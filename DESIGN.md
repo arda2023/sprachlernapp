@@ -1,5 +1,3 @@
-<!-- SEED: established with the user before implementation; re-run /impeccable document once there's code to capture the actual tokens and components. -->
-
 ---
 name: Sprachapp
 description: A dark, editorial vocabulary app that turns reading into mastery — no games, no mascots.
@@ -11,76 +9,127 @@ description: A dark, editorial vocabulary app that turns reading into mastery �
 
 **Creative North Star: "The Night Edition"**
 
-Sprachapp reads like a language magazine that comes out after dark: a quiet, near-black page you read stories on, where the only color that ever appears is a mark of your own progress. Instead of stars, hearts, or streak flames, the two accent inks — violet and orange — behave like a copy editor's pen: they underline a word directly in the text to say where it stands, mastered or still active, and then get out of the way again.
+Sprachapp reads like a language magazine that comes out after dark: a quiet, near-black page you read stories on, where the only color that ever appears is a mark of your own progress. Instead of stars, hearts, or animated mascots, the two accent inks — violet and orange — behave like a copy editor's pen: they underline a word directly in the text or mark progress in dedicated tracks to say where it stands, mastered or still active, and then get out of the way again.
 
 The vibe is focused and editorial, not playful. There is no mascot, no confetti, no cartoon avatar, no rainbow of category colors — the explicit anti-reference is Duolingo's bright, gamified look. Density stays reading-first: long-form story text is the centerpiece, and interface chrome (nav, buttons, deck labels) stays quiet and out of the way in a distinct, plainer typeface so it never competes with the content.
 
 **Key Characteristics:**
-- Dark, near-black editorial ground; no light theme.
+- Dark, near-black editorial ground; dark is the only mode.
 - Exactly two accent colors, each with one fixed, non-decorative meaning: mastered vs. active vocabulary.
+- Categories outside active/mastered (*Verfügbare Wiederholungen* and *Noch nicht angezeigt*) receive no new accent color; they are rendered in neutral text or an unfilled hairline track.
+- The streak is supported, but strictly quiet and typographic: neutral text tones (`textPrimary` / `textMuted`), no flame iconography, no orange highlight.
 - Serif for anything the learner reads as content; sans for anything that is app chrome.
-- No gamified visual language (mascots, confetti, streak iconography, saturated multi-color palettes).
+- No gamified visual language (mascots, confetti, flame badges, saturated multi-color palettes).
 
 ## Colors
 
 A dark editorial ground with exactly two accent inks, each reserved for one meaning: marking a word's learning status.
 
-### Primary
-- **Editorial Violet** (#7B2CBF): marks words the learner has mastered. The reward is a permanent, elegant mark on the page itself, not a badge or popup.
+### Primary (Mastered Ink)
+- **Editorial Violet** (`#7B2CBF` / `AppColors.mastered`): marks words the learner has mastered (e.g. Leitner Box 5). The reward is a permanent, elegant mark on the page or track, not an animated badge or popup.
 
-### Secondary
-- **Field Orange** (#F77F00): marks words currently activated/in practice — reads as "in progress," in contrast to violet's "done."
+### Secondary (Active Ink)
+- **Field Orange** (`#F77F00` / `AppColors.active`): marks words currently activated and in practice — reads as "in progress," in contrast to violet's "done."
 
 ### Neutral
-- **Night Page** (#0D0F14): base background — the darkest layer, where story text and primary reading surfaces sit.
-- **Raised Ink** (#1A1D26): elevated surface tone for cards, decks, sheets, and navigation — one step lighter than the page so structure reads without needing borders.
-- Text, border, and divider tones: [to be resolved during implementation]
+- **Night Page** (`#0D0F14` / `AppColors.nightPage`): base background — the darkest layer, where story text and primary reading surfaces sit.
+- **Raised Ink** (`#1A1D26` / `AppColors.raisedInk`): elevated surface tone for cards, decks, sheets, and bottom navigation bar — one step lighter than the page so structure reads without requiring heavy outlines.
+- **Hairline** (`#2A2F40` / `AppColors.hairline`): fine border strokes, card outlines, and unfilled progress track grooves.
+- **Text Primary** (`#F0F2F5` / `AppColors.textPrimary`): high-contrast text for body reading, headlines, primary metrics, and active tab icons.
+- **Text Muted** (`#8E95A5` / `AppColors.textMuted`): secondary labels, level indicators, percentage stats, and inactive tab icons.
+- **Icon Off** (`#4A5063` / `AppColors.iconOff`): unlit difficulty indicators and inactive chrome elements.
+- **Stand-in Cover Tones**: `#1A1D26`, `#20242F`, `#161922` used as subtle editorial masthead canvas tones when a story has no cover illustration.
 
 ### Named Rules
-**The Two-Ink Rule.** Only two accent colors exist anywhere in the system — violet for mastered, orange for active — and neither is ever used decoratively (no brand-colored buttons, icons, or nav highlights). Color is only ever allowed to mean one of the two word states.
+
+**The Two-Ink Rule.** Only two accent colors exist anywhere in the system — Editorial Violet (`#7B2CBF`) for mastered words and Field Orange (`#F77F00`) for active/in-progress words. Neither is ever used decoratively (no brand-colored buttons, decorative illustrations, or colorful category chips).
+- *Verfügbare Wiederholungen* (Due repetitions) and *Noch nicht angezeigt* (New/unseen words) **do not** receive a third or fourth accent color; they are rendered neutrally in text (`textPrimary`/`textMuted`) or represented by the unfilled hairline track.
+- **Contrast & Underline Rule**: Editorial Violet text against the `#0D0F14` ground yields low contrast (~2.7:1), violating WCAG legibility for plain body text. Therefore, word statistics and emphasized counts use high-contrast primary text (`#F0F2F5`) paired with colored ink underlines (`TextDecoration.underline` with `decorationThickness: 3` and `decorationColor: AppColors.mastered` or `AppColors.active`).
+
+**The Neutral Chrome Rule.** Application navigation and interactive controls must never be filled with status inks. Specifically, the central Play button in the bottom navigation bar must **not** be colored violet, because violet exclusively denotes "mastered". The central button must adopt a neutral Raised Ink styling (e.g. `#1A1D26` background, `#2A2F40` hairline border, and `#F0F2F5` primary text icon).
+
+**The Understated Streak Rule.** Streaks are permitted as an orientation aid, but must remain strictly calm and typographic. The streak count is rendered in `AppColors.textPrimary` (w700), the label in `AppColors.textMuted`, enclosed within a neutral hairline pill. It must never use Field Orange, playful flame iconography, or celebratory animations.
 
 ## Typography
 
-**Display/Headline Font:** Source Serif 4 (serif fallback)
-**Body Font (stories):** Source Serif 4
-**UI/Label Font:** Figtree (sans-serif fallback)
+**Display/Headline Font:** Source Serif 4 (serif fallback)  
+**Body Font (stories/sentences):** Source Serif 4  
+**UI/Label Font (chrome/navigation/stats):** Figtree (sans-serif fallback)  
 
-**Character:** An editorial pairing — Source Serif 4 gives headlines and story text the weight and legibility of long-form reading, while Figtree keeps interface chrome (buttons, nav, labels, deck names, word-status chips) quiet, modern, and clearly separate from the content it frames.
+**Character:** An editorial pairing — Source Serif 4 gives headlines, sentences, and story text the weight and dignity of long-form reading, while Figtree keeps interface chrome quiet, modern, and distinct from the content it frames.
 
 ### Hierarchy
-- **Display/Headline** (Source Serif 4): story titles and section headers — carries the magazine feel.
-- **Body** (Source Serif 4): story reading text, set for sustained reading rather than scanning.
-- **Label/UI** (Figtree): buttons, navigation, deck names, word-status chips, form fields, and every other interface element that isn't content.
-- Exact sizes, weights, and line-heights: [to be resolved during implementation]
+
+- **Editorial Section Heading** (Source Serif 4): 24pt, w600, height 1.2, letter-spacing -0.2. Used for section titles ("Aktive Stapel", "Stories").
+- **Story Card Title** (Source Serif 4): 17pt, w600, height 1.2. Used for story titles on cards.
+- **Story Masthead Stand-in** (Source Serif 4): 52pt, w700, height 1.0, letter-spacing -1.0, rendered with 9% opacity text on neutral cards.
+- **Chrome Stat / Large Metric** (Figtree): 22pt, w600 (w700 for counts), height 1.3. Used for headline vocabulary counts.
+- **Deck Title** (Figtree): 17pt, w600. Used for deck names in active deck tiles.
+- **Button / Standard Chrome** (Figtree): 15pt, w500 / w600. Used for standard buttons ("Mehr entdecken") and secondary stat lines.
+- **Streak Metric** (Figtree): 16pt, w700 for the day count; 13pt, w400 for the "Tage" label.
+- **Metadata / Chip Labels** (Figtree): 13pt, w600. Used for level chips ("Spanisch A2") and deck completion percentages.
+- **Tab Bar Labels** (Figtree): 11pt, w600. Used under navigation icons.
 
 ### Named Rules
-**The Story-Voice Rule.** Anything the learner reads as content (stories, sentences, headlines) is set in Source Serif 4; anything that is app chrome is set in Figtree. The two faces are never swapped or mixed within a role.
+
+**The Story-Voice Rule.** Anything the learner reads as content (stories, practice sentences, reading prompts, editorial headings) is set in Source Serif 4. Anything that is app chrome (buttons, navigation, deck titles, word counts, difficulty indicators, progress meters) is set in Figtree. The two typefaces are never swapped or mixed within a role.
 
 ## Layout
 
-[To be resolved during implementation — no spatial grammar has been established yet.] Directionally: reading-first density on the Story surface (generous line length and vertical rhythm, not a dense tile grid), consistent with the focused, non-gamified brief. Practice decks may run denser since they are task-oriented rather than reading-oriented, but should not adopt a game-board look.
+A spacious, reading-first spatial grammar with disciplined vertical pacing:
+
+- **Horizontal Screen Gutter**: `20pt` standard padding (`EdgeInsets.symmetric(horizontal: 20)`).
+- **Vertical Spacing Rhythm**:
+  - Top safe area offset: `8pt`.
+  - Spacing after header row: `28pt`.
+  - Major section separation: `44pt` between dashboard modules.
+  - Section title to content gap: `14pt` (decks) / `10pt` (carousel).
+  - Inter-item spacing: `12pt` between vertical deck tiles and horizontal story cards.
+  - Bottom scroll padding: `32pt` above the navigation bar.
+- **Bottom Navigation Bar**: Fixed height `64pt` (excluding platform safe area bottom inset).
+- **Story Carousel**: Fixed container height `200pt`; individual cards measured at `140pt` width × `200pt` height.
+- **Deck Tiles**: Full-width cards with `16pt` internal padding on all sides.
+- **Progress Track Metrics**:
+  - Segmented vocabulary track: height `8pt`, rounded pill shape (`Radius.circular(999)`).
+  - Deck mastered track: height `3pt`, rounded pill shape (`Radius.circular(999)`).
 
 ## Elevation & Depth
 
-Depth is tonal, not shadow-driven: surfaces separate by moving from Night Page (#0D0F14) to Raised Ink (#1A1D26) rather than by drop shadows or glow effects — an intentionally flat, print-like sensibility rather than a glossy app-game look.
+Depth is purely tonal, not shadow-driven: surfaces separate by stepping from Night Page (`#0D0F14`) to Raised Ink (`#1A1D26`), outlined with Hairline (`#2A2F40`), rather than by drop shadows or glows. This maintains an intentional, print-like sensibility.
 
 ### Named Rules
-**The Flat Ground Rule.** No drop shadows or glow are used to indicate elevation; a tonal step (Night Page → Raised Ink) is the only depth cue.
+
+**The Flat Ground Rule.** No drop shadows or glow effects are used to indicate elevation. The tonal step from Night Page to Raised Ink, supported by a 1pt Hairline border, is the sole depth cue.
 
 ## Shapes
 
-[To be resolved during implementation — no corner radius or form language has been established yet.]
+- **Cards & Content Tiles**: Corner radius `12pt` (`BorderRadius.circular(12)`). Used on Deck Tiles and Story Cards.
+- **Pills & Chips**: Fully rounded pill radius `999pt` (`BorderRadius.circular(999)`). Used on level chips, streak badges, difficulty indicators, and progress tracks.
+- **Central Action Button**: Circle (`BoxShape.circle`), sized `52 × 52 pt` centered inside a `76pt` wide column, guaranteeing at least `56 × 56 pt` touch geometry.
+- **Border Strokes**: `1pt` solid hairline borders (`AppColors.hairline` = `#2A2F40`) on elevated containers and chips.
+
+## Accessibility
+
+- **Semantics Labels on Custom Controls**: Every custom interactive component (`DeckTile`, `StoryCard`, `_TabItem`, `_PracticeButton`) wraps its visual tree in `MergeSemantics` and provides a descriptive `Semantics(label: ...)` string (e.g. `'Reisen & Unterwegs, 42 Prozent gemeistert'`, `'Tägliche Übung starten'`), explicitly exposing `isButton: true` and `hasTapAction: true`.
+- **Minimum Tap Targets**: All tappable elements strictly satisfy the `44 × 44 pt` minimum dimension required by platform accessibility guidelines (`iOSTapTargetGuideline`).
+- **Dynamic Type & Text Scaling**: Dashboard layouts must survive at least 2.0× text scaling (`textScaleFactor = 2.0`) without clipped text or render-overflow exceptions. Bottom tab bar labels clamp text scaling to a maximum of 1.3× to preserve core navigation reachability.
+- **Heading Semantics**: Section titles explicitly declare `Semantics(header: true)` for assistive screen-reader navigation.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** treat violet (#7B2CBF) and orange (#F77F00) as status inks exclusively — mastered vs. active vocabulary — never as generic brand or decorative color.
-- **Do** set story/sentence content in Source Serif 4 and app chrome in Figtree; never mix the two roles.
-- **Do** build depth through the Night Page / Raised Ink tonal step, not shadows or glow.
-- **Do** keep the reading surface (stories) the visual centerpiece; chrome stays quiet around it.
+- **Do** treat Editorial Violet (`#7B2CBF`) and Field Orange (`#F77F00`) strictly as status inks denoting mastered vs. active vocabulary.
+- **Do** format word counts with high-contrast text and colored ink underlines to ensure contrast compliance.
+- **Do** present the streak in neutral text colors (`textPrimary` / `textMuted`) without flame icons or orange highlights.
+- **Do** style the central practice button in neutral Raised Ink chrome with a hairline border.
+- **Do** set editorial content in Source Serif 4 and app chrome in Figtree; keep roles strictly segregated.
+- **Do** ensure all tappable areas meet or exceed `44 × 44 pt` and carry complete VoiceOver/TalkBack semantics.
+- **Do** build depth exclusively through the Night Page → Raised Ink tonal step and hairline borders.
 
 ### Don't:
-- **Don't** use bright, saturated, "gamified" color anywhere in the system — the Duolingo look is the named anti-reference.
-- **Don't** add mascots, confetti, streak-flame icons, or other playful game-app iconography.
+- **Don't** assign new accent colors to "Verfügbare Wiederholungen" or "Noch nicht angezeigt"; keep them neutral.
+- **Don't** color the central play button in violet or orange.
+- **Don't** use playful game-app iconography such as flame icons, mascots, confetti, or star badges.
+- **Don't** use drop shadows, glows, or glossy skeuomorphic gradients.
 - **Don't** introduce a third accent color; the Two-Ink Rule is closed.
 - **Don't** ship a light theme; dark is the only mode.
