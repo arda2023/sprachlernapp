@@ -25,6 +25,7 @@ abstract final class AppType {
     double? height,
     TextDecoration? decoration,
     Color? decorationColor,
+    bool tabular = false,
   }) => GoogleFonts.figtree(
     fontSize: size,
     fontWeight: weight,
@@ -33,7 +34,12 @@ abstract final class AppType {
     decoration: decoration,
     decorationColor: decorationColor,
     decorationThickness: decoration == null ? null : 3,
+    fontFeatures: tabular ? const [FontFeature.tabularFigures()] : null,
   );
+
+  /// Metadata / chip labels: level, reading time, topic.
+  static TextStyle meta({Color color = AppColors.textMuted}) =>
+      chrome(size: 13, weight: FontWeight.w600, color: color);
 
   static TextStyle editorial({
     double size = 24,
@@ -48,6 +54,14 @@ abstract final class AppType {
     height: height,
     letterSpacing: letterSpacing,
   );
+
+  /// Long-form story text in the reader.
+  static TextStyle storyBody() => editorial(
+    size: 19,
+    weight: FontWeight.w400,
+    height: 1.6,
+    letterSpacing: 0,
+  );
 }
 
 ThemeData buildAppTheme() {
@@ -57,14 +71,32 @@ ThemeData buildAppTheme() {
     colorScheme: const ColorScheme.dark(
       surface: AppColors.nightPage,
       onSurface: AppColors.textPrimary,
-      primary: AppColors.mastered,
-      onPrimary: Colors.white,
-      secondary: AppColors.active,
+      // Neutral Chrome Rule: Material defaults (cursor, focus, indicators)
+      // must never pick up a status ink.
+      primary: AppColors.textPrimary,
+      onPrimary: AppColors.nightPage,
+      secondary: AppColors.textMuted,
+      onSecondary: AppColors.nightPage,
       outline: AppColors.hairline,
     ),
     textTheme: base.textTheme.apply(
       bodyColor: AppColors.textPrimary,
       displayColor: AppColors.textPrimary,
+    ),
+    // Flat Ground Rule: sheets separate by tone and hairline, never shadow.
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: AppColors.raisedInk,
+      modalBackgroundColor: AppColors.raisedInk,
+      surfaceTintColor: Colors.transparent,
+      shadowColor: Colors.transparent,
+      elevation: 0,
+      modalElevation: 0,
+      modalBarrierColor: AppColors.nightPage.withValues(alpha: 0.7),
+      dragHandleColor: AppColors.iconOff,
+      shape: const RoundedRectangleBorder(
+        side: BorderSide(color: AppColors.hairline),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+      ),
     ),
     splashFactory: NoSplash.splashFactory,
     highlightColor: Colors.transparent,

@@ -47,6 +47,7 @@ Three core learning surfaces:
   2. *Wörter im Aufbau* (Words in progress / actively learning)
   3. *Wörter gemeistert* (Mastered words)
   4. *Noch nicht angezeigt* (New words not yet seen)
+  - **Assignment order** (makes the categories disjoint): never shown → *Noch nicht angezeigt*; otherwise due (`dueAt ≤ now`) → *Verfügbare Wiederholungen*; otherwise Box 5 → *Wörter gemeistert*; otherwise (Box 1–4) → *Wörter im Aufbau*. A Box-5 word that falls due therefore counts as a due repetition until reviewed, so the due count always matches the practice queue.
   - **Invariant**: The sum of these four categories always equals the total vocabulary count (all words in active decks plus story words added to learning).
   - **Dynamic Derivation**: These numbers are **always derived dynamically** from word status and scheduling timestamps; they are never stored as independent counter columns.
   - The former static "core vocabulary progress bar over 3,000 words" is discarded.

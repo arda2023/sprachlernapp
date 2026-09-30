@@ -8,7 +8,8 @@ Sprachapp is an editorial, reading-first language learning application for iOS a
 The initial version targets adult German speakers learning English through contextual stories and spaced-repetition sentence decks.
 
 The repository currently contains:
-- A functional home dashboard (`HomeScreen`) with dark-mode editorial styling and sample data (`VocabStats`, `Deck`, `Story`).
+- A functional home dashboard (`HomeScreen`) with dark-mode editorial styling and placeholder data (`VocabBreakdown`, `DailyGoal`, `Deck`, `Story`).
+- A Stories section: library (`StoryLibraryScreen`) and reader (`StoryReaderScreen`) with tap-to-look-up words and a placeholder dictionary.
 - A bespoke design system implemented in `lib/theme/app_theme.dart` using Google Fonts (Source Serif 4 and Figtree).
 - Reusable UI components and modular dashboard widgets under `lib/widgets/` and `lib/screens/home/widgets/`.
 - A widget and accessibility test suite in `test/widget_test.dart` verifying tap targets, Dynamic Type scaling, semantic accessibility, and visual track segments.
@@ -21,19 +22,30 @@ Dart SDK constraint: `^3.13.2` (see `pubspec.yaml`).
 lib/
 ├── main.dart                      # Application entry point (SprachApp widget, ThemeData)
 ├── models/
-│   └── home_models.dart           # UI data models (VocabStats, Deck, Story)
+│   ├── home_models.dart           # UI data models (VocabBreakdown, DailyGoal, Deck, Story)
+│   ├── story_models.dart          # WordEntry, WordMark, StoryText, ReadingProgress
+│   └── sample_content.dart        # Synthetic placeholder content (until the content pack exists)
 ├── screens/
-│   └── home/
-│       ├── home_screen.dart       # Main dashboard layout (ListView, sections)
+│   ├── app_shell.dart             # Tab host (IndexedStack) with the shared bottom bar
+│   ├── home/
+│   │   ├── home_screen.dart       # Main dashboard layout (ListView, sections)
+│   │   └── widgets/
+│   │       ├── daily_goal.dart    # Daily goal fraction with neutral track
+│   │       ├── deck_tile.dart     # Topic deck card with progress track
+│   │       ├── home_header.dart   # Level chip and understated streak pill
+│   │       ├── story_carousel.dart# Horizontal story card carousel (+ meta line helpers)
+│   │       └── vocab_progress.dart# Four derived categories, segmented track, ledger
+│   └── stories/
+│       ├── story_library_screen.dart # Weiterlesen tile + one carousel per topic
+│       ├── story_reader_screen.dart  # Reader with per-word tap targets
 │       └── widgets/
-│           ├── deck_tile.dart     # Topic deck card with progress track
-│           ├── home_header.dart   # Level chip and streak badge
-│           ├── story_carousel.dart# Horizontal story card carousel
-│           └── vocab_progress.dart# Vocabulary overview and segmented track
+│           └── word_lookup_sheet.dart # Dictionary bottom sheet + neutral add button
 ├── theme/
 │   └── app_theme.dart             # Color tokens (AppColors), typography (AppType), ThemeData
 └── widgets/
-    └── app_bottom_bar.dart        # 5-item navigation bar with central practice button
+    ├── app_bottom_bar.dart        # 5-item navigation bar with central practice button
+    ├── hairline_track.dart        # Thin pill progress track
+    └── section_heading.dart       # Serif section heading with optional trailing widget
 
 test/
 └── widget_test.dart               # Component, accessibility, and unit tests
