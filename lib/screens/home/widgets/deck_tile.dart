@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../models/home_models.dart';
 import '../../../theme/app_theme.dart';
+import '../../../widgets/hairline_track.dart';
 
 class DeckTile extends StatelessWidget {
   const DeckTile({super.key, required this.deck, required this.onTap});
@@ -55,19 +56,9 @@ class DeckTile extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 14),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(999),
-                  child: SizedBox(
-                    height: 3,
-                    child: ColoredBox(
-                      color: AppColors.hairline,
-                      child: FractionallySizedBox(
-                        alignment: Alignment.centerLeft,
-                        widthFactor: deck.masteredFraction.clamp(0, 1),
-                        child: const ColoredBox(color: AppColors.mastered),
-                      ),
-                    ),
-                  ),
+                HairlineTrack(
+                  fraction: deck.masteredFraction,
+                  color: AppColors.mastered,
                 ),
               ],
             ),

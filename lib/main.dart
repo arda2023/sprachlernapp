@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'screens/home/home_screen.dart';
+import 'screens/app_shell.dart';
 import 'theme/app_theme.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class SprachApp extends StatelessWidget {
       title: 'Sprachapp',
       debugShowCheckedModeBanner: false,
       theme: buildAppTheme(),
-      home: const HomeScreen(),
+      home: const AppShell(),
     );
   }
 }

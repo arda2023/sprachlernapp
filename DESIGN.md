@@ -46,7 +46,11 @@ A dark editorial ground with exactly two accent inks, each reserved for one mean
 - *Verfügbare Wiederholungen* (Due repetitions) and *Noch nicht angezeigt* (New/unseen words) **do not** receive a third or fourth accent color; they are rendered neutrally in text (`textPrimary`/`textMuted`) or represented by the unfilled hairline track.
 - **Contrast & Underline Rule**: Editorial Violet text against the `#0D0F14` ground yields low contrast (~2.7:1), violating WCAG legibility for plain body text. Therefore, word statistics and emphasized counts use high-contrast primary text (`#F0F2F5`) paired with colored ink underlines (`TextDecoration.underline` with `decorationThickness: 3` and `decorationColor: AppColors.mastered` or `AppColors.active`).
 
-**The Neutral Chrome Rule.** Application navigation and interactive controls must never be filled with status inks. Specifically, the central Play button in the bottom navigation bar must **not** be colored violet, because violet exclusively denotes "mastered". The central button must adopt a neutral Raised Ink styling (e.g. `#1A1D26` background, `#2A2F40` hairline border, and `#F0F2F5` primary text icon).
+**The Neutral Chrome Rule.** Application navigation and interactive controls must never be filled with status inks. Specifically, the central Play button in the bottom navigation bar must **not** be colored violet, because violet exclusively denotes "mastered". The central button must adopt a neutral Raised Ink styling (e.g. `#1A1D26` background, `#2A2F40` hairline border, and `#F0F2F5` primary text icon). The same holds for the "Zum Lernen hinzufügen" action in the word lookup sheet: Night Page fill, Hairline border, `textPrimary` label and icon; once added it reads "Wird gelernt" in `textMuted` and is disabled.
+
+**The Reader Mark Rule.** In running story text, words already in the learner's vocabulary carry their status ink as an underline (thickness 2): Field Orange for active, Editorial Violet for mastered. A word the learner has just tapped gets a neutral Hairline background while its lookup sheet is open. Unmarked words stay plain.
+
+**The Neutral Progress Rule.** Progress that is not a word's learning status — the daily goal and the reading position in a story — is drawn as a 3pt hairline track with a `textMuted` fill. It never borrows Editorial Violet or Field Orange.
 
 **The Understated Streak Rule.** Streaks are permitted as an orientation aid, but must remain strictly calm and typographic. The streak count is rendered in `AppColors.textPrimary` (w700), the label in `AppColors.textMuted`, enclosed within a neutral hairline pill. It must never use Field Orange, playful flame iconography, or celebratory animations.
 
@@ -61,13 +65,17 @@ A dark editorial ground with exactly two accent inks, each reserved for one mean
 ### Hierarchy
 
 - **Editorial Section Heading** (Source Serif 4): 24pt, w600, height 1.2, letter-spacing -0.2. Used for section titles ("Aktive Stapel", "Stories").
+- **Screen Title** (Source Serif 4): 32pt, w600, height 1.2, letter-spacing -0.2. Used for the Stories library title and the story title in the reader.
+- **Story Body** (Source Serif 4): 19pt, w400, height 1.6, letter-spacing 0 (`AppType.storyBody()`). Used for running story text in the reader.
+- **Lookup Headword** (Source Serif 4): 28pt, w600. **Lookup Translation** (Source Serif 4): 22pt, w400, height 1.3. Used in the word lookup sheet.
 - **Story Card Title** (Source Serif 4): 17pt, w600, height 1.2. Used for story titles on cards.
 - **Story Masthead Stand-in** (Source Serif 4): 52pt, w700, height 1.0, letter-spacing -1.0, rendered with 9% opacity text on neutral cards.
 - **Chrome Stat / Large Metric** (Figtree): 22pt, w600 (w700 for counts), height 1.3. Used for headline vocabulary counts.
 - **Deck Title** (Figtree): 17pt, w600. Used for deck names in active deck tiles.
 - **Button / Standard Chrome** (Figtree): 15pt, w500 / w600. Used for standard buttons ("Mehr entdecken") and secondary stat lines.
 - **Streak Metric** (Figtree): 16pt, w700 for the day count; 13pt, w400 for the "Tage" label.
-- **Metadata / Chip Labels** (Figtree): 13pt, w600. Used for level chips ("Spanisch A2") and deck completion percentages.
+- **Metadata / Chip Labels** (Figtree): 13pt, w600 (`AppType.meta()`). Used for level chips ("Englisch A2"), deck completion percentages, story meta lines (`A2 · 4 Min · Reisen`, level first so the genre truncates first) and word classes.
+- **Counts** use tabular figures so numbers don't shift as they change.
 - **Tab Bar Labels** (Figtree): 11pt, w600. Used under navigation icons.
 
 ### Named Rules
@@ -89,6 +97,10 @@ A spacious, reading-first spatial grammar with disciplined vertical pacing:
 - **Bottom Navigation Bar**: Fixed height `64pt` (excluding platform safe area bottom inset).
 - **Story Carousel**: Fixed container height `200pt`; individual cards measured at `140pt` width × `200pt` height.
 - **Deck Tiles**: Full-width cards with `16pt` internal padding on all sides.
+- **Home order**: header → `28pt` → daily goal line → `28pt` → vocabulary overview (due count, segmented track, three-row ledger with hairline separators) → `44pt` → sections.
+- **Stories Library**: screen title → `28pt` → "Weiterlesen" tile (deck-tile geometry) → one carousel per topic, `44pt` apart, each headed by a section heading with a story count in metadata style.
+- **Reader**: `20pt` gutter, text measure capped at `600pt`, `20pt` between paragraphs. Meta line, screen title, then the story body.
+- **Word Lookup Sheet**: modal bottom sheet on Raised Ink with a 1pt Hairline edge, `12pt` top radius, zero elevation, Night Page scrim at 70%. `20pt` gutter. Headword + word class, hairline rule, "Deutsch" label + translation, then one full-width action button (`52pt` min height).
 - **Progress Track Metrics**:
   - Segmented vocabulary track: height `8pt`, rounded pill shape (`Radius.circular(999)`).
   - Deck mastered track: height `3pt`, rounded pill shape (`Radius.circular(999)`).

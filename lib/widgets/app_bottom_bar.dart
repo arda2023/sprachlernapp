@@ -138,9 +138,11 @@ class _PracticeButton extends StatelessWidget {
             child: Container(
               width: 52,
               height: 52,
-              decoration: const BoxDecoration(
-                color: AppColors.mastered,
+              // Neutral Chrome Rule: violet means "mastered", never "tap me".
+              decoration: BoxDecoration(
+                color: AppColors.raisedInk,
                 shape: BoxShape.circle,
+                border: Border.all(color: AppColors.hairline),
               ),
               child: const Icon(
                 CupertinoIcons.play_fill,
