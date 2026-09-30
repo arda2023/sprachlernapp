@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 import 'home_models.dart';
 import 'story_models.dart';
 
@@ -13,9 +15,108 @@ const sampleBreakdown = VocabBreakdown(
 
 const sampleGoal = DailyGoal(done: 4, target: 10);
 
+const sampleWeek = WeekProgress([
+  DayMark.met,
+  DayMark.met,
+  DayMark.missed,
+  DayMark.met,
+  DayMark.today,
+  DayMark.upcoming,
+  DayMark.upcoming,
+]);
+
 const sampleDecks = [
-  Deck(name: 'Reisen & Unterwegs', masteredFraction: 0.42),
-  Deck(name: 'Alltägliche Konversation', masteredFraction: 0.17),
+  Deck(
+    id: 'reisen-unterwegs',
+    name: 'Reisen & Unterwegs',
+    description:
+        'Lerne Englisch für Bahnhof, Flughafen, Hotel und alles, was '
+        'dazwischen passiert.',
+    icon: CupertinoIcons.airplane,
+    difficulty: DeckDifficulty.beginner,
+    totalWords: 420,
+    seenWords: 210,
+    masteredWords: 176,
+    isActive: true,
+    recentWords: [
+      SeenWord(word: 'platform', translation: 'der Bahnsteig'),
+      SeenWord(word: 'delay', translation: 'die Verspätung'),
+      SeenWord(word: 'luggage', translation: 'das Gepäck'),
+      SeenWord(word: 'departure', translation: 'die Abfahrt'),
+      SeenWord(word: 'receipt', translation: 'die Quittung'),
+    ],
+  ),
+  Deck(
+    id: 'alltag-konversation',
+    name: 'Alltägliche Konversation',
+    description:
+        'Smalltalk, Verabredungen und die kleinen Sätze, die jeden Tag '
+        'vorkommen.',
+    icon: CupertinoIcons.chat_bubble_2,
+    difficulty: DeckDifficulty.beginner,
+    totalWords: 380,
+    seenWords: 120,
+    masteredWords: 65,
+    isActive: true,
+    recentWords: [
+      SeenWord(word: 'appointment', translation: 'der Termin'),
+      SeenWord(word: 'neighbour', translation: 'der Nachbar'),
+      SeenWord(word: 'borrow', translation: 'ausleihen'),
+    ],
+  ),
+  Deck(
+    id: 'medizin',
+    name: 'Medizin',
+    description:
+        'Lerne Englisch rund um das Thema Medizin, Anatomie und Gesundheit.',
+    icon: CupertinoIcons.heart,
+    difficulty: DeckDifficulty.advanced,
+    totalWords: 532,
+    seenWords: 53,
+    masteredWords: 30,
+    isActive: false,
+    recentWords: [
+      SeenWord(word: 'prescription', translation: 'das Rezept'),
+      SeenWord(word: 'fever', translation: 'das Fieber'),
+      SeenWord(word: 'injury', translation: 'die Verletzung'),
+      SeenWord(word: 'swollen', translation: 'geschwollen'),
+      SeenWord(word: 'ward', translation: 'die Station'),
+    ],
+  ),
+  Deck(
+    id: 'essen-einkaufen',
+    name: 'Essen & Einkaufen',
+    description:
+        'Vom Wochenmarkt bis zum Restaurant: bestellen, fragen, zahlen.',
+    icon: CupertinoIcons.cart,
+    difficulty: DeckDifficulty.beginner,
+    totalWords: 350,
+    seenWords: 40,
+    masteredWords: 12,
+    isActive: false,
+  ),
+  Deck(
+    id: 'business',
+    name: 'Business',
+    description: 'Meetings, Verhandlungen und Präsentationen auf Englisch.',
+    icon: CupertinoIcons.briefcase,
+    difficulty: DeckDifficulty.intermediate,
+    totalWords: 450,
+    seenWords: 0,
+    masteredWords: 0,
+    isActive: false,
+  ),
+  Deck(
+    id: 'e-mail',
+    name: 'E-Mail & Korrespondenz',
+    description: 'Anfragen, Absagen und Nachfassen – schriftlich und höflich.',
+    icon: CupertinoIcons.envelope,
+    difficulty: DeckDifficulty.intermediate,
+    totalWords: 300,
+    seenWords: 0,
+    masteredWords: 0,
+    isActive: false,
+  ),
 ];
 
 const sampleStories = [

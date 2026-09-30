@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' show showModalBottomSheet;
 
 import '../../../models/story_models.dart';
 import '../../../theme/app_theme.dart';
+import '../../../widgets/action_buttons.dart';
 
 /// Dictionary sheet for a tapped word: headword (serif, it is content),
 /// word class and translation, and one neutral action.
@@ -138,49 +139,6 @@ class AddToLearningButton extends StatelessWidget {
       WordMark.active => ('Wird gelernt', CupertinoIcons.checkmark),
       WordMark.mastered => ('Bereits gemeistert', CupertinoIcons.checkmark),
     };
-    final color = onPressed == null
-        ? AppColors.textMuted
-        : AppColors.textPrimary;
-
-    return MergeSemantics(
-      child: CupertinoButton(
-        onPressed: onPressed,
-        padding: EdgeInsets.zero,
-        pressedOpacity: 0.7,
-        minimumSize: const Size(44, 52),
-        child: Semantics(
-          label: label,
-          enabled: onPressed != null,
-          excludeSemantics: true,
-          child: Container(
-            constraints: const BoxConstraints(minHeight: 52),
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: BoxDecoration(
-              color: AppColors.nightPage,
-              border: Border.all(color: AppColors.hairline),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(icon, size: 18, color: color),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Text(
-                    label,
-                    textAlign: TextAlign.center,
-                    style: AppType.chrome(
-                      weight: FontWeight.w600,
-                      color: color,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+    return OutlineActionButton(label: label, icon: icon, onPressed: onPressed);
   }
 }
