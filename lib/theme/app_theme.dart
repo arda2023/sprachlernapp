@@ -10,6 +10,9 @@ abstract final class AppColors {
   static const mastered = Color(0xFF7B2CBF);
   static const active = Color(0xFFF77F00);
 
+  /// Field Orange at 8% over Raised Ink: background of an active deck tile.
+  static const activeTint = Color(0xFF2C2523);
+
   static const textPrimary = Color(0xFFF0F2F5);
   static const textMuted = Color(0xFF8E95A5);
   static const iconOff = Color(0xFF4A5063);

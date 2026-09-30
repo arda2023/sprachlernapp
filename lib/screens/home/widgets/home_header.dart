@@ -1,66 +1,52 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../../theme/app_theme.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
     super.key,
-    required this.levelLabel,
-    required this.streakDays,
+    required this.flag,
+    required this.languageName,
+    required this.onProfile,
+    required this.onSettings,
   });
 
-  final String levelLabel;
-  final int streakDays;
+  final String flag;
+  final String languageName;
+  final VoidCallback onProfile;
+  final VoidCallback onSettings;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _LevelChip(label: levelLabel),
+        _LanguageChip(flag: flag, name: languageName),
         const Spacer(),
-        _StreakBadge(days: streakDays),
+        _HeaderIcon(
+          icon: CupertinoIcons.person_crop_circle,
+          label: 'Profil',
+          onTap: onProfile,
+        ),
+        _HeaderIcon(
+          icon: CupertinoIcons.gear_alt,
+          label: 'Einstellungen',
+          onTap: onSettings,
+        ),
       ],
     );
   }
 }
 
-class _LevelChip extends StatelessWidget {
-  const _LevelChip({required this.label});
+class _LanguageChip extends StatelessWidget {
+  const _LanguageChip({required this.flag, required this.name});
 
-  final String label;
+  final String flag;
+  final String name;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColors.hairline),
-        borderRadius: BorderRadius.circular(999),
-      ),
-      child: Text(
-        label,
-        style: AppType.chrome(
-          size: 13,
-          weight: FontWeight.w600,
-          color: AppColors.textMuted,
-        ),
-      ),
-    );
-  }
-}
-
-class _StreakBadge extends StatelessWidget {
-  const _StreakBadge({required this.days});
-
-  final int days;
-
-  /// Understated Streak Rule: neutral hairline pill, no flame, no ink.
-  @override
-  Widget build(BuildContext context) {
-    final unit = days == 1 ? 'Tag' : 'Tage';
     return Semantics(
-      container: true,
-      label: '$days $unit Lernserie',
+      label: 'Zielsprache: $name',
       excludeSemantics: true,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
@@ -68,27 +54,41 @@ class _StreakBadge extends StatelessWidget {
           border: Border.all(color: AppColors.hairline),
           borderRadius: BorderRadius.circular(999),
         ),
-        child: Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: '$days',
-                style: AppType.chrome(
-                  size: 16,
-                  weight: FontWeight.w700,
-                  tabular: true,
-                ),
-              ),
-              TextSpan(
-                text: ' $unit',
-                style: AppType.chrome(
-                  size: 13,
-                  weight: FontWeight.w400,
-                  color: AppColors.textMuted,
-                ),
-              ),
-            ],
+        child: Text(
+          '$flag  $name',
+          style: AppType.chrome(
+            size: 13,
+            weight: FontWeight.w600,
+            color: AppColors.textMuted,
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _HeaderIcon extends StatelessWidget {
+  const _HeaderIcon({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return MergeSemantics(
+      child: CupertinoButton(
+        onPressed: onTap,
+        padding: EdgeInsets.zero,
+        minimumSize: const Size(44, 44),
+        child: Semantics(
+          label: label,
+          excludeSemantics: true,
+          child: Icon(icon, size: 24, color: AppColors.textMuted),
         ),
       ),
     );

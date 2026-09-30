@@ -8,7 +8,9 @@ Sprachapp is an editorial, reading-first language learning application for iOS a
 The initial version targets adult German speakers learning English through contextual stories and spaced-repetition sentence decks.
 
 The repository currently contains:
-- A functional home dashboard (`HomeScreen`) with dark-mode editorial styling and placeholder data (`VocabBreakdown`, `DailyGoal`, `Deck`, `Story`).
+- A functional home dashboard (`HomeScreen`) with dark-mode editorial styling and placeholder data (`VocabBreakdown`, `DailyGoal`, `WeekProgress`, `Deck`, `Story`).
+- A notched bottom bar (`AppBottomBar` + docked `PracticeButton` with a daily-goal ring) hosted by `AppShell`.
+- Deck screens: library (`DeckLibraryScreen`, also the "Inhalte" tab) and details (`DeckDetailsScreen`), backed by an in-memory `DeckStore`.
 - A Stories section: library (`StoryLibraryScreen`) and reader (`StoryReaderScreen`) with tap-to-look-up words and a placeholder dictionary.
 - A bespoke design system implemented in `lib/theme/app_theme.dart` using Google Fonts (Source Serif 4 and Figtree).
 - Reusable UI components and modular dashboard widgets under `lib/widgets/` and `lib/screens/home/widgets/`.
@@ -22,19 +24,24 @@ Dart SDK constraint: `^3.13.2` (see `pubspec.yaml`).
 lib/
 ├── main.dart                      # Application entry point (SprachApp widget, ThemeData)
 ├── models/
-│   ├── home_models.dart           # UI data models (VocabBreakdown, DailyGoal, Deck, Story)
+│   ├── deck_store.dart            # In-memory deck state (ChangeNotifier) until Riverpod/Drift
+│   ├── home_models.dart           # UI data models (VocabBreakdown, DailyGoal, WeekProgress, Deck, Story)
 │   ├── story_models.dart          # WordEntry, WordMark, StoryText, ReadingProgress
 │   └── sample_content.dart        # Synthetic placeholder content (until the content pack exists)
 ├── screens/
-│   ├── app_shell.dart             # Tab host (IndexedStack) with the shared bottom bar
+│   ├── app_shell.dart             # Tab host (IndexedStack), notched bar, docked practice button
+│   ├── decks/
+│   │   ├── deck_library_screen.dart  # All decks, active first ("Inhalte" tab)
+│   │   └── deck_details_screen.dart  # Progress, toggle, recent words, Stapel-Revue
 │   ├── home/
 │   │   ├── home_screen.dart       # Main dashboard layout (ListView, sections)
 │   │   └── widgets/
-│   │       ├── daily_goal.dart    # Daily goal fraction with neutral track
-│   │       ├── deck_tile.dart     # Topic deck card with progress track
-│   │       ├── home_header.dart   # Level chip and understated streak pill
+│   │       ├── daily_goal_sheet.dart # Bottom sheet to pick the daily goal
+│   │       ├── deck_tile.dart     # Deck card: icon in mastery ring, bolts, active state
+│   │       ├── home_header.dart   # Language chip, Profil and Einstellungen buttons
 │   │       ├── story_carousel.dart# Horizontal story card carousel (+ meta line helpers)
-│   │       └── vocab_progress.dart# Four derived categories, segmented track, ledger
+│   │       ├── vocab_progress.dart# Four derived categories, segmented track, ledger
+│   │       └── weekly_goal_card.dart # Week row (streak) + daily goal with gear
 │   └── stories/
 │       ├── story_library_screen.dart # Weiterlesen tile + one carousel per topic
 │       ├── story_reader_screen.dart  # Reader with per-word tap targets
@@ -43,8 +50,11 @@ lib/
 ├── theme/
 │   └── app_theme.dart             # Color tokens (AppColors), typography (AppType), ThemeData
 └── widgets/
-    ├── app_bottom_bar.dart        # 5-item navigation bar with central practice button
+    ├── action_buttons.dart        # PrimaryActionButton, OutlineActionButton
+    ├── app_bottom_bar.dart        # Notched BottomAppBar, tabs, PracticeButton (FAB + ring)
+    ├── difficulty_bolts.dart      # Three-bolt difficulty indicator
     ├── hairline_track.dart        # Thin pill progress track
+    ├── progress_ring.dart         # Circular progress ring (CustomPainter)
     └── section_heading.dart       # Serif section heading with optional trailing widget
 
 test/
