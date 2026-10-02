@@ -74,7 +74,7 @@ class HomeScreen extends StatelessWidget {
               padding: _gutter,
               child: VocabProgress(breakdown: sampleBreakdown),
             ),
-            const SizedBox(height: 44),
+            const SizedBox(height: 22),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 8),
               child: SectionHeading(
@@ -91,7 +91,16 @@ class HomeScreen extends StatelessWidget {
                 padding: _gutter.copyWith(top: i == 0 ? 0 : 12),
                 child: DeckTile(deck: deck, onTap: () => onOpenDeck(deck)),
               ),
-            const SizedBox(height: 44),
+            if (decks.active.isEmpty)
+              Padding(
+                padding: _gutter,
+                child: Text(
+                  'Noch kein Stapel aktiv. Unter „Mehr ansehen“ findest du '
+                  'alle Stapel.',
+                  style: AppType.chrome(color: AppColors.textMuted),
+                ),
+              ),
+            const SizedBox(height: 22),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 8),
               child: SectionHeading(

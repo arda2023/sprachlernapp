@@ -3,22 +3,23 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 
-/// Stand-in for reading a whole story aloud: a clock that runs while
-/// [playing] and can be paused, skipped and sought. Swap the ticker for a
-/// TTS engine later; the listeners stay the same.
-class StoryNarration extends ChangeNotifier {
-  StoryNarration({
+/// Stand-in for audio that runs longer than a word: a story read aloud or a
+/// listening clip. A clock that runs while [playing] and can be paused,
+/// skipped and sought. Swap the ticker for a TTS engine later; the
+/// listeners stay the same.
+class PlaybackClock extends ChangeNotifier {
+  PlaybackClock({
     required this.duration,
     this.tick = const Duration(seconds: 1),
   }) : assert(duration > Duration.zero);
 
   /// About 150 words a minute, at least ten seconds.
-  factory StoryNarration.forText(Iterable<String> paragraphs) {
+  factory PlaybackClock.forText(Iterable<String> paragraphs) {
     final words = paragraphs
         .expand((p) => p.split(RegExp(r'\s+')))
         .where((w) => w.isNotEmpty)
         .length;
-    return StoryNarration(
+    return PlaybackClock(
       duration: Duration(milliseconds: math.max(10000, words * 400)),
     );
   }

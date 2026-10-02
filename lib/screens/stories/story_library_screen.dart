@@ -1,27 +1,39 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../models/home_models.dart';
+import '../../models/news_models.dart';
 import '../../models/story_models.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/hairline_track.dart';
 import '../../widgets/section_heading.dart';
 import '../home/widgets/story_carousel.dart';
+import 'widgets/news_carousel.dart';
 
-/// The Stories tab: an optional "Weiterlesen" tile, then one horizontal
-/// carousel per topic, in the order topics first appear in [stories].
+/// The Stories tab: an optional "Weiterlesen" tile, the weekly news
+/// carousel, then one horizontal carousel per topic, in the order topics
+/// first appear in [stories].
 class StoryLibraryScreen extends StatelessWidget {
   const StoryLibraryScreen({
     super.key,
     required this.stories,
     required this.onOpenStory,
     this.continueReading,
+    this.news = const [],
+    this.onOpenNews,
   });
 
   static const _gutter = EdgeInsets.symmetric(horizontal: 20);
+  static const newsSubheading =
+      'Wöchentlich aktualisierte Nachrichten zu deinen Lieblingsthemen '
+      'zusammengefasst.';
 
   final List<Story> stories;
   final ReadingProgress? continueReading;
   final ValueChanged<Story> onOpenStory;
+
+  /// One article per desk; the section is left out when empty.
+  final List<NewsArticle> news;
+  final ValueChanged<NewsArticle>? onOpenNews;
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +80,22 @@ class StoryLibraryScreen extends StatelessWidget {
               ),
             ),
           ],
+          if (news.isNotEmpty) ...[
+            SizedBox(height: resumed?.story == null ? 18 : 22),
+            const Padding(
+              padding: _gutter,
+              child: SectionHeading(title: 'Nachrichten'),
+            ),
+            const SizedBox(height: 6),
+            Padding(
+              padding: _gutter,
+              child: Text(newsSubheading, style: AppType.meta()),
+            ),
+            const SizedBox(height: 14),
+            NewsCarousel(articles: news, onOpen: (a) => onOpenNews?.call(a)),
+          ],
           for (final MapEntry(key: topic, value: group) in byTopic.entries) ...[
-            const SizedBox(height: 44),
+            const SizedBox(height: 22),
             Padding(
               padding: _gutter,
               child: SectionHeading(
@@ -136,17 +162,27 @@ class ContinueReadingTile extends StatelessWidget {
                   style: AppType.editorial(size: 17),
                 ),
                 const SizedBox(height: 14),
-                Row(
-                  children: [
-                    Expanded(child: HairlineTrack(fraction: fraction)),
-                    const SizedBox(width: 12),
-                    Text(
-                      '$percent % gelesen',
-                      style: AppType.meta().copyWith(
-                        fontFeatures: const [FontFeature.tabularFigures()],
+                LayoutBuilder(
+                  builder: (context, constraints) => Row(
+                    children: [
+                      Expanded(child: HairlineTrack(fraction: fraction)),
+                      const SizedBox(width: 12),
+                      ConstrainedBox(
+                        // Large Dynamic Type wraps the label instead of
+                        // overflowing the tile.
+                        constraints: BoxConstraints(
+                          maxWidth: constraints.maxWidth * 0.6,
+                        ),
+                        child: Text(
+                          '$percent % gelesen',
+                          textAlign: TextAlign.end,
+                          style: AppType.meta().copyWith(
+                            fontFeatures: const [FontFeature.tabularFigures()],
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

@@ -13,10 +13,10 @@ import '../../domain/sentences.dart';
 import '../../models/exercise_models.dart';
 import '../../models/sample_content.dart';
 import '../../theme/app_theme.dart';
-import '../../widgets/action_buttons.dart';
 import '../../widgets/back_bar.dart';
 import '../../widgets/reading_toolbar.dart';
 import '../../widgets/sentence_translation_sheet.dart';
+import '../../widgets/success_feedback_card.dart';
 
 /// A text with gaps. Verb mode: each gap is an inline text field. Choice
 /// mode: no keyboard, answer chips below the text. Feedback follows the
@@ -509,8 +509,11 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
                             if (done) ...[
                               const SizedBox(height: 8),
                               SuccessFeedbackCard(
-                                total: _gaps.length,
-                                onBack: () => Navigator.of(context).maybePop(),
+                                title: 'Alle ${_gaps.length} Lücken gelöst',
+                                subtitle: 'Text abgeschlossen',
+                                actionLabel: 'Zurück zu den Texten',
+                                onAction: () =>
+                                    Navigator.of(context).maybePop(),
                               ),
                             ],
                           ],
@@ -763,70 +766,6 @@ class _ChipFace extends StatelessWidget {
           applyHeightToLastDescent: false,
         ),
         style: AppType.chrome(weight: FontWeight.w600, color: label),
-      ),
-    );
-  }
-}
-
-/// Shown once every gap is solved: a quiet thumbs-up in Quiet Sage on a
-/// Sage Tint disc (Feedback Rule: a right answer, inside an exercise), the
-/// count as text, and the way back. No illustration, no confetti.
-class SuccessFeedbackCard extends StatelessWidget {
-  const SuccessFeedbackCard({
-    super.key,
-    required this.total,
-    required this.onBack,
-  });
-
-  final int total;
-  final VoidCallback onBack;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.raisedInk,
-        border: Border.all(color: AppColors.hairline),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: const BoxDecoration(
-                  color: AppColors.successTint,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  CupertinoIcons.hand_thumbsup_fill,
-                  size: 24,
-                  color: AppColors.success,
-                ),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Alle $total Lücken gelöst',
-                      style: AppType.chrome(size: 17, weight: FontWeight.w600),
-                    ),
-                    const SizedBox(height: 2),
-                    Text('Text abgeschlossen', style: AppType.meta()),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          OutlineActionButton(label: 'Zurück zu den Texten', onPressed: onBack),
-        ],
       ),
     );
   }

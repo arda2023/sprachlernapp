@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+import '../domain/leitner.dart';
 import 'word_list_models.dart';
 
 /// In-memory Wortliste state until Riverpod and Drift arrive. The list and
@@ -39,6 +40,23 @@ class WordListStore extends ChangeNotifier {
 
   bool togglePlaylist(String id) =>
       _update(id, (w) => w.copyWith(inPlaylist: !w.inPlaylist)).inPlaylist;
+
+  /// Applies one practice answer: the Leitner rule moves the box, the word
+  /// counts as seen [now]. Returns the new box.
+  // TODO: append to the review log instead once the Drift layer exists.
+  int recordReview(
+    String id, {
+    required bool correct,
+    required DateTime now,
+    bool early = false,
+  }) => _update(
+    id,
+    (w) => w.copyWith(
+      box: nextLeitnerBox(w.box, correct: correct, early: early),
+      lastSeenAt: now,
+      reviewCount: w.reviewCount + 1,
+    ),
+  ).box;
 
   void setNote(String id, String note) {
     if (byId(id).note == note) return;

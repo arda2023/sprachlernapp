@@ -39,69 +39,83 @@ class ReadingToolbar extends StatelessWidget {
           constraints: const BoxConstraints(minHeight: 56),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            child: Row(
-              children: [
-                Expanded(
-                  child: translating
-                      ? Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: Text(
-                            hint,
-                            style: AppType.chrome(
-                              size: 13,
-                              color: AppColors.textMuted,
-                            ),
-                          ),
-                        )
-                      : const SizedBox.shrink(),
-                ),
-                const SizedBox(width: 8),
-                if (onToggleListen case final onToggleListen?) ...[
-                  _ListenToggle(on: listening, onPressed: onToggleListen),
-                  const SizedBox(width: 8),
-                ],
-                MergeSemantics(
-                  child: CupertinoButton(
-                    onPressed: onToggleTranslate,
-                    padding: EdgeInsets.zero,
-                    minimumSize: const Size(44, 44),
-                    child: Semantics(
-                      label: 'Übersetzen',
-                      toggled: translating,
-                      excludeSemantics: true,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 14,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          color: translating ? AppColors.hairline : null,
-                          border: Border.all(color: AppColors.hairline),
-                          borderRadius: BorderRadius.circular(999),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              CupertinoIcons.textformat_abc,
-                              size: 20,
-                              color: color,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              'Übersetzen',
+            child: LayoutBuilder(
+              builder: (context, constraints) => Row(
+                children: [
+                  Expanded(
+                    child: translating
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Text(
+                              hint,
                               style: AppType.chrome(
-                                weight: FontWeight.w600,
-                                color: color,
+                                size: 13,
+                                color: AppColors.textMuted,
                               ),
                             ),
-                          ],
+                          )
+                        : const SizedBox.shrink(),
+                  ),
+                  const SizedBox(width: 8),
+                  if (onToggleListen case final onToggleListen?) ...[
+                    _ListenToggle(on: listening, onPressed: onToggleListen),
+                    const SizedBox(width: 8),
+                  ],
+                  ConstrainedBox(
+                    // Large Dynamic Type shortens the label instead of
+                    // pushing the toolbar off screen; the semantics label
+                    // stays whole.
+                    constraints: BoxConstraints(
+                      maxWidth: constraints.maxWidth * 0.55,
+                    ),
+                    child: MergeSemantics(
+                      child: CupertinoButton(
+                        onPressed: onToggleTranslate,
+                        padding: EdgeInsets.zero,
+                        minimumSize: const Size(44, 44),
+                        child: Semantics(
+                          label: 'Übersetzen',
+                          toggled: translating,
+                          excludeSemantics: true,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 10,
+                            ),
+                            decoration: BoxDecoration(
+                              color: translating ? AppColors.hairline : null,
+                              border: Border.all(color: AppColors.hairline),
+                              borderRadius: BorderRadius.circular(999),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  CupertinoIcons.textformat_abc,
+                                  size: 20,
+                                  color: color,
+                                ),
+                                const SizedBox(width: 6),
+                                Flexible(
+                                  child: Text(
+                                    'Übersetzen',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppType.chrome(
+                                      weight: FontWeight.w600,
+                                      color: color,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

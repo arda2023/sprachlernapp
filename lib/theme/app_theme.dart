@@ -40,6 +40,11 @@ abstract final class AppColors {
   /// never persistent.
   static const playback = Color(0xFF2A3A55);
 
+  /// Newsprint Sand: the category kicker on news cards ("WIRTSCHAFT"). A
+  /// warm, low-chroma neutral, the same for every category: no category
+  /// colors (DESIGN.md). 8.2:1 on Raised Ink. Never a status, never a fill.
+  static const newsKicker = Color(0xFFC2B49A);
+
   static const textPrimary = Color(0xFFF0F2F5);
   static const textMuted = Color(0xFF8E95A5);
   static const iconOff = Color(0xFF4A5063);

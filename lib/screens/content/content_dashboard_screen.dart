@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../models/deck_store.dart';
-import '../../models/home_models.dart';
 import '../../theme/app_theme.dart';
-import '../../widgets/section_heading.dart';
-import '../home/widgets/deck_tile.dart';
 
 /// One practice category on the dashboard. [onOpen] null means the category
 /// isn't built yet ("Bald verfügbar").
@@ -22,127 +18,38 @@ class ContentCategory {
   final VoidCallback? onOpen;
 }
 
-/// The "Inhalte" tab: decks on top, then a grid of practice categories.
+/// The "Inhalte" tab: the practice categories as a two-column grid. Decks
+/// live on Home and in the deck library.
 class ContentDashboardScreen extends StatelessWidget {
-  const ContentDashboardScreen({
-    super.key,
-    required this.decks,
-    required this.categories,
-    required this.onOpenDeck,
-    required this.onBrowseDecks,
-  });
+  const ContentDashboardScreen({super.key, required this.categories});
 
   static const _gutter = EdgeInsets.symmetric(horizontal: 20);
 
-  final DeckStore decks;
   final List<ContentCategory> categories;
-  final ValueChanged<Deck> onOpenDeck;
-  final VoidCallback onBrowseDecks;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       bottom: false,
-      child: ListenableBuilder(
-        listenable: decks,
-        builder: (context, _) => ListView(
-          physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics(),
-          ),
-          padding: const EdgeInsets.only(top: 8, bottom: 32),
-          children: [
-            Padding(
-              padding: _gutter,
-              child: Semantics(
-                header: true,
-                child: Text('Inhalte', style: AppType.editorial(size: 32)),
-              ),
-            ),
-            const SizedBox(height: 28),
-            const Padding(
-              padding: _gutter,
-              child: SectionHeading(title: 'Stapel'),
-            ),
-            const SizedBox(height: 14),
-            for (final deck in decks.active.take(2))
-              Padding(
-                padding: _gutter.copyWith(bottom: 12),
-                child: DeckTile(deck: deck, onTap: () => onOpenDeck(deck)),
-              ),
-            Padding(
-              padding: _gutter,
-              child: _AllDecksRow(
-                count: decks.decks.length,
-                active: decks.active.length,
-                onTap: onBrowseDecks,
-              ),
-            ),
-            const SizedBox(height: 44),
-            const Padding(
-              padding: _gutter,
-              child: SectionHeading(title: 'Üben'),
-            ),
-            const SizedBox(height: 14),
-            Padding(
-              padding: _gutter,
-              child: _CategoryGrid(categories: categories),
-            ),
-          ],
+      child: ListView(
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
         ),
-      ),
-    );
-  }
-}
-
-class _AllDecksRow extends StatelessWidget {
-  const _AllDecksRow({
-    required this.count,
-    required this.active,
-    required this.onTap,
-  });
-
-  final int count;
-  final int active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return MergeSemantics(
-      child: CupertinoButton(
-        onPressed: onTap,
-        padding: EdgeInsets.zero,
-        pressedOpacity: 0.7,
-        minimumSize: const Size(44, 52),
-        child: Semantics(
-          label: 'Alle Stapel, $count Stapel, $active aktiv',
-          excludeSemantics: true,
-          child: Container(
-            constraints: const BoxConstraints(minHeight: 52),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: BoxDecoration(
-              color: AppColors.raisedInk,
-              border: Border.all(color: AppColors.hairline),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    'Alle Stapel',
-                    style: AppType.chrome(weight: FontWeight.w600),
-                  ),
-                ),
-                Text('$count', style: AppType.meta()),
-                const SizedBox(width: 8),
-                const Icon(
-                  CupertinoIcons.chevron_right,
-                  size: 16,
-                  color: AppColors.textMuted,
-                ),
-              ],
+        padding: const EdgeInsets.only(top: 8, bottom: 32),
+        children: [
+          Padding(
+            padding: _gutter,
+            child: Semantics(
+              header: true,
+              child: Text('Inhalte', style: AppType.editorial(size: 32)),
             ),
           ),
-        ),
+          const SizedBox(height: 28),
+          Padding(
+            padding: _gutter,
+            child: _CategoryGrid(categories: categories),
+          ),
+        ],
       ),
     );
   }

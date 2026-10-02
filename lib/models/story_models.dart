@@ -29,10 +29,21 @@ class WordEntry {
 }
 
 class StoryText {
-  const StoryText({required this.storyId, required this.paragraphs});
+  const StoryText({
+    required this.storyId,
+    required this.paragraphs,
+    this.headings = const [],
+  });
 
   final String storyId;
   final List<String> paragraphs;
+
+  /// Optional subheading before each paragraph (news articles); stories
+  /// have none.
+  final List<String?> headings;
+
+  String? headingBefore(int paragraph) =>
+      paragraph < headings.length ? headings[paragraph] : null;
 }
 
 class ReadingProgress {

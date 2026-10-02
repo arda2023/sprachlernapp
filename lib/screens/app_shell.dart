@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 import '../models/deck_store.dart';
 import '../models/home_models.dart';
+import '../models/practice_models.dart';
 import '../models/reading_history.dart';
 import '../models/sample_content.dart';
 import '../models/word_list_store.dart';
@@ -16,6 +17,7 @@ import 'decks/deck_library_screen.dart';
 import 'grammar/grammar_rules_screen.dart';
 import 'home/home_screen.dart';
 import 'home/widgets/daily_goal_sheet.dart';
+import 'practice/practice_library_screen.dart';
 import 'stories/story_library_screen.dart';
 import 'stories/story_reader_screen.dart';
 import 'words/word_list_screen.dart';
@@ -41,6 +43,7 @@ class _AppShellState extends State<AppShell> {
   final _decks = DeckStore(sampleDecks);
   final _history = ReadingHistory(sampleReadStoryIds);
   final _words = WordListStore(sampleVocabulary(DateTime.now()));
+  final _practice = PracticeProgress(sampleCompletedPracticeIds);
   AppTab _tab = AppTab.home;
   DailyGoal _goal = sampleGoal;
 
@@ -49,6 +52,7 @@ class _AppShellState extends State<AppShell> {
     _decks.dispose();
     _history.dispose();
     _words.dispose();
+    _practice.dispose();
     super.dispose();
   }
 
@@ -75,9 +79,28 @@ class _AppShellState extends State<AppShell> {
       detail: '${sampleExerciseTexts.length} Texte',
       onOpen: _openTexts,
     ),
-    // TODO: build these categories.
-    const ContentCategory(title: 'Hören', icon: CupertinoIcons.headphones),
-    const ContentCategory(title: 'Grammatik', icon: CupertinoIcons.textformat),
+    ContentCategory(
+      title: 'Hören',
+      icon: CupertinoIcons.headphones,
+      detail: '${sampleListeningExercises.length} Übungen',
+      onOpen: () => PracticeLibraryScreen.open(
+        context,
+        kind: PracticeKind.listening,
+        exercises: sampleListeningExercises,
+        progress: _practice,
+      ),
+    ),
+    ContentCategory(
+      title: 'Grammatik',
+      icon: CupertinoIcons.textformat,
+      detail: '${sampleGrammarExercises.length} Übungen',
+      onOpen: () => PracticeLibraryScreen.open(
+        context,
+        kind: PracticeKind.grammar,
+        exercises: sampleGrammarExercises,
+        progress: _practice,
+      ),
+    ),
     ContentCategory(
       title: 'Grammatikregeln',
       icon: CupertinoIcons.book,
@@ -86,7 +109,8 @@ class _AppShellState extends State<AppShell> {
     ),
   ];
 
-  void _openDeck(Deck deck) => DeckDetailsScreen.open(context, _decks, deck.id);
+  void _openDeck(Deck deck) =>
+      DeckDetailsScreen.open(context, _decks, deck.id, _words);
 
   Future<void> _editGoal() async {
     final target = await DailyGoalSheet.show(context, current: _goal.target);
@@ -126,14 +150,12 @@ class _AppShellState extends State<AppShell> {
               stories: sampleStories,
               continueReading: sampleContinueReading,
               onOpenStory: _openStory,
+              news: sampleNews,
+              onOpenNews: (article) =>
+                  StoryReaderScreen.openNews(context, article),
             ),
             WordListScreen(store: _words),
-            ContentDashboardScreen(
-              decks: _decks,
-              categories: _categories,
-              onOpenDeck: _openDeck,
-              onBrowseDecks: _browseDecks,
-            ),
+            ContentDashboardScreen(categories: _categories),
           ],
         ),
         floatingActionButton: PracticeButton(

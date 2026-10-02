@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import '../../models/grammar_models.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/back_bar.dart';
+import '../../widgets/emphasis_text.dart';
 
 /// One grammar rule, set like a reader page on the Night Page: German prose
 /// in the editorial serif, English forms in italic w600 (the citation
@@ -91,21 +92,6 @@ class GrammarRuleDetailScreen extends StatelessWidget {
   }
 }
 
-/// [source] with its `*…*` forms in italic w600, on [style].
-TextSpan grammarSpan(String source, TextStyle style) => TextSpan(
-  style: style,
-  children: [
-    for (final piece in parseEmphasis(source))
-      TextSpan(text: piece.text, style: piece.emphasis ? _emphasis : null),
-  ],
-);
-
-const _emphasis = TextStyle(
-  fontStyle: FontStyle.italic,
-  fontWeight: FontWeight.w600,
-  color: AppColors.textPrimary,
-);
-
 class _Section extends StatelessWidget {
   const _Section({required this.section});
 
@@ -125,7 +111,7 @@ class _Section extends StatelessWidget {
           const SizedBox(height: 12),
           Semantics(
             container: true,
-            child: Text.rich(grammarSpan(paragraph, AppType.storyBody())),
+            child: Text.rich(emphasisSpan(paragraph, AppType.storyBody())),
           ),
         ],
         if (section.examples.isNotEmpty) ...[
@@ -164,7 +150,7 @@ class _Example extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text.rich(
-              grammarSpan(
+              emphasisSpan(
                 example.english,
                 AppType.editorial(
                   size: 19,
@@ -242,7 +228,7 @@ class _Pitfall extends StatelessWidget {
             const SizedBox(height: 12),
             Text('Sondern', style: AppType.meta()),
             const SizedBox(height: 2),
-            Text.rich(grammarSpan(pitfall.right, sentence)),
+            Text.rich(emphasisSpan(pitfall.right, sentence)),
           ],
         ),
       ),

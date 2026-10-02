@@ -16,12 +16,9 @@ class DeckStore extends ChangeNotifier {
 
   List<Deck> get inactive => _decks.where((d) => !d.isActive).toList();
 
-  /// Home shows active decks first, then decks already started, at most
-  /// [limit].
-  List<Deck> homeDecks({int limit = 3}) => [
-    ...active,
-    ...inactive.where((d) => d.seenWords > 0),
-  ].take(limit).toList();
+  /// Home shows only active decks, at most [limit]. Inactive decks, even
+  /// started ones, live in the deck library ("Mehr ansehen").
+  List<Deck> homeDecks({int limit = 3}) => active.take(limit).toList();
 
   Deck byId(String id) => _decks.firstWhere((d) => d.id == id);
 

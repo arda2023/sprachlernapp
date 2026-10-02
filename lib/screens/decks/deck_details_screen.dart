@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 import '../../models/deck_store.dart';
 import '../../models/home_models.dart';
+import '../../models/word_list_store.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/action_buttons.dart';
 import '../../widgets/back_bar.dart';
@@ -11,6 +12,7 @@ import '../../widgets/difficulty_bolts.dart';
 import '../../widgets/progress_ring.dart';
 import '../../widgets/section_heading.dart';
 import '../home/widgets/vocab_progress.dart' show formatCountDe;
+import 'deck_practice_screen.dart';
 
 /// One deck: orientation (title, description, progress) first, then the
 /// actions (toggle, practice, recent words, Stapel-Revue).
@@ -19,23 +21,30 @@ class DeckDetailsScreen extends StatelessWidget {
     super.key,
     required this.decks,
     required this.deckId,
+    required this.words,
   });
 
   final DeckStore decks;
   final String deckId;
 
+  /// The vocabulary the practice session draws from and reports to.
+  final WordListStore words;
+
   static Future<void> open(
     BuildContext context,
     DeckStore decks,
     String deckId,
+    WordListStore words,
   ) => Navigator.of(context).push(
     CupertinoPageRoute<void>(
-      builder: (_) => DeckDetailsScreen(decks: decks, deckId: deckId),
+      builder: (_) =>
+          DeckDetailsScreen(decks: decks, deckId: deckId, words: words),
     ),
   );
 
-  // TODO: route to the practice session and review mode once they exist.
-  void _notYetRouted() {}
+  // TODO: draw the session from this deck's words once decks own words.
+  void _practise(BuildContext context, DeckPracticeMode mode) =>
+      DeckPracticeScreen.open(context, store: words, mode: mode);
 
   @override
   Widget build(BuildContext context) {
@@ -72,11 +81,12 @@ class DeckDetailsScreen extends StatelessWidget {
                         const SizedBox(height: 12),
                         PrimaryActionButton(
                           label: 'Lerne mit diesem Stapel',
-                          onPressed: _notYetRouted,
+                          onPressed: () =>
+                              _practise(context, DeckPracticeMode.learn),
                         ),
                         const SizedBox(height: 12),
                         _RecentWords(words: deck.recentWords.take(5).toList()),
-                        const SizedBox(height: 44),
+                        const SizedBox(height: 22),
                         const SectionHeading(title: 'Mehr davon'),
                         const SizedBox(height: 4),
                         Text(
@@ -84,7 +94,10 @@ class DeckDetailsScreen extends StatelessWidget {
                           style: AppType.chrome(color: AppColors.textMuted),
                         ),
                         const SizedBox(height: 14),
-                        _ReviewCard(onReview: _notYetRouted),
+                        _ReviewCard(
+                          onReview: () =>
+                              _practise(context, DeckPracticeMode.review),
+                        ),
                       ],
                     ),
                   ),

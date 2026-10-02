@@ -26,3 +26,14 @@ int calendarDaysBetween(DateTime earlier, DateTime later) => DateTime.utc(
   later.month,
   later.day,
 ).difference(DateTime.utc(earlier.year, earlier.month, earlier.day)).inDays;
+
+/// Box after a review (PRODUCT.md): a right answer moves the word up one box
+/// (at most box 5), an error – a wrong attempt or "Wort erfahren" – sends it
+/// back to box 1. In early practice ("Vorab-Üben", the Stapel-Revue) a right
+/// answer keeps the box; errors still reset it.
+int nextLeitnerBox(int box, {required bool correct, bool early = false}) {
+  RangeError.checkValueInInterval(box, 1, leitnerBoxCount, 'box');
+  if (!correct) return 1;
+  if (early) return box;
+  return box == leitnerBoxCount ? box : box + 1;
+}

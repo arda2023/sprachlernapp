@@ -54,7 +54,7 @@ class DeckLibraryScreen extends StatelessWidget {
           final active = decks.active;
           final others = decks.inactive;
           List<Widget> section(String title, List<Deck> group) => [
-            const SizedBox(height: 44),
+            const SizedBox(height: 22),
             Padding(
               padding: _gutter,
               child: SectionHeading(

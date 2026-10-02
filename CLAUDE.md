@@ -11,13 +11,15 @@ The repository currently contains:
 - A functional home dashboard (`HomeScreen`) with dark-mode editorial styling and placeholder data (`VocabBreakdown`, `DailyGoal`, `WeekProgress`, `Deck`, `Story`).
 - A notched bottom bar (`AppBottomBar` + docked `PracticeButton` with a daily-goal ring) hosted by `AppShell`.
 - Deck screens: library (`DeckLibraryScreen`) and details (`DeckDetailsScreen`), backed by an in-memory `DeckStore`.
-- An "Inhalte" tab (`ContentDashboardScreen`) with a text library (`TextLibraryScreen`) and gap-text exercises (`TextExerciseScreen`, typed verb gaps or answer chips).
+- The deck practice session (`DeckPracticeScreen`): five-card queue from the Wortliste, inline gap with exact / "fast richtig" / wrong checking, "Wort erfahren", collapsible translation, keyboard toolbar; results move the Leitner box in `WordListStore` ("Stapel nochmals durchsehen" runs it as early practice).
+- An "Inhalte" tab (`ContentDashboardScreen`, four category cards, no decks) with a text library (`TextLibraryScreen`) and gap-text exercises (`TextExerciseScreen`, typed verb gaps or answer chips).
+- Listening and grammar practice: libraries (`ListeningLibraryScreen`, `GrammarLibraryScreen`, "Meine Übungen"/"Fertig") and single-choice exercises (`ListeningExerciseScreen`, `GrammarExerciseScreen`) ending in the shared `SuccessFeedbackCard`, backed by an in-memory `PracticeProgress`.
 - A sentence translation mode in the reader and in text exercises (`ReadingToolbar`, `SentenceTranslationSheet`).
-- Simulated story narration in the reader ("Vorlesen" toggle, `NarrationPanel`, `StoryNarration`) that marks the sentence being read.
+- Simulated story narration in the reader ("Vorlesen" toggle, `NarrationPanel`, `PlaybackClock`) that marks the sentence being read.
 - Grammar rules (`GrammarRulesScreen` with a level filter, `GrammarRuleDetailScreen`), opened from the "Grammatikregeln" category.
 - A "Wortliste" tab (`WordListScreen`) with search, memory level indicator, simulated audio playback, quiet toggles and two sheets (`MemoryLevelLegendSheet`, `WordDetailsSheet`), backed by an in-memory `WordListStore`.
-- The first pure-Dart domain code in `lib/domain/` (answer checking, sentence splitting).
-- A Stories section: library (`StoryLibraryScreen`) and reader (`StoryReaderScreen`) with tap-to-look-up words and a placeholder dictionary.
+- The first pure-Dart domain code in `lib/domain/` (answer checking, sentence splitting, `*emphasis*` markup, Leitner intervals and next box, word forms in sentences).
+- A Stories section: library (`StoryLibraryScreen`, with the weekly "Nachrichten" carousel of `NewsCard`s) and reader (`StoryReaderScreen`, also for news with subheadings) with tap-to-look-up words and a placeholder dictionary.
 - A bespoke design system implemented in `lib/theme/app_theme.dart` using Google Fonts (Source Serif 4 and Figtree).
 - Reusable UI components and modular dashboard widgets under `lib/widgets/` and `lib/screens/home/widgets/`.
 - A widget and accessibility test suite in `test/widget_test.dart` verifying tap targets, Dynamic Type scaling, semantic accessibility, and visual track segments.
@@ -31,48 +33,59 @@ lib/
 ├── main.dart                      # Application entry point (SprachApp widget, ThemeData)
 ├── domain/                        # Pure Dart, no Flutter imports
 │   ├── answer_check.dart          # Exact / "fast richtig" / wrong, edit distance
-│   ├── leitner.dart               # Box count, default intervals, calendar-day diff
-│   └── sentences.dart             # Sentence ranges (translation mode, narration)
+│   ├── emphasis.dart              # `*…*` markup for English forms in German prose
+│   ├── leitner.dart               # Box count, intervals, next box, calendar-day diff
+│   ├── sentences.dart             # Sentence ranges (translation mode, narration)
+│   └── word_form.dart             # Word form in a sentence, form kind, labels, explanations
 ├── models/
 │   ├── deck_store.dart            # In-memory deck state (ChangeNotifier) until Riverpod/Drift
 │   ├── exercise_models.dart       # ExerciseText (gap markup), TextGap, ExerciseMode
-│   ├── grammar_models.dart        # GrammarRule, sections, examples, *emphasis* markup
+│   ├── grammar_models.dart        # GrammarRule, sections, examples, pitfalls
 │   ├── home_models.dart           # UI data models (VocabBreakdown, DailyGoal, WeekProgress, Deck, Story)
+│   ├── news_models.dart           # NewsArticle (sections: heading + paragraph), NewsCategory
+│   ├── practice_models.dart       # ChoiceExercise, PracticeKind, PracticeProgress
 │   ├── reading_history.dart       # Stories the learner opened (feeds "Aus deinen Stories")
-│   ├── story_models.dart          # WordEntry, WordMark, StoryText, ReadingProgress
+│   ├── story_models.dart          # WordEntry, WordMark, StoryText (+ headings), ReadingProgress
 │   ├── sample_content.dart        # Synthetic placeholder content (until the content pack exists)
 │   ├── speech_playback.dart       # Simulated TTS: which word/sentence is "playing"
-│   ├── story_narration.dart       # Simulated story narration clock (play, skip, seek)
+│   ├── playback_clock.dart        # Simulated audio clock: narration, clips (play, skip, seek)
 │   ├── word_list_models.dart      # VocabWord + "Zuletzt gesehen"/interval labels
-│   └── word_list_store.dart       # In-memory Wortliste state (ChangeNotifier)
+│   └── word_list_store.dart       # In-memory Wortliste state, recordReview (ChangeNotifier)
 ├── screens/
 │   ├── app_shell.dart             # Tab host (IndexedStack), notched bar, docked practice button
 │   ├── content/
-│   │   ├── content_dashboard_screen.dart # "Inhalte" tab: decks + category grid
+│   │   ├── content_dashboard_screen.dart # "Inhalte" tab: category grid
 │   │   ├── text_library_screen.dart      # Exercise text carousels
 │   │   ├── text_exercise_screen.dart     # Gap text: typed verbs or answer chips
 │   │   └── widgets/
 │   │       └── exercise_choice_sheet.dart # Picks the exercise mode
 │   ├── decks/
 │   │   ├── deck_library_screen.dart  # All decks, active first (pushed route)
-│   │   └── deck_details_screen.dart  # Progress, toggle, recent words, Stapel-Revue
+│   │   ├── deck_details_screen.dart  # Progress, toggle, recent words, Stapel-Revue
+│   │   ├── deck_practice_screen.dart # Practice session: gap card, translation, toolbar
+│   │   └── widgets/
+│   │       └── form_info_sheet.dart  # Grammar sheet for the gap's word class and form
 │   ├── home/
 │   │   ├── home_screen.dart       # Main dashboard layout (ListView, sections)
 │   │   └── widgets/
 │   │       ├── daily_goal_sheet.dart # Bottom sheet to pick the daily goal
 │   │       ├── deck_tile.dart     # Deck card: icon in mastery ring, bolts, active state
 │   │       ├── home_header.dart   # Language chip, Profil and Einstellungen buttons
-│   │       ├── story_carousel.dart# Horizontal story card carousel (+ meta line helpers)
+│   │       ├── story_carousel.dart# Story card carousel, TypeCover, meta line helpers
 │   │       ├── vocab_progress.dart# Four derived categories, segmented track, ledger
 │   │       └── weekly_goal_card.dart # Week row (streak) + daily goal with gear
 │   ├── grammar/
 │   │   ├── grammar_rules_screen.dart       # Level filter + rule rows
 │   │   └── grammar_rule_detail_screen.dart # Night Page rule reader
+│   ├── practice/
+│   │   ├── practice_library_screen.dart # Hören/Grammatik libraries: tabs + rows
+│   │   └── choice_exercise_screen.dart  # Clip player or gap sentence, answer cards
 │   ├── stories/
-│   │   ├── story_library_screen.dart # Weiterlesen tile + one carousel per topic
-│   │   ├── story_reader_screen.dart  # Reader with per-word tap targets
+│   │   ├── story_library_screen.dart # Weiterlesen tile, Nachrichten, one carousel per topic
+│   │   ├── story_reader_screen.dart  # Reader with per-word tap targets (stories and news)
 │   │   └── widgets/
 │   │       ├── narration_panel.dart   # Docked player: skip, play/pause, slider
+│   │       ├── news_carousel.dart     # Endless paged news carousel + NewsCard
 │   │       └── word_lookup_sheet.dart # Dictionary bottom sheet + neutral add button
 │   └── words/
 │       ├── word_list_screen.dart  # Wortliste tab: title, search + playlist button, rows
@@ -88,12 +101,17 @@ lib/
     ├── action_buttons.dart        # PrimaryActionButton, OutlineActionButton
     ├── app_bottom_bar.dart        # Notched BottomAppBar, tabs, PracticeButton (FAB + ring)
     ├── back_bar.dart              # Back button bar for pushed screens
+    ├── chevron_row.dart           # List row: title, summary, meta, chevron
     ├── difficulty_bolts.dart      # Three-bolt difficulty indicator
+    ├── emphasis_text.dart         # TextSpan for `*…*` markup (italic w600)
     ├── hairline_track.dart        # Thin pill progress track
+    ├── playback_controls.dart     # PlayPauseButton, PlaybackTrack (slider + times)
     ├── progress_ring.dart         # Circular progress ring (CustomPainter)
     ├── reading_toolbar.dart       # Bottom toolbar: "Vorlesen" and "Übersetzen" toggles
     ├── sentence_translation_sheet.dart # Sentence + German translation sheet
-    └── section_heading.dart       # Serif section heading with optional trailing widget
+    ├── section_heading.dart       # Serif section heading with optional trailing widget
+    ├── segmented_tabs.dart        # Neutral CupertinoSlidingSegmentedControl
+    └── success_feedback_card.dart # Thumbs-up card closing every exercise
 
 test/
 └── widget_test.dart               # Component, accessibility, and unit tests

@@ -396,62 +396,36 @@ const sampleExerciseTexts = [
 /// reads with every gap filled.
 const _sentenceTranslations = {
   // News (sampleNews).
-  'The city council voted for a new bus plan on Tuesday.':
-      'Der Stadtrat hat am Dienstag für einen neuen Busplan gestimmt.',
-  'From May, buses will run every ten minutes in the city centre.':
-      'Ab Mai fahren die Busse in der Innenstadt alle zehn Minuten.',
-  'The plan will cost about twelve million euros a year.':
-      'Der Plan kostet etwa zwölf Millionen Euro im Jahr.',
-  'Part of the money comes from higher parking fees.':
-      'Ein Teil des Geldes kommt aus höheren Parkgebühren.',
-  'Some shop owners are worried about fewer customers.':
-      'Einige Ladenbesitzer machen sich Sorgen über weniger Kunden.',
-  'The council wants to check the results after one year.':
-      'Der Stadtrat will die Ergebnisse nach einem Jahr überprüfen.',
-  'Food prices rose by two percent last month.':
-      'Die Lebensmittelpreise sind im letzten Monat um zwei Prozent gestiegen.',
-  'That is less than at the start of the year.':
-      'Das ist weniger als zu Beginn des Jahres.',
-  'Many banks now pay more interest on savings.':
-      'Viele Banken zahlen jetzt mehr Zinsen auf Ersparnisse.',
-  'Experts still advise people to compare offers.':
-      'Experten raten trotzdem, Angebote zu vergleichen.',
-  'Small companies are looking for workers in many regions.':
-      'Kleine Firmen suchen in vielen Regionen Arbeitskräfte.',
-  'Electricians and cooks are especially hard to find.':
-      'Besonders Elektriker und Köche sind schwer zu finden.',
+  'The city council voted for a new bus plan on Tuesday.': 'Der Stadtrat hat am Dienstag für einen neuen Busplan gestimmt.',
+  'From May, buses will run every ten minutes in the city centre.': 'Ab Mai fahren die Busse in der Innenstadt alle zehn Minuten.',
+  'The plan will cost about twelve million euros a year.': 'Der Plan kostet etwa zwölf Millionen Euro im Jahr.',
+  'Part of the money comes from higher parking fees.': 'Ein Teil des Geldes kommt aus höheren Parkgebühren.',
+  'Some shop owners are worried about fewer customers.': 'Einige Ladenbesitzer machen sich Sorgen über weniger Kunden.',
+  'The council wants to check the results after one year.': 'Der Stadtrat will die Ergebnisse nach einem Jahr überprüfen.',
+  'Food prices rose by two percent last month.': 'Die Lebensmittelpreise sind im letzten Monat um zwei Prozent gestiegen.',
+  'That is less than at the start of the year.': 'Das ist weniger als zu Beginn des Jahres.',
+  'Many banks now pay more interest on savings.': 'Viele Banken zahlen jetzt mehr Zinsen auf Ersparnisse.',
+  'Experts still advise people to compare offers.': 'Experten raten trotzdem, Angebote zu vergleichen.',
+  'Small companies are looking for workers in many regions.': 'Kleine Firmen suchen in vielen Regionen Arbeitskräfte.',
+  'Electricians and cooks are especially hard to find.': 'Besonders Elektriker und Köche sind schwer zu finden.',
   'A new law asks companies to sell spare parts for seven years.': 'Ein neues Gesetz verlangt von Firmen, sieben Jahre lang Ersatzteile zu verkaufen.',
-  'Batteries must also be easy to change.':
-      'Akkus müssen außerdem leicht auszutauschen sein.',
-  'More schools use tablets in their lessons.':
-      'Immer mehr Schulen nutzen Tablets im Unterricht.',
+  'Batteries must also be easy to change.': 'Akkus müssen außerdem leicht auszutauschen sein.',
+  'More schools use tablets in their lessons.': 'Immer mehr Schulen nutzen Tablets im Unterricht.',
   'Teachers say that children need clear rules for screen time.': 'Lehrkräfte sagen, dass Kinder klare Regeln für die Bildschirmzeit brauchen.',
-  'Many villages are still waiting for fast internet.':
-      'Viele Dörfer warten noch auf schnelles Internet.',
-  'A new programme wants to connect them by 2030.':
-      'Ein neues Programm will sie bis 2030 anschließen.',
-  'A large study shows that short walks are good for the heart.':
-      'Eine große Studie zeigt, dass kurze Spaziergänge gut für das Herz sind.',
-  'Even ten minutes a day can make a difference.':
-      'Schon zehn Minuten am Tag können etwas bewirken.',
-  'Doctors report more cases of flu than usual for October.':
-      'Ärzte melden für Oktober mehr Grippefälle als üblich.',
-  'Older people should get their vaccination soon.':
-      'Ältere Menschen sollten sich bald impfen lassen.',
+  'Many villages are still waiting for fast internet.': 'Viele Dörfer warten noch auf schnelles Internet.',
+  'A new programme wants to connect them by 2030.': 'Ein neues Programm will sie bis 2030 anschließen.',
+  'A large study shows that short walks are good for the heart.': 'Eine große Studie zeigt, dass kurze Spaziergänge gut für das Herz sind.',
+  'Even ten minutes a day can make a difference.': 'Schon zehn Minuten am Tag können etwas bewirken.',
+  'Doctors report more cases of flu than usual for October.': 'Ärzte melden für Oktober mehr Grippefälle als üblich.',
+  'Older people should get their vaccination soon.': 'Ältere Menschen sollten sich bald impfen lassen.',
   'Researchers found that good sleep helps us remember new words.': 'Forschende haben herausgefunden, dass guter Schlaf hilft, sich neue Wörter zu merken.',
-  'So learning in the evening can be a good idea.':
-      'Abends zu lernen kann also eine gute Idee sein.',
+  'So learning in the evening can be a good idea.': 'Abends zu lernen kann also eine gute Idee sein.',
   'A small film about two sisters won the main prize at the festival.': 'Ein kleiner Film über zwei Schwestern hat den Hauptpreis beim Festival gewonnen.',
-  'It has almost no music and very little dialogue.':
-      'Er hat fast keine Musik und sehr wenig Dialog.',
-  'This summer, bands will play in three old train stations.':
-      'Diesen Sommer spielen Bands in drei alten Bahnhöfen.',
-  'Tickets are cheap, but there are only a few hundred.':
-      'Die Karten sind günstig, aber es gibt nur ein paar Hundert.',
-  'Young readers are buying more paper books again.':
-      'Junge Leser kaufen wieder mehr gedruckte Bücher.',
-  'Many of them find new titles through short videos.':
-      'Viele von ihnen entdecken neue Titel über kurze Videos.',
+  'It has almost no music and very little dialogue.': 'Er hat fast keine Musik und sehr wenig Dialog.',
+  'This summer, bands will play in three old train stations.': 'Diesen Sommer spielen Bands in drei alten Bahnhöfen.',
+  'Tickets are cheap, but there are only a few hundred.': 'Die Karten sind günstig, aber es gibt nur ein paar Hundert.',
+  'Young readers are buying more paper books again.': 'Junge Leser kaufen wieder mehr gedruckte Bücher.',
+  'Many of them find new titles through short videos.': 'Viele von ihnen entdecken neue Titel über kurze Videos.',
   'The station was almost empty when Clara arrived.':
       'Der Bahnhof war fast leer, als Clara ankam.',
   'A cold wind moved through the hall, and the old clock above the gate '
@@ -1283,3 +1257,7 @@ const sampleNews = [
     ],
   ),
 ];
+
+/// When the news desk last refreshed, relative to [now].
+DateTime sampleNewsUpdatedAt(DateTime now) =>
+    now.subtract(const Duration(days: 2));

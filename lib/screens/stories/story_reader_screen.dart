@@ -5,10 +5,11 @@ import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 
 import '../../models/home_models.dart';
+import '../../models/news_models.dart';
 import '../../domain/sentences.dart';
 import '../../models/sample_content.dart';
 import '../../models/story_models.dart';
-import '../../models/story_narration.dart';
+import '../../models/playback_clock.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/back_bar.dart';
 import '../../widgets/reading_toolbar.dart';
@@ -51,6 +52,16 @@ class StoryReaderScreen extends StatefulWidget {
         ),
       );
 
+  /// News read like stories: same lookup, translation and narration, plus
+  /// the article's subheadings.
+  static Future<void> openNews(BuildContext context, NewsArticle article) =>
+      Navigator.of(context).push(
+        CupertinoPageRoute<void>(
+          builder: (_) =>
+              StoryReaderScreen(story: article.asStory, text: article.text),
+        ),
+      );
+
   @override
   State<StoryReaderScreen> createState() => _StoryReaderScreenState();
 }
@@ -84,7 +95,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   final _sentences = <_Sentence>[];
 
   late final Map<String, WordMark> _marks = Map.of(widget.initialMarks);
-  late final _narration = StoryNarration.forText(widget.text.paragraphs);
+  late final _narration = PlaybackClock.forText(widget.text.paragraphs);
   int? _selected;
   int? _selectedSentence;
   bool _translating = false;
@@ -335,7 +346,27 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                               ),
                             ),
                             const SizedBox(height: 28),
-                            for (final sentences in _paragraphSentences)
+                            for (final (i, sentences)
+                                in _paragraphSentences.indexed) ...[
+                              if (widget.text.headingBefore(i)
+                                  case final heading?)
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    top: i == 0 ? 0 : 8,
+                                    bottom: 8,
+                                  ),
+                                  child: Semantics(
+                                    header: true,
+                                    child: Text(
+                                      heading,
+                                      style: AppType.editorial(
+                                        size: 22,
+                                        weight: FontWeight.w700,
+                                        height: 1.3,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 20),
                                 child: Text.rich(
@@ -356,6 +387,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                                   ),
                                 ),
                               ),
+                            ],
                           ],
                         ),
                       ),

@@ -44,6 +44,9 @@ class VocabWord {
   Duration get reviewInterval => leitnerInterval(box);
 
   VocabWord copyWith({
+    int? box,
+    DateTime? lastSeenAt,
+    int? reviewCount,
     bool? isDisabled,
     bool? isFavorite,
     bool? inPlaylist,
@@ -53,9 +56,9 @@ class VocabWord {
     entry: entry,
     sentence: sentence,
     sentenceTranslation: sentenceTranslation,
-    box: box,
-    lastSeenAt: lastSeenAt,
-    reviewCount: reviewCount,
+    box: box ?? this.box,
+    lastSeenAt: lastSeenAt ?? this.lastSeenAt,
+    reviewCount: reviewCount ?? this.reviewCount,
     isDisabled: isDisabled ?? this.isDisabled,
     isFavorite: isFavorite ?? this.isFavorite,
     inPlaylist: inPlaylist ?? this.inPlaylist,

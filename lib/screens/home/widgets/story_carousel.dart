@@ -84,7 +84,7 @@ class StoryCard extends StatelessWidget {
                   if (story.cover case final cover?)
                     Image(image: cover, fit: BoxFit.cover)
                   else
-                    _TypeCover(topic: story.topic, tone: tone),
+                    TypeCover(topic: story.topic, tone: tone),
                   const DecoratedBox(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -129,10 +129,15 @@ class StoryCard extends StatelessWidget {
   }
 }
 
-/// Stand-in cover until stories ship with artwork: the topic set as a
-/// faint serif masthead on a neutral tone.
-class _TypeCover extends StatelessWidget {
-  const _TypeCover({required this.topic, required this.tone});
+/// Stand-in cover until stories and news ship with artwork: the topic set
+/// as a faint serif masthead on a neutral tone.
+class TypeCover extends StatelessWidget {
+  const TypeCover({
+    super.key,
+    required this.topic,
+    required this.tone,
+    this.size = 52,
+  });
 
   static const _tones = [
     Color(0xFF1A1D26),
@@ -143,6 +148,9 @@ class _TypeCover extends StatelessWidget {
   final String topic;
   final int tone;
 
+  /// Masthead size; the cover crops it, so it reads as texture.
+  final double size;
+
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
@@ -151,18 +159,18 @@ class _TypeCover extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
         children: [
           Positioned(
-            left: 10,
-            top: 30,
+            left: size * 0.2,
+            top: size * 0.58,
             child: Text(
               topic,
               maxLines: 1,
               softWrap: false,
               textScaler: TextScaler.noScaling,
               style: AppType.editorial(
-                size: 52,
+                size: size,
                 weight: FontWeight.w700,
                 height: 1,
-                letterSpacing: -1,
+                letterSpacing: -size / 52,
                 color: AppColors.textPrimary.withValues(alpha: 0.09),
               ),
             ),
