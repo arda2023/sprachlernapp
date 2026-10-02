@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Scaffold;
 
 import '../../models/deck_store.dart';
 import '../../models/home_models.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/back_bar.dart';
 import '../../widgets/section_heading.dart';
 import '../home/widgets/deck_tile.dart';
 
-/// All decks, active first. Serves as the "Inhalte" tab and the target of
-/// "Mehr ansehen" on Home.
+/// All decks, active first. Pushed from "Alle Stapel" on the content
+/// dashboard and from "Mehr ansehen" on Home.
 class DeckLibraryScreen extends StatelessWidget {
   const DeckLibraryScreen({
     super.key,
@@ -19,6 +21,28 @@ class DeckLibraryScreen extends StatelessWidget {
 
   final DeckStore decks;
   final ValueChanged<Deck> onOpenDeck;
+
+  static Future<void> open(
+    BuildContext context, {
+    required DeckStore decks,
+    required ValueChanged<Deck> onOpenDeck,
+  }) => Navigator.of(context).push(
+    CupertinoPageRoute<void>(
+      builder: (context) => Scaffold(
+        body: SafeArea(
+          bottom: false,
+          child: Column(
+            children: [
+              BackBar(onBack: () => Navigator.of(context).maybePop()),
+              Expanded(
+                child: DeckLibraryScreen(decks: decks, onOpenDeck: onOpenDeck),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
