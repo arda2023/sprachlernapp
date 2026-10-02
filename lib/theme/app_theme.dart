@@ -19,6 +19,27 @@ abstract final class AppColors {
   static const error = Color(0xFFD9726B);
   static const errorTint = Color(0xFF372A30);
 
+  /// Memory Level Exception: the five dashes over a word in the Wortliste
+  /// (Leitner box 1–5). Nowhere else.
+  static const memoryLevel1 = active;
+  static const memoryLevel2 = Color(0xFF7DB2E0); // Pale Sky
+  static const memoryLevel3 = Color(0xFF6FCFB4); // Mint
+  static const memoryLevel4 = Color(0xFF8BCF7A); // Light Green
+  static const memoryLevel5 = Color(0xFF2FA65A); // Deep Green
+
+  static Color memoryLevel(int level) => switch (level) {
+    1 => memoryLevel1,
+    2 => memoryLevel2,
+    3 => memoryLevel3,
+    4 => memoryLevel4,
+    _ => memoryLevel5,
+  };
+
+  /// Audio Playback Exception: background behind a word or sentence while
+  /// it is being read aloud (Wortliste, story narration). Never a status,
+  /// never persistent.
+  static const playback = Color(0xFF2A3A55);
+
   static const textPrimary = Color(0xFFF0F2F5);
   static const textMuted = Color(0xFF8E95A5);
   static const iconOff = Color(0xFF4A5063);
@@ -105,6 +126,16 @@ ThemeData buildAppTheme() {
       shape: const RoundedRectangleBorder(
         side: BorderSide(color: AppColors.hairline),
         borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+      ),
+    ),
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: AppColors.raisedInk,
+      contentTextStyle: AppType.chrome(),
+      behavior: SnackBarBehavior.floating,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(color: AppColors.hairline),
+        borderRadius: BorderRadius.circular(12),
       ),
     ),
     splashFactory: NoSplash.splashFactory,

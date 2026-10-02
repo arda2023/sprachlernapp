@@ -6,16 +6,19 @@ import '../models/deck_store.dart';
 import '../models/home_models.dart';
 import '../models/reading_history.dart';
 import '../models/sample_content.dart';
+import '../models/word_list_store.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_bottom_bar.dart';
 import 'content/content_dashboard_screen.dart';
 import 'content/text_library_screen.dart';
 import 'decks/deck_details_screen.dart';
 import 'decks/deck_library_screen.dart';
+import 'grammar/grammar_rules_screen.dart';
 import 'home/home_screen.dart';
 import 'home/widgets/daily_goal_sheet.dart';
 import 'stories/story_library_screen.dart';
 import 'stories/story_reader_screen.dart';
+import 'words/word_list_screen.dart';
 
 /// Hosts the tab screens under the notched bar, keeps each tab's scroll
 /// position while switching, and owns the placeholder app state (decks,
@@ -28,10 +31,16 @@ class AppShell extends StatefulWidget {
 }
 
 class _AppShellState extends State<AppShell> {
-  static const _tabs = [AppTab.home, AppTab.stories, AppTab.content];
+  static const _tabs = [
+    AppTab.home,
+    AppTab.stories,
+    AppTab.words,
+    AppTab.content,
+  ];
 
   final _decks = DeckStore(sampleDecks);
   final _history = ReadingHistory(sampleReadStoryIds);
+  final _words = WordListStore(sampleVocabulary(DateTime.now()));
   AppTab _tab = AppTab.home;
   DailyGoal _goal = sampleGoal;
 
@@ -39,14 +48,11 @@ class _AppShellState extends State<AppShell> {
   void dispose() {
     _decks.dispose();
     _history.dispose();
+    _words.dispose();
     super.dispose();
   }
 
-  void _select(AppTab tab) {
-    // TODO: the Wortliste screen doesn't exist yet.
-    if (!_tabs.contains(tab)) return;
-    setState(() => _tab = tab);
-  }
+  void _select(AppTab tab) => setState(() => _tab = tab);
 
   void _openStory(Story story) {
     _history.markRead(story.id);
@@ -72,7 +78,12 @@ class _AppShellState extends State<AppShell> {
     // TODO: build these categories.
     const ContentCategory(title: 'Hören', icon: CupertinoIcons.headphones),
     const ContentCategory(title: 'Grammatik', icon: CupertinoIcons.textformat),
-    const ContentCategory(title: 'Grammatikregeln', icon: CupertinoIcons.book),
+    ContentCategory(
+      title: 'Grammatikregeln',
+      icon: CupertinoIcons.book,
+      detail: '${sampleGrammarRules.length} Regeln',
+      onOpen: () => GrammarRulesScreen.open(context, sampleGrammarRules),
+    ),
   ];
 
   void _openDeck(Deck deck) => DeckDetailsScreen.open(context, _decks, deck.id);
@@ -116,6 +127,7 @@ class _AppShellState extends State<AppShell> {
               continueReading: sampleContinueReading,
               onOpenStory: _openStory,
             ),
+            WordListScreen(store: _words),
             ContentDashboardScreen(
               decks: _decks,
               categories: _categories,

@@ -3,18 +3,27 @@ import 'package:flutter/cupertino.dart';
 import '../theme/app_theme.dart';
 
 /// Bottom toolbar of the reader and text exercises. Holds the translation
-/// toggle and, while it is on, the hint telling the learner what to do.
+/// toggle and, while it is on, the hint telling the learner what to do. The
+/// reader also gets the "Vorlesen" toggle left of it.
 class ReadingToolbar extends StatelessWidget {
   const ReadingToolbar({
     super.key,
     required this.translating,
     required this.onToggleTranslate,
+    this.listening = false,
+    this.onToggleListen,
   });
 
   static const hint = 'Tippe auf einen Satz, um ihn zu übersetzen';
 
   final bool translating;
   final VoidCallback onToggleTranslate;
+
+  /// Whether the narration panel is open.
+  final bool listening;
+
+  /// Null hides the "Vorlesen" toggle.
+  final VoidCallback? onToggleListen;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +56,10 @@ class ReadingToolbar extends StatelessWidget {
                       : const SizedBox.shrink(),
                 ),
                 const SizedBox(width: 8),
+                if (onToggleListen case final onToggleListen?) ...[
+                  _ListenToggle(on: listening, onPressed: onToggleListen),
+                  const SizedBox(width: 8),
+                ],
                 MergeSemantics(
                   child: CupertinoButton(
                     onPressed: onToggleTranslate,
@@ -89,6 +102,45 @@ class ReadingToolbar extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Icon-only sibling of the "Übersetzen" pill: off = `textMuted` speaker,
+/// on = `textPrimary` filled speaker on a Hairline-filled disc.
+class _ListenToggle extends StatelessWidget {
+  const _ListenToggle({required this.on, required this.onPressed});
+
+  final bool on;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return MergeSemantics(
+      child: CupertinoButton(
+        onPressed: onPressed,
+        padding: EdgeInsets.zero,
+        minimumSize: const Size(44, 44),
+        child: Semantics(
+          label: 'Vorlesen',
+          toggled: on,
+          excludeSemantics: true,
+          child: Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              color: on ? AppColors.hairline : null,
+              border: Border.all(color: AppColors.hairline),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              on ? CupertinoIcons.speaker_2_fill : CupertinoIcons.speaker_2,
+              size: 20,
+              color: on ? AppColors.textPrimary : AppColors.textMuted,
             ),
           ),
         ),

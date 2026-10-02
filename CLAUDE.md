@@ -13,6 +13,9 @@ The repository currently contains:
 - Deck screens: library (`DeckLibraryScreen`) and details (`DeckDetailsScreen`), backed by an in-memory `DeckStore`.
 - An "Inhalte" tab (`ContentDashboardScreen`) with a text library (`TextLibraryScreen`) and gap-text exercises (`TextExerciseScreen`, typed verb gaps or answer chips).
 - A sentence translation mode in the reader and in text exercises (`ReadingToolbar`, `SentenceTranslationSheet`).
+- Simulated story narration in the reader ("Vorlesen" toggle, `NarrationPanel`, `StoryNarration`) that marks the sentence being read.
+- Grammar rules (`GrammarRulesScreen` with a level filter, `GrammarRuleDetailScreen`), opened from the "Grammatikregeln" category.
+- A "Wortliste" tab (`WordListScreen`) with search, memory level indicator, simulated audio playback, quiet toggles and two sheets (`MemoryLevelLegendSheet`, `WordDetailsSheet`), backed by an in-memory `WordListStore`.
 - The first pure-Dart domain code in `lib/domain/` (answer checking, sentence splitting).
 - A Stories section: library (`StoryLibraryScreen`) and reader (`StoryReaderScreen`) with tap-to-look-up words and a placeholder dictionary.
 - A bespoke design system implemented in `lib/theme/app_theme.dart` using Google Fonts (Source Serif 4 and Figtree).
@@ -28,14 +31,20 @@ lib/
 ├── main.dart                      # Application entry point (SprachApp widget, ThemeData)
 ├── domain/                        # Pure Dart, no Flutter imports
 │   ├── answer_check.dart          # Exact / "fast richtig" / wrong, edit distance
-│   └── sentences.dart             # Sentence ranges for translation mode
+│   ├── leitner.dart               # Box count, default intervals, calendar-day diff
+│   └── sentences.dart             # Sentence ranges (translation mode, narration)
 ├── models/
 │   ├── deck_store.dart            # In-memory deck state (ChangeNotifier) until Riverpod/Drift
 │   ├── exercise_models.dart       # ExerciseText (gap markup), TextGap, ExerciseMode
+│   ├── grammar_models.dart        # GrammarRule, sections, examples, *emphasis* markup
 │   ├── home_models.dart           # UI data models (VocabBreakdown, DailyGoal, WeekProgress, Deck, Story)
 │   ├── reading_history.dart       # Stories the learner opened (feeds "Aus deinen Stories")
 │   ├── story_models.dart          # WordEntry, WordMark, StoryText, ReadingProgress
-│   └── sample_content.dart        # Synthetic placeholder content (until the content pack exists)
+│   ├── sample_content.dart        # Synthetic placeholder content (until the content pack exists)
+│   ├── speech_playback.dart       # Simulated TTS: which word/sentence is "playing"
+│   ├── story_narration.dart       # Simulated story narration clock (play, skip, seek)
+│   ├── word_list_models.dart      # VocabWord + "Zuletzt gesehen"/interval labels
+│   └── word_list_store.dart       # In-memory Wortliste state (ChangeNotifier)
 ├── screens/
 │   ├── app_shell.dart             # Tab host (IndexedStack), notched bar, docked practice button
 │   ├── content/
@@ -56,11 +65,23 @@ lib/
 │   │       ├── story_carousel.dart# Horizontal story card carousel (+ meta line helpers)
 │   │       ├── vocab_progress.dart# Four derived categories, segmented track, ledger
 │   │       └── weekly_goal_card.dart # Week row (streak) + daily goal with gear
-│   └── stories/
-│       ├── story_library_screen.dart # Weiterlesen tile + one carousel per topic
-│       ├── story_reader_screen.dart  # Reader with per-word tap targets
+│   ├── grammar/
+│   │   ├── grammar_rules_screen.dart       # Level filter + rule rows
+│   │   └── grammar_rule_detail_screen.dart # Night Page rule reader
+│   ├── stories/
+│   │   ├── story_library_screen.dart # Weiterlesen tile + one carousel per topic
+│   │   ├── story_reader_screen.dart  # Reader with per-word tap targets
+│   │   └── widgets/
+│   │       ├── narration_panel.dart   # Docked player: skip, play/pause, slider
+│   │       └── word_lookup_sheet.dart # Dictionary bottom sheet + neutral add button
+│   └── words/
+│       ├── word_list_screen.dart  # Wortliste tab: title, search + playlist button, rows
 │       └── widgets/
-│           └── word_lookup_sheet.dart # Dictionary bottom sheet + neutral add button
+│           ├── memory_level_indicator.dart    # Five dashes + level titles
+│           ├── memory_level_legend_sheet.dart # Legend for the five levels
+│           ├── playback_highlight.dart        # Playback mark, ListenButton, headword + speaker
+│           ├── word_details_sheet.dart        # Translation, ledger, sentence, notes
+│           └── word_list_item.dart            # Word row + WordToggle
 ├── theme/
 │   └── app_theme.dart             # Color tokens (AppColors), typography (AppType), ThemeData
 └── widgets/
@@ -70,7 +91,7 @@ lib/
     ├── difficulty_bolts.dart      # Three-bolt difficulty indicator
     ├── hairline_track.dart        # Thin pill progress track
     ├── progress_ring.dart         # Circular progress ring (CustomPainter)
-    ├── reading_toolbar.dart       # Bottom toolbar with the "Übersetzen" toggle
+    ├── reading_toolbar.dart       # Bottom toolbar: "Vorlesen" and "Übersetzen" toggles
     ├── sentence_translation_sheet.dart # Sentence + German translation sheet
     └── section_heading.dart       # Serif section heading with optional trailing widget
 

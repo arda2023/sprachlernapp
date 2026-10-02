@@ -5,20 +5,24 @@ import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 
 import '../../models/home_models.dart';
-import '../../models/sample_content.dart';
 import '../../domain/sentences.dart';
+import '../../models/sample_content.dart';
 import '../../models/story_models.dart';
+import '../../models/story_narration.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/back_bar.dart';
 import '../../widgets/reading_toolbar.dart';
 import '../../widgets/sentence_translation_sheet.dart';
 import '../home/widgets/story_carousel.dart';
+import 'widgets/narration_panel.dart';
 import 'widgets/word_lookup_sheet.dart';
 
 /// Reading view. Every word is its own tappable span (LingQ mechanic); words
 /// already in the learner's vocabulary carry their status ink as an
 /// underline, directly in the text. In translation mode whole sentences
-/// become the tap targets instead.
+/// become the tap targets instead. "Vorlesen" docks a player above the
+/// toolbar; while it plays, the sentence being read sits on the Audio
+/// Playback Highlight.
 class StoryReaderScreen extends StatefulWidget {
   const StoryReaderScreen({
     super.key,
@@ -64,28 +68,31 @@ class _Sentence {
 
   final String text;
   final TapGestureRecognizer recognizer;
+
+  /// Plain gaps as [String], words as indices into [_StoryReaderScreenState._words].
+  final tokens = <Object>[];
 }
 
 class _StoryReaderScreenState extends State<StoryReaderScreen> {
   static final _wordPattern = RegExp(r"[A-Za-z]+(?:['’][A-Za-z]+)*");
 
-  /// Per paragraph: plain gaps as [String], words as indices into [_words].
-  late final List<List<Object>> _paragraphs;
   final _words = <_Word>[];
 
-  /// Per paragraph: indices into [_sentences].
+  /// Per paragraph: indices into [_sentences]. Words never cross a sentence
+  /// boundary, so each sentence holds its own tokens.
   late final List<List<int>> _paragraphSentences;
   final _sentences = <_Sentence>[];
 
   late final Map<String, WordMark> _marks = Map.of(widget.initialMarks);
+  late final _narration = StoryNarration.forText(widget.text.paragraphs);
   int? _selected;
   int? _selectedSentence;
   bool _translating = false;
+  bool _listening = false;
 
   @override
   void initState() {
     super.initState();
-    _paragraphs = [for (final p in widget.text.paragraphs) _tokenize(p)];
     _paragraphSentences = [
       for (final p in widget.text.paragraphs)
         [
@@ -93,41 +100,39 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
             _addSentence(p.substring(range.start, range.end)),
         ],
     ];
+    _narration.addListener(_onNarration);
   }
 
   int _addSentence(String text) {
     final index = _sentences.length;
-    _sentences.add(
-      _Sentence(text, TapGestureRecognizer()..onTap = () => _translate(index)),
+    final sentence = _Sentence(
+      text,
+      TapGestureRecognizer()..onTap = () => _translate(index),
     );
-    return index;
-  }
-
-  List<Object> _tokenize(String paragraph) {
-    final tokens = <Object>[];
     var last = 0;
-    for (final match in _wordPattern.allMatches(paragraph)) {
+    for (final match in _wordPattern.allMatches(text)) {
       if (match.start > last) {
-        tokens.add(paragraph.substring(last, match.start));
+        sentence.tokens.add(text.substring(last, match.start));
       }
-      final index = _words.length;
-      final word = match[0]!;
+      final word = _words.length;
       _words.add(
         _Word(
-          word,
-          widget.lookup(word),
-          TapGestureRecognizer()..onTap = () => _lookUp(index),
+          match[0]!,
+          widget.lookup(match[0]!),
+          TapGestureRecognizer()..onTap = () => _lookUp(word),
         ),
       );
-      tokens.add(index);
+      sentence.tokens.add(word);
       last = match.end;
     }
-    if (last < paragraph.length) tokens.add(paragraph.substring(last));
-    return tokens;
+    if (last < text.length) sentence.tokens.add(text.substring(last));
+    _sentences.add(sentence);
+    return index;
   }
 
   @override
   void dispose() {
+    _narration.dispose();
     for (final word in _words) {
       word.recognizer.dispose();
     }
@@ -136,6 +141,20 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     }
     super.dispose();
   }
+
+  void _onNarration() => setState(() {});
+
+  void _toggleListen() {
+    setState(() => _listening = !_listening);
+    _listening ? _narration.play() : _narration.stop();
+  }
+
+  /// The sentence being read aloud, only while playback runs.
+  int? get _narrated => _narration.playing
+      ? sentenceAt([
+          for (final s in _sentences) s.text.length,
+        ], _narration.progress)
+      : null;
 
   void _toggleTranslate() {
     setState(() => _translating = !_translating);
@@ -169,9 +188,11 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   /// Translation mode: every leaf span of a sentence carries the sentence's
   /// recognizer (a parent span's recognizer doesn't reach its children);
   /// status underlines stay.
-  TextSpan _sentenceSpan(int index) {
+  TextSpan _sentenceSpan(int index, {required bool narrated}) {
     final sentence = _sentences[index];
-    final background = index == _selectedSentence ? AppColors.hairline : null;
+    final background = index == _selectedSentence
+        ? AppColors.hairline
+        : (narrated ? AppColors.playback : null);
     final children = <InlineSpan>[];
     var last = 0;
     for (final match in _wordPattern.allMatches(sentence.text)) {
@@ -241,9 +262,22 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     );
   }
 
+  /// Word mode: the sentence's words keep their own recognizers; the
+  /// playback mark sits on the sentence and a tapped word's Hairline
+  /// background wins over it.
+  TextSpan _wordModeSentenceSpan(int index, {required bool narrated}) =>
+      TextSpan(
+        style: TextStyle(backgroundColor: narrated ? AppColors.playback : null),
+        children: [
+          for (final token in _sentences[index].tokens)
+            token is int ? _wordSpan(token) : TextSpan(text: token as String),
+        ],
+      );
+
   @override
   Widget build(BuildContext context) {
     final story = widget.story;
+    final narrated = _narrated;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light.copyWith(
         statusBarColor: Colors.transparent,
@@ -252,6 +286,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
         bottomNavigationBar: ReadingToolbar(
           translating: _translating,
           onToggleTranslate: _toggleTranslate,
+          listening: _listening,
+          onToggleListen: _toggleListen,
         ),
         body: SafeArea(
           bottom: false,
@@ -299,26 +335,24 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                               ),
                             ),
                             const SizedBox(height: 28),
-                            for (final (i, paragraph) in _paragraphs.indexed)
+                            for (final sentences in _paragraphSentences)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 20),
                                 child: Text.rich(
                                   TextSpan(
                                     style: AppType.storyBody(),
-                                    children: _translating
-                                        ? [
-                                            for (final sentence
-                                                in _paragraphSentences[i])
-                                              _sentenceSpan(sentence),
-                                          ]
-                                        : [
-                                            for (final token in paragraph)
-                                              token is int
-                                                  ? _wordSpan(token)
-                                                  : TextSpan(
-                                                      text: token as String,
-                                                    ),
-                                          ],
+                                    children: [
+                                      for (final s in sentences)
+                                        _translating
+                                            ? _sentenceSpan(
+                                                s,
+                                                narrated: s == narrated,
+                                              )
+                                            : _wordModeSentenceSpan(
+                                                s,
+                                                narrated: s == narrated,
+                                              ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -329,6 +363,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                   ],
                 ),
               ),
+              if (_listening) NarrationPanel(narration: _narration),
             ],
           ),
         ),

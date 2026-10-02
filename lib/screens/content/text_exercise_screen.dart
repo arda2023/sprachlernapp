@@ -508,7 +508,7 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
                               ),
                             if (done) ...[
                               const SizedBox(height: 8),
-                              _DoneNote(
+                              SuccessFeedbackCard(
                                 total: _gaps.length,
                                 onBack: () => Navigator.of(context).maybePop(),
                               ),
@@ -768,8 +768,15 @@ class _ChipFace extends StatelessWidget {
   }
 }
 
-class _DoneNote extends StatelessWidget {
-  const _DoneNote({required this.total, required this.onBack});
+/// Shown once every gap is solved: a quiet thumbs-up in Quiet Sage on a
+/// Sage Tint disc (Feedback Rule: a right answer, inside an exercise), the
+/// count as text, and the way back. No illustration, no confetti.
+class SuccessFeedbackCard extends StatelessWidget {
+  const SuccessFeedbackCard({
+    super.key,
+    required this.total,
+    required this.onBack,
+  });
 
   final int total;
   final VoidCallback onBack;
@@ -786,9 +793,36 @@ class _DoneNote extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Alle $total Lücken gelöst',
-            style: AppType.chrome(size: 17, weight: FontWeight.w600),
+          Row(
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                decoration: const BoxDecoration(
+                  color: AppColors.successTint,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  CupertinoIcons.hand_thumbsup_fill,
+                  size: 24,
+                  color: AppColors.success,
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Alle $total Lücken gelöst',
+                      style: AppType.chrome(size: 17, weight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 2),
+                    Text('Text abgeschlossen', style: AppType.meta()),
+                  ],
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
           OutlineActionButton(label: 'Zurück zu den Texten', onPressed: onBack),

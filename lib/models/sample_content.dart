@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
 import 'exercise_models.dart';
+import 'grammar_models.dart';
 import 'home_models.dart';
 import 'story_models.dart';
+import 'word_list_models.dart';
 
 // Synthetic placeholder content until the offline pipeline generates the v1
 // content pack and the Drift layer derives real numbers.
@@ -436,3 +438,478 @@ const _sentenceTranslations = {
 
 String sampleTranslateSentence(String sentence) =>
     _sentenceTranslations[sentence.trim()] ?? 'Übersetzung folgt.';
+
+/// Seen words for the Wortliste, relative to [now] so "Zuletzt gesehen" reads
+/// sensibly whenever the app runs.
+List<VocabWord> sampleVocabulary(DateTime now) {
+  VocabWord word(
+    String headword,
+    String partOfSpeech,
+    String translation, {
+    required String sentence,
+    required String sentenceTranslation,
+    required int box,
+    required int daysAgo,
+    required int reviews,
+    bool favorite = false,
+    bool playlist = false,
+  }) => VocabWord(
+    id: headword,
+    entry: WordEntry(
+      headword: headword,
+      partOfSpeech: partOfSpeech,
+      translation: translation,
+    ),
+    sentence: sentence,
+    sentenceTranslation: sentenceTranslation,
+    box: box,
+    lastSeenAt: now.subtract(Duration(days: daysAgo, hours: 2)),
+    reviewCount: reviews,
+    isFavorite: favorite,
+    inPlaylist: playlist,
+  );
+
+  return [
+    word(
+      'platform',
+      'Substantiv',
+      'der Bahnsteig',
+      sentence: 'Anna ran to the platform, but the doors were already closed.',
+      sentenceTranslation:
+          'Anna rannte zum Bahnsteig, aber die Türen waren schon geschlossen.',
+      box: 3,
+      daysAgo: 2,
+      reviews: 5,
+      playlist: true,
+    ),
+    word(
+      'ticket',
+      'Substantiv',
+      'die Fahrkarte',
+      sentence: 'She looked at her ticket again.',
+      sentenceTranslation: 'Sie sah noch einmal auf ihre Fahrkarte.',
+      box: 2,
+      daysAgo: 0,
+      reviews: 3,
+    ),
+    word(
+      'station',
+      'Substantiv',
+      'der Bahnhof',
+      sentence: 'The station was almost empty when Clara arrived.',
+      sentenceTranslation: 'Der Bahnhof war fast leer, als Clara ankam.',
+      box: 5,
+      daysAgo: 21,
+      reviews: 9,
+      favorite: true,
+    ),
+    word(
+      'appointment',
+      'Substantiv',
+      'der Termin',
+      sentence:
+          'Maria felt tired for a whole week, so she booked an appointment.',
+      sentenceTranslation:
+          'Maria war eine ganze Woche lang müde, also machte sie einen '
+          'Termin.',
+      box: 1,
+      daysAgo: 1,
+      reviews: 1,
+      playlist: true,
+    ),
+    word(
+      'journey',
+      'Substantiv',
+      'die Reise',
+      sentence: 'She had waited three years for this journey.',
+      sentenceTranslation: 'Sie hatte drei Jahre auf diese Reise gewartet.',
+      box: 4,
+      daysAgo: 9,
+      reviews: 6,
+    ),
+    word(
+      'borrow',
+      'Verb',
+      'ausleihen',
+      sentence: 'Can I borrow your umbrella until tomorrow?',
+      sentenceTranslation: 'Kann ich mir deinen Schirm bis morgen ausleihen?',
+      box: 2,
+      daysAgo: 3,
+      reviews: 2,
+    ),
+    word(
+      'delay',
+      'Substantiv',
+      'die Verspätung',
+      sentence: 'The delay was announced only five minutes before departure.',
+      sentenceTranslation:
+          'Die Verspätung wurde erst fünf Minuten vor der Abfahrt '
+          'angekündigt.',
+      box: 3,
+      daysAgo: 5,
+      reviews: 4,
+    ),
+    word(
+      'quiet',
+      'Adjektiv',
+      'still, ruhig',
+      sentence:
+          'The kitchen was quiet, and the rain fell softly on the window.',
+      sentenceTranslation:
+          'Die Küche war still, und der Regen fiel leise ans Fenster.',
+      box: 5,
+      daysAgo: 64,
+      reviews: 7,
+    ),
+    word(
+      'prescription',
+      'Substantiv',
+      'das Rezept',
+      sentence: 'The doctor listened carefully and wrote a prescription.',
+      sentenceTranslation:
+          'Die Ärztin hörte aufmerksam zu und schrieb ein Rezept.',
+      box: 1,
+      daysAgo: 0,
+      reviews: 2,
+    ),
+    word(
+      'neighbour',
+      'Substantiv',
+      'der Nachbar',
+      sentence: 'People buy fresh bread and talk with their neighbours.',
+      sentenceTranslation:
+          'Die Leute kaufen frisches Brot und unterhalten sich mit ihren '
+          'Nachbarn.',
+      box: 4,
+      daysAgo: 16,
+      reviews: 5,
+      favorite: true,
+    ),
+  ];
+}
+
+/// Grammar rules of English, explained in German, three per level.
+const sampleGrammarRules = [
+  GrammarRule(
+    id: 'articles',
+    title: 'Artikel',
+    summary: 'a, an und the – und wann keiner steht',
+    level: GrammarLevel.beginner,
+    sections: [
+      GrammarSection(
+        heading: 'Unbestimmter Artikel',
+        paragraphs: [
+          'Das Englische kennt nur einen unbestimmten Artikel. Vor einem '
+              'Konsonantenlaut steht *a*, vor einem Vokallaut *an*. '
+              'Entscheidend ist der Laut, nicht der Buchstabe: *an hour*, '
+              'aber *a university*.',
+        ],
+        examples: [
+          GrammarExample('She is *a* teacher.', 'Sie ist Lehrerin.'),
+          GrammarExample(
+            'We waited for *an* hour.',
+            'Wir haben eine Stunde gewartet.',
+          ),
+        ],
+        pitfall: GrammarPitfall(
+          wrong: 'She is teacher.',
+          right: 'She is *a* teacher.',
+        ),
+      ),
+      GrammarSection(
+        heading: 'Bestimmter Artikel',
+        paragraphs: [
+          '*The* gilt für alle Geschlechter und für Einzahl wie Mehrzahl. '
+              'Allgemeine Aussagen stehen ohne Artikel: *Life is short*, '
+              'nicht *The life is short*.',
+        ],
+        examples: [
+          GrammarExample(
+            '*The* station was almost empty.',
+            'Der Bahnhof war fast leer.',
+          ),
+          GrammarExample(
+            'Music helps me relax.',
+            'Musik hilft mir, mich zu entspannen.',
+          ),
+        ],
+      ),
+    ],
+  ),
+  GrammarRule(
+    id: 'plural',
+    title: 'Pluralbildung',
+    summary: 'Endung -s, -es und die unregelmäßigen Formen',
+    level: GrammarLevel.beginner,
+    sections: [
+      GrammarSection(
+        heading: 'Regelmäßige Mehrzahl',
+        paragraphs: [
+          'Die meisten Substantive hängen *-s* an: *book* → *books*. Nach '
+              'Zischlauten (s, x, ch, sh) steht *-es*: *bus* → *buses*, '
+              '*watch* → *watches*. Endet ein Wort auf Konsonant + y, wird '
+              'daraus *-ies*: *city* → *cities*.',
+        ],
+        examples: [
+          GrammarExample(
+            'Two *trains* left at midnight.',
+            'Um Mitternacht fuhren zwei Züge ab.',
+          ),
+          GrammarExample(
+            'The *cities* were full of tourists.',
+            'Die Städte waren voller Touristen.',
+          ),
+        ],
+      ),
+      GrammarSection(
+        heading: 'Unregelmäßige Mehrzahl',
+        paragraphs: [
+          'Einige häufige Wörter bilden die Mehrzahl ohne Endung: *man* → '
+              '*men*, *child* → *children*, *person* → *people*. *People* '
+              'steht immer mit einem Verb in der Mehrzahl.',
+        ],
+        examples: [
+          GrammarExample(
+            '*People* buy fresh bread here.',
+            'Die Leute kaufen hier frisches Brot.',
+          ),
+        ],
+        pitfall: GrammarPitfall(
+          wrong: 'The people is friendly.',
+          right: 'The people *are* friendly.',
+        ),
+      ),
+    ],
+  ),
+  GrammarRule(
+    id: 'simple-present',
+    title: 'Simple Present',
+    summary: 'Gewohnheiten, Fakten und das -s in der 3. Person',
+    level: GrammarLevel.beginner,
+    sections: [
+      GrammarSection(
+        heading: 'Bildung',
+        paragraphs: [
+          'Das Simple Present ist die Grundform des Verbs. Nur in der '
+              '3. Person Einzahl (he, she, it) kommt *-s* hinzu: *I work*, '
+              'aber *she works*.',
+          'Fragen und Verneinungen bildest du mit *do* bzw. *does*. Das '
+              'Hauptverb bleibt dann in der Grundform: *Does she work?*',
+        ],
+        examples: [
+          GrammarExample(
+            'Clara *reads* every evening.',
+            'Clara liest jeden Abend.',
+          ),
+          GrammarExample(
+            'He *doesn\'t know* why the train is late.',
+            'Er weiß nicht, warum der Zug Verspätung hat.',
+          ),
+        ],
+        pitfall: GrammarPitfall(
+          wrong: 'Does she works here?',
+          right: 'Does she *work* here?',
+        ),
+      ),
+    ],
+  ),
+  GrammarRule(
+    id: 'present-perfect',
+    title: 'Present Perfect',
+    summary: 'Vergangenes mit Bezug zur Gegenwart',
+    level: GrammarLevel.intermediate,
+    sections: [
+      GrammarSection(
+        heading: 'Wann du es brauchst',
+        paragraphs: [
+          'Das Present Perfect (*have/has* + Partizip) verbindet die '
+              'Vergangenheit mit dem Jetzt: Etwas hat begonnen und dauert '
+              'an, oder sein Ergebnis zählt jetzt. Steht ein abgeschlossener '
+              'Zeitpunkt dabei (*yesterday*, *in 2019*), nimmst du das Simple '
+              'Past.',
+        ],
+        examples: [
+          GrammarExample(
+            'I *have lived* here since 2010.',
+            'Ich wohne seit 2010 hier.',
+          ),
+          GrammarExample(
+            'She *has* just *finished* her book.',
+            'Sie hat gerade ihr Buch beendet.',
+          ),
+        ],
+        pitfall: GrammarPitfall(
+          wrong: 'I live here since 2010.',
+          right: 'I *have lived* here since 2010.',
+        ),
+      ),
+      GrammarSection(
+        heading: 'since und for',
+        paragraphs: [
+          '*Since* nennt den Startpunkt (*since Monday*), *for* die Dauer '
+              '(*for three years*). Im Deutschen steht für beides „seit“.',
+        ],
+        examples: [
+          GrammarExample(
+            'She *has waited for* three years.',
+            'Sie wartet seit drei Jahren.',
+          ),
+        ],
+      ),
+    ],
+  ),
+  GrammarRule(
+    id: 'comparison',
+    title: 'Steigerung von Adjektiven',
+    summary: '-er/-est oder more/most',
+    level: GrammarLevel.intermediate,
+    sections: [
+      GrammarSection(
+        heading: 'Kurze und lange Adjektive',
+        paragraphs: [
+          'Einsilbige Adjektive steigerst du mit *-er* und *-est*: *cold*, '
+              '*colder*, *the coldest*. Ab drei Silben stehen *more* und '
+              '*most* davor: *more expensive*, *the most expensive*.',
+          'Ein paar Formen sind unregelmäßig: *good* → *better* → *best*, '
+              '*bad* → *worse* → *worst*.',
+        ],
+        examples: [
+          GrammarExample(
+            'The night was *colder* than expected.',
+            'Die Nacht war kälter als erwartet.',
+          ),
+          GrammarExample(
+            'This is *the most beautiful* station in Spain.',
+            'Das ist der schönste Bahnhof Spaniens.',
+          ),
+        ],
+        pitfall: GrammarPitfall(
+          wrong: 'She is more tall than me.',
+          right: 'She is *taller* than me.',
+        ),
+      ),
+    ],
+  ),
+  GrammarRule(
+    id: 'some-any',
+    title: 'some und any',
+    summary: 'Mengen in Aussagen, Fragen und Verneinungen',
+    level: GrammarLevel.intermediate,
+    sections: [
+      GrammarSection(
+        heading: 'Die Grundregel',
+        paragraphs: [
+          '*Some* steht in bejahten Sätzen, *any* in Fragen und '
+              'Verneinungen. In Angeboten und Bitten bleibt *some*, weil du '
+              'ein Ja erwartest: *Would you like some tea?*',
+        ],
+        examples: [
+          GrammarExample(
+            'There are *some* tickets left.',
+            'Es sind noch ein paar Fahrkarten übrig.',
+          ),
+          GrammarExample(
+            'Nobody had *any* information.',
+            'Niemand hatte irgendeine Information.',
+          ),
+        ],
+      ),
+    ],
+  ),
+  GrammarRule(
+    id: 'conditionals',
+    title: 'Bedingungssätze',
+    summary: 'if-Sätze Typ 1, 2 und 3',
+    level: GrammarLevel.advanced,
+    sections: [
+      GrammarSection(
+        heading: 'Die drei Typen',
+        paragraphs: [
+          'Typ 1 (real): *if* + Simple Present, Hauptsatz mit *will*. '
+              'Typ 2 (unwahrscheinlich): *if* + Simple Past, Hauptsatz mit '
+              '*would*. Typ 3 (verpasst): *if* + Past Perfect, Hauptsatz mit '
+              '*would have* + Partizip.',
+          'Im if-Satz selbst steht nie *will* oder *would*.',
+        ],
+        examples: [
+          GrammarExample(
+            'If the train *is* late, we *will take* a taxi.',
+            'Wenn der Zug Verspätung hat, nehmen wir ein Taxi.',
+          ),
+          GrammarExample(
+            'If I *had* more time, I *would read* more.',
+            'Wenn ich mehr Zeit hätte, würde ich mehr lesen.',
+          ),
+          GrammarExample(
+            'If she *had left* earlier, she *would have caught* the train.',
+            'Wäre sie früher losgegangen, hätte sie den Zug erreicht.',
+          ),
+        ],
+        pitfall: GrammarPitfall(
+          wrong: 'If I would have time, I would read more.',
+          right: 'If I *had* time, I would read more.',
+        ),
+      ),
+    ],
+  ),
+  GrammarRule(
+    id: 'passive',
+    title: 'Passiv',
+    summary: 'Wenn die Handlung wichtiger ist als der Handelnde',
+    level: GrammarLevel.advanced,
+    sections: [
+      GrammarSection(
+        heading: 'Bildung',
+        paragraphs: [
+          'Das Passiv bildest du mit einer Form von *be* + Partizip: '
+              '*is built*, *was built*, *has been built*. Wer die Handlung '
+              'ausführt, folgt bei Bedarf mit *by*.',
+          'Achtung: Das deutsche „werden“ entspricht hier *be*, nicht '
+              '*will*.',
+        ],
+        examples: [
+          GrammarExample(
+            'The station *was built* in 1901.',
+            'Der Bahnhof wurde 1901 gebaut.',
+          ),
+          GrammarExample(
+            'The tickets *are checked* by the conductor.',
+            'Die Fahrkarten werden vom Schaffner kontrolliert.',
+          ),
+        ],
+        pitfall: GrammarPitfall(
+          wrong: 'The bridge will built next year.',
+          right: 'The bridge *will be built* next year.',
+        ),
+      ),
+    ],
+  ),
+  GrammarRule(
+    id: 'reported-speech',
+    title: 'Indirekte Rede',
+    summary: 'Zeitverschiebung nach said und told',
+    level: GrammarLevel.advanced,
+    sections: [
+      GrammarSection(
+        heading: 'Die Zeit rückt zurück',
+        paragraphs: [
+          'Steht das einleitende Verb in der Vergangenheit (*said*, '
+              '*told*), rückt die Zeit der wiedergegebenen Aussage meist '
+              'einen Schritt zurück: *am* → *was*, *will* → *would*, '
+              '*have done* → *had done*. Einen Konjunktiv wie im Deutschen '
+              'gibt es nicht.',
+        ],
+        examples: [
+          GrammarExample(
+            '"I am tired." → She said she *was* tired.',
+            '„Ich bin müde.“ → Sie sagte, sie sei müde.',
+          ),
+          GrammarExample(
+            '"The train will come." → He said the train *would* come.',
+            '„Der Zug wird kommen.“ → Er sagte, der Zug werde kommen.',
+          ),
+        ],
+      ),
+    ],
+  ),
+];

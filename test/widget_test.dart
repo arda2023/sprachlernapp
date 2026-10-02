@@ -5,9 +5,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:sprachapp/domain/answer_check.dart';
+import 'package:sprachapp/domain/leitner.dart';
 import 'package:sprachapp/domain/sentences.dart';
 import 'package:sprachapp/main.dart';
 import 'package:sprachapp/models/exercise_models.dart';
+import 'package:sprachapp/models/grammar_models.dart';
 import 'package:sprachapp/models/reading_history.dart';
 import 'package:sprachapp/screens/content/content_dashboard_screen.dart';
 import 'package:sprachapp/screens/content/text_exercise_screen.dart';
@@ -17,14 +19,24 @@ import 'package:sprachapp/screens/home/widgets/story_carousel.dart';
 import 'package:sprachapp/models/home_models.dart';
 import 'package:sprachapp/models/sample_content.dart';
 import 'package:sprachapp/models/story_models.dart';
+import 'package:sprachapp/models/story_narration.dart';
+import 'package:sprachapp/models/word_list_models.dart';
+import 'package:sprachapp/models/word_list_store.dart';
 import 'package:sprachapp/screens/decks/deck_details_screen.dart';
 import 'package:sprachapp/screens/decks/deck_library_screen.dart';
+import 'package:sprachapp/screens/grammar/grammar_rule_detail_screen.dart';
+import 'package:sprachapp/screens/grammar/grammar_rules_screen.dart';
 import 'package:sprachapp/screens/home/widgets/deck_tile.dart';
 import 'package:sprachapp/screens/home/widgets/vocab_progress.dart';
 import 'package:sprachapp/screens/home/widgets/weekly_goal_card.dart';
 import 'package:sprachapp/screens/stories/story_library_screen.dart';
 import 'package:sprachapp/screens/stories/story_reader_screen.dart';
+import 'package:sprachapp/screens/stories/widgets/narration_panel.dart';
 import 'package:sprachapp/screens/stories/widgets/word_lookup_sheet.dart';
+import 'package:sprachapp/screens/words/widgets/memory_level_legend_sheet.dart';
+import 'package:sprachapp/screens/words/widgets/word_details_sheet.dart';
+import 'package:sprachapp/screens/words/widgets/word_list_item.dart';
+import 'package:sprachapp/screens/words/word_list_screen.dart';
 import 'package:sprachapp/theme/app_theme.dart';
 import 'package:sprachapp/widgets/app_bottom_bar.dart';
 import 'package:sprachapp/widgets/difficulty_bolts.dart';
@@ -606,7 +618,7 @@ void main() {
     // Cards fill their grid column, whatever their text length.
     final texte = tester.getSize(find.bySemanticsLabel('Texte, 5 Texte'));
     final regeln = tester.getSize(
-      find.bySemanticsLabel('Grammatikregeln, Bald verfügbar'),
+      find.bySemanticsLabel('Grammatikregeln, 9 Regeln'),
     );
     expect(texte.width, regeln.width);
     expect(texte.width, greaterThan(150));
@@ -909,5 +921,619 @@ void main() {
     await tapWord(tester, 'Sunday');
     expect(find.text('Tom … up late on Sunday.'), findsOneWidget);
     expect(find.text('Tom wachte am Sonntag spät auf.'), findsOneWidget);
+  });
+
+  final wordListNow = DateTime(2026, 10, 2, 12);
+
+  Widget wordList([WordListStore? store]) => MaterialApp(
+    theme: buildAppTheme(),
+    home: Scaffold(
+      body: WordListScreen(
+        store: store ?? WordListStore(sampleVocabulary(wordListNow)),
+        clock: () => wordListNow,
+      ),
+    ),
+  );
+
+  /// Phone width; tall enough that every sample card is built.
+  void phoneView(WidgetTester tester, {double height = 2600}) {
+    tester.view.devicePixelRatio = 3;
+    tester.view.physicalSize = Size(390 * 3, height * 3);
+    addTearDown(tester.view.reset);
+  }
+
+  /// [finder] inside the card of [headword].
+  Finder inCard(String headword, Finder finder) => find.descendant(
+    of: find.byWidgetPredicate(
+      (w) => w is WordListItem && w.word.entry.headword == headword,
+    ),
+    matching: finder,
+  );
+
+  /// Lets the simulated playback and any snack bar run out.
+  Future<void> drainTimers(WidgetTester tester) async {
+    await tester.pump(const Duration(seconds: 5));
+    await tester.pumpAndSettle();
+  }
+
+  test('Leitner intervals and "Zuletzt gesehen" labels', () {
+    expect(leitnerInterval(1), const Duration(days: 1));
+    expect(leitnerInterval(5), const Duration(days: 90));
+    expect(() => leitnerInterval(6), throwsRangeError);
+    final now = DateTime(2026, 10, 2, 0, 30);
+    expect(lastSeenLabel(DateTime(2026, 10, 2, 0, 5), now), 'heute');
+    expect(lastSeenLabel(DateTime(2026, 10, 1, 23, 50), now), 'gestern');
+    expect(lastSeenLabel(DateTime(2026, 9, 30), now), 'vor 2 Tagen');
+    expect(lastSeenLabel(DateTime(2026, 9, 11), now), 'vor 3 Wochen');
+    expect(lastSeenLabel(DateTime(2026, 7, 30), now), 'vor 2 Monaten');
+    expect(intervalLabel(const Duration(days: 1)), '1 Tag');
+    expect(intervalLabel(const Duration(days: 14)), '14 Tage');
+  });
+
+  testWidgets('Wortliste tab lists seen words with search and playlist', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const SprachApp());
+    await tester.tap(
+      find.descendant(
+        of: find.byType(AppBottomBar),
+        matching: find.text('Wortliste'),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(WordListScreen), findsOneWidget);
+    expect(find.text('Wörter suchen'), findsOneWidget);
+    expect(find.bySemanticsLabel(RegExp(r'^Playlist, \d+ Wörter$')), findsOne);
+    expect(
+      tester.getSemantics(
+        find.descendant(
+          of: find.byType(AppBottomBar),
+          matching: find.bySemanticsLabel('Wortliste'),
+        ),
+      ),
+      isSemantics(isButton: true, isSelected: true, hasTapAction: true),
+    );
+    await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+  });
+
+  testWidgets('Word card shows level, sentence and metadata', (tester) async {
+    phoneView(tester);
+    await tester.pumpWidget(wordList());
+    expect(find.text('platform'), findsOneWidget);
+    expect(
+      find.text('Anna ran to the platform, but the doors were already closed.'),
+      findsOneWidget,
+    );
+    expect(
+      find.text('Zuletzt gesehen: vor 2 Tagen · Wiederholt: 5 Mal'),
+      findsOneWidget,
+    );
+    expect(
+      tester.getSemantics(
+        inCard(
+          'platform',
+          find.bySemanticsLabel('Erinnerungsstufe 3 von 5: Gut verankert'),
+        ),
+      ),
+      isSemantics(isButton: true, hasTapAction: true),
+    );
+    // Level 3: three lit dashes in the level-3 green, two Hairline.
+    final dashes = tester
+        .widgetList<Container>(
+          find.descendant(
+            of: inCard(
+              'platform',
+              find.bySemanticsLabel('Erinnerungsstufe 3 von 5: Gut verankert'),
+            ),
+            matching: find.byType(Container),
+          ),
+        )
+        .map((c) => (c.decoration! as BoxDecoration).color)
+        .toList();
+    expect(dashes, [
+      AppColors.memoryLevel3,
+      AppColors.memoryLevel3,
+      AppColors.memoryLevel3,
+      AppColors.hairline,
+      AppColors.hairline,
+    ]);
+    expect(AppColors.memoryLevel(1), AppColors.active);
+    await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+  });
+
+  testWidgets('Search matches headword and translation', (tester) async {
+    phoneView(tester);
+    await tester.pumpWidget(wordList());
+    await tester.enterText(find.byType(CupertinoSearchTextField), 'bahn');
+    await tester.pumpAndSettle();
+    expect(find.text('platform'), findsOneWidget);
+    expect(find.text('station'), findsOneWidget);
+    expect(find.text('journey'), findsNothing);
+
+    await tester.enterText(find.byType(CupertinoSearchTextField), 'xyz');
+    await tester.pumpAndSettle();
+    expect(find.text('Keine Wörter für „xyz“'), findsOneWidget);
+  });
+
+  testWidgets('Tapping the word or sentence marks it while it plays', (
+    tester,
+  ) async {
+    phoneView(tester);
+    await tester.pumpWidget(wordList());
+    Finder marks() => find.byWidgetPredicate(
+      (w) =>
+          w is AnimatedContainer &&
+          (w.decoration as BoxDecoration?)?.color == AppColors.playback,
+    );
+    expect(marks(), findsNothing);
+    expect(find.byIcon(CupertinoIcons.speaker_2_fill), findsNothing);
+
+    await tester.tap(find.bySemanticsLabel('platform anhören'));
+    await tester.pump();
+    expect(marks(), findsOneWidget);
+    expect(find.byIcon(CupertinoIcons.speaker_2_fill), findsOneWidget);
+
+    // Starting the sentence stops the word: one mark at a time.
+    await tester.tap(find.bySemanticsLabel(RegExp('^Satz anhören: Anna ran')));
+    await tester.pump();
+    expect(marks(), findsOneWidget);
+    expect(find.byIcon(CupertinoIcons.speaker_2_fill), findsNothing);
+
+    await drainTimers(tester);
+    expect(marks(), findsNothing);
+  });
+
+  testWidgets('Quiet toggles flip state and confirm with a snack bar', (
+    tester,
+  ) async {
+    phoneView(tester);
+    final store = WordListStore(sampleVocabulary(wordListNow));
+    await tester.pumpWidget(wordList(store));
+    Finder toggle(String label) =>
+        inCard('platform', find.bySemanticsLabel(label));
+
+    expect(
+      tester.getSemantics(toggle('Deaktiviert')),
+      isSemantics(isButton: true, hasToggledState: true, isToggled: false),
+    );
+    await tester.tap(toggle('Deaktiviert'));
+    await tester.pump();
+    expect(find.text('Wort deaktiviert'), findsOneWidget);
+    expect(store.byId('platform').isDisabled, isTrue);
+    expect(
+      find.textContaining('Deaktiviert · Zuletzt gesehen: vor 2 Tagen'),
+      findsOneWidget,
+    );
+    expect(
+      tester.getSemantics(toggle('Deaktiviert')),
+      isSemantics(isButton: true, hasToggledState: true, isToggled: true),
+    );
+
+    // Already in the playlist: tapping removes it.
+    await tester.tap(toggle('In der Playlist'));
+    await tester.pump();
+    expect(find.text('Aus der Playlist entfernt'), findsOneWidget);
+
+    await tester.tap(toggle('Favorit'));
+    await tester.pump();
+    expect(find.text('Zu Favoriten hinzugefügt'), findsOneWidget);
+    expect(find.byIcon(CupertinoIcons.heart_fill), findsWidgets);
+    await drainTimers(tester);
+  });
+
+  testWidgets('The dashes open the legend with the word\'s level marked', (
+    tester,
+  ) async {
+    phoneView(tester);
+    await tester.pumpWidget(wordList());
+    await tester.tap(
+      inCard(
+        'platform',
+        find.bySemanticsLabel('Erinnerungsstufe 3 von 5: Gut verankert'),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(MemoryLevelLegendSheet), findsOneWidget);
+    expect(find.text('Neues Wort'), findsOneWidget);
+    expect(find.text('Maximales Erinnerungsvermögen'), findsOneWidget);
+    expect(
+      find.bySemanticsLabel(
+        RegExp('^Stufe 3 von 5: Gut verankert.*Dieses Wort'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('Dieses Wort'), findsOneWidget);
+  });
+
+  testWidgets('Chevron opens the details sheet; notes are kept', (
+    tester,
+  ) async {
+    phoneView(tester);
+    final store = WordListStore(sampleVocabulary(wordListNow));
+    await tester.pumpWidget(wordList(store));
+    await tester.tap(find.bySemanticsLabel('Details zu platform'));
+    await tester.pumpAndSettle();
+    final sheet = find.byType(WordDetailsSheet);
+    expect(sheet, findsOneWidget);
+    Finder inSheet(Finder f) => find.descendant(of: sheet, matching: f);
+    expect(inSheet(find.text('der Bahnsteig')), findsOneWidget);
+    expect(inSheet(find.text('Substantiv')), findsOneWidget);
+    expect(inSheet(find.text('vor 2 Tagen')), findsOneWidget);
+    expect(inSheet(find.text('5 Mal')), findsOneWidget);
+    expect(inSheet(find.text('Zeit zwischen Wiederholungen')), findsOneWidget);
+    expect(inSheet(find.text('14 Tage')), findsOneWidget);
+    expect(
+      inSheet(
+        find.text(
+          'Anna rannte zum Bahnsteig, aber die Türen waren schon geschlossen.',
+        ),
+      ),
+      findsOneWidget,
+    );
+
+    await tester.tap(inSheet(find.bySemanticsLabel('platform anhören')));
+    await tester.pump();
+    expect(inSheet(find.byIcon(CupertinoIcons.speaker_2_fill)), findsOneWidget);
+
+    await tester.ensureVisible(inSheet(find.byType(TextField)));
+    await tester.enterText(inSheet(find.byType(TextField)), 'Gleis = track');
+    expect(store.byId('platform').note, 'Gleis = track');
+    await drainTimers(tester);
+  });
+
+  testWidgets('Wortliste and sheets survive large Dynamic Type', (
+    tester,
+  ) async {
+    phoneView(tester, height: 844);
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await tester.pumpWidget(wordList());
+    await tester.drag(find.byType(ListView), const Offset(0, -600));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+
+    await tester.tap(
+      find.bySemanticsLabel(RegExp('^Details zu')).hitTestable().first,
+    );
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+    Navigator.of(tester.element(find.byType(WordDetailsSheet))).pop();
+    await tester.pumpAndSettle();
+
+    await tester.tap(
+      find.bySemanticsLabel(RegExp('^Erinnerungsstufe')).hitTestable().first,
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(MemoryLevelLegendSheet), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('Word rows sit on the Night Page with a Hairline rule', (
+    tester,
+  ) async {
+    phoneView(tester);
+    await tester.pumpWidget(wordList());
+    final boxes = tester
+        .widgetList<Container>(
+          find.descendant(
+            of: find.byType(WordListItem).first,
+            matching: find.byType(Container),
+          ),
+        )
+        .map((c) => c.decoration)
+        .whereType<BoxDecoration>();
+    // No card: nothing in the row is outlined or filled with Raised Ink.
+    expect(
+      boxes.where((d) => d.border is Border && d.shape != BoxShape.circle),
+      isEmpty,
+    );
+    expect(boxes.where((d) => d.color == AppColors.raisedInk), isEmpty);
+    final rule = find.descendant(
+      of: find.byType(WordListItem).first,
+      matching: find.byWidgetPredicate(
+        (w) =>
+            w is Container &&
+            w.color == AppColors.hairline &&
+            w.constraints?.maxHeight == 1,
+      ),
+    );
+    expect(rule, findsOneWidget);
+  });
+
+  // ------------------------------------------------------------- grammar
+
+  test('Emphasis markup splits forms from prose', () {
+    expect(parseEmphasis('Vor Vokalen *an*: *an hour*.'), [
+      (text: 'Vor Vokalen ', emphasis: false),
+      (text: 'an', emphasis: true),
+      (text: ': ', emphasis: false),
+      (text: 'an hour', emphasis: true),
+      (text: '.', emphasis: false),
+    ]);
+    expect(parseEmphasis('2 * 3'), [(text: '2 * 3', emphasis: false)]);
+    for (final level in GrammarLevel.values) {
+      expect(sampleGrammarRules.where((r) => r.level == level), isNotEmpty);
+    }
+    expect(
+      sampleGrammarRules.map((r) => r.id).toSet(),
+      hasLength(sampleGrammarRules.length),
+    );
+  });
+
+  Widget grammar() => MaterialApp(
+    theme: buildAppTheme(),
+    home: GrammarRulesScreen(rules: sampleGrammarRules),
+  );
+
+  testWidgets('Grammatikregeln filters rules by level', (tester) async {
+    await tester.pumpWidget(grammar());
+    expect(
+      find.byType(CupertinoSlidingSegmentedControl<GrammarLevel>),
+      findsOneWidget,
+    );
+    expect(find.text('Artikel'), findsOneWidget);
+    expect(find.text('Pluralbildung'), findsOneWidget);
+    expect(find.text('Present Perfect'), findsNothing);
+    expect(
+      tester.getSemantics(
+        find.bySemanticsLabel(RegExp('^Artikel, a, an und the')),
+      ),
+      isSemantics(isButton: true, hasTapAction: true),
+    );
+
+    await tester.tap(find.text('Mittleres Niveau'));
+    await tester.pumpAndSettle();
+    expect(find.text('Present Perfect'), findsOneWidget);
+    expect(find.text('Artikel'), findsNothing);
+
+    await tester.tap(find.text('Fortgeschrittene'));
+    await tester.pumpAndSettle();
+    expect(find.text('Passiv'), findsOneWidget);
+    await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+  });
+
+  testWidgets('Grammatikregeln opens from the dashboard', (tester) async {
+    await openContentTab(tester);
+    await tester.scrollUntilVisible(
+      find.text('Grammatikregeln'),
+      200,
+      scrollable: find
+          .descendant(
+            of: find.byType(ContentDashboardScreen),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+    // Clear the notched bar before tapping.
+    await tester.drag(
+      find.byType(ContentDashboardScreen),
+      const Offset(0, -300),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.bySemanticsLabel('Grammatikregeln, 9 Regeln'));
+    await tester.pumpAndSettle();
+    expect(find.byType(GrammarRulesScreen), findsOneWidget);
+  });
+
+  testWidgets('Rule detail reads on the Night Page, forms set apart', (
+    tester,
+  ) async {
+    await tester.pumpWidget(grammar());
+    await tester.tap(find.text('Artikel'));
+    await tester.pumpAndSettle();
+    expect(find.byType(GrammarRuleDetailScreen), findsOneWidget);
+    expect(
+      tester
+          .widget<Scaffold>(
+            find.descendant(
+              of: find.byType(GrammarRuleDetailScreen),
+              matching: find.byType(Scaffold),
+            ),
+          )
+          .backgroundColor,
+      AppColors.nightPage,
+    );
+    expect(find.text('Anfänger · 1 Min'), findsOneWidget);
+
+    final example = tester
+        .widget<RichText>(
+          find
+              .byWidgetPredicate(
+                (w) =>
+                    w is RichText &&
+                    w.text.toPlainText() == 'She is a teacher.',
+              )
+              .first,
+        )
+        .text;
+    TextStyle? styleOf(String piece) {
+      TextStyle? found;
+      example.visitChildren((span) {
+        if (span is TextSpan && span.text == piece) found = span.style;
+        return found == null;
+      });
+      return found;
+    }
+
+    // English forms: italic w600 in textPrimary, never a status ink.
+    expect(styleOf('a')?.fontStyle, FontStyle.italic);
+    expect(styleOf('a')?.fontWeight, FontWeight.w600);
+    expect(styleOf('a')?.color, AppColors.textPrimary);
+    expect(find.text('Sie ist Lehrerin.'), findsOneWidget);
+
+    await tester.scrollUntilVisible(
+      find.text('Sondern'),
+      200,
+      scrollable: find
+          .descendant(
+            of: find.byType(GrammarRuleDetailScreen),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+    expect(find.text('Typischer Fehler'), findsWidgets);
+    expect(
+      find.bySemanticsLabel(RegExp('Nicht\nFalsch: She is teacher.')),
+      findsOneWidget,
+    );
+    for (final text in tester.widgetList<RichText>(find.byType(RichText))) {
+      text.text.visitChildren((span) {
+        expect(span.style?.color, isNot(AppColors.active));
+        expect(span.style?.color, isNot(AppColors.mastered));
+        return true;
+      });
+    }
+  });
+
+  testWidgets('Grammar screens survive large Dynamic Type', (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await tester.pumpWidget(grammar());
+    await tester.tap(find.text('Fortgeschrittene'));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+    await tester.tap(find.text('Bedingungssätze'));
+    await tester.pumpAndSettle();
+    await tester.drag(find.byType(ListView).last, const Offset(0, -2000));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+  });
+
+  // ----------------------------------------------------------- narration
+
+  test('Narration clock: duration, skip, seek and the sentence being read', () {
+    final narration = StoryNarration.forText(['one two three']);
+    expect(narration.duration, const Duration(seconds: 10));
+    narration.skip(const Duration(seconds: -15));
+    expect(narration.position, Duration.zero);
+    narration.skip(StoryNarration.skipStep);
+    expect(narration.position, narration.duration);
+    narration.dispose();
+
+    expect(clockLabel(const Duration(minutes: 5, seconds: 56)), '5:56');
+    expect(clockLabel(const Duration(seconds: 7)), '0:07');
+    expect(sentenceAt([10, 30], 0), 0);
+    expect(sentenceAt([10, 30], 0.3), 1);
+    expect(sentenceAt([10, 30], 1), isNull);
+    expect(sentenceAt([], 0), isNull);
+  });
+
+  /// Plain text of every span in the story body on [color].
+  List<String> spansOn(WidgetTester tester, Color color) {
+    final found = <String>[];
+    // visitChildren skips spans without text, so walk the tree by hand.
+    void walk(InlineSpan span) {
+      if (span.style?.backgroundColor == color) {
+        found.add(span.toPlainText());
+      } else if (span is TextSpan) {
+        span.children?.forEach(walk);
+      }
+    }
+
+    for (final text in tester.widgetList<RichText>(find.byType(RichText))) {
+      walk(text.text);
+    }
+    return found;
+  }
+
+  testWidgets('Vorlesen docks a player and marks the sentence being read', (
+    tester,
+  ) async {
+    await tester.pumpWidget(reader());
+    expect(find.byType(NarrationPanel), findsNothing);
+    expect(spansOn(tester, AppColors.playback), isEmpty);
+
+    await tester.tap(find.bySemanticsLabel('Vorlesen'));
+    await tester.pump();
+    expect(
+      tester.getSemantics(find.bySemanticsLabel('Vorlesen')),
+      isSemantics(
+        isButton: true,
+        isToggled: true,
+        hasToggledState: true,
+        hasTapAction: true,
+      ),
+    );
+    expect(find.byType(NarrationPanel), findsOneWidget);
+    expect(find.bySemanticsLabel('Pause'), findsOneWidget);
+    expect(find.text('0:00'), findsOneWidget);
+    expect(spansOn(tester, AppColors.playback), [
+      'The station was almost empty when Clara arrived. ',
+    ]);
+
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text('0:01'), findsOneWidget);
+
+    // Further along, the mark moves on; a tapped word still opens its sheet.
+    await tester.tap(find.bySemanticsLabel('15 Sekunden vor'));
+    await tester.pump();
+    expect(
+      spansOn(tester, AppColors.playback).single,
+      isNot(startsWith('The station')),
+    );
+
+    // Paused: no mark.
+    await tester.tap(find.bySemanticsLabel('Pause'));
+    await tester.pump();
+    expect(find.bySemanticsLabel('Abspielen'), findsOneWidget);
+    expect(spansOn(tester, AppColors.playback), isEmpty);
+    await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+
+    // Translation mode keeps the mark on the sentence.
+    await tester.tap(find.bySemanticsLabel('Abspielen'));
+    await tester.tap(find.bySemanticsLabel('Übersetzen'));
+    await tester.pump();
+    expect(spansOn(tester, AppColors.playback), hasLength(1));
+
+    await tester.tap(find.bySemanticsLabel('Vorlesen'));
+    await tester.pump();
+    expect(find.byType(NarrationPanel), findsNothing);
+    expect(spansOn(tester, AppColors.playback), isEmpty);
+  });
+
+  testWidgets('Reader with player survives large Dynamic Type', (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await tester.pumpWidget(reader());
+    await tester.tap(find.bySemanticsLabel('Vorlesen'));
+    await tester.pump();
+    expect(tester.takeException(), isNull);
+  });
+
+  // ------------------------------------------------------------- success
+
+  testWidgets('Success card shows a quiet thumbs-up, no illustration', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildAppTheme(),
+        home: Scaffold(body: SuccessFeedbackCard(total: 6, onBack: () {})),
+      ),
+    );
+    expect(find.text('Alle 6 Lücken gelöst'), findsOneWidget);
+    expect(find.byType(Image), findsNothing);
+    final icon = tester.widget<Icon>(
+      find.byIcon(CupertinoIcons.hand_thumbsup_fill),
+    );
+    expect(icon.color, AppColors.success);
+    final disc = tester.widget<Container>(
+      find
+          .ancestor(
+            of: find.byIcon(CupertinoIcons.hand_thumbsup_fill),
+            matching: find.byType(Container),
+          )
+          .first,
+    );
+    expect((disc.decoration! as BoxDecoration).color, AppColors.successTint);
+    final card = tester.widget<Container>(
+      find
+          .ancestor(
+            of: find.text('Alle 6 Lücken gelöst'),
+            matching: find.byType(Container),
+          )
+          .last,
+    );
+    expect((card.decoration! as BoxDecoration).color, AppColors.raisedInk);
   });
 }
