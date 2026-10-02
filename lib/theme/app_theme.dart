@@ -13,6 +13,12 @@ abstract final class AppColors {
   /// Field Orange at 8% over Raised Ink: background of an active deck tile.
   static const activeTint = Color(0xFF2C2523);
 
+  /// Feedback Rule: right/wrong in exercises only, never accents.
+  static const success = Color(0xFF6FB38A);
+  static const successTint = Color(0xFF273435);
+  static const error = Color(0xFFD9726B);
+  static const errorTint = Color(0xFF372A30);
+
   static const textPrimary = Color(0xFFF0F2F5);
   static const textMuted = Color(0xFF8E95A5);
   static const iconOff = Color(0xFF4A5063);

@@ -1,18 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' show Colors, Scaffold;
+import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 
 import '../../models/home_models.dart';
 import '../../models/sample_content.dart';
+import '../../domain/sentences.dart';
 import '../../models/story_models.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/back_bar.dart';
+import '../../widgets/reading_toolbar.dart';
+import '../../widgets/sentence_translation_sheet.dart';
 import '../home/widgets/story_carousel.dart';
 import 'widgets/word_lookup_sheet.dart';
 
 /// Reading view. Every word is its own tappable span (LingQ mechanic); words
 /// already in the learner's vocabulary carry their status ink as an
-/// underline, directly in the text.
+/// underline, directly in the text. In translation mode whole sentences
+/// become the tap targets instead.
 class StoryReaderScreen extends StatefulWidget {
   const StoryReaderScreen({
     super.key,
@@ -20,6 +26,7 @@ class StoryReaderScreen extends StatefulWidget {
     required this.text,
     this.lookup = sampleLookup,
     this.initialMarks = sampleWordMarks,
+    this.translate = sampleTranslateSentence,
   });
 
   final Story story;
@@ -28,6 +35,9 @@ class StoryReaderScreen extends StatefulWidget {
 
   /// Headword → mark. Placeholder until the vocabulary store exists.
   final Map<String, WordMark> initialMarks;
+
+  /// Pre-generated sentence translation; placeholder until the content pack.
+  final String Function(String sentence) translate;
 
   static Future<void> open(BuildContext context, Story story) =>
       Navigator.of(context).push(
@@ -49,19 +59,48 @@ class _Word {
   final TapGestureRecognizer recognizer;
 }
 
+class _Sentence {
+  _Sentence(this.text, this.recognizer);
+
+  final String text;
+  final TapGestureRecognizer recognizer;
+}
+
 class _StoryReaderScreenState extends State<StoryReaderScreen> {
   static final _wordPattern = RegExp(r"[A-Za-z]+(?:['’][A-Za-z]+)*");
 
   /// Per paragraph: plain gaps as [String], words as indices into [_words].
   late final List<List<Object>> _paragraphs;
   final _words = <_Word>[];
+
+  /// Per paragraph: indices into [_sentences].
+  late final List<List<int>> _paragraphSentences;
+  final _sentences = <_Sentence>[];
+
   late final Map<String, WordMark> _marks = Map.of(widget.initialMarks);
   int? _selected;
+  int? _selectedSentence;
+  bool _translating = false;
 
   @override
   void initState() {
     super.initState();
     _paragraphs = [for (final p in widget.text.paragraphs) _tokenize(p)];
+    _paragraphSentences = [
+      for (final p in widget.text.paragraphs)
+        [
+          for (final range in splitSentences(p))
+            _addSentence(p.substring(range.start, range.end)),
+        ],
+    ];
+  }
+
+  int _addSentence(String text) {
+    final index = _sentences.length;
+    _sentences.add(
+      _Sentence(text, TapGestureRecognizer()..onTap = () => _translate(index)),
+    );
+    return index;
   }
 
   List<Object> _tokenize(String paragraph) {
@@ -92,7 +131,84 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     for (final word in _words) {
       word.recognizer.dispose();
     }
+    for (final sentence in _sentences) {
+      sentence.recognizer.dispose();
+    }
     super.dispose();
+  }
+
+  void _toggleTranslate() {
+    setState(() => _translating = !_translating);
+    if (_translating) {
+      SemanticsService.sendAnnouncement(
+        View.of(context),
+        ReadingToolbar.hint,
+        TextDirection.ltr,
+      );
+    }
+  }
+
+  Future<void> _translate(int index) async {
+    final sentence = _sentences[index].text;
+    setState(() => _selectedSentence = index);
+    await SentenceTranslationSheet.show(
+      context,
+      original: sentence,
+      translation: widget.translate(sentence),
+    );
+    if (mounted) setState(() => _selectedSentence = null);
+  }
+
+  Color? _inkFor(String surface) =>
+      switch (_marks[widget.lookup(surface).headword]) {
+        WordMark.active => AppColors.active,
+        WordMark.mastered => AppColors.mastered,
+        null => null,
+      };
+
+  /// Translation mode: every leaf span of a sentence carries the sentence's
+  /// recognizer (a parent span's recognizer doesn't reach its children);
+  /// status underlines stay.
+  TextSpan _sentenceSpan(int index) {
+    final sentence = _sentences[index];
+    final background = index == _selectedSentence ? AppColors.hairline : null;
+    final children = <InlineSpan>[];
+    var last = 0;
+    for (final match in _wordPattern.allMatches(sentence.text)) {
+      if (match.start > last) {
+        children.add(
+          TextSpan(
+            text: sentence.text.substring(last, match.start),
+            recognizer: sentence.recognizer,
+          ),
+        );
+      }
+      final ink = _inkFor(match[0]!);
+      children.add(
+        TextSpan(
+          text: match[0],
+          recognizer: sentence.recognizer,
+          style: TextStyle(
+            decoration: ink == null ? null : TextDecoration.underline,
+            decorationColor: ink,
+            decorationThickness: 2,
+          ),
+        ),
+      );
+      last = match.end;
+    }
+    if (last < sentence.text.length) {
+      children.add(
+        TextSpan(
+          text: sentence.text.substring(last),
+          recognizer: sentence.recognizer,
+        ),
+      );
+    }
+    return TextSpan(
+      style: TextStyle(backgroundColor: background),
+      children: children,
+    );
   }
 
   Future<void> _lookUp(int index) async {
@@ -112,11 +228,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
 
   TextSpan _wordSpan(int index) {
     final word = _words[index];
-    final ink = switch (_marks[word.entry.headword]) {
-      WordMark.active => AppColors.active,
-      WordMark.mastered => AppColors.mastered,
-      null => null,
-    };
+    final ink = _inkFor(word.text);
     return TextSpan(
       text: word.text,
       recognizer: word.recognizer,
@@ -137,11 +249,15 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
         statusBarColor: Colors.transparent,
       ),
       child: Scaffold(
+        bottomNavigationBar: ReadingToolbar(
+          translating: _translating,
+          onToggleTranslate: _toggleTranslate,
+        ),
         body: SafeArea(
           bottom: false,
           child: Column(
             children: [
-              _ReaderTopBar(onBack: () => Navigator.of(context).maybePop()),
+              BackBar(onBack: () => Navigator.of(context).maybePop()),
               Expanded(
                 child: ListView(
                   physics: const BouncingScrollPhysics(
@@ -174,25 +290,35 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              'Tippe auf ein Wort, um es nachzuschlagen.',
+                              _translating
+                                  ? 'Übersetzungsmodus aktiv.'
+                                  : 'Tippe auf ein Wort, um es nachzuschlagen.',
                               style: AppType.chrome(
                                 size: 13,
                                 color: AppColors.textMuted,
                               ),
                             ),
                             const SizedBox(height: 28),
-                            for (final paragraph in _paragraphs)
+                            for (final (i, paragraph) in _paragraphs.indexed)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 20),
                                 child: Text.rich(
                                   TextSpan(
                                     style: AppType.storyBody(),
-                                    children: [
-                                      for (final token in paragraph)
-                                        token is int
-                                            ? _wordSpan(token)
-                                            : TextSpan(text: token as String),
-                                    ],
+                                    children: _translating
+                                        ? [
+                                            for (final sentence
+                                                in _paragraphSentences[i])
+                                              _sentenceSpan(sentence),
+                                          ]
+                                        : [
+                                            for (final token in paragraph)
+                                              token is int
+                                                  ? _wordSpan(token)
+                                                  : TextSpan(
+                                                      text: token as String,
+                                                    ),
+                                          ],
                                   ),
                                 ),
                               ),
@@ -206,39 +332,6 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _ReaderTopBar extends StatelessWidget {
-  const _ReaderTopBar({required this.onBack});
-
-  final VoidCallback onBack;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Row(
-        children: [
-          MergeSemantics(
-            child: CupertinoButton(
-              onPressed: onBack,
-              padding: EdgeInsets.zero,
-              minimumSize: const Size(44, 44),
-              child: Semantics(
-                label: 'Zurück',
-                excludeSemantics: true,
-                child: const Icon(
-                  CupertinoIcons.chevron_left,
-                  size: 24,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

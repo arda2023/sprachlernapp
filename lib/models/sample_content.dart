@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+import 'exercise_models.dart';
 import 'home_models.dart';
 import 'story_models.dart';
 
@@ -300,3 +301,138 @@ const sampleWordMarks = {
   'ticket': WordMark.active,
   'late': WordMark.active,
 };
+
+/// Stories opened before this session, so "Aus deinen Stories" isn't empty.
+const sampleReadStoryIds = {'last-train-to-seville'};
+
+const sampleExerciseTexts = [
+  ExerciseText(
+    info: Story(
+      id: 'text-last-train-to-seville',
+      title: 'The Last Train to Seville',
+      topic: 'Reisen',
+      level: 'A2',
+      readingMinutes: 4,
+    ),
+    sourceStoryId: 'last-train-to-seville',
+    paragraphs: [
+      'The station was almost {empty|empty|adjective} when Clara '
+          '{arrived|arrive|verb}. A cold wind {moved|move|verb} through the '
+          'hall, and the old {clock|clock|noun} above the gate said ten '
+          'minutes to midnight.',
+      'She {looked|look|verb} at her ticket again. The last train to '
+          'Seville was {late|late|adjective}, but nobody seemed to know why.',
+    ],
+  ),
+  ExerciseText(
+    info: Story(
+      id: 'text-saturday-market',
+      title: 'The Saturday Market',
+      topic: 'Alltag',
+      level: 'A1',
+      readingMinutes: 2,
+    ),
+    sourceStoryId: 'saturday-market',
+    paragraphs: [
+      'On Saturdays, the {market|market|noun} {opens|open|verb} early. '
+          'People {buy|buy|verb} fresh {bread|bread|noun} and '
+          '{talk|talk|verb} with their neighbours.',
+    ],
+  ),
+  ExerciseText(
+    info: Story(
+      id: 'text-slow-morning',
+      title: 'A Slow Morning',
+      topic: 'Alltag',
+      level: 'A2',
+      readingMinutes: 3,
+    ),
+    paragraphs: [
+      'Tom {woke|wake|verb} up late on Sunday. He {dressed|dress|verb} '
+          'slowly and {made|make|verb} a cup of {tea|tea|noun}. The kitchen '
+          'was {quiet|quiet|adjective}, and the rain {fell|fall|verb} softly '
+          'on the window.',
+      'After breakfast, he {called|call|verb} his sister. They '
+          '{talked|talk|verb} about their {plans|plan|noun} for the summer.',
+    ],
+  ),
+  ExerciseText(
+    info: Story(
+      id: 'text-at-the-station',
+      title: 'At the Station',
+      topic: 'Reisen',
+      level: 'A2',
+      readingMinutes: 2,
+    ),
+    paragraphs: [
+      'The train {left|leave|verb} at nine. Anna {ran|run|verb} to the '
+          '{platform|platform|noun}, but the doors were already closed. She '
+          '{bought|buy|verb} a new {ticket|ticket|noun} and '
+          '{waited|wait|verb} for the next one.',
+    ],
+  ),
+  ExerciseText(
+    info: Story(
+      id: 'text-visit-to-the-doctor',
+      title: 'A Visit to the Doctor',
+      topic: 'Medizin',
+      level: 'B1',
+      readingMinutes: 3,
+    ),
+    paragraphs: [
+      'Maria {felt|feel|verb} tired for a whole week, so she '
+          '{booked|book|verb} an {appointment|appointment|noun}. The doctor '
+          '{listened|listen|verb} {carefully|careful|adverb} and '
+          '{wrote|write|verb} a {prescription|prescription|noun}.',
+    ],
+  ),
+];
+
+/// Pre-generated sentence translations, keyed by the English sentence as it
+/// reads with every gap filled.
+const _sentenceTranslations = {
+  'The station was almost empty when Clara arrived.':
+      'Der Bahnhof war fast leer, als Clara ankam.',
+  'A cold wind moved through the hall, and the old clock above the gate '
+          'said ten minutes to midnight.':
+      'Ein kalter Wind zog durch die Halle, und die alte Uhr über dem Tor '
+      'zeigte zehn vor Mitternacht.',
+  'She looked at her ticket again.': 'Sie sah noch einmal auf ihre Fahrkarte.',
+  'The last train to Seville was late, but nobody seemed to know why.':
+      'Der letzte Zug nach Sevilla hatte Verspätung, aber niemand schien '
+      'zu wissen, warum.',
+  'A man behind the counter shrugged and went back to his newspaper.':
+      'Ein Mann hinter dem Schalter zuckte mit den Schultern und las weiter '
+      'in seiner Zeitung.',
+  'Clara sat down on a bench and opened her book.':
+      'Clara setzte sich auf eine Bank und schlug ihr Buch auf.',
+  'She had waited three years for this journey.':
+      'Sie hatte drei Jahre auf diese Reise gewartet.',
+  'Ten more minutes would not change anything.':
+      'Zehn Minuten mehr würden nichts ändern.',
+  'On Saturdays, the market opens early.': 'Samstags öffnet der Markt früh.',
+  'People buy fresh bread and talk with their neighbours.':
+      'Die Leute kaufen frisches Brot und unterhalten sich mit ihren '
+      'Nachbarn.',
+  'Tom woke up late on Sunday.': 'Tom wachte am Sonntag spät auf.',
+  'He dressed slowly and made a cup of tea.':
+      'Er zog sich langsam an und machte sich eine Tasse Tee.',
+  'The kitchen was quiet, and the rain fell softly on the window.':
+      'Die Küche war still, und der Regen fiel leise ans Fenster.',
+  'After breakfast, he called his sister.':
+      'Nach dem Frühstück rief er seine Schwester an.',
+  'They talked about their plans for the summer.':
+      'Sie sprachen über ihre Pläne für den Sommer.',
+  'The train left at nine.': 'Der Zug fuhr um neun ab.',
+  'Anna ran to the platform, but the doors were already closed.':
+      'Anna rannte zum Bahnsteig, aber die Türen waren schon geschlossen.',
+  'She bought a new ticket and waited for the next one.':
+      'Sie kaufte eine neue Fahrkarte und wartete auf den nächsten.',
+  'Maria felt tired for a whole week, so she booked an appointment.':
+      'Maria war eine ganze Woche lang müde, also machte sie einen Termin.',
+  'The doctor listened carefully and wrote a prescription.':
+      'Die Ärztin hörte aufmerksam zu und schrieb ein Rezept.',
+};
+
+String sampleTranslateSentence(String sentence) =>
+    _sentenceTranslations[sentence.trim()] ?? 'Übersetzung folgt.';

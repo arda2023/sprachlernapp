@@ -40,6 +40,11 @@ A dark editorial ground with exactly two accent inks, each reserved for one mean
 - **Text Muted** (`#8E95A5` / `AppColors.textMuted`): secondary labels, level indicators, percentage stats, and inactive tab icons.
 - **Icon Off** (`#4A5063` / `AppColors.iconOff`): unlit difficulty bolts and inactive chrome elements.
 - **Active Deck Tint** (`#2C2523` / `AppColors.activeTint`): Field Orange at 8% over Raised Ink. Only as the background of an active deck tile; see the Active Deck Rule.
+
+### Feedback (exercise answers only)
+- **Quiet Sage** (`#6FB38A` / `AppColors.success`, ~7.6:1 on Night Page): a correct answer in an exercise. **Sage Tint** (`#273435` / `AppColors.successTint`): background of a correct answer chip.
+- **Muted Brick** (`#D9726B` / `AppColors.error`, ~5.9:1 on Night Page): a wrong answer, shown as a short flash. **Brick Tint** (`#372A30` / `AppColors.errorTint`): background of a wrongly chosen chip during its flash.
+- Both are desaturated so they sit inside the Night Edition palette instead of reading as signal lights.
 - **Stand-in Cover Tones**: `#1A1D26`, `#20242F`, `#161922` used as subtle editorial masthead canvas tones when a story has no cover illustration.
 
 ### Named Rules
@@ -47,6 +52,8 @@ A dark editorial ground with exactly two accent inks, each reserved for one mean
 **The Two-Ink Rule.** Only two accent colors exist anywhere in the system — Editorial Violet (`#7B2CBF`) for mastered words and Field Orange (`#F77F00`) for active/in-progress words. Neither is ever used decoratively (no brand-colored buttons, decorative illustrations, or colorful category chips).
 - *Verfügbare Wiederholungen* (Due repetitions) and *Noch nicht angezeigt* (New/unseen words) **do not** receive a third or fourth accent color; they are rendered neutrally in text (`textPrimary`/`textMuted`) or represented by the unfilled hairline track.
 - **Contrast & Underline Rule**: Editorial Violet text against the `#0D0F14` ground yields low contrast (~2.7:1), violating WCAG legibility for plain body text. Therefore, word statistics and emphasized counts use high-contrast primary text (`#F0F2F5`) paired with colored ink underlines (`TextDecoration.underline` with `decorationThickness: 3` and `decorationColor: AppColors.mastered` or `AppColors.active`).
+
+**The Feedback Rule.** Quiet Sage and Muted Brick are not accents and do not reopen the Two-Ink Rule: they say "this answer was right / wrong" and nothing else. They appear only inside exercise screens (gaps, answer chips, the typed field). Muted Brick is always transient (a flash of about 600ms); Quiet Sage may stay on an answer that has been placed. They never color navigation, cards, progress, word status or buttons outside exercises. Color is never the only cue: every check is announced to the screen reader ("Richtig", "Falsch", "Fast richtig") and wrong answers trigger a light haptic.
 
 **The Neutral Chrome Rule.** Application navigation and interactive controls must never be filled with status inks. Specifically, the central Play button in the bottom navigation bar must **not** be colored violet, because violet exclusively denotes "mastered". The central button must adopt a neutral Raised Ink styling (e.g. `#1A1D26` background, `#2A2F40` hairline border, and `#F0F2F5` primary text icon). The same holds for the "Zum Lernen hinzufügen" action in the word lookup sheet: Night Page fill, Hairline border, `textPrimary` label and icon; once added it reads "Wird gelernt" in `textMuted` and is disabled.
 
@@ -108,7 +115,13 @@ A spacious, reading-first spatial grammar with disciplined vertical pacing:
 - **Story Carousel**: Fixed container height `200pt`; individual cards measured at `140pt` width × `200pt` height.
 - **Deck Tiles**: Full-width cards with `16pt` internal padding. Left: the deck icon inside a `52pt` progress ring (mastered share, Editorial Violet). Right of it: deck title, "[X]% gemeistert" in metadata style, then the difficulty bolts; an "Aktiv" label trails active decks.
 - **Weekly Goal Card**: Raised Ink card, `16pt` padding. Week row (7 equal columns, `30pt` day circles), hairline rule, then "4 von 10 Wörtern" with a `44pt` gear button that opens the daily-goal sheet.
-- **Deck Library**: screen title "Stapel" → count line → "Aktiv" section → "Weitere Stapel" section, tiles `12pt` apart. It is the "Inhalte" tab and the target of "Mehr ansehen".
+- **Content Dashboard** ("Inhalte" tab): screen title "Inhalte" → `28pt` → section "Stapel" (up to two active deck tiles, then a full-width "Alle Stapel" row with count and chevron) → `44pt` → section "Üben" with a two-column grid of category cards (`12pt` gaps): Texte, Hören, Grammatik, Grammatikregeln. Category card: Raised Ink, 1pt Hairline, `12pt` radius, `16pt` padding, at least `132pt` tall; 28pt icon top left, title (Figtree 17 w600) and a metadata line ("4 Texte") at the bottom. Categories that don't exist yet read "Bald verfügbar" in `textMuted`, with the icon in `iconOff`, and are not tappable.
+- **Deck Library**: pushed from "Alle Stapel" or "Mehr ansehen", with a back bar. Screen title "Stapel" → count line → "Aktiv" section → "Weitere Stapel" section, tiles `12pt` apart.
+- **Text Library**: back bar → screen title "Texte" → section "Aus deinen Stories" (exercise texts built from stories the learner has opened; omitted when empty) → sections by level, each a story-card carousel. Tapping a card opens the exercise choice sheet.
+- **Exercise Choice Sheet**: standard sheet; text title (Source Serif 4 24pt) and meta line, then one option row per mode (Figtree 17 w600 title, metadata description with the gap count, chevron), Hairline separators, `56pt` min height. A mode without gaps is disabled.
+- **Text Exercise**: back bar with a "x von y" progress count → the text in Story Body style. A gap shows its base word in `textMuted` over a Hairline underline; the active gap's underline is `textPrimary`. Verb mode: the gap is an inline text field sized to the longer of base word and answer. Choice mode: no keyboard; a Raised Ink chip panel with a Hairline top edge sits above the toolbar. Answer chips: Night Page fill, Hairline border, `999pt` radius, Figtree 15 w600, `44pt` min height; wrong → Brick Tint + Muted Brick border for 600ms; right → Sage Tint + Quiet Sage border, the chip flies into the gap (skipped when the OS asks for reduced motion) and is greyed out (`iconOff` label, no fill) after 1s. A placed answer reads in Quiet Sage, w600, and can't be edited.
+- **Reading Toolbar** (reader and text exercise): Raised Ink bar with a Hairline top edge, `56pt` tall plus the safe area. It holds the "Übersetzen" toggle (`CupertinoIcons.textformat_abc` + label, `44pt` min height): off = `textMuted`; on = `textPrimary` on a Hairline-filled pill. While translation mode is on, the toolbar shows "Tippe auf einen Satz, um ihn zu übersetzen".
+- **Translation Mode**: sentences replace words as tap targets. The tapped sentence gets a Hairline background while its sheet is open; status underlines stay visible. **Sentence Translation Sheet**: "Satz" label, the original sentence (Source Serif 4 20pt w400), hairline rule, "Deutsch" label, the translation (Source Serif 4 20pt w400). In exercises, unsolved gaps appear as "…" in the original so the sheet never gives the answer away.
 - **Deck Details**: icon ring + level name and bolts → screen title → description (Source Serif 4, 17pt w400, `textMuted`) → progress legend ("53 von 532 neuen Wörtern" with an orange-underlined count, "30 Wörter gelernt" with a violet-underlined count) over an `8pt` track (violet mastered, orange seen-not-mastered, hairline rest) → "Stapel lernen" toggle row → primary button "Lerne mit diesem Stapel" → expandable "Deine letzten 5 gesehenen Wörter" → `44pt` → "Mehr davon" section with the Stapel-Revue card.
 - **Home order**: header → `28pt` → Weekly Goal card → `28pt` → vocabulary overview (due count, segmented track, three-row ledger with hairline separators) → `44pt` → sections.
 - **Stories Library**: screen title → `28pt` → "Weiterlesen" tile (deck-tile geometry) → one carousel per topic, `44pt` apart, each headed by a section heading with a story count in metadata style.
@@ -130,7 +143,7 @@ Depth is purely tonal, not shadow-driven: surfaces separate by stepping from Nig
 ## Shapes
 
 - **Cards & Content Tiles**: Corner radius `12pt` (`BorderRadius.circular(12)`). Used on Deck Tiles and Story Cards.
-- **Pills & Chips**: Fully rounded pill radius `999pt` (`BorderRadius.circular(999)`). Used on level chips, streak badges, difficulty indicators, and progress tracks.
+- **Pills & Chips**: Fully rounded pill radius `999pt` (`BorderRadius.circular(999)`). Used on level chips, answer chips, the translation toggle, and progress tracks.
 - **Central Action Button**: `FloatingActionButton` with `CircleBorder` (1pt Hairline side), `56 × 56 pt`, inside a `72pt` progress ring; the notch follows the ring.
 - **Buttons**: `12pt` radius, `52pt` minimum height, full width. *Primary* ("Lerne mit diesem Stapel"): `textPrimary` fill with a Night Page label, the only filled button. *Outline* ("Zum Lernen hinzufügen", "Stapel nochmals durchsehen"): Night Page fill, Hairline border, `textPrimary` label. Neither ever uses a status ink.
 - **Toggle**: `CupertinoSwitch` with a `textMuted` track when on, a Hairline track when off and a `textPrimary` thumb; never an ink.
@@ -160,5 +173,6 @@ Depth is purely tonal, not shadow-driven: surfaces separate by stepping from Nig
 - **Don't** color the central play button in violet or orange.
 - **Don't** use playful game-app iconography such as flame icons, mascots, confetti, or star badges. Bolts are allowed only as the deck difficulty indicator.
 - **Don't** use drop shadows, glows, or glossy skeuomorphic gradients.
-- **Don't** introduce a third accent color; the Two-Ink Rule is closed.
+- **Don't** introduce a third accent color; the Two-Ink Rule is closed. The feedback colors are not accents and stay inside exercises (see the Feedback Rule).
+- **Don't** let a wrong answer stay red; Muted Brick only flashes.
 - **Don't** ship a light theme; dark is the only mode.

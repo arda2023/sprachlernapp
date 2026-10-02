@@ -1,11 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../models/deck_store.dart';
 import '../models/home_models.dart';
+import '../models/reading_history.dart';
 import '../models/sample_content.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_bottom_bar.dart';
+import 'content/content_dashboard_screen.dart';
+import 'content/text_library_screen.dart';
 import 'decks/deck_details_screen.dart';
 import 'decks/deck_library_screen.dart';
 import 'home/home_screen.dart';
@@ -27,12 +31,14 @@ class _AppShellState extends State<AppShell> {
   static const _tabs = [AppTab.home, AppTab.stories, AppTab.content];
 
   final _decks = DeckStore(sampleDecks);
+  final _history = ReadingHistory(sampleReadStoryIds);
   AppTab _tab = AppTab.home;
   DailyGoal _goal = sampleGoal;
 
   @override
   void dispose() {
     _decks.dispose();
+    _history.dispose();
     super.dispose();
   }
 
@@ -42,7 +48,32 @@ class _AppShellState extends State<AppShell> {
     setState(() => _tab = tab);
   }
 
-  void _openStory(Story story) => StoryReaderScreen.open(context, story);
+  void _openStory(Story story) {
+    _history.markRead(story.id);
+    StoryReaderScreen.open(context, story);
+  }
+
+  void _browseDecks() =>
+      DeckLibraryScreen.open(context, decks: _decks, onOpenDeck: _openDeck);
+
+  void _openTexts() => TextLibraryScreen.open(
+    context,
+    texts: sampleExerciseTexts,
+    history: _history,
+  );
+
+  List<ContentCategory> get _categories => [
+    ContentCategory(
+      title: 'Texte',
+      icon: CupertinoIcons.doc_text,
+      detail: '${sampleExerciseTexts.length} Texte',
+      onOpen: _openTexts,
+    ),
+    // TODO: build these categories.
+    const ContentCategory(title: 'Hören', icon: CupertinoIcons.headphones),
+    const ContentCategory(title: 'Grammatik', icon: CupertinoIcons.textformat),
+    const ContentCategory(title: 'Grammatikregeln', icon: CupertinoIcons.book),
+  ];
 
   void _openDeck(Deck deck) => DeckDetailsScreen.open(context, _decks, deck.id);
 
@@ -75,7 +106,7 @@ class _AppShellState extends State<AppShell> {
               onOpenStory: _openStory,
               onBrowseStories: () => _select(AppTab.stories),
               onOpenDeck: _openDeck,
-              onBrowseDecks: () => _select(AppTab.content),
+              onBrowseDecks: _browseDecks,
               onEditGoal: _editGoal,
               onProfile: _notYetRouted,
               onSettings: _notYetRouted,
@@ -85,7 +116,12 @@ class _AppShellState extends State<AppShell> {
               continueReading: sampleContinueReading,
               onOpenStory: _openStory,
             ),
-            DeckLibraryScreen(decks: _decks, onOpenDeck: _openDeck),
+            ContentDashboardScreen(
+              decks: _decks,
+              categories: _categories,
+              onOpenDeck: _openDeck,
+              onBrowseDecks: _browseDecks,
+            ),
           ],
         ),
         floatingActionButton: PracticeButton(

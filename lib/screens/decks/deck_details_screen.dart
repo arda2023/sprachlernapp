@@ -6,6 +6,7 @@ import '../../models/deck_store.dart';
 import '../../models/home_models.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/action_buttons.dart';
+import '../../widgets/back_bar.dart';
 import '../../widgets/difficulty_bolts.dart';
 import '../../widgets/progress_ring.dart';
 import '../../widgets/section_heading.dart';
@@ -51,7 +52,7 @@ class DeckDetailsScreen extends StatelessWidget {
               final deck = decks.byId(deckId);
               return Column(
                 children: [
-                  _TopBar(onBack: () => Navigator.of(context).maybePop()),
+                  BackBar(onBack: () => Navigator.of(context).maybePop()),
                   Expanded(
                     child: ListView(
                       physics: const BouncingScrollPhysics(
@@ -92,39 +93,6 @@ class DeckDetailsScreen extends StatelessWidget {
             },
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _TopBar extends StatelessWidget {
-  const _TopBar({required this.onBack});
-
-  final VoidCallback onBack;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Row(
-        children: [
-          MergeSemantics(
-            child: CupertinoButton(
-              onPressed: onBack,
-              padding: EdgeInsets.zero,
-              minimumSize: const Size(44, 44),
-              child: Semantics(
-                label: 'Zurück',
-                excludeSemantics: true,
-                child: const Icon(
-                  CupertinoIcons.chevron_left,
-                  size: 24,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
