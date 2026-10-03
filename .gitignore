@@ -47,3 +47,8 @@ app.*.map.json
 # Widget Preview related
 .widget_preview/
 
+# Secrets and Supabase CLI state
+.env
+supabase/.temp/
+supabase/.branches/
+

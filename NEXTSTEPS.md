@@ -1,24 +1,25 @@
 # NEXTSTEPS
 
 ## Erledigt (Stand 2026-10-03)
-- KI-Zugang: Vertex AI (`sprachlernapp-510508`, `global`, `gemini-3.8-flash`); TTS über Cloud Text-to-Speech.
-- `PRODUCT.md` umgestellt (Karten, Erstkontakt, Modi, falsche Form, Story-Wörter, Übersetzungsschichten, Import, Konten); keine "Zero Runtime AI"-Stellen.
-- Neu: `ARCHITECTURE.md`, `docs/srs.md`, `docs/content-schema.md`. Gemerged: `docs/backend.md`, `docs/pipeline.md`.
-- `CLAUDE.md` und `AGENTS.md`: dieselben 8 Pflichtregeln. `DESIGN.md`: nur Meldung bei falscher Form.
+- Supabase lokal: `supabase init`, `config.toml` (E-Mail-Bestätigung an, anonym aus, API-Schemas + `app`, nicht `content`, `health` mit `verify_jwt = true`).
+- Migrationen 1–4: Schemas, `content`-Tabellen (RLS ohne Policies), `app`-Tabellen (RLS nur eigene Zeilen, `review_log` append-only per Trigger, `profiles`-Trigger), Storage-Buckets `audio`/`packs` (öffentlich), `imports` (privat, eigener Ordner).
+- pgTAP-Tests (11), Edge Function `health`, `.env.example`, `.gitignore`, `docs/backend.md` (Lokale Entwicklung, Deploy).
 
-## Abweichungen (Doku gewinnt, Code nicht angepasst)
-- `lib/domain/leitner.dart`: kein Box 0, keine Erstkontakt-Regel (richtig → Box 3).
-- `DESIGN.md` nennt "Einsteiger/Mittelstufe" für die Bolts, `PRODUCT.md` "Anfänger/Mittleres Niveau".
-- `DESIGN.md` Memory Level Legend: "richtig = +1" gilt nicht beim Erstkontakt.
-- Code zeigt wöchentliche Nachrichten; v1 liefert zeitlose Kurztexte.
-- Pipeline-Ordner heißt `pipeline/` (früher `tools/content_pipeline/`).
+## Geänderte Dateien
+`supabase/` (config.toml, .gitignore, migrations/4, tests/database/security.test.sql, functions/health/index.ts), `.env.example`, `.gitignore`, `docs/backend.md`, `NEXTSTEPS.md`.
 
-## Annahmen (bitte bestätigen)
-- Karte mit Box 0 (aus Story, nie beantwortet) zählt als "Noch nicht angezeigt".
-- Tagesziel = verschiedene Karten mit `review_log`-Zeile heute; `mode = early` für Vorab-Üben.
-- Eine `review_log`-Zeile je Karte und Session; die Wiederholung wird nicht geloggt.
+## Testergebnis
+- `supabase db reset`: exit 0. `supabase test db`: Files=1, Tests=11, PASS.
+- `health` mit lokalem Anon-Key: `{"ok":true,...}`; ohne JWT: HTTP 401.
+- Schlüssel-Suche über alle nicht ignorierten Dateien: keine Treffer.
+
+## Abweichungen
+- `sentence_tokens.start/end` heißen `start_pos/end_pos` (`end` ist reserviert).
+- `profiles` hat `id` statt `user_id` (wie `docs/user-schema.md`).
+- Join-Tabellen (`deck_cards`, `card_sentences`, `story_sentences`, `sentence_tokens`) ohne `lang`.
+- `git status` zeigt noch `DESIGN.md`, `docs/srs.md`, `docs/content-schema.md`, `docs/user-schema.md` aus dem vorigen Auftrag (uncommitted).
+- `supabase/.temp/` enthält von der CLI erzeugte lokale Demo-Keys; per `supabase/.gitignore` und `.gitignore` ignoriert.
 
 ## Offen
-- Denk-Budget-Parameter von Gemini 3.8 Flash prüfen; TTS-Pilot `gemini-3.8-flash-lite-tts`.
-- Dienstkonto "Vertex AI User" anlegen, Secret `GCP_SA_KEY` setzen.
-- EN-Hauptlauf und Audio vor ca. 22.11.2026; weitere Punkte: `PRODUCT.md` → Open Decisions.
+- Deploy durch Arda (`link`, `db push --dry-run`, `db push`, `functions deploy health`).
+- `docker` fehlt im PATH der PowerShell-Sitzung; Supabase CLI 2.118.0 (2.119.0 verfügbar).
