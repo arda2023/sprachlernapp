@@ -1,11 +1,11 @@
-version: meanings-v2
+version: meanings-v3
 
 You are a lexicographer preparing vocabulary cards for adult German speakers learning {lang_name}.
 
 Word form: "{form}"
 Frequency rank (wordfreq, {lang}): {rank}
 
-List the meanings of exactly this form that are genuinely relevant for learners who meet this form. At most 3, most important first. Treat function words (prepositions, particles, adverbs such as "about", "up", "so", "just", "the") like any other word: give their relevant meanings.
+List the meanings of exactly this form that are genuinely relevant for learners who meet this form. At most {max_meanings}, most important first. Treat function words (prepositions, particles, adverbs such as "about", "up", "so", "just", "the") like any other word: give their relevant meanings. Different parts of speech with different German translations are separate meanings, even when their English form is identical: for "left", distinguish adjective "links", adverb "nach links", verb "verließ" and adjective "übrig".
 
 For each meaning:
 - pos: Universal POS tag of the form in this meaning (NOUN, VERB, ADJ, ADV, ADP, PRON, DET, AUX, CCONJ, SCONJ, PART, INTJ).

@@ -97,17 +97,31 @@ Generierung über Vertex AI und ADC wie in 3b. Die folgenden Regeln ersetzen die
 - Das Ledger verwendet `prompt_token_count`, `candidates_token_count` und `thoughts_token_count` aus `usage_metadata`. `thinking_tokens` werden mit dem Denk-Preis berechnet. Ein Vertex-Miniaufruf mit `HIGH` am 03.10.2026 lieferte 5 Eingabe-, 1 Ausgabe- und 105 Denk-Token. Preise und Modellparameter bleiben wie in `config.yaml` dokumentiert.
 - Einmaliger Smoke-Test 3c (03.10.2026, fünf Formen, Budget 1,00 USD): 14 Karten erzeugt, 13 im Pack mit 39 `ok`-Sätzen; 267 Ledger-Aufrufe, 380 Denk-Token, 0,150474 USD. Eine Karte (`left#links`) erreichte keine drei Sätze. Alle Pack-Gaps und `qa_status` wurden geprüft. Die Artefakte wurden geschrieben; der Prozess beendete sich erst beim anschließenden Konsolen-`print` wegen `UnicodeEncodeError` (Windows cp1252, Zeichen `→`) mit Exit 1. Die Ausgabe wurde auf ASCII umgestellt; der Smoke-Test wurde nicht wiederholt.
 
+## 3d Stand
+
+- Schritt A verwendet das versionierte Inventar `pipeline/data/meanings/en.json`. Ein vorhandener Formeintrag wird ohne Modellaufruf übernommen. `--refresh-meanings <form>` fordert Bedeutungen neu an und hängt nur neue `sense_key` an; bestehende Schlüssel und ihre Inhalte bleiben erhalten. Für wordfreq-Rang ≤ 1000 gelten höchstens vier Bedeutungen, sonst drei. `meanings-v3` trennt Wortarten mit verschiedenen deutschen Übersetzungen, z. B. `left#links` (Adjektiv) und `left#nach_links` (Adverb). Die fünf Smoke-Formen sind aus dem bisherigen Pack vorbefüllt; beide `left`-Schlüssel sind ergänzt.
+- Schritt B (`sentences-v3`) erzeugt fünf Kandidaten in **einem** Aufruf mit je einer vorgegebenen Alltagssituation und einem erlaubten Namen. Er bittet um verschiedene Satzanfänge und Satzmuster. Bis zu zwei zusätzliche Runden mit je drei Kandidaten sind möglich. Nach drei angenommenen Sätzen werden übrige Kandidaten nicht mehr kostenpflichtig geprüft. Blindtest-Neuversuche bleiben Einzelaufrufe. Innerhalb einer Karte ist höchstens ein Satz mit demselben ersten Wort erlaubt.
+- i+1 ist eine reine Warnung: Für jedes Inhaltswort außer Zielform, Namenspool und Zahlen gilt der höhere Wert aus `wordfreq.zipf_frequency(lemma, "en")` und `wordfreq.zipf_frequency(Form, "en")`. Mindestwerte nach `cefr_band`: Anfänger 4,0; Mittel 3,5; Fortgeschritten 3,0.
+- `review.csv` verwendet UTF-8 mit BOM und Komma. Der Bericht nennt für jede nicht gepackte Karte alle protokollierten Verwerfungsgründe und Blindtest-Antworten. Die Konsolenausgabe bleibt ASCII.
+- `--forms 60` wählt die ersten 60 zulässigen wordfreq-Formen nach Ausschluss von Fragmenten, Zahlen und Eigennamen. Funktionswörter bleiben enthalten. `--forms smoke` bleibt die Liste aus `config.yaml`.
+- Einmaliger Smoke-Test 3d: alle fünf Formen und `left#links` im Pack, 15 Karten mit je drei `ok`-Sätzen, alle Gap-Spannen korrekt; 169 Aufrufe, 0,121110 USD, 0 Denk-Token.
+- Einmaliger Pilot 3d mit 60 Formen: 177 Karten erzeugt, 169 im Pack (95,48 %), 507 `ok`-Sätze; 2.443 Aufrufe, 1,674511 USD, 6.431 Denk-Token. Alle Pack-Gaps und Satzanzahlen sind geprüft. Acht Karten blieben unvollständig; der Bericht nennt je Karte alle Verwerfungsgründe und Blindtest-Antworten. Häufige Verwerfungen betreffen `what` (61), `there` (38), `like` (34), `this` (29), `i` und `your` (je 22). Die Wortform `i` aus wordfreq ist kleingeschrieben und scheitert im Blindtest an `I`; die Inventar- und Formnormalisierung dafür ist noch offen.
+
 Windows (PowerShell), im Ordner `pipeline`:
 ```powershell
 .\.venv\Scripts\python.exe -m pytest
-.\.venv\Scripts\python.exe -m sprachpipe.cli generate --forms smoke --out out\smoke_pack_v2.json --max-usd 1.0
+.\.venv\Scripts\python.exe -m sprachpipe.cli generate --forms smoke --out out\smoke_pack_v3.json --max-usd 1.0
+.\.venv\Scripts\python.exe -m sprachpipe.cli generate --forms 60 --out out\pilot_pack.json --max-usd 5.0
 ```
 
 macOS (Terminal), im Ordner `pipeline`:
 ```bash
 .venv/bin/python -m pytest
-.venv/bin/python -m sprachpipe.cli generate --forms smoke --out out/smoke_pack_v2.json --max-usd 1.0
+.venv/bin/python -m sprachpipe.cli generate --forms smoke --out out/smoke_pack_v3.json --max-usd 1.0
+.venv/bin/python -m sprachpipe.cli generate --forms 60 --out out/pilot_pack.json --max-usd 5.0
 ```
+
+Der Pilot folgt nur auf einen Smoke-Test, bei dem alle fünf Formen mindestens eine Karte im Pack haben und `left#links` im Pack ist. Die Ergebnisse des aktuellen Laufs stehen in `NEXTSTEPS.md`.
 
 ## KI-Zugang: Vertex AI
 
@@ -144,7 +158,7 @@ Jeder Schritt ist wiederholbar und schreibt nur über stabile IDs (`docs/content
 
 ## QA-Regeln
 
-- **Linter** (automatisch, jeder Satz): Länge im Rahmen des Stapel-Niveaus; höchstens 1 Nebensatz; Lücken-Offsets stimmen (`gap_start`/`gap_end` treffen genau die Form); i+1 (alle anderen Wörter liegen im bekannten Wortschatz des Niveaus, höchstens das Zielwort ist neu).
+- **Linter** (automatisch, jeder Satz): höchstens 14 Wörter und 1 Nebensatz; Lücken-Offsets treffen genau die Form. i+1 wird nach den Zipf-Mindestwerten aus 3d nur als Warnung ausgegeben.
 - **Blindtest**: Ein zweites Modell bekommt den Satz mit Lücke ohne Lösung und muss die exakte Form liefern. Bei Abweichung wird der Satz einmal neu erzeugt; danach gilt er als `failed`.
 - **Stichprobe**: 5 % der Sätze je Lauf werden von Hand geprüft.
 

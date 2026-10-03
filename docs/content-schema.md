@@ -78,6 +78,7 @@ Alle Tabellen außer `languages` und `content_releases` haben zusätzlich `remov
 
 - **Karte**: eine exakte Form in einer Bedeutung. Lemma und Familie verbinden Karten nur über `lemma_id` ("Andere Formen", Erkennung falscher Formen), verschmelzen nie.
 - **`sense_key`**: stabiler Slug je Lemma, z. B. `bank#ufer`. Einmal vergeben, nie geändert.
+- **Bedeutungs-Inventar der Pipeline**: `pipeline/data/meanings/en.json` speichert die Zuordnung von Form zu Bedeutungen vor dem Pack-Bau. Vorhandene `sense_key` bleiben unverändert und werden nicht gelöscht; `--refresh-meanings <form>` kann neue Bedeutungen nur anhängen. Dadurch bleiben die daraus berechneten Sense- und Karten-IDs stabil.
 - **Mehrwort-Karten** (Redewendungen, Verbalphrasen): `form` darf mehrere Wörter enthalten; die Lücke ist eine zusammenhängende Zeichenspanne. Trennbare Formen ("pick it up") werden in v1 nicht erzeugt.
 - **Sätze je Karte**: genau 3 Zeilen in `card_sentences`; jeder Satz enthält genau diese Form an `gap_start`–`gap_end` (Zeichen-Offsets in `sentences.text`). `accepted[]` listet erlaubte Antworten (Normalfall: nur die Form selbst).
 - **Satzkorrektur**: Der Text ist Schlüssel, eine Korrektur ergibt eine neue ID plus Tombstone der alten Zeile mit `replaced_by`. `origins` ist nicht Teil des Schlüssels.

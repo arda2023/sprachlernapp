@@ -50,15 +50,12 @@ def cmd_lint(args, cfg) -> int:
     from .pack import load_pack, sentence_lint_items
 
     c = cfg["linter"]
-    ranks = None
-    if args.lemmas:
-        ranks = {e["lemma"]: e["freq_rank"]
-                 for e in json.loads(Path(args.lemmas).read_text(encoding="utf-8"))}
     errors = 0
     for item in sentence_lint_items(load_pack(args.file)):
         findings = lint_sentence(
             item["sentence"], item["form"], item["gap_start"], item["gap_end"],
-            c["allowed_rank"], ranks=ranks,
+            c["min_zipf"][item["cefr_band"]], lang=cfg["generate"]["lang"],
+            names=cfg["generate"]["names"],
             max_words=c["max_words"], max_subclauses=c["max_subclauses"],
         )
         status = "ok" if not findings else ", ".join(f"{f.level}:{f.rule}" for f in findings)
@@ -102,53 +99,40 @@ SMOKE_MAX_USD = 1.0
 
 
 def run_generate(llm, cfg, forms, out_path, out_dir, *, max_usd, label,
-                 lemma_of=None, is_word=None) -> str | None:
+                 inventory_path=None, refresh_meanings=None) -> str | None:
     """Steps 3-7 for [forms] ((form, rank) pairs); writes the pack,
     review.csv and run_report.md. Returns the abort reason or None."""
     from .annotate import annotate
     from .blindtest import ask, judge
     from .generate import load_prompt, meanings, qa_sentence, sentences, slot_context
+    from .inventory import MeaningInventory
     from .linter import lint_sentence
     from .llm import BudgetExceeded, LlmError
     from .meaning_check import check as check_meaning
     from .pack import assemble_pack, build_rows
-    from .quality import common_lemmas, duplicate, lemma_ranks
+    from .quality import common_lemmas, duplicate
     from .review import write_review_csv, write_run_report
 
     g, c, lc = cfg["generate"], cfg["llm"], cfg["linter"]
-    ranks = lemma_ranks(cfg)
+    inventory = MeaningInventory(g["lang"], inventory_path)
     out_dir = Path(out_dir)
     cards, skipped, aborted = [], [], None
     try:
         for form, rank in forms:
-            found = meanings(llm, cfg, form, rank)
+            found = meanings(llm, cfg, form, rank, inventory,
+                             refresh=form == refresh_meanings)
             if not found:
                 skipped.append(f"{form}: keine Bedeutung (Fragment, Eigenname oder Zahl)")
                 continue
             for m in found:
                 card = {"form": form, "rank": rank, **m, "slots": [], "accepted": []}
                 cards.append(card)
-                def candidate(slot_index):
-                    situation, name = slot_context(cfg, card, slot_index)
-                    avoid_words = common_lemmas(cards[:-1])
-                    def make(feedback=""):
-                        others = [a["text"] for s in card["slots"] for a in s]
-                        extra = (" Do not reuse: " + " / ".join(others)) if others else ""
-                        return sentences(llm, cfg, card, count=1, feedback=feedback + extra,
-                                         situation=situation, name=name,
-                                         avoid_words=avoid_words)[0]
-                    return make
-
-                # Create five candidates, each with its own deterministic situation.
-                makers = [candidate(i) for i in range(5)]
-                initial = [make() for make in makers]
-
                 def evaluate(first, make):
                     slot = qa_sentence(
                         first, card, cfg, regenerate=make,
                         lint=lambda text, gap: lint_sentence(
-                            text, form, gap[0], gap[1], lc["allowed_rank"][card["cefr_band"]],
-                            ranks=ranks, max_words=lc["max_words"],
+                            text, form, gap[0], gap[1], lc["min_zipf"][card["cefr_band"]],
+                            lang=g["lang"], names=g["names"], max_words=lc["max_words"],
                             max_subclauses=lc["max_subclauses"]),
                         blind=lambda text, gap, tr: ask(llm, cfg, text, gap, tr, card["gloss_de"]),
                         judge=lambda ans: judge(ans, form, [form], card["lemma"], None, None),
@@ -159,12 +143,30 @@ def run_generate(llm, cfg, forms, out_path, out_dir, *, max_usd, label,
                     if final["qa_status"] == "ok" and len(card["accepted"]) < 3:
                         card["accepted"].append(final)
 
-                for first, make in zip(initial, makers):
-                    evaluate(first, make)
-                if len(card["accepted"]) < 3:
-                    for i in range(5, 8):
-                        make = candidate(i)
-                        evaluate(make(), make)
+                for start, count in ((0, 5), (5, 3), (8, 3)):
+                    if start and len(card["accepted"]) >= 3:
+                        break
+                    contexts = [slot_context(cfg, card, start + i) for i in range(count)]
+                    avoid_words = common_lemmas(cards[:-1])
+                    batch = sentences(llm, cfg, card, count=count, contexts=contexts,
+                                      avoid_words=avoid_words)
+                    for i, first in enumerate(batch):
+                        if len(card["accepted"]) >= 3:
+                            card["slots"].append([{
+                                "text": first["text"], "translation_de": first["translation_de"],
+                                "gap": None, "lint": [], "lint_rules": [], "blind": None,
+                                "blind_answer": None, "meaning_check": None,
+                                "discard_reason": "", "qa_status": "unused"}])
+                            continue
+                        context = contexts[i]
+                        def regenerate(feedback, context=context):
+                            others = [b["text"] for b in batch]
+                            others += [a["text"] for slot in card["slots"] for a in slot]
+                            extra = " Do not reuse: " + " / ".join(others)
+                            return sentences(llm, cfg, card, count=1,
+                                             feedback=feedback + extra,
+                                             contexts=[context], avoid_words=avoid_words)[0]
+                        evaluate(first, regenerate)
                 for final in card["accepted"]:
                     final["tokens"], final["annotate_problems"] = annotate(
                         llm, cfg, final["text"], final["translation_de"], card, final["gap"])
@@ -201,14 +203,18 @@ def cmd_generate(args, cfg) -> int:
     if args.forms == "smoke" and args.max_usd > SMOKE_MAX_USD:
         print(f"error: smoke test is capped at {SMOKE_MAX_USD:.2f} USD", file=sys.stderr)
         return 2
+    forms = candidate_forms(args.forms, cfg)
+    if args.refresh_meanings and args.refresh_meanings not in {form for form, _ in forms}:
+        print("error: --refresh-meanings must be among --forms", file=sys.stderr)
+        return 2
     out_dir = PIPELINE_DIR / cfg["out_dir"]
     out_dir.mkdir(parents=True, exist_ok=True)
     ledger = out_dir / "ledger.csv"
     if ledger.exists():  # one ledger per run; keep the previous one
         ledger.rename(out_dir / f"ledger-{datetime.now():%Y%m%d-%H%M%S}.csv")
-    forms = candidate_forms(args.forms, cfg)
     aborted = run_generate(Llm(cfg, ledger, args.max_usd), cfg, forms, args.out, out_dir,
-                           max_usd=args.max_usd, label=args.forms)
+                           max_usd=args.max_usd, label=args.forms,
+                           refresh_meanings=args.refresh_meanings)
     print(f"pack -> {args.out}")
     print(f"review -> {out_dir / 'review.csv'}")
     print(f"report -> {out_dir / 'run_report.md'}")
@@ -227,7 +233,6 @@ def main(argv: list[str] | None = None) -> int:
     lp.add_argument("--out")
     li = sub.add_parser("lint", help="lint the card sentences of a pack")
     li.add_argument("file")
-    li.add_argument("--lemmas", help="lemmas JSON for the i+1 rule")
     up = sub.add_parser("upsert", help="write a pack into schema content (dry run by default)")
     up.add_argument("pack")
     up.add_argument("--publish", action="store_true")
@@ -238,6 +243,8 @@ def main(argv: list[str] | None = None) -> int:
     ge.add_argument("--forms", required=True, help="'smoke', a number n or 'a,b,c'")
     ge.add_argument("--out", required=True, help="pack JSON to write")
     ge.add_argument("--max-usd", type=float, default=1.0, help="cost limit for this run")
+    ge.add_argument("--refresh-meanings", metavar="FORM",
+                    help="regenerate meanings for this form and append new sense keys")
     args = p.parse_args(argv)
 
     from .db import DbError

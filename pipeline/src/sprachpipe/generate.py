@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import re
 import hashlib
+from copy import deepcopy
 from pathlib import Path
 
 PROMPTS_DIR = Path(__file__).resolve().parents[2] / "prompts"
@@ -40,7 +41,22 @@ def candidate_forms(spec: str, cfg: dict) -> list[tuple[str, int | None]]:
     if spec == "smoke":
         forms = [str(f) for f in cfg["smoke_forms"]]
     elif spec.isdigit():
-        forms = ranked[: int(spec)]
+        from .lemmas import spacy_analyzer
+
+        count = int(spec)
+        analyze = spacy_analyzer(cfg["lemmas"]["spacy_model"])
+        forms = []
+        for word in ranked:
+            if not word.isalpha():
+                continue
+            result = analyze(word)
+            if result is None or result[1] in ("PROPN", "NUM") or result[2]:
+                continue
+            forms.append(word)
+            if len(forms) == count:
+                break
+        if len(forms) != count:
+            raise ValueError(f"only {len(forms)} eligible forms among top {len(ranked)}")
     else:
         forms = [f.strip() for f in spec.split(",") if f.strip()]
     return [(f, rank.get(f)) for f in forms]
@@ -48,7 +64,7 @@ def candidate_forms(spec: str, cfg: dict) -> list[tuple[str, int | None]]:
 
 MEANINGS_SCHEMA = {
     "type": "object",
-    "properties": {"meanings": {"type": "array", "maxItems": 3, "items": {
+    "properties": {"meanings": {"type": "array", "maxItems": 4, "items": {
         "type": "object",
         "properties": {
             "pos": {"type": "string", "enum": POS_TAGS},
@@ -80,25 +96,32 @@ def sentences_schema(count: int) -> dict:
     }
 
 
-def meanings(llm, cfg: dict, form: str, rank: int | None) -> list[dict]:
-    """Step A: at most 3 meanings; [] for fragments, proper names, numbers."""
+def meanings(llm, cfg: dict, form: str, rank: int | None, inventory,
+             *, refresh: bool = False) -> list[dict]:
+    """Step A: reuse inventory, or generate and append up to the rank limit."""
+    existing = inventory.get(form)
+    if existing is not None and not refresh:
+        return existing
     g, c = cfg["generate"], cfg["llm"]
+    limit = 4 if rank is not None and rank <= 1000 else 3
+    schema = deepcopy(MEANINGS_SCHEMA)
+    schema["properties"]["meanings"]["maxItems"] = limit
     _, tpl = load_prompt("meanings")
     prompt = tpl.format(form=form, rank=rank if rank is not None else "unknown",
-                        lang=g["lang"], lang_name=LANG_NAMES[g["lang"]])
-    result = llm.generate_json(prompt, MEANINGS_SCHEMA, model=c["generate_model"],
+                        max_meanings=limit, lang=g["lang"], lang_name=LANG_NAMES[g["lang"]])
+    result = llm.generate_json(prompt, schema, model=c["generate_model"],
                                thinking=c["generate_thinking"], step="meanings",
                                max_output_tokens=c["max_output_tokens"]["meanings"])
     seen, out = set(), []
-    for m in result["meanings"][:3]:
+    for m in result["meanings"][:limit]:
         if m["sense_key"] not in seen:
             seen.add(m["sense_key"])
             out.append(m)
-    return out
+    return inventory.append(form, out, limit)
 
 
 def slot_context(cfg: dict, card: dict, slot: int) -> tuple[str, str]:
-    """Stable, distinct situations for up to eight candidate slots."""
+    """Stable, distinct situations for up to eleven candidate slots."""
     g = cfg["generate"]
     key = f"{card['form']}|{card['sense_key']}"
     def index(i: int, salt: str, size: int) -> int:
@@ -115,12 +138,18 @@ def slot_context(cfg: dict, card: dict, slot: int) -> tuple[str, str]:
 
 
 def sentences(llm, cfg: dict, card: dict, count: int = 3, feedback: str = "",
-              *, situation: str = "", name: str = "", avoid_words: list[str] | None = None) -> list[dict]:
+              *, contexts: list[tuple[str, str]] | None = None,
+              avoid_words: list[str] | None = None) -> list[dict]:
     """Step B: [count] sentences {text, translation_de} for one card."""
     g, c = cfg["generate"], cfg["llm"]
     _, tpl = load_prompt("sentences")
+    contexts = contexts or [("everyday life", "") for _ in range(count)]
+    if len(contexts) != count:
+        raise ValueError("one situation and name required per sentence slot")
+    instructions = "\n".join(f"{i}. situation: {situation}; permitted first name: {name or 'none'}"
+                             for i, (situation, name) in enumerate(contexts, start=1))
     prompt = tpl.format(count=count, lang_name=LANG_NAMES[g["lang"]], feedback=feedback,
-                        situation=situation, name=name,
+                        slot_instructions=instructions,
                         avoid_words=", ".join(avoid_words or []) or "none",
                         **{k: card[k] for k in ("form", "pos", "lemma", "gloss_de",
                                                 "form_label_de", "translation_de",

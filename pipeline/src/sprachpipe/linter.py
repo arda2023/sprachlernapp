@@ -34,15 +34,16 @@ def lint_sentence(
     form: str,
     gap_start: int,
     gap_end: int,
-    allowed_rank: int,
+    min_zipf: float,
     *,
-    ranks: dict[str, int] | None = None,
+    lang: str = "en",
+    names: list[str] | tuple[str, ...] = (),
+    zipf=None,
     max_words: int = 14,
     max_subclauses: int = 1,
     nlp=None,
 ) -> list[Finding]:
-    """Findings for one card sentence. [ranks] maps content-word lemmas to
-    their frequency rank; without it the i+1 rule is skipped."""
+    """Findings for one card sentence; i+1 uses the higher Zipf value."""
     findings: list[Finding] = []
     doc = (nlp or _nlp())(sentence)
 
@@ -68,16 +69,18 @@ def lint_sentence(
     if any(ch.isdigit() for ch in sentence):
         findings.append(Finding("warn", "digits", "sentence contains digits"))
 
-    if ranks is not None:
-        for tok in doc:
-            if tok.idx >= gap_start and tok.idx < gap_end:
-                continue
-            if tok.pos_ not in CONTENT_POS:
-                continue
-            lemma = tok.lemma_.lower()
-            rank = ranks.get(lemma)
-            if rank is None or rank > allowed_rank:
-                shown = "unknown" if rank is None else str(rank)
-                findings.append(Finding("warn", "i+1",
-                                        f"{lemma!r} rank {shown} above {allowed_rank}"))
+    if zipf is None:
+        from wordfreq import zipf_frequency
+        zipf = zipf_frequency
+    name_set = {name.casefold() for name in names}
+    for tok in doc:
+        if tok.idx >= gap_start and tok.idx < gap_end:
+            continue
+        if tok.pos_ not in CONTENT_POS or tok.like_num or tok.text.casefold() in name_set:
+            continue
+        lemma = tok.lemma_.lower()
+        frequency = max(zipf(lemma, lang), zipf(tok.text.lower(), lang))
+        if frequency < min_zipf:
+            findings.append(Finding("warn", "i+1",
+                                    f"{lemma!r}/{tok.text.lower()!r} Zipf {frequency:.2f} below {min_zipf:.1f}"))
     return findings

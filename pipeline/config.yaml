@@ -12,7 +12,7 @@ lemmas:
 linter:
   max_words: 14
   max_subclauses: 1
-  allowed_rank: {anfaenger: 1500, mittel: 3000, fortgeschritten: 5000}
+  min_zipf: {anfaenger: 4.0, mittel: 3.5, fortgeschritten: 3.0}
 
 # Price table for the cost ledger (USD per 1M tokens). Checked against the
 # official Vertex AI price list: Global endpoint, Standard (no Priority,

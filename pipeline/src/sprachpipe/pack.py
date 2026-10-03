@@ -154,10 +154,12 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
 
 def sentence_lint_items(pack: dict) -> list[dict]:
     """Every card sentence of the pack with its form and gap, for the linter."""
-    forms = {c["ref"]: c["form"] for c in pack.get("cards", [])}
+    cards = {c["ref"]: c for c in pack.get("cards", [])}
     texts = {s["ref"]: s["text"] for s in pack.get("sentences", [])}
     return [
-        {"card": cs["card"], "form": forms[cs["card"]], "sentence": texts[cs["sentence"]],
+        {"card": cs["card"], "form": cards[cs["card"]]["form"],
+         "cefr_band": cards[cs["card"]].get("cefr_band") or "anfaenger",
+         "sentence": texts[cs["sentence"]],
          "gap_start": cs["gap_start"], "gap_end": cs["gap_end"]}
         for cs in pack.get("card_sentences", [])
     ]

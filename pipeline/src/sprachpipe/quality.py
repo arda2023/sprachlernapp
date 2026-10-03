@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import re
 from collections import Counter
-from functools import lru_cache
 
 from .linter import CONTENT_POS, _nlp
 
@@ -19,7 +18,7 @@ def duplicate(text: str, gap: tuple[int, int], accepted: list[dict]) -> bool:
     window, prefix = keys(text, gap)
     for a in accepted:
         other_window, other_prefix = keys(a["text"], a["gap"])
-        if window == other_window or prefix == other_prefix:
+        if window == other_window or prefix == other_prefix or (prefix and other_prefix and prefix[0] == other_prefix[0]):
             return True
     return False
 
@@ -48,20 +47,3 @@ def overused_lemmas(cards: list[dict]) -> list[tuple[str, int, int]]:
                 counts.update(content_lemmas(a["text"], card["form"]))
     limit = max(4, n * 0.05)
     return [(word, count, n) for word, count in counts.most_common() if count > limit]
-
-
-def lemma_ranks(cfg: dict) -> dict[str, int]:
-    """Rank the top wordfreq forms after lemma grouping as in lemmas.py."""
-    c = cfg["lemmas"]
-    return _cached_lemma_ranks(c["lang"], c["top_n"], c["spacy_model"],
-                               tuple(c["pos_allowed"]))
-
-
-@lru_cache(maxsize=4)
-def _cached_lemma_ranks(lang: str, top_n: int, model: str,
-                        pos_allowed: tuple[str, ...]) -> dict[str, int]:
-    from .lemmas import select_lemmas, spacy_analyzer, wordfreq_words
-
-    selected = select_lemmas(wordfreq_words(lang, top_n),
-                             spacy_analyzer(model), pos_allowed, top_n)
-    return {entry["lemma"]: entry["freq_rank"] for entry in selected}

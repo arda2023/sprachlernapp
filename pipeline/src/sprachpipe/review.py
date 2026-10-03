@@ -34,11 +34,11 @@ def review_rows(cards: list[dict]) -> list[dict]:
 
 
 def write_review_csv(cards: list[dict], path: str | Path) -> Path:
-    """UTF-8 with BOM and ';' so Excel (German locale) shows umlauts and columns."""
+    """UTF-8 with BOM and comma delimiter."""
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", newline="", encoding="utf-8-sig") as f:
-        w = csv.DictWriter(f, fieldnames=REVIEW_COLUMNS, delimiter=";")
+        w = csv.DictWriter(f, fieldnames=REVIEW_COLUMNS, delimiter=",")
         w.writeheader()
         w.writerows(review_rows(cards))
     return path
@@ -90,7 +90,8 @@ def write_run_report(path: str | Path, *, cards: list[dict], skipped: list[str],
         "",
         f"- Formen: {info.get('n_forms', 0)}, übersprungen: {len(skipped)}",
         f"- Karten (Form + Bedeutung): {len(cards)}, im Pack: {packed_cards}",
-        f"- Satzkandidaten: {len(finals)} (ok {status['ok']}, failed {status['failed']}); "
+        f"- Satzkandidaten: {len(finals)} (ok {status['ok']}, failed {status['failed']}, "
+        f"ungenutzt {status['unused']}); "
         f"Satzversuche insgesamt: {len(attempts)}",
         "",
         "## Durchfallquoten je Regel (alle erzeugten Sätze)",
@@ -126,8 +127,20 @@ def write_run_report(path: str | Path, *, cards: list[dict], skipped: list[str],
         lines.append(f"| {step} | {n} | {u:.4f} |")
     lines += ["", "## Übersprungene Formen", ""]
     lines += [f"- {s}" for s in skipped] or ["- keine"]
-    incomplete = [f"{c['form']} ({c['sense_key']})" for c in cards if not c.get("packed")]
+    incomplete = [c for c in cards if not c.get("packed")]
     lines += ["", "## Karten nicht im Pack (weniger als 3 ok-Sätze)", ""]
-    lines += [f"- {s}" for s in incomplete] or ["- keine"]
+    if not incomplete:
+        lines.append("- keine")
+    for card in incomplete:
+        lines.append(f"- {card['form']} ({card['sense_key']}): "
+                     f"{len(card['accepted'])}/3 angenommene Sätze")
+        discarded_attempts = [a for slot in card["slots"] for a in slot
+                              if a.get("discard_reason")]
+        if not discarded_attempts:
+            lines.append("  - keine Verwerfungen protokolliert (Abbruch oder Pack-Kollision)")
+        for a in discarded_attempts:
+            answer = (f"; Blindtest-Antwort: {a['blind_answer']}"
+                      if a.get("blind_answer") is not None else "")
+            lines.append(f"  - {a['discard_reason']}{answer}; Satz: {a['text']}")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return path

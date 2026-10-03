@@ -46,7 +46,9 @@ class FakeVertex(llm_mod.Llm):
         if key == "meanings":
             out = {"meanings": [WENT]}
         elif key == "sentences":
-            out = {"sentences": [{"text": next(self.sentences), "translation_de": "Deutsch."}]}
+            n = schema["properties"]["sentences"]["minItems"]
+            out = {"sentences": [{"text": next(self.sentences), "translation_de": "Deutsch."}
+                                 for _ in range(n)]}
         elif key == "tokens":
             toks = re.findall(r"^(\d+): (.+)$", prompt, flags=re.M)
             out = {"tokens": [{"token_idx": int(i), "surface": s, "lemma": s.lower(),
@@ -62,14 +64,14 @@ class FakeVertex(llm_mod.Llm):
 
 
 @pytest.fixture
-def cfg(monkeypatch):
-    monkeypatch.setattr("sprachpipe.quality.lemma_ranks", lambda cfg: {})
+def cfg():
     return load_config()
 
 
 def run(cfg, tmp_path, llm):
     aborted = run_generate(llm, cfg, [("went", 50)], tmp_path / "pack.json", tmp_path,
-                           max_usd=llm.max_usd, label="test")
+                           max_usd=llm.max_usd, label="test",
+                           inventory_path=tmp_path / "meanings.json")
     return aborted, json.loads((tmp_path / "pack.json").read_text(encoding="utf-8"))
 
 
@@ -84,8 +86,8 @@ def test_five_candidates_pack_only_ok(cfg, tmp_path):
     llm = FakeVertex(cfg, tmp_path / "ledger.csv", 1.0)
     aborted, pack = run(cfg, tmp_path, llm)
     assert aborted is None
-    assert llm.calls.count("sentences") == 5
-    assert llm.calls.count("sense_key") == 5
+    assert llm.calls.count("sentences") == 1
+    assert llm.calls.count("sense_key") == 3
     assert len(pack["card_sentences"]) == 3
     texts = {s["ref"]: s for s in pack["sentences"]}
     for cs in pack["card_sentences"]:
@@ -94,16 +96,39 @@ def test_five_candidates_pack_only_ok(cfg, tmp_path):
         assert sn["qa_status"] == "ok" and cs["accepted"] == ["went"]
 
 
+def test_second_run_reuses_meanings_without_model_call(cfg, tmp_path):
+    first_llm = FakeVertex(cfg, tmp_path / "first.csv", 1.0)
+    _, first_pack = run(cfg, tmp_path, first_llm)
+    second_llm = FakeVertex(cfg, tmp_path / "second.csv", 1.0)
+    _, second_pack = run(cfg, tmp_path, second_llm)
+    assert first_llm.calls.count("meanings") == 1
+    assert second_llm.calls.count("meanings") == 0
+    assert [s["sense_key"] for s in first_pack["senses"]] == [
+        s["sense_key"] for s in second_pack["senses"]]
+
+
 def test_second_round_of_three_after_duplicate_rejections(cfg, tmp_path):
     texts = [SENTENCES[0]] * 5 + SENTENCES[1:4]
     llm = FakeVertex(cfg, tmp_path / "ledger.csv", 1.0, sentences=texts)
     aborted, pack = run(cfg, tmp_path, llm)
     assert aborted is None
-    assert llm.calls.count("sentences") == 8
+    assert llm.calls.count("sentences") == 2
     assert len(pack["card_sentences"]) == 3
-    review = list(csv.DictReader(open(tmp_path / "review.csv", encoding="utf-8-sig"), delimiter=";"))
+    review = list(csv.DictReader(open(tmp_path / "review.csv", encoding="utf-8-sig")))
     assert sum(r["verworfen_grund"] == "Duplikat" for r in review) == 4
     assert "| Duplikat | 4 |" in (tmp_path / "run_report.md").read_text(encoding="utf-8")
+
+
+def test_two_extra_rounds_then_report_all_rejections(cfg, tmp_path):
+    llm = FakeVertex(cfg, tmp_path / "ledger.csv", 1.0,
+                     sentences=[SENTENCES[0]] * 11)
+    aborted, pack = run(cfg, tmp_path, llm)
+    assert aborted is None
+    assert llm.calls.count("sentences") == 3
+    assert pack["cards"] == []
+    report = (tmp_path / "run_report.md").read_text(encoding="utf-8")
+    assert "went (go#gehen): 1/3 angenommene Sätze" in report
+    assert report.count("Duplikat; Satz:") == 10
 
 
 def test_blind_mismatch_feedback_in_generation(cfg, tmp_path):
@@ -111,10 +136,10 @@ def test_blind_mismatch_feedback_in_generation(cfg, tmp_path):
                      sentences=SENTENCES[:6], answers={SENTENCES[0].replace("went", "___"): "walked"})
     aborted, pack = run(cfg, tmp_path, llm)
     assert aborted is None
-    assert llm.calls.count("sentences") == 6
+    assert llm.calls.count("sentences") == 2
     assert any("walked" in p and 'only the target form "went"' in p for p in llm.prompts)
     assert SENTENCES[0] not in [s["text"] for s in pack["sentences"]]
-    review = list(csv.DictReader(open(tmp_path / "review.csv", encoding="utf-8-sig"), delimiter=";"))
+    review = list(csv.DictReader(open(tmp_path / "review.csv", encoding="utf-8-sig")))
     assert any(r["Modellantwort bei Abweichung"] == "walked" for r in review)
 
 
@@ -188,6 +213,25 @@ def test_linter_retry_and_duplicate(cfg):
     assert not duplicate("Leo went home after lunch.", (4, 8), accepted)
 
 
+def test_linter_error_fails_after_two_retries(cfg):
+    findings = iter([[Finding("error", "length", "bad")]] * 3)
+    feedback = []
+    attempts = qa_sentence({"text": "She went home.", "translation_de": "x"},
+                           {"form": "went", "sense_key": "go#gehen"}, cfg,
+                           regenerate=lambda fb: (feedback.append(fb),
+                                                  {"text": "He went out.", "translation_de": "y"})[1],
+                           lint=lambda *a: next(findings),
+                           blind=lambda *a: pytest.fail("blind test must not run"),
+                           judge=lambda a: "passed")
+    assert [a["qa_status"] for a in attempts] == ["replaced", "replaced", "failed"]
+    assert len(feedback) == 2
+
+
+def test_same_first_word_is_duplicate():
+    accepted = [{"text": "Yesterday she went home.", "gap": (14, 18)}]
+    assert duplicate("yesterday they went shopping.", (15, 19), accepted)
+
+
 def test_meaning_check_rejects_left_keys(cfg):
     class Fake:
         def generate_json(self, prompt, schema, **kwargs):
@@ -218,7 +262,7 @@ def test_review_csv_and_report(cfg, tmp_path):
     run(cfg, tmp_path, FakeVertex(cfg, tmp_path / "ledger.csv", 1.0))
     raw = (tmp_path / "review.csv").read_bytes()
     assert raw.startswith(b"\xef\xbb\xbf")
-    rows = list(csv.reader(raw.decode("utf-8-sig").splitlines(), delimiter=";"))
+    rows = list(csv.reader(raw.decode("utf-8-sig").splitlines()))
     assert rows[0] == REVIEW_COLUMNS and len(rows) == 6
     report = (tmp_path / "run_report.md").read_text(encoding="utf-8")
     assert "## Verworfene Sätze je Grund" in report
