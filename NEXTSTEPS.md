@@ -1,25 +1,25 @@
 # NEXTSTEPS
 
-## Erledigt (Stand 2026-10-03)
-- Supabase lokal: `supabase init`, `config.toml` (E-Mail-Bestätigung an, anonym aus, API-Schemas + `app`, nicht `content`, `health` mit `verify_jwt = true`).
-- Migrationen 1–4: Schemas, `content`-Tabellen (RLS ohne Policies), `app`-Tabellen (RLS nur eigene Zeilen, `review_log` append-only per Trigger, `profiles`-Trigger), Storage-Buckets `audio`/`packs` (öffentlich), `imports` (privat, eigener Ordner).
-- pgTAP-Tests (11), Edge Function `health`, `.env.example`, `.gitignore`, `docs/backend.md` (Lokale Entwicklung, Deploy).
+## Erledigt (Stand 2026-10-03, Pipeline 3a)
+- `pipeline/`: venv, gepinnte Abhängigkeiten, Module ids, schema, pack, lemmas, linter, db, export, cost, cli; Fixture `mini_pack.json` (went; left = verließ / links als 2 Karten).
+- Doku: `docs/content-schema.md` (Abschnitt Kanonisierung, `start_pos`/`end_pos`, `lang` nach Migration), `docs/pipeline.md` (Abschnitt „3a Stand“).
 
 ## Geänderte Dateien
-`supabase/` (config.toml, .gitignore, migrations/4, tests/database/security.test.sql, functions/health/index.ts), `.env.example`, `.gitignore`, `docs/backend.md`, `NEXTSTEPS.md`.
+`pipeline/` (neu), `docs/content-schema.md`, `docs/pipeline.md`, `NEXTSTEPS.md`.
 
 ## Testergebnis
-- `supabase db reset`: exit 0. `supabase test db`: Files=1, Tests=11, PASS.
-- `health` mit lokalem Anon-Key: `{"ok":true,...}`; ohne JWT: HTTP 401.
-- Schlüssel-Suche über alle nicht ignorierten Dateien: keine Treffer.
+- `pytest`: 43 passed.
+- Lokale DB (`supabase db reset`, 2× `upsert --publish`): Zeilenzahlen in beiden Läufen identisch (u. a. cards 3, sentences 9, sentence_tokens 62).
+- `export`: content.sqlite mit 16 Tabellen; Join cards → card_sentences → sentences liefert 9 Zeilen.
+- `lemmas`: 60 Lemmata. `lint` auf das Fixture: 0 Fehler.
 
 ## Abweichungen
-- `sentence_tokens.start/end` heißen `start_pos/end_pos` (`end` ist reserviert).
-- `profiles` hat `id` statt `user_id` (wie `docs/user-schema.md`).
-- Join-Tabellen (`deck_cards`, `card_sentences`, `story_sentences`, `sentence_tokens`) ohne `lang`.
-- `git status` zeigt noch `DESIGN.md`, `docs/srs.md`, `docs/content-schema.md`, `docs/user-schema.md` aus dem vorigen Auftrag (uncommitted).
-- `supabase/.temp/` enthält von der CLI erzeugte lokale Demo-Keys; per `supabase/.gitignore` und `.gitignore` ignoriert.
+- Python 3.11 statt 3.12 (3.12 nicht installiert; vorhanden 3.9, 3.11, 3.14).
+- ID-Kanonisierung nimmt den Tabellennamen als erstes Feld (vermeidet gleiche IDs bei decks/stories/grammar_rules).
+- i+1-Regel läuft nur mit `--lemmas <json>`; ohne Rangliste wird sie übersprungen.
+- `pipeline/.gitignore` statt Root-`.gitignore` für `.venv/` und `out/`.
 
-## Offen
-- Deploy durch Arda (`link`, `db push --dry-run`, `db push`, `functions deploy health`).
-- `docker` fehlt im PATH der PowerShell-Sitzung; Supabase CLI 2.118.0 (2.119.0 verfügbar).
+## Offene Probleme
+- spaCy ohne Kontext: `about`/`up`/`out` als ADV, `best`/`better` unter `well`.
+- Funktionswörter: offene Entscheidung (`docs/pipeline.md`). Preise in `config.yaml` leer (3b).
+- content.sqlite ohne Indizes außer Primärschlüsseln; Tombstone-Übernahme noch nicht implementiert.

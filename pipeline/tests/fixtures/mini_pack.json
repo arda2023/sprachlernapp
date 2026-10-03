@@ -1,0 +1,936 @@
+{
+ "lang": "en",
+ "release": {
+  "version": "0.0.0-fixture",
+  "schema_version": 1,
+  "notes": "mini_pack test fixture"
+ },
+ "languages": [
+  {
+   "code": "en",
+   "name_native": "English",
+   "name_de": "Englisch",
+   "gloss_lang": "de"
+  }
+ ],
+ "lemmas": [
+  {
+   "ref": "go/VERB",
+   "lemma": "go",
+   "pos": "VERB"
+  },
+  {
+   "ref": "leave/VERB",
+   "lemma": "leave",
+   "pos": "VERB"
+  },
+  {
+   "ref": "left/ADJ",
+   "lemma": "left",
+   "pos": "ADJ"
+  }
+ ],
+ "senses": [
+  {
+   "ref": "go#gehen",
+   "lemma": "go/VERB",
+   "sense_key": "go#gehen",
+   "gloss_de": "gehen",
+   "sense_index": 1
+  },
+  {
+   "ref": "leave#verlassen",
+   "lemma": "leave/VERB",
+   "sense_key": "leave#verlassen",
+   "gloss_de": "verlassen",
+   "sense_index": 1
+  },
+  {
+   "ref": "left#links",
+   "lemma": "left/ADJ",
+   "sense_key": "left#links",
+   "gloss_de": "links, linke(r/s)",
+   "sense_index": 1
+  }
+ ],
+ "cards": [
+  {
+   "ref": "went",
+   "form": "went",
+   "sense": "go#gehen",
+   "form_kind": "past",
+   "form_label_de": "Verb, Vergangenheit",
+   "translation_de": "ging",
+   "cefr_band": "anfaenger"
+  },
+  {
+   "ref": "left-verliess",
+   "form": "left",
+   "sense": "leave#verlassen",
+   "form_kind": "past",
+   "form_label_de": "Verb, Vergangenheit",
+   "translation_de": "verließ",
+   "cefr_band": "anfaenger"
+  },
+  {
+   "ref": "left-links",
+   "form": "left",
+   "sense": "left#links",
+   "form_kind": "base",
+   "form_label_de": "Adjektiv, Grundform",
+   "translation_de": "linke(r/s)",
+   "cefr_band": "anfaenger"
+  }
+ ],
+ "dictionary_forms": [
+  {
+   "form": "went",
+   "sense": "go#gehen",
+   "card": "went",
+   "gloss_de": "ging",
+   "rank": 1
+  },
+  {
+   "form": "left",
+   "sense": "leave#verlassen",
+   "card": "left-verliess",
+   "gloss_de": "verließ",
+   "rank": 1
+  },
+  {
+   "form": "left",
+   "sense": "left#links",
+   "card": "left-links",
+   "gloss_de": "linke(r/s)",
+   "rank": 1
+  },
+  {
+   "form": "go",
+   "sense": "go#gehen",
+   "card": null,
+   "gloss_de": "gehen",
+   "rank": 1
+  },
+  {
+   "form": "leave",
+   "sense": "leave#verlassen",
+   "card": null,
+   "gloss_de": "verlassen",
+   "rank": 1
+  }
+ ],
+ "decks": [
+  {
+   "ref": "basics",
+   "slug": "fixture-basics",
+   "title_de": "Fixture: Grundwörter",
+   "cefr_band": "anfaenger",
+   "sort": 1
+  }
+ ],
+ "deck_cards": [
+  {
+   "deck": "basics",
+   "card": "went",
+   "position": 1
+  },
+  {
+   "deck": "basics",
+   "card": "left-verliess",
+   "position": 2
+  },
+  {
+   "deck": "basics",
+   "card": "left-links",
+   "position": 3
+  }
+ ],
+ "sentences": [
+  {
+   "ref": "s1",
+   "text": "She went home after work.",
+   "translation_de": "Sie ging nach der Arbeit nach Hause.",
+   "origins": [
+    "deck"
+   ]
+  },
+  {
+   "ref": "s2",
+   "text": "We went to the beach on Sunday.",
+   "translation_de": "Wir gingen am Sonntag an den Strand.",
+   "origins": [
+    "deck"
+   ]
+  },
+  {
+   "ref": "s3",
+   "text": "My brother went to bed early.",
+   "translation_de": "Mein Bruder ging früh ins Bett.",
+   "origins": [
+    "deck"
+   ]
+  },
+  {
+   "ref": "s4",
+   "text": "He left the house at seven.",
+   "translation_de": "Er verließ das Haus um sieben.",
+   "origins": [
+    "deck"
+   ]
+  },
+  {
+   "ref": "s5",
+   "text": "They left the party before midnight.",
+   "translation_de": "Sie verließen die Party vor Mitternacht.",
+   "origins": [
+    "deck"
+   ]
+  },
+  {
+   "ref": "s6",
+   "text": "She left her job last year.",
+   "translation_de": "Sie hat letztes Jahr ihre Stelle verlassen.",
+   "origins": [
+    "deck"
+   ]
+  },
+  {
+   "ref": "s7",
+   "text": "She raised her left hand.",
+   "translation_de": "Sie hob ihre linke Hand.",
+   "origins": [
+    "deck"
+   ]
+  },
+  {
+   "ref": "s8",
+   "text": "He broke his left arm last summer.",
+   "translation_de": "Er brach sich letzten Sommer den linken Arm.",
+   "origins": [
+    "deck"
+   ]
+  },
+  {
+   "ref": "s9",
+   "text": "My left shoe is wet.",
+   "translation_de": "Mein linker Schuh ist nass.",
+   "origins": [
+    "deck"
+   ]
+  }
+ ],
+ "card_sentences": [
+  {
+   "card": "went",
+   "sentence": "s1",
+   "position": 1,
+   "gap_start": 4,
+   "gap_end": 8,
+   "accepted": [
+    "went"
+   ]
+  },
+  {
+   "card": "went",
+   "sentence": "s2",
+   "position": 2,
+   "gap_start": 3,
+   "gap_end": 7,
+   "accepted": [
+    "went"
+   ]
+  },
+  {
+   "card": "went",
+   "sentence": "s3",
+   "position": 3,
+   "gap_start": 11,
+   "gap_end": 15,
+   "accepted": [
+    "went"
+   ]
+  },
+  {
+   "card": "left-verliess",
+   "sentence": "s4",
+   "position": 1,
+   "gap_start": 3,
+   "gap_end": 7,
+   "accepted": [
+    "left"
+   ]
+  },
+  {
+   "card": "left-verliess",
+   "sentence": "s5",
+   "position": 2,
+   "gap_start": 5,
+   "gap_end": 9,
+   "accepted": [
+    "left"
+   ]
+  },
+  {
+   "card": "left-verliess",
+   "sentence": "s6",
+   "position": 3,
+   "gap_start": 4,
+   "gap_end": 8,
+   "accepted": [
+    "left"
+   ]
+  },
+  {
+   "card": "left-links",
+   "sentence": "s7",
+   "position": 1,
+   "gap_start": 15,
+   "gap_end": 19,
+   "accepted": [
+    "left"
+   ]
+  },
+  {
+   "card": "left-links",
+   "sentence": "s8",
+   "position": 2,
+   "gap_start": 13,
+   "gap_end": 17,
+   "accepted": [
+    "left"
+   ]
+  },
+  {
+   "card": "left-links",
+   "sentence": "s9",
+   "position": 3,
+   "gap_start": 3,
+   "gap_end": 7,
+   "accepted": [
+    "left"
+   ]
+  }
+ ],
+ "sentence_tokens": [
+  {
+   "sentence": "s1",
+   "idx": 0,
+   "start_pos": 0,
+   "end_pos": 3,
+   "surface": "She",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s1",
+   "idx": 1,
+   "start_pos": 4,
+   "end_pos": 8,
+   "surface": "went",
+   "lemma": "go/VERB",
+   "sense": "go#gehen",
+   "card": "went"
+  },
+  {
+   "sentence": "s1",
+   "idx": 2,
+   "start_pos": 9,
+   "end_pos": 13,
+   "surface": "home",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s1",
+   "idx": 3,
+   "start_pos": 14,
+   "end_pos": 19,
+   "surface": "after",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s1",
+   "idx": 4,
+   "start_pos": 20,
+   "end_pos": 24,
+   "surface": "work",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s1",
+   "idx": 5,
+   "start_pos": 24,
+   "end_pos": 25,
+   "surface": ".",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s2",
+   "idx": 0,
+   "start_pos": 0,
+   "end_pos": 2,
+   "surface": "We",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s2",
+   "idx": 1,
+   "start_pos": 3,
+   "end_pos": 7,
+   "surface": "went",
+   "lemma": "go/VERB",
+   "sense": "go#gehen",
+   "card": "went"
+  },
+  {
+   "sentence": "s2",
+   "idx": 2,
+   "start_pos": 8,
+   "end_pos": 10,
+   "surface": "to",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s2",
+   "idx": 3,
+   "start_pos": 11,
+   "end_pos": 14,
+   "surface": "the",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s2",
+   "idx": 4,
+   "start_pos": 15,
+   "end_pos": 20,
+   "surface": "beach",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s2",
+   "idx": 5,
+   "start_pos": 21,
+   "end_pos": 23,
+   "surface": "on",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s2",
+   "idx": 6,
+   "start_pos": 24,
+   "end_pos": 30,
+   "surface": "Sunday",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s2",
+   "idx": 7,
+   "start_pos": 30,
+   "end_pos": 31,
+   "surface": ".",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s3",
+   "idx": 0,
+   "start_pos": 0,
+   "end_pos": 2,
+   "surface": "My",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s3",
+   "idx": 1,
+   "start_pos": 3,
+   "end_pos": 10,
+   "surface": "brother",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s3",
+   "idx": 2,
+   "start_pos": 11,
+   "end_pos": 15,
+   "surface": "went",
+   "lemma": "go/VERB",
+   "sense": "go#gehen",
+   "card": "went"
+  },
+  {
+   "sentence": "s3",
+   "idx": 3,
+   "start_pos": 16,
+   "end_pos": 18,
+   "surface": "to",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s3",
+   "idx": 4,
+   "start_pos": 19,
+   "end_pos": 22,
+   "surface": "bed",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s3",
+   "idx": 5,
+   "start_pos": 23,
+   "end_pos": 28,
+   "surface": "early",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s3",
+   "idx": 6,
+   "start_pos": 28,
+   "end_pos": 29,
+   "surface": ".",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s4",
+   "idx": 0,
+   "start_pos": 0,
+   "end_pos": 2,
+   "surface": "He",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s4",
+   "idx": 1,
+   "start_pos": 3,
+   "end_pos": 7,
+   "surface": "left",
+   "lemma": "leave/VERB",
+   "sense": "leave#verlassen",
+   "card": "left-verliess"
+  },
+  {
+   "sentence": "s4",
+   "idx": 2,
+   "start_pos": 8,
+   "end_pos": 11,
+   "surface": "the",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s4",
+   "idx": 3,
+   "start_pos": 12,
+   "end_pos": 17,
+   "surface": "house",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s4",
+   "idx": 4,
+   "start_pos": 18,
+   "end_pos": 20,
+   "surface": "at",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s4",
+   "idx": 5,
+   "start_pos": 21,
+   "end_pos": 26,
+   "surface": "seven",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s4",
+   "idx": 6,
+   "start_pos": 26,
+   "end_pos": 27,
+   "surface": ".",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s5",
+   "idx": 0,
+   "start_pos": 0,
+   "end_pos": 4,
+   "surface": "They",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s5",
+   "idx": 1,
+   "start_pos": 5,
+   "end_pos": 9,
+   "surface": "left",
+   "lemma": "leave/VERB",
+   "sense": "leave#verlassen",
+   "card": "left-verliess"
+  },
+  {
+   "sentence": "s5",
+   "idx": 2,
+   "start_pos": 10,
+   "end_pos": 13,
+   "surface": "the",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s5",
+   "idx": 3,
+   "start_pos": 14,
+   "end_pos": 19,
+   "surface": "party",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s5",
+   "idx": 4,
+   "start_pos": 20,
+   "end_pos": 26,
+   "surface": "before",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s5",
+   "idx": 5,
+   "start_pos": 27,
+   "end_pos": 35,
+   "surface": "midnight",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s5",
+   "idx": 6,
+   "start_pos": 35,
+   "end_pos": 36,
+   "surface": ".",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s6",
+   "idx": 0,
+   "start_pos": 0,
+   "end_pos": 3,
+   "surface": "She",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s6",
+   "idx": 1,
+   "start_pos": 4,
+   "end_pos": 8,
+   "surface": "left",
+   "lemma": "leave/VERB",
+   "sense": "leave#verlassen",
+   "card": "left-verliess"
+  },
+  {
+   "sentence": "s6",
+   "idx": 2,
+   "start_pos": 9,
+   "end_pos": 12,
+   "surface": "her",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s6",
+   "idx": 3,
+   "start_pos": 13,
+   "end_pos": 16,
+   "surface": "job",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s6",
+   "idx": 4,
+   "start_pos": 17,
+   "end_pos": 21,
+   "surface": "last",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s6",
+   "idx": 5,
+   "start_pos": 22,
+   "end_pos": 26,
+   "surface": "year",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s6",
+   "idx": 6,
+   "start_pos": 26,
+   "end_pos": 27,
+   "surface": ".",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s7",
+   "idx": 0,
+   "start_pos": 0,
+   "end_pos": 3,
+   "surface": "She",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s7",
+   "idx": 1,
+   "start_pos": 4,
+   "end_pos": 10,
+   "surface": "raised",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s7",
+   "idx": 2,
+   "start_pos": 11,
+   "end_pos": 14,
+   "surface": "her",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s7",
+   "idx": 3,
+   "start_pos": 15,
+   "end_pos": 19,
+   "surface": "left",
+   "lemma": "left/ADJ",
+   "sense": "left#links",
+   "card": "left-links"
+  },
+  {
+   "sentence": "s7",
+   "idx": 4,
+   "start_pos": 20,
+   "end_pos": 24,
+   "surface": "hand",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s7",
+   "idx": 5,
+   "start_pos": 24,
+   "end_pos": 25,
+   "surface": ".",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s8",
+   "idx": 0,
+   "start_pos": 0,
+   "end_pos": 2,
+   "surface": "He",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s8",
+   "idx": 1,
+   "start_pos": 3,
+   "end_pos": 8,
+   "surface": "broke",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s8",
+   "idx": 2,
+   "start_pos": 9,
+   "end_pos": 12,
+   "surface": "his",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s8",
+   "idx": 3,
+   "start_pos": 13,
+   "end_pos": 17,
+   "surface": "left",
+   "lemma": "left/ADJ",
+   "sense": "left#links",
+   "card": "left-links"
+  },
+  {
+   "sentence": "s8",
+   "idx": 4,
+   "start_pos": 18,
+   "end_pos": 21,
+   "surface": "arm",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s8",
+   "idx": 5,
+   "start_pos": 22,
+   "end_pos": 26,
+   "surface": "last",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s8",
+   "idx": 6,
+   "start_pos": 27,
+   "end_pos": 33,
+   "surface": "summer",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s8",
+   "idx": 7,
+   "start_pos": 33,
+   "end_pos": 34,
+   "surface": ".",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s9",
+   "idx": 0,
+   "start_pos": 0,
+   "end_pos": 2,
+   "surface": "My",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s9",
+   "idx": 1,
+   "start_pos": 3,
+   "end_pos": 7,
+   "surface": "left",
+   "lemma": "left/ADJ",
+   "sense": "left#links",
+   "card": "left-links"
+  },
+  {
+   "sentence": "s9",
+   "idx": 2,
+   "start_pos": 8,
+   "end_pos": 12,
+   "surface": "shoe",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s9",
+   "idx": 3,
+   "start_pos": 13,
+   "end_pos": 15,
+   "surface": "is",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s9",
+   "idx": 4,
+   "start_pos": 16,
+   "end_pos": 19,
+   "surface": "wet",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  },
+  {
+   "sentence": "s9",
+   "idx": 5,
+   "start_pos": 19,
+   "end_pos": 20,
+   "surface": ".",
+   "lemma": null,
+   "sense": null,
+   "card": null
+  }
+ ]
+}

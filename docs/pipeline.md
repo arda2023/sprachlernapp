@@ -2,6 +2,41 @@
 
 Offline-Werkzeug in Python, läuft nie in der App (siehe `PRODUCT.md`, Abschnitt Runtime AI Boundary).
 
+## 3a Stand
+
+Gerüst ohne KI-Aufrufe: stabile IDs, Lemma-Auswahl, Satz-Linter, DB-Schreiber, Export nach `content.sqlite`, Kosten-Protokoll.
+
+Ordner: `pipeline/src/sprachpipe/` (Code), `pipeline/tests/` (pytest, Fixture `tests/fixtures/mini_pack.json`), `pipeline/config.yaml`, `pipeline/out/` und `pipeline/.venv/` (beide nicht im Repo). Verbindung nur über `SUPABASE_DB_URL` in `pipeline/.env` (Vorlage: `pipeline/.env.example`).
+
+Windows (PowerShell), im Ordner `pipeline`:
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -e ".[test]"
+.\.venv\Scripts\python.exe -m pytest
+.\.venv\Scripts\python.exe -m sprachpipe.cli lemmas
+.\.venv\Scripts\python.exe -m sprachpipe.cli lint tests\fixtures\mini_pack.json
+.\.venv\Scripts\python.exe -m sprachpipe.cli upsert tests\fixtures\mini_pack.json            # Dry-Run
+.\.venv\Scripts\python.exe -m sprachpipe.cli upsert tests\fixtures\mini_pack.json --publish  # schreibt
+.\.venv\Scripts\python.exe -m sprachpipe.cli export tests\fixtures\mini_pack.json out\content.sqlite
+.\.venv\Scripts\python.exe -m sprachpipe.cli check-db                                         # nur lesen
+```
+
+macOS (Terminal), im Ordner `pipeline`:
+```bash
+python3.11 -m venv .venv
+.venv/bin/python -m pip install -e ".[test]"
+.venv/bin/python -m pytest
+.venv/bin/python -m sprachpipe.cli lemmas
+.venv/bin/python -m sprachpipe.cli upsert tests/fixtures/mini_pack.json --publish
+.venv/bin/python -m sprachpipe.cli export tests/fixtures/mini_pack.json out/content.sqlite
+```
+
+`upsert` ist ohne `--publish` ein Dry-Run. Lokale DB nach `supabase start`: `postgresql://postgres:postgres@127.0.0.1:54322/postgres`.
+
+**Offene Entscheidung: Funktionswörter.** Der Pilot-Filter nimmt nur NOUN, VERB, ADJ, ADV (Rang 1–60); Funktionswörter (Artikel, Pronomen, Präpositionen, Hilfsverben) bleiben bewusst draußen. Ob und wie sie Karten werden, ist offen.
+
+**Bekannte Grenze:** spaCy bestimmt Lemma und Wortart am einzelnen Wort ohne Kontext. Dadurch stehen z. B. `about`, `up`, `out` als ADV in der Liste und `best`/`better` bei `well`.
+
 ## KI-Zugang: Vertex AI
 
 - Projekt `sprachlernapp-510508`, Region `global`.

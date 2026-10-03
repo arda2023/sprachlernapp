@@ -5,16 +5,45 @@ Gilt für Supabase Schema `content` und, gleich, für `content.sqlite` je Sprach
 ## Master und IDs
 
 - **Supabase Schema `content` ist der Master.** `content.sqlite` ist ein Export daraus.
-- `id` = Hash des normalisierten Schlüssels: Hex der ersten 16 Byte von SHA-256 über die Schlüsselfelder (Unicode NFC, Felder mit `\u001f` getrennt).
+- `id` = Hash des normalisierten Schlüssels: Hex der ersten 16 Byte von SHA-256 über Tabellenname und Schlüsselfelder (Details: Abschnitt „Kanonisierung (festgeschrieben)“).
 - IDs werden **beim ersten Upsert berechnet und danach nie neu berechnet**. Eine gespeicherte ID gilt, auch wenn sich die Hash-Regel später ändert.
 - **Schlüssel enthalten nur unveränderliche Felder.** Korrekturen an Glossen, Übersetzungen oder Labels ändern nie eine ID; sie sind normale Spalten.
 - IDs werden **nie wiederverwendet**.
-- Alle Tabellen tragen `lang` (Zielsprache) und, wo Glossen vorkommen, `gloss_lang` (v1: `de`).
+- Alle Inhaltstabellen außer den Verknüpfungstabellen (`deck_cards`, `card_sentences`, `story_sentences`, `sentence_tokens`) tragen `lang` (Zielsprache). Die Glossensprache steht einmal in `languages.gloss_lang` (v1: `de`).
 - Formen wie `null`, `true`, `false` immer als Text behandeln.
 
 ## Normalisierung `form_norm`
 
 Unicode NFC, Kleinschreibung, `’` → `'`, sonst unverändert (keine Akzententfernung, keine Lemmatisierung).
+
+## Kanonisierung (festgeschrieben)
+
+Code: `pipeline/src/sprachpipe/ids.py` (`stable_id`). Testvektoren: `pipeline/tests/test_ids.py`.
+
+- Kanonische Zeichenfolge: `<tabelle>` `\u001f` `<feld 1>` `\u001f` `<feld 2>` … Der Tabellenname steht zuerst, damit gleiche Schlüssel in verschiedenen Tabellen (z. B. `decks` und `stories`, beide `lang` + `slug`) verschiedene IDs ergeben.
+- Jeder Wert wird Text (Ganzzahlen als Dezimalziffern) und nach Unicode NFC normalisiert. Sonst keine Änderung: keine Kleinschreibung, kein Trimmen. `null` ist als Schlüsselwert verboten.
+- `id` = Hex der ersten 16 Byte von SHA-256 über die UTF-8-Bytes (32 Zeichen).
+- `languages` hat keine `id`; Schlüssel ist `code`.
+
+| Tabelle | Feldreihenfolge |
+|---|---|
+| `lemmas` | `lang`, `lemma`, `pos` |
+| `senses` | `lemma_id`, `sense_key` |
+| `cards` | `lang`, `form`, `sense_id` |
+| `dictionary_forms` | `lang`, `form_norm`, `sense_id` |
+| `decks` | `lang`, `slug` |
+| `deck_cards` | `deck_id`, `card_id` |
+| `sentences` | `lang`, `text` |
+| `sentence_tokens` | `sentence_id`, `idx` |
+| `card_sentences` | `card_id`, `sentence_id` |
+| `stories` | `lang`, `slug` |
+| `story_sentences` | `story_id`, `idx` |
+| `exercises` | `lang`, `kind`, `slug` |
+| `grammar_rules` | `lang`, `slug` |
+| `audio_assets` | `owner_kind`, `owner_id`, `voice`, `model` |
+| `content_releases` | `lang`, `version` |
+
+Eine Änderung an dieser Tabelle ändert alle IDs der betroffenen Tabelle und ist deshalb ausgeschlossen.
 
 ## Tombstones
 
@@ -34,7 +63,7 @@ Unicode NFC, Kleinschreibung, `’` → `'`, sonst unverändert (keine Akzentent
 | `decks` | `lang`, `slug` | `title_de`, `description_de`, `cefr_band`, `icon`, `sort` |
 | `deck_cards` | `deck_id`, `card_id` | `position` |
 | `sentences` | `lang`, `text` | `origins` (Menge: deck / story / exercise), `translation_de`, `model`, `qa_status`, `qa_report` |
-| `sentence_tokens` | `sentence_id`, `idx` | `start`, `end`, `surface`, `lemma_id`, `sense_id`, `card_id` |
+| `sentence_tokens` | `sentence_id`, `idx` | `start_pos`, `end_pos`, `surface`, `lemma_id`, `sense_id`, `card_id` |
 | `card_sentences` | `card_id`, `sentence_id` | `position` (1–3), `gap_start`, `gap_end`, `accepted[]` |
 | `stories` | `lang`, `slug` | `title`, `kind` (story / text), `cefr_band`, `topic`, `minutes`, `cover` |
 | `story_sentences` | `story_id`, `idx` | `sentence_id`, `paragraph_idx`, `heading` |
@@ -60,4 +89,3 @@ Alle Tabellen außer `languages` und `content_releases` haben zusätzlich `remov
 ## Offen
 
 - Nachrichten (Schema folgt, wenn entschieden).
-- Feldreihenfolge der Kanonisierung je Tabelle wird mit dem ersten Upsert festgeschrieben.

@@ -1,0 +1,23 @@
+# Pipeline configuration (no secrets; credentials only via pipeline/.env).
+
+out_dir: out
+
+lemmas:
+  lang: en
+  top_n: 5000            # wordfreq top_n_list
+  pos_allowed: [NOUN, VERB, ADJ, ADV]   # pilot; function words stay out (open decision)
+  max_rank: 60           # pilot: ranks 1–60
+  spacy_model: en_core_web_sm
+
+linter:
+  max_words: 14
+  max_subclauses: 1
+  allowed_rank: 60       # i+1 rule: other content lemmas must rank <= this
+
+# Price table for the cost ledger. Values are UNCHECKED and intentionally
+# empty; they are filled and verified against the official price list in 3b.
+prices:
+  status: ungeprüft
+  as_of: ""              # date the prices were read (YYYY-MM-DD)
+  source: ""             # URL of the official price list
+  models: {}             # model: {input_per_mtok_usd, output_per_mtok_usd, thinking_per_mtok_usd}
