@@ -1,25 +1,25 @@
 # NEXTSTEPS
 
-## Erledigt (Stand 2026-10-03, Pipeline 3a)
-- `pipeline/`: venv, gepinnte Abhängigkeiten, Module ids, schema, pack, lemmas, linter, db, export, cost, cli; Fixture `mini_pack.json` (went; left = verließ / links als 2 Karten).
-- Doku: `docs/content-schema.md` (Abschnitt Kanonisierung, `start_pos`/`end_pos`, `lang` nach Migration), `docs/pipeline.md` (Abschnitt „3a Stand“).
+## Erledigt (2026-10-03, Pipeline 3c)
 
-## Geänderte Dateien
-`pipeline/` (neu), `docs/content-schema.md`, `docs/pipeline.md`, `NEXTSTEPS.md`.
+- Pack nur mit drei `ok`-Sätzen je Karte; keine automatische Erweiterung von `accepted[]`.
+- Fünf Kandidaten, bei Bedarf eine Zusatzrunde mit drei; Blindtest mit genau einem Neuversuch, Bedeutungs-Check gegen alle Bedeutungen der Form, Duplikatprüfung.
+- Deterministische Alltagssituationen und Namen je Slot, Vermeidungsliste, i+1-Warnungen, Review/Report und Denk-Token-Ledger.
+- Prompt-Versionen: meanings-v2, sentences-v2, annotate-v1, blindtest-v1, meaning-check-v1.
 
-## Testergebnis
-- `pytest`: 43 passed.
-- Lokale DB (`supabase db reset`, 2× `upsert --publish`): Zeilenzahlen in beiden Läufen identisch (u. a. cards 3, sentences 9, sentence_tokens 62).
-- `export`: content.sqlite mit 16 Tabellen; Join cards → card_sentences → sentences liefert 9 Zeilen.
-- `lemmas`: 60 Lemmata. `lint` auf das Fixture: 0 Fehler.
+## Testergebnis und Kosten
+
+- Offline: `pytest -q` → 55 passed.
+- Vertex-Miniaufruf mit hoher Denkstufe: `thoughts_token_count=105` (5 Eingabe-, 1 Ausgabe-Token); das Ledger verwendet dieses Feld.
+- Einmaliger Smoke-Test: 5 Formen, 14 Karten erzeugt, 13 im Pack, 39 `ok`-Sätze; alle Gaps treffen exakt die Form.
+- Ledger: 267 Aufrufe, 380 Denk-Token, 0,150474 USD bei 1,00 USD Grenze.
 
 ## Abweichungen
-- Python 3.11 statt 3.12 (3.12 nicht installiert; vorhanden 3.9, 3.11, 3.14).
-- ID-Kanonisierung nimmt den Tabellennamen als erstes Feld (vermeidet gleiche IDs bei decks/stories/grammar_rules).
-- i+1-Regel läuft nur mit `--lemmas <json>`; ohne Rangliste wird sie übersprungen.
-- `pipeline/.gitignore` statt Root-`.gitignore` für `.venv/` und `out/`.
 
-## Offene Probleme
-- spaCy ohne Kontext: `about`/`up`/`out` als ADV, `best`/`better` unter `well`.
-- Funktionswörter: offene Entscheidung (`docs/pipeline.md`). Preise in `config.yaml` leer (3b).
-- content.sqlite ohne Indizes außer Primärschlüsseln; Tombstone-Übernahme noch nicht implementiert.
+- Der Smoke-Test schrieb Pack, Review, Ledger und Bericht, endete danach beim Konsolen-`print` mit `UnicodeEncodeError` (Windows cp1252, `→`); ASCII-Ausgabe ist korrigiert. Kein zweiter Smoke-Test.
+- `left#links` blieb ohne drei gültige Sätze außerhalb des Packs.
+- Vorbestehende Änderungen an `.agent/`, `.agents/`, `.claude/` und `.gemini/` bleiben unberührt; deshalb zeigt `git status` mehr als die angefragten Pipeline- und Dokumentationsdateien.
+
+## Offen
+
+- Die 3c-Smoke-Ausgabe fachlich prüfen, insbesondere die Bedeutungen und deutschen Übersetzungen von `left` und `light`.

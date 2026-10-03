@@ -38,10 +38,14 @@ def test_budget(tmp_path):
         check_budget(0.5, ledger)
 
 
-def test_price_table_is_marked_unchecked():
-    prices = load_config()["prices"]
-    assert prices["status"] == "ungeprüft"
-    assert {"as_of", "source", "models"} <= set(prices)
+def test_price_table_is_checked():
+    cfg = load_config()
+    prices = cfg["prices"]
+    assert prices["status"] == "geprüft"
+    assert prices["as_of"] and prices["source"].startswith("https://")
+    for model in (cfg["llm"]["generate_model"], cfg["llm"]["blindtest_model"]):
+        assert {"input_per_mtok_usd", "output_per_mtok_usd",
+                "thinking_per_mtok_usd"} <= set(prices["models"][model])
 
 
 def test_schema_matches_migration():
