@@ -75,9 +75,10 @@ MEANINGS_SCHEMA = {
             "form_label_de": {"type": "string"},
             "cefr_band": {"type": "string", "enum": BANDS},
             "translation_de": {"type": "string"},
+            "usage": {"type": "string", "enum": ["haupt", "neben", "selten"]},
         },
         "required": ["pos", "lemma", "sense_key", "gloss_de", "form_kind", "form_label_de",
-                     "cefr_band", "translation_de"],
+                     "cefr_band", "translation_de", "usage"],
     }}},
     "required": ["meanings"],
 }
@@ -107,7 +108,7 @@ def meanings(llm, cfg: dict, form: str, rank: int | None, inventory,
     schema = deepcopy(MEANINGS_SCHEMA)
     schema["properties"]["meanings"]["maxItems"] = limit
     _, tpl = load_prompt("meanings")
-    prompt = tpl.format(form=form, rank=rank if rank is not None else "unknown",
+    prompt = tpl.format(form=inventory.display_form(form), rank=rank if rank is not None else "unknown",
                         max_meanings=limit, lang=g["lang"], lang_name=LANG_NAMES[g["lang"]])
     result = llm.generate_json(prompt, schema, model=c["generate_model"],
                                thinking=c["generate_thinking"], step="meanings",
@@ -151,7 +152,8 @@ def sentences(llm, cfg: dict, card: dict, count: int = 3, feedback: str = "",
     prompt = tpl.format(count=count, lang_name=LANG_NAMES[g["lang"]], feedback=feedback,
                         slot_instructions=instructions,
                         avoid_words=", ".join(avoid_words or []) or "none",
-                        **{k: card[k] for k in ("form", "pos", "lemma", "gloss_de",
+                        **{k: (card.get("display_form", card["form"]) if k == "form" else card[k])
+                           for k in ("form", "pos", "lemma", "gloss_de",
                                                 "form_label_de", "translation_de",
                                                 "cefr_band")})
     result = llm.generate_json(prompt, sentences_schema(count), model=c["generate_model"],
@@ -165,10 +167,9 @@ def sentences(llm, cfg: dict, card: dict, count: int = 3, feedback: str = "",
 
 
 def gap_offsets(text: str, form: str) -> tuple[int, int] | None:
-    """Character span of [form] as a whole token: case-sensitive first, then
-    case-insensitive. None if the form does not occur."""
+    """Character span of [form] as a whole token, ignoring case."""
     pattern = r"(?<!\w)" + re.escape(form) + r"(?!\w)"
-    m = re.search(pattern, text) or re.search(pattern, text, flags=re.IGNORECASE)
+    m = re.search(pattern, text, flags=re.IGNORECASE)
     return (m.start(), m.end()) if m else None
 
 
@@ -214,7 +215,7 @@ def qa_sentence(first: dict, card: dict, cfg: dict, *, regenerate, lint, blind, 
             a["discard_reason"] = "Blindtest"
             cur = regenerate(f"In the sentence {cur['text']!r} a reader who saw a gap instead "
                              f"of the form answered {a['blind_answer']!r}. Change the sentence "
-                             f"so that only the target form \"{card['form']}\" fits.")
+                             f"so that only the target form \"{card.get('display_form', card['form'])}\" fits.")
             continue
         if a["blind"] != "passed":
             a["qa_status"] = "failed"

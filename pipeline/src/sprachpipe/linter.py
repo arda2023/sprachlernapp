@@ -47,7 +47,7 @@ def lint_sentence(
     findings: list[Finding] = []
     doc = (nlp or _nlp())(sentence)
 
-    if sentence[gap_start:gap_end] != form:
+    if sentence[gap_start:gap_end].casefold() != form.casefold():
         findings.append(Finding("error", "gap", f"text[{gap_start}:{gap_end}] is "
                                 f"{sentence[gap_start:gap_end]!r}, expected {form!r}"))
 
@@ -63,7 +63,7 @@ def lint_sentence(
         findings.append(Finding("error", "subclauses",
                                 f"{len(subclauses)} subordinate clauses, max {max_subclauses}"))
 
-    if not sentence.rstrip().endswith((".", "?", "!")):
+    if not re.search(r'[.?!]["”’\x27)\]]*\s*$', sentence):
         findings.append(Finding("error", "ending", "sentence must end with . ? or !"))
 
     if any(ch.isdigit() for ch in sentence):

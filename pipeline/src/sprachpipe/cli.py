@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 from .config import PIPELINE_DIR, load_config, load_env
@@ -98,81 +99,125 @@ def cmd_export(args, cfg) -> int:
 SMOKE_MAX_USD = 1.0
 
 
+def _process_card(llm, cfg, card, found, avoid_words):
+    from .annotate import annotate_card
+    from .blindtest import ask, judge
+    from .generate import qa_sentence, sentences, slot_context
+    from .linter import lint_sentence
+    from .meaning_check import check as check_meaning
+    from .quality import duplicate
+
+    g, lc = cfg["generate"], cfg["linter"]
+    def evaluate(first, make):
+        slot = qa_sentence(
+            first, card, cfg, regenerate=make,
+            lint=lambda text, gap: lint_sentence(
+                text, card["form"], gap[0], gap[1], lc["min_zipf"][card["cefr_band"]],
+                lang=g["lang"], names=g["names"], max_words=lc["max_words"],
+                max_subclauses=lc["max_subclauses"]),
+            blind=lambda text, gap, tr: ask(llm, cfg, text, gap, tr, card["gloss_de"]),
+            judge=lambda ans: judge(ans, card["form"], [card["form"]], card["lemma"], None, None),
+            meaning_check=lambda text: check_meaning(llm, cfg, text,
+                         card["display_form"], found),
+            duplicate=lambda text, gap: duplicate(text, gap, card["accepted"]))
+        card["slots"].append(slot)
+        final = slot[-1]
+        if final["qa_status"] == "ok" and len(card["accepted"]) < 3:
+            card["accepted"].append(final)
+
+    for start, count in ((0, 5), (5, 3), (8, 3)):
+        if start and len(card["accepted"]) >= 3:
+            break
+        contexts = [slot_context(cfg, card, start + i) for i in range(count)]
+        batch = sentences(llm, cfg, card, count=count, contexts=contexts,
+                          avoid_words=avoid_words)
+        for i, first in enumerate(batch):
+            if len(card["accepted"]) >= 3:
+                card["slots"].append([{
+                    "text": first["text"], "translation_de": first["translation_de"],
+                    "gap": None, "lint": [], "lint_rules": [], "blind": None,
+                    "blind_answer": None, "meaning_check": None,
+                    "discard_reason": "", "qa_status": "unused"}])
+                continue
+            context = contexts[i]
+            def regenerate(feedback, context=context):
+                others = [b["text"] for b in batch]
+                others += [a["text"] for slot in card["slots"] for a in slot]
+                extra = " Do not reuse: " + " / ".join(others)
+                return sentences(llm, cfg, card, count=1,
+                                 feedback=feedback + extra,
+                                 contexts=[context], avoid_words=avoid_words)[0]
+            evaluate(first, regenerate)
+    if len(card["accepted"]) == 3:
+        annotate_card(llm, cfg, card, card["accepted"])
+    return card
+
+
 def run_generate(llm, cfg, forms, out_path, out_dir, *, max_usd, label,
                  inventory_path=None, refresh_meanings=None) -> str | None:
     """Steps 3-7 for [forms] ((form, rank) pairs); writes the pack,
     review.csv and run_report.md. Returns the abort reason or None."""
-    from .annotate import annotate
-    from .blindtest import ask, judge
-    from .generate import load_prompt, meanings, qa_sentence, sentences, slot_context
+    from .generate import load_prompt, meanings
     from .inventory import MeaningInventory
-    from .linter import lint_sentence
     from .llm import BudgetExceeded, LlmError
-    from .meaning_check import check as check_meaning
     from .pack import assemble_pack, build_rows
-    from .quality import common_lemmas, duplicate
+    from .quality import common_lemmas
     from .review import write_review_csv, write_run_report
+    from .ids import stable_id
 
     g, c, lc = cfg["generate"], cfg["llm"], cfg["linter"]
     inventory = MeaningInventory(g["lang"], inventory_path)
     out_dir = Path(out_dir)
     cards, skipped, aborted = [], [], None
+    llm.set_progress(out_dir / "progress.txt", len(forms))
     try:
+        work = []
+        remaining = {}
         for form, rank in forms:
             found = meanings(llm, cfg, form, rank, inventory,
                              refresh=form == refresh_meanings)
             if not found:
                 skipped.append(f"{form}: keine Bedeutung (Fragment, Eigenname oder Zahl)")
+                llm.form_done()
                 continue
-            for m in found:
-                card = {"form": form, "rank": rank, **m, "slots": [], "accepted": []}
+            active = [(idx, m) for idx, m in enumerate(found, start=1)
+                      if m.get("status", "active") == "active"]
+            remaining[form] = len(active)
+            if not active:
+                skipped.append(f"{form}: alle Bedeutungen ausgeschlossen")
+                llm.form_done()
+            for idx, m in active:
+                card = {"form": form, "display_form": inventory.display_form(form),
+                        "rank": rank, "sense_index": idx, **m, "slots": [], "accepted": []}
                 cards.append(card)
-                def evaluate(first, make):
-                    slot = qa_sentence(
-                        first, card, cfg, regenerate=make,
-                        lint=lambda text, gap: lint_sentence(
-                            text, form, gap[0], gap[1], lc["min_zipf"][card["cefr_band"]],
-                            lang=g["lang"], names=g["names"], max_words=lc["max_words"],
-                            max_subclauses=lc["max_subclauses"]),
-                        blind=lambda text, gap, tr: ask(llm, cfg, text, gap, tr, card["gloss_de"]),
-                        judge=lambda ans: judge(ans, form, [form], card["lemma"], None, None),
-                        meaning_check=lambda text: check_meaning(llm, cfg, text, form, found),
-                        duplicate=lambda text, gap: duplicate(text, gap, card["accepted"]))
-                    card["slots"].append(slot)
-                    final = slot[-1]
-                    if final["qa_status"] == "ok" and len(card["accepted"]) < 3:
-                        card["accepted"].append(final)
-
-                for start, count in ((0, 5), (5, 3), (8, 3)):
-                    if start and len(card["accepted"]) >= 3:
-                        break
-                    contexts = [slot_context(cfg, card, start + i) for i in range(count)]
-                    avoid_words = common_lemmas(cards[:-1])
-                    batch = sentences(llm, cfg, card, count=count, contexts=contexts,
-                                      avoid_words=avoid_words)
-                    for i, first in enumerate(batch):
-                        if len(card["accepted"]) >= 3:
-                            card["slots"].append([{
-                                "text": first["text"], "translation_de": first["translation_de"],
-                                "gap": None, "lint": [], "lint_rules": [], "blind": None,
-                                "blind_answer": None, "meaning_check": None,
-                                "discard_reason": "", "qa_status": "unused"}])
-                            continue
-                        context = contexts[i]
-                        def regenerate(feedback, context=context):
-                            others = [b["text"] for b in batch]
-                            others += [a["text"] for slot in card["slots"] for a in slot]
-                            extra = " Do not reuse: " + " / ".join(others)
-                            return sentences(llm, cfg, card, count=1,
-                                             feedback=feedback + extra,
-                                             contexts=[context], avoid_words=avoid_words)[0]
-                        evaluate(first, regenerate)
-                for final in card["accepted"]:
-                    final["tokens"], final["annotate_problems"] = annotate(
-                        llm, cfg, final["text"], final["translation_de"], card, final["gap"])
+                work.append((card, found))
+        concurrency = max(1, int(g.get("concurrency", 8)))
+        with ThreadPoolExecutor(max_workers=concurrency) as pool:
+            for start in range(0, len(work), concurrency):
+                wave = work[start:start + concurrency]
+                avoid_words = common_lemmas(cards[:start])
+                futures = {pool.submit(_process_card, llm, cfg, card, found, avoid_words): card
+                           for card, found in wave}
+                for future in as_completed(futures):
+                    card = futures[future]
+                    try:
+                        future.result()
+                    except Exception:
+                        for other in futures:
+                            other.cancel()
+                        raise
+                    remaining[card["form"]] -= 1
+                    if remaining[card["form"]] == 0:
+                        llm.form_done()
     except (BudgetExceeded, LlmError) as e:
         aborted = f"{type(e).__name__}: {e}"
     finally:
+        llm.finish_progress()
+        def card_id(card):
+            lemma_id = stable_id("lemmas", lang=g["lang"], lemma=card["lemma"], pos=card["pos"])
+            sense_id = stable_id("senses", lemma_id=lemma_id, sense_key=card["sense_key"])
+            return stable_id("cards", lang=g["lang"], form=card["form"], sense_id=sense_id)
+        cards.sort(key=card_id)
         pack = assemble_pack(g["lang"], cards, model=c["generate_model"], version="0.0.0-generate")
         build_rows(pack)  # validates refs and columns
         out_path = Path(out_path)
@@ -225,6 +270,45 @@ def cmd_generate(args, cfg) -> int:
     return 0
 
 
+def cmd_classify_usage(args, cfg) -> int:
+    from .classify import classify_form
+    from .cost import total_usd
+    from .inventory import MeaningInventory
+    from .llm import AuthError, BudgetExceeded, Llm, LlmError
+
+    if args.max_usd <= 0 or args.max_usd > 0.50:
+        print("error: classify-usage requires 0 < --max-usd <= 0.50", file=sys.stderr)
+        return 2
+    out_dir = PIPELINE_DIR / cfg["out_dir"]
+    ledger = out_dir / "classify_ledger.csv"
+    if ledger.exists():
+        print("error: classify ledger exists; one-time run already started", file=sys.stderr)
+        return 2
+    inventory = MeaningInventory(cfg["generate"]["lang"])
+    inventory.save()
+    llm = Llm(cfg, ledger, args.max_usd)
+    llm.set_progress(out_dir / "classify_progress.txt", len(inventory.forms))
+    try:
+        for form in inventory.forms:
+            found = inventory.get(form)
+            usages = classify_form(llm, cfg, form, found, inventory.display_form(form))
+            inventory.classify(form, usages)
+            llm.form_done()
+    except (AuthError, BudgetExceeded, LlmError, ValueError) as e:
+        print(f"aborted: {type(e).__name__}: {e}", file=sys.stderr)
+        return 3
+    finally:
+        llm.finish_progress()
+    print("form | sense_key | usage | status")
+    for form in inventory.forms:
+        for meaning in inventory.get(form):
+            if meaning["usage"] != "haupt" or meaning["status"] == "excluded":
+                print(f"{form} | {meaning['sense_key']} | {meaning['usage']} | {meaning['status']}")
+    print(f"cost_usd {total_usd(ledger):.6f}")
+    print(f"ledger {ledger}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="sprachpipe")
     sub = p.add_subparsers(dest="command", required=True)
@@ -245,12 +329,15 @@ def main(argv: list[str] | None = None) -> int:
     ge.add_argument("--max-usd", type=float, default=1.0, help="cost limit for this run")
     ge.add_argument("--refresh-meanings", metavar="FORM",
                     help="regenerate meanings for this form and append new sense keys")
+    cu = sub.add_parser("classify-usage", help="classify existing inventory meanings once")
+    cu.add_argument("--max-usd", type=float, default=0.50)
     args = p.parse_args(argv)
 
     from .db import DbError
 
     handlers = {"check-db": cmd_check_db, "lemmas": cmd_lemmas, "lint": cmd_lint,
-                "upsert": cmd_upsert, "export": cmd_export, "generate": cmd_generate}
+                "upsert": cmd_upsert, "export": cmd_export, "generate": cmd_generate,
+                "classify-usage": cmd_classify_usage}
     try:
         return handlers[args.command](args, load_config())
     except DbError as e:

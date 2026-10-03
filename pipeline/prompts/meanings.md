@@ -1,4 +1,4 @@
-version: meanings-v3
+version: meanings-v4
 
 You are a lexicographer preparing vocabulary cards for adult German speakers learning {lang_name}.
 
@@ -16,5 +16,6 @@ For each meaning:
 - form_label_de: German label, e.g. "Verb, Vergangenheit", "Adjektiv, Grundform", "Präposition".
 - cefr_band: anfaenger (A1-A2), mittel (B1-B2) or fortgeschritten (C1-C2) for this meaning.
 - translation_de: German translation of exactly this form in this meaning (e.g. "ging" for "went").
+- usage: haupt for a common, central sense; neben for a less common but useful sense; selten for a rare or marginal sense. Do not mark everyday function-word uses selten.
 
 If the form is an abbreviation or fragment (e.g. "'s", "n't"), a proper name or a number, return an empty list.

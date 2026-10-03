@@ -32,8 +32,8 @@ def clean(answer: str) -> str:
 
 def judge(answer: str, form: str, accepted: list[str], lemma: str, lemma_of,
           is_word) -> str:
-    """Only the exact form passes; accepted[] is never extended automatically."""
-    return "passed" if clean(answer) == form else "failed"
+    """Only the target form passes, ignoring case; accepted[] is not extended."""
+    return "passed" if clean(answer).casefold() == form.casefold() else "failed"
 
 
 def default_helpers(lang: str):

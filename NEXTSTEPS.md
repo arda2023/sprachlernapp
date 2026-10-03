@@ -1,25 +1,16 @@
 # NEXTSTEPS
 
-## Erledigt (2026-10-03, Pipeline 3d)
+## Pipeline 3e (2026-10-03)
 
-- Persistentes Bedeutungs-Inventar `pipeline/data/meanings/en.json`; vorhandene `sense_key` bleiben stabil, Refresh hängt nur an.
-- meanings-v3 trennt Wortarten und begrenzt Bedeutungen nach Wortfrequenz auf vier bzw. drei.
-- sentences-v3 erzeugt fünf Kandidaten in einem Aufruf; bei Bedarf zwei Dreier-Runden. Satzanfänge je Karte sind verschieden.
-- i+1 verwendet den höheren Zipf-Wert aus Lemma und Form; Namenspool und Zahlen sind ausgenommen. review.csv nutzt Komma und UTF-8 mit BOM.
+- `display_form` ist je Form gespeichert; `i` wird in Prompts als `I` gezeigt. Lücke und Blindtest vergleichen ohne Groß-/Kleinschreibung.
+- Der Linter akzeptiert nach `.?!` schließende Anführungszeichen und Klammern.
+- Das Inventar enthält `usage`, `status` und `exclude_reason`; vier Lücken-untaugliche Bedeutungen sind ausgeschlossen. Seltene Bedeutungen werden durch `classify-usage` ausgeschlossen, sobald die Klassifikation erfolgreich lief.
+- Der Pack erhält den Stapel `allgemeine-sprache` mit gewichteter Rangfolge. Karten laufen mit konfigurierbarer Parallelität (Standard 8), Annotation in einem Aufruf je Karte.
+- Das Budget wird vor Aufrufen reserviert; 429 und 5xx werden höchstens fünfmal mit Rückzug versucht. `out/progress.txt` zeigt Laufdaten.
+- Offline: `pytest -q` → 75 passed in 7.23s.
 
-## Testergebnis und Kosten
+## Ausstehend
 
-- Offline: `pytest -q` → 64 passed.
-- Smoke einmal: 5/5 Formen, `left#links` im Pack, 15 Karten und 45 gültige Sätze; 169 Aufrufe, 0,121110 USD, 0 Denk-Token.
-- Pilot einmal: 60 Formen, 169/177 Karten im Pack (95,48 %), 507 gültige Sätze; 2.443 Aufrufe, 1,674511 USD, 6.431 Denk-Token.
-- Beide Packs: jede Lücke trifft die Form, alle Pack-Sätze `ok`, jede Pack-Karte genau drei Sätze; Satzanfänge je Karte verschieden.
-
-## Abweichungen
-
-- Acht Pilotkarten erreichten keine drei Sätze; Gründe und Blindtest-Antworten stehen vollständig in `pipeline/out/run_report.md`.
-- Häufigste Verwerfungen: `what` 61, `there` 38, `like` 34, `this` 29, `i` und `your` je 22.
-
-## Offen
-
-- Kleingeschriebenes `i` aus wordfreq wird vom Blindtest als `I` beantwortet; Kanonisierung der Form vor einem Folgelauf klären.
-- Schwierige Funktionswort-Bedeutungen wie `what#ausruf`, `there#beruhigung` und `like#als_ob` fachlich prüfen.
+- Der einmal gestartete Klassifikationslauf brach vor dem ersten Vertex-Aufruf mit `AuthError: ADC TransportError` ab. Keine Kosten und keine Klassifikationstabelle. Zugangsdaten wurden nicht geprüft.
+- Der 3e-Smoke-Test wurde deshalb nicht gestartet. Der 60er-Pilot wurde wie angewiesen nicht gestartet.
+- Nach Behebung der ADC-Verbindung: `classify-usage --max-usd 0.50`, dann `generate --forms smoke --out out/smoke_pack_v4.json --max-usd 1.0`. Den 60er-Pilot führt Arda selbst aus.

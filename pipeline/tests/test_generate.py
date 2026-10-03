@@ -41,10 +41,21 @@ class FakeVertex(llm_mod.Llm):
 
     def _call(self, prompt, schema, model, thinking, max_output_tokens):
         key = next(iter(schema["properties"]))
-        self.calls.append(key)
+        batch_annotation = (key == "sentences" and
+            "sentence_idx" in schema["properties"]["sentences"]["items"]["properties"])
+        self.calls.append("annotate" if batch_annotation else key)
         self.prompts.append(prompt)
         if key == "meanings":
             out = {"meanings": [WENT]}
+        elif batch_annotation:
+            groups = []
+            for idx, block in re.findall(r"Sentence (\d+): (.*?)(?=Sentence \d+:|For EVERY|\Z)",
+                                         prompt, flags=re.S):
+                toks = re.findall(r"^(\d+): (.+)$", block, flags=re.M)
+                groups.append({"sentence_idx": int(idx), "tokens": [
+                    {"token_idx": int(i), "surface": s, "lemma": s.lower(), "gloss_de": "x"}
+                    for i, s in toks]})
+            out = {"sentences": groups}
         elif key == "sentences":
             n = schema["properties"]["sentences"]["minItems"]
             out = {"sentences": [{"text": next(self.sentences), "translation_de": "Deutsch."}
@@ -80,6 +91,9 @@ def test_gap_offsets():
     assert gap_offsets("Wentworth went home.", "went") == (10, 14)
     assert gap_offsets("Went home, she did.", "went") == (0, 4)
     assert gap_offsets("She is home.", "went") is None
+    assert gap_offsets("Today I went home.", "i") == (6, 7)
+    assert gap_offsets("What is this?", "what") == (0, 4)
+    assert judge("I", "i", ["i"], "I", None, None) == "passed"
 
 
 def test_five_candidates_pack_only_ok(cfg, tmp_path):
@@ -88,7 +102,10 @@ def test_five_candidates_pack_only_ok(cfg, tmp_path):
     assert aborted is None
     assert llm.calls.count("sentences") == 1
     assert llm.calls.count("sense_key") == 3
+    assert llm.calls.count("annotate") == 1
     assert len(pack["card_sentences"]) == 3
+    assert len(pack["deck_cards"]) == 1
+    assert pack["decks"][0]["slug"] == "allgemeine-sprache"
     texts = {s["ref"]: s for s in pack["sentences"]}
     for cs in pack["card_sentences"]:
         sn = texts[cs["sentence"]]

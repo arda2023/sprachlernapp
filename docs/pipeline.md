@@ -123,6 +123,31 @@ macOS (Terminal), im Ordner `pipeline`:
 
 Der Pilot folgt nur auf einen Smoke-Test, bei dem alle fünf Formen mindestens eine Karte im Pack haben und `left#links` im Pack ist. Die Ergebnisse des aktuellen Laufs stehen in `NEXTSTEPS.md`.
 
+## 3e Stand
+
+- Das Bedeutungs-Inventar speichert je Form `display_form` (`i` → `I`) und je `sense_key` `usage` (`haupt`, `neben`, `selten`), `status` (`active`, `excluded`) sowie gegebenenfalls `exclude_reason`. `classify-usage` bewertet die 63 vorhandenen Formen einmal mit genau einem Modellaufruf je Form und ändert keine Schlüssel. `meanings-v4` liefert `usage` direkt für neue Bedeutungen. `selten` wird mit Grund `selten` ausgeschlossen. `what#ausruf`, `there#beruhigung`, `like#als_ob` und `this#so_graduierend` bleiben mit Grund `cloze_ambiguous` im Inventar, erzeugen aber keine Karten.
+- Prompts verwenden `display_form`. Lücken-Offsets berechnet der Code; Lücke, Blindtest und Formvergleich beachten die Groß-/Kleinschreibung nicht. Der Linter akzeptiert nach `.?!` auch schließende Anführungszeichen und Klammern.
+- Der Pack enthält den Stapel `allgemeine-sprache`. Dessen `cefr_band` ist die Mehrheit der gepackten Karten (bei Gleichstand die niedrigere Stufe). `deck_cards.position` folgt `form_rank + 0` für `haupt` beziehungsweise `form_rank + 200` für `neben`, danach der Bedeutungsreihenfolge im Inventar. Nur aktive, vollständige Karten kommen in den Stapel.
+- `generate.concurrency` in `config.yaml` begrenzt die parallelen Karten (Standard 8). Fertige Karten werden nach stabiler Karten-ID sortiert. Das Kostenledger reserviert vor jedem Aufruf ein Budget unter Sperre und verrechnet danach die echten Tokenkosten. Bei 429/`RESOURCE_EXHAUSTED` und 5xx folgen höchstens fünf Versuche mit exponentiellem Rückzug und Zufallsanteil; Auth-Fehler beenden den Lauf sofort. Annotation (`annotate-v2`) erfolgt mit einem Aufruf für die drei Sätze einer Karte, mit Tokenprüfung wie bisher.
+- `out/progress.txt` enthält fertige/gesamte Formen, abgeschlossene Aufrufe, USD und Laufzeit. Es wird nach jeweils 25 Aufrufen, bei einer fertigen Form und am Laufende aktualisiert. Der 60er-Lauf wird im eigenen Terminal gestartet (siehe `pipeline/README.md`); dieser Schritt startet nur den Smoke-Test.
+- Ausführung am 03.10.2026: `pytest -q` bestand mit 75 Tests. Der einmal gestartete `classify-usage`-Lauf endete vor dem ersten Modellaufruf mit `AuthError: ADC TransportError`; es entstanden keine Vertex-Kosten. Der Smoke-Test wurde wegen der festgelegten Stop-Regel nicht gestartet. Das Inventar enthält bis zur erfolgreichen Klassifikation vorläufig `usage: haupt` für ältere Bedeutungen; die vier `cloze_ambiguous`-Einträge sind bereits ausgeschlossen.
+
+Windows PowerShell, im Ordner `pipeline`:
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q
+.\.venv\Scripts\python.exe -m sprachpipe.cli classify-usage --max-usd 0.50
+.\.venv\Scripts\python.exe -m sprachpipe.cli generate --forms smoke --out out\smoke_pack_v4.json --max-usd 1.0
+Get-Content out\progress.txt
+```
+
+macOS Terminal, im Ordner `pipeline`:
+```bash
+.venv/bin/python -m pytest -q
+.venv/bin/python -m sprachpipe.cli classify-usage --max-usd 0.50
+.venv/bin/python -m sprachpipe.cli generate --forms smoke --out out/smoke_pack_v4.json --max-usd 1.0
+cat out/progress.txt
+```
+
 ## KI-Zugang: Vertex AI
 
 - Projekt `sprachlernapp-510508`, Region `global`.

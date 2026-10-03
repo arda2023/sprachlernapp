@@ -49,10 +49,10 @@ llm:
   blindtest_model: gemini-2.5-flash    # cheaper; availability checked 2026-10-03 with a mini call
   blindtest_thinking: {thinking_budget: 0}
   timeout_s: 90
-  max_retries: 2         # transient errors only
-  max_output_tokens: {meanings: 2048, sentences: 2048, annotate: 4096, blindtest: 256, meaning_check: 256}
+  max_output_tokens: {meanings: 2048, sentences: 2048, annotate: 4096, blindtest: 256, meaning_check: 256, classify_usage: 1024}
 
 generate:
+  concurrency: 8
   lang: en
   gloss_lang: de
   top_n: 5000            # wordfreq ranks for candidate forms

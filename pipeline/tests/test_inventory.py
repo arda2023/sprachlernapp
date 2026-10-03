@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 from sprachpipe.config import load_config
+from sprachpipe.classify import classify_form
 from sprachpipe.generate import candidate_forms, meanings
 from sprachpipe.inventory import MeaningInventory
 
@@ -54,8 +55,39 @@ def test_seed_preserves_smoke_keys():
     path = Path(__file__).resolve().parents[1] / "data" / "meanings" / "en.json"
     data = json.loads(path.read_text(encoding="utf-8"))
     assert list(data["forms"])[:5] == ["went", "left", "about", "up", "light"]
-    assert {m["sense_key"] for m in data["forms"]["left"]} == {
+    assert {m["sense_key"] for m in data["forms"]["left"]["meanings"]} == {
         "leave#verlassen", "left#uebrig", "left#links", "left#nach_links"}
+    assert data["forms"]["i"]["display_form"] == "I"
+    for key in ("what#ausruf", "there#beruhigung", "like#als_ob", "this#so_graduierend"):
+        assert any(m["sense_key"] == key and m["status"] == "excluded"
+                   and m["exclude_reason"] == "cloze_ambiguous"
+                   for form in data["forms"].values() for m in form["meanings"])
+
+
+def test_classification_preserves_keys_and_excludes_rare(tmp_path):
+    inv = MeaningInventory("en", tmp_path / "en.json")
+    inv.append("what", [entry("what#ausruf"), entry("what#frage"), entry("what#alt")], 4)
+    inv.classify("what", {"what#ausruf": "haupt", "what#frage": "neben", "what#alt": "selten"})
+    stored = MeaningInventory("en", inv.path).get("what")
+    assert [m["sense_key"] for m in stored] == ["what#ausruf", "what#frage", "what#alt"]
+    assert [(m["usage"], m["status"], m.get("exclude_reason")) for m in stored] == [
+        ("haupt", "excluded", "cloze_ambiguous"), ("neben", "active", None),
+        ("selten", "excluded", "selten")]
+
+
+def test_classify_usage_one_call_exact_existing_keys():
+    class Fake:
+        def __init__(self):
+            self.calls = 0
+        def generate_json(self, prompt, schema, **kwargs):
+            self.calls += 1
+            assert 'English form "I"' in prompt
+            assert set(schema["properties"]["usages"]["required"]) == {"i#ich", "i#alt"}
+            return {"usages": {"i#ich": "haupt", "i#alt": "selten"}}
+    fake = Fake()
+    assert classify_form(fake, load_config(), "i", [entry("i#ich"), entry("i#alt")], "I") == {
+        "i#ich": "haupt", "i#alt": "selten"}
+    assert fake.calls == 1
 
 
 def test_numeric_forms_skip_fragments_numbers_proper_names(monkeypatch):

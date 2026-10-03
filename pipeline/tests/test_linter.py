@@ -54,6 +54,20 @@ def test_ending():
     assert "ending" in rules(lint("She went home", "went"), "error")
 
 
+@pytest.mark.parametrize("sentence", ['She said "Go."', 'She asked "Go?"', 'Go!)'])
+def test_ending_allows_closing_quotes_and_brackets(sentence):
+    assert "ending" not in rules(lint(sentence, "Go", zipf=lambda word, lang: 5.0), "error")
+
+
+def test_ending_rejects_closer_without_punctuation():
+    assert "ending" in rules(lint('She said "Go"', "Go"), "error")
+
+
+def test_gap_allows_capital_i_in_sentence_middle():
+    sentence = "Today I went home."
+    assert "gap" not in rules(lint_sentence(sentence, "i", 6, 7, 4.0), "error")
+
+
 def test_digits_warn():
     assert "digits" not in rules(lint(GOOD, "went"))
     assert "digits" in rules(lint("She went home at 7.", "went"), "warn")

@@ -1,17 +1,7 @@
-version: annotate-v1
+version: annotate-v2
 
-You annotate a {lang_name} sentence for German learners.
+You annotate three {lang_name} sentences for German learners. Return one entry per sentence_idx (0, 1, 2), each with a tokens list.
 
-Sentence: {text}
-German translation: {translation_de}
+{sentences}
 
-Tokens (index: surface):
-{tokens}
-
-For EVERY token listed above, including function words (articles, prepositions, pronouns, auxiliaries), give:
-- token_idx: the index from the list
-- surface: the token exactly as listed
-- lemma: dictionary form
-- gloss_de: short German gloss of this token in this sentence (the meaning here, not all meanings)
-
-Token {card_idx} ("{form}") has the meaning: lemma "{lemma}", gloss "{gloss_de}". Use exactly this lemma and gloss for it.
+For EVERY listed word token, including function words, give token_idx, surface exactly as listed, dictionary lemma, and a short German gloss in this sentence. For each Target token ("{form}"), use lemma "{lemma}" and gloss "{gloss_de}". Do not include punctuation tokens.

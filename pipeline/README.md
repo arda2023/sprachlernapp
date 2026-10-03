@@ -1,6 +1,22 @@
 # sprachpipe
 
-Offline-Content-Pipeline für Sprachapp (Python, läuft nie in der App). Details und Befehle für Windows und macOS: `docs/pipeline.md`, Abschnitte „3a Stand“ und „3b Stand“.
+Offline-Content-Pipeline für Sprachapp (Python, läuft nie in der App). Details und Befehle für Windows und macOS: `docs/pipeline.md`, Abschnitt „3e Stand“.
+
+## Lauf im eigenen Terminal
+
+Windows PowerShell, im Ordner `pipeline`:
+```powershell
+.\.venv\Scripts\python.exe -m sprachpipe.cli generate --forms 60 --out out\pilot_pack_v4.json --max-usd 5.0
+Get-Content out\progress.txt
+```
+
+macOS Terminal, im Ordner `pipeline`:
+```bash
+.venv/bin/python -m sprachpipe.cli generate --forms 60 --out out/pilot_pack_v4.json --max-usd 5.0
+cat out/progress.txt
+```
+
+`progress.txt` zeigt fertige Formen, abgeschlossene Aufrufe, USD und Laufzeit; Aktualisierung nach jedem 25. Aufruf sowie beim Abschluss einer Form. `generate.concurrency` in `config.yaml` steuert die Zahl gleichzeitiger Karten (Standard 8).
 
 ## Module (`src/sprachpipe/`)
 
@@ -19,7 +35,7 @@ Offline-Content-Pipeline für Sprachapp (Python, läuft nie in der App). Details
 | `annotate.py` | Tokens + Glossen im Kontext |
 | `blindtest.py` | Blindtest mit zweitem Modell |
 | `review.py` | `review.csv`, `run_report.md` |
-| `cli.py` | `check-db`, `lemmas`, `lint`, `upsert`, `export`, `generate` |
+| `cli.py` | `check-db`, `lemmas`, `lint`, `upsert`, `export`, `generate`, `classify-usage` |
 
 ## Regeln
 

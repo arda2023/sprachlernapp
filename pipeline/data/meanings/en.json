@@ -1,1991 +1,2556 @@
 {
   "lang": "en",
   "forms": {
-    "went": [
-      {
-        "pos": "VERB",
-        "lemma": "go",
-        "sense_key": "go#gehen",
-        "gloss_de": "sich von einem Ort zum anderen bewegen (Vergangenheit von go)",
-        "form_kind": "past",
-        "form_label_de": "Verb, Vergangenheit",
-        "cefr_band": "anfaenger",
-        "translation_de": "ging, fuhr"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "go",
-        "sense_key": "go#werden",
-        "gloss_de": "in einen bestimmten Zustand übergehen (z. B. went crazy, went blind)",
-        "form_kind": "past",
-        "form_label_de": "Verb, Vergangenheit",
-        "cefr_band": "mittel",
-        "translation_de": "wurde"
-      }
-    ],
-    "left": [
-      {
-        "pos": "VERB",
-        "lemma": "leave",
-        "sense_key": "leave#verlassen",
-        "gloss_de": "verlassen (einen Ort verlassen)",
-        "form_kind": "past",
-        "form_label_de": "Verb, Vergangenheit",
-        "cefr_band": "anfaenger",
-        "translation_de": "verliess"
-      },
-      {
-        "pos": "ADJ",
-        "lemma": "left",
-        "sense_key": "left#uebrig",
-        "gloss_de": "übrig (als Rest noch vorhanden)",
-        "form_kind": "base",
-        "form_label_de": "Adjektiv, prädikativ",
-        "cefr_band": "anfaenger",
-        "translation_de": "übrig"
-      },
-      {
-        "pos": "ADJ",
-        "lemma": "left",
-        "sense_key": "left#links",
-        "gloss_de": "links (auf der linken Seite befindlich, z. B. die linke Tür)",
-        "form_kind": "base",
-        "form_label_de": "Adjektiv, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "links, linke"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "left",
-        "sense_key": "left#nach_links",
-        "gloss_de": "nach links (Richtung beim Gehen oder Abbiegen)",
-        "form_kind": "base",
-        "form_label_de": "Adverb",
-        "cefr_band": "anfaenger",
-        "translation_de": "nach links"
-      }
-    ],
-    "about": [
-      {
-        "pos": "ADP",
-        "lemma": "about",
-        "sense_key": "about#ueber_thema",
-        "gloss_de": "über (ein Thema oder einen Gegenstand betreffend)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "über"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "about",
-        "sense_key": "about#ungefaehr",
-        "gloss_de": "ungefähr (eine Mengenangabe oder Zeit betreffend)",
-        "form_kind": "base",
-        "form_label_de": "Adverb",
-        "cefr_band": "anfaenger",
-        "translation_de": "ungefähr"
-      },
-      {
-        "pos": "ADJ",
-        "lemma": "about",
-        "sense_key": "about#im_begriff",
-        "gloss_de": "im Begriff sein (etwas gleich zu tun, v.a. 'about to')",
-        "form_kind": "base",
-        "form_label_de": "Adjektiv, prädikativ",
-        "cefr_band": "mittel",
-        "translation_de": "im Begriff (zu)"
-      }
-    ],
-    "up": [
-      {
-        "pos": "ADV",
-        "lemma": "up",
-        "sense_key": "up#hinauf",
-        "gloss_de": "hinauf / nach oben (Richtung oder höhere Position)",
-        "form_kind": "base",
-        "form_label_de": "Adverb",
-        "cefr_band": "anfaenger",
-        "translation_de": "hinauf, nach oben, oben"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "up",
-        "sense_key": "up#entlang",
-        "gloss_de": "hinauf / entlang (eine Straße, einen Fluss oder eine Steigung hinauf)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "hinauf, herauf, entlang"
-      },
-      {
-        "pos": "ADJ",
-        "lemma": "up",
-        "sense_key": "up#wach",
-        "gloss_de": "auf / wach (nicht mehr schlafend oder im Bett)",
-        "form_kind": "base",
-        "form_label_de": "Prädikatives Adjektiv",
-        "cefr_band": "anfaenger",
-        "translation_de": "auf, wach"
-      }
-    ],
-    "light": [
-      {
-        "pos": "NOUN",
-        "lemma": "light",
-        "sense_key": "light#licht",
-        "gloss_de": "Licht oder Lichtquelle (Helligkeit)",
-        "form_kind": "base",
-        "form_label_de": "Substantiv, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "das Licht"
-      },
-      {
-        "pos": "ADJ",
-        "lemma": "light",
-        "sense_key": "light#leicht",
-        "gloss_de": "leicht (von geringem Gewicht)",
-        "form_kind": "base",
-        "form_label_de": "Adjektiv, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "leicht"
-      },
-      {
-        "pos": "ADJ",
-        "lemma": "light",
-        "sense_key": "light#hell",
-        "gloss_de": "hell (von Farben oder Beleuchtung)",
-        "form_kind": "base",
-        "form_label_de": "Adjektiv, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "hell"
-      }
-    ],
-    "the": [
-      {
-        "pos": "DET",
-        "lemma": "the",
-        "sense_key": "the#bestimmter_artikel",
-        "gloss_de": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
-        "form_kind": "base",
-        "form_label_de": "bestimmter Artikel",
-        "cefr_band": "anfaenger",
-        "translation_de": "der, die, das"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "the",
-        "sense_key": "the#umso",
-        "gloss_de": "Adverb vor Komparativen (z. B. 'the more, the better')",
-        "form_kind": "base",
-        "form_label_de": "Adverb",
-        "cefr_band": "mittel",
-        "translation_de": "je, desto, umso"
-      }
-    ],
-    "to": [
-      {
-        "pos": "PART",
-        "lemma": "to",
-        "sense_key": "to#infinitivpartikel",
-        "gloss_de": "Partikel vor einem Infinitiv (z. B. 'to go')",
-        "form_kind": "base",
-        "form_label_de": "Infinitivpartikel",
-        "cefr_band": "anfaenger",
-        "translation_de": "zu"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "to",
-        "sense_key": "to#nach_richtung",
-        "gloss_de": "Richtung oder Zielort (z. B. 'go to London')",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "nach, zu"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "to",
-        "sense_key": "to#fuer_empfaenger",
-        "gloss_de": "Angabe des Empfängers oder Adressaten (z. B. 'give it to me')",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "an, für"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "to",
-        "sense_key": "to#bis_zeit",
-        "gloss_de": "zeitlicher Endpunkt oder Uhrzeit (z. B. 'from nine to five', 'ten to six')",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "bis, vor"
-      }
-    ],
-    "and": [
-      {
-        "pos": "CCONJ",
-        "lemma": "and",
-        "sense_key": "and#und",
-        "gloss_de": "und (verbindet Wörter, Phrasen oder Sätze additiv)",
-        "form_kind": "base",
-        "form_label_de": "Konjunktion, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "und"
-      },
-      {
-        "pos": "CCONJ",
-        "lemma": "and",
-        "sense_key": "and#um_zu",
-        "gloss_de": "um zu (in umgangssprachlichen Konstruktionen wie 'try and see' oder 'go and get')",
-        "form_kind": "base",
-        "form_label_de": "Konjunktion, Grundform",
-        "cefr_band": "mittel",
-        "translation_de": "und / um zu"
-      }
-    ],
-    "of": [
-      {
-        "pos": "ADP",
-        "lemma": "of",
-        "sense_key": "of#genitiv_besitz",
-        "gloss_de": "Zugehörigkeit oder Besitz (oft dem deutschen Genitiv entsprechend)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "von (Genitiv)"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "of",
-        "sense_key": "of#teil_menge",
-        "gloss_de": "Teil einer Menge, Inhalt oder Quantität (z. B. 'a cup of tea', 'one of them')",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "von (aus)"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "of",
-        "sense_key": "of#material_herkunft",
-        "gloss_de": "Material oder Beschaffenheit (z. B. 'made of gold')",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "aus"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "of",
-        "sense_key": "of#ueber_bezug",
-        "gloss_de": "thematischer Bezug oder Inhalt (z. B. 'think of', 'a story of')",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "an / über"
-      }
-    ],
-    "a": [
-      {
-        "pos": "DET",
-        "lemma": "a",
-        "sense_key": "a#ein",
-        "gloss_de": "unbestimmter Artikel vor Konsonantenlauten",
-        "form_kind": "base",
-        "form_label_de": "Artikel",
-        "cefr_band": "anfaenger",
-        "translation_de": "ein, eine"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "a",
-        "sense_key": "a#pro",
-        "gloss_de": "pro Einheit (z. B. 'twice a week')",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "pro, je"
-      },
-      {
-        "pos": "NOUN",
-        "lemma": "a",
-        "sense_key": "a#buchstabe_a",
-        "gloss_de": "der Buchstabe A oder die Schulnote A",
-        "form_kind": "base",
-        "form_label_de": "Substantiv, Einzahl",
-        "cefr_band": "anfaenger",
-        "translation_de": "A (Buchstabe / Note)"
-      }
-    ],
-    "in": [
-      {
-        "pos": "ADP",
-        "lemma": "in",
-        "sense_key": "in#in_raeumlich",
-        "gloss_de": "in (räumlich: innerhalb eines Ortes oder Raumes)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "in, im"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "in",
-        "sense_key": "in#in_zeitlich",
-        "gloss_de": "in (zeitlich: innerhalb eines Zeitraums oder nach Ablauf einer Zeit)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "in, im"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "in",
-        "sense_key": "in#herein_drinnen",
-        "gloss_de": "drinnen oder hinein (Richtung oder Zustand im Inneren)",
-        "form_kind": "base",
-        "form_label_de": "Adverb",
-        "cefr_band": "anfaenger",
-        "translation_de": "drinnen, herein, hinein"
-      },
-      {
-        "pos": "ADJ",
-        "lemma": "in",
-        "sense_key": "in#angesagt",
-        "gloss_de": "in (in Mode, angesagt)",
-        "form_kind": "base",
-        "form_label_de": "Adjektiv, Grundform",
-        "cefr_band": "mittel",
-        "translation_de": "in, angesagt, modern"
-      }
-    ],
-    "i": [
-      {
-        "pos": "PRON",
-        "lemma": "I",
-        "sense_key": "i#ich",
-        "gloss_de": "Personalpronomen der 1. Person Singular (Subjektform; im Englischen immer großgeschrieben)",
-        "form_kind": "base",
-        "form_label_de": "Personalpronomen",
-        "cefr_band": "anfaenger",
-        "translation_de": "ich"
-      }
-    ],
-    "is": [
-      {
-        "pos": "AUX",
-        "lemma": "be",
-        "sense_key": "be#sein_vollverb",
-        "gloss_de": "sein (als Vollverb oder Kopula zur Angabe von Zustand, Identität oder Eigenschaft)",
-        "form_kind": "third_person",
-        "form_label_de": "3. Person Singular Präsens",
-        "cefr_band": "anfaenger",
-        "translation_de": "ist"
-      },
-      {
-        "pos": "AUX",
-        "lemma": "be",
-        "sense_key": "be#hilfsverb",
-        "gloss_de": "Hilfsverb zur Bildung von Verlaufsformen (Continuous) oder Passiv",
-        "form_kind": "third_person",
-        "form_label_de": "3. Person Singular Präsens (Hilfsverb)",
-        "cefr_band": "anfaenger",
-        "translation_de": "ist / wird"
-      }
-    ],
-    "for": [
-      {
-        "pos": "ADP",
-        "lemma": "for",
-        "sense_key": "for#fuer_zweck_empfaenger",
-        "gloss_de": "für (bestimmt für, zugunsten von oder zu einem Zweck)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "für"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "for",
-        "sense_key": "for#seit_lang_dauer",
-        "gloss_de": "seit / lang (Angabe einer Zeitspanne oder Dauer)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "lang / seit"
-      },
-      {
-        "pos": "CCONJ",
-        "lemma": "for",
-        "sense_key": "for#denn_grund",
-        "gloss_de": "denn (gehobene Konjunktion zur Begründung)",
-        "form_kind": "base",
-        "form_label_de": "Konjunktion",
-        "cefr_band": "mittel",
-        "translation_de": "denn"
-      }
-    ],
-    "that": [
-      {
-        "pos": "SCONJ",
-        "lemma": "that",
-        "sense_key": "that#dass",
-        "gloss_de": "dass (leitet einen Nebensatz ein)",
-        "form_kind": "base",
-        "form_label_de": "Subjunktion",
-        "cefr_band": "anfaenger",
-        "translation_de": "dass"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "that",
-        "sense_key": "that#das",
-        "gloss_de": "das, jenes (Demonstrativ- oder Relativpronomen)",
-        "form_kind": "base",
-        "form_label_de": "Pronomen",
-        "cefr_band": "anfaenger",
-        "translation_de": "das / jenes / der / die"
-      },
-      {
-        "pos": "DET",
-        "lemma": "that",
-        "sense_key": "that#jener",
-        "gloss_de": "jener, jene, jenes (begleitendes Demonstrativum)",
-        "form_kind": "base",
-        "form_label_de": "Determinator",
-        "cefr_band": "anfaenger",
-        "translation_de": "jener / jene / jenes / dieser / diese / dieses"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "that",
-        "sense_key": "that#so",
-        "gloss_de": "so, dermaßen (vor Adjektiven oder Adverbien)",
-        "form_kind": "base",
-        "form_label_de": "Adverb",
-        "cefr_band": "mittel",
-        "translation_de": "so / dermaßen"
-      }
-    ],
-    "you": [
-      {
-        "pos": "PRON",
-        "lemma": "you",
-        "sense_key": "you#du_sie_ihr",
-        "gloss_de": "Personalpronomen der 2. Person (Singular oder Plural, vertraulich oder höflich)",
-        "form_kind": "base",
-        "form_label_de": "Pronomen, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "du, Sie, ihr (auch: dir, Ihnen, euch, dich, Sie)"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "you",
-        "sense_key": "you#man",
-        "gloss_de": "unpersönliches Pronomen für Personen allgemein",
-        "form_kind": "base",
-        "form_label_de": "Pronomen, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "man"
-      }
-    ],
-    "it": [
-      {
-        "pos": "PRON",
-        "lemma": "it",
-        "sense_key": "it#es_ding",
-        "gloss_de": "Personalpronomen der 3. Person Singular für sächliche Dinge oder Tiere",
-        "form_kind": "base",
-        "form_label_de": "Pronomen",
-        "cefr_band": "anfaenger",
-        "translation_de": "es (auch: er, sie)"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "it",
-        "sense_key": "it#unpersoenlich",
-        "gloss_de": "unpersönliches Subjekt (z. B. bei Wetter, Zeit oder Entfernungen)",
-        "form_kind": "base",
-        "form_label_de": "Pronomen, unpersönlich",
-        "cefr_band": "anfaenger",
-        "translation_de": "es"
-      }
-    ],
-    "on": [
-      {
-        "pos": "ADP",
-        "lemma": "on",
-        "sense_key": "on#auf",
-        "gloss_de": "auf (räumlich: auf einer Oberfläche oder an etwas liegend)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "auf"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "on",
-        "sense_key": "on#an_zeitlich",
-        "gloss_de": "an (zeitlich: an bestimmten Tagen oder Daten)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "an"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "on",
-        "sense_key": "on#weiter",
-        "gloss_de": "weiter (eine Handlung fortsetzend, wie in 'go on')",
-        "form_kind": "base",
-        "form_label_de": "Adverb",
-        "cefr_band": "anfaenger",
-        "translation_de": "weiter"
-      },
-      {
-        "pos": "ADJ",
-        "lemma": "on",
-        "sense_key": "on#an_eingeschaltet",
-        "gloss_de": "an (Geräte oder Lichter: eingeschaltet, in Betrieb)",
-        "form_kind": "base",
-        "form_label_de": "Adjektiv",
-        "cefr_band": "anfaenger",
-        "translation_de": "an"
-      }
-    ],
-    "with": [
-      {
-        "pos": "ADP",
-        "lemma": "with",
-        "sense_key": "with#zusammen_mit",
-        "gloss_de": "in Begleitung oder Gesellschaft von (zusammen mit)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "mit"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "with",
-        "sense_key": "with#mittels",
-        "gloss_de": "mittels oder unter Verwendung eines Werkzeugs/Mittels",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "mit"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "with",
-        "sense_key": "with#mit_eigenschaft",
-        "gloss_de": "im Besitz von etwas, versehen mit einer Eigenschaft oder Merkmal",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "mit"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "with",
-        "sense_key": "with#bei",
-        "gloss_de": "bei jemandem wohnend oder angestellt (z. B. 'stay with', 'work with')",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "bei"
-      }
-    ],
-    "this": [
-      {
-        "pos": "DET",
-        "lemma": "this",
-        "sense_key": "this#dieser_begleitend",
-        "gloss_de": "dieser/diese/dieses (begleitend vor einem Nomen, weist auf Nahes hin)",
-        "form_kind": "base",
-        "form_label_de": "Determiner, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "dieser / diese / dieses"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "this",
-        "sense_key": "this#dies_stellvertretend",
-        "gloss_de": "dies / das (stellvertretend für eine Sache, Person oder Situation)",
-        "form_kind": "base",
-        "form_label_de": "Pronomen, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "dies / das"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "this",
-        "sense_key": "this#so_graduierend",
-        "gloss_de": "so / derartig (zur Verstärkung eines Adjektivs oder Adverbs)",
-        "form_kind": "base",
-        "form_label_de": "Adverb, Grundform",
-        "cefr_band": "mittel",
-        "translation_de": "so / dermaßen"
-      }
-    ],
-    "was": [
-      {
-        "pos": "VERB",
-        "lemma": "be",
-        "sense_key": "be#sein_vollverb",
-        "gloss_de": "sein (Zustand, Eigenschaft oder Identität in der Vergangenheit)",
-        "form_kind": "past",
-        "form_label_de": "Verb, Präteritum (1./3. Person Singular)",
-        "cefr_band": "anfaenger",
-        "translation_de": "war"
-      },
-      {
-        "pos": "AUX",
-        "lemma": "be",
-        "sense_key": "be#hilfsverb",
-        "gloss_de": "sein/werden (Hilfsverb zur Bildung von Vergangenheitsformen wie Past Continuous oder Passiv)",
-        "form_kind": "past",
-        "form_label_de": "Hilfsverb, Präteritum (1./3. Person Singular)",
-        "cefr_band": "anfaenger",
-        "translation_de": "war / wurde"
-      }
-    ],
-    "be": [
-      {
-        "pos": "AUX",
-        "lemma": "be",
-        "sense_key": "be#hilfsverb",
-        "gloss_de": "Hilfsverb zur Bildung von Verlaufsformen oder Passiv",
-        "form_kind": "base",
-        "form_label_de": "Hilfsverb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "sein / werden"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "be",
-        "sense_key": "be#sein_existieren",
-        "gloss_de": "sein (einen Zustand, eine Eigenschaft oder Identität haben)",
-        "form_kind": "base",
-        "form_label_de": "Vollverb, Grundform / Infinitiv",
-        "cefr_band": "anfaenger",
-        "translation_de": "sein"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "be",
-        "sense_key": "be#befinden",
-        "gloss_de": "sich an einem bestimmten Ort befinden",
-        "form_kind": "base",
-        "form_label_de": "Vollverb, Grundform / Infinitiv",
-        "cefr_band": "anfaenger",
-        "translation_de": "sein (sich befinden)"
-      }
-    ],
-    "as": [
-      {
-        "pos": "ADP",
-        "lemma": "as",
-        "sense_key": "as#als_funktion",
-        "gloss_de": "in der Funktion oder Eigenschaft von (z. B. as a doctor)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "als"
-      },
-      {
-        "pos": "SCONJ",
-        "lemma": "as",
-        "sense_key": "as#waehrend_zeit",
-        "gloss_de": "zeitlich: zur gleichen Zeit wie (während)",
-        "form_kind": "base",
-        "form_label_de": "Konjunktion",
-        "cefr_band": "anfaenger",
-        "translation_de": "während"
-      },
-      {
-        "pos": "SCONJ",
-        "lemma": "as",
-        "sense_key": "as#da_grund",
-        "gloss_de": "kausal: drückt einen Grund aus (da, weil)",
-        "form_kind": "base",
-        "form_label_de": "Konjunktion",
-        "cefr_band": "anfaenger",
-        "translation_de": "da"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "as",
-        "sense_key": "as#so_vergleich",
-        "gloss_de": "Vergleichspartikel beim Gleichheitsvergleich (z. B. as tall as)",
-        "form_kind": "base",
-        "form_label_de": "Adverb",
-        "cefr_band": "anfaenger",
-        "translation_de": "so"
-      }
-    ],
-    "are": [
-      {
-        "pos": "AUX",
-        "lemma": "be",
-        "sense_key": "be#sein_hilfsverb",
-        "gloss_de": "Hilfsverb zur Bildung von Verlaufsformen oder Passiv (Präsens)",
-        "form_kind": "other",
-        "form_label_de": "Hilfsverb, Präsens Plural / 2. Person",
-        "cefr_band": "anfaenger",
-        "translation_de": "sind / bist / seid"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "be",
-        "sense_key": "be#sein_vollverb",
-        "gloss_de": "Vollverb / Kopula: existieren oder eine Eigenschaft/Zustand haben",
-        "form_kind": "other",
-        "form_label_de": "Verb, Präsens Plural / 2. Person",
-        "cefr_band": "anfaenger",
-        "translation_de": "sind / bist / seid"
-      }
-    ],
-    "have": [
-      {
-        "pos": "VERB",
-        "lemma": "have",
-        "sense_key": "have#besitzen",
-        "gloss_de": "besitzen oder zur Verfügung haben",
-        "form_kind": "base",
-        "form_label_de": "Grundform / Präsens",
-        "cefr_band": "anfaenger",
-        "translation_de": "haben"
-      },
-      {
-        "pos": "AUX",
-        "lemma": "have",
-        "sense_key": "have#hilfsverb",
-        "gloss_de": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
-        "form_kind": "base",
-        "form_label_de": "Hilfsverb, Grundform / Präsens",
-        "cefr_band": "anfaenger",
-        "translation_de": "haben"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "have",
-        "sense_key": "have#muessen",
-        "gloss_de": "eine Notwendigkeit oder Verpflichtung ausdrücken (have to)",
-        "form_kind": "base",
-        "form_label_de": "Grundform / Präsens",
-        "cefr_band": "anfaenger",
-        "translation_de": "müssen"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "have",
-        "sense_key": "have#einnehmen",
-        "gloss_de": "zu sich nehmen (Essen, Trinken) oder erleben/durchführen",
-        "form_kind": "base",
-        "form_label_de": "Grundform / Präsens",
-        "cefr_band": "anfaenger",
-        "translation_de": "einnehmen, trinken, essen"
-      }
-    ],
-    "at": [
-      {
-        "pos": "ADP",
-        "lemma": "at",
-        "sense_key": "at#ort",
-        "gloss_de": "räumlich (an einem bestimmten Ort oder Punkt)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "an, bei, in"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "at",
-        "sense_key": "at#zeit",
-        "gloss_de": "zeitlich (zu einem bestimmten Zeitpunkt oder einer Uhrzeit)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "um, zu"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "at",
-        "sense_key": "at#richtung",
-        "gloss_de": "Richtung oder Ziel (auf etwas oder jemanden gerichtet, z. B. look at)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "auf, an"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "at",
-        "sense_key": "at#zustand",
-        "gloss_de": "Zustand oder Tätigkeit (in einem Zustand, z. B. at work, at peace)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "bei, in"
-      }
-    ],
-    "he": [
-      {
-        "pos": "PRON",
-        "lemma": "he",
-        "sense_key": "he#er",
-        "gloss_de": "Personalpronomen der 3. Person Singular Maskulinum im Nominativ",
-        "form_kind": "base",
-        "form_label_de": "Pronomen, Nominativ",
-        "cefr_band": "anfaenger",
-        "translation_de": "er"
-      }
-    ],
-    "not": [
-      {
-        "pos": "PART",
-        "lemma": "not",
-        "sense_key": "not#nicht",
-        "gloss_de": "nicht (drückt Verneinung von Verben, Adjektiven oder Aussagen aus)",
-        "form_kind": "base",
-        "form_label_de": "Negationspartikel",
-        "cefr_band": "anfaenger",
-        "translation_de": "nicht"
-      },
-      {
-        "pos": "PART",
-        "lemma": "not",
-        "sense_key": "not#gar_nicht",
-        "gloss_de": "gar nicht / überhaupt nicht (zur nachdrücklichen Verneinung in Kurzantworten oder Ausrufen)",
-        "form_kind": "base",
-        "form_label_de": "Partikel",
-        "cefr_band": "anfaenger",
-        "translation_de": "gar nicht"
-      }
-    ],
-    "by": [
-      {
-        "pos": "ADP",
-        "lemma": "by",
-        "sense_key": "by#von_urheber",
-        "gloss_de": "von (Urheber, Verursacher beim Passiv oder bei Werken)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "von"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "by",
-        "sense_key": "by#neben_ort",
-        "gloss_de": "neben, bei (örtliche Nähe)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "bei, neben"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "by",
-        "sense_key": "by#mit_mittel",
-        "gloss_de": "mit, per (Mittel, Methode oder Verkehrsmittel)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "mit"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "by",
-        "sense_key": "by#bis_spaetestens",
-        "gloss_de": "bis (spätestens zu einem bestimmten Zeitpunkt)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "bis"
-      }
-    ],
-    "but": [
-      {
-        "pos": "CCONJ",
-        "lemma": "but",
-        "sense_key": "but#aber",
-        "gloss_de": "aber (drückt einen Gegensatz oder eine Einschränkung aus)",
-        "form_kind": "base",
-        "form_label_de": "Konjunktion",
-        "cefr_band": "anfaenger",
-        "translation_de": "aber, sondern"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "but",
-        "sense_key": "but#ausser",
-        "gloss_de": "außer (mit Ausnahme von)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "mittel",
-        "translation_de": "außer"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "but",
-        "sense_key": "but#nur",
-        "gloss_de": "nur (gehoben oder formell für 'lediglich')",
-        "form_kind": "base",
-        "form_label_de": "Adverb",
-        "cefr_band": "fortgeschritten",
-        "translation_de": "nur, lediglich"
-      }
-    ],
-    "from": [
-      {
-        "pos": "ADP",
-        "lemma": "from",
-        "sense_key": "from#von_ausgangspunkt",
-        "gloss_de": "von, aus (räumlicher, zeitlicher oder persönlicher Ausgangspunkt)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "von, aus"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "from",
-        "sense_key": "from#unterscheidung",
-        "gloss_de": "von (Unterscheidung oder Trennung zwischen zwei Dingen)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "mittel",
-        "translation_de": "von"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "from",
-        "sense_key": "from#ursache",
-        "gloss_de": "vor, aus (Ursache oder Grund, z. B. 'suffer from')",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "mittel",
-        "translation_de": "vor, aus, an"
-      }
-    ],
-    "my": [
-      {
-        "pos": "DET",
-        "lemma": "my",
-        "sense_key": "my#mein",
-        "gloss_de": "mein (Possessivbegleiter der 1. Person Singular)",
-        "form_kind": "base",
-        "form_label_de": "Possessivpronomen / Begleiter",
-        "cefr_band": "anfaenger",
-        "translation_de": "mein, meine"
-      },
-      {
-        "pos": "INTJ",
-        "lemma": "my",
-        "sense_key": "my#ausruf",
-        "gloss_de": "Ausruf des Erstaunens oder der Überraschung (oft 'My, my!')",
-        "form_kind": "base",
-        "form_label_de": "Interjektion",
-        "cefr_band": "mittel",
-        "translation_de": "meine Güte, oje"
-      }
-    ],
-    "or": [
-      {
-        "pos": "CCONJ",
-        "lemma": "or",
-        "sense_key": "or#oder",
-        "gloss_de": "oder (verbindet Alternativen)",
-        "form_kind": "base",
-        "form_label_de": "Konjunktion",
-        "cefr_band": "anfaenger",
-        "translation_de": "oder"
-      },
-      {
-        "pos": "CCONJ",
-        "lemma": "or",
-        "sense_key": "or#andernfalls",
-        "gloss_de": "sonst / andernfalls (nach Warnungen oder Aufforderungen)",
-        "form_kind": "base",
-        "form_label_de": "Konjunktion",
-        "cefr_band": "mittel",
-        "translation_de": "sonst"
-      }
-    ],
-    "we": [
-      {
-        "pos": "PRON",
-        "lemma": "we",
-        "sense_key": "we#wir",
-        "gloss_de": "wir (1. Person Plural Nominativ)",
-        "form_kind": "base",
-        "form_label_de": "Personalpronomen, Subjektform",
-        "cefr_band": "anfaenger",
-        "translation_de": "wir"
-      }
-    ],
-    "an": [
-      {
-        "pos": "DET",
-        "lemma": "a",
-        "sense_key": "a#ein",
-        "gloss_de": "unbestimmter Artikel vor Vokallauten (ein, eine)",
-        "form_kind": "other",
-        "form_label_de": "unbestimmter Artikel (vor Vokallauten)",
-        "cefr_band": "anfaenger",
-        "translation_de": "ein, eine"
-      }
-    ],
-    "your": [
-      {
-        "pos": "DET",
-        "lemma": "your",
-        "sense_key": "your#dein",
-        "gloss_de": "von dir besessen / zu dir gehörend (Singular, informell)",
-        "form_kind": "base",
-        "form_label_de": "Possessivpronomen / Possessivbegleiter, Singular",
-        "cefr_band": "anfaenger",
-        "translation_de": "dein, deine"
-      },
-      {
-        "pos": "DET",
-        "lemma": "your",
-        "sense_key": "your#euer",
-        "gloss_de": "von euch besessen / zu euch gehörend (Plural, informell)",
-        "form_kind": "base",
-        "form_label_de": "Possessivpronomen / Possessivbegleiter, Plural",
-        "cefr_band": "anfaenger",
-        "translation_de": "euer, eure"
-      },
-      {
-        "pos": "DET",
-        "lemma": "your",
-        "sense_key": "your#ihr",
-        "gloss_de": "zu Ihnen gehörend (Höflichkeitsform Singular oder Plural)",
-        "form_kind": "base",
-        "form_label_de": "Possessivpronomen / Possessivbegleiter, höflich",
-        "cefr_band": "anfaenger",
-        "translation_de": "Ihr, Ihre"
-      },
-      {
-        "pos": "DET",
-        "lemma": "your",
-        "sense_key": "your#man",
-        "gloss_de": "allgemein bezogen auf jedermann (generisches Pronomen)",
-        "form_kind": "base",
-        "form_label_de": "Possessivbegleiter, verallgemeinernd",
-        "cefr_band": "mittel",
-        "translation_de": "sein, manch"
-      }
-    ],
-    "all": [
-      {
-        "pos": "DET",
-        "lemma": "all",
-        "sense_key": "all#alle_det",
-        "gloss_de": "alle, ganz (bestimmt ein Nomen im Plural oder als Gesamtheit)",
-        "form_kind": "base",
-        "form_label_de": "Determinator",
-        "cefr_band": "anfaenger",
-        "translation_de": "alle, ganz"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "all",
-        "sense_key": "all#alles_pron",
-        "gloss_de": "alles, alle (eigenständig als Pronomen für Personen oder Dinge)",
-        "form_kind": "base",
-        "form_label_de": "Pronomen",
-        "cefr_band": "anfaenger",
-        "translation_de": "alles, alle"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "all",
-        "sense_key": "all#vollstaendig_adv",
-        "gloss_de": "völlig, ganz (verstärkend vor Adjektiven oder Präpositionen, z. B. 'all alone')",
-        "form_kind": "base",
-        "form_label_de": "Adverb",
-        "cefr_band": "anfaenger",
-        "translation_de": "ganz, völlig"
-      }
-    ],
-    "so": [
-      {
-        "pos": "ADV",
-        "lemma": "so",
-        "sense_key": "so#so_sehr",
-        "gloss_de": "so, derart (verstärkend vor Adjektiven oder Adverbien)",
-        "form_kind": "base",
-        "form_label_de": "Adverb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "so / derart"
-      },
-      {
-        "pos": "CCONJ",
-        "lemma": "so",
-        "sense_key": "so#deshalb",
-        "gloss_de": "daher, aus diesem Grund (konjunktional zur Angabe einer Folge)",
-        "form_kind": "base",
-        "form_label_de": "Konjunktion",
-        "cefr_band": "anfaenger",
-        "translation_de": "also / daher / deshalb"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "so",
-        "sense_key": "so#ebenfalls",
-        "gloss_de": "auch, ebenso (in Kurzantworten wie 'so do I')",
-        "form_kind": "base",
-        "form_label_de": "Adverb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "auch / ebenso"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "so",
-        "sense_key": "so#auf_diese_weise",
-        "gloss_de": "auf diese Weise, so (die Art und Weise beschreibend)",
-        "form_kind": "base",
-        "form_label_de": "Adverb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "so / auf diese Weise"
-      }
-    ],
-    "his": [
-      {
-        "pos": "DET",
-        "lemma": "his",
-        "sense_key": "his#sein",
-        "gloss_de": "Possessivartikel (gehört einer männlichen Person oder einem Tier)",
-        "form_kind": "base",
-        "form_label_de": "Possessivartikel, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "sein, seine"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "his",
-        "sense_key": "his#seiner",
-        "gloss_de": "Possessivpronomen (eigenständig stehend: das Seine/seines)",
-        "form_kind": "base",
-        "form_label_de": "Possessivpronomen, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "seiner, seins, seine"
-      }
-    ],
-    "they": [
-      {
-        "pos": "PRON",
-        "lemma": "they",
-        "sense_key": "they#sie_plural",
-        "gloss_de": "Personalpronomen der 3. Person Plural (sie mehrere Personen oder Dinge)",
-        "form_kind": "base",
-        "form_label_de": "Pronomen, Subjektform",
-        "cefr_band": "anfaenger",
-        "translation_de": "sie"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "they",
-        "sense_key": "they#man_leute",
-        "gloss_de": "allgemeine oder unbestimmte Personen (man, die Leute)",
-        "form_kind": "base",
-        "form_label_de": "Pronomen, Subjektform",
-        "cefr_band": "anfaenger",
-        "translation_de": "man"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "they",
-        "sense_key": "they#singular_they",
-        "gloss_de": "geschlechtsneutrale Einzahl für eine einzelne Person",
-        "form_kind": "base",
-        "form_label_de": "Pronomen, Subjektform (Singular)",
-        "cefr_band": "mittel",
-        "translation_de": "er/sie (geschlechtsneutral)"
-      }
-    ],
-    "me": [
-      {
-        "pos": "PRON",
-        "lemma": "I",
-        "sense_key": "i#mich",
-        "gloss_de": "mich (Objektform von 'ich', Akkusativ)",
-        "form_kind": "other",
-        "form_label_de": "Pronomen, Objektform (Akkusativ)",
-        "cefr_band": "anfaenger",
-        "translation_de": "mich"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "I",
-        "sense_key": "i#mir",
-        "gloss_de": "mir (Objektform von 'ich', Dativ)",
-        "form_kind": "other",
-        "form_label_de": "Pronomen, Objektform (Dativ)",
-        "cefr_band": "anfaenger",
-        "translation_de": "mir"
-      }
-    ],
-    "if": [
-      {
-        "pos": "SCONJ",
-        "lemma": "if",
-        "sense_key": "if#wenn",
-        "gloss_de": "wenn / falls (Konditionalsatz, Bedingung)",
-        "form_kind": "base",
-        "form_label_de": "Subjunktion",
-        "cefr_band": "anfaenger",
-        "translation_de": "wenn, falls"
-      },
-      {
-        "pos": "SCONJ",
-        "lemma": "if",
-        "sense_key": "if#ob",
-        "gloss_de": "ob (indirekte Frage, Ungewissheit)",
-        "form_kind": "base",
-        "form_label_de": "Subjunktion",
-        "cefr_band": "anfaenger",
-        "translation_de": "ob"
-      },
-      {
-        "pos": "NOUN",
-        "lemma": "if",
-        "sense_key": "if#wenn_und_aber",
-        "gloss_de": "Wenn (Bedingung oder Unsicherheit in Redewendungen wie 'no ifs or buts')",
-        "form_kind": "base",
-        "form_label_de": "Substantiv, Singular",
-        "cefr_band": "mittel",
-        "translation_de": "Wenn"
-      }
-    ],
-    "can": [
-      {
-        "pos": "AUX",
-        "lemma": "can",
-        "sense_key": "can#koennen",
-        "gloss_de": "können (Fähigkeit, Möglichkeit oder Erlaubnis)",
-        "form_kind": "base",
-        "form_label_de": "Hilfsverb, Präsens",
-        "cefr_band": "anfaenger",
-        "translation_de": "kann / können"
-      },
-      {
-        "pos": "NOUN",
-        "lemma": "can",
-        "sense_key": "can#dose",
-        "gloss_de": "Dose (metallener Behälter für Getränke oder Lebensmittel)",
-        "form_kind": "base",
-        "form_label_de": "Substantiv, Einzahl",
-        "cefr_band": "anfaenger",
-        "translation_de": "Dose"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "can",
-        "sense_key": "can#einkochen",
-        "gloss_de": "eindosen (Nahrungsmittel in Dosen oder Gläsern konservieren)",
-        "form_kind": "base",
-        "form_label_de": "Verb, Grundform",
-        "cefr_band": "fortgeschritten",
-        "translation_de": "einkochen / eindosen"
-      }
-    ],
-    "will": [
-      {
-        "pos": "AUX",
-        "lemma": "will",
-        "sense_key": "will#zukunft",
-        "gloss_de": "werden (Hilfsverb zur Bildung des Futurs)",
-        "form_kind": "base",
-        "form_label_de": "Hilfsverb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "werden"
-      },
-      {
-        "pos": "NOUN",
-        "lemma": "will",
-        "sense_key": "will#wille",
-        "gloss_de": "Wille (die eigene Absicht oder Entschlossenheit)",
-        "form_kind": "base",
-        "form_label_de": "Substantiv, Singular",
-        "cefr_band": "mittel",
-        "translation_de": "Wille"
-      },
-      {
-        "pos": "NOUN",
-        "lemma": "will",
-        "sense_key": "will#testament",
-        "gloss_de": "Testament (schriftliche Verfügung für den Todesfall)",
-        "form_kind": "base",
-        "form_label_de": "Substantiv, Singular",
-        "cefr_band": "mittel",
-        "translation_de": "Testament"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "will",
-        "sense_key": "will#wollen",
-        "gloss_de": "herbeiwünschen oder verfügen (durch Willenskraft bewirken)",
-        "form_kind": "base",
-        "form_label_de": "Vollverb, Grundform",
-        "cefr_band": "fortgeschritten",
-        "translation_de": "wollen"
-      }
-    ],
-    "just": [
-      {
-        "pos": "ADV",
-        "lemma": "just",
-        "sense_key": "just#nur",
-        "gloss_de": "nur, bloß (Einschränkung)",
-        "form_kind": "base",
-        "form_label_de": "Adverb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "nur, bloß"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "just",
-        "sense_key": "just#gerade_eben",
-        "gloss_de": "gerade eben (vor sehr kurzer Zeit)",
-        "form_kind": "base",
-        "form_label_de": "Adverb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "gerade, eben"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "just",
-        "sense_key": "just#genau",
-        "gloss_de": "genau, exakt (Übereinstimmung)",
-        "form_kind": "base",
-        "form_label_de": "Adverb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "genau, exakt"
-      },
-      {
-        "pos": "ADJ",
-        "lemma": "just",
-        "sense_key": "just#gerecht",
-        "gloss_de": "gerecht, fair (moralisch oder rechtlich richtig)",
-        "form_kind": "base",
-        "form_label_de": "Adjektiv, Grundform",
-        "cefr_band": "mittel",
-        "translation_de": "gerecht, fair"
-      }
-    ],
-    "like": [
-      {
-        "pos": "VERB",
-        "lemma": "like",
-        "sense_key": "like#moegen",
-        "gloss_de": "etwas oder jemanden gernhaben, mögen",
-        "form_kind": "base",
-        "form_label_de": "Verb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "mögen / gernhaben"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "like",
-        "sense_key": "like#wie",
-        "gloss_de": "Vergleich oder Ähnlichkeit ausdrückend (wie)",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "wie"
-      },
-      {
-        "pos": "SCONJ",
-        "lemma": "like",
-        "sense_key": "like#als_ob",
-        "gloss_de": "umgangssprachliche Konjunktion: wie wenn oder als ob",
-        "form_kind": "base",
-        "form_label_de": "Konjunktion",
-        "cefr_band": "mittel",
-        "translation_de": "wie / als ob"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "like",
-        "sense_key": "like#fuellwort",
-        "gloss_de": "umgangssprachliches Füllwort oder Zitat-Einleiter",
-        "form_kind": "base",
-        "form_label_de": "Adverb",
-        "cefr_band": "mittel",
-        "translation_de": "quasi / sozusagen"
-      }
-    ],
-    "out": [
-      {
-        "pos": "ADV",
-        "lemma": "out",
-        "sense_key": "out#hinaus",
-        "gloss_de": "hinaus, heraus (Bewegung aus einem Inneren ins Freie oder nach außen)",
-        "form_kind": "base",
-        "form_label_de": "Adverb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "hinaus / heraus / raus"
-      },
-      {
-        "pos": "ADJ",
-        "lemma": "out",
-        "sense_key": "out#nicht_da",
-        "gloss_de": "nicht zu Hause oder nicht im Büro anwesend sein",
-        "form_kind": "base",
-        "form_label_de": "Adjektiv, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "aus / nicht da / unterwegs"
-      },
-      {
-        "pos": "ADJ",
-        "lemma": "out",
-        "sense_key": "out#erloschen",
-        "gloss_de": "nicht mehr brennend oder leuchtend (z. B. Feuer, Licht)",
-        "form_kind": "base",
-        "form_label_de": "Adjektiv, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "aus / erloschen"
-      },
-      {
-        "pos": "ADP",
-        "lemma": "out",
-        "sense_key": "out#heraus_aus",
-        "gloss_de": "durch eine Öffnung nach draußen (oft als 'out of')",
-        "form_kind": "base",
-        "form_label_de": "Präposition",
-        "cefr_band": "anfaenger",
-        "translation_de": "aus ... hinaus / durch ... heraus"
-      }
-    ],
-    "what": [
-      {
-        "pos": "PRON",
-        "lemma": "what",
-        "sense_key": "what#fragepronomen",
-        "gloss_de": "was (Fragepronomen nach Dingen oder Sachverhalten)",
-        "form_kind": "base",
-        "form_label_de": "Pronomen, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "was"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "what",
-        "sense_key": "what#relativpronomen",
-        "gloss_de": "das, was (Relativpronomen mit implizitem Bezugswort)",
-        "form_kind": "base",
-        "form_label_de": "Pronomen, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "was / das, was"
-      },
-      {
-        "pos": "DET",
-        "lemma": "what",
-        "sense_key": "what#welcher",
-        "gloss_de": "welche(r/s) / was für ein (fragend oder ausrufend vor Nomen)",
-        "form_kind": "base",
-        "form_label_de": "Determinator, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "welcher / was für ein"
-      },
-      {
-        "pos": "INTJ",
-        "lemma": "what",
-        "sense_key": "what#ausruf",
-        "gloss_de": "wie bitte? / was? (Ausruf des Erstaunens oder Nichtverstehens)",
-        "form_kind": "base",
-        "form_label_de": "Interjektion",
-        "cefr_band": "anfaenger",
-        "translation_de": "was?! / wie bitte?!"
-      }
-    ],
-    "has": [
-      {
-        "pos": "AUX",
-        "lemma": "have",
-        "sense_key": "have#hilfsverb",
-        "gloss_de": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
-        "form_kind": "third_person",
-        "form_label_de": "Hilfsverb, 3. Person Singular Präsens",
-        "cefr_band": "anfaenger",
-        "translation_de": "hat"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "have",
-        "sense_key": "have#besitzen",
-        "gloss_de": "besitzen oder verfügen über (Vollverb in der 3. Person Singular)",
-        "form_kind": "third_person",
-        "form_label_de": "Verb, 3. Person Singular Präsens",
-        "cefr_band": "anfaenger",
-        "translation_de": "hat"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "have",
-        "sense_key": "have#muessen",
-        "gloss_de": "müssen (in Konstruktion mit 'to': has to)",
-        "form_kind": "third_person",
-        "form_label_de": "Verb, 3. Person Singular Präsens",
-        "cefr_band": "anfaenger",
-        "translation_de": "muss"
-      }
-    ],
-    "when": [
-      {
-        "pos": "SCONJ",
-        "lemma": "when",
-        "sense_key": "when#als_wenn",
-        "gloss_de": "als, wenn (zeitliche Unterordnung)",
-        "form_kind": "base",
-        "form_label_de": "Subjunktion",
-        "cefr_band": "anfaenger",
-        "translation_de": "als / wenn"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "when",
-        "sense_key": "when#wann",
-        "gloss_de": "wann (fragend, zu welcher Zeit)",
-        "form_kind": "base",
-        "form_label_de": "Interrogativadverb",
-        "cefr_band": "anfaenger",
-        "translation_de": "wann"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "when",
-        "sense_key": "when#in_dem",
-        "gloss_de": "in dem / an dem (Relativadverb mit Zeitbezug)",
-        "form_kind": "base",
-        "form_label_de": "Relativadverb",
-        "cefr_band": "mittel",
-        "translation_de": "an dem / in dem"
-      }
-    ],
-    "more": [
-      {
-        "pos": "ADV",
-        "lemma": "more",
-        "sense_key": "more#mehr_steigerung",
-        "gloss_de": "mehr (zur Bildung des Komparativs bei Adjektiven und Adverbien oder zur Angabe eines höheren Grades)",
-        "form_kind": "comparative",
-        "form_label_de": "Adverb, Komparativ",
-        "cefr_band": "anfaenger",
-        "translation_de": "mehr"
-      },
-      {
-        "pos": "DET",
-        "lemma": "much",
-        "sense_key": "much#mehr_menge",
-        "gloss_de": "mehr (eine größere Menge oder Anzahl von etwas vor einem Nomen)",
-        "form_kind": "comparative",
-        "form_label_de": "Determinator, Komparativ",
-        "cefr_band": "anfaenger",
-        "translation_de": "mehr"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "more",
-        "sense_key": "more#mehr_pronomen",
-        "gloss_de": "mehr (eine größere Menge oder zusätzliche Personen/Dinge, stellvertretend für ein Nomen)",
-        "form_kind": "comparative",
-        "form_label_de": "Pronomen, Komparativ",
-        "cefr_band": "anfaenger",
-        "translation_de": "mehr"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "more",
-        "sense_key": "more#wieder_noch",
-        "gloss_de": "wieder / noch (in Verbindung mit Verneinung wie 'no more' oder 'not ... any more')",
-        "form_kind": "base",
-        "form_label_de": "Adverb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "mehr / nicht mehr"
-      }
-    ],
-    "do": [
-      {
-        "pos": "AUX",
-        "lemma": "do",
-        "sense_key": "do#hilfsverb",
-        "gloss_de": "Hilfsverb zur Bildung von Fragen, Verneinungen oder zur Betonung",
-        "form_kind": "base",
-        "form_label_de": "Hilfsverb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "(unübersetzt / Hilfsverb)"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "do",
-        "sense_key": "do#tun",
-        "gloss_de": "eine Handlung oder Aktivität ausführen",
-        "form_kind": "base",
-        "form_label_de": "Verb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "tun, machen"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "do",
-        "sense_key": "do#reichen",
-        "gloss_de": "ausreichen oder genügen ('that will do')",
-        "form_kind": "base",
-        "form_label_de": "Verb, Grundform",
-        "cefr_band": "mittel",
-        "translation_de": "genügen, ausreichen"
-      }
-    ],
-    "no": [
-      {
-        "pos": "INTJ",
-        "lemma": "no",
-        "sense_key": "no#nein",
-        "gloss_de": "nein (verneinende Antwort)",
-        "form_kind": "base",
-        "form_label_de": "Interjektion",
-        "cefr_band": "anfaenger",
-        "translation_de": "nein"
-      },
-      {
-        "pos": "DET",
-        "lemma": "no",
-        "sense_key": "no#kein",
-        "gloss_de": "kein (Verneinung vor Nomen)",
-        "form_kind": "base",
-        "form_label_de": "Determinator",
-        "cefr_band": "anfaenger",
-        "translation_de": "kein / keine"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "no",
-        "sense_key": "no#nicht",
-        "gloss_de": "nicht / überhaupt nicht (vor Komparativen wie 'no longer' oder 'no better')",
-        "form_kind": "base",
-        "form_label_de": "Adverb",
-        "cefr_band": "mittel",
-        "translation_de": "nicht / keineswegs"
-      },
-      {
-        "pos": "NOUN",
-        "lemma": "no",
-        "sense_key": "no#nein-stimme",
-        "gloss_de": "Nein (Nein-Stimme oder Ablehnung)",
-        "form_kind": "base",
-        "form_label_de": "Substantiv, Grundform",
-        "cefr_band": "mittel",
-        "translation_de": "Nein / Gegenstimme"
-      }
-    ],
-    "were": [
-      {
-        "pos": "AUX",
-        "lemma": "be",
-        "sense_key": "be#sein_vergangenheit",
-        "gloss_de": "waren / warst / wart (Vergangenheit von 'be' im Plural sowie bei 'you')",
-        "form_kind": "past",
-        "form_label_de": "Hilfsverb, Präteritum",
-        "cefr_band": "anfaenger",
-        "translation_de": "waren"
-      },
-      {
-        "pos": "AUX",
-        "lemma": "be",
-        "sense_key": "be#waere_konjunktiv",
-        "gloss_de": "wäre / wären (Konjunktiv von 'be' für hypothetische Bedingungen)",
-        "form_kind": "other",
-        "form_label_de": "Hilfsverb, Konjunktiv II",
-        "cefr_band": "mittel",
-        "translation_de": "wäre"
-      }
-    ],
-    "who": [
-      {
-        "pos": "PRON",
-        "lemma": "who",
-        "sense_key": "who#wer",
-        "gloss_de": "wer (fragend, als Interrogativpronomen)",
-        "form_kind": "base",
-        "form_label_de": "Interrogativpronomen",
-        "cefr_band": "anfaenger",
-        "translation_de": "wer"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "who",
-        "sense_key": "who#der_die",
-        "gloss_de": "der / die / welche (bezüglich, als Relativpronomen für Personen)",
-        "form_kind": "base",
-        "form_label_de": "Relativpronomen",
-        "cefr_band": "anfaenger",
-        "translation_de": "der / die / das"
-      }
-    ],
-    "had": [
-      {
-        "pos": "AUX",
-        "lemma": "have",
-        "sense_key": "have#hilfsverb",
-        "gloss_de": "Hilfsverb zur Bildung des Past Perfect (Vorvergangenheit)",
-        "form_kind": "past",
-        "form_label_de": "Hilfsverb, Vergangenheit",
-        "cefr_band": "anfaenger",
-        "translation_de": "hatte / war"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "have",
-        "sense_key": "have#besitzen_past",
-        "gloss_de": "besitzen oder innehaben (einfache Vergangenheit)",
-        "form_kind": "past",
-        "form_label_de": "Verb, Vergangenheit",
-        "cefr_band": "anfaenger",
-        "translation_de": "hatte"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "have",
-        "sense_key": "have#besitzen_partizip",
-        "gloss_de": "besitzen oder innehaben (Partizip Perfekt)",
-        "form_kind": "past_participle",
-        "form_label_de": "Verb, Partizip Perfekt",
-        "cefr_band": "anfaenger",
-        "translation_de": "gehabt"
-      }
-    ],
-    "their": [
-      {
-        "pos": "PRON",
-        "lemma": "they",
-        "sense_key": "they#ihr_plural",
-        "gloss_de": "ihr (Possessivpronomen der 3. Person Plural: bezogen auf mehrere Personen oder Dinge)",
-        "form_kind": "other",
-        "form_label_de": "Possessivpronomen, 3. Person Plural",
-        "cefr_band": "anfaenger",
-        "translation_de": "ihr / ihre"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "they",
-        "sense_key": "they#ihr_singular",
-        "gloss_de": "sein/ihr (Possessivpronomen für eine Person unbestimmten oder nicht-binären Geschlechts)",
-        "form_kind": "other",
-        "form_label_de": "Possessivpronomen, singuläres they",
-        "cefr_band": "mittel",
-        "translation_de": "sein / ihr (geschlechtsneutral)"
-      }
-    ],
-    "there": [
-      {
-        "pos": "PRON",
-        "lemma": "there",
-        "sense_key": "there#es_gibt",
-        "gloss_de": "als grammatisches Scheinsubjekt in Existenzsätzen (there is / there are)",
-        "form_kind": "base",
-        "form_label_de": "Pronomen, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "es (in: es gibt)"
-      },
-      {
-        "pos": "ADV",
-        "lemma": "there",
-        "sense_key": "there#dort",
-        "gloss_de": "an jenem Ort oder zu jenem Ort hin",
-        "form_kind": "base",
-        "form_label_de": "Adverb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "dort, dorthin"
-      },
-      {
-        "pos": "INTJ",
-        "lemma": "there",
-        "sense_key": "there#beruhigung",
-        "gloss_de": "Ausruf zum Trösten oder Beruhigen (z. B. there, there)",
-        "form_kind": "base",
-        "form_label_de": "Interjektion, Grundform",
-        "cefr_band": "mittel",
-        "translation_de": "so (beruhigend), nun"
-      }
-    ],
-    "her": [
-      {
-        "pos": "DET",
-        "lemma": "her",
-        "sense_key": "her#ihr_possessiv",
-        "gloss_de": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)",
-        "form_kind": "base",
-        "form_label_de": "Possessivartikel",
-        "cefr_band": "anfaenger",
-        "translation_de": "ihr, ihre, ihres"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "she",
-        "sense_key": "she#sie_akkusativ",
-        "gloss_de": "sie (Personalpronomen: 3. Person Singular feminin im Akkusativ als direktes Objekt)",
-        "form_kind": "other",
-        "form_label_de": "Personalpronomen, Objektform (Akkusativ)",
-        "cefr_band": "anfaenger",
-        "translation_de": "sie"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "she",
-        "sense_key": "she#ihr_dativ",
-        "gloss_de": "ihr (Personalpronomen: 3. Person Singular feminin im Dativ als indirektes Objekt)",
-        "form_kind": "other",
-        "form_label_de": "Personalpronomen, Objektform (Dativ)",
-        "cefr_band": "anfaenger",
-        "translation_de": "ihr"
-      }
-    ],
-    "which": [
-      {
-        "pos": "PRON",
-        "lemma": "which",
-        "sense_key": "which#relativpronomen",
-        "gloss_de": "Relativpronomen (bezieht sich auf Sachen oder Sachverhalte)",
-        "form_kind": "base",
-        "form_label_de": "Relativpronomen",
-        "cefr_band": "anfaenger",
-        "translation_de": "welche, welcher, welches; das"
-      },
-      {
-        "pos": "PRON",
-        "lemma": "which",
-        "sense_key": "which#fragepronomen",
-        "gloss_de": "Interrogativpronomen zur Auswahl aus einer begrenzten Menge",
-        "form_kind": "base",
-        "form_label_de": "Interrogativpronomen",
-        "cefr_band": "anfaenger",
-        "translation_de": "welche, welcher, welches"
-      },
-      {
-        "pos": "DET",
-        "lemma": "which",
-        "sense_key": "which#determiner_auswahl",
-        "gloss_de": "fragendes Begleitwort vor einem Nomen",
-        "form_kind": "base",
-        "form_label_de": "Artikelwort / Determinator",
-        "cefr_band": "anfaenger",
-        "translation_de": "welche, welcher, welches"
-      }
-    ],
-    "time": [
-      {
-        "pos": "NOUN",
-        "lemma": "time",
-        "sense_key": "time#zeit",
-        "gloss_de": "Zeit (fortlaufende Dauer, Zeitpunkt oder Uhrzeit)",
-        "form_kind": "base",
-        "form_label_de": "Substantiv, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "Zeit"
-      },
-      {
-        "pos": "NOUN",
-        "lemma": "time",
-        "sense_key": "time#mal",
-        "gloss_de": "Mal (einzelner Anlass oder Vorkommnis)",
-        "form_kind": "base",
-        "form_label_de": "Substantiv, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "Mal"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "time",
-        "sense_key": "time#stoppen",
-        "gloss_de": "die Zeit messen oder stoppen",
-        "form_kind": "base",
-        "form_label_de": "Verb, Grundform",
-        "cefr_band": "mittel",
-        "translation_de": "die Zeit messen"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "time",
-        "sense_key": "time#zeitlich_abstimmen",
-        "gloss_de": "zeitlich planen oder terminieren",
-        "form_kind": "base",
-        "form_label_de": "Verb, Grundform",
-        "cefr_band": "mittel",
-        "translation_de": "zeitlich abstimmen"
-      }
-    ],
-    "get": [
-      {
-        "pos": "VERB",
-        "lemma": "get",
-        "sense_key": "get#bekommen",
-        "gloss_de": "bekommen, erhalten oder besorgen",
-        "form_kind": "base",
-        "form_label_de": "Verb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "bekommen"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "get",
-        "sense_key": "get#werden",
-        "gloss_de": "einen Zustand erreichen (werden)",
-        "form_kind": "base",
-        "form_label_de": "Verb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "werden"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "get",
-        "sense_key": "get#gelangen",
-        "gloss_de": "an einen Ort gelangen oder ankommen",
-        "form_kind": "base",
-        "form_label_de": "Verb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "gelangen"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "get",
-        "sense_key": "get#verstehen",
-        "gloss_de": "umgangssprachlich: verstehen oder kapieren",
-        "form_kind": "base",
-        "form_label_de": "Verb, Grundform",
-        "cefr_band": "anfaenger",
-        "translation_de": "verstehen"
-      }
-    ],
-    "been": [
-      {
-        "pos": "AUX",
-        "lemma": "be",
-        "sense_key": "be#gewesen",
-        "gloss_de": "gewesen (Hilfsverb oder Kopulaverb im Perfekt/Plusquamperfekt)",
-        "form_kind": "past_participle",
-        "form_label_de": "Partizip Perfekt",
-        "cefr_band": "anfaenger",
-        "translation_de": "gewesen"
-      },
-      {
-        "pos": "VERB",
-        "lemma": "be",
-        "sense_key": "be#besucht",
-        "gloss_de": "an einem Ort gewesen (besucht, hingereist)",
-        "form_kind": "past_participle",
-        "form_label_de": "Partizip Perfekt",
-        "cefr_band": "anfaenger",
-        "translation_de": "gewesen (an einem Ort / gereist)"
-      }
-    ]
+    "went": {
+      "display_form": "went",
+      "meanings": [
+        {
+          "pos": "VERB",
+          "lemma": "go",
+          "sense_key": "go#gehen",
+          "gloss_de": "sich von einem Ort zum anderen bewegen (Vergangenheit von go)",
+          "form_kind": "past",
+          "form_label_de": "Verb, Vergangenheit",
+          "cefr_band": "anfaenger",
+          "translation_de": "ging, fuhr",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "go",
+          "sense_key": "go#werden",
+          "gloss_de": "in einen bestimmten Zustand übergehen (z. B. went crazy, went blind)",
+          "form_kind": "past",
+          "form_label_de": "Verb, Vergangenheit",
+          "cefr_band": "mittel",
+          "translation_de": "wurde",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "left": {
+      "display_form": "left",
+      "meanings": [
+        {
+          "pos": "VERB",
+          "lemma": "leave",
+          "sense_key": "leave#verlassen",
+          "gloss_de": "verlassen (einen Ort verlassen)",
+          "form_kind": "past",
+          "form_label_de": "Verb, Vergangenheit",
+          "cefr_band": "anfaenger",
+          "translation_de": "verliess",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADJ",
+          "lemma": "left",
+          "sense_key": "left#uebrig",
+          "gloss_de": "übrig (als Rest noch vorhanden)",
+          "form_kind": "base",
+          "form_label_de": "Adjektiv, prädikativ",
+          "cefr_band": "anfaenger",
+          "translation_de": "übrig",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADJ",
+          "lemma": "left",
+          "sense_key": "left#links",
+          "gloss_de": "links (auf der linken Seite befindlich, z. B. die linke Tür)",
+          "form_kind": "base",
+          "form_label_de": "Adjektiv, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "links, linke",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "left",
+          "sense_key": "left#nach_links",
+          "gloss_de": "nach links (Richtung beim Gehen oder Abbiegen)",
+          "form_kind": "base",
+          "form_label_de": "Adverb",
+          "cefr_band": "anfaenger",
+          "translation_de": "nach links",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "about": {
+      "display_form": "about",
+      "meanings": [
+        {
+          "pos": "ADP",
+          "lemma": "about",
+          "sense_key": "about#ueber_thema",
+          "gloss_de": "über (ein Thema oder einen Gegenstand betreffend)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "über",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "about",
+          "sense_key": "about#ungefaehr",
+          "gloss_de": "ungefähr (eine Mengenangabe oder Zeit betreffend)",
+          "form_kind": "base",
+          "form_label_de": "Adverb",
+          "cefr_band": "anfaenger",
+          "translation_de": "ungefähr",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADJ",
+          "lemma": "about",
+          "sense_key": "about#im_begriff",
+          "gloss_de": "im Begriff sein (etwas gleich zu tun, v.a. 'about to')",
+          "form_kind": "base",
+          "form_label_de": "Adjektiv, prädikativ",
+          "cefr_band": "mittel",
+          "translation_de": "im Begriff (zu)",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "up": {
+      "display_form": "up",
+      "meanings": [
+        {
+          "pos": "ADV",
+          "lemma": "up",
+          "sense_key": "up#hinauf",
+          "gloss_de": "hinauf / nach oben (Richtung oder höhere Position)",
+          "form_kind": "base",
+          "form_label_de": "Adverb",
+          "cefr_band": "anfaenger",
+          "translation_de": "hinauf, nach oben, oben",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "up",
+          "sense_key": "up#entlang",
+          "gloss_de": "hinauf / entlang (eine Straße, einen Fluss oder eine Steigung hinauf)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "hinauf, herauf, entlang",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADJ",
+          "lemma": "up",
+          "sense_key": "up#wach",
+          "gloss_de": "auf / wach (nicht mehr schlafend oder im Bett)",
+          "form_kind": "base",
+          "form_label_de": "Prädikatives Adjektiv",
+          "cefr_band": "anfaenger",
+          "translation_de": "auf, wach",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "light": {
+      "display_form": "light",
+      "meanings": [
+        {
+          "pos": "NOUN",
+          "lemma": "light",
+          "sense_key": "light#licht",
+          "gloss_de": "Licht oder Lichtquelle (Helligkeit)",
+          "form_kind": "base",
+          "form_label_de": "Substantiv, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "das Licht",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADJ",
+          "lemma": "light",
+          "sense_key": "light#leicht",
+          "gloss_de": "leicht (von geringem Gewicht)",
+          "form_kind": "base",
+          "form_label_de": "Adjektiv, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "leicht",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADJ",
+          "lemma": "light",
+          "sense_key": "light#hell",
+          "gloss_de": "hell (von Farben oder Beleuchtung)",
+          "form_kind": "base",
+          "form_label_de": "Adjektiv, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "hell",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "the": {
+      "display_form": "the",
+      "meanings": [
+        {
+          "pos": "DET",
+          "lemma": "the",
+          "sense_key": "the#bestimmter_artikel",
+          "gloss_de": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+          "form_kind": "base",
+          "form_label_de": "bestimmter Artikel",
+          "cefr_band": "anfaenger",
+          "translation_de": "der, die, das",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "the",
+          "sense_key": "the#umso",
+          "gloss_de": "Adverb vor Komparativen (z. B. 'the more, the better')",
+          "form_kind": "base",
+          "form_label_de": "Adverb",
+          "cefr_band": "mittel",
+          "translation_de": "je, desto, umso",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "to": {
+      "display_form": "to",
+      "meanings": [
+        {
+          "pos": "PART",
+          "lemma": "to",
+          "sense_key": "to#infinitivpartikel",
+          "gloss_de": "Partikel vor einem Infinitiv (z. B. 'to go')",
+          "form_kind": "base",
+          "form_label_de": "Infinitivpartikel",
+          "cefr_band": "anfaenger",
+          "translation_de": "zu",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "to",
+          "sense_key": "to#nach_richtung",
+          "gloss_de": "Richtung oder Zielort (z. B. 'go to London')",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "nach, zu",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "to",
+          "sense_key": "to#fuer_empfaenger",
+          "gloss_de": "Angabe des Empfängers oder Adressaten (z. B. 'give it to me')",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "an, für",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "to",
+          "sense_key": "to#bis_zeit",
+          "gloss_de": "zeitlicher Endpunkt oder Uhrzeit (z. B. 'from nine to five', 'ten to six')",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "bis, vor",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "and": {
+      "display_form": "and",
+      "meanings": [
+        {
+          "pos": "CCONJ",
+          "lemma": "and",
+          "sense_key": "and#und",
+          "gloss_de": "und (verbindet Wörter, Phrasen oder Sätze additiv)",
+          "form_kind": "base",
+          "form_label_de": "Konjunktion, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "und",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "CCONJ",
+          "lemma": "and",
+          "sense_key": "and#um_zu",
+          "gloss_de": "um zu (in umgangssprachlichen Konstruktionen wie 'try and see' oder 'go and get')",
+          "form_kind": "base",
+          "form_label_de": "Konjunktion, Grundform",
+          "cefr_band": "mittel",
+          "translation_de": "und / um zu",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "of": {
+      "display_form": "of",
+      "meanings": [
+        {
+          "pos": "ADP",
+          "lemma": "of",
+          "sense_key": "of#genitiv_besitz",
+          "gloss_de": "Zugehörigkeit oder Besitz (oft dem deutschen Genitiv entsprechend)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "von (Genitiv)",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "of",
+          "sense_key": "of#teil_menge",
+          "gloss_de": "Teil einer Menge, Inhalt oder Quantität (z. B. 'a cup of tea', 'one of them')",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "von (aus)",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "of",
+          "sense_key": "of#material_herkunft",
+          "gloss_de": "Material oder Beschaffenheit (z. B. 'made of gold')",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "aus",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "of",
+          "sense_key": "of#ueber_bezug",
+          "gloss_de": "thematischer Bezug oder Inhalt (z. B. 'think of', 'a story of')",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "an / über",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "a": {
+      "display_form": "a",
+      "meanings": [
+        {
+          "pos": "DET",
+          "lemma": "a",
+          "sense_key": "a#ein",
+          "gloss_de": "unbestimmter Artikel vor Konsonantenlauten",
+          "form_kind": "base",
+          "form_label_de": "Artikel",
+          "cefr_band": "anfaenger",
+          "translation_de": "ein, eine",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "a",
+          "sense_key": "a#pro",
+          "gloss_de": "pro Einheit (z. B. 'twice a week')",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "pro, je",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "NOUN",
+          "lemma": "a",
+          "sense_key": "a#buchstabe_a",
+          "gloss_de": "der Buchstabe A oder die Schulnote A",
+          "form_kind": "base",
+          "form_label_de": "Substantiv, Einzahl",
+          "cefr_band": "anfaenger",
+          "translation_de": "A (Buchstabe / Note)",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "in": {
+      "display_form": "in",
+      "meanings": [
+        {
+          "pos": "ADP",
+          "lemma": "in",
+          "sense_key": "in#in_raeumlich",
+          "gloss_de": "in (räumlich: innerhalb eines Ortes oder Raumes)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "in, im",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "in",
+          "sense_key": "in#in_zeitlich",
+          "gloss_de": "in (zeitlich: innerhalb eines Zeitraums oder nach Ablauf einer Zeit)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "in, im",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "in",
+          "sense_key": "in#herein_drinnen",
+          "gloss_de": "drinnen oder hinein (Richtung oder Zustand im Inneren)",
+          "form_kind": "base",
+          "form_label_de": "Adverb",
+          "cefr_band": "anfaenger",
+          "translation_de": "drinnen, herein, hinein",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADJ",
+          "lemma": "in",
+          "sense_key": "in#angesagt",
+          "gloss_de": "in (in Mode, angesagt)",
+          "form_kind": "base",
+          "form_label_de": "Adjektiv, Grundform",
+          "cefr_band": "mittel",
+          "translation_de": "in, angesagt, modern",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "i": {
+      "display_form": "I",
+      "meanings": [
+        {
+          "pos": "PRON",
+          "lemma": "I",
+          "sense_key": "i#ich",
+          "gloss_de": "Personalpronomen der 1. Person Singular (Subjektform; im Englischen immer großgeschrieben)",
+          "form_kind": "base",
+          "form_label_de": "Personalpronomen",
+          "cefr_band": "anfaenger",
+          "translation_de": "ich",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "is": {
+      "display_form": "is",
+      "meanings": [
+        {
+          "pos": "AUX",
+          "lemma": "be",
+          "sense_key": "be#sein_vollverb",
+          "gloss_de": "sein (als Vollverb oder Kopula zur Angabe von Zustand, Identität oder Eigenschaft)",
+          "form_kind": "third_person",
+          "form_label_de": "3. Person Singular Präsens",
+          "cefr_band": "anfaenger",
+          "translation_de": "ist",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "AUX",
+          "lemma": "be",
+          "sense_key": "be#hilfsverb",
+          "gloss_de": "Hilfsverb zur Bildung von Verlaufsformen (Continuous) oder Passiv",
+          "form_kind": "third_person",
+          "form_label_de": "3. Person Singular Präsens (Hilfsverb)",
+          "cefr_band": "anfaenger",
+          "translation_de": "ist / wird",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "for": {
+      "display_form": "for",
+      "meanings": [
+        {
+          "pos": "ADP",
+          "lemma": "for",
+          "sense_key": "for#fuer_zweck_empfaenger",
+          "gloss_de": "für (bestimmt für, zugunsten von oder zu einem Zweck)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "für",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "for",
+          "sense_key": "for#seit_lang_dauer",
+          "gloss_de": "seit / lang (Angabe einer Zeitspanne oder Dauer)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "lang / seit",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "CCONJ",
+          "lemma": "for",
+          "sense_key": "for#denn_grund",
+          "gloss_de": "denn (gehobene Konjunktion zur Begründung)",
+          "form_kind": "base",
+          "form_label_de": "Konjunktion",
+          "cefr_band": "mittel",
+          "translation_de": "denn",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "that": {
+      "display_form": "that",
+      "meanings": [
+        {
+          "pos": "SCONJ",
+          "lemma": "that",
+          "sense_key": "that#dass",
+          "gloss_de": "dass (leitet einen Nebensatz ein)",
+          "form_kind": "base",
+          "form_label_de": "Subjunktion",
+          "cefr_band": "anfaenger",
+          "translation_de": "dass",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "that",
+          "sense_key": "that#das",
+          "gloss_de": "das, jenes (Demonstrativ- oder Relativpronomen)",
+          "form_kind": "base",
+          "form_label_de": "Pronomen",
+          "cefr_band": "anfaenger",
+          "translation_de": "das / jenes / der / die",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "DET",
+          "lemma": "that",
+          "sense_key": "that#jener",
+          "gloss_de": "jener, jene, jenes (begleitendes Demonstrativum)",
+          "form_kind": "base",
+          "form_label_de": "Determinator",
+          "cefr_band": "anfaenger",
+          "translation_de": "jener / jene / jenes / dieser / diese / dieses",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "that",
+          "sense_key": "that#so",
+          "gloss_de": "so, dermaßen (vor Adjektiven oder Adverbien)",
+          "form_kind": "base",
+          "form_label_de": "Adverb",
+          "cefr_band": "mittel",
+          "translation_de": "so / dermaßen",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "you": {
+      "display_form": "you",
+      "meanings": [
+        {
+          "pos": "PRON",
+          "lemma": "you",
+          "sense_key": "you#du_sie_ihr",
+          "gloss_de": "Personalpronomen der 2. Person (Singular oder Plural, vertraulich oder höflich)",
+          "form_kind": "base",
+          "form_label_de": "Pronomen, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "du, Sie, ihr (auch: dir, Ihnen, euch, dich, Sie)",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "you",
+          "sense_key": "you#man",
+          "gloss_de": "unpersönliches Pronomen für Personen allgemein",
+          "form_kind": "base",
+          "form_label_de": "Pronomen, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "man",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "it": {
+      "display_form": "it",
+      "meanings": [
+        {
+          "pos": "PRON",
+          "lemma": "it",
+          "sense_key": "it#es_ding",
+          "gloss_de": "Personalpronomen der 3. Person Singular für sächliche Dinge oder Tiere",
+          "form_kind": "base",
+          "form_label_de": "Pronomen",
+          "cefr_band": "anfaenger",
+          "translation_de": "es (auch: er, sie)",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "it",
+          "sense_key": "it#unpersoenlich",
+          "gloss_de": "unpersönliches Subjekt (z. B. bei Wetter, Zeit oder Entfernungen)",
+          "form_kind": "base",
+          "form_label_de": "Pronomen, unpersönlich",
+          "cefr_band": "anfaenger",
+          "translation_de": "es",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "on": {
+      "display_form": "on",
+      "meanings": [
+        {
+          "pos": "ADP",
+          "lemma": "on",
+          "sense_key": "on#auf",
+          "gloss_de": "auf (räumlich: auf einer Oberfläche oder an etwas liegend)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "auf",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "on",
+          "sense_key": "on#an_zeitlich",
+          "gloss_de": "an (zeitlich: an bestimmten Tagen oder Daten)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "an",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "on",
+          "sense_key": "on#weiter",
+          "gloss_de": "weiter (eine Handlung fortsetzend, wie in 'go on')",
+          "form_kind": "base",
+          "form_label_de": "Adverb",
+          "cefr_band": "anfaenger",
+          "translation_de": "weiter",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADJ",
+          "lemma": "on",
+          "sense_key": "on#an_eingeschaltet",
+          "gloss_de": "an (Geräte oder Lichter: eingeschaltet, in Betrieb)",
+          "form_kind": "base",
+          "form_label_de": "Adjektiv",
+          "cefr_band": "anfaenger",
+          "translation_de": "an",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "with": {
+      "display_form": "with",
+      "meanings": [
+        {
+          "pos": "ADP",
+          "lemma": "with",
+          "sense_key": "with#zusammen_mit",
+          "gloss_de": "in Begleitung oder Gesellschaft von (zusammen mit)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "mit",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "with",
+          "sense_key": "with#mittels",
+          "gloss_de": "mittels oder unter Verwendung eines Werkzeugs/Mittels",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "mit",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "with",
+          "sense_key": "with#mit_eigenschaft",
+          "gloss_de": "im Besitz von etwas, versehen mit einer Eigenschaft oder Merkmal",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "mit",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "with",
+          "sense_key": "with#bei",
+          "gloss_de": "bei jemandem wohnend oder angestellt (z. B. 'stay with', 'work with')",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "bei",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "this": {
+      "display_form": "this",
+      "meanings": [
+        {
+          "pos": "DET",
+          "lemma": "this",
+          "sense_key": "this#dieser_begleitend",
+          "gloss_de": "dieser/diese/dieses (begleitend vor einem Nomen, weist auf Nahes hin)",
+          "form_kind": "base",
+          "form_label_de": "Determiner, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "dieser / diese / dieses",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "this",
+          "sense_key": "this#dies_stellvertretend",
+          "gloss_de": "dies / das (stellvertretend für eine Sache, Person oder Situation)",
+          "form_kind": "base",
+          "form_label_de": "Pronomen, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "dies / das",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "this",
+          "sense_key": "this#so_graduierend",
+          "gloss_de": "so / derartig (zur Verstärkung eines Adjektivs oder Adverbs)",
+          "form_kind": "base",
+          "form_label_de": "Adverb, Grundform",
+          "cefr_band": "mittel",
+          "translation_de": "so / dermaßen",
+          "usage": "haupt",
+          "status": "excluded",
+          "exclude_reason": "cloze_ambiguous"
+        }
+      ]
+    },
+    "was": {
+      "display_form": "was",
+      "meanings": [
+        {
+          "pos": "VERB",
+          "lemma": "be",
+          "sense_key": "be#sein_vollverb",
+          "gloss_de": "sein (Zustand, Eigenschaft oder Identität in der Vergangenheit)",
+          "form_kind": "past",
+          "form_label_de": "Verb, Präteritum (1./3. Person Singular)",
+          "cefr_band": "anfaenger",
+          "translation_de": "war",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "AUX",
+          "lemma": "be",
+          "sense_key": "be#hilfsverb",
+          "gloss_de": "sein/werden (Hilfsverb zur Bildung von Vergangenheitsformen wie Past Continuous oder Passiv)",
+          "form_kind": "past",
+          "form_label_de": "Hilfsverb, Präteritum (1./3. Person Singular)",
+          "cefr_band": "anfaenger",
+          "translation_de": "war / wurde",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "be": {
+      "display_form": "be",
+      "meanings": [
+        {
+          "pos": "AUX",
+          "lemma": "be",
+          "sense_key": "be#hilfsverb",
+          "gloss_de": "Hilfsverb zur Bildung von Verlaufsformen oder Passiv",
+          "form_kind": "base",
+          "form_label_de": "Hilfsverb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "sein / werden",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "be",
+          "sense_key": "be#sein_existieren",
+          "gloss_de": "sein (einen Zustand, eine Eigenschaft oder Identität haben)",
+          "form_kind": "base",
+          "form_label_de": "Vollverb, Grundform / Infinitiv",
+          "cefr_band": "anfaenger",
+          "translation_de": "sein",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "be",
+          "sense_key": "be#befinden",
+          "gloss_de": "sich an einem bestimmten Ort befinden",
+          "form_kind": "base",
+          "form_label_de": "Vollverb, Grundform / Infinitiv",
+          "cefr_band": "anfaenger",
+          "translation_de": "sein (sich befinden)",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "as": {
+      "display_form": "as",
+      "meanings": [
+        {
+          "pos": "ADP",
+          "lemma": "as",
+          "sense_key": "as#als_funktion",
+          "gloss_de": "in der Funktion oder Eigenschaft von (z. B. as a doctor)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "als",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "SCONJ",
+          "lemma": "as",
+          "sense_key": "as#waehrend_zeit",
+          "gloss_de": "zeitlich: zur gleichen Zeit wie (während)",
+          "form_kind": "base",
+          "form_label_de": "Konjunktion",
+          "cefr_band": "anfaenger",
+          "translation_de": "während",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "SCONJ",
+          "lemma": "as",
+          "sense_key": "as#da_grund",
+          "gloss_de": "kausal: drückt einen Grund aus (da, weil)",
+          "form_kind": "base",
+          "form_label_de": "Konjunktion",
+          "cefr_band": "anfaenger",
+          "translation_de": "da",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "as",
+          "sense_key": "as#so_vergleich",
+          "gloss_de": "Vergleichspartikel beim Gleichheitsvergleich (z. B. as tall as)",
+          "form_kind": "base",
+          "form_label_de": "Adverb",
+          "cefr_band": "anfaenger",
+          "translation_de": "so",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "are": {
+      "display_form": "are",
+      "meanings": [
+        {
+          "pos": "AUX",
+          "lemma": "be",
+          "sense_key": "be#sein_hilfsverb",
+          "gloss_de": "Hilfsverb zur Bildung von Verlaufsformen oder Passiv (Präsens)",
+          "form_kind": "other",
+          "form_label_de": "Hilfsverb, Präsens Plural / 2. Person",
+          "cefr_band": "anfaenger",
+          "translation_de": "sind / bist / seid",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "be",
+          "sense_key": "be#sein_vollverb",
+          "gloss_de": "Vollverb / Kopula: existieren oder eine Eigenschaft/Zustand haben",
+          "form_kind": "other",
+          "form_label_de": "Verb, Präsens Plural / 2. Person",
+          "cefr_band": "anfaenger",
+          "translation_de": "sind / bist / seid",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "have": {
+      "display_form": "have",
+      "meanings": [
+        {
+          "pos": "VERB",
+          "lemma": "have",
+          "sense_key": "have#besitzen",
+          "gloss_de": "besitzen oder zur Verfügung haben",
+          "form_kind": "base",
+          "form_label_de": "Grundform / Präsens",
+          "cefr_band": "anfaenger",
+          "translation_de": "haben",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "AUX",
+          "lemma": "have",
+          "sense_key": "have#hilfsverb",
+          "gloss_de": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+          "form_kind": "base",
+          "form_label_de": "Hilfsverb, Grundform / Präsens",
+          "cefr_band": "anfaenger",
+          "translation_de": "haben",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "have",
+          "sense_key": "have#muessen",
+          "gloss_de": "eine Notwendigkeit oder Verpflichtung ausdrücken (have to)",
+          "form_kind": "base",
+          "form_label_de": "Grundform / Präsens",
+          "cefr_band": "anfaenger",
+          "translation_de": "müssen",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "have",
+          "sense_key": "have#einnehmen",
+          "gloss_de": "zu sich nehmen (Essen, Trinken) oder erleben/durchführen",
+          "form_kind": "base",
+          "form_label_de": "Grundform / Präsens",
+          "cefr_band": "anfaenger",
+          "translation_de": "einnehmen, trinken, essen",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "at": {
+      "display_form": "at",
+      "meanings": [
+        {
+          "pos": "ADP",
+          "lemma": "at",
+          "sense_key": "at#ort",
+          "gloss_de": "räumlich (an einem bestimmten Ort oder Punkt)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "an, bei, in",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "at",
+          "sense_key": "at#zeit",
+          "gloss_de": "zeitlich (zu einem bestimmten Zeitpunkt oder einer Uhrzeit)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "um, zu",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "at",
+          "sense_key": "at#richtung",
+          "gloss_de": "Richtung oder Ziel (auf etwas oder jemanden gerichtet, z. B. look at)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "auf, an",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "at",
+          "sense_key": "at#zustand",
+          "gloss_de": "Zustand oder Tätigkeit (in einem Zustand, z. B. at work, at peace)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "bei, in",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "he": {
+      "display_form": "he",
+      "meanings": [
+        {
+          "pos": "PRON",
+          "lemma": "he",
+          "sense_key": "he#er",
+          "gloss_de": "Personalpronomen der 3. Person Singular Maskulinum im Nominativ",
+          "form_kind": "base",
+          "form_label_de": "Pronomen, Nominativ",
+          "cefr_band": "anfaenger",
+          "translation_de": "er",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "not": {
+      "display_form": "not",
+      "meanings": [
+        {
+          "pos": "PART",
+          "lemma": "not",
+          "sense_key": "not#nicht",
+          "gloss_de": "nicht (drückt Verneinung von Verben, Adjektiven oder Aussagen aus)",
+          "form_kind": "base",
+          "form_label_de": "Negationspartikel",
+          "cefr_band": "anfaenger",
+          "translation_de": "nicht",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PART",
+          "lemma": "not",
+          "sense_key": "not#gar_nicht",
+          "gloss_de": "gar nicht / überhaupt nicht (zur nachdrücklichen Verneinung in Kurzantworten oder Ausrufen)",
+          "form_kind": "base",
+          "form_label_de": "Partikel",
+          "cefr_band": "anfaenger",
+          "translation_de": "gar nicht",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "by": {
+      "display_form": "by",
+      "meanings": [
+        {
+          "pos": "ADP",
+          "lemma": "by",
+          "sense_key": "by#von_urheber",
+          "gloss_de": "von (Urheber, Verursacher beim Passiv oder bei Werken)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "von",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "by",
+          "sense_key": "by#neben_ort",
+          "gloss_de": "neben, bei (örtliche Nähe)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "bei, neben",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "by",
+          "sense_key": "by#mit_mittel",
+          "gloss_de": "mit, per (Mittel, Methode oder Verkehrsmittel)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "mit",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "by",
+          "sense_key": "by#bis_spaetestens",
+          "gloss_de": "bis (spätestens zu einem bestimmten Zeitpunkt)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "bis",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "but": {
+      "display_form": "but",
+      "meanings": [
+        {
+          "pos": "CCONJ",
+          "lemma": "but",
+          "sense_key": "but#aber",
+          "gloss_de": "aber (drückt einen Gegensatz oder eine Einschränkung aus)",
+          "form_kind": "base",
+          "form_label_de": "Konjunktion",
+          "cefr_band": "anfaenger",
+          "translation_de": "aber, sondern",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "but",
+          "sense_key": "but#ausser",
+          "gloss_de": "außer (mit Ausnahme von)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "mittel",
+          "translation_de": "außer",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "but",
+          "sense_key": "but#nur",
+          "gloss_de": "nur (gehoben oder formell für 'lediglich')",
+          "form_kind": "base",
+          "form_label_de": "Adverb",
+          "cefr_band": "fortgeschritten",
+          "translation_de": "nur, lediglich",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "from": {
+      "display_form": "from",
+      "meanings": [
+        {
+          "pos": "ADP",
+          "lemma": "from",
+          "sense_key": "from#von_ausgangspunkt",
+          "gloss_de": "von, aus (räumlicher, zeitlicher oder persönlicher Ausgangspunkt)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "von, aus",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "from",
+          "sense_key": "from#unterscheidung",
+          "gloss_de": "von (Unterscheidung oder Trennung zwischen zwei Dingen)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "mittel",
+          "translation_de": "von",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "from",
+          "sense_key": "from#ursache",
+          "gloss_de": "vor, aus (Ursache oder Grund, z. B. 'suffer from')",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "mittel",
+          "translation_de": "vor, aus, an",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "my": {
+      "display_form": "my",
+      "meanings": [
+        {
+          "pos": "DET",
+          "lemma": "my",
+          "sense_key": "my#mein",
+          "gloss_de": "mein (Possessivbegleiter der 1. Person Singular)",
+          "form_kind": "base",
+          "form_label_de": "Possessivpronomen / Begleiter",
+          "cefr_band": "anfaenger",
+          "translation_de": "mein, meine",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "INTJ",
+          "lemma": "my",
+          "sense_key": "my#ausruf",
+          "gloss_de": "Ausruf des Erstaunens oder der Überraschung (oft 'My, my!')",
+          "form_kind": "base",
+          "form_label_de": "Interjektion",
+          "cefr_band": "mittel",
+          "translation_de": "meine Güte, oje",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "or": {
+      "display_form": "or",
+      "meanings": [
+        {
+          "pos": "CCONJ",
+          "lemma": "or",
+          "sense_key": "or#oder",
+          "gloss_de": "oder (verbindet Alternativen)",
+          "form_kind": "base",
+          "form_label_de": "Konjunktion",
+          "cefr_band": "anfaenger",
+          "translation_de": "oder",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "CCONJ",
+          "lemma": "or",
+          "sense_key": "or#andernfalls",
+          "gloss_de": "sonst / andernfalls (nach Warnungen oder Aufforderungen)",
+          "form_kind": "base",
+          "form_label_de": "Konjunktion",
+          "cefr_band": "mittel",
+          "translation_de": "sonst",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "we": {
+      "display_form": "we",
+      "meanings": [
+        {
+          "pos": "PRON",
+          "lemma": "we",
+          "sense_key": "we#wir",
+          "gloss_de": "wir (1. Person Plural Nominativ)",
+          "form_kind": "base",
+          "form_label_de": "Personalpronomen, Subjektform",
+          "cefr_band": "anfaenger",
+          "translation_de": "wir",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "an": {
+      "display_form": "an",
+      "meanings": [
+        {
+          "pos": "DET",
+          "lemma": "a",
+          "sense_key": "a#ein",
+          "gloss_de": "unbestimmter Artikel vor Vokallauten (ein, eine)",
+          "form_kind": "other",
+          "form_label_de": "unbestimmter Artikel (vor Vokallauten)",
+          "cefr_band": "anfaenger",
+          "translation_de": "ein, eine",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "your": {
+      "display_form": "your",
+      "meanings": [
+        {
+          "pos": "DET",
+          "lemma": "your",
+          "sense_key": "your#dein",
+          "gloss_de": "von dir besessen / zu dir gehörend (Singular, informell)",
+          "form_kind": "base",
+          "form_label_de": "Possessivpronomen / Possessivbegleiter, Singular",
+          "cefr_band": "anfaenger",
+          "translation_de": "dein, deine",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "DET",
+          "lemma": "your",
+          "sense_key": "your#euer",
+          "gloss_de": "von euch besessen / zu euch gehörend (Plural, informell)",
+          "form_kind": "base",
+          "form_label_de": "Possessivpronomen / Possessivbegleiter, Plural",
+          "cefr_band": "anfaenger",
+          "translation_de": "euer, eure",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "DET",
+          "lemma": "your",
+          "sense_key": "your#ihr",
+          "gloss_de": "zu Ihnen gehörend (Höflichkeitsform Singular oder Plural)",
+          "form_kind": "base",
+          "form_label_de": "Possessivpronomen / Possessivbegleiter, höflich",
+          "cefr_band": "anfaenger",
+          "translation_de": "Ihr, Ihre",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "DET",
+          "lemma": "your",
+          "sense_key": "your#man",
+          "gloss_de": "allgemein bezogen auf jedermann (generisches Pronomen)",
+          "form_kind": "base",
+          "form_label_de": "Possessivbegleiter, verallgemeinernd",
+          "cefr_band": "mittel",
+          "translation_de": "sein, manch",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "all": {
+      "display_form": "all",
+      "meanings": [
+        {
+          "pos": "DET",
+          "lemma": "all",
+          "sense_key": "all#alle_det",
+          "gloss_de": "alle, ganz (bestimmt ein Nomen im Plural oder als Gesamtheit)",
+          "form_kind": "base",
+          "form_label_de": "Determinator",
+          "cefr_band": "anfaenger",
+          "translation_de": "alle, ganz",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "all",
+          "sense_key": "all#alles_pron",
+          "gloss_de": "alles, alle (eigenständig als Pronomen für Personen oder Dinge)",
+          "form_kind": "base",
+          "form_label_de": "Pronomen",
+          "cefr_band": "anfaenger",
+          "translation_de": "alles, alle",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "all",
+          "sense_key": "all#vollstaendig_adv",
+          "gloss_de": "völlig, ganz (verstärkend vor Adjektiven oder Präpositionen, z. B. 'all alone')",
+          "form_kind": "base",
+          "form_label_de": "Adverb",
+          "cefr_band": "anfaenger",
+          "translation_de": "ganz, völlig",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "so": {
+      "display_form": "so",
+      "meanings": [
+        {
+          "pos": "ADV",
+          "lemma": "so",
+          "sense_key": "so#so_sehr",
+          "gloss_de": "so, derart (verstärkend vor Adjektiven oder Adverbien)",
+          "form_kind": "base",
+          "form_label_de": "Adverb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "so / derart",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "CCONJ",
+          "lemma": "so",
+          "sense_key": "so#deshalb",
+          "gloss_de": "daher, aus diesem Grund (konjunktional zur Angabe einer Folge)",
+          "form_kind": "base",
+          "form_label_de": "Konjunktion",
+          "cefr_band": "anfaenger",
+          "translation_de": "also / daher / deshalb",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "so",
+          "sense_key": "so#ebenfalls",
+          "gloss_de": "auch, ebenso (in Kurzantworten wie 'so do I')",
+          "form_kind": "base",
+          "form_label_de": "Adverb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "auch / ebenso",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "so",
+          "sense_key": "so#auf_diese_weise",
+          "gloss_de": "auf diese Weise, so (die Art und Weise beschreibend)",
+          "form_kind": "base",
+          "form_label_de": "Adverb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "so / auf diese Weise",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "his": {
+      "display_form": "his",
+      "meanings": [
+        {
+          "pos": "DET",
+          "lemma": "his",
+          "sense_key": "his#sein",
+          "gloss_de": "Possessivartikel (gehört einer männlichen Person oder einem Tier)",
+          "form_kind": "base",
+          "form_label_de": "Possessivartikel, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "sein, seine",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "his",
+          "sense_key": "his#seiner",
+          "gloss_de": "Possessivpronomen (eigenständig stehend: das Seine/seines)",
+          "form_kind": "base",
+          "form_label_de": "Possessivpronomen, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "seiner, seins, seine",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "they": {
+      "display_form": "they",
+      "meanings": [
+        {
+          "pos": "PRON",
+          "lemma": "they",
+          "sense_key": "they#sie_plural",
+          "gloss_de": "Personalpronomen der 3. Person Plural (sie mehrere Personen oder Dinge)",
+          "form_kind": "base",
+          "form_label_de": "Pronomen, Subjektform",
+          "cefr_band": "anfaenger",
+          "translation_de": "sie",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "they",
+          "sense_key": "they#man_leute",
+          "gloss_de": "allgemeine oder unbestimmte Personen (man, die Leute)",
+          "form_kind": "base",
+          "form_label_de": "Pronomen, Subjektform",
+          "cefr_band": "anfaenger",
+          "translation_de": "man",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "they",
+          "sense_key": "they#singular_they",
+          "gloss_de": "geschlechtsneutrale Einzahl für eine einzelne Person",
+          "form_kind": "base",
+          "form_label_de": "Pronomen, Subjektform (Singular)",
+          "cefr_band": "mittel",
+          "translation_de": "er/sie (geschlechtsneutral)",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "me": {
+      "display_form": "me",
+      "meanings": [
+        {
+          "pos": "PRON",
+          "lemma": "I",
+          "sense_key": "i#mich",
+          "gloss_de": "mich (Objektform von 'ich', Akkusativ)",
+          "form_kind": "other",
+          "form_label_de": "Pronomen, Objektform (Akkusativ)",
+          "cefr_band": "anfaenger",
+          "translation_de": "mich",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "I",
+          "sense_key": "i#mir",
+          "gloss_de": "mir (Objektform von 'ich', Dativ)",
+          "form_kind": "other",
+          "form_label_de": "Pronomen, Objektform (Dativ)",
+          "cefr_band": "anfaenger",
+          "translation_de": "mir",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "if": {
+      "display_form": "if",
+      "meanings": [
+        {
+          "pos": "SCONJ",
+          "lemma": "if",
+          "sense_key": "if#wenn",
+          "gloss_de": "wenn / falls (Konditionalsatz, Bedingung)",
+          "form_kind": "base",
+          "form_label_de": "Subjunktion",
+          "cefr_band": "anfaenger",
+          "translation_de": "wenn, falls",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "SCONJ",
+          "lemma": "if",
+          "sense_key": "if#ob",
+          "gloss_de": "ob (indirekte Frage, Ungewissheit)",
+          "form_kind": "base",
+          "form_label_de": "Subjunktion",
+          "cefr_band": "anfaenger",
+          "translation_de": "ob",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "NOUN",
+          "lemma": "if",
+          "sense_key": "if#wenn_und_aber",
+          "gloss_de": "Wenn (Bedingung oder Unsicherheit in Redewendungen wie 'no ifs or buts')",
+          "form_kind": "base",
+          "form_label_de": "Substantiv, Singular",
+          "cefr_band": "mittel",
+          "translation_de": "Wenn",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "can": {
+      "display_form": "can",
+      "meanings": [
+        {
+          "pos": "AUX",
+          "lemma": "can",
+          "sense_key": "can#koennen",
+          "gloss_de": "können (Fähigkeit, Möglichkeit oder Erlaubnis)",
+          "form_kind": "base",
+          "form_label_de": "Hilfsverb, Präsens",
+          "cefr_band": "anfaenger",
+          "translation_de": "kann / können",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "NOUN",
+          "lemma": "can",
+          "sense_key": "can#dose",
+          "gloss_de": "Dose (metallener Behälter für Getränke oder Lebensmittel)",
+          "form_kind": "base",
+          "form_label_de": "Substantiv, Einzahl",
+          "cefr_band": "anfaenger",
+          "translation_de": "Dose",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "can",
+          "sense_key": "can#einkochen",
+          "gloss_de": "eindosen (Nahrungsmittel in Dosen oder Gläsern konservieren)",
+          "form_kind": "base",
+          "form_label_de": "Verb, Grundform",
+          "cefr_band": "fortgeschritten",
+          "translation_de": "einkochen / eindosen",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "will": {
+      "display_form": "will",
+      "meanings": [
+        {
+          "pos": "AUX",
+          "lemma": "will",
+          "sense_key": "will#zukunft",
+          "gloss_de": "werden (Hilfsverb zur Bildung des Futurs)",
+          "form_kind": "base",
+          "form_label_de": "Hilfsverb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "werden",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "NOUN",
+          "lemma": "will",
+          "sense_key": "will#wille",
+          "gloss_de": "Wille (die eigene Absicht oder Entschlossenheit)",
+          "form_kind": "base",
+          "form_label_de": "Substantiv, Singular",
+          "cefr_band": "mittel",
+          "translation_de": "Wille",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "NOUN",
+          "lemma": "will",
+          "sense_key": "will#testament",
+          "gloss_de": "Testament (schriftliche Verfügung für den Todesfall)",
+          "form_kind": "base",
+          "form_label_de": "Substantiv, Singular",
+          "cefr_band": "mittel",
+          "translation_de": "Testament",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "will",
+          "sense_key": "will#wollen",
+          "gloss_de": "herbeiwünschen oder verfügen (durch Willenskraft bewirken)",
+          "form_kind": "base",
+          "form_label_de": "Vollverb, Grundform",
+          "cefr_band": "fortgeschritten",
+          "translation_de": "wollen",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "just": {
+      "display_form": "just",
+      "meanings": [
+        {
+          "pos": "ADV",
+          "lemma": "just",
+          "sense_key": "just#nur",
+          "gloss_de": "nur, bloß (Einschränkung)",
+          "form_kind": "base",
+          "form_label_de": "Adverb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "nur, bloß",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "just",
+          "sense_key": "just#gerade_eben",
+          "gloss_de": "gerade eben (vor sehr kurzer Zeit)",
+          "form_kind": "base",
+          "form_label_de": "Adverb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "gerade, eben",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "just",
+          "sense_key": "just#genau",
+          "gloss_de": "genau, exakt (Übereinstimmung)",
+          "form_kind": "base",
+          "form_label_de": "Adverb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "genau, exakt",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADJ",
+          "lemma": "just",
+          "sense_key": "just#gerecht",
+          "gloss_de": "gerecht, fair (moralisch oder rechtlich richtig)",
+          "form_kind": "base",
+          "form_label_de": "Adjektiv, Grundform",
+          "cefr_band": "mittel",
+          "translation_de": "gerecht, fair",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "like": {
+      "display_form": "like",
+      "meanings": [
+        {
+          "pos": "VERB",
+          "lemma": "like",
+          "sense_key": "like#moegen",
+          "gloss_de": "etwas oder jemanden gernhaben, mögen",
+          "form_kind": "base",
+          "form_label_de": "Verb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "mögen / gernhaben",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "like",
+          "sense_key": "like#wie",
+          "gloss_de": "Vergleich oder Ähnlichkeit ausdrückend (wie)",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "wie",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "SCONJ",
+          "lemma": "like",
+          "sense_key": "like#als_ob",
+          "gloss_de": "umgangssprachliche Konjunktion: wie wenn oder als ob",
+          "form_kind": "base",
+          "form_label_de": "Konjunktion",
+          "cefr_band": "mittel",
+          "translation_de": "wie / als ob",
+          "usage": "haupt",
+          "status": "excluded",
+          "exclude_reason": "cloze_ambiguous"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "like",
+          "sense_key": "like#fuellwort",
+          "gloss_de": "umgangssprachliches Füllwort oder Zitat-Einleiter",
+          "form_kind": "base",
+          "form_label_de": "Adverb",
+          "cefr_band": "mittel",
+          "translation_de": "quasi / sozusagen",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "out": {
+      "display_form": "out",
+      "meanings": [
+        {
+          "pos": "ADV",
+          "lemma": "out",
+          "sense_key": "out#hinaus",
+          "gloss_de": "hinaus, heraus (Bewegung aus einem Inneren ins Freie oder nach außen)",
+          "form_kind": "base",
+          "form_label_de": "Adverb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "hinaus / heraus / raus",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADJ",
+          "lemma": "out",
+          "sense_key": "out#nicht_da",
+          "gloss_de": "nicht zu Hause oder nicht im Büro anwesend sein",
+          "form_kind": "base",
+          "form_label_de": "Adjektiv, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "aus / nicht da / unterwegs",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADJ",
+          "lemma": "out",
+          "sense_key": "out#erloschen",
+          "gloss_de": "nicht mehr brennend oder leuchtend (z. B. Feuer, Licht)",
+          "form_kind": "base",
+          "form_label_de": "Adjektiv, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "aus / erloschen",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADP",
+          "lemma": "out",
+          "sense_key": "out#heraus_aus",
+          "gloss_de": "durch eine Öffnung nach draußen (oft als 'out of')",
+          "form_kind": "base",
+          "form_label_de": "Präposition",
+          "cefr_band": "anfaenger",
+          "translation_de": "aus ... hinaus / durch ... heraus",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "what": {
+      "display_form": "what",
+      "meanings": [
+        {
+          "pos": "PRON",
+          "lemma": "what",
+          "sense_key": "what#fragepronomen",
+          "gloss_de": "was (Fragepronomen nach Dingen oder Sachverhalten)",
+          "form_kind": "base",
+          "form_label_de": "Pronomen, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "was",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "what",
+          "sense_key": "what#relativpronomen",
+          "gloss_de": "das, was (Relativpronomen mit implizitem Bezugswort)",
+          "form_kind": "base",
+          "form_label_de": "Pronomen, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "was / das, was",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "DET",
+          "lemma": "what",
+          "sense_key": "what#welcher",
+          "gloss_de": "welche(r/s) / was für ein (fragend oder ausrufend vor Nomen)",
+          "form_kind": "base",
+          "form_label_de": "Determinator, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "welcher / was für ein",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "INTJ",
+          "lemma": "what",
+          "sense_key": "what#ausruf",
+          "gloss_de": "wie bitte? / was? (Ausruf des Erstaunens oder Nichtverstehens)",
+          "form_kind": "base",
+          "form_label_de": "Interjektion",
+          "cefr_band": "anfaenger",
+          "translation_de": "was?! / wie bitte?!",
+          "usage": "haupt",
+          "status": "excluded",
+          "exclude_reason": "cloze_ambiguous"
+        }
+      ]
+    },
+    "has": {
+      "display_form": "has",
+      "meanings": [
+        {
+          "pos": "AUX",
+          "lemma": "have",
+          "sense_key": "have#hilfsverb",
+          "gloss_de": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+          "form_kind": "third_person",
+          "form_label_de": "Hilfsverb, 3. Person Singular Präsens",
+          "cefr_band": "anfaenger",
+          "translation_de": "hat",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "have",
+          "sense_key": "have#besitzen",
+          "gloss_de": "besitzen oder verfügen über (Vollverb in der 3. Person Singular)",
+          "form_kind": "third_person",
+          "form_label_de": "Verb, 3. Person Singular Präsens",
+          "cefr_band": "anfaenger",
+          "translation_de": "hat",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "have",
+          "sense_key": "have#muessen",
+          "gloss_de": "müssen (in Konstruktion mit 'to': has to)",
+          "form_kind": "third_person",
+          "form_label_de": "Verb, 3. Person Singular Präsens",
+          "cefr_band": "anfaenger",
+          "translation_de": "muss",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "when": {
+      "display_form": "when",
+      "meanings": [
+        {
+          "pos": "SCONJ",
+          "lemma": "when",
+          "sense_key": "when#als_wenn",
+          "gloss_de": "als, wenn (zeitliche Unterordnung)",
+          "form_kind": "base",
+          "form_label_de": "Subjunktion",
+          "cefr_band": "anfaenger",
+          "translation_de": "als / wenn",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "when",
+          "sense_key": "when#wann",
+          "gloss_de": "wann (fragend, zu welcher Zeit)",
+          "form_kind": "base",
+          "form_label_de": "Interrogativadverb",
+          "cefr_band": "anfaenger",
+          "translation_de": "wann",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "when",
+          "sense_key": "when#in_dem",
+          "gloss_de": "in dem / an dem (Relativadverb mit Zeitbezug)",
+          "form_kind": "base",
+          "form_label_de": "Relativadverb",
+          "cefr_band": "mittel",
+          "translation_de": "an dem / in dem",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "more": {
+      "display_form": "more",
+      "meanings": [
+        {
+          "pos": "ADV",
+          "lemma": "more",
+          "sense_key": "more#mehr_steigerung",
+          "gloss_de": "mehr (zur Bildung des Komparativs bei Adjektiven und Adverbien oder zur Angabe eines höheren Grades)",
+          "form_kind": "comparative",
+          "form_label_de": "Adverb, Komparativ",
+          "cefr_band": "anfaenger",
+          "translation_de": "mehr",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "DET",
+          "lemma": "much",
+          "sense_key": "much#mehr_menge",
+          "gloss_de": "mehr (eine größere Menge oder Anzahl von etwas vor einem Nomen)",
+          "form_kind": "comparative",
+          "form_label_de": "Determinator, Komparativ",
+          "cefr_band": "anfaenger",
+          "translation_de": "mehr",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "more",
+          "sense_key": "more#mehr_pronomen",
+          "gloss_de": "mehr (eine größere Menge oder zusätzliche Personen/Dinge, stellvertretend für ein Nomen)",
+          "form_kind": "comparative",
+          "form_label_de": "Pronomen, Komparativ",
+          "cefr_band": "anfaenger",
+          "translation_de": "mehr",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "more",
+          "sense_key": "more#wieder_noch",
+          "gloss_de": "wieder / noch (in Verbindung mit Verneinung wie 'no more' oder 'not ... any more')",
+          "form_kind": "base",
+          "form_label_de": "Adverb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "mehr / nicht mehr",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "do": {
+      "display_form": "do",
+      "meanings": [
+        {
+          "pos": "AUX",
+          "lemma": "do",
+          "sense_key": "do#hilfsverb",
+          "gloss_de": "Hilfsverb zur Bildung von Fragen, Verneinungen oder zur Betonung",
+          "form_kind": "base",
+          "form_label_de": "Hilfsverb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "(unübersetzt / Hilfsverb)",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "do",
+          "sense_key": "do#tun",
+          "gloss_de": "eine Handlung oder Aktivität ausführen",
+          "form_kind": "base",
+          "form_label_de": "Verb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "tun, machen",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "do",
+          "sense_key": "do#reichen",
+          "gloss_de": "ausreichen oder genügen ('that will do')",
+          "form_kind": "base",
+          "form_label_de": "Verb, Grundform",
+          "cefr_band": "mittel",
+          "translation_de": "genügen, ausreichen",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "no": {
+      "display_form": "no",
+      "meanings": [
+        {
+          "pos": "INTJ",
+          "lemma": "no",
+          "sense_key": "no#nein",
+          "gloss_de": "nein (verneinende Antwort)",
+          "form_kind": "base",
+          "form_label_de": "Interjektion",
+          "cefr_band": "anfaenger",
+          "translation_de": "nein",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "DET",
+          "lemma": "no",
+          "sense_key": "no#kein",
+          "gloss_de": "kein (Verneinung vor Nomen)",
+          "form_kind": "base",
+          "form_label_de": "Determinator",
+          "cefr_band": "anfaenger",
+          "translation_de": "kein / keine",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "no",
+          "sense_key": "no#nicht",
+          "gloss_de": "nicht / überhaupt nicht (vor Komparativen wie 'no longer' oder 'no better')",
+          "form_kind": "base",
+          "form_label_de": "Adverb",
+          "cefr_band": "mittel",
+          "translation_de": "nicht / keineswegs",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "NOUN",
+          "lemma": "no",
+          "sense_key": "no#nein-stimme",
+          "gloss_de": "Nein (Nein-Stimme oder Ablehnung)",
+          "form_kind": "base",
+          "form_label_de": "Substantiv, Grundform",
+          "cefr_band": "mittel",
+          "translation_de": "Nein / Gegenstimme",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "were": {
+      "display_form": "were",
+      "meanings": [
+        {
+          "pos": "AUX",
+          "lemma": "be",
+          "sense_key": "be#sein_vergangenheit",
+          "gloss_de": "waren / warst / wart (Vergangenheit von 'be' im Plural sowie bei 'you')",
+          "form_kind": "past",
+          "form_label_de": "Hilfsverb, Präteritum",
+          "cefr_band": "anfaenger",
+          "translation_de": "waren",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "AUX",
+          "lemma": "be",
+          "sense_key": "be#waere_konjunktiv",
+          "gloss_de": "wäre / wären (Konjunktiv von 'be' für hypothetische Bedingungen)",
+          "form_kind": "other",
+          "form_label_de": "Hilfsverb, Konjunktiv II",
+          "cefr_band": "mittel",
+          "translation_de": "wäre",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "who": {
+      "display_form": "who",
+      "meanings": [
+        {
+          "pos": "PRON",
+          "lemma": "who",
+          "sense_key": "who#wer",
+          "gloss_de": "wer (fragend, als Interrogativpronomen)",
+          "form_kind": "base",
+          "form_label_de": "Interrogativpronomen",
+          "cefr_band": "anfaenger",
+          "translation_de": "wer",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "who",
+          "sense_key": "who#der_die",
+          "gloss_de": "der / die / welche (bezüglich, als Relativpronomen für Personen)",
+          "form_kind": "base",
+          "form_label_de": "Relativpronomen",
+          "cefr_band": "anfaenger",
+          "translation_de": "der / die / das",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "had": {
+      "display_form": "had",
+      "meanings": [
+        {
+          "pos": "AUX",
+          "lemma": "have",
+          "sense_key": "have#hilfsverb",
+          "gloss_de": "Hilfsverb zur Bildung des Past Perfect (Vorvergangenheit)",
+          "form_kind": "past",
+          "form_label_de": "Hilfsverb, Vergangenheit",
+          "cefr_band": "anfaenger",
+          "translation_de": "hatte / war",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "have",
+          "sense_key": "have#besitzen_past",
+          "gloss_de": "besitzen oder innehaben (einfache Vergangenheit)",
+          "form_kind": "past",
+          "form_label_de": "Verb, Vergangenheit",
+          "cefr_band": "anfaenger",
+          "translation_de": "hatte",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "have",
+          "sense_key": "have#besitzen_partizip",
+          "gloss_de": "besitzen oder innehaben (Partizip Perfekt)",
+          "form_kind": "past_participle",
+          "form_label_de": "Verb, Partizip Perfekt",
+          "cefr_band": "anfaenger",
+          "translation_de": "gehabt",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "their": {
+      "display_form": "their",
+      "meanings": [
+        {
+          "pos": "PRON",
+          "lemma": "they",
+          "sense_key": "they#ihr_plural",
+          "gloss_de": "ihr (Possessivpronomen der 3. Person Plural: bezogen auf mehrere Personen oder Dinge)",
+          "form_kind": "other",
+          "form_label_de": "Possessivpronomen, 3. Person Plural",
+          "cefr_band": "anfaenger",
+          "translation_de": "ihr / ihre",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "they",
+          "sense_key": "they#ihr_singular",
+          "gloss_de": "sein/ihr (Possessivpronomen für eine Person unbestimmten oder nicht-binären Geschlechts)",
+          "form_kind": "other",
+          "form_label_de": "Possessivpronomen, singuläres they",
+          "cefr_band": "mittel",
+          "translation_de": "sein / ihr (geschlechtsneutral)",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "there": {
+      "display_form": "there",
+      "meanings": [
+        {
+          "pos": "PRON",
+          "lemma": "there",
+          "sense_key": "there#es_gibt",
+          "gloss_de": "als grammatisches Scheinsubjekt in Existenzsätzen (there is / there are)",
+          "form_kind": "base",
+          "form_label_de": "Pronomen, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "es (in: es gibt)",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "ADV",
+          "lemma": "there",
+          "sense_key": "there#dort",
+          "gloss_de": "an jenem Ort oder zu jenem Ort hin",
+          "form_kind": "base",
+          "form_label_de": "Adverb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "dort, dorthin",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "INTJ",
+          "lemma": "there",
+          "sense_key": "there#beruhigung",
+          "gloss_de": "Ausruf zum Trösten oder Beruhigen (z. B. there, there)",
+          "form_kind": "base",
+          "form_label_de": "Interjektion, Grundform",
+          "cefr_band": "mittel",
+          "translation_de": "so (beruhigend), nun",
+          "usage": "haupt",
+          "status": "excluded",
+          "exclude_reason": "cloze_ambiguous"
+        }
+      ]
+    },
+    "her": {
+      "display_form": "her",
+      "meanings": [
+        {
+          "pos": "DET",
+          "lemma": "her",
+          "sense_key": "her#ihr_possessiv",
+          "gloss_de": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)",
+          "form_kind": "base",
+          "form_label_de": "Possessivartikel",
+          "cefr_band": "anfaenger",
+          "translation_de": "ihr, ihre, ihres",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "she",
+          "sense_key": "she#sie_akkusativ",
+          "gloss_de": "sie (Personalpronomen: 3. Person Singular feminin im Akkusativ als direktes Objekt)",
+          "form_kind": "other",
+          "form_label_de": "Personalpronomen, Objektform (Akkusativ)",
+          "cefr_band": "anfaenger",
+          "translation_de": "sie",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "she",
+          "sense_key": "she#ihr_dativ",
+          "gloss_de": "ihr (Personalpronomen: 3. Person Singular feminin im Dativ als indirektes Objekt)",
+          "form_kind": "other",
+          "form_label_de": "Personalpronomen, Objektform (Dativ)",
+          "cefr_band": "anfaenger",
+          "translation_de": "ihr",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "which": {
+      "display_form": "which",
+      "meanings": [
+        {
+          "pos": "PRON",
+          "lemma": "which",
+          "sense_key": "which#relativpronomen",
+          "gloss_de": "Relativpronomen (bezieht sich auf Sachen oder Sachverhalte)",
+          "form_kind": "base",
+          "form_label_de": "Relativpronomen",
+          "cefr_band": "anfaenger",
+          "translation_de": "welche, welcher, welches; das",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "PRON",
+          "lemma": "which",
+          "sense_key": "which#fragepronomen",
+          "gloss_de": "Interrogativpronomen zur Auswahl aus einer begrenzten Menge",
+          "form_kind": "base",
+          "form_label_de": "Interrogativpronomen",
+          "cefr_band": "anfaenger",
+          "translation_de": "welche, welcher, welches",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "DET",
+          "lemma": "which",
+          "sense_key": "which#determiner_auswahl",
+          "gloss_de": "fragendes Begleitwort vor einem Nomen",
+          "form_kind": "base",
+          "form_label_de": "Artikelwort / Determinator",
+          "cefr_band": "anfaenger",
+          "translation_de": "welche, welcher, welches",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "time": {
+      "display_form": "time",
+      "meanings": [
+        {
+          "pos": "NOUN",
+          "lemma": "time",
+          "sense_key": "time#zeit",
+          "gloss_de": "Zeit (fortlaufende Dauer, Zeitpunkt oder Uhrzeit)",
+          "form_kind": "base",
+          "form_label_de": "Substantiv, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "Zeit",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "NOUN",
+          "lemma": "time",
+          "sense_key": "time#mal",
+          "gloss_de": "Mal (einzelner Anlass oder Vorkommnis)",
+          "form_kind": "base",
+          "form_label_de": "Substantiv, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "Mal",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "time",
+          "sense_key": "time#stoppen",
+          "gloss_de": "die Zeit messen oder stoppen",
+          "form_kind": "base",
+          "form_label_de": "Verb, Grundform",
+          "cefr_band": "mittel",
+          "translation_de": "die Zeit messen",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "time",
+          "sense_key": "time#zeitlich_abstimmen",
+          "gloss_de": "zeitlich planen oder terminieren",
+          "form_kind": "base",
+          "form_label_de": "Verb, Grundform",
+          "cefr_band": "mittel",
+          "translation_de": "zeitlich abstimmen",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "get": {
+      "display_form": "get",
+      "meanings": [
+        {
+          "pos": "VERB",
+          "lemma": "get",
+          "sense_key": "get#bekommen",
+          "gloss_de": "bekommen, erhalten oder besorgen",
+          "form_kind": "base",
+          "form_label_de": "Verb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "bekommen",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "get",
+          "sense_key": "get#werden",
+          "gloss_de": "einen Zustand erreichen (werden)",
+          "form_kind": "base",
+          "form_label_de": "Verb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "werden",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "get",
+          "sense_key": "get#gelangen",
+          "gloss_de": "an einen Ort gelangen oder ankommen",
+          "form_kind": "base",
+          "form_label_de": "Verb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "gelangen",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "get",
+          "sense_key": "get#verstehen",
+          "gloss_de": "umgangssprachlich: verstehen oder kapieren",
+          "form_kind": "base",
+          "form_label_de": "Verb, Grundform",
+          "cefr_band": "anfaenger",
+          "translation_de": "verstehen",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    },
+    "been": {
+      "display_form": "been",
+      "meanings": [
+        {
+          "pos": "AUX",
+          "lemma": "be",
+          "sense_key": "be#gewesen",
+          "gloss_de": "gewesen (Hilfsverb oder Kopulaverb im Perfekt/Plusquamperfekt)",
+          "form_kind": "past_participle",
+          "form_label_de": "Partizip Perfekt",
+          "cefr_band": "anfaenger",
+          "translation_de": "gewesen",
+          "usage": "haupt",
+          "status": "active"
+        },
+        {
+          "pos": "VERB",
+          "lemma": "be",
+          "sense_key": "be#besucht",
+          "gloss_de": "an einem Ort gewesen (besucht, hingereist)",
+          "form_kind": "past_participle",
+          "form_label_de": "Partizip Perfekt",
+          "cefr_band": "anfaenger",
+          "translation_de": "gewesen (an einem Ort / gereist)",
+          "usage": "haupt",
+          "status": "active"
+        }
+      ]
+    }
   }
 }

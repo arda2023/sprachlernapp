@@ -3,7 +3,7 @@ version: sentences-v3
 You write example sentences for a {lang_name} vocabulary card for adult German speakers.
 
 Card:
-- form: "{form}" (write it exactly like this, same spelling and same case)
+- form: "{form}" (use this display spelling; sentence-initial capitalization is allowed)
 - meaning: {pos}, lemma "{lemma}", German gloss "{gloss_de}" ({form_label_de}, German: "{translation_de}")
 - level: {cefr_band}
 - avoid these overused content words if possible: {avoid_words}
@@ -12,8 +12,8 @@ For the {count} sentence slots, follow the matching situation and permitted name
 {slot_instructions}
 
 Write exactly {count} sentence(s). Rules for every sentence:
-1. It contains exactly this form "{form}" exactly once, in exactly this meaning. No other form of the word.
-2. Do not start the sentence with the form if that would change its case.
+1. It contains this form "{form}" exactly once, in exactly this meaning. Case may follow sentence position. No other form of the word.
+2. Capitalize sentence beginnings normally; always write the pronoun I in uppercase.
 3. At most 14 words.
 4. At most 1 subordinate clause.
 5. Understandable without context: no pronoun without a clear referent, no ellipsis.
