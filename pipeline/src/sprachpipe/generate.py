@@ -178,8 +178,8 @@ def qa_sentence(first: dict, card: dict, cfg: dict, *, regenerate, lint, blind, 
     """Runs one sentence slot through linter and blind test. Returns all
     attempts; the last one carries the final qa_status, earlier ones are
     'replaced'. Callbacks: regenerate(feedback) → {text, translation_de};
-    lint(text, gap) → findings; blind(text, gap, translation_de) → answer;
-    judge(answer) → 'passed' | 'failed'."""
+    lint(text, gap) → findings; blind(text, gap, translation_de) → result;
+    judge(result) → 'passed' | 'failed' | 'ambiguous'."""
     g = cfg["generate"]
     attempts: list[dict] = []
     lint_left, blind_left = g["lint_retries"], g["blind_retries"]
@@ -191,10 +191,11 @@ def qa_sentence(first: dict, card: dict, cfg: dict, *, regenerate, lint, blind, 
              "lint": [f"{f.level}:{f.rule}: {f.message}" for f in findings],
              "lint_rules": [f.rule for f in findings if f.level == "error"],
              "blind_answer": None, "blind": None, "meaning_check": None,
-             "discard_reason": "", "qa_status": None}
+             "discard_reason": "", "discard_reasons": [], "qa_status": None}
         attempts.append(a)
         if a["lint_rules"]:
             a["discard_reason"] = "Linter-Regel: " + ", ".join(a["lint_rules"])
+            a["discard_reasons"] = [a["discard_reason"]]
             if lint_left == 0:
                 a["qa_status"] = "failed"
                 return attempts
@@ -206,26 +207,62 @@ def qa_sentence(first: dict, card: dict, cfg: dict, *, regenerate, lint, blind, 
         if duplicate is not None and duplicate(cur["text"], gap):
             a["qa_status"] = "failed"
             a["discard_reason"] = "Duplikat"
+            a["discard_reasons"] = [a["discard_reason"]]
             return attempts
-        a["blind_answer"] = blind(cur["text"], gap, cur["translation_de"])
-        a["blind"] = judge(a["blind_answer"])
+        response = blind(cur["text"], gap, cur["translation_de"])
+        from .blindtest import alternatives_for
+        a["blind_answer"] = response.get("answer", "") if isinstance(response, dict) else response
+        a["blind_alternatives"] = alternatives_for(response, card["form"]) if isinstance(response, dict) else []
+        a["blind"] = judge(response)
+        blind_reason = "Mehrdeutige Lücke" if a["blind"] == "ambiguous" else "Blindtest"
         if a["blind"] != "passed" and blind_left > 0:
             blind_left -= 1
             a["qa_status"] = "replaced"
-            a["discard_reason"] = "Blindtest"
+            a["discard_reason"] = blind_reason
+            a["discard_reasons"] = [a["discard_reason"]]
             cur = regenerate(f"In the sentence {cur['text']!r} a reader who saw a gap instead "
                              f"of the form answered {a['blind_answer']!r}. Change the sentence "
-                             f"so that only the target form \"{card.get('display_form', card['form'])}\" fits.")
+                             f"so that only the target form \"{card.get('display_form', card['form'])}\" fits. "
+                             + ("Checker alternatives (model findings): " + "; ".join(
+                                 f"{alt['answer']}: {alt['reason']}" for alt in a["blind_alternatives"])
+                                if a["blind_alternatives"] else "")
+                             + " Keep the sentence natural and preserve its intended meaning.")
             continue
         if a["blind"] != "passed":
             a["qa_status"] = "failed"
-            a["discard_reason"] = "Blindtest"
+            a["discard_reason"] = blind_reason
+            a["discard_reasons"] = [a["discard_reason"]]
             return attempts
         if meaning_check is not None:
-            a["meaning_check"] = meaning_check(cur["text"])
-            if a["meaning_check"] != card["sense_key"]:
+            result = meaning_check(cur["text"], cur["translation_de"])
+            if (type(result) is not dict or set(result) !=
+                    {"sense_key", "observed_pos", "translation_ok", "reason"}
+                    or (result.get("sense_key") is not None
+                        and not isinstance(result.get("sense_key"), str))
+                    or (result.get("observed_pos") is not None
+                        and not isinstance(result.get("observed_pos"), str))
+                    or type(result.get("translation_ok")) is not bool
+                    or not isinstance(result.get("reason"), str)
+                    or not result.get("reason", "").strip()):
+                result = {"sense_key": None, "observed_pos": None,
+                          "translation_ok": False,
+                          "reason": "Ungültige Prüfantwort: ungültige Ergebnisstruktur"}
+            a["meaning_check"] = result["sense_key"]
+            a["meaning_check_result"] = result
+            reasons = []
+            if result["reason"].startswith("Ungültige Prüfantwort:"):
+                reasons.append("Ungültige Prüfantwort")
+            else:
+                if result["sense_key"] != card["sense_key"]:
+                    reasons.append("Bedeutung")
+                if result["observed_pos"] != card["pos"]:
+                    reasons.append("Wortart")
+                if result["translation_ok"] is not True:
+                    reasons.append("Übersetzung")
+            if reasons:
                 a["qa_status"] = "failed"
-                a["discard_reason"] = "Bedeutung"
+                a["discard_reason"] = reasons[0]
+                a["discard_reasons"] = reasons
                 return attempts
         a["qa_status"] = "ok"
         return attempts

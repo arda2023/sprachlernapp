@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import csv
+import json
 from collections import Counter
 from pathlib import Path
 
 REVIEW_COLUMNS = ["Form", "Bedeutung", "Satz", "Übersetzung", "Linter-Befunde",
                   "Blindtest-Ergebnis", "qa_status", "Modellantwort bei Abweichung",
-                  "bedeutung_check", "verworfen_grund"]
+                  "bedeutung_check", "Prüfwortart", "Übersetzungsprüfung",
+                  "Prüfbegründung", "verworfen_grund", "Blindtest-Alternativen (Modellbefund)"]
 
 
 def review_rows(cards: list[dict]) -> list[dict]:
@@ -17,6 +19,9 @@ def review_rows(cards: list[dict]) -> list[dict]:
     for card in cards:
         for slot in card["slots"]:
             for a in slot:
+                checked = a.get("meaning_check_result") or {}
+                reasons = a.get("discard_reasons") or ([a["discard_reason"]]
+                                                         if a.get("discard_reason") else [])
                 rows.append({
                     "Form": card["form"],
                     "Bedeutung": f"{card['sense_key']} ({card['gloss_de']})",
@@ -26,9 +31,14 @@ def review_rows(cards: list[dict]) -> list[dict]:
                     "Blindtest-Ergebnis": a["blind"] or "",
                     "qa_status": a["qa_status"],
                     "Modellantwort bei Abweichung":
-                        a["blind_answer"] if a["discard_reason"] == "Blindtest" else "",
+                        a["blind_answer"] if a["discard_reason"] in ("Blindtest", "Mehrdeutige Lücke") else "",
+                    "Blindtest-Alternativen (Modellbefund)": json.dumps(a.get("blind_alternatives", []), ensure_ascii=False),
                     "bedeutung_check": a.get("meaning_check") or "",
-                    "verworfen_grund": a.get("discard_reason") or "",
+                    "Prüfwortart": checked.get("observed_pos") or "",
+                    "Übersetzungsprüfung": ("ok" if checked.get("translation_ok") is True else
+                                           "fehlerhaft" if checked.get("translation_ok") is False else ""),
+                    "Prüfbegründung": checked.get("reason") or "",
+                    "verworfen_grund": "; ".join(reasons),
                 })
     return rows
 
@@ -61,7 +71,11 @@ def write_run_report(path: str | Path, *, cards: list[dict], skipped: list[str],
     rule_fail = Counter(r for a in attempts for r in a["lint_rules"])
     blinded = [a for a in attempts if a["blind"]]
     blind = Counter(a["blind"] for a in blinded)
-    discarded = Counter(a["discard_reason"] for a in attempts if a.get("discard_reason"))
+    discarded = Counter()
+    for attempt in attempts:
+        for reason in (attempt.get("discard_reasons") or
+                       ([attempt["discard_reason"]] if attempt.get("discard_reason") else [])):
+            discarded[reason] += 1
     from .quality import overused_lemmas
     overused = overused_lemmas(cards)
     rows = _ledger_rows(Path(ledger))
@@ -90,6 +104,7 @@ def write_run_report(path: str | Path, *, cards: list[dict], skipped: list[str],
         "",
         f"- Formen: {info.get('n_forms', 0)}, übersprungen: {len(skipped)}",
         f"- Karten (Form + Bedeutung): {len(cards)}, im Pack: {packed_cards}",
+        f"- Nicht im Pack: {len(cards) - packed_cards}; Pack-Anteil: {pct(packed_cards, len(cards))}",
         f"- Satzkandidaten: {len(finals)} (ok {status['ok']}, failed {status['failed']}, "
         f"ungenutzt {status['unused']}); "
         f"Satzversuche insgesamt: {len(attempts)}",
@@ -104,7 +119,8 @@ def write_run_report(path: str | Path, *, cards: list[dict], skipped: list[str],
     lines += [f"| Blindtest failed | {pct(blind['failed'], len(blinded))} |",
               "", "## Verworfene Sätze je Grund", "",
               "| Grund | Anzahl |", "|---|---:|"]
-    for reason in ("Linter-Regel", "Blindtest", "Bedeutung", "Duplikat"):
+    for reason in ("Linter-Regel", "Blindtest", "Mehrdeutige Lücke", "Bedeutung", "Wortart", "Übersetzung",
+                   "Ungültige Prüfantwort", "Duplikat"):
         n = sum(v for k, v in discarded.items() if k == reason or k.startswith(reason + ":"))
         lines.append(f"| {reason} | {n} |")
     lines += ["", "## Warnungen", ""]
@@ -135,12 +151,17 @@ def write_run_report(path: str | Path, *, cards: list[dict], skipped: list[str],
         lines.append(f"- {card['form']} ({card['sense_key']}): "
                      f"{len(card['accepted'])}/3 angenommene Sätze")
         discarded_attempts = [a for slot in card["slots"] for a in slot
-                              if a.get("discard_reason")]
+                              if a.get("discard_reason") or a.get("discard_reasons")]
         if not discarded_attempts:
             lines.append("  - keine Verwerfungen protokolliert (Abbruch oder Pack-Kollision)")
         for a in discarded_attempts:
             answer = (f"; Blindtest-Antwort: {a['blind_answer']}"
                       if a.get("blind_answer") is not None else "")
-            lines.append(f"  - {a['discard_reason']}{answer}; Satz: {a['text']}")
+            reasons = a.get("discard_reasons") or [a["discard_reason"]]
+            detail = (f"; Prüfung: {a['meaning_check_result']['reason']}"
+                      if a.get("meaning_check_result") else "")
+            alternatives = ("; Alternativen (Modellbefund): " + json.dumps(a["blind_alternatives"], ensure_ascii=False)
+                            if a.get("blind_alternatives") else "")
+            lines.append(f"  - {', '.join(reasons)}{answer}{detail}{alternatives}; Satz: {a['text']}")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return path

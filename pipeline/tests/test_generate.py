@@ -66,11 +66,14 @@ class FakeVertex(llm_mod.Llm):
                                "gloss_de": "x"} for i, s in toks]}
         elif key == "sense_key":
             text = re.search(r"^Sentence: (.+)$", prompt, flags=re.M).group(1)
-            out = {"sense_key": self.senses.get(text, WENT["sense_key"])}
+            out = {"sense_key": self.senses.get(text, WENT["sense_key"]),
+                   "observed_pos": WENT["pos"], "translation_ok": True,
+                   "reason": "Die Übersetzung entspricht der Bedeutung."}
         else:
             match = re.search(r"^Sentence: (.+)$", prompt, flags=re.M)
             text = match.group(1) if match else ""
-            out = {"answer": self.answers.get(text, "went")}
+            answer = self.answers.get(text, "went")
+            out = answer if isinstance(answer, dict) else {"answer": answer, "alternatives": []}
         return json.dumps(out), self.usage
 
 
@@ -106,6 +109,9 @@ def test_five_candidates_pack_only_ok(cfg, tmp_path):
     assert len(pack["card_sentences"]) == 3
     assert len(pack["deck_cards"]) == 1
     assert pack["decks"][0]["slug"] == "allgemeine-sprache"
+    assert all(s["qa_report"]["meaning_check_result"]["translation_ok"]
+               and s["qa_report"]["meaning_check_result"]["observed_pos"] == "VERB"
+               for s in pack["sentences"])
     texts = {s["ref"]: s for s in pack["sentences"]}
     for cs in pack["card_sentences"]:
         sn = texts[cs["sentence"]]
@@ -252,17 +258,24 @@ def test_same_first_word_is_duplicate():
 def test_meaning_check_rejects_left_keys(cfg):
     class Fake:
         def generate_json(self, prompt, schema, **kwargs):
-            assert "left#verlassen: verlassen (einen Ort verlassen)" in prompt
-            assert "left#zuruecklassen: zurücklassen (etwas liegen lassen)" in prompt
-            return {"sense_key": "left#zuruecklassen"}
-    meanings = [{"sense_key": "left#verlassen", "gloss_de": "verlassen (einen Ort verlassen)"},
-                {"sense_key": "left#zuruecklassen", "gloss_de": "zurücklassen (etwas liegen lassen)"}]
-    answer = check_meaning(Fake(), cfg, "Tom left his keys.", "left", meanings)
+            assert "left#verlassen: POS=VERB" in prompt
+            assert "left#zuruecklassen: POS=VERB" in prompt
+            assert "German translation: Tom ließ seine Schlüssel liegen." in prompt
+            return {"sense_key": "left#zuruecklassen", "observed_pos": "VERB",
+                    "translation_ok": True, "reason": "Die Schlüssel wurden zurückgelassen."}
+    meanings = [{"sense_key": "left#verlassen", "pos": "VERB", "form_kind": "past",
+                 "form_label_de": "Verb, Vergangenheit",
+                 "gloss_de": "verlassen (einen Ort verlassen)"},
+                {"sense_key": "left#zuruecklassen", "pos": "VERB", "form_kind": "past",
+                 "form_label_de": "Verb, Vergangenheit",
+                 "gloss_de": "zurücklassen (etwas liegen lassen)"}]
+    answer = check_meaning(Fake(), cfg, "Tom left his keys.", "left", meanings,
+                           "Tom ließ seine Schlüssel liegen.")
     attempts = qa_sentence({"text": "Tom left his keys.", "translation_de": "Tom ließ seine Schlüssel liegen."},
-                           {"form": "left", "sense_key": "left#verlassen"}, cfg,
+                           {"form": "left", "sense_key": "left#verlassen", "pos": "VERB"}, cfg,
                            regenerate=lambda fb: pytest.fail("meaning mismatch must be discarded"),
                            lint=lambda *a: [], blind=lambda *a: "left", judge=lambda a: "passed",
-                           meaning_check=lambda text: answer)
+                           meaning_check=lambda text, translation: answer)
     assert attempts[-1]["qa_status"] == "failed"
     assert attempts[-1]["discard_reason"] == "Bedeutung"
 
@@ -284,3 +297,40 @@ def test_review_csv_and_report(cfg, tmp_path):
     report = (tmp_path / "run_report.md").read_text(encoding="utf-8")
     assert "## Verworfene Sätze je Grund" in report
     assert "i+1-Verstöße" in report
+
+
+def test_ambiguous_retry_findings_in_csv_report_and_pack(cfg, tmp_path):
+    alternatives = [{"answer": "walked", "reason": "Model considers walking equivalent here."}]
+    llm = FakeVertex(cfg, tmp_path / "ledger.csv", 1.0,
+                     answers={SENTENCES[0].replace("went", "___"):
+                              {"answer": "went", "alternatives": alternatives}})
+    aborted, pack = run(cfg, tmp_path, llm)
+    assert aborted is None and len(pack["cards"]) == 1
+    assert llm.calls.count("answer") == 4
+    assert llm.calls.count("sentences") == 2
+    assert all(cs["accepted"] == ["went"] for cs in pack["card_sentences"])
+    rows = list(csv.DictReader(open(tmp_path / "review.csv", encoding="utf-8-sig")))
+    rejected = next(r for r in rows if r["verworfen_grund"] == "Mehrdeutige Lücke")
+    assert rejected["qa_status"] == "replaced"
+    assert json.loads(rejected["Blindtest-Alternativen (Modellbefund)"]) == alternatives
+    report = (tmp_path / "run_report.md").read_text(encoding="utf-8")
+    assert "| Mehrdeutige Lücke | 1 |" in report
+    assert "blindtest-v2" in report
+    histories = [a for s in pack["sentences"] for a in s["qa_report"]["blind_attempts"]]
+    assert any(a["alternatives"] == alternatives and a["discard_reason"] == "Mehrdeutige Lücke" for a in histories)
+    assert all(s["qa_report"]["blind_alternatives"] == [] for s in pack["sentences"])
+
+
+def test_only_ambiguous_candidates_leave_card_out_and_count_every_attempt(cfg, tmp_path):
+    answers = {text.replace("went", "___"): {"answer": "went", "alternatives": [
+        {"answer": "walked", "reason": "Same meaning according to checker."}]} for text in SENTENCES}
+    llm = FakeVertex(cfg, tmp_path / "ledger.csv", 1.0, sentences=SENTENCES * 3, answers=answers)
+    aborted, pack = run(cfg, tmp_path, llm)
+    assert aborted is None and pack["cards"] == []
+    assert llm.calls.count("answer") == 22  # eleven candidates, one retry each
+    assert llm.calls.count("sense_key") == 0
+    report = (tmp_path / "run_report.md").read_text(encoding="utf-8")
+    assert "| Mehrdeutige Lücke | 22 |" in report
+    assert "Nicht im Pack: 1; Pack-Anteil: 0/1 (0 %)" in report
+    assert report.count("Alternativen (Modellbefund):") == 22
+    assert "Same meaning according to checker." in report

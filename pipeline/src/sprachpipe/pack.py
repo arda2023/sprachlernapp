@@ -229,8 +229,18 @@ def assemble_pack(lang: str, cards: list[dict], *, model: str, version: str) -> 
                 "origins": ["deck"], "model": model, "qa_status": a["qa_status"],
                 "qa_report": {"lint": a["lint"], "blind": a["blind"],
                               "blind_answer": a["blind_answer"],
+                              "blind_alternatives": a.get("blind_alternatives", []),
+                              "blind_attempts": [
+                                  {"text": item["text"], "answer": item.get("blind_answer"),
+                                   "alternatives": item.get("blind_alternatives", []),
+                                   "discard_reason": item.get("discard_reason", "")}
+                                  for slot in card["slots"] if any(item is a for item in slot)
+                                  for item in slot if item.get("blind")],
                               "annotate": a.get("annotate_problems", []),
                               "meaning_check": a.get("meaning_check"),
+                              "meaning_check_result": a.get("meaning_check_result"),
+                              "discard_reason": a.get("discard_reason", ""),
+                              "discard_reasons": a.get("discard_reasons", []),
                               "attempts": next(len(slot) for slot in card["slots"]
                                                if any(item is a for item in slot))}})
             pack["card_sentences"].append({

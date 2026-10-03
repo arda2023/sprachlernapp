@@ -48,9 +48,10 @@ class ParallelFake(Llm):
                 result = {"sentences": [{"text": f"{name} {form} home after work.",
                                           "translation_de": "Deutsch."} for name in names[:n]]}
             elif key == "answer":
-                result = {"answer": "went" if "gehen" in prompt else "left"}
+                result = {"answer": "went" if "gehen" in prompt else "left", "alternatives": []}
             elif key == "sense_key":
-                result = {"sense_key": "go#gehen" if "go#gehen" in prompt else "leave#verlassen"}
+                result = {"sense_key": "go#gehen" if "go#gehen" in prompt else "leave#verlassen",
+                          "observed_pos": "VERB", "translation_ok": True, "reason": "Passt."}
             else:
                 raise AssertionError(key)
             return json.dumps(result), (100, 50, 0)
@@ -75,7 +76,20 @@ def test_same_pack_with_concurrency_one_and_eight(tmp_path):
                                folder / "pack.json", folder, max_usd=1.0, label="test",
                                inventory_path=inventory_path)
         assert aborted is None
-        outputs.append(json.loads((folder / "pack.json").read_text(encoding="utf-8")))
+        pack = json.loads((folder / "pack.json").read_text(encoding="utf-8"))
+        assert len(pack["cards"]) == 2
+        senses = {s["ref"]: s["sense_key"] for s in pack["senses"]}
+        assert {(c["form"], senses[c["sense"]]) for c in pack["cards"]} == {
+            ("went", "go#gehen"), ("left", "leave#verlassen")}
+        assert len(pack["sentences"]) == 6
+        assert all(s["qa_status"] == "ok" for s in pack["sentences"])
+        sentence_refs = {s["ref"] for s in pack["sentences"]}
+        for card in pack["cards"]:
+            assigned = [s["sentence"] for s in pack["card_sentences"] if s["card"] == card["ref"]]
+            assert len(assigned) == len(set(assigned)) == 3
+            assert set(assigned) <= sentence_refs
+        print(f"concurrency={concurrency}: cards=2 sentences=6 per_card=3 qa_status=ok")
+        outputs.append(pack)
         active.append(fake.max_active)
         assert "forms 2/2" in (folder / "progress.txt").read_text(encoding="ascii")
     assert outputs[0] == outputs[1]

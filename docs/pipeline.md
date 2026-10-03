@@ -148,6 +148,12 @@ macOS Terminal, im Ordner `pipeline`:
 cat out/progress.txt
 ```
 
+### Bedeutungs-, Wortart- und Übersetzungsprüfung
+
+`meaning-check-v2` erweitert den bestehenden Bedeutungs-Check in demselben Aufruf: Er erhält alle Kandidaten mit `sense_key`, Glosse, POS und Formbeschreibung sowie `translation_de`. Ein Satz besteht diese Prüfung nur, wenn Bedeutung und kontextuelle Wortart zur Karte passen und `translation_ok` wahr ist. Unklare `null`-Werte, unbekannte Schlüssel und unvollständige Antworten werden verworfen; die Gründe Bedeutung, Wortart, Übersetzung und ungültige Prüfantwort werden getrennt gezählt und in Review-Ausgabe sowie `qa_report` festgehalten. Es gibt keine zusätzliche Retry-Schleife.
+
+`sentences-v4` fordert Übersetzungen an, die insbesondere Zeit/Tempus, Negation, Handelnde und Modalität erhalten, und erlaubt idiomatische sinngleiche Formulierungen. Die Offline-Tests prüfen Promptaufbau und Verarbeitung, nicht die Urteilsqualität des Live-Modells. Eine Live-Validierung ist ausstehend.
+
 ## KI-Zugang: Vertex AI
 
 - Projekt `sprachlernapp-510508`, Region `global`.
@@ -184,7 +190,12 @@ Jeder Schritt ist wiederholbar und schreibt nur über stabile IDs (`docs/content
 ## QA-Regeln
 
 - **Linter** (automatisch, jeder Satz): höchstens 14 Wörter und 1 Nebensatz; Lücken-Offsets treffen genau die Form. i+1 wird nach den Zipf-Mindestwerten aus 3d nur als Warnung ausgegeben.
-- **Blindtest**: Ein zweites Modell bekommt den Satz mit Lücke ohne Lösung und muss die exakte Form liefern. Bei Abweichung wird der Satz einmal neu erzeugt; danach gilt er als `failed`.
+- **Blindtest (`blindtest-v2`)**: Ein zweites Modell bekommt ausschließlich Lückensatz, deutsche Satzübersetzung und Glosse. Ein Aufruf liefert die Hauptantwort und höchstens drei begründete Alternativen, auch Mehrwortlösungen. Eine ähnliche, aber abweichende Bedeutung genügt nicht; die leere Alternativenliste ist erlaubt.
+- Hauptantwort und Alternativen werden wie bisher an Randzeichen und Groß-/Kleinschreibung normalisiert. Varianten der Zielform zählen nicht als Alternative, doppelte Alternativen werden zusammengefasst. Ungültige Antwortstrukturen bestehen nicht. Jede verbleibende Alternative führt zu **Mehrdeutige Lücke**; sonst muss die Hauptantwort der Zielform entsprechen.
+- Falsche Hauptantworten und Mehrdeutigkeit teilen den bestehenden Blindtest-Retry (ein Neuversuch). Alternativen samt Begründung dienen als Feedback; Sätze müssen natürlich bleiben. `accepted[]` enthält weiterhin ausschließlich die Zielform. Keine automatischen Bedeutungsausschlüsse oder gelockerten Qualitätsschranken.
+- Versuchsdaten und Review-CSV speichern Alternativen als **Modellbefund**. `qa_report.blind_alternatives` enthält den aktuellen Befund; `blind_attempts` bewahrt auch die ersetzten Blindtest-Versuche desselben Satzslots. Bestehende Felder bleiben erhalten; bei alten Daten fehlen die neuen Felder und werden als leer behandelt.
+- Der Bericht zählt **Mehrdeutige Lücke** über alle Versuche, einschließlich ersetzter und verworfener. Pack-Anteil und Zahl fehlender Karten machen den Verlust vollständiger Karten sichtbar; es wird kein unbelegter Vergleich mit einem früheren Lauf behauptet.
+- Die Alternativensuche ist eine **Heuristik, keine Eindeutigkeitsgarantie**. Offline-Tests mit simulierten Antworten belegen Verarbeitung und Retry-Grenzen, keine Live-Qualität. Live-Smoke bleibt ausstehend und wird von Arda gestartet.
 - **Stichprobe**: 5 % der Sätze je Lauf werden von Hand geprüft.
 
 ## Kosten

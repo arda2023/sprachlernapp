@@ -1,4 +1,4 @@
-version: sentences-v3
+version: sentences-v4
 
 You write example sentences for a {lang_name} vocabulary card for adult German speakers.
 
@@ -22,5 +22,5 @@ Write exactly {count} sentence(s). Rules for every sentence:
 8. The context makes the form guessable: a learner who sees the sentence with a gap, the German translation and the gloss can name exactly this form (e.g. a time word that fixes the tense).
 9. Use a different first word for every sentence, ignoring case. Vary sentence patterns: mix statements, questions, requests, and negation where natural. Make the situations distinct.
 10. Ends with . ? or !  No digits.
-translation_de: natural German translation, not word for word.
+translation_de: idiomatic German that preserves the sentence meaning, including time/tense, negation, who does what, and modality. Do not add a time-of-day meaning for "early" when the English means "before expected". Natural phrasing is welcome; changing meaning is not.
 {feedback}

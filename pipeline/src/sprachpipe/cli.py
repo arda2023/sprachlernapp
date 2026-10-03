@@ -117,8 +117,8 @@ def _process_card(llm, cfg, card, found, avoid_words):
                 max_subclauses=lc["max_subclauses"]),
             blind=lambda text, gap, tr: ask(llm, cfg, text, gap, tr, card["gloss_de"]),
             judge=lambda ans: judge(ans, card["form"], [card["form"]], card["lemma"], None, None),
-            meaning_check=lambda text: check_meaning(llm, cfg, text,
-                         card["display_form"], found),
+            meaning_check=lambda text, translation: check_meaning(
+                llm, cfg, text, card["display_form"], found, translation),
             duplicate=lambda text, gap: duplicate(text, gap, card["accepted"]))
         card["slots"].append(slot)
         final = slot[-1]
@@ -137,7 +137,7 @@ def _process_card(llm, cfg, card, found, avoid_words):
                     "text": first["text"], "translation_de": first["translation_de"],
                     "gap": None, "lint": [], "lint_rules": [], "blind": None,
                     "blind_answer": None, "meaning_check": None,
-                    "discard_reason": "", "qa_status": "unused"}])
+                    "discard_reason": "", "discard_reasons": [], "qa_status": "unused"}])
                 continue
             context = contexts[i]
             def regenerate(feedback, context=context):

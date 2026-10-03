@@ -25,7 +25,7 @@
           "form_label_de": "Verb, Vergangenheit",
           "cefr_band": "mittel",
           "translation_de": "wurde",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -54,7 +54,7 @@
           "form_label_de": "Adjektiv, prädikativ",
           "cefr_band": "anfaenger",
           "translation_de": "übrig",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         },
         {
@@ -160,7 +160,7 @@
           "form_label_de": "Prädikatives Adjektiv",
           "cefr_band": "anfaenger",
           "translation_de": "auf, wach",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -283,7 +283,7 @@
           "form_label_de": "Präposition",
           "cefr_band": "anfaenger",
           "translation_de": "bis, vor",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -312,7 +312,7 @@
           "form_label_de": "Konjunktion, Grundform",
           "cefr_band": "mittel",
           "translation_de": "und / um zu",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -353,7 +353,7 @@
           "form_label_de": "Präposition",
           "cefr_band": "anfaenger",
           "translation_de": "aus",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         },
         {
@@ -394,7 +394,7 @@
           "form_label_de": "Präposition",
           "cefr_band": "anfaenger",
           "translation_de": "pro, je",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         },
         {
@@ -406,8 +406,9 @@
           "form_label_de": "Substantiv, Einzahl",
           "cefr_band": "anfaenger",
           "translation_de": "A (Buchstabe / Note)",
-          "usage": "haupt",
-          "status": "active"
+          "usage": "selten",
+          "status": "excluded",
+          "exclude_reason": "selten"
         }
       ]
     },
@@ -447,7 +448,7 @@
           "form_label_de": "Adverb",
           "cefr_band": "anfaenger",
           "translation_de": "drinnen, herein, hinein",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         },
         {
@@ -459,8 +460,9 @@
           "form_label_de": "Adjektiv, Grundform",
           "cefr_band": "mittel",
           "translation_de": "in, angesagt, modern",
-          "usage": "haupt",
-          "status": "active"
+          "usage": "selten",
+          "status": "excluded",
+          "exclude_reason": "selten"
         }
       ]
     },
@@ -546,7 +548,7 @@
           "form_label_de": "Konjunktion",
           "cefr_band": "mittel",
           "translation_de": "denn",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -587,7 +589,7 @@
           "form_label_de": "Determinator",
           "cefr_band": "anfaenger",
           "translation_de": "jener / jene / jenes / dieser / diese / dieses",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         },
         {
@@ -599,7 +601,7 @@
           "form_label_de": "Adverb",
           "cefr_band": "mittel",
           "translation_de": "so / dermaßen",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -628,7 +630,7 @@
           "form_label_de": "Pronomen, Grundform",
           "cefr_band": "anfaenger",
           "translation_de": "man",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -763,7 +765,7 @@
           "form_label_de": "Präposition",
           "cefr_band": "anfaenger",
           "translation_de": "bei",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -804,7 +806,7 @@
           "form_label_de": "Adverb, Grundform",
           "cefr_band": "mittel",
           "translation_de": "so / dermaßen",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "excluded",
           "exclude_reason": "cloze_ambiguous"
         }
@@ -1010,7 +1012,7 @@
           "form_label_de": "Grundform / Präsens",
           "cefr_band": "anfaenger",
           "translation_de": "einnehmen, trinken, essen",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -1063,7 +1065,7 @@
           "form_label_de": "Präposition",
           "cefr_band": "anfaenger",
           "translation_de": "bei, in",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -1203,7 +1205,7 @@
           "form_label_de": "Adverb",
           "cefr_band": "fortgeschritten",
           "translation_de": "nur, lediglich",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -1244,7 +1246,7 @@
           "form_label_de": "Präposition",
           "cefr_band": "mittel",
           "translation_de": "vor, aus, an",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -1273,8 +1275,9 @@
           "form_label_de": "Interjektion",
           "cefr_band": "mittel",
           "translation_de": "meine Güte, oje",
-          "usage": "haupt",
-          "status": "active"
+          "usage": "selten",
+          "status": "excluded",
+          "exclude_reason": "selten"
         }
       ]
     },
@@ -1302,7 +1305,7 @@
           "form_label_de": "Konjunktion",
           "cefr_band": "mittel",
           "translation_de": "sonst",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -1389,8 +1392,9 @@
           "form_label_de": "Possessivbegleiter, verallgemeinernd",
           "cefr_band": "mittel",
           "translation_de": "sein, manch",
-          "usage": "haupt",
-          "status": "active"
+          "usage": "selten",
+          "status": "excluded",
+          "exclude_reason": "selten"
         }
       ]
     },
@@ -1430,7 +1434,7 @@
           "form_label_de": "Adverb",
           "cefr_band": "anfaenger",
           "translation_de": "ganz, völlig",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -1471,7 +1475,7 @@
           "form_label_de": "Adverb, Grundform",
           "cefr_band": "anfaenger",
           "translation_de": "auch / ebenso",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         },
         {
@@ -1541,7 +1545,7 @@
           "form_label_de": "Pronomen, Subjektform",
           "cefr_band": "anfaenger",
           "translation_de": "man",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         },
         {
@@ -1553,7 +1557,7 @@
           "form_label_de": "Pronomen, Subjektform (Singular)",
           "cefr_band": "mittel",
           "translation_de": "er/sie (geschlechtsneutral)",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -1623,8 +1627,9 @@
           "form_label_de": "Substantiv, Singular",
           "cefr_band": "mittel",
           "translation_de": "Wenn",
-          "usage": "haupt",
-          "status": "active"
+          "usage": "selten",
+          "status": "excluded",
+          "exclude_reason": "selten"
         }
       ]
     },
@@ -1664,8 +1669,9 @@
           "form_label_de": "Verb, Grundform",
           "cefr_band": "fortgeschritten",
           "translation_de": "einkochen / eindosen",
-          "usage": "haupt",
-          "status": "active"
+          "usage": "selten",
+          "status": "excluded",
+          "exclude_reason": "selten"
         }
       ]
     },
@@ -1705,7 +1711,7 @@
           "form_label_de": "Substantiv, Singular",
           "cefr_band": "mittel",
           "translation_de": "Testament",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         },
         {
@@ -1717,8 +1723,9 @@
           "form_label_de": "Vollverb, Grundform",
           "cefr_band": "fortgeschritten",
           "translation_de": "wollen",
-          "usage": "haupt",
-          "status": "active"
+          "usage": "selten",
+          "status": "excluded",
+          "exclude_reason": "selten"
         }
       ]
     },
@@ -1770,7 +1777,7 @@
           "form_label_de": "Adjektiv, Grundform",
           "cefr_band": "mittel",
           "translation_de": "gerecht, fair",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -1811,7 +1818,7 @@
           "form_label_de": "Konjunktion",
           "cefr_band": "mittel",
           "translation_de": "wie / als ob",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "excluded",
           "exclude_reason": "cloze_ambiguous"
         },
@@ -1824,7 +1831,7 @@
           "form_label_de": "Adverb",
           "cefr_band": "mittel",
           "translation_de": "quasi / sozusagen",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -1853,7 +1860,7 @@
           "form_label_de": "Adjektiv, Grundform",
           "cefr_band": "anfaenger",
           "translation_de": "aus / nicht da / unterwegs",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         },
         {
@@ -1865,7 +1872,7 @@
           "form_label_de": "Adjektiv, Grundform",
           "cefr_band": "anfaenger",
           "translation_de": "aus / erloschen",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         },
         {
@@ -1930,7 +1937,7 @@
           "form_label_de": "Interjektion",
           "cefr_band": "anfaenger",
           "translation_de": "was?! / wie bitte?!",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "excluded",
           "exclude_reason": "cloze_ambiguous"
         }
@@ -2013,7 +2020,7 @@
           "form_label_de": "Relativadverb",
           "cefr_band": "mittel",
           "translation_de": "an dem / in dem",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -2095,7 +2102,7 @@
           "form_label_de": "Verb, Grundform",
           "cefr_band": "anfaenger",
           "translation_de": "tun, machen",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         },
         {
@@ -2107,7 +2114,7 @@
           "form_label_de": "Verb, Grundform",
           "cefr_band": "mittel",
           "translation_de": "genügen, ausreichen",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -2148,7 +2155,7 @@
           "form_label_de": "Adverb",
           "cefr_band": "mittel",
           "translation_de": "nicht / keineswegs",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         },
         {
@@ -2160,7 +2167,7 @@
           "form_label_de": "Substantiv, Grundform",
           "cefr_band": "mittel",
           "translation_de": "Nein / Gegenstimme",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -2259,7 +2266,7 @@
           "form_label_de": "Verb, Partizip Perfekt",
           "cefr_band": "anfaenger",
           "translation_de": "gehabt",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -2288,8 +2295,9 @@
           "form_label_de": "Possessivpronomen, singuläres they",
           "cefr_band": "mittel",
           "translation_de": "sein / ihr (geschlechtsneutral)",
-          "usage": "haupt",
-          "status": "active"
+          "usage": "selten",
+          "status": "excluded",
+          "exclude_reason": "selten"
         }
       ]
     },
@@ -2329,7 +2337,7 @@
           "form_label_de": "Interjektion, Grundform",
           "cefr_band": "mittel",
           "translation_de": "so (beruhigend), nun",
-          "usage": "haupt",
+          "usage": "selten",
           "status": "excluded",
           "exclude_reason": "cloze_ambiguous"
         }
@@ -2453,7 +2461,7 @@
           "form_label_de": "Verb, Grundform",
           "cefr_band": "mittel",
           "translation_de": "die Zeit messen",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         },
         {
@@ -2465,7 +2473,7 @@
           "form_label_de": "Verb, Grundform",
           "cefr_band": "mittel",
           "translation_de": "zeitlich abstimmen",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -2506,7 +2514,7 @@
           "form_label_de": "Verb, Grundform",
           "cefr_band": "anfaenger",
           "translation_de": "gelangen",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         },
         {
@@ -2518,7 +2526,7 @@
           "form_label_de": "Verb, Grundform",
           "cefr_band": "anfaenger",
           "translation_de": "verstehen",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
@@ -2547,7 +2555,7 @@
           "form_label_de": "Partizip Perfekt",
           "cefr_band": "anfaenger",
           "translation_de": "gewesen (an einem Ort / gereist)",
-          "usage": "haupt",
+          "usage": "neben",
           "status": "active"
         }
       ]
