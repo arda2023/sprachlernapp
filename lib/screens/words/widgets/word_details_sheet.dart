@@ -5,7 +5,11 @@ import 'package:flutter/material.dart'
 import '../../../domain/leitner.dart';
 import '../../../models/speech_playback.dart';
 import '../../../models/word_list_models.dart';
-import '../../../models/word_list_store.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../presentation/providers/learning_providers.dart';
+import '../../../presentation/content_unavailable_view.dart';
 import '../../../theme/app_theme.dart';
 import 'memory_level_indicator.dart';
 import 'playback_highlight.dart';
@@ -13,25 +17,22 @@ import 'playback_highlight.dart';
 /// Everything about one word: level, headword (read aloud on tap), word
 /// class, translation, review metadata, the example sentence with its
 /// translation, and the learner's own notes.
-class WordDetailsSheet extends StatefulWidget {
+class WordDetailsSheet extends ConsumerStatefulWidget {
   const WordDetailsSheet({
     super.key,
-    required this.store,
+    required this.initialWord,
     required this.playback,
-    required this.wordId,
     required this.now,
   });
 
-  final WordListStore store;
+  final VocabWord initialWord;
   final SpeechPlayback playback;
-  final String wordId;
   final DateTime now;
 
   static Future<void> show(
     BuildContext context, {
-    required WordListStore store,
+    required VocabWord initialWord,
     required SpeechPlayback playback,
-    required String wordId,
     required DateTime now,
   }) => showModalBottomSheet<void>(
     context: context,
@@ -39,21 +40,32 @@ class WordDetailsSheet extends StatefulWidget {
     isScrollControlled: true,
     useSafeArea: true,
     builder: (_) => WordDetailsSheet(
-      store: store,
+      initialWord: initialWord,
       playback: playback,
-      wordId: wordId,
       now: now,
     ),
   );
 
   @override
-  State<WordDetailsSheet> createState() => _WordDetailsSheetState();
+  ConsumerState<WordDetailsSheet> createState() => _WordDetailsSheetState();
 }
 
-class _WordDetailsSheetState extends State<WordDetailsSheet> {
-  late final _note = TextEditingController(
-    text: widget.store.byId(widget.wordId).note,
-  );
+class _WordDetailsSheetState extends ConsumerState<WordDetailsSheet> {
+  late final _note = TextEditingController(text: widget.initialWord.note);
+
+  Future<void> _pending = Future.value();
+  bool _noteError = false;
+  void _saveNote(String text) {
+    final actions = ref.read(wordActionsProvider);
+    _pending = _pending.then((_) async {
+      try {
+        await actions.save(widget.initialWord.id, note: text);
+        if (mounted) setState(() => _noteError = false);
+      } catch (_) {
+        if (mounted) setState(() => _noteError = true);
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -63,6 +75,16 @@ class _WordDetailsSheetState extends State<WordDetailsSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final result = ref.watch(wordListProvider);
+    if (result.hasError) {
+      return ContentUnavailableView(
+        error: result.error!,
+        onRetry: () => ref.invalidate(wordListProvider),
+      );
+    }
+    final word =
+        result.value?.where((w) => w.id == widget.initialWord.id).firstOrNull ??
+        widget.initialWord;
     final body = AppType.editorial(
       color: context.appColors.textPrimary,
       size: 20,
@@ -76,9 +98,8 @@ class _WordDetailsSheetState extends State<WordDetailsSheet> {
       // Keeps the notes field above the keyboard.
       padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
       child: ListenableBuilder(
-        listenable: Listenable.merge([widget.store, widget.playback]),
+        listenable: widget.playback,
         builder: (context, _) {
-          final word = widget.store.byId(widget.wordId);
           final entry = word.entry;
           final playingWord = widget.playback.isPlaying(wordAudioKey(word.id));
           final playingSentence = widget.playback.isPlaying(
@@ -223,11 +244,14 @@ class _WordDetailsSheetState extends State<WordDetailsSheet> {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        _NoteField(
-                          controller: _note,
-                          onChanged: (text) =>
-                              widget.store.setNote(word.id, text),
-                        ),
+                        if (_noteError)
+                          CupertinoButton(
+                            onPressed: () => _saveNote(_note.text),
+                            child: const Text(
+                              'Notiz nicht gespeichert. Erneut versuchen',
+                            ),
+                          ),
+                        _NoteField(controller: _note, onChanged: _saveNote),
                       ],
                     ),
                   ),

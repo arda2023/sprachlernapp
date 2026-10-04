@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/srs_state.dart';
 import '../../models/home_models.dart';
 import 'database_providers.dart';
+import 'learning_providers.dart';
 
 final userChangesProvider = StreamProvider<int>((ref) async* {
   final user = await ref.watch(userRepositoryProvider.future);
@@ -67,7 +68,7 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
 
 final vocabBreakdownProvider = FutureProvider<VocabBreakdown>((ref) async {
   ref.watch(userChangesProvider);
-  final now = ref.watch(clockProvider)();
+  final now = ref.watch(learningNowProvider);
   final content = await ref.watch(contentRepositoryProvider.future);
   final user = await ref.watch(userRepositoryProvider.future);
   final decks = await content.decks();

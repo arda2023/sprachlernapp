@@ -28,7 +28,7 @@ import 'widgets/practice_sentence.dart';
 import 'widgets/practice_menu.dart';
 import 'widgets/local_submission_sheet.dart';
 
-enum DeckPracticeMode { learn, review }
+enum DeckPracticeMode { learn, review, mixed }
 
 class DeckPracticeScreen extends ConsumerStatefulWidget {
   const DeckPracticeScreen({
@@ -70,9 +70,11 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
   WordAnchor? _word;
   DeckSessionArgs get _args => (
     deckId: widget.deckId,
-    kind: widget.mode == DeckPracticeMode.learn
-        ? DeckSessionKind.learn
-        : DeckSessionKind.revue,
+    kind: switch (widget.mode) {
+      DeckPracticeMode.learn => DeckSessionKind.learn,
+      DeckPracticeMode.review => DeckSessionKind.revue,
+      DeckPracticeMode.mixed => DeckSessionKind.mixed,
+    },
     size: widget.sessionSize,
   );
   DeckSessionController get _controller =>
@@ -656,8 +658,12 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
           '$first auf Anhieb richtig · $reset zurück auf Stufe 1${afterTypo > 0 ? ' · $afterTypo nach Schreibkorrektur' : ''}',
       explanation: widget.mode == DeckPracticeMode.review
           ? 'In der Stapel-Revue bleiben saubere Antworten auf ihrer Stufe. Fehler, Hinweise und „Wort erfahren“ führen zu Stufe 1.'
+          : widget.mode == DeckPracticeMode.mixed
+          ? 'Fällige Karten werden zuerst geübt. Neue Wörter starten ohne Hilfe auf Stufe 3. Beim Vorab-Üben bleiben saubere Antworten auf ihrer Stufe.'
           : 'Neue Wörter starten ohne Hilfe auf Stufe 3. Saubere Wiederholungen rücken eine Stufe auf. Fehler, Hinweise und „Wort erfahren“ führen zu Stufe 1.',
-      actionLabel: 'Zurück zum Stapel',
+      actionLabel: widget.mode == DeckPracticeMode.mixed
+          ? 'Zurück zur Startseite'
+          : 'Zurück zum Stapel',
       onAction: () => Navigator.of(context).maybePop(),
     );
   }

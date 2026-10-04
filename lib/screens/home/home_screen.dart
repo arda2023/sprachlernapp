@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../presentation/providers/deck_providers.dart';
+import '../../presentation/providers/learning_providers.dart';
 import '../../presentation/providers/database_providers.dart';
 import '../../presentation/content_unavailable_view.dart';
 
@@ -32,8 +33,8 @@ class HomeScreen extends ConsumerWidget {
 
   static const _gutter = EdgeInsets.symmetric(horizontal: 20);
 
-  final DailyGoal goal;
-  final WeekProgress week;
+  final DailyGoal? goal;
+  final WeekProgress? week;
   final ValueChanged<Story> onOpenStory;
   final VoidCallback onBrowseStories;
   final ValueChanged<Deck> onOpenDeck;
@@ -64,11 +65,27 @@ class HomeScreen extends ConsumerWidget {
           const SizedBox(height: 28),
           Padding(
             padding: _gutter,
-            child: WeeklyGoalCard(
-              week: week,
-              goal: goal,
-              onEditGoal: onEditGoal,
-            ),
+            child: goal != null && week != null
+                ? WeeklyGoalCard(
+                    week: week!,
+                    goal: goal!,
+                    onEditGoal: onEditGoal,
+                  )
+                : ref
+                      .watch(learningProgressProvider)
+                      .when(
+                        data: (p) => WeeklyGoalCard(
+                          week: p.week,
+                          goal: p.goal,
+                          onEditGoal: onEditGoal,
+                        ),
+                        loading: () => const CupertinoActivityIndicator(),
+                        error: (e, _) => ContentUnavailableView(
+                          error: e,
+                          onRetry: () =>
+                              ref.invalidate(learningProgressProvider),
+                        ),
+                      ),
           ),
           const SizedBox(height: 28),
           Padding(

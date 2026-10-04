@@ -14,6 +14,28 @@ def norm(value):
     return unicodedata.normalize('NFC', value.strip()).lower().replace('’', "'")
 
 
+def partition_selection(entries, pack):
+    """Compare exact learning-card identities, never calls or annotation senses.
+
+    Return original entry objects in original order; do not modify definitions.
+    """
+    from .pack import build_rows
+    rows = build_rows(pack)
+    lemmas = {r['id']: r for r in rows['lemmas']}
+    senses = {r['id']: r for r in rows['senses']}
+    packed = {(norm(c['form']), norm(lemmas[c['lemma_id']]['lemma']), c['pos'],
+               senses[c['sense_id']]['sense_key']) for c in rows['cards']}
+    present, missing, seen = [], [], set()
+    for entry in entries:
+        identity = (norm(entry['form']), norm(entry['lemma']), entry['pos'],
+                    entry.get('sense_key') or entry.get('proposed_sense_key'))
+        if not identity[-1] or identity in seen:
+            raise ValueError(f'duplicate or undefined selection identity: {identity}')
+        seen.add(identity)
+        (present if identity in packed else missing).append(entry)
+    return present, missing
+
+
 def plan_selection(path, existing_pack, *, inventory_path=None):
     data = json.loads(Path(path).read_text(encoding='utf-8'))
     if data.get('version') != 1 or data.get('lang') != 'en' or not data.get('entries'):
@@ -91,7 +113,7 @@ def plan_selection(path, existing_pack, *, inventory_path=None):
 
 
 def print_plan(plan, cfg, max_usd):
-    from .llm import model_price
+    from .llm import model_price, reservation_usd
     print(f"Selection: {plan['entries']} distinct lemmas; POS {plan['pos']}")
     print(f"Cards planned: {len(plan['selected'])}; existing reused: {len(plan['covered'])}")
     print(f"Lemmas without any existing learning card: {plan['new_lemmas']}")
@@ -111,18 +133,28 @@ def print_plan(plan, cfg, max_usd):
               ('meaning_check', 'meaning_check', 5, 900, 120, 200),
               ('alternative_check', 'alternative_check', 2, 900, 150, 200),
               ('annotate', 'generate', 1, 2500, 1600, 400)]
-    per_card = 0.0
+    per_card = reserved_per_card = 0.0
     print(f"Price snapshot from config.yaml: {cfg['prices']['as_of']} (not refreshed)")
     print('Assumption per card: first batch of 5 candidates, 3 accepted; no regeneration.')
     for step, role, calls, inp, out, thinking in stages:
         model = cfg['llm'][role + '_model']
         price = model_price(cfg['prices'], model)
+        limit = cfg['llm']['max_output_tokens'][step]
+        reserve = reservation_usd(price, 2 * (inp - 1), limit)
+        reserved_per_card += calls * reserve
         per_card += calls * (inp * price['input_per_mtok_usd'] +
                             out * price['output_per_mtok_usd'] +
                             thinking * price['thinking_per_mtok_usd']) / 1e6
         print(f"  {step}: {model}, {cfg['llm'][role + '_thinking']}; "
-              f"{calls} calls x {inp}/{out}/{thinking} input/output/thinking tokens")
+              f"{calls} calls x {inp}/{out}/{thinking} input/output/thinking tokens; "
+              f"configured max_output_tokens={limit}; reservation/call={reserve:.6f} USD")
     estimate = per_card * len(plan['selected'])
     print(f'Planning estimate: {estimate:.3f} USD; retry scenario (2.5x): {estimate * 2.5:.3f} USD')
+    envelope = reserved_per_card * len(plan['selected'])
+    print(f'Configured-limit scenario: {envelope:.3f} USD (same assumed inputs/call counts, '
+          'full configured output limits, no retries). Reservations reconcile to actual usage; '
+          'this total is not reserved upfront.')
+    if envelope > max_usd:
+        print('BUDGET RISK: configured-limit scenario exceeds the run budget; partial completion possible.')
     print(f'Not a guaranteed upper bound. Existing reservations enforce run budget {max_usd:.2f} USD; '
           'the run may stop before all cards pass QA. No cloud calls in dry-run.')

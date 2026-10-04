@@ -114,6 +114,51 @@ def run(curation=CURATION, packs=PACKS):
     return curate(packs, curation, META)
 
 
+def test_strict_metadata_requires_exact_decisions_and_preserves_inputs():
+    packs = copy.deepcopy(PACKS)
+    # Shared entity used by an added card, independent of source order.
+    packs['extra']['senses'].append(copy.deepcopy(packs['base']['senses'][0]))
+    packs['extra']['senses'][-1]['gloss_de'] = 'anders'
+    # Remove duplicate synthetic sense from GO_DUP before constructing conflict.
+    packs['extra']['senses'] = [s for i, s in enumerate(packs['extra']['senses'])
+                                if s['ref'] != 'go/VERB|go#gehen' or i == len(packs['extra']['senses']) - 1]
+    c = dict(CURATION, metadata_resolutions=[])
+    with pytest.raises(CurationError, match='unresolved metadata conflict'):
+        run(c, packs)
+    expected = {name: next(s for s in p['senses'] if s['ref'] == 'go/VERB|go#gehen')
+                for name, p in packs.items()}
+    c['metadata_resolutions'] = [{'table': 'senses', 'ref': 'go/VERB|go#gehen',
+                                  'expect': copy.deepcopy(expected),
+                                  'new': {'gloss_de': 'gehen'}, 'reason': 'gleiche Bedeutung'}]
+    snapshot = copy.deepcopy(packs)
+    work, log = run(c, packs)
+    assert packs == snapshot
+    assert next(s for s in work['senses'] if s['ref'] == 'go/VERB|go#gehen')['gloss_de'] == 'gehen'
+    assert log['metadata_resolutions'] == c['metadata_resolutions']
+    packs['extra']['senses'][-1]['gloss_de'] = 'unexpected'
+    with pytest.raises(CurationError, match='precondition differs'):
+        run(c, packs)
+
+
+def test_editorial_translation_preserves_english_ids_tokens_and_historical_qa():
+    c = copy.deepcopy(CURATION)
+    op = c['sentence_operations'][1]
+    op.update(op='editorial_translation', reason='Redaktionell, keine Modellprüfung')
+    c['sentence_operations'] = [op]
+    work, log = run(c)
+    original = BASE['sentences'][2]
+    edited = next(s for s in work['sentences'] if s['ref'] == 'base/s3')
+    assert sid(original['text']) == sid(edited['text'])
+    assert edited['qa_report'] == original['qa_report']
+    assert edited['editorial_reviews'][0]['model_check'] is False
+    assert [p['kind'] for p in work['curation']['pending']] == ['dictionary_forms']
+    assert [{**t, 'sentence': 's3'} for t in work['sentence_tokens'] if t['sentence'] == 'base/s3'] == [
+        t for t in BASE['sentence_tokens'] if t['sentence'] == 's3']
+    op['expect']['translation_de'] = 'wrong original'
+    with pytest.raises(CurationError, match='translation_de differs'):
+        run(c)
+
+
 def links(work, card):
     texts = {s["ref"]: s for s in work["sentences"]}
     return [(cs, texts[cs["sentence"]]) for cs in sorted(

@@ -171,3 +171,6 @@ Auch diese Auswahl besteht noch aus dem kleinen häufigkeitsbasierten Pilotbesta
 Alltagswörter aus dem neuen Los werden dadurch nicht vorgetäuscht.
 Vollständige Vorher/Nachher-Zeilen mit Form, Lemma, Sense, Klasse und Grund:
 `build/selection_queue_report.txt` (lokaler Nachweis, nicht versioniert).
+
+## Anbindung Gemischt (04.10.2026)
+Gemischt verwendet jetzt `buildMixedQueue` im gemeinsamen `DeckSessionController`: fällige aktive bekannte Karten aller Quellen, neue Karten aktivierter Stapel über den unveränderten `selectNewCards`, anschließend Vorab-Üben mit `mode=early`. Bereits gesehene Karten bleiben bei deaktiviertem Stapel erreichbar; deaktivierte/retirierte Karten entfallen. Wiederholungen verwenden weiterhin `withRepeat`, Antworten `ReviewPass` und Termine `scheduleReview`. Story-Prototypen erzeugen keine Lernstände. Der oben dokumentierte Pilot-Snapshot bleibt ein historischer Vergleich, keine Aussage über das heutige 264-Karten-Pack.

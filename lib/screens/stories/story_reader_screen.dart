@@ -253,7 +253,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
       entry: word.entry,
       mark: _marks[headword],
       // TODO: write to the vocabulary store once the Drift layer exists.
-      onAdd: () => setState(() => _marks[headword] ??= WordMark.active),
+      learningAvailable: false,
+      onAdd: () {},
     );
     if (mounted) setState(() => _selected = null);
   }

@@ -49,6 +49,19 @@ def resolutions(**change):
             "expect": {"cards": 3, "card_sentences": 9, "dictionary_keys": keys}, "resolutions": [r]}
 
 
+def test_editorial_form_gloss_keeps_all_source_variants_and_checks_preconditions():
+    work, report = finished_run()
+    r = resolutions(gloss_de='ging / begab sich', editorial=True, reason='Formgerechte Präzisierung')
+    final, summary, _ = script.finalize_state(work, report, r)
+    resolved = summary['resolved_conflicts'][0]
+    assert resolved['origin']['editorial'] is True
+    assert {x['gloss_de'] for x in resolved['origin']['resolution']['rejected']} == {'ging', 'ging (gehen)'}
+    assert next(d for d in final['dictionary_forms'] if d['form'] == 'went')['gloss_de'] == 'ging / begab sich'
+    r['resolutions'][0]['expected_variants'].append('unknown')
+    with pytest.raises(script.FinalizeError, match='variants'):
+        script.finalize_state(work, report, r)
+
+
 def test_exact_resolution_resolves_only_its_conflict_and_keeps_origin():
     work, report = finished_run()
     snapshot = copy.deepcopy((work, report))

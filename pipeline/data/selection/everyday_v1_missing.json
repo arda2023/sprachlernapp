@@ -1,0 +1,296 @@
+{
+  "version": 1,
+  "lang": "en",
+  "title": "Alltag v1 – ausschließlich fehlende Karten des technischen Teil-Laufs",
+  "scope": "13 unveränderte Originalpositionen; alle 87 gepackten Karten einschließlich redaktioneller Befunde ausgeschlossen.",
+  "definitions": "Neue Schlüssel sind Vorschläge, keine geprüften Inventareinträge. QA und redaktionelle Freigabe folgen erst nach Generierung.",
+  "provenance": {
+    "selection": "everyday_v1.json",
+    "selection_sha256": "f065eaf6af73287a118c02e0009edc5f5e551c2c792c428220c7d2aebdca9e54",
+    "partial_pack": "out/everyday_v1_20261004/pack.json",
+    "partial_pack_sha256": "f5d1bf2c70b9bc01dbb524e2bc862bbe7e4f63a5bd13e5eeb61e9dc6f3f31035",
+    "identity": [
+      "normalized form",
+      "normalized lemma",
+      "POS",
+      "sense_key or proposed_sense_key"
+    ],
+    "existing_cards": 87,
+    "missing_cards": 13
+  },
+  "entries": [
+    {
+      "form": "sit",
+      "lemma": "sit",
+      "pos": "VERB",
+      "target_meaning_de": "Auf einem Sitz mit abgestütztem Gesäß ruhen",
+      "translation_de": "sitzen",
+      "topic": "Alltägliche Handlungen",
+      "reason": "Konkretes Alltagswort für alltägliche handlungen; zunächst nur die festgelegte Bedeutung.",
+      "frequency": {
+        "source": "wordfreq 3.1.1 top_n_list(en,5000)",
+        "rank": 1355,
+        "zipf": 4.9
+      },
+      "sense_key": "sit#sitzen",
+      "proposed_sense_key": null,
+      "definition_status": "editorial_proposal_not_sentence_validated",
+      "form_kind": "base",
+      "form_label_de": "Verb, Grundform",
+      "cefr_band": "anfaenger",
+      "sense_source": "existing_pack_sense"
+    },
+    {
+      "form": "wet",
+      "lemma": "wet",
+      "pos": "ADJ",
+      "target_meaning_de": "Mit Wasser oder anderer Flüssigkeit benetzt",
+      "translation_de": "nass",
+      "topic": "Haushalt",
+      "reason": "Konkretes Alltagswort für haushalt; zunächst nur die festgelegte Bedeutung.",
+      "frequency": {
+        "source": "wordfreq 3.1.1 top_n_list(en,5000)",
+        "rank": 2813,
+        "zipf": 4.54
+      },
+      "sense_key": "wet#nass",
+      "proposed_sense_key": null,
+      "definition_status": "editorial_proposal_not_sentence_validated",
+      "form_kind": "base",
+      "form_label_de": "Adjektiv, Grundform",
+      "cefr_band": "anfaenger",
+      "sense_source": "existing_pack_sense"
+    },
+    {
+      "form": "soft",
+      "lemma": "soft",
+      "pos": "ADJ",
+      "target_meaning_de": "Bei Druck leicht nachgebend",
+      "translation_de": "weich",
+      "topic": "Haushalt",
+      "reason": "Konkretes Alltagswort für haushalt; zunächst nur die festgelegte Bedeutung.",
+      "frequency": {
+        "source": "wordfreq 3.1.1 top_n_list(en,5000)",
+        "rank": 2130,
+        "zipf": 4.68
+      },
+      "sense_key": "soft#weiche",
+      "proposed_sense_key": null,
+      "definition_status": "editorial_proposal_not_sentence_validated",
+      "form_kind": "base",
+      "form_label_de": "Adjektiv, Grundform",
+      "cefr_band": "anfaenger",
+      "sense_source": "existing_pack_sense"
+    },
+    {
+      "form": "hard",
+      "lemma": "hard",
+      "pos": "ADJ",
+      "target_meaning_de": "Bei Druck kaum nachgebend",
+      "translation_de": "hart",
+      "topic": "Haushalt",
+      "reason": "Konkretes Alltagswort für haushalt; zunächst nur die festgelegte Bedeutung.",
+      "frequency": {
+        "source": "wordfreq 3.1.1 top_n_list(en,5000)",
+        "rank": 273,
+        "zipf": 5.53
+      },
+      "sense_key": null,
+      "proposed_sense_key": "hard#hart",
+      "definition_status": "editorial_proposal_not_sentence_validated",
+      "form_kind": "base",
+      "form_label_de": "Adjektiv, Grundform",
+      "cefr_band": "anfaenger",
+      "sense_source": "new_editorial_proposal"
+    },
+    {
+      "form": "cheap",
+      "lemma": "cheap",
+      "pos": "ADJ",
+      "target_meaning_de": "Wenig Geld kostend",
+      "translation_de": "günstig",
+      "topic": "Einkaufen",
+      "reason": "Konkretes Alltagswort für einkaufen; zunächst nur die festgelegte Bedeutung.",
+      "frequency": {
+        "source": "wordfreq 3.1.1 top_n_list(en,5000)",
+        "rank": 1989,
+        "zipf": 4.71
+      },
+      "sense_key": "cheap#billiger",
+      "proposed_sense_key": null,
+      "definition_status": "editorial_proposal_not_sentence_validated",
+      "form_kind": "base",
+      "form_label_de": "Adjektiv, Grundform",
+      "cefr_band": "anfaenger",
+      "sense_source": "existing_pack_sense"
+    },
+    {
+      "form": "expensive",
+      "lemma": "expensive",
+      "pos": "ADJ",
+      "target_meaning_de": "Viel Geld kostend",
+      "translation_de": "teuer",
+      "topic": "Einkaufen",
+      "reason": "Konkretes Alltagswort für einkaufen; zunächst nur die festgelegte Bedeutung.",
+      "frequency": {
+        "source": "wordfreq 3.1.1 top_n_list(en,5000)",
+        "rank": 2071,
+        "zipf": 4.69
+      },
+      "sense_key": "expensive#teuer",
+      "proposed_sense_key": null,
+      "definition_status": "editorial_proposal_not_sentence_validated",
+      "form_kind": "base",
+      "form_label_de": "Adjektiv, Grundform",
+      "cefr_band": "anfaenger",
+      "sense_source": "existing_pack_sense"
+    },
+    {
+      "form": "young",
+      "lemma": "young",
+      "pos": "ADJ",
+      "target_meaning_de": "Erst wenige Lebensjahre alt",
+      "translation_de": "jung",
+      "topic": "Körper und Gesundheit",
+      "reason": "Konkretes Alltagswort für körper und gesundheit; zunächst nur die festgelegte Bedeutung.",
+      "frequency": {
+        "source": "wordfreq 3.1.1 top_n_list(en,5000)",
+        "rank": 364,
+        "zipf": 5.43
+      },
+      "sense_key": "young#jung",
+      "proposed_sense_key": null,
+      "definition_status": "editorial_proposal_not_sentence_validated",
+      "form_kind": "base",
+      "form_label_de": "Adjektiv, Grundform",
+      "cefr_band": "anfaenger",
+      "sense_source": "existing_pack_sense"
+    },
+    {
+      "form": "old",
+      "lemma": "old",
+      "pos": "ADJ",
+      "target_meaning_de": "Schon viele Lebensjahre alt",
+      "translation_de": "alt",
+      "topic": "Körper und Gesundheit",
+      "reason": "Konkretes Alltagswort für körper und gesundheit; zunächst nur die festgelegte Bedeutung.",
+      "frequency": {
+        "source": "wordfreq 3.1.1 top_n_list(en,5000)",
+        "rank": 174,
+        "zipf": 5.75
+      },
+      "sense_key": "old#alt",
+      "proposed_sense_key": null,
+      "definition_status": "editorial_proposal_not_sentence_validated",
+      "form_kind": "base",
+      "form_label_de": "Adjektiv, Grundform",
+      "cefr_band": "anfaenger",
+      "sense_source": "existing_pack_sense"
+    },
+    {
+      "form": "strong",
+      "lemma": "strong",
+      "pos": "ADJ",
+      "target_meaning_de": "Viel körperliche Kraft besitzend",
+      "translation_de": "kräftig",
+      "topic": "Körper und Gesundheit",
+      "reason": "Konkretes Alltagswort für körper und gesundheit; zunächst nur die festgelegte Bedeutung.",
+      "frequency": {
+        "source": "wordfreq 3.1.1 top_n_list(en,5000)",
+        "rank": 614,
+        "zipf": 5.22
+      },
+      "sense_key": "strong#stark",
+      "proposed_sense_key": null,
+      "definition_status": "editorial_proposal_not_sentence_validated",
+      "form_kind": "base",
+      "form_label_de": "Adjektiv, Grundform",
+      "cefr_band": "anfaenger",
+      "sense_source": "existing_pack_sense"
+    },
+    {
+      "form": "ready",
+      "lemma": "ready",
+      "pos": "ADJ",
+      "target_meaning_de": "Für eine anstehende Handlung vorbereitet",
+      "translation_de": "bereit",
+      "topic": "Alltägliche Handlungen",
+      "reason": "Konkretes Alltagswort für alltägliche handlungen; zunächst nur die festgelegte Bedeutung.",
+      "frequency": {
+        "source": "wordfreq 3.1.1 top_n_list(en,5000)",
+        "rank": 532,
+        "zipf": 5.28
+      },
+      "sense_key": "ready#bereit",
+      "proposed_sense_key": null,
+      "definition_status": "editorial_proposal_not_sentence_validated",
+      "form_kind": "base",
+      "form_label_de": "Adjektiv, Grundform",
+      "cefr_band": "anfaenger",
+      "sense_source": "existing_pack_sense"
+    },
+    {
+      "form": "quiet",
+      "lemma": "quiet",
+      "pos": "ADJ",
+      "target_meaning_de": "Wenig Geräusche verursachend",
+      "translation_de": "ruhig",
+      "topic": "Alltägliche Handlungen",
+      "reason": "Konkretes Alltagswort für alltägliche handlungen; zunächst nur die festgelegte Bedeutung.",
+      "frequency": {
+        "source": "wordfreq 3.1.1 top_n_list(en,5000)",
+        "rank": 2267,
+        "zipf": 4.65
+      },
+      "sense_key": "quiet#ruhig",
+      "proposed_sense_key": null,
+      "definition_status": "editorial_proposal_not_sentence_validated",
+      "form_kind": "base",
+      "form_label_de": "Adjektiv, Grundform",
+      "cefr_band": "anfaenger",
+      "sense_source": "existing_pack_sense"
+    },
+    {
+      "form": "safe",
+      "lemma": "safe",
+      "pos": "ADJ",
+      "target_meaning_de": "Keiner konkreten Gefahr ausgesetzt",
+      "translation_de": "sicher",
+      "topic": "Alltägliche Handlungen",
+      "reason": "Konkretes Alltagswort für alltägliche handlungen; zunächst nur die festgelegte Bedeutung.",
+      "frequency": {
+        "source": "wordfreq 3.1.1 top_n_list(en,5000)",
+        "rank": 914,
+        "zipf": 5.07
+      },
+      "sense_key": null,
+      "proposed_sense_key": "safe#sicher",
+      "definition_status": "editorial_proposal_not_sentence_validated",
+      "form_kind": "base",
+      "form_label_de": "Adjektiv, Grundform",
+      "cefr_band": "anfaenger",
+      "sense_source": "new_editorial_proposal"
+    },
+    {
+      "form": "heavy",
+      "lemma": "heavy",
+      "pos": "ADJ",
+      "target_meaning_de": "Ein hohes Gewicht habend",
+      "translation_de": "schwer",
+      "topic": "Alltägliche Handlungen",
+      "reason": "Konkretes Alltagswort für alltägliche handlungen; zunächst nur die festgelegte Bedeutung.",
+      "frequency": {
+        "source": "wordfreq 3.1.1 top_n_list(en,5000)",
+        "rank": 1170,
+        "zipf": 4.96
+      },
+      "sense_key": "heavy#schwer",
+      "proposed_sense_key": null,
+      "definition_status": "editorial_proposal_not_sentence_validated",
+      "form_kind": "base",
+      "form_label_de": "Adjektiv, Grundform",
+      "cefr_band": "anfaenger",
+      "sense_source": "existing_pack_sense"
+    }
+  ]
+}

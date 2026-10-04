@@ -47,6 +47,11 @@ def cost_usd(price: dict, input_tokens: int, output_tokens: int, thinking_tokens
             + thinking_tokens * price["thinking_per_mtok_usd"]) / 1_000_000
 
 
+def reservation_usd(price: dict, prompt_chars: int, max_output_tokens: int) -> float:
+    """Same pre-call reservation for runtime and offline planning scenarios."""
+    return cost_usd(price, prompt_chars // 2 + 1, max_output_tokens, 0)
+
+
 def usage_counts(metadata) -> tuple[int, int, int]:
     """Vertex separates visible candidate tokens from thoughts_token_count."""
     return (int(getattr(metadata, "prompt_token_count", 0) or 0),
@@ -110,7 +115,7 @@ class Llm:
                       step: str, max_output_tokens: int):
         price = model_price(self.prices, model)
         # Upper bound: ~2 characters per input token, full output budget.
-        estimate = cost_usd(price, len(prompt) // 2 + 1, max_output_tokens, 0)
+        estimate = reservation_usd(price, len(prompt), max_output_tokens)
         with self._budget:
             while True:
                 if self._fatal_auth.is_set():

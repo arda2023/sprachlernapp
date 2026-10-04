@@ -295,3 +295,147 @@ macOS Terminal, ebenfalls **nicht ausgeführt**:
 
 Der Ausgabeordner muss neu sein, `--out` darin liegen. Dry-Run legt nichts an.
 Die 100 neuen Vokabeln sind vorbereitet, weder generiert noch geprüft/installiert.
+
+## Alltag-v1-Nachhol-Lauf: vorbereitet, nicht gestartet (04.10.2026)
+
+Beleg aus dem vorhandenen run_report.md: meaning_check, Limit 1024,
+output_tokens=29, thinking_tokens=981, finish_reason=MAX_TOKENS, ungültiges JSON.
+Nur max_output_tokens.meaning_check ist jetzt 4096 statt 1024. Modell bleibt
+gemini-3.8-flash, Thinking LOW. Alle anderen Limits bleiben unverändert.
+Das ist eine begründete Gegenmaßnahme ohne Live-Nachweis. Der frühere ungeklärte
+v7-Abbruch wird dadurch weder erklärt noch derselben Ursache zugeordnet.
+Keine JSON-Reparatur, stillen Ersatzwerte, neuen Retries oder Budgeterhöhungen.
+
+`selection.partition_selection(entries, pack)` vergleicht normalisierte Form,
+normalisiertes Lemma, POS und stabilen Sense-Key (Zielbedeutung); nur cards zählen,
+nicht Wörterbuchannotation, Ledger-Aufrufe oder der redaktionelle Kartenstatus.
+Die versionierte `data/selection/everyday_v1_missing.json` enthält 13 unveränderte
+Originaleinträge: sit, wet, soft, hard, cheap, expensive, young, old, strong, ready,
+quiet, safe, heavy. 87 vorhandene + 13 fehlende = ursprüngliche 100, Schnittmenge 0.
+Auch die fünf K- und fünf U-Karten sind unter den 87 ausgeschlossen. Quellpfade und
+SHA-256 stehen im provenance-Feld. Originaldefinitionen/Metadaten bleiben erhalten.
+Die CLI benötigt keine Ergänzung: derselbe --selection-Weg und neues --run-dir.
+
+Reproduzierbarer Vergleich (Python, auf beiden Systemen aus Repository-Root;
+Interpreter Windows: pipeline/.venv/Scripts/python.exe, macOS: pipeline/.venv/bin/python):
+
+```python
+import json, sys
+from pathlib import Path
+sys.path.insert(0, str(Path('pipeline/src').resolve()))
+from sprachpipe.selection import partition_selection
+source = json.loads(Path('pipeline/data/selection/everyday_v1.json').read_text(encoding='utf-8'))
+pack = json.loads(Path('pipeline/out/everyday_v1_20261004/pack.json').read_text(encoding='utf-8'))
+present, missing = partition_selection(source['entries'], pack)
+saved = json.loads(Path('pipeline/data/selection/everyday_v1_missing.json').read_text(encoding='utf-8'))
+assert saved['entries'] == missing
+assert len(present) == len(pack['cards']) == 87 and len(missing) == 13
+assert len(present) + len(missing) == len(source['entries'])
+print(len(present), len(missing))  # tatsächliches Ergebnis: 87 13
+```
+
+Tatsächlich ausgeführter Dry-Run, Windows PowerShell ab pipeline:
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 -m sprachpipe.cli generate --selection data\selection\everyday_v1_missing.json --existing-pack ..\assets\content\en\content.sqlite --run-dir out\everyday_v1_missing_20261004 --out out\everyday_v1_missing_20261004\pack.json --max-usd 1.00 --dry-run
+```
+
+macOS Terminal (nicht ausgeführt), ab pipeline:
+
+```sh
+.venv/bin/python -X utf8 -m sprachpipe.cli generate --selection data/selection/everyday_v1_missing.json --existing-pack ../assets/content/en/content.sqlite --run-dir out/everyday_v1_missing_20261004 --out out/everyday_v1_missing_20261004/pack.json --max-usd 1.00 --dry-run
+```
+
+Tatsächlicher Output, Kernwerte:
+
+```text
+Selection: 13 distinct lemmas; POS {'VERB': 1, 'ADJ': 12}
+Cards planned: 13; existing reused: 0
+Lemmas without any existing learning card: 13
+Existing sense keys: 11; new proposed keys: 2
+Canonical inventory definitions: 0; explicit editorial targets: 13; missing definitions: 0
+Planning estimate: 0.399 USD; retry scenario (2.5x): 0.999 USD
+Configured-limit scenario: 1.559 USD
+BUDGET RISK: configured-limit scenario exceeds the run budget; partial completion possible.
+```
+
+Modelle und Reservierungsansätze je Aufruf aus dem Dry-Run:
+
+| Schritt | Modell / Thinking | konfiguriertes Outputlimit | Reservierung USD |
+|---|---|---:|---:|
+| sentences | gemini-3.8-flash / LOW | 2048 | 0.009555 |
+| blindtest | gemini-2.5-flash / Budget 0 | 256 | 0.000790 |
+| meaning_check | gemini-3.8-flash / LOW | 4096 | 0.016035 |
+| alternative_check | gemini-3.8-flash / LOW | 1024 | 0.004515 |
+| annotate | gemini-3.8-flash / LOW | 4096 | 0.017235 |
+
+Die normalen Verbrauchsannahmen bleiben explizite Szenarien (siehe oben).
+Zusätzlich rechnet der Dry-Run mit voller Ausschöpfung sämtlicher tatsächlich
+konfigurierten Ausgabelimits bei denselben Input-/Aufrufannahmen. Lauf und Dry-Run
+verwenden dieselbe reservation_usd-Formel: geschätzte Inputtokens aus Promptlänge
+plus volles konfiguriertes Outputlimit, kein doppeltes Addieren von Thinking.
+Für meaning_check nimmt das Szenario 900 Inputtokens an; im echten Lauf wird die
+jeweilige Promptlänge verwendet. Die Reservierung wird vor jedem Aufruf geprüft
+und danach gegen tatsächlichen Verbrauch abgerechnet. 1.559 USD ist weder eine
+Vorabreservierung für den ganzen Lauf noch eine garantierte Gesamtkostengrenze.
+Das Limit 1.00 USD kann zu erneutem Teilabschluss führen; keine automatische Erhöhung.
+Dry-Run hat keine LLM-Instanz und keinen Ausgabeordner angelegt.
+
+Vollständiger manueller Startbefehl, NICHT ausgeführt, PowerShell ab pipeline:
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 -m sprachpipe.cli generate --selection data\selection\everyday_v1_missing.json --existing-pack ..\assets\content\en\content.sqlite --run-dir out\everyday_v1_missing_20261004 --out out\everyday_v1_missing_20261004\pack.json --max-usd 1.00
+```
+
+macOS Terminal, ebenfalls NICHT ausgeführt:
+
+```sh
+.venv/bin/python -X utf8 -m sprachpipe.cli generate --selection data/selection/everyday_v1_missing.json --existing-pack ../assets/content/en/content.sqlite --run-dir out/everyday_v1_missing_20261004 --out out/everyday_v1_missing_20261004/pack.json --max-usd 1.00
+```
+
+Bestehende Ausgabeordner werden weiterhin abgewiesen. Nachhol-Ergebnis und offene
+Inhaltsentscheidungen sind später gemeinsam auszuwerten. Die fünf Alternativbefunde,
+Bus-Glosse und fünf U-Karten in docs/everyday-v1-review.md wurden nicht verändert.
+Keine Aussage einer vollständigen oder öffentlichen Inhaltsfreigabe.
+
+
+## Interner Alltag-Merge (04.10.2026)
+
+`data/curation/everyday_merge_v1.json` entscheidet die drei unveränderten Quellen
+(curated_test_v1, everyday_v1_20261004, everyday_v1_missing_20261004).
+Die SHA-256-Vorbedingungen schützen die Quellpacks; Metadatenentscheidungen
+prüfen vollständige Originalzeilen, Wörterbuchentscheidungen alle Varianten.
+`curate` erlaubt für diesen Weg nur explizit aufgelöste Sense-Glossenkonflikte;
+abweichende andere Entitätsfelder und unbekannte Konflikte brechen ab.
+`editorial_translation` hält Text, ID, Tokens und historische QA fest und
+protokolliert eine redaktionelle Prüfung ohne neue Modellprüfung.
+`derive_dictionary` erhält Quellen aller Formglossen; ausdrücklich begründete
+redaktionelle Formkorrekturen dürfen einen neuen Glosswert verwenden.
+
+Der schmale Einstieg verwendet `curate`, `finalize_state`, `check_pack`,
+`export_sqlite` und `check_sqlite`; keine Cloud-Aufrufe. Ausgabeordner müssen
+neu sein. Der vorhandene Ordner unten wird bei erneutem Aufruf verweigert.
+
+Windows PowerShell, Repository-Root:
+```powershell
+pipeline/.venv/Scripts/python.exe -X utf8 pipeline/scripts/merge_everyday.py --out pipeline/out/curated_everyday_v1
+```
+macOS Terminal, Repository-Root:
+```bash
+pipeline/.venv/bin/python -X utf8 pipeline/scripts/merge_everyday.py --out pipeline/out/curated_everyday_v1
+```
+Beide Systeme, nach Sicherung der bisherigen Assets und Schließen der Repositories:
+```text
+dart run tool/stage_content_pack.dart --from pipeline/out/curated_everyday_v1
+flutter analyze
+flutter test
+```
+
+Ergebnis dieses Laufs: 264 Karten, 792 Sätze/Zuordnungen, 8.520 Tokens,
+2.378 Wörterbuchschlüssel. Jede exportierte Tabelle wurde erneut gelesen und
+mit `build_rows` verglichen. Quellen/Entscheidungen/Herkunft und neun offene
+Alt-Pilot-Fallgruppen stehen in `finalization_report.json`. Vollständige
+Nachhol-Inhaltsprüfung und 100er-Statusliste: `docs/everyday-v1-review.md`.
+Die regulären neuen Tests arbeiten mit synthetischen Fixtures; der bestehende
+optionale Asset-Test liest den tatsächlich gestagten Bestand ohne out-Abhängigkeit.
+Keine öffentliche Inhaltsfreigabe und keine Änderung der SRS-/Auswahlregeln.

@@ -1,0 +1,5738 @@
+{
+  "version": "curated_everyday_v1",
+  "lang": "en",
+  "base": "pilot",
+  "sources": {
+    "pilot": "pipeline/out/curated_test_v1/pack.json",
+    "everyday": "pipeline/out/everyday_v1_20261004/pack.json",
+    "missing": "pipeline/out/everyday_v1_missing_20261004/pack.json"
+  },
+  "source_sha256": {
+    "pilot": "72e544044e6934db1bbdb1358c4e4b7c999ea1a2e291cddd27c4679d842d4e9f",
+    "everyday": "f5d1bf2c70b9bc01dbb524e2bc862bbe7e4f63a5bd13e5eeb61e9dc6f3f31035",
+    "missing": "e9e31b4e541cb4ced54fa3a914eb9457244d532bff232d567a2bba73461659a5"
+  },
+  "expect": {
+    "cards": 264,
+    "card_sentences": 792
+  },
+  "card_meta": {
+    "out|out/ADJ|out#erloschen": {
+      "rank": 45,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "but|but/ADV|but#nur": {
+      "rank": 25,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "no|no/ADV|no#nicht": {
+      "rank": 51,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "not|not/PART|not#nicht": {
+      "rank": 23,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "it|it/PRON|it#es_ding": {
+      "rank": 12,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "that|that/ADV|that#so": {
+      "rank": 10,
+      "usage": "neben",
+      "sense_index": 4
+    },
+    "will|will/AUX|will#zukunft": {
+      "rank": 40,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "it|it/PRON|it#unpersoenlich": {
+      "rank": 12,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "your|your/DET|your#ihr": {
+      "rank": 31,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "the|the/ADV|the#umso": {
+      "rank": 1,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "to|to/ADP|to#bis_zeit": {
+      "rank": 2,
+      "usage": "neben",
+      "sense_index": 4
+    },
+    "her|she/PRON|she#sie_akkusativ": {
+      "rank": 58,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "by|by/ADP|by#mit_mittel": {
+      "rank": 24,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "of|of/ADP|of#teil_menge": {
+      "rank": 4,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "his|his/PRON|his#seiner": {
+      "rank": 34,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "her|she/PRON|she#ihr_dativ": {
+      "rank": 58,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "was|be/AUX|be#hilfsverb": {
+      "rank": 16,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "as|as/SCONJ|as#waehrend_zeit": {
+      "rank": 18,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "just|just/ADV|just#nur": {
+      "rank": 41,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "that|that/PRON|that#das": {
+      "rank": 10,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "in|in/ADP|in#in_zeitlich": {
+      "rank": 6,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "so|so/ADV|so#auf_diese_weise": {
+      "rank": 33,
+      "usage": "haupt",
+      "sense_index": 4
+    },
+    "but|but/ADP|but#ausser": {
+      "rank": 25,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "at|at/ADP|at#richtung": {
+      "rank": 21,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "from|from/ADP|from#ursache": {
+      "rank": 26,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "up|up/ADJ|up#wach": {
+      "rank": 44,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "but|but/CCONJ|but#aber": {
+      "rank": 25,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "what|what/DET|what#welcher": {
+      "rank": 46,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "more|more/PRON|more#mehr_pronomen": {
+      "rank": 49,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "up|up/ADV|up#hinauf": {
+      "rank": 44,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "me|I/PRON|i#mich": {
+      "rank": 36,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "what|what/PRON|what#relativpronomen": {
+      "rank": 46,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "had|have/VERB|have#besitzen_partizip": {
+      "rank": 54,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "if|if/SCONJ|if#ob": {
+      "rank": 37,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "get|get/VERB|get#gelangen": {
+      "rank": 61,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "get|get/VERB|get#bekommen": {
+      "rank": 61,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "will|will/NOUN|will#testament": {
+      "rank": 40,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "like|like/ADP|like#wie": {
+      "rank": 42,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "on|on/ADP|on#auf": {
+      "rank": 13,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "his|his/DET|his#sein": {
+      "rank": 34,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "as|as/SCONJ|as#da_grund": {
+      "rank": 18,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "in|in/ADV|in#herein_drinnen": {
+      "rank": 6,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "that|that/SCONJ|that#dass": {
+      "rank": 10,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "just|just/ADV|just#gerade_eben": {
+      "rank": 41,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "with|with/ADP|with#zusammen_mit": {
+      "rank": 14,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "you|you/PRON|you#du_sie_ihr": {
+      "rank": 11,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "they|they/PRON|they#man_leute": {
+      "rank": 35,
+      "usage": "neben",
+      "sense_index": 2
+    },
+    "on|on/ADP|on#an_zeitlich": {
+      "rank": 13,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "your|your/DET|your#dein": {
+      "rank": 31,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "what|what/PRON|what#fragepronomen": {
+      "rank": 46,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "about|about/ADJ|about#im_begriff": {
+      "rank": 43,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "has|have/VERB|have#besitzen": {
+      "rank": 47,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "by|by/ADP|by#bis_spaetestens": {
+      "rank": 24,
+      "usage": "haupt",
+      "sense_index": 4
+    },
+    "as|as/ADP|as#als_funktion": {
+      "rank": 18,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "are|be/AUX|be#sein_hilfsverb": {
+      "rank": 19,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "more|more/ADV|more#mehr_steigerung": {
+      "rank": 49,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "just|just/ADV|just#genau": {
+      "rank": 41,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "time|time/VERB|time#stoppen": {
+      "rank": 60,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "we|we/PRON|we#wir": {
+      "rank": 29,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "time|time/VERB|time#zeitlich_abstimmen": {
+      "rank": 60,
+      "usage": "neben",
+      "sense_index": 4
+    },
+    "have|have/VERB|have#einnehmen": {
+      "rank": 20,
+      "usage": "neben",
+      "sense_index": 4
+    },
+    "have|have/VERB|have#besitzen": {
+      "rank": 20,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "for|for/CCONJ|for#denn_grund": {
+      "rank": 9,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "with|with/ADP|with#mittels": {
+      "rank": 14,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "at|at/ADP|at#zustand": {
+      "rank": 21,
+      "usage": "neben",
+      "sense_index": 4
+    },
+    "which|which/DET|which#determiner_auswahl": {
+      "rank": 59,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "on|on/ADJ|on#an_eingeschaltet": {
+      "rank": 13,
+      "usage": "haupt",
+      "sense_index": 4
+    },
+    "can|can/NOUN|can#dose": {
+      "rank": 39,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "for|for/ADP|for#fuer_zweck_empfaenger": {
+      "rank": 9,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "time|time/NOUN|time#mal": {
+      "rank": 60,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "had|have/VERB|have#besitzen_past": {
+      "rank": 54,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "like|like/VERB|like#moegen": {
+      "rank": 42,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "like|like/ADV|like#fuellwort": {
+      "rank": 42,
+      "usage": "neben",
+      "sense_index": 4
+    },
+    "and|and/CCONJ|and#um_zu": {
+      "rank": 3,
+      "usage": "neben",
+      "sense_index": 2
+    },
+    "if|if/SCONJ|if#wenn": {
+      "rank": 37,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "they|they/PRON|they#singular_they": {
+      "rank": 35,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "all|all/DET|all#alle_det": {
+      "rank": 32,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "who|who/PRON|who#der_die": {
+      "rank": 53,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "from|from/ADP|from#unterscheidung": {
+      "rank": 26,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "no|no/INTJ|no#nein": {
+      "rank": 51,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "your|your/DET|your#euer": {
+      "rank": 31,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "to|to/PART|to#infinitivpartikel": {
+      "rank": 2,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "do|do/VERB|do#reichen": {
+      "rank": 50,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "when|when/SCONJ|when#als_wenn": {
+      "rank": 48,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "which|which/PRON|which#relativpronomen": {
+      "rank": 59,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "when|when/ADV|when#in_dem": {
+      "rank": 48,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "from|from/ADP|from#von_ausgangspunkt": {
+      "rank": 26,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "by|by/ADP|by#neben_ort": {
+      "rank": 24,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "as|as/ADV|as#so_vergleich": {
+      "rank": 18,
+      "usage": "haupt",
+      "sense_index": 4
+    },
+    "out|out/ADJ|out#nicht_da": {
+      "rank": 45,
+      "usage": "neben",
+      "sense_index": 2
+    },
+    "been|be/VERB|be#besucht": {
+      "rank": 62,
+      "usage": "neben",
+      "sense_index": 2
+    },
+    "an|a/DET|a#ein": {
+      "rank": 30,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "my|my/DET|my#mein": {
+      "rank": 27,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "to|to/ADP|to#nach_richtung": {
+      "rank": 2,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "for|for/ADP|for#seit_lang_dauer": {
+      "rank": 9,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "and|and/CCONJ|and#und": {
+      "rank": 3,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "been|be/AUX|be#gewesen": {
+      "rank": 62,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "of|of/ADP|of#ueber_bezug": {
+      "rank": 4,
+      "usage": "haupt",
+      "sense_index": 4
+    },
+    "who|who/PRON|who#wer": {
+      "rank": 53,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "were|be/AUX|be#waere_konjunktiv": {
+      "rank": 52,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "out|out/ADV|out#hinaus": {
+      "rank": 45,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "is|be/AUX|be#sein_vollverb": {
+      "rank": 8,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "more|more/ADV|more#wieder_noch": {
+      "rank": 49,
+      "usage": "haupt",
+      "sense_index": 4
+    },
+    "with|with/ADP|with#mit_eigenschaft": {
+      "rank": 14,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "do|do/AUX|do#hilfsverb": {
+      "rank": 50,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "of|of/ADP|of#material_herkunft": {
+      "rank": 4,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "have|have/VERB|have#muessen": {
+      "rank": 20,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "can|can/AUX|can#koennen": {
+      "rank": 39,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "be|be/AUX|be#hilfsverb": {
+      "rank": 17,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "is|be/AUX|be#hilfsverb": {
+      "rank": 8,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "about|about/ADV|about#ungefaehr": {
+      "rank": 43,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "this|this/PRON|this#dies_stellvertretend": {
+      "rank": 15,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "in|in/ADP|in#in_raeumlich": {
+      "rank": 6,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "with|with/ADP|with#bei": {
+      "rank": 14,
+      "usage": "neben",
+      "sense_index": 4
+    },
+    "get|get/VERB|get#werden": {
+      "rank": 61,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "up|up/ADP|up#entlang": {
+      "rank": 44,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "a|a/DET|a#ein": {
+      "rank": 5,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "her|her/DET|her#ihr_possessiv": {
+      "rank": 58,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "so|so/ADV|so#ebenfalls": {
+      "rank": 33,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "to|to/ADP|to#fuer_empfaenger": {
+      "rank": 2,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "there|there/ADV|there#dort": {
+      "rank": 57,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "or|or/CCONJ|or#oder": {
+      "rank": 28,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "have|have/AUX|have#hilfsverb": {
+      "rank": 20,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "the|the/DET|the#bestimmter_artikel": {
+      "rank": 1,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "or|or/CCONJ|or#andernfalls": {
+      "rank": 28,
+      "usage": "neben",
+      "sense_index": 2
+    },
+    "they|they/PRON|they#sie_plural": {
+      "rank": 35,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "has|have/VERB|have#muessen": {
+      "rank": 47,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "out|out/ADP|out#heraus_aus": {
+      "rank": 45,
+      "usage": "haupt",
+      "sense_index": 4
+    },
+    "on|on/ADV|on#weiter": {
+      "rank": 13,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "about|about/ADP|about#ueber_thema": {
+      "rank": 43,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "had|have/AUX|have#hilfsverb": {
+      "rank": 54,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "at|at/ADP|at#zeit": {
+      "rank": 21,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "has|have/AUX|have#hilfsverb": {
+      "rank": 47,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "that|that/DET|that#jener": {
+      "rank": 10,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "were|be/AUX|be#sein_vergangenheit": {
+      "rank": 52,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "just|just/ADJ|just#gerecht": {
+      "rank": 41,
+      "usage": "neben",
+      "sense_index": 4
+    },
+    "all|all/ADV|all#vollstaendig_adv": {
+      "rank": 32,
+      "usage": "neben",
+      "sense_index": 3
+    },
+    "time|time/NOUN|time#zeit": {
+      "rank": 60,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "so|so/CCONJ|so#deshalb": {
+      "rank": 33,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "i|I/PRON|i#ich": {
+      "rank": 7,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "their|they/PRON|they#ihr_plural": {
+      "rank": 56,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "by|by/ADP|by#von_urheber": {
+      "rank": 24,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "this|this/DET|this#dieser_begleitend": {
+      "rank": 15,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "more|much/DET|much#mehr_menge": {
+      "rank": 49,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "of|of/ADP|of#genitiv_besitz": {
+      "rank": 4,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "all|all/PRON|all#alles_pron": {
+      "rank": 32,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "will|will/NOUN|will#wille": {
+      "rank": 40,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "at|at/ADP|at#ort": {
+      "rank": 21,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "there|there/PRON|there#es_gibt": {
+      "rank": 57,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "get|get/VERB|get#verstehen": {
+      "rank": 61,
+      "usage": "neben",
+      "sense_index": 4
+    },
+    "he|he/PRON|he#er": {
+      "rank": 22,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "so|so/ADV|so#so_sehr": {
+      "rank": 33,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "me|I/PRON|i#mir": {
+      "rank": 36,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "no|no/NOUN|no#nein-stimme": {
+      "rank": 51,
+      "usage": "neben",
+      "sense_index": 4
+    },
+    "you|you/PRON|you#man": {
+      "rank": 11,
+      "usage": "neben",
+      "sense_index": 2
+    },
+    "when|when/ADV|when#wann": {
+      "rank": 48,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "no|no/DET|no#kein": {
+      "rank": 51,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "a|a/ADP|a#pro": {
+      "rank": 5,
+      "usage": "neben",
+      "sense_index": 2
+    },
+    "do|do/VERB|do#tun": {
+      "rank": 50,
+      "usage": "neben",
+      "sense_index": 2
+    },
+    "are|be/AUX|be#sein_vollverb": {
+      "rank": 19,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "was|be/AUX|be#sein_vollverb": {
+      "rank": 16,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "be|be/AUX|be#sein_existieren": {
+      "rank": 17,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "which|which/PRON|which#fragepronomen": {
+      "rank": 59,
+      "usage": "haupt",
+      "sense_index": 2
+    },
+    "be|be/AUX|be#befinden": {
+      "rank": 17,
+      "usage": "haupt",
+      "sense_index": 3
+    },
+    "eat|eat/VERB|eat#essen": {
+      "rank": 765,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "chair|chair/NOUN|chair#stuhl": {
+      "rank": 2067,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "phone|phone/NOUN|phone#telefon": {
+      "rank": 506,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "cheese|cheese/NOUN|cheese#kase": {
+      "rank": 2617,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "pillow|pillow/NOUN|pillow#kissen": {
+      "rank": 5001,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "wash|wash/VERB|wash#waescht": {
+      "rank": 3271,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "repair|repair/VERB|repair#repariert": {
+      "rank": 3582,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "shoe|shoe/NOUN|shoe#schuhe": {
+      "rank": 4796,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "leg|leg/NOUN|leg#bein": {
+      "rank": 2215,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "bottle|bottle/NOUN|bottle#flasche": {
+      "rank": 2613,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "close|close/VERB|close#schliessen": {
+      "rank": 431,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "buy|buy/VERB|buy#kaufen": {
+      "rank": 476,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "table|table/NOUN|table#tisch": {
+      "rank": 958,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "shop|shop/NOUN|shop#geschaeft": {
+      "rank": 1408,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "price|price/NOUN|price#preis": {
+      "rank": 592,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "write|write/VERB|write#schreiben": {
+      "rank": 1008,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "arm|arm/NOUN|arm#arm": {
+      "rank": 1887,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "key|key/NOUN|key#schluessel": {
+      "rank": 788,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "paper|paper/NOUN|paper#papier": {
+      "rank": 910,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "pay|pay/VERB|pay#bezahlt": {
+      "rank": 390,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "kitchen|kitchen/NOUN|kitchen#kueche": {
+      "rank": 2257,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "money|money/NOUN|money#geld": {
+      "rank": 210,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "map|map/NOUN|map#karte": {
+      "rank": 1798,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "empty|empty/ADJ|empty#leer": {
+      "rank": 2533,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "choose|choose/VERB|choose#waehlt-aus": {
+      "rank": 1296,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "wait|wait/VERB|wait#warten": {
+      "rank": 451,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "road|road/NOUN|road#strasse": {
+      "rank": 577,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "towel|towel/NOUN|towel#handtuch": {
+      "rank": 5001,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "bed|bed/NOUN|bed#bett": {
+      "rank": 893,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "mirror|mirror/NOUN|mirror#spiegel": {
+      "rank": 3184,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "speaker|speaker/NOUN|speaker#lautsprecher": {
+      "rank": 3088,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "meeting|meeting/NOUN|meeting#besprechung": {
+      "rank": 736,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "basket|basket/NOUN|basket#korb": {
+      "rank": 5001,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "full|full/ADJ|full#vollen": {
+      "rank": 262,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "milk|milk/NOUN|milk#milch": {
+      "rank": 2223,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "foot|foot/NOUN|foot#fuss": {
+      "rank": 1426,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "bus|bus/NOUN|bus#bus": {
+      "rank": 1554,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "car|car/NOUN|car#auto": {
+      "rank": 334,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "lamp|lamp/NOUN|lamp#lampen": {
+      "rank": 5001,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "letter|letter/NOUN|letter#brief": {
+      "rank": 1196,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "shirt|shirt/NOUN|shirt#hemd": {
+      "rank": 2366,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "walk|walk/VERB|walk#geht-zu-fuss": {
+      "rank": 891,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "sell|sell/VERB|sell#verkaufen": {
+      "rank": 1128,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "dry|dry/ADJ|dry#trocken": {
+      "rank": 1857,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "skin|skin/NOUN|skin#haut": {
+      "rank": 1319,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "bread|bread/NOUN|bread#brot": {
+      "rank": 2981,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "blanket|blanket/NOUN|blanket#decke": {
+      "rank": 5001,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "cup|cup/NOUN|cup#tasse": {
+      "rank": 805,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "send|send/VERB|send#schicken": {
+      "rank": 817,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "spoon|spoon/NOUN|spoon#loeffel": {
+      "rank": 5001,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "open|open/VERB|open#oeffnete": {
+      "rank": 314,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "computer|computer/NOUN|computer#computer": {
+      "rank": 1136,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "sleep|sleep/VERB|sleep#schlafen": {
+      "rank": 957,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "bag|bag/NOUN|bag#tasche": {
+      "rank": 1683,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "drink|drink/VERB|drink#trinkt": {
+      "rank": 1334,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "egg|egg/NOUN|egg#ei": {
+      "rank": 3227,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "plate|plate/NOUN|plate#teller": {
+      "rank": 2751,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "drive|drive/VERB|drive#faehrt": {
+      "rank": 764,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "box|box/NOUN|box#schachtel": {
+      "rank": 962,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "listen|listen/VERB|listen#zuhoert": {
+      "rank": 929,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "cook|cook/VERB|cook#kocht": {
+      "rank": 2248,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "stand|stand/VERB|stand#stehen": {
+      "rank": 756,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "clock|clock/NOUN|clock#uhr": {
+      "rank": 3414,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "bring|bring/VERB|bring#bringt": {
+      "rank": 537,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "bicycle|bicycle/NOUN|bicycle#fahrrad": {
+      "rank": 5001,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "head|head/NOUN|head#kopf": {
+      "rank": 288,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "apple|apple/NOUN|apple#aepfel": {
+      "rank": 1781,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "desk|desk/NOUN|desk#schreibtisch": {
+      "rank": 3423,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "receipt|receipt/NOUN|receipt#kassenbon": {
+      "rank": 5001,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "hand|hand/NOUN|hand#hand": {
+      "rank": 375,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "soap|soap/NOUN|soap#seife": {
+      "rank": 5001,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "train|train/NOUN|train#zug": {
+      "rank": 1176,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "window|window/NOUN|window#fenster": {
+      "rank": 1680,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "eye|eye/NOUN|eye#auge": {
+      "rank": 1018,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "bandage|bandage/NOUN|bandage#verband": {
+      "rank": 5001,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "bridge|bridge/NOUN|bridge#brucke": {
+      "rank": 1746,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "carry|carry/VERB|carry#tragen": {
+      "rank": 1360,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "ticket|ticket/NOUN|ticket#fahrkarte": {
+      "rank": 2468,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "clean|clean/VERB|clean#putzen": {
+      "rank": 1135,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "cut|cut/VERB|cut#schneidet": {
+      "rank": 569,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "fork|fork/NOUN|fork#gabel": {
+      "rank": 5001,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "knife|knife/NOUN|knife#messer": {
+      "rank": 3567,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "station|station/NOUN|station#bahnhof": {
+      "rank": 1061,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "colleague|colleague/NOUN|colleague#kollege_oder_kollegin": {
+      "rank": 5001,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "office|office/NOUN|office#buero": {
+      "rank": 389,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "read|read/VERB|read#lesen": {
+      "rank": 266,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "tooth|tooth/NOUN|tooth#zahn": {
+      "rank": 5001,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "strong|strong/ADJ|strong#stark": {
+      "rank": 614,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "old|old/ADJ|old#alt": {
+      "rank": 174,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "cheap|cheap/ADJ|cheap#billiger": {
+      "rank": 1989,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "expensive|expensive/ADJ|expensive#teuer": {
+      "rank": 2071,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "hard|hard/ADJ|hard#hart": {
+      "rank": 273,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "young|young/ADJ|young#jung": {
+      "rank": 364,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "ready|ready/ADJ|ready#bereit": {
+      "rank": 532,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "wet|wet/ADJ|wet#nass": {
+      "rank": 2813,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "quiet|quiet/ADJ|quiet#ruhig": {
+      "rank": 2267,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "soft|soft/ADJ|soft#weiche": {
+      "rank": 2130,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "sit|sit/VERB|sit#sitzen": {
+      "rank": 1355,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "heavy|heavy/ADJ|heavy#schwer": {
+      "rank": 1170,
+      "usage": "haupt",
+      "sense_index": 1
+    },
+    "safe|safe/ADJ|safe#sicher": {
+      "rank": 914,
+      "usage": "haupt",
+      "sense_index": 1
+    }
+  },
+  "card_operations": [
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "eat|eat/VERB|eat#essen"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "chair|chair/NOUN|chair#stuhl"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "phone|phone/NOUN|phone#telefon"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "cheese|cheese/NOUN|cheese#kase"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "pillow|pillow/NOUN|pillow#kissen"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "wash|wash/VERB|wash#waescht"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "repair|repair/VERB|repair#repariert"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "shoe|shoe/NOUN|shoe#schuhe"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "leg|leg/NOUN|leg#bein"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "bottle|bottle/NOUN|bottle#flasche"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "close|close/VERB|close#schliessen"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "buy|buy/VERB|buy#kaufen"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "table|table/NOUN|table#tisch"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "shop|shop/NOUN|shop#geschaeft"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "price|price/NOUN|price#preis"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "write|write/VERB|write#schreiben"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "arm|arm/NOUN|arm#arm"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "key|key/NOUN|key#schluessel"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "paper|paper/NOUN|paper#papier"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "pay|pay/VERB|pay#bezahlt"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "kitchen|kitchen/NOUN|kitchen#kueche"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "money|money/NOUN|money#geld"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "map|map/NOUN|map#karte"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "empty|empty/ADJ|empty#leer"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "choose|choose/VERB|choose#waehlt-aus"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "wait|wait/VERB|wait#warten"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "road|road/NOUN|road#strasse"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "towel|towel/NOUN|towel#handtuch"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "bed|bed/NOUN|bed#bett"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "mirror|mirror/NOUN|mirror#spiegel"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "speaker|speaker/NOUN|speaker#lautsprecher"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "meeting|meeting/NOUN|meeting#besprechung"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "basket|basket/NOUN|basket#korb"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "full|full/ADJ|full#vollen"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "milk|milk/NOUN|milk#milch"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "foot|foot/NOUN|foot#fuss"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "bus|bus/NOUN|bus#bus"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "car|car/NOUN|car#auto"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "lamp|lamp/NOUN|lamp#lampen"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "letter|letter/NOUN|letter#brief"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "shirt|shirt/NOUN|shirt#hemd"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "walk|walk/VERB|walk#geht-zu-fuss"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "sell|sell/VERB|sell#verkaufen"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "dry|dry/ADJ|dry#trocken"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "skin|skin/NOUN|skin#haut"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "bread|bread/NOUN|bread#brot"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "blanket|blanket/NOUN|blanket#decke"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "cup|cup/NOUN|cup#tasse"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "send|send/VERB|send#schicken"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "spoon|spoon/NOUN|spoon#loeffel"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "open|open/VERB|open#oeffnete"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "computer|computer/NOUN|computer#computer"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "sleep|sleep/VERB|sleep#schlafen"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "bag|bag/NOUN|bag#tasche"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "drink|drink/VERB|drink#trinkt"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "egg|egg/NOUN|egg#ei"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "plate|plate/NOUN|plate#teller"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "drive|drive/VERB|drive#faehrt"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "box|box/NOUN|box#schachtel"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "listen|listen/VERB|listen#zuhoert"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "cook|cook/VERB|cook#kocht"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "stand|stand/VERB|stand#stehen"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "clock|clock/NOUN|clock#uhr"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "bring|bring/VERB|bring#bringt"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "bicycle|bicycle/NOUN|bicycle#fahrrad"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "head|head/NOUN|head#kopf"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "apple|apple/NOUN|apple#aepfel"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "desk|desk/NOUN|desk#schreibtisch"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "receipt|receipt/NOUN|receipt#kassenbon"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "hand|hand/NOUN|hand#hand"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "soap|soap/NOUN|soap#seife"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "train|train/NOUN|train#zug"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "window|window/NOUN|window#fenster"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "eye|eye/NOUN|eye#auge"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "bandage|bandage/NOUN|bandage#verband"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "bridge|bridge/NOUN|bridge#brucke"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "carry|carry/VERB|carry#tragen"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "ticket|ticket/NOUN|ticket#fahrkarte"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "clean|clean/VERB|clean#putzen"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "cut|cut/VERB|cut#schneidet"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "fork|fork/NOUN|fork#gabel"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "knife|knife/NOUN|knife#messer"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "station|station/NOUN|station#bahnhof"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "colleague|colleague/NOUN|colleague#kollege_oder_kollegin"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "office|office/NOUN|office#buero"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "read|read/VERB|read#lesen"
+    },
+    {
+      "op": "add_card",
+      "source": "everyday",
+      "card": "tooth|tooth/NOUN|tooth#zahn"
+    },
+    {
+      "op": "add_card",
+      "source": "missing",
+      "card": "strong|strong/ADJ|strong#stark"
+    },
+    {
+      "op": "add_card",
+      "source": "missing",
+      "card": "old|old/ADJ|old#alt"
+    },
+    {
+      "op": "add_card",
+      "source": "missing",
+      "card": "cheap|cheap/ADJ|cheap#billiger"
+    },
+    {
+      "op": "add_card",
+      "source": "missing",
+      "card": "expensive|expensive/ADJ|expensive#teuer"
+    },
+    {
+      "op": "add_card",
+      "source": "missing",
+      "card": "hard|hard/ADJ|hard#hart"
+    },
+    {
+      "op": "add_card",
+      "source": "missing",
+      "card": "young|young/ADJ|young#jung"
+    },
+    {
+      "op": "add_card",
+      "source": "missing",
+      "card": "ready|ready/ADJ|ready#bereit"
+    },
+    {
+      "op": "add_card",
+      "source": "missing",
+      "card": "wet|wet/ADJ|wet#nass"
+    },
+    {
+      "op": "add_card",
+      "source": "missing",
+      "card": "quiet|quiet/ADJ|quiet#ruhig"
+    },
+    {
+      "op": "add_card",
+      "source": "missing",
+      "card": "soft|soft/ADJ|soft#weiche"
+    },
+    {
+      "op": "add_card",
+      "source": "missing",
+      "card": "sit|sit/VERB|sit#sitzen"
+    },
+    {
+      "op": "add_card",
+      "source": "missing",
+      "card": "heavy|heavy/ADJ|heavy#schwer"
+    },
+    {
+      "op": "add_card",
+      "source": "missing",
+      "card": "safe|safe/ADJ|safe#sicher"
+    }
+  ],
+  "sentence_operations": [
+    {
+      "op": "remove_alternative",
+      "source": "everyday",
+      "label": "s8",
+      "card": "phone|phone/NOUN|phone#telefon",
+      "sentence_id": "a07f6a220e98d122f6e04cdf05e24eb1",
+      "expect": {
+        "text": "Can you check your phone for a message from Lina?",
+        "translation_de": "Kannst du auf deinem Telefon nach einer Nachricht von Lina schauen?"
+      },
+      "alternative": "cell phone",
+      "reason": "Engere Annahmeliste: Telefon garantiert kein Mobiltelefon."
+    },
+    {
+      "op": "remove_alternative",
+      "source": "everyday",
+      "label": "s8",
+      "card": "phone|phone/NOUN|phone#telefon",
+      "sentence_id": "a07f6a220e98d122f6e04cdf05e24eb1",
+      "expect": {
+        "text": "Can you check your phone for a message from Lina?",
+        "translation_de": "Kannst du auf deinem Telefon nach einer Nachricht von Lina schauen?"
+      },
+      "alternative": "mobile",
+      "reason": "Engere Annahmeliste: Telefon garantiert kein Mobiltelefon."
+    },
+    {
+      "op": "remove_alternative",
+      "source": "everyday",
+      "label": "s146",
+      "card": "send|send/VERB|send#schicken",
+      "sentence_id": "2eeca48989194c550818cc608869d2a1",
+      "expect": {
+        "text": "Can you send a birthday card to Rosa?",
+        "translation_de": "Kannst du eine Geburtstagskarte an Rosa schicken?"
+      },
+      "alternative": "mail",
+      "reason": "Senden garantiert keinen Postweg."
+    },
+    {
+      "op": "remove_alternative",
+      "source": "everyday",
+      "label": "s192",
+      "card": "bring|bring/VERB|bring#bringt",
+      "sentence_id": "b83df3189fdbace3a0e864e394688c0d",
+      "expect": {
+        "text": "Lina will bring the documents to the office tomorrow.",
+        "translation_de": "Lina wird die Dokumente morgen ins Büro bringen."
+      },
+      "alternative": "take",
+      "reason": "Deiktische Richtung bleibt bei bring; take hier konservativ ausgeschlossen."
+    },
+    {
+      "op": "remove_alternative",
+      "source": "everyday",
+      "label": "s206",
+      "card": "receipt|receipt/NOUN|receipt#kassenbon",
+      "sentence_id": "05218294a9689370661fb9ea2f05e6c3",
+      "expect": {
+        "text": "Does Luis have the receipt for this blue shirt?",
+        "translation_de": "Hat Luis den Beleg für dieses blaue Hemd?"
+      },
+      "alternative": "proof of purchase",
+      "reason": "Kaufnachweis ist weiter gefasst als receipt."
+    },
+    {
+      "op": "remove_alternative",
+      "source": "everyday",
+      "label": "s79",
+      "card": "road|road/NOUN|road#strasse",
+      "sentence_id": "c5c3ae22a17f2628f7b0b8429acd4469",
+      "expect": {
+        "text": "Sara can see heavy traffic on the road from her office window.",
+        "translation_de": "Sara kann von ihrem Bürofenster aus dichten Verkehr auf der Straße sehen."
+      },
+      "alternative": "street",
+      "reason": "Straße im Siedlungsraum ist enger als road; redaktionell konservativ, nicht generell ungrammatisch."
+    },
+    {
+      "op": "remove_alternative",
+      "source": "everyday",
+      "label": "s80",
+      "card": "road|road/NOUN|road#strasse",
+      "sentence_id": "b223945a912afc18e6be8473e63e6a5b",
+      "expect": {
+        "text": "Ben walked out of the station and crossed the busy road.",
+        "translation_de": "Ben ging aus dem Bahnhof und überquerte die belebte Straße."
+      },
+      "alternative": "street",
+      "reason": "Straße im Siedlungsraum ist enger als road; redaktionell konservativ, nicht generell ungrammatisch."
+    },
+    {
+      "op": "remove_alternative",
+      "source": "everyday",
+      "label": "s81",
+      "card": "road|road/NOUN|road#strasse",
+      "sentence_id": "2e1b58b20bba1b3aff592e2611b7ea4c",
+      "expect": {
+        "text": "Did David park his car on the other side of the road?",
+        "translation_de": "Hat David sein Auto auf der anderen Straßenseite geparkt?"
+      },
+      "alternative": "street",
+      "reason": "Straße im Siedlungsraum ist enger als road; redaktionell konservativ, nicht generell ungrammatisch."
+    },
+    {
+      "op": "remove_alternative",
+      "source": "everyday",
+      "label": "s176",
+      "card": "box|box/NOUN|box#schachtel",
+      "sentence_id": "0361ac900df19f99bd320e0866bdb140",
+      "expect": {
+        "text": "Luis keeps his gardening tools inside a wooden box.",
+        "translation_de": "Luis bewahrt seine Gartenwerkzeuge in einer Holzkiste auf."
+      },
+      "alternative": "crate",
+      "reason": "Kiste mit besonderer Bauart ist enger als allgemeine box."
+    },
+    {
+      "op": "remove_alternative",
+      "source": "missing",
+      "label": "s25",
+      "card": "quiet|quiet/ADJ|quiet#ruhig",
+      "sentence_id": "501c3a14a16c8dcbde0953ff2b3ea8bf",
+      "expect": {
+        "text": "Zoe lives on a quiet street near the city center.",
+        "translation_de": "Zoe wohnt in einer ruhigen Straße nahe dem Stadtzentrum."
+      },
+      "alternative": "peaceful",
+      "reason": "Friedlich garantiert nicht geräuscharm; die Aussage zur Geräuschkulisse bleibt nicht sicher erhalten."
+    },
+    {
+      "op": "editorial_translation",
+      "source": "everyday",
+      "label": "s53",
+      "card": "key|key/NOUN|key#schluessel",
+      "sentence_id": "2b2b90918d944b984fcd138035038a4d",
+      "expect": {
+        "text": "Did Lina hide the key to the gift box?",
+        "translation_de": "Hat Lina den Schlüssel zum Geschenkkarton versteckt?"
+      },
+      "new": {
+        "translation_de": "Hat Lina den Schlüssel zum Geschenkbox versteckt?"
+      },
+      "reason": "Explizite redaktionelle Entscheidung des Auftrags; gift box ohne unnötige Materialfestlegung. Keine neue Modellprüfung."
+    }
+  ],
+  "metadata_resolutions": [
+    {
+      "table": "senses",
+      "ref": "lamp/NOUN|lamp#lampen",
+      "expect": {
+        "pilot": {
+          "ref": "lamp/NOUN|lamp#lampen",
+          "lemma": "lamp/NOUN",
+          "sense_key": "lamp#lampen",
+          "gloss_de": "Lampen"
+        },
+        "everyday": {
+          "ref": "lamp/NOUN|lamp#lampen",
+          "lemma": "lamp/NOUN",
+          "sense_key": "lamp#lampen",
+          "gloss_de": "Gerät zur Beleuchtung eines Raums"
+        }
+      },
+      "new": {
+        "gloss_de": "Lampe als Beleuchtungsgerät, innen oder außen"
+      },
+      "reason": "Vom Auftrag präzisierte allgemeine Zielbedeutung; Quellauswahl unverändert, gleiche Identität."
+    },
+    {
+      "table": "senses",
+      "ref": "bus/NOUN|bus#bus",
+      "expect": {
+        "pilot": {
+          "ref": "bus/NOUN|bus#bus",
+          "lemma": "bus/NOUN",
+          "sense_key": "bus#bus",
+          "gloss_de": "Bus"
+        },
+        "everyday": {
+          "ref": "bus/NOUN|bus#bus",
+          "lemma": "bus/NOUN",
+          "sense_key": "bus#bus",
+          "gloss_de": "Bus-"
+        },
+        "missing": {
+          "ref": "bus/NOUN|bus#bus",
+          "lemma": "bus/NOUN",
+          "sense_key": "bus#bus",
+          "gloss_de": "Bus-"
+        }
+      },
+      "new": {
+        "gloss_de": "Bus"
+      },
+      "reason": "Explizite Korrektur der eigenständigen Sense-Glosse Bus- zu Bus."
+    },
+    {
+      "table": "senses",
+      "ref": "street/NOUN|street#strassen",
+      "expect": {
+        "pilot": {
+          "ref": "street/NOUN|street#strassen",
+          "lemma": "street/NOUN",
+          "sense_key": "street#strassen",
+          "gloss_de": "Straßen-"
+        },
+        "everyday": {
+          "ref": "street/NOUN|street#strassen",
+          "lemma": "street/NOUN",
+          "sense_key": "street#strassen",
+          "gloss_de": "Straßen"
+        }
+      },
+      "new": {
+        "gloss_de": "Straßen-"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "be/AUX|be#ist",
+      "expect": {
+        "pilot": {
+          "ref": "be/AUX|be#ist",
+          "lemma": "be/AUX",
+          "sense_key": "be#ist",
+          "gloss_de": "ist"
+        },
+        "everyday": {
+          "ref": "be/AUX|be#ist",
+          "lemma": "be/AUX",
+          "sense_key": "be#ist",
+          "gloss_de": "Ist"
+        },
+        "missing": {
+          "ref": "be/AUX|be#ist",
+          "lemma": "be/AUX",
+          "sense_key": "be#ist",
+          "gloss_de": "ist"
+        }
+      },
+      "new": {
+        "gloss_de": "ist"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "this/DET|this#dieses",
+      "expect": {
+        "pilot": {
+          "ref": "this/DET|this#dieses",
+          "lemma": "this/DET",
+          "sense_key": "this#dieses",
+          "gloss_de": "Dieses"
+        },
+        "everyday": {
+          "ref": "this/DET|this#dieses",
+          "lemma": "this/DET",
+          "sense_key": "this#dieses",
+          "gloss_de": "dieses"
+        },
+        "missing": {
+          "ref": "this/DET|this#dieses",
+          "lemma": "this/DET",
+          "sense_key": "this#dieses",
+          "gloss_de": "dieses"
+        }
+      },
+      "new": {
+        "gloss_de": "Dieses"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "not/PART|not#nicht",
+      "expect": {
+        "pilot": {
+          "ref": "not/PART|not#nicht",
+          "lemma": "not/PART",
+          "sense_key": "not#nicht",
+          "gloss_de": "nicht (drückt Verneinung von Verben, Adjektiven oder Aussagen aus)"
+        },
+        "everyday": {
+          "ref": "not/PART|not#nicht",
+          "lemma": "not/PART",
+          "sense_key": "not#nicht",
+          "gloss_de": "nicht"
+        },
+        "missing": {
+          "ref": "not/PART|not#nicht",
+          "lemma": "not/PART",
+          "sense_key": "not#nicht",
+          "gloss_de": "nicht"
+        }
+      },
+      "new": {
+        "gloss_de": "nicht (drückt Verneinung von Verben, Adjektiven oder Aussagen aus)"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "gift/NOUN|gift#geschenk",
+      "expect": {
+        "pilot": {
+          "ref": "gift/NOUN|gift#geschenk",
+          "lemma": "gift/NOUN",
+          "sense_key": "gift#geschenk",
+          "gloss_de": "Geschenk"
+        },
+        "everyday": {
+          "ref": "gift/NOUN|gift#geschenk",
+          "lemma": "gift/NOUN",
+          "sense_key": "gift#geschenk",
+          "gloss_de": "Geschenk-"
+        },
+        "missing": {
+          "ref": "gift/NOUN|gift#geschenk",
+          "lemma": "gift/NOUN",
+          "sense_key": "gift#geschenk",
+          "gloss_de": "Geschenk"
+        }
+      },
+      "new": {
+        "gloss_de": "Geschenk"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "the/DET|the#der",
+      "expect": {
+        "pilot": {
+          "ref": "the/DET|the#der",
+          "lemma": "the/DET",
+          "sense_key": "the#der",
+          "gloss_de": "der"
+        },
+        "everyday": {
+          "ref": "the/DET|the#der",
+          "lemma": "the/DET",
+          "sense_key": "the#der",
+          "gloss_de": "der"
+        },
+        "missing": {
+          "ref": "the/DET|the#der",
+          "lemma": "the/DET",
+          "sense_key": "the#der",
+          "gloss_de": "Der"
+        }
+      },
+      "new": {
+        "gloss_de": "der"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "at/ADP|at#an",
+      "expect": {
+        "pilot": {
+          "ref": "at/ADP|at#an",
+          "lemma": "at/ADP",
+          "sense_key": "at#an",
+          "gloss_de": "an"
+        },
+        "everyday": {
+          "ref": "at/ADP|at#an",
+          "lemma": "at/ADP",
+          "sense_key": "at#an",
+          "gloss_de": "an"
+        },
+        "missing": {
+          "ref": "at/ADP|at#an",
+          "lemma": "at/ADP",
+          "sense_key": "at#an",
+          "gloss_de": "An"
+        }
+      },
+      "new": {
+        "gloss_de": "an"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "that/ADV|that#so",
+      "expect": {
+        "pilot": {
+          "ref": "that/ADV|that#so",
+          "lemma": "that/ADV",
+          "sense_key": "that#so",
+          "gloss_de": "so, dermaßen (vor Adjektiven oder Adverbien)"
+        },
+        "missing": {
+          "ref": "that/ADV|that#so",
+          "lemma": "that/ADV",
+          "sense_key": "that#so",
+          "gloss_de": "so"
+        }
+      },
+      "new": {
+        "gloss_de": "so, dermaßen (vor Adjektiven oder Adverbien)"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "kitchen/NOUN|kitchen#kueche",
+      "expect": {
+        "pilot": {
+          "ref": "kitchen/NOUN|kitchen#kueche",
+          "lemma": "kitchen/NOUN",
+          "sense_key": "kitchen#kueche",
+          "gloss_de": "Küche"
+        },
+        "everyday": {
+          "ref": "kitchen/NOUN|kitchen#kueche",
+          "lemma": "kitchen/NOUN",
+          "sense_key": "kitchen#kueche",
+          "gloss_de": "Raum zum Zubereiten von Speisen"
+        }
+      },
+      "new": {
+        "gloss_de": "Raum zum Zubereiten von Speisen"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "play/VERB|play#spielen",
+      "expect": {
+        "pilot": {
+          "ref": "play/VERB|play#spielen",
+          "lemma": "play/VERB",
+          "sense_key": "play#spielen",
+          "gloss_de": "spielen"
+        },
+        "everyday": {
+          "ref": "play/VERB|play#spielen",
+          "lemma": "play/VERB",
+          "sense_key": "play#spielen",
+          "gloss_de": "Spielen"
+        }
+      },
+      "new": {
+        "gloss_de": "spielen"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "football/NOUN|football#fussball",
+      "expect": {
+        "pilot": {
+          "ref": "football/NOUN|football#fussball",
+          "lemma": "football/NOUN",
+          "sense_key": "football#fussball",
+          "gloss_de": "Fußball"
+        },
+        "everyday": {
+          "ref": "football/NOUN|football#fussball",
+          "lemma": "football/NOUN",
+          "sense_key": "football#fussball",
+          "gloss_de": "Fußball-"
+        }
+      },
+      "new": {
+        "gloss_de": "Fußball"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "garden/NOUN|garden#garten",
+      "expect": {
+        "pilot": {
+          "ref": "garden/NOUN|garden#garten",
+          "lemma": "garden/NOUN",
+          "sense_key": "garden#garten",
+          "gloss_de": "Garten"
+        },
+        "everyday": {
+          "ref": "garden/NOUN|garden#garten",
+          "lemma": "garden/NOUN",
+          "sense_key": "garden#garten",
+          "gloss_de": "Garten-"
+        }
+      },
+      "new": {
+        "gloss_de": "Garten"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "box/NOUN|box#schachtel",
+      "expect": {
+        "pilot": {
+          "ref": "box/NOUN|box#schachtel",
+          "lemma": "box/NOUN",
+          "sense_key": "box#schachtel",
+          "gloss_de": "Schachtel"
+        },
+        "everyday": {
+          "ref": "box/NOUN|box#schachtel",
+          "lemma": "box/NOUN",
+          "sense_key": "box#schachtel",
+          "gloss_de": "Fester Behälter zum Aufbewahren von Dingen"
+        }
+      },
+      "new": {
+        "gloss_de": "Fester Behälter zum Aufbewahren von Dingen"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "old/ADJ|old#alt",
+      "expect": {
+        "pilot": {
+          "ref": "old/ADJ|old#alt",
+          "lemma": "old/ADJ",
+          "sense_key": "old#alt",
+          "gloss_de": "alt"
+        },
+        "missing": {
+          "ref": "old/ADJ|old#alt",
+          "lemma": "old/ADJ",
+          "sense_key": "old#alt",
+          "gloss_de": "Schon viele Lebensjahre alt"
+        }
+      },
+      "new": {
+        "gloss_de": "Schon viele Lebensjahre alt"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "glass/NOUN|glass#glas",
+      "expect": {
+        "pilot": {
+          "ref": "glass/NOUN|glass#glas",
+          "lemma": "glass/NOUN",
+          "sense_key": "glass#glas",
+          "gloss_de": "Glas"
+        },
+        "everyday": {
+          "ref": "glass/NOUN|glass#glas",
+          "lemma": "glass/NOUN",
+          "sense_key": "glass#glas",
+          "gloss_de": "Glas-"
+        },
+        "missing": {
+          "ref": "glass/NOUN|glass#glas",
+          "lemma": "glass/NOUN",
+          "sense_key": "glass#glas",
+          "gloss_de": "Glas"
+        }
+      },
+      "new": {
+        "gloss_de": "Glas"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "milk/NOUN|milk#milch",
+      "expect": {
+        "pilot": {
+          "ref": "milk/NOUN|milk#milch",
+          "lemma": "milk/NOUN",
+          "sense_key": "milk#milch",
+          "gloss_de": "Milch"
+        },
+        "everyday": {
+          "ref": "milk/NOUN|milk#milch",
+          "lemma": "milk/NOUN",
+          "sense_key": "milk#milch",
+          "gloss_de": "Flüssiges Lebensmittel von Kühen"
+        }
+      },
+      "new": {
+        "gloss_de": "Flüssiges Lebensmittel von Kühen"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "blanket/NOUN|blanket#decke",
+      "expect": {
+        "pilot": {
+          "ref": "blanket/NOUN|blanket#decke",
+          "lemma": "blanket/NOUN",
+          "sense_key": "blanket#decke",
+          "gloss_de": "Decke"
+        },
+        "everyday": {
+          "ref": "blanket/NOUN|blanket#decke",
+          "lemma": "blanket/NOUN",
+          "sense_key": "blanket#decke",
+          "gloss_de": "Textile Decke zum Zudecken"
+        }
+      },
+      "new": {
+        "gloss_de": "Textile Decke zum Zudecken"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "supermarket/NOUN|supermarket#supermarkt",
+      "expect": {
+        "pilot": {
+          "ref": "supermarket/NOUN|supermarket#supermarkt",
+          "lemma": "supermarket/NOUN",
+          "sense_key": "supermarket#supermarkt",
+          "gloss_de": "Supermarkt-"
+        },
+        "everyday": {
+          "ref": "supermarket/NOUN|supermarket#supermarkt",
+          "lemma": "supermarket/NOUN",
+          "sense_key": "supermarket#supermarkt",
+          "gloss_de": "Supermarkt"
+        },
+        "missing": {
+          "ref": "supermarket/NOUN|supermarket#supermarkt",
+          "lemma": "supermarket/NOUN",
+          "sense_key": "supermarket#supermarkt",
+          "gloss_de": "Supermarkt"
+        }
+      },
+      "new": {
+        "gloss_de": "Supermarkt-"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "please/INTJ|please#bitte",
+      "expect": {
+        "pilot": {
+          "ref": "please/INTJ|please#bitte",
+          "lemma": "please/INTJ",
+          "sense_key": "please#bitte",
+          "gloss_de": "Bitte"
+        },
+        "everyday": {
+          "ref": "please/INTJ|please#bitte",
+          "lemma": "please/INTJ",
+          "sense_key": "please#bitte",
+          "gloss_de": "bitte"
+        },
+        "missing": {
+          "ref": "please/INTJ|please#bitte",
+          "lemma": "please/INTJ",
+          "sense_key": "please#bitte",
+          "gloss_de": "bitte"
+        }
+      },
+      "new": {
+        "gloss_de": "Bitte"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "send/VERB|send#schicken",
+      "expect": {
+        "pilot": {
+          "ref": "send/VERB|send#schicken",
+          "lemma": "send/VERB",
+          "sense_key": "send#schicken",
+          "gloss_de": "schicken"
+        },
+        "everyday": {
+          "ref": "send/VERB|send#schicken",
+          "lemma": "send/VERB",
+          "sense_key": "send#schicken",
+          "gloss_de": "Eine Nachricht an einen Empfänger übermitteln"
+        }
+      },
+      "new": {
+        "gloss_de": "Eine Nachricht an einen Empfänger übermitteln"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "open/VERB|open#oeffnete",
+      "expect": {
+        "pilot": {
+          "ref": "open/VERB|open#oeffnete",
+          "lemma": "open/VERB",
+          "sense_key": "open#oeffnete",
+          "gloss_de": "öffnete"
+        },
+        "everyday": {
+          "ref": "open/VERB|open#oeffnete",
+          "lemma": "open/VERB",
+          "sense_key": "open#oeffnete",
+          "gloss_de": "Etwas bisher Geschlossenes zugänglich machen"
+        }
+      },
+      "new": {
+        "gloss_de": "Etwas bisher Geschlossenes zugänglich machen"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "phone/NOUN|phone#telefon",
+      "expect": {
+        "pilot": {
+          "ref": "phone/NOUN|phone#telefon",
+          "lemma": "phone/NOUN",
+          "sense_key": "phone#telefon",
+          "gloss_de": "Telefon"
+        },
+        "everyday": {
+          "ref": "phone/NOUN|phone#telefon",
+          "lemma": "phone/NOUN",
+          "sense_key": "phone#telefon",
+          "gloss_de": "Gerät zum Telefonieren"
+        },
+        "missing": {
+          "ref": "phone/NOUN|phone#telefon",
+          "lemma": "phone/NOUN",
+          "sense_key": "phone#telefon",
+          "gloss_de": "Telefon"
+        }
+      },
+      "new": {
+        "gloss_de": "Gerät zum Telefonieren"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "shop/NOUN|shop#geschaeft",
+      "expect": {
+        "pilot": {
+          "ref": "shop/NOUN|shop#geschaeft",
+          "lemma": "shop/NOUN",
+          "sense_key": "shop#geschaeft",
+          "gloss_de": "Geschäft"
+        },
+        "everyday": {
+          "ref": "shop/NOUN|shop#geschaeft",
+          "lemma": "shop/NOUN",
+          "sense_key": "shop#geschaeft",
+          "gloss_de": "Ort, an dem Waren verkauft werden"
+        }
+      },
+      "new": {
+        "gloss_de": "Ort, an dem Waren verkauft werden"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "that/PRON|that#das",
+      "expect": {
+        "pilot": {
+          "ref": "that/PRON|that#das",
+          "lemma": "that/PRON",
+          "sense_key": "that#das",
+          "gloss_de": "das, jenes (Demonstrativ- oder Relativpronomen)"
+        },
+        "everyday": {
+          "ref": "that/PRON|that#das",
+          "lemma": "that/PRON",
+          "sense_key": "that#das",
+          "gloss_de": "das"
+        }
+      },
+      "new": {
+        "gloss_de": "das, jenes (Demonstrativ- oder Relativpronomen)"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "team/NOUN|team#team",
+      "expect": {
+        "pilot": {
+          "ref": "team/NOUN|team#team",
+          "lemma": "team/NOUN",
+          "sense_key": "team#team",
+          "gloss_de": "Team"
+        },
+        "everyday": {
+          "ref": "team/NOUN|team#team",
+          "lemma": "team/NOUN",
+          "sense_key": "team#team",
+          "gloss_de": "Team-"
+        }
+      },
+      "new": {
+        "gloss_de": "Team"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "cup/NOUN|cup#tasse",
+      "expect": {
+        "pilot": {
+          "ref": "cup/NOUN|cup#tasse",
+          "lemma": "cup/NOUN",
+          "sense_key": "cup#tasse",
+          "gloss_de": "Tasse"
+        },
+        "everyday": {
+          "ref": "cup/NOUN|cup#tasse",
+          "lemma": "cup/NOUN",
+          "sense_key": "cup#tasse",
+          "gloss_de": "Trinkgefäß mit Henkel"
+        }
+      },
+      "new": {
+        "gloss_de": "Trinkgefäß mit Henkel"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "bring/VERB|bring#bringt",
+      "expect": {
+        "pilot": {
+          "ref": "bring/VERB|bring#bringt",
+          "lemma": "bring/VERB",
+          "sense_key": "bring#bringt",
+          "gloss_de": "bringt"
+        },
+        "everyday": {
+          "ref": "bring/VERB|bring#bringt",
+          "lemma": "bring/VERB",
+          "sense_key": "bring#bringt",
+          "gloss_de": "Etwas zu einer Person oder an einen Ort tragen"
+        },
+        "missing": {
+          "ref": "bring/VERB|bring#bringt",
+          "lemma": "bring/VERB",
+          "sense_key": "bring#bringt",
+          "gloss_de": "bringt"
+        }
+      },
+      "new": {
+        "gloss_de": "Etwas zu einer Person oder an einen Ort tragen"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "be/AUX|be#bist",
+      "expect": {
+        "pilot": {
+          "ref": "be/AUX|be#bist",
+          "lemma": "be/AUX",
+          "sense_key": "be#bist",
+          "gloss_de": "bist"
+        },
+        "missing": {
+          "ref": "be/AUX|be#bist",
+          "lemma": "be/AUX",
+          "sense_key": "be#bist",
+          "gloss_de": "Bist"
+        }
+      },
+      "new": {
+        "gloss_de": "bist"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "eat/VERB|eat#essen",
+      "expect": {
+        "pilot": {
+          "ref": "eat/VERB|eat#essen",
+          "lemma": "eat/VERB",
+          "sense_key": "eat#essen",
+          "gloss_de": "essen"
+        },
+        "everyday": {
+          "ref": "eat/VERB|eat#essen",
+          "lemma": "eat/VERB",
+          "sense_key": "eat#essen",
+          "gloss_de": "Nahrung zu sich nehmen"
+        }
+      },
+      "new": {
+        "gloss_de": "Nahrung zu sich nehmen"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "game/NOUN|game#spiele",
+      "expect": {
+        "pilot": {
+          "ref": "game/NOUN|game#spiele",
+          "lemma": "game/NOUN",
+          "sense_key": "game#spiele",
+          "gloss_de": "Spiele"
+        },
+        "everyday": {
+          "ref": "game/NOUN|game#spiele",
+          "lemma": "game/NOUN",
+          "sense_key": "game#spiele",
+          "gloss_de": "Spiele-"
+        }
+      },
+      "new": {
+        "gloss_de": "Spiele"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "to/PART|to#zu-infinitivpartikel",
+      "expect": {
+        "pilot": {
+          "ref": "to/PART|to#zu-infinitivpartikel",
+          "lemma": "to/PART",
+          "sense_key": "to#zu-infinitivpartikel",
+          "gloss_de": "zu / (Infinitivpartikel)"
+        },
+        "everyday": {
+          "ref": "to/PART|to#zu-infinitivpartikel",
+          "lemma": "to/PART",
+          "sense_key": "to#zu-infinitivpartikel",
+          "gloss_de": "zu (Infinitivpartikel)"
+        }
+      },
+      "new": {
+        "gloss_de": "zu / (Infinitivpartikel)"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "apple/NOUN|apple#aepfel",
+      "expect": {
+        "pilot": {
+          "ref": "apple/NOUN|apple#aepfel",
+          "lemma": "apple/NOUN",
+          "sense_key": "apple#aepfel",
+          "gloss_de": "Äpfel"
+        },
+        "everyday": {
+          "ref": "apple/NOUN|apple#aepfel",
+          "lemma": "apple/NOUN",
+          "sense_key": "apple#aepfel",
+          "gloss_de": "Runde essbare Frucht des Apfelbaums"
+        },
+        "missing": {
+          "ref": "apple/NOUN|apple#aepfel",
+          "lemma": "apple/NOUN",
+          "sense_key": "apple#aepfel",
+          "gloss_de": "Äpfel"
+        }
+      },
+      "new": {
+        "gloss_de": "Runde essbare Frucht des Apfelbaums"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "empty/ADJ|empty#leer",
+      "expect": {
+        "pilot": {
+          "ref": "empty/ADJ|empty#leer",
+          "lemma": "empty/ADJ",
+          "sense_key": "empty#leer",
+          "gloss_de": "leer"
+        },
+        "everyday": {
+          "ref": "empty/ADJ|empty#leer",
+          "lemma": "empty/ADJ",
+          "sense_key": "empty#leer",
+          "gloss_de": "Ohne Inhalt"
+        }
+      },
+      "new": {
+        "gloss_de": "Ohne Inhalt"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "table/NOUN|table#tisch",
+      "expect": {
+        "pilot": {
+          "ref": "table/NOUN|table#tisch",
+          "lemma": "table/NOUN",
+          "sense_key": "table#tisch",
+          "gloss_de": "Tisch"
+        },
+        "everyday": {
+          "ref": "table/NOUN|table#tisch",
+          "lemma": "table/NOUN",
+          "sense_key": "table#tisch",
+          "gloss_de": "Möbel mit waagerechter Platte zum Essen oder Arbeiten"
+        },
+        "missing": {
+          "ref": "table/NOUN|table#tisch",
+          "lemma": "table/NOUN",
+          "sense_key": "table#tisch",
+          "gloss_de": "Tisch"
+        }
+      },
+      "new": {
+        "gloss_de": "Möbel mit waagerechter Platte zum Essen oder Arbeiten"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "I/PRON|i#mich",
+      "expect": {
+        "pilot": {
+          "ref": "I/PRON|i#mich",
+          "lemma": "I/PRON",
+          "sense_key": "i#mich",
+          "gloss_de": "mich (Objektform von 'ich', Akkusativ)"
+        },
+        "everyday": {
+          "ref": "I/PRON|i#mich",
+          "lemma": "I/PRON",
+          "sense_key": "i#mich",
+          "gloss_de": "mich"
+        }
+      },
+      "new": {
+        "gloss_de": "mich (Objektform von 'ich', Akkusativ)"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "shoe/NOUN|shoe#schuhe",
+      "expect": {
+        "pilot": {
+          "ref": "shoe/NOUN|shoe#schuhe",
+          "lemma": "shoe/NOUN",
+          "sense_key": "shoe#schuhe",
+          "gloss_de": "Schuhe"
+        },
+        "everyday": {
+          "ref": "shoe/NOUN|shoe#schuhe",
+          "lemma": "shoe/NOUN",
+          "sense_key": "shoe#schuhe",
+          "gloss_de": "Kleidungsstück für einen Fuß"
+        },
+        "missing": {
+          "ref": "shoe/NOUN|shoe#schuhe",
+          "lemma": "shoe/NOUN",
+          "sense_key": "shoe#schuhe",
+          "gloss_de": "Schuhe"
+        }
+      },
+      "new": {
+        "gloss_de": "Kleidungsstück für einen Fuß"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "letter/NOUN|letter#brief",
+      "expect": {
+        "pilot": {
+          "ref": "letter/NOUN|letter#brief",
+          "lemma": "letter/NOUN",
+          "sense_key": "letter#brief",
+          "gloss_de": "Brief"
+        },
+        "everyday": {
+          "ref": "letter/NOUN|letter#brief",
+          "lemma": "letter/NOUN",
+          "sense_key": "letter#brief",
+          "gloss_de": "Schriftliche Nachricht, die man an jemanden schickt; kein Buchstabe"
+        }
+      },
+      "new": {
+        "gloss_de": "Schriftliche Nachricht, die man an jemanden schickt; kein Buchstabe"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "office/NOUN|office#buero",
+      "expect": {
+        "pilot": {
+          "ref": "office/NOUN|office#buero",
+          "lemma": "office/NOUN",
+          "sense_key": "office#buero",
+          "gloss_de": "Büro"
+        },
+        "everyday": {
+          "ref": "office/NOUN|office#buero",
+          "lemma": "office/NOUN",
+          "sense_key": "office#buero",
+          "gloss_de": "Büro"
+        },
+        "missing": {
+          "ref": "office/NOUN|office#buero",
+          "lemma": "office/NOUN",
+          "sense_key": "office#buero",
+          "gloss_de": "Büro-"
+        }
+      },
+      "new": {
+        "gloss_de": "Raum für Schreibtischarbeit"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "chair/NOUN|chair#stuhl",
+      "expect": {
+        "pilot": {
+          "ref": "chair/NOUN|chair#stuhl",
+          "lemma": "chair/NOUN",
+          "sense_key": "chair#stuhl",
+          "gloss_de": "Stuhl"
+        },
+        "everyday": {
+          "ref": "chair/NOUN|chair#stuhl",
+          "lemma": "chair/NOUN",
+          "sense_key": "chair#stuhl",
+          "gloss_de": "Sitzmöbel für eine Person mit Rückenlehne"
+        },
+        "missing": {
+          "ref": "chair/NOUN|chair#stuhl",
+          "lemma": "chair/NOUN",
+          "sense_key": "chair#stuhl",
+          "gloss_de": "Stuhl"
+        }
+      },
+      "new": {
+        "gloss_de": "Sitzmöbel für eine Person mit Rückenlehne"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "repair/VERB|repair#repariert",
+      "expect": {
+        "pilot": {
+          "ref": "repair/VERB|repair#repariert",
+          "lemma": "repair/VERB",
+          "sense_key": "repair#repariert",
+          "gloss_de": "repariert"
+        },
+        "everyday": {
+          "ref": "repair/VERB|repair#repariert",
+          "lemma": "repair/VERB",
+          "sense_key": "repair#repariert",
+          "gloss_de": "Etwas Beschädigtes wieder funktionsfähig machen"
+        }
+      },
+      "new": {
+        "gloss_de": "Etwas Beschädigtes wieder funktionsfähig machen"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "tool/NOUN|tool#werkzeug",
+      "expect": {
+        "pilot": {
+          "ref": "tool/NOUN|tool#werkzeug",
+          "lemma": "tool/NOUN",
+          "sense_key": "tool#werkzeug",
+          "gloss_de": "Werkzeug"
+        },
+        "everyday": {
+          "ref": "tool/NOUN|tool#werkzeug",
+          "lemma": "tool/NOUN",
+          "sense_key": "tool#werkzeug",
+          "gloss_de": "Werkzeug"
+        },
+        "missing": {
+          "ref": "tool/NOUN|tool#werkzeug",
+          "lemma": "tool/NOUN",
+          "sense_key": "tool#werkzeug",
+          "gloss_de": "Werkzeug-"
+        }
+      },
+      "new": {
+        "gloss_de": "Werkzeug"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "to/PART|to#um-zu",
+      "expect": {
+        "pilot": {
+          "ref": "to/PART|to#um-zu",
+          "lemma": "to/PART",
+          "sense_key": "to#um-zu",
+          "gloss_de": "um zu"
+        },
+        "everyday": {
+          "ref": "to/PART|to#um-zu",
+          "lemma": "to/PART",
+          "sense_key": "to#um-zu",
+          "gloss_de": "um ... zu"
+        },
+        "missing": {
+          "ref": "to/PART|to#um-zu",
+          "lemma": "to/PART",
+          "sense_key": "to#um-zu",
+          "gloss_de": "um zu"
+        }
+      },
+      "new": {
+        "gloss_de": "um zu"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "read/VERB|read#lesen",
+      "expect": {
+        "pilot": {
+          "ref": "read/VERB|read#lesen",
+          "lemma": "read/VERB",
+          "sense_key": "read#lesen",
+          "gloss_de": "lesen"
+        },
+        "everyday": {
+          "ref": "read/VERB|read#lesen",
+          "lemma": "read/VERB",
+          "sense_key": "read#lesen",
+          "gloss_de": "Geschriebene Wörter erfassen"
+        }
+      },
+      "new": {
+        "gloss_de": "Geschriebene Wörter erfassen"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "pay/VERB|pay#bezahlt",
+      "expect": {
+        "pilot": {
+          "ref": "pay/VERB|pay#bezahlt",
+          "lemma": "pay/VERB",
+          "sense_key": "pay#bezahlt",
+          "gloss_de": "bezahlt"
+        },
+        "everyday": {
+          "ref": "pay/VERB|pay#bezahlt",
+          "lemma": "pay/VERB",
+          "sense_key": "pay#bezahlt",
+          "gloss_de": "Geld für eine Ware oder Leistung geben"
+        }
+      },
+      "new": {
+        "gloss_de": "Geld für eine Ware oder Leistung geben"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "city/NOUN|city#stadt",
+      "expect": {
+        "pilot": {
+          "ref": "city/NOUN|city#stadt",
+          "lemma": "city/NOUN",
+          "sense_key": "city#stadt",
+          "gloss_de": "Stadt-"
+        },
+        "everyday": {
+          "ref": "city/NOUN|city#stadt",
+          "lemma": "city/NOUN",
+          "sense_key": "city#stadt",
+          "gloss_de": "Stadt"
+        },
+        "missing": {
+          "ref": "city/NOUN|city#stadt",
+          "lemma": "city/NOUN",
+          "sense_key": "city#stadt",
+          "gloss_de": "Stadt-"
+        }
+      },
+      "new": {
+        "gloss_de": "Stadt-"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "hotel/NOUN|hotel#hotel",
+      "expect": {
+        "pilot": {
+          "ref": "hotel/NOUN|hotel#hotel",
+          "lemma": "hotel/NOUN",
+          "sense_key": "hotel#hotel",
+          "gloss_de": "Hotel"
+        },
+        "everyday": {
+          "ref": "hotel/NOUN|hotel#hotel",
+          "lemma": "hotel/NOUN",
+          "sense_key": "hotel#hotel",
+          "gloss_de": "Hotel-"
+        },
+        "missing": {
+          "ref": "hotel/NOUN|hotel#hotel",
+          "lemma": "hotel/NOUN",
+          "sense_key": "hotel#hotel",
+          "gloss_de": "Hotel"
+        }
+      },
+      "new": {
+        "gloss_de": "Hotel"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "dessert/NOUN|dessert#dessert",
+      "expect": {
+        "pilot": {
+          "ref": "dessert/NOUN|dessert#dessert",
+          "lemma": "dessert/NOUN",
+          "sense_key": "dessert#dessert",
+          "gloss_de": "Dessert"
+        },
+        "everyday": {
+          "ref": "dessert/NOUN|dessert#dessert",
+          "lemma": "dessert/NOUN",
+          "sense_key": "dessert#dessert",
+          "gloss_de": "Dessert-"
+        }
+      },
+      "new": {
+        "gloss_de": "Dessert"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "beach/NOUN|beach#strand",
+      "expect": {
+        "pilot": {
+          "ref": "beach/NOUN|beach#strand",
+          "lemma": "beach/NOUN",
+          "sense_key": "beach#strand",
+          "gloss_de": "Strand-"
+        },
+        "everyday": {
+          "ref": "beach/NOUN|beach#strand",
+          "lemma": "beach/NOUN",
+          "sense_key": "beach#strand",
+          "gloss_de": "Strand"
+        }
+      },
+      "new": {
+        "gloss_de": "Strand-"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "paper/NOUN|paper#papier",
+      "expect": {
+        "pilot": {
+          "ref": "paper/NOUN|paper#papier",
+          "lemma": "paper/NOUN",
+          "sense_key": "paper#papier",
+          "gloss_de": "Papier-"
+        },
+        "everyday": {
+          "ref": "paper/NOUN|paper#papier",
+          "lemma": "paper/NOUN",
+          "sense_key": "paper#papier",
+          "gloss_de": "Dünnes Material zum Schreiben oder Drucken"
+        }
+      },
+      "new": {
+        "gloss_de": "Dünnes Material zum Schreiben oder Drucken"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "do/AUX|do#hilfsverb-zur-fragenbildung",
+      "expect": {
+        "pilot": {
+          "ref": "do/AUX|do#hilfsverb-zur-fragenbildung",
+          "lemma": "do/AUX",
+          "sense_key": "do#hilfsverb-zur-fragenbildung",
+          "gloss_de": "Hilfsverb zur Fragenbildung"
+        },
+        "everyday": {
+          "ref": "do/AUX|do#hilfsverb-zur-fragenbildung",
+          "lemma": "do/AUX",
+          "sense_key": "do#hilfsverb-zur-fragenbildung",
+          "gloss_de": "(Hilfsverb zur Fragenbildung)"
+        }
+      },
+      "new": {
+        "gloss_de": "Hilfsverb zur Fragenbildung"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "chocolate/NOUN|chocolate#schokolade",
+      "expect": {
+        "pilot": {
+          "ref": "chocolate/NOUN|chocolate#schokolade",
+          "lemma": "chocolate/NOUN",
+          "sense_key": "chocolate#schokolade",
+          "gloss_de": "Schokolade-"
+        },
+        "everyday": {
+          "ref": "chocolate/NOUN|chocolate#schokolade",
+          "lemma": "chocolate/NOUN",
+          "sense_key": "chocolate#schokolade",
+          "gloss_de": "Schokolade"
+        }
+      },
+      "new": {
+        "gloss_de": "Schokolade-"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "vegetable/NOUN|vegetable#gemuese",
+      "expect": {
+        "pilot": {
+          "ref": "vegetable/NOUN|vegetable#gemuese",
+          "lemma": "vegetable/NOUN",
+          "sense_key": "vegetable#gemuese",
+          "gloss_de": "Gemüse"
+        },
+        "everyday": {
+          "ref": "vegetable/NOUN|vegetable#gemuese",
+          "lemma": "vegetable/NOUN",
+          "sense_key": "vegetable#gemuese",
+          "gloss_de": "Gemüse-"
+        }
+      },
+      "new": {
+        "gloss_de": "Gemüse"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "music/NOUN|music#musik",
+      "expect": {
+        "pilot": {
+          "ref": "music/NOUN|music#musik",
+          "lemma": "music/NOUN",
+          "sense_key": "music#musik",
+          "gloss_de": "Musik"
+        },
+        "everyday": {
+          "ref": "music/NOUN|music#musik",
+          "lemma": "music/NOUN",
+          "sense_key": "music#musik",
+          "gloss_de": "Musik-"
+        },
+        "missing": {
+          "ref": "music/NOUN|music#musik",
+          "lemma": "music/NOUN",
+          "sense_key": "music#musik",
+          "gloss_de": "Musik-"
+        }
+      },
+      "new": {
+        "gloss_de": "Musik"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "map/NOUN|map#karte",
+      "expect": {
+        "pilot": {
+          "ref": "map/NOUN|map#karte",
+          "lemma": "map/NOUN",
+          "sense_key": "map#karte",
+          "gloss_de": "Karte"
+        },
+        "everyday": {
+          "ref": "map/NOUN|map#karte",
+          "lemma": "map/NOUN",
+          "sense_key": "map#karte",
+          "gloss_de": "Zeichnung zur Orientierung in einem Gebiet"
+        }
+      },
+      "new": {
+        "gloss_de": "Zeichnung zur Orientierung in einem Gebiet"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "sit/VERB|sit#sitzen",
+      "expect": {
+        "pilot": {
+          "ref": "sit/VERB|sit#sitzen",
+          "lemma": "sit/VERB",
+          "sense_key": "sit#sitzen",
+          "gloss_de": "sitzen"
+        },
+        "everyday": {
+          "ref": "sit/VERB|sit#sitzen",
+          "lemma": "sit/VERB",
+          "sense_key": "sit#sitzen",
+          "gloss_de": "sitzen"
+        },
+        "missing": {
+          "ref": "sit/VERB|sit#sitzen",
+          "lemma": "sit/VERB",
+          "sense_key": "sit#sitzen",
+          "gloss_de": "Auf einem Sitz mit abgestütztem Gesäß ruhen"
+        }
+      },
+      "new": {
+        "gloss_de": "Auf einem Sitz mit abgestütztem Gesäß ruhen"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "here/ADV|here#hier",
+      "expect": {
+        "pilot": {
+          "ref": "here/ADV|here#hier",
+          "lemma": "here/ADV",
+          "sense_key": "here#hier",
+          "gloss_de": "Hier"
+        },
+        "everyday": {
+          "ref": "here/ADV|here#hier",
+          "lemma": "here/ADV",
+          "sense_key": "here#hier",
+          "gloss_de": "hier"
+        }
+      },
+      "new": {
+        "gloss_de": "Hier"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "walk/VERB|walk#geht-zu-fuss",
+      "expect": {
+        "pilot": {
+          "ref": "walk/VERB|walk#geht-zu-fuss",
+          "lemma": "walk/VERB",
+          "sense_key": "walk#geht-zu-fuss",
+          "gloss_de": "geht zu Fuß"
+        },
+        "everyday": {
+          "ref": "walk/VERB|walk#geht-zu-fuss",
+          "lemma": "walk/VERB",
+          "sense_key": "walk#geht-zu-fuss",
+          "gloss_de": "Sich gehend fortbewegen"
+        }
+      },
+      "new": {
+        "gloss_de": "Sich gehend fortbewegen"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "full/ADJ|full#vollen",
+      "expect": {
+        "pilot": {
+          "ref": "full/ADJ|full#vollen",
+          "lemma": "full/ADJ",
+          "sense_key": "full#vollen",
+          "gloss_de": "vollen"
+        },
+        "everyday": {
+          "ref": "full/ADJ|full#vollen",
+          "lemma": "full/ADJ",
+          "sense_key": "full#vollen",
+          "gloss_de": "Bis zur verfügbaren Kapazität gefüllt"
+        }
+      },
+      "new": {
+        "gloss_de": "Bis zur verfügbaren Kapazität gefüllt"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "dry/ADJ|dry#trocken",
+      "expect": {
+        "pilot": {
+          "ref": "dry/ADJ|dry#trocken",
+          "lemma": "dry/ADJ",
+          "sense_key": "dry#trocken",
+          "gloss_de": "trocken"
+        },
+        "everyday": {
+          "ref": "dry/ADJ|dry#trocken",
+          "lemma": "dry/ADJ",
+          "sense_key": "dry#trocken",
+          "gloss_de": "Nicht nass"
+        }
+      },
+      "new": {
+        "gloss_de": "Nicht nass"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "sell/VERB|sell#verkaufen",
+      "expect": {
+        "pilot": {
+          "ref": "sell/VERB|sell#verkaufen",
+          "lemma": "sell/VERB",
+          "sense_key": "sell#verkaufen",
+          "gloss_de": "verkaufen"
+        },
+        "everyday": {
+          "ref": "sell/VERB|sell#verkaufen",
+          "lemma": "sell/VERB",
+          "sense_key": "sell#verkaufen",
+          "gloss_de": "Eine Ware gegen Geld abgeben"
+        }
+      },
+      "new": {
+        "gloss_de": "Eine Ware gegen Geld abgeben"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "write/VERB|write#schreiben",
+      "expect": {
+        "pilot": {
+          "ref": "write/VERB|write#schreiben",
+          "lemma": "write/VERB",
+          "sense_key": "write#schreiben",
+          "gloss_de": "schreiben"
+        },
+        "everyday": {
+          "ref": "write/VERB|write#schreiben",
+          "lemma": "write/VERB",
+          "sense_key": "write#schreiben",
+          "gloss_de": "Wörter schriftlich festhalten"
+        }
+      },
+      "new": {
+        "gloss_de": "Wörter schriftlich festhalten"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "plastic/NOUN|plastic#plastik",
+      "expect": {
+        "pilot": {
+          "ref": "plastic/NOUN|plastic#plastik",
+          "lemma": "plastic/NOUN",
+          "sense_key": "plastic#plastik",
+          "gloss_de": "Plastik"
+        },
+        "everyday": {
+          "ref": "plastic/NOUN|plastic#plastik",
+          "lemma": "plastic/NOUN",
+          "sense_key": "plastic#plastik",
+          "gloss_de": "Plastik-"
+        }
+      },
+      "new": {
+        "gloss_de": "Plastik"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "soft/ADJ|soft#weiche",
+      "expect": {
+        "pilot": {
+          "ref": "soft/ADJ|soft#weiche",
+          "lemma": "soft/ADJ",
+          "sense_key": "soft#weiche",
+          "gloss_de": "weiche"
+        },
+        "everyday": {
+          "ref": "soft/ADJ|soft#weiche",
+          "lemma": "soft/ADJ",
+          "sense_key": "soft#weiche",
+          "gloss_de": "weiche"
+        },
+        "missing": {
+          "ref": "soft/ADJ|soft#weiche",
+          "lemma": "soft/ADJ",
+          "sense_key": "soft#weiche",
+          "gloss_de": "Bei Druck leicht nachgebend"
+        }
+      },
+      "new": {
+        "gloss_de": "Bei Druck leicht nachgebend"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "bandage/NOUN|bandage#verband",
+      "expect": {
+        "pilot": {
+          "ref": "bandage/NOUN|bandage#verband",
+          "lemma": "bandage/NOUN",
+          "sense_key": "bandage#verband",
+          "gloss_de": "Verband"
+        },
+        "everyday": {
+          "ref": "bandage/NOUN|bandage#verband",
+          "lemma": "bandage/NOUN",
+          "sense_key": "bandage#verband",
+          "gloss_de": "Material zum Bedecken und Schützen einer Wunde; kein Verb"
+        }
+      },
+      "new": {
+        "gloss_de": "Material zum Bedecken und Schützen einer Wunde; kein Verb"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "buy/VERB|buy#kaufen",
+      "expect": {
+        "pilot": {
+          "ref": "buy/VERB|buy#kaufen",
+          "lemma": "buy/VERB",
+          "sense_key": "buy#kaufen",
+          "gloss_de": "kaufen"
+        },
+        "everyday": {
+          "ref": "buy/VERB|buy#kaufen",
+          "lemma": "buy/VERB",
+          "sense_key": "buy#kaufen",
+          "gloss_de": "Eine Ware gegen Geld erwerben"
+        }
+      },
+      "new": {
+        "gloss_de": "Eine Ware gegen Geld erwerben"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "young/ADJ|young#jung",
+      "expect": {
+        "pilot": {
+          "ref": "young/ADJ|young#jung",
+          "lemma": "young/ADJ",
+          "sense_key": "young#jung",
+          "gloss_de": "jung"
+        },
+        "missing": {
+          "ref": "young/ADJ|young#jung",
+          "lemma": "young/ADJ",
+          "sense_key": "young#jung",
+          "gloss_de": "Erst wenige Lebensjahre alt"
+        }
+      },
+      "new": {
+        "gloss_de": "Erst wenige Lebensjahre alt"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "wait/VERB|wait#warten",
+      "expect": {
+        "pilot": {
+          "ref": "wait/VERB|wait#warten",
+          "lemma": "wait/VERB",
+          "sense_key": "wait#warten",
+          "gloss_de": "warten"
+        },
+        "everyday": {
+          "ref": "wait/VERB|wait#warten",
+          "lemma": "wait/VERB",
+          "sense_key": "wait#warten",
+          "gloss_de": "Bis zu einem erwarteten Ereignis bleiben"
+        }
+      },
+      "new": {
+        "gloss_de": "Bis zu einem erwarteten Ereignis bleiben"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "road/NOUN|road#strasse",
+      "expect": {
+        "pilot": {
+          "ref": "road/NOUN|road#strasse",
+          "lemma": "road/NOUN",
+          "sense_key": "road#strasse",
+          "gloss_de": "Straße"
+        },
+        "everyday": {
+          "ref": "road/NOUN|road#strasse",
+          "lemma": "road/NOUN",
+          "sense_key": "road#strasse",
+          "gloss_de": "Befestigter Verkehrsweg für Fahrzeuge"
+        }
+      },
+      "new": {
+        "gloss_de": "Befestigter Verkehrsweg für Fahrzeuge"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "winter/NOUN|winter#winter",
+      "expect": {
+        "pilot": {
+          "ref": "winter/NOUN|winter#winter",
+          "lemma": "winter/NOUN",
+          "sense_key": "winter#winter",
+          "gloss_de": "Winter-"
+        },
+        "everyday": {
+          "ref": "winter/NOUN|winter#winter",
+          "lemma": "winter/NOUN",
+          "sense_key": "winter#winter",
+          "gloss_de": "Winter"
+        }
+      },
+      "new": {
+        "gloss_de": "Winter-"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "piano/NOUN|piano#klavier",
+      "expect": {
+        "pilot": {
+          "ref": "piano/NOUN|piano#klavier",
+          "lemma": "piano/NOUN",
+          "sense_key": "piano#klavier",
+          "gloss_de": "Klavier-"
+        },
+        "everyday": {
+          "ref": "piano/NOUN|piano#klavier",
+          "lemma": "piano/NOUN",
+          "sense_key": "piano#klavier",
+          "gloss_de": "Klavier"
+        }
+      },
+      "new": {
+        "gloss_de": "Klavier-"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "ready/ADJ|ready#bereit",
+      "expect": {
+        "pilot": {
+          "ref": "ready/ADJ|ready#bereit",
+          "lemma": "ready/ADJ",
+          "sense_key": "ready#bereit",
+          "gloss_de": "bereit"
+        },
+        "missing": {
+          "ref": "ready/ADJ|ready#bereit",
+          "lemma": "ready/ADJ",
+          "sense_key": "ready#bereit",
+          "gloss_de": "Für eine anstehende Handlung vorbereitet"
+        }
+      },
+      "new": {
+        "gloss_de": "Für eine anstehende Handlung vorbereitet"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "spoon/NOUN|spoon#loeffel",
+      "expect": {
+        "pilot": {
+          "ref": "spoon/NOUN|spoon#loeffel",
+          "lemma": "spoon/NOUN",
+          "sense_key": "spoon#loeffel",
+          "gloss_de": "Löffel"
+        },
+        "everyday": {
+          "ref": "spoon/NOUN|spoon#loeffel",
+          "lemma": "spoon/NOUN",
+          "sense_key": "spoon#loeffel",
+          "gloss_de": "Besteck zum Essen von Suppe"
+        }
+      },
+      "new": {
+        "gloss_de": "Besteck zum Essen von Suppe"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "strong/ADJ|strong#stark",
+      "expect": {
+        "pilot": {
+          "ref": "strong/ADJ|strong#stark",
+          "lemma": "strong/ADJ",
+          "sense_key": "strong#stark",
+          "gloss_de": "stark"
+        },
+        "everyday": {
+          "ref": "strong/ADJ|strong#stark",
+          "lemma": "strong/ADJ",
+          "sense_key": "strong#stark",
+          "gloss_de": "stark"
+        },
+        "missing": {
+          "ref": "strong/ADJ|strong#stark",
+          "lemma": "strong/ADJ",
+          "sense_key": "strong#stark",
+          "gloss_de": "Viel körperliche Kraft besitzend"
+        }
+      },
+      "new": {
+        "gloss_de": "Viel körperliche Kraft besitzend"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "time/NOUN|time#zeit",
+      "expect": {
+        "pilot": {
+          "ref": "time/NOUN|time#zeit",
+          "lemma": "time/NOUN",
+          "sense_key": "time#zeit",
+          "gloss_de": "Zeit (fortlaufende Dauer, Zeitpunkt oder Uhrzeit)"
+        },
+        "everyday": {
+          "ref": "time/NOUN|time#zeit",
+          "lemma": "time/NOUN",
+          "sense_key": "time#zeit",
+          "gloss_de": "Zeit"
+        }
+      },
+      "new": {
+        "gloss_de": "Zeit (fortlaufende Dauer, Zeitpunkt oder Uhrzeit)"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "house/NOUN|house#haus",
+      "expect": {
+        "pilot": {
+          "ref": "house/NOUN|house#haus",
+          "lemma": "house/NOUN",
+          "sense_key": "house#haus",
+          "gloss_de": "Haus-"
+        },
+        "everyday": {
+          "ref": "house/NOUN|house#haus",
+          "lemma": "house/NOUN",
+          "sense_key": "house#haus",
+          "gloss_de": "Haus"
+        },
+        "missing": {
+          "ref": "house/NOUN|house#haus",
+          "lemma": "house/NOUN",
+          "sense_key": "house#haus",
+          "gloss_de": "Haus"
+        }
+      },
+      "new": {
+        "gloss_de": "Haus-"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "key/NOUN|key#schluessel",
+      "expect": {
+        "pilot": {
+          "ref": "key/NOUN|key#schluessel",
+          "lemma": "key/NOUN",
+          "sense_key": "key#schluessel",
+          "gloss_de": "Schlüssel"
+        },
+        "everyday": {
+          "ref": "key/NOUN|key#schluessel",
+          "lemma": "key/NOUN",
+          "sense_key": "key#schluessel",
+          "gloss_de": "Gegenstand zum Öffnen eines Schlosses"
+        }
+      },
+      "new": {
+        "gloss_de": "Gegenstand zum Öffnen eines Schlosses"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "sport/NOUN|sport#sport",
+      "expect": {
+        "pilot": {
+          "ref": "sport/NOUN|sport#sport",
+          "lemma": "sport/NOUN",
+          "sense_key": "sport#sport",
+          "gloss_de": "Sport"
+        },
+        "everyday": {
+          "ref": "sport/NOUN|sport#sport",
+          "lemma": "sport/NOUN",
+          "sense_key": "sport#sport",
+          "gloss_de": "Sport-"
+        }
+      },
+      "new": {
+        "gloss_de": "Sport"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "front/ADJ|front#vorder",
+      "expect": {
+        "pilot": {
+          "ref": "front/ADJ|front#vorder",
+          "lemma": "front/ADJ",
+          "sense_key": "front#vorder",
+          "gloss_de": "Vorder-"
+        },
+        "everyday": {
+          "ref": "front/ADJ|front#vorder",
+          "lemma": "front/ADJ",
+          "sense_key": "front#vorder",
+          "gloss_de": "vorder-"
+        }
+      },
+      "new": {
+        "gloss_de": "Vorder-"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "station/NOUN|station#bahnhofs",
+      "expect": {
+        "pilot": {
+          "ref": "station/NOUN|station#bahnhofs",
+          "lemma": "station/NOUN",
+          "sense_key": "station#bahnhofs",
+          "gloss_de": "Bahnhofs"
+        },
+        "everyday": {
+          "ref": "station/NOUN|station#bahnhofs",
+          "lemma": "station/NOUN",
+          "sense_key": "station#bahnhofs",
+          "gloss_de": "Bahnhofs-"
+        }
+      },
+      "new": {
+        "gloss_de": "Bahnhofs"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "listen/VERB|listen#zuhoert",
+      "expect": {
+        "pilot": {
+          "ref": "listen/VERB|listen#zuhoert",
+          "lemma": "listen/VERB",
+          "sense_key": "listen#zuhoert",
+          "gloss_de": "zuhört"
+        },
+        "everyday": {
+          "ref": "listen/VERB|listen#zuhoert",
+          "lemma": "listen/VERB",
+          "sense_key": "listen#zuhoert",
+          "gloss_de": "Aufmerksam auf gehörte Sprache oder Geräusche achten"
+        }
+      },
+      "new": {
+        "gloss_de": "Aufmerksam auf gehörte Sprache oder Geräusche achten"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "heavy/ADJ|heavy#schwer",
+      "expect": {
+        "pilot": {
+          "ref": "heavy/ADJ|heavy#schwer",
+          "lemma": "heavy/ADJ",
+          "sense_key": "heavy#schwer",
+          "gloss_de": "schwer"
+        },
+        "missing": {
+          "ref": "heavy/ADJ|heavy#schwer",
+          "lemma": "heavy/ADJ",
+          "sense_key": "heavy#schwer",
+          "gloss_de": "Ein hohes Gewicht habend"
+        }
+      },
+      "new": {
+        "gloss_de": "Ein hohes Gewicht habend"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "towel/NOUN|towel#handtuch",
+      "expect": {
+        "pilot": {
+          "ref": "towel/NOUN|towel#handtuch",
+          "lemma": "towel/NOUN",
+          "sense_key": "towel#handtuch",
+          "gloss_de": "Handtuch"
+        },
+        "everyday": {
+          "ref": "towel/NOUN|towel#handtuch",
+          "lemma": "towel/NOUN",
+          "sense_key": "towel#handtuch",
+          "gloss_de": "Tuch zum Abtrocknen"
+        }
+      },
+      "new": {
+        "gloss_de": "Tuch zum Abtrocknen"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "wash/VERB|wash#waescht",
+      "expect": {
+        "pilot": {
+          "ref": "wash/VERB|wash#waescht",
+          "lemma": "wash/VERB",
+          "sense_key": "wash#waescht",
+          "gloss_de": "wäscht"
+        },
+        "everyday": {
+          "ref": "wash/VERB|wash#waescht",
+          "lemma": "wash/VERB",
+          "sense_key": "wash#waescht",
+          "gloss_de": "Mit Wasser reinigen"
+        }
+      },
+      "new": {
+        "gloss_de": "Mit Wasser reinigen"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "quiet/ADJ|quiet#ruhig",
+      "expect": {
+        "pilot": {
+          "ref": "quiet/ADJ|quiet#ruhig",
+          "lemma": "quiet/ADJ",
+          "sense_key": "quiet#ruhig",
+          "gloss_de": "ruhig"
+        },
+        "missing": {
+          "ref": "quiet/ADJ|quiet#ruhig",
+          "lemma": "quiet/ADJ",
+          "sense_key": "quiet#ruhig",
+          "gloss_de": "Wenig Geräusche verursachend"
+        }
+      },
+      "new": {
+        "gloss_de": "Wenig Geräusche verursachend"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "cheap/ADJ|cheap#billiger",
+      "expect": {
+        "pilot": {
+          "ref": "cheap/ADJ|cheap#billiger",
+          "lemma": "cheap/ADJ",
+          "sense_key": "cheap#billiger",
+          "gloss_de": "billiger"
+        },
+        "missing": {
+          "ref": "cheap/ADJ|cheap#billiger",
+          "lemma": "cheap/ADJ",
+          "sense_key": "cheap#billiger",
+          "gloss_de": "Wenig Geld kostend"
+        }
+      },
+      "new": {
+        "gloss_de": "Wenig Geld kostend"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "choose/VERB|choose#waehlt-aus",
+      "expect": {
+        "pilot": {
+          "ref": "choose/VERB|choose#waehlt-aus",
+          "lemma": "choose/VERB",
+          "sense_key": "choose#waehlt-aus",
+          "gloss_de": "wählt aus"
+        },
+        "everyday": {
+          "ref": "choose/VERB|choose#waehlt-aus",
+          "lemma": "choose/VERB",
+          "sense_key": "choose#waehlt-aus",
+          "gloss_de": "Sich zwischen mehreren Möglichkeiten entscheiden"
+        }
+      },
+      "new": {
+        "gloss_de": "Sich zwischen mehreren Möglichkeiten entscheiden"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "wet/ADJ|wet#nass",
+      "expect": {
+        "pilot": {
+          "ref": "wet/ADJ|wet#nass",
+          "lemma": "wet/ADJ",
+          "sense_key": "wet#nass",
+          "gloss_de": "nass"
+        },
+        "missing": {
+          "ref": "wet/ADJ|wet#nass",
+          "lemma": "wet/ADJ",
+          "sense_key": "wet#nass",
+          "gloss_de": "Mit Wasser oder anderer Flüssigkeit benetzt"
+        }
+      },
+      "new": {
+        "gloss_de": "Mit Wasser oder anderer Flüssigkeit benetzt"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "pillow/NOUN|pillow#kissen",
+      "expect": {
+        "everyday": {
+          "ref": "pillow/NOUN|pillow#kissen",
+          "lemma": "pillow/NOUN",
+          "sense_key": "pillow#kissen",
+          "gloss_de": "Weiche Unterlage für den Kopf im Bett"
+        },
+        "missing": {
+          "ref": "pillow/NOUN|pillow#kissen",
+          "lemma": "pillow/NOUN",
+          "sense_key": "pillow#kissen",
+          "gloss_de": "Kissen"
+        }
+      },
+      "new": {
+        "gloss_de": "Weiche Unterlage für den Kopf im Bett"
+      },
+      "reason": "Definitionsglosse der exakt ausgewählten Bedeutung; Flexions-/Kurzglossen sind keine neue Bedeutung. Formübersetzungen separat."
+    },
+    {
+      "table": "senses",
+      "ref": "basket/NOUN|basket#korb",
+      "expect": {
+        "everyday": {
+          "ref": "basket/NOUN|basket#korb",
+          "lemma": "basket/NOUN",
+          "sense_key": "basket#korb",
+          "gloss_de": "Korb"
+        }
+      },
+      "new": {
+        "gloss_de": "Korb als Behälter, etwa zum Aufbewahren oder Tragen"
+      },
+      "reason": "Vom Auftrag präzisierte allgemeine Zielbedeutung; Quellauswahl unverändert, gleiche Identität."
+    },
+    {
+      "table": "senses",
+      "ref": "'s/PART|s#von-genitiv",
+      "expect": {
+        "everyday": {
+          "ref": "'s/PART|s#von-genitiv",
+          "lemma": "'s/PART",
+          "sense_key": "s#von-genitiv",
+          "gloss_de": "von (Genitiv)"
+        },
+        "missing": {
+          "ref": "'s/PART|s#von-genitiv",
+          "lemma": "'s/PART",
+          "sense_key": "s#von-genitiv",
+          "gloss_de": "von / Genitiv"
+        }
+      },
+      "new": {
+        "gloss_de": "von (Genitiv)"
+      },
+      "reason": "Einzeln geprüfte Kurz-/Erklärungs-, Großschreibungs- oder Kompositumsvariante derselben Sense; vorhandene Definition beibehalten, Formglossen separat."
+    }
+  ],
+  "exclusions": [],
+  "editorial_scope": "Internal test pack; 87-card complete review reused, all 39 missing-run sentences and 5 alternatives read. Historical model QA remains historical.",
+  "dictionary_resolutions": {
+    "version": "everyday-gloss-v1",
+    "applies_to": "curated_everyday_v1",
+    "expect": {
+      "cards": 264,
+      "card_sentences": 792,
+      "dictionary_keys": 2378
+    },
+    "resolutions": [
+      {
+        "form": "'s",
+        "sense": "'s/PART|s#von-genitiv",
+        "expected_variants": [
+          "von (Genitiv)",
+          "von / Genitiv"
+        ],
+        "gloss_de": "von (Genitiv)",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "an",
+        "sense": "a/DET|a#ein",
+        "expected_variants": [
+          "ein",
+          "unbestimmter Artikel vor Vokallauten (ein, eine)"
+        ],
+        "gloss_de": "unbestimmter Artikel vor Vokallauten (ein, eine)",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "are",
+        "sense": "be/AUX|be#bist",
+        "expected_variants": [
+          "Bist",
+          "bist"
+        ],
+        "gloss_de": "bist",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "at",
+        "sense": "at/ADP|at#an",
+        "expected_variants": [
+          "an",
+          "An"
+        ],
+        "gloss_de": "an",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "bandage",
+        "sense": "bandage/NOUN|bandage#verband",
+        "expected_variants": [
+          "Material zum Bedecken und Schützen einer Wunde; kein Verb",
+          "Verband"
+        ],
+        "gloss_de": "Verband",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "beach",
+        "sense": "beach/NOUN|beach#strand",
+        "expected_variants": [
+          "Strand",
+          "Strand-"
+        ],
+        "gloss_de": "Strand",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "blanket",
+        "sense": "blanket/NOUN|blanket#decke",
+        "expected_variants": [
+          "Textile Decke zum Zudecken",
+          "Decke"
+        ],
+        "gloss_de": "Decke",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "box",
+        "sense": "box/NOUN|box#schachtel",
+        "expected_variants": [
+          "Fester Behälter zum Aufbewahren von Dingen",
+          "Schachtel"
+        ],
+        "gloss_de": "Schachtel",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "bring",
+        "sense": "bring/VERB|bring#bringt",
+        "expected_variants": [
+          "Etwas zu einer Person oder an einen Ort tragen",
+          "bringt"
+        ],
+        "gloss_de": "bringen",
+        "editorial": true,
+        "reason": "Konkrete Grundform benötigt unflektierte Formübersetzung; historische flektierte Glosse passt nicht zur sichtbaren Form."
+      },
+      {
+        "form": "bus",
+        "sense": "bus/NOUN|bus#bus",
+        "expected_variants": [
+          "Bus-",
+          "Bus"
+        ],
+        "gloss_de": "Bus",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "buy",
+        "sense": "buy/VERB|buy#kaufen",
+        "expected_variants": [
+          "Eine Ware gegen Geld erwerben",
+          "kaufen"
+        ],
+        "gloss_de": "kaufen",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "chair",
+        "sense": "chair/NOUN|chair#stuhl",
+        "expected_variants": [
+          "Sitzmöbel für eine Person mit Rückenlehne",
+          "Stuhl"
+        ],
+        "gloss_de": "Stuhl",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "chocolate",
+        "sense": "chocolate/NOUN|chocolate#schokolade",
+        "expected_variants": [
+          "Schokolade",
+          "Schokolade-"
+        ],
+        "gloss_de": "Schokolade",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "city",
+        "sense": "city/NOUN|city#stadt",
+        "expected_variants": [
+          "Stadt",
+          "Stadt-"
+        ],
+        "gloss_de": "Stadt",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "cup",
+        "sense": "cup/NOUN|cup#tasse",
+        "expected_variants": [
+          "Trinkgefäß mit Henkel",
+          "Tasse"
+        ],
+        "gloss_de": "Tasse",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "dessert",
+        "sense": "dessert/NOUN|dessert#dessert",
+        "expected_variants": [
+          "Dessert-",
+          "Dessert"
+        ],
+        "gloss_de": "Dessert",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "does",
+        "sense": "do/AUX|do#hilfsverb-zur-fragenbildung",
+        "expected_variants": [
+          "(Hilfsverb zur Fragenbildung)",
+          "Hilfsverb zur Fragenbildung"
+        ],
+        "gloss_de": "Hilfsverb zur Fragenbildung",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "dry",
+        "sense": "dry/ADJ|dry#trocken",
+        "expected_variants": [
+          "Nicht nass",
+          "trocken"
+        ],
+        "gloss_de": "trocken",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "eat",
+        "sense": "eat/VERB|eat#essen",
+        "expected_variants": [
+          "Nahrung zu sich nehmen",
+          "essen"
+        ],
+        "gloss_de": "essen",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "empty",
+        "sense": "empty/ADJ|empty#leer",
+        "expected_variants": [
+          "Ohne Inhalt",
+          "leer"
+        ],
+        "gloss_de": "leer",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "football",
+        "sense": "football/NOUN|football#fussball",
+        "expected_variants": [
+          "Fußball-",
+          "Fußball"
+        ],
+        "gloss_de": "Fußball",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "front",
+        "sense": "front/ADJ|front#vorder",
+        "expected_variants": [
+          "vorder-",
+          "Vorder-"
+        ],
+        "gloss_de": "vorder-",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "full",
+        "sense": "full/ADJ|full#vollen",
+        "expected_variants": [
+          "Bis zur verfügbaren Kapazität gefüllt",
+          "vollen"
+        ],
+        "gloss_de": "voll",
+        "editorial": true,
+        "reason": "Konkrete Grundform benötigt unflektierte Formübersetzung; historische flektierte Glosse passt nicht zur sichtbaren Form."
+      },
+      {
+        "form": "garden",
+        "sense": "garden/NOUN|garden#garten",
+        "expected_variants": [
+          "Garten-",
+          "Garten"
+        ],
+        "gloss_de": "Garten",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "gift",
+        "sense": "gift/NOUN|gift#geschenk",
+        "expected_variants": [
+          "Geschenk-",
+          "Geschenk"
+        ],
+        "gloss_de": "Geschenk",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "glass",
+        "sense": "glass/NOUN|glass#glas",
+        "expected_variants": [
+          "Glas-",
+          "Glas"
+        ],
+        "gloss_de": "Glas",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "heavy",
+        "sense": "heavy/ADJ|heavy#schwer",
+        "expected_variants": [
+          "Ein hohes Gewicht habend",
+          "schwer"
+        ],
+        "gloss_de": "schwer",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "hotel",
+        "sense": "hotel/NOUN|hotel#hotel",
+        "expected_variants": [
+          "Hotel-",
+          "Hotel"
+        ],
+        "gloss_de": "Hotel",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "house",
+        "sense": "house/NOUN|house#haus",
+        "expected_variants": [
+          "Haus",
+          "Haus-"
+        ],
+        "gloss_de": "Haus",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "is",
+        "sense": "be/AUX|be#ist",
+        "expected_variants": [
+          "Ist",
+          "ist"
+        ],
+        "gloss_de": "ist",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "key",
+        "sense": "key/NOUN|key#schluessel",
+        "expected_variants": [
+          "Gegenstand zum Öffnen eines Schlosses",
+          "Schlüssel"
+        ],
+        "gloss_de": "Schlüssel",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "kitchen",
+        "sense": "kitchen/NOUN|kitchen#kueche",
+        "expected_variants": [
+          "Raum zum Zubereiten von Speisen",
+          "Küche"
+        ],
+        "gloss_de": "Küche",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "letter",
+        "sense": "letter/NOUN|letter#brief",
+        "expected_variants": [
+          "Schriftliche Nachricht, die man an jemanden schickt; kein Buchstabe",
+          "Brief"
+        ],
+        "gloss_de": "Brief",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "map",
+        "sense": "map/NOUN|map#karte",
+        "expected_variants": [
+          "Zeichnung zur Orientierung in einem Gebiet",
+          "Karte"
+        ],
+        "gloss_de": "Karte",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "me",
+        "sense": "I/PRON|i#mich",
+        "expected_variants": [
+          "mich",
+          "mich (Objektform von 'ich', Akkusativ)"
+        ],
+        "gloss_de": "mich (Objektform von 'ich', Akkusativ)",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "milk",
+        "sense": "milk/NOUN|milk#milch",
+        "expected_variants": [
+          "Flüssiges Lebensmittel von Kühen",
+          "Milch"
+        ],
+        "gloss_de": "Milch",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "music",
+        "sense": "music/NOUN|music#musik",
+        "expected_variants": [
+          "Musik-",
+          "Musik"
+        ],
+        "gloss_de": "Musik",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "not",
+        "sense": "not/PART|not#nicht",
+        "expected_variants": [
+          "nicht",
+          "nicht (drückt Verneinung von Verben, Adjektiven oder Aussagen aus)"
+        ],
+        "gloss_de": "nicht (drückt Verneinung von Verben, Adjektiven oder Aussagen aus)",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "office",
+        "sense": "office/NOUN|office#buero",
+        "expected_variants": [
+          "Büro",
+          "Büro-"
+        ],
+        "gloss_de": "Büro",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "old",
+        "sense": "old/ADJ|old#alt",
+        "expected_variants": [
+          "Schon viele Lebensjahre alt",
+          "alt"
+        ],
+        "gloss_de": "alt",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "paper",
+        "sense": "paper/NOUN|paper#papier",
+        "expected_variants": [
+          "Dünnes Material zum Schreiben oder Drucken",
+          "Papier-"
+        ],
+        "gloss_de": "Papier",
+        "editorial": true,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "pay",
+        "sense": "pay/VERB|pay#bezahlt",
+        "expected_variants": [
+          "Geld für eine Ware oder Leistung geben",
+          "bezahlt"
+        ],
+        "gloss_de": "bezahlen",
+        "editorial": true,
+        "reason": "Konkrete Grundform benötigt unflektierte Formübersetzung; historische flektierte Glosse passt nicht zur sichtbaren Form."
+      },
+      {
+        "form": "phone",
+        "sense": "phone/NOUN|phone#telefon",
+        "expected_variants": [
+          "Gerät zum Telefonieren",
+          "Telefon"
+        ],
+        "gloss_de": "Telefon",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "piano",
+        "sense": "piano/NOUN|piano#klavier",
+        "expected_variants": [
+          "Klavier",
+          "Klavier-"
+        ],
+        "gloss_de": "Klavier",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "pillow",
+        "sense": "pillow/NOUN|pillow#kissen",
+        "expected_variants": [
+          "Weiche Unterlage für den Kopf im Bett",
+          "Kissen"
+        ],
+        "gloss_de": "Kissen",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "plastic",
+        "sense": "plastic/NOUN|plastic#plastik",
+        "expected_variants": [
+          "Plastik-",
+          "Plastik"
+        ],
+        "gloss_de": "Plastik",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "quiet",
+        "sense": "quiet/ADJ|quiet#ruhig",
+        "expected_variants": [
+          "Wenig Geräusche verursachend",
+          "ruhig"
+        ],
+        "gloss_de": "ruhig",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "read",
+        "sense": "read/VERB|read#lesen",
+        "expected_variants": [
+          "Geschriebene Wörter erfassen",
+          "lesen"
+        ],
+        "gloss_de": "lesen",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "ready",
+        "sense": "ready/ADJ|ready#bereit",
+        "expected_variants": [
+          "Für eine anstehende Handlung vorbereitet",
+          "bereit"
+        ],
+        "gloss_de": "bereit",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "road",
+        "sense": "road/NOUN|road#strasse",
+        "expected_variants": [
+          "Befestigter Verkehrsweg für Fahrzeuge",
+          "Straße"
+        ],
+        "gloss_de": "Straße",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "sell",
+        "sense": "sell/VERB|sell#verkaufen",
+        "expected_variants": [
+          "Eine Ware gegen Geld abgeben",
+          "verkaufen"
+        ],
+        "gloss_de": "verkaufen",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "send",
+        "sense": "send/VERB|send#schicken",
+        "expected_variants": [
+          "Eine Nachricht an einen Empfänger übermitteln",
+          "schicken"
+        ],
+        "gloss_de": "schicken",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "shop",
+        "sense": "shop/NOUN|shop#geschaeft",
+        "expected_variants": [
+          "Ort, an dem Waren verkauft werden",
+          "Geschäft"
+        ],
+        "gloss_de": "Geschäft",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "sit",
+        "sense": "sit/VERB|sit#sitzen",
+        "expected_variants": [
+          "sitzen",
+          "Auf einem Sitz mit abgestütztem Gesäß ruhen"
+        ],
+        "gloss_de": "sitzen",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "soft",
+        "sense": "soft/ADJ|soft#weiche",
+        "expected_variants": [
+          "weiche",
+          "Bei Druck leicht nachgebend"
+        ],
+        "gloss_de": "weich",
+        "editorial": true,
+        "reason": "Konkrete Grundform benötigt unflektierte Formübersetzung; historische flektierte Glosse passt nicht zur sichtbaren Form."
+      },
+      {
+        "form": "spoon",
+        "sense": "spoon/NOUN|spoon#loeffel",
+        "expected_variants": [
+          "Besteck zum Essen von Suppe",
+          "Löffel"
+        ],
+        "gloss_de": "Löffel",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "sports",
+        "sense": "sport/NOUN|sport#sport",
+        "expected_variants": [
+          "Sport-",
+          "Sport"
+        ],
+        "gloss_de": "Sport",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "station",
+        "sense": "station/NOUN|station#bahnhofs",
+        "expected_variants": [
+          "Bahnhofs-",
+          "Bahnhofs"
+        ],
+        "gloss_de": "Bahnhof",
+        "editorial": true,
+        "reason": "Konkrete Grundform benötigt unflektierte Formübersetzung; historische flektierte Glosse passt nicht zur sichtbaren Form."
+      },
+      {
+        "form": "strong",
+        "sense": "strong/ADJ|strong#stark",
+        "expected_variants": [
+          "stark",
+          "Viel körperliche Kraft besitzend"
+        ],
+        "gloss_de": "stark",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "supermarket",
+        "sense": "supermarket/NOUN|supermarket#supermarkt",
+        "expected_variants": [
+          "Supermarkt",
+          "Supermarkt-"
+        ],
+        "gloss_de": "Supermarkt",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "table",
+        "sense": "table/NOUN|table#tisch",
+        "expected_variants": [
+          "Möbel mit waagerechter Platte zum Essen oder Arbeiten",
+          "Tisch"
+        ],
+        "gloss_de": "Tisch",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "team",
+        "sense": "team/NOUN|team#team",
+        "expected_variants": [
+          "Team-",
+          "Team"
+        ],
+        "gloss_de": "Team",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "that",
+        "sense": "that/PRON|that#das",
+        "expected_variants": [
+          "das",
+          "das, jenes (Demonstrativ- oder Relativpronomen)"
+        ],
+        "gloss_de": "das, jenes (Demonstrativ- oder Relativpronomen)",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "that",
+        "sense": "that/ADV|that#so",
+        "expected_variants": [
+          "so",
+          "so, dermaßen (vor Adjektiven oder Adverbien)"
+        ],
+        "gloss_de": "so, dermaßen (vor Adjektiven oder Adverbien)",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "the",
+        "sense": "the/DET|the#der",
+        "expected_variants": [
+          "der",
+          "Der"
+        ],
+        "gloss_de": "der",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "time",
+        "sense": "time/NOUN|time#zeit",
+        "expected_variants": [
+          "Zeit",
+          "Zeit (fortlaufende Dauer, Zeitpunkt oder Uhrzeit)"
+        ],
+        "gloss_de": "Zeit (fortlaufende Dauer, Zeitpunkt oder Uhrzeit)",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "to",
+        "sense": "to/PART|to#um-zu",
+        "expected_variants": [
+          "um ... zu",
+          "um zu"
+        ],
+        "gloss_de": "um zu",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "to",
+        "sense": "to/PART|to#zu-infinitivpartikel",
+        "expected_variants": [
+          "zu (Infinitivpartikel)",
+          "zu / (Infinitivpartikel)"
+        ],
+        "gloss_de": "zu / (Infinitivpartikel)",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "tool",
+        "sense": "tool/NOUN|tool#werkzeug",
+        "expected_variants": [
+          "Werkzeug",
+          "Werkzeug-"
+        ],
+        "gloss_de": "Werkzeug",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "towel",
+        "sense": "towel/NOUN|towel#handtuch",
+        "expected_variants": [
+          "Tuch zum Abtrocknen",
+          "Handtuch"
+        ],
+        "gloss_de": "Handtuch",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "wash",
+        "sense": "wash/VERB|wash#waescht",
+        "expected_variants": [
+          "Mit Wasser reinigen",
+          "wäscht"
+        ],
+        "gloss_de": "waschen",
+        "editorial": true,
+        "reason": "Konkrete Grundform benötigt unflektierte Formübersetzung; historische flektierte Glosse passt nicht zur sichtbaren Form."
+      },
+      {
+        "form": "wet",
+        "sense": "wet/ADJ|wet#nass",
+        "expected_variants": [
+          "Mit Wasser oder anderer Flüssigkeit benetzt",
+          "nass"
+        ],
+        "gloss_de": "nass",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "winter",
+        "sense": "winter/NOUN|winter#winter",
+        "expected_variants": [
+          "Winter",
+          "Winter-"
+        ],
+        "gloss_de": "Winter",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "write",
+        "sense": "write/VERB|write#schreiben",
+        "expected_variants": [
+          "Wörter schriftlich festhalten",
+          "schreiben"
+        ],
+        "gloss_de": "schreiben",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      },
+      {
+        "form": "young",
+        "sense": "young/ADJ|young#jung",
+        "expected_variants": [
+          "Erst wenige Lebensjahre alt",
+          "jung"
+        ],
+        "gloss_de": "jung",
+        "editorial": false,
+        "reason": "Geprüfte konkrete Formübersetzung derselben Bedeutung; Definition/Kurzform oder Kompositumsvariante getrennt von Sense-Glosse behandelt."
+      }
+    ]
+  },
+  "selection_status": [
+    {
+      "card": "table|table/NOUN|table#tisch",
+      "target_meaning_de": "Möbel mit waagerechter Platte zum Essen oder Arbeiten",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "chair|chair/NOUN|chair#stuhl",
+      "target_meaning_de": "Sitzmöbel für eine Person mit Rückenlehne",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "bed|bed/NOUN|bed#bett",
+      "target_meaning_de": "Möbel zum Schlafen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "pillow|pillow/NOUN|pillow#kissen",
+      "target_meaning_de": "Weiche Unterlage für den Kopf im Bett",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "blanket|blanket/NOUN|blanket#decke",
+      "target_meaning_de": "Textile Decke zum Zudecken",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "kitchen|kitchen/NOUN|kitchen#kueche",
+      "target_meaning_de": "Raum zum Zubereiten von Speisen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "plate|plate/NOUN|plate#teller",
+      "target_meaning_de": "Flaches Geschirr zum Servieren von Essen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "cup|cup/NOUN|cup#tasse",
+      "target_meaning_de": "Trinkgefäß mit Henkel",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "spoon|spoon/NOUN|spoon#loeffel",
+      "target_meaning_de": "Besteck zum Essen von Suppe",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "fork|fork/NOUN|fork#gabel",
+      "target_meaning_de": "Besteck mit Zinken",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "knife|knife/NOUN|knife#messer",
+      "target_meaning_de": "Werkzeug mit Klinge zum Schneiden",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "towel|towel/NOUN|towel#handtuch",
+      "target_meaning_de": "Tuch zum Abtrocknen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "soap|soap/NOUN|soap#seife",
+      "target_meaning_de": "Mittel zum Waschen der Hände",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "mirror|mirror/NOUN|mirror#spiegel",
+      "target_meaning_de": "Gegenstand, in dem man sein Spiegelbild sieht",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "window|window/NOUN|window#fenster",
+      "target_meaning_de": "Verglaste Öffnung in einer Wand",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "speaker|speaker/NOUN|speaker#lautsprecher",
+      "target_meaning_de": "Gerät, das elektrische Signale als hörbaren Schall wiedergibt; keine sprechende Person",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "bag|bag/NOUN|bag#tasche",
+      "target_meaning_de": "Tragbarer Behälter für persönliche Dinge",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "key|key/NOUN|key#schluessel",
+      "target_meaning_de": "Gegenstand zum Öffnen eines Schlosses",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "phone|phone/NOUN|phone#telefon",
+      "target_meaning_de": "Gerät zum Telefonieren",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "bottle|bottle/NOUN|bottle#flasche",
+      "target_meaning_de": "Verschließbares Gefäß für Flüssigkeiten",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "box|box/NOUN|box#schachtel",
+      "target_meaning_de": "Fester Behälter zum Aufbewahren von Dingen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "clock|clock/NOUN|clock#uhr",
+      "target_meaning_de": "Gerät zur Anzeige der Uhrzeit an Wand oder auf Tisch",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "lamp|lamp/NOUN|lamp#lampen",
+      "target_meaning_de": "Gerät zur Beleuchtung eines Raums",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "shirt|shirt/NOUN|shirt#hemd",
+      "target_meaning_de": "Kleidungsstück für den Oberkörper mit Kragen und Knöpfen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "shoe|shoe/NOUN|shoe#schuhe",
+      "target_meaning_de": "Kleidungsstück für einen Fuß",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "shop|shop/NOUN|shop#geschaeft",
+      "target_meaning_de": "Ort, an dem Waren verkauft werden",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "price|price/NOUN|price#preis",
+      "target_meaning_de": "Geldbetrag, den eine Ware kostet",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "receipt|receipt/NOUN|receipt#kassenbon",
+      "target_meaning_de": "Beleg für einen bezahlten Einkauf",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "basket|basket/NOUN|basket#korb",
+      "target_meaning_de": "Offener Behälter zum Tragen von Einkäufen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "bread|bread/NOUN|bread#brot",
+      "target_meaning_de": "Gebackenes Grundnahrungsmittel aus Mehl",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "milk|milk/NOUN|milk#milch",
+      "target_meaning_de": "Flüssiges Lebensmittel von Kühen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "apple|apple/NOUN|apple#aepfel",
+      "target_meaning_de": "Runde essbare Frucht des Apfelbaums",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "cheese|cheese/NOUN|cheese#kase",
+      "target_meaning_de": "Festes Lebensmittel aus Milch",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "egg|egg/NOUN|egg#ei",
+      "target_meaning_de": "Hühnerei als Lebensmittel",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "money|money/NOUN|money#geld",
+      "target_meaning_de": "Zahlungsmittel für Einkäufe",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "office|office/NOUN|office#buero",
+      "target_meaning_de": "Raum für Schreibtischarbeit",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "desk|desk/NOUN|desk#schreibtisch",
+      "target_meaning_de": "Tisch zum Arbeiten oder Schreiben",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "computer|computer/NOUN|computer#computer",
+      "target_meaning_de": "Elektronisches Gerät zum Verarbeiten von Daten",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "meeting|meeting/NOUN|meeting#besprechung",
+      "target_meaning_de": "Verabredetes Gespräch mehrerer Personen bei der Arbeit",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "colleague|colleague/NOUN|colleague#kollege_oder_kollegin",
+      "target_meaning_de": "Person, mit der man zusammenarbeitet",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "letter|letter/NOUN|letter#brief",
+      "target_meaning_de": "Schriftliche Nachricht, die man an jemanden schickt; kein Buchstabe",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "paper|paper/NOUN|paper#papier",
+      "target_meaning_de": "Dünnes Material zum Schreiben oder Drucken",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "bus|bus/NOUN|bus#bus",
+      "target_meaning_de": "Großes Fahrzeug zur Beförderung vieler Fahrgäste",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "train|train/NOUN|train#zug",
+      "target_meaning_de": "Schienenfahrzeug zur Beförderung von Reisenden",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "station|station/NOUN|station#bahnhof",
+      "target_meaning_de": "Ort, an dem Züge halten und Reisende einsteigen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "ticket|ticket/NOUN|ticket#fahrkarte",
+      "target_meaning_de": "Beleg für die Berechtigung zu einer Fahrt",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "road|road/NOUN|road#strasse",
+      "target_meaning_de": "Befestigter Verkehrsweg für Fahrzeuge",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "bicycle|bicycle/NOUN|bicycle#fahrrad",
+      "target_meaning_de": "Zweirädriges Fahrzeug mit Pedalantrieb",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "car|car/NOUN|car#auto",
+      "target_meaning_de": "Kraftfahrzeug für wenige Personen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "bridge|bridge/NOUN|bridge#brucke",
+      "target_meaning_de": "Bauwerk, das einen Weg über ein Hindernis führt",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "map|map/NOUN|map#karte",
+      "target_meaning_de": "Zeichnung zur Orientierung in einem Gebiet",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "bandage|bandage/NOUN|bandage#verband",
+      "target_meaning_de": "Material zum Bedecken und Schützen einer Wunde; kein Verb",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "hand|hand/NOUN|hand#hand",
+      "target_meaning_de": "Körperteil am Ende eines Arms",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "head|head/NOUN|head#kopf",
+      "target_meaning_de": "Oberster Körperteil mit Gesicht und Gehirn",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "eye|eye/NOUN|eye#auge",
+      "target_meaning_de": "Sinnesorgan zum Sehen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "foot|foot/NOUN|foot#fuss",
+      "target_meaning_de": "Körperteil am unteren Ende eines Beins",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "arm|arm/NOUN|arm#arm",
+      "target_meaning_de": "Körperglied zwischen Schulter und Hand",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "leg|leg/NOUN|leg#bein",
+      "target_meaning_de": "Körperglied zum Stehen und Gehen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "tooth|tooth/NOUN|tooth#zahn",
+      "target_meaning_de": "Hartes Gebilde im Mund zum Kauen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "skin|skin/NOUN|skin#haut",
+      "target_meaning_de": "Äußere schützende Schicht des Körpers",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "wash|wash/VERB|wash#waescht",
+      "target_meaning_de": "Mit Wasser reinigen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "cook|cook/VERB|cook#kocht",
+      "target_meaning_de": "Essen durch Erhitzen zubereiten",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "clean|clean/VERB|clean#putzen",
+      "target_meaning_de": "Schmutz von einem Gegenstand oder einer Fläche entfernen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "open|open/VERB|open#oeffnete",
+      "target_meaning_de": "Etwas bisher Geschlossenes zugänglich machen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "close|close/VERB|close#schliessen",
+      "target_meaning_de": "Etwas Offenes zumachen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "repair|repair/VERB|repair#repariert",
+      "target_meaning_de": "Etwas Beschädigtes wieder funktionsfähig machen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "cut|cut/VERB|cut#schneidet",
+      "target_meaning_de": "Mit einer scharfen Klinge teilen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "buy|buy/VERB|buy#kaufen",
+      "target_meaning_de": "Eine Ware gegen Geld erwerben",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "pay|pay/VERB|pay#bezahlt",
+      "target_meaning_de": "Geld für eine Ware oder Leistung geben",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "sell|sell/VERB|sell#verkaufen",
+      "target_meaning_de": "Eine Ware gegen Geld abgeben",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "choose|choose/VERB|choose#waehlt-aus",
+      "target_meaning_de": "Sich zwischen mehreren Möglichkeiten entscheiden",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "drive|drive/VERB|drive#faehrt",
+      "target_meaning_de": "Ein Kraftfahrzeug steuern",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "walk|walk/VERB|walk#geht-zu-fuss",
+      "target_meaning_de": "Sich gehend fortbewegen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "carry|carry/VERB|carry#tragen",
+      "target_meaning_de": "Einen Gegenstand halten und mitnehmen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "bring|bring/VERB|bring#bringt",
+      "target_meaning_de": "Etwas zu einer Person oder an einen Ort tragen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "wait|wait/VERB|wait#warten",
+      "target_meaning_de": "Bis zu einem erwarteten Ereignis bleiben",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "read|read/VERB|read#lesen",
+      "target_meaning_de": "Geschriebene Wörter erfassen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "write|write/VERB|write#schreiben",
+      "target_meaning_de": "Wörter schriftlich festhalten",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "send|send/VERB|send#schicken",
+      "target_meaning_de": "Eine Nachricht an einen Empfänger übermitteln",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "eat|eat/VERB|eat#essen",
+      "target_meaning_de": "Nahrung zu sich nehmen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "drink|drink/VERB|drink#trinkt",
+      "target_meaning_de": "Flüssigkeit zu sich nehmen",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "sleep|sleep/VERB|sleep#schlafen",
+      "target_meaning_de": "Sich im natürlichen nächtlichen Ruhezustand befinden",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "stand|stand/VERB|stand#stehen",
+      "target_meaning_de": "Mit aufrechtem Körper auf den Füßen sein",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "sit|sit/VERB|sit#sitzen",
+      "target_meaning_de": "Auf einem Sitz mit abgestütztem Gesäß ruhen",
+      "source": "missing",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "listen|listen/VERB|listen#zuhoert",
+      "target_meaning_de": "Aufmerksam auf gehörte Sprache oder Geräusche achten",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "empty|empty/ADJ|empty#leer",
+      "target_meaning_de": "Ohne Inhalt",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "full|full/ADJ|full#vollen",
+      "target_meaning_de": "Bis zur verfügbaren Kapazität gefüllt",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "dry|dry/ADJ|dry#trocken",
+      "target_meaning_de": "Nicht nass",
+      "source": "everyday",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "wet|wet/ADJ|wet#nass",
+      "target_meaning_de": "Mit Wasser oder anderer Flüssigkeit benetzt",
+      "source": "missing",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "soft|soft/ADJ|soft#weiche",
+      "target_meaning_de": "Bei Druck leicht nachgebend",
+      "source": "missing",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "hard|hard/ADJ|hard#hart",
+      "target_meaning_de": "Bei Druck kaum nachgebend",
+      "source": "missing",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "cheap|cheap/ADJ|cheap#billiger",
+      "target_meaning_de": "Wenig Geld kostend",
+      "source": "missing",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "expensive|expensive/ADJ|expensive#teuer",
+      "target_meaning_de": "Viel Geld kostend",
+      "source": "missing",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "young|young/ADJ|young#jung",
+      "target_meaning_de": "Erst wenige Lebensjahre alt",
+      "source": "missing",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "old|old/ADJ|old#alt",
+      "target_meaning_de": "Schon viele Lebensjahre alt",
+      "source": "missing",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "strong|strong/ADJ|strong#stark",
+      "target_meaning_de": "Viel körperliche Kraft besitzend",
+      "source": "missing",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "ready|ready/ADJ|ready#bereit",
+      "target_meaning_de": "Für eine anstehende Handlung vorbereitet",
+      "source": "missing",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "quiet|quiet/ADJ|quiet#ruhig",
+      "target_meaning_de": "Wenig Geräusche verursachend",
+      "source": "missing",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "safe|safe/ADJ|safe#sicher",
+      "target_meaning_de": "Keiner konkreten Gefahr ausgesetzt",
+      "source": "missing",
+      "status": "included",
+      "sentences": 3
+    },
+    {
+      "card": "heavy|heavy/ADJ|heavy#schwer",
+      "target_meaning_de": "Ein hohes Gewicht habend",
+      "source": "missing",
+      "status": "included",
+      "sentences": 3
+    }
+  ],
+  "runs": {
+    "everyday": {
+      "artifacts": [
+        "ledger.csv",
+        "pack.json",
+        "progress.txt",
+        "review.csv",
+        "run_report.md"
+      ],
+      "cards": 87,
+      "sentences": 261,
+      "model_calls": 781,
+      "ledger_usd": "0.869800",
+      "technical_status": "MAX_TOKENS meaning_check JSON abort; packed cards retained; not budget exhaustion",
+      "progress": "forms 80/100\ncalls 781\nUSD 0.869814\nelapsed_s 370.2\n"
+    },
+    "missing": {
+      "artifacts": [
+        "ledger.csv",
+        "pack.json",
+        "progress.txt",
+        "review.csv",
+        "run_report.md"
+      ],
+      "cards": 13,
+      "sentences": 39,
+      "model_calls": 113,
+      "ledger_usd": "0.118054",
+      "technical_status": "13/13 forms complete, 13 cards packed; no abort reported",
+      "progress": "forms 13/13\ncalls 113\nUSD 0.118061\nelapsed_s 185.4\n"
+    }
+  }
+}

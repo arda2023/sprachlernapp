@@ -53,7 +53,7 @@ llm:
   alternative_check_model: gemini-3.8-flash   # smoke v8: blindtest_model confirmed nearly for about
   alternative_check_thinking: {thinking_level: LOW}
   timeout_s: 90
-  max_output_tokens: {meanings: 2048, sentences: 2048, annotate: 4096, blindtest: 256, meaning_check: 1024, classify_usage: 1024, alternative_check: 1024}   # alternative_check: up to 4 candidates per call
+  max_output_tokens: {meanings: 2048, sentences: 2048, annotate: 4096, blindtest: 256, meaning_check: 4096, classify_usage: 1024, alternative_check: 1024}   # alternative_check: up to 4 candidates per call
 
 generate:
   concurrency: 8

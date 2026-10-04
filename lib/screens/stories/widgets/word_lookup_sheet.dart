@@ -14,6 +14,7 @@ class WordLookupSheet extends StatefulWidget {
     required this.entry,
     required this.mark,
     required this.onAdd,
+    this.learningAvailable = true,
   });
 
   /// The word as it appears in the text, e.g. 'arrived'.
@@ -21,6 +22,7 @@ class WordLookupSheet extends StatefulWidget {
   final WordEntry entry;
   final WordMark? mark;
   final VoidCallback onAdd;
+  final bool learningAvailable;
 
   static Future<void> show(
     BuildContext context, {
@@ -28,6 +30,7 @@ class WordLookupSheet extends StatefulWidget {
     required WordEntry entry,
     required WordMark? mark,
     required VoidCallback onAdd,
+    bool learningAvailable = true,
   }) => showModalBottomSheet<void>(
     context: context,
     showDragHandle: true,
@@ -38,6 +41,7 @@ class WordLookupSheet extends StatefulWidget {
       entry: entry,
       mark: mark,
       onAdd: onAdd,
+      learningAvailable: learningAvailable,
     ),
   );
 
@@ -125,9 +129,15 @@ class _WordLookupSheetState extends State<WordLookupSheet> {
               ),
             ),
             const SizedBox(height: 28),
+            if (!widget.learningAvailable)
+              const Text(
+                'Story-Prototyp: Zum Lernen hinzufügen ist noch nicht verfügbar.',
+              ),
             AddToLearningButton(
               mark: _mark,
-              onPressed: _mark == null ? _add : null,
+              onPressed: widget.learningAvailable && _mark == null
+                  ? _add
+                  : null,
             ),
           ],
         ),

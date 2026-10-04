@@ -11,6 +11,8 @@ part 'user_database.g.dart';
 /// creation + `review_log`. Only ids and state, never content texts.
 @DataClassName('UserCardRow')
 class UserCards extends Table {
+  TextColumn get note => text().withDefault(const Constant(''))();
+  BoolColumn get inPlaylist => boolean().withDefault(const Constant(false))();
   TextColumn get cardId => text()();
   TextColumn get lang => text()();
   BoolColumn get localOnly => boolean().withDefault(const Constant(false))();
@@ -75,6 +77,7 @@ class DeckSettings extends Table {
 /// `settings`: one row (id 1) with the local device id and preferences.
 @DataClassName('SettingsRow')
 class Settings extends Table {
+  IntColumn get dailyGoal => integer().withDefault(const Constant(10))();
   TextColumn get motif => text().withDefault(const Constant('automatic'))();
   BoolColumn get includeDiacritics =>
       boolean().withDefault(const Constant(true))();
@@ -124,11 +127,16 @@ class UserDatabase extends _$UserDatabase {
   }
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onUpgrade: (m, from, to) async {
+      if (from < 3) {
+        await m.addColumn(userCards, userCards.note);
+        await m.addColumn(userCards, userCards.inPlaylist);
+        await m.addColumn(settings, settings.dailyGoal);
+      }
       if (from < 2) {
         await m.addColumn(userCards, userCards.favorite);
         await m.addColumn(settings, settings.motif);

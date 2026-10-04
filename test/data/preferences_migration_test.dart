@@ -33,10 +33,17 @@ void main() {
     expect((await repo.reviewsFor('card')).single.id, 'pass');
     expect((await repo.cardStates(['card']))['card']!.box, 3);
     expect(await repo.activeDeckIds(['deck']), isEmpty);
-    await repo.setCardFlags('card', favorite: true, disabled: true);
+    await repo.setCardFlags(
+      'card',
+      favorite: true,
+      disabled: true,
+      note: 'Persistente Notiz',
+      inPlaylist: true,
+    );
     await repo.savePreferences(
       const PracticePreferences(
         motif: AppMotif.light,
+        dailyGoal: 20,
         includeDiacritics: false,
         autoNext: true,
         showGrammar: true,
@@ -65,10 +72,13 @@ void main() {
     expect(state.favorite, isTrue);
     expect(state.disabled, isTrue);
     expect(state.box, 3);
+    expect(state.note, 'Persistente Notiz');
+    expect(state.inPlaylist, isTrue);
     expect(await repo.deviceId(), 'stable-device');
     expect(await repo.reviewsFor('card'), hasLength(1));
     final preferences = await repo.preferences();
     expect(preferences.motif, AppMotif.light);
+    expect(preferences.dailyGoal, 20);
     expect(preferences.includeDiacritics, isFalse);
     expect(preferences.autoNext, isTrue);
     expect(preferences.showGrammar, isTrue);
@@ -80,7 +90,7 @@ void main() {
       (await db.customSelect('PRAGMA user_version').getSingle()).read<int>(
         'user_version',
       ),
-      2,
+      3,
     );
   });
 }

@@ -179,6 +179,41 @@ void main() {
       );
       expect(next.map((e) => e.cardId), ['card-went', 'card-goes']);
       expect(items['card-went']!.sentenceForPass(1).sentenceId, 's-went-2');
+
+      // A different asset version replaces only the closed content database.
+      // Real learner rows and append-only reviews survive the update byte-for-byte.
+      await user.close();
+      final userFile = File('${support.path}/user.db');
+      final savedUserBytes = userFile.readAsBytesSync();
+      await content.close();
+      final updateDir = Directory('${tmp.path}/update')..createSync();
+      final updated = buildFixturePack(
+        updateDir,
+        tweak: (db) {
+          db.execute("UPDATE content_releases SET version='mini-v2'");
+          db.execute(
+            "UPDATE cards SET translation_de='ging (aktualisiert)' WHERE id='card-went'",
+          );
+        },
+      ).readAsBytesSync();
+      content = await installerFor(
+        support,
+        db: updated,
+        manifest: manifestFor(updated, version: 'mini-v2'),
+      ).open();
+      expect(content.info.version, 'mini-v2');
+      expect(userFile.readAsBytesSync(), savedUserBytes);
+      user = openUser();
+      expect((await user.cardStates(deckIds))['card-went']!.box, 1);
+      expect(await user.reviewCounts(deckIds), {
+        'card-went': 1,
+        'card-about': 1,
+        'card-a': 1,
+      });
+      expect(
+        (await user.reviewsFor('card-went')).single.sentenceId,
+        's-went-1',
+      );
     },
   );
 }

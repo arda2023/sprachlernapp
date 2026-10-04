@@ -1,24 +1,25 @@
-# NEXTSTEPS – vielfältige neue Karten und Alltag-Los (04.10.2026)
-- Gemeinsame Domain-Auswahl: vier Inhaltswörter, höchstens ein Funktionswort; fällige Reviews zuerst.
-- Pro Sitzung höchstens eine neue Karte je normalisiertem Lemma/Oberfläche; ungesehene Lemmas bevorzugt.
-- Kleine Bestände ergeben kurze gültige Sitzungen mit Hinweis; keine Nebenbedeutungs-Auffüllung.
-- POS plus explizite Sense-Ausnahmen; keine Form-Blacklist. Revue, SRS und In-Session-Regeln erhalten.
-- Echte Stapel-Sessions angebunden; bisherige Demo-Modi nicht migriert. Direkter inaktiver Stapelstart bleibt möglich.
-- Packdiagnose: 164 Karten, 60 Oberflächen, 52 Lemmas; 53 Mehrdeutigkeitsformen mit 104 zusätzlichen Bedeutungen.
-- Getrennt: 5 mehrformige Lemmas mit 10 Zusatzformen; Überschneidungen nicht addieren.
-- Read-only-Snapshot 04.10.2026 15:12:28: 20 Lernstände, 19 Erstpässe, 0 fällige aktive Karten.
-- 3 Erstpässe mit Fehler/Hinweis/Aufdecken; tatsächliche In-Session-Pässe nicht persistiert/zählbar.
-- Aktueller Pack: 38 Inhalts-/126 Funktionswortkarten; vielfältige neue Sitzung maximal 20 Karten (16+4).
-- pipeline/data/selection/everyday_v1.json: 100 neue Lemmas, 60 NOUN/25 VERB/15 ADJ; table/speaker/bandage enthalten.
-- Je eine Grundform/Zielbedeutung; 75 bestehende Sense-Keys, 25 Vorschläge; keine bestehende Lernkarte dupliziert.
-- Optionales --selection nutzt bestehende Generierung/QA/Annotation/Budgetreservierung; --forms erhalten.
-- Dry-Run: 100 geplant, 0 vorhandene Karten, 100 explizite redaktionelle Ziele, 0 fehlende Definitionen.
-- Kostenszenario aus Konfiguration: 3.073 USD; mit 2.5x Versuchen 7.681 USD; keine Garantie, Budget bleibt 3 USD.
-- flutter analyze: No issues found!; flutter test: 210 All tests passed!; pytest: 281 passed in 10.39s.
-- git diff --check: Exit 0; Arbeitsstand geprüft, vorherige Änderungen erhalten.
-- Nachweise: build/selection_queue_report.txt, everyday_dry_run.txt, selection_analyze.txt, selection_flutter_tests_final.txt, selection_pytest.txt.
-- Befehle und Annahmen: docs/pipeline.md; Auswahlregeln/Diagnose: docs/srs.md; Diagnosewerkzeug unter tool/.
-- Manuell, Windows PowerShell ab pipeline, neuer Ausgabeordner, NICHT ausgeführt:
-  `.\.venv\Scripts\python.exe -m sprachpipe.cli generate --selection data\selection\everyday_v1.json --existing-pack ..\assets\content\en\content.sqlite --run-dir out\everyday_v1_20261004 --out out\everyday_v1_20261004\pack.json --max-usd 3.00`
-- Cloud-Lauf kann vor Abschluss stoppen. Neue Inhalte noch nicht generiert/geprüft/installiert; keine Pack-/Lernstandsänderung.
-- Keine Screen-/Audio-/Einstellungs-/Story-Migration, Cloud-Aufrufe, Uploads, Commits oder Pushes; macOS nicht ausgeführt.
+# NEXTSTEPS – gemeinsamer Lernstand (04.10.2026)
+- Startseite, Gemischt und Wortliste verwenden die bestehenden Content-/User-Repositories.
+- Globale Vokabelzähler bleiben abgeleitet; stabile Karten-IDs werden nur einmal gezählt.
+- Stapel-Fortschritt bleibt deckbezogen; Aktivierung steuert neue Karten, nicht bereits gesehene Reviews.
+- Tagesziel und Woche verwenden eindeutige reviewte Karten pro lokalem Tag; Zielwert ist persistiert.
+- Gemeinsamer Timer/Resume-Beobachter aktualisiert Fälligkeiten auch ohne DB-Schreibzugriff.
+- Gemischt nutzt fällige Karten, vorhandene 4:1-/Vielfaltauswahl, danach Vorab-Üben.
+- Derselbe DeckSessionController/ReviewPass speichert Stapel- und Gemischt-Antworten.
+- Wortliste zeigt bekannte, nicht retirierte Karten ab Box 1, auch deaktivierte zur Reaktivierung.
+- Suche und Reihenfolge verwenden echte Inhalte/Reviews; unbekannte alte IDs bleiben unangetastet.
+- Favorit, Deaktivierung, Notiz und Playlist-Auswahl sind in user.db persistiert.
+- Schema v3 ergänzt note, in_playlist und daily_goal additiv; build_runner erfolgreich.
+- WordListStore aus App entfernt; kontrollierte Test-Fixture bleibt unter test/fixtures.
+- Story-Prototyp zeigt fehlende Lernanbindung ausdrücklich; Hinzufügen ist deaktiviert.
+- Dateien: learning_providers, deck_providers, deck_session_controller, AppShell, Home, Wortliste/Details, Domain/User-DB.
+- Integrationstests: gemeinsame Zustände, Doppelzuordnung, Flags, Neustart, Mitternacht/Resume, Pack-/DB-Fehler, leere Queue.
+- flutter analyze: No issues found; flutter test: 215 passed; Android-Debug-APK gebaut.
+- Android API 36: Home → Gemischt/on korrekt → Wortliste → Favorit → Neustart auf separater Datenkopie geprüft.
+- Testkopie danach 21 Kartenstände/20 Reviews; on Stufe 3 und Favorit nach Neustart erhalten.
+- Normale APK wieder installiert; Original: alle bisherigen Werte der 20 Kartenstände/19 Reviews und Einstellungen erhalten.
+- Original-Schema von 2 auf 3 migriert; Pack-SHA256 unverändert. Keine Deinstallation/kein Datenreset.
+- iOS nicht geprüft; Audio, Story-Migration, Cloud und Sync bleiben außerhalb dieses Schritts.
+- Neun redaktionelle Alt-Pilot-Fallgruppen unverändert offen; internes Pack weiterhin 264 Karten/792 Sätze.
+- Nachweise: docs/app-content-integration-plan.md Abschnitt 14; lokale Screenshots/DB-Vergleiche in build/repository_integration.
+- git diff --check bestanden; git status --short geprüft; vorherige Änderungen erhalten, keine Commits/Pushes.

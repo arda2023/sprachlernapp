@@ -219,7 +219,7 @@ def test_other_checks_keep_their_models(cfg):
     check_meaning(Rec(), cfg, ABOUT, "about", [{"sense_key": "about#ungefaehr", "pos": "ADV",
                   "form_kind": "other", "form_label_de": "Adverb", "gloss_de": "ungefähr"}], "x")
     assert seen == {"blindtest": ("gemini-2.5-flash", {"thinking_budget": 0}, 256),
-                    "meaning_check": (c["meaning_check_model"], c["meaning_check_thinking"], 1024)}
+                    "meaning_check": (c["meaning_check_model"], c["meaning_check_thinking"], 4096)}
 
 
 ABOUT_YEARS = "David has known his best friend for about ten years."

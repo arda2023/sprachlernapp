@@ -9,6 +9,31 @@ class $UserCardsTable extends UserCards
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $UserCardsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _inPlaylistMeta = const VerificationMeta(
+    'inPlaylist',
+  );
+  @override
+  late final GeneratedColumn<bool> inPlaylist = GeneratedColumn<bool>(
+    'in_playlist',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("in_playlist" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   static const VerificationMeta _cardIdMeta = const VerificationMeta('cardId');
   @override
   late final GeneratedColumn<String> cardId = GeneratedColumn<String>(
@@ -140,6 +165,8 @@ class $UserCardsTable extends UserCards
   );
   @override
   List<GeneratedColumn> get $columns => [
+    note,
+    inPlaylist,
     cardId,
     lang,
     localOnly,
@@ -164,6 +191,18 @@ class $UserCardsTable extends UserCards
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    if (data.containsKey('in_playlist')) {
+      context.handle(
+        _inPlaylistMeta,
+        inPlaylist.isAcceptableOrUnknown(data['in_playlist']!, _inPlaylistMeta),
+      );
+    }
     if (data.containsKey('card_id')) {
       context.handle(
         _cardIdMeta,
@@ -251,6 +290,14 @@ class $UserCardsTable extends UserCards
   UserCardRow map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return UserCardRow(
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      )!,
+      inPlaylist: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}in_playlist'],
+      )!,
       cardId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}card_id'],
@@ -305,6 +352,8 @@ class $UserCardsTable extends UserCards
 }
 
 class UserCardRow extends DataClass implements Insertable<UserCardRow> {
+  final String note;
+  final bool inPlaylist;
   final String cardId;
   final String lang;
   final bool localOnly;
@@ -319,6 +368,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   final bool retired;
   final DateTime updatedAt;
   const UserCardRow({
+    required this.note,
+    required this.inPlaylist,
     required this.cardId,
     required this.lang,
     required this.localOnly,
@@ -334,6 +385,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    map['note'] = Variable<String>(note);
+    map['in_playlist'] = Variable<bool>(inPlaylist);
     map['card_id'] = Variable<String>(cardId);
     map['lang'] = Variable<String>(lang);
     map['local_only'] = Variable<bool>(localOnly);
@@ -352,6 +405,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
 
   UserCardsCompanion toCompanion(bool nullToAbsent) {
     return UserCardsCompanion(
+      note: Value(note),
+      inPlaylist: Value(inPlaylist),
       cardId: Value(cardId),
       lang: Value(lang),
       localOnly: Value(localOnly),
@@ -374,6 +429,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return UserCardRow(
+      note: serializer.fromJson<String>(json['note']),
+      inPlaylist: serializer.fromJson<bool>(json['inPlaylist']),
       cardId: serializer.fromJson<String>(json['cardId']),
       lang: serializer.fromJson<String>(json['lang']),
       localOnly: serializer.fromJson<bool>(json['localOnly']),
@@ -391,6 +448,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'note': serializer.toJson<String>(note),
+      'inPlaylist': serializer.toJson<bool>(inPlaylist),
       'cardId': serializer.toJson<String>(cardId),
       'lang': serializer.toJson<String>(lang),
       'localOnly': serializer.toJson<bool>(localOnly),
@@ -406,6 +465,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   }
 
   UserCardRow copyWith({
+    String? note,
+    bool? inPlaylist,
     String? cardId,
     String? lang,
     bool? localOnly,
@@ -418,6 +479,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
     bool? retired,
     DateTime? updatedAt,
   }) => UserCardRow(
+    note: note ?? this.note,
+    inPlaylist: inPlaylist ?? this.inPlaylist,
     cardId: cardId ?? this.cardId,
     lang: lang ?? this.lang,
     localOnly: localOnly ?? this.localOnly,
@@ -432,6 +495,10 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   );
   UserCardRow copyWithCompanion(UserCardsCompanion data) {
     return UserCardRow(
+      note: data.note.present ? data.note.value : this.note,
+      inPlaylist: data.inPlaylist.present
+          ? data.inPlaylist.value
+          : this.inPlaylist,
       cardId: data.cardId.present ? data.cardId.value : this.cardId,
       lang: data.lang.present ? data.lang.value : this.lang,
       localOnly: data.localOnly.present ? data.localOnly.value : this.localOnly,
@@ -449,6 +516,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   @override
   String toString() {
     return (StringBuffer('UserCardRow(')
+          ..write('note: $note, ')
+          ..write('inPlaylist: $inPlaylist, ')
           ..write('cardId: $cardId, ')
           ..write('lang: $lang, ')
           ..write('localOnly: $localOnly, ')
@@ -466,6 +535,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
 
   @override
   int get hashCode => Object.hash(
+    note,
+    inPlaylist,
     cardId,
     lang,
     localOnly,
@@ -482,6 +553,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is UserCardRow &&
+          other.note == this.note &&
+          other.inPlaylist == this.inPlaylist &&
           other.cardId == this.cardId &&
           other.lang == this.lang &&
           other.localOnly == this.localOnly &&
@@ -496,6 +569,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
 }
 
 class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
+  final Value<String> note;
+  final Value<bool> inPlaylist;
   final Value<String> cardId;
   final Value<String> lang;
   final Value<bool> localOnly;
@@ -509,6 +584,8 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
   final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const UserCardsCompanion({
+    this.note = const Value.absent(),
+    this.inPlaylist = const Value.absent(),
     this.cardId = const Value.absent(),
     this.lang = const Value.absent(),
     this.localOnly = const Value.absent(),
@@ -523,6 +600,8 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
     this.rowid = const Value.absent(),
   });
   UserCardsCompanion.insert({
+    this.note = const Value.absent(),
+    this.inPlaylist = const Value.absent(),
     required String cardId,
     required String lang,
     this.localOnly = const Value.absent(),
@@ -542,6 +621,8 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
        origin = Value(origin),
        updatedAt = Value(updatedAt);
   static Insertable<UserCardRow> custom({
+    Expression<String>? note,
+    Expression<bool>? inPlaylist,
     Expression<String>? cardId,
     Expression<String>? lang,
     Expression<bool>? localOnly,
@@ -556,6 +637,8 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
+      if (note != null) 'note': note,
+      if (inPlaylist != null) 'in_playlist': inPlaylist,
       if (cardId != null) 'card_id': cardId,
       if (lang != null) 'lang': lang,
       if (localOnly != null) 'local_only': localOnly,
@@ -572,6 +655,8 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
   }
 
   UserCardsCompanion copyWith({
+    Value<String>? note,
+    Value<bool>? inPlaylist,
     Value<String>? cardId,
     Value<String>? lang,
     Value<bool>? localOnly,
@@ -586,6 +671,8 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
     Value<int>? rowid,
   }) {
     return UserCardsCompanion(
+      note: note ?? this.note,
+      inPlaylist: inPlaylist ?? this.inPlaylist,
       cardId: cardId ?? this.cardId,
       lang: lang ?? this.lang,
       localOnly: localOnly ?? this.localOnly,
@@ -604,6 +691,12 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (inPlaylist.present) {
+      map['in_playlist'] = Variable<bool>(inPlaylist.value);
+    }
     if (cardId.present) {
       map['card_id'] = Variable<String>(cardId.value);
     }
@@ -646,6 +739,8 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
   @override
   String toString() {
     return (StringBuffer('UserCardsCompanion(')
+          ..write('note: $note, ')
+          ..write('inPlaylist: $inPlaylist, ')
           ..write('cardId: $cardId, ')
           ..write('lang: $lang, ')
           ..write('localOnly: $localOnly, ')
@@ -1814,6 +1909,18 @@ class $SettingsTable extends Settings
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $SettingsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _dailyGoalMeta = const VerificationMeta(
+    'dailyGoal',
+  );
+  @override
+  late final GeneratedColumn<int> dailyGoal = GeneratedColumn<int>(
+    'daily_goal',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(10),
+  );
   static const VerificationMeta _motifMeta = const VerificationMeta('motif');
   @override
   late final GeneratedColumn<String> motif = GeneratedColumn<String>(
@@ -1914,6 +2021,7 @@ class $SettingsTable extends Settings
   );
   @override
   List<GeneratedColumn> get $columns => [
+    dailyGoal,
     motif,
     includeDiacritics,
     autoNext,
@@ -1935,6 +2043,12 @@ class $SettingsTable extends Settings
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('daily_goal')) {
+      context.handle(
+        _dailyGoalMeta,
+        dailyGoal.isAcceptableOrUnknown(data['daily_goal']!, _dailyGoalMeta),
+      );
+    }
     if (data.containsKey('motif')) {
       context.handle(
         _motifMeta,
@@ -2001,6 +2115,10 @@ class $SettingsTable extends Settings
   SettingsRow map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return SettingsRow(
+      dailyGoal: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}daily_goal'],
+      )!,
       motif: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}motif'],
@@ -2043,6 +2161,7 @@ class $SettingsTable extends Settings
 }
 
 class SettingsRow extends DataClass implements Insertable<SettingsRow> {
+  final int dailyGoal;
   final String motif;
   final bool includeDiacritics;
   final bool autoNext;
@@ -2052,6 +2171,7 @@ class SettingsRow extends DataClass implements Insertable<SettingsRow> {
   final String targetLang;
   final DateTime updatedAt;
   const SettingsRow({
+    required this.dailyGoal,
     required this.motif,
     required this.includeDiacritics,
     required this.autoNext,
@@ -2064,6 +2184,7 @@ class SettingsRow extends DataClass implements Insertable<SettingsRow> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    map['daily_goal'] = Variable<int>(dailyGoal);
     map['motif'] = Variable<String>(motif);
     map['include_diacritics'] = Variable<bool>(includeDiacritics);
     map['auto_next'] = Variable<bool>(autoNext);
@@ -2077,6 +2198,7 @@ class SettingsRow extends DataClass implements Insertable<SettingsRow> {
 
   SettingsCompanion toCompanion(bool nullToAbsent) {
     return SettingsCompanion(
+      dailyGoal: Value(dailyGoal),
       motif: Value(motif),
       includeDiacritics: Value(includeDiacritics),
       autoNext: Value(autoNext),
@@ -2094,6 +2216,7 @@ class SettingsRow extends DataClass implements Insertable<SettingsRow> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return SettingsRow(
+      dailyGoal: serializer.fromJson<int>(json['dailyGoal']),
       motif: serializer.fromJson<String>(json['motif']),
       includeDiacritics: serializer.fromJson<bool>(json['includeDiacritics']),
       autoNext: serializer.fromJson<bool>(json['autoNext']),
@@ -2108,6 +2231,7 @@ class SettingsRow extends DataClass implements Insertable<SettingsRow> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'dailyGoal': serializer.toJson<int>(dailyGoal),
       'motif': serializer.toJson<String>(motif),
       'includeDiacritics': serializer.toJson<bool>(includeDiacritics),
       'autoNext': serializer.toJson<bool>(autoNext),
@@ -2120,6 +2244,7 @@ class SettingsRow extends DataClass implements Insertable<SettingsRow> {
   }
 
   SettingsRow copyWith({
+    int? dailyGoal,
     String? motif,
     bool? includeDiacritics,
     bool? autoNext,
@@ -2129,6 +2254,7 @@ class SettingsRow extends DataClass implements Insertable<SettingsRow> {
     String? targetLang,
     DateTime? updatedAt,
   }) => SettingsRow(
+    dailyGoal: dailyGoal ?? this.dailyGoal,
     motif: motif ?? this.motif,
     includeDiacritics: includeDiacritics ?? this.includeDiacritics,
     autoNext: autoNext ?? this.autoNext,
@@ -2140,6 +2266,7 @@ class SettingsRow extends DataClass implements Insertable<SettingsRow> {
   );
   SettingsRow copyWithCompanion(SettingsCompanion data) {
     return SettingsRow(
+      dailyGoal: data.dailyGoal.present ? data.dailyGoal.value : this.dailyGoal,
       motif: data.motif.present ? data.motif.value : this.motif,
       includeDiacritics: data.includeDiacritics.present
           ? data.includeDiacritics.value
@@ -2160,6 +2287,7 @@ class SettingsRow extends DataClass implements Insertable<SettingsRow> {
   @override
   String toString() {
     return (StringBuffer('SettingsRow(')
+          ..write('dailyGoal: $dailyGoal, ')
           ..write('motif: $motif, ')
           ..write('includeDiacritics: $includeDiacritics, ')
           ..write('autoNext: $autoNext, ')
@@ -2174,6 +2302,7 @@ class SettingsRow extends DataClass implements Insertable<SettingsRow> {
 
   @override
   int get hashCode => Object.hash(
+    dailyGoal,
     motif,
     includeDiacritics,
     autoNext,
@@ -2187,6 +2316,7 @@ class SettingsRow extends DataClass implements Insertable<SettingsRow> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is SettingsRow &&
+          other.dailyGoal == this.dailyGoal &&
           other.motif == this.motif &&
           other.includeDiacritics == this.includeDiacritics &&
           other.autoNext == this.autoNext &&
@@ -2198,6 +2328,7 @@ class SettingsRow extends DataClass implements Insertable<SettingsRow> {
 }
 
 class SettingsCompanion extends UpdateCompanion<SettingsRow> {
+  final Value<int> dailyGoal;
   final Value<String> motif;
   final Value<bool> includeDiacritics;
   final Value<bool> autoNext;
@@ -2207,6 +2338,7 @@ class SettingsCompanion extends UpdateCompanion<SettingsRow> {
   final Value<String> targetLang;
   final Value<DateTime> updatedAt;
   const SettingsCompanion({
+    this.dailyGoal = const Value.absent(),
     this.motif = const Value.absent(),
     this.includeDiacritics = const Value.absent(),
     this.autoNext = const Value.absent(),
@@ -2217,6 +2349,7 @@ class SettingsCompanion extends UpdateCompanion<SettingsRow> {
     this.updatedAt = const Value.absent(),
   });
   SettingsCompanion.insert({
+    this.dailyGoal = const Value.absent(),
     this.motif = const Value.absent(),
     this.includeDiacritics = const Value.absent(),
     this.autoNext = const Value.absent(),
@@ -2229,6 +2362,7 @@ class SettingsCompanion extends UpdateCompanion<SettingsRow> {
        targetLang = Value(targetLang),
        updatedAt = Value(updatedAt);
   static Insertable<SettingsRow> custom({
+    Expression<int>? dailyGoal,
     Expression<String>? motif,
     Expression<bool>? includeDiacritics,
     Expression<bool>? autoNext,
@@ -2239,6 +2373,7 @@ class SettingsCompanion extends UpdateCompanion<SettingsRow> {
     Expression<DateTime>? updatedAt,
   }) {
     return RawValuesInsertable({
+      if (dailyGoal != null) 'daily_goal': dailyGoal,
       if (motif != null) 'motif': motif,
       if (includeDiacritics != null) 'include_diacritics': includeDiacritics,
       if (autoNext != null) 'auto_next': autoNext,
@@ -2251,6 +2386,7 @@ class SettingsCompanion extends UpdateCompanion<SettingsRow> {
   }
 
   SettingsCompanion copyWith({
+    Value<int>? dailyGoal,
     Value<String>? motif,
     Value<bool>? includeDiacritics,
     Value<bool>? autoNext,
@@ -2261,6 +2397,7 @@ class SettingsCompanion extends UpdateCompanion<SettingsRow> {
     Value<DateTime>? updatedAt,
   }) {
     return SettingsCompanion(
+      dailyGoal: dailyGoal ?? this.dailyGoal,
       motif: motif ?? this.motif,
       includeDiacritics: includeDiacritics ?? this.includeDiacritics,
       autoNext: autoNext ?? this.autoNext,
@@ -2275,6 +2412,9 @@ class SettingsCompanion extends UpdateCompanion<SettingsRow> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (dailyGoal.present) {
+      map['daily_goal'] = Variable<int>(dailyGoal.value);
+    }
     if (motif.present) {
       map['motif'] = Variable<String>(motif.value);
     }
@@ -2305,6 +2445,7 @@ class SettingsCompanion extends UpdateCompanion<SettingsRow> {
   @override
   String toString() {
     return (StringBuffer('SettingsCompanion(')
+          ..write('dailyGoal: $dailyGoal, ')
           ..write('motif: $motif, ')
           ..write('includeDiacritics: $includeDiacritics, ')
           ..write('autoNext: $autoNext, ')

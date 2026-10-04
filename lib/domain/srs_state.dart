@@ -50,6 +50,8 @@ class UserCardState {
     required this.dueAt,
     this.disabled = false,
     this.favorite = false,
+    this.note = '',
+    this.inPlaylist = false,
     this.retired = false,
     this.localOnly = false,
     this.origin = CardOrigin.deck,
@@ -61,6 +63,8 @@ class UserCardState {
   final DateTime? dueAt;
   final bool disabled;
   final bool favorite;
+  final String note;
+  final bool inPlaylist;
   final bool retired;
 
   /// A card without a content row (`u:` id); counted although unknown to the
@@ -186,7 +190,8 @@ enum DeckSessionKind {
   learn(ReviewMode.deck),
 
   /// Stapel-Revue: seen cards of the deck only, early practice rule.
-  revue(ReviewMode.revue);
+  revue(ReviewMode.revue),
+  mixed(ReviewMode.mixed);
 
   const DeckSessionKind(this.mode);
 
@@ -196,17 +201,21 @@ enum DeckSessionKind {
 /// One place in a session queue. A [repeat] is the in-session repeat of a
 /// card: it is practised again but never logged and never changes the box.
 class SessionEntry {
-  const SessionEntry(this.cardId, {this.repeat = false});
+  const SessionEntry(this.cardId, {this.repeat = false, this.mode});
 
   final String cardId;
   final bool repeat;
+  final ReviewMode? mode;
 
   @override
   bool operator ==(Object other) =>
-      other is SessionEntry && other.cardId == cardId && other.repeat == repeat;
+      other is SessionEntry &&
+      other.cardId == cardId &&
+      other.repeat == repeat &&
+      other.mode == mode;
 
   @override
-  int get hashCode => Object.hash(cardId, repeat);
+  int get hashCode => Object.hash(cardId, repeat, mode);
 
   @override
   String toString() =>
@@ -256,8 +265,62 @@ List<SessionEntry> buildDeckQueue({
       picked = [...due, ...newIds];
     case DeckSessionKind.revue:
       picked = seen;
+    case DeckSessionKind.mixed:
+      throw ArgumentError('Use buildMixedQueue for all-source sessions');
   }
   return [for (final id in picked.take(size)) SessionEntry(id)];
+}
+
+/// Mixed uses only resolvable, connected content. Seen cards remain eligible
+/// independently of deck activation; activation gates only new deck cards.
+List<SessionEntry> buildMixedQueue({
+  required List<String> activeDeckCardIds,
+  required Map<String, ContentCard> cards,
+  required Map<String, UserCardState> states,
+  required DateTime now,
+  int size = 10,
+}) {
+  final eligible = states.values
+      .where((s) => s.isActive && cards.containsKey(s.cardId))
+      .toList();
+  int dueOrder(UserCardState a, UserCardState b) {
+    final d = (a.dueAt ?? DateTime(1970)).compareTo(b.dueAt ?? DateTime(1970));
+    return d != 0 ? d : a.cardId.compareTo(b.cardId);
+  }
+
+  final due = eligible.where((s) => s.isDue(now)).toList()..sort(dueOrder);
+  final freshIds = <String>{
+    for (final s
+        in eligible
+            .where((s) => s.box == 0 && s.origin == CardOrigin.story)
+            .toList()
+          ..sort(
+            (a, b) => (a.createdAt ?? DateTime(1970)).compareTo(
+              b.createdAt ?? DateTime(1970),
+            ),
+          ))
+      s.cardId,
+    for (final id in activeDeckCardIds)
+      if (cards.containsKey(id) &&
+          (states[id]?.isActive ?? true) &&
+          (states[id]?.box ?? 0) == 0)
+        id,
+  };
+  final fresh = selectNewCards(
+    candidates: [for (final id in freshIds) cards[id]!],
+    knownLemmas: {
+      for (final id in states.keys)
+        if (cards[id] case final card?) selectionLemma(card),
+    },
+    limit: size - due.length,
+  );
+  final early = eligible.where((s) => s.box >= 1 && !s.isDue(now)).toList()
+    ..sort(dueOrder);
+  return [
+    for (final s in due) SessionEntry(s.cardId, mode: ReviewMode.mixed),
+    for (final id in fresh) SessionEntry(id, mode: ReviewMode.mixed),
+    for (final s in early) SessionEntry(s.cardId, mode: ReviewMode.early),
+  ].take(size).toList();
 }
 
 /// Cards between a pass and its in-session repeat ("etwa 3 Karten später").
@@ -273,7 +336,8 @@ List<SessionEntry> withRepeat(List<SessionEntry> queue, int index) {
   final later = queue.skip(index + 1);
   if (later.any((e) => e.repeat && e.cardId == entry.cardId)) return queue;
   final at = min(index + 1 + inSessionRepeatGap, queue.length);
-  return [...queue]..insert(at, SessionEntry(entry.cardId, repeat: true));
+  return [...queue]
+    ..insert(at, SessionEntry(entry.cardId, repeat: true, mode: entry.mode));
 }
 
 /// Random UUID version 4 (pass ids, device id); no package needed.

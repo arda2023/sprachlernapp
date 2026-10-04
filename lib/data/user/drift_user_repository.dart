@@ -32,6 +32,8 @@ class DriftUserRepository implements UserRepository {
     dueAt: r.dueAt?.toLocal(),
     disabled: r.disabled,
     favorite: r.favorite,
+    note: r.note,
+    inPlaylist: r.inPlaylist,
     retired: r.retired,
     localOnly: r.localOnly,
     origin: CardOrigin.fromCode(r.origin),
@@ -239,6 +241,7 @@ class DriftUserRepository implements UserRepository {
           _db.userCards,
           _db.reviewLog,
           _db.deckSettings,
+          _db.settings,
         ]),
       )
       .map((_) {});
@@ -252,6 +255,7 @@ class DriftUserRepository implements UserRepository {
     final r = await _db.select(_db.settings).getSingle();
     return PracticePreferences(
       motif: AppMotif.values.byName(r.motif),
+      dailyGoal: r.dailyGoal,
       includeDiacritics: r.includeDiacritics,
       autoNext: r.autoNext,
       showGrammar: r.showGrammar,
@@ -264,6 +268,7 @@ class DriftUserRepository implements UserRepository {
     await (_db.update(_db.settings)..where((t) => t.id.equals(1))).write(
       SettingsCompanion(
         motif: Value(value.motif.name),
+        dailyGoal: Value(value.dailyGoal),
         includeDiacritics: Value(value.includeDiacritics),
         autoNext: Value(value.autoNext),
         showGrammar: Value(value.showGrammar),
@@ -277,6 +282,8 @@ class DriftUserRepository implements UserRepository {
     String cardId, {
     bool? favorite,
     bool? disabled,
+    bool? inPlaylist,
+    String? note,
   }) async {
     final changed =
         await (_db.update(
@@ -284,6 +291,10 @@ class DriftUserRepository implements UserRepository {
         )..where((t) => t.cardId.equals(cardId))).write(
           UserCardsCompanion(
             favorite: favorite == null ? const Value.absent() : Value(favorite),
+            inPlaylist: inPlaylist == null
+                ? const Value.absent()
+                : Value(inPlaylist),
+            note: note == null ? const Value.absent() : Value(note),
             disabled: disabled == null ? const Value.absent() : Value(disabled),
             updatedAt: Value(DateTime.now().toUtc()),
           ),

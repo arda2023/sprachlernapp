@@ -142,6 +142,7 @@ class TestUser implements UserRepository {
   @override
   Future<void> savePreferences(PracticePreferences value) async {
     prefs = value;
+    events.add(null);
   }
 
   @override
@@ -152,13 +153,21 @@ class TestUser implements UserRepository {
   @override
   Future<List<LocalSubmission>> submissions() async => List.of(localEntries);
   @override
-  Future<void> setCardFlags(String id, {bool? favorite, bool? disabled}) async {
+  Future<void> setCardFlags(
+    String id, {
+    bool? favorite,
+    bool? disabled,
+    bool? inPlaylist,
+    String? note,
+  }) async {
     final s = states[id]!;
     states[id] = UserCardState(
       cardId: id,
       box: s.box,
       dueAt: s.dueAt,
       favorite: favorite ?? s.favorite,
+      note: note ?? s.note,
+      inPlaylist: inPlaylist ?? s.inPlaylist,
       disabled: disabled ?? s.disabled,
       retired: s.retired,
       localOnly: s.localOnly,

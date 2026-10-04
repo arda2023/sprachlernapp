@@ -18,7 +18,7 @@ class VocabWord {
     this.inPlaylist = false,
     this.note = '',
   }) : assert(box >= 1 && box <= leitnerBoxCount),
-       assert(reviewCount >= box - 1);
+       assert(reviewCount >= 0);
 
   /// Stable slug, so content-pack imports stay idempotent.
   final String id;

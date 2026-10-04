@@ -270,13 +270,15 @@ def test_default_is_meaning_check_config_and_override_only_model_and_thinking():
     assert (c["meaning_check_model"], c["meaning_check_thinking"]) == ("gemini-3.8-flash",
                                                                        {"thinking_level": "LOW"})
     # only meaning_check gets the higher limit
-    assert c["max_output_tokens"]["meaning_check"] == 1024
+    assert c["max_output_tokens"]["meaning_check"] == 4096
+    assert c["max_output_tokens"] == {'meanings':2048, 'sentences':2048, 'annotate':4096,
+        'blindtest':256, 'meaning_check':4096, 'classify_usage':1024, 'alternative_check':1024}
     assert (c["max_output_tokens"]["blindtest"], c["max_output_tokens"]["alternative_check"]) == (256, 1024)
     fake = KwargsCheck(dict(GOOD))
     check(fake, cfg, "Elias left early.", "left", LEAVE, "Elias ging vorzeitig.")
     assert fake.kwargs == {"model": "gemini-3.8-flash",
                            "thinking": {"thinking_level": "LOW"}, "step": "meaning_check",
-                           "max_output_tokens": 1024}
+                           "max_output_tokens": 4096}
     prompt, schema = fake.prompt, fake.schema
     check(fake, cfg, "Elias left early.", "left", LEAVE, "Elias ging vorzeitig.",
           model=c["blindtest_model"], thinking=c["blindtest_thinking"])
@@ -287,6 +289,27 @@ def test_default_is_meaning_check_config_and_override_only_model_and_thinking():
 
 
 TRUNCATED = '{\n  "sense_key": "leave#verlassen",\n  "observed_pos": "VERB",\n  "reason": "Die Pers'
+
+
+def test_new_limit_is_reserved_before_call_and_broken_json_is_not_retried(tmp_path):
+    from sprachpipe.llm import Llm, LlmError, cost_usd, model_price
+    cfg = load_config()
+    llm = Llm(cfg, tmp_path/'ledger.csv', 1.00)
+    calls = []
+    def fake_call(prompt, schema, model, thinking, max_output_tokens):
+        calls.append(max_output_tokens)
+        price = model_price(cfg['prices'], model)
+        assert max_output_tokens == 4096
+        assert llm._reserved == pytest.approx(cost_usd(price, len(prompt)//2+1, 4096, 0))
+        assert llm._reserved > cost_usd(price, len(prompt)//2+1, 1024, 0)
+        return TRUNCATED, (804,29,981), {'finish_reason':'MAX_TOKENS','usage_known':True}
+    llm._call = fake_call
+    with pytest.raises(LlmError) as err:
+        check(llm, cfg, 'Elias left early.', 'left', LEAVE, 'Elias ging vorzeitig.')
+    for part in ['max_output_tokens=4096','output_tokens=29','thinking_tokens=981','finish_reason=MAX_TOKENS']:
+        assert part in str(err.value)
+    assert calls == [4096]
+    assert llm._reserved == pytest.approx(0)
 
 
 def vertex_llm(tmp_path, response):
@@ -312,7 +335,7 @@ def test_truncated_json_is_visible_error_with_finish_metadata(tmp_path):
         check(llm, load_config(), "Elias left early.", "left", LEAVE, "Elias ging vorzeitig.")
     message = str(err.value)
     assert message.startswith("meaning_check: Unterminated string starting at")
-    for part in ("model=gemini-3.8-flash", "max_output_tokens=1024", "input_tokens=830",
+    for part in ("model=gemini-3.8-flash", "max_output_tokens=4096", "input_tokens=830",
                  "output_tokens=30", "thinking_tokens=994", "finish_reason=MAX_TOKENS"):
         assert part in message
     assert "Elias" not in message and "Die Pers" not in message   # no prompt, no response text
@@ -330,7 +353,7 @@ def test_parse_error_without_metadata_says_unknown(tmp_path):
         check(llm, load_config(), "Elias left early.", "left", LEAVE, "Elias ging vorzeitig.")
     message = str(err.value)
     for part in ("input_tokens=unbekannt", "output_tokens=unbekannt", "thinking_tokens=unbekannt",
-                 "finish_reason=unbekannt", "max_output_tokens=1024"):
+                 "finish_reason=unbekannt", "max_output_tokens=4096"):
         assert part in message
 
 

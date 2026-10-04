@@ -34,7 +34,13 @@ abstract interface class ContentRepository {
 abstract interface class UserRepository {
   Future<PracticePreferences> preferences();
   Future<void> savePreferences(PracticePreferences value);
-  Future<void> setCardFlags(String cardId, {bool? favorite, bool? disabled});
+  Future<void> setCardFlags(
+    String cardId, {
+    bool? favorite,
+    bool? disabled,
+    bool? inPlaylist,
+    String? note,
+  });
   Future<void> saveSubmission(LocalSubmission submission);
   Future<List<LocalSubmission>> submissions();
 

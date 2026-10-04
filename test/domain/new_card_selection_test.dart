@@ -21,6 +21,78 @@ ContentCard c(
 );
 
 void main() {
+  test('mixed keeps due reviews ahead of diverse new cards, merges decks, filters disabled, then early', () {
+    final now = DateTime(2026, 10, 4);
+    final cards = [
+      c('due1', lemma: 'same'),
+      c('due2', lemma: 'same'),
+      for (var i = 0; i < 5; i++) c('n$i'),
+      c('function', pos: 'ADP'),
+      c('disabled'),
+      c('early'),
+    ];
+    final states = {
+      'due1': UserCardState(
+        cardId: 'due1',
+        box: 2,
+        dueAt: now.subtract(const Duration(days: 2)),
+      ),
+      'due2': UserCardState(cardId: 'due2', box: 5, dueAt: now),
+      'disabled': UserCardState(
+        cardId: 'disabled',
+        box: 1,
+        dueAt: now,
+        disabled: true,
+      ),
+      'early': UserCardState(
+        cardId: 'early',
+        box: 3,
+        dueAt: now.add(const Duration(days: 2)),
+      ),
+    };
+    final queue = buildMixedQueue(
+      activeDeckCardIds: [
+        'function',
+        'n0',
+        'n1',
+        'n0',
+        'disabled',
+        'n2',
+        'n3',
+        'n4',
+      ],
+      cards: {for (final c in cards) c.id: c},
+      states: states,
+      now: now,
+      size: 10,
+    );
+    expect(queue.map((e) => e.cardId), [
+      'due1',
+      'due2',
+      'n0',
+      'n1',
+      'n2',
+      'n3',
+      'function',
+      'n4',
+      'early',
+    ]);
+    expect(queue.last.mode, ReviewMode.early);
+    expect(queue.take(2).every((e) => e.mode == ReviewMode.mixed), isTrue);
+    final repeated = withRepeat(queue, 0);
+    expect(repeated.where((e) => e.repeat).single.mode, ReviewMode.mixed);
+    expect(withRepeat(repeated, 4), repeated);
+    expect(
+      buildMixedQueue(
+        activeDeckCardIds: [],
+        cards: {},
+        states: states,
+        now: now,
+      ),
+      isEmpty,
+    );
+  });
+
   List<String> pick(
     List<ContentCard> cards, {
     int limit = 10,

@@ -1,10 +1,10 @@
+import 'package:sprachapp/presentation/providers/learning_providers.dart';
 import 'package:flutter/foundation.dart';
 
-import '../domain/leitner.dart';
-import 'word_list_models.dart';
+import 'package:sprachapp/domain/leitner.dart';
+import 'package:sprachapp/models/word_list_models.dart';
 
-/// In-memory Wortliste state until Riverpod and Drift arrive. The list and
-/// the details sheet listen to the same store.
+/// In-memory presentation fixture; never imported by the app.
 class WordListStore extends ChangeNotifier {
   WordListStore(List<VocabWord> words) : _words = List.of(words);
 
@@ -69,5 +69,29 @@ class WordListStore extends ChangeNotifier {
     _words[i] = updated;
     notifyListeners();
     return updated;
+  }
+}
+
+class FixtureWordActions extends WordActions {
+  FixtureWordActions(super.ref, this.store);
+  final WordListStore store;
+  @override
+  Future<void> save(
+    String id, {
+    bool? favorite,
+    bool? disabled,
+    bool? inPlaylist,
+    String? note,
+  }) async {
+    if (favorite != null && store.byId(id).isFavorite != favorite) {
+      store.toggleFavorite(id);
+    }
+    if (disabled != null && store.byId(id).isDisabled != disabled) {
+      store.toggleDisabled(id);
+    }
+    if (inPlaylist != null && store.byId(id).inPlaylist != inPlaylist) {
+      store.togglePlaylist(id);
+    }
+    if (note != null) store.setNote(id, note);
   }
 }

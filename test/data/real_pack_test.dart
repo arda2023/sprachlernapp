@@ -1,12 +1,13 @@
 // Data-access check of the real staged pack (assets/content/en/), through the
 // production installer and repository. Skipped when no pack is staged, so the
 // suite never depends on it; stage first with
-//   dart run tool/stage_content_pack.dart --from pipeline/out/curated_test_v1
+//   dart run tool/stage_content_pack.dart --from <verified-pack-directory>
 
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sqlite3/sqlite3.dart';
 import 'package:sprachapp/data/content/content_pack_installer.dart';
 
 import 'support.dart';
@@ -16,10 +17,39 @@ void main() {
   final manifest = File('assets/content/en/content.manifest.json');
   final staged = asset.existsSync() && manifest.existsSync();
 
-  test('staged pack: 164 cards and 492 card sentences, read-only', () async {
+  test('staged pack: all cards and sentence links readable, read-only', () async {
     final tmp = Directory.systemTemp.createTempSync('real_pack_');
     addTearDown(() => tmp.deleteSync(recursive: true));
     final before = sha256Of(asset);
+    final raw = sqlite3.open(asset.path, mode: OpenMode.readOnly);
+    late int expectedCards;
+    late int expectedLinks;
+    late int expectedAlternatives;
+    try {
+      expectedCards =
+          raw
+                  .select(
+                    'SELECT count(*) AS n FROM cards WHERE removed_in IS NULL',
+                  )
+                  .single['n']
+              as int;
+      expectedLinks =
+          raw
+                  .select(
+                    'SELECT count(*) AS n FROM card_sentences WHERE removed_in IS NULL',
+                  )
+                  .single['n']
+              as int;
+      expectedAlternatives =
+          raw
+                  .select(
+                    "SELECT count(*) AS n FROM card_sentences WHERE removed_in IS NULL AND valid_alternatives != '[]'",
+                  )
+                  .single['n']
+              as int;
+    } finally {
+      raw.close();
+    }
     final installer = ContentPackInstaller(
       supportDirectory: tmp,
       loadAsset: (key) async {
@@ -49,14 +79,19 @@ void main() {
       );
 
       expect(decks.single.slug, 'allgemeine-sprache');
-      expect(decks.single.cardCount, 164);
-      expect(cardIds, hasLength(164));
-      expect(cardIds.toSet(), hasLength(164));
-      expect(items, hasLength(164));
-      expect(sentences, hasLength(492));
-      expect(sentences.map((s) => s.sentenceId).toSet(), hasLength(492));
+      expect(expectedCards, greaterThan(0));
+      expect(expectedLinks, expectedCards * 3);
+      expect(decks.single.cardCount, expectedCards);
+      expect(cardIds, hasLength(expectedCards));
+      expect(cardIds.toSet(), hasLength(expectedCards));
+      expect(items, hasLength(expectedCards));
+      expect(sentences, hasLength(expectedLinks));
+      expect(
+        sentences.map((s) => s.sentenceId).toSet(),
+        hasLength(expectedLinks),
+      );
       expect(items.every((i) => i.sentences.length == 3), isTrue);
-      expect(withAlternatives, hasLength(88));
+      expect(withAlternatives, hasLength(expectedAlternatives));
       expect(repo.info.isInternalTestPack, isTrue);
       // ids are the 32-hex content ids, unchanged
       expect(

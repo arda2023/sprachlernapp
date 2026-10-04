@@ -122,23 +122,43 @@ class DeckSessionController extends Notifier<DeckSessionState> {
         _version = await ref.read(appInfoProvider.future);
         _device = await _user.deviceId();
         _preferences = await _user.preferences();
-        final ids = await _content.deckCardIds(args.deckId);
+        final ids = <String>[];
+        final known = await _content.allCardIds();
+        if (args.kind == DeckSessionKind.mixed) {
+          final decks = await _content.decks();
+          final active = await _user.activeDeckIds(decks.map((d) => d.id));
+          for (final deck in decks) {
+            if (active.contains(deck.id)) {
+              ids.addAll(await _content.deckCardIds(deck.id));
+            }
+          }
+        } else {
+          ids.addAll(await _content.deckCardIds(args.deckId));
+        }
         final states = await _user.allCardStates();
         final cards = {
           for (final c in await _content.selectionCards({
             ...ids,
-            ...states.keys,
+            ...states.keys.where(known.contains),
           }))
             c.id: c,
         };
-        _queue = buildDeckQueue(
-          deckCardIds: ids,
-          states: states,
-          cards: cards,
-          kind: args.kind,
-          now: _clock(),
-          size: args.size,
-        );
+        _queue = args.kind == DeckSessionKind.mixed
+            ? buildMixedQueue(
+                activeDeckCardIds: ids,
+                cards: cards,
+                states: states,
+                now: _clock(),
+                size: args.size,
+              )
+            : buildDeckQueue(
+                deckCardIds: ids,
+                states: states,
+                cards: cards,
+                kind: args.kind,
+                now: _clock(),
+                size: args.size,
+              );
         for (final item in await _content.practiceItems(
           _queue.map((e) => e.cardId).toList(),
         )) {
@@ -178,7 +198,7 @@ class DeckSessionController extends Notifier<DeckSessionState> {
       item: item,
       sentence: item.sentenceForPass(counts[entry.cardId] ?? 0),
       state: states[entry.cardId],
-      mode: args.kind.mode,
+      mode: entry.mode ?? args.kind.mode,
       startedAt: _clock(),
       logged: !entry.repeat,
     );
@@ -190,6 +210,8 @@ class DeckSessionController extends Notifier<DeckSessionState> {
               args.kind == DeckSessionKind.learn &&
               _queue.length < args.size
           ? 'Für diese Sitzung sind ${_queue.length} unterschiedliche Karten verfügbar.'
+          : entry.mode == ReviewMode.early
+          ? 'Vorab-Üben: Eine saubere Antwort lässt Stufe und Fälligkeit unverändert.'
           : null,
     );
   }

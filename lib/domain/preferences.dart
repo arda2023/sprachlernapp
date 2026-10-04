@@ -4,19 +4,23 @@ enum AppMotif { automatic, light, dark }
 class PracticePreferences {
   const PracticePreferences({
     this.motif = AppMotif.automatic,
+    this.dailyGoal = 10,
     this.includeDiacritics = true,
     this.autoNext = false,
     this.showGrammar = false,
   });
   final AppMotif motif;
+  final int dailyGoal;
   final bool includeDiacritics, autoNext, showGrammar;
   PracticePreferences copyWith({
     AppMotif? motif,
+    int? dailyGoal,
     bool? includeDiacritics,
     bool? autoNext,
     bool? showGrammar,
   }) => PracticePreferences(
     motif: motif ?? this.motif,
+    dailyGoal: dailyGoal ?? this.dailyGoal,
     includeDiacritics: includeDiacritics ?? this.includeDiacritics,
     autoNext: autoNext ?? this.autoNext,
     showGrammar: showGrammar ?? this.showGrammar,

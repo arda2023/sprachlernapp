@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'fixtures/deck_repositories.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -27,7 +29,10 @@ import 'package:sprachapp/models/sample_content.dart';
 import 'package:sprachapp/models/story_models.dart';
 import 'package:sprachapp/models/playback_clock.dart';
 import 'package:sprachapp/models/word_list_models.dart';
-import 'package:sprachapp/models/word_list_store.dart';
+
+import 'fixtures/word_list_store.dart';
+
+import 'package:sprachapp/presentation/providers/learning_providers.dart';
 import 'package:sprachapp/screens/decks/deck_details_screen.dart';
 import 'package:sprachapp/screens/decks/deck_library_screen.dart';
 import 'package:sprachapp/screens/grammar/grammar_rule_detail_screen.dart';
@@ -56,8 +61,17 @@ import 'package:sprachapp/widgets/sentence_translation_sheet.dart';
 import 'package:sprachapp/widgets/section_heading.dart';
 
 void main() {
-  setUp(() => TestWidgetsFlutterBinding.ensureInitialized().platformDispatcher.platformBrightnessTestValue = Brightness.dark);
-  tearDown(() => TestWidgetsFlutterBinding.ensureInitialized().platformDispatcher.clearPlatformBrightnessTestValue());
+  setUp(
+    () =>
+        TestWidgetsFlutterBinding.ensureInitialized()
+                .platformDispatcher
+                .platformBrightnessTestValue =
+            Brightness.dark,
+  );
+  tearDown(
+    () => TestWidgetsFlutterBinding.ensureInitialized().platformDispatcher
+        .clearPlatformBrightnessTestValue(),
+  );
   setUpAll(() => GoogleFonts.config.allowRuntimeFetching = false);
 
   Future<void> scrollHomeTo(WidgetTester tester, Finder target) =>
@@ -97,7 +111,7 @@ void main() {
     expect(find.text('Stories'), findsWidgets);
     expect(find.text('Mehr entdecken'), findsOneWidget);
     expect(
-      find.bySemanticsLabel('Lernen, Tagesziel 4 von 10 Wörtern'),
+      find.bySemanticsLabel('Lernen, Tagesziel 0 von 10 Wörtern'),
       findsOneWidget,
     );
     expect(tester.takeException(), isNull);
@@ -114,7 +128,7 @@ void main() {
       reason: label,
     );
     for (final label in [
-      'Lernen, Tagesziel 4 von 10 Wörtern',
+      'Lernen, Tagesziel 0 von 10 Wörtern',
       'Profil',
       'Einstellungen',
       'Tagesziel ändern',
@@ -205,7 +219,7 @@ void main() {
       ),
     );
     expect(ring.color, AppColors.textMuted);
-    expect(ring.fraction, 0.4);
+    expect(ring.fraction, 0);
 
     final tabs = find.byType(AppBottomBar);
     expect(find.descendant(of: tabs, matching: find.text('Lernen')), findsOne);
@@ -224,8 +238,8 @@ void main() {
     final card = find.byType(WeeklyGoalCard);
     expect(
       find.bySemanticsLabel(
-        'Diese Woche: Montag erreicht, Dienstag erreicht, Mittwoch verfehlt, '
-        'Donnerstag erreicht, Freitag heute, Samstag offen, Sonntag offen',
+        'Diese Woche: Montag verfehlt, Dienstag verfehlt, Mittwoch verfehlt, '
+        'Donnerstag verfehlt, Freitag verfehlt, Samstag verfehlt, Sonntag heute',
       ),
       findsOneWidget,
     );
@@ -234,11 +248,11 @@ void main() {
         of: card,
         matching: find.byIcon(CupertinoIcons.checkmark),
       ),
-      findsNWidgets(3),
+      findsNothing,
     );
     expect(
       find.descendant(of: card, matching: find.byIcon(CupertinoIcons.xmark)),
-      findsOneWidget,
+      findsNWidgets(6),
     );
     final inked = find.descendant(
       of: card,
@@ -265,11 +279,11 @@ void main() {
     await tester.tap(find.text('20 Wörter pro Tag'));
     await tester.pumpAndSettle();
     expect(
-      find.bySemanticsLabel('Tagesziel: 4 von 20 Wörtern'),
+      find.bySemanticsLabel('Tagesziel: 0 von 20 Wörtern'),
       findsOneWidget,
     );
     expect(
-      find.bySemanticsLabel('Lernen, Tagesziel 4 von 20 Wörtern'),
+      find.bySemanticsLabel('Lernen, Tagesziel 0 von 20 Wörtern'),
       findsOneWidget,
     );
   });
@@ -494,7 +508,7 @@ void main() {
       findsOneWidget,
     );
     expect(
-      find.bySemanticsLabel('Tagesziel: 4 von 10 Wörtern'),
+      find.bySemanticsLabel('Tagesziel: 0 von 10 Wörtern'),
       findsOneWidget,
     );
   });
@@ -579,26 +593,30 @@ void main() {
     expect(story.style?.fontFamily, contains('SourceSerif4'));
   });
 
-  testWidgets('Tapping a word opens the lookup sheet and adds it', (
-    tester,
-  ) async {
-    await tester.pumpWidget(reader());
-    await tapWord(tester, 'arrived');
+  testWidgets(
+    'Story lookup explicitly does not pretend to save a learning card',
+    (tester) async {
+      await tester.pumpWidget(reader());
+      await tapWord(tester, 'arrived');
 
-    expect(find.byType(WordLookupSheet), findsOneWidget);
-    expect(find.text('ankommen'), findsOneWidget);
-    expect(find.text('im Text: arrived'), findsOneWidget);
-    expect(find.textContaining('Verb', findRichText: true), findsWidgets);
+      expect(find.byType(WordLookupSheet), findsOneWidget);
+      expect(find.text('ankommen'), findsOneWidget);
+      expect(find.text('im Text: arrived'), findsOneWidget);
+      expect(find.textContaining('Verb', findRichText: true), findsWidgets);
 
-    final add = find.bySemanticsLabel('Zum Lernen hinzufügen');
-    expect(
-      tester.getSemantics(add),
-      isSemantics(isButton: true, hasTapAction: true, isEnabled: true),
-    );
-    await tester.tap(add);
-    await tester.pumpAndSettle();
-    expect(find.bySemanticsLabel('Wird gelernt'), findsOneWidget);
-  });
+      expect(
+        find.text(
+          'Story-Prototyp: Zum Lernen hinzufügen ist noch nicht verfügbar.',
+        ),
+        findsOneWidget,
+      );
+      expect(
+        tester.getSemantics(find.bySemanticsLabel('Zum Lernen hinzufügen')),
+        isSemantics(isButton: true, isEnabled: false),
+      );
+      expect(find.bySemanticsLabel('Wird gelernt'), findsNothing);
+    },
+  );
 
   testWidgets('Lookup sheet uses neutral chrome and no shadow', (tester) async {
     await tester.pumpWidget(reader());
@@ -629,7 +647,7 @@ void main() {
     final icon = tester.widget<Icon>(
       find.descendant(of: button, matching: find.byType(Icon)),
     );
-    expect(icon.color, AppColors.textPrimary);
+    expect(icon.color, AppColors.textMuted); // Prototype action is disabled.
   });
 
   testWidgets('Known words keep their status without a downgrade', (
@@ -1034,15 +1052,25 @@ void main() {
 
   final wordListNow = DateTime(2026, 10, 2, 12);
 
-  Widget wordList([WordListStore? store]) => MaterialApp(
-    theme: buildAppTheme(),
-    home: Scaffold(
-      body: WordListScreen(
-        store: store ?? WordListStore(sampleVocabulary(wordListNow)),
-        clock: () => wordListNow,
+  Widget wordList([WordListStore? store]) {
+    final fixture = store ?? WordListStore(sampleVocabulary(wordListNow));
+    return ProviderScope(
+      overrides: [
+        wordListProvider.overrideWith((ref) {
+          fixture.addListener(ref.invalidateSelf);
+          ref.onDispose(() => fixture.removeListener(ref.invalidateSelf));
+          return fixture.words;
+        }),
+        wordActionsProvider.overrideWith(
+          (ref) => FixtureWordActions(ref, fixture),
+        ),
+      ],
+      child: MaterialApp(
+        theme: buildAppTheme(),
+        home: Scaffold(body: WordListScreen(clock: () => wordListNow)),
       ),
-    ),
-  );
+    );
+  }
 
   /// Phone width; tall enough that every sample card is built.
   void phoneView(WidgetTester tester, {double height = 2600}) {

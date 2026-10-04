@@ -150,13 +150,45 @@ def curate(packs: dict[str, dict], curation: dict, card_meta: dict[str, dict]) -
     missing = [n for n in [base, *curation["sources"]] if n not in packs]
     if missing:
         raise CurationError(f"missing source packs: {missing}")
+    metadata = []
+    if "metadata_resolutions" in curation:
+        # Opt-in strict merge: every differing entity needs an exact, versioned
+        # decision. Keep source rows in the log before changing our copies.
+        decisions = {(r["table"], r["ref"]): r for r in curation["metadata_resolutions"]}
+        if len(decisions) != len(curation["metadata_resolutions"]):
+            raise CurationError("duplicate metadata resolution")
+        used = set()
+        for table in ("lemmas", "senses", "decks"):
+            groups = {}
+            for name, pack in packs.items():
+                for row in pack[table]:
+                    group = groups.setdefault(row["ref"], {})
+                    if name in group:
+                        raise CurationError(f"duplicate {table} ref {row['ref']}")
+                    group[name] = row
+            for ref, origins in groups.items():
+                key = (table, ref)
+                decision = decisions.get(key)
+                if decision:
+                    if origins != decision["expect"] or not decision.get("reason"):
+                        raise CurationError(f"metadata precondition differs: {table}/{ref}")
+                    if table != "senses" or set(decision["new"]) != {"gloss_de"}:
+                        raise CurationError("only explicit sense gloss changes supported")
+                    metadata.append(copy.deepcopy(decision))
+                    for row in origins.values():
+                        row.update(decision["new"])
+                    used.add(key)
+                if any(row != next(iter(origins.values())) for row in origins.values()):
+                    raise CurationError(f"unresolved metadata conflict: {table}/{ref}")
+        if set(decisions) != used:
+            raise CurationError("unused metadata resolution")
     for name, pack in packs.items():
         if pack["lang"] != lang:
             raise CurationError(f"{name}: lang {pack['lang']!r} != {lang!r}")
         _reref(name, pack)
     work = packs[base]
     log = {"version": curation["version"], "card_operations": [], "sentence_operations": [],
-           "metadata_conflicts": [], "pruned": {}}
+           "metadata_conflicts": [], "metadata_resolutions": metadata, "pruned": {}}
     pending: list[dict] = []
 
     # every card of a non-base source must be decided exactly once
@@ -226,14 +258,23 @@ def curate(packs: dict[str, dict], curation: dict, card_meta: dict[str, dict]) -
             pending.append({"kind": "sentence_qa", "sentence": new_ref, "sentence_id": new_id,
                             "checks": ["lint", "blindtest", "meaning_check", "alternative_check"],
                             "recheck_alternatives": dropped_alternatives})
-        elif op["op"] == "replace_translation":
+        elif op["op"] in ("replace_translation", "editorial_translation"):
+            if op["op"] == "editorial_translation" and (
+                    not op.get("reason") or set(op.get("expect", {})) != {"text", "translation_de"}):
+                raise CurationError(f"{where}: editorial translation needs text, translation and reason")
             sentence["translation_de"] = op["new"]["translation_de"]
             log["sentence_operations"].append({
-                "op": "replace_translation", "label": op["label"], "card": op["card"],
+                "op": op["op"], "label": op["label"], "card": op["card"],
                 "sentence_id": old_id, "old": op["expect"]["translation_de"],
-                "new": op["new"]["translation_de"]})
-            pending.append({"kind": "translation_check", "sentence": sentence["ref"],
-                            "sentence_id": old_id})
+                "new": op["new"]["translation_de"], "reason": op.get("reason")})
+            if op["op"] == "replace_translation":
+                pending.append({"kind": "translation_check", "sentence": sentence["ref"],
+                                "sentence_id": old_id})
+            else:
+                sentence.setdefault("editorial_reviews", []).append({
+                    "version": curation["version"], "kind": "translation", "model_check": False,
+                    "original": op["expect"], "translation_de": sentence["translation_de"],
+                    "reason": op["reason"]})
         elif op["op"] == "remove_alternative":
             before = list(cs.get("valid_alternatives", []))
             if before.count(op["alternative"]) != 1:
@@ -244,6 +285,7 @@ def curate(packs: dict[str, dict], curation: dict, card_meta: dict[str, dict]) -
                 "op": "remove_alternative", "label": op["label"], "card": op["card"],
                 "sentence_id": old_id, "removed": op["alternative"], "before": before,
                 "after": cs["valid_alternatives"],
+                **({"reason": op["reason"]} if "reason" in op else {}),
                 "note": "qa_report.alternative_check keeps the historical model verdict"})
         else:
             raise CurationError(f"{where}: unknown operation")
@@ -374,12 +416,13 @@ def derive_dictionary(work: dict, resolutions: list[dict] | None = None) -> dict
             found = values.get((norm, sense), {})
             r = chosen.get((norm, sense))
             if r is not None:
-                if sorted(found) != sorted(r["expected_variants"]) or r["gloss_de"] not in found:
+                if sorted(found) != sorted(r["expected_variants"]) or (r["gloss_de"] not in found
+                        and not (r.get("editorial") is True and r.get("reason") and found)):
                     raise CurationError(f"resolution {norm!r}/{sense!r}: variants {sorted(found)} "
                                         f"!= expected {sorted(r['expected_variants'])} or choice missing")
                 used.add((norm, sense))
                 entries.append({"form": norm, "sense": sense, "card": card, "gloss_de": r["gloss_de"],
-                                "rank": rank, "origin": dict(found[r["gloss_de"]], resolution={
+                                "rank": rank, "origin": dict(found.get(r["gloss_de"], {"editorial": True}), resolution={
                                     "reason": r["reason"], "rejected": [
                                         {"gloss_de": k, **v} for k, v in found.items()
                                         if k != r["gloss_de"]]})})

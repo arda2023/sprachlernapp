@@ -5,14 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'dart:async';
-
 import '../models/home_models.dart';
 import '../models/practice_models.dart';
 import '../models/reading_history.dart';
 import '../models/sample_content.dart';
-import '../models/word_list_store.dart';
-import '../presentation/providers/deck_providers.dart';
+import '../presentation/providers/learning_providers.dart';
+import '../presentation/providers/preferences_provider.dart';
+import 'decks/deck_practice_screen.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_bottom_bar.dart';
 import 'content/content_dashboard_screen.dart';
@@ -36,38 +35,7 @@ class AppShell extends ConsumerStatefulWidget {
   ConsumerState<AppShell> createState() => _AppShellState();
 }
 
-class _AppShellState extends ConsumerState<AppShell>
-    with WidgetsBindingObserver {
-  Timer? _midnight;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    _scheduleMidnight();
-  }
-
-  void _scheduleMidnight() {
-    _midnight?.cancel();
-    final now = DateTime.now();
-    _midnight = Timer(
-      DateTime(now.year, now.month, now.day + 1).difference(now),
-      () {
-        ref.invalidate(vocabBreakdownProvider);
-        _scheduleMidnight();
-      },
-    );
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      ref.invalidate(vocabBreakdownProvider);
-      ref.invalidate(decksProvider);
-      _scheduleMidnight();
-    }
-  }
-
+class _AppShellState extends ConsumerState<AppShell> {
   static const _tabs = [
     AppTab.home,
     AppTab.stories,
@@ -76,17 +44,12 @@ class _AppShellState extends ConsumerState<AppShell>
   ];
 
   final _history = ReadingHistory(sampleReadStoryIds);
-  final _words = WordListStore(sampleVocabulary(DateTime.now()));
   final _practice = PracticeProgress(sampleCompletedPracticeIds);
   AppTab _tab = AppTab.home;
-  DailyGoal _goal = sampleGoal;
 
   @override
   void dispose() {
-    _midnight?.cancel();
-    WidgetsBinding.instance.removeObserver(this);
     _history.dispose();
-    _words.dispose();
     _practice.dispose();
     super.dispose();
   }
@@ -146,14 +109,37 @@ class _AppShellState extends ConsumerState<AppShell>
   void _openDeck(Deck deck) => DeckDetailsScreen.open(context, deck.id);
 
   Future<void> _editGoal() async {
-    final target = await DailyGoalSheet.show(context, current: _goal.target);
-    if (target == null || !mounted) return;
-    setState(() => _goal = DailyGoal(done: _goal.done, target: target));
+    try {
+      final preferences = await ref.read(preferencesProvider.future);
+      if (!mounted) return;
+      final target = await DailyGoalSheet.show(
+        context,
+        current: preferences.dailyGoal,
+      );
+      if (target == null || !mounted) return;
+      await ref
+          .read(preferencesProvider.notifier)
+          .save(preferences.copyWith(dailyGoal: target));
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Tagesziel nicht geladen oder gespeichert. Bitte erneut versuchen.',
+            ),
+          ),
+        );
+      }
+    }
   }
 
-  // TODO: route to the mixed practice session, profile and settings once
-  // they exist.
+  // Profile remains outside this integration.
   void _notYetRouted() {}
+  void _startMixed() => DeckPracticeScreen.open(
+    context,
+    deckId: '',
+    mode: DeckPracticeMode.mixed,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -172,8 +158,8 @@ class _AppShellState extends ConsumerState<AppShell>
           index: _tabs.indexOf(_tab),
           children: [
             HomeScreen(
-              goal: _goal,
-              week: sampleWeek,
+              goal: null,
+              week: null,
               onOpenStory: _openStory,
               onBrowseStories: () => _select(AppTab.stories),
               onOpenDeck: _openDeck,
@@ -190,19 +176,22 @@ class _AppShellState extends ConsumerState<AppShell>
               onOpenNews: (article) =>
                   StoryReaderScreen.openNews(context, article),
             ),
-            WordListScreen(store: _words),
+            const WordListScreen(),
             ContentDashboardScreen(categories: _categories),
           ],
         ),
-        floatingActionButton: PracticeButton(
-          goal: _goal,
-          onPressed: _notYetRouted,
-        ),
+        floatingActionButton: ref
+            .watch(learningProgressProvider)
+            .when(
+              data: (p) => PracticeButton(goal: p.goal, onPressed: _startMixed),
+              loading: () => null,
+              error: (_, _) => null,
+            ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: AppBottomBar(
           current: _tab,
           onTabSelected: _select,
-          onStartPractice: _notYetRouted,
+          onStartPractice: _startMixed,
         ),
       ),
     );
