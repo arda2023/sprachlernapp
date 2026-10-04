@@ -37,7 +37,7 @@ Eine Karte entsteht bei der ersten Anzeige in einem Stapel oder per "Zum Lernen 
 
 ## Synonymhinweis
 
-Beschlossene Regel (04.10.2026). Pipeline, Migrationen, Export und App-Code sind noch nicht umgesetzt (`NEXTSTEPS.md`). Produktregel: `PRODUCT.md`, Darstellung: `DESIGN.md`.
+Beschlossene Regel (04.10.2026). Stand: Content-Pipeline sowie lokaler Pack- und `content.sqlite`-Transport von `valid_alternatives` sind umgesetzt und offline getestet; die Content-Migration ist erstellt, aber nicht angewendet. Ausstehend: App-Anbindung (Prüfreihenfolge, Hinweis, Box-1-Regel), `hint_used`-Migration und Live-Qualität der Alternativprüfung (`NEXTSTEPS.md`). Produktregel: `PRODUCT.md`, Darstellung: `DESIGN.md`.
 
 - **Auslöser**: Die Eingabe entspricht einer geprüften Alternative aus `card_sentences.valid_alternatives` genau dieses Karte-Satz-Lücken-Paares (`docs/content-schema.md`); Vergleich wie bei der Zielform (Groß-/Kleinschreibung egal, getrimmt). Eigene Sätze aus `card_contexts` haben keine Alternativen und verhalten sich wie eine leere Liste.
 - **Prüfreihenfolge** je Eingabe: (1) Zielform → gelöst; (2) geprüfte Alternative → Hinweis; (3) "Fast richtig" (nur gegen die Zielform); (4) falsche Form desselben Lemmas → Fehler; (5) alles andere → Fehler.
@@ -115,4 +115,4 @@ Eine Zeile je Karte und Session, geschrieben nach dem ersten Durchgang der Karte
 - Tagesziel = verschiedene Karten mit `review_log`-Zeile heute. ✔
 - `mode = early` kennzeichnet Vorab-Üben innerhalb von Gemischt (Box-Regel wie Revue). ✔
 - Eine `review_log`-Zeile je Karte und Session; die In-Session-Wiederholung wird nicht geloggt. ✔
-- Geprüfte Alternative → Synonymhinweis, Abschluss nur mit Zielform oder "Wort erfahren", danach Box 1 ohne zusätzlichen Fehler (beschlossen 04.10.2026, Umsetzung offen). ✔
+- Geprüfte Alternative → Synonymhinweis, Abschluss nur mit Zielform oder "Wort erfahren", danach Box 1 ohne zusätzlichen Fehler (beschlossen 04.10.2026; App-Umsetzung offen). ✔
