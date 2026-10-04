@@ -1,24 +1,24 @@
 # Status / nächste Schritte
 Stand: 04.10.2026
-Paket A/B lokal umgesetzt; Abnahme in docs/decks-and-story-learning-plan.md, Abschnitte 10/11.
-Aktives internes Pack unverändert: story_learning_v1, Content-Schema 2.
-Asset-SHA256: b8231bbc7d1fe834b13ee81b901ad2d96dc06ac3dfbcdf72422718a68bb5e59b.
-264 Karten/160 Primärwörter, 798 Sätze, 8532 Token; eine Story mit 6 Sätzen.
-User-Schema 4; vorhandene 20 Kartenstände/19 Reviews bei Paket B erhalten.
-Paket-A/B-Prüfstand: Python 345/Flutter 235 bestanden; analyze ohne Befund; iOS nicht ausgeführt.
-Story-Lernen: lokale Box-0-Karten in Wortliste/Gemischt; Besitzauflösung nach stabilen IDs.
-Weitere Story-Lernkontexte benötigen konkrete redaktionelle Freigabe; Kontextwahl/Sync fehlen.
-Reisen-Auswahl: pipeline/data/selection/reisen_500_v1.json; 500 unveränderte Ziele, 5 Batches à 100.
-Bedeutungen: 144 bestehende, 356 neue Vorschläge, 0 offene Bindungen; 141 Bestandssenses ohne Definition.
-Registry: pipeline/data/words/en.reisen_500_v1.json; 160 Bestandswörter + 500 Reservierungen.
-Registry-SHA256: 888632469bbf306e85bbe42de93082362af24a37be84f6a3c82e2258581d3a90.
-Null Besitz-/Aliaskonflikte; 8 Schreibaliase, keine automatische Antwortfreigabe.
-Import muss neue Registry explizit angeben; CLI-Standard en.v1.json unverändert.
-Backpack/Rucksack- und Platform/Bahnsteig-Storyidentitäten erhalten.
-Altbestand: cough/NOUN ist in einem Verbkontext falsch annotiert; dokumentiert, nicht verändert.
-Auswahl-/Registry-/Packvalidatoren bestanden; bestehende Create-Fixture lokal validiert.
-Austausch: build/reisen_authoring_v1.zip; Kontext, Schema, Fixture, Wörterbuch, Anleitung, Prüfergebnisse.
-Bericht: docs/reisen-500-authoring.md; keine Reisesätze erzeugt oder Reisen-Karten exportiert.
-Nächster Schritt: 100 Sätze für authoring_batch=1 im Chat redigieren und als Create-v2-Delta liefern.
-Danach gegen konkrete Pack-/Registry-Hashes prüfen; noch kein Import oder Packwechsel erfolgt.
-Keine Cloud-/Modellaufrufe, DB-Schreibzugriffe, Installation, Commits oder Pushes in dieser Vorbereitung.
+Reisen Batch 1 vollständig offline importiert, exportiert und intern gestagt.
+Packversion reisen_batch_1_v1, Schema 2; kein öffentliches Release.
+Genau immigration (030) und ask (401) durch freigegebene Sätze ersetzt.
+stop ist NOUN/Haltestelle; andere 98 Satzpaare und 15 Alternativen unverändert.
+Neue Lieferung: 134 Lemmas, 147 Senses, 182 Formglossen, 1040 Tokens.
+Originalauswahl/-Registry unverändert; Reisen-Anzeigen dicht 1–100.
+Übergabe-Validator Exit 0, vollständiger Exportlinter 0 Fehler / 163 Warnbefunde.
+SQLite: integrity_check ok, foreign_key_check leer, alle 18 Tabellen abgeglichen.
+Bestand erhalten; Exportzeitstempel separat validiert, neuer Release-Deskriptor.
+364 Karten, 898 Satztexte, 892 Satzlinks, 260 Primärwörter.
+Reisen: 100 aktive Karten mit je einem festen Satz; Allgemein: 160 Primärkarten.
+Assetsicherung bytegleich zur Baseline: build/reisen_batch_1_checks/asset_rollback/.
+Staging, --verify und test/data/real_pack_test.dart jeweils Exit 0.
+SQLite SHA256: fd0962fe5b4958338fe46f1101db520f69b5e5c7f101762b1bdade1cef847678
+Bericht und Prüfoutputs: docs/reisen-batch-1-import.md.
+Batch-2-Übergabe: build/reisen_authoring_batch_2.zip, 13 Dateien, Hashes/CRC geprüft.
+Registryrevision: pipeline/data/words/en.reisen_batch_2_v1.json; 660 Wortzeilen erhalten.
+Batch 2: exakt 100 Ziele, 35 vorhandene / 65 vorgeschlagene neue Senses.
+Sieben inzwischen vorhandene Begleitwort-Senses gebunden; keine Batch-2-Sätze erzeugt.
+Nächster Schritt: Batch 2 redigieren und gezielte Reisen-Neupositionierung beim Import vorbereiten.
+Create-Importer unterstützt das Umordnen bestehender Anzeigen bisher nicht.
+Keine Cloud-Aufrufe, Modellwechsel, user.db-Zugriffe, Emulatorläufe, Commits oder Pushes.

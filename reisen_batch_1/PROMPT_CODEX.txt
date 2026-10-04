@@ -1,0 +1,52 @@
+Ziel: Die 100 redigierten Reisesätze aus reisen_batch_1 sicher prüfen, mit dem bestehenden Offline-Create-Weg importieren, als internes Pack exportieren und stagen, ohne Lernstände oder alte Inhalte zu ändern.
+
+Dateien:
+- Regeln: @AGENTS.md, @CLAUDE.md, @PRODUCT.md, @docs/content-schema.md, @docs/decks-and-story-learning-plan.md, @docs/reisen-500-authoring.md, @NEXTSTEPS.md.
+- Lieferung: @reisen_batch_1/README.txt, @reisen_batch_1/reisen_batch_1.editorial.json, @reisen_batch_1/authoring_audit.json, @reisen_batch_1/verify_reisen_batch_1.py und @reisen_batch_1/reference/.
+- Basis: @pipeline/out/story_learning_v1/pack.json.
+- Auswahl/Reservierung: @pipeline/data/selection/reisen_500_v1.json, @pipeline/data/words/en.reisen_500_v1.json.
+- Vorhandene Werkzeuge zum Lesen/Verwenden: @pipeline/scripts/import_editorial_patch.py, @pipeline/src/sprachpipe/word_registry.py, @pipeline/src/sprachpipe/pack.py, @pipeline/src/sprachpipe/export.py, @tool/stage_content_pack.dart.
+- Neue Ausgabe: pipeline/out/reisen_batch_1_v1/. Bericht: docs/reisen-batch-1-import.md.
+
+Schritte:
+1. git status --short prüfen, vorhandene Änderungen erhalten. README und Audit lesen. Die konkrete Umsetzung ist mit diesem Auftrag autorisiert; keine zusätzliche Reviewer-Freigabe für denselben Import erfinden. Trotzdem keine Prüfung überspringen.
+2. Quellen/Schema/Registry gegen die Lieferung prüfen. Batch 1 entspricht exakt authoring_batch=1: 100 Wörter, NICHT den ersten 100 Auswahl-IDs. Originalpositionen und IDs erhalten. In der alten Authoring-README stehen falsche ID- und Aliasangaben; die JSON-Auswahl/Registry sind maßgeblich. Nur cafe -> café gehört zu diesem Batch. Keinen alten Hash durch einen neuen ersetzen, um eine Abweichung zu umgehen.
+3. Mit vorhandenem Pipeline-Interpreter reisen_batch_1/verify_reisen_batch_1.py --repo . ausführen. Das prüft die gelieferten Hashes, echte Tokenisierung, stable_id sowie create_content/build_rows in-memory. Wenn lokal jsonschema fehlt, darf die gleichwertige vorhandene Schema-Prüfung genutzt werden; nichts als bestanden ausgeben, das nicht geprüft wurde. Bei einer API-Abweichung nur den Übergabe-Validator an die tatsächlich vorhandene Schnittstelle anpassen und im Bericht nennen. Keine Validatoren oder fachlichen Regeln abschwächen.
+4. Gegenlesen: alle 100 Zielbindungen, alle neuen Begleitwort-Senses/Formglossen sowie die 15 expliziten Alternativen. Keine automatische neue Satzproduktion, keine allgemeine Synonymliste. Falls ein klarer Lieferfehler auftritt, gezielt in der Lieferdatei korrigieren, Stelle/Begründung im Bericht angeben und nur betroffene Token-/Link-Hashes neu berechnen. Bei echter Bedeutungsunsicherheit nichts erraten. Vorhandene Formglossen nicht unter einer anderen ID duplizieren, um eine Anzeige zu kaschieren. Alte verkürzte Formglossen (README) separat berichten; keine unangekündigte Bestandsmigration.
+5. Existiert pipeline/out/reisen_batch_1_v1 bereits, nichts überschreiben. Den vorhandenen Importweg mit expliziter Registry verwenden, Befehle unten. Genau 100 Karten/Sätze zusätzlich; keine Platzhalter für die anderen 400 Wörter. Wörterbuch-Senses für Begleitwörter erzeugen keine Lernkarten und keinen weiteren Wortbesitz. Alle historischen Karten, Satzverknüpfungen, Storydaten und bisherigen Stapelpositionen erhalten.
+6. Exportierte SQLite neu öffnen: integrity_check, foreign_key_check, vollständiger Zeilenabgleich mit build_rows, 364 Karten / 898 Satztexte / 892 Karten-Satz-Verknüpfungen / 260 Primärwörter. Reisen genau 100 aktive Karten, je ein Satz, eindeutiger Wortbesitz. Alle alten Karten-IDs und Daten erhalten. Pack und Bericht klar intern markieren.
+7. Nach bestandener Prüfung mit dem bestehenden Staging-Werkzeug stagen und --verify ausführen. Bestehendes Asset vorher reversibel sichern. Genau den vorhandenen Pack-Lesetest ausführen; keine neue Testsuite für reine Inhalte bauen. Benutzer-Datenbank nicht löschen, nicht zurücksetzen und keine echten Lernaktionen ausführen. Wenn ein Emulator-Test sinnvoll verfügbar ist, nur mit separater Lernstandskopie und danach normalen Einstieg wiederherstellen. Keine App-Deinstallation. iOS nur als geprüft melden, wenn tatsächlich ausgeführt.
+8. docs/reisen-batch-1-import.md schreiben: ausgeführte Befehle/Exitcodes, neue Packversion/Hashes, Soll-Ist-Zahlen, etwaige Lieferkorrekturen, bekannte alte Formglossen und nicht ausgeführte Prüfungen. NEXTSTEPS.md maximal 25 Zeilen. Nächster Inhaltsblock ist authoring_batch=2; nicht jetzt generieren. Für dessen Lieferung später den neuen Basis-Packhash und aktuelle Registry bereitstellen, da einige Wörterbuch-Senses bereits als Begleitwörter importiert sein können.
+
+Nicht anfassen:
+SRS, Antwortlogik, UI, ursprüngliches Basispaket, source authoring_context/Registry-Identitäten, Original-user.db und Review-Historie; keine Cloud-Aufrufe, neue Generierung, entfernten Migrationen, öffentlichen Releases, Commits oder Pushes. Kein Rebuild aller Inhalte. Keine Gemini-Nachannotation.
+
+Akzeptanzkriterien:
+- Ein vorhandener „Reisen“-Stapel mit genau 100 zusätzlich importierten eindeutigen Lernwörtern und 100 geprüften Übungssätzen.
+- Alle 100 Auswahlidentitäten unverändert; 15 Alternativen ausschließlich wie wörtlich geprüft; accepted enthält nur die Zielform.
+- Kein ungelöstes Worttoken, keine fehlende Formglosse, keine doppelte Definition/Referenz, kein Hash-Trick.
+- Bestehende Inhalte und Lernstände unverändert. Export und Staging tatsächlich geprüft.
+- Klare Trennung zwischen Satzfreigabe durch ChatGPT, automatischer Strukturprüfung und tatsächlich ausgeführtem App-Test.
+
+Prüfen mit, ab Repository-Root:
+Windows PowerShell:
+.\pipeline\.venv\Scripts\python.exe -X utf8 reisen_batch_1/verify_reisen_batch_1.py --repo .
+$env:PYTHONPATH = 'pipeline/src'
+.\pipeline\.venv\Scripts\python.exe -X utf8 pipeline/scripts/import_editorial_patch.py --source pipeline/out/story_learning_v1/pack.json --create reisen_batch_1/reisen_batch_1.editorial.json --registry pipeline/data/words/en.reisen_500_v1.json --out pipeline/out/reisen_batch_1_v1
+
+macOS Terminal:
+pipeline/.venv/bin/python reisen_batch_1/verify_reisen_batch_1.py --repo .
+PYTHONPATH=pipeline/src pipeline/.venv/bin/python pipeline/scripts/import_editorial_patch.py --source pipeline/out/story_learning_v1/pack.json --create reisen_batch_1/reisen_batch_1.editorial.json --registry pipeline/data/words/en.reisen_500_v1.json --out pipeline/out/reisen_batch_1_v1
+
+Beide Systeme, erst nach erfolgreichem Export:
+dart run tool/stage_content_pack.dart --from pipeline/out/reisen_batch_1_v1
+dart run tool/stage_content_pack.dart --verify
+git diff --check
+git status --short
+Den genauen vorhandenen Pack-Lesetest anhand des aktuellen Projekts wählen und mit Output angeben. Nie „fertig“ ohne gezeigten Output.
+
+Schleifenbremse: Nach 2–3 Fehlversuchen neue Hypothese; nach 5 Versuchen konkrete Ursache, betroffene Datei und unveränderte Artefakte melden. Nicht die ganze Lieferung neu erzeugen.
+
+Am Ende: NEXTSTEPS.md schreiben (Erledigt, geänderte Dateien, Testergebnis, Abweichungen, offene Probleme, maximal 25 Zeilen, nur Fakten).
+
+Modell: Codex GPT-5.6 Sol, Hoch | Alternative: Claude CLI Opus 5.5, Hoch | Danach: /clear

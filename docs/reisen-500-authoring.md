@@ -114,3 +114,20 @@ Git-Abschlussprüfung (Windows/macOS identisch): `git diff --check`, `git diff -
 Abschlussausgabe: `git diff --check` ohne Whitespace-Befund; Git meldet nur bestehende LF/CRLF-Hinweise. Gesamt-Diff einschließlich Paket A/B: 62 Dateien, 4.205 Einfügungen, 356 Löschungen; neue ungetrackte Daten-/Berichtsdateien sind darin nicht enthalten und wurden mit `git status --short` ausgewiesen. Hashvergleich: 592 geschützte Ausgangsdateien unverändert. `NEXTSTEPS.md`: 24 Zeilen. ZIP: 12 Dateien, 305.248 Bytes; CRC-Prüfung erfolgreich. ZIP-SHA256: `d30220887b6a170a5c98f3768c6468cb2e3a8aad0e9b77419ae09b20742535ee`.
 
 **Nächster gebündelter Schritt:** Im Chat die 100 Sätze für `authoring_batch=1` anhand dieses ZIP redigieren und als vollständiges Editorial-Create-v2-Delta liefern; danach lokal gegen die angegebenen Hashes und Reservierungen prüfen. Noch kein Import oder Packwechsel.
+
+
+## Präzisierung der Positionen für Teilbatches
+
+Nach ausdrücklicher Freigabe bleiben Auswahl- und Registry-Originalpositionen
+unverändert. Die Pack-Anzeigeposition wird ausschließlich aus den tatsächlich
+enthaltenen Reisen-Karten durch Sortieren nach Originalposition und Nummerieren
+ab 1 abgeleitet. Batch 1 enthält die Originalpositionen 1–5,26–30,...476–480,
+nicht die ersten 100 IDs; nur cafe → café gehört als Alias dazu.
+Für folgende Batches werden alle dann enthaltenen Reisen-Karten gemeinsam
+geordnet. Nur deren Anzeigepositionen dürfen sich verschieben; andere Stapel,
+IDs, Besitz und Lernstände bleiben unverändert. Der Packvertrag 1..n bleibt bestehen.
+Das Mapping und die 100-/200-Positionsprüfung liegen unter build/reisen_batch_1_checks/.
+Der bestehende Create-Importer setzt Registry-Originalpositionen nicht mit der
+Anzeige gleich und benötigt für Batch 1 keine Produktionscodeänderung. Eine spätere
+Lieferung muss die gemeinsame Neupositionierung bestehender Reisen-Zeilen ausdrücklich
+berücksichtigen; bloßes Anhängen eines weiteren unveränderten 100er-Deltas reicht nicht.

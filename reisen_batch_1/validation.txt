@@ -1,0 +1,8 @@
+PASS JSON Schema
+PASS 100 authoritative batch-1 identities, positions and reservations; 1 ownership alias
+PASS 100 sentences and gaps; 1044 complete tokens; words/sentence 6–12
+PASS sense references, dictionary coverage, immutable existing rows, 100 review hashes
+PASS literal alternative substitutions: 15
+PASS spaCy English tokenizer boundaries (blank en, no automatic POS judgments)
+NOT RUN: current project create_content/build_rows/export; use --repo for local acceptance.
+Exitcode: 0

@@ -1,0 +1,71 @@
+{
+  "original_editorial_sha256": "ec7ce8232ff783e07a4a1b3aae7d56ac82ec9b315516dd1ffdf0bf6818ea0660",
+  "corrections": {
+    "rain/VERB|rain#regnen": "rain/VERB|rain#regnet",
+    "get/VERB|get#aussteigen_get_off": "get/VERB|get#stieg",
+    "off/ADP|off#aussteigen_partikel": "off/ADP|off#aus"
+  },
+  "form_gloss_correction": {
+    "sense": "have/VERB|have#veranlassen",
+    "old": "haben",
+    "new": "lassen"
+  },
+  "token_hashes_updated": [
+    "reisen-v1-277-s1",
+    "reisen-v1-401-s1"
+  ],
+  "link_hashes_updated": [],
+  "new_senses_after": 149,
+  "new_dictionary_forms_after": 185,
+  "sentence_revision": {
+    "replacements": {
+      "reisen-v1-030-s1": {
+        "text": "We show our passports at immigration.",
+        "translation_de": "Wir zeigen unsere Reisepässe bei der Einreisekontrolle vor."
+      },
+      "reisen-v1-401-s1": {
+        "text": "Please ask the driver about the next stop.",
+        "translation_de": "Bitte frag den Fahrer nach der nächsten Haltestelle."
+      }
+    },
+    "removed_unreferenced_new_senses": [
+      {
+        "ref": "have/VERB|have#veranlassen",
+        "lemma": "have/VERB",
+        "sense_key": "have#veranlassen",
+        "gloss_de": "lassen",
+        "definition_de": "Veranlassen, dass eine Handlung am genannten Gegenstand ausgeführt wird."
+      },
+      {
+        "ref": "let/VERB|let#aufforderung_let_us",
+        "lemma": "let/VERB",
+        "sense_key": "let#aufforderung_let_us",
+        "gloss_de": "lass; lassen Sie",
+        "definition_de": "Mit us eine gemeinsame Handlung vorschlagen oder dazu auffordern."
+      }
+    ],
+    "removed_unreferenced_new_forms": [
+      {
+        "form": "have",
+        "sense": "have/VERB|have#veranlassen",
+        "gloss_de": "lassen",
+        "rank": 12
+      },
+      {
+        "form": "let",
+        "sense": "let/VERB|let#aufforderung_let_us",
+        "gloss_de": "lass; lassen Sie",
+        "rank": 1
+      },
+      {
+        "form": "get",
+        "sense": "get/VERB|get#stieg",
+        "gloss_de": "steigen",
+        "rank": 5
+      }
+    ],
+    "removed_unreferenced_new_lemmas": [],
+    "added_forms": [],
+    "other_98_sentences_annotations_reviews_unchanged": true
+  }
+}

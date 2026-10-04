@@ -26,6 +26,8 @@ void main() {
     late int expectedPrimary;
     late int expectedLinks;
     late int expectedAlternatives;
+    final expectedDeckCardIds = <String, List<String>>{};
+    final expectedSentenceIds = <String, String>{};
     try {
       expectedCards =
           raw
@@ -55,6 +57,24 @@ void main() {
                   )
                   .single['n']
               as int;
+      for (final deck in raw.select(
+        'SELECT id, slug FROM decks WHERE removed_in IS NULL',
+      )) {
+        expectedDeckCardIds[deck['slug'] as String] = [
+          for (final row in raw.select(
+            'SELECT primary_card_id FROM deck_words WHERE deck_id = ? '
+            'AND removed_in IS NULL ORDER BY position',
+            [deck['id']],
+          ))
+            row['primary_card_id'] as String,
+        ];
+      }
+      for (final row in raw.select(
+        'SELECT card_id, sentence_id FROM card_sentences WHERE removed_in IS NULL',
+      )) {
+        expectedSentenceIds[row['card_id'] as String] =
+            row['sentence_id'] as String;
+      }
     } finally {
       raw.close();
     }
@@ -70,7 +90,31 @@ void main() {
     final repo = await installer.open();
     try {
       final decks = await repo.decks();
-      final cardIds = await repo.deckCardIds(decks.single.id);
+      final bySlug = {for (final deck in decks) deck.slug: deck};
+      expect(bySlug.keys, unorderedEquals(['allgemeine-sprache', 'reisen']));
+      expect(bySlug['allgemeine-sprache']!.cardCount, 160);
+      expect(bySlug['reisen']!.cardCount, 100);
+      final cardIds = <String>[];
+      for (final slug in ['allgemeine-sprache', 'reisen']) {
+        final deck = bySlug[slug]!;
+        final ids = await repo.deckCardIds(deck.id);
+        expect(ids, orderedEquals(expectedDeckCardIds[slug]!));
+        expect(ids, hasLength(deck.cardCount));
+        final deckItems = await repo.practiceItems(ids);
+        expect(deckItems, hasLength(ids.length));
+        for (final item in deckItems) {
+          expect(item.sentences, hasLength(1));
+        }
+        expect(
+          deckItems.expand((item) => item.sentences).map((s) => s.sentenceId),
+          unorderedEquals(ids.map((id) => expectedSentenceIds[id])),
+        );
+        cardIds.addAll(ids);
+        // ignore: avoid_print
+        print(
+          'deck $slug: ${ids.length} primary cards, ${deckItems.length} fixed sentence assignments verified',
+        );
+      }
       final items = await repo.practiceItems(
         (await repo.allCardIds()).toList(),
       );
@@ -82,19 +126,21 @@ void main() {
       // ignore: avoid_print
       print(
         'pack ${repo.info.version} (schema ${repo.info.schemaVersion}, '
-        'internal: ${repo.info.isInternalTestPack}); deck "${decks.single.titleDe}": '
+        'internal: ${repo.info.isInternalTestPack}); ${decks.length} decks: '
         '${cardIds.length} cards, ${sentences.length} card sentences, '
         '${withAlternatives.length} with valid_alternatives, '
         '${(await repo.allCardIds()).length} cards in the pack',
       );
 
-      expect(decks.single.slug, 'allgemeine-sprache');
       expect(expectedCards, greaterThan(0));
       expect(
         expectedLinks,
         expectedCards * (repo.info.schemaVersion == 1 ? 3 : 1),
       );
-      expect(decks.single.cardCount, expectedPrimary);
+      expect(
+        decks.fold<int>(0, (sum, deck) => sum + deck.cardCount),
+        expectedPrimary,
+      );
       expect(cardIds, hasLength(expectedPrimary));
       expect(cardIds.toSet(), hasLength(expectedPrimary));
       expect(items, hasLength(expectedCards));

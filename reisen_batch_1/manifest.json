@@ -1,0 +1,20 @@
+{
+  "format": "reisen-editorial-delivery",
+  "version": 1,
+  "files": {
+    "PROMPT_CODEX.txt": "8b85b5183acb672144981cab3df027b6ba82e0f270be120f8d7856128fae9db8",
+    "README.txt": "187f3a0c4287dd9ed73eaf6dfffdcec85066bd7ad80a57f2fdd5a4f2ed28dd67",
+    "authoring_audit.json": "fecf517b32f385ac1098e90d57ec386b5ea84142976ab4011dd5e94c7e5bfb56",
+    "reference/authoring_context.json": "51fc4807c1146435ca3e7ce6e52eadddf9ebbdb91d4242de8814e9d4b616ad16",
+    "reference/dictionary_context.json": "d2e3aadb4d05f976a98ba2f105341a4c76c8af2e3b5fc3261b3e1d2509eb3644",
+    "reference/editorial_content_v2.schema.json": "24839ce2451931fac319a849bfc790a4179d139861681ac727d76eb90f232b47",
+    "reference/registry.json": "6f1ec89d18917586aba814744052b143217bd273a32463bd604608a77e17f961",
+    "reisen_batch_1.editorial.json": "cfe52fbbc83c4b7e0473578f7730ade6fd36c937dc45a82becace3d94292b2dd",
+    "reisen_batch_1.html": "c3acb859be5513199bbb2f66f53ab4b28ec3b0f3a77f93c57ae483c39e506144",
+    "validation.txt": "68afdf443a7e3fee03cb64c8187bb0c3c84e8983cb7cf18510ce1f06d5e43c90",
+    "verify_reisen_batch_1.py": "c61115a24f0f693718e09fe7609ef589acf28262b0cdd745b4e527c790c779ae",
+    "local_corrections.json": "bdd26fa97e62607a6300a235557bc27bcf0200a21afcfa6f14988aa6899995ef"
+  },
+  "original_manifest_sha256": "a5b46b33f209b37d5a5b56cd22bbe49dd021036821835068b835e94fe9029878",
+  "local_revision": 3
+}

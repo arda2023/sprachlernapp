@@ -1,0 +1,72 @@
+{
+  "status": "authored_and_structurally_validated_project_import_pending",
+  "author": "ChatGPT",
+  "batch": 1,
+  "target_words": 100,
+  "sentences": 100,
+  "german_translations": 100,
+  "tokens": 1044,
+  "alternatives": 15,
+  "pos": {
+    "NOUN": 75,
+    "VERB": 15,
+    "ADJ": 10
+  },
+  "new_lemmas": 134,
+  "new_senses": 152,
+  "new_dictionary_forms": 186,
+  "existing_target_senses": 46,
+  "source_sha256": "3f35432275a8033804f04857240b67999a419a5e6017d47a78d17d968fd95bd1",
+  "registry_sha256": "888632469bbf306e85bbe42de93082362af24a37be84f6a3c82e2258581d3a90",
+  "excluded_batches": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "ownership_aliases": [
+    {
+      "form_norm": "cafe",
+      "word": "café"
+    }
+  ],
+  "notes": [
+    "authoring_batch=1 is authoritative; original IDs and sparse positions retained.",
+    "Source README first-100 IDs and traveler/airplane/take-off claims were inconsistent; only cafe alias applies.",
+    "New companion senses do not create cards or word ownership.",
+    "Existing senses and dictionary form glosses are not modified.",
+    "All alternatives checked as full literal substitutions; not exhaustive.",
+    "No Gemini/Vertex calls; no actual project import, export, stage or device test here.",
+    "No certified CEFR claims.",
+    "Source state reserves 500 words but does not contain 500 travel learning cards."
+  ],
+  "known_existing_glosses": [
+    {
+      "form": "travel",
+      "existing_gloss": "Reise-",
+      "desired_display": "Reisen"
+    },
+    {
+      "form": "airport",
+      "existing_gloss": "Flughafen-",
+      "desired_display": "Flughafen"
+    },
+    {
+      "form": "railway",
+      "existing_gloss": "Eisenbahn-",
+      "desired_display": "Eisenbahn"
+    },
+    {
+      "form": "history",
+      "existing_gloss": "Geschichts-",
+      "desired_display": "Geschichte"
+    }
+  ],
+  "expected_after_import": {
+    "cards": 364,
+    "sentences_including_story": 898,
+    "card_sentences_including_history": 892,
+    "deck_words": 260,
+    "new_travel_cards": 100
+  }
+}
