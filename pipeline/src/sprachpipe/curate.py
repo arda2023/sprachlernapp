@@ -142,6 +142,66 @@ def _pending_annotation(pending: list, card: str, work: dict) -> None:
         entry["sentences"] = refs
 
 
+def _editorial_sentence(work: dict, cs: dict, sentence: dict, op: dict,
+                        version: str, pending: list, log: dict) -> None:
+    """Explicit model-editorial decision, never a fabricated Vertex verdict.
+
+    Used only by the hash-bound exchange adapter. Historical evidence lives in
+    the change log; the current QA report binds the exact new text and lists.
+    Annotation and full lint remain mandatory pending steps.
+    """
+    from .pack import _valid_alternatives
+
+    before = {k: cs.get(k, []) for k in
+              ("gap_start", "gap_end", "accepted", "valid_alternatives")}
+    if before != op["expect_link"] or not op.get("reason") or not op.get("provenance"):
+        raise CurationError("editorial sentence: missing provenance or link precondition differs")
+    new = op["new"]
+    card = _card(work, cs["card"], "editorial sentence")
+    if new["accepted"] != cs["accepted"] or new["accepted"] != [card["form"]]:
+        raise CurationError("editorial sentence: accepted must stay the target form")
+    if _whole_token_count(new["text"], card["form"]) != 1:
+        raise CurationError("editorial sentence: target must occur exactly once")
+    gap = gap_offsets(new["text"], card["form"])
+    if list(gap) != [new["gap_start"], new["gap_end"]]:
+        raise CurationError("editorial sentence: declared gap differs from gap_offsets")
+    _valid_alternatives(dict(cs, valid_alternatives=new["valid_alternatives"]), card["form"])
+    original = copy.deepcopy(sentence)
+    old_ref = sentence["ref"]
+    old_id = sentence_id(work["lang"], sentence["text"])
+    changed = new["text"] != sentence["text"]
+    history = {"sentence": original, "link": copy.deepcopy(cs)}
+    if changed:
+        new_id = sentence_id(work["lang"], new["text"])
+        if any(sentence_id(work["lang"], s["text"]) == new_id for s in work["sentences"]):
+            raise CurationError("editorial sentence: duplicate replacement text")
+        history["tokens"] = [t for t in work["sentence_tokens"] if t["sentence"] == old_ref]
+        work["sentence_tokens"] = [t for t in work["sentence_tokens"] if t["sentence"] != old_ref]
+        history["audio"] = [a for a in work.get("audio_assets", [])
+                            if a.get("owner_kind") == "sentence"
+                            and a.get("owner_id") in (old_ref, old_id)]
+        if "audio_assets" in work:
+            work["audio_assets"] = [a for a in work["audio_assets"] if a not in history["audio"]]
+        sentence.clear()
+        sentence.update(ref=f"{version}/{old_ref}", origins=original.get("origins", []), model=None)
+        cs["sentence"] = sentence["ref"]
+        pending.append({"kind": "editorial_annotation", "sentence": sentence["ref"],
+                        "card": cs["card"], "op_id": op["op_id"]})
+    sentence.update(text=new["text"], translation_de=new["translation_de"],
+                    qa_status="editorial_reviewed", qa_report={
+                        "editorial": {"provenance": op["provenance"], "op_id": op["op_id"],
+                                      "reason": op["reason"], "checked": copy.deepcopy(new),
+                                      "alternatives_exhaustive": False,
+                                      "new_vertex_check": False},
+                        "historical_source_sentence_id": old_id})
+    cs.update({k: copy.deepcopy(new[k]) for k in before})
+    log["sentence_operations"].append({
+        "op": "editorial_sentence", "op_id": op["op_id"], "card": cs["card"],
+        "old_sentence_id": old_id, "new_sentence_id": sentence_id(work["lang"], new["text"]),
+        "new_ref": sentence["ref"], "english_changed": changed, "history": history,
+        "new": copy.deepcopy(new), "reason": op["reason"]})
+
+
 def curate(packs: dict[str, dict], curation: dict, card_meta: dict[str, dict]) -> tuple[dict, dict]:
     """New working state and change log. [card_meta]: card ref → {rank,
     usage, sense_index} for the deck order (pack.deck_order_key)."""
@@ -229,7 +289,9 @@ def curate(packs: dict[str, dict], curation: dict, card_meta: dict[str, dict]) -
         where = f"sentence_operations[{i}] {op['op']} {op['source']}/{op['label']}"
         cs, sentence = _locate(work, op, where)
         old_id = op["sentence_id"]
-        if op["op"] == "replace_text":
+        if op["op"] == "editorial_sentence":
+            _editorial_sentence(work, cs, sentence, op, curation["version"], pending, log)
+        elif op["op"] == "replace_text":
             text, form = op["new"]["text"], cards[op["card"]]["form"]
             if _whole_token_count(text, form) != 1:
                 raise CurationError(f"{where}: new text must contain {form!r} exactly once")
@@ -289,6 +351,22 @@ def curate(packs: dict[str, dict], curation: dict, card_meta: dict[str, dict]) -
                 "note": "qa_report.alternative_check keeps the historical model verdict"})
         else:
             raise CurationError(f"{where}: unknown operation")
+
+    for op in curation.get("editorial_metadata", []):
+        if (op["table"], op["field"]) not in (("senses", "gloss_de"), ("cards", "translation_de")):
+            raise CurationError("unsupported editorial metadata field")
+        hits = [r for r in work[op["table"]] if r["ref"] == op["ref"]]
+        if len(hits) != 1 or hits[0][op["field"]] != op["expect"] or not op.get("reason"):
+            raise CurationError(f"editorial metadata precondition: {op['ref']}")
+        affected = sorted(c["ref"] for c in work["cards"]
+                          if c["sense"] == op["ref"] or c["ref"] == op["ref"])
+        if affected != sorted(op["affected_card_refs"]):
+            raise CurationError(f"editorial metadata affected cards: {op['ref']}")
+        hits[0][op["field"]] = op["new"]
+        log.setdefault("editorial_metadata", []).append(copy.deepcopy(op))
+
+    if any(op["op"] == "editorial_sentence" for op in curation["sentence_operations"]):
+        pending.append({"kind": "editorial_validation", "note": "complete lint and ID/reference checks"})
 
     # drop lemmas and senses that nothing references any more
     used_senses = {c["sense"] for c in work["cards"]} | {t["sense"] for t in work["sentence_tokens"]

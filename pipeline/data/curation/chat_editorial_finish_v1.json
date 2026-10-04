@@ -1,0 +1,1351 @@
+{
+  "format": "sprachapp.editorial-finish",
+  "format_version": 1,
+  "version": "chat_editorial_finish_v1",
+  "base_plan_sha256": "8e8e26f48b73f04be2935b16b38c5ffccea1719a911bf7aa421962ecaae6c568",
+  "working_state_path": "pipeline/out/chat_editorial_v1_working_20261004/working_state.json",
+  "working_state_sha256": "ca8056571dcc62645a7a8045fd40f9e04882467dc9fab660cf3159d4ed27dfed",
+  "provenance": {
+    "decisions": "Explicit user instructions, 2026-10-04; offline contextual annotation by Codex",
+    "new_vertex_qa": false,
+    "public_release": false
+  },
+  "sentence_replacements": [
+    {
+      "op_id": "sentence-16.2",
+      "source_ref": "pilot/pilot_60_v1/s47",
+      "expected_sentence_id": "33e8c32907dd3a0c719eb73b9686cf6a",
+      "expect": {
+        "text": "Rosa wants to water the flowers; please bring her the watering can.",
+        "translation_de": "Rosa möchte die Blumen gießen; bring ihr bitte die Gießkanne.",
+        "gap_start": 46,
+        "gap_end": 49,
+        "accepted": [
+          "her"
+        ],
+        "valid_alternatives": []
+      },
+      "new": {
+        "text": "Rosa is in the garden, so please bring her some water.",
+        "translation_de": "Rosa ist im Garten, also bring ihr bitte etwas Wasser.",
+        "gap_start": 39,
+        "gap_end": 42,
+        "accepted": [
+          "her"
+        ],
+        "valid_alternatives": []
+      },
+      "reason": "Exakte Ersatzfassung aus Nutzerauftrag 04.10.2026; keine weitere Vereinfachung nötig; alle Tokens neu gelesen."
+    },
+    {
+      "op_id": "sentence-67.2",
+      "source_ref": "pilot/pilot_60_v1/s203",
+      "expected_sentence_id": "24b64544b03a67c04bbc1f5b44177393",
+      "expect": {
+        "text": "Ali asks if the heating is on because the room feels cold.",
+        "translation_de": "Ali fragt, ob die Heizung an ist, weil es im Zimmer kalt ist.",
+        "gap_start": 27,
+        "gap_end": 29,
+        "accepted": [
+          "on"
+        ],
+        "valid_alternatives": []
+      },
+      "new": {
+        "text": "The room feels cold, but the heating is on.",
+        "translation_de": "Im Zimmer fühlt es sich kalt an, aber die Heizung ist an.",
+        "gap_start": 40,
+        "gap_end": 42,
+        "accepted": [
+          "on"
+        ],
+        "valid_alternatives": []
+      },
+      "reason": "Exakte Ersatzfassung aus Nutzerauftrag 04.10.2026; keine weitere Vereinfachung nötig; alle Tokens neu gelesen."
+    },
+    {
+      "op_id": "sentence-76.1",
+      "source_ref": "pilot/pilot_60_v1/s229",
+      "expected_sentence_id": "56c54f084a365e5270e134770783172e",
+      "expect": {
+        "text": "Someone left a phone here; I hope they come back for it.",
+        "translation_de": "Jemand hat hier ein Handy liegen lassen; hoffentlich kommt die Person zurück, um es abzuholen.",
+        "gap_start": 34,
+        "gap_end": 38,
+        "accepted": [
+          "they"
+        ],
+        "valid_alternatives": []
+      },
+      "new": {
+        "text": "Someone left a phone here, but they may come back for it.",
+        "translation_de": "Jemand hat hier ein Handy liegen lassen, kommt aber vielleicht zurück, um es abzuholen.",
+        "gap_start": 31,
+        "gap_end": 35,
+        "accepted": [
+          "they"
+        ],
+        "valid_alternatives": []
+      },
+      "reason": "Exakte Ersatzfassung aus Nutzerauftrag 04.10.2026; keine weitere Vereinfachung nötig; alle Tokens neu gelesen."
+    },
+    {
+      "op_id": "sentence-80.3",
+      "source_ref": "pilot/pilot_60_v1/s243",
+      "expected_sentence_id": "11a462e361601415f6acaab7c80caa80",
+      "expect": {
+        "text": "When David was asked if he wanted more coffee, he said no.",
+        "translation_de": "Als David gefragt wurde, ob er noch Kaffee wollte, sagte er nein.",
+        "gap_start": 55,
+        "gap_end": 57,
+        "accepted": [
+          "no"
+        ],
+        "valid_alternatives": []
+      },
+      "new": {
+        "text": "David said no when I offered him more coffee.",
+        "translation_de": "David sagte nein, als ich ihm noch Kaffee anbot.",
+        "gap_start": 11,
+        "gap_end": 13,
+        "accepted": [
+          "no"
+        ],
+        "valid_alternatives": []
+      },
+      "reason": "Exakte Ersatzfassung aus Nutzerauftrag 04.10.2026; keine weitere Vereinfachung nötig; alle Tokens neu gelesen."
+    },
+    {
+      "op_id": "sentence-89.1",
+      "source_ref": "pilot/pilot_60_v1/s268",
+      "expected_sentence_id": "6c3dcc97d32e5db94920853bcb0bdcd1",
+      "expect": {
+        "text": "Her grandmother makes wonderful soup; Mia hopes hers will taste just as good.",
+        "translation_de": "Ihre Großmutter kocht wunderbare Suppe; Mia hofft, dass ihre eigene genauso gut schmeckt.",
+        "gap_start": 69,
+        "gap_end": 71,
+        "accepted": [
+          "as"
+        ],
+        "valid_alternatives": []
+      },
+      "new": {
+        "text": "Mia makes wonderful soup, and her grandmother's tastes just as good.",
+        "translation_de": "Mia kocht wunderbare Suppe, und die ihrer Großmutter schmeckt genauso gut.",
+        "gap_start": 60,
+        "gap_end": 62,
+        "accepted": [
+          "as"
+        ],
+        "valid_alternatives": []
+      },
+      "reason": "Exakte Ersatzfassung aus Nutzerauftrag 04.10.2026; keine weitere Vereinfachung nötig; alle Tokens neu gelesen."
+    },
+    {
+      "op_id": "sentence-163.3",
+      "source_ref": "pilot/pos_check_v1/s9",
+      "expected_sentence_id": "ecbc39906048ffd9736e830d02ed2920",
+      "expect": {
+        "text": "Here are two cakes; Zoe wants to know which tastes better.",
+        "translation_de": "Hier sind zwei Kuchen; Zoe möchte wissen, welcher besser schmeckt.",
+        "gap_start": 38,
+        "gap_end": 43,
+        "accepted": [
+          "which"
+        ],
+        "valid_alternatives": [
+          "which one"
+        ]
+      },
+      "new": {
+        "text": "Zoe has two cakes but cannot decide which tastes better.",
+        "translation_de": "Zoe hat zwei Kuchen, kann sich aber nicht entscheiden, welcher besser schmeckt.",
+        "gap_start": 36,
+        "gap_end": 41,
+        "accepted": [
+          "which"
+        ],
+        "valid_alternatives": []
+      },
+      "reason": "Exakte Ersatzfassung aus Nutzerauftrag 04.10.2026; keine weitere Vereinfachung nötig; alle Tokens neu gelesen."
+    }
+  ],
+  "token_decisions": [
+    {
+      "op_id": "sentence-10.1",
+      "idx": 0,
+      "surface": "With",
+      "sentence_id": "a8054e8137e5ed48fd1cad2fdeb06821",
+      "lemma": "with/ADP",
+      "sense": "with/ADP|with#umstand",
+      "gloss_de": "hier: weil alle anderen weg sind (With everyone else away)",
+      "reason": "With + everyone else + away beschreibt den Umstand, der das ruhigere Haus erklärt; keine Begleitung."
+    },
+    {
+      "op_id": "sentence-17.1",
+      "idx": 2,
+      "surface": "taking",
+      "sentence_id": "8b54a36d4250811a4a9bc0d59a121ea8",
+      "lemma": "take/VERB",
+      "sense": "take/VERB|take#pruefung_ablegen",
+      "gloss_de": "einen Test schreibend (taking a test)",
+      "reason": "was taking a test bedeutet einen Test schreiben, keine Einnahme."
+    },
+    {
+      "op_id": "sentence-60.1",
+      "idx": 8,
+      "surface": "rush",
+      "sentence_id": "ca7572aed4630fad7c04ac4e5b75451d",
+      "lemma": "rush/NOUN",
+      "sense": "rush/NOUN|rush#andrang",
+      "gloss_de": "hier Teil von rush hour (= Hauptverkehrszeit)",
+      "reason": "Im Kompositum rush hour ist rush der Andrang, nicht das Verb eilen."
+    },
+    {
+      "op_id": "sentence-60.2",
+      "idx": 10,
+      "surface": "at",
+      "sentence_id": "97a4f9e7eb9e268af4c9b9fde09eae84",
+      "lemma": "at/ADP",
+      "sense": "at/ADP|at#at_once",
+      "gloss_de": "hier Teil von at once (= gleichzeitig)",
+      "reason": "Alle Speisen sollen gleichzeitig fertig sein; diese konkrete Lesart schließt sofort aus."
+    },
+    {
+      "op_id": "sentence-60.2",
+      "idx": 11,
+      "surface": "once",
+      "sentence_id": "97a4f9e7eb9e268af4c9b9fde09eae84",
+      "lemma": "once/ADV",
+      "sense": "once/ADV|once#gleichzeitig",
+      "gloss_de": "hier Teil von at once (= gleichzeitig)",
+      "reason": "everything is ready at once meint simultane Fertigstellung, nicht einmal."
+    },
+    {
+      "op_id": "sentence-97.2",
+      "idx": 8,
+      "surface": "so",
+      "sentence_id": "ce7b5cd8d024f281e4cac74f4f6f21fc",
+      "lemma": "so/ADV",
+      "sense": "so/ADV|so#so_far_zeit",
+      "gloss_de": "hier Teil von so far (= bisher / bis jetzt)",
+      "reason": "Present Perfect mit so far blickt auf den Zeitraum bis jetzt."
+    },
+    {
+      "op_id": "sentence-97.2",
+      "idx": 9,
+      "surface": "far",
+      "sentence_id": "ce7b5cd8d024f281e4cac74f4f6f21fc",
+      "lemma": "far/ADV",
+      "sense": "far/ADV|far#so_far_zeit",
+      "gloss_de": "hier Teil von so far (= bisher / bis jetzt)",
+      "reason": "Leos Zufriedenheit gilt bisher; far ist hier nicht räumliches weit."
+    },
+    {
+      "op_id": "sentence-129.3",
+      "idx": 1,
+      "surface": "kept",
+      "sentence_id": "2b7ed0b22b021f6d247da3f5113097b6",
+      "lemma": "keep/VERB",
+      "sense": "keep/VERB|keep#fortsetzen",
+      "gloss_de": "fuhr fort (kept walking on = ging weiter)",
+      "reason": "kept + walking drückt Fortsetzung aus; on ist bereits richtig als weiter annotiert."
+    },
+    {
+      "op_id": "sentence-152.3",
+      "idx": 8,
+      "surface": "keep",
+      "sentence_id": "9cd33d1c06a8282c5659dcc1fecd6c4c",
+      "lemma": "keep/VERB",
+      "sense": "keep/VERB|keep#keep_up",
+      "gloss_de": "hier Teil von keep up (= mithalten)",
+      "reason": "David geht zu schnell: I cannot keep up bedeutet nicht mithalten können."
+    },
+    {
+      "op_id": "sentence-152.3",
+      "idx": 9,
+      "surface": "up",
+      "sentence_id": "9cd33d1c06a8282c5659dcc1fecd6c4c",
+      "lemma": "up/ADV",
+      "sense": "up/ADV|up#keep_up",
+      "gloss_de": "hier Teil von keep up (= mithalten)",
+      "reason": "Keine Ortsangabe oben, sondern Partikel von keep up."
+    },
+    {
+      "op_id": "sentence-155.3",
+      "idx": 6,
+      "surface": "keep",
+      "sentence_id": "0613055c02c1d6b356f216140d3481c1",
+      "lemma": "keep/VERB",
+      "sense": "keep/VERB|keep#halten",
+      "gloss_de": "halten",
+      "reason": "Vorhandenes keep = halten: die Stimme in leisem Zustand halten; passende bestehende Bedeutung."
+    },
+    {
+      "op_id": "sentence-155.3",
+      "idx": 9,
+      "surface": "down",
+      "sentence_id": "0613055c02c1d6b356f216140d3481c1",
+      "lemma": "down/ADV",
+      "sense": "down/ADV|down#leise",
+      "gloss_de": "hier Teil von keep your voice down (= leise sprechen)",
+      "reason": "Die Bibliotheksregel begrenzt die Lautstärke, keine räumliche Abwärtsbewegung."
+    },
+    {
+      "op_id": "sentence-253.3",
+      "idx": 9,
+      "surface": "on",
+      "sentence_id": "ea74c9984b08ed0899af0997bfc986b7",
+      "lemma": "on/ADP",
+      "sense": "on/ADP|on#on_own",
+      "gloss_de": "hier Teil von on his own (= allein)",
+      "reason": "Der Großvater lebt allein; im Kontext keine Behauptung über Hilfsbedürftigkeit."
+    },
+    {
+      "op_id": "sentence-253.3",
+      "idx": 10,
+      "surface": "his",
+      "sentence_id": "ea74c9984b08ed0899af0997bfc986b7",
+      "lemma": "his/DET",
+      "sense": "his/DET|his#sein",
+      "gloss_de": "Possessivartikel (gehört einer männlichen Person oder einem Tier)",
+      "reason": "Vorhandener maskuliner Possessivbegleiter; his bezieht sich auf Saras Großvater, Subjekt von lives."
+    },
+    {
+      "op_id": "sentence-253.3",
+      "idx": 11,
+      "surface": "own",
+      "sentence_id": "ea74c9984b08ed0899af0997bfc986b7",
+      "lemma": "own/ADJ",
+      "sense": "own/ADJ|own#on_own",
+      "gloss_de": "hier Teil von on his own (= allein)",
+      "reason": "Bezieht sich reflexiv auf den Großvater, keine weitere Person."
+    },
+    {
+      "op_id": "sentence-257.2",
+      "idx": 7,
+      "surface": "driving",
+      "sentence_id": "02efec231c11596a33ffe0d47d4b0d33",
+      "lemma": "driving/NOUN",
+      "sense": "driving/NOUN|driving#autofahren",
+      "gloss_de": "hier Teil von driving licence (= Führerschein / Fahrerlaubnis)",
+      "reason": "driving bezeichnet Autofahren, nicht allein den Führerschein."
+    },
+    {
+      "op_id": "sentence-257.2",
+      "idx": 8,
+      "surface": "licence",
+      "sentence_id": "02efec231c11596a33ffe0d47d4b0d33",
+      "lemma": "licence/NOUN",
+      "sense": "licence/NOUN|licence#erlaubnis",
+      "gloss_de": "hier Teil von driving licence (= Führerschein / Fahrerlaubnis)",
+      "reason": "licence ist das Grundwort für Erlaubnis/Dokument; driving spezifiziert das Fahren."
+    },
+    {
+      "op_id": "sentence-16.2",
+      "idx": 0,
+      "surface": "Rosa",
+      "sentence_id": "618e9cfe6d4d6a61b866bfea16cd8d49",
+      "lemma": "Rosa/PROPN",
+      "sense": "Rosa/PROPN|rosa#rosa",
+      "gloss_de": "Rosa",
+      "reason": "Neue Fassung vollständig offline gelesen: Rosa is in the garden, so please bring her some water. / Rosa ist im Garten, also bring ihr bitte etwas Wasser.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-16.2",
+      "idx": 1,
+      "surface": "is",
+      "sentence_id": "618e9cfe6d4d6a61b866bfea16cd8d49",
+      "lemma": "be/AUX",
+      "sense": "be/AUX|be#ist",
+      "gloss_de": "ist",
+      "reason": "Neue Fassung vollständig offline gelesen: Rosa is in the garden, so please bring her some water. / Rosa ist im Garten, also bring ihr bitte etwas Wasser.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-16.2",
+      "idx": 2,
+      "surface": "in",
+      "sentence_id": "618e9cfe6d4d6a61b866bfea16cd8d49",
+      "lemma": "in/ADP",
+      "sense": "in/ADP|in#in",
+      "gloss_de": "in",
+      "reason": "Neue Fassung vollständig offline gelesen: Rosa is in the garden, so please bring her some water. / Rosa ist im Garten, also bring ihr bitte etwas Wasser.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-16.2",
+      "idx": 3,
+      "surface": "the",
+      "sentence_id": "618e9cfe6d4d6a61b866bfea16cd8d49",
+      "lemma": "the/DET",
+      "sense": "the/DET|the#bestimmter_artikel",
+      "gloss_de": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+      "reason": "Neue Fassung vollständig offline gelesen: Rosa is in the garden, so please bring her some water. / Rosa ist im Garten, also bring ihr bitte etwas Wasser.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-16.2",
+      "idx": 4,
+      "surface": "garden",
+      "sentence_id": "618e9cfe6d4d6a61b866bfea16cd8d49",
+      "lemma": "garden/NOUN",
+      "sense": "garden/NOUN|garden#garten",
+      "gloss_de": "Garten",
+      "reason": "Neue Fassung vollständig offline gelesen: Rosa is in the garden, so please bring her some water. / Rosa ist im Garten, also bring ihr bitte etwas Wasser.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-16.2",
+      "idx": 6,
+      "surface": "so",
+      "sentence_id": "618e9cfe6d4d6a61b866bfea16cd8d49",
+      "lemma": "so/CCONJ",
+      "sense": "so/CCONJ|so#deshalb",
+      "gloss_de": "daher, aus diesem Grund (konjunktional zur Angabe einer Folge)",
+      "reason": "Neue Fassung vollständig offline gelesen: Rosa is in the garden, so please bring her some water. / Rosa ist im Garten, also bring ihr bitte etwas Wasser.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-16.2",
+      "idx": 7,
+      "surface": "please",
+      "sentence_id": "618e9cfe6d4d6a61b866bfea16cd8d49",
+      "lemma": "please/INTJ",
+      "sense": "please/INTJ|please#bitte",
+      "gloss_de": "bitte",
+      "reason": "Neue Fassung vollständig offline gelesen: Rosa is in the garden, so please bring her some water. / Rosa ist im Garten, also bring ihr bitte etwas Wasser.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-16.2",
+      "idx": 8,
+      "surface": "bring",
+      "sentence_id": "618e9cfe6d4d6a61b866bfea16cd8d49",
+      "lemma": "bring/VERB",
+      "sense": "bring/VERB|bring#bring",
+      "gloss_de": "bring",
+      "reason": "Neue Fassung vollständig offline gelesen: Rosa is in the garden, so please bring her some water. / Rosa ist im Garten, also bring ihr bitte etwas Wasser.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-16.2",
+      "idx": 9,
+      "surface": "her",
+      "sentence_id": "618e9cfe6d4d6a61b866bfea16cd8d49",
+      "lemma": "she/PRON",
+      "sense": "she/PRON|she#ihr_dativ",
+      "gloss_de": "ihr (Personalpronomen: 3. Person Singular feminin im Dativ als indirektes Objekt)",
+      "reason": "Neue Fassung vollständig offline gelesen: Rosa is in the garden, so please bring her some water. / Rosa ist im Garten, also bring ihr bitte etwas Wasser.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-16.2",
+      "idx": 10,
+      "surface": "some",
+      "sentence_id": "618e9cfe6d4d6a61b866bfea16cd8d49",
+      "lemma": "some/DET",
+      "sense": "some/DET|some#etwas",
+      "gloss_de": "etwas",
+      "reason": "Neue Fassung vollständig offline gelesen: Rosa is in the garden, so please bring her some water. / Rosa ist im Garten, also bring ihr bitte etwas Wasser.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-16.2",
+      "idx": 11,
+      "surface": "water",
+      "sentence_id": "618e9cfe6d4d6a61b866bfea16cd8d49",
+      "lemma": "water/NOUN",
+      "sense": "water/NOUN|water#wasser",
+      "gloss_de": "Wasser",
+      "reason": "Neue Fassung vollständig offline gelesen: Rosa is in the garden, so please bring her some water. / Rosa ist im Garten, also bring ihr bitte etwas Wasser.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-67.2",
+      "idx": 0,
+      "surface": "The",
+      "sentence_id": "23952665d725b8b44173f6202d522c46",
+      "lemma": "the/DET",
+      "sense": "the/DET|the#bestimmter_artikel",
+      "gloss_de": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+      "reason": "Neue Fassung vollständig offline gelesen: The room feels cold, but the heating is on. / Im Zimmer fühlt es sich kalt an, aber die Heizung ist an.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-67.2",
+      "idx": 1,
+      "surface": "room",
+      "sentence_id": "23952665d725b8b44173f6202d522c46",
+      "lemma": "room/NOUN",
+      "sense": "room/NOUN|room#zimmer",
+      "gloss_de": "Zimmer",
+      "reason": "Neue Fassung vollständig offline gelesen: The room feels cold, but the heating is on. / Im Zimmer fühlt es sich kalt an, aber die Heizung ist an.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-67.2",
+      "idx": 2,
+      "surface": "feels",
+      "sentence_id": "23952665d725b8b44173f6202d522c46",
+      "lemma": "feel/VERB",
+      "sense": "feel/VERB|feel#fuehlt-sich",
+      "gloss_de": "fühlt sich",
+      "reason": "Neue Fassung vollständig offline gelesen: The room feels cold, but the heating is on. / Im Zimmer fühlt es sich kalt an, aber die Heizung ist an.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-67.2",
+      "idx": 3,
+      "surface": "cold",
+      "sentence_id": "23952665d725b8b44173f6202d522c46",
+      "lemma": "cold/ADJ",
+      "sense": "cold/ADJ|cold#kalt",
+      "gloss_de": "kalt",
+      "reason": "Neue Fassung vollständig offline gelesen: The room feels cold, but the heating is on. / Im Zimmer fühlt es sich kalt an, aber die Heizung ist an.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-67.2",
+      "idx": 5,
+      "surface": "but",
+      "sentence_id": "23952665d725b8b44173f6202d522c46",
+      "lemma": "but/CCONJ",
+      "sense": "but/CCONJ|but#aber",
+      "gloss_de": "aber",
+      "reason": "Neue Fassung vollständig offline gelesen: The room feels cold, but the heating is on. / Im Zimmer fühlt es sich kalt an, aber die Heizung ist an.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-67.2",
+      "idx": 6,
+      "surface": "the",
+      "sentence_id": "23952665d725b8b44173f6202d522c46",
+      "lemma": "the/DET",
+      "sense": "the/DET|the#bestimmter_artikel",
+      "gloss_de": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+      "reason": "Neue Fassung vollständig offline gelesen: The room feels cold, but the heating is on. / Im Zimmer fühlt es sich kalt an, aber die Heizung ist an.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-67.2",
+      "idx": 7,
+      "surface": "heating",
+      "sentence_id": "23952665d725b8b44173f6202d522c46",
+      "lemma": "heating/NOUN",
+      "sense": "heating/NOUN|heating#heizung",
+      "gloss_de": "Heizung",
+      "reason": "Neue Fassung vollständig offline gelesen: The room feels cold, but the heating is on. / Im Zimmer fühlt es sich kalt an, aber die Heizung ist an.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-67.2",
+      "idx": 8,
+      "surface": "is",
+      "sentence_id": "23952665d725b8b44173f6202d522c46",
+      "lemma": "be/AUX",
+      "sense": "be/AUX|be#ist",
+      "gloss_de": "ist",
+      "reason": "Neue Fassung vollständig offline gelesen: The room feels cold, but the heating is on. / Im Zimmer fühlt es sich kalt an, aber die Heizung ist an.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-67.2",
+      "idx": 9,
+      "surface": "on",
+      "sentence_id": "23952665d725b8b44173f6202d522c46",
+      "lemma": "on/ADJ",
+      "sense": "on/ADJ|on#an_eingeschaltet",
+      "gloss_de": "an (Geräte oder Lichter: eingeschaltet, in Betrieb)",
+      "reason": "Neue Fassung vollständig offline gelesen: The room feels cold, but the heating is on. / Im Zimmer fühlt es sich kalt an, aber die Heizung ist an.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-76.1",
+      "idx": 0,
+      "surface": "Someone",
+      "sentence_id": "3fb5289da8fd75df33c39330f38cf6b1",
+      "lemma": "someone/PRON",
+      "sense": "someone/PRON|someone#jemand",
+      "gloss_de": "jemand",
+      "reason": "Neue Fassung vollständig offline gelesen: Someone left a phone here, but they may come back for it. / Jemand hat hier ein Handy liegen lassen, kommt aber vielleicht zurück, um es abzuholen.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-76.1",
+      "idx": 1,
+      "surface": "left",
+      "sentence_id": "3fb5289da8fd75df33c39330f38cf6b1",
+      "annotation": {
+        "lemma": "leave",
+        "pos": "VERB",
+        "gloss_de": "ließ liegen"
+      },
+      "reason": "Neue Fassung vollständig offline gelesen: Someone left a phone here, but they may come back for it. / Jemand hat hier ein Handy liegen lassen, kommt aber vielleicht zurück, um es abzuholen.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen. Explizit dieselbe passende Wörterbuchbedeutung wie in anderen bestehenden Redaktionskontexten."
+    },
+    {
+      "op_id": "sentence-76.1",
+      "idx": 2,
+      "surface": "a",
+      "sentence_id": "3fb5289da8fd75df33c39330f38cf6b1",
+      "lemma": "a/DET",
+      "sense": "a/DET|a#ein",
+      "gloss_de": "ein",
+      "reason": "Neue Fassung vollständig offline gelesen: Someone left a phone here, but they may come back for it. / Jemand hat hier ein Handy liegen lassen, kommt aber vielleicht zurück, um es abzuholen.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-76.1",
+      "idx": 3,
+      "surface": "phone",
+      "sentence_id": "3fb5289da8fd75df33c39330f38cf6b1",
+      "lemma": "phone/NOUN",
+      "sense": "phone/NOUN|phone#handy",
+      "gloss_de": "Handy",
+      "reason": "Neue Fassung vollständig offline gelesen: Someone left a phone here, but they may come back for it. / Jemand hat hier ein Handy liegen lassen, kommt aber vielleicht zurück, um es abzuholen.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-76.1",
+      "idx": 4,
+      "surface": "here",
+      "sentence_id": "3fb5289da8fd75df33c39330f38cf6b1",
+      "lemma": "here/ADV",
+      "sense": "here/ADV|here#hier",
+      "gloss_de": "hier",
+      "reason": "Neue Fassung vollständig offline gelesen: Someone left a phone here, but they may come back for it. / Jemand hat hier ein Handy liegen lassen, kommt aber vielleicht zurück, um es abzuholen.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-76.1",
+      "idx": 6,
+      "surface": "but",
+      "sentence_id": "3fb5289da8fd75df33c39330f38cf6b1",
+      "lemma": "but/CCONJ",
+      "sense": "but/CCONJ|but#aber",
+      "gloss_de": "aber",
+      "reason": "Neue Fassung vollständig offline gelesen: Someone left a phone here, but they may come back for it. / Jemand hat hier ein Handy liegen lassen, kommt aber vielleicht zurück, um es abzuholen.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-76.1",
+      "idx": 7,
+      "surface": "they",
+      "sentence_id": "3fb5289da8fd75df33c39330f38cf6b1",
+      "lemma": "they/PRON",
+      "sense": "they/PRON|they#singular_they",
+      "gloss_de": "geschlechtsneutrale Einzahl für eine einzelne Person",
+      "reason": "Neue Fassung vollständig offline gelesen: Someone left a phone here, but they may come back for it. / Jemand hat hier ein Handy liegen lassen, kommt aber vielleicht zurück, um es abzuholen.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-76.1",
+      "idx": 8,
+      "surface": "may",
+      "sentence_id": "3fb5289da8fd75df33c39330f38cf6b1",
+      "annotation": {
+        "lemma": "may",
+        "pos": "AUX",
+        "gloss_de": "vielleicht (Möglichkeit)"
+      },
+      "reason": "Neue Fassung vollständig offline gelesen: Someone left a phone here, but they may come back for it. / Jemand hat hier ein Handy liegen lassen, kommt aber vielleicht zurück, um es abzuholen.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen. Explizit dieselbe passende Wörterbuchbedeutung wie in anderen bestehenden Redaktionskontexten."
+    },
+    {
+      "op_id": "sentence-76.1",
+      "idx": 9,
+      "surface": "come",
+      "sentence_id": "3fb5289da8fd75df33c39330f38cf6b1",
+      "lemma": "come/VERB",
+      "sense": "come/VERB|come#kommen",
+      "gloss_de": "kommen",
+      "reason": "Neue Fassung vollständig offline gelesen: Someone left a phone here, but they may come back for it. / Jemand hat hier ein Handy liegen lassen, kommt aber vielleicht zurück, um es abzuholen.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-76.1",
+      "idx": 10,
+      "surface": "back",
+      "sentence_id": "3fb5289da8fd75df33c39330f38cf6b1",
+      "annotation": {
+        "lemma": "back",
+        "pos": "ADV",
+        "gloss_de": "zurück"
+      },
+      "reason": "Neue Fassung vollständig offline gelesen: Someone left a phone here, but they may come back for it. / Jemand hat hier ein Handy liegen lassen, kommt aber vielleicht zurück, um es abzuholen.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen. Explizit dieselbe passende Wörterbuchbedeutung wie in anderen bestehenden Redaktionskontexten."
+    },
+    {
+      "op_id": "sentence-76.1",
+      "idx": 11,
+      "surface": "for",
+      "sentence_id": "3fb5289da8fd75df33c39330f38cf6b1",
+      "lemma": "for/ADP",
+      "sense": "for/ADP|for#fuer_zweck_empfaenger",
+      "gloss_de": "für (bestimmt für, zugunsten von oder zu einem Zweck)",
+      "reason": "Neue Fassung vollständig offline gelesen: Someone left a phone here, but they may come back for it. / Jemand hat hier ein Handy liegen lassen, kommt aber vielleicht zurück, um es abzuholen.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-76.1",
+      "idx": 12,
+      "surface": "it",
+      "sentence_id": "3fb5289da8fd75df33c39330f38cf6b1",
+      "lemma": "it/PRON",
+      "sense": "it/PRON|it#es",
+      "gloss_de": "es",
+      "reason": "Neue Fassung vollständig offline gelesen: Someone left a phone here, but they may come back for it. / Jemand hat hier ein Handy liegen lassen, kommt aber vielleicht zurück, um es abzuholen.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-80.3",
+      "idx": 0,
+      "surface": "David",
+      "sentence_id": "3b4e90310fcc778f3b410e77d88ba2de",
+      "lemma": "David/PROPN",
+      "sense": "David/PROPN|david#david",
+      "gloss_de": "David",
+      "reason": "Neue Fassung vollständig offline gelesen: David said no when I offered him more coffee. / David sagte nein, als ich ihm noch Kaffee anbot.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-80.3",
+      "idx": 1,
+      "surface": "said",
+      "sentence_id": "3b4e90310fcc778f3b410e77d88ba2de",
+      "lemma": "say/VERB",
+      "sense": "say/VERB|say#sagte",
+      "gloss_de": "sagte",
+      "reason": "Neue Fassung vollständig offline gelesen: David said no when I offered him more coffee. / David sagte nein, als ich ihm noch Kaffee anbot.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-80.3",
+      "idx": 2,
+      "surface": "no",
+      "sentence_id": "3b4e90310fcc778f3b410e77d88ba2de",
+      "lemma": "no/INTJ",
+      "sense": "no/INTJ|no#nein",
+      "gloss_de": "nein (verneinende Antwort)",
+      "reason": "Neue Fassung vollständig offline gelesen: David said no when I offered him more coffee. / David sagte nein, als ich ihm noch Kaffee anbot.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-80.3",
+      "idx": 3,
+      "surface": "when",
+      "sentence_id": "3b4e90310fcc778f3b410e77d88ba2de",
+      "lemma": "when/SCONJ",
+      "sense": "when/SCONJ|when#als",
+      "gloss_de": "als",
+      "reason": "Neue Fassung vollständig offline gelesen: David said no when I offered him more coffee. / David sagte nein, als ich ihm noch Kaffee anbot.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-80.3",
+      "idx": 4,
+      "surface": "I",
+      "sentence_id": "3b4e90310fcc778f3b410e77d88ba2de",
+      "lemma": "I/PRON",
+      "sense": "I/PRON|i#ich",
+      "gloss_de": "ich",
+      "reason": "Neue Fassung vollständig offline gelesen: David said no when I offered him more coffee. / David sagte nein, als ich ihm noch Kaffee anbot.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-80.3",
+      "idx": 5,
+      "surface": "offered",
+      "sentence_id": "3b4e90310fcc778f3b410e77d88ba2de",
+      "lemma": "offer/VERB",
+      "sense": "offer/VERB|offer#anbot",
+      "gloss_de": "anbot",
+      "reason": "Neue Fassung vollständig offline gelesen: David said no when I offered him more coffee. / David sagte nein, als ich ihm noch Kaffee anbot.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-80.3",
+      "idx": 6,
+      "surface": "him",
+      "sentence_id": "3b4e90310fcc778f3b410e77d88ba2de",
+      "lemma": "he/PRON",
+      "sense": "he/PRON|he#ihm",
+      "gloss_de": "ihm",
+      "reason": "Neue Fassung vollständig offline gelesen: David said no when I offered him more coffee. / David sagte nein, als ich ihm noch Kaffee anbot.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-80.3",
+      "idx": 7,
+      "surface": "more",
+      "sentence_id": "3b4e90310fcc778f3b410e77d88ba2de",
+      "lemma": "much/DET",
+      "sense": "much/DET|much#mehr_menge",
+      "gloss_de": "mehr (eine größere Menge oder Anzahl von etwas vor einem Nomen)",
+      "reason": "Neue Fassung vollständig offline gelesen: David said no when I offered him more coffee. / David sagte nein, als ich ihm noch Kaffee anbot.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-80.3",
+      "idx": 8,
+      "surface": "coffee",
+      "sentence_id": "3b4e90310fcc778f3b410e77d88ba2de",
+      "lemma": "coffee/NOUN",
+      "sense": "coffee/NOUN|coffee#kaffee",
+      "gloss_de": "Kaffee",
+      "reason": "Neue Fassung vollständig offline gelesen: David said no when I offered him more coffee. / David sagte nein, als ich ihm noch Kaffee anbot.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-89.1",
+      "idx": 0,
+      "surface": "Mia",
+      "sentence_id": "e35bc358ebd891732c69daa54f5e659e",
+      "lemma": "Mia/PROPN",
+      "sense": "Mia/PROPN|mia#mia",
+      "gloss_de": "Mia",
+      "reason": "Neue Fassung vollständig offline gelesen: Mia makes wonderful soup, and her grandmother's tastes just as good. / Mia kocht wunderbare Suppe, und die ihrer Großmutter schmeckt genauso gut.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-89.1",
+      "idx": 1,
+      "surface": "makes",
+      "sentence_id": "e35bc358ebd891732c69daa54f5e659e",
+      "lemma": "make/VERB",
+      "sense": "make/VERB|make#macht",
+      "gloss_de": "macht",
+      "reason": "Neue Fassung vollständig offline gelesen: Mia makes wonderful soup, and her grandmother's tastes just as good. / Mia kocht wunderbare Suppe, und die ihrer Großmutter schmeckt genauso gut.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-89.1",
+      "idx": 2,
+      "surface": "wonderful",
+      "sentence_id": "e35bc358ebd891732c69daa54f5e659e",
+      "lemma": "wonderful/ADJ",
+      "sense": "wonderful/ADJ|wonderful#wunderbar",
+      "gloss_de": "wunderbar",
+      "reason": "Neue Fassung vollständig offline gelesen: Mia makes wonderful soup, and her grandmother's tastes just as good. / Mia kocht wunderbare Suppe, und die ihrer Großmutter schmeckt genauso gut.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-89.1",
+      "idx": 3,
+      "surface": "soup",
+      "sentence_id": "e35bc358ebd891732c69daa54f5e659e",
+      "lemma": "soup/NOUN",
+      "sense": "soup/NOUN|soup#suppe",
+      "gloss_de": "Suppe",
+      "reason": "Neue Fassung vollständig offline gelesen: Mia makes wonderful soup, and her grandmother's tastes just as good. / Mia kocht wunderbare Suppe, und die ihrer Großmutter schmeckt genauso gut.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-89.1",
+      "idx": 5,
+      "surface": "and",
+      "sentence_id": "e35bc358ebd891732c69daa54f5e659e",
+      "lemma": "and/CCONJ",
+      "sense": "and/CCONJ|and#und",
+      "gloss_de": "und",
+      "reason": "Neue Fassung vollständig offline gelesen: Mia makes wonderful soup, and her grandmother's tastes just as good. / Mia kocht wunderbare Suppe, und die ihrer Großmutter schmeckt genauso gut.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-89.1",
+      "idx": 6,
+      "surface": "her",
+      "sentence_id": "e35bc358ebd891732c69daa54f5e659e",
+      "lemma": "her/DET",
+      "sense": "her/DET|her#ihr_possessiv",
+      "gloss_de": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)",
+      "reason": "Neue Fassung vollständig offline gelesen: Mia makes wonderful soup, and her grandmother's tastes just as good. / Mia kocht wunderbare Suppe, und die ihrer Großmutter schmeckt genauso gut.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-89.1",
+      "idx": 7,
+      "surface": "grandmother",
+      "sentence_id": "e35bc358ebd891732c69daa54f5e659e",
+      "lemma": "grandmother/NOUN",
+      "sense": "grandmother/NOUN|grandmother#grossmutter",
+      "gloss_de": "Großmutter",
+      "reason": "Neue Fassung vollständig offline gelesen: Mia makes wonderful soup, and her grandmother's tastes just as good. / Mia kocht wunderbare Suppe, und die ihrer Großmutter schmeckt genauso gut.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-89.1",
+      "idx": 8,
+      "surface": "'s",
+      "sentence_id": "e35bc358ebd891732c69daa54f5e659e",
+      "lemma": "'s/PART",
+      "sense": "'s/PART|s#genitiv-endung",
+      "gloss_de": "(Genitiv-Endung)",
+      "reason": "Neue Fassung vollständig offline gelesen: Mia makes wonderful soup, and her grandmother's tastes just as good. / Mia kocht wunderbare Suppe, und die ihrer Großmutter schmeckt genauso gut.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-89.1",
+      "idx": 9,
+      "surface": "tastes",
+      "sentence_id": "e35bc358ebd891732c69daa54f5e659e",
+      "lemma": "taste/VERB",
+      "sense": "taste/VERB|taste#schmeckt",
+      "gloss_de": "schmeckt",
+      "reason": "Neue Fassung vollständig offline gelesen: Mia makes wonderful soup, and her grandmother's tastes just as good. / Mia kocht wunderbare Suppe, und die ihrer Großmutter schmeckt genauso gut.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen. tastes ist hier ein Verb (schmeckt), auch wenn der Parser es im Genitivsatz als NOUN vorschlägt."
+    },
+    {
+      "op_id": "sentence-89.1",
+      "idx": 10,
+      "surface": "just",
+      "sentence_id": "e35bc358ebd891732c69daa54f5e659e",
+      "lemma": "just/ADV",
+      "sense": "just/ADV|just#genau",
+      "gloss_de": "genau, exakt (Übereinstimmung)",
+      "reason": "Neue Fassung vollständig offline gelesen: Mia makes wonderful soup, and her grandmother's tastes just as good. / Mia kocht wunderbare Suppe, und die ihrer Großmutter schmeckt genauso gut.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-89.1",
+      "idx": 11,
+      "surface": "as",
+      "sentence_id": "e35bc358ebd891732c69daa54f5e659e",
+      "lemma": "as/ADV",
+      "sense": "as/ADV|as#so_vergleich",
+      "gloss_de": "Vergleichspartikel beim Gleichheitsvergleich (z. B. as tall as)",
+      "reason": "Neue Fassung vollständig offline gelesen: Mia makes wonderful soup, and her grandmother's tastes just as good. / Mia kocht wunderbare Suppe, und die ihrer Großmutter schmeckt genauso gut.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-89.1",
+      "idx": 12,
+      "surface": "good",
+      "sentence_id": "e35bc358ebd891732c69daa54f5e659e",
+      "lemma": "good/ADJ",
+      "sense": "good/ADJ|good#gut",
+      "gloss_de": "gut",
+      "reason": "Neue Fassung vollständig offline gelesen: Mia makes wonderful soup, and her grandmother's tastes just as good. / Mia kocht wunderbare Suppe, und die ihrer Großmutter schmeckt genauso gut.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-163.3",
+      "idx": 0,
+      "surface": "Zoe",
+      "sentence_id": "cfb0fc0b9b56d7630ee43912ff7df883",
+      "lemma": "Zoe/PROPN",
+      "sense": "Zoe/PROPN|zoe#zoe",
+      "gloss_de": "Zoe",
+      "reason": "Neue Fassung vollständig offline gelesen: Zoe has two cakes but cannot decide which tastes better. / Zoe hat zwei Kuchen, kann sich aber nicht entscheiden, welcher besser schmeckt.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-163.3",
+      "idx": 1,
+      "surface": "has",
+      "sentence_id": "cfb0fc0b9b56d7630ee43912ff7df883",
+      "lemma": "have/VERB",
+      "sense": "have/VERB|have#hat",
+      "gloss_de": "hat",
+      "reason": "Neue Fassung vollständig offline gelesen: Zoe has two cakes but cannot decide which tastes better. / Zoe hat zwei Kuchen, kann sich aber nicht entscheiden, welcher besser schmeckt.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-163.3",
+      "idx": 2,
+      "surface": "two",
+      "sentence_id": "cfb0fc0b9b56d7630ee43912ff7df883",
+      "lemma": "two/NUM",
+      "sense": "two/NUM|two#zwei",
+      "gloss_de": "zwei",
+      "reason": "Neue Fassung vollständig offline gelesen: Zoe has two cakes but cannot decide which tastes better. / Zoe hat zwei Kuchen, kann sich aber nicht entscheiden, welcher besser schmeckt.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-163.3",
+      "idx": 3,
+      "surface": "cakes",
+      "sentence_id": "cfb0fc0b9b56d7630ee43912ff7df883",
+      "lemma": "cake/NOUN",
+      "sense": "cake/NOUN|cake#kuchen",
+      "gloss_de": "Kuchen",
+      "reason": "Neue Fassung vollständig offline gelesen: Zoe has two cakes but cannot decide which tastes better. / Zoe hat zwei Kuchen, kann sich aber nicht entscheiden, welcher besser schmeckt.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-163.3",
+      "idx": 4,
+      "surface": "but",
+      "sentence_id": "cfb0fc0b9b56d7630ee43912ff7df883",
+      "lemma": "but/CCONJ",
+      "sense": "but/CCONJ|but#aber",
+      "gloss_de": "aber",
+      "reason": "Neue Fassung vollständig offline gelesen: Zoe has two cakes but cannot decide which tastes better. / Zoe hat zwei Kuchen, kann sich aber nicht entscheiden, welcher besser schmeckt.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-163.3",
+      "idx": 5,
+      "surface": "can",
+      "sentence_id": "cfb0fc0b9b56d7630ee43912ff7df883",
+      "lemma": "can/AUX",
+      "sense": "can/AUX|can#kann",
+      "gloss_de": "kann",
+      "reason": "Neue Fassung vollständig offline gelesen: Zoe has two cakes but cannot decide which tastes better. / Zoe hat zwei Kuchen, kann sich aber nicht entscheiden, welcher besser schmeckt.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-163.3",
+      "idx": 6,
+      "surface": "not",
+      "sentence_id": "cfb0fc0b9b56d7630ee43912ff7df883",
+      "lemma": "not/PART",
+      "sense": "not/PART|not#nicht",
+      "gloss_de": "nicht (drückt Verneinung von Verben, Adjektiven oder Aussagen aus)",
+      "reason": "Neue Fassung vollständig offline gelesen: Zoe has two cakes but cannot decide which tastes better. / Zoe hat zwei Kuchen, kann sich aber nicht entscheiden, welcher besser schmeckt.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-163.3",
+      "idx": 7,
+      "surface": "decide",
+      "sentence_id": "cfb0fc0b9b56d7630ee43912ff7df883",
+      "lemma": "decide/VERB",
+      "sense": "decide/VERB|decide#entscheiden",
+      "gloss_de": "entscheiden",
+      "reason": "Neue Fassung vollständig offline gelesen: Zoe has two cakes but cannot decide which tastes better. / Zoe hat zwei Kuchen, kann sich aber nicht entscheiden, welcher besser schmeckt.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-163.3",
+      "idx": 8,
+      "surface": "which",
+      "sentence_id": "cfb0fc0b9b56d7630ee43912ff7df883",
+      "lemma": "which/PRON",
+      "sense": "which/PRON|which#fragepronomen",
+      "gloss_de": "Interrogativpronomen zur Auswahl aus einer begrenzten Menge",
+      "reason": "Neue Fassung vollständig offline gelesen: Zoe has two cakes but cannot decide which tastes better. / Zoe hat zwei Kuchen, kann sich aber nicht entscheiden, welcher besser schmeckt.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen."
+    },
+    {
+      "op_id": "sentence-163.3",
+      "idx": 9,
+      "surface": "tastes",
+      "sentence_id": "cfb0fc0b9b56d7630ee43912ff7df883",
+      "lemma": "taste/VERB",
+      "sense": "taste/VERB|taste#schmeckt",
+      "gloss_de": "schmeckt",
+      "reason": "Neue Fassung vollständig offline gelesen: Zoe has two cakes but cannot decide which tastes better. / Zoe hat zwei Kuchen, kann sich aber nicht entscheiden, welcher besser schmeckt.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen. tastes ist hier ein Verb (schmeckt), auch wenn der Parser es im Genitivsatz als NOUN vorschlägt."
+    },
+    {
+      "op_id": "sentence-163.3",
+      "idx": 10,
+      "surface": "better",
+      "sentence_id": "cfb0fc0b9b56d7630ee43912ff7df883",
+      "lemma": "good/ADJ",
+      "sense": "good/ADJ|good#gut",
+      "gloss_de": "besser",
+      "reason": "Neue Fassung vollständig offline gelesen: Zoe has two cakes but cannot decide which tastes better. / Zoe hat zwei Kuchen, kann sich aber nicht entscheiden, welcher besser schmeckt.. Zuordnung folgt diesem Kontext, nicht früheren Tokenpositionen. Prädikativer Komparativ von good nach taste, daher ADJ, nicht ADV."
+    }
+  ],
+  "token_replacements": [
+    {
+      "expect": {
+        "op_id": "sentence-60.1",
+        "idx": 9,
+        "surface": "hour",
+        "sentence_id": "ca7572aed4630fad7c04ac4e5b75451d",
+        "reason": "Im neuen EN/DE-Kontext sentence-60.1 lokal durch Codex gelesen: vorhandene konkrete Formglosse und Bedeutung passen hier; kein Übernehmen allein aufgrund gleicher Oberfläche.",
+        "lemma": "hour/NOUN",
+        "sense": "hour/NOUN|hour#stunde",
+        "gloss_de": "Stunde"
+      },
+      "new": {
+        "op_id": "sentence-60.1",
+        "idx": 9,
+        "surface": "hour",
+        "sentence_id": "ca7572aed4630fad7c04ac4e5b75451d",
+        "lemma": "hour/NOUN",
+        "sense": "hour/NOUN|hour#tageszeit",
+        "gloss_de": "hier Teil von rush hour (= Hauptverkehrszeit)",
+        "reason": "Die Wendung benennt eine verkehrsreiche Tageszeit, keine einzelne Dauerstunde."
+      }
+    }
+  ],
+  "resolved_open_tokens": [
+    {
+      "op_id": "sentence-10.1",
+      "idx": 0,
+      "surface": "With"
+    },
+    {
+      "op_id": "sentence-17.1",
+      "idx": 2,
+      "surface": "taking"
+    },
+    {
+      "op_id": "sentence-60.1",
+      "idx": 8,
+      "surface": "rush"
+    },
+    {
+      "op_id": "sentence-60.2",
+      "idx": 10,
+      "surface": "at"
+    },
+    {
+      "op_id": "sentence-60.2",
+      "idx": 11,
+      "surface": "once"
+    },
+    {
+      "op_id": "sentence-97.2",
+      "idx": 8,
+      "surface": "so"
+    },
+    {
+      "op_id": "sentence-97.2",
+      "idx": 9,
+      "surface": "far"
+    },
+    {
+      "op_id": "sentence-129.3",
+      "idx": 1,
+      "surface": "kept"
+    },
+    {
+      "op_id": "sentence-152.3",
+      "idx": 8,
+      "surface": "keep"
+    },
+    {
+      "op_id": "sentence-152.3",
+      "idx": 9,
+      "surface": "up"
+    },
+    {
+      "op_id": "sentence-155.3",
+      "idx": 6,
+      "surface": "keep"
+    },
+    {
+      "op_id": "sentence-155.3",
+      "idx": 9,
+      "surface": "down"
+    },
+    {
+      "op_id": "sentence-253.3",
+      "idx": 9,
+      "surface": "on"
+    },
+    {
+      "op_id": "sentence-253.3",
+      "idx": 10,
+      "surface": "his"
+    },
+    {
+      "op_id": "sentence-253.3",
+      "idx": 11,
+      "surface": "own"
+    },
+    {
+      "op_id": "sentence-257.2",
+      "idx": 7,
+      "surface": "driving"
+    },
+    {
+      "op_id": "sentence-257.2",
+      "idx": 8,
+      "surface": "licence"
+    }
+  ],
+  "vocabulary": {
+    "lemmas": [
+      {
+        "ref": "rush/NOUN",
+        "lemma": "rush",
+        "pos": "NOUN"
+      },
+      {
+        "ref": "down/ADV",
+        "lemma": "down",
+        "pos": "ADV"
+      },
+      {
+        "ref": "own/ADJ",
+        "lemma": "own",
+        "pos": "ADJ"
+      },
+      {
+        "ref": "driving/NOUN",
+        "lemma": "driving",
+        "pos": "NOUN"
+      },
+      {
+        "ref": "licence/NOUN",
+        "lemma": "licence",
+        "pos": "NOUN"
+      }
+    ],
+    "senses": [
+      {
+        "ref": "with/ADP|with#umstand",
+        "lemma": "with/ADP",
+        "sense_key": "with#umstand",
+        "gloss_de": "bei gegebenem Umstand",
+        "definition_de": "Leitet einen begleitenden, oft begründenden Umstand mit eigener Subjekt-Prädikat-Struktur ein."
+      },
+      {
+        "ref": "take/VERB|take#pruefung_ablegen",
+        "lemma": "take/VERB",
+        "sense_key": "take#pruefung_ablegen",
+        "gloss_de": "eine Prüfung ablegen",
+        "definition_de": "An einem Test oder einer Prüfung als geprüfte Person teilnehmen."
+      },
+      {
+        "ref": "rush/NOUN|rush#andrang",
+        "lemma": "rush/NOUN",
+        "sense_key": "rush#andrang",
+        "gloss_de": "Andrang",
+        "definition_de": "Starker Zustrom oder intensive Betriebsamkeit in begrenzter Zeit."
+      },
+      {
+        "ref": "hour/NOUN|hour#tageszeit",
+        "lemma": "hour/NOUN",
+        "sense_key": "hour#tageszeit",
+        "gloss_de": "Zeitabschnitt",
+        "definition_de": "Ein durch eine Tätigkeit oder ein Ereignis geprägter Abschnitt des Tages, nicht zwingend sechzig Minuten."
+      },
+      {
+        "ref": "at/ADP|at#at_once",
+        "lemma": "at/ADP",
+        "sense_key": "at#at_once",
+        "gloss_de": "in at once",
+        "definition_de": "Präposition der festen Zeitangabe at once mit simultaner oder unmittelbarer Lesart je nach Kontext."
+      },
+      {
+        "ref": "once/ADV|once#gleichzeitig",
+        "lemma": "once/ADV",
+        "sense_key": "once#gleichzeitig",
+        "gloss_de": "zugleich in at once",
+        "definition_de": "Adverbialer Bestandteil von at once in der Bedeutung zur selben Zeit."
+      },
+      {
+        "ref": "so/ADV|so#so_far_zeit",
+        "lemma": "so/ADV",
+        "sense_key": "so#so_far_zeit",
+        "gloss_de": "bis jetzt in so far",
+        "definition_de": "Gradbestimmung in der festen zeitlichen Wendung so far."
+      },
+      {
+        "ref": "far/ADV|far#so_far_zeit",
+        "lemma": "far/ADV",
+        "sense_key": "far#so_far_zeit",
+        "gloss_de": "bis jetzt in so far",
+        "definition_de": "Zeitlicher Endpunkt in der Wendung so far; keine räumliche Entfernung."
+      },
+      {
+        "ref": "keep/VERB|keep#fortsetzen",
+        "lemma": "keep/VERB",
+        "sense_key": "keep#fortsetzen",
+        "gloss_de": "fortfahren",
+        "definition_de": "Mit einer durch die folgende ing-Form bezeichneten Tätigkeit fortfahren."
+      },
+      {
+        "ref": "keep/VERB|keep#keep_up",
+        "lemma": "keep/VERB",
+        "sense_key": "keep#keep_up",
+        "gloss_de": "mithalten in keep up",
+        "definition_de": "Mit up das Tempo einer anderen Person oder Entwicklung halten."
+      },
+      {
+        "ref": "up/ADV|up#keep_up",
+        "lemma": "up/ADV",
+        "sense_key": "up#keep_up",
+        "gloss_de": "mithalten in keep up",
+        "definition_de": "Nicht räumliche Verbpartikel bei keep zur Angabe des Schritthaltens."
+      },
+      {
+        "ref": "down/ADV|down#leise",
+        "lemma": "down/ADV",
+        "sense_key": "down#leise",
+        "gloss_de": "leise",
+        "definition_de": "Mit keep und voice ein niedriges Lautstärkeniveau bezeichnen."
+      },
+      {
+        "ref": "on/ADP|on#on_own",
+        "lemma": "on/ADP",
+        "sense_key": "on#on_own",
+        "gloss_de": "allein in on one’s own",
+        "definition_de": "Präposition in on one’s own: ohne Begleitung oder Unterstützung, je nach Kontext."
+      },
+      {
+        "ref": "own/ADJ|own#on_own",
+        "lemma": "own/ADJ",
+        "sense_key": "own#on_own",
+        "gloss_de": "allein in on one’s own",
+        "definition_de": "Possessiv verstärkender Bestandteil der Wendung on one’s own."
+      },
+      {
+        "ref": "driving/NOUN|driving#autofahren",
+        "lemma": "driving/NOUN",
+        "sense_key": "driving#autofahren",
+        "gloss_de": "Autofahren",
+        "definition_de": "Tätigkeit des Führens eines Kraftfahrzeugs; nominaler Bestimmungsbestandteil in driving licence."
+      },
+      {
+        "ref": "licence/NOUN|licence#erlaubnis",
+        "lemma": "licence/NOUN",
+        "sense_key": "licence#erlaubnis",
+        "gloss_de": "Erlaubnis",
+        "definition_de": "Offizielle Erlaubnis oder das sie belegende Dokument."
+      }
+    ],
+    "forms": [
+      {
+        "form": "with",
+        "sense": "with/ADP|with#umstand",
+        "gloss_de": "hier: weil alle anderen weg sind (With everyone else away)"
+      },
+      {
+        "form": "taking",
+        "sense": "take/VERB|take#pruefung_ablegen",
+        "gloss_de": "einen Test schreibend (taking a test)"
+      },
+      {
+        "form": "rush",
+        "sense": "rush/NOUN|rush#andrang",
+        "gloss_de": "hier Teil von rush hour (= Hauptverkehrszeit)"
+      },
+      {
+        "form": "hour",
+        "sense": "hour/NOUN|hour#tageszeit",
+        "gloss_de": "hier Teil von rush hour (= Hauptverkehrszeit)"
+      },
+      {
+        "form": "at",
+        "sense": "at/ADP|at#at_once",
+        "gloss_de": "hier Teil von at once (= gleichzeitig)"
+      },
+      {
+        "form": "once",
+        "sense": "once/ADV|once#gleichzeitig",
+        "gloss_de": "hier Teil von at once (= gleichzeitig)"
+      },
+      {
+        "form": "so",
+        "sense": "so/ADV|so#so_far_zeit",
+        "gloss_de": "hier Teil von so far (= bisher / bis jetzt)"
+      },
+      {
+        "form": "far",
+        "sense": "far/ADV|far#so_far_zeit",
+        "gloss_de": "hier Teil von so far (= bisher / bis jetzt)"
+      },
+      {
+        "form": "kept",
+        "sense": "keep/VERB|keep#fortsetzen",
+        "gloss_de": "fuhr fort (kept walking on = ging weiter)"
+      },
+      {
+        "form": "keep",
+        "sense": "keep/VERB|keep#keep_up",
+        "gloss_de": "hier Teil von keep up (= mithalten)"
+      },
+      {
+        "form": "up",
+        "sense": "up/ADV|up#keep_up",
+        "gloss_de": "hier Teil von keep up (= mithalten)"
+      },
+      {
+        "form": "down",
+        "sense": "down/ADV|down#leise",
+        "gloss_de": "hier Teil von keep your voice down (= leise sprechen)"
+      },
+      {
+        "form": "on",
+        "sense": "on/ADP|on#on_own",
+        "gloss_de": "hier Teil von on his own (= allein)"
+      },
+      {
+        "form": "own",
+        "sense": "own/ADJ|own#on_own",
+        "gloss_de": "hier Teil von on his own (= allein)"
+      },
+      {
+        "form": "driving",
+        "sense": "driving/NOUN|driving#autofahren",
+        "gloss_de": "hier Teil von driving licence (= Führerschein / Fahrerlaubnis)"
+      },
+      {
+        "form": "licence",
+        "sense": "licence/NOUN|licence#erlaubnis",
+        "gloss_de": "hier Teil von driving licence (= Führerschein / Fahrerlaubnis)"
+      },
+      {
+        "form": "better",
+        "sense": "good/ADJ|good#gut",
+        "gloss_de": "besser"
+      }
+    ]
+  },
+  "dictionary_resolutions": [],
+  "context_checks": [
+    {
+      "op_id": "sentence-155.3",
+      "kept_indices": [
+        7,
+        8
+      ],
+      "reason": "your = eigene bei unpersönlichem you; voice = Stimme. Beide Zuordnungen passen unverändert zur Bibliotheksregel."
+    },
+    {
+      "op_id": "sentence-129.3",
+      "kept_indices": [
+        2,
+        3
+      ],
+      "reason": "walking = gehend; on = weiter. Beide passen zur Fortsetzung kept walking on."
+    }
+  ]
+}

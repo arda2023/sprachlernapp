@@ -1,0 +1,50 @@
+Ziel: Die beigefügte vollständige Sprachredaktion des Packs curated_everyday_v1 nachvollziehbar in den bestehenden Kurationsweg übernehmen und alle lokal möglichen Importarbeiten abschließen.
+
+Dateien:
+- Eingabe: @editorial_review/corrections.json, @editorial_review/reviewed_sentences.json, @editorial_review/verify_editorial_patch.py, @editorial_review/review.html
+- Original: @pipeline/out/curated_everyday_v1/pack.json (SHA-256 steht in corrections.json)
+- Zuerst lesen: @AGENTS.md, @PRODUCT.md, @docs/content-schema.md, @docs/pipeline.md, @NEXTSTEPS.md
+- Vorhandenen Weg nutzen: @pipeline/src/sprachpipe/curate.py, @pipeline/src/sprachpipe/ids.py, @pipeline/src/sprachpipe/pack.py, @pipeline/src/sprachpipe/export.py, @pipeline/src/sprachpipe/annotate.py, @pipeline/scripts/complete_curation.py, @pipeline/scripts/finalize_curation.py
+- Vorgesehene neue Dateien, falls ein Adapter fehlt: @pipeline/data/curation/chat_editorial_v1.json, @pipeline/scripts/import_editorial_patch.py, @pipeline/tests/test_editorial_import.py
+- Dokumentation: @docs/chat-editorial-import.md und @NEXTSTEPS.md
+
+Schritte:
+1. Prüfe Arbeitsbaum und vorhandene Instruktionen. Vorhandene Änderungen erhalten. Quellpack mit dem beigefügten Read-only-Validator prüfen; bei abweichendem Quellinhalt keine unscharfe Zuordnung versuchen. Gleiche JSON-Daten mit anderer Einrückung sind nur bei identischem kanonischem Hash und passenden Einzelvorbedingungen zulässig.
+2. corrections.json ist ein ausdrücklich beschriebenes Austauschformat, KEIN bereits vom Projekt unterstützter Kurationsplan. Passe es an den vorhandenen Kurationsweg an. Kein zweites Export-/ID-/Wörterbuchsystem aufbauen. Alle 190 Satzoperationen und 10 Metadatenoperationen übernehmen. Eine Metadatenentscheidung für eine geteilte Sense nur einmal anwenden und betroffene Karten zeigen.
+3. Die englischen Ersatztexte und Übersetzungen sind fertig redigiert. Nicht noch einmal generieren, frei umschreiben oder durch Gemini „verbessern“ lassen. Die Redaktion ist eine Modellprüfung durch ChatGPT, keine behauptete menschliche Freigabe und kein neuer Vertex-Test. Ihre Herkunft ausdrücklich protokollieren. Bei einem konkreten technischen oder inhaltlichen Widerspruch genau den betreffenden Eintrag melden; keine pauschale neue Vollprüfungsschleife beginnen.
+4. Änderungen je Art behandeln: Nur Deutsch → Satz-ID behalten, englische Token bleiben gültig; alte QA bleibt historische Quelle. Nur Alternativen → explizite neue Liste verwenden, accepted[] bleibt ausschließlich die Zielform. Neues Englisch → IDs mit ids.stable_id und Lücke mit vorhandenen Funktionen neu berechnen; alte Tokens, Audio-Verweise und Modell-QA nicht für den neuen Satz als gültig ausgeben. Die expliziten neuen Alternativen wurden im Chat wörtlich im jeweiligen neuen Satz gelesen; diese Liste ist redaktionell und nicht vollständig. Alte Alternativen nicht wieder hinzufügen.
+5. Für die 137 geänderten englischen Sätze vollständige Annotation vorbereiten. Bestehende Funktionen für Tokenisierung/Offsets verwenden. Lemma, Wortart, konkrete Bedeutung und Formübersetzung aus dem tatsächlichen neuen Kontext prüfen; reine Oberflächengleichheit ist keine sichere Übernahme. Lokale eindeutige Zuordnungen und redaktionell belegbare Zuordnungen erledigen. Unsichere Zuordnungen als konkrete offene Einträge ausgeben, nicht mit der ersten Wörterbuchbedeutung oder einer Sense-Glosse auffüllen. Keine bezahlten Cloud-/Vertex-Aufrufe starten. Falls der aktuelle Weg zwingend solche Aufrufe verlangt, den fertigen Arbeitsstand mit genauer Restliste speichern; keinen Vollgenerierungslauf vorschlagen.
+6. Die zwei Kartenempfehlungen (so#auf_diese_weise und like#fuellwort) sind getrennt von den Satzänderungen. Bereite ihr Aussetzen im Anfänger-Lernangebot konkret vor und erläutere die Wirkung auf Stapel, Gemischt, fällige Reviews und Zähler. Sie sind keine Erlaubnis, user.db oder Reviews zu löschen. Keine automatische neue Schema-/App-Funktion für zwei Einträge bauen. Wenn ein bestehender kompatibler Ausschlussweg fehlt, Empfehlung offen dokumentieren; die 190 Textänderungen trotzdem bearbeiten. Der ursprüngliche Pack und alle alten Karten-/Satzdaten bleiben als Quelle erhalten.
+7. dictionary_forms nach vorhandener Logik aus den fertigen Token-Zuordnungen ableiten. Formübersetzungen nicht aus den allgemeinen Sense-Glossen erfinden. Konflikte mit exakten Varianten zeigen; erledigte Glossenkonflikte nicht grundlos wieder öffnen. Unveränderte IDs und Kartenlernstände erhalten.
+8. Offline prüfen: Vorbedingungen, doppelte Operationen, geänderte und unveränderte IDs, Zielwort genau einmal, Lücken, Alternativen, Token-/Wörterbuchreferenzen, keine veraltete QA. Vorhandenen vollständigen Linter ausführen. Nur echte verbleibende technische Risiken mit gezielten Tests absichern; keine Tests, die bloß die neue Formulierung nachsprechen.
+9. Ein neues Pack erst nach allen notwendigen technischen Prüfungen sicher in einen neuen Ausgabeordner exportieren. Annotation nicht überspringen, Exportblockaden nicht entfernen. Vorhandene Quelldateien und App-Assets nicht überschreiben. Stagen/Installieren erst als anschließende konkrete Aktion ausweisen, wenn ein tatsächlich fertiger Export vorliegt. Kein Erfolg behaupten, wenn nur ein Arbeitsstand entstanden ist.
+
+Nicht anfassen:
+- user.db, Lernstände, review_log, SRS-Regeln, IDs unveränderter Karten
+- Generierungsmodelle, Tokenlimits, ursprüngliche out/-Läufe, Originalpack
+- Flutter-UI, Supabase, öffentliche Releases, Secrets
+- Keine Cloud-Aufrufe, Commits oder Pushes
+
+Akzeptanzkriterien:
+- 792 Satzpaare sind durch reviewed_sentences.json abgedeckt: 190 bearbeitet, 596 unverändert, 6 einer Rückstellungsempfehlung zugeordnet.
+- Alle Importoperationen sind deterministisch, an exakte Quellen gebunden und protokolliert.
+- Kein geänderter englischer Satz nutzt unbemerkt alte Annotation, Audio oder Modellfreigaben.
+- accepted[] und unveränderte Karten-IDs bleiben gleich; die 2 Empfehlungen werden nicht still als bereits umgesetzt ausgegeben.
+- Ergebnis klar unterscheiden: fertiger technisch validierter neuer Export oder gespeicherter Arbeitsstand mit präziser Restliste. Keine künstliche Erfolgsmeldung.
+
+Prüfen mit:
+Windows (PowerShell), ab Repository-Root:
+.\pipeline\.venv\Scripts\python.exe -X utf8 editorial_review\verify_editorial_patch.py --source pipeline\out\curated_everyday_v1\pack.json
+.\pipeline\.venv\Scripts\python.exe -m pytest -q pipeline\tests
+
+macOS (Terminal), ab Repository-Root:
+./pipeline/.venv/bin/python editorial_review/verify_editorial_patch.py --source pipeline/out/curated_everyday_v1/pack.json
+./pipeline/.venv/bin/python -m pytest -q pipeline/tests
+
+Beide Systeme: git diff --check; tatsächliche neue Adapter-/Linter-/Exportbefehle samt Output nennen. Flutter-Tests nur bei einer tatsächlich nötigen Flutter-Änderung; hier ist keine vorgesehen.
+
+Schleifenbremse: Nach 2–3 Fehlversuchen neue konkrete Hypothese; nach 5 stoppen und Befund, Ursache und verbleibende Arbeit nennen. Keine wiederholten vollständigen Cloudläufe.
+
+Am Ende: NEXTSTEPS.md maximal 25 Zeilen, nur Fakten: erledigt, Dateien, tatsächlicher Prüfoutput, Abweichungen, offene Annotation/Empfehlungen. Nie „fertig“ ohne Output.
+
+Modell: GPT-5.6 Sol (Codex), Hoch | Alternative: Opus 5.5 (Claude CLI), Hoch | Danach: /clear

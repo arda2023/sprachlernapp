@@ -1,0 +1,22 @@
+ACTUAL LOCAL VALIDATION
+{
+  "source_sha256_exact": true,
+  "cards": 264,
+  "sentences": 792,
+  "original_alternatives": 150,
+  "sentence_operations": 190,
+  "metadata_operations": 10,
+  "unchanged_source": true,
+  "new_english_annotation_status": "not_done",
+  "spacy_zipf_and_runtime_tests": "not_run"
+}
+
+Coverage: 792 unique card/sentence pairs; all patch rows match corpus before/after.
+Draft partition: 137 English + 48 German + 5 alternatives + 596 keep + 6 hold = 792.
+Canaries rejected: wrong_original_text, broken_new_gap, changed_accepted_target, duplicate_operation, wrong_metadata_source.
+HTML: 792 entries, 10 metadata decisions, unique control IDs; self-contained, no external scripts.
+Existing source token spans: all 8520 match source surfaces.
+137 new sentences: exact target once, <=14 space-separated words, valid endings, correct gap offsets, unique IDs.
+Source bytes unchanged. No provider calls; no database writes.
+Not performed: full spaCy/Zipf lint, new token/sense annotation, pipeline/Flutter suite, export, staging, iOS test.
+The two card holds are recommendations only.

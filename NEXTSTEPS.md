@@ -1,25 +1,25 @@
-# NEXTSTEPS – gemeinsamer Lernstand (04.10.2026)
-- Startseite, Gemischt und Wortliste verwenden die bestehenden Content-/User-Repositories.
-- Globale Vokabelzähler bleiben abgeleitet; stabile Karten-IDs werden nur einmal gezählt.
-- Stapel-Fortschritt bleibt deckbezogen; Aktivierung steuert neue Karten, nicht bereits gesehene Reviews.
-- Tagesziel und Woche verwenden eindeutige reviewte Karten pro lokalem Tag; Zielwert ist persistiert.
-- Gemeinsamer Timer/Resume-Beobachter aktualisiert Fälligkeiten auch ohne DB-Schreibzugriff.
-- Gemischt nutzt fällige Karten, vorhandene 4:1-/Vielfaltauswahl, danach Vorab-Üben.
-- Derselbe DeckSessionController/ReviewPass speichert Stapel- und Gemischt-Antworten.
-- Wortliste zeigt bekannte, nicht retirierte Karten ab Box 1, auch deaktivierte zur Reaktivierung.
-- Suche und Reihenfolge verwenden echte Inhalte/Reviews; unbekannte alte IDs bleiben unangetastet.
-- Favorit, Deaktivierung, Notiz und Playlist-Auswahl sind in user.db persistiert.
-- Schema v3 ergänzt note, in_playlist und daily_goal additiv; build_runner erfolgreich.
-- WordListStore aus App entfernt; kontrollierte Test-Fixture bleibt unter test/fixtures.
-- Story-Prototyp zeigt fehlende Lernanbindung ausdrücklich; Hinzufügen ist deaktiviert.
-- Dateien: learning_providers, deck_providers, deck_session_controller, AppShell, Home, Wortliste/Details, Domain/User-DB.
-- Integrationstests: gemeinsame Zustände, Doppelzuordnung, Flags, Neustart, Mitternacht/Resume, Pack-/DB-Fehler, leere Queue.
-- flutter analyze: No issues found; flutter test: 215 passed; Android-Debug-APK gebaut.
-- Android API 36: Home → Gemischt/on korrekt → Wortliste → Favorit → Neustart auf separater Datenkopie geprüft.
-- Testkopie danach 21 Kartenstände/20 Reviews; on Stufe 3 und Favorit nach Neustart erhalten.
-- Normale APK wieder installiert; Original: alle bisherigen Werte der 20 Kartenstände/19 Reviews und Einstellungen erhalten.
-- Original-Schema von 2 auf 3 migriert; Pack-SHA256 unverändert. Keine Deinstallation/kein Datenreset.
-- iOS nicht geprüft; Audio, Story-Migration, Cloud und Sync bleiben außerhalb dieses Schritts.
-- Neun redaktionelle Alt-Pilot-Fallgruppen unverändert offen; internes Pack weiterhin 264 Karten/792 Sätze.
-- Nachweise: docs/app-content-integration-plan.md Abschnitt 14; lokale Screenshots/DB-Vergleiche in build/repository_integration.
-- git diff --check bestanden; git status --short geprüft; vorherige Änderungen erhalten, keine Commits/Pushes.
+# NEXTSTEPS – Redaktioneller Offline-Abschluss (04.10.2026)
+- Erledigt: chat_editorial_finish_v1 exportiert und als internes App-Pack gestagt.
+- Asset: assets/content/en/content.sqlite; Manifest daneben; 4.112.384 Bytes, Schema 1.
+- SHA-256: bb71bd0ec9466e931500678b98c6838cf5208f67d82c6cd2cbd6f6fe3fcedf29.
+- Pack: 264 eindeutige Karten, 792 Sätze/Zuordnungen, genau drei je Karte.
+- Alle Karten-IDs, accepted-Werte und Stapelpositionen gegenüber curated_everyday_v1 erhalten.
+- 17 offene Tokens in zehn Sätzen entschieden; hour zusätzlich korrigiert.
+- Sechs Nutzer-Ersatzfassungen exakt übernommen; alle 64 Worttokens frisch annotiert, Alternativen leer.
+- 16 Wörterbuchbedeutungen ergänzt; Definitionen und konkrete Formglossen getrennt; keine neuen Karten.
+- 137 geänderte englische Sätze: 1.314 Wörter + 172 Satzzeichen; keine offenen Zuordnungen.
+- Gesamtes Pack: 8.474 Token-Spans/Referenzen, 2.323 Wörterbuchschlüssel; keine fehlenden Glossen/Konflikte.
+- Vollständiger Linter: 792 Sätze, 0 Fehler, 150 i+1-Häufigkeitswarnungen; keine Regeländerung.
+- Neuer Ausgabeordner: pipeline/out/chat_editorial_finish_v1; Finalisierung/SQLite-Readback status ok.
+- Adapter: pipeline/scripts/import_editorial_patch.py; Ergänzung: pipeline/data/curation/chat_editorial_finish_v1.json.
+- Bericht: docs/chat-editorial-import.md; vorherige Redaktion/Quellpack/Arbeitsstand (17 Dateien) bytegleich.
+- Asset-Rollback: build/editorial_finish/rollback/content.sqlite und content.manifest.json.
+- Pipeline: 310 Tests bestanden; Flutter: 215 Tests bestanden; flutter analyze ohne Befund.
+- Import/Lint/Export, Stage/Verify und Repository-Lesetest erfolgreich; alle 16 SQLite-Tabellen abgeglichen.
+- Android emulator-5554: Repository prüft 264/792, neue Texte/Glossen; separate Lernstandskopie verwendet.
+- Original-user.db bytegleich: Schema 3, 20 Kartenstände / 19 Reviews; keine Migration oder Rücksetzung.
+- Normale Debug-App mit neuem Pack datenbewahrend wiederhergestellt; iOS nicht geprüft.
+- so#auf_diese_weise und like#fuellwort bleiben enthalten; Rückstellungen weiterhin nur Empfehlungen.
+- Interne Testfreigabe, keine öffentliche Inhaltsfreigabe; keine neue Vertex-QA behauptet.
+- Cloud-/Vertex-Aufrufe 0, zusätzliche Pipeline-Kosten 0 USD; keine Commits/Pushes.
+- git diff --check und git status --short geprüft; bestehende Änderungen erhalten.
