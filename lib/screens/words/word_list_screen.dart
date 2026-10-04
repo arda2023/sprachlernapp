@@ -104,7 +104,13 @@ class _WordListScreenState extends State<WordListScreen> {
                 padding: _gutter,
                 child: Semantics(
                   header: true,
-                  child: Text('Wortliste', style: AppType.editorial(size: 32)),
+                  child: Text(
+                    'Wortliste',
+                    style: AppType.editorial(
+                      color: context.appColors.textPrimary,
+                      size: 32,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 4),
@@ -112,7 +118,7 @@ class _WordListScreenState extends State<WordListScreen> {
                 padding: _gutter,
                 child: Text(
                   '${all.length} Wörter · $playlistCount in der Playlist',
-                  style: AppType.meta(),
+                  style: AppType.meta(color: context.appColors.textMuted),
                 ),
               ),
               const SizedBox(height: 20),
@@ -136,7 +142,9 @@ class _WordListScreenState extends State<WordListScreen> {
                         padding: _gutter,
                         child: Text(
                           'Keine Wörter für „${_query.text.trim()}“',
-                          style: AppType.chrome(color: AppColors.textMuted),
+                          style: AppType.chrome(
+                            color: context.appColors.textMuted,
+                          ),
                         ),
                       )
                     : ListView.builder(
@@ -197,13 +205,16 @@ class _SearchField extends StatelessWidget {
     return CupertinoSearchTextField(
       controller: controller,
       placeholder: 'Wörter suchen',
-      style: AppType.chrome(size: 16),
-      placeholderStyle: AppType.chrome(size: 16, color: AppColors.textMuted),
-      itemColor: AppColors.textMuted,
+      style: AppType.chrome(color: context.appColors.textPrimary, size: 16),
+      placeholderStyle: AppType.chrome(
+        size: 16,
+        color: context.appColors.textMuted,
+      ),
+      itemColor: context.appColors.textMuted,
       padding: const EdgeInsetsDirectional.fromSTEB(6, 14, 8, 14),
       decoration: BoxDecoration(
-        color: AppColors.raisedInk,
-        border: Border.all(color: AppColors.hairline),
+        color: context.appColors.raisedInk,
+        border: Border.all(color: context.appColors.hairline),
         borderRadius: BorderRadius.circular(12),
       ),
     );
@@ -233,14 +244,14 @@ class _PlaylistButton extends StatelessWidget {
             width: size,
             height: size,
             decoration: BoxDecoration(
-              color: AppColors.raisedInk,
-              border: Border.all(color: AppColors.hairline),
+              color: context.appColors.raisedInk,
+              border: Border.all(color: context.appColors.hairline),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(
+            child: Icon(
               CupertinoIcons.music_note_list,
               size: 22,
-              color: AppColors.textPrimary,
+              color: context.appColors.textPrimary,
             ),
           ),
         ),

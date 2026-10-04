@@ -35,14 +35,17 @@ class MemoryLevelLegendSheet extends StatelessWidget {
               header: true,
               child: Text(
                 'Erinnerungsstufen',
-                style: AppType.editorial(size: 24),
+                style: AppType.editorial(
+                  color: context.appColors.textPrimary,
+                  size: 24,
+                ),
               ),
             ),
             const SizedBox(height: 6),
             Text(
               'Jede richtige Wiederholung hebt ein Wort eine Stufe höher. '
               'Ein Fehler setzt es auf Stufe 1 zurück.',
-              style: AppType.chrome(color: AppColors.textMuted),
+              style: AppType.chrome(color: context.appColors.textMuted),
             ),
             const SizedBox(height: 16),
             for (var level = 1; level <= leitnerBoxCount; level++)
@@ -72,8 +75,8 @@ class _LegendRow extends StatelessWidget {
       child: Container(
         constraints: const BoxConstraints(minHeight: 56),
         padding: const EdgeInsets.symmetric(vertical: 12),
-        decoration: const BoxDecoration(
-          border: Border(top: BorderSide(color: AppColors.hairline)),
+        decoration: BoxDecoration(
+          border: Border(top: BorderSide(color: context.appColors.hairline)),
         ),
         child: Row(
           children: [
@@ -89,16 +92,20 @@ class _LegendRow extends StatelessWidget {
                   Text(
                     title,
                     style: AppType.chrome(
+                      color: context.appColors.textPrimary,
                       weight: isCurrent ? FontWeight.w700 : FontWeight.w600,
                     ),
                   ),
                   const SizedBox(height: 2),
-                  Text(detail, style: AppType.meta()),
+                  Text(
+                    detail,
+                    style: AppType.meta(color: context.appColors.textMuted),
+                  ),
                   if (isCurrent) ...[
                     const SizedBox(height: 2),
                     Text(
                       'Dieses Wort',
-                      style: AppType.meta(color: AppColors.textPrimary),
+                      style: AppType.meta(color: context.appColors.textPrimary),
                     ),
                   ],
                 ],

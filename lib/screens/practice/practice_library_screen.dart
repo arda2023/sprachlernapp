@@ -107,7 +107,10 @@ class _PracticeLibraryScreenState extends State<PracticeLibraryScreen> {
                     header: true,
                     child: Text(
                       widget.kind.title,
-                      style: AppType.editorial(size: 32),
+                      style: AppType.editorial(
+                        color: context.appColors.textPrimary,
+                        size: 32,
+                      ),
                     ),
                   ),
                 ),
@@ -117,7 +120,7 @@ class _PracticeLibraryScreenState extends State<PracticeLibraryScreen> {
                   child: Text(
                     '${widget.exercises.length} Übungen · '
                     '${done.length} fertig',
-                    style: AppType.meta(),
+                    style: AppType.meta(color: context.appColors.textMuted),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -140,7 +143,9 @@ class _PracticeLibraryScreenState extends State<PracticeLibraryScreen> {
                                 ? 'Noch keine Übung abgeschlossen.'
                                 : 'Alles erledigt. Unter „Fertig“ kannst du '
                                       'jede Übung wiederholen.',
-                            style: AppType.chrome(color: AppColors.textMuted),
+                            style: AppType.chrome(
+                              color: context.appColors.textMuted,
+                            ),
                           ),
                         )
                       : ListView(

@@ -15,7 +15,13 @@ class SectionHeading extends StatelessWidget {
         Expanded(
           child: Semantics(
             header: true,
-            child: Text(title, style: AppType.editorial(size: 24)),
+            child: Text(
+              title,
+              style: AppType.editorial(
+                color: context.appColors.textPrimary,
+                size: 24,
+              ),
+            ),
           ),
         ),
         ?trailing,

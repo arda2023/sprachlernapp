@@ -33,6 +33,7 @@ class VocabProgress extends StatelessWidget {
           Text.rich(
             TextSpan(
               style: AppType.chrome(
+                color: context.appColors.textPrimary,
                 size: 22,
                 weight: FontWeight.w600,
                 height: 1.3,
@@ -41,6 +42,7 @@ class VocabProgress extends StatelessWidget {
                 TextSpan(
                   text: due,
                   style: AppType.chrome(
+                    color: context.appColors.textPrimary,
                     size: 22,
                     weight: FontWeight.w700,
                     height: 1.3,
@@ -60,12 +62,12 @@ class VocabProgress extends StatelessWidget {
           _LedgerRow(
             label: 'Wörter im Aufbau',
             count: b.building,
-            ink: AppColors.active,
+            ink: context.appColors.active,
           ),
           _LedgerRow(
             label: 'Wörter gemeistert',
             count: b.mastered,
-            ink: AppColors.mastered,
+            ink: context.appColors.mastered,
           ),
           _LedgerRow(label: 'Noch nicht angezeigt', count: b.unseen),
         ],
@@ -86,8 +88,8 @@ class _LedgerRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.hairline)),
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: context.appColors.hairline)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -96,13 +98,14 @@ class _LedgerRow extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: AppType.chrome(color: AppColors.textMuted),
+              style: AppType.chrome(color: context.appColors.textMuted),
             ),
           ),
           const SizedBox(width: 12),
           Text(
             formatCountDe(count),
             style: AppType.chrome(
+              color: context.appColors.textPrimary,
               weight: FontWeight.w700,
               tabular: true,
               decoration: ink == null ? null : TextDecoration.underline,
@@ -130,19 +133,19 @@ class _SegmentedTrack extends StatelessWidget {
       child: SizedBox(
         height: 8,
         child: ColoredBox(
-          color: AppColors.hairline,
+          color: context.appColors.hairline,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (b.mastered > 0)
                 Expanded(
                   flex: b.mastered,
-                  child: const ColoredBox(color: AppColors.mastered),
+                  child: ColoredBox(color: context.appColors.mastered),
                 ),
               if (b.building > 0)
                 Expanded(
                   flex: b.building,
-                  child: const ColoredBox(color: AppColors.active),
+                  child: ColoredBox(color: context.appColors.active),
                 ),
               if (neutral > 0) Expanded(flex: neutral, child: const SizedBox()),
             ],

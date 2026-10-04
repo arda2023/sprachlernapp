@@ -1,7 +1,12 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../presentation/providers/deck_providers.dart';
+import '../../presentation/providers/database_providers.dart';
+import '../../presentation/content_unavailable_view.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Scaffold;
 
-import '../../models/deck_store.dart';
 import '../../models/home_models.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/back_bar.dart';
@@ -10,21 +15,15 @@ import '../home/widgets/deck_tile.dart';
 
 /// All decks, active first. Pushed from "Alle Stapel" on the content
 /// dashboard and from "Mehr ansehen" on Home.
-class DeckLibraryScreen extends StatelessWidget {
-  const DeckLibraryScreen({
-    super.key,
-    required this.decks,
-    required this.onOpenDeck,
-  });
+class DeckLibraryScreen extends ConsumerWidget {
+  const DeckLibraryScreen({super.key, required this.onOpenDeck});
 
   static const _gutter = EdgeInsets.symmetric(horizontal: 20);
 
-  final DeckStore decks;
   final ValueChanged<Deck> onOpenDeck;
 
   static Future<void> open(
     BuildContext context, {
-    required DeckStore decks,
     required ValueChanged<Deck> onOpenDeck,
   }) => Navigator.of(context).push(
     CupertinoPageRoute<void>(
@@ -34,9 +33,7 @@ class DeckLibraryScreen extends StatelessWidget {
           child: Column(
             children: [
               BackBar(onBack: () => Navigator.of(context).maybePop()),
-              Expanded(
-                child: DeckLibraryScreen(decks: decks, onOpenDeck: onOpenDeck),
-              ),
+              Expanded(child: DeckLibraryScreen(onOpenDeck: onOpenDeck)),
             ],
           ),
         ),
@@ -45,58 +42,76 @@ class DeckLibraryScreen extends StatelessWidget {
   );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       bottom: false,
-      child: ListenableBuilder(
-        listenable: decks,
-        builder: (context, _) {
-          final active = decks.active;
-          final others = decks.inactive;
-          List<Widget> section(String title, List<Deck> group) => [
-            const SizedBox(height: 22),
-            Padding(
-              padding: _gutter,
-              child: SectionHeading(
-                title: title,
-                trailing: Text('${group.length}', style: AppType.meta()),
-              ),
+      child: ref
+          .watch(decksProvider)
+          .when(
+            loading: () => const Center(child: CupertinoActivityIndicator()),
+            error: (error, _) => ContentUnavailableView(
+              error: error,
+              onRetry: () {
+                retryDatabases(ref);
+                ref.invalidate(decksProvider);
+              },
             ),
-            const SizedBox(height: 14),
-            for (final (i, deck) in group.indexed)
-              Padding(
-                padding: _gutter.copyWith(top: i == 0 ? 0 : 12),
-                child: DeckTile(deck: deck, onTap: () => onOpenDeck(deck)),
-              ),
-          ];
+            data: (decks) {
+              final active = decks.where((d) => d.isActive).toList();
+              final others = decks.where((d) => !d.isActive).toList();
+              List<Widget> section(String title, List<Deck> group) => [
+                const SizedBox(height: 22),
+                Padding(
+                  padding: _gutter,
+                  child: SectionHeading(
+                    title: title,
+                    trailing: Text(
+                      '${group.length}',
+                      style: AppType.meta(color: context.appColors.textMuted),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 14),
+                for (final (i, deck) in group.indexed)
+                  Padding(
+                    padding: _gutter.copyWith(top: i == 0 ? 0 : 12),
+                    child: DeckTile(deck: deck, onTap: () => onOpenDeck(deck)),
+                  ),
+              ];
 
-          return ListView(
-            physics: const BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics(),
-            ),
-            padding: const EdgeInsets.only(top: 8, bottom: 32),
-            children: [
-              Padding(
-                padding: _gutter,
-                child: Semantics(
-                  header: true,
-                  child: Text('Stapel', style: AppType.editorial(size: 32)),
+              return ListView(
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Padding(
-                padding: _gutter,
-                child: Text(
-                  '${active.length} aktiv · ${decks.decks.length} Stapel',
-                  style: AppType.meta(),
-                ),
-              ),
-              if (active.isNotEmpty) ...section('Aktiv', active),
-              if (others.isNotEmpty) ...section('Weitere Stapel', others),
-            ],
-          );
-        },
-      ),
+                padding: const EdgeInsets.only(top: 8, bottom: 32),
+                children: [
+                  Padding(
+                    padding: _gutter,
+                    child: Semantics(
+                      header: true,
+                      child: Text(
+                        'Stapel',
+                        style: AppType.editorial(
+                          color: context.appColors.textPrimary,
+                          size: 32,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: _gutter,
+                    child: Text(
+                      '${active.length} aktiv · ${decks.length} Stapel',
+                      style: AppType.meta(color: context.appColors.textMuted),
+                    ),
+                  ),
+                  if (active.isNotEmpty) ...section('Aktiv', active),
+                  if (others.isNotEmpty) ...section('Weitere Stapel', others),
+                ],
+              );
+            },
+          ),
     );
   }
 }

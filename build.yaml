@@ -1,0 +1,9 @@
+targets:
+  $default:
+    builders:
+      drift_dev:
+        options:
+          # ISO-8601 text keeps milliseconds and the UTC marker of review times.
+          store_date_time_values_as_text: true
+          # Repositories use typed queries; the manager API stays unused.
+          generate_manager: false

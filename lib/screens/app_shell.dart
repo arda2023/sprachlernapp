@@ -1,13 +1,18 @@
+import 'settings/settings_screen.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/deck_store.dart';
+import 'dart:async';
+
 import '../models/home_models.dart';
 import '../models/practice_models.dart';
 import '../models/reading_history.dart';
 import '../models/sample_content.dart';
 import '../models/word_list_store.dart';
+import '../presentation/providers/deck_providers.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_bottom_bar.dart';
 import 'content/content_dashboard_screen.dart';
@@ -23,16 +28,46 @@ import 'stories/story_reader_screen.dart';
 import 'words/word_list_screen.dart';
 
 /// Hosts the tab screens under the notched bar, keeps each tab's scroll
-/// position while switching, and owns the placeholder app state (decks,
-/// daily goal) until Riverpod arrives.
-class AppShell extends StatefulWidget {
+/// position while switching. Non-deck features retain their existing stores.
+class AppShell extends ConsumerStatefulWidget {
   const AppShell({super.key});
 
   @override
-  State<AppShell> createState() => _AppShellState();
+  ConsumerState<AppShell> createState() => _AppShellState();
 }
 
-class _AppShellState extends State<AppShell> {
+class _AppShellState extends ConsumerState<AppShell>
+    with WidgetsBindingObserver {
+  Timer? _midnight;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _scheduleMidnight();
+  }
+
+  void _scheduleMidnight() {
+    _midnight?.cancel();
+    final now = DateTime.now();
+    _midnight = Timer(
+      DateTime(now.year, now.month, now.day + 1).difference(now),
+      () {
+        ref.invalidate(vocabBreakdownProvider);
+        _scheduleMidnight();
+      },
+    );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      ref.invalidate(vocabBreakdownProvider);
+      ref.invalidate(decksProvider);
+      _scheduleMidnight();
+    }
+  }
+
   static const _tabs = [
     AppTab.home,
     AppTab.stories,
@@ -40,7 +75,6 @@ class _AppShellState extends State<AppShell> {
     AppTab.content,
   ];
 
-  final _decks = DeckStore(sampleDecks);
   final _history = ReadingHistory(sampleReadStoryIds);
   final _words = WordListStore(sampleVocabulary(DateTime.now()));
   final _practice = PracticeProgress(sampleCompletedPracticeIds);
@@ -49,7 +83,8 @@ class _AppShellState extends State<AppShell> {
 
   @override
   void dispose() {
-    _decks.dispose();
+    _midnight?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
     _history.dispose();
     _words.dispose();
     _practice.dispose();
@@ -63,8 +98,7 @@ class _AppShellState extends State<AppShell> {
     StoryReaderScreen.open(context, story);
   }
 
-  void _browseDecks() =>
-      DeckLibraryScreen.open(context, decks: _decks, onOpenDeck: _openDeck);
+  void _browseDecks() => DeckLibraryScreen.open(context, onOpenDeck: _openDeck);
 
   void _openTexts() => TextLibraryScreen.open(
     context,
@@ -109,8 +143,7 @@ class _AppShellState extends State<AppShell> {
     ),
   ];
 
-  void _openDeck(Deck deck) =>
-      DeckDetailsScreen.open(context, _decks, deck.id, _words);
+  void _openDeck(Deck deck) => DeckDetailsScreen.open(context, deck.id);
 
   Future<void> _editGoal() async {
     final target = await DailyGoalSheet.show(context, current: _goal.target);
@@ -125,17 +158,20 @@ class _AppShellState extends State<AppShell> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: Colors.transparent,
-        systemNavigationBarColor: AppColors.raisedInk,
-        systemNavigationBarIconBrightness: Brightness.light,
-      ),
+      value:
+          (context.appColors.light
+                  ? SystemUiOverlayStyle.dark
+                  : SystemUiOverlayStyle.light)
+              .copyWith(
+                statusBarColor: Colors.transparent,
+                systemNavigationBarColor: context.appColors.raisedInk,
+                systemNavigationBarIconBrightness: Brightness.light,
+              ),
       child: Scaffold(
         body: IndexedStack(
           index: _tabs.indexOf(_tab),
           children: [
             HomeScreen(
-              decks: _decks,
               goal: _goal,
               week: sampleWeek,
               onOpenStory: _openStory,
@@ -144,7 +180,7 @@ class _AppShellState extends State<AppShell> {
               onBrowseDecks: _browseDecks,
               onEditGoal: _editGoal,
               onProfile: _notYetRouted,
-              onSettings: _notYetRouted,
+              onSettings: () => SettingsScreen.open(context),
             ),
             StoryLibraryScreen(
               stories: sampleStories,

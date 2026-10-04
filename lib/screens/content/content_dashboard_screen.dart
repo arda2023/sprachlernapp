@@ -41,7 +41,13 @@ class ContentDashboardScreen extends StatelessWidget {
             padding: _gutter,
             child: Semantics(
               header: true,
-              child: Text('Inhalte', style: AppType.editorial(size: 32)),
+              child: Text(
+                'Inhalte',
+                style: AppType.editorial(
+                  color: context.appColors.textPrimary,
+                  size: 32,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 28),
@@ -114,8 +120,8 @@ class _CategoryCard extends StatelessWidget {
             constraints: const BoxConstraints(minHeight: 132),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.raisedInk,
-              border: Border.all(color: AppColors.hairline),
+              color: context.appColors.raisedInk,
+              border: Border.all(color: context.appColors.hairline),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -124,7 +130,9 @@ class _CategoryCard extends StatelessWidget {
                 Icon(
                   category.icon,
                   size: 28,
-                  color: available ? AppColors.textPrimary : AppColors.iconOff,
+                  color: available
+                      ? context.appColors.textPrimary
+                      : context.appColors.iconOff,
                 ),
                 const Spacer(),
                 const SizedBox(height: 16),
@@ -134,12 +142,15 @@ class _CategoryCard extends StatelessWidget {
                     size: 17,
                     weight: FontWeight.w600,
                     color: available
-                        ? AppColors.textPrimary
-                        : AppColors.textMuted,
+                        ? context.appColors.textPrimary
+                        : context.appColors.textMuted,
                   ),
                 ),
                 const SizedBox(height: 2),
-                Text(detail, style: AppType.meta()),
+                Text(
+                  detail,
+                  style: AppType.meta(color: context.appColors.textMuted),
+                ),
               ],
             ),
           ),

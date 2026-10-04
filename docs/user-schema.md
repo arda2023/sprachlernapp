@@ -36,7 +36,9 @@ Eigene Kontexte haben keine geprüften Alternativen und verhalten sich wie `vali
 
 **`reading_progress`** — `target_kind` (`story` / `import`), `target_id`, `fraction` (0–1), `updated_at`.
 
-**`settings`** — `daily_goal`, `target_lang`, `updated_at`.
+**`settings`** — `daily_goal`, `target_lang`, `updated_at`. Lokal zusätzlich `device_id` (zufällige UUID, einmalig erzeugt; Quelle für `review_log.device_id`).
+
+**Stand `user.db` Schema v1 (Paket A, `lib/data/user/user_database.dart`):** `user_cards` mit `card_id`, `lang`, `local_only`, `box`, `due_at` (null bei Box 0), `created_at`, `origin`, `disabled`, `retired`, `updated_at`; `review_log` vollständig inkl. `hint_used` (Standard `false`) und Primärschlüssel `id` = Durchgangs-ID; `deck_settings`; `settings` mit `device_id`, `target_lang`, `updated_at`. `review_log` ist per Trigger gegen `UPDATE`/`DELETE` gesperrt. `form`, `gloss_de`, `in_playlist`, `note`, `daily_goal` und die übrigen Tabellen folgen mit den Schritten, die sie nutzen (Schema-Migration).
 
 ## Nur lokal (user.db)
 
@@ -53,3 +55,7 @@ Eigene Kontexte haben keine geprüften Alternativen und verhalten sich wie `vali
 - `review_log` und `card_contexts` werden nur angehängt und hochgeladen.
 - Alle anderen Tabellen: last-write-wins nach `updated_at`.
 - Sync-Zeitpunkt ist offen (`PRODUCT.md` → Open Decisions).
+
+## Lokale Migration v1 → v2 (Übungsoberfläche)
+Additiv: `user_cards.favorite` bool Standard false; `settings.motif` (`automatic`/`light`/`dark`, Standard automatic), `include_diacritics` bool Standard true, `auto_next` und `show_grammar` bool Standard false. Geräte-ID, Deck-Einstellungen, Kartenstände, Fälligkeiten und append-only Reviews bleiben erhalten. Keine Änderung am Serververtrag und kein Cloud-Aufruf.
+`local_submissions`: `id` text PK, `created_at`, `body` (maximal 2000 Grapheme), `category` nullable, `rating` nullable (1–5), `card_id`, `sentence_id`, `pack_version` nullable. Problemberichte enthalten Kategorie und Inhaltsreferenzen; Feedback eine Bewertung. Nur lokales Speichern und expliziter nativer Export. Keine vollständigen Lernverläufe oder Zugangsdaten.

@@ -23,8 +23,8 @@ class DifficultyBolts extends StatelessWidget {
               CupertinoIcons.bolt_fill,
               size: 14,
               color: i <= difficulty.bolts
-                  ? AppColors.textPrimary
-                  : AppColors.iconOff,
+                  ? context.appColors.textPrimary
+                  : context.appColors.iconOff,
             ),
         ],
       ),

@@ -1,6 +1,70 @@
 ---
 name: Sprachapp
-description: A dark, editorial vocabulary app that turns reading into mastery — no games, no mascots.
+description: An editorial vocabulary app with automatic, light and dark motifs — no games, no mascots.
+colors:
+  night-page: "#0D0F14"
+  raised-ink: "#1A1D26"
+  hairline: "#2A2F40"
+  text-primary: "#F0F2F5"
+  text-muted: "#8E95A5"
+  icon-off: "#4A5063"
+  mastered: "#7B2CBF"
+  active: "#F77F00"
+  active-tint: "#2C2523"
+  success: "#6FB38A"
+  success-tint: "#273435"
+  error: "#D9726B"
+  error-tint: "#372A30"
+  practice-blue: "#7DB2E0"
+  playback: "#2A3A55"
+  news-kicker: "#C2B49A"
+  light-page: "#F6F5F2"
+  light-surface: "#FFFFFF"
+  light-hairline: "#D8DCE2"
+  light-text-primary: "#202632"
+  light-text-muted: "#596477"
+  light-icon-off: "#8992A1"
+  light-active-tint: "#FFF0E2"
+  light-success: "#347A51"
+  light-success-tint: "#E4F1E9"
+  light-error: "#AD3F38"
+  light-error-tint: "#FBE8E6"
+  light-practice-blue: "#256C99"
+  light-playback: "#E6EFF8"
+  light-news-kicker: "#78653F"
+typography:
+  practice-sentence:
+    fontFamily: "Source Serif 4, serif"
+    fontSize: "26px"
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: "0px"
+  chrome:
+    fontFamily: "Figtree, sans-serif"
+    fontSize: "15px"
+    fontWeight: 500
+rounded:
+  practice-field: "5px"
+  practice-tooltip: "8px"
+  sheet: "12px"
+  practice-card: "14px"
+spacing:
+  screen-gutter: "20px"
+  tooltip-padding: "12px"
+components:
+  practice-card:
+    backgroundColor: "{colors.raised-ink}"
+    rounded: "{rounded.practice-card}"
+    padding: "8px 18px 12px"
+  practice-card-light:
+    backgroundColor: "{colors.light-surface}"
+    rounded: "{rounded.practice-card}"
+    padding: "8px 18px 12px"
+  practice-tooltip:
+    backgroundColor: "{colors.night-page}"
+    textColor: "{colors.text-primary}"
+    rounded: "{rounded.practice-tooltip}"
+    padding: "{spacing.tooltip-padding}"
 ---
 
 # Design System: Sprachapp
@@ -14,7 +78,7 @@ Sprachapp reads like a language magazine that comes out after dark: a quiet, nea
 The vibe is focused and editorial, not playful. There is no mascot, no confetti, no cartoon avatar, no rainbow of category colors — the explicit anti-reference is Duolingo's bright, gamified look. Density stays reading-first: long-form story text is the centerpiece, and interface chrome (nav, buttons, deck labels) stays quiet and out of the way in a distinct, plainer typeface so it never competes with the content.
 
 **Key Characteristics:**
-- Dark, near-black editorial ground; dark is the only mode.
+- Editorial ground with persisted Automatic / Light / Dark motifs; dark keeps the near-black identity.
 - Exactly two accent colors, each with one fixed, non-decorative meaning: mastered vs. active vocabulary. Two scoped exceptions exist: the Memory Level Indicator (Wortliste and the deck practice card only) and the Audio Playback Highlight (only while something is read aloud); see the Two-Ink Rule.
 - Categories outside active/mastered (*Verfügbare Wiederholungen* and *Noch nicht angezeigt*) receive no new accent color; they are rendered in neutral text or an unfilled hairline track.
 - The streak is supported, but strictly quiet: a neutral week row of checks and crosses, no flame iconography, no orange highlight.
@@ -24,7 +88,22 @@ The vibe is focused and editorial, not playful. There is no mascot, no confetti,
 
 ## Colors
 
-A dark editorial ground with exactly two accent inks, each reserved for one meaning: marking a word's learning status.
+An editorial ground with exactly two status inks, each reserved for one meaning: marking a word's learning status.
+
+The dark motif remains the Night Edition identity; the approved light motif preserves its typography, spacing and semantic roles. Automatic follows system brightness. Values in the frontmatter are extracted from `AppPalette` in `lib/theme/app_theme.dart`; `px` represents Flutter logical pixels. Resolve colors through the current palette, including sheets and routes already open. Changing motif must preserve navigation, input and cursor state.
+
+### Light motif mapping
+
+| Semantic role | Light token |
+| --- | --- |
+| Page / raised surface / divider | `light-page` / `light-surface` / `light-hairline` |
+| Primary text / secondary text / inactive icon | `light-text-primary` / `light-text-muted` / `light-icon-off` |
+| Active deck fill | `light-active-tint` |
+| Correct / incorrect feedback and fills | `light-success`, `light-success-tint` / `light-error`, `light-error-tint` |
+| Practice text and memory level 2 | `light-practice-blue` |
+| Playback / news kicker | `light-playback` / `light-news-kicker` |
+
+Mastered and active status inks retain their values and meanings. Practice blue is Pale Sky in dark mode and the deeper light-mode blue for readability; it covers the sentence, typing, correct answers, prefix hints and English examples in the practice grammar sheet. This is a scoped reading/feedback treatment, not a new navigation accent.
 
 ### Primary (Mastered Ink)
 - **Editorial Violet** (`#7B2CBF` / `AppColors.mastered`): marks words the learner has mastered (e.g. Leitner Box 5). The reward is a permanent, elegant mark on the page or track, not an animated badge or popup.
@@ -43,7 +122,7 @@ A dark editorial ground with exactly two accent inks, each reserved for one mean
 - **Active Deck Tint** (`#2C2523` / `AppColors.activeTint`): Field Orange at 8% over Raised Ink. Only as the background of an active deck tile; see the Active Deck Rule.
 
 ### Feedback (exercise answers only)
-- **Quiet Sage** (`#6FB38A` / `AppColors.success`, ~7.6:1 on Night Page): a correct answer in an exercise. **Sage Tint** (`#273435` / `AppColors.successTint`): background of a correct answer chip.
+- **Quiet Sage** (`#6FB38A` / `AppColors.success`, ~7.6:1 on Night Page): a correct answer in choice/text exercises; deck practice uses Pale Sky. **Sage Tint** (`#273435` / `AppColors.successTint`): background of a correct answer chip.
 - **Muted Brick** (`#D9726B` / `AppColors.error`, ~5.9:1 on Night Page): a wrong answer, shown as a short flash. **Brick Tint** (`#372A30` / `AppColors.errorTint`): background of a wrongly chosen chip during its flash.
 - Both are desaturated so they sit inside the Night Edition palette instead of reading as signal lights.
 - **Stand-in Cover Tones**: `#1A1D26`, `#20242F`, `#161922` used as subtle editorial masthead canvas tones when a story has no cover illustration.
@@ -58,11 +137,11 @@ A dark editorial ground with exactly two accent inks, each reserved for one mean
 - *Verfügbare Wiederholungen* (Due repetitions) and *Noch nicht angezeigt* (New/unseen words) **do not** receive a third or fourth accent color; they are rendered neutrally in text (`textPrimary`/`textMuted`) or represented by the unfilled hairline track.
 - **Official exceptions.** Exactly two, each with a fixed scope. Nowhere else may these colors appear.
   1. **Memory Level Indicator** (Wortliste tab and its sheets — Memory Level Legend, Word Details — and the sentence card of the deck practice session, only). Five rounded dashes (`14 × 4pt`, `3pt` gaps, `999pt` radius) above a word show its Leitner box (1–5). The first *n* dashes take the color of level *n*; the rest stay Hairline. Level 1 is Field Orange (a new word is "active"), Level 2 Pale Sky, Level 3 Mint, Level 4 Light Green, Level 5 a saturated Deep Green. The color describes the word's memory strength, never a reward: no animation, no glow, no badge. The level is always also given as text (legend sheet, details sheet) or as a semantics label (`'Erinnerungsstufe 3 von 5: Gut verankert'`); tapping the dashes opens the Memory Level Legend. In practice the card shows the level the word had when the session started; it never changes mid-card, so a right answer is not rewarded with a lit dash. Outside these places, word status keeps the two inks: a Level 5 word is still underlined in Editorial Violet in the reader.
-     *Reveal hint (deck practice only).* After "Wort erfahren", the word stands in the gap as the field's hint in Pale Sky at 60% opacity. It is the one use of a level color that is not a level: it says "this is the word, type it", disappears as soon as the learner types, and is always announced ("Das Wort lautet …"). Pale Sky is never used for any other hint.
+     *Reveal hint (deck practice only).* After "Wort erfahren", the word stands in the gap as the field's hint in Pale Sky at 50% opacity. This scoped practice use of the level-2 color says "this is the word, type it", disappears as soon as the learner types, and is always announced ("Das Wort lautet …"). Deck typing, solved words, prefix hints and grammar examples also use Pale Sky under the practice rules below.
   2. **Audio Playback Highlight** (wherever audio plays: Wortliste and its sheets, story narration, the solved word in deck practice). While a word or sentence is read aloud, it sits on an `AppColors.playback` background and its speaker icon switches from `CupertinoIcons.speaker_2` (`textMuted`) to `speaker_2_fill` (`textPrimary`). On a standalone word or sentence the mark has a `6pt` radius, a `6pt` horizontal inset and a 150 ms fade (none under reduced motion); in running story text it is a plain span background on the sentence being read, so it follows line breaks. The mark is transient: it shows only while playback runs (not while paused) and disappears when it ends, and only one item plays at a time. A tapped word's Hairline background wins over it. It never marks status, selection or progress.
 - **Contrast & Underline Rule**: Editorial Violet text against the `#0D0F14` ground yields low contrast (~2.7:1), violating WCAG legibility for plain body text. Therefore, word statistics and emphasized counts use high-contrast primary text (`#F0F2F5`) paired with colored ink underlines (`TextDecoration.underline` with `decorationThickness: 3` and `decorationColor: AppColors.mastered` or `AppColors.active`).
 
-**The Feedback Rule.** Quiet Sage and Muted Brick are not accents and do not reopen the Two-Ink Rule: they say "this answer was right / wrong" and nothing else. They appear only inside exercise screens (gaps, answer chips, answer cards, the typed field, and the thumbs-up of the Success Feedback Card). Muted Brick is always transient (a flash of about 600ms); Quiet Sage may stay on an answer that has been placed. They never color navigation, cards, progress, word status or buttons outside exercises. Color is never the only cue: every check is announced to the screen reader ("Richtig", "Falsch", "Fast richtig", or the synonym hint's text) and wrong answers trigger a light haptic. The synonym hint is neither wrong nor right, so it uses neither color.
+**The Feedback Rule.** Quiet Sage and Muted Brick are not accents and do not reopen the Two-Ink Rule: they say "this answer was right / wrong" and nothing else. They appear only inside exercise screens (gaps, answer chips, answer cards, the typed field, and the thumbs-up of the Success Feedback Card). Choice exercises flash Muted Brick for about 600ms and may retain Quiet Sage on placed answers. Deck practice instead keeps mixed first-error letter feedback at 50% until editing, replaces subsequent wrong attempts with a target prefix, and uses Pale Sky for correct answers. They never color navigation, cards, progress, word status or buttons outside exercises. Color is never the only cue: every check is announced to the screen reader ("Richtig", "Falsch", "Fast richtig", or the synonym hint's text) and wrong answers trigger a light haptic. The synonym hint is neither wrong nor right, so it uses neither color.
 
 **The Neutral Chrome Rule.** Application navigation and interactive controls must never be filled with status inks. Specifically, the central Play button in the bottom navigation bar must **not** be colored violet, because violet exclusively denotes "mastered". The central button must adopt a neutral Raised Ink styling (e.g. `#1A1D26` background, `#2A2F40` hairline border, and `#F0F2F5` primary text icon). The same holds for the "Zum Lernen hinzufügen" action in the word lookup sheet: Night Page fill, Hairline border, `textPrimary` label and icon; once added it reads "Wird gelernt" in `textMuted` and is disabled.
 
@@ -138,15 +217,21 @@ A spacious, reading-first spatial grammar with disciplined vertical pacing:
 - **Translation Mode**: sentences replace words as tap targets. The tapped sentence gets a Hairline background while its sheet is open; status underlines stay visible. **Sentence Translation Sheet**: "Satz" label, the original sentence (Source Serif 4 20pt w400), hairline rule, "Deutsch" label, the translation (Source Serif 4 20pt w400). In exercises, unsolved gaps appear as "…" in the original so the sheet never gives the answer away.
 - **Deck Details**: icon ring + level name and bolts → screen title → description (Source Serif 4, 17pt w400, `textMuted`) → progress legend ("53 von 532 neuen Wörtern" with an orange-underlined count, "30 Wörter gelernt" with a violet-underlined count) over an `8pt` track (violet mastered, orange seen-not-mastered, hairline rest) → "Stapel lernen" toggle row → primary button "Lerne mit diesem Stapel" (opens a practice session) → expandable "Deine letzten 5 gesehenen Wörter" → `44pt` → "Mehr davon" section with the Stapel-Revue card, whose "Stapel nochmals durchsehen" opens the same session as early practice.
 - **Deck Practice** (`DeckPracticeScreen`, a full-screen route without edge swipe; leaving is explicit):
-  - *Session bar*: `44pt` Home button (`CupertinoIcons.house`, "Session beenden", ends the session without a prompt) → centre: how many words are left, "Noch 4 Wörter" ("Noch 1 Wort", at the end "Alle Wörter geübt"; metadata, tabular; read as "Noch 4 von 5 Wörtern") over the Session Track → `44pt` menu (`ellipsis_vertical`, "Mehr"), which opens a `CupertinoActionSheet` titled with the headword: "Wort deaktivieren" / "Wort wieder aktivieren", "Zu Favoriten hinzufügen" / "Aus Favoriten entfernen", "Abbrechen". Action labels in Figtree 17 `textPrimary`; each choice is confirmed by a snack bar.
-  - *Session Track* (`SessionTrack`, Neutral Progress Rule): one `3pt` pill segment per word of the session, `3pt` apart, spanning the bar between the two buttons; a solved word's segment is `textMuted`, a word still to do is Hairline, so the words left can be counted off the bar. Sessions longer than 12 words fall back to one `HairlineTrack`.
-  - *Sentence card*: Raised Ink, Hairline, `12pt` radius, `20pt` sides. The Memory Level Indicator in a `44pt` tap row (opens the legend) → `8pt` → the English sentence in Source Serif 4 26pt w400, height 1.5, with the word as an inline field: sized to the answer, text and cursor starting at the left like running text, a 2pt underline (`textMuted`, `textPrimary` while focused) → `4pt` → right under the sentence, the grammar hint: the word class and form ("Substantiv, Plural", "Verb, Vergangenheit"; Figtree 15 w600 `textMuted`) with `CupertinoIcons.info_circle` (17pt), a `44pt` tap row, read as "Substantiv, Plural, Grammatik-Hinweis". It opens the Form Info Sheet at any time.
-  - *Form Info Sheet* (`FormInfoSheet`, standard sheet): "Grammatik" (metadata) → the word class and form (Source Serif 4 24pt, a header) → `12pt` → what that form is and how it is built (Source Serif 4 17pt w400, height 1.45), with examples outside the practice vocabulary ("book → books"). It never names the answer. Once the word is solved or revealed it adds the outline button "Wort-Details ansehen", which closes it and opens the Word Details Sheet.
-  - *Translation card* (`12pt` below): Raised Ink, Hairline, `12pt` radius. Header (`56pt` button, exposed as expandable): the German translation of the word (Source Serif 4 20pt w600) and `chevron_up` / `chevron_down` (`textMuted`). Body: Hairline rule, then the whole German sentence (Source Serif 4 18pt w400 `textMuted`, height 1.45). Folding (200 ms, none under reduced motion) is kept for the rest of the session.
-  - *Answer toolbar*: Raised Ink with a Hairline top edge; it sits on the bottom edge (above the home indicator) and, while the keyboard is open, directly above it (`MediaQuery.viewInsetsOf(context).bottom`; the screen doesn't resize). Left: "Aussprechen" (`speaker_2`, `44pt`): `iconOff` and disabled until the word is solved or revealed, then `textPrimary`; while it plays, `speaker_2_fill` and the solved word sits on the Audio Playback Highlight. Middle: a `textMuted` 13pt hint ("Fast richtig – prüf die Schreibweise.", "Tippe das Wort ab, um weiterzumachen."), a live region that takes all free space, so the action button always sits flush right. Right: a `44pt` pill (at most 60% of the bar; its label wraps at large Dynamic Type) — "Wort erfahren" (Hairline outline, `textPrimary`; disabled in `iconOff` once used), or after solving "Weiter" with `checkmark_alt` (`textPrimary` fill, Night Page label, the Primary button's grammar).
-  - *Answers* (PRODUCT.md): Return checks the field. Exact (case-insensitive) → the word replaces the field in Quiet Sage w600, the keyboard closes, "Richtig" is announced. A synonym pre-checked for this gap → the synonym hint below. One edit off the target form (four letters or more) → "Fast richtig", the input stays, no error. Anything else → the field clears, the attempt flashes as the hint in Muted Brick at 75% on a Brick Tint fill with a Muted Brick underline for 600 ms, light haptic, "Falsch" announced; it counts as an error. A wrong form of the same lemma is handled the same way, and in addition the toolbar hint reads „Andere Form von „go“ – gesucht: Verb, Vergangenheit“ (a live region, announced; it stays until the learner types again). "Wort erfahren" counts as an error too. A card with any error sends the word back to box 1; a clean card moves it up one box, except in the Stapel-Revue (early practice), where it keeps its box.
-  - *Synonym hint* (decided rule, not implemented yet; PRODUCT.md, `docs/srs.md`): an answer that matches an alternative pre-checked for this gap is handled like "Fast richtig", not like a wrong answer. The input stays and the field stays focused and editable; no Muted Brick, no Quiet Sage, no haptic, no "Falsch" or "Richtig" announcement, the gap is not solved and "Weiter" does not appear. The toolbar hint (`textMuted` 13pt live region, announced) reads „Approximately passt hier auch. Gesucht ist ein anderes Wort: a…“: the input with a capital first letter, then the first letter of the target form and an ellipsis. It never shows the whole target form; for a one-letter target it reads „Approximately passt hier auch. Gesucht ist ein anderes Wort.“ It stays until another check replaces it or the card is solved or revealed. Pale Sky stays reserved for the reveal hint, and "Wort erfahren" stays available. The card is then solved only with the target form or "Wort erfahren" and goes back to box 1 without counting an error; the Memory Level Indicator does not change mid-card.
-  - *End*: after the last "Weiter" the cards and the toolbar give way to the Success Feedback Card ("5 Wörter geübt", "4 auf Anhieb richtig · 1 zurück auf Stufe 1", the box rule of the mode, "Zurück zum Stapel"; a card solved after a synonym hint counts as "zurück auf Stufe 1", not as "auf Anhieb richtig"); the session bar reads "Alle Wörter geübt" over a fully `textMuted` track.
+  - *Session bar*: `44pt` Home button ("Session beenden", no extra prompt), remaining-word count (metadata, tabular) over the neutral Session Track, then `44pt` "Mehr" button. The track uses one `3pt` pill per word with `3pt` gaps, `textMuted` for solved and Hairline for remaining words; sessions over 12 words use one continuous track.
+  - *Sentence card*: Raised Ink, `14pt` radius, padding `18pt` horizontally, `8pt` above and `12pt` below, without a separate border. The memory indicator (or "Neues Wort") remains the session-entry level, followed by `12pt` and the sentence, then `18pt` and the form row. The sentence uses Source Serif 4 26pt w400, height 1.5, zero letter spacing, in practice blue. The form row uses Figtree 15 in `textPrimary` with a trailing chevron; it opens grammar without altering the current attempt.
+  - *Growing input*: the inline field uses practice blue text and cursor, `12%` practice-blue fill, `5pt` radius, `5pt` horizontal inset and no underline or outline. Measure the visible input (or displayed hint), current text scale and cursor space, starting at `64pt` and growing to the available sentence width. Never size an empty field from the target answer. Move it to the next sentence line when required, then grow vertically with unlimited lines; preserve the complete beginning of the input, word spaces and attached punctuation. The sentence scrolls vertically above the keyboard and toolbar.
+  - *Answer states*: typing is fully opaque practice blue. The first ordinary wrong answer remains completely visible at `50%` opacity: case-insensitive letter occurrence anywhere in the target determines blue; other letters use the error color; nonletters use `textMuted`. This is not positional feedback. The first subsequent text edit clears that checked attempt and keeps only the newly typed or pasted text, with cursor and composition preserved. From the second ordinary wrong answer, show a non-editable target prefix at `50%` opacity in practice blue: two graphemes plus an ellipsis, one grapheme for a two-grapheme target, no prefix for a one-grapheme target. Hints are separate from the editable answer and are never submitted as input. Correct answers retain the same tinted field and show the complete practice-blue target in it, including in history. The field becomes read-only, without cursor, focus or text selection; preserve its measured width, baseline and sentence wrapping across completion. Each wrong answer is announced and uses a light haptic; no additional review is created by a visual state change.
+  - *Existing answer distinctions*: "Fast richtig" keeps the editable attempt and its neutral spelling hint without counting an error. A wrong form keeps the existing form-specific explanation and SRS consequence. A pre-checked synonym keeps the attempt editable and displays the neutral live-region hint that an alternative target is sought, revealing at most its first letter; it is neither marked wrong nor solved. "Wort erfahren" displays the complete target as a `50%` practice-blue hint to copy. PRODUCT.md and `docs/srs.md` govern the unchanged box rules; a later prefix does not undo an earlier box-1 consequence.
+  - *Word lookup*: visible sentence words have a subtle dotted `textMuted` underline at `45%` opacity. Match translations to exact token start/end offsets and supplied annotations, never to spelling elsewhere. Tapping anchors a Night Page tooltip above the word (below when close to the top), with Hairline border, `8pt` radius, `12pt` padding and width at most `260pt`. The selected word stays fully opaque; the remaining sentence and field dim to `50%`. Another word switches selection. The first outside tap only closes the tooltip and restores opacity, without submitting or navigating. An unsolved gap is not a lookup target. Missing annotations read "Übersetzung nicht verfügbar"; no runtime lookup is implied.
+  - *Form Info Sheet*: standard tonal sheet, dimmed backdrop, close cross, outside-tap dismissal and scrolling content. Form title: Source Serif 4 24pt; explanation: 17pt w400, height 1.45; safe English examples: 20pt in practice blue. Existing form information may appear under "Vorhandene Formen" only after the card is solved. Before solving, examples must not disclose the answer. Unknown form markers receive an honest generic explanation. Word details become available only once the word is known.
+  - *Translation card*: `12pt` below the sentence card; Raised Ink, Hairline and `12pt` radius. Its expandable header shows the target's German translation (Source Serif 4 20pt w600) and chevron; its body shows the whole German sentence (18pt w400 `textMuted`, height 1.45) below a Hairline rule. Folding takes 200 ms, no animation under reduced motion, and persists for the session.
+  - *Answer toolbar*: Raised Ink and Hairline top edge, above the keyboard when open and within the bottom safe area when closed. Keep exactly one action aligned right in a clipped slot of at most `264pt`; its height is measured across all labels at the current text scale so state changes do not move the layout. Empty genuine input shows "Wort erfahren" with a quiet Hairline fill; genuine text shows primary "Eingeben"; deleting all text returns to "Wort erfahren". Prefix and reveal hints are not genuine input. Keyboard Done also checks. After a correct answer, show disabled "Wird gespeichert …" while saving, "Speichern wiederholen" on a save error, or primary "Weiter" only after successful persistence. Toolbar pills use a `48 × 48pt` minimum touch target, including the stable action-slot height, to satisfy Android target sizing. Primary pills use `textPrimary` fill and Night Page text, `16pt` horizontal and `10pt` vertical padding. Only a successfully saved answer adds a separate `28pt` practice-blue circle with a `20pt` Night Page check in a reserved `44pt` area to the button's left. Wrong answers, typos, synonyms and reveals alone never show that check. The reveal still requires copying the answer, but the visible "Tippe das Wort ab, um weiterzumachen." line is omitted with no replacement explanation. Preserve substantive error and synonym messages as neutral 13pt live regions above the controls. The speaker remains at the left, disabled and announced as "Aussprechen, noch nicht verfügbar" while practice audio is unavailable. Labels wrap at larger text sizes.
+  - *Action transition*: `140ms` slide/fade within the clipped right slot, ease-out cubic entering and ease-in cubic exiting; the outgoing action moves right. Outgoing controls ignore pointers and are excluded from semantics, so there is never more than one operable action. Reduced-motion mode switches immediately. Button and saved-check alignment remain stable with either keyboard state.
+  - *Read-only history*: swipe right outside the text editor for earlier completed session snapshots; swipe left to return toward the active pass. Custom semantics actions "Vorheriger Durchgang" and "Nächster Durchgang" provide accessible navigation. Do not show an "Aktuelle Karte" row, arrow controls or a replacement navigation row; the snapshot feedback may still identify "Rückblick". Preserve the original sentence, solution and feedback without rechecking, saving or exposing future cards. Current input, selection, hints and error state survive the visit. Text selection and cursor gestures remain editor actions. Auto-next pauses during history and overlays.
+  - *Menu*: a scrollable tonal bottom sheet with close cross and Figtree 17 rows: Teilen, Wort deaktivieren, favorite toggle, Ein Problem melden, Feedback an Sprachapp, keyboard help, Einstellungen. Native sharing runs only after the learner selects it; favorite and disabled state are persistent card properties. Disabling does not create a review or delete learning history.
+  - *Reports and feedback*: use the supplied problem categories, then a form with optional text capped at 2000 characters; general feedback adds a required 1–5 star choice. Primary copy is "Lokal speichern"; "Teilen" exports via the native share sheet. Persisted entries remain accessible in Settings. Never claim a report was sent. Problem context includes card/sentence ID, pack version and category, not the complete learning history or credentials. Forms remain reachable above the keyboard.
+  - *Settings*: scrolling neutral rows with title, description and current value. Motif offers Automatisch / Hell / Dunkel throughout the app. Diacritics defaults on; automatic next and grammar forms default off. Auto-next waits for successful persistence and a visible 1400 ms confirmation, then advances only when no overlay or history is open. Grammar takes priority. Learning notifications, mute automatic audio, audio speed and voice input remain disabled with "Noch nicht verfügbar" until backed by real capabilities; no ineffective active switches.
+  - *End*: after the last "Weiter", the Success Feedback Card replaces the practice cards and toolbar; it summarizes words practised and answer outcomes and offers "Zurück zum Stapel". The session bar reads "Alle Wörter geübt" over the completed neutral track.
 - **Home order**: header → `28pt` → Weekly Goal card → `28pt` → vocabulary overview (due count, segmented track, three-row ledger with hairline separators) → `44pt` → sections. "Aktive Stapel" lists only active decks (at most three), never inactive ones, even started ones; those live in the deck library ("Mehr ansehen"). With no active deck it reads "Noch kein Stapel aktiv. Unter „Mehr ansehen“ findest du alle Stapel." in `textMuted`.
 - **Stories Library**: screen title → `28pt` → "Weiterlesen" tile (deck-tile geometry; its "40 % gelesen" label takes at most 60% of the row and wraps at large Dynamic Type) → `44pt` → "Nachrichten" → one carousel per topic, `44pt` apart, each headed by a section heading with a story count in metadata style.
 - **Nachrichten** (Stories tab): section heading "Nachrichten" → `6pt` → the subheading "Wöchentlich aktualisierte Nachrichten zu deinen Lieblingsthemen zusammengefasst." (metadata, full width) → `14pt` → the news carousel: a `PageView` with `viewportFraction: 0.9` and `padEnds: false`; each page carries a `20pt` left gutter, so the focused card's left edge sits exactly on the screen gutter, the cards are `20pt` apart and the next one peeks in from the right. It pages one desk at a time and never ends: no item count, the page index wraps with modulo, and it starts on a far multiple of the article count so the learner can swipe back from the first desk too. Five cards, one per desk: Politik, Wirtschaft, Technologie, Medizin, Unterhaltung.
@@ -173,7 +258,7 @@ A spacious, reading-first spatial grammar with disciplined vertical pacing:
 
 ## Elevation & Depth
 
-Depth is purely tonal, not shadow-driven: surfaces separate by stepping from Night Page (`#0D0F14`) to Raised Ink (`#1A1D26`), outlined with Hairline (`#2A2F40`), rather than by drop shadows or glows. This maintains an intentional, print-like sensibility.
+Depth is purely tonal, not shadow-driven. In light mode, light-page and light-surface use the light-hairline edge; in dark mode, surfaces separate by stepping from Night Page (`#0D0F14`) to Raised Ink (`#1A1D26`), outlined with Hairline (`#2A2F40`), rather than by drop shadows or glows. This maintains an intentional, print-like sensibility.
 
 ### Named Rules
 
@@ -216,5 +301,5 @@ Depth is purely tonal, not shadow-driven: surfaces separate by stepping from Nig
 - **Don't** introduce a third accent color; the Two-Ink Rule is closed. The feedback colors are not accents and stay inside exercises (see the Feedback Rule); the memory level and playback colors are the Two-Ink Rule's only exceptions — memory levels stay inside the Wortliste and the deck practice card, the playback highlight appears only while audio plays.
 - **Don't** highlight grammar examples with a status ink; English forms are set in italic w600 instead.
 - **Don't** use memory level colors as a word's status anywhere else (reader underlines, deck rings, home tracks keep Editorial Violet and Field Orange), and don't leave the playback highlight on after playback ends.
-- **Don't** let a wrong answer stay red; Muted Brick only flashes.
-- **Don't** ship a light theme; dark is the only mode.
+- **Don’t** persist red feedback outside its exercise attempt: choice chips flash; deck input keeps its first checked feedback until the next text edit.
+- **Do** resolve semantic colors through the current theme; motif changes preserve navigation and editing state.

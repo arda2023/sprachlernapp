@@ -34,12 +34,18 @@ class DailyGoalSheet extends StatelessWidget {
           children: [
             Semantics(
               header: true,
-              child: Text('Tagesziel', style: AppType.editorial(size: 24)),
+              child: Text(
+                'Tagesziel',
+                style: AppType.editorial(
+                  color: context.appColors.textPrimary,
+                  size: 24,
+                ),
+              ),
             ),
             const SizedBox(height: 6),
             Text(
               'Eine Empfehlung – du kannst jederzeit weiterlernen.',
-              style: AppType.chrome(color: AppColors.textMuted),
+              style: AppType.chrome(color: context.appColors.textMuted),
             ),
             const SizedBox(height: 16),
             for (final target in options)
@@ -79,8 +85,10 @@ class _GoalOption extends StatelessWidget {
           excludeSemantics: true,
           child: Container(
             constraints: const BoxConstraints(minHeight: 52),
-            decoration: const BoxDecoration(
-              border: Border(top: BorderSide(color: AppColors.hairline)),
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(color: context.appColors.hairline),
+              ),
             ),
             child: Row(
               children: [
@@ -88,16 +96,17 @@ class _GoalOption extends StatelessWidget {
                   child: Text(
                     '$target Wörter pro Tag',
                     style: AppType.chrome(
+                      color: context.appColors.textPrimary,
                       weight: selected ? FontWeight.w700 : FontWeight.w500,
                       tabular: true,
                     ),
                   ),
                 ),
                 if (selected)
-                  const Icon(
+                  Icon(
                     CupertinoIcons.checkmark,
                     size: 18,
-                    color: AppColors.textPrimary,
+                    color: context.appColors.textPrimary,
                   ),
               ],
             ),

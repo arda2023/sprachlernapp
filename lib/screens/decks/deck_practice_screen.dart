@@ -3,1072 +3,662 @@ import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show
-        Colors,
-        InputDecoration,
-        Scaffold,
-        ScaffoldMessenger,
-        SnackBar,
-        TextField,
-        UnderlineInputBorder;
+    show Scaffold, Material, ScaffoldMessenger, SnackBar;
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/answer_check.dart';
-import '../../domain/leitner.dart';
-import '../../domain/word_form.dart';
-import '../../models/speech_playback.dart';
-import '../../models/word_list_models.dart';
-import '../../models/word_list_store.dart';
+import '../../domain/grammar_hint.dart';
+import '../../domain/srs_state.dart';
+import '../../presentation/practice/deck_session_controller.dart';
+import '../../presentation/providers/database_providers.dart';
+import '../../presentation/providers/preferences_provider.dart';
+import '../../presentation/content_unavailable_view.dart';
 import '../../theme/app_theme.dart';
-import '../../widgets/hairline_track.dart';
+import 'widgets/practice_chrome.dart';
+export 'widgets/practice_chrome.dart' show SessionTrack;
 import '../../widgets/success_feedback_card.dart';
 import '../words/widgets/memory_level_indicator.dart';
 import '../words/widgets/memory_level_legend_sheet.dart';
-import '../words/widgets/word_details_sheet.dart';
+import '../settings/settings_screen.dart';
 import 'widgets/form_info_sheet.dart';
+import 'widgets/practice_input.dart';
+import 'widgets/practice_sentence.dart';
+import 'widgets/practice_menu.dart';
+import 'widgets/local_submission_sheet.dart';
 
-/// "Lerne mit diesem Stapel" runs a regular session; "Stapel nochmals
-/// durchsehen" is early practice (PRODUCT.md, Vorab-Üben): right answers
-/// keep their box, errors still reset it.
 enum DeckPracticeMode { learn, review }
 
-/// Where one card's gap stands.
-enum GapState {
-  /// Nothing tried yet, or a near miss ("Fast richtig") still in the field.
-  initial,
-
-  /// A wrong attempt is flashing; the field is already cleared.
-  wrong,
-
-  /// "Wort erfahren": the answer shows as a hint until the learner types.
-  revealed,
-
-  /// The exact answer stands in the gap; the field is gone.
-  solved,
-}
-
-/// One card of a session: the word as it was when the session started (so
-/// the memory level doesn't jump mid-card), where its form sits in the
-/// sentence, and the local answer state.
-class PracticeCard {
-  PracticeCard(this.word, this.form);
-
-  final VocabWord word;
-  final WordForm form;
-
-  bool revealed = false;
-  bool solved = false;
-
-  /// The attempt flashing in Muted Brick, or null.
-  String? wrongAttempt;
-
-  /// Wrong attempts so far; a near miss doesn't count (PRODUCT.md).
-  int errors = 0;
-
-  GapState get state => solved
-      ? GapState.solved
-      : wrongAttempt != null
-      ? GapState.wrong
-      : revealed
-      ? GapState.revealed
-      : GapState.initial;
-
-  /// Right without a wrong attempt and without "Wort erfahren".
-  bool get correct => errors == 0 && !revealed;
-}
-
-/// A simple session queue until the scheduler exists: the first [size]
-/// active words whose example sentence holds the word in a form the gap can
-/// find, in Wortliste order.
-// TODO: due reviews first, then new words, then Vorab-Üben (PRODUCT.md).
-List<PracticeCard> deckPracticeQueue(List<VocabWord> words, {int size = 5}) => [
-  for (final word in words)
-    if (!word.isDisabled)
-      if (findWordForm(word.sentence, word.entry.headword) case final form?)
-        PracticeCard(word, form),
-].take(size).toList();
-
-/// The deck practice session: one sentence card at a time with the word as
-/// an inline gap, its German translation below, and a toolbar above the
-/// keyboard. Only the exact word moves on (PRODUCT.md); a wrong attempt
-/// flashes Muted Brick and clears, "Wort erfahren" shows the word as a hint
-/// and counts as an error.
-class DeckPracticeScreen extends StatefulWidget {
+class DeckPracticeScreen extends ConsumerStatefulWidget {
   const DeckPracticeScreen({
     super.key,
-    required this.store,
+    required this.deckId,
     this.mode = DeckPracticeMode.learn,
     this.sessionSize = 5,
-    this.clock = DateTime.now,
   });
-
-  final WordListStore store;
+  final String deckId;
   final DeckPracticeMode mode;
   final int sessionSize;
-
-  /// Injected so recorded reviews are testable.
-  final DateTime Function() clock;
-
   static Future<void> open(
     BuildContext context, {
-    required WordListStore store,
+    required String deckId,
     DeckPracticeMode mode = DeckPracticeMode.learn,
   }) => Navigator.of(context).push(
     CupertinoPageRoute<void>(
       fullscreenDialog: true,
-      builder: (_) => DeckPracticeScreen(store: store, mode: mode),
+      builder: (_) => DeckPracticeScreen(deckId: deckId, mode: mode),
     ),
   );
-
   @override
-  State<DeckPracticeScreen> createState() => _DeckPracticeScreenState();
+  ConsumerState<DeckPracticeScreen> createState() => _DeckPracticeScreenState();
 }
 
-class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
-  static const _flashDuration = Duration(milliseconds: 600);
-  static const _almostMessage = 'Fast richtig – prüf die Schreibweise.';
-  static const _revealedMessage = 'Tippe das Wort ab, um weiterzumachen.';
-
-  late final List<PracticeCard> _queue = deckPracticeQueue(
-    widget.store.words,
+class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
+    with WidgetsBindingObserver {
+  final _input = PracticeInputController();
+  final _focus = FocusNode();
+  final _sentenceKey = GlobalKey<PracticeSentenceState>();
+  final _rootKey = GlobalKey();
+  Timer? _autoTimer;
+  bool _translationOpen = true,
+      _overlay = false,
+      _inputGesture = false,
+      _foreground = true;
+  int? _historyIndex;
+  String? _grammarShownFor;
+  WordAnchor? _word;
+  DeckSessionArgs get _args => (
+    deckId: widget.deckId,
+    kind: widget.mode == DeckPracticeMode.learn
+        ? DeckSessionKind.learn
+        : DeckSessionKind.revue,
     size: widget.sessionSize,
   );
-  final _input = TextEditingController();
-  final _focus = FocusNode();
-  final _playback = SpeechPlayback();
-  Timer? _flashTimer;
+  DeckSessionController get _controller =>
+      ref.read(deckSessionControllerProvider(_args).notifier);
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
 
-  int _index = 0;
-  bool _finished = false;
-
-  /// Whether the full German sentence shows; kept across cards.
-  bool _translationOpen = true;
-
-  /// Hint in the toolbar ("Fast richtig", what to do after a reveal).
-  String? _message;
-
-  PracticeCard get _card => _queue[_index];
-  String get _audioKey => 'practice/${_card.word.id}';
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    _foreground = state == AppLifecycleState.resumed;
+    _autoTimer?.cancel();
+    if (_foreground) _schedule();
+  }
 
   @override
   void dispose() {
-    _flashTimer?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
+    _autoTimer?.cancel();
     _input.dispose();
     _focus.dispose();
-    _playback.dispose();
     super.dispose();
   }
 
-  void _announce(String message) => SemanticsService.sendAnnouncement(
+  void _announce(String text) => SemanticsService.sendAnnouncement(
     View.of(context),
-    message,
+    text,
     TextDirection.ltr,
   );
-
-  void _toast(String message) => ScaffoldMessenger.of(context)
-    ..hideCurrentSnackBar()
-    ..showSnackBar(
-      SnackBar(content: Text(message), duration: const Duration(seconds: 2)),
-    );
-
-  // ------------------------------------------------------------- answers
-
   void _submit() {
-    final card = _card;
-    final attempt = _input.text.trim();
-    if (card.solved || attempt.isEmpty) return;
-    switch (checkAnswer(attempt, card.form.text)) {
-      case AnswerResult.correct:
-        _flashTimer?.cancel();
-        setState(() {
-          card
-            ..solved = true
-            ..wrongAttempt = null;
-          _message = null;
-        });
-        _focus.unfocus();
-        widget.store.recordReview(
-          card.word.id,
-          correct: card.correct,
-          early: widget.mode == DeckPracticeMode.review,
-          now: widget.clock(),
-        );
-        _announce('Richtig: ${card.form.text}');
-      case AnswerResult.almost:
-        setState(() => _message = _almostMessage);
-        _announce(_almostMessage);
-        _focus.requestFocus();
-      case AnswerResult.wrong:
-        HapticFeedback.lightImpact();
-        _input.clear();
-        setState(() {
-          card
-            ..errors += 1
-            ..wrongAttempt = attempt;
-          _message = card.revealed ? _revealedMessage : null;
-        });
-        _announce('Falsch');
-        _focus.requestFocus();
-        _flashTimer?.cancel();
-        _flashTimer = Timer(_flashDuration, () {
-          if (mounted) setState(() => card.wrongAttempt = null);
-        });
+    if (_historyIndex != null ||
+        _overlay ||
+        _word != null ||
+        _input.feedback != InputFeedback.typing) {
+      return;
+    }
+    final attempt = _input.text;
+    final result = _controller.submit(attempt);
+    if (result == null) return;
+    if (result.verdict == AnswerVerdict.target) {
+      _focus.unfocus();
+      _announce('Richtig');
+    } else if (result.verdict == AnswerVerdict.wrong) {
+      final pass = ref.read(deckSessionControllerProvider(_args)).pass!;
+      _input.showWrong(attempt, pass.item.card.form);
+      HapticFeedback.lightImpact();
+      _announce('Falsch');
+    } else {
+      _announce(result.message ?? 'Fast richtig – prüf die Schreibweise.');
     }
   }
 
   void _reveal() {
-    final card = _card;
-    if (card.solved || card.revealed) return;
-    _input.clear();
-    setState(() {
-      card.revealed = true;
-      _message = _revealedMessage;
-    });
-    _announce('Das Wort lautet ${card.form.text}. $_revealedMessage');
+    _controller.reveal();
+    final pass = ref.read(deckSessionControllerProvider(_args)).pass!;
+    _input.showReveal(pass.item.card.form);
+    _announce('Das Wort lautet ${pass.item.card.form}. Tippe es ab.');
     _focus.requestFocus();
   }
 
-  void _next() {
-    _playback.stop();
-    _input.clear();
+  Future<void> _next() async {
+    if (_overlay || _word != null || _historyIndex != null) return;
+    final s = ref.read(deckSessionControllerProvider(_args));
+    if (!s.saved || s.committing) return;
+    _autoTimer?.cancel();
+    _input.reset();
+    await _controller.next();
+    if (mounted && !ref.read(deckSessionControllerProvider(_args)).finished) {
+      _focus.requestFocus();
+    }
+  }
+
+  void _schedule() {
+    _autoTimer?.cancel();
+    if (!mounted ||
+        _overlay ||
+        _word != null ||
+        _historyIndex != null ||
+        !_foreground ||
+        ModalRoute.of(context)?.isCurrent == false) {
+      return;
+    }
+    final s = ref.read(deckSessionControllerProvider(_args));
+    final prefs = ref.read(preferencesProvider).value;
+    if (!s.saved || s.committing || s.error != null || s.finished) return;
+    if (prefs?.showGrammar == true && _grammarShownFor != s.pass!.id) {
+      _grammarShownFor = s.pass!.id;
+      _grammar();
+    } else if (prefs?.autoNext == true) {
+      final id = s.pass!.id;
+      _autoTimer = Timer(const Duration(milliseconds: 1400), () {
+        if (mounted &&
+            ref.read(deckSessionControllerProvider(_args)).pass?.id == id) {
+          _next();
+        }
+      });
+    }
+  }
+
+  Future<void> _withOverlay(Future<void> Function() action) async {
+    _autoTimer?.cancel();
+    final hadFocus = _focus.hasFocus;
     setState(() {
-      _message = null;
-      if (_index == _queue.length - 1) {
-        _finished = true;
-      } else {
-        _index += 1;
-      }
+      _overlay = true;
+      _word = null;
     });
-    if (!_finished) _focus.requestFocus();
+    _focus.unfocus();
+    try {
+      await action();
+    } finally {
+      if (mounted) {
+        setState(() => _overlay = false);
+        if (hadFocus &&
+            _historyIndex == null &&
+            ref.read(deckSessionControllerProvider(_args)).pass?.solved ==
+                false) {
+          _focus.requestFocus();
+        }
+        _schedule();
+      }
+    }
   }
 
-  void _speak() => _playback.play(_audioKey, _card.form.text);
+  List<SessionSnapshot> _past(DeckSessionState state) => state.snapshots
+      .where((s) => state.finished || s.id != state.pass?.id)
+      .toList();
+  void _history(int direction) {
+    if (_overlay || _word != null) return;
+    final s = ref.read(deckSessionControllerProvider(_args));
+    final past = _past(s);
+    final index = _historyIndex ?? past.length;
+    final next = (index + direction).clamp(0, past.length);
+    if (next == index) return;
+    _autoTimer?.cancel();
+    _focus.unfocus();
+    setState(() => _historyIndex = next == past.length ? null : next);
+    if (_historyIndex == null) {
+      if (s.pass?.solved == false) _focus.requestFocus();
+      _schedule();
+    }
+  }
 
-  // ---------------------------------------------------------- side paths
-
-  void _showGrammar() {
-    final card = _card;
-    final entry = card.word.entry;
-    FormInfoSheet.show(
+  Future<void> _grammar() => _withOverlay(() async {
+    final s = ref.read(deckSessionControllerProvider(_args));
+    final snapshot = _historyIndex == null ? null : _past(s)[_historyIndex!];
+    final card = snapshot?.card ?? s.pass!.item.card;
+    final solved = snapshot != null || s.pass!.solved;
+    final hint = grammarHint(card, solved: solved);
+    await FormInfoSheet.show(
       context,
-      label: formLabel(entry.partOfSpeech, entry.headword, card.form.text),
-      explanation: formExplanation(
-        entry.partOfSpeech,
-        formKindOf(entry.partOfSpeech, entry.headword, card.form.text),
-      ),
-      // Before the word is known the details would give it away.
-      onShowWord: card.solved || card.revealed ? _openDetails : null,
+      label: card.formLabelDe ?? card.pos,
+      explanation: hint.explanation,
+      examples: hint.examples,
+      forms: solved && snapshot == null
+          ? ([card.form, ...s.pass!.item.otherFormsOfLemma]..sort())
+          : const [],
     );
-  }
-
-  void _openDetails() => WordDetailsSheet.show(
-    context,
-    store: widget.store,
-    playback: _playback,
-    wordId: _card.word.id,
-    now: widget.clock(),
-  );
-
-  Future<void> _openMenu() async {
-    final word = widget.store.byId(_card.word.id);
-    final action = await showCupertinoModalPopup<VoidCallback>(
-      context: context,
-      builder: (context) {
-        Widget item(String label, VoidCallback onChosen) =>
-            CupertinoActionSheetAction(
-              onPressed: () => Navigator.of(context).pop(onChosen),
-              child: Text(label, style: AppType.chrome(size: 17)),
-            );
-        return CupertinoActionSheet(
-          title: Text(word.entry.headword, style: AppType.meta()),
-          actions: [
-            item(
-              word.isDisabled ? 'Wort wieder aktivieren' : 'Wort deaktivieren',
-              () => _toast(
-                widget.store.toggleDisabled(word.id)
-                    ? 'Wort deaktiviert'
-                    : 'Wort wieder aktiviert',
-              ),
-            ),
-            item(
-              word.isFavorite
-                  ? 'Aus Favoriten entfernen'
-                  : 'Zu Favoriten hinzufügen',
-              () => _toast(
-                widget.store.toggleFavorite(word.id)
-                    ? 'Zu Favoriten hinzugefügt'
-                    : 'Aus Favoriten entfernt',
-              ),
-            ),
-          ],
-          cancelButton: CupertinoActionSheetAction(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(
-              'Abbrechen',
-              style: AppType.chrome(size: 17, weight: FontWeight.w600),
+  });
+  Future<void> _menu() => _withOverlay(() async {
+    final s = ref.read(deckSessionControllerProvider(_args));
+    final snapshot = _historyIndex == null ? null : _past(s)[_historyIndex!];
+    final card = snapshot?.card ?? s.pass!.item.card;
+    final sentence = snapshot?.sentence ?? s.pass!.sentence;
+    try {
+      final user = await ref.read(userRepositoryProvider.future);
+      final flags = (await user.cardStates([card.id]))[card.id];
+      if (!mounted) return;
+      final action = await showPracticeMenu(
+        context,
+        favorite: flags?.favorite ?? false,
+        canDisable: snapshot == null && s.canLeave,
+      );
+      if (!mounted || action == null) return;
+      switch (action) {
+        case PracticeAction.share:
+          await sharePracticeText(
+            context,
+            '${card.form} – ${card.translationDe ?? ''}\n${sentence.text}',
+          );
+        case PracticeAction.disable:
+          await _controller.disableCurrent();
+          _input.reset();
+        case PracticeAction.favorite:
+          await user.setCardFlags(
+            card.id,
+            favorite: !(flags?.favorite ?? false),
+          );
+        case PracticeAction.report:
+          final category = await showProblemCategories(context);
+          if (!mounted || category == null) return;
+          final pack = (await ref.read(contentRepositoryProvider.future))
+              .info
+              .version;
+          if (!mounted) return;
+          await LocalSubmissionSheet.open(
+            context,
+            category: category,
+            cardId: card.id,
+            sentenceId: sentence.sentenceId,
+            packVersion: pack,
+          );
+        case PracticeAction.feedback:
+          await LocalSubmissionSheet.open(context);
+        case PracticeAction.keyboard:
+          await showKeyboardHelp(context);
+        case PracticeAction.settings:
+          await SettingsScreen.open(context);
+      }
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Änderung nicht gespeichert. Bitte erneut versuchen.',
             ),
           ),
         );
-      },
-    );
-    if (mounted) action?.call();
-  }
-
-  // --------------------------------------------------------------- build
-
-  @override
-  Widget build(BuildContext context) {
-    final total = _queue.length;
-    final done = _finished ? total : _index + (_card.solved ? 1 : 0);
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: Colors.transparent,
-      ),
-      child: Scaffold(
-        // The toolbar follows the keyboard itself (see _AnswerToolbar).
-        resizeToAvoidBottomInset: false,
-        body: ListenableBuilder(
-          listenable: _playback,
-          builder: (context, _) => Column(
-            children: [
-              SafeArea(
-                bottom: false,
-                child: _SessionBar(
-                  done: done,
-                  total: total,
-                  onHome: () => Navigator.of(context).maybePop(),
-                  onMenu: _finished || total == 0 ? null : _openMenu,
-                ),
-              ),
-              Expanded(
-                child: ListView(
-                  physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics(),
-                  ),
-                  keyboardDismissBehavior:
-                      ScrollViewKeyboardDismissBehavior.manual,
-                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-                  children: [
-                    Center(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 600),
-                        child: total == 0
-                            ? Text(
-                                'Gerade gibt es keine Wörter zum Üben.',
-                                style: AppType.chrome(
-                                  color: AppColors.textMuted,
-                                ),
-                              )
-                            : _finished
-                            ? _summary()
-                            : _cards(),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (!_finished && total > 0)
-                _AnswerToolbar(
-                  speakerEnabled: _card.solved || _card.revealed,
-                  playing: _playback.isPlaying(_audioKey),
-                  onSpeak: _speak,
-                  message: _message,
-                  solved: _card.solved,
-                  revealed: _card.revealed,
-                  onReveal: _reveal,
-                  onNext: _next,
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _cards() {
-    final card = _card;
-    final entry = card.word.entry;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _ExerciseCard(
-          key: ValueKey(card.word.id),
-          card: card,
-          input: _input,
-          focus: _focus,
-          playing: _playback.isPlaying(_audioKey),
-          onSubmit: _submit,
-          onShowLegend: () =>
-              MemoryLevelLegendSheet.show(context, current: card.word.box),
-          onShowGrammar: _showGrammar,
-          formLabel: formLabel(
-            entry.partOfSpeech,
-            entry.headword,
-            card.form.text,
-          ),
-        ),
-        const SizedBox(height: 12),
-        _TranslationCard(
-          translation: entry.translation,
-          sentence: card.word.sentenceTranslation,
-          open: _translationOpen,
-          onToggle: () => setState(() => _translationOpen = !_translationOpen),
-        ),
-      ],
-    );
-  }
-
-  Widget _summary() {
-    final total = _queue.length;
-    final right = _queue.where((c) => c.correct).length;
-    final review = widget.mode == DeckPracticeMode.review;
-    return SuccessFeedbackCard(
-      title: '$total ${total == 1 ? 'Wort' : 'Wörter'} geübt',
-      subtitle:
-          '$right auf Anhieb richtig · ${total - right} zurück auf Stufe 1',
-      explanation: review
-          ? 'In der Stapel-Revue bleiben richtige Antworten auf ihrer Stufe. '
-                'Fehler und „Wort erfahren“ setzen ein Wort auf Stufe 1 zurück.'
-          : 'Richtige Antworten rücken eine Stufe auf. Fehler und „Wort '
-                'erfahren“ setzen ein Wort auf Stufe 1 zurück.',
-      actionLabel: 'Zurück zum Stapel',
-      onAction: () => Navigator.of(context).maybePop(),
-    );
-  }
-}
-
-/// Home (ends the session), how many words of the session are left over a
-/// neutral track with one segment per word, and the word menu.
-class _SessionBar extends StatelessWidget {
-  const _SessionBar({
-    required this.done,
-    required this.total,
-    required this.onHome,
-    required this.onMenu,
-  });
-
-  final int done;
-  final int total;
-  final VoidCallback onHome;
-  final VoidCallback? onMenu;
-
-  @override
-  Widget build(BuildContext context) {
-    final left = total - done;
-    final label = left == 0
-        ? 'Alle Wörter geübt'
-        : 'Noch $left ${left == 1 ? 'Wort' : 'Wörter'}';
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Row(
-        children: [
-          _BarButton(
-            label: 'Session beenden',
-            icon: CupertinoIcons.house,
-            onPressed: onHome,
-          ),
-          Expanded(
-            child: Semantics(
-              label: left == 0
-                  ? 'Alle $total Wörter geübt'
-                  : 'Noch $left von $total Wörtern',
-              excludeSemantics: true,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  // The track spans the space between the two buttons.
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      label,
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppType.meta().copyWith(
-                        fontFeatures: const [FontFeature.tabularFigures()],
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    SessionTrack(done: done, total: total),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          if (onMenu case final onMenu?)
-            _BarButton(
-              label: 'Mehr',
-              icon: CupertinoIcons.ellipsis_vertical,
-              onPressed: onMenu,
-            )
-          else
-            const SizedBox(width: 44),
-        ],
-      ),
-    );
-  }
-}
-
-/// Neutral session progress (Neutral Progress Rule): one `3pt` segment per
-/// word, `textMuted` once done, Hairline while left, so the count of words
-/// left can be read off the bar. Long sessions fall back to one track.
-class SessionTrack extends StatelessWidget {
-  const SessionTrack({super.key, required this.done, required this.total});
-
-  static const maxSegments = 12;
-
-  final int done;
-  final int total;
-
-  @override
-  Widget build(BuildContext context) {
-    if (total == 0 || total > maxSegments) {
-      return HairlineTrack(fraction: total == 0 ? 0 : done / total);
+      }
     }
-    return Row(
-      children: [
-        for (var i = 0; i < total; i++) ...[
-          if (i > 0) const SizedBox(width: 3),
-          Expanded(
-            child: Container(
-              height: 3,
-              decoration: BoxDecoration(
-                color: i < done ? AppColors.textMuted : AppColors.hairline,
-                borderRadius: BorderRadius.circular(999),
-              ),
-            ),
-          ),
-        ],
-      ],
-    );
-  }
-}
-
-class _BarButton extends StatelessWidget {
-  const _BarButton({
-    required this.label,
-    required this.icon,
-    required this.onPressed,
   });
-
-  final String label;
-  final IconData icon;
-  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return MergeSemantics(
-      child: CupertinoButton(
-        onPressed: onPressed,
-        padding: EdgeInsets.zero,
-        minimumSize: const Size(44, 44),
-        child: Semantics(
-          label: label,
-          excludeSemantics: true,
-          child: Icon(icon, size: 22, color: AppColors.textPrimary),
-        ),
-      ),
-    );
-  }
-}
-
-/// The sentence card: memory level, the English sentence with the word as
-/// an inline gap, and right under it the word class and form, which opens
-/// the grammar sheet.
-class _ExerciseCard extends StatelessWidget {
-  const _ExerciseCard({
-    super.key,
-    required this.card,
-    required this.input,
-    required this.focus,
-    required this.playing,
-    required this.onSubmit,
-    required this.onShowLegend,
-    required this.onShowGrammar,
-    required this.formLabel,
-  });
-
-  final PracticeCard card;
-  final TextEditingController input;
-  final FocusNode focus;
-  final bool playing;
-  final VoidCallback onSubmit;
-  final VoidCallback onShowLegend;
-  final VoidCallback onShowGrammar;
-  final String formLabel;
-
-  static TextStyle get sentenceStyle => AppType.editorial(
-    size: 26,
-    weight: FontWeight.w400,
-    height: 1.5,
-    letterSpacing: 0,
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    final sentence = card.word.sentence;
-    final form = card.form;
-    final style = sentenceStyle;
-    final box = card.word.box;
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.raisedInk,
-        border: Border.all(color: AppColors.hairline),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    final provider = deckSessionControllerProvider(_args);
+    final state = ref.watch(provider);
+    ref.watch(preferencesProvider);
+    ref.listen(provider, (previous, next) {
+      if (next.saved && previous?.saved != true) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) _schedule();
+        });
+      }
+    });
+    final past = _past(state);
+    final snapshot = _historyIndex != null && _historyIndex! < past.length
+        ? past[_historyIndex!]
+        : null;
+    final pass = state.pass;
+    final contentCard = snapshot?.card ?? pass?.item.card;
+    final sentence = snapshot?.sentence ?? pass?.sentence;
+    final solved = snapshot != null || pass?.solved == true;
+    final canShow =
+        sentence != null &&
+        (!state.finished || snapshot != null) &&
+        !state.loading;
+    return PopScope(
+      canPop: state.canLeave,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Stack(
+          key: _rootKey,
+          children: [
+            Column(
               children: [
-                MergeSemantics(
-                  child: CupertinoButton(
-                    onPressed: onShowLegend,
-                    padding: EdgeInsets.zero,
-                    minimumSize: const Size(44, 44),
-                    alignment: Alignment.centerLeft,
-                    child: Semantics(
-                      label:
-                          'Erinnerungsstufe $box von $leitnerBoxCount: '
-                          '${memoryLevelTitle(box)}',
-                      excludeSemantics: true,
-                      child: MemoryLevelIndicator(level: box),
-                    ),
+                SafeArea(
+                  bottom: false,
+                  child: PracticeSessionBar(
+                    done: state.finished
+                        ? state.total
+                        : state.index + (state.saved ? 1 : 0),
+                    total: state.total,
+                    onHome: () {
+                      _autoTimer?.cancel();
+                      if (state.canLeave) Navigator.of(context).maybePop();
+                    },
+                    onMenu: canShow ? _menu : null,
                   ),
                 ),
-                const SizedBox(height: 8),
-                Text.rich(
-                  TextSpan(
-                    style: style,
-                    children: [
-                      TextSpan(text: sentence.substring(0, form.start)),
-                      if (card.solved)
-                        TextSpan(
-                          text: form.text,
-                          semanticsLabel: '${form.text}, richtig',
-                          style: TextStyle(
-                            color: AppColors.success,
-                            fontWeight: FontWeight.w600,
-                            // Audio Playback Highlight while it is spoken.
-                            backgroundColor: playing
-                                ? AppColors.playback
-                                : null,
-                          ),
-                        )
-                      else
-                        WidgetSpan(
-                          alignment: PlaceholderAlignment.baseline,
-                          baseline: TextBaseline.alphabetic,
-                          child: _GapField(
-                            card: card,
-                            input: input,
-                            focus: focus,
-                            style: style,
-                            onSubmit: onSubmit,
-                          ),
-                        ),
-                      TextSpan(text: sentence.substring(form.end)),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 4),
-                MergeSemantics(
-                  child: CupertinoButton(
-                    onPressed: onShowGrammar,
-                    padding: EdgeInsets.zero,
-                    minimumSize: const Size(44, 44),
-                    pressedOpacity: 0.7,
-                    alignment: Alignment.centerLeft,
-                    child: Semantics(
-                      label: '$formLabel, Grammatik-Hinweis',
-                      excludeSemantics: true,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Flexible(
-                            child: Text(
-                              formLabel,
-                              style: AppType.chrome(
-                                weight: FontWeight.w600,
-                                color: AppColors.textMuted,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          const Icon(
-                            CupertinoIcons.info_circle,
-                            size: 17,
-                            color: AppColors.textMuted,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// The inline field. A wrong attempt flashes as its hint in Muted Brick on
-/// Brick Tint; a revealed word shows as the hint in Pale Sky. Typing hides
-/// either.
-class _GapField extends StatelessWidget {
-  const _GapField({
-    required this.card,
-    required this.input,
-    required this.focus,
-    required this.style,
-    required this.onSubmit,
-  });
-
-  final PracticeCard card;
-  final TextEditingController input;
-  final FocusNode focus;
-  final TextStyle style;
-  final VoidCallback onSubmit;
-
-  static final _revealColor = AppColors.memoryLevel2.withValues(alpha: 0.6);
-  static final _wrongColor = AppColors.error.withValues(alpha: 0.75);
-
-  @override
-  Widget build(BuildContext context) {
-    final state = card.state;
-    final painter = TextPainter(
-      text: TextSpan(text: card.form.text, style: style),
-      textDirection: TextDirection.ltr,
-      textScaler: MediaQuery.textScalerOf(context),
-    )..layout();
-    final width = math.max(64.0, painter.width + 20);
-    painter.dispose();
-
-    final (hint, hintColor) = switch (state) {
-      GapState.wrong => (card.wrongAttempt, _wrongColor),
-      GapState.revealed => (card.form.text, _revealColor),
-      _ => (null, null),
-    };
-    final line = state == GapState.wrong
-        ? AppColors.error
-        : AppColors.textMuted;
-
-    return Semantics(
-      label: state == GapState.revealed
-          ? 'Lücke, Lösung: ${card.form.text}'
-          : 'Lücke',
-      child: SizedBox(
-        width: width,
-        child: TextField(
-          controller: input,
-          focusNode: focus,
-          autofocus: true,
-          style: style,
-          // Typing starts where the gap starts, like running text.
-          textAlign: TextAlign.start,
-          cursorColor: AppColors.textPrimary,
-          autocorrect: false,
-          enableSuggestions: false,
-          textInputAction: TextInputAction.done,
-          // Keeps the keyboard open after every attempt.
-          onEditingComplete: onSubmit,
-          decoration: InputDecoration(
-            isDense: true,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 2),
-            // A wrong attempt flashes on Brick Tint (Feedback Rule).
-            filled: state == GapState.wrong,
-            fillColor: AppColors.errorTint,
-            hintText: hint,
-            hintStyle: style.copyWith(color: hintColor),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: line, width: 2),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: state == GapState.wrong
-                    ? AppColors.error
-                    : AppColors.textPrimary,
-                width: 2,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// The German translation of the word, and, folded out, of the sentence.
-class _TranslationCard extends StatelessWidget {
-  const _TranslationCard({
-    required this.translation,
-    required this.sentence,
-    required this.open,
-    required this.onToggle,
-  });
-
-  final String translation;
-  final String sentence;
-  final bool open;
-  final VoidCallback onToggle;
-
-  @override
-  Widget build(BuildContext context) {
-    final reduceMotion = MediaQuery.disableAnimationsOf(context);
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.raisedInk,
-        border: Border.all(color: AppColors.hairline),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          MergeSemantics(
-            child: CupertinoButton(
-              onPressed: onToggle,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-              minimumSize: const Size(44, 56),
-              pressedOpacity: 0.7,
-              child: Semantics(
-                label: 'Übersetzung: $translation, ganzer Satz',
-                expanded: open,
-                excludeSemantics: true,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        translation,
-                        style: AppType.editorial(size: 20),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Icon(
-                      open
-                          ? CupertinoIcons.chevron_up
-                          : CupertinoIcons.chevron_down,
-                      size: 16,
-                      color: AppColors.textMuted,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          AnimatedSize(
-            duration: reduceMotion
-                ? Duration.zero
-                : const Duration(milliseconds: 200),
-            curve: Curves.easeOutCubic,
-            alignment: Alignment.topCenter,
-            child: open
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Container(height: 1, color: AppColors.hairline),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 14, 20, 18),
-                        child: Text(
-                          sentence,
-                          style: AppType.editorial(
-                            size: 18,
-                            weight: FontWeight.w400,
-                            color: AppColors.textMuted,
-                            height: 1.45,
-                            letterSpacing: 0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                : const SizedBox(width: double.infinity),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Sits on the bottom edge, or right above the keyboard while it is open.
-/// Left: "Aussprechen", unlit until the word is known. Middle: a hint.
-/// Right: "Wort erfahren", or "Weiter" once solved.
-class _AnswerToolbar extends StatelessWidget {
-  const _AnswerToolbar({
-    required this.speakerEnabled,
-    required this.playing,
-    required this.onSpeak,
-    required this.message,
-    required this.solved,
-    required this.revealed,
-    required this.onReveal,
-    required this.onNext,
-  });
-
-  final bool speakerEnabled;
-  final bool playing;
-  final VoidCallback onSpeak;
-  final String? message;
-  final bool solved;
-  final bool revealed;
-  final VoidCallback onReveal;
-  final VoidCallback onNext;
-
-  @override
-  Widget build(BuildContext context) {
-    final keyboard = MediaQuery.viewInsetsOf(context).bottom;
-    final safeArea = MediaQuery.viewPaddingOf(context).bottom;
-    final speakerColor = !speakerEnabled
-        ? AppColors.iconOff
-        : AppColors.textPrimary;
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.raisedInk,
-        border: Border(top: BorderSide(color: AppColors.hairline)),
-      ),
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(
-          8,
-          6,
-          12,
-          6 + (keyboard > 0 ? keyboard : safeArea),
-        ),
-        child: LayoutBuilder(
-          builder: (context, constraints) => ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 44),
-            child: Row(
-              children: [
-                MergeSemantics(
-                  child: CupertinoButton(
-                    onPressed: speakerEnabled ? onSpeak : null,
-                    padding: EdgeInsets.zero,
-                    minimumSize: const Size(44, 44),
-                    child: Semantics(
-                      label: 'Aussprechen',
-                      enabled: speakerEnabled,
-                      excludeSemantics: true,
-                      child: Icon(
-                        playing
-                            ? CupertinoIcons.speaker_2_fill
-                            : CupertinoIcons.speaker_2,
-                        size: 22,
-                        color: speakerColor,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                // Takes all free space (the spacer), so the action button
-                // sits flush right, with or without a hint.
                 Expanded(
                   child: Semantics(
-                    liveRegion: true,
-                    child: Text(
-                      message ?? '',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppType.chrome(
-                        size: 13,
-                        color: AppColors.textMuted,
+                    container: true,
+                    customSemanticsActions: {
+                      if ((_historyIndex ?? past.length) > 0)
+                        const CustomSemanticsAction(
+                          label: 'Vorheriger Durchgang',
+                        ): () =>
+                            _history(-1),
+                      if (snapshot != null)
+                        const CustomSemanticsAction(
+                          label: 'Nächster Durchgang',
+                        ): () =>
+                            _history(1),
+                    },
+                    child: Listener(
+                      onPointerDown: (e) => _inputGesture =
+                          _sentenceKey.currentState?.containsInput(
+                            e.position,
+                          ) ??
+                          false,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onHorizontalDragEnd: (d) {
+                          if (!_inputGesture &&
+                              (d.primaryVelocity ?? 0).abs() > 100) {
+                            _history((d.primaryVelocity ?? 0) > 0 ? -1 : 1);
+                          }
+                        },
+                        child: ListView(
+                          padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+                          children: [
+                            Center(
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  maxWidth: 600,
+                                ),
+                                child: state.loading
+                                    ? const CupertinoActivityIndicator()
+                                    : state.error != null && !state.saveFailed
+                                    ? ContentUnavailableView(
+                                        error: state.error!,
+                                        onRetry: () {
+                                          retryDatabases(ref);
+                                          _controller.start();
+                                        },
+                                      )
+                                    : !canShow
+                                    ? state.total == 0
+                                          ? Text(
+                                              'Gerade gibt es keine Wörter zum Üben.',
+                                              style: AppType.chrome(
+                                                color: context
+                                                    .appColors
+                                                    .textPrimary,
+                                              ),
+                                            )
+                                          : _summary(state)
+                                    : Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          if (snapshot != null)
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                bottom: 12,
+                                              ),
+                                              child: Text(
+                                                'Rückblick · ${snapshot.feedback}',
+                                                style: AppType.chrome(
+                                                  color: context
+                                                      .appColors
+                                                      .textPrimary,
+                                                ),
+                                              ),
+                                            ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  context.appColors.raisedInk,
+                                              borderRadius:
+                                                  BorderRadius.circular(14),
+                                            ),
+                                            padding: const EdgeInsets.fromLTRB(
+                                              18,
+                                              8,
+                                              18,
+                                              12,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.stretch,
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: CupertinoButton(
+                                                    padding: EdgeInsets.zero,
+                                                    onPressed: () => _withOverlay(
+                                                      () =>
+                                                          MemoryLevelLegendSheet.show(
+                                                            context,
+                                                            current: math.max(
+                                                              1,
+                                                              snapshot?.box ??
+                                                                  pass!
+                                                                      .boxBefore,
+                                                            ),
+                                                          ),
+                                                    ),
+                                                    child:
+                                                        (snapshot?.box ??
+                                                                pass!
+                                                                    .boxBefore) ==
+                                                            0
+                                                        ? Text(
+                                                            'Neues Wort',
+                                                            style: AppType.meta(
+                                                              color: context
+                                                                  .appColors
+                                                                  .textMuted,
+                                                            ),
+                                                          )
+                                                        : MemoryLevelIndicator(
+                                                            level:
+                                                                snapshot?.box ??
+                                                                pass!.boxBefore,
+                                                          ),
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 12),
+                                                PracticeSentence(
+                                                  key: _sentenceKey,
+                                                  sentence: sentence,
+                                                  input: _input,
+                                                  focus: _focus,
+                                                  solved: solved,
+                                                  selectedStart: _word?.start,
+                                                  onSubmit: _submit,
+                                                  onChanged: _controller
+                                                      .clearWrongFormHint,
+                                                  onWord: (word) {
+                                                    _autoTimer?.cancel();
+                                                    setState(
+                                                      () => _word = word,
+                                                    );
+                                                  },
+                                                ),
+                                                const SizedBox(height: 18),
+                                                CupertinoButton(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                        vertical: 8,
+                                                      ),
+                                                  onPressed: _grammar,
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                        child: Text(
+                                                          contentCard!
+                                                                  .formLabelDe ??
+                                                              contentCard.pos,
+                                                          style: AppType.chrome(
+                                                            color: context
+                                                                .appColors
+                                                                .textPrimary,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Icon(
+                                                        CupertinoIcons
+                                                            .chevron_right,
+                                                        size: 18,
+                                                        color: context
+                                                            .appColors
+                                                            .textMuted,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(height: 16),
+                                          PracticeTranslationCard(
+                                            translation:
+                                                contentCard.translationDe ?? '',
+                                            sentence:
+                                                sentence.translationDe ?? '',
+                                            open: _translationOpen,
+                                            onToggle: () => setState(
+                                              () => _translationOpen =
+                                                  !_translationOpen,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
-                ConstrainedBox(
-                  // Large Dynamic Type wraps the label instead of pushing
-                  // the speaker off screen.
-                  constraints: BoxConstraints(
-                    maxWidth: constraints.maxWidth * 0.6,
+                if (canShow && snapshot == null)
+                  ListenableBuilder(
+                    listenable: _input,
+                    builder: (context, _) => PracticeAnswerToolbar(
+                      speakerEnabled: false,
+                      playing: false,
+                      onSpeak: () {},
+                      message:
+                          state.saved ||
+                              state.message ==
+                                  'Tippe das Wort ab, um weiterzumachen.'
+                          ? null
+                          : state.message,
+                      hasInput: _input.text.isNotEmpty,
+                      saved: state.saved,
+                      solved: solved,
+                      revealed: pass!.revealed,
+                      onReveal: _reveal,
+                      onSubmit: _submit,
+                      onNext: state.saveFailed
+                          ? _controller.commit
+                          : state.saved
+                          ? _next
+                          : null,
+                      nextLabel: state.saveFailed
+                          ? 'Speichern wiederholen'
+                          : state.committing
+                          ? 'Wird gespeichert …'
+                          : 'Weiter',
+                    ),
                   ),
-                  child: solved
-                      ? _ToolbarButton(
-                          label: 'Weiter',
-                          icon: CupertinoIcons.checkmark_alt,
-                          primary: true,
-                          onPressed: onNext,
-                        )
-                      : _ToolbarButton(
-                          label: 'Wort erfahren',
-                          onPressed: revealed ? null : onReveal,
-                        ),
-                ),
+                if (snapshot != null)
+                  const SafeArea(top: false, child: SizedBox(height: 12)),
               ],
             ),
+            if (_word case final word?) ...[
+              Positioned.fill(
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTapDown: (e) {
+                    if (!(_sentenceKey.currentState?.selectAt(
+                          e.globalPosition,
+                        ) ??
+                        false)) {
+                      setState(() => _word = null);
+                      _schedule();
+                    }
+                  },
+                ),
+              ),
+              _tooltip(word),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _tooltip(WordAnchor word) {
+    final box = _rootKey.currentContext?.findRenderObject() as RenderBox?;
+    final rect = box == null
+        ? word.rect
+        : word.rect.shift(-box.localToGlobal(Offset.zero));
+    final width = math.min(260.0, MediaQuery.sizeOf(context).width - 32);
+    return Positioned(
+      left: (rect.center.dx - width / 2).clamp(
+        16.0,
+        MediaQuery.sizeOf(context).width - width - 16,
+      ),
+      top: rect.top < 110 ? rect.bottom + 8 : null,
+      bottom: rect.top < 110
+          ? null
+          : (box?.size.height ?? MediaQuery.sizeOf(context).height) -
+                rect.top +
+                8,
+      width: width,
+      child: Material(
+        color: context.appColors.nightPage,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+          side: BorderSide(color: context.appColors.hairline),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Text(
+            word.translation,
+            textAlign: TextAlign.center,
+            style: AppType.chrome(color: context.appColors.textPrimary),
           ),
         ),
       ),
     );
   }
-}
 
-/// A `44pt` pill. Primary: `textPrimary` fill, Night Page label (the
-/// Primary button's grammar). Otherwise an outline on Hairline.
-class _ToolbarButton extends StatelessWidget {
-  const _ToolbarButton({
-    required this.label,
-    required this.onPressed,
-    this.icon,
-    this.primary = false,
-  });
-
-  final String label;
-  final IconData? icon;
-  final bool primary;
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final enabled = onPressed != null;
-    final foreground = primary
-        ? AppColors.nightPage
-        : (enabled ? AppColors.textPrimary : AppColors.iconOff);
-    return MergeSemantics(
-      child: CupertinoButton(
-        onPressed: onPressed,
-        padding: EdgeInsets.zero,
-        minimumSize: const Size(44, 44),
-        child: Semantics(
-          label: label,
-          enabled: enabled,
-          excludeSemantics: true,
-          child: Container(
-            constraints: const BoxConstraints(minHeight: 44),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            decoration: BoxDecoration(
-              color: primary ? AppColors.textPrimary : null,
-              border: primary ? null : Border.all(color: AppColors.hairline),
-              borderRadius: BorderRadius.circular(999),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (icon case final icon?) ...[
-                  Icon(icon, size: 18, color: foreground),
-                  const SizedBox(width: 6),
-                ],
-                Flexible(
-                  child: Text(
-                    label,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    style: AppType.chrome(
-                      weight: FontWeight.w600,
-                      color: foreground,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+  Widget _summary(DeckSessionState state) {
+    final records = state.records;
+    final first = records.where((r) => r.firstAttemptCorrect).length;
+    final reset = records
+        .where((r) => r.hintUsed || r.revealed || r.errorCount > 0)
+        .length;
+    final afterTypo = records.length - first - reset;
+    return SuccessFeedbackCard(
+      title:
+          '${records.length} ${records.length == 1 ? 'Wort' : 'Wörter'} geübt',
+      subtitle:
+          '$first auf Anhieb richtig · $reset zurück auf Stufe 1${afterTypo > 0 ? ' · $afterTypo nach Schreibkorrektur' : ''}',
+      explanation: widget.mode == DeckPracticeMode.review
+          ? 'In der Stapel-Revue bleiben saubere Antworten auf ihrer Stufe. Fehler, Hinweise und „Wort erfahren“ führen zu Stufe 1.'
+          : 'Neue Wörter starten ohne Hilfe auf Stufe 3. Saubere Wiederholungen rücken eine Stufe auf. Fehler, Hinweise und „Wort erfahren“ führen zu Stufe 1.',
+      actionLabel: 'Zurück zum Stapel',
+      onAction: () => Navigator.of(context).maybePop(),
     );
   }
 }

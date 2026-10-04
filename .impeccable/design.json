@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-04T12:50:55Z",
+  "title": "Design System: Sprachapp",
+  "extensions": {
+    "colorMeta": {
+      "practice-blue": { "role": "neutral", "displayName": "Pale Sky — practice content and memory level 2" },
+      "light-page": { "role": "neutral", "displayName": "Light editorial page" },
+      "light-surface": { "role": "neutral", "displayName": "Light raised surface" },
+      "light-hairline": { "role": "neutral", "displayName": "Light divider" },
+      "light-text-primary": { "role": "neutral", "displayName": "Light primary text" },
+      "light-text-muted": { "role": "neutral", "displayName": "Light secondary text" },
+      "light-icon-off": { "role": "neutral", "displayName": "Light inactive icon" },
+      "light-active-tint": { "role": "secondary", "displayName": "Light active deck tint" },
+      "light-success": { "role": "neutral", "displayName": "Light correct-answer feedback" },
+      "light-success-tint": { "role": "neutral", "displayName": "Light correct-answer fill" },
+      "light-error": { "role": "neutral", "displayName": "Light wrong-answer feedback" },
+      "light-error-tint": { "role": "neutral", "displayName": "Light wrong-answer fill" },
+      "light-practice-blue": { "role": "neutral", "displayName": "Light practice text and memory level 2" },
+      "light-playback": { "role": "neutral", "displayName": "Light playback highlight" },
+      "light-news-kicker": { "role": "neutral", "displayName": "Light newsprint kicker" }
+    },
+    "typographyMeta": {
+      "practice-sentence": { "displayName": "Practice sentence", "purpose": "Sentence content and inline typing share Source Serif 4, including larger system text sizes." },
+      "chrome": { "displayName": "Interface chrome", "purpose": "Figtree labels, tooltip text and settings controls." }
+    },
+    "shadows": [
+      { "name": "flat", "value": "none", "purpose": "Practice cards, tooltips and sheets separate by semantic surface tones and hairlines." }
+    ],
+    "motion": [
+      { "name": "translation-fold", "value": "200ms", "purpose": "Translation-card expansion; zero duration with reduced motion." },
+      { "name": "auto-next-confirmation", "value": "1400ms", "purpose": "Visible confirmation after successful persistence, paused while history or an overlay is open." },
+      { "name": "practice-action-switch", "value": "140ms", "purpose": "Clipped rightward slide/fade; cubic ease-out entering, cubic ease-in exiting. Outgoing actions ignore input and semantics. Zero duration with reduced motion." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Practice card — dark",
+      "kind": "card",
+      "refersTo": "practice-card",
+      "description": "Scoped static preview of the native solved sentence and history surface. The solution keeps the typing tint without an editable cursor. Logical Flutter pixels map to CSS pixels; native layout remains authoritative.",
+      "html": "<div class=\"ds-practice-card\"><p>Leo <span class=\"ds-solution\">is</span> reading his English book.</p></div>",
+      "css": ".ds-practice-card{background:#1A1D26;border-radius:14px;padding:8px 18px 12px;color:#7DB2E0;font:400 26px/1.5 'Source Serif 4',serif}.ds-practice-card p{margin:0}.ds-practice-card .ds-solution{display:inline-block;min-width:54px;padding:0 5px;border-radius:5px;background:rgba(125,178,224,.12);user-select:none}"
+    },
+    {
+      "name": "Practice card — light",
+      "kind": "card",
+      "refersTo": "practice-card-light",
+      "description": "The same editorial sentence role in the app-wide light motif.",
+      "html": "<div class=\"ds-practice-card-light\"><p>Leo <span class=\"ds-solution\">is</span> reading his English book.</p></div>",
+      "css": ".ds-practice-card-light{background:#FFFFFF;border-radius:14px;padding:8px 18px 12px;color:#256C99;font:400 26px/1.5 'Source Serif 4',serif}.ds-practice-card-light p{margin:0}.ds-practice-card-light .ds-solution{display:inline-block;min-width:54px;padding:0 5px;border-radius:5px;background:rgba(37,108,153,.12);user-select:none}"
+    },
+    {
+      "name": "Practice input",
+      "kind": "input",
+      "description": "Typing at full opacity with a 12% blue field tint. This style preview does not emulate Flutter's measured multiline width or feedback controller.",
+      "html": "<label class=\"ds-input-label\">Antwort <textarea class=\"ds-practice-input\" rows=\"2\">reading</textarea></label>",
+      "css": ".ds-input-label{color:#8E95A5;font:500 15px Figtree,sans-serif}.ds-practice-input{display:block;background:rgba(125,178,224,.12);color:#7DB2E0;caret-color:#7DB2E0;border:0;border-radius:5px;padding:0 5px;font:400 26px/1.5 'Source Serif 4',serif;max-width:100%}.ds-practice-input:hover,.ds-practice-input:active,.ds-practice-input:focus-visible{background:rgba(125,178,224,.12);outline:none}"
+    },
+    {
+      "name": "Practice word tooltip",
+      "kind": "custom",
+      "refersTo": "practice-tooltip",
+      "description": "Static tooltip chrome; native placement is anchored to the selected exact sentence token. Other sentence words dim to 50%.",
+      "html": "<div class=\"ds-practice-tooltip\" role=\"tooltip\">lesend / liest</div>",
+      "css": ".ds-practice-tooltip{max-width:260px;background:#0D0F14;color:#F0F2F5;border:1px solid #2A2F40;border-radius:8px;padding:12px;text-align:center;font:500 15px Figtree,sans-serif}"
+    },
+    {
+      "name": "First wrong answer",
+      "kind": "custom",
+      "description": "Target table, checked answer laterx: occurrence-based letter colors, all at 50% opacity; never a position comparison.",
+      "html": "<div class=\"ds-first-wrong\" aria-label=\"Falsch: laterx\"><span class=\"ds-occurs\">late</span><span class=\"ds-absent\">rx</span></div>",
+      "css": ".ds-first-wrong{display:inline-block;background:rgba(125,178,224,.12);border-radius:5px;padding:0 5px;font:400 26px/1.5 'Source Serif 4',serif}.ds-occurs{color:rgba(125,178,224,.5)}.ds-absent{color:rgba(217,114,107,.5)}"
+    },
+    {
+      "name": "Practice action — empty input",
+      "kind": "button",
+      "description": "Static empty-input state: a single quiet filled action aligned right. Prefix and reveal hints do not activate the submit state.",
+      "html": "<div class=\"ds-action-bar\"><button class=\"ds-reveal\">Wort erfahren</button></div>",
+      "css": ".ds-action-bar{display:flex;justify-content:flex-end;overflow:hidden;padding:8px 12px;background:#1A1D26;border-top:1px solid #2A2F40}.ds-reveal{min-width:48px;min-height:48px;padding:10px 16px;background:#2A2F40;color:#F0F2F5;border:1px solid #2A2F40;border-radius:999px;font:600 15px Figtree,sans-serif}.ds-reveal:hover,.ds-reveal:active,.ds-reveal:focus-visible{background:#2A2F40}"
+    },
+    {
+      "name": "Practice action — genuine input",
+      "kind": "button",
+      "description": "Static nonempty-input state: Eingeben occupies the same right-aligned action position, with no simultaneous reveal button.",
+      "html": "<div class=\"ds-action-bar\"><button class=\"ds-submit\">Eingeben</button></div>",
+      "css": ".ds-action-bar{display:flex;justify-content:flex-end;overflow:hidden;padding:8px 12px;background:#1A1D26;border-top:1px solid #2A2F40}.ds-submit{min-width:48px;min-height:48px;padding:10px 16px;background:#F0F2F5;color:#0D0F14;border:0;border-radius:999px;font:600 15px Figtree,sans-serif}.ds-submit:hover,.ds-submit:active,.ds-submit:focus-visible{background:#F0F2F5}"
+    },
+    {
+      "name": "Practice action — saved",
+      "kind": "button",
+      "description": "Static successful-persistence state: the blue check is separate from the right-aligned Weiter button. Saving, failure, typo, wrong answer, synonym and reveal alone do not show success.",
+      "html": "<div class=\"ds-action-bar\"><span class=\"ds-check-slot\" aria-label=\"Richtig gespeichert\"><span class=\"ds-check\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" aria-hidden=\"true\"><path d=\"M4 10l4 4 8-10\" fill=\"none\" stroke=\"#0D0F14\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></span><button class=\"ds-next\">Weiter</button></div>",
+      "css": ".ds-action-bar{display:flex;align-items:center;justify-content:flex-end;overflow:hidden;padding:8px 12px;background:#1A1D26;border-top:1px solid #2A2F40}.ds-check-slot{width:44px;display:flex;justify-content:center}.ds-check{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#7DB2E0}.ds-next{min-width:48px;min-height:48px;padding:10px 16px;background:#F0F2F5;color:#0D0F14;border:0;border-radius:999px;font:600 15px Figtree,sans-serif}.ds-next:hover,.ds-next:active,.ds-next:focus-visible{background:#F0F2F5}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Night Edition",
+    "overview": "Scoped extension for the approved app-wide light motif and deck-practice update. DESIGN.md remains the complete incumbent brand specification; this sidecar does not replace unrelated existing components. Color primitives live only in its frontmatter. Component snippets are static style translations of Flutter output, not a second practice implementation.",
+    "keyCharacteristics": [
+      "Editorial ground with persisted Automatic / Light / Dark motifs; dark keeps the near-black identity.",
+      "Serif for anything the learner reads as content; sans for anything that is app chrome."
+    ],
+    "rules": [],
+    "dos": [
+      "Do resolve semantic colors through the current theme; motif changes preserve navigation and editing state."
+    ],
+    "donts": [
+      "Don’t persist red feedback outside its exercise attempt: choice chips flash; deck input keeps its first checked feedback until the next text edit."
+    ]
+  }
+}

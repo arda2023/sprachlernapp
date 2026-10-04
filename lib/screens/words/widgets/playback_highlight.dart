@@ -28,8 +28,8 @@ class PlaybackHighlight extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: inset, vertical: 2),
       decoration: BoxDecoration(
         color: active
-            ? AppColors.playback
-            : AppColors.playback.withValues(alpha: 0),
+            ? context.appColors.playback
+            : context.appColors.playback.withValues(alpha: 0),
         borderRadius: BorderRadius.circular(6),
       ),
       child: child,
@@ -95,13 +95,21 @@ class HeadwordWithSpeaker extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
-          child: Text(headword, style: AppType.editorial(size: size)),
+          child: Text(
+            headword,
+            style: AppType.editorial(
+              color: context.appColors.textPrimary,
+              size: size,
+            ),
+          ),
         ),
         const SizedBox(width: 8),
         Icon(
           playing ? CupertinoIcons.speaker_2_fill : CupertinoIcons.speaker_2,
           size: size * 0.85,
-          color: playing ? AppColors.textPrimary : AppColors.textMuted,
+          color: playing
+              ? context.appColors.textPrimary
+              : context.appColors.textMuted,
         ),
       ],
     );

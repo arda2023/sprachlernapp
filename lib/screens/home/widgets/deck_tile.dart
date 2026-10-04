@@ -33,9 +33,13 @@ class DeckTile extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: active ? AppColors.activeTint : AppColors.raisedInk,
+              color: active
+                  ? context.appColors.activeTint
+                  : context.appColors.raisedInk,
               border: Border.all(
-                color: active ? AppColors.active : AppColors.hairline,
+                color: active
+                    ? context.appColors.active
+                    : context.appColors.hairline,
               ),
               borderRadius: BorderRadius.circular(12),
             ),
@@ -44,11 +48,11 @@ class DeckTile extends StatelessWidget {
                 ProgressRing(
                   fraction: deck.masteredFraction,
                   size: 52,
-                  color: AppColors.mastered,
+                  color: context.appColors.mastered,
                   child: Icon(
                     deck.icon,
                     size: 22,
-                    color: AppColors.textPrimary,
+                    color: context.appColors.textPrimary,
                   ),
                 ),
                 const SizedBox(width: 14),
@@ -59,6 +63,7 @@ class DeckTile extends StatelessWidget {
                       Text(
                         deck.name,
                         style: AppType.chrome(
+                          color: context.appColors.textPrimary,
                           size: 17,
                           weight: FontWeight.w600,
                         ),
@@ -68,7 +73,7 @@ class DeckTile extends StatelessWidget {
                         '$percent% gemeistert',
                         style: AppType.chrome(
                           size: 13,
-                          color: AppColors.textMuted,
+                          color: context.appColors.textMuted,
                           tabular: true,
                         ),
                       ),
@@ -81,7 +86,7 @@ class DeckTile extends StatelessWidget {
                   const SizedBox(width: 12),
                   Text(
                     'Aktiv',
-                    style: AppType.meta(color: AppColors.textPrimary),
+                    style: AppType.meta(color: context.appColors.textPrimary),
                   ),
                 ],
               ],

@@ -73,7 +73,7 @@ class StoryCard extends StatelessWidget {
             width: StoryCarousel.cardWidth,
             height: StoryCarousel.cardHeight,
             foregroundDecoration: BoxDecoration(
-              border: Border.all(color: AppColors.hairline),
+              border: Border.all(color: context.appColors.hairline),
               borderRadius: radius,
             ),
             child: ClipRRect(
@@ -107,14 +107,20 @@ class StoryCard extends StatelessWidget {
                           story.title,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
-                          style: AppType.editorial(size: 17, height: 1.2),
+                          style: AppType.editorial(
+                            color: context.appColors.textPrimary,
+                            size: 17,
+                            height: 1.2,
+                          ),
                         ),
                         const SizedBox(height: 6),
                         Text(
                           storyMetaLine(story),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppType.meta(),
+                          style: AppType.meta(
+                            color: context.appColors.textMuted,
+                          ),
                         ),
                       ],
                     ),
@@ -171,7 +177,7 @@ class TypeCover extends StatelessWidget {
                 weight: FontWeight.w700,
                 height: 1,
                 letterSpacing: -size / 52,
-                color: AppColors.textPrimary.withValues(alpha: 0.09),
+                color: context.appColors.textPrimary.withValues(alpha: 0.09),
               ),
             ),
           ),

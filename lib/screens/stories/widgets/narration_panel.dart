@@ -17,9 +17,9 @@ class NarrationPanel extends StatelessWidget {
     return ListenableBuilder(
       listenable: narration,
       builder: (context, _) => DecoratedBox(
-        decoration: const BoxDecoration(
-          color: AppColors.raisedInk,
-          border: Border(top: BorderSide(color: AppColors.hairline)),
+        decoration: BoxDecoration(
+          color: context.appColors.raisedInk,
+          border: Border(top: BorderSide(color: context.appColors.hairline)),
         ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 10, 12, 6),
@@ -78,7 +78,7 @@ class _SkipButton extends StatelessWidget {
         child: Semantics(
           label: label,
           excludeSemantics: true,
-          child: Icon(icon, size: 28, color: AppColors.textPrimary),
+          child: Icon(icon, size: 28, color: context.appColors.textPrimary),
         ),
       ),
     );

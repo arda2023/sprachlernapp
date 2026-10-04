@@ -44,9 +44,11 @@ class TextLibraryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: Colors.transparent,
-      ),
+      value:
+          (context.appColors.light
+                  ? SystemUiOverlayStyle.dark
+                  : SystemUiOverlayStyle.light)
+              .copyWith(statusBarColor: Colors.transparent),
       child: Scaffold(
         body: SafeArea(
           bottom: false,
@@ -92,7 +94,10 @@ class TextLibraryScreen extends StatelessWidget {
                             header: true,
                             child: Text(
                               'Texte',
-                              style: AppType.editorial(size: 32),
+                              style: AppType.editorial(
+                                color: context.appColors.textPrimary,
+                                size: 32,
+                              ),
                             ),
                           ),
                         ),
@@ -101,7 +106,9 @@ class TextLibraryScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
                             'Lückentexte zum Lesen und Üben',
-                            style: AppType.meta(),
+                            style: AppType.meta(
+                              color: context.appColors.textMuted,
+                            ),
                           ),
                         ),
                         for (final (title, group) in sections)
@@ -115,7 +122,9 @@ class TextLibraryScreen extends StatelessWidget {
                                 title: title,
                                 trailing: Text(
                                   '${group.length}',
-                                  style: AppType.meta(),
+                                  style: AppType.meta(
+                                    color: context.appColors.textMuted,
+                                  ),
                                 ),
                               ),
                             ),

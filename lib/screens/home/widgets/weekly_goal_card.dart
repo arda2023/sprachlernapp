@@ -48,8 +48,8 @@ class WeeklyGoalCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 4, 4),
       decoration: BoxDecoration(
-        color: AppColors.raisedInk,
-        border: Border.all(color: AppColors.hairline),
+        color: context.appColors.raisedInk,
+        border: Border.all(color: context.appColors.hairline),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -76,10 +76,10 @@ class WeeklyGoalCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(right: 12),
             child: ColoredBox(
-              color: AppColors.hairline,
+              color: context.appColors.hairline,
               child: SizedBox(height: 1),
             ),
           ),
@@ -91,11 +91,15 @@ class WeeklyGoalCard extends StatelessWidget {
                   excludeSemantics: true,
                   child: Text.rich(
                     TextSpan(
-                      style: AppType.chrome(size: 17),
+                      style: AppType.chrome(
+                        color: context.appColors.textPrimary,
+                        size: 17,
+                      ),
                       children: [
                         TextSpan(
                           text: '${goal.done}',
                           style: AppType.chrome(
+                            color: context.appColors.textPrimary,
                             size: 17,
                             weight: FontWeight.w700,
                             tabular: true,
@@ -115,10 +119,10 @@ class WeeklyGoalCard extends StatelessWidget {
                   child: Semantics(
                     label: 'Tagesziel ändern',
                     excludeSemantics: true,
-                    child: const Icon(
+                    child: Icon(
                       CupertinoIcons.gear_alt,
                       size: 20,
-                      color: AppColors.textMuted,
+                      color: context.appColors.textMuted,
                     ),
                   ),
                 ),
@@ -146,20 +150,20 @@ class _DayCell extends StatelessWidget {
   Widget build(BuildContext context) {
     final today = mark == DayMark.today;
     final icon = switch (mark) {
-      DayMark.met => const Icon(
+      DayMark.met => Icon(
         CupertinoIcons.checkmark,
         size: 15,
-        color: AppColors.textPrimary,
+        color: context.appColors.textPrimary,
       ),
-      DayMark.missed => const Icon(
+      DayMark.missed => Icon(
         CupertinoIcons.xmark,
         size: 13,
-        color: AppColors.textMuted,
+        color: context.appColors.textMuted,
       ),
-      DayMark.today when todayReached => const Icon(
+      DayMark.today when todayReached => Icon(
         CupertinoIcons.checkmark,
         size: 15,
-        color: AppColors.textPrimary,
+        color: context.appColors.textPrimary,
       ),
       _ => null,
     };
@@ -169,8 +173,12 @@ class _DayCell extends StatelessWidget {
           name,
           maxLines: 1,
           style: today
-              ? AppType.chrome(size: 13, weight: FontWeight.w700)
-              : AppType.meta(),
+              ? AppType.chrome(
+                  color: context.appColors.textPrimary,
+                  size: 13,
+                  weight: FontWeight.w700,
+                )
+              : AppType.meta(color: context.appColors.textMuted),
         ),
         const SizedBox(height: 8),
         Container(
@@ -180,7 +188,9 @@ class _DayCell extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
-              color: today ? AppColors.textPrimary : AppColors.hairline,
+              color: today
+                  ? context.appColors.textPrimary
+                  : context.appColors.hairline,
               width: today ? 1.5 : 1,
             ),
           ),

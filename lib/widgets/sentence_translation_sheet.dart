@@ -30,6 +30,7 @@ class SentenceTranslationSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final body = AppType.editorial(
+      color: context.appColors.textPrimary,
       size: 20,
       weight: FontWeight.w400,
       height: 1.4,
@@ -43,16 +44,22 @@ class SentenceTranslationSheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('Satz', style: AppType.meta()),
+            Text(
+              'Satz',
+              style: AppType.meta(color: context.appColors.textMuted),
+            ),
             const SizedBox(height: 4),
             Text(original.trim(), style: body),
             const SizedBox(height: 20),
-            const ColoredBox(
-              color: AppColors.hairline,
+            ColoredBox(
+              color: context.appColors.hairline,
               child: SizedBox(height: 1),
             ),
             const SizedBox(height: 16),
-            Text('Deutsch', style: AppType.meta()),
+            Text(
+              'Deutsch',
+              style: AppType.meta(color: context.appColors.textMuted),
+            ),
             const SizedBox(height: 4),
             Text(translation, style: body),
           ],

@@ -57,8 +57,8 @@ class _WordLookupSheetState extends State<WordLookupSheet> {
   Widget build(BuildContext context) {
     final entry = widget.entry;
     final ink = switch (_mark) {
-      WordMark.active => AppColors.active,
-      WordMark.mastered => AppColors.mastered,
+      WordMark.active => context.appColors.active,
+      WordMark.mastered => context.appColors.mastered,
       null => null,
     };
     final inflected = widget.surface.toLowerCase() != entry.headword;
@@ -76,32 +76,48 @@ class _WordLookupSheetState extends State<WordLookupSheet> {
                 children: [
                   TextSpan(
                     text: entry.headword,
-                    style: AppType.editorial(size: 28).copyWith(
-                      decoration: ink == null ? null : TextDecoration.underline,
-                      decorationColor: ink,
-                      decorationThickness: 2,
-                    ),
+                    style:
+                        AppType.editorial(
+                          color: context.appColors.textPrimary,
+                          size: 28,
+                        ).copyWith(
+                          decoration: ink == null
+                              ? null
+                              : TextDecoration.underline,
+                          decorationColor: ink,
+                          decorationThickness: 2,
+                        ),
                   ),
                   const TextSpan(text: '   '),
-                  TextSpan(text: entry.partOfSpeech, style: AppType.meta()),
+                  TextSpan(
+                    text: entry.partOfSpeech,
+                    style: AppType.meta(color: context.appColors.textMuted),
+                  ),
                 ],
               ),
             ),
             if (inflected) ...[
               const SizedBox(height: 4),
-              Text('im Text: ${widget.surface}', style: AppType.meta()),
+              Text(
+                'im Text: ${widget.surface}',
+                style: AppType.meta(color: context.appColors.textMuted),
+              ),
             ],
             const SizedBox(height: 20),
-            const ColoredBox(
-              color: AppColors.hairline,
+            ColoredBox(
+              color: context.appColors.hairline,
               child: SizedBox(height: 1),
             ),
             const SizedBox(height: 16),
-            Text('Deutsch', style: AppType.meta()),
+            Text(
+              'Deutsch',
+              style: AppType.meta(color: context.appColors.textMuted),
+            ),
             const SizedBox(height: 4),
             Text(
               entry.translation,
               style: AppType.editorial(
+                color: context.appColors.textPrimary,
                 size: 22,
                 weight: FontWeight.w400,
                 height: 1.3,

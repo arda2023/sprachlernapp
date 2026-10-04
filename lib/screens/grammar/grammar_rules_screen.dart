@@ -50,7 +50,10 @@ class _GrammarRulesScreenState extends State<GrammarRulesScreen> {
                 header: true,
                 child: Text(
                   'Grammatikregeln',
-                  style: AppType.editorial(size: 32),
+                  style: AppType.editorial(
+                    color: context.appColors.textPrimary,
+                    size: 32,
+                  ),
                 ),
               ),
             ),
@@ -59,7 +62,7 @@ class _GrammarRulesScreenState extends State<GrammarRulesScreen> {
               padding: _gutter,
               child: Text(
                 '${widget.rules.length} Regeln · erklärt auf Deutsch',
-                style: AppType.meta(),
+                style: AppType.meta(color: context.appColors.textMuted),
               ),
             ),
             const SizedBox(height: 20),

@@ -191,8 +191,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
 
   Color? _inkFor(String surface) =>
       switch (_marks[widget.lookup(surface).headword]) {
-        WordMark.active => AppColors.active,
-        WordMark.mastered => AppColors.mastered,
+        WordMark.active => context.appColors.active,
+        WordMark.mastered => context.appColors.mastered,
         null => null,
       };
 
@@ -202,8 +202,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   TextSpan _sentenceSpan(int index, {required bool narrated}) {
     final sentence = _sentences[index];
     final background = index == _selectedSentence
-        ? AppColors.hairline
-        : (narrated ? AppColors.playback : null);
+        ? context.appColors.hairline
+        : (narrated ? context.appColors.playback : null);
     final children = <InlineSpan>[];
     var last = 0;
     for (final match in _wordPattern.allMatches(sentence.text)) {
@@ -268,7 +268,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
         decoration: ink == null ? null : TextDecoration.underline,
         decorationColor: ink,
         decorationThickness: 2,
-        backgroundColor: index == _selected ? AppColors.hairline : null,
+        backgroundColor: index == _selected ? context.appColors.hairline : null,
       ),
     );
   }
@@ -278,7 +278,9 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   /// background wins over it.
   TextSpan _wordModeSentenceSpan(int index, {required bool narrated}) =>
       TextSpan(
-        style: TextStyle(backgroundColor: narrated ? AppColors.playback : null),
+        style: TextStyle(
+          backgroundColor: narrated ? context.appColors.playback : null,
+        ),
         children: [
           for (final token in _sentences[index].tokens)
             token is int ? _wordSpan(token) : TextSpan(text: token as String),
@@ -290,9 +292,11 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     final story = widget.story;
     final narrated = _narrated;
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: Colors.transparent,
-      ),
+      value:
+          (context.appColors.light
+                  ? SystemUiOverlayStyle.dark
+                  : SystemUiOverlayStyle.light)
+              .copyWith(statusBarColor: Colors.transparent),
       child: Scaffold(
         bottomNavigationBar: ReadingToolbar(
           translating: _translating,
@@ -324,7 +328,9 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                               excludeSemantics: true,
                               child: Text(
                                 storyMetaLine(story),
-                                style: AppType.meta(),
+                                style: AppType.meta(
+                                  color: context.appColors.textMuted,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 8),
@@ -332,7 +338,10 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                               header: true,
                               child: Text(
                                 story.title,
-                                style: AppType.editorial(size: 32),
+                                style: AppType.editorial(
+                                  color: context.appColors.textPrimary,
+                                  size: 32,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 12),
@@ -342,7 +351,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                                   : 'Tippe auf ein Wort, um es nachzuschlagen.',
                               style: AppType.chrome(
                                 size: 13,
-                                color: AppColors.textMuted,
+                                color: context.appColors.textMuted,
                               ),
                             ),
                             const SizedBox(height: 28),
@@ -360,6 +369,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                                     child: Text(
                                       heading,
                                       style: AppType.editorial(
+                                        color: context.appColors.textPrimary,
                                         size: 22,
                                         weight: FontWeight.w700,
                                         height: 1.3,

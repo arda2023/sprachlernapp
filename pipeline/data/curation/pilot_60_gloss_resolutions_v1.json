@@ -1,0 +1,152 @@
+{
+ "version": "pilot-60-gloss-resolutions-v1",
+ "applies_to": "pilot-60-curation-v1",
+ "source": "out/curation_run_v1/report.json (dictionary_forms conflicts); docs/pilot-60-curation-plan.md Abschnitt 9",
+ "expect": {
+  "cards": 164,
+  "card_sentences": 492,
+  "dictionary_keys": 1809
+ },
+ "resolutions": [
+  {
+   "form": "can",
+   "sense": "can/AUX|can#kann",
+   "gloss_de": "kann",
+   "expected_variants": [
+    "Kann",
+    "kann"
+   ],
+   "reason": "Großschreibung am Satzanfang; Formübersetzung klein wie im Wörterbuch"
+  },
+  {
+   "form": "city",
+   "sense": "city/NOUN|city#stadt",
+   "gloss_de": "Stadt",
+   "expected_variants": [
+    "Stadt",
+    "Stadt-"
+   ],
+   "reason": "Kompositionsbindestrich aus attributiver Verwendung; Wörterbuch nennt die freie Form"
+  },
+  {
+   "form": "classroom",
+   "sense": "classroom/NOUN|classroom#klassenzimmer",
+   "gloss_de": "Klassenzimmer",
+   "expected_variants": [
+    "Klassenzimmer",
+    "Klassenzimmer-"
+   ],
+   "reason": "Kompositionsbindestrich aus attributiver Verwendung; Wörterbuch nennt die freie Form"
+  },
+  {
+   "form": "here",
+   "sense": "here/ADV|here#hier",
+   "gloss_de": "hier",
+   "expected_variants": [
+    "Hier",
+    "hier"
+   ],
+   "reason": "Großschreibung am Satzanfang; Formübersetzung klein wie im Wörterbuch"
+  },
+  {
+   "form": "is",
+   "sense": "be/AUX|be#ist",
+   "gloss_de": "ist",
+   "expected_variants": [
+    "Ist",
+    "ist"
+   ],
+   "reason": "Großschreibung am Satzanfang; Formübersetzung klein wie im Wörterbuch"
+  },
+  {
+   "form": "not",
+   "sense": "not/PART|not#nicht",
+   "gloss_de": "nicht (drückt Verneinung von Verben, Adjektiven oder Aussagen aus)",
+   "expected_variants": [
+    "nicht",
+    "nicht (drückt Verneinung von Verben, Adjektiven oder Aussagen aus)"
+   ],
+   "reason": "erklärende Kartenglosse gegenüber kurzer Token-Glosse; Kartenglosse behalten"
+  },
+  {
+   "form": "phone",
+   "sense": "phone/NOUN|phone#telefon",
+   "gloss_de": "Telefon",
+   "expected_variants": [
+    "Telefon",
+    "Telefon-"
+   ],
+   "reason": "Kompositionsbindestrich aus attributiver Verwendung; Wörterbuch nennt die freie Form"
+  },
+  {
+   "form": "photo",
+   "sense": "photo/NOUN|photo#foto",
+   "gloss_de": "Foto",
+   "expected_variants": [
+    "Foto",
+    "Foto-"
+   ],
+   "reason": "Kompositionsbindestrich aus attributiver Verwendung; Wörterbuch nennt die freie Form"
+  },
+  {
+   "form": "please",
+   "sense": "please/INTJ|please#bitte",
+   "gloss_de": "bitte",
+   "expected_variants": [
+    "Bitte",
+    "bitte"
+   ],
+   "reason": "Großschreibung am Satzanfang; Formübersetzung klein wie im Wörterbuch"
+  },
+  {
+   "form": "shop",
+   "sense": "shop/NOUN|shop#laden",
+   "gloss_de": "Laden",
+   "expected_variants": [
+    "Laden",
+    "Laden-"
+   ],
+   "reason": "Kompositionsbindestrich aus attributiver Verwendung; Wörterbuch nennt die freie Form"
+  },
+  {
+   "form": "this",
+   "sense": "this/DET|this#dieses",
+   "gloss_de": "dieses",
+   "expected_variants": [
+    "Dieses",
+    "dieses"
+   ],
+   "reason": "Großschreibung am Satzanfang; Formübersetzung klein wie im Wörterbuch"
+  },
+  {
+   "form": "this",
+   "sense": "this/DET|this#diese",
+   "gloss_de": "diese",
+   "expected_variants": [
+    "Diese",
+    "diese"
+   ],
+   "reason": "Großschreibung am Satzanfang; Formübersetzung klein wie im Wörterbuch"
+  },
+  {
+   "form": "time",
+   "sense": "time/NOUN|time#zeit",
+   "gloss_de": "Zeit (fortlaufende Dauer, Zeitpunkt oder Uhrzeit)",
+   "expected_variants": [
+    "Zeit",
+    "Zeit (fortlaufende Dauer, Zeitpunkt oder Uhrzeit)"
+   ],
+   "reason": "erklärende Kartenglosse gegenüber kurzer Token-Glosse; Kartenglosse behalten"
+  },
+  {
+   "form": "why",
+   "sense": "why/SCONJ|why#warum",
+   "gloss_de": "warum",
+   "expected_variants": [
+    "Warum",
+    "warum"
+   ],
+   "reason": "Großschreibung am Satzanfang; Formübersetzung klein wie im Wörterbuch"
+  }
+ ]
+}

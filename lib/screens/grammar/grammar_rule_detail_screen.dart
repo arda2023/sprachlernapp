@@ -26,11 +26,13 @@ class GrammarRuleDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: Colors.transparent,
-      ),
+      value:
+          (context.appColors.light
+                  ? SystemUiOverlayStyle.dark
+                  : SystemUiOverlayStyle.light)
+              .copyWith(statusBarColor: Colors.transparent),
       child: Scaffold(
-        backgroundColor: AppColors.nightPage,
+        backgroundColor: context.appColors.nightPage,
         body: SafeArea(
           bottom: false,
           child: Column(
@@ -51,7 +53,9 @@ class GrammarRuleDetailScreen extends StatelessWidget {
                           children: [
                             Text(
                               '${rule.level.label} · ${rule.minutes} Min',
-                              style: AppType.meta(),
+                              style: AppType.meta(
+                                color: context.appColors.textMuted,
+                              ),
                             ),
                             const SizedBox(height: 8),
                             Semantics(
@@ -59,7 +63,10 @@ class GrammarRuleDetailScreen extends StatelessWidget {
                               header: true,
                               child: Text(
                                 rule.title,
-                                style: AppType.editorial(size: 32),
+                                style: AppType.editorial(
+                                  color: context.appColors.textPrimary,
+                                  size: 32,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 12),
@@ -68,7 +75,7 @@ class GrammarRuleDetailScreen extends StatelessWidget {
                               style: AppType.editorial(
                                 size: 17,
                                 weight: FontWeight.w400,
-                                color: AppColors.textMuted,
+                                color: context.appColors.textMuted,
                                 height: 1.45,
                                 letterSpacing: 0,
                               ),
@@ -105,7 +112,13 @@ class _Section extends StatelessWidget {
         Semantics(
           container: true,
           header: true,
-          child: Text(section.heading, style: AppType.editorial(size: 22)),
+          child: Text(
+            section.heading,
+            style: AppType.editorial(
+              color: context.appColors.textPrimary,
+              size: 22,
+            ),
+          ),
         ),
         for (final paragraph in section.paragraphs) ...[
           const SizedBox(height: 12),
@@ -116,7 +129,10 @@ class _Section extends StatelessWidget {
         ],
         if (section.examples.isNotEmpty) ...[
           const SizedBox(height: 20),
-          Text('Beispiele', style: AppType.meta()),
+          Text(
+            'Beispiele',
+            style: AppType.meta(color: context.appColors.textMuted),
+          ),
           for (final example in section.examples) ...[
             const SizedBox(height: 12),
             _Example(example: example),
@@ -143,8 +159,10 @@ class _Example extends StatelessWidget {
       container: true,
       child: Container(
         padding: const EdgeInsets.only(left: 14),
-        decoration: const BoxDecoration(
-          border: Border(left: BorderSide(color: AppColors.hairline, width: 2)),
+        decoration: BoxDecoration(
+          border: Border(
+            left: BorderSide(color: context.appColors.hairline, width: 2),
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,6 +171,7 @@ class _Example extends StatelessWidget {
               emphasisSpan(
                 example.english,
                 AppType.editorial(
+                  color: context.appColors.textPrimary,
                   size: 19,
                   weight: FontWeight.w400,
                   height: 1.45,
@@ -166,7 +185,7 @@ class _Example extends StatelessWidget {
               style: AppType.editorial(
                 size: 16,
                 weight: FontWeight.w400,
-                color: AppColors.textMuted,
+                color: context.appColors.textMuted,
                 height: 1.45,
                 letterSpacing: 0,
               ),
@@ -188,6 +207,7 @@ class _Pitfall extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sentence = AppType.editorial(
+      color: context.appColors.textPrimary,
       size: 17,
       weight: FontWeight.w400,
       height: 1.45,
@@ -199,8 +219,8 @@ class _Pitfall extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.raisedInk,
-          border: Border.all(color: AppColors.hairline),
+          color: context.appColors.raisedInk,
+          border: Border.all(color: context.appColors.hairline),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -208,10 +228,16 @@ class _Pitfall extends StatelessWidget {
           children: [
             Text(
               'Typischer Fehler',
-              style: AppType.chrome(weight: FontWeight.w600),
+              style: AppType.chrome(
+                color: context.appColors.textPrimary,
+                weight: FontWeight.w600,
+              ),
             ),
             const SizedBox(height: 12),
-            Text('Nicht', style: AppType.meta()),
+            Text(
+              'Nicht',
+              style: AppType.meta(color: context.appColors.textMuted),
+            ),
             const SizedBox(height: 2),
             Semantics(
               label: 'Falsch: ${pitfall.wrong.replaceAll('*', '')}',
@@ -219,14 +245,17 @@ class _Pitfall extends StatelessWidget {
               child: Text(
                 pitfall.wrong.replaceAll('*', ''),
                 style: sentence.copyWith(
-                  color: AppColors.textMuted,
+                  color: context.appColors.textMuted,
                   decoration: TextDecoration.lineThrough,
-                  decorationColor: AppColors.textMuted,
+                  decorationColor: context.appColors.textMuted,
                 ),
               ),
             ),
             const SizedBox(height: 12),
-            Text('Sondern', style: AppType.meta()),
+            Text(
+              'Sondern',
+              style: AppType.meta(color: context.appColors.textMuted),
+            ),
             const SizedBox(height: 2),
             Text.rich(emphasisSpan(pitfall.right, sentence)),
           ],

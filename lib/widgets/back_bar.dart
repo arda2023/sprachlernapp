@@ -24,10 +24,10 @@ class BackBar extends StatelessWidget {
               child: Semantics(
                 label: 'Zurück',
                 excludeSemantics: true,
-                child: const Icon(
+                child: Icon(
                   CupertinoIcons.chevron_left,
                   size: 24,
-                  color: AppColors.textPrimary,
+                  color: context.appColors.textPrimary,
                 ),
               ),
             ),

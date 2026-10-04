@@ -11,7 +11,7 @@ import pytest
 
 from sprachpipe.config import PIPELINE_DIR, load_config
 from sprachpipe.cost import BudgetExceeded, append_entry
-from sprachpipe.curate import curate
+from sprachpipe.curate import curate, derive_dictionary
 from sprachpipe.llm import AuthError, LlmError
 
 from test_curate import CURATION, META, PACKS, sid
@@ -224,7 +224,7 @@ def test_dictionary_reuses_source_values_with_origin_and_takes_annotation_values
          "gloss_de": "ging (gehen)", "rank": 1}]
     work, _ = curate(packs, CURATION, META)
     work, report, _, _ = run(FakeLlm(), work)
-    d = script.derive_dictionary(work)
+    d = derive_dictionary(work)
     went = next(e for e in d["entries"] if e["form"] == "went")
     assert went["gloss_de"] == "ging (gehen)" and went["card"] == "went|go/VERB|go#gehen"
     assert went["origin"]["sources"] == {"base": {"card": "went|go/VERB|go#gehen", "rank": 1}}
@@ -243,7 +243,7 @@ def test_conflicting_form_translations_stay_open():
         {"form": "went", "sense": "go/VERB|go#gehen", "card": None, "gloss_de": "ging", "rank": 1}]
     work, _ = curate(packs, CURATION, META)
     work, _, _, _ = run(FakeLlm(), work)
-    d = script.derive_dictionary(work)
+    d = derive_dictionary(work)
     [conflict] = [c for c in d["conflicts"] if c["form"] == "went"]
     assert {v["gloss_de"] for v in conflict["values"]} == {"ging", "ging (gehen)"}
 

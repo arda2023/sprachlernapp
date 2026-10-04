@@ -64,7 +64,7 @@ class AppBottomBar extends StatelessWidget {
         notchMargin: 6,
         height: height,
         padding: EdgeInsets.zero,
-        color: AppColors.raisedInk,
+        color: context.appColors.raisedInk,
         surfaceTintColor: Colors.transparent,
         shadowColor: Colors.transparent,
         elevation: 0,
@@ -90,7 +90,7 @@ class AppBottomBar extends StatelessWidget {
                         style: AppType.chrome(
                           size: 11,
                           weight: FontWeight.w600,
-                          color: AppColors.textMuted,
+                          color: context.appColors.textMuted,
                         ),
                       ),
                     ),
@@ -120,7 +120,9 @@ class _TabItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = selected ? AppColors.textPrimary : AppColors.textMuted;
+    final color = selected
+        ? context.appColors.textPrimary
+        : context.appColors.textMuted;
     return MergeSemantics(
       child: CupertinoButton(
         onPressed: onTap,
@@ -173,6 +175,7 @@ class PracticeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProgressRing(
+      color: context.appColors.textMuted,
       fraction: goal.done / goal.target,
       size: ringSize,
       child: MergeSemantics(
@@ -186,11 +189,11 @@ class PracticeButton extends StatelessWidget {
             hoverElevation: 0,
             highlightElevation: 0,
             disabledElevation: 0,
-            backgroundColor: AppColors.raisedInk,
-            foregroundColor: AppColors.textPrimary,
+            backgroundColor: context.appColors.raisedInk,
+            foregroundColor: context.appColors.textPrimary,
             splashColor: Colors.transparent,
-            shape: const CircleBorder(
-              side: BorderSide(color: AppColors.hairline),
+            shape: CircleBorder(
+              side: BorderSide(color: context.appColors.hairline),
             ),
             child: const Icon(CupertinoIcons.play_fill, size: 22),
           ),

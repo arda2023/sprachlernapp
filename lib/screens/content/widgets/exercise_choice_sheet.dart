@@ -33,10 +33,19 @@ class ExerciseChoiceSheet extends StatelessWidget {
           children: [
             Semantics(
               header: true,
-              child: Text(text.info.title, style: AppType.editorial(size: 24)),
+              child: Text(
+                text.info.title,
+                style: AppType.editorial(
+                  color: context.appColors.textPrimary,
+                  size: 24,
+                ),
+              ),
             ),
             const SizedBox(height: 6),
-            Text(storyMetaLine(text.info), style: AppType.meta()),
+            Text(
+              storyMetaLine(text.info),
+              style: AppType.meta(color: context.appColors.textMuted),
+            ),
             const SizedBox(height: 16),
             for (final mode in ExerciseMode.values)
               _ModeOption(
@@ -81,8 +90,10 @@ class _ModeOption extends StatelessWidget {
           child: Container(
             constraints: const BoxConstraints(minHeight: 56),
             padding: const EdgeInsets.symmetric(vertical: 12),
-            decoration: const BoxDecoration(
-              border: Border(top: BorderSide(color: AppColors.hairline)),
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(color: context.appColors.hairline),
+              ),
             ),
             child: Row(
               children: [
@@ -96,12 +107,15 @@ class _ModeOption extends StatelessWidget {
                           size: 17,
                           weight: FontWeight.w600,
                           color: enabled
-                              ? AppColors.textPrimary
-                              : AppColors.textMuted,
+                              ? context.appColors.textPrimary
+                              : context.appColors.textMuted,
                         ),
                       ),
                       const SizedBox(height: 2),
-                      Text(detail, style: AppType.meta()),
+                      Text(
+                        detail,
+                        style: AppType.meta(color: context.appColors.textMuted),
+                      ),
                     ],
                   ),
                 ),
@@ -109,7 +123,9 @@ class _ModeOption extends StatelessWidget {
                 Icon(
                   CupertinoIcons.chevron_right,
                   size: 16,
-                  color: enabled ? AppColors.textMuted : AppColors.iconOff,
+                  color: enabled
+                      ? context.appColors.textMuted
+                      : context.appColors.iconOff,
                 ),
               ],
             ),

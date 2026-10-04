@@ -157,7 +157,7 @@ def _process_card(llm, cfg, card, found, avoid_words):
 
 
 def run_generate(llm, cfg, forms, out_path, out_dir, *, max_usd, label,
-                 inventory_path=None, refresh_meanings=None) -> str | None:
+                 inventory_path=None, refresh_meanings=None, selected_meanings=None) -> str | None:
     """Steps 3-7 for [forms] ((form, rank) pairs); writes the pack,
     review.csv and run_report.md. Returns the abort reason or None."""
     from .generate import load_prompt, meanings
@@ -177,8 +177,9 @@ def run_generate(llm, cfg, forms, out_path, out_dir, *, max_usd, label,
         work = []
         remaining = {}
         for form, rank in forms:
-            found = meanings(llm, cfg, form, rank, inventory,
-                             refresh=form == refresh_meanings)
+            found = (selected_meanings[form] if selected_meanings is not None else
+                     meanings(llm, cfg, form, rank, inventory,
+                              refresh=form == refresh_meanings))
             if not found:
                 skipped.append(f"{form}: keine Bedeutung (Fragment, Eigenname oder Zahl)")
                 llm.form_done()
@@ -246,6 +247,12 @@ def cmd_generate(args, cfg) -> int:
     from .generate import candidate_forms
     from .llm import Llm
 
+    if getattr(args, 'selection', None):
+        return cmd_generate_selection(args, cfg)
+    if getattr(args, 'dry_run', False) or getattr(args, 'run_dir', None) or getattr(args, 'existing_pack', None):
+        print('error: --dry-run/--run-dir/--existing-pack require --selection', file=sys.stderr)
+        return 2
+
     if args.max_usd <= 0:
         print("error: --max-usd must be > 0", file=sys.stderr)
         return 2
@@ -272,6 +279,43 @@ def cmd_generate(args, cfg) -> int:
         print(f"aborted: {aborted}", file=sys.stderr)
         return 3
     return 0
+
+
+def cmd_generate_selection(args, cfg) -> int:
+    import math
+    from .selection import plan_selection, print_plan
+
+    try:
+        if not math.isfinite(args.max_usd) or not 0 < args.max_usd <= 3:
+            raise ValueError('selection requires 0 < --max-usd <= 3.00')
+        if not args.existing_pack or not args.run_dir or args.refresh_meanings:
+            raise ValueError('selection requires --existing-pack and --run-dir; no --refresh-meanings')
+        plan = plan_selection(args.selection, args.existing_pack)
+        print_plan(plan, cfg, args.max_usd)
+        if plan['missing_definitions']:
+            return 2
+        out_dir, out_path = Path(args.run_dir).resolve(), Path(args.out).resolve()
+        if out_dir.exists() or not out_path.is_relative_to(out_dir) or out_path == out_dir:
+            raise ValueError('--run-dir must be new; --out must be a file inside it')
+        if args.dry_run:
+            print(f'DRY RUN: would write {out_path}; no files written')
+            return 0
+        if not plan['forms']:
+            print('All targets already covered; nothing to generate.')
+            return 0
+        out_dir.mkdir(parents=True, exist_ok=False)
+        from .llm import Llm
+        aborted = run_generate(
+            Llm(cfg, out_dir / 'ledger.csv', args.max_usd), cfg, plan['forms'], out_path, out_dir,
+            max_usd=args.max_usd, label=str(args.selection), selected_meanings=plan['selected'])
+        print(f'pack -> {out_path}; review/report/ledger -> {out_dir}')
+        if aborted:
+            print(f'aborted: {aborted}', file=sys.stderr)
+            return 3
+        return 0
+    except (ValueError, OSError) as e:
+        print(f'error: {e}', file=sys.stderr)
+        return 2
 
 
 def cmd_classify_usage(args, cfg) -> int:
@@ -328,7 +372,12 @@ def main(argv: list[str] | None = None) -> int:
     ex.add_argument("pack")
     ex.add_argument("target")
     ge = sub.add_parser("generate", help="AI generation of cards and sentences (Vertex AI)")
-    ge.add_argument("--forms", required=True, help="'smoke', a number n or 'a,b,c'")
+    source = ge.add_mutually_exclusive_group(required=True)
+    source.add_argument("--forms", help="'smoke', a number n or 'a,b,c'")
+    source.add_argument("--selection", help="versioned exact-target JSON")
+    ge.add_argument("--existing-pack", help="read-only SQLite pack for target reuse")
+    ge.add_argument("--run-dir", help="new output directory for exact selection")
+    ge.add_argument("--dry-run", action="store_true", help="offline selection validation and estimate")
     ge.add_argument("--out", required=True, help="pack JSON to write")
     ge.add_argument("--max-usd", type=float, default=1.0, help="cost limit for this run")
     ge.add_argument("--refresh-meanings", metavar="FORM",

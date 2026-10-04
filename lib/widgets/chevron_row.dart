@@ -33,8 +33,10 @@ class ChevronRow extends StatelessWidget {
           child: Container(
             constraints: const BoxConstraints(minHeight: 72),
             padding: const EdgeInsets.symmetric(vertical: 14),
-            decoration: const BoxDecoration(
-              border: Border(bottom: BorderSide(color: AppColors.hairline)),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: context.appColors.hairline),
+              ),
             ),
             child: Row(
               children: [
@@ -45,6 +47,7 @@ class ChevronRow extends StatelessWidget {
                       Text(
                         title,
                         style: AppType.chrome(
+                          color: context.appColors.textPrimary,
                           size: 17,
                           weight: FontWeight.w600,
                         ),
@@ -52,20 +55,27 @@ class ChevronRow extends StatelessWidget {
                       const SizedBox(height: 2),
                       Text(
                         summary,
-                        style: AppType.chrome(color: AppColors.textMuted),
+                        style: AppType.chrome(
+                          color: context.appColors.textMuted,
+                        ),
                       ),
                       if (meta case final meta?) ...[
                         const SizedBox(height: 6),
-                        Text(meta, style: AppType.meta()),
+                        Text(
+                          meta,
+                          style: AppType.meta(
+                            color: context.appColors.textMuted,
+                          ),
+                        ),
                       ],
                     ],
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Icon(
+                Icon(
                   CupertinoIcons.chevron_right,
                   size: 16,
-                  color: AppColors.textMuted,
+                  color: context.appColors.textMuted,
                 ),
               ],
             ),

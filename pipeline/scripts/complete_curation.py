@@ -347,46 +347,9 @@ def run_annotation(llm, cfg, work, step, cards, report) -> None:
     _close(work, step, entry)
 
 
-def derive_dictionary(work: dict) -> dict:
-    """Entries from the complete token set. Values: preserved source entries
-    and new annotation glosses with origin; no sense gloss fallback."""
-    from sprachpipe.ids import form_norm
-
-    counts: dict[tuple[str, str], list] = {}
-    for t in work["sentence_tokens"]:
-        if t.get("sense"):
-            c = counts.setdefault((form_norm(t["surface"]), t["sense"]), [0, None])
-            c[0] += 1
-            c[1] = c[1] or t.get("card")
-    values: dict[tuple[str, str], dict] = {}
-    for e in work["curation"]["dictionary_sources"]:
-        for v in e["values"]:
-            values.setdefault((e["form"], e["sense"]), {}).setdefault(
-                v["gloss_de"], {})["sources"] = v["sources"]
-    for g in work["curation"].get("annotation_glosses", []):
-        origin = values.setdefault((g["form"], g["sense"]), {}).setdefault(g["gloss_de"], {})
-        origin.setdefault("annotation", []).append({"sentence": g["sentence"], "idx": g["idx"]})
-    by_form: dict[str, list] = {}
-    for (norm, sense), (n, card) in counts.items():
-        by_form.setdefault(norm, []).append((-n, sense, card))
-    entries, missing, conflicts = [], [], []
-    for norm in sorted(by_form):
-        for rank, (_, sense, card) in enumerate(sorted(by_form[norm]), start=1):
-            found = values.get((norm, sense), {})
-            if not found:
-                missing.append({"form": norm, "sense": sense})
-            elif len(found) > 1:
-                conflicts.append({"form": norm, "sense": sense,
-                                  "values": [{"gloss_de": k, **v} for k, v in found.items()]})
-            else:
-                [(gloss, origin)] = found.items()
-                entries.append({"form": norm, "sense": sense, "card": card, "gloss_de": gloss,
-                                "rank": rank, "origin": origin})
-    return {"entries": entries, "missing": missing, "conflicts": conflicts,
-            "token_keys": sum(len(v) for v in by_form.values())}
-
-
 def run_dictionary(work, step, report) -> None:
+    from sprachpipe.curate import derive_dictionary
+
     if any(p["kind"] == "annotate_card" for p in work["curation"]["pending"]):
         report["steps"].append({"kind": "dictionary_forms", "status": "open",
                                 "findings": ["Annotation unvollständig; nicht abgeleitet"]})

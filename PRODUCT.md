@@ -62,9 +62,11 @@ Three core learning surfaces:
   - Encapsulated behind an interchangeable engine interface (`SpacedRepetitionEngine`) so alternative algorithms (e.g. FSRS) can be benchmarked against real learner data in later versions.
 - **Answer Checking & Review Logic**:
   - Only the exact correct word form allows the learner to proceed (with the exception of "Wort erfahren").
-  - Minor typos display a "fast richtig" (almost right) hint and do not count as an incorrect attempt.
+  - Minor typos display a "fast richtig" (almost right) hint and do not count as an incorrect attempt. A typo is one missing, extra or substituted letter or two swapped neighbouring letters, only for target forms of four letters or more; shorter forms get no typo tolerance. Answer checking runs entirely on the device, without AI or network.
+  - "Fast richtig" followed by the exact form carries no learning penalty (decided 04.10.2026): without an error, a synonym hint or "Wort erfahren" the card enters Box 3 on first contact and is promoted regularly afterwards. `first_attempt_correct` stays a literal observation (only an exact first checked input is `true`), so the box is never derived from that field alone.
+  - **Check order**: target → checked alternative → documented other form of the same lemma → typo → wrong. Only existing content form information establishes another form; never guess by stripping endings.
   - **Wrong form**: a wrong form of the same lemma counts as an error and shows the hint `Andere Form von „<lemma>“ – gesucht: <Wortart, Form>`. The learner continues only with the exact form or "Wort erfahren". Any other answer, including a synonym that was not pre-checked for this gap, is an ordinary error.
-  - **Synonym hint** (decided rule. Status: the content pipeline and the local pack/`content.sqlite` transport of `valid_alternatives` are implemented and tested offline; the content migration is created but not applied; app integration, the `hint_used` migration and live quality of the alternative check are pending, see `NEXTSTEPS.md`): a fitting answer is distinguished from the target form the learner knew unaided. Only the target form completes the card regularly.
+  - **Synonym hint** (decided rule. Status: the content pipeline and the local pack/`content.sqlite` transport of `valid_alternatives` are implemented and tested offline; the content migration is created but not applied; the deck app integration and local `user.db.hint_used` are implemented; the cloud `hint_used` migration and live quality of the alternative check remain pending, see `NEXTSTEPS.md`): a fitting answer is distinguished from the target form the learner knew unaided. Only the target form completes the card regularly.
     - A typed answer that matches an alternative pre-checked offline for exactly this card, sentence and gap (`card_sentences.valid_alternatives`, `docs/content-schema.md`) is not "Falsch". It shows a neutral hint, e.g. target *about*, input *approximately*: „Approximately passt hier auch. Gesucht ist ein anderes Wort: a…“. For a one-letter target form the hint gives no letter: „… passt hier auch. Gesucht ist ein anderes Wort.“
     - The learner must then type the target form or use "Wort erfahren". The card counts as solved with help: Box 1, also on first contact and from any higher box, due at the start of the next local day with the default Box-1 interval (a configured interval applies instead). Further inputs in the same pass of the card neither reset it again nor add a log line. Bookkeeping: `docs/srs.md`.
     - The comparison is the same as for the target form (case-insensitive, trimmed). Unknown or unconfirmed alternatives stay ordinary errors; there is no runtime AI check of learner input. Own story contexts have no checked alternatives.
@@ -107,6 +109,7 @@ Three core learning surfaces:
 - **Accounts**: Learning works offline without an account. An email account is needed only for online features (import, AI checks); Google/Apple sign-in before release.
 - **Storage**:
   - Local-first (Drift SQLite `user.db`, read-only `content.sqlite`). Cross-device synchronization is deferred; its timing is an open decision.
+  - **Internal test pack** (decided 04.10.2026): a technically finalized internal content pack may run on the developer's own devices and for selected testers, release builds included; there is no blanket release-build lock. It is not a public content release.
 
 ## Open Decisions
 
@@ -142,3 +145,23 @@ Three core learning surfaces:
 5. **Calm, editorial density**: Prioritize sustained reading comfort and quiet typography over high-stimulus UI elements.
 6. **Vocabulary metrics are derived, never stored**: The four category counts reflect actual card states and review logs at all times.
 7. **Controlled runtime AI**: The client holds no AI keys and calls no provider; AI runs only in Edge Functions for user-generated content, while curated content stays pre-generated for speed, privacy and pedagogical quality.
+
+## Übungsoberfläche und lokale Einstellungen (2026-10-04)
+- Eingabe, letzte geprüfte Antwort und nicht editierbarer Hinweis sind getrennte Zustände. Erster gewöhnlicher Fehler bleibt vollständig sichtbar: Buchstaben nach Vorkommen im Ziel (nicht Position), 50 % Deckkraft; weitere Fehler zeigen zwei Ziel-Grapheme + … (bei zwei Zeichen nur eines, bei einem keines). Die erste Änderung startet einen neuen Versuch und erhält den neu eingegebenen Text. Fast richtig, falsche Form und Synonyme behalten ihre SRS-Regeln.
+- Rückblick zeigt unveränderliche abgeschlossene Durchgänge, ohne erneute Prüfung/Buchung; die aktuelle Eingabe bleibt erhalten. Keine Vorschau zukünftiger Karten.
+- Wort-Tooltips verwenden ausschließlich Satz-Tokenoffsets und verknüpfte Bedeutungen/Formen des Packs. Fehlende Annotation ist nicht verfügbar. Grammatik nutzt bekannte Formkennzeichen; vor Lösung werden weder Zielform noch Formenliste verraten.
+- Favoriten und Deaktivierung sind lokale Zustände an stabilen Karten-IDs. Deaktivierung erhält Lernstand/Reviews und entfernt weitere Auswahl. Berichte (Kategorie, Karten-/Satz-ID, Packversion) und Feedback (1–5 Sterne), jeweils optional 2000 Zeichen, werden lokal gespeichert und nur auf ausdrücklichen Tap nativ geteilt; kein Versandziel.
+- Motiv Automatisch/Hell/Dunkel gilt für die App. Diakritika einbeziehen ist standardmäßig an (bisherige strikte Prüfung); ausgeschaltet werden nur Akzentunterschiede ignoriert. Auto-Weiter und Grammatikformen sind standardmäßig aus. Auto-Weiter erfolgt erst nach Speicherung und sichtbarer Rückmeldung; Overlays/Rückblick/Navigation pausieren es, geöffnete Grammatik hat Vorrang.
+- Gerätefunktionen ohne Implementierung (Benachrichtigungen, Audio, Spracherkennung) sind deaktiviert als „Noch nicht verfügbar“ sichtbar.
+
+## Lösungsfeld und Aktionsleiste (2026-10-04)
+- Auch gelöst und im Rückblick bleibt die Zielform hellblau im getönten Eingabekästchen, ohne Cursor oder Bearbeitung und mit gleicher Feldgeometrie.
+- Genau eine rechte Hauptaktion: echte Eingabe leer → Wort erfahren; Text vorhanden → Eingeben; erfolgreich gespeichert → Weiter mit separatem hellblauem Haken links daneben. Hinweise zählen nicht als Eingabe; Aufdecken behält die Abtippregel. Speichern und Speicherfehler behalten ihre Sperren bzw. Wiederholungsaktion.
+- Aktionswechsel dauern 140 ms, bleiben geclippt und rechts ausgerichtet, ausgehende Aktionen sind nicht bedienbar; reduzierte Animationen wechseln sofort. Die Leiste liegt über der Tastatur bzw. in der unteren SafeArea.
+- Die sichtbare Abtipp-Erklärung und die Navigationszeile Aktuelle Karte samt Pfeilen entfallen; Rückblick bleibt per Wischen und Screenreader-Aktionen erreichbar.
+
+Neue Karten werden vielfältig eingeführt: vier Inhaltswörter, dann höchstens ein
+Funktionswort; pro Sitzung nur eine neue Karte je Lemma und Oberfläche. Bekannte
+Lemmas folgen innerhalb ihrer Gruppe auf ungesehene. Bei kleinem Angebot kürzere
+Sitzung statt Nebenbedeutungs-Refill (Details und Grenzfälle: `docs/srs.md`).
+Fällige Reviews, SRS und In-Session-Wiederholungen behalten ihre bisherigen Regeln.

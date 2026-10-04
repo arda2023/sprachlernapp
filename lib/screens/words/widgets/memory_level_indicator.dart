@@ -43,7 +43,7 @@ class MemoryLevelIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lit = AppColors.memoryLevel(level);
+    final lit = context.appColors.memoryLevel(level);
     return ExcludeSemantics(
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -54,7 +54,7 @@ class MemoryLevelIndicator extends StatelessWidget {
               height: dashHeight,
               margin: EdgeInsets.only(right: i < leitnerBoxCount ? gap : 0),
               decoration: BoxDecoration(
-                color: i <= level ? lit : AppColors.hairline,
+                color: i <= level ? lit : context.appColors.hairline,
                 borderRadius: BorderRadius.circular(999),
               ),
             ),

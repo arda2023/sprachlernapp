@@ -152,16 +152,21 @@ class _ChoiceExerciseScreenState extends State<ChoiceExerciseScreen> {
   Widget build(BuildContext context) {
     final next = _solved ? _next : null;
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: Colors.transparent,
-      ),
+      value:
+          (context.appColors.light
+                  ? SystemUiOverlayStyle.dark
+                  : SystemUiOverlayStyle.light)
+              .copyWith(statusBarColor: Colors.transparent),
       child: Scaffold(
         body: SafeArea(
           child: Column(
             children: [
               BackBar(
                 onBack: () => Navigator.of(context).maybePop(),
-                trailing: Text(_exercise.meta, style: AppType.meta()),
+                trailing: Text(
+                  _exercise.meta,
+                  style: AppType.meta(color: context.appColors.textMuted),
+                ),
               ),
               Expanded(
                 child: ListView(
@@ -177,13 +182,21 @@ class _ChoiceExerciseScreenState extends State<ChoiceExerciseScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text(_exercise.kind.title, style: AppType.meta()),
+                            Text(
+                              _exercise.kind.title,
+                              style: AppType.meta(
+                                color: context.appColors.textMuted,
+                              ),
+                            ),
                             const SizedBox(height: 8),
                             Semantics(
                               header: true,
                               child: Text(
                                 _exercise.title,
-                                style: AppType.editorial(size: 28),
+                                style: AppType.editorial(
+                                  color: context.appColors.textPrimary,
+                                  size: 28,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 12),
@@ -191,7 +204,7 @@ class _ChoiceExerciseScreenState extends State<ChoiceExerciseScreen> {
                               _exercise.kind.instruction,
                               style: AppType.chrome(
                                 size: 13,
-                                color: AppColors.textMuted,
+                                color: context.appColors.textMuted,
                               ),
                             ),
                             const SizedBox(height: 28),
@@ -200,7 +213,10 @@ class _ChoiceExerciseScreenState extends State<ChoiceExerciseScreen> {
                               const SizedBox(height: 28),
                               Text(
                                 _exercise.prompt,
-                                style: AppType.editorial(size: 22),
+                                style: AppType.editorial(
+                                  color: context.appColors.textPrimary,
+                                  size: 22,
+                                ),
                               ),
                             ] else
                               _GapSentence(
@@ -286,8 +302,8 @@ class _ClipPlayer extends StatelessWidget {
       builder: (context, _) => Container(
         padding: const EdgeInsets.fromLTRB(12, 20, 12, 8),
         decoration: BoxDecoration(
-          color: AppColors.raisedInk,
-          border: Border.all(color: AppColors.hairline),
+          color: context.appColors.raisedInk,
+          border: Border.all(color: context.appColors.hairline),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -321,6 +337,7 @@ class _GapSentence extends StatelessWidget {
   Widget build(BuildContext context) {
     final parts = prompt.split(ChoiceExercise.gap);
     final style = AppType.editorial(
+      color: context.appColors.textPrimary,
       size: 24,
       weight: FontWeight.w400,
       height: 1.5,
@@ -342,14 +359,14 @@ class _GapSentence extends StatelessWidget {
                         text: _blank,
                         style: TextStyle(
                           decoration: TextDecoration.underline,
-                          decorationColor: AppColors.textMuted,
+                          decorationColor: context.appColors.textMuted,
                           decorationThickness: 2,
                         ),
                       )
                     : TextSpan(
                         text: answer,
-                        style: const TextStyle(
-                          color: AppColors.success,
+                        style: TextStyle(
+                          color: context.appColors.success,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -382,24 +399,24 @@ class _OptionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final (fill, edge, text) = switch (state) {
       _OptionState.idle => (
-        AppColors.raisedInk,
-        AppColors.hairline,
-        AppColors.textPrimary,
+        context.appColors.raisedInk,
+        context.appColors.hairline,
+        context.appColors.textPrimary,
       ),
       _OptionState.wrong => (
-        AppColors.errorTint,
-        AppColors.error,
-        AppColors.textPrimary,
+        context.appColors.errorTint,
+        context.appColors.error,
+        context.appColors.textPrimary,
       ),
       _OptionState.right => (
-        AppColors.successTint,
-        AppColors.success,
-        AppColors.success,
+        context.appColors.successTint,
+        context.appColors.success,
+        context.appColors.success,
       ),
       _OptionState.retired => (
-        AppColors.raisedInk,
-        AppColors.hairline,
-        AppColors.textMuted,
+        context.appColors.raisedInk,
+        context.appColors.hairline,
+        context.appColors.textMuted,
       ),
     };
     final enabled = state == _OptionState.idle || state == _OptionState.wrong;
@@ -438,10 +455,10 @@ class _OptionCard extends StatelessWidget {
                 ),
                 if (state == _OptionState.right) ...[
                   const SizedBox(width: 12),
-                  const Icon(
+                  Icon(
                     CupertinoIcons.checkmark_alt,
                     size: 22,
-                    color: AppColors.success,
+                    color: context.appColors.success,
                   ),
                 ],
               ],

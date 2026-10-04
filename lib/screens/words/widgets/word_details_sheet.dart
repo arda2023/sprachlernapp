@@ -64,6 +64,7 @@ class _WordDetailsSheetState extends State<WordDetailsSheet> {
   @override
   Widget build(BuildContext context) {
     final body = AppType.editorial(
+      color: context.appColors.textPrimary,
       size: 20,
       weight: FontWeight.w400,
       height: 1.4,
@@ -111,7 +112,9 @@ class _WordDetailsSheetState extends State<WordDetailsSheet> {
                           Expanded(
                             child: Text(
                               memoryLevelTitle(word.box),
-                              style: AppType.meta(),
+                              style: AppType.meta(
+                                color: context.appColors.textMuted,
+                              ),
                             ),
                           ),
                         ],
@@ -137,7 +140,10 @@ class _WordDetailsSheetState extends State<WordDetailsSheet> {
                   ),
                   Padding(
                     padding: inset,
-                    child: Text(entry.partOfSpeech, style: AppType.meta()),
+                    child: Text(
+                      entry.partOfSpeech,
+                      style: AppType.meta(color: context.appColors.textMuted),
+                    ),
                   ),
                   const SizedBox(height: 20),
                   _Indented(
@@ -146,11 +152,17 @@ class _WordDetailsSheetState extends State<WordDetailsSheet> {
                       children: [
                         const _Rule(),
                         const SizedBox(height: 16),
-                        Text('Deutsch', style: AppType.meta()),
+                        Text(
+                          'Deutsch',
+                          style: AppType.meta(
+                            color: context.appColors.textMuted,
+                          ),
+                        ),
                         const SizedBox(height: 4),
                         Text(
                           entry.translation,
                           style: AppType.editorial(
+                            color: context.appColors.textPrimary,
                             size: 22,
                             weight: FontWeight.w400,
                             height: 1.3,
@@ -172,7 +184,12 @@ class _WordDetailsSheetState extends State<WordDetailsSheet> {
                         ),
                         const _Rule(),
                         const SizedBox(height: 16),
-                        Text('Beispielsatz', style: AppType.meta()),
+                        Text(
+                          'Beispielsatz',
+                          style: AppType.meta(
+                            color: context.appColors.textMuted,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -190,11 +207,21 @@ class _WordDetailsSheetState extends State<WordDetailsSheet> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text('Deutsch', style: AppType.meta()),
+                        Text(
+                          'Deutsch',
+                          style: AppType.meta(
+                            color: context.appColors.textMuted,
+                          ),
+                        ),
                         const SizedBox(height: 4),
                         Text(word.sentenceTranslation, style: body),
                         const SizedBox(height: 24),
-                        Text('Notizen', style: AppType.meta()),
+                        Text(
+                          'Notizen',
+                          style: AppType.meta(
+                            color: context.appColors.textMuted,
+                          ),
+                        ),
                         const SizedBox(height: 8),
                         _NoteField(
                           controller: _note,
@@ -232,7 +259,7 @@ class _Rule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      const ColoredBox(color: AppColors.hairline, child: SizedBox(height: 1));
+      ColoredBox(color: context.appColors.hairline, child: SizedBox(height: 1));
 }
 
 /// Label left, value right, Hairline above; like the vocabulary ledger.
@@ -248,21 +275,25 @@ class _LedgerRow extends StatelessWidget {
       child: Container(
         constraints: const BoxConstraints(minHeight: 44),
         padding: const EdgeInsets.symmetric(vertical: 10),
-        decoration: const BoxDecoration(
-          border: Border(top: BorderSide(color: AppColors.hairline)),
+        decoration: BoxDecoration(
+          border: Border(top: BorderSide(color: context.appColors.hairline)),
         ),
         child: Row(
           children: [
             Expanded(
               child: Text(
                 label,
-                style: AppType.chrome(color: AppColors.textMuted),
+                style: AppType.chrome(color: context.appColors.textMuted),
               ),
             ),
             const SizedBox(width: 12),
             Text(
               value,
-              style: AppType.chrome(weight: FontWeight.w600, tabular: true),
+              style: AppType.chrome(
+                color: context.appColors.textPrimary,
+                weight: FontWeight.w600,
+                tabular: true,
+              ),
             ),
           ],
         ),
@@ -289,16 +320,16 @@ class _NoteField extends StatelessWidget {
       minLines: 3,
       maxLines: 6,
       textCapitalization: TextCapitalization.sentences,
-      style: AppType.chrome(height: 1.4),
-      cursorColor: AppColors.textPrimary,
+      style: AppType.chrome(color: context.appColors.textPrimary, height: 1.4),
+      cursorColor: context.appColors.textPrimary,
       decoration: InputDecoration(
         hintText: 'Füge eigene Notizen hinzu …',
-        hintStyle: AppType.chrome(color: AppColors.textMuted),
+        hintStyle: AppType.chrome(color: context.appColors.textMuted),
         filled: true,
-        fillColor: AppColors.nightPage,
+        fillColor: context.appColors.nightPage,
         contentPadding: const EdgeInsets.all(14),
-        enabledBorder: border(AppColors.hairline),
-        focusedBorder: border(AppColors.textMuted),
+        enabledBorder: border(context.appColors.hairline),
+        focusedBorder: border(context.appColors.textMuted),
       ),
     );
   }

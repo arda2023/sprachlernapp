@@ -30,8 +30,8 @@ class SuccessFeedbackCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.raisedInk,
-        border: Border.all(color: AppColors.hairline),
+        color: context.appColors.raisedInk,
+        border: Border.all(color: context.appColors.hairline),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -43,14 +43,14 @@ class SuccessFeedbackCard extends StatelessWidget {
               Container(
                 width: 48,
                 height: 48,
-                decoration: const BoxDecoration(
-                  color: AppColors.successTint,
+                decoration: BoxDecoration(
+                  color: context.appColors.successTint,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   CupertinoIcons.hand_thumbsup_fill,
                   size: 24,
-                  color: AppColors.success,
+                  color: context.appColors.success,
                 ),
               ),
               const SizedBox(width: 14),
@@ -60,11 +60,18 @@ class SuccessFeedbackCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: AppType.chrome(size: 17, weight: FontWeight.w600),
+                      style: AppType.chrome(
+                        color: context.appColors.textPrimary,
+                        size: 17,
+                        weight: FontWeight.w600,
+                      ),
                     ),
                     if (subtitle case final subtitle?) ...[
                       const SizedBox(height: 2),
-                      Text(subtitle, style: AppType.meta()),
+                      Text(
+                        subtitle,
+                        style: AppType.meta(color: context.appColors.textMuted),
+                      ),
                     ],
                   ],
                 ),
@@ -77,6 +84,7 @@ class SuccessFeedbackCard extends StatelessWidget {
               emphasisSpan(
                 explanation,
                 AppType.editorial(
+                  color: context.appColors.textPrimary,
                   size: 17,
                   weight: FontWeight.w400,
                   height: 1.45,

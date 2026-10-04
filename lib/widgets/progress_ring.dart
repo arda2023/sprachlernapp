@@ -12,14 +12,14 @@ class ProgressRing extends StatelessWidget {
     super.key,
     required this.fraction,
     required this.size,
-    this.color = AppColors.textMuted,
+    this.color,
     this.strokeWidth = 3,
     this.child,
   });
 
   final double fraction;
   final double size;
-  final Color color;
+  final Color? color;
   final double strokeWidth;
   final Widget? child;
 
@@ -30,7 +30,8 @@ class ProgressRing extends StatelessWidget {
       child: CustomPaint(
         painter: _RingPainter(
           fraction: fraction.clamp(0.0, 1.0),
-          color: color,
+          color: color ?? context.appColors.textMuted,
+          trackColor: context.appColors.hairline,
           strokeWidth: strokeWidth,
         ),
         child: Center(child: child),
@@ -43,11 +44,12 @@ class _RingPainter extends CustomPainter {
   _RingPainter({
     required this.fraction,
     required this.color,
+    required this.trackColor,
     required this.strokeWidth,
   });
 
   final double fraction;
-  final Color color;
+  final Color color, trackColor;
   final double strokeWidth;
 
   @override
@@ -56,7 +58,7 @@ class _RingPainter extends CustomPainter {
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth;
-    canvas.drawOval(rect, paint..color = AppColors.hairline);
+    canvas.drawOval(rect, paint..color = trackColor);
     if (fraction > 0) {
       canvas.drawArc(
         rect,
@@ -74,5 +76,6 @@ class _RingPainter extends CustomPainter {
   bool shouldRepaint(_RingPainter old) =>
       old.fraction != fraction ||
       old.color != color ||
+      old.trackColor != trackColor ||
       old.strokeWidth != strokeWidth;
 }

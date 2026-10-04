@@ -18,9 +18,9 @@ class PrimaryActionButton extends StatelessWidget {
   Widget build(BuildContext context) => _ActionButton(
     label: label,
     onPressed: onPressed,
-    fill: AppColors.textPrimary,
-    border: AppColors.textPrimary,
-    foreground: AppColors.nightPage,
+    fill: context.appColors.textPrimary,
+    border: context.appColors.textPrimary,
+    foreground: context.appColors.nightPage,
   );
 }
 
@@ -42,9 +42,11 @@ class OutlineActionButton extends StatelessWidget {
     label: label,
     icon: icon,
     onPressed: onPressed,
-    fill: AppColors.nightPage,
-    border: AppColors.hairline,
-    foreground: onPressed == null ? AppColors.textMuted : AppColors.textPrimary,
+    fill: context.appColors.nightPage,
+    border: context.appColors.hairline,
+    foreground: onPressed == null
+        ? context.appColors.textMuted
+        : context.appColors.textPrimary,
   );
 }
 

@@ -337,6 +337,68 @@ def _dictionary_sources(packs: dict[str, dict]) -> dict:
                           if len(entries[(f, s)]["values"]) > 1]}
 
 
+def derive_dictionary(work: dict, resolutions: list[dict] | None = None) -> dict:
+    """dictionary_forms from the complete token set. Values: preserved source
+    entries and annotation glosses with origin; no sense gloss fallback.
+    [resolutions]: editorial choices by exact (form, sense); applied only if
+    the key's variants equal expected_variants exactly, otherwise and for
+    unused resolutions CurationError. Rejected variants stay in the origin."""
+    from .ids import form_norm
+
+    counts: dict[tuple[str, str], list] = {}
+    for t in work["sentence_tokens"]:
+        if t.get("sense"):
+            c = counts.setdefault((form_norm(t["surface"]), t["sense"]), [0, None])
+            c[0] += 1
+            c[1] = c[1] or t.get("card")
+    values: dict[tuple[str, str], dict] = {}
+    for e in work["curation"]["dictionary_sources"]:
+        for v in e["values"]:
+            values.setdefault((e["form"], e["sense"]), {}).setdefault(
+                v["gloss_de"], {})["sources"] = v["sources"]
+    for g in work["curation"].get("annotation_glosses", []):
+        origin = values.setdefault((g["form"], g["sense"]), {}).setdefault(g["gloss_de"], {})
+        origin.setdefault("annotation", []).append({"sentence": g["sentence"], "idx": g["idx"]})
+    chosen: dict[tuple[str, str], dict] = {}
+    for r in resolutions or []:
+        key = (r["form"], r["sense"])
+        if key in chosen:
+            raise CurationError(f"resolution for {key} given twice")
+        chosen[key] = r
+    by_form: dict[str, list] = {}
+    for (norm, sense), (n, card) in counts.items():
+        by_form.setdefault(norm, []).append((-n, sense, card))
+    entries, missing, conflicts, used = [], [], [], set()
+    for norm in sorted(by_form):
+        for rank, (_, sense, card) in enumerate(sorted(by_form[norm]), start=1):
+            found = values.get((norm, sense), {})
+            r = chosen.get((norm, sense))
+            if r is not None:
+                if sorted(found) != sorted(r["expected_variants"]) or r["gloss_de"] not in found:
+                    raise CurationError(f"resolution {norm!r}/{sense!r}: variants {sorted(found)} "
+                                        f"!= expected {sorted(r['expected_variants'])} or choice missing")
+                used.add((norm, sense))
+                entries.append({"form": norm, "sense": sense, "card": card, "gloss_de": r["gloss_de"],
+                                "rank": rank, "origin": dict(found[r["gloss_de"]], resolution={
+                                    "reason": r["reason"], "rejected": [
+                                        {"gloss_de": k, **v} for k, v in found.items()
+                                        if k != r["gloss_de"]]})})
+            elif not found:
+                missing.append({"form": norm, "sense": sense})
+            elif len(found) > 1:
+                conflicts.append({"form": norm, "sense": sense,
+                                  "values": [{"gloss_de": k, **v} for k, v in found.items()]})
+            else:
+                [(gloss, origin)] = found.items()
+                entries.append({"form": norm, "sense": sense, "card": card, "gloss_de": gloss,
+                                "rank": rank, "origin": origin})
+    unused = sorted(set(chosen) - used)
+    if unused:
+        raise CurationError(f"resolutions for keys not in the token set: {unused}")
+    return {"entries": entries, "missing": missing, "conflicts": conflicts,
+            "token_keys": sum(len(v) for v in by_form.values())}
+
+
 def finalize(work: dict) -> dict:
     """Final pack only without pending steps."""
     pending = (work.get("curation") or {}).get("pending")

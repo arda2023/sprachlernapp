@@ -52,3 +52,7 @@ app.*.map.json
 supabase/.temp/
 supabase/.branches/
 
+# Staged content packs (internal test material, tool/stage_content_pack.dart)
+/assets/content/*/content.sqlite
+/assets/content/*/content.sqlite.tmp
+/assets/content/*/content.manifest.json

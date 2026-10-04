@@ -2,6 +2,45 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+extension AppPaletteContext on BuildContext {
+  AppPalette get appColors => AppPalette(Theme.of(this).brightness);
+}
+
+/// Semantic palette resolved at the view, so changing a theme never remounts
+/// navigation or destroys the current exercise/editor state.
+class AppPalette {
+  const AppPalette(this.brightness);
+  final Brightness brightness;
+  bool get light => brightness == Brightness.light;
+  Color get nightPage => light ? const Color(0xFFF6F5F2) : AppColors.nightPage;
+  Color get raisedInk => light ? const Color(0xFFFFFFFF) : AppColors.raisedInk;
+  Color get hairline => light ? const Color(0xFFD8DCE2) : AppColors.hairline;
+  Color get textPrimary =>
+      light ? const Color(0xFF202632) : AppColors.textPrimary;
+  Color get textMuted => light ? const Color(0xFF596477) : AppColors.textMuted;
+  Color get iconOff => light ? const Color(0xFF8992A1) : AppColors.iconOff;
+  Color get active => AppColors.active;
+  Color get mastered => AppColors.mastered;
+  Color get activeTint =>
+      light ? const Color(0xFFFFF0E2) : AppColors.activeTint;
+  Color get success => light ? const Color(0xFF347A51) : AppColors.success;
+  Color get successTint =>
+      light ? const Color(0xFFE4F1E9) : AppColors.successTint;
+  Color get error => light ? const Color(0xFFAD3F38) : AppColors.error;
+  Color get errorTint => light ? const Color(0xFFFBE8E6) : AppColors.errorTint;
+  Color get memoryLevel1 => AppColors.memoryLevel1;
+  Color get memoryLevel2 =>
+      light ? const Color(0xFF256C99) : AppColors.memoryLevel2;
+  Color get memoryLevel3 => AppColors.memoryLevel3;
+  Color get memoryLevel4 => AppColors.memoryLevel4;
+  Color get memoryLevel5 => AppColors.memoryLevel5;
+  Color memoryLevel(int level) =>
+      level == 2 ? memoryLevel2 : AppColors.memoryLevel(level);
+  Color get playback => light ? const Color(0xFFE6EFF8) : AppColors.playback;
+  Color get newsKicker =>
+      light ? const Color(0xFF78653F) : AppColors.newsKicker;
+}
+
 abstract final class AppColors {
   static const nightPage = Color(0xFF0D0F14);
   static const raisedInk = Color(0xFF1A1D26);
@@ -56,7 +95,7 @@ abstract final class AppType {
   static TextStyle chrome({
     double size = 15,
     FontWeight weight = FontWeight.w500,
-    Color color = AppColors.textPrimary,
+    Color? color,
     double? height,
     TextDecoration? decoration,
     Color? decorationColor,
@@ -73,13 +112,13 @@ abstract final class AppType {
   );
 
   /// Metadata / chip labels: level, reading time, topic.
-  static TextStyle meta({Color color = AppColors.textMuted}) =>
+  static TextStyle meta({Color? color}) =>
       chrome(size: 13, weight: FontWeight.w600, color: color);
 
   static TextStyle editorial({
     double size = 24,
     FontWeight weight = FontWeight.w600,
-    Color color = AppColors.textPrimary,
+    Color? color,
     double height = 1.2,
     double letterSpacing = -0.2,
   }) => GoogleFonts.sourceSerif4(
@@ -99,56 +138,75 @@ abstract final class AppType {
   );
 }
 
-ThemeData buildAppTheme() {
-  final base = ThemeData(brightness: Brightness.dark, useMaterial3: true);
+ThemeData buildAppTheme({Brightness brightness = Brightness.dark}) {
+  final colors = AppPalette(brightness);
+  final base = ThemeData(brightness: brightness, useMaterial3: true);
   return base.copyWith(
-    scaffoldBackgroundColor: AppColors.nightPage,
-    colorScheme: const ColorScheme.dark(
-      surface: AppColors.nightPage,
-      onSurface: AppColors.textPrimary,
+    scaffoldBackgroundColor: colors.nightPage,
+    dividerColor: colors.hairline,
+    disabledColor: colors.textMuted,
+    dividerTheme: DividerThemeData(color: colors.hairline, thickness: 1),
+    appBarTheme: AppBarTheme(
+      backgroundColor: colors.nightPage,
+      foregroundColor: colors.textPrimary,
+      surfaceTintColor: Colors.transparent,
+      elevation: 0,
+    ),
+    colorScheme: ColorScheme(
+      brightness: brightness,
+      error: colors.error,
+      onError: colors.nightPage,
+      surface: colors.nightPage,
+      surfaceContainer: colors.raisedInk,
+      surfaceContainerHigh: colors.raisedInk,
+      surfaceContainerHighest: colors.raisedInk,
+      surfaceContainerLow: colors.raisedInk,
+      surfaceContainerLowest: colors.nightPage,
+      onSurface: colors.textPrimary,
       // Neutral Chrome Rule: Material defaults (cursor, focus, indicators)
       // must never pick up a status ink.
-      primary: AppColors.textPrimary,
-      onPrimary: AppColors.nightPage,
-      secondary: AppColors.textMuted,
-      onSecondary: AppColors.nightPage,
-      outline: AppColors.hairline,
+      primary: colors.textPrimary,
+      onPrimary: colors.nightPage,
+      secondary: colors.textMuted,
+      onSecondary: colors.nightPage,
+      outline: colors.hairline,
     ),
     textTheme: base.textTheme.apply(
-      bodyColor: AppColors.textPrimary,
-      displayColor: AppColors.textPrimary,
+      fontFamily: AppType.chrome().fontFamily,
+      bodyColor: colors.textPrimary,
+      displayColor: colors.textPrimary,
     ),
     // Flat Ground Rule: sheets separate by tone and hairline, never shadow.
     bottomSheetTheme: BottomSheetThemeData(
-      backgroundColor: AppColors.raisedInk,
-      modalBackgroundColor: AppColors.raisedInk,
+      backgroundColor: colors.raisedInk,
+      modalBackgroundColor: colors.raisedInk,
       surfaceTintColor: Colors.transparent,
       shadowColor: Colors.transparent,
       elevation: 0,
       modalElevation: 0,
-      modalBarrierColor: AppColors.nightPage.withValues(alpha: 0.7),
-      dragHandleColor: AppColors.iconOff,
-      shape: const RoundedRectangleBorder(
-        side: BorderSide(color: AppColors.hairline),
+      modalBarrierColor: colors.nightPage.withValues(alpha: 0.7),
+      dragHandleColor: colors.iconOff,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: colors.hairline),
         borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
       ),
     ),
     snackBarTheme: SnackBarThemeData(
-      backgroundColor: AppColors.raisedInk,
+      backgroundColor: colors.raisedInk,
       contentTextStyle: AppType.chrome(),
       behavior: SnackBarBehavior.floating,
       elevation: 0,
       shape: RoundedRectangleBorder(
-        side: const BorderSide(color: AppColors.hairline),
+        side: BorderSide(color: colors.hairline),
         borderRadius: BorderRadius.circular(12),
       ),
     ),
     splashFactory: NoSplash.splashFactory,
     highlightColor: Colors.transparent,
-    cupertinoOverrideTheme: const CupertinoThemeData(
-      brightness: Brightness.dark,
-      primaryColor: AppColors.textPrimary,
-      scaffoldBackgroundColor: AppColors.nightPage,
+    cupertinoOverrideTheme: CupertinoThemeData(
+      brightness: brightness,
+      primaryColor: colors.textPrimary,
+      scaffoldBackgroundColor: colors.nightPage,
     ),
   );
 }

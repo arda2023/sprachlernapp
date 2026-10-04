@@ -51,7 +51,7 @@ class _LanguageChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.hairline),
+          border: Border.all(color: context.appColors.hairline),
           borderRadius: BorderRadius.circular(999),
         ),
         child: Text(
@@ -59,7 +59,7 @@ class _LanguageChip extends StatelessWidget {
           style: AppType.chrome(
             size: 13,
             weight: FontWeight.w600,
-            color: AppColors.textMuted,
+            color: context.appColors.textMuted,
           ),
         ),
       ),
@@ -88,7 +88,7 @@ class _HeaderIcon extends StatelessWidget {
         child: Semantics(
           label: label,
           excludeSemantics: true,
-          child: Icon(icon, size: 24, color: AppColors.textMuted),
+          child: Icon(icon, size: 24, color: context.appColors.textMuted),
         ),
       ),
     );

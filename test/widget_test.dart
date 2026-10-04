@@ -1,3 +1,5 @@
+import 'fixtures/deck_repositories.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -10,7 +12,6 @@ import 'package:sprachapp/domain/leitner.dart';
 import 'package:sprachapp/domain/sentences.dart';
 import 'package:sprachapp/domain/word_form.dart';
 import 'package:sprachapp/main.dart';
-import 'package:sprachapp/models/deck_store.dart';
 import 'package:sprachapp/models/exercise_models.dart';
 import 'package:sprachapp/models/grammar_models.dart';
 import 'package:sprachapp/models/practice_models.dart';
@@ -29,8 +30,6 @@ import 'package:sprachapp/models/word_list_models.dart';
 import 'package:sprachapp/models/word_list_store.dart';
 import 'package:sprachapp/screens/decks/deck_details_screen.dart';
 import 'package:sprachapp/screens/decks/deck_library_screen.dart';
-import 'package:sprachapp/screens/decks/deck_practice_screen.dart';
-import 'package:sprachapp/screens/decks/widgets/form_info_sheet.dart';
 import 'package:sprachapp/screens/grammar/grammar_rule_detail_screen.dart';
 import 'package:sprachapp/screens/grammar/grammar_rules_screen.dart';
 import 'package:sprachapp/screens/practice/choice_exercise_screen.dart';
@@ -43,7 +42,6 @@ import 'package:sprachapp/screens/stories/story_reader_screen.dart';
 import 'package:sprachapp/screens/stories/widgets/narration_panel.dart';
 import 'package:sprachapp/screens/stories/widgets/news_carousel.dart';
 import 'package:sprachapp/screens/stories/widgets/word_lookup_sheet.dart';
-import 'package:sprachapp/screens/words/widgets/memory_level_indicator.dart';
 import 'package:sprachapp/screens/words/widgets/memory_level_legend_sheet.dart';
 import 'package:sprachapp/screens/words/widgets/word_details_sheet.dart';
 import 'package:sprachapp/screens/words/widgets/word_list_item.dart';
@@ -58,6 +56,8 @@ import 'package:sprachapp/widgets/sentence_translation_sheet.dart';
 import 'package:sprachapp/widgets/section_heading.dart';
 
 void main() {
+  setUp(() => TestWidgetsFlutterBinding.ensureInitialized().platformDispatcher.platformBrightnessTestValue = Brightness.dark);
+  tearDown(() => TestWidgetsFlutterBinding.ensureInitialized().platformDispatcher.clearPlatformBrightnessTestValue());
   setUpAll(() => GoogleFonts.config.allowRuntimeFetching = false);
 
   Future<void> scrollHomeTo(WidgetTester tester, Finder target) =>
@@ -78,18 +78,19 @@ void main() {
   }
 
   testWidgets('HomeScreen renders every section', (tester) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
 
     expect(find.bySemanticsLabel('Zielsprache: Englisch'), findsOneWidget);
     expect(find.textContaining('A2'), findsNothing);
     expect(find.textContaining('Tage'), findsNothing);
     final reisen = find.bySemanticsLabel(
-      RegExp('Reisen & Unterwegs, 42 Prozent'),
+      RegExp('Reisen & Unterwegs, 20 Prozent'),
     );
     await scrollHomeTo(tester, reisen);
     expect(find.text('Aktive Stapel'), findsOneWidget);
     expect(
-      find.bySemanticsLabel(RegExp('Reisen & Unterwegs, 42 Prozent')),
+      find.bySemanticsLabel(RegExp('Reisen & Unterwegs, 20 Prozent')),
       findsOneWidget,
     );
     await scrollHomeTo(tester, find.text('Mehr entdecken'));
@@ -105,7 +106,8 @@ void main() {
   testWidgets('Custom-labelled controls stay activatable for VoiceOver', (
     tester,
   ) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     void expectButton(String label) => expect(
       tester.getSemantics(find.bySemanticsLabel(label)),
       isSemantics(isButton: true, hasTapAction: true),
@@ -120,7 +122,7 @@ void main() {
       expectButton(label);
     }
     const reisen =
-        'Reisen & Unterwegs, 42 Prozent gemeistert, '
+        'Reisen & Unterwegs, 20 Prozent gemeistert, '
         'Schwierigkeit Einsteiger, aktiv';
     await scrollHomeTo(tester, find.bySemanticsLabel(reisen));
     expectButton(reisen);
@@ -135,21 +137,24 @@ void main() {
   });
 
   testWidgets('Tappable controls meet the 44pt minimum', (tester) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
   });
 
   testWidgets('Layout survives large Dynamic Type', (tester) async {
     tester.platformDispatcher.textScaleFactorTestValue = 2;
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
   });
 
   testWidgets('Vocab track paints mastered and active segments', (
     tester,
   ) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     for (final color in [AppColors.mastered, AppColors.active]) {
       final segment = find.byWidgetPredicate(
         (w) => w is ColoredBox && w.color == color && w.child == null,
@@ -169,7 +174,8 @@ void main() {
   testWidgets('Notched bar docks a neutral practice button with goal ring', (
     tester,
   ) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     expect(find.byIcon(CupertinoIcons.flame_fill), findsNothing);
 
     final bar = tester.widget<BottomAppBar>(find.byType(BottomAppBar));
@@ -213,7 +219,8 @@ void main() {
   testWidgets('Week row shows met, missed and today without a count', (
     tester,
   ) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     final card = find.byType(WeeklyGoalCard);
     expect(
       find.bySemanticsLabel(
@@ -250,7 +257,8 @@ void main() {
   });
 
   testWidgets('Gear changes the daily goal everywhere', (tester) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     await tester.tap(find.bySemanticsLabel('Tagesziel ändern'));
     await tester.pumpAndSettle();
     expect(find.text('Tagesziel'), findsOneWidget);
@@ -268,7 +276,8 @@ void main() {
 
   /// Home → "Mehr ansehen" → the deck library, scrolled to [deck].
   Future<void> openDeckLibraryAt(WidgetTester tester, String deck) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     await scrollHomeTo(tester, find.text('Mehr ansehen'));
     // Clear of the notched bar, also at large Dynamic Type.
     await tester.ensureVisible(find.text('Mehr ansehen'));
@@ -286,26 +295,37 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  test('Home lists only active decks', () {
-    final decks = DeckStore(sampleDecks);
-    addTearDown(decks.dispose);
-    expect(decks.homeDecks(), everyElement(predicate<Deck>((d) => d.isActive)));
-    expect(decks.homeDecks(), hasLength(decks.active.length));
-    // A started but inactive deck stays in the library.
-    expect(decks.inactive.where((d) => d.seenWords > 0), isNotEmpty);
-    decks.setActive(decks.active.first.id, false);
-    expect(decks.homeDecks(), hasLength(1));
-  });
-
   testWidgets('Deck tiles show ring, bolts and active state', (tester) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     await scrollHomeTo(
       tester,
       find.bySemanticsLabel(RegExp('^Reisen & Unterwegs,')),
     );
     // Home: active decks only.
     expect(find.widgetWithText(DeckTile, 'Medizin'), findsNothing);
-    expect(find.byType(DeckTile), findsNWidgets(2));
+    final firstTile = tester.widget<DeckTile>(
+      find.widgetWithText(DeckTile, 'Reisen & Unterwegs'),
+    );
+    expect(firstTile.deck.isActive, isTrue);
+    await scrollHomeTo(
+      tester,
+      find.widgetWithText(DeckTile, 'Alltägliche Konversation'),
+    );
+    expect(
+      tester
+          .widget<DeckTile>(
+            find.widgetWithText(DeckTile, 'Alltägliche Konversation'),
+          )
+          .deck
+          .isActive,
+      isTrue,
+    );
+    await tester.scrollUntilVisible(
+      find.widgetWithText(DeckTile, 'Reisen & Unterwegs'),
+      -200,
+      scrollable: find.byType(Scrollable).first,
+    );
 
     BoxDecoration tileBox(String name) =>
         tester
@@ -338,11 +358,17 @@ void main() {
 
     expect(
       find.bySemanticsLabel(
-        'Medizin, 6 Prozent gemeistert, Schwierigkeit Fortgeschritten',
+        'Medizin, 20 Prozent gemeistert, Schwierigkeit Fortgeschritten',
       ),
       findsOneWidget,
     );
-    expect(find.text('6% gemeistert'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.widgetWithText(DeckTile, 'Medizin'),
+        matching: find.text('20% gemeistert'),
+      ),
+      findsOneWidget,
+    );
     final medizin = find.widgetWithText(DeckTile, 'Medizin');
     final ring = tester.widget<ProgressRing>(
       find.descendant(of: medizin, matching: find.byType(ProgressRing)),
@@ -363,7 +389,8 @@ void main() {
   });
 
   testWidgets('"Mehr ansehen" opens the deck library', (tester) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     await scrollHomeTo(tester, find.text('Mehr ansehen'));
     await tester.tap(find.text('Mehr ansehen'));
     await tester.pumpAndSettle();
@@ -384,15 +411,13 @@ void main() {
     await openMedizin(tester);
     expect(find.byType(DeckDetailsScreen), findsOneWidget);
     expect(
-      find.bySemanticsLabel(
-        '53 von 532 neuen Wörtern gesehen, 30 Wörter gelernt',
-      ),
+      find.bySemanticsLabel('3 von 5 neuen Wörtern gesehen, 1 Wörter gelernt'),
       findsOneWidget,
     );
     expect(find.text('Fortgeschritten'), findsOneWidget);
     for (final label in [
       'Lerne mit diesem Stapel',
-      'Deine letzten 5 gesehenen Wörter',
+      'Deine letzten 3 gesehenen Wörter',
     ]) {
       expect(
         tester.getSemantics(find.bySemanticsLabel(label)),
@@ -402,10 +427,10 @@ void main() {
     }
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
 
-    await tester.tap(find.text('Deine letzten 5 gesehenen Wörter'));
+    await tester.tap(find.text('Deine letzten 3 gesehenen Wörter'));
     await tester.pumpAndSettle();
-    expect(find.text('prescription'), findsOneWidget);
-    expect(find.text('das Rezept'), findsOneWidget);
+    expect(find.text('walks'), findsOneWidget);
+    expect(find.text('geht'), findsOneWidget);
 
     await tester.scrollUntilVisible(
       find.text('Stapel nochmals durchsehen'),
@@ -434,7 +459,7 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Zurück'));
     await tester.pumpAndSettle();
     const medizinActive =
-        'Medizin, 6 Prozent gemeistert, Schwierigkeit Fortgeschritten, aktiv';
+        'Medizin, 20 Prozent gemeistert, Schwierigkeit Fortgeschritten, aktiv';
     expect(find.bySemanticsLabel(medizinActive), findsOneWidget);
     await tester.tap(find.bySemanticsLabel('Zurück'));
     await tester.pumpAndSettle();
@@ -452,6 +477,8 @@ void main() {
       200,
       scrollable: find.byType(Scrollable).last,
     );
+    await tester.ensureVisible(recent);
+    await tester.pumpAndSettle();
     await tester.tap(recent);
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
@@ -460,9 +487,10 @@ void main() {
   testWidgets('Home shows the four derived categories and the daily goal', (
     tester,
   ) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     expect(
-      find.bySemanticsLabel(RegExp('12 Wiederholungen verfügbar')),
+      find.bySemanticsLabel(RegExp('6 Wiederholungen verfügbar')),
       findsOneWidget,
     );
     expect(
@@ -477,7 +505,8 @@ void main() {
   });
 
   testWidgets('Stories tab groups carousels by topic', (tester) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     await scrollHomeTo(tester, find.text('Mehr entdecken'));
     await tester.tap(find.text('Mehr entdecken'));
     await tester.pumpAndSettle();
@@ -505,7 +534,8 @@ void main() {
   testWidgets('Stories tab survives large Dynamic Type', (tester) async {
     tester.platformDispatcher.textScaleFactorTestValue = 2;
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     await openStoriesTab(tester);
     expect(find.byType(StoryLibraryScreen), findsOneWidget);
     expect(tester.takeException(), isNull);
@@ -650,7 +680,8 @@ void main() {
   // ------------------------------------------------------- content dashboard
 
   Future<void> openContentTab(WidgetTester tester) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     await tester.tap(
       find.descendant(
         of: find.byType(AppBottomBar),
@@ -752,7 +783,8 @@ void main() {
   testWidgets('Opening the story marks it read for the text library', (
     tester,
   ) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     final market = find.bySemanticsLabel(RegExp(r'^The Saturday Market\.'));
     await tester.scrollUntilVisible(
       market,
@@ -1050,7 +1082,8 @@ void main() {
   testWidgets('Wortliste tab lists seen words with search and playlist', (
     tester,
   ) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     await tester.tap(
       find.descendant(
         of: find.byType(AppBottomBar),
@@ -1907,433 +1940,7 @@ void main() {
     expect(nextLeitnerBox(3, correct: false, early: true), 1);
   });
 
-  test('Session queue takes five active words with a findable gap', () {
-    final store = WordListStore(sampleVocabulary(wordListNow));
-    addTearDown(store.dispose);
-    final queue = deckPracticeQueue(store.words);
-    expect(queue, hasLength(5));
-    for (final card in queue) {
-      expect(card.state, GapState.initial);
-      expect(
-        card.word.sentence.substring(card.form.start, card.form.end),
-        card.form.text,
-      );
-    }
-    store.toggleDisabled(queue.first.word.id);
-    expect(
-      deckPracticeQueue(store.words).map((c) => c.word.id),
-      isNot(contains(queue.first.word.id)),
-    );
-  });
-
-  Widget practice(WordListStore store, {DeckPracticeMode? mode}) => MaterialApp(
-    theme: buildAppTheme(),
-    home: DeckPracticeScreen(
-      store: store,
-      mode: mode ?? DeckPracticeMode.learn,
-      clock: () => wordListNow,
-    ),
-  );
-
-  /// Colors of the session track's segments, left to right.
-  List<Color?> segmentColors(WidgetTester tester) => tester
-      .widgetList<Container>(
-        find.descendant(
-          of: find.byType(SessionTrack),
-          matching: find.byType(Container),
-        ),
-      )
-      .map((c) => (c.decoration! as BoxDecoration).color)
-      .toList();
-
-  Future<void> answer(WidgetTester tester, String text) async {
-    await tester.enterText(find.byType(TextField), text);
-    await tester.testTextInput.receiveAction(TextInputAction.done);
-    await tester.pump();
-  }
-
-  InputDecoration gapDecoration(WidgetTester tester) =>
-      tester.widget<TextField>(find.byType(TextField)).decoration!;
-
-  /// Style of [text] inside the sentence card, or null if it isn't a span.
-  TextStyle? spanStyle(WidgetTester tester, String text) {
-    TextStyle? found;
-    for (final rich in tester.widgetList<RichText>(find.byType(RichText))) {
-      void walk(InlineSpan span) {
-        if (span is TextSpan) {
-          if (span.text == text) found = span.style;
-          span.children?.forEach(walk);
-        }
-      }
-
-      walk(rich.text);
-    }
-    return found;
-  }
-
-  testWidgets(
-    'Practice: wrong flashes and clears, near miss keeps, right locks',
-    (tester) async {
-      final store = WordListStore(sampleVocabulary(wordListNow));
-      addTearDown(store.dispose);
-      final queue = deckPracticeQueue(store.words);
-      final first = queue.first;
-      await tester.pumpWidget(practice(store));
-
-      expect(find.text('Noch 5 Wörter'), findsOneWidget);
-      expect(find.bySemanticsLabel('Noch 5 von 5 Wörtern'), findsOneWidget);
-      // One segment per word, spanning the bar between Home and the menu.
-      expect(tester.getSize(find.byType(SessionTrack)).width, greaterThan(400));
-      expect(segmentColors(tester), List.filled(5, AppColors.hairline));
-      expect(
-        find.bySemanticsLabel(
-          'Erinnerungsstufe ${first.word.box} von 5: '
-          '${memoryLevelTitle(first.word.box)}',
-        ),
-        findsOneWidget,
-      );
-      expect(find.text(first.word.entry.translation), findsOneWidget);
-      // Speaker and details stay unlit until the word is known.
-      expect(
-        tester.getSemantics(find.bySemanticsLabel('Aussprechen')),
-        isSemantics(isButton: true, isEnabled: false),
-      );
-      // The grammar hint sits right under the sentence and opens at once,
-      // without giving the word away.
-      final hint = find.bySemanticsLabel(RegExp(', Grammatik-Hinweis\$'));
-      expect(
-        tester.getSemantics(hint),
-        isSemantics(isButton: true, hasTapAction: true),
-      );
-      final label = formLabel(
-        first.word.entry.partOfSpeech,
-        first.word.entry.headword,
-        first.form.text,
-      );
-      expect(find.text(label), findsOneWidget);
-      await tester.tap(hint);
-      await tester.pumpAndSettle();
-      expect(find.byType(FormInfoSheet), findsOneWidget);
-      expect(find.text('Wort-Details ansehen'), findsNothing);
-      expect(
-        find.descendant(
-          of: find.byType(FormInfoSheet),
-          matching: find.textContaining(first.form.text),
-        ),
-        findsNothing,
-      );
-      Navigator.of(tester.element(find.byType(FormInfoSheet))).pop();
-      await tester.pumpAndSettle();
-      expect(find.text('Wort erfahren'), findsOneWidget);
-      expect(find.text('Weiter'), findsNothing);
-      await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
-
-      await answer(tester, 'banana');
-      expect(
-        tester.widget<TextField>(find.byType(TextField)).controller!.text,
-        isEmpty,
-      );
-      expect(gapDecoration(tester).hintText, 'banana');
-      expect(
-        gapDecoration(tester).hintStyle?.color,
-        AppColors.error.withValues(alpha: 0.75),
-      );
-      // The wrong attempt flashes on Brick Tint, then the gap clears.
-      expect(gapDecoration(tester).filled, isTrue);
-      expect(gapDecoration(tester).fillColor, AppColors.errorTint);
-      await tester.pump(const Duration(milliseconds: 600));
-      expect(gapDecoration(tester).hintText, isNull);
-      expect(gapDecoration(tester).filled, isFalse);
-
-      // One edit off: "Fast richtig", the input stays, no error counted.
-      final near =
-          '${first.form.text.substring(0, first.form.text.length - 1)}x';
-      await answer(tester, near);
-      expect(
-        find.text('Fast richtig – prüf die Schreibweise.'),
-        findsOneWidget,
-      );
-      expect(
-        tester.widget<TextField>(find.byType(TextField)).controller!.text,
-        near,
-      );
-
-      await answer(tester, first.form.text);
-      expect(find.byType(TextField), findsNothing);
-      expect(spanStyle(tester, first.form.text)?.color, AppColors.success);
-      expect(find.text('Weiter'), findsOneWidget);
-      expect(
-        tester.getSemantics(find.bySemanticsLabel('Aussprechen')),
-        isSemantics(isButton: true, isEnabled: true, hasTapAction: true),
-      );
-      // One wrong attempt: back to box 1, seen now, one more review.
-      final updated = store.byId(first.word.id);
-      expect(updated.box, 1);
-      expect(updated.lastSeenAt, wordListNow);
-      expect(updated.reviewCount, first.word.reviewCount + 1);
-      // The card keeps the level it started with.
-      expect(
-        find.bySemanticsLabel(RegExp('^Erinnerungsstufe ${first.word.box} ')),
-        findsOneWidget,
-      );
-
-      await tester.tap(find.bySemanticsLabel('Aussprechen'));
-      await tester.pump();
-      expect(find.byIcon(CupertinoIcons.speaker_2_fill), findsOneWidget);
-      expect(
-        spanStyle(tester, first.form.text)?.backgroundColor,
-        AppColors.playback,
-      );
-      await tester.pump(const Duration(seconds: 5));
-
-      await tester.tap(find.text('Weiter'));
-      await tester.pumpAndSettle();
-      expect(find.text('Noch 4 Wörter'), findsOneWidget);
-      expect(segmentColors(tester), [
-        AppColors.textMuted,
-        ...List.filled(4, AppColors.hairline),
-      ]);
-      expect(find.byType(TextField), findsOneWidget);
-    },
-  );
-
-  testWidgets(
-    'Practice: "Wort erfahren" hints in Pale Sky and counts as an error',
-    (tester) async {
-      final store = WordListStore(sampleVocabulary(wordListNow));
-      addTearDown(store.dispose);
-      final first = deckPracticeQueue(store.words).first;
-      await tester.pumpWidget(practice(store));
-
-      await tester.tap(find.text('Wort erfahren'));
-      await tester.pump();
-      expect(gapDecoration(tester).hintText, first.form.text);
-      expect(
-        gapDecoration(tester).hintStyle?.color,
-        AppColors.memoryLevel2.withValues(alpha: 0.6),
-      );
-      expect(
-        find.text('Tippe das Wort ab, um weiterzumachen.'),
-        findsOneWidget,
-      );
-      expect(
-        tester.getSemantics(find.bySemanticsLabel('Wort erfahren')),
-        isSemantics(isButton: true, isEnabled: false),
-      );
-      expect(
-        tester.getSemantics(find.bySemanticsLabel('Aussprechen')),
-        isSemantics(isButton: true, isEnabled: true, hasTapAction: true),
-      );
-
-      // Once the word is known, the grammar sheet leads to its details.
-      await tester.tap(find.bySemanticsLabel(RegExp(', Grammatik-Hinweis\$')));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Wort-Details ansehen'));
-      await tester.pumpAndSettle();
-      expect(find.byType(FormInfoSheet), findsNothing);
-      expect(find.byType(WordDetailsSheet), findsOneWidget);
-      Navigator.of(tester.element(find.byType(WordDetailsSheet))).pop();
-      await tester.pumpAndSettle();
-
-      await answer(tester, first.form.text);
-      expect(find.text('Weiter'), findsOneWidget);
-      expect(store.byId(first.word.id).box, 1);
-    },
-  );
-
-  testWidgets('Practice: a clean first try moves the word up one box', (
-    tester,
-  ) async {
-    final store = WordListStore(sampleVocabulary(wordListNow));
-    addTearDown(store.dispose);
-    final queue = deckPracticeQueue(store.words);
-    await tester.pumpWidget(practice(store));
-    for (final (i, card) in queue.indexed) {
-      final left = 5 - i;
-      expect(
-        find.text('Noch $left ${left == 1 ? 'Wort' : 'Wörter'}'),
-        findsOneWidget,
-      );
-      await answer(tester, card.form.text);
-      expect(
-        store.byId(card.word.id).box,
-        nextLeitnerBox(card.word.box, correct: true),
-      );
-      await tester.tap(find.text('Weiter'));
-      await tester.pumpAndSettle();
-    }
-    // Session done: the summary replaces the cards and the toolbar.
-    expect(find.text('5 Wörter geübt'), findsOneWidget);
-    expect(
-      find.text('5 auf Anhieb richtig · 0 zurück auf Stufe 1'),
-      findsOneWidget,
-    );
-    expect(find.text('Wort erfahren'), findsNothing);
-    expect(find.text('Alle Wörter geübt'), findsOneWidget);
-    expect(segmentColors(tester), List.filled(5, AppColors.textMuted));
-  });
-
-  testWidgets('Practice: Stapel-Revue keeps the box on a right answer', (
-    tester,
-  ) async {
-    final store = WordListStore(sampleVocabulary(wordListNow));
-    addTearDown(store.dispose);
-    final first = deckPracticeQueue(store.words).first;
-    await tester.pumpWidget(practice(store, mode: DeckPracticeMode.review));
-    await answer(tester, first.form.text);
-    expect(store.byId(first.word.id).box, first.word.box);
-  });
-
-  testWidgets('Practice: the sentence translation folds away and stays so', (
-    tester,
-  ) async {
-    final store = WordListStore(sampleVocabulary(wordListNow));
-    addTearDown(store.dispose);
-    final queue = deckPracticeQueue(store.words);
-    await tester.pumpWidget(practice(store));
-    expect(find.text(queue[0].word.sentenceTranslation), findsOneWidget);
-    expect(find.byIcon(CupertinoIcons.chevron_up), findsOneWidget);
-    expect(
-      tester.getSemantics(find.bySemanticsLabel(RegExp('^Übersetzung:'))),
-      isSemantics(isButton: true, hasExpandedState: true, isExpanded: true),
-    );
-
-    await tester.tap(find.bySemanticsLabel(RegExp('^Übersetzung:')));
-    await tester.pumpAndSettle();
-    expect(find.text(queue[0].word.sentenceTranslation), findsNothing);
-    expect(find.text(queue[0].word.entry.translation), findsOneWidget);
-    expect(find.byIcon(CupertinoIcons.chevron_down), findsOneWidget);
-
-    await answer(tester, queue[0].form.text);
-    await tester.tap(find.text('Weiter'));
-    await tester.pumpAndSettle();
-    expect(find.text(queue[1].word.sentenceTranslation), findsNothing);
-    expect(find.text(queue[1].word.entry.translation), findsOneWidget);
-  });
-
-  testWidgets('Practice: the menu deactivates and favourites the word', (
-    tester,
-  ) async {
-    final store = WordListStore(sampleVocabulary(wordListNow));
-    addTearDown(store.dispose);
-    final first = deckPracticeQueue(store.words).first;
-    await tester.pumpWidget(practice(store));
-
-    await tester.tap(find.bySemanticsLabel('Mehr'));
-    await tester.pumpAndSettle();
-    expect(find.byType(CupertinoActionSheet), findsOneWidget);
-    await tester.tap(find.text('Wort deaktivieren'));
-    await tester.pumpAndSettle();
-    expect(find.text('Wort deaktiviert'), findsOneWidget);
-    expect(store.byId(first.word.id).isDisabled, isTrue);
-
-    await tester.tap(find.bySemanticsLabel('Mehr'));
-    await tester.pumpAndSettle();
-    expect(find.text('Wort wieder aktivieren'), findsOneWidget);
-    await tester.tap(
-      find.text(
-        first.word.isFavorite
-            ? 'Aus Favoriten entfernen'
-            : 'Zu Favoriten hinzufügen',
-      ),
-    );
-    await tester.pumpAndSettle();
-    expect(store.byId(first.word.id).isFavorite, !first.word.isFavorite);
-
-    await tester.tap(find.bySemanticsLabel('Mehr'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Abbrechen'));
-    await tester.pumpAndSettle();
-    expect(find.byType(CupertinoActionSheet), findsNothing);
-  });
-
-  testWidgets('Practice: the toolbar rides on the keyboard', (tester) async {
-    phoneView(tester, height: 844);
-    final store = WordListStore(sampleVocabulary(wordListNow));
-    addTearDown(store.dispose);
-    await tester.pumpWidget(practice(store));
-    Finder toolbarButton() => find.bySemanticsLabel('Wort erfahren');
-    final closed = tester.getBottomLeft(toolbarButton()).dy;
-    expect(closed, greaterThan(844 - 60));
-
-    tester.view.viewInsets = const FakeViewPadding(bottom: 300 * 3);
-    await tester.pump();
-    final open = tester.getBottomLeft(toolbarButton()).dy;
-    expect(open, lessThanOrEqualTo(844 - 300));
-    expect(open, greaterThan(844 - 300 - 60));
-  });
-
-  testWidgets('Practice: Home ends the session', (tester) async {
-    await openMedizin(tester);
-    await tester.tap(find.text('Lerne mit diesem Stapel'));
-    await tester.pumpAndSettle();
-    expect(find.byType(DeckPracticeScreen), findsOneWidget);
-    await tester.tap(find.bySemanticsLabel('Session beenden'));
-    await tester.pumpAndSettle();
-    expect(find.byType(DeckPracticeScreen), findsNothing);
-    expect(find.byType(DeckDetailsScreen), findsOneWidget);
-
-    await tester.scrollUntilVisible(
-      find.text('Stapel nochmals durchsehen'),
-      200,
-      scrollable: find.byType(Scrollable).last,
-    );
-    await tester.ensureVisible(find.text('Stapel nochmals durchsehen'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Stapel nochmals durchsehen'));
-    await tester.pumpAndSettle();
-    expect(
-      tester.widget<DeckPracticeScreen>(find.byType(DeckPracticeScreen)).mode,
-      DeckPracticeMode.review,
-    );
-  });
-
-  testWidgets('Practice survives large Dynamic Type', (tester) async {
-    phoneView(tester, height: 844);
-    tester.platformDispatcher.textScaleFactorTestValue = 2;
-    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
-    final store = WordListStore(sampleVocabulary(wordListNow));
-    addTearDown(store.dispose);
-    await tester.pumpWidget(practice(store));
-    expect(tester.takeException(), isNull);
-    await tester.tap(find.text('Wort erfahren'));
-    await tester.pump();
-    await answer(tester, deckPracticeQueue(store.words).first.form.text);
-    await tester.pumpAndSettle();
-    expect(tester.takeException(), isNull);
-  });
-
-  testWidgets(
-    'Practice: cursor starts left, "Wort erfahren" sits flush right',
-    (tester) async {
-      phoneView(tester, height: 844);
-      final store = WordListStore(sampleVocabulary(wordListNow));
-      addTearDown(store.dispose);
-      await tester.pumpWidget(practice(store));
-      expect(
-        tester.widget<TextField>(find.byType(TextField)).textAlign,
-        TextAlign.start,
-      );
-      // Toolbar padding is 12pt on the right.
-      expect(
-        tester.getTopRight(find.bySemanticsLabel('Wort erfahren')).dx,
-        moreOrLessEquals(390 - 12, epsilon: 1),
-      );
-      expect(tester.getTopLeft(find.bySemanticsLabel('Aussprechen')).dx, 8);
-      // Also with a hint in the middle and after solving.
-      await tester.tap(find.text('Wort erfahren'));
-      await tester.pump();
-      expect(
-        tester.getTopRight(find.bySemanticsLabel('Wort erfahren')).dx,
-        moreOrLessEquals(390 - 12, epsilon: 1),
-      );
-      await answer(tester, deckPracticeQueue(store.words).first.form.text);
-      expect(
-        tester.getTopRight(find.bySemanticsLabel('Weiter')).dx,
-        moreOrLessEquals(390 - 12, epsilon: 1),
-      );
-    },
-  );
+  // Repository-backed practice and its visual regressions: deck_flow_test.dart.
 
   // -------------------------------------------------------------- news
 
@@ -2537,7 +2144,8 @@ void main() {
   });
 
   testWidgets('Opening a news card pushes the reader', (tester) async {
-    await tester.pumpWidget(const SprachApp());
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
     await openStoriesTab(tester);
     final card = find.widgetWithText(NewsCard, 'Politik in 100 Sekunden');
     await tester.ensureVisible(card);

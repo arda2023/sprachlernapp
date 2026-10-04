@@ -1,6 +1,11 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../presentation/providers/deck_providers.dart';
+import '../../presentation/providers/database_providers.dart';
+import '../../presentation/content_unavailable_view.dart';
+
 import 'package:flutter/cupertino.dart';
 
-import '../../models/deck_store.dart';
 import '../../models/home_models.dart';
 import '../../models/sample_content.dart';
 import '../../theme/app_theme.dart';
@@ -11,10 +16,9 @@ import 'widgets/story_carousel.dart';
 import 'widgets/vocab_progress.dart';
 import 'widgets/weekly_goal_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({
     super.key,
-    required this.decks,
     required this.goal,
     required this.week,
     required this.onOpenStory,
@@ -28,7 +32,6 @@ class HomeScreen extends StatelessWidget {
 
   static const _gutter = EdgeInsets.symmetric(horizontal: 20);
 
-  final DeckStore decks;
   final DailyGoal goal;
   final WeekProgress week;
   final ValueChanged<Story> onOpenStory;
@@ -40,84 +43,115 @@ class HomeScreen extends StatelessWidget {
   final VoidCallback onSettings;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       bottom: false,
-      child: ListenableBuilder(
-        listenable: decks,
-        builder: (context, _) => ListView(
-          physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics(),
-          ),
-          padding: const EdgeInsets.only(top: 8, bottom: 32),
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 8),
-              child: HomeHeader(
-                flag: '🇬🇧',
-                languageName: 'Englisch',
-                onProfile: onProfile,
-                onSettings: onSettings,
-              ),
-            ),
-            const SizedBox(height: 28),
-            Padding(
-              padding: _gutter,
-              child: WeeklyGoalCard(
-                week: week,
-                goal: goal,
-                onEditGoal: onEditGoal,
-              ),
-            ),
-            const SizedBox(height: 28),
-            const Padding(
-              padding: _gutter,
-              child: VocabProgress(breakdown: sampleBreakdown),
-            ),
-            const SizedBox(height: 22),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 8),
-              child: SectionHeading(
-                title: 'Aktive Stapel',
-                trailing: _MoreButton(
-                  label: 'Mehr ansehen',
-                  onPressed: onBrowseDecks,
-                ),
-              ),
-            ),
-            const SizedBox(height: 14),
-            for (final (i, deck) in decks.homeDecks().indexed)
-              Padding(
-                padding: _gutter.copyWith(top: i == 0 ? 0 : 12),
-                child: DeckTile(deck: deck, onTap: () => onOpenDeck(deck)),
-              ),
-            if (decks.active.isEmpty)
-              Padding(
-                padding: _gutter,
-                child: Text(
-                  'Noch kein Stapel aktiv. Unter „Mehr ansehen“ findest du '
-                  'alle Stapel.',
-                  style: AppType.chrome(color: AppColors.textMuted),
-                ),
-              ),
-            const SizedBox(height: 22),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 8),
-              child: SectionHeading(
-                title: 'Stories',
-                trailing: _MoreButton(
-                  label: 'Mehr entdecken',
-                  onPressed: onBrowseStories,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            StoryCarousel(
-              stories: sampleStories.take(5).toList(),
-              onOpen: onOpenStory,
-            ),
-          ],
+      child: ListView(
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
         ),
+        padding: const EdgeInsets.only(top: 8, bottom: 32),
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 8),
+            child: HomeHeader(
+              flag: '🇬🇧',
+              languageName: 'Englisch',
+              onProfile: onProfile,
+              onSettings: onSettings,
+            ),
+          ),
+          const SizedBox(height: 28),
+          Padding(
+            padding: _gutter,
+            child: WeeklyGoalCard(
+              week: week,
+              goal: goal,
+              onEditGoal: onEditGoal,
+            ),
+          ),
+          const SizedBox(height: 28),
+          Padding(
+            padding: _gutter,
+            child: ref
+                .watch(vocabBreakdownProvider)
+                .when(
+                  loading: () => const CupertinoActivityIndicator(),
+                  error: (error, _) => ContentUnavailableView(
+                    error: error,
+                    onRetry: () {
+                      retryDatabases(ref);
+                      ref.invalidate(vocabBreakdownProvider);
+                      ref.invalidate(decksProvider);
+                    },
+                  ),
+                  data: (value) => VocabProgress(breakdown: value),
+                ),
+          ),
+          const SizedBox(height: 22),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 8),
+            child: SectionHeading(
+              title: 'Aktive Stapel',
+              trailing: _MoreButton(
+                label: 'Mehr ansehen',
+                onPressed: onBrowseDecks,
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+          ...ref
+              .watch(decksProvider)
+              .when(
+                loading: () => [const CupertinoActivityIndicator()],
+                error: (error, _) => [
+                  ContentUnavailableView(
+                    error: error,
+                    onRetry: () {
+                      retryDatabases(ref);
+                      ref.invalidate(decksProvider);
+                    },
+                  ),
+                ],
+                data: (decks) => [
+                  for (final (i, deck)
+                      in decks.where((d) => d.isActive).take(3).indexed)
+                    Padding(
+                      padding: _gutter.copyWith(top: i == 0 ? 0 : 12),
+                      child: DeckTile(
+                        deck: deck,
+                        onTap: () => onOpenDeck(deck),
+                      ),
+                    ),
+                  if (!decks.any((d) => d.isActive))
+                    Padding(
+                      padding: _gutter,
+                      child: Text(
+                        'Noch kein Stapel aktiv. Unter „Mehr ansehen“ findest du alle Stapel.',
+                        style: AppType.chrome(
+                          color: context.appColors.textMuted,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+          const SizedBox(height: 22),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 8),
+            child: SectionHeading(
+              title: 'Stories',
+              trailing: _MoreButton(
+                label: 'Mehr entdecken',
+                onPressed: onBrowseStories,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          StoryCarousel(
+            stories: sampleStories.take(5).toList(),
+            onOpen: onOpenStory,
+          ),
+        ],
       ),
     );
   }
@@ -138,12 +172,19 @@ class _MoreButton extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(label, style: AppType.chrome(size: 15, weight: FontWeight.w600)),
+          Text(
+            label,
+            style: AppType.chrome(
+              color: context.appColors.textPrimary,
+              size: 15,
+              weight: FontWeight.w600,
+            ),
+          ),
           const SizedBox(width: 2),
-          const Icon(
+          Icon(
             CupertinoIcons.chevron_right,
             size: 14,
-            color: AppColors.textMuted,
+            color: context.appColors.textMuted,
           ),
         ],
       ),

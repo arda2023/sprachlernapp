@@ -13,10 +13,13 @@ class FormInfoSheet extends StatelessWidget {
     required this.label,
     required this.explanation,
     this.onShowWord,
+    this.examples = const [],
+    this.forms = const [],
   });
 
   final String label;
   final String explanation;
+  final List<String> examples, forms;
 
   /// Null until the word is solved or revealed.
   final VoidCallback? onShowWord;
@@ -26,15 +29,19 @@ class FormInfoSheet extends StatelessWidget {
     required String label,
     required String explanation,
     VoidCallback? onShowWord,
+    List<String> examples = const [],
+    List<String> forms = const [],
   }) => showModalBottomSheet<void>(
     context: context,
-    showDragHandle: true,
+    showDragHandle: false,
     isScrollControlled: true,
     useSafeArea: true,
     builder: (_) => FormInfoSheet(
       label: label,
       explanation: explanation,
       onShowWord: onShowWord,
+      examples: examples,
+      forms: forms,
     ),
   );
 
@@ -48,22 +55,64 @@ class FormInfoSheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Grammatik', style: AppType.meta()),
+            Align(
+              alignment: Alignment.centerRight,
+              child: CupertinoButton(
+                onPressed: () => Navigator.pop(context),
+                child: Semantics(
+                  label: 'Schließen',
+                  child: const Icon(CupertinoIcons.xmark),
+                ),
+              ),
+            ),
             const SizedBox(height: 6),
             Semantics(
               header: true,
-              child: Text(label, style: AppType.editorial(size: 24)),
+              child: Text(
+                label,
+                style: AppType.editorial(
+                  color: context.appColors.textPrimary,
+                  size: 24,
+                ),
+              ),
             ),
             const SizedBox(height: 12),
             Text(
               explanation,
               style: AppType.editorial(
+                color: context.appColors.textPrimary,
                 size: 17,
                 weight: FontWeight.w400,
                 height: 1.45,
                 letterSpacing: 0,
               ),
             ),
+            if (examples.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Text(
+                  examples.join(' · '),
+                  style: AppType.editorial(
+                    size: 20,
+                    color: context.appColors.memoryLevel2,
+                  ),
+                ),
+              ),
+            if (forms.isNotEmpty) ...[
+              const SizedBox(height: 20),
+              Text(
+                'Vorhandene Formen',
+                style: AppType.chrome(color: context.appColors.textPrimary),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                forms.join(' · '),
+                style: AppType.editorial(
+                  size: 20,
+                  color: context.appColors.memoryLevel2,
+                ),
+              ),
+            ],
             if (onShowWord case final onShowWord?) ...[
               const SizedBox(height: 20),
               OutlineActionButton(

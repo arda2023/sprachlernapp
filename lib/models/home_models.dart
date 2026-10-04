@@ -1,30 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-/// The four Lingvist categories (PRODUCT.md). Disjoint by construction, so
-/// [total] always equals their sum. Derived upstream from card state and due
-/// dates; never persisted.
-class VocabBreakdown {
-  const VocabBreakdown({
-    required this.due,
-    required this.building,
-    required this.mastered,
-    required this.unseen,
-  }) : assert(due >= 0 && building >= 0 && mastered >= 0 && unseen >= 0);
-
-  /// Verfügbare Wiederholungen: seen words whose due date has passed.
-  final int due;
-
-  /// Wörter im Aufbau: box 1–4, not yet due.
-  final int building;
-
-  /// Wörter gemeistert: box 5, not yet due.
-  final int mastered;
-
-  /// Noch nicht angezeigt: never shown to the learner.
-  final int unseen;
-
-  int get total => due + building + mastered + unseen;
-}
+export '../domain/srs_state.dart' show VocabBreakdown;
 
 /// A recommendation, never a lockout (PRODUCT.md).
 class DailyGoal {
@@ -70,9 +46,9 @@ class Deck {
     required this.isActive,
     this.recentWords = const [],
   }) : assert(0 <= masteredWords && masteredWords <= seenWords),
-       assert(seenWords <= totalWords && totalWords > 0);
+       assert(seenWords <= totalWords && totalWords >= 0);
 
-  /// Stable slug, so content-pack imports stay idempotent.
+  /// Stable content ID, so content-pack imports stay idempotent.
   final String id;
   final String name;
   final String description;
@@ -94,7 +70,8 @@ class Deck {
   /// Most recent first.
   final List<SeenWord> recentWords;
 
-  double get masteredFraction => masteredWords / totalWords;
+  double get masteredFraction =>
+      totalWords == 0 ? 0 : masteredWords / totalWords;
 
   Deck copyWith({bool? isActive}) => Deck(
     id: id,

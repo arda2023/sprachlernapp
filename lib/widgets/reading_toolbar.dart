@@ -27,11 +27,13 @@ class ReadingToolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = translating ? AppColors.textPrimary : AppColors.textMuted;
+    final color = translating
+        ? context.appColors.textPrimary
+        : context.appColors.textMuted;
     return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.raisedInk,
-        border: Border(top: BorderSide(color: AppColors.hairline)),
+      decoration: BoxDecoration(
+        color: context.appColors.raisedInk,
+        border: Border(top: BorderSide(color: context.appColors.hairline)),
       ),
       child: SafeArea(
         top: false,
@@ -50,7 +52,7 @@ class ReadingToolbar extends StatelessWidget {
                               hint,
                               style: AppType.chrome(
                                 size: 13,
-                                color: AppColors.textMuted,
+                                color: context.appColors.textMuted,
                               ),
                             ),
                           )
@@ -83,8 +85,12 @@ class ReadingToolbar extends StatelessWidget {
                               vertical: 10,
                             ),
                             decoration: BoxDecoration(
-                              color: translating ? AppColors.hairline : null,
-                              border: Border.all(color: AppColors.hairline),
+                              color: translating
+                                  ? context.appColors.hairline
+                                  : null,
+                              border: Border.all(
+                                color: context.appColors.hairline,
+                              ),
                               borderRadius: BorderRadius.circular(999),
                             ),
                             child: Row(
@@ -147,14 +153,16 @@ class _ListenToggle extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: on ? AppColors.hairline : null,
-              border: Border.all(color: AppColors.hairline),
+              color: on ? context.appColors.hairline : null,
+              border: Border.all(color: context.appColors.hairline),
               shape: BoxShape.circle,
             ),
             child: Icon(
               on ? CupertinoIcons.speaker_2_fill : CupertinoIcons.speaker_2,
               size: 20,
-              color: on ? AppColors.textPrimary : AppColors.textMuted,
+              color: on
+                  ? context.appColors.textPrimary
+                  : context.appColors.textMuted,
             ),
           ),
         ),

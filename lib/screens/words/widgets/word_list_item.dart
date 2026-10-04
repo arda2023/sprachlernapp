@@ -104,6 +104,7 @@ class WordListItem extends StatelessWidget {
                         child: Text(
                           word.sentence,
                           style: AppType.editorial(
+                            color: context.appColors.textPrimary,
                             size: 16,
                             weight: FontWeight.w400,
                             height: 1.45,
@@ -116,9 +117,13 @@ class WordListItem extends StatelessWidget {
                         padding: inset,
                         child: Text(
                           meta,
-                          style: AppType.meta().copyWith(
-                            fontFeatures: const [FontFeature.tabularFigures()],
-                          ),
+                          style:
+                              AppType.meta(color: context.appColors.textMuted)
+                                  .copyWith(
+                                    fontFeatures: const [
+                                      FontFeature.tabularFigures(),
+                                    ],
+                                  ),
                         ),
                       ),
                     ],
@@ -161,13 +166,13 @@ class WordListItem extends StatelessWidget {
                   child: Semantics(
                     label: 'Details zu $headword',
                     excludeSemantics: true,
-                    child: const SizedBox(
+                    child: SizedBox(
                       width: 44,
                       height: 44,
                       child: Icon(
                         CupertinoIcons.chevron_right,
                         size: 18,
-                        color: AppColors.textMuted,
+                        color: context.appColors.textMuted,
                       ),
                     ),
                   ),
@@ -182,7 +187,7 @@ class WordListItem extends StatelessWidget {
             left: PlaybackHighlight.inset,
             right: WordListItem.ruleEndInset,
           ),
-          color: AppColors.hairline,
+          color: context.appColors.hairline,
         ),
       ],
     );
@@ -221,12 +226,14 @@ class WordToggle extends StatelessWidget {
             width: 34,
             height: 34,
             decoration: BoxDecoration(
-              color: on ? AppColors.hairline : null,
+              color: on ? context.appColors.hairline : null,
               shape: BoxShape.circle,
             ),
             child: IconTheme.merge(
               data: IconThemeData(
-                color: on ? AppColors.textPrimary : AppColors.textMuted,
+                color: on
+                    ? context.appColors.textPrimary
+                    : context.appColors.textMuted,
               ),
               child: Center(child: icon),
             ),
@@ -255,7 +262,7 @@ class DisableWordIcon extends StatelessWidget {
         Icon(
           CupertinoIcons.xmark,
           size: 9,
-          color: filled ? AppColors.hairline : color,
+          color: filled ? context.appColors.hairline : color,
         ),
       ],
     );

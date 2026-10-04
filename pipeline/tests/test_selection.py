@@ -1,0 +1,114 @@
+import copy
+import json
+from pathlib import Path
+
+import pytest
+
+from sprachpipe.cli import main, run_generate
+from sprachpipe.config import load_config
+from sprachpipe.export import export_sqlite
+from sprachpipe.pack import build_rows
+from sprachpipe.selection import plan_selection
+
+FIXTURE = Path(__file__).parent / 'fixtures' / 'mini_pack.json'
+
+
+@pytest.fixture
+def inputs(tmp_path):
+    pack = json.loads(FIXTURE.read_text(encoding='utf-8'))
+    db = tmp_path / 'content.sqlite'
+    export_sqlite(pack, db)
+    entry = {'form':'table','lemma':'table','pos':'NOUN','form_kind':'base',
+             'proposed_sense_key':'table#tisch','sense_key':None,
+             'target_meaning_de':'Möbel zum Essen','translation_de':'Tisch',
+             'form_label_de':'Substantiv, Singular','cefr_band':'anfaenger',
+             'topic':'Haushalt','reason':'Konkreter Alltagsgegenstand',
+             'frequency':{'rank':958}}
+    data = {'version':1,'lang':'en','entries':[entry]}
+    path = tmp_path / 'selection.json'
+    path.write_text(json.dumps(data), encoding='utf-8')
+    return path, db, data
+
+
+def test_missing_definition_visible_and_duplicate_rejected(inputs, tmp_path):
+    path, db, data = inputs
+    plan = plan_selection(path, db, inventory_path=tmp_path/'absent.json')
+    assert len(plan['selected']) == 1
+    assert plan['reused_sense_keys'] == 0
+    del data['entries'][0]['target_meaning_de']
+    path.write_text(json.dumps(data), encoding='utf-8')
+    plan = plan_selection(path, db, inventory_path=tmp_path/'absent.json')
+    assert plan['missing_definitions'][0]['fields'] == ['target_meaning_de']
+    assert not plan['selected']
+    data['entries'].append(copy.deepcopy(data['entries'][0]))
+    path.write_text(json.dumps(data), encoding='utf-8')
+    with pytest.raises(ValueError, match='duplicate'):
+        plan_selection(path, db)
+
+
+def test_existing_exact_card_reused_not_another_sense(inputs):
+    path, db, data = inputs
+    e = data['entries'][0]
+    e.update(form='left',lemma='left',pos='ADJ',sense_key='left#links',proposed_sense_key=None)
+    path.write_text(json.dumps(data), encoding='utf-8')
+    plan = plan_selection(path, db)
+    assert len(plan['covered']) == 1
+    assert not plan['selected']
+    rows = build_rows(json.loads(FIXTURE.read_text(encoding='utf-8')))
+    assert plan['covered'][0]['card_id'] in {r['id'] for r in rows['cards']}
+    e.update(sense_key=None,proposed_sense_key='left#remaining')
+    path.write_text(json.dumps(data), encoding='utf-8')
+    plan = plan_selection(path, db)
+    assert not plan['covered']
+    assert plan['selected']['left'][0]['sense_key'] == 'left#remaining'
+
+
+def test_dry_run_never_initializes_llm_or_writes(inputs, tmp_path, monkeypatch, capsys):
+    from sprachpipe import llm
+    monkeypatch.setattr(llm, 'Llm', lambda *a, **kw: pytest.fail('LLM initialized'))
+    path, db, _ = inputs
+    run = tmp_path / 'new-run'
+    argv = ['generate','--selection',str(path),'--existing-pack',str(db),
+            '--run-dir',str(run),'--out',str(run/'pack.json'),'--max-usd','3','--dry-run']
+    assert main(argv) == 0
+    assert not run.exists()
+    assert 'Cards planned: 1' in capsys.readouterr().out
+    argv[argv.index('3')] = '3.01'
+    assert main(argv) == 2
+
+
+def test_selected_generation_bypasses_other_meanings_preserves_ids(tmp_path, monkeypatch):
+    from test_generate import FakeVertex, WENT
+    from sprachpipe import generate
+    cfg = load_config()
+    cfg['generate']['concurrency'] = 1
+    inv = tmp_path / 'meanings.json'
+    other = {**WENT, 'sense_key':'go#work', 'gloss_de':'funktionieren'}
+    inv.write_text(json.dumps({'lang':'en','forms':{'went':[WENT, other]}}), encoding='utf-8')
+    before = inv.read_bytes()
+    monkeypatch.setattr(generate, 'meanings', lambda *a, **kw: pytest.fail('meaning expansion'))
+    fake = FakeVertex(cfg, tmp_path/'ledger.csv', 3)
+    aborted = run_generate(fake, cfg, [('went',50)], tmp_path/'pack.json', tmp_path,
+        max_usd=3, label='exact', inventory_path=inv, selected_meanings={'went':[WENT]})
+    assert aborted is None
+    pack = json.loads((tmp_path/'pack.json').read_text(encoding='utf-8'))
+    assert len(pack['cards']) == 1
+    assert pack['cards'][0]['sense'].endswith('go#gehen')
+    assert 'meanings' not in fake.calls
+    assert 'annotate' in fake.calls and 'sense_key' in fake.calls
+    assert inv.read_bytes() == before
+    actual = build_rows(pack)['cards'][0]['id']
+    fixture = build_rows(json.loads(FIXTURE.read_text(encoding='utf-8')))
+    assert actual == next(r['id'] for r in fixture['cards'] if r['form']=='went')
+
+
+def test_versioned_editorial_selection_has_100_distinct_targets():
+    path = Path(__file__).parents[1]/'data'/'selection'/'everyday_v1.json'
+    entries = json.loads(path.read_text(encoding='utf-8'))['entries']
+    assert len(entries) == len({e['lemma'] for e in entries}) == 100
+    assert {p:sum(e['pos']==p for e in entries) for p in ['NOUN','VERB','ADJ']} == {
+        'NOUN':60,'VERB':25,'ADJ':15}
+    for form, tr in [('table','Tisch'),('speaker','Lautsprecher'),('bandage','Verband')]:
+        assert next(e['translation_de'] for e in entries if e['form']==form) == tr
+    assert all(e['target_meaning_de'] and e['form'] == e['lemma'] and
+               e['definition_status']=='editorial_proposal_not_sentence_validated' for e in entries)

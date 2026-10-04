@@ -224,3 +224,74 @@ Jeder Schritt ist wiederholbar und schreibt nur über stabile IDs (`docs/content
 
 - Einträge in BNC/COCA sind Wortfamilien, je 1.000er-Liste alphabetisch sortiert, nicht nach Rang. Kopfwort-Zuordnung erhalten.
 - Die Werte `"null"`, `"true"`, `"false"` kommen als Wörter vor. Beim Einlesen (CSV, YAML, JSON, Excel) explizit als Text behandeln.
+
+## Gezielte Alltag-Auswahl v1 (04.10.2026)
+
+`data/selection/everyday_v1.json` enthält 100 redaktionell ausgewählte neue
+Lemmas (60 NOUN, 25 lexikalische VERB, 15 ADJ), je eine Grundform und eine
+konkrete Zielbedeutung. table/Tisch, speaker/Lautsprecher und bandage/Verband
+fehlen als Lernkarten im aktuellen Pack und sind enthalten. Worthäufigkeit aus
+wordfreq 3.1.1 ist Relevanzhilfe, keine Häufigkeit der einzelnen Bedeutung.
+75 vorhandene Pack-Sense-Keys werden wiederverwendet, 25 sind neue Vorschläge.
+Alle 100 Definitionen sind explizite redaktionelle Ziele, noch nicht satzgeprüft;
+keiner der 100 Einträge wird als bereits geprüftes kanonisches Inventar ausgegeben.
+
+Der optionale CLI-Modus `generate --selection` liest das vorhandene SQLite-Pack
+schreibgeschützt. Identische aktive Form/Lemma/POS/Sense-Karten werden als REUSE
+übersprungen. Fehlende Definitionen werden vor jeglicher Generierung ausgewiesen;
+doppelte Lemmas/Oberflächen und als bestehend behauptete unbekannte Schlüssel
+werden abgewiesen. Er erzeugt nur die ausgewählten Zielbedeutungen und verwendet
+unverändert `_process_card`, QA, Annotation, stabile IDs und Llm-Budgetreservierung.
+Das Bedeutungsinventar wird nicht erweitert; `--forms` behält seinen bisherigen Weg.
+Satzannotation anderer Wörter bleibt notwendig, erzeugt aber keine zusätzlichen
+Lernkarten. Das Ausgabe-Pack ist ein separates Los, keine automatische Installation
+oder Zusammenführung. Bereits vorhandene Karten verbleiben im bestehenden Pack.
+
+Tatsächlich ausgeführter Offline-Dry-Run, Windows PowerShell ab `pipeline`:
+
+```powershell
+.\.venv\Scripts\python.exe -m sprachpipe.cli generate --selection data\selection\everyday_v1.json --existing-pack ..\assets\content\en\content.sqlite --run-dir out\everyday_v1_20261004 --out out\everyday_v1_20261004\pack.json --max-usd 3.00 --dry-run
+```
+
+Gleicher Offline-Befehl, macOS Terminal ab `pipeline`:
+
+```sh
+.venv/bin/python -m sprachpipe.cli generate --selection data/selection/everyday_v1.json --existing-pack ../assets/content/en/content.sqlite --run-dir out/everyday_v1_20261004 --out out/everyday_v1_20261004/pack.json --max-usd 3.00 --dry-run
+```
+
+Tatsächlicher Output (vollständig lokal in `build/everyday_dry_run.txt`):
+
+```text
+Selection: 100 distinct lemmas; POS {'NOUN': 60, 'VERB': 25, 'ADJ': 15}
+Cards planned: 100; existing reused: 0
+Lemmas without any existing learning card: 100
+Existing sense keys: 75; new proposed keys: 25
+Canonical inventory definitions: 0; explicit editorial targets: 100; missing definitions: 0
+Planning estimate: 3.073 USD; retry scenario (2.5x): 7.681 USD
+```
+
+Preisstand aus bestehender config.yaml: 03.10.2026, nicht neu abgerufen.
+Modelle: gemini-3.8-flash/LOW für Generierung, Bedeutungs-/Alternativenprüfung
+und Annotation; gemini-2.5-flash/thinking_budget=0 für Blindtest.
+Annahme je Karte: ein Batch mit fünf Kandidaten, drei akzeptierten Sätzen,
+fünf Blindtests, fünf Bedeutungsprüfungen, zwei Alternativenprüfungen und eine
+Annotation. Tokenansätze (Input/Output/Thinking je Aufruf): 2500/800/400 für
+Sätze, 500/70/0 Blindtest, 900/120/200 Bedeutungsprüfung, 900/150/200 Alternativen,
+2500/1600/400 Annotation. Keine Garantie; Nachgenerierungen oder mehr Thinking
+können teurer sein. Bereits das Basisszenario liegt knapp über dem Laufbudget;
+Teilabschluss ist möglich. Budget bleibt unverändert maximal 3,00 USD.
+
+Manueller Cloud-Start, **nicht ausgeführt**, Windows PowerShell ab `pipeline`:
+
+```powershell
+.\.venv\Scripts\python.exe -m sprachpipe.cli generate --selection data\selection\everyday_v1.json --existing-pack ..\assets\content\en\content.sqlite --run-dir out\everyday_v1_20261004 --out out\everyday_v1_20261004\pack.json --max-usd 3.00
+```
+
+macOS Terminal, ebenfalls **nicht ausgeführt**:
+
+```sh
+.venv/bin/python -m sprachpipe.cli generate --selection data/selection/everyday_v1.json --existing-pack ../assets/content/en/content.sqlite --run-dir out/everyday_v1_20261004 --out out/everyday_v1_20261004/pack.json --max-usd 3.00
+```
+
+Der Ausgabeordner muss neu sein, `--out` darin liegen. Dry-Run legt nichts an.
+Die 100 neuen Vokabeln sind vorbereitet, weder generiert noch geprüft/installiert.

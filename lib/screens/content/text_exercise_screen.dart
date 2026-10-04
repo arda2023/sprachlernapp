@@ -366,8 +366,8 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
   InlineSpan _solvedSpan(_Gap g, {GestureRecognizer? recognizer}) => TextSpan(
     text: g.gap.answer,
     recognizer: recognizer,
-    style: const TextStyle(
-      color: AppColors.success,
+    style: TextStyle(
+      color: context.appColors.success,
       fontWeight: FontWeight.w600,
     ),
   );
@@ -406,7 +406,7 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
       TextSpan(
         style: TextStyle(
           backgroundColor: index == _selectedSentence
-              ? AppColors.hairline
+              ? context.appColors.hairline
               : null,
         ),
         children: [
@@ -417,7 +417,7 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
                   : TextSpan(
                       text: piece.gap.base,
                       recognizer: _sentences[index].recognizer,
-                      style: const TextStyle(color: AppColors.textMuted),
+                      style: TextStyle(color: context.appColors.textMuted),
                     )
             else
               TextSpan(
@@ -435,9 +435,11 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
     final info = widget.text.info;
     final done = _current == null;
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: Colors.transparent,
-      ),
+      value:
+          (context.appColors.light
+                  ? SystemUiOverlayStyle.dark
+                  : SystemUiOverlayStyle.light)
+              .copyWith(statusBarColor: Colors.transparent),
       child: Scaffold(
         bottomNavigationBar: ReadingToolbar(
           translating: _translating,
@@ -455,9 +457,10 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
                   excludeSemantics: true,
                   child: Text(
                     '$_solvedCount von ${_gaps.length}',
-                    style: AppType.meta().copyWith(
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                    ),
+                    style: AppType.meta(color: context.appColors.textMuted)
+                        .copyWith(
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
                   ),
                 ),
               ),
@@ -474,13 +477,21 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text(widget.mode.title, style: AppType.meta()),
+                            Text(
+                              widget.mode.title,
+                              style: AppType.meta(
+                                color: context.appColors.textMuted,
+                              ),
+                            ),
                             const SizedBox(height: 8),
                             Semantics(
                               header: true,
                               child: Text(
                                 info.title,
-                                style: AppType.editorial(size: 32),
+                                style: AppType.editorial(
+                                  color: context.appColors.textPrimary,
+                                  size: 32,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 12),
@@ -490,7 +501,7 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
                                   : widget.mode.description,
                               style: AppType.chrome(
                                 size: 13,
-                                color: AppColors.textMuted,
+                                color: context.appColors.textMuted,
                               ),
                             ),
                             const SizedBox(height: 28),
@@ -528,7 +539,10 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                   child: Text(
                     message,
-                    style: AppType.chrome(weight: FontWeight.w600),
+                    style: AppType.chrome(
+                      color: context.appColors.textPrimary,
+                      weight: FontWeight.w600,
+                    ),
                   ),
                 ),
               if (_choice && !_translating && !done)
@@ -580,7 +594,7 @@ class _TypedGap extends StatelessWidget {
           focusNode: gap.focus,
           style: style,
           textAlign: TextAlign.center,
-          cursorColor: AppColors.textPrimary,
+          cursorColor: context.appColors.textPrimary,
           autocorrect: false,
           enableSuggestions: false,
           textInputAction: TextInputAction.done,
@@ -592,16 +606,22 @@ class _TypedGap extends StatelessWidget {
             contentPadding: const EdgeInsets.symmetric(horizontal: 2),
             hintText: gap.gap.base,
             hintStyle: style.copyWith(
-              color: gap.flashError ? AppColors.error : AppColors.textMuted,
+              color: gap.flashError
+                  ? context.appColors.error
+                  : context.appColors.textMuted,
             ),
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                color: gap.flashError ? AppColors.error : AppColors.hairline,
+                color: gap.flashError
+                    ? context.appColors.error
+                    : context.appColors.hairline,
               ),
             ),
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                color: gap.flashError ? AppColors.error : AppColors.textPrimary,
+                color: gap.flashError
+                    ? context.appColors.error
+                    : context.appColors.textPrimary,
               ),
             ),
           ),
@@ -639,14 +659,16 @@ class _ChoiceGap extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: current ? AppColors.textPrimary : AppColors.hairline,
+              color: current
+                  ? context.appColors.textPrimary
+                  : context.appColors.hairline,
               width: current ? 1.5 : 1,
             ),
           ),
         ),
         child: Text(
           gap.gap.base,
-          style: style.copyWith(color: AppColors.textMuted),
+          style: style.copyWith(color: context.appColors.textMuted),
         ),
       ),
     );
@@ -665,9 +687,9 @@ class _ChipPanel extends StatelessWidget {
       constraints: BoxConstraints(
         maxHeight: MediaQuery.sizeOf(context).height * 0.4,
       ),
-      decoration: const BoxDecoration(
-        color: AppColors.raisedInk,
-        border: Border(top: BorderSide(color: AppColors.hairline)),
+      decoration: BoxDecoration(
+        color: context.appColors.raisedInk,
+        border: Border(top: BorderSide(color: context.appColors.hairline)),
       ),
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -728,24 +750,24 @@ class _ChipFace extends StatelessWidget {
   Widget build(BuildContext context) {
     final (fill, border, label) = switch (flash) {
       _ChipFlash.success => (
-        AppColors.successTint,
-        AppColors.success,
-        AppColors.success,
+        context.appColors.successTint,
+        context.appColors.success,
+        context.appColors.success,
       ),
       _ChipFlash.error => (
-        AppColors.errorTint,
-        AppColors.error,
-        AppColors.error,
+        context.appColors.errorTint,
+        context.appColors.error,
+        context.appColors.error,
       ),
       _ChipFlash.none when used => (
         null,
-        AppColors.hairline,
-        AppColors.iconOff,
+        context.appColors.hairline,
+        context.appColors.iconOff,
       ),
       _ChipFlash.none => (
-        AppColors.nightPage,
-        AppColors.hairline,
-        AppColors.textPrimary,
+        context.appColors.nightPage,
+        context.appColors.hairline,
+        context.appColors.textPrimary,
       ),
     };
     // No container alignment: that would stretch the chip to the full row.

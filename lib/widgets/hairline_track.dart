@@ -9,12 +9,12 @@ class HairlineTrack extends StatelessWidget {
   const HairlineTrack({
     super.key,
     required this.fraction,
-    this.color = AppColors.textMuted,
+    this.color,
     this.height = 3,
   });
 
   final double fraction;
-  final Color color;
+  final Color? color;
   final double height;
 
   @override
@@ -24,11 +24,11 @@ class HairlineTrack extends StatelessWidget {
       child: SizedBox(
         height: height,
         child: ColoredBox(
-          color: AppColors.hairline,
+          color: context.appColors.hairline,
           child: FractionallySizedBox(
             alignment: Alignment.centerLeft,
             widthFactor: fraction.clamp(0.0, 1.0),
-            child: ColoredBox(color: color),
+            child: ColoredBox(color: color ?? context.appColors.textMuted),
           ),
         ),
       ),

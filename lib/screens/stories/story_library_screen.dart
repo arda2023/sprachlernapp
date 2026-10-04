@@ -61,7 +61,13 @@ class StoryLibraryScreen extends StatelessWidget {
             padding: _gutter,
             child: Semantics(
               header: true,
-              child: Text('Stories', style: AppType.editorial(size: 32)),
+              child: Text(
+                'Stories',
+                style: AppType.editorial(
+                  color: context.appColors.textPrimary,
+                  size: 32,
+                ),
+              ),
             ),
           ),
           if (resumed case (story: final story?, :final fraction)) ...[
@@ -89,7 +95,10 @@ class StoryLibraryScreen extends StatelessWidget {
             const SizedBox(height: 6),
             Padding(
               padding: _gutter,
-              child: Text(newsSubheading, style: AppType.meta()),
+              child: Text(
+                newsSubheading,
+                style: AppType.meta(color: context.appColors.textMuted),
+              ),
             ),
             const SizedBox(height: 14),
             NewsCarousel(articles: news, onOpen: (a) => onOpenNews?.call(a)),
@@ -102,7 +111,7 @@ class StoryLibraryScreen extends StatelessWidget {
                 title: topic,
                 trailing: Text(
                   group.length == 1 ? '1 Story' : '${group.length} Stories',
-                  style: AppType.meta(),
+                  style: AppType.meta(color: context.appColors.textMuted),
                 ),
               ),
             ),
@@ -146,20 +155,26 @@ class ContinueReadingTile extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.raisedInk,
-              border: Border.all(color: AppColors.hairline),
+              color: context.appColors.raisedInk,
+              border: Border.all(color: context.appColors.hairline),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(storyMetaLine(story), style: AppType.meta()),
+                Text(
+                  storyMetaLine(story),
+                  style: AppType.meta(color: context.appColors.textMuted),
+                ),
                 const SizedBox(height: 6),
                 Text(
                   story.title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppType.editorial(size: 17),
+                  style: AppType.editorial(
+                    color: context.appColors.textPrimary,
+                    size: 17,
+                  ),
                 ),
                 const SizedBox(height: 14),
                 LayoutBuilder(
@@ -176,9 +191,13 @@ class ContinueReadingTile extends StatelessWidget {
                         child: Text(
                           '$percent % gelesen',
                           textAlign: TextAlign.end,
-                          style: AppType.meta().copyWith(
-                            fontFeatures: const [FontFeature.tabularFigures()],
-                          ),
+                          style:
+                              AppType.meta(color: context.appColors.textMuted)
+                                  .copyWith(
+                                    fontFeatures: const [
+                                      FontFeature.tabularFigures(),
+                                    ],
+                                  ),
                         ),
                       ),
                     ],

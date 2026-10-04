@@ -25,8 +25,8 @@ class SegmentedTabs<T extends Object> extends StatelessWidget {
       maxScaleFactor: 1.3,
       child: CupertinoSlidingSegmentedControl<T>(
         groupValue: selected,
-        backgroundColor: AppColors.raisedInk,
-        thumbColor: AppColors.hairline,
+        backgroundColor: context.appColors.raisedInk,
+        thumbColor: context.appColors.hairline,
         padding: const EdgeInsets.all(2),
         onValueChanged: (value) {
           if (value != null) onChanged(value);
@@ -44,8 +44,8 @@ class SegmentedTabs<T extends Object> extends StatelessWidget {
                     size: 13,
                     weight: FontWeight.w600,
                     color: value == selected
-                        ? AppColors.textPrimary
-                        : AppColors.textMuted,
+                        ? context.appColors.textPrimary
+                        : context.appColors.textMuted,
                   ),
                 ),
               ),

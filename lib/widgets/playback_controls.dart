@@ -32,14 +32,14 @@ class PlayPauseButton extends StatelessWidget {
           child: Container(
             width: size,
             height: size,
-            decoration: const BoxDecoration(
-              color: AppColors.textPrimary,
+            decoration: BoxDecoration(
+              color: context.appColors.textPrimary,
               shape: BoxShape.circle,
             ),
             child: Icon(
               playing ? CupertinoIcons.pause_fill : CupertinoIcons.play_fill,
               size: size * 0.46,
-              color: AppColors.nightPage,
+              color: context.appColors.nightPage,
             ),
           ),
         ),
@@ -61,20 +61,19 @@ class PlaybackTrack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final total = clock.duration;
-    final times = AppType.meta().copyWith(
-      fontFeatures: const [FontFeature.tabularFigures()],
-    );
+    final times = AppType.meta(color: context.appColors.textMuted)
+        .copyWith(fontFeatures: const [FontFeature.tabularFigures()]);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         SliderTheme(
           // Neutral Progress Rule: textMuted fill on a Hairline groove,
           // never an ink; no overlay glow (Flat Ground).
-          data: const SliderThemeData(
+          data: SliderThemeData(
             trackHeight: 3,
-            activeTrackColor: AppColors.textMuted,
-            inactiveTrackColor: AppColors.hairline,
-            thumbColor: AppColors.textPrimary,
+            activeTrackColor: context.appColors.textMuted,
+            inactiveTrackColor: context.appColors.hairline,
+            thumbColor: context.appColors.textPrimary,
             overlayColor: Color(0x00000000),
             thumbShape: RoundSliderThumbShape(
               enabledThumbRadius: 7,

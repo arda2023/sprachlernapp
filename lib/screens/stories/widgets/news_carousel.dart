@@ -106,7 +106,7 @@ class NewsCard extends StatelessWidget {
           child: Container(
             height: height,
             foregroundDecoration: BoxDecoration(
-              border: Border.all(color: AppColors.hairline),
+              border: Border.all(color: context.appColors.hairline),
               borderRadius: radius,
             ),
             child: ClipRRect(
@@ -125,10 +125,10 @@ class NewsCard extends StatelessWidget {
                       ),
                     },
                   ),
-                  Container(height: 1, color: AppColors.hairline),
+                  Container(height: 1, color: context.appColors.hairline),
                   Expanded(
                     child: ColoredBox(
-                      color: AppColors.raisedInk,
+                      color: context.appColors.raisedInk,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
                         child: Column(
@@ -141,7 +141,10 @@ class NewsCard extends StatelessWidget {
                                 article.title,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
-                                style: AppType.editorial(size: 22),
+                                style: AppType.editorial(
+                                  color: context.appColors.textPrimary,
+                                  size: 22,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 8),
@@ -152,7 +155,7 @@ class NewsCard extends StatelessWidget {
                               style: AppType.chrome(
                                 size: 13,
                                 weight: FontWeight.w700,
-                                color: AppColors.newsKicker,
+                                color: context.appColors.newsKicker,
                               ).copyWith(letterSpacing: 1.2),
                             ),
                             const SizedBox(height: 4),
@@ -160,7 +163,9 @@ class NewsCard extends StatelessWidget {
                               '${article.level} · '
                               '${article.readingMinutes} Min',
                               maxLines: 1,
-                              style: AppType.meta(),
+                              style: AppType.meta(
+                                color: context.appColors.textMuted,
+                              ),
                             ),
                           ],
                         ),
