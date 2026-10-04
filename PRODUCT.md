@@ -56,22 +56,27 @@ Three core learning surfaces:
   - The former static "core vocabulary progress bar over 3,000 words" is discarded.
 - **Spaced Repetition System (v1 Leitner)**:
   - 5-box Leitner system with default intervals of approximately 1 / 4 / 14 / 40 / 90 days (tunable).
-  - **First contact**: if the first attempt on a new card is correct, the card enters Box 3; otherwise Box 1. Intervals are unchanged.
-  - Afterwards, a correct review advances the card by one box (+1); an incorrect review resets it to Box 1.
+  - **First contact**: if the first attempt on a new card is correct, the card enters Box 3; otherwise (error, "Wort erfahren" or a synonym hint) Box 1. Intervals are unchanged.
+  - Afterwards, a correct review advances the card by one box (+1); an incorrect review or a review solved after a synonym hint resets it to Box 1.
   - Box 5 represents "gemeistert" (mastered).
   - Encapsulated behind an interchangeable engine interface (`SpacedRepetitionEngine`) so alternative algorithms (e.g. FSRS) can be benchmarked against real learner data in later versions.
 - **Answer Checking & Review Logic**:
   - Only the exact correct word form allows the learner to proceed (with the exception of "Wort erfahren").
   - Minor typos display a "fast richtig" (almost right) hint and do not count as an incorrect attempt.
-  - **Wrong form**: a wrong form of the same lemma counts as an error and shows the hint `Andere Form von „<lemma>“ – gesucht: <Wortart, Form>`. The learner continues only with the exact form or "Wort erfahren". Any other answer, including an unaccepted synonym, is an ordinary error.
+  - **Wrong form**: a wrong form of the same lemma counts as an error and shows the hint `Andere Form von „<lemma>“ – gesucht: <Wortart, Form>`. The learner continues only with the exact form or "Wort erfahren". Any other answer, including a synonym that was not pre-checked for this gap, is an ordinary error.
+  - **Synonym hint** (decided rule; pipeline, schema and app not implemented yet, see `NEXTSTEPS.md`): a fitting answer is distinguished from the target form the learner knew unaided. Only the target form completes the card regularly.
+    - A typed answer that matches an alternative pre-checked offline for exactly this card, sentence and gap (`card_sentences.valid_alternatives`, `docs/content-schema.md`) is not "Falsch". It shows a neutral hint, e.g. target *about*, input *approximately*: „Approximately passt hier auch. Gesucht ist ein anderes Wort: a…“. For a one-letter target form the hint gives no letter: „… passt hier auch. Gesucht ist ein anderes Wort.“
+    - The learner must then type the target form or use "Wort erfahren". The card counts as solved with help: Box 1, also on first contact and from any higher box, due at the start of the next local day with the default Box-1 interval (a configured interval applies instead). Further inputs in the same pass of the card neither reset it again nor add a log line. Bookkeeping: `docs/srs.md`.
+    - The comparison is the same as for the target form (case-insensitive, trimmed). Unknown or unconfirmed alternatives stay ordinary errors; there is no runtime AI check of learner input. Own story contexts have no checked alternatives.
+    - "Fast richtig" for typos is unchanged: it never shows a synonym hint and gets no new reset rule.
   - "Wort erfahren" (reveal word) counts as an explicit error and resets the card to Box 1.
   - In multiple choice (Lücke per Auswahl), the user keeps tapping options until the correct one is selected.
-  - **In-session repeat**: a failed card returns once, about 3 cards later. The box is decided by the first attempt only.
+  - **In-session repeat**: a failed card, or a card solved with a synonym hint, returns once, about 3 cards later. The box is decided by the card's first pass only; the repeat changes neither box nor due date.
 - **Practice Modes**:
   - **Gemischt**: (1) due cards of all origins, (2) new words from active decks up to the daily goal, (3) more new words, (4) early practice (*Vorab-Üben*). The deck toggle ("Stapel lernen") controls only new words here; seen cards are always reviewed.
   - **Lerne mit diesem Stapel**: only this deck's forms and sentences, never story-only cards; works even if the deck is inactive.
-  - **Stapel-Revue**: seen cards only; a correct answer keeps the box, an error sends the card to Box 1.
-  - Early practice rule (Vorab-Üben and Stapel-Revue): correct answers do not advance the box; errors reset the card to Box 1.
+  - **Stapel-Revue**: seen cards only; a correct answer keeps the box, an error or a synonym hint sends the card to Box 1.
+  - Early practice rule (Vorab-Üben and Stapel-Revue): correct answers do not advance the box; errors and synonym hints reset the card to Box 1.
 - **Story Words**: The story sentence is the main context for the card in Gemischt. A local pre-check runs first (≤ 20 words, ≤ 1 subordinate clause, the word is present). A server-side AI check then decides whether the sentence is understandable without context; if not, the AI rewrites a sentence with the same form and sense. Until that is done the original sentence is used. "Inhalte" exercises never add words.
 - **Text Exercises (Inhalte → Texte)**:
   - Whole texts with gaps, offered in two modes: *Lückentext-Übungen: Verben* (only verb gaps; the learner types the inflected form, e.g. "dressed" for base "dress") and *Beliebige Wortart* (all gaps; the learner picks from answer chips, no keyboard).
@@ -97,7 +102,7 @@ Three core learning surfaces:
   - Words and sentences are pronounced from pre-generated audio, produced with the Cloud Text-to-Speech API (model Gemini 2.5 Flash TTS, ADC login, no API key). Full-story continuous narration is deferred to post-v1.
 - **Content Pipeline & Runtime AI Boundary**:
   - Content is generated offline in advance via an automated AI pipeline (external script, not in the app).
-  - Sentences are AI-generated with automated QA (linter, blind gap test by a second model, 5 % manual sample). Frequency comes from the wordfreq word forms; BNC/COCA serves only as an English cross-check.
+  - Sentences are AI-generated with automated QA (linter, blind gap test by a second model, 5 % manual sample). Alternatives proposed by the blind test are only candidates; each must pass a full-sentence check in the gap before it becomes a valid alternative (`docs/pipeline.md`). Frequency comes from the wordfreq word forms; BNC/COCA serves only as an English cross-check.
   - The client never calls AI providers directly. Curated content is generated before release. Runtime AI only via Supabase Edge Functions that call Vertex AI (project `sprachlernapp-510508`) for user-generated content: dictionary miss lookup, sentence translation on tap in imported texts, story-word sentence check/rewrite.
 - **Accounts**: Learning works offline without an account. An email account is needed only for online features (import, AI checks); Google/Apple sign-in before release.
 - **Storage**:

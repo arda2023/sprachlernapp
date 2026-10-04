@@ -24,19 +24,35 @@ Jede Box-Änderung setzt `due_at` nach der neuen Box neu.
 
 Eine Karte entsteht bei der ersten Anzeige in einem Stapel oder per "Zum Lernen hinzufügen" (Box 0). Der erste Versuch entscheidet:
 
-- richtig (ohne falschen Versuch, ohne "Wort erfahren") → Box 3
+- richtig (ohne falschen Versuch, ohne "Wort erfahren", ohne Synonymhinweis) → Box 3
 - sonst → Box 1
 
 ## Danach
 
 - **Antwort sauber** (erster Versuch exakt) → Box + 1 (höchstens 5), `due_at` nach neuer Box.
 - **Fehler** (falscher Versuch, falsche Form, "Wort erfahren") → Box 1, `due_at` nach Box 1.
+- **Mit Hilfe gelöst** (Synonymhinweis, `hint_used = true`) → Box 1, `due_at` nach Box 1. Kein Fehler.
 - "Fast richtig" ist kein Fehler.
-- **Vorab-Üben** und **Stapel-Revue** (Karte nicht fällig): richtig → Box und `due_at` unverändert; Fehler → Box 1, `due_at` nach Box 1.
+- **Vorab-Üben** und **Stapel-Revue** (Karte nicht fällig): richtig → Box und `due_at` unverändert; Fehler oder Synonymhinweis → Box 1, `due_at` nach Box 1.
+
+## Synonymhinweis
+
+Beschlossene Regel (04.10.2026). Pipeline, Migrationen, Export und App-Code sind noch nicht umgesetzt (`NEXTSTEPS.md`). Produktregel: `PRODUCT.md`, Darstellung: `DESIGN.md`.
+
+- **Auslöser**: Die Eingabe entspricht einer geprüften Alternative aus `card_sentences.valid_alternatives` genau dieses Karte-Satz-Lücken-Paares (`docs/content-schema.md`); Vergleich wie bei der Zielform (Groß-/Kleinschreibung egal, getrimmt). Eigene Sätze aus `card_contexts` haben keine Alternativen und verhalten sich wie eine leere Liste.
+- **Prüfreihenfolge** je Eingabe: (1) Zielform → gelöst; (2) geprüfte Alternative → Hinweis; (3) "Fast richtig" (nur gegen die Zielform); (4) falsche Form desselben Lemmas → Fehler; (5) alles andere → Fehler.
+- **Abschluss** nur mit der Zielform oder "Wort erfahren". Unbekannte oder unbestätigte Alternativen sind Fehler nach (5); es gibt keine KI-Prüfung der Eingabe zur Laufzeit.
+- `hint_used`: bool, Standard `false`. Beim ersten Synonymhinweis `true` und bis zum Ende des Durchgangs dauerhaft `true`.
+- Eine geprüfte Alternative erhöht `error_count` nicht. Andere falsche Eingaben im selben Durchgang zählen wie bisher.
+- `first_attempt_correct` bleibt `false`, wenn die erste Eingabe eine Alternative ist.
+- Ein mit `hint_used = true` abgeschlossener Durchgang ergibt Box 1, auch beim Erstkontakt, aus höheren Boxen, beim Vorab-Üben und bei der Stapel-Revue, unabhängig von einer später exakt richtigen Eingabe. `due_at` = Beginn des nächsten lokalen Tages beim Standardintervall der Box 1; ein konfiguriertes Box-1-Intervall gilt stattdessen.
+- Weitere Eingaben desselben Durchgangs (erneute Alternative, Fehler, "Wort erfahren") stufen nicht erneut zurück und erzeugen keine zusätzliche `review_log`-Zeile; die eine Zeile hält den Durchgang vollständig fest.
+- `revealed` bleibt getrennt: Der Anfangsbuchstabe im Hinweis ist kein "Wort erfahren". Wird danach "Wort erfahren" benutzt, sind `hint_used` und `revealed` beide `true`.
+- "Fast richtig" bei Tippfehlern bleibt unverändert: kein Synonymhinweis, keine neue Rückstufungsregel.
 
 ## In-Session-Wiederholung
 
-Eine Karte mit Fehler kommt einmal wieder, etwa 3 Karten später. Die Box entscheidet allein der erste Versuch; die Wiederholung ändert Box und `due_at` nicht und erzeugt keine eigene Zeile im `review_log`.
+Eine Karte mit Fehler oder mit Synonymhinweis kommt einmal wieder, etwa 3 Karten später. Die Box entscheidet allein der erste Durchgang; die Wiederholung ändert Box und `due_at` nicht und erzeugt keine eigene Zeile im `review_log`.
 
 ## Queue je Modus
 
@@ -73,6 +89,8 @@ Zuordnung in dieser Reihenfolge, damit die Zähler disjunkt sind. **Invariante:*
 
 Eine Zeile je Karte und Session, geschrieben nach dem ersten Durchgang der Karte. Keine Updates, keine Löschungen.
 
+`hint_used` ist beschlossener Zielvertrag. Bestehende Zeilen erhalten bei der Migration den Standard `false`; Hinweise werden nicht nachträglich erfunden oder rekonstruiert.
+
 | Spalte | Typ | Bedeutung |
 |---|---|---|
 | id | uuid | Zeilen-ID |
@@ -83,6 +101,7 @@ Eine Zeile je Karte und Session, geschrieben nach dem ersten Durchgang der Karte
 | first_attempt_correct | bool | erster Versuch exakt |
 | error_count | int | falsche Versuche im ersten Durchgang |
 | revealed | bool | "Wort erfahren" benutzt |
+| hint_used | bool | Synonymhinweis im ersten Durchgang gezeigt; Standard `false` (Zielvertrag, noch nicht migriert) |
 | box_before | int | Box vor der Antwort (0–5) |
 | box_after | int | Box nach der Antwort (1–5) |
 | due_at_after | timestamp | neue Fälligkeit |
@@ -96,3 +115,4 @@ Eine Zeile je Karte und Session, geschrieben nach dem ersten Durchgang der Karte
 - Tagesziel = verschiedene Karten mit `review_log`-Zeile heute. ✔
 - `mode = early` kennzeichnet Vorab-Üben innerhalb von Gemischt (Box-Regel wie Revue). ✔
 - Eine `review_log`-Zeile je Karte und Session; die In-Session-Wiederholung wird nicht geloggt. ✔
+- Geprüfte Alternative → Synonymhinweis, Abschluss nur mit Zielform oder "Wort erfahren", danach Box 1 ohne zusätzlichen Fehler (beschlossen 04.10.2026, Umsetzung offen). ✔

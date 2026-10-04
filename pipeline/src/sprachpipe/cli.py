@@ -100,6 +100,7 @@ SMOKE_MAX_USD = 1.0
 
 
 def _process_card(llm, cfg, card, found, avoid_words):
+    from .alternative_check import check as check_alternatives
     from .annotate import annotate_card
     from .blindtest import ask, judge
     from .generate import qa_sentence, sentences, slot_context
@@ -119,7 +120,9 @@ def _process_card(llm, cfg, card, found, avoid_words):
             judge=lambda ans: judge(ans, card["form"], [card["form"]], card["lemma"], None, None),
             meaning_check=lambda text, translation: check_meaning(
                 llm, cfg, text, card["display_form"], found, translation),
-            duplicate=lambda text, gap: duplicate(text, gap, card["accepted"]))
+            duplicate=lambda text, gap: duplicate(text, gap, card["accepted"]),
+            alternative_check=lambda text, gap, tr, candidates: check_alternatives(
+                llm, cfg, text, gap, tr, candidates))
         card["slots"].append(slot)
         final = slot[-1]
         if final["qa_status"] == "ok" and len(card["accepted"]) < 3:
@@ -232,7 +235,8 @@ def run_generate(llm, cfg, forms, out_path, out_dir, *, max_usd, label,
                   "blindtest_model": c["blindtest_model"],
                   "blindtest_thinking": c["blindtest_thinking"],
                   "prompt_versions": [load_prompt(n)[0] for n in
-                                      ("meanings", "sentences", "annotate", "blindtest", "meaning_check")]})
+                                      ("meanings", "sentences", "annotate", "blindtest", "meaning_check",
+                                       "alternative_check")]})
     return aborted
 
 

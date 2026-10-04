@@ -30,12 +30,13 @@ SENTENCES = ["She went home after work.", "We went to the beach on Sunday.",
 
 class FakeVertex(llm_mod.Llm):
     def __init__(self, cfg, ledger, max_usd, *, usage=(100, 50, 10),
-                 sentences=None, answers=None, senses=None):
+                 sentences=None, answers=None, senses=None, checks=None):
         super().__init__(cfg, ledger, max_usd)
         self.usage = usage
         self.sentences = iter(sentences or SENTENCES)
         self.answers = answers or {}
         self.senses = senses or {}
+        self.checks = checks or {}   # candidate → (valid, reason); default rejected
         self.calls = []
         self.prompts = []
 
@@ -69,6 +70,12 @@ class FakeVertex(llm_mod.Llm):
             out = {"sense_key": self.senses.get(text, WENT["sense_key"]),
                    "observed_pos": WENT["pos"], "translation_ok": True,
                    "reason": "Die Übersetzung entspricht der Bedeutung."}
+        elif key == "results":
+            found = re.findall(r'^(\d+)\. inserted: "(.*)" -> ', prompt, flags=re.M)
+            out = {"results": [{"candidate_index": int(i),
+                                "valid": self.checks.get(c, (False, ""))[0],
+                                "reason": self.checks.get(c, (False, "Bedeutung weicht ab."))[1]}
+                               for i, c in found]}
         else:
             match = re.search(r"^Sentence: (.+)$", prompt, flags=re.M)
             text = match.group(1) if match else ""
@@ -117,6 +124,8 @@ def test_five_candidates_pack_only_ok(cfg, tmp_path):
         sn = texts[cs["sentence"]]
         assert sn["text"][cs["gap_start"]:cs["gap_end"]] == "went"
         assert sn["qa_status"] == "ok" and cs["accepted"] == ["went"]
+        assert cs["valid_alternatives"] == []
+    assert llm.calls.count("results") == 0   # no candidates, no alternative check
 
 
 def test_second_run_reuses_meanings_without_model_call(cfg, tmp_path):
@@ -219,7 +228,8 @@ def test_blind_mismatch_regenerates_once_with_answer(cfg):
     assert [a["qa_status"] for a in attempts] == ["replaced", "failed"]
     assert len(feedback) == 1 and "walked" in feedback[0]
     assert 'only the target form "went"' in feedback[0]
-    assert judge("walked", "went", ["went", "walked"], "go", None, None) == "failed"
+    assert judge("walked", "went", ["went", "walked"], "go", None, None) == "other"
+    assert [a["blind"] for a in attempts] == ["unconfirmed", "unconfirmed"]
 
 
 def test_linter_retry_and_duplicate(cfg):
@@ -299,38 +309,59 @@ def test_review_csv_and_report(cfg, tmp_path):
     assert "i+1-Verstöße" in report
 
 
-def test_ambiguous_retry_findings_in_csv_report_and_pack(cfg, tmp_path):
-    alternatives = [{"answer": "walked", "reason": "Model considers walking equivalent here."}]
+def test_confirmed_alternative_in_pack_csv_report_and_ledger(cfg, tmp_path):
+    alternatives = [{"answer": "Headed", "reason": "Same direction home."},
+                    {"answer": "went home", "reason": "Repeats the next word."}]
     llm = FakeVertex(cfg, tmp_path / "ledger.csv", 1.0,
                      answers={SENTENCES[0].replace("went", "___"):
-                              {"answer": "went", "alternatives": alternatives}})
+                              {"answer": "went", "alternatives": alternatives}},
+                     checks={"Headed": (True, "Natürlich, gleiche Bedeutung.")})
     aborted, pack = run(cfg, tmp_path, llm)
     assert aborted is None and len(pack["cards"]) == 1
-    assert llm.calls.count("answer") == 4
-    assert llm.calls.count("sentences") == 2
+    assert llm.calls.count("answer") == 3          # no retry because of alternatives
+    assert llm.calls.count("results") == 1          # one check for the one sentence with candidates
+    assert llm.calls.count("sentences") == 1
     assert all(cs["accepted"] == ["went"] for cs in pack["card_sentences"])
+    texts = {s["ref"]: s for s in pack["sentences"]}
+    by_text = {texts[cs["sentence"]]["text"]: cs["valid_alternatives"] for cs in pack["card_sentences"]}
+    assert by_text[SENTENCES[0]] == ["headed"]
+    assert [v for t, v in by_text.items() if t != SENTENCES[0]] == [[], []]
+    report_0 = next(s["qa_report"] for s in pack["sentences"] if s["text"] == SENTENCES[0])
+    assert report_0["blind"] == "passed"
+    assert report_0["alternative_candidates"] == ["Headed", "went home"]
+    assert [(r["sentence"], r["status"]) for r in report_0["alternative_check"]] == [
+        ("She Headed home after work.", "confirmed"),
+        ("She went home home after work.", "rejected")]
+    assert report_0["blind_attempts"][0]["alternative_check"] == report_0["alternative_check"]
     rows = list(csv.DictReader(open(tmp_path / "review.csv", encoding="utf-8-sig")))
-    rejected = next(r for r in rows if r["verworfen_grund"] == "Mehrdeutige Lücke")
-    assert rejected["qa_status"] == "replaced"
-    assert json.loads(rejected["Blindtest-Alternativen (Modellbefund)"]) == alternatives
+    row = next(r for r in rows if r["Satz"] == SENTENCES[0])
+    assert json.loads(row["Gültige Alternativen"]) == ["headed"]
+    assert json.loads(row["Alternativkandidaten"]) == ["Headed", "went home"]
+    assert [c["reason"] for c in json.loads(row["Alternativprüfung"])] == [
+        "Natürlich, gleiche Bedeutung.", "Bedeutung weicht ab."]
     report = (tmp_path / "run_report.md").read_text(encoding="utf-8")
-    assert "| Mehrdeutige Lücke | 1 |" in report
-    assert "blindtest-v2" in report
-    histories = [a for s in pack["sentences"] for a in s["qa_report"]["blind_attempts"]]
-    assert any(a["alternatives"] == alternatives and a["discard_reason"] == "Mehrdeutige Lücke" for a in histories)
-    assert all(s["qa_report"]["blind_alternatives"] == [] for s in pack["sentences"])
+    assert "- Kandidaten geprüft: 2" in report
+    assert "- bestätigt: 1, abgelehnt: 1, ohne gültiges Urteil (ungültige Prüfantwort): 0" in report
+    assert "- In valid_alternatives des Packs: 1" in report
+    assert "blindtest-v3" in report and "alternative-check-v1" in report
+    assert "Kosten je gepackter Karte:" in report and "(1 Karten im Pack)" in report
+    ledger = list(csv.DictReader(open(tmp_path / "ledger.csv", encoding="utf-8")))
+    assert sum(r["step"] == "alternative_check" for r in ledger) == 1
 
 
-def test_only_ambiguous_candidates_leave_card_out_and_count_every_attempt(cfg, tmp_path):
-    answers = {text.replace("went", "___"): {"answer": "went", "alternatives": [
-        {"answer": "walked", "reason": "Same meaning according to checker."}]} for text in SENTENCES}
-    llm = FakeVertex(cfg, tmp_path / "ledger.csv", 1.0, sentences=SENTENCES * 3, answers=answers)
+def test_unconfirmed_main_answers_leave_card_out_and_count_every_attempt(cfg, tmp_path):
+    answers = {text.replace("went", "___"): {"answer": "walked", "alternatives": []} for text in SENTENCES}
+    llm = FakeVertex(cfg, tmp_path / "ledger.csv", 1.0, sentences=SENTENCES * 3, answers=answers,
+                     checks={"walked": (False, "Andere Bedeutung: zu Fuß gehen.")})
     aborted, pack = run(cfg, tmp_path, llm)
     assert aborted is None and pack["cards"] == []
     assert llm.calls.count("answer") == 22  # eleven candidates, one retry each
-    assert llm.calls.count("sense_key") == 0
+    assert llm.calls.count("sense_key") == 22 and llm.calls.count("results") == 22
     report = (tmp_path / "run_report.md").read_text(encoding="utf-8")
-    assert "| Mehrdeutige Lücke | 22 |" in report
+    assert "| Blindtest | 22 |" in report
+    assert "| Hauptantwort nicht bestätigt (`unconfirmed`) | 22 |" in report
+    assert "- bestätigt: 0, abgelehnt: 22" in report
     assert "Nicht im Pack: 1; Pack-Anteil: 0/1 (0 %)" in report
-    assert report.count("Alternativen (Modellbefund):") == 22
-    assert "Same meaning according to checker." in report
+    assert "Kosten je gepackter Karte: nicht berechenbar (0 Karten im Pack)" in report
+    assert report.count("Alternativprüfung:") == 22
+    assert "Andere Bedeutung: zu Fuß gehen." in report

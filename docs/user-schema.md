@@ -24,7 +24,9 @@ Gilt für Drift `user.db` **und** Supabase-Schema `app`. Im Schema `app` hat jed
 
 `id` uuid, `card_id`, `text`, `translation_de`, `gap_start`, `gap_end`, `source` (`story` / `import` / `ai_rewrite`), `source_ref`, `status` (`pending` / `ok` / `rewritten` / `failed`), `is_primary` bool, `created_at`.
 
-**`review_log`** — Spalten wie in `docs/srs.md`. Nur anhängen; im Schema `app` nur Insert und Select.
+Eigene Kontexte haben keine geprüften Alternativen und verhalten sich wie `valid_alternatives` = leere Liste (`docs/srs.md`, Abschnitt Synonymhinweis). Unbestätigte Synonyme, etwa aus Story-Prüfung oder KI-Umschreibung, werden nicht übernommen.
+
+**`review_log`** — Spalten wie in `docs/srs.md`. Nur anhängen; im Schema `app` nur Insert und Select. Beschlossener Zielvertrag, noch nicht migriert: zusätzliche Spalte `hint_used` bool, Standard `false`; bestehende Zeilen behalten `false`, ohne nachträglich erfundene Hinweise.
 
 **`deck_settings`** — `deck_id`, `active` bool, `updated_at`.
 

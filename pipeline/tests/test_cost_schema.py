@@ -58,4 +58,17 @@ def test_schema_matches_migration():
             if word and word not in ("unique", "check", "primary", "--"):
                 cols.append(word)
         found[name] = cols
+    # Later additive migrations append columns in file order.
+    for path in sorted(MIGRATION.parent.glob("*.sql")):
+        for table, column in re.findall(r"alter table content\.(\w+)\s+add column (\w+)",
+                                        path.read_text(encoding="utf-8")):
+            found[table].append(column)
     assert found == {t: [c for c, _ in cols] for t, cols in COLUMNS.items()}
+
+
+def test_valid_alternatives_migration_is_additive():
+    sql = (MIGRATION.parent / "20261004000001_card_sentence_alternatives.sql").read_text(encoding="utf-8")
+    assert ("alter table content.card_sentences\n"
+            "  add column valid_alternatives text[] not null default '{}'::text[];") in sql
+    assert "drop " not in sql.lower() and "create table" not in sql.lower()
+    assert COLUMNS["card_sentences"][-1] == ("valid_alternatives", "text[]")

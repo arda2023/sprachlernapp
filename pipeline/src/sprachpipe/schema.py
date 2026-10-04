@@ -1,6 +1,7 @@
 """Columns of the Supabase schema `content`, mirrored from
-supabase/migrations/20261003000002_content_tables.sql (the source of truth).
-tests/test_schema.py fails if the two drift apart.
+supabase/migrations/20261003000002_content_tables.sql plus later additive
+`add column` migrations (the source of truth; added columns come last).
+tests/test_cost_schema.py fails if the two drift apart.
 """
 
 from __future__ import annotations
@@ -57,6 +58,7 @@ COLUMNS: dict[str, list[tuple[str, str]]] = {
         ("id", "text"), ("card_id", "text"), ("sentence_id", "text"), ("position", "smallint"),
         ("gap_start", "integer"), ("gap_end", "integer"), ("accepted", "text[]"),
         ("removed_in", "text"), ("replaced_by", "text"),
+        ("valid_alternatives", "text[]"),   # 20261004000001_card_sentence_alternatives.sql
     ],
     "stories": [
         ("id", "text"), ("lang", "text"), ("slug", "text"), ("title", "text"), ("kind", "text"),

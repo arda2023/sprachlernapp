@@ -56,7 +56,7 @@ def test_meaning_check_one_call_includes_pos_and_form_details_and_translation():
     assert "German translation: " + translation in fake.prompt
     assert result == response
     version, sentence_prompt = load_prompt("sentences")
-    assert version == "sentences-v4"
+    assert version == "sentences-v5"
     assert "who does what" in sentence_prompt and "time/tense" in sentence_prompt
     attempt = run_qa(load_config(), sentence, translation, "left", "leave#verlassen", "VERB", result)
     assert attempt["qa_status"] == "failed"

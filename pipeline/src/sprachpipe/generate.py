@@ -174,16 +174,37 @@ def gap_offsets(text: str, form: str) -> tuple[int, int] | None:
 
 
 def qa_sentence(first: dict, card: dict, cfg: dict, *, regenerate, lint, blind, judge,
-                meaning_check=None, duplicate=None) -> list[dict]:
-    """Runs one sentence slot through linter and blind test. Returns all
-    attempts; the last one carries the final qa_status, earlier ones are
-    'replaced'. Callbacks: regenerate(feedback) → {text, translation_de};
-    lint(text, gap) → findings; blind(text, gap, translation_de) → result;
-    judge(result) → 'passed' | 'failed' | 'ambiguous'."""
+                meaning_check=None, duplicate=None, alternative_check=None) -> list[dict]:
+    """Runs one sentence slot through linter, blind test, meaning check and
+    alternative check. Returns all attempts; the last one carries the final
+    qa_status, earlier ones are 'replaced'. Callbacks: regenerate(feedback) →
+    {text, translation_de}; lint(text, gap) → findings; blind(text, gap,
+    translation_de) → result; judge(result) → 'passed' (target form) | 'other'
+    | 'failed'; alternative_check(text, gap, translation_de, candidates) →
+    results of alternative_check.check. Final attempt["blind"]: 'passed',
+    'confirmed_alternative', 'unconfirmed', 'other' (not checked) or 'failed'."""
+    from .blindtest import alternatives_for, candidates_for, clean
+    from .ids import form_norm
+
     g = cfg["generate"]
     attempts: list[dict] = []
     lint_left, blind_left = g["lint_retries"], g["blind_retries"]
     cur = first
+
+    def retry_blind(a: dict, detail: str = "") -> dict | None:
+        """The one shared blind-test retry: regenerated sentence or None (failed)."""
+        nonlocal blind_left
+        a["discard_reason"] = "Blindtest"
+        a["discard_reasons"] = [a["discard_reason"]]
+        if blind_left == 0:
+            a["qa_status"] = "failed"
+            return None
+        blind_left -= 1
+        a["qa_status"] = "replaced"
+        return regenerate(f"In the sentence {a['text']!r} a reader who saw a gap instead "
+                          f"of the form answered {a['blind_answer']!r}. Change the sentence "
+                          f"so that only the target form \"{card.get('display_form', card['form'])}\" fits."
+                          f"{detail} Keep the sentence natural and preserve its intended meaning.")
     while True:
         gap = gap_offsets(cur["text"], card["form"])
         findings = lint(cur["text"], gap or (0, 0))
@@ -210,29 +231,17 @@ def qa_sentence(first: dict, card: dict, cfg: dict, *, regenerate, lint, blind, 
             a["discard_reasons"] = [a["discard_reason"]]
             return attempts
         response = blind(cur["text"], gap, cur["translation_de"])
-        from .blindtest import alternatives_for
         a["blind_answer"] = response.get("answer", "") if isinstance(response, dict) else response
         a["blind_alternatives"] = alternatives_for(response, card["form"]) if isinstance(response, dict) else []
+        a["alternative_candidates"] = candidates_for(response, card["form"])
+        a["alternative_check"] = []
+        a["valid_alternatives"] = []
         a["blind"] = judge(response)
-        blind_reason = "Mehrdeutige Lücke" if a["blind"] == "ambiguous" else "Blindtest"
-        if a["blind"] != "passed" and blind_left > 0:
-            blind_left -= 1
-            a["qa_status"] = "replaced"
-            a["discard_reason"] = blind_reason
-            a["discard_reasons"] = [a["discard_reason"]]
-            cur = regenerate(f"In the sentence {cur['text']!r} a reader who saw a gap instead "
-                             f"of the form answered {a['blind_answer']!r}. Change the sentence "
-                             f"so that only the target form \"{card.get('display_form', card['form'])}\" fits. "
-                             + ("Checker alternatives (model findings): " + "; ".join(
-                                 f"{alt['answer']}: {alt['reason']}" for alt in a["blind_alternatives"])
-                                if a["blind_alternatives"] else "")
-                             + " Keep the sentence natural and preserve its intended meaning.")
+        if a["blind"] not in ("passed", "other"):
+            cur = retry_blind(a)
+            if cur is None:
+                return attempts
             continue
-        if a["blind"] != "passed":
-            a["qa_status"] = "failed"
-            a["discard_reason"] = blind_reason
-            a["discard_reasons"] = [a["discard_reason"]]
-            return attempts
         if meaning_check is not None:
             result = meaning_check(cur["text"], cur["translation_de"])
             if (type(result) is not dict or set(result) !=
@@ -264,5 +273,28 @@ def qa_sentence(first: dict, card: dict, cfg: dict, *, regenerate, lint, blind, 
                 a["discard_reason"] = reasons[0]
                 a["discard_reasons"] = reasons
                 return attempts
+        # Alternatives only after the original sentence passed every check.
+        candidates = a["alternative_candidates"]
+        if alternative_check is not None and candidates:
+            results = alternative_check(cur["text"], gap, cur["translation_de"], candidates)
+            a["alternative_check"] = results
+            if (len(results) != len(candidates)
+                    or any(r.get("status") not in ("confirmed", "rejected") for r in results)):
+                a["qa_status"] = "failed"
+                a["discard_reason"] = "Ungültige Prüfantwort: Alternativprüfung"
+                a["discard_reasons"] = [a["discard_reason"]]
+                return attempts
+        confirmed = [r["norm"] for r in a["alternative_check"] if r["status"] == "confirmed"]
+        if a["blind"] == "other":
+            main = form_norm(clean(a["blind_answer"]))
+            if main not in confirmed:
+                a["blind"] = "unconfirmed"
+                reason = next((r["reason"] for r in a["alternative_check"] if r["norm"] == main), "")
+                cur = retry_blind(a, f" Checker: {reason}" if reason else "")
+                if cur is None:
+                    return attempts
+                continue
+            a["blind"] = "confirmed_alternative"
+        a["valid_alternatives"] = confirmed
         a["qa_status"] = "ok"
         return attempts

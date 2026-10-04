@@ -60,17 +60,39 @@ def alternatives_for(result: dict, form: str) -> list[dict]:
             if a["answer"].casefold() != form.casefold()]
 
 
+MAX_CANDIDATES = 4
+
+
+def candidates_for(result: str | dict, form: str) -> list[str]:
+    """Unconfirmed candidates: a main answer other than the target form, then
+    the proposed alternatives. Cleaned, deduplicated by form_norm, target
+    removed, at most four; spelling of the first occurrence is kept."""
+    from .ids import form_norm
+
+    if isinstance(result, dict):
+        result = normalize(result)
+        answers = [result["answer"]] + [a["answer"] for a in result["alternatives"]]
+    else:
+        answers = [result] if isinstance(result, str) else []
+    seen, out = {form_norm(form)}, []
+    for answer in answers:
+        answer = clean(answer)
+        if answer and form_norm(answer) not in seen:
+            seen.add(form_norm(answer))
+            out.append(answer)
+    return out[:MAX_CANDIDATES]
+
+
 def judge(answer: str | dict, form: str, accepted: list[str], lemma: str, lemma_of,
           is_word) -> str:
-    """Only the target form passes, ignoring case; accepted[] is not extended."""
+    """'passed' = the main answer is the target form (ignoring case); 'other' =
+    a different main answer, decided later by the alternative check;
+    'failed' = empty or invalid response. accepted[] is not extended."""
     if isinstance(answer, dict):
-        result = normalize(answer)
-        if not result["answer"]:
-            return "failed"
-        if alternatives_for(result, form):
-            return "ambiguous"
-        return "passed" if result["answer"].casefold() == form.casefold() else "failed"
-    return "passed" if isinstance(answer, str) and clean(answer).casefold() == form.casefold() else "failed"
+        answer = normalize(answer)["answer"]
+    if not isinstance(answer, str) or not clean(answer):
+        return "failed"
+    return "passed" if clean(answer).casefold() == form.casefold() else "other"
 
 
 def default_helpers(lang: str):

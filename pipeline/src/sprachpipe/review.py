@@ -10,7 +10,19 @@ from pathlib import Path
 REVIEW_COLUMNS = ["Form", "Bedeutung", "Satz", "Übersetzung", "Linter-Befunde",
                   "Blindtest-Ergebnis", "qa_status", "Modellantwort bei Abweichung",
                   "bedeutung_check", "Prüfwortart", "Übersetzungsprüfung",
-                  "Prüfbegründung", "verworfen_grund", "Blindtest-Alternativen (Modellbefund)"]
+                  "Prüfbegründung", "verworfen_grund", "Blindtest-Alternativen (Modellbefund)",
+                  "Alternativkandidaten", "Alternativprüfung", "Gültige Alternativen"]
+
+# attempt["blind"] → report label; "passed" is only the exact target form.
+BLIND_LABELS = {"passed": "Zielform exakt", "confirmed_alternative": "Hauptantwort als Alternative bestätigt",
+                "unconfirmed": "Hauptantwort nicht bestätigt",
+                "other": "Andere Hauptantwort (nicht geprüft)", "failed": "Leer oder ungültig"}
+
+
+def _checked(a: dict) -> str:
+    return json.dumps([{"candidate": r["candidate"], "sentence": r["sentence"],
+                        "status": r["status"], "reason": r["reason"]}
+                       for r in a.get("alternative_check") or []], ensure_ascii=False)
 
 
 def review_rows(cards: list[dict]) -> list[dict]:
@@ -31,8 +43,12 @@ def review_rows(cards: list[dict]) -> list[dict]:
                     "Blindtest-Ergebnis": a["blind"] or "",
                     "qa_status": a["qa_status"],
                     "Modellantwort bei Abweichung":
-                        a["blind_answer"] if a["discard_reason"] in ("Blindtest", "Mehrdeutige Lücke") else "",
+                        a["blind_answer"] if (a["discard_reason"] == "Blindtest" or a["blind"] in
+                                              ("other", "unconfirmed", "confirmed_alternative")) else "",
                     "Blindtest-Alternativen (Modellbefund)": json.dumps(a.get("blind_alternatives", []), ensure_ascii=False),
+                    "Alternativkandidaten": json.dumps(a.get("alternative_candidates", []), ensure_ascii=False),
+                    "Alternativprüfung": _checked(a),
+                    "Gültige Alternativen": json.dumps(a.get("valid_alternatives", []), ensure_ascii=False),
                     "bedeutung_check": a.get("meaning_check") or "",
                     "Prüfwortart": checked.get("observed_pos") or "",
                     "Übersetzungsprüfung": ("ok" if checked.get("translation_ok") is True else
@@ -116,10 +132,24 @@ def write_run_report(path: str | Path, *, cards: list[dict], skipped: list[str],
     ]
     for rule in sorted(rule_fail) or []:
         lines.append(f"| Linter `{rule}` | {pct(rule_fail[rule], len(attempts))} |")
-    lines += [f"| Blindtest failed | {pct(blind['failed'], len(blinded))} |",
+    lines += [f"| Blindtest nicht bestanden (nicht bestätigt, leer oder ungültig) | "
+              f"{pct(blind['unconfirmed'] + blind['failed'], len(blinded))} |",
+              "", "## Blindtest-Ergebnisse (alle Versuche)", "",
+              "| Ergebnis | Anzahl |", "|---|---:|"]
+    lines += [f"| {label} (`{key}`) | {blind[key]} |" for key, label in BLIND_LABELS.items()]
+    checks = [r for a in attempts for r in a.get("alternative_check") or []]
+    check_status = Counter(r["status"] for r in checks)
+    in_pack = sum(len(a.get("valid_alternatives", [])) for c in cards if c.get("packed")
+                  for a in c["accepted"])
+    lines += ["", "## Alternativen (alle Versuche, einschließlich ersetzter)", "",
+              f"- Kandidaten geprüft: {check_status['confirmed'] + check_status['rejected']}",
+              f"- bestätigt: {check_status['confirmed']}, abgelehnt: {check_status['rejected']}, "
+              f"ohne gültiges Urteil (ungültige Prüfantwort): {check_status['invalid']}",
+              f"- Prüfaufrufe: {sum(1 for a in attempts if a.get('alternative_check'))}",
+              f"- In valid_alternatives des Packs: {in_pack}",
               "", "## Verworfene Sätze je Grund", "",
               "| Grund | Anzahl |", "|---|---:|"]
-    for reason in ("Linter-Regel", "Blindtest", "Mehrdeutige Lücke", "Bedeutung", "Wortart", "Übersetzung",
+    for reason in ("Linter-Regel", "Blindtest", "Bedeutung", "Wortart", "Übersetzung",
                    "Ungültige Prüfantwort", "Duplikat"):
         n = sum(v for k, v in discarded.items() if k == reason or k.startswith(reason + ":"))
         lines.append(f"| {reason} | {n} |")
@@ -137,7 +167,8 @@ def write_run_report(path: str | Path, *, cards: list[dict], skipped: list[str],
               f"- Token: Eingabe {tok['input_tokens']}, Ausgabe {tok['output_tokens']}, "
               f"Denken {tok['thinking_tokens']}",
               f"- Gesamt: {usd:.4f} USD",
-              f"- Pro Karte: {usd / len(cards):.4f} USD" if cards else "- Pro Karte: -",
+              (f"- Kosten je gepackter Karte: {usd / packed_cards:.4f} USD ({packed_cards} Karten im Pack)"
+               if packed_cards else "- Kosten je gepackter Karte: nicht berechenbar (0 Karten im Pack)"),
               "", "| Schritt | Aufrufe | USD |", "|---|---|---|"]
     for step, (n, u) in sorted(by_step.items()):
         lines.append(f"| {step} | {n} | {u:.4f} |")
@@ -162,6 +193,7 @@ def write_run_report(path: str | Path, *, cards: list[dict], skipped: list[str],
                       if a.get("meaning_check_result") else "")
             alternatives = ("; Alternativen (Modellbefund): " + json.dumps(a["blind_alternatives"], ensure_ascii=False)
                             if a.get("blind_alternatives") else "")
-            lines.append(f"  - {', '.join(reasons)}{answer}{detail}{alternatives}; Satz: {a['text']}")
+            checked = ("; Alternativprüfung: " + _checked(a)) if a.get("alternative_check") else ""
+            lines.append(f"  - {', '.join(reasons)}{answer}{detail}{alternatives}{checked}; Satz: {a['text']}")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return path

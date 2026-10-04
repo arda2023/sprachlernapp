@@ -1,6 +1,6 @@
 import pytest
 
-from sprachpipe.blindtest import ask, judge, normalize, alternatives_for
+from sprachpipe.blindtest import ask, judge, normalize, alternatives_for, candidates_for
 from sprachpipe.config import load_config
 from sprachpipe.generate import qa_sentence
 
@@ -11,12 +11,13 @@ def verdict(result, form="about"):
 
 @pytest.mark.parametrize("result,form,expected", [
     ({"answer": "about", "alternatives": []}, "about", "passed"),
-    ({"answer": "around", "alternatives": []}, "about", "failed"),
-    ({"answer": "about", "alternatives": [{"answer": "approximately", "reason": "Same estimate."}]}, "about", "ambiguous"),
+    ({"answer": "around", "alternatives": []}, "about", "other"),
+    ({"answer": "about", "alternatives": [{"answer": "approximately", "reason": "Same estimate."}]}, "about", "passed"),
     ({"answer": "I", "alternatives": [{"answer": "'i.'", "reason": "Case variant."}]}, "i", "passed"),
-    ({"answer": "about", "alternatives": [{"answer": "more or less", "reason": "Same estimate."}]}, "about", "ambiguous"),
+    ({"answer": "about", "alternatives": [{"answer": "more or less", "reason": "Same estimate."}]}, "about", "passed"),
 ])
 def test_verdict(result, form, expected):
+    """Alternatives no longer decide the verdict; only the main answer does."""
     assert verdict(result, form) == expected
 
 
@@ -37,6 +38,7 @@ def test_invalid_model_structure_cannot_pass(result):
             return result
     response = ask(Fake(), load_config(), "For about thirty minutes.", (4, 9), "Ungefähr.", "ungefähr")
     assert verdict(response) == "failed"
+    assert candidates_for(response, "about") == []
 
 
 def test_normalization_deduplication_and_single_blind_call():
@@ -56,26 +58,50 @@ def test_normalization_deduplication_and_single_blind_call():
     assert fake.calls == 1
     assert alternatives_for(response, "about") == [
         {"answer": "Approximately", "reason": "Same estimate."}]
+    assert candidates_for(response, "about") == ["Approximately"]
 
 
-@pytest.mark.parametrize("first", ["wrong", "ambiguous"])
-def test_mismatch_and_ambiguity_share_one_retry(first):
-    ambiguous = {"answer": "about", "alternatives": [
-        {"answer": "approximately", "reason": "Same estimate."}]}
-    responses = iter([ambiguous if first == "ambiguous" else {"answer": "around", "alternatives": []}, ambiguous])
+def test_candidates_case_duplicates_multiword_and_main_answer():
+    response = {"answer": "Around", "alternatives": [
+        {"answer": "AROUND", "reason": "Duplicate of the main answer."},
+        {"answer": "more or less", "reason": "Multiword estimate."},
+        {"answer": "About!", "reason": "Target form."}]}
+    assert candidates_for(response, "about") == ["Around", "more or less"]
+    full = {"answer": "roughly", "alternatives": [
+        {"answer": a, "reason": "x"} for a in ("around", "approximately", "more or less")]}
+    assert candidates_for(full, "about") == ["roughly", "around", "approximately", "more or less"]
+    assert candidates_for("about", "about") == [] and candidates_for(" Around. ", "about") == ["Around"]
+
+
+def test_alternatives_trigger_no_retry():
+    calls = []
+    def blind(*args):
+        calls.append(args)
+        return {"answer": "about", "alternatives": [
+            {"answer": "approximately", "reason": "Same estimate."}]}
+    attempts = qa_sentence(
+        {"text": "Nina walks for about thirty minutes.", "translation_de": "Ungefähr dreißig Minuten."},
+        {"form": "about", "sense_key": "about#ungefaehr"}, load_config(),
+        regenerate=lambda fb: pytest.fail("alternatives must not regenerate the sentence"),
+        lint=lambda *_: [], blind=blind, judge=verdict)
+    assert len(calls) == 1
+    assert [a["qa_status"] for a in attempts] == ["ok"]
+    assert attempts[0]["alternative_candidates"] == ["approximately"]
+    assert attempts[0]["valid_alternatives"] == []   # never confirmed without a check
+
+
+def test_wrong_main_answer_uses_the_one_blind_retry():
     calls, feedback = [], []
     def blind(*args):
         calls.append(args)
-        return next(responses)
+        return {"answer": "around", "alternatives": []}
     attempts = qa_sentence(
         {"text": "Nina walks for about thirty minutes.", "translation_de": "Ungefähr dreißig Minuten."},
         {"form": "about", "sense_key": "about#ungefaehr"}, load_config(),
         regenerate=lambda fb: (feedback.append(fb), {"text": "Leo walks for about thirty minutes.", "translation_de": "Ungefähr."})[1],
-        lint=lambda *_: [], blind=blind, judge=verdict,
-        meaning_check=lambda *_: pytest.fail("ambiguous attempt must not reach meaning check"))
+        lint=lambda *_: [], blind=blind, judge=verdict)
     assert len(calls) == 2 and len(feedback) == 1
     assert [a["qa_status"] for a in attempts] == ["replaced", "failed"]
-    assert attempts[-1]["discard_reasons"] == ["Mehrdeutige Lücke"]
-    assert attempts[-1]["blind_alternatives"] == ambiguous["alternatives"]
-    if first == "ambiguous":
-        assert "approximately: Same estimate." in feedback[0]
+    assert [a["blind"] for a in attempts] == ["unconfirmed", "unconfirmed"]
+    assert attempts[-1]["discard_reasons"] == ["Blindtest"]
+    assert "'around'" in feedback[0] and 'only the target form "about"' in feedback[0]

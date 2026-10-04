@@ -82,3 +82,51 @@ def test_export_sqlite(pack, tmp_path):
         assert release[0] == "0.0.0-fixture" and release[1]
     finally:
         con.close()
+
+
+def with_alternatives(pack):
+    new = json.loads(json.dumps(pack))
+    new["card_sentences"][0]["valid_alternatives"] = ["headed", "more or less"]
+    return new
+
+
+def test_old_pack_without_field_gets_empty_list(pack):
+    assert all("valid_alternatives" not in cs for cs in pack["card_sentences"])
+    rows = build_rows(pack)["card_sentences"]
+    assert rows and all(r["valid_alternatives"] == [] for r in rows)
+
+
+def test_alternatives_survive_build_and_sqlite_export(pack, tmp_path):
+    new = with_alternatives(pack)
+    rows = build_rows(new)["card_sentences"]
+    assert rows[0]["valid_alternatives"] == ["headed", "more or less"]
+    assert rows[0]["accepted"] == ["went"]
+    target = tmp_path / "content.sqlite"
+    export_sqlite(new, target)
+    con = sqlite3.connect(target)
+    try:
+        stored = dict(con.execute("select id, valid_alternatives from card_sentences").fetchall())
+        accepted = dict(con.execute("select id, accepted from card_sentences").fetchall())
+        assert "valid_alternatives" in [c[1] for c in con.execute("pragma table_info(card_sentences)")]
+    finally:
+        con.close()
+    assert json.loads(stored[rows[0]["id"]]) == ["headed", "more or less"]
+    assert sorted(json.loads(v) for k, v in stored.items() if k != rows[0]["id"]) == [[]] * 8
+    assert json.loads(accepted[rows[0]["id"]]) == ["went"]
+
+
+def test_ids_unchanged_with_and_without_alternatives(pack):
+    old, new = build_rows(pack), build_rows(with_alternatives(pack))
+    for table in old:
+        assert [r.get("id", r.get("code")) for r in old[table]] == [
+            r.get("id", r.get("code")) for r in new[table]]
+    assert upsert_pack(None, pack) == upsert_pack(None, with_alternatives(pack))
+
+
+@pytest.mark.parametrize("value", [None, "headed", ["headed", None], [1], ["Headed"], [" headed"],
+                                   [""], ["headed", "headed"], ["went"]])
+def test_invalid_alternatives_are_rejected(pack, value):
+    bad = json.loads(json.dumps(pack))
+    bad["card_sentences"][0]["valid_alternatives"] = value
+    with pytest.raises(ValueError, match="valid_alternatives"):
+        build_rows(bad)

@@ -38,6 +38,25 @@ def _complete(table: str, row: dict) -> dict:
     return row
 
 
+def _valid_alternatives(cs: dict, form: str) -> list[str]:
+    """Missing in old packs → []. null, wrong types, unnormalized values,
+    duplicates or the target form are invalid content, never an empty result."""
+    if "valid_alternatives" not in cs:
+        return []
+    values = cs["valid_alternatives"]
+    where = f"card_sentences {cs.get('card')!r}/{cs.get('sentence')!r}: valid_alternatives"
+    if type(values) is not list or not all(isinstance(v, str) for v in values):
+        raise ValueError(f"{where} must be a list of strings")
+    for v in values:
+        if not v or v != form_norm(v.strip()):
+            raise ValueError(f"{where}: {v!r} is not normalized")
+        if v == form_norm(form):
+            raise ValueError(f"{where}: {v!r} is the target form")
+    if len(set(values)) != len(values):
+        raise ValueError(f"{where}: duplicates")
+    return list(values)
+
+
 def build_rows(pack: dict) -> dict[str, list[dict]]:
     lang = pack["lang"]
     rows: dict[str, list[dict]] = {t: [] for t in COLUMNS}
@@ -46,6 +65,7 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
     sense_ids: dict[str, str] = {}
     sense_lemma: dict[str, str] = {}
     card_ids: dict[str, str] = {}
+    card_forms: dict[str, str] = {}
     sentence_ids: dict[str, str] = {}
     deck_ids: dict[str, str] = {}
 
@@ -76,6 +96,7 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
         sid = _lookup(sense_ids, "sense", ca["sense"])
         cid = stable_id("cards", lang=lang, form=ca["form"], sense_id=sid)
         card_ids[ca["ref"]] = cid
+        card_forms[ca["ref"]] = ca["form"]
         lid = sense_lemma[sid]
         rows["cards"].append(_complete("cards", {
             "id": cid, "lang": lang, "form": ca["form"], "sense_id": sid,
@@ -140,6 +161,7 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
             "card_id": cid, "sentence_id": snid, "position": cs["position"],
             "gap_start": cs["gap_start"], "gap_end": cs["gap_end"],
             "accepted": list(cs.get("accepted", [])),
+            "valid_alternatives": _valid_alternatives(cs, card_forms[cs["card"]]),
         }))
 
     release = pack.get("release")
@@ -230,9 +252,14 @@ def assemble_pack(lang: str, cards: list[dict], *, model: str, version: str) -> 
                 "qa_report": {"lint": a["lint"], "blind": a["blind"],
                               "blind_answer": a["blind_answer"],
                               "blind_alternatives": a.get("blind_alternatives", []),
+                              "alternative_candidates": a.get("alternative_candidates", []),
+                              "alternative_check": a.get("alternative_check", []),
                               "blind_attempts": [
                                   {"text": item["text"], "answer": item.get("blind_answer"),
+                                   "blind": item.get("blind"),
                                    "alternatives": item.get("blind_alternatives", []),
+                                   "candidates": item.get("alternative_candidates", []),
+                                   "alternative_check": item.get("alternative_check", []),
                                    "discard_reason": item.get("discard_reason", "")}
                                   for slot in card["slots"] if any(item is a for item in slot)
                                   for item in slot if item.get("blind")],
@@ -245,7 +272,8 @@ def assemble_pack(lang: str, cards: list[dict], *, model: str, version: str) -> 
                                                if any(item is a for item in slot))}})
             pack["card_sentences"].append({
                 "card": cref, "sentence": snref, "position": pos_,
-                "gap_start": a["gap"][0], "gap_end": a["gap"][1], "accepted": [card["form"]]})
+                "gap_start": a["gap"][0], "gap_end": a["gap"][1], "accepted": [card["form"]],
+                "valid_alternatives": list(a.get("valid_alternatives", []))})
             for t in a.get("tokens", []):
                 row = {"sentence": snref, "idx": t["idx"], "start_pos": t["start_pos"],
                        "end_pos": t["end_pos"], "surface": t["surface"],
