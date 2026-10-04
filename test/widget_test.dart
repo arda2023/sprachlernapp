@@ -525,11 +525,7 @@ void main() {
     await tester.tap(find.text('Mehr entdecken'));
     await tester.pumpAndSettle();
     expect(find.byType(StoryLibraryScreen), findsOneWidget);
-    expect(find.text('Weiterlesen'), findsOneWidget);
-    expect(
-      find.bySemanticsLabel(RegExp('^Weiterlesen: The Last Train')),
-      findsOneWidget,
-    );
+    expect(find.text('Weiterlesen'), findsNothing); // No invented persisted reading progress.
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
     await tester.scrollUntilVisible(
       find.widgetWithText(SectionHeading, 'Reisen'),
@@ -606,12 +602,12 @@ void main() {
 
       expect(
         find.text(
-          'Story-Prototyp: Zum Lernen hinzufügen ist noch nicht verfügbar.',
+          'Für diesen Text sind keine geprüften Lernreferenzen vorhanden.',
         ),
         findsOneWidget,
       );
       expect(
-        tester.getSemantics(find.bySemanticsLabel('Zum Lernen hinzufügen')),
+        tester.getSemantics(find.bySemanticsLabel('Zum Lernen nicht verfügbar')),
         isSemantics(isButton: true, isEnabled: false),
       );
       expect(find.bySemanticsLabel('Wird gelernt'), findsNothing);
@@ -655,7 +651,8 @@ void main() {
   ) async {
     await tester.pumpWidget(reader());
     await tapWord(tester, 'station');
-    expect(find.bySemanticsLabel('Bereits gemeistert'), findsOneWidget);
+    expect(find.bySemanticsLabel('Zum Lernen nicht verfügbar'), findsOneWidget);
+    // Demo marks remain visual only; no saved-learning claim.
     expect(sampleWordMarks['station'], WordMark.mastered);
   });
 
@@ -2016,7 +2013,7 @@ void main() {
   ) async {
     phoneView(tester);
     await tester.pumpWidget(storyLibrary());
-    final news = find.widgetWithText(SectionHeading, 'Nachrichten');
+    final news = find.widgetWithText(SectionHeading, 'Nachrichten · Demo');
     expect(news, findsOneWidget);
     expect(find.text(StoryLibraryScreen.newsSubheading), findsOneWidget);
     expect(find.textContaining('Zuletzt aktualisiert'), findsNothing);

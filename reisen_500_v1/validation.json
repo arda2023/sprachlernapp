@@ -1,0 +1,55 @@
+{
+  "source_pack_version": "story_learning_v1",
+  "selection_count": 500,
+  "distinct_normalized_forms": 500,
+  "duplicate_forms": [],
+  "collisions_with_160_owned_forms": [],
+  "alias_collisions": [],
+  "topics": {
+    "Reiseplanung": 25,
+    "Dokumente und Grenze": 25,
+    "Flughafen und Flug": 25,
+    "Bahn und Nahverkehr": 25,
+    "Straßenverkehr und Mietwagen": 25,
+    "Unterkunft": 25,
+    "Restaurant und Service": 25,
+    "Essen und Getränke": 25,
+    "Bezahlen und Einkaufen": 25,
+    "Sehenswürdigkeiten und Kultur": 25,
+    "Natur und Ausflüge": 25,
+    "Wetter": 25,
+    "Meer und Wassersport": 25,
+    "Gesundheit": 25,
+    "Gepäck und Sicherheit": 25,
+    "Unterwegs handeln": 25,
+    "Verständigung und Organisation": 25,
+    "Orientierung und Probleme lösen": 25,
+    "Angebote und Orte beschreiben": 25,
+    "Bedürfnisse und Eigenschaften": 25
+  },
+  "pos_counts": {
+    "NOUN": 375,
+    "VERB": 75,
+    "ADJ": 50
+  },
+  "batches": {
+    "1": 100,
+    "2": 100,
+    "3": 100,
+    "4": 100,
+    "5": 100
+  },
+  "words_with_existing_dictionary_candidates": 139,
+  "canonical_senses_confirmed": 0,
+  "sentences_created": 0,
+  "cloud_calls": 0,
+  "pack_review": {
+    "cards": 264,
+    "primary_words": 160,
+    "active_card_sentences": 264,
+    "historical_card_sentences": 528,
+    "stories": 1,
+    "story_sentence_links": 6,
+    "scope": "Zahlen, aktive Ein-Satz-Zuordnung, alle sechs Storysätze mit Übersetzungen und ihren 58 Tokens geprüft. Kein Review des Flutter-Codes und keine Wiederholung der gesamten Altinhaltsredaktion."
+  }
+}

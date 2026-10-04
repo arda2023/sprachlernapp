@@ -17,7 +17,7 @@ class VocabWord {
     this.isFavorite = false,
     this.inPlaylist = false,
     this.note = '',
-  }) : assert(box >= 1 && box <= leitnerBoxCount),
+  }) : assert(box >= 0 && box <= leitnerBoxCount),
        assert(reviewCount >= 0);
 
   /// Stable slug, so content-pack imports stay idempotent.
@@ -41,7 +41,8 @@ class VocabWord {
   final bool inPlaylist;
   final String note;
 
-  Duration get reviewInterval => leitnerInterval(box);
+  Duration get reviewInterval =>
+      box == 0 ? Duration.zero : leitnerInterval(box);
 
   VocabWord copyWith({
     int? box,

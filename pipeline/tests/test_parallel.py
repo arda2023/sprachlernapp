@@ -86,14 +86,14 @@ def test_same_pack_with_concurrency_one_and_eight(tmp_path):
         senses = {s["ref"]: s["sense_key"] for s in pack["senses"]}
         assert {(c["form"], senses[c["sense"]]) for c in pack["cards"]} == {
             ("went", "go#gehen"), ("left", "leave#verlassen")}
-        assert len(pack["sentences"]) == 6
+        assert len(pack["sentences"]) == 2
         assert all(s["qa_status"] == "ok" for s in pack["sentences"])
         assert all(s["qa_report"]["language_ok"] is True for s in pack["sentences"])
         sentence_refs = {s["ref"] for s in pack["sentences"]}
         for card in pack["cards"]:
             rows = [s for s in pack["card_sentences"] if s["card"] == card["ref"]]
             assigned = [s["sentence"] for s in rows]
-            assert len(assigned) == len(set(assigned)) == 3
+            assert len(assigned) == len(set(assigned)) == 1
             assert set(assigned) <= sentence_refs
             assert all(s["accepted"] == [card["form"]] for s in rows)
             assert all(s["valid_alternatives"] == (["departed"] if card["form"] == "left" else [])

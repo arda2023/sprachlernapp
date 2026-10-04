@@ -178,7 +178,7 @@ void main() {
         now: DateTime(2026, 10, 4, 8),
       );
       expect(next.map((e) => e.cardId), ['card-went', 'card-goes']);
-      expect(items['card-went']!.sentenceForPass(1).sentenceId, 's-went-2');
+      expect(items['card-went']!.sentenceForPass(1).sentenceId, 's-went-1');
 
       // A different asset version replaces only the closed content database.
       // Real learner rows and append-only reviews survive the update byte-for-byte.

@@ -68,9 +68,9 @@ Deaktivierte und retired Karten sind nie in einer Queue.
 
 Der Stapelschalter steuert nur neue Stapelwörter (Schritt 2 und 3); gesehene Karten werden immer wiederholt.
 
-**Lerne mit diesem Stapel**: nur Formen und Sätze dieses Stapels, nie reine Story-Karten, auch bei inaktivem Stapel. Reihenfolge: fällige Karten des Stapels, dann neue Wörter des Stapels.
+**Lerne mit diesem Stapel**: ausschließlich Primärkarten und deren feste Sätze dieses Stapels, nie reine Story-Karten, auch bei inaktivem Stapel. Reihenfolge: fällige Karten des Stapels, dann neue Wörter des Stapels.
 
-**Stapel-Revue**: nur gesehene Karten des Stapels (Box ≥ 1), als Vorab-Üben (richtig → unverändert, Fehler → Box 1).
+**Stapel-Revue**: nur gesehene Primärkarten des Stapels (Box ≥ 1), als Vorab-Üben (richtig → unverändert, Fehler → Box 1).
 
 ## Abgeleitete Zähler
 
@@ -78,12 +78,12 @@ Nie gespeichert. Mit `A` = aktive Stapel, `C` = Karten mit `disabled = false` un
 
 | Zähler | Definition |
 |---|---|
-| Noch nicht angezeigt | distinct `card_id` aus `deck_cards` von `A` ohne Zeile in `user_cards` **plus** Karten in `C` mit `box = 0` |
+| Noch nicht angezeigt | distinct `card_id` aus `deck_cards` von `A` ohne Zeile in `user_cards` **plus** Karten in `C` mit `box = 0`, die aktive Primärwörter oder belegte Story-Lernentscheidungen sind |
 | Verfügbare Wiederholungen | Karten in `C` mit `box ≥ 1` und `due_at ≤ now` |
 | Wörter gemeistert | Karten in `C` mit `box = 5` und `due_at > now` |
 | Wörter im Aufbau | Karten in `C` mit `box` 1–4 und `due_at > now` |
 
-Zuordnung in dieser Reihenfolge, damit die Zähler disjunkt sind. **Invariante:** Summe der vier = |`C`| + distinct `card_id` aus `A` ohne Karte. Retired Karten zählen wie deaktivierte nirgends mit.
+Zuordnung in dieser Reihenfolge, damit die Zähler disjunkt sind. **Invariante:** Summe der vier = gelernte auflösbare Karten in `C` + zulässige Box-0-Karten + unbekannte Primärkarten aus `A`. Retired Karten zählen wie deaktivierte nirgends mit.
 
 **Tagesziel** = Anzahl verschiedener `card_id` mit einer `review_log`-Zeile am heutigen lokalen Kalendertag. Der Streak entsteht ebenfalls aus `review_log`.
 
@@ -173,4 +173,13 @@ Vollständige Vorher/Nachher-Zeilen mit Form, Lemma, Sense, Klasse und Grund:
 `build/selection_queue_report.txt` (lokaler Nachweis, nicht versioniert).
 
 ## Anbindung Gemischt (04.10.2026)
-Gemischt verwendet jetzt `buildMixedQueue` im gemeinsamen `DeckSessionController`: fällige aktive bekannte Karten aller Quellen, neue Karten aktivierter Stapel über den unveränderten `selectNewCards`, anschließend Vorab-Üben mit `mode=early`. Bereits gesehene Karten bleiben bei deaktiviertem Stapel erreichbar; deaktivierte/retirierte Karten entfallen. Wiederholungen verwenden weiterhin `withRepeat`, Antworten `ReviewPass` und Termine `scheduleReview`. Story-Prototypen erzeugen keine Lernstände. Der oben dokumentierte Pilot-Snapshot bleibt ein historischer Vergleich, keine Aussage über das heutige 264-Karten-Pack.
+Gemischt verwendet jetzt `buildMixedQueue` im gemeinsamen `DeckSessionController`: fällige aktive bekannte Karten aller Quellen, neue Karten aktivierter Stapel über den unveränderten `selectNewCards`, anschließend Vorab-Üben mit `mode=early`. Bereits gesehene Karten bleiben bei deaktiviertem Stapel erreichbar; deaktivierte/retirierte Karten entfallen. Wiederholungen verwenden weiterhin `withRepeat`, Antworten `ReviewPass` und Termine `scheduleReview`. Nicht annotierte Story-/News-Demos erzeugen keine Lernstände. Der oben dokumentierte Pilot-Snapshot bleibt ein historischer Vergleich, keine Aussage über das heutige 264-Karten-Pack.
+
+## Ein-Satz-Vertrag und Altstände (Paket A, 04.10.2026)
+`practiceSentence` ist fest; Schema 1 projiziert Position 1, Schema 2 hat genau einen aktiven Link auf Position 1. In-Session-Wiederholungen verwenden denselben Satz. `historicalSentence(cardId, sentenceId)` löst auch archivierte Links auf; Archivierung einer Verknüpfung ist keine Karten-Retirierung.
+Direkte Stapelübungen und Revue enthalten ausschließlich Primärkarten. Gelernte Nebenbedeutungen bleiben in Gemischt fällig/vorab übbar und in der Wortliste. Bloß angezeigte Box-0-Nebenbedeutungen werden nicht fortgesetzt und nicht als neue verfügbare Wörter gezählt. Vorhandenes `origin=story` ist ein belegter Altvertrag; Paket B speichert zusätzlich separate explizite Add-Entscheidungen in Schema 4. Intervalle/Antwortregeln/Reviewbuchung unverändert.
+
+### Paket B: gemeinsame auflösbare Lernmenge
+`PracticeItemResolver` liefert kuratierte und vollständige lokale Karten. Zähler berücksichtigen nur diesen auflösbaren Bestand; fehlende alte IDs bleiben gespeichert und werden in der Wortliste als Inhaltsbefund ausgewiesen. Explizite Story-Box-0-Karten sind sofort „Ungelernt“ in der Wortliste; kein Tagesziel-/Wochenfortschritt ohne Review.
+Gemischt reserviert nach fälligen Karten zuerst Slots für explizite Story-Box-0-Karten (älteste Entscheidung zuerst), dann automatische Primärwörter, zuletzt Vorab-Üben. Die 4:1-Auswahl betrifft nur automatische neue Karten und kann Story-Slots nicht verdrängen. Vielfalt bei neuen Karten gilt pro Sitzung; vorhandene Box-0-Zustände bleiben spätere Kandidaten. Gelernte unterschiedliche Bedeutungen werden nach Karten-ID getrennt behandelt.
+Exakte Bindungen einer lokalen Karte an spätere Content-Entsprechungen verhindern einen zweiten automatischen Erstkontakt. Der lokale Stand kann einen Primärplatz als „über Story gelernt“ abdecken; Besitz/Deckgröße ändern sich nicht. Haben beide IDs bereits Zustände, bleiben beide erreichbar und der Konflikt sichtbar. Keine automatische Verschmelzung.

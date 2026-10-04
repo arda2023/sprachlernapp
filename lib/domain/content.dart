@@ -1,4 +1,10 @@
 // Pure Dart: no Flutter imports (see CLAUDE.md, domain layer).
+import 'package:unorm_dart/unorm_dart.dart' as unicode;
+
+/// Same NFC -> lowercase -> apostrophe sequence as sprachpipe.ids.form_norm.
+/// Identity never strips accents or trims content forms.
+String contentFormNorm(String value) =>
+    unicode.nfc(value).toLowerCase().replaceAll('’', "'");
 
 /// Why the content pack can't be used. The app shows a clear state instead
 /// of placeholder data (docs/app-content-integration-plan.md, Abschnitt 5).
@@ -77,6 +83,7 @@ class ContentCard {
     required this.lemma,
     required this.pos,
     this.senseKey,
+    this.senseId,
     this.formKind,
     this.formLabelDe,
     this.translationDe,
@@ -93,6 +100,7 @@ class ContentCard {
   final String lemma;
   final String pos;
   final String? senseKey;
+  final String? senseId;
   final String? formKind;
 
   /// "Verb, Vergangenheit": the grammar hint under the gap.
@@ -101,7 +109,7 @@ class ContentCard {
   final String? cefrBand;
 }
 
-/// One of the three sentences of a card (`card_sentences` + `sentences`).
+/// A current or historical sentence of a card (`card_sentences` + `sentences`).
 /// The gap is `text[gapStart, gapEnd)`; [validAlternatives] hold only for
 /// this card, sentence and gap.
 class CardSentence {
@@ -122,7 +130,7 @@ class CardSentence {
   /// Stable `sentences.id`, logged as `review_log.sentence_id`.
   final String sentenceId;
 
-  /// 1–3.
+  /// 1 for active schema-2 practice; historical positions are retained.
   final int position;
   final String text;
   final String? translationDe;
@@ -147,7 +155,7 @@ class SentenceToken {
   final String? translation;
 }
 
-/// Everything a pass of a card needs: the card, its three sentences in
+/// Everything a pass of a card needs: the card, its sentences in
 /// position order and the other forms of its lemma (wrong-form check).
 class PracticeItem {
   const PracticeItem({
@@ -163,8 +171,9 @@ class PracticeItem {
   /// card's own form.
   final Set<String> otherFormsOfLemma;
 
-  /// The sentence of the next pass: rotates through positions 1–3 by the
-  /// number of earlier logged reviews of the card.
-  CardSentence sentenceForPass(int priorReviews) =>
-      sentences[priorReviews % sentences.length];
+  /// Fixed practice sentence, including schema-1 compatibility projection.
+  CardSentence get practiceSentence => sentences.first;
+
+  /// Compatibility API: prior reviews never rotate the assigned sentence.
+  CardSentence sentenceForPass(int priorReviews) => practiceSentence;
 }

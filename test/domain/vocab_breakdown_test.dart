@@ -28,7 +28,7 @@ void main() {
   );
 
   group('deriveVocabBreakdown', () {
-    final known = {'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8'};
+    final known = {'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'u:own'};
     final cards = {
       'c1': card('c1', 0, null), // added, never answered → unseen
       'c2': card('c2', 2, past), // due

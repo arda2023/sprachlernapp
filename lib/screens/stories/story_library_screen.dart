@@ -18,6 +18,7 @@ class StoryLibraryScreen extends StatelessWidget {
     required this.stories,
     required this.onOpenStory,
     this.continueReading,
+    this.status,
     this.news = const [],
     this.onOpenNews,
   });
@@ -28,6 +29,7 @@ class StoryLibraryScreen extends StatelessWidget {
       'zusammengefasst.';
 
   final List<Story> stories;
+  final Widget? status;
   final ReadingProgress? continueReading;
   final ValueChanged<Story> onOpenStory;
 
@@ -70,6 +72,7 @@ class StoryLibraryScreen extends StatelessWidget {
               ),
             ),
           ),
+          if (status != null) Padding(padding: _gutter, child: status!),
           if (resumed case (story: final story?, :final fraction)) ...[
             const SizedBox(height: 28),
             const Padding(
@@ -90,7 +93,7 @@ class StoryLibraryScreen extends StatelessWidget {
             SizedBox(height: resumed?.story == null ? 18 : 22),
             const Padding(
               padding: _gutter,
-              child: SectionHeading(title: 'Nachrichten'),
+              child: SectionHeading(title: 'Nachrichten · Demo'),
             ),
             const SizedBox(height: 6),
             Padding(

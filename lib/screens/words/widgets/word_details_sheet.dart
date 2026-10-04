@@ -192,7 +192,9 @@ class _WordDetailsSheetState extends ConsumerState<WordDetailsSheet> {
                         ),
                         const SizedBox(height: 20),
                         _LedgerRow(
-                          label: 'Zuletzt gesehen',
+                          label: word.box == 0
+                              ? 'Hinzugefügt'
+                              : 'Zuletzt gesehen',
                           value: lastSeenLabel(word.lastSeenAt, widget.now),
                         ),
                         _LedgerRow(
@@ -201,7 +203,7 @@ class _WordDetailsSheetState extends ConsumerState<WordDetailsSheet> {
                         ),
                         _LedgerRow(
                           label: 'Zeit zwischen Wiederholungen',
-                          value: intervalLabel(word.reviewInterval),
+                          value: word.box==0?'Noch nicht geübt':intervalLabel(word.reviewInterval),
                         ),
                         const _Rule(),
                         const SizedBox(height: 16),

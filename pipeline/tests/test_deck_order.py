@@ -4,12 +4,12 @@ from sprachpipe.pack import assemble_pack, build_rows
 def card(form, key, rank, usage, index, band):
     accepted = []
     slots = []
-    for n in range(3):
-        text = f"Mia {form} place {key[-1]} {n}."
-        gap = (4, 4 + len(form))
+    for n in range(1):
+        text = f"{form}."
+        gap = (0, len(form))
         a = {"text": text, "translation_de": "x", "gap": gap, "qa_status": "ok",
              "lint": [], "blind": "passed", "blind_answer": form,
-             "tokens": [], "meaning_check": key}
+             "tokens": [{"idx":0,"start_pos":0,"end_pos":len(form),"surface":form,"lemma":form,"pos":"VERB","gloss_de":key,"card":True},{"idx":1,"start_pos":len(form),"end_pos":len(form)+1,"surface":"."}], "meaning_check": key}
         accepted.append(a)
         slots.append([a])
     return {"form": form, "lemma": form, "pos": "VERB", "sense_key": key,

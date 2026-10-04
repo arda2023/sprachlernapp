@@ -1,6 +1,6 @@
 # Nutzerschema (Entwurf v1)
 
-Gilt für Drift `user.db` **und** Supabase-Schema `app`. Im Schema `app` hat jede Tabelle zusätzlich `user_id uuid` und RLS "nur eigene Zeilen". Regeln zu Box, Fälligkeit und Zählern: `docs/srs.md`. Inhalte: `docs/content-schema.md`.
+Der gemeinsame Entwurf gilt für Drift `user.db` und Supabase-Schema `app`; die unten ausdrücklich beschriebenen lokalen Migrationen sind kein angewendeter Serververtrag. Im Schema `app` hat jede Tabelle zusätzlich `user_id uuid` und RLS "nur eigene Zeilen". Regeln zu Box, Fälligkeit und Zählern: `docs/srs.md`. Inhalte: `docs/content-schema.md`.
 
 ## Gemeinsame Tabellen (user.db und app)
 
@@ -62,3 +62,14 @@ Additiv: `user_cards.favorite` bool Standard false; `settings.motif` (`automatic
 
 ## Lokale Migration v2 → v3 (gemeinsamer Lernstand)
 Additiv: `user_cards.note` text Standard leer, `user_cards.in_playlist` bool Standard false und `settings.daily_goal` int Standard 10. Favorit/Deaktivierung verwenden weiterhin die bestehenden Felder. Wortform, Übersetzung und Beispielsatz werden aus dem Content-Repository aufgelöst; unbekannte alte IDs bleiben unverändert gespeichert, erscheinen aber nicht mit erfundenen Texten in der Wortliste. Keine gespeicherten Vokabelzähler. Migration von v1 berücksichtigt weiterhin v2; bestehende Karten, Reviews, Geräte-ID und Einstellungen bleiben erhalten. Playlist ist nur die persistierte Auswahl; Audio bleibt außerhalb dieser Integration.
+
+## Lokale Migration v3 → v4 (Story-Lernen, umgesetzt 04.10.2026)
+Migration auch ab v1/v2 additiv; keine Zeilen werden zusammengeführt oder nach Schreibweise gebunden. Alte Werte, Review-IDs, Geräte-ID und Review-Trigger bleiben erhalten.
+
+- `user_cards`: nullable `form`, `form_norm`, `gloss_de`, `lemma`, `pos`, `lemma_identity`, `sense_identity`, `sense_key`, `primary_context_id`. Nur neue lokale Karten benötigen diese Metadaten. Kuratierte Karten behalten ihre Inhalte in `content.sqlite`.
+- `card_contexts`: `id` UUID PK, `card_id`, `text_value`, `translation_de`, `gap_start`, `gap_end` (UTF-16), `source_ref` (Story-ID), `sentence_ref`, `token_index`, `revision`, `fingerprint` UNIQUE, `tokens_json`, `other_forms_json`, `lang`, `provenance`, `created_at`. Nur freigegebene Kontexte werden angelegt; kein pending-Erfolg. UPDATE/DELETE sind per Trigger gesperrt. `primary_context_id` ersetzt den früheren unimplementierten `is_primary`-Entwurf; keine Kontextwahl-Oberfläche.
+- `story_learning_additions`: `card_id` PK, `added_at`. Explizite Lernentscheidung unabhängig vom ursprünglichen `origin`.
+- `story_word_sources`: zusammengesetzter PK (`card_id`, `fingerprint`), `source_ref`, `sentence_ref`, `token_index`, `revision`, `added_at`. Fingerprint bindet genaue Quelle, Satz, Übersetzung, Tokenstelle und Identität. Wiederholte Adds ändern keine ursprünglichen Zeitpunkte.
+- `learning_identity_bindings`: `identity_key` PK, `lang`, `form_norm`, `semantic_anchor`, `card_id`; zusätzlich UNIQUE (`lang`, `form_norm`, `semantic_anchor`). Anker ist die belegte stabile Sense-ID. Neue lokale ID: `u:` + SHA256 über JSON `["local-card-v1", lang, form_norm, semantic_anchor]`.
+
+Karte, erster Kontext, Bindung, Quelle und Lernentscheidung werden in einer Transaktion gespeichert. INSERT OR IGNORE dient nur idempotenten Entscheidungen/Bindungen; kein INSERT OR REPLACE. Konflikt nach paralleler Bindung führt zum Rollback. Kein Review beim Add. Lokale Reviews referenzieren `card_contexts.id`; akzeptierte Zielantwort ist die exakte Form, `valid_alternatives` bleibt leer. Unvollständige alte lokale Karten bleiben erhalten und werden als nicht verfügbar ausgewiesen.

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import copy
+
 from .generate import LANG_NAMES, load_prompt
 from .linter import _nlp
 
@@ -25,17 +27,17 @@ def tokenize(text: str, nlp=None) -> list[dict]:
 
 
 CARD_SCHEMA = {
-    "type": "object", "properties": {"sentences": {"type": "array", "minItems": 3,
-        "maxItems": 3, "items": {"type": "object", "properties": {
+    "type": "object", "properties": {"sentences": {"type": "array", "minItems": 1,
+        "maxItems": 1, "items": {"type": "object", "properties": {
             "sentence_idx": {"type": "integer"},
             "tokens": ANNOTATE_SCHEMA["properties"]["tokens"]},
             "required": ["sentence_idx", "tokens"]}}}, "required": ["sentences"]}
 
 
-def annotate_card(llm, cfg: dict, card: dict, finals: list[dict], nlp=None) -> None:
-    """Annotate exactly three accepted sentences in one request, then validate each token."""
-    if len(finals) != 3:
-        raise ValueError("annotation needs three accepted sentences")
+def annotate_card(llm, cfg: dict, card: dict, finals: list[dict], nlp=None, *, expected_count=1) -> None:
+    """Annotate the contracted number of accepted sentences in one request, then validate each token."""
+    if expected_count not in (1, 3) or len(finals) != expected_count:
+        raise ValueError(f"annotation needs exactly {expected_count} accepted sentences")
     g, c = cfg["generate"], cfg["llm"]
     tokenized = [tokenize(a["text"], nlp) for a in finals]
     blocks = []
@@ -50,12 +52,14 @@ def annotate_card(llm, cfg: dict, card: dict, finals: list[dict], nlp=None) -> N
     prompt = tpl.format(lang_name=LANG_NAMES[g["lang"]], sentences="\n".join(blocks),
                         form=card.get("display_form", card["form"]), lemma=card["lemma"],
                         gloss_de=card["gloss_de"])
-    result = llm.generate_json(prompt, CARD_SCHEMA, model=c["generate_model"],
+    schema = copy.deepcopy(CARD_SCHEMA)
+    schema["properties"]["sentences"].update(minItems=expected_count, maxItems=expected_count)
+    result = llm.generate_json(prompt, schema, model=c["generate_model"],
                                thinking=c["generate_thinking"], step="annotate",
                                max_output_tokens=c["max_output_tokens"]["annotate"])
     groups = result["sentences"]
-    if len(groups) != 3 or {a["sentence_idx"] for a in groups} != {0, 1, 2}:
-        raise ValueError("annotation must return sentence_idx 0, 1, 2 once each")
+    if len(groups) != expected_count or {a["sentence_idx"] for a in groups} != set(range(expected_count)):
+        raise ValueError("annotation must return each requested sentence_idx once")
     for group in groups:
         i = group["sentence_idx"]
         a, tokens = finals[i], tokenized[i]

@@ -9,6 +9,99 @@ class $UserCardsTable extends UserCards
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $UserCardsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _formMeta = const VerificationMeta('form');
+  @override
+  late final GeneratedColumn<String> form = GeneratedColumn<String>(
+    'form',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _formNormMeta = const VerificationMeta(
+    'formNorm',
+  );
+  @override
+  late final GeneratedColumn<String> formNorm = GeneratedColumn<String>(
+    'form_norm',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _glossDeMeta = const VerificationMeta(
+    'glossDe',
+  );
+  @override
+  late final GeneratedColumn<String> glossDe = GeneratedColumn<String>(
+    'gloss_de',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _lemmaMeta = const VerificationMeta('lemma');
+  @override
+  late final GeneratedColumn<String> lemma = GeneratedColumn<String>(
+    'lemma',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _posMeta = const VerificationMeta('pos');
+  @override
+  late final GeneratedColumn<String> pos = GeneratedColumn<String>(
+    'pos',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _lemmaIdentityMeta = const VerificationMeta(
+    'lemmaIdentity',
+  );
+  @override
+  late final GeneratedColumn<String> lemmaIdentity = GeneratedColumn<String>(
+    'lemma_identity',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _senseIdentityMeta = const VerificationMeta(
+    'senseIdentity',
+  );
+  @override
+  late final GeneratedColumn<String> senseIdentity = GeneratedColumn<String>(
+    'sense_identity',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _senseKeyMeta = const VerificationMeta(
+    'senseKey',
+  );
+  @override
+  late final GeneratedColumn<String> senseKey = GeneratedColumn<String>(
+    'sense_key',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _primaryContextIdMeta = const VerificationMeta(
+    'primaryContextId',
+  );
+  @override
+  late final GeneratedColumn<String> primaryContextId = GeneratedColumn<String>(
+    'primary_context_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _noteMeta = const VerificationMeta('note');
   @override
   late final GeneratedColumn<String> note = GeneratedColumn<String>(
@@ -165,6 +258,15 @@ class $UserCardsTable extends UserCards
   );
   @override
   List<GeneratedColumn> get $columns => [
+    form,
+    formNorm,
+    glossDe,
+    lemma,
+    pos,
+    lemmaIdentity,
+    senseIdentity,
+    senseKey,
+    primaryContextId,
     note,
     inPlaylist,
     cardId,
@@ -191,6 +293,69 @@ class $UserCardsTable extends UserCards
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('form')) {
+      context.handle(
+        _formMeta,
+        form.isAcceptableOrUnknown(data['form']!, _formMeta),
+      );
+    }
+    if (data.containsKey('form_norm')) {
+      context.handle(
+        _formNormMeta,
+        formNorm.isAcceptableOrUnknown(data['form_norm']!, _formNormMeta),
+      );
+    }
+    if (data.containsKey('gloss_de')) {
+      context.handle(
+        _glossDeMeta,
+        glossDe.isAcceptableOrUnknown(data['gloss_de']!, _glossDeMeta),
+      );
+    }
+    if (data.containsKey('lemma')) {
+      context.handle(
+        _lemmaMeta,
+        lemma.isAcceptableOrUnknown(data['lemma']!, _lemmaMeta),
+      );
+    }
+    if (data.containsKey('pos')) {
+      context.handle(
+        _posMeta,
+        pos.isAcceptableOrUnknown(data['pos']!, _posMeta),
+      );
+    }
+    if (data.containsKey('lemma_identity')) {
+      context.handle(
+        _lemmaIdentityMeta,
+        lemmaIdentity.isAcceptableOrUnknown(
+          data['lemma_identity']!,
+          _lemmaIdentityMeta,
+        ),
+      );
+    }
+    if (data.containsKey('sense_identity')) {
+      context.handle(
+        _senseIdentityMeta,
+        senseIdentity.isAcceptableOrUnknown(
+          data['sense_identity']!,
+          _senseIdentityMeta,
+        ),
+      );
+    }
+    if (data.containsKey('sense_key')) {
+      context.handle(
+        _senseKeyMeta,
+        senseKey.isAcceptableOrUnknown(data['sense_key']!, _senseKeyMeta),
+      );
+    }
+    if (data.containsKey('primary_context_id')) {
+      context.handle(
+        _primaryContextIdMeta,
+        primaryContextId.isAcceptableOrUnknown(
+          data['primary_context_id']!,
+          _primaryContextIdMeta,
+        ),
+      );
+    }
     if (data.containsKey('note')) {
       context.handle(
         _noteMeta,
@@ -290,6 +455,42 @@ class $UserCardsTable extends UserCards
   UserCardRow map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return UserCardRow(
+      form: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}form'],
+      ),
+      formNorm: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}form_norm'],
+      ),
+      glossDe: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}gloss_de'],
+      ),
+      lemma: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lemma'],
+      ),
+      pos: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}pos'],
+      ),
+      lemmaIdentity: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lemma_identity'],
+      ),
+      senseIdentity: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sense_identity'],
+      ),
+      senseKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sense_key'],
+      ),
+      primaryContextId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}primary_context_id'],
+      ),
       note: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}note'],
@@ -352,6 +553,15 @@ class $UserCardsTable extends UserCards
 }
 
 class UserCardRow extends DataClass implements Insertable<UserCardRow> {
+  final String? form;
+  final String? formNorm;
+  final String? glossDe;
+  final String? lemma;
+  final String? pos;
+  final String? lemmaIdentity;
+  final String? senseIdentity;
+  final String? senseKey;
+  final String? primaryContextId;
   final String note;
   final bool inPlaylist;
   final String cardId;
@@ -368,6 +578,15 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   final bool retired;
   final DateTime updatedAt;
   const UserCardRow({
+    this.form,
+    this.formNorm,
+    this.glossDe,
+    this.lemma,
+    this.pos,
+    this.lemmaIdentity,
+    this.senseIdentity,
+    this.senseKey,
+    this.primaryContextId,
     required this.note,
     required this.inPlaylist,
     required this.cardId,
@@ -385,6 +604,33 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (!nullToAbsent || form != null) {
+      map['form'] = Variable<String>(form);
+    }
+    if (!nullToAbsent || formNorm != null) {
+      map['form_norm'] = Variable<String>(formNorm);
+    }
+    if (!nullToAbsent || glossDe != null) {
+      map['gloss_de'] = Variable<String>(glossDe);
+    }
+    if (!nullToAbsent || lemma != null) {
+      map['lemma'] = Variable<String>(lemma);
+    }
+    if (!nullToAbsent || pos != null) {
+      map['pos'] = Variable<String>(pos);
+    }
+    if (!nullToAbsent || lemmaIdentity != null) {
+      map['lemma_identity'] = Variable<String>(lemmaIdentity);
+    }
+    if (!nullToAbsent || senseIdentity != null) {
+      map['sense_identity'] = Variable<String>(senseIdentity);
+    }
+    if (!nullToAbsent || senseKey != null) {
+      map['sense_key'] = Variable<String>(senseKey);
+    }
+    if (!nullToAbsent || primaryContextId != null) {
+      map['primary_context_id'] = Variable<String>(primaryContextId);
+    }
     map['note'] = Variable<String>(note);
     map['in_playlist'] = Variable<bool>(inPlaylist);
     map['card_id'] = Variable<String>(cardId);
@@ -405,6 +651,29 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
 
   UserCardsCompanion toCompanion(bool nullToAbsent) {
     return UserCardsCompanion(
+      form: form == null && nullToAbsent ? const Value.absent() : Value(form),
+      formNorm: formNorm == null && nullToAbsent
+          ? const Value.absent()
+          : Value(formNorm),
+      glossDe: glossDe == null && nullToAbsent
+          ? const Value.absent()
+          : Value(glossDe),
+      lemma: lemma == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lemma),
+      pos: pos == null && nullToAbsent ? const Value.absent() : Value(pos),
+      lemmaIdentity: lemmaIdentity == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lemmaIdentity),
+      senseIdentity: senseIdentity == null && nullToAbsent
+          ? const Value.absent()
+          : Value(senseIdentity),
+      senseKey: senseKey == null && nullToAbsent
+          ? const Value.absent()
+          : Value(senseKey),
+      primaryContextId: primaryContextId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(primaryContextId),
       note: Value(note),
       inPlaylist: Value(inPlaylist),
       cardId: Value(cardId),
@@ -429,6 +698,15 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return UserCardRow(
+      form: serializer.fromJson<String?>(json['form']),
+      formNorm: serializer.fromJson<String?>(json['formNorm']),
+      glossDe: serializer.fromJson<String?>(json['glossDe']),
+      lemma: serializer.fromJson<String?>(json['lemma']),
+      pos: serializer.fromJson<String?>(json['pos']),
+      lemmaIdentity: serializer.fromJson<String?>(json['lemmaIdentity']),
+      senseIdentity: serializer.fromJson<String?>(json['senseIdentity']),
+      senseKey: serializer.fromJson<String?>(json['senseKey']),
+      primaryContextId: serializer.fromJson<String?>(json['primaryContextId']),
       note: serializer.fromJson<String>(json['note']),
       inPlaylist: serializer.fromJson<bool>(json['inPlaylist']),
       cardId: serializer.fromJson<String>(json['cardId']),
@@ -448,6 +726,15 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'form': serializer.toJson<String?>(form),
+      'formNorm': serializer.toJson<String?>(formNorm),
+      'glossDe': serializer.toJson<String?>(glossDe),
+      'lemma': serializer.toJson<String?>(lemma),
+      'pos': serializer.toJson<String?>(pos),
+      'lemmaIdentity': serializer.toJson<String?>(lemmaIdentity),
+      'senseIdentity': serializer.toJson<String?>(senseIdentity),
+      'senseKey': serializer.toJson<String?>(senseKey),
+      'primaryContextId': serializer.toJson<String?>(primaryContextId),
       'note': serializer.toJson<String>(note),
       'inPlaylist': serializer.toJson<bool>(inPlaylist),
       'cardId': serializer.toJson<String>(cardId),
@@ -465,6 +752,15 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   }
 
   UserCardRow copyWith({
+    Value<String?> form = const Value.absent(),
+    Value<String?> formNorm = const Value.absent(),
+    Value<String?> glossDe = const Value.absent(),
+    Value<String?> lemma = const Value.absent(),
+    Value<String?> pos = const Value.absent(),
+    Value<String?> lemmaIdentity = const Value.absent(),
+    Value<String?> senseIdentity = const Value.absent(),
+    Value<String?> senseKey = const Value.absent(),
+    Value<String?> primaryContextId = const Value.absent(),
     String? note,
     bool? inPlaylist,
     String? cardId,
@@ -479,6 +775,21 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
     bool? retired,
     DateTime? updatedAt,
   }) => UserCardRow(
+    form: form.present ? form.value : this.form,
+    formNorm: formNorm.present ? formNorm.value : this.formNorm,
+    glossDe: glossDe.present ? glossDe.value : this.glossDe,
+    lemma: lemma.present ? lemma.value : this.lemma,
+    pos: pos.present ? pos.value : this.pos,
+    lemmaIdentity: lemmaIdentity.present
+        ? lemmaIdentity.value
+        : this.lemmaIdentity,
+    senseIdentity: senseIdentity.present
+        ? senseIdentity.value
+        : this.senseIdentity,
+    senseKey: senseKey.present ? senseKey.value : this.senseKey,
+    primaryContextId: primaryContextId.present
+        ? primaryContextId.value
+        : this.primaryContextId,
     note: note ?? this.note,
     inPlaylist: inPlaylist ?? this.inPlaylist,
     cardId: cardId ?? this.cardId,
@@ -495,6 +806,21 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   );
   UserCardRow copyWithCompanion(UserCardsCompanion data) {
     return UserCardRow(
+      form: data.form.present ? data.form.value : this.form,
+      formNorm: data.formNorm.present ? data.formNorm.value : this.formNorm,
+      glossDe: data.glossDe.present ? data.glossDe.value : this.glossDe,
+      lemma: data.lemma.present ? data.lemma.value : this.lemma,
+      pos: data.pos.present ? data.pos.value : this.pos,
+      lemmaIdentity: data.lemmaIdentity.present
+          ? data.lemmaIdentity.value
+          : this.lemmaIdentity,
+      senseIdentity: data.senseIdentity.present
+          ? data.senseIdentity.value
+          : this.senseIdentity,
+      senseKey: data.senseKey.present ? data.senseKey.value : this.senseKey,
+      primaryContextId: data.primaryContextId.present
+          ? data.primaryContextId.value
+          : this.primaryContextId,
       note: data.note.present ? data.note.value : this.note,
       inPlaylist: data.inPlaylist.present
           ? data.inPlaylist.value
@@ -516,6 +842,15 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   @override
   String toString() {
     return (StringBuffer('UserCardRow(')
+          ..write('form: $form, ')
+          ..write('formNorm: $formNorm, ')
+          ..write('glossDe: $glossDe, ')
+          ..write('lemma: $lemma, ')
+          ..write('pos: $pos, ')
+          ..write('lemmaIdentity: $lemmaIdentity, ')
+          ..write('senseIdentity: $senseIdentity, ')
+          ..write('senseKey: $senseKey, ')
+          ..write('primaryContextId: $primaryContextId, ')
           ..write('note: $note, ')
           ..write('inPlaylist: $inPlaylist, ')
           ..write('cardId: $cardId, ')
@@ -534,7 +869,16 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   }
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll([
+    form,
+    formNorm,
+    glossDe,
+    lemma,
+    pos,
+    lemmaIdentity,
+    senseIdentity,
+    senseKey,
+    primaryContextId,
     note,
     inPlaylist,
     cardId,
@@ -548,11 +892,20 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
     favorite,
     retired,
     updatedAt,
-  );
+  ]);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is UserCardRow &&
+          other.form == this.form &&
+          other.formNorm == this.formNorm &&
+          other.glossDe == this.glossDe &&
+          other.lemma == this.lemma &&
+          other.pos == this.pos &&
+          other.lemmaIdentity == this.lemmaIdentity &&
+          other.senseIdentity == this.senseIdentity &&
+          other.senseKey == this.senseKey &&
+          other.primaryContextId == this.primaryContextId &&
           other.note == this.note &&
           other.inPlaylist == this.inPlaylist &&
           other.cardId == this.cardId &&
@@ -569,6 +922,15 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
 }
 
 class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
+  final Value<String?> form;
+  final Value<String?> formNorm;
+  final Value<String?> glossDe;
+  final Value<String?> lemma;
+  final Value<String?> pos;
+  final Value<String?> lemmaIdentity;
+  final Value<String?> senseIdentity;
+  final Value<String?> senseKey;
+  final Value<String?> primaryContextId;
   final Value<String> note;
   final Value<bool> inPlaylist;
   final Value<String> cardId;
@@ -584,6 +946,15 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
   final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const UserCardsCompanion({
+    this.form = const Value.absent(),
+    this.formNorm = const Value.absent(),
+    this.glossDe = const Value.absent(),
+    this.lemma = const Value.absent(),
+    this.pos = const Value.absent(),
+    this.lemmaIdentity = const Value.absent(),
+    this.senseIdentity = const Value.absent(),
+    this.senseKey = const Value.absent(),
+    this.primaryContextId = const Value.absent(),
     this.note = const Value.absent(),
     this.inPlaylist = const Value.absent(),
     this.cardId = const Value.absent(),
@@ -600,6 +971,15 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
     this.rowid = const Value.absent(),
   });
   UserCardsCompanion.insert({
+    this.form = const Value.absent(),
+    this.formNorm = const Value.absent(),
+    this.glossDe = const Value.absent(),
+    this.lemma = const Value.absent(),
+    this.pos = const Value.absent(),
+    this.lemmaIdentity = const Value.absent(),
+    this.senseIdentity = const Value.absent(),
+    this.senseKey = const Value.absent(),
+    this.primaryContextId = const Value.absent(),
     this.note = const Value.absent(),
     this.inPlaylist = const Value.absent(),
     required String cardId,
@@ -621,6 +1001,15 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
        origin = Value(origin),
        updatedAt = Value(updatedAt);
   static Insertable<UserCardRow> custom({
+    Expression<String>? form,
+    Expression<String>? formNorm,
+    Expression<String>? glossDe,
+    Expression<String>? lemma,
+    Expression<String>? pos,
+    Expression<String>? lemmaIdentity,
+    Expression<String>? senseIdentity,
+    Expression<String>? senseKey,
+    Expression<String>? primaryContextId,
     Expression<String>? note,
     Expression<bool>? inPlaylist,
     Expression<String>? cardId,
@@ -637,6 +1026,15 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
+      if (form != null) 'form': form,
+      if (formNorm != null) 'form_norm': formNorm,
+      if (glossDe != null) 'gloss_de': glossDe,
+      if (lemma != null) 'lemma': lemma,
+      if (pos != null) 'pos': pos,
+      if (lemmaIdentity != null) 'lemma_identity': lemmaIdentity,
+      if (senseIdentity != null) 'sense_identity': senseIdentity,
+      if (senseKey != null) 'sense_key': senseKey,
+      if (primaryContextId != null) 'primary_context_id': primaryContextId,
       if (note != null) 'note': note,
       if (inPlaylist != null) 'in_playlist': inPlaylist,
       if (cardId != null) 'card_id': cardId,
@@ -655,6 +1053,15 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
   }
 
   UserCardsCompanion copyWith({
+    Value<String?>? form,
+    Value<String?>? formNorm,
+    Value<String?>? glossDe,
+    Value<String?>? lemma,
+    Value<String?>? pos,
+    Value<String?>? lemmaIdentity,
+    Value<String?>? senseIdentity,
+    Value<String?>? senseKey,
+    Value<String?>? primaryContextId,
     Value<String>? note,
     Value<bool>? inPlaylist,
     Value<String>? cardId,
@@ -671,6 +1078,15 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
     Value<int>? rowid,
   }) {
     return UserCardsCompanion(
+      form: form ?? this.form,
+      formNorm: formNorm ?? this.formNorm,
+      glossDe: glossDe ?? this.glossDe,
+      lemma: lemma ?? this.lemma,
+      pos: pos ?? this.pos,
+      lemmaIdentity: lemmaIdentity ?? this.lemmaIdentity,
+      senseIdentity: senseIdentity ?? this.senseIdentity,
+      senseKey: senseKey ?? this.senseKey,
+      primaryContextId: primaryContextId ?? this.primaryContextId,
       note: note ?? this.note,
       inPlaylist: inPlaylist ?? this.inPlaylist,
       cardId: cardId ?? this.cardId,
@@ -691,6 +1107,33 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (form.present) {
+      map['form'] = Variable<String>(form.value);
+    }
+    if (formNorm.present) {
+      map['form_norm'] = Variable<String>(formNorm.value);
+    }
+    if (glossDe.present) {
+      map['gloss_de'] = Variable<String>(glossDe.value);
+    }
+    if (lemma.present) {
+      map['lemma'] = Variable<String>(lemma.value);
+    }
+    if (pos.present) {
+      map['pos'] = Variable<String>(pos.value);
+    }
+    if (lemmaIdentity.present) {
+      map['lemma_identity'] = Variable<String>(lemmaIdentity.value);
+    }
+    if (senseIdentity.present) {
+      map['sense_identity'] = Variable<String>(senseIdentity.value);
+    }
+    if (senseKey.present) {
+      map['sense_key'] = Variable<String>(senseKey.value);
+    }
+    if (primaryContextId.present) {
+      map['primary_context_id'] = Variable<String>(primaryContextId.value);
+    }
     if (note.present) {
       map['note'] = Variable<String>(note.value);
     }
@@ -739,6 +1182,15 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
   @override
   String toString() {
     return (StringBuffer('UserCardsCompanion(')
+          ..write('form: $form, ')
+          ..write('formNorm: $formNorm, ')
+          ..write('glossDe: $glossDe, ')
+          ..write('lemma: $lemma, ')
+          ..write('pos: $pos, ')
+          ..write('lemmaIdentity: $lemmaIdentity, ')
+          ..write('senseIdentity: $senseIdentity, ')
+          ..write('senseKey: $senseKey, ')
+          ..write('primaryContextId: $primaryContextId, ')
           ..write('note: $note, ')
           ..write('inPlaylist: $inPlaylist, ')
           ..write('cardId: $cardId, ')
@@ -2977,6 +3429,2000 @@ class LocalSubmissionsCompanion extends UpdateCompanion<SubmissionRow> {
   }
 }
 
+class $CardContextsTable extends CardContexts
+    with TableInfo<$CardContextsTable, CardContextRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CardContextsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _cardIdMeta = const VerificationMeta('cardId');
+  @override
+  late final GeneratedColumn<String> cardId = GeneratedColumn<String>(
+    'card_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _textValueMeta = const VerificationMeta(
+    'textValue',
+  );
+  @override
+  late final GeneratedColumn<String> textValue = GeneratedColumn<String>(
+    'text_value',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _translationDeMeta = const VerificationMeta(
+    'translationDe',
+  );
+  @override
+  late final GeneratedColumn<String> translationDe = GeneratedColumn<String>(
+    'translation_de',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _gapStartMeta = const VerificationMeta(
+    'gapStart',
+  );
+  @override
+  late final GeneratedColumn<int> gapStart = GeneratedColumn<int>(
+    'gap_start',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _gapEndMeta = const VerificationMeta('gapEnd');
+  @override
+  late final GeneratedColumn<int> gapEnd = GeneratedColumn<int>(
+    'gap_end',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sourceRefMeta = const VerificationMeta(
+    'sourceRef',
+  );
+  @override
+  late final GeneratedColumn<String> sourceRef = GeneratedColumn<String>(
+    'source_ref',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sentenceRefMeta = const VerificationMeta(
+    'sentenceRef',
+  );
+  @override
+  late final GeneratedColumn<String> sentenceRef = GeneratedColumn<String>(
+    'sentence_ref',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tokenIndexMeta = const VerificationMeta(
+    'tokenIndex',
+  );
+  @override
+  late final GeneratedColumn<int> tokenIndex = GeneratedColumn<int>(
+    'token_index',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _revisionMeta = const VerificationMeta(
+    'revision',
+  );
+  @override
+  late final GeneratedColumn<String> revision = GeneratedColumn<String>(
+    'revision',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fingerprintMeta = const VerificationMeta(
+    'fingerprint',
+  );
+  @override
+  late final GeneratedColumn<String> fingerprint = GeneratedColumn<String>(
+    'fingerprint',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  static const VerificationMeta _tokensJsonMeta = const VerificationMeta(
+    'tokensJson',
+  );
+  @override
+  late final GeneratedColumn<String> tokensJson = GeneratedColumn<String>(
+    'tokens_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _otherFormsJsonMeta = const VerificationMeta(
+    'otherFormsJson',
+  );
+  @override
+  late final GeneratedColumn<String> otherFormsJson = GeneratedColumn<String>(
+    'other_forms_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _langMeta = const VerificationMeta('lang');
+  @override
+  late final GeneratedColumn<String> lang = GeneratedColumn<String>(
+    'lang',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _provenanceMeta = const VerificationMeta(
+    'provenance',
+  );
+  @override
+  late final GeneratedColumn<String> provenance = GeneratedColumn<String>(
+    'provenance',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    cardId,
+    textValue,
+    translationDe,
+    gapStart,
+    gapEnd,
+    sourceRef,
+    sentenceRef,
+    tokenIndex,
+    revision,
+    fingerprint,
+    tokensJson,
+    otherFormsJson,
+    lang,
+    provenance,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'card_contexts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CardContextRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('card_id')) {
+      context.handle(
+        _cardIdMeta,
+        cardId.isAcceptableOrUnknown(data['card_id']!, _cardIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_cardIdMeta);
+    }
+    if (data.containsKey('text_value')) {
+      context.handle(
+        _textValueMeta,
+        textValue.isAcceptableOrUnknown(data['text_value']!, _textValueMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_textValueMeta);
+    }
+    if (data.containsKey('translation_de')) {
+      context.handle(
+        _translationDeMeta,
+        translationDe.isAcceptableOrUnknown(
+          data['translation_de']!,
+          _translationDeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_translationDeMeta);
+    }
+    if (data.containsKey('gap_start')) {
+      context.handle(
+        _gapStartMeta,
+        gapStart.isAcceptableOrUnknown(data['gap_start']!, _gapStartMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_gapStartMeta);
+    }
+    if (data.containsKey('gap_end')) {
+      context.handle(
+        _gapEndMeta,
+        gapEnd.isAcceptableOrUnknown(data['gap_end']!, _gapEndMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_gapEndMeta);
+    }
+    if (data.containsKey('source_ref')) {
+      context.handle(
+        _sourceRefMeta,
+        sourceRef.isAcceptableOrUnknown(data['source_ref']!, _sourceRefMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sourceRefMeta);
+    }
+    if (data.containsKey('sentence_ref')) {
+      context.handle(
+        _sentenceRefMeta,
+        sentenceRef.isAcceptableOrUnknown(
+          data['sentence_ref']!,
+          _sentenceRefMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_sentenceRefMeta);
+    }
+    if (data.containsKey('token_index')) {
+      context.handle(
+        _tokenIndexMeta,
+        tokenIndex.isAcceptableOrUnknown(data['token_index']!, _tokenIndexMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tokenIndexMeta);
+    }
+    if (data.containsKey('revision')) {
+      context.handle(
+        _revisionMeta,
+        revision.isAcceptableOrUnknown(data['revision']!, _revisionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_revisionMeta);
+    }
+    if (data.containsKey('fingerprint')) {
+      context.handle(
+        _fingerprintMeta,
+        fingerprint.isAcceptableOrUnknown(
+          data['fingerprint']!,
+          _fingerprintMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_fingerprintMeta);
+    }
+    if (data.containsKey('tokens_json')) {
+      context.handle(
+        _tokensJsonMeta,
+        tokensJson.isAcceptableOrUnknown(data['tokens_json']!, _tokensJsonMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tokensJsonMeta);
+    }
+    if (data.containsKey('other_forms_json')) {
+      context.handle(
+        _otherFormsJsonMeta,
+        otherFormsJson.isAcceptableOrUnknown(
+          data['other_forms_json']!,
+          _otherFormsJsonMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_otherFormsJsonMeta);
+    }
+    if (data.containsKey('lang')) {
+      context.handle(
+        _langMeta,
+        lang.isAcceptableOrUnknown(data['lang']!, _langMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_langMeta);
+    }
+    if (data.containsKey('provenance')) {
+      context.handle(
+        _provenanceMeta,
+        provenance.isAcceptableOrUnknown(data['provenance']!, _provenanceMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_provenanceMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CardContextRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CardContextRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      cardId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}card_id'],
+      )!,
+      textValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}text_value'],
+      )!,
+      translationDe: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}translation_de'],
+      )!,
+      gapStart: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}gap_start'],
+      )!,
+      gapEnd: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}gap_end'],
+      )!,
+      sourceRef: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source_ref'],
+      )!,
+      sentenceRef: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sentence_ref'],
+      )!,
+      tokenIndex: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}token_index'],
+      )!,
+      revision: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}revision'],
+      )!,
+      fingerprint: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fingerprint'],
+      )!,
+      tokensJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tokens_json'],
+      )!,
+      otherFormsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}other_forms_json'],
+      )!,
+      lang: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lang'],
+      )!,
+      provenance: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}provenance'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $CardContextsTable createAlias(String alias) {
+    return $CardContextsTable(attachedDatabase, alias);
+  }
+}
+
+class CardContextRow extends DataClass implements Insertable<CardContextRow> {
+  final String id;
+  final String cardId;
+  final String textValue;
+  final String translationDe;
+  final int gapStart;
+  final int gapEnd;
+  final String sourceRef;
+  final String sentenceRef;
+  final int tokenIndex;
+  final String revision;
+  final String fingerprint;
+  final String tokensJson;
+  final String otherFormsJson;
+  final String lang;
+  final String provenance;
+  final DateTime createdAt;
+  const CardContextRow({
+    required this.id,
+    required this.cardId,
+    required this.textValue,
+    required this.translationDe,
+    required this.gapStart,
+    required this.gapEnd,
+    required this.sourceRef,
+    required this.sentenceRef,
+    required this.tokenIndex,
+    required this.revision,
+    required this.fingerprint,
+    required this.tokensJson,
+    required this.otherFormsJson,
+    required this.lang,
+    required this.provenance,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['card_id'] = Variable<String>(cardId);
+    map['text_value'] = Variable<String>(textValue);
+    map['translation_de'] = Variable<String>(translationDe);
+    map['gap_start'] = Variable<int>(gapStart);
+    map['gap_end'] = Variable<int>(gapEnd);
+    map['source_ref'] = Variable<String>(sourceRef);
+    map['sentence_ref'] = Variable<String>(sentenceRef);
+    map['token_index'] = Variable<int>(tokenIndex);
+    map['revision'] = Variable<String>(revision);
+    map['fingerprint'] = Variable<String>(fingerprint);
+    map['tokens_json'] = Variable<String>(tokensJson);
+    map['other_forms_json'] = Variable<String>(otherFormsJson);
+    map['lang'] = Variable<String>(lang);
+    map['provenance'] = Variable<String>(provenance);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  CardContextsCompanion toCompanion(bool nullToAbsent) {
+    return CardContextsCompanion(
+      id: Value(id),
+      cardId: Value(cardId),
+      textValue: Value(textValue),
+      translationDe: Value(translationDe),
+      gapStart: Value(gapStart),
+      gapEnd: Value(gapEnd),
+      sourceRef: Value(sourceRef),
+      sentenceRef: Value(sentenceRef),
+      tokenIndex: Value(tokenIndex),
+      revision: Value(revision),
+      fingerprint: Value(fingerprint),
+      tokensJson: Value(tokensJson),
+      otherFormsJson: Value(otherFormsJson),
+      lang: Value(lang),
+      provenance: Value(provenance),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory CardContextRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CardContextRow(
+      id: serializer.fromJson<String>(json['id']),
+      cardId: serializer.fromJson<String>(json['cardId']),
+      textValue: serializer.fromJson<String>(json['textValue']),
+      translationDe: serializer.fromJson<String>(json['translationDe']),
+      gapStart: serializer.fromJson<int>(json['gapStart']),
+      gapEnd: serializer.fromJson<int>(json['gapEnd']),
+      sourceRef: serializer.fromJson<String>(json['sourceRef']),
+      sentenceRef: serializer.fromJson<String>(json['sentenceRef']),
+      tokenIndex: serializer.fromJson<int>(json['tokenIndex']),
+      revision: serializer.fromJson<String>(json['revision']),
+      fingerprint: serializer.fromJson<String>(json['fingerprint']),
+      tokensJson: serializer.fromJson<String>(json['tokensJson']),
+      otherFormsJson: serializer.fromJson<String>(json['otherFormsJson']),
+      lang: serializer.fromJson<String>(json['lang']),
+      provenance: serializer.fromJson<String>(json['provenance']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'cardId': serializer.toJson<String>(cardId),
+      'textValue': serializer.toJson<String>(textValue),
+      'translationDe': serializer.toJson<String>(translationDe),
+      'gapStart': serializer.toJson<int>(gapStart),
+      'gapEnd': serializer.toJson<int>(gapEnd),
+      'sourceRef': serializer.toJson<String>(sourceRef),
+      'sentenceRef': serializer.toJson<String>(sentenceRef),
+      'tokenIndex': serializer.toJson<int>(tokenIndex),
+      'revision': serializer.toJson<String>(revision),
+      'fingerprint': serializer.toJson<String>(fingerprint),
+      'tokensJson': serializer.toJson<String>(tokensJson),
+      'otherFormsJson': serializer.toJson<String>(otherFormsJson),
+      'lang': serializer.toJson<String>(lang),
+      'provenance': serializer.toJson<String>(provenance),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  CardContextRow copyWith({
+    String? id,
+    String? cardId,
+    String? textValue,
+    String? translationDe,
+    int? gapStart,
+    int? gapEnd,
+    String? sourceRef,
+    String? sentenceRef,
+    int? tokenIndex,
+    String? revision,
+    String? fingerprint,
+    String? tokensJson,
+    String? otherFormsJson,
+    String? lang,
+    String? provenance,
+    DateTime? createdAt,
+  }) => CardContextRow(
+    id: id ?? this.id,
+    cardId: cardId ?? this.cardId,
+    textValue: textValue ?? this.textValue,
+    translationDe: translationDe ?? this.translationDe,
+    gapStart: gapStart ?? this.gapStart,
+    gapEnd: gapEnd ?? this.gapEnd,
+    sourceRef: sourceRef ?? this.sourceRef,
+    sentenceRef: sentenceRef ?? this.sentenceRef,
+    tokenIndex: tokenIndex ?? this.tokenIndex,
+    revision: revision ?? this.revision,
+    fingerprint: fingerprint ?? this.fingerprint,
+    tokensJson: tokensJson ?? this.tokensJson,
+    otherFormsJson: otherFormsJson ?? this.otherFormsJson,
+    lang: lang ?? this.lang,
+    provenance: provenance ?? this.provenance,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  CardContextRow copyWithCompanion(CardContextsCompanion data) {
+    return CardContextRow(
+      id: data.id.present ? data.id.value : this.id,
+      cardId: data.cardId.present ? data.cardId.value : this.cardId,
+      textValue: data.textValue.present ? data.textValue.value : this.textValue,
+      translationDe: data.translationDe.present
+          ? data.translationDe.value
+          : this.translationDe,
+      gapStart: data.gapStart.present ? data.gapStart.value : this.gapStart,
+      gapEnd: data.gapEnd.present ? data.gapEnd.value : this.gapEnd,
+      sourceRef: data.sourceRef.present ? data.sourceRef.value : this.sourceRef,
+      sentenceRef: data.sentenceRef.present
+          ? data.sentenceRef.value
+          : this.sentenceRef,
+      tokenIndex: data.tokenIndex.present
+          ? data.tokenIndex.value
+          : this.tokenIndex,
+      revision: data.revision.present ? data.revision.value : this.revision,
+      fingerprint: data.fingerprint.present
+          ? data.fingerprint.value
+          : this.fingerprint,
+      tokensJson: data.tokensJson.present
+          ? data.tokensJson.value
+          : this.tokensJson,
+      otherFormsJson: data.otherFormsJson.present
+          ? data.otherFormsJson.value
+          : this.otherFormsJson,
+      lang: data.lang.present ? data.lang.value : this.lang,
+      provenance: data.provenance.present
+          ? data.provenance.value
+          : this.provenance,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CardContextRow(')
+          ..write('id: $id, ')
+          ..write('cardId: $cardId, ')
+          ..write('textValue: $textValue, ')
+          ..write('translationDe: $translationDe, ')
+          ..write('gapStart: $gapStart, ')
+          ..write('gapEnd: $gapEnd, ')
+          ..write('sourceRef: $sourceRef, ')
+          ..write('sentenceRef: $sentenceRef, ')
+          ..write('tokenIndex: $tokenIndex, ')
+          ..write('revision: $revision, ')
+          ..write('fingerprint: $fingerprint, ')
+          ..write('tokensJson: $tokensJson, ')
+          ..write('otherFormsJson: $otherFormsJson, ')
+          ..write('lang: $lang, ')
+          ..write('provenance: $provenance, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    cardId,
+    textValue,
+    translationDe,
+    gapStart,
+    gapEnd,
+    sourceRef,
+    sentenceRef,
+    tokenIndex,
+    revision,
+    fingerprint,
+    tokensJson,
+    otherFormsJson,
+    lang,
+    provenance,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CardContextRow &&
+          other.id == this.id &&
+          other.cardId == this.cardId &&
+          other.textValue == this.textValue &&
+          other.translationDe == this.translationDe &&
+          other.gapStart == this.gapStart &&
+          other.gapEnd == this.gapEnd &&
+          other.sourceRef == this.sourceRef &&
+          other.sentenceRef == this.sentenceRef &&
+          other.tokenIndex == this.tokenIndex &&
+          other.revision == this.revision &&
+          other.fingerprint == this.fingerprint &&
+          other.tokensJson == this.tokensJson &&
+          other.otherFormsJson == this.otherFormsJson &&
+          other.lang == this.lang &&
+          other.provenance == this.provenance &&
+          other.createdAt == this.createdAt);
+}
+
+class CardContextsCompanion extends UpdateCompanion<CardContextRow> {
+  final Value<String> id;
+  final Value<String> cardId;
+  final Value<String> textValue;
+  final Value<String> translationDe;
+  final Value<int> gapStart;
+  final Value<int> gapEnd;
+  final Value<String> sourceRef;
+  final Value<String> sentenceRef;
+  final Value<int> tokenIndex;
+  final Value<String> revision;
+  final Value<String> fingerprint;
+  final Value<String> tokensJson;
+  final Value<String> otherFormsJson;
+  final Value<String> lang;
+  final Value<String> provenance;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const CardContextsCompanion({
+    this.id = const Value.absent(),
+    this.cardId = const Value.absent(),
+    this.textValue = const Value.absent(),
+    this.translationDe = const Value.absent(),
+    this.gapStart = const Value.absent(),
+    this.gapEnd = const Value.absent(),
+    this.sourceRef = const Value.absent(),
+    this.sentenceRef = const Value.absent(),
+    this.tokenIndex = const Value.absent(),
+    this.revision = const Value.absent(),
+    this.fingerprint = const Value.absent(),
+    this.tokensJson = const Value.absent(),
+    this.otherFormsJson = const Value.absent(),
+    this.lang = const Value.absent(),
+    this.provenance = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CardContextsCompanion.insert({
+    required String id,
+    required String cardId,
+    required String textValue,
+    required String translationDe,
+    required int gapStart,
+    required int gapEnd,
+    required String sourceRef,
+    required String sentenceRef,
+    required int tokenIndex,
+    required String revision,
+    required String fingerprint,
+    required String tokensJson,
+    required String otherFormsJson,
+    required String lang,
+    required String provenance,
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       cardId = Value(cardId),
+       textValue = Value(textValue),
+       translationDe = Value(translationDe),
+       gapStart = Value(gapStart),
+       gapEnd = Value(gapEnd),
+       sourceRef = Value(sourceRef),
+       sentenceRef = Value(sentenceRef),
+       tokenIndex = Value(tokenIndex),
+       revision = Value(revision),
+       fingerprint = Value(fingerprint),
+       tokensJson = Value(tokensJson),
+       otherFormsJson = Value(otherFormsJson),
+       lang = Value(lang),
+       provenance = Value(provenance),
+       createdAt = Value(createdAt);
+  static Insertable<CardContextRow> custom({
+    Expression<String>? id,
+    Expression<String>? cardId,
+    Expression<String>? textValue,
+    Expression<String>? translationDe,
+    Expression<int>? gapStart,
+    Expression<int>? gapEnd,
+    Expression<String>? sourceRef,
+    Expression<String>? sentenceRef,
+    Expression<int>? tokenIndex,
+    Expression<String>? revision,
+    Expression<String>? fingerprint,
+    Expression<String>? tokensJson,
+    Expression<String>? otherFormsJson,
+    Expression<String>? lang,
+    Expression<String>? provenance,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (cardId != null) 'card_id': cardId,
+      if (textValue != null) 'text_value': textValue,
+      if (translationDe != null) 'translation_de': translationDe,
+      if (gapStart != null) 'gap_start': gapStart,
+      if (gapEnd != null) 'gap_end': gapEnd,
+      if (sourceRef != null) 'source_ref': sourceRef,
+      if (sentenceRef != null) 'sentence_ref': sentenceRef,
+      if (tokenIndex != null) 'token_index': tokenIndex,
+      if (revision != null) 'revision': revision,
+      if (fingerprint != null) 'fingerprint': fingerprint,
+      if (tokensJson != null) 'tokens_json': tokensJson,
+      if (otherFormsJson != null) 'other_forms_json': otherFormsJson,
+      if (lang != null) 'lang': lang,
+      if (provenance != null) 'provenance': provenance,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CardContextsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? cardId,
+    Value<String>? textValue,
+    Value<String>? translationDe,
+    Value<int>? gapStart,
+    Value<int>? gapEnd,
+    Value<String>? sourceRef,
+    Value<String>? sentenceRef,
+    Value<int>? tokenIndex,
+    Value<String>? revision,
+    Value<String>? fingerprint,
+    Value<String>? tokensJson,
+    Value<String>? otherFormsJson,
+    Value<String>? lang,
+    Value<String>? provenance,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return CardContextsCompanion(
+      id: id ?? this.id,
+      cardId: cardId ?? this.cardId,
+      textValue: textValue ?? this.textValue,
+      translationDe: translationDe ?? this.translationDe,
+      gapStart: gapStart ?? this.gapStart,
+      gapEnd: gapEnd ?? this.gapEnd,
+      sourceRef: sourceRef ?? this.sourceRef,
+      sentenceRef: sentenceRef ?? this.sentenceRef,
+      tokenIndex: tokenIndex ?? this.tokenIndex,
+      revision: revision ?? this.revision,
+      fingerprint: fingerprint ?? this.fingerprint,
+      tokensJson: tokensJson ?? this.tokensJson,
+      otherFormsJson: otherFormsJson ?? this.otherFormsJson,
+      lang: lang ?? this.lang,
+      provenance: provenance ?? this.provenance,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (cardId.present) {
+      map['card_id'] = Variable<String>(cardId.value);
+    }
+    if (textValue.present) {
+      map['text_value'] = Variable<String>(textValue.value);
+    }
+    if (translationDe.present) {
+      map['translation_de'] = Variable<String>(translationDe.value);
+    }
+    if (gapStart.present) {
+      map['gap_start'] = Variable<int>(gapStart.value);
+    }
+    if (gapEnd.present) {
+      map['gap_end'] = Variable<int>(gapEnd.value);
+    }
+    if (sourceRef.present) {
+      map['source_ref'] = Variable<String>(sourceRef.value);
+    }
+    if (sentenceRef.present) {
+      map['sentence_ref'] = Variable<String>(sentenceRef.value);
+    }
+    if (tokenIndex.present) {
+      map['token_index'] = Variable<int>(tokenIndex.value);
+    }
+    if (revision.present) {
+      map['revision'] = Variable<String>(revision.value);
+    }
+    if (fingerprint.present) {
+      map['fingerprint'] = Variable<String>(fingerprint.value);
+    }
+    if (tokensJson.present) {
+      map['tokens_json'] = Variable<String>(tokensJson.value);
+    }
+    if (otherFormsJson.present) {
+      map['other_forms_json'] = Variable<String>(otherFormsJson.value);
+    }
+    if (lang.present) {
+      map['lang'] = Variable<String>(lang.value);
+    }
+    if (provenance.present) {
+      map['provenance'] = Variable<String>(provenance.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CardContextsCompanion(')
+          ..write('id: $id, ')
+          ..write('cardId: $cardId, ')
+          ..write('textValue: $textValue, ')
+          ..write('translationDe: $translationDe, ')
+          ..write('gapStart: $gapStart, ')
+          ..write('gapEnd: $gapEnd, ')
+          ..write('sourceRef: $sourceRef, ')
+          ..write('sentenceRef: $sentenceRef, ')
+          ..write('tokenIndex: $tokenIndex, ')
+          ..write('revision: $revision, ')
+          ..write('fingerprint: $fingerprint, ')
+          ..write('tokensJson: $tokensJson, ')
+          ..write('otherFormsJson: $otherFormsJson, ')
+          ..write('lang: $lang, ')
+          ..write('provenance: $provenance, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $StoryLearningAdditionsTable extends StoryLearningAdditions
+    with TableInfo<$StoryLearningAdditionsTable, StoryAdditionRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $StoryLearningAdditionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _cardIdMeta = const VerificationMeta('cardId');
+  @override
+  late final GeneratedColumn<String> cardId = GeneratedColumn<String>(
+    'card_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _addedAtMeta = const VerificationMeta(
+    'addedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> addedAt = GeneratedColumn<DateTime>(
+    'added_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [cardId, addedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'story_learning_additions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<StoryAdditionRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('card_id')) {
+      context.handle(
+        _cardIdMeta,
+        cardId.isAcceptableOrUnknown(data['card_id']!, _cardIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_cardIdMeta);
+    }
+    if (data.containsKey('added_at')) {
+      context.handle(
+        _addedAtMeta,
+        addedAt.isAcceptableOrUnknown(data['added_at']!, _addedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_addedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {cardId};
+  @override
+  StoryAdditionRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return StoryAdditionRow(
+      cardId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}card_id'],
+      )!,
+      addedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}added_at'],
+      )!,
+    );
+  }
+
+  @override
+  $StoryLearningAdditionsTable createAlias(String alias) {
+    return $StoryLearningAdditionsTable(attachedDatabase, alias);
+  }
+}
+
+class StoryAdditionRow extends DataClass
+    implements Insertable<StoryAdditionRow> {
+  final String cardId;
+  final DateTime addedAt;
+  const StoryAdditionRow({required this.cardId, required this.addedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['card_id'] = Variable<String>(cardId);
+    map['added_at'] = Variable<DateTime>(addedAt);
+    return map;
+  }
+
+  StoryLearningAdditionsCompanion toCompanion(bool nullToAbsent) {
+    return StoryLearningAdditionsCompanion(
+      cardId: Value(cardId),
+      addedAt: Value(addedAt),
+    );
+  }
+
+  factory StoryAdditionRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return StoryAdditionRow(
+      cardId: serializer.fromJson<String>(json['cardId']),
+      addedAt: serializer.fromJson<DateTime>(json['addedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'cardId': serializer.toJson<String>(cardId),
+      'addedAt': serializer.toJson<DateTime>(addedAt),
+    };
+  }
+
+  StoryAdditionRow copyWith({String? cardId, DateTime? addedAt}) =>
+      StoryAdditionRow(
+        cardId: cardId ?? this.cardId,
+        addedAt: addedAt ?? this.addedAt,
+      );
+  StoryAdditionRow copyWithCompanion(StoryLearningAdditionsCompanion data) {
+    return StoryAdditionRow(
+      cardId: data.cardId.present ? data.cardId.value : this.cardId,
+      addedAt: data.addedAt.present ? data.addedAt.value : this.addedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('StoryAdditionRow(')
+          ..write('cardId: $cardId, ')
+          ..write('addedAt: $addedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(cardId, addedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is StoryAdditionRow &&
+          other.cardId == this.cardId &&
+          other.addedAt == this.addedAt);
+}
+
+class StoryLearningAdditionsCompanion
+    extends UpdateCompanion<StoryAdditionRow> {
+  final Value<String> cardId;
+  final Value<DateTime> addedAt;
+  final Value<int> rowid;
+  const StoryLearningAdditionsCompanion({
+    this.cardId = const Value.absent(),
+    this.addedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  StoryLearningAdditionsCompanion.insert({
+    required String cardId,
+    required DateTime addedAt,
+    this.rowid = const Value.absent(),
+  }) : cardId = Value(cardId),
+       addedAt = Value(addedAt);
+  static Insertable<StoryAdditionRow> custom({
+    Expression<String>? cardId,
+    Expression<DateTime>? addedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (cardId != null) 'card_id': cardId,
+      if (addedAt != null) 'added_at': addedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  StoryLearningAdditionsCompanion copyWith({
+    Value<String>? cardId,
+    Value<DateTime>? addedAt,
+    Value<int>? rowid,
+  }) {
+    return StoryLearningAdditionsCompanion(
+      cardId: cardId ?? this.cardId,
+      addedAt: addedAt ?? this.addedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (cardId.present) {
+      map['card_id'] = Variable<String>(cardId.value);
+    }
+    if (addedAt.present) {
+      map['added_at'] = Variable<DateTime>(addedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('StoryLearningAdditionsCompanion(')
+          ..write('cardId: $cardId, ')
+          ..write('addedAt: $addedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $StoryWordSourcesTable extends StoryWordSources
+    with TableInfo<$StoryWordSourcesTable, StorySourceRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $StoryWordSourcesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _cardIdMeta = const VerificationMeta('cardId');
+  @override
+  late final GeneratedColumn<String> cardId = GeneratedColumn<String>(
+    'card_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fingerprintMeta = const VerificationMeta(
+    'fingerprint',
+  );
+  @override
+  late final GeneratedColumn<String> fingerprint = GeneratedColumn<String>(
+    'fingerprint',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sourceRefMeta = const VerificationMeta(
+    'sourceRef',
+  );
+  @override
+  late final GeneratedColumn<String> sourceRef = GeneratedColumn<String>(
+    'source_ref',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sentenceRefMeta = const VerificationMeta(
+    'sentenceRef',
+  );
+  @override
+  late final GeneratedColumn<String> sentenceRef = GeneratedColumn<String>(
+    'sentence_ref',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tokenIndexMeta = const VerificationMeta(
+    'tokenIndex',
+  );
+  @override
+  late final GeneratedColumn<int> tokenIndex = GeneratedColumn<int>(
+    'token_index',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _revisionMeta = const VerificationMeta(
+    'revision',
+  );
+  @override
+  late final GeneratedColumn<String> revision = GeneratedColumn<String>(
+    'revision',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _addedAtMeta = const VerificationMeta(
+    'addedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> addedAt = GeneratedColumn<DateTime>(
+    'added_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    cardId,
+    fingerprint,
+    sourceRef,
+    sentenceRef,
+    tokenIndex,
+    revision,
+    addedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'story_word_sources';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<StorySourceRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('card_id')) {
+      context.handle(
+        _cardIdMeta,
+        cardId.isAcceptableOrUnknown(data['card_id']!, _cardIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_cardIdMeta);
+    }
+    if (data.containsKey('fingerprint')) {
+      context.handle(
+        _fingerprintMeta,
+        fingerprint.isAcceptableOrUnknown(
+          data['fingerprint']!,
+          _fingerprintMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_fingerprintMeta);
+    }
+    if (data.containsKey('source_ref')) {
+      context.handle(
+        _sourceRefMeta,
+        sourceRef.isAcceptableOrUnknown(data['source_ref']!, _sourceRefMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sourceRefMeta);
+    }
+    if (data.containsKey('sentence_ref')) {
+      context.handle(
+        _sentenceRefMeta,
+        sentenceRef.isAcceptableOrUnknown(
+          data['sentence_ref']!,
+          _sentenceRefMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_sentenceRefMeta);
+    }
+    if (data.containsKey('token_index')) {
+      context.handle(
+        _tokenIndexMeta,
+        tokenIndex.isAcceptableOrUnknown(data['token_index']!, _tokenIndexMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tokenIndexMeta);
+    }
+    if (data.containsKey('revision')) {
+      context.handle(
+        _revisionMeta,
+        revision.isAcceptableOrUnknown(data['revision']!, _revisionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_revisionMeta);
+    }
+    if (data.containsKey('added_at')) {
+      context.handle(
+        _addedAtMeta,
+        addedAt.isAcceptableOrUnknown(data['added_at']!, _addedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_addedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {cardId, fingerprint};
+  @override
+  StorySourceRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return StorySourceRow(
+      cardId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}card_id'],
+      )!,
+      fingerprint: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fingerprint'],
+      )!,
+      sourceRef: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source_ref'],
+      )!,
+      sentenceRef: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sentence_ref'],
+      )!,
+      tokenIndex: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}token_index'],
+      )!,
+      revision: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}revision'],
+      )!,
+      addedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}added_at'],
+      )!,
+    );
+  }
+
+  @override
+  $StoryWordSourcesTable createAlias(String alias) {
+    return $StoryWordSourcesTable(attachedDatabase, alias);
+  }
+}
+
+class StorySourceRow extends DataClass implements Insertable<StorySourceRow> {
+  final String cardId;
+  final String fingerprint;
+  final String sourceRef;
+  final String sentenceRef;
+  final int tokenIndex;
+  final String revision;
+  final DateTime addedAt;
+  const StorySourceRow({
+    required this.cardId,
+    required this.fingerprint,
+    required this.sourceRef,
+    required this.sentenceRef,
+    required this.tokenIndex,
+    required this.revision,
+    required this.addedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['card_id'] = Variable<String>(cardId);
+    map['fingerprint'] = Variable<String>(fingerprint);
+    map['source_ref'] = Variable<String>(sourceRef);
+    map['sentence_ref'] = Variable<String>(sentenceRef);
+    map['token_index'] = Variable<int>(tokenIndex);
+    map['revision'] = Variable<String>(revision);
+    map['added_at'] = Variable<DateTime>(addedAt);
+    return map;
+  }
+
+  StoryWordSourcesCompanion toCompanion(bool nullToAbsent) {
+    return StoryWordSourcesCompanion(
+      cardId: Value(cardId),
+      fingerprint: Value(fingerprint),
+      sourceRef: Value(sourceRef),
+      sentenceRef: Value(sentenceRef),
+      tokenIndex: Value(tokenIndex),
+      revision: Value(revision),
+      addedAt: Value(addedAt),
+    );
+  }
+
+  factory StorySourceRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return StorySourceRow(
+      cardId: serializer.fromJson<String>(json['cardId']),
+      fingerprint: serializer.fromJson<String>(json['fingerprint']),
+      sourceRef: serializer.fromJson<String>(json['sourceRef']),
+      sentenceRef: serializer.fromJson<String>(json['sentenceRef']),
+      tokenIndex: serializer.fromJson<int>(json['tokenIndex']),
+      revision: serializer.fromJson<String>(json['revision']),
+      addedAt: serializer.fromJson<DateTime>(json['addedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'cardId': serializer.toJson<String>(cardId),
+      'fingerprint': serializer.toJson<String>(fingerprint),
+      'sourceRef': serializer.toJson<String>(sourceRef),
+      'sentenceRef': serializer.toJson<String>(sentenceRef),
+      'tokenIndex': serializer.toJson<int>(tokenIndex),
+      'revision': serializer.toJson<String>(revision),
+      'addedAt': serializer.toJson<DateTime>(addedAt),
+    };
+  }
+
+  StorySourceRow copyWith({
+    String? cardId,
+    String? fingerprint,
+    String? sourceRef,
+    String? sentenceRef,
+    int? tokenIndex,
+    String? revision,
+    DateTime? addedAt,
+  }) => StorySourceRow(
+    cardId: cardId ?? this.cardId,
+    fingerprint: fingerprint ?? this.fingerprint,
+    sourceRef: sourceRef ?? this.sourceRef,
+    sentenceRef: sentenceRef ?? this.sentenceRef,
+    tokenIndex: tokenIndex ?? this.tokenIndex,
+    revision: revision ?? this.revision,
+    addedAt: addedAt ?? this.addedAt,
+  );
+  StorySourceRow copyWithCompanion(StoryWordSourcesCompanion data) {
+    return StorySourceRow(
+      cardId: data.cardId.present ? data.cardId.value : this.cardId,
+      fingerprint: data.fingerprint.present
+          ? data.fingerprint.value
+          : this.fingerprint,
+      sourceRef: data.sourceRef.present ? data.sourceRef.value : this.sourceRef,
+      sentenceRef: data.sentenceRef.present
+          ? data.sentenceRef.value
+          : this.sentenceRef,
+      tokenIndex: data.tokenIndex.present
+          ? data.tokenIndex.value
+          : this.tokenIndex,
+      revision: data.revision.present ? data.revision.value : this.revision,
+      addedAt: data.addedAt.present ? data.addedAt.value : this.addedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('StorySourceRow(')
+          ..write('cardId: $cardId, ')
+          ..write('fingerprint: $fingerprint, ')
+          ..write('sourceRef: $sourceRef, ')
+          ..write('sentenceRef: $sentenceRef, ')
+          ..write('tokenIndex: $tokenIndex, ')
+          ..write('revision: $revision, ')
+          ..write('addedAt: $addedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    cardId,
+    fingerprint,
+    sourceRef,
+    sentenceRef,
+    tokenIndex,
+    revision,
+    addedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is StorySourceRow &&
+          other.cardId == this.cardId &&
+          other.fingerprint == this.fingerprint &&
+          other.sourceRef == this.sourceRef &&
+          other.sentenceRef == this.sentenceRef &&
+          other.tokenIndex == this.tokenIndex &&
+          other.revision == this.revision &&
+          other.addedAt == this.addedAt);
+}
+
+class StoryWordSourcesCompanion extends UpdateCompanion<StorySourceRow> {
+  final Value<String> cardId;
+  final Value<String> fingerprint;
+  final Value<String> sourceRef;
+  final Value<String> sentenceRef;
+  final Value<int> tokenIndex;
+  final Value<String> revision;
+  final Value<DateTime> addedAt;
+  final Value<int> rowid;
+  const StoryWordSourcesCompanion({
+    this.cardId = const Value.absent(),
+    this.fingerprint = const Value.absent(),
+    this.sourceRef = const Value.absent(),
+    this.sentenceRef = const Value.absent(),
+    this.tokenIndex = const Value.absent(),
+    this.revision = const Value.absent(),
+    this.addedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  StoryWordSourcesCompanion.insert({
+    required String cardId,
+    required String fingerprint,
+    required String sourceRef,
+    required String sentenceRef,
+    required int tokenIndex,
+    required String revision,
+    required DateTime addedAt,
+    this.rowid = const Value.absent(),
+  }) : cardId = Value(cardId),
+       fingerprint = Value(fingerprint),
+       sourceRef = Value(sourceRef),
+       sentenceRef = Value(sentenceRef),
+       tokenIndex = Value(tokenIndex),
+       revision = Value(revision),
+       addedAt = Value(addedAt);
+  static Insertable<StorySourceRow> custom({
+    Expression<String>? cardId,
+    Expression<String>? fingerprint,
+    Expression<String>? sourceRef,
+    Expression<String>? sentenceRef,
+    Expression<int>? tokenIndex,
+    Expression<String>? revision,
+    Expression<DateTime>? addedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (cardId != null) 'card_id': cardId,
+      if (fingerprint != null) 'fingerprint': fingerprint,
+      if (sourceRef != null) 'source_ref': sourceRef,
+      if (sentenceRef != null) 'sentence_ref': sentenceRef,
+      if (tokenIndex != null) 'token_index': tokenIndex,
+      if (revision != null) 'revision': revision,
+      if (addedAt != null) 'added_at': addedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  StoryWordSourcesCompanion copyWith({
+    Value<String>? cardId,
+    Value<String>? fingerprint,
+    Value<String>? sourceRef,
+    Value<String>? sentenceRef,
+    Value<int>? tokenIndex,
+    Value<String>? revision,
+    Value<DateTime>? addedAt,
+    Value<int>? rowid,
+  }) {
+    return StoryWordSourcesCompanion(
+      cardId: cardId ?? this.cardId,
+      fingerprint: fingerprint ?? this.fingerprint,
+      sourceRef: sourceRef ?? this.sourceRef,
+      sentenceRef: sentenceRef ?? this.sentenceRef,
+      tokenIndex: tokenIndex ?? this.tokenIndex,
+      revision: revision ?? this.revision,
+      addedAt: addedAt ?? this.addedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (cardId.present) {
+      map['card_id'] = Variable<String>(cardId.value);
+    }
+    if (fingerprint.present) {
+      map['fingerprint'] = Variable<String>(fingerprint.value);
+    }
+    if (sourceRef.present) {
+      map['source_ref'] = Variable<String>(sourceRef.value);
+    }
+    if (sentenceRef.present) {
+      map['sentence_ref'] = Variable<String>(sentenceRef.value);
+    }
+    if (tokenIndex.present) {
+      map['token_index'] = Variable<int>(tokenIndex.value);
+    }
+    if (revision.present) {
+      map['revision'] = Variable<String>(revision.value);
+    }
+    if (addedAt.present) {
+      map['added_at'] = Variable<DateTime>(addedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('StoryWordSourcesCompanion(')
+          ..write('cardId: $cardId, ')
+          ..write('fingerprint: $fingerprint, ')
+          ..write('sourceRef: $sourceRef, ')
+          ..write('sentenceRef: $sentenceRef, ')
+          ..write('tokenIndex: $tokenIndex, ')
+          ..write('revision: $revision, ')
+          ..write('addedAt: $addedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $LearningIdentityBindingsTable extends LearningIdentityBindings
+    with TableInfo<$LearningIdentityBindingsTable, LearningBindingRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LearningIdentityBindingsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _identityKeyMeta = const VerificationMeta(
+    'identityKey',
+  );
+  @override
+  late final GeneratedColumn<String> identityKey = GeneratedColumn<String>(
+    'identity_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _langMeta = const VerificationMeta('lang');
+  @override
+  late final GeneratedColumn<String> lang = GeneratedColumn<String>(
+    'lang',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _formNormMeta = const VerificationMeta(
+    'formNorm',
+  );
+  @override
+  late final GeneratedColumn<String> formNorm = GeneratedColumn<String>(
+    'form_norm',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _semanticAnchorMeta = const VerificationMeta(
+    'semanticAnchor',
+  );
+  @override
+  late final GeneratedColumn<String> semanticAnchor = GeneratedColumn<String>(
+    'semantic_anchor',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _cardIdMeta = const VerificationMeta('cardId');
+  @override
+  late final GeneratedColumn<String> cardId = GeneratedColumn<String>(
+    'card_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    identityKey,
+    lang,
+    formNorm,
+    semanticAnchor,
+    cardId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'learning_identity_bindings';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<LearningBindingRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('identity_key')) {
+      context.handle(
+        _identityKeyMeta,
+        identityKey.isAcceptableOrUnknown(
+          data['identity_key']!,
+          _identityKeyMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_identityKeyMeta);
+    }
+    if (data.containsKey('lang')) {
+      context.handle(
+        _langMeta,
+        lang.isAcceptableOrUnknown(data['lang']!, _langMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_langMeta);
+    }
+    if (data.containsKey('form_norm')) {
+      context.handle(
+        _formNormMeta,
+        formNorm.isAcceptableOrUnknown(data['form_norm']!, _formNormMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_formNormMeta);
+    }
+    if (data.containsKey('semantic_anchor')) {
+      context.handle(
+        _semanticAnchorMeta,
+        semanticAnchor.isAcceptableOrUnknown(
+          data['semantic_anchor']!,
+          _semanticAnchorMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_semanticAnchorMeta);
+    }
+    if (data.containsKey('card_id')) {
+      context.handle(
+        _cardIdMeta,
+        cardId.isAcceptableOrUnknown(data['card_id']!, _cardIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_cardIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {identityKey};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {lang, formNorm, semanticAnchor},
+  ];
+  @override
+  LearningBindingRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LearningBindingRow(
+      identityKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}identity_key'],
+      )!,
+      lang: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lang'],
+      )!,
+      formNorm: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}form_norm'],
+      )!,
+      semanticAnchor: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}semantic_anchor'],
+      )!,
+      cardId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}card_id'],
+      )!,
+    );
+  }
+
+  @override
+  $LearningIdentityBindingsTable createAlias(String alias) {
+    return $LearningIdentityBindingsTable(attachedDatabase, alias);
+  }
+}
+
+class LearningBindingRow extends DataClass
+    implements Insertable<LearningBindingRow> {
+  final String identityKey;
+  final String lang;
+  final String formNorm;
+  final String semanticAnchor;
+  final String cardId;
+  const LearningBindingRow({
+    required this.identityKey,
+    required this.lang,
+    required this.formNorm,
+    required this.semanticAnchor,
+    required this.cardId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['identity_key'] = Variable<String>(identityKey);
+    map['lang'] = Variable<String>(lang);
+    map['form_norm'] = Variable<String>(formNorm);
+    map['semantic_anchor'] = Variable<String>(semanticAnchor);
+    map['card_id'] = Variable<String>(cardId);
+    return map;
+  }
+
+  LearningIdentityBindingsCompanion toCompanion(bool nullToAbsent) {
+    return LearningIdentityBindingsCompanion(
+      identityKey: Value(identityKey),
+      lang: Value(lang),
+      formNorm: Value(formNorm),
+      semanticAnchor: Value(semanticAnchor),
+      cardId: Value(cardId),
+    );
+  }
+
+  factory LearningBindingRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LearningBindingRow(
+      identityKey: serializer.fromJson<String>(json['identityKey']),
+      lang: serializer.fromJson<String>(json['lang']),
+      formNorm: serializer.fromJson<String>(json['formNorm']),
+      semanticAnchor: serializer.fromJson<String>(json['semanticAnchor']),
+      cardId: serializer.fromJson<String>(json['cardId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'identityKey': serializer.toJson<String>(identityKey),
+      'lang': serializer.toJson<String>(lang),
+      'formNorm': serializer.toJson<String>(formNorm),
+      'semanticAnchor': serializer.toJson<String>(semanticAnchor),
+      'cardId': serializer.toJson<String>(cardId),
+    };
+  }
+
+  LearningBindingRow copyWith({
+    String? identityKey,
+    String? lang,
+    String? formNorm,
+    String? semanticAnchor,
+    String? cardId,
+  }) => LearningBindingRow(
+    identityKey: identityKey ?? this.identityKey,
+    lang: lang ?? this.lang,
+    formNorm: formNorm ?? this.formNorm,
+    semanticAnchor: semanticAnchor ?? this.semanticAnchor,
+    cardId: cardId ?? this.cardId,
+  );
+  LearningBindingRow copyWithCompanion(LearningIdentityBindingsCompanion data) {
+    return LearningBindingRow(
+      identityKey: data.identityKey.present
+          ? data.identityKey.value
+          : this.identityKey,
+      lang: data.lang.present ? data.lang.value : this.lang,
+      formNorm: data.formNorm.present ? data.formNorm.value : this.formNorm,
+      semanticAnchor: data.semanticAnchor.present
+          ? data.semanticAnchor.value
+          : this.semanticAnchor,
+      cardId: data.cardId.present ? data.cardId.value : this.cardId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LearningBindingRow(')
+          ..write('identityKey: $identityKey, ')
+          ..write('lang: $lang, ')
+          ..write('formNorm: $formNorm, ')
+          ..write('semanticAnchor: $semanticAnchor, ')
+          ..write('cardId: $cardId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(identityKey, lang, formNorm, semanticAnchor, cardId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LearningBindingRow &&
+          other.identityKey == this.identityKey &&
+          other.lang == this.lang &&
+          other.formNorm == this.formNorm &&
+          other.semanticAnchor == this.semanticAnchor &&
+          other.cardId == this.cardId);
+}
+
+class LearningIdentityBindingsCompanion
+    extends UpdateCompanion<LearningBindingRow> {
+  final Value<String> identityKey;
+  final Value<String> lang;
+  final Value<String> formNorm;
+  final Value<String> semanticAnchor;
+  final Value<String> cardId;
+  final Value<int> rowid;
+  const LearningIdentityBindingsCompanion({
+    this.identityKey = const Value.absent(),
+    this.lang = const Value.absent(),
+    this.formNorm = const Value.absent(),
+    this.semanticAnchor = const Value.absent(),
+    this.cardId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LearningIdentityBindingsCompanion.insert({
+    required String identityKey,
+    required String lang,
+    required String formNorm,
+    required String semanticAnchor,
+    required String cardId,
+    this.rowid = const Value.absent(),
+  }) : identityKey = Value(identityKey),
+       lang = Value(lang),
+       formNorm = Value(formNorm),
+       semanticAnchor = Value(semanticAnchor),
+       cardId = Value(cardId);
+  static Insertable<LearningBindingRow> custom({
+    Expression<String>? identityKey,
+    Expression<String>? lang,
+    Expression<String>? formNorm,
+    Expression<String>? semanticAnchor,
+    Expression<String>? cardId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (identityKey != null) 'identity_key': identityKey,
+      if (lang != null) 'lang': lang,
+      if (formNorm != null) 'form_norm': formNorm,
+      if (semanticAnchor != null) 'semantic_anchor': semanticAnchor,
+      if (cardId != null) 'card_id': cardId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LearningIdentityBindingsCompanion copyWith({
+    Value<String>? identityKey,
+    Value<String>? lang,
+    Value<String>? formNorm,
+    Value<String>? semanticAnchor,
+    Value<String>? cardId,
+    Value<int>? rowid,
+  }) {
+    return LearningIdentityBindingsCompanion(
+      identityKey: identityKey ?? this.identityKey,
+      lang: lang ?? this.lang,
+      formNorm: formNorm ?? this.formNorm,
+      semanticAnchor: semanticAnchor ?? this.semanticAnchor,
+      cardId: cardId ?? this.cardId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (identityKey.present) {
+      map['identity_key'] = Variable<String>(identityKey.value);
+    }
+    if (lang.present) {
+      map['lang'] = Variable<String>(lang.value);
+    }
+    if (formNorm.present) {
+      map['form_norm'] = Variable<String>(formNorm.value);
+    }
+    if (semanticAnchor.present) {
+      map['semantic_anchor'] = Variable<String>(semanticAnchor.value);
+    }
+    if (cardId.present) {
+      map['card_id'] = Variable<String>(cardId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LearningIdentityBindingsCompanion(')
+          ..write('identityKey: $identityKey, ')
+          ..write('lang: $lang, ')
+          ..write('formNorm: $formNorm, ')
+          ..write('semanticAnchor: $semanticAnchor, ')
+          ..write('cardId: $cardId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$UserDatabase extends GeneratedDatabase {
   _$UserDatabase(QueryExecutor e) : super(e);
   late final $UserCardsTable userCards = $UserCardsTable(this);
@@ -2986,6 +5432,14 @@ abstract class _$UserDatabase extends GeneratedDatabase {
   late final $LocalSubmissionsTable localSubmissions = $LocalSubmissionsTable(
     this,
   );
+  late final $CardContextsTable cardContexts = $CardContextsTable(this);
+  late final $StoryLearningAdditionsTable storyLearningAdditions =
+      $StoryLearningAdditionsTable(this);
+  late final $StoryWordSourcesTable storyWordSources = $StoryWordSourcesTable(
+    this,
+  );
+  late final $LearningIdentityBindingsTable learningIdentityBindings =
+      $LearningIdentityBindingsTable(this);
   late final Index reviewLogCard = Index(
     'review_log_card',
     'CREATE INDEX review_log_card ON review_log (card_id)',
@@ -3000,6 +5454,10 @@ abstract class _$UserDatabase extends GeneratedDatabase {
     deckSettings,
     settings,
     localSubmissions,
+    cardContexts,
+    storyLearningAdditions,
+    storyWordSources,
+    learningIdentityBindings,
     reviewLogCard,
   ];
   @override

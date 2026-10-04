@@ -6,7 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/home_models.dart';
 import '../../models/word_list_models.dart';
 import '../../models/story_models.dart';
+import '../../domain/srs_state.dart';
 import 'database_providers.dart';
+import 'story_learning_providers.dart';
 import 'deck_providers.dart';
 
 /// Invalidate derived views at local midnight and after a background period.
@@ -75,29 +77,40 @@ final learningProgressProvider =
       );
     }, retry: (_, _) => null);
 
+final learningNoticesProvider = FutureProvider<List<String>>(
+  (ref) async => (await ref.watch(practiceResolverProvider.future)).notices,
+);
+
 final wordListProvider = FutureProvider<List<VocabWord>>((ref) async {
   ref.watch(userChangesProvider);
   ref.watch(learningNowProvider);
-  final content = await ref.watch(contentRepositoryProvider.future);
+  final resolver = await ref.watch(practiceResolverProvider.future);
   final user = await ref.watch(userRepositoryProvider.future);
-  final known = await content.allCardIds();
+  final known = resolver.knownIds;
   final states = await user.allCardStates();
   // Box zero has not been answered; unknown old IDs remain untouched in user.db.
   final ids = [
     for (final s in states.values)
-      if (s.box >= 1 && !s.retired && known.contains(s.cardId)) s.cardId,
+      if ((s.box >= 1 ||
+              resolver.additions.containsKey(s.cardId) ||
+              s.origin == CardOrigin.story) &&
+          !s.retired &&
+          known.contains(s.cardId))
+        s.cardId,
   ];
-  final items = await content.practiceItems(ids);
+  final items = await resolver.practiceItems(ids);
   final words = <VocabWord>[];
   for (final item in items) {
     final state = states[item.card.id]!;
     final reviews = await user.reviewsFor(item.card.id);
-    final sentence = reviews.isEmpty
-        ? item.sentences.first
-        : item.sentences.firstWhere(
-            (s) => s.sentenceId == reviews.last.sentenceId,
-            orElse: () => item.sentences.first,
-          );
+    final sentence =
+        (reviews.isEmpty
+            ? null
+            : await resolver.historicalSentence(
+                item.card.id,
+                reviews.last.sentenceId,
+              )) ??
+        item.practiceSentence;
     final seen = reviews.isEmpty
         ? state.createdAt
         : reviews.last.createdAt.toLocal();

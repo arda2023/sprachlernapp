@@ -49,7 +49,7 @@ def test_price_table_is_checked():
 
 
 def test_schema_matches_migration():
-    sql = MIGRATION.read_text(encoding="utf-8")
+    sql = "\n".join(p.read_text(encoding="utf-8") for p in sorted(MIGRATION.parent.glob("*.sql")))
     found = {}
     for name, body in re.findall(r"create table content\.(\w+) \((.*?)\n\);", sql, re.S):
         cols = []

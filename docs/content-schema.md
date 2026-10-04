@@ -1,4 +1,4 @@
-# Inhaltsschema (Entwurf v1)
+# Inhaltsschema (Version 2, kompatibler Leser für Version 1)
 
 Gilt für Supabase Schema `content` und, gleich, für `content.sqlite` je Sprache. Die App liest nur. Lernzustand steht in `user.db` (`docs/user-schema.md`) und verweist über `card_id` auf `cards.id`.
 
@@ -64,7 +64,7 @@ Eine Änderung an dieser Tabelle ändert alle IDs der betroffenen Tabelle und is
 | `deck_cards` | `deck_id`, `card_id` | `position` |
 | `sentences` | `lang`, `text` | `origins` (Menge: deck / story / exercise), `translation_de`, `model`, `qa_status`, `qa_report` |
 | `sentence_tokens` | `sentence_id`, `idx` | `start_pos`, `end_pos`, `surface`, `lemma_id`, `sense_id`, `card_id` |
-| `card_sentences` | `card_id`, `sentence_id` | `position` (1–3), `gap_start`, `gap_end`, `accepted[]`, `valid_alternatives[]` (siehe Regeln) |
+| `card_sentences` | `card_id`, `sentence_id` | `position` (aktiv 1; historische Positionen erhalten), `gap_start`, `gap_end`, `accepted[]`, `valid_alternatives[]` (siehe Regeln) |
 | `stories` | `lang`, `slug` | `title`, `kind` (story / text), `cefr_band`, `topic`, `minutes`, `cover` |
 | `story_sentences` | `story_id`, `idx` | `sentence_id`, `paragraph_idx`, `heading` |
 | `exercises` | `lang`, `kind`, `slug` | `title`, `cefr_band`, `payload` (JSON je Art: Lückentext, Hören, Grammatik) |
@@ -91,3 +91,17 @@ Alle Tabellen außer `languages` und `content_releases` haben zusätzlich `remov
 ## Offen
 
 - Nachrichten (Schema folgt, wenn entschieden).
+
+## Schema 2: feste Sätze und Wortbesitz (04.10.2026)
+- Genau ein aktiver `card_sentences`-Link auf Position 1 je nicht retirierter Karte. `removed_in` an einem Link archiviert nur diese Verknüpfung, niemals die Karte. Historische Texte/Token/IDs bleiben lesbar; keine Reviewumschreibung.
+- `deck_words`: id = stable_id(lang, form_norm), dazu deck_id, primary_card_id, position, removed_in, replaced_by. Ein aktiver Besitzer je normalisierter Form/Sprache; eine aktive Primärkarte und Position je Wort. Aktive deck_cards entsprechen exakt diesen Primärzuordnungen, Positionen 1..n je Stapel.
+- `word_aliases`: id = stable_id(lang, form_norm), word_id, removed_in, replaced_by. Alias kollidiert mit keiner anderen aktiven Form/Reservierung. Keine Fortschrittsgleichsetzung.
+- Alle früheren KEY_FIELDS unverändert. Registry `pipeline/data/words/en.v1.json` mit SHA-gebundenem Snapshot im JSON-Pack; zusätzliche Senses behalten eigene Karten-IDs beim selben Wortbesitz.
+- Schema-1-Packs bleiben read-only lesbar: drei alte Links werden geprüft, Position 1 bleibt fest; Primärplätze werden deterministisch nach Stapelreihenfolge und normalisierter Form projiziert. Neue normale Exporte verwenden Schema 2. CLI-Replay von Schema 1 braucht `export --legacy`.
+- `build_rows` transportiert Tombstones, Stories und Story-Satzverweise und prüft Struktur, Referenzen, Spans, accepted, Alternativen und Besitz vor jedem Schema-2-Export. SQLite-Readback vergleicht alle Zeilen aller 18 Tabellen.
+- Migration `supabase/migrations/20261004000003_deck_word_ownership.sql` ist ein lokaler Schemaspiegel; nicht remote angewendet. Keine user.db-Migration.
+
+## Story-Lernen im internen Pack story_learning_v1
+Content-Schema bleibt 2. Storytexte werden über `stories`, `story_sentences`, `sentences` und `sentence_tokens` transportiert; jede Wortstelle hat eine genaue Lemma-/Sense-Referenz und kontextuelle Formglosse. Python-Codepoint-Offsets werden im Dart-Repository in UTF-16 umgerechnet; Quelle und Tokenindex bleiben erhalten. Keine Suche nach dem ersten gleich geschriebenen Wörterbucheintrag.
+Die Satzfreigabe in `qa_report.editorial_create.learning_contexts` bindet `token_index`, `surface`, `sense`, `approved: true` und `reason` an den gehashten redaktionellen Satz-/Tokenstand. Der Adapter prüft Zielstelle, vollständige Annotation, maximal 20 Wörter und bestehende Satzregeln. Nur diese Freigabe erlaubt einen neuen eigenen Übungskontext; eine passende bestehende Lernkarte braucht keinen neuen Story-Kontext. `story_title_de` im ersten Satzreview erhält den gelieferten deutschen Titel ohne neue Schema-Spalte.
+„The Open Pocket“ / „Die offene Tasche“: sechs gelieferte Sätze, 58 Token. Backpack in Satz 2 und platform in Satz 6 sind als eigene Lernkontexte redaktionell freigegeben; platform bedeutet Bahnsteig. Table/Ticket sind vorhandene Karten, Backpack/Platform haben keine kuratierte Karte. Alle 264 bisherigen Karten und 160 Primärplätze bleiben unverändert. Herkunft ist redaktionelle Chat-Zulieferung, keine menschliche oder Gemini-/Vertex-Prüfung.

@@ -18,8 +18,8 @@ def inputs(tmp_path):
     pack = json.loads(FIXTURE.read_text(encoding='utf-8'))
     db = tmp_path / 'content.sqlite'
     export_sqlite(pack, db)
-    entry = {'form':'table','lemma':'table','pos':'NOUN','form_kind':'base',
-             'proposed_sense_key':'table#tisch','sense_key':None,
+    entry = {'form':'vase','lemma':'vase','pos':'NOUN','form_kind':'base',
+             'proposed_sense_key':'vase#gefaess','sense_key':None,
              'target_meaning_de':'Möbel zum Essen','translation_de':'Tisch',
              'form_label_de':'Substantiv, Singular','cefr_band':'anfaenger',
              'topic':'Haushalt','reason':'Konkreter Alltagsgegenstand',
@@ -42,7 +42,7 @@ def test_missing_definition_visible_and_duplicate_rejected(inputs, tmp_path):
     assert not plan['selected']
     data['entries'].append(copy.deepcopy(data['entries'][0]))
     path.write_text(json.dumps(data), encoding='utf-8')
-    with pytest.raises(ValueError, match='duplicate'):
+    with pytest.raises(ValueError, match='conflicts'):
         plan_selection(path, db)
 
 
@@ -58,9 +58,8 @@ def test_existing_exact_card_reused_not_another_sense(inputs):
     assert plan['covered'][0]['card_id'] in {r['id'] for r in rows['cards']}
     e.update(sense_key=None,proposed_sense_key='left#remaining')
     path.write_text(json.dumps(data), encoding='utf-8')
-    plan = plan_selection(path, db)
-    assert not plan['covered']
-    assert plan['selected']['left'][0]['sense_key'] == 'left#remaining'
+    with pytest.raises(ValueError, match='different meaning'):
+        plan_selection(path, db)
 
 
 def test_dry_run_never_initializes_llm_or_writes(inputs, tmp_path, monkeypatch, capsys):

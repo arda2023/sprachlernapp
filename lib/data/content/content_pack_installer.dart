@@ -98,6 +98,19 @@ class ContentPackInstaller {
       await target.parent.create(recursive: true);
       final tmp = File('${target.path}.tmp');
       await tmp.writeAsBytes(bytes, flush: true);
+      // Validate the candidate before replacing a previously usable pack.
+      final candidate = ContentDatabase.open(tmp, lang: lang);
+      try {
+        if (candidate.info.version != manifest.version ||
+            candidate.info.schemaVersion != manifest.schemaVersion) {
+          throw const ContentUnavailable(
+            ContentUnavailableReason.incompatible,
+            'Version/Schema passt nicht zum Manifest',
+          );
+        }
+      } finally {
+        await candidate.close();
+      }
       await tmp.rename(target.path);
     }
     return (file: target, manifest: manifest);
@@ -112,7 +125,8 @@ class ContentPackInstaller {
   Future<DriftContentRepository> open() async {
     final installed = await install();
     final db = ContentDatabase.open(installed.file, lang: lang);
-    if (db.info.version != installed.manifest.version) {
+    if (db.info.version != installed.manifest.version ||
+        db.info.schemaVersion != installed.manifest.schemaVersion) {
       await db.close();
       throw ContentUnavailable(
         ContentUnavailableReason.incompatible,

@@ -2,7 +2,34 @@
 
 Offline-Werkzeug in Python, läuft nie in der App (siehe `PRODUCT.md`, Abschnitt Runtime AI Boundary).
 
-## 3a Stand
+## Aktueller Vertrag: Paket A (04.10.2026)
+
+Neue Produktion und Offline-Create exportieren **Schema 2: genau einen aktiven Satz je Karte**. Kandidaten-Batches (5/3/3), Retrygrenzen, Linter und Alternativenregeln bleiben eigenständige Regeln. Schema 1 wird ausdrücklich als Legacy gelesen/geprüft; `sprachpipe export … --legacy` und historische Patch-/Finish-/Merge-Skripte mit `--legacy` erlauben die Reproduktion alter Artefakte. `complete_curation`/`finalize_curation` übernehmen das ausdrücklich im gespeicherten Arbeitsstand angegebene Schema; sie erzeugen keine neue Auswahl. Die folgenden 3a–3d-Abschnitte und Laufzahlen dokumentieren historische Stände, nicht den neuen Satzvertrag.
+
+`word_registry.py` prüft Sprache + NFC/lowercase/typografisches Apostroph vor Satzproduktion/Import; aktive Primärkarte und Eigentümerstapel sind eindeutig. Mehrere neue Bedeutungen derselben Form müssen vor Produktion redaktionell auf eine Primärbedeutung begrenzt werden. Konflikte führen zu Fehlern mit beiden Stellen/Eigentümern, nicht zu Ersatzwörtern. Die Registry wird als kanonischer SHA-256 plus Snapshot im Pack gebunden. Neue Reservierungen benötigen `parent_sha256` des Basissnapshots; vorhandene Einträge bleiben unverändert. Der nächste Lauf muss den fortgeschriebenen Snapshot verwenden (`bind_new_pack`/Import), nicht eine veraltete Registry als aktuellen Bestand ausgeben. Kein verteilter Reservierungsdienst.
+
+`build_rows` prüft Schema-2-Kardinalität, Primärbesitz/Aliase, IDs/Referenzen, Gap/accepted/Alternativen, vollständige Tokenabdeckung und Formglossen sowie Storyreferenzen vor Export. `removed_in`/`replaced_by` werden transportiert. Historische Links zählen nicht als aktive Sätze; Karten werden dadurch nicht retirert. `check_sqlite` öffnet den Export erneut und vergleicht alle Zeilen aller 18 Tabellen. Die additive SQL-Migration ist nur ein lokaler Inhaltsschema-Spiegel und wurde nicht remote angewendet.
+
+### Offline-Create: verbindliche Lieferung
+
+Schema: `pipeline/data/curation/editorial_content_v2.schema.json`; ausführbares kleines Beispiel: `pipeline/tests/fixtures/editorial_create_v2/{base,input,registry}.json`. Die Katzen-Story ist ausschließlich synthetische Test-Fixture und nicht im App-Pack.
+
+Pflichtfelder: `format=sprachapp.editorial-content`, `format_version=2`, `operation_id`, neue `version`, `reviewer`, `source_sha256` (exakte Bytes des Basis-pack.json), `registry_sha256` (kanonisches JSON der erweiterten Registry), `add`, `reviews`. `add` enthält neue Referenzen in vorhandenen Tabellen; keine Änderung/Löschung bestehender Datensätze. Für eine Karte sind Form, genaue Sense/Lemma-Referenz, deutsche Übersetzung/Formbezeichnung/Definition, Primärzuordnung/Reservierung, ein Satz mit Übersetzung, Lücke, genau `[form]` als accepted und geprüfte valid_alternatives erforderlich. Alle Texttokens haben idx, Oberfläche und Offsets; Worttokens zusätzlich genaue Lemma/Sense-Referenzen und Formglossen in dictionary_forms, optional exakte Kartenreferenz. Satzzeichen besitzen keine erfundene Bedeutung. Neue Stories transportieren Metadaten und lückenlose story_sentences-Indizes/Absatzindizes über dieselben annotierten Sätze.
+
+Je neuem Satz genau ein `reviews`-Eintrag mit `sentence`, `decision=approved`, begründeter `reason`, `checked` (exakter Text, Übersetzung, kanonische SHA-256 von Token- und Linkarrays) sowie `alternatives_checked`: jede Alternative mit Karte und wörtlich eingesetztem vollständigem Satz. Ein leeres Array ist nur ohne Alternativen vollständig. Fehlende/veraltete Annotation oder Review blockiert. Der Import behauptet keine Modell-QA: qa_status=editorial_reviewed, Modell=NULL, Redaktion/Operation als Provenienz. Anschließend unveränderte Linter-/Export-/Readback-Prüfung; kein LLM-Client/ADC nötig.
+
+Ab Repository-Root, Windows PowerShell:
+```powershell
+.\pipeline\.venv\Scripts\python.exe -X utf8 pipeline/scripts/import_editorial_patch.py --source <basis-pack.json> --create <input.json> --registry <registry.json> --out <frischer-ordner>
+```
+macOS Terminal:
+```sh
+pipeline/.venv/bin/python pipeline/scripts/import_editorial_patch.py --source <basis-pack.json> --create <input.json> --registry <registry.json> --out <frischer-ordner>
+```
+
+Der separate Übergangsmodus `--single-sentence pipeline/data/curation/single_sentence_v1.json` verwendet das gesicherte chat_editorial_finish_v1/pack.json und `--registry pipeline/data/words/en.v1.json`. Ausgabe: `pipeline/out/single_sentence_v1/`; erneute Ausführung darf diesen Ordner nicht überschreiben. Auswahlbegründungen und Quellhashes sind versioniert. Details/Abnahme: `docs/decks-and-story-learning-plan.md`.
+
+## 3a Stand (historisch)
 
 Gerüst ohne KI-Aufrufe: stabile IDs, Lemma-Auswahl, Satz-Linter, DB-Schreiber, Export nach `content.sqlite`, Kosten-Protokoll.
 
@@ -17,7 +44,7 @@ py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe -m sprachpipe.cli lint tests\fixtures\mini_pack.json
 .\.venv\Scripts\python.exe -m sprachpipe.cli upsert tests\fixtures\mini_pack.json            # Dry-Run
 .\.venv\Scripts\python.exe -m sprachpipe.cli upsert tests\fixtures\mini_pack.json --publish  # schreibt
-.\.venv\Scripts\python.exe -m sprachpipe.cli export tests\fixtures\mini_pack.json out\content.sqlite
+.\.venv\Scripts\python.exe -m sprachpipe.cli export tests\fixtures\mini_pack.json out\content.sqlite --legacy
 .\.venv\Scripts\python.exe -m sprachpipe.cli check-db                                         # nur lesen
 ```
 
@@ -28,7 +55,7 @@ python3.11 -m venv .venv
 .venv/bin/python -m pytest
 .venv/bin/python -m sprachpipe.cli lemmas
 .venv/bin/python -m sprachpipe.cli upsert tests/fixtures/mini_pack.json --publish
-.venv/bin/python -m sprachpipe.cli export tests/fixtures/mini_pack.json out/content.sqlite
+.venv/bin/python -m sprachpipe.cli export tests/fixtures/mini_pack.json out/content.sqlite --legacy
 ```
 
 `upsert` ist ohne `--publish` ein Dry-Run. Lokale DB nach `supabase start`: `postgresql://postgres:postgres@127.0.0.1:54322/postgres`.
@@ -181,7 +208,7 @@ Gemini 3.8 Flash: `thinking_level` (geprüft 2026-10-03, siehe „3b Stand“).
 
 1. **wordfreq**: Wortformen mit Rang je Sprache. BNC/COCA nur als Gegenprobe für Englisch.
 2. **Karten**: Form + Bedeutung, Lemma-Verknüpfung, Stapelzuordnung.
-3. **Sätze**: je Karte 3 Sätze, die genau diese Form enthalten.
+3. **Sätze**: je Karte genau ein aktiver Satz, der genau diese Form enthält (Schema 2).
 4. **Annotation**: Token → Bedeutung im Satz (`sentence_tokens`).
 5. **Wörterbuch**: Form → Bedeutungen mit deutscher Glosse (`dictionary_forms`), Satzübersetzungen.
 6. **QA** (siehe unten). Nur bestandene Zeilen gehen weiter.
@@ -439,3 +466,7 @@ Nachhol-Inhaltsprüfung und 100er-Statusliste: `docs/everyday-v1-review.md`.
 Die regulären neuen Tests arbeiten mit synthetischen Fixtures; der bestehende
 optionale Asset-Test liest den tatsächlich gestagten Bestand ohne out-Abhängigkeit.
 Keine öffentliche Inhaltsfreigabe und keine Änderung der SRS-/Auswahlregeln.
+
+## Offline-Story-Zulieferung story_learning_v1 (04.10.2026)
+Quelle: `pipeline/data/curation/story_learning_seed_v1.json`; gebundene Registry: `pipeline/data/words/en.story_learning_v1.json`. Der vorhandene `import_editorial_patch.py`-Create-Weg ergänzt eine Story mit sechs vollständig annotierten Sätzen, sechs Lemmas, acht Senses und acht Formglossen. Keine zusätzlichen kuratierten Karten oder Eigentümerplätze. Der Adapter validiert optionale `learning_contexts` gegen die konkrete Tokenstelle und die bestehende Satzprüfung; ungültige/duplizierte Freigaben brechen vor Export ab.
+Ergebnis im frischen `pipeline/out/story_learning_v1/`: `pack.json`, `content.sqlite`, `finalization_report.json`. Vollständiger Readback aller 18 Tabellen und Abgleich mit Paket A erhalten alle alten Karten, Satzlinks, Sätze, Token, Senses und Wörterbuchzeilen. Keine alten out-Artefakte überschrieben. Modellaufrufe 0, Kosten 0 USD. `editorial_reviewed` benennt die Chat-Redaktion und behauptet keine externe Prüfung.

@@ -8,9 +8,19 @@ import 'package:path_provider/path_provider.dart';
 part 'user_database.g.dart';
 
 /// `user_cards` (docs/user-schema.md): learner state per card, a cache of
-/// creation + `review_log`. Only ids and state, never content texts.
+/// creation + `review_log`. Curated content is referenced; local cards own metadata.
 @DataClassName('UserCardRow')
 class UserCards extends Table {
+  TextColumn get form => text().nullable()();
+  TextColumn get formNorm => text().nullable()();
+  TextColumn get glossDe => text().nullable()();
+  TextColumn get lemma => text().nullable()();
+  TextColumn get pos => text().nullable()();
+  TextColumn get lemmaIdentity => text().nullable()();
+  TextColumn get senseIdentity => text().nullable()();
+  TextColumn get senseKey => text().nullable()();
+  TextColumn get primaryContextId => text().nullable()();
+
   TextColumn get note => text().withDefault(const Constant(''))();
   BoolColumn get inPlaylist => boolean().withDefault(const Constant(false))();
   TextColumn get cardId => text()();
@@ -107,10 +117,78 @@ class LocalSubmissions extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-/// Learner database (schema v2). Content stays in read-only content.sqlite;
+@DataClassName('CardContextRow')
+class CardContexts extends Table {
+  TextColumn get id => text()();
+  TextColumn get cardId => text()();
+  TextColumn get textValue => text()();
+  TextColumn get translationDe => text()();
+  IntColumn get gapStart => integer()();
+  IntColumn get gapEnd => integer()();
+  TextColumn get sourceRef => text()();
+  TextColumn get sentenceRef => text()();
+  IntColumn get tokenIndex => integer()();
+  TextColumn get revision => text()();
+  TextColumn get fingerprint => text().unique()();
+  TextColumn get tokensJson => text()();
+  TextColumn get otherFormsJson => text()();
+  TextColumn get lang => text()();
+  TextColumn get provenance => text()();
+  DateTimeColumn get createdAt => dateTime()();
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DataClassName('StoryAdditionRow')
+class StoryLearningAdditions extends Table {
+  TextColumn get cardId => text()();
+  DateTimeColumn get addedAt => dateTime()();
+  @override
+  Set<Column> get primaryKey => {cardId};
+}
+
+@DataClassName('StorySourceRow')
+class StoryWordSources extends Table {
+  TextColumn get cardId => text()();
+  TextColumn get fingerprint => text()();
+  TextColumn get sourceRef => text()();
+  TextColumn get sentenceRef => text()();
+  IntColumn get tokenIndex => integer()();
+  TextColumn get revision => text()();
+  DateTimeColumn get addedAt => dateTime()();
+  @override
+  Set<Column> get primaryKey => {cardId, fingerprint};
+}
+
+@DataClassName('LearningBindingRow')
+class LearningIdentityBindings extends Table {
+  TextColumn get identityKey => text()();
+  TextColumn get lang => text()();
+  TextColumn get formNorm => text()();
+  TextColumn get semanticAnchor => text()();
+  TextColumn get cardId => text()();
+  @override
+  Set<Column> get primaryKey => {identityKey};
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {lang, formNorm, semanticAnchor},
+  ];
+}
+
+/// Learner database (schema v4). Content stays in read-only content.sqlite;
 /// both databases are joined only by stable ids.
 @DriftDatabase(
-  tables: [UserCards, ReviewLog, DeckSettings, Settings, LocalSubmissions],
+  tables: [
+    UserCards,
+    ReviewLog,
+    DeckSettings,
+    Settings,
+    LocalSubmissions,
+    CardContexts,
+    StoryLearningAdditions,
+    StoryWordSources,
+    LearningIdentityBindings,
+  ],
 )
 class UserDatabase extends _$UserDatabase {
   UserDatabase(super.executor);
@@ -126,12 +204,40 @@ class UserDatabase extends _$UserDatabase {
     );
   }
 
+  Future<void> _contextTriggers() async {
+    for (final op in ['UPDATE', 'DELETE']) {
+      await customStatement(
+        "CREATE TRIGGER card_contexts_no_${op.toLowerCase()} BEFORE $op ON card_contexts BEGIN SELECT RAISE(ABORT, 'card_contexts are immutable'); END",
+      );
+    }
+  }
+
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onUpgrade: (m, from, to) async {
+      if (from < 4) {
+        for (final column in [
+          userCards.form,
+          userCards.formNorm,
+          userCards.glossDe,
+          userCards.lemma,
+          userCards.pos,
+          userCards.lemmaIdentity,
+          userCards.senseIdentity,
+          userCards.senseKey,
+          userCards.primaryContextId,
+        ]) {
+          await m.addColumn(userCards, column);
+        }
+        await m.createTable(cardContexts);
+        await m.createTable(storyLearningAdditions);
+        await m.createTable(storyWordSources);
+        await m.createTable(learningIdentityBindings);
+        await _contextTriggers();
+      }
       if (from < 3) {
         await m.addColumn(userCards, userCards.note);
         await m.addColumn(userCards, userCards.inPlaylist);
@@ -148,6 +254,7 @@ class UserDatabase extends _$UserDatabase {
     },
     onCreate: (m) async {
       await m.createAll();
+      await _contextTriggers();
       // review_log is append-only (ARCHITECTURE.md, Regeln) – also for raw SQL.
       await customStatement(
         "CREATE TRIGGER review_log_no_update BEFORE UPDATE ON review_log "

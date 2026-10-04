@@ -5,6 +5,8 @@ input/output path. Never imports an LLM client, installs content or edits source
 """
 from __future__ import annotations
 
+from sprachpipe.content_contract import sentence_count
+
 import argparse
 import copy
 import hashlib
@@ -339,7 +341,7 @@ def validate_work(work, source, patch):
         if t.get('card'):
             require(t['card'] in cards and t['sense'] == cards[t['card']]['sense'], 'token card mismatch')
     for c in work['cards']:
-        require(sorted(cs['position'] for cs in work['card_sentences'] if cs['card'] == c['ref']) == [1, 2, 3],
+        require(sorted(cs['position'] for cs in work['card_sentences'] if cs['card'] == c['ref'] and not cs.get('removed_in')) == list(range(1, sentence_count(work)+1)),
                 f'card positions {c["ref"]}')
     for cs in work['card_sentences']:
         s, card = sentences[cs['sentence']], cards[cs['card']]
@@ -503,6 +505,132 @@ def import_patch(source_path, patch_path, corpus_path, plan_path, out, finish_pa
     return 0 if report['status'] == 'ok' else 1
 
 
+def create_content(source, entry, registry, *, source_hash):
+    """Offline schema-2 create, using the same rows, linter and exporter."""
+    from sprachpipe.word_registry import digest as registry_digest, validate_selection
+    require(entry.get('format') == 'sprachapp.editorial-content' and entry.get('format_version') == 2,
+            'unsupported create format')
+    spec = read(ROOT/'pipeline/data/curation/editorial_content_v2.schema.json')
+    require(all(k in entry for k in spec['required']), 'missing required create field')
+    for table, values in entry['add'].items():
+        require(table in spec['properties']['add']['properties'], f'unsupported create table {table}')
+        require(isinstance(values, list), f'{table} must be an array')
+        required = spec['properties']['add']['properties'][table]['items']['required']
+        for i, row in enumerate(values):
+            require(isinstance(row, dict) and all(k in row for k in required),
+                    f'create {table}[{i}]: required fields {required}')
+    require(source_hash == entry['source_sha256'], 'create source hash mismatch')
+    require(registry_digest(registry) == entry['registry_sha256'], 'create registry hash mismatch')
+    require(source['release']['schema_version'] == 2, 'create requires schema-2 base')
+    require(registry.get('parent_sha256') == source['word_registry']['sha256'], 'registry must extend this base snapshot')
+    old_words = source['word_registry']['snapshot']['words']
+    require(all(w in registry['words'] for w in old_words), 'create registry changes existing ownership')
+    require(entry.get('operation_id') and entry.get('reviewer'), 'operation_id/reviewer required')
+    work = copy.deepcopy(source)
+    tables = {'lemmas', 'senses', 'cards', 'decks', 'deck_cards', 'deck_words', 'word_aliases',
+              'sentences', 'sentence_tokens', 'card_sentences', 'dictionary_forms', 'stories', 'story_sentences'}
+    require(set(entry['add']) <= tables, 'unsupported create table')
+    for table, values in entry['add'].items():
+        require(isinstance(values, list), f'{table} must be an array')
+        require(all(not r.get('removed_in') and not r.get('replaced_by') for r in values), 'create cannot retire content')
+        work.setdefault(table, []).extend(copy.deepcopy(values))
+    # Ref collisions must fail before build_rows can resolve an ambiguous reference.
+    for table in ('lemmas', 'senses', 'cards', 'decks', 'sentences', 'stories'):
+        refs = [r['ref'] for r in work.get(table, [])]
+        require(len(refs) == len(set(refs)), f'duplicate {table} ref')
+    require(entry['version'] != source['release']['version'], 'create needs a new pack version')
+    work['release'] = {'version': entry['version'], 'schema_version': 2,
+                       'notes': 'INTERNES TEST-PACK: offline editorial create; no Vertex QA.'}
+    work['word_registry'] = {'sha256': registry_digest(registry), 'snapshot': copy.deepcopy(registry)}
+    # Ownership reservation is checked before linguistic work, and again by build_rows.
+    lemmas = {r['ref']: r for r in work['lemmas']}
+    senses = {r['ref']: r for r in work['senses']}
+    memberships = {r['card']: r['deck'] for r in entry['add'].get('deck_cards', [])}
+    grouped = {}
+    for card in entry['add'].get('cards', []):
+        se = senses[card['sense']]; lm = lemmas[se['lemma']]
+        sid = stable_id('senses', lemma_id=stable_id('lemmas', lang=work['lang'], lemma=lm['lemma'], pos=lm['pos']), sense_key=se['sense_key'])
+        cid = stable_id('cards', lang=work['lang'], form=card['form'], sense_id=sid)
+        require(card['ref'] in memberships, 'new card must have a reserved primary membership')
+        grouped.setdefault(memberships[card['ref']], []).append({'form': card['form'], 'card_id': cid})
+    for owner, cards in grouped.items():
+        validate_selection(cards, registry, lang=work['lang'], owner=owner, allow_reserved=True)
+    reviews = {r['sentence']: r for r in entry['reviews']}
+    added_sentences = entry['add'].get('sentences', [])
+    require(len(reviews) == len(entry['reviews']) == len(added_sentences), 'one review per new sentence required')
+    require(set(reviews) == {s['ref'] for s in added_sentences}, 'review references differ from new sentences')
+    known_senses = {r['ref']: r for r in work['senses']}
+    dictionary_keys = {(form_norm(d['form']), d['sense']) for d in work['dictionary_forms'] if d.get('gloss_de')}
+    for sn in added_sentences:
+        r = reviews.get(sn['ref'])
+        tokens = [t for t in work['sentence_tokens'] if t['sentence'] == sn['ref']]
+        links = [c for c in work['card_sentences'] if c['sentence'] == sn['ref']]
+        require(r and r.get('decision') == 'approved' and r.get('reason') and
+                r['checked'] == {'text': sn['text'], 'translation_de': sn['translation_de'],
+                                 'tokens_sha256': digest(tokens), 'links_sha256': digest(links)}, 'missing/stale editorial review')
+        expected = tokenize(sn['text'])
+        require([{k:t[k] for k in ('idx','surface','start_pos','end_pos')} for t in tokens] ==
+                [{k:t[k] for k in ('idx','surface','start_pos','end_pos')} for t in expected], 'incomplete token coverage')
+        for t, e in zip(tokens, expected):
+            if e['is_word']:
+                require(t.get('sense') in known_senses and t.get('lemma') and
+                        (form_norm(t['surface']), t['sense']) in dictionary_keys, f'missing form gloss/meaning: {t["surface"]}')
+        substitutions = [{'card': c['card'], 'alternative': a,
+                          'text': sn['text'][:c['gap_start']] + a + sn['text'][c['gap_end']:]}
+                         for c in links for a in c.get('valid_alternatives', [])]
+        require(r.get('alternatives_checked', []) == substitutions, 'alternative substitution review incomplete')
+        contexts = r.get('learning_contexts', [])
+        seen_targets = set()
+        for context in contexts:
+            idx = context['token_index']
+            require(idx not in seen_targets and 0 <= idx < len(tokens), 'duplicate/invalid learning target')
+            seen_targets.add(idx)
+            token = tokens[idx]
+            require(context.get('approved') is True and context.get('reason') and
+                    context.get('surface') == token['surface'] and context.get('sense') == token.get('sense'),
+                    'learning context target/review mismatch')
+            require(expected[idx]['is_word'] and len([t for t in expected if t['is_word']]) <= 20,
+                    'learning context exceeds 20 words or targets punctuation')
+            findings = lint_sentence(sn['text'], token['surface'], token['start_pos'], token['end_pos'],
+                                     0, lang=work['lang'], names=load_config()['generate']['names'],
+                                     max_words=20, max_subclauses=1)
+            require(not any(f.level == 'error' for f in findings), 'invalid learning context: '+str(findings))
+        target = next(s for s in work['sentences'] if s['ref'] == sn['ref'])
+        target['model'] = None
+        target['qa_status'] = 'editorial_reviewed'
+        target['qa_report'] = {'editorial_create': {'reviewer': entry['reviewer'], 'operation_id': entry['operation_id'], **copy.deepcopy(r)}}
+    build_rows(work)
+    return work
+
+
+def export_offline(final, out):
+    from sprachpipe.export import export_sqlite
+    from finalize_curation import check_sqlite
+    require(not out.exists(), 'output directory already exists')
+    rows = build_rows(final)
+    cfg = load_config(); lc = cfg['linter']
+    findings = []
+    for item in sentence_lint_items(final):
+        for f in lint_sentence(item['sentence'], item['form'], item['gap_start'], item['gap_end'],
+                               lc['min_zipf'][item['cefr_band']], lang=final['lang'], names=cfg['generate']['names'],
+                               max_words=lc['max_words'], max_subclauses=lc['max_subclauses']):
+            findings.append({'card': item['card'], 'level': f.level, 'rule': f.rule, 'message': f.message})
+    require(not any(f['level'] == 'error' for f in findings), 'offline export blocked by linter errors: '+str([f for f in findings if f['level']=='error']))
+    out.mkdir(parents=True, exist_ok=False)
+    report = {'status': 'failed', 'internal_test_pack': True, 'ai_calls': 0, 'ai_cost_usd': 0,
+              'lint': {'sentences': len(final['card_sentences']), 'errors': 0, 'findings': findings}}
+    try:
+        save(out/'pack.json', final)
+        counts = export_sqlite(final, out/'content.sqlite')
+        report['sqlite_counts'] = check_sqlite(out/'content.sqlite', rows)
+        require(counts == report['sqlite_counts'], 'SQLite readback mismatch')
+        report['sha256'] = hashlib.sha256((out/'content.sqlite').read_bytes()).hexdigest()
+        report['status'] = 'ok'
+    finally:
+        save(out/'finalization_report.json', report)
+    print(json.dumps({k:v for k,v in report.items() if k != 'lint'}, ensure_ascii=False, indent=2))
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--source', type=Path, default=ROOT/'pipeline/out/curated_everyday_v1/pack.json')
@@ -510,9 +638,28 @@ def main(argv=None):
     p.add_argument('--corpus', type=Path, default=ROOT/'editorial_review/reviewed_sentences.json')
     p.add_argument('--plan', type=Path, default=ROOT/'pipeline/data/curation/chat_editorial_v1.json')
     p.add_argument('--out', type=Path, required=True)
+    p.add_argument('--single-sentence', type=Path, help='hash-bound existing-sentence selection')
+    p.add_argument('--create', type=Path, help='schema-2 offline editorial create input')
+    p.add_argument('--registry', type=Path, default=ROOT/'pipeline/data/words/en.v1.json')
+    p.add_argument('--legacy', action='store_true', help='explicit replay of schema-1 editorial artifacts')
     p.add_argument('--finish', type=Path, help='versioned, hash-bound offline completion supplement')
     a = p.parse_args(argv)
     try:
+        if a.single_sentence or a.create:
+            require(not (a.single_sentence and a.create), 'choose transition or create')
+            require(not a.out.exists(), 'output directory already exists')
+            from sprachpipe.word_registry import load_registry
+            from sprachpipe.content_contract import transition
+            registry = load_registry(a.registry)
+            raw = a.source.read_bytes()
+            source = json.loads(raw)
+            if a.single_sentence:
+                final = transition(source, registry, read(a.single_sentence), source_hash=hashlib.sha256(raw).hexdigest())
+            else:
+                final = create_content(source, read(a.create), registry, source_hash=hashlib.sha256(raw).hexdigest())
+            export_offline(final, a.out)
+            return 0
+        require(a.legacy, 'schema-1 patch/finish replay requires --legacy; new content uses --create')
         return import_patch(a.source, a.patch, a.corpus, a.plan, a.out, a.finish)
     except (ValueError, KeyError, OSError) as e:
         print(f'rejected: {type(e).__name__}: {e}')

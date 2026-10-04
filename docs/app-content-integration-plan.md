@@ -197,7 +197,7 @@ List<SessionEntry> scheduleRepeat(List<SessionEntry> queue, int index); // +3, e
 ## 8. Routineentscheidungen (ohne Rückfrage festgelegt)
 
 - Session-Größe „Lerne mit diesem Stapel“: wie heute 5 Karten; Revue ebenfalls 5.
-- Satzwahl: rotierend über Position 1–3 nach Anzahl bisheriger Logzeilen der Karte.
+- Satzwahl (ersetzt durch Ein-Satz-Paket A): fest zugeordneter Satz; Legacy-Schema 1 verwendet immer Position 1, Schema 2 genau einen aktiven Link.
 - Stapel ohne `deck_settings`-Zeile gilt als aktiv.
 - Stapelzahlen in den Details: `totalWords` = Karten im Stapel, `seenWords` = Box ≥ 1, `masteredWords` = Box 5 (wie heutiges View-Modell); keine gespeicherten Zähler.
 - `response_ms` = Zeit von Kartenanzeige bis zur ersten Eingabe; `app_version` aus `package_info_plus`; Zeiten in UTC gespeichert, Tagesgrenzen in Ortszeit berechnet.
@@ -283,3 +283,6 @@ Android-Emulator API 36, echter UI-Ablauf auf **isolierter Kopie** unter `files/
 Normale APK anschließend wieder installiert, ohne Deinstallation oder Datenreset. Original-DB: 20 Kartenstände, 19 Reviews, 0 Deck-Settings, 1 Settings-Zeile und 0 lokale Meldungen; **alle bisherigen Spalten und Zeilen identisch**, Schema 2 → 3. Asset-SHA256 weiterhin `ebc12c0d0ba4909cc070e7f1d2e9c27c08fc3744bb7317d781c8af4b1d1df9a5`. Keine iOS-Prüfung. Die neun redaktionellen Alt-Pilot-Fallgruppen bleiben unverändert offen (siehe `docs/everyday-v1-review.md`).
 
 Ausgeführte Befehle (identisch in Windows PowerShell und macOS Terminal): `dart run build_runner build` erfolgreich nach Schemaänderung; `flutter analyze` → `No issues found! (ran in 2.0s)`; `flutter test --reporter expanded` → `00:16 +215: All tests passed!`; `flutter build apk --debug` → `Built build\app\outputs\flutter-apk\app-debug.apk`. `git diff --check` Exit 0, `git status --short` geprüft. Keine Pipeline-Tests, kein pub get, keine Commits/Pushes. Vorhandene Änderungen aus der vorigen Pack-Aufgabe bleiben erhalten.
+
+## Ein-Satz-Paket A (04.10.2026; neuer Auftrag)
+Die älteren Pakete A/B und Laufzahlen oben sind historische Integrationsstände. Aktueller Vertrag: 160 Primärwörter im Stapel, 264 erhaltene Karten, 264 aktive/528 historische Satzlinks, 792 Texte. Primärbedeutungen und Satzwahl sind versioniert redaktionell entschieden. Direkte Übung/Revue nur Primärkarten; gelernte Nebenbedeutungen über Gemischt, unbeantwortete Nebenbedeutungen ohne Storyentscheidung nicht automatisch anbieten. Reader/Installer unterstützen Schema 1/2, Reviewhistorie bleibt lesbar. Details und tatsächliche Prüfergebnisse: docs/decks-and-story-learning-plan.md und NEXTSTEPS.md.

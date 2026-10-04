@@ -5,6 +5,7 @@ import '../../domain/srs_state.dart';
 import '../../models/home_models.dart';
 import 'database_providers.dart';
 import 'learning_providers.dart';
+import 'story_learning_providers.dart';
 
 final userChangesProvider = StreamProvider<int>((ref) async* {
   final user = await ref.watch(userRepositoryProvider.future);
@@ -21,11 +22,22 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
   final content = await ref.watch(contentRepositoryProvider.future);
   final user = await ref.watch(userRepositoryProvider.future);
   final summaries = await content.decks();
+  final resolver = await ref.watch(practiceResolverProvider.future);
   final active = await user.activeDeckIds(summaries.map((d) => d.id));
   final result = <Deck>[];
   for (final deck in summaries) {
     final ids = await content.deckCardIds(deck.id);
     final states = await user.cardStates(ids);
+    var viaStory = 0;
+    for (final id in ids) {
+      if (states.containsKey(id)) continue;
+      final bound = resolver.bindingFor(resolver.cards[id]!);
+      final local = resolver.states[bound];
+      if (local != null) {
+        states[id] = local;
+        if (local.box >= 1 && local.isActive) viaStory++;
+      }
+    }
     final seen = states.values.where((s) => s.isActive && s.box >= 1);
     final recent = <(String, DateTime)>[];
     for (final state in seen) {
@@ -35,14 +47,15 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
       }
     }
     recent.sort((a, b) => b.$2.compareTo(a.$2));
-    final words = await content.practiceItems(
+    final words = await resolver.practiceItems(
       recent.take(5).map((r) => r.$1).toList(),
     );
     result.add(
       Deck(
         id: deck.id,
         name: deck.titleDe,
-        description: deck.descriptionDe ?? '',
+        description:
+            '${deck.descriptionDe ?? ''}${viaStory > 0 ? ' · $viaStory über Story gelernt' : ''}',
         icon: CupertinoIcons.square_stack,
         difficulty: switch (deck.cefrBand) {
           'mittel' => DeckDifficulty.intermediate,
@@ -69,18 +82,12 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
 final vocabBreakdownProvider = FutureProvider<VocabBreakdown>((ref) async {
   ref.watch(userChangesProvider);
   final now = ref.watch(learningNowProvider);
-  final content = await ref.watch(contentRepositoryProvider.future);
-  final user = await ref.watch(userRepositoryProvider.future);
-  final decks = await content.decks();
-  final active = await user.activeDeckIds(decks.map((d) => d.id));
-  final ids = <String>{};
-  for (final id in active) {
-    ids.addAll(await content.deckCardIds(id));
-  }
+  final resolver = await ref.watch(practiceResolverProvider.future);
   return deriveVocabBreakdown(
-    activeDeckCardIds: ids,
-    cards: await user.allCardStates(),
-    knownCardIds: await content.allCardIds(),
+    activeDeckCardIds: (await resolver.activePrimaryIds()).toSet(),
+    cards: resolver.states,
+    knownCardIds: resolver.knownIds,
+    explicitStoryIds: resolver.additions.keys.toSet(),
     now: now,
   );
 }, retry: (_, _) => null);

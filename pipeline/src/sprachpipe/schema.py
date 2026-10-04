@@ -43,6 +43,15 @@ COLUMNS: dict[str, list[tuple[str, str]]] = {
         ("id", "text"), ("deck_id", "text"), ("card_id", "text"), ("position", "integer"),
         ("removed_in", "text"), ("replaced_by", "text"),
     ],
+    "deck_words": [
+        ("id", "text"), ("lang", "text"), ("form_norm", "text"),
+        ("deck_id", "text"), ("primary_card_id", "text"), ("position", "integer"),
+        ("removed_in", "text"), ("replaced_by", "text"),
+    ],
+    "word_aliases": [
+        ("id", "text"), ("lang", "text"), ("form_norm", "text"), ("word_id", "text"),
+        ("removed_in", "text"), ("replaced_by", "text"),
+    ],
     "sentences": [
         ("id", "text"), ("lang", "text"), ("text", "text"), ("origins", "text[]"),
         ("translation_de", "text"), ("model", "text"), ("qa_status", "text"),

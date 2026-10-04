@@ -19,6 +19,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--curation', type=Path, default=PIPELINE_DIR / 'data/curation/everyday_merge_v1.json')
     parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--legacy', action='store_true', help='explicit replay of historical schema-1 curation')
     args = parser.parse_args()
     if args.out.exists():
         parser.error(f'output already exists: {args.out}')
@@ -29,6 +30,8 @@ def main():
         if hashlib.sha256(raw).hexdigest() != curation['source_sha256'][name]:
             raise ValueError(f'source hash mismatch: {name}')
         packs[name] = json.loads(raw)
+    if any(p.get('release', {}).get('schema_version') == 1 for p in packs.values()) and not args.legacy:
+        parser.error('historical schema-1 merge requires --legacy; new content uses schema-2 Create')
     work, log = curate(packs, curation, curation['card_meta'])
     final, summary, before = finalize_state(
         work, {'inputs': {'curation_log': log}}, curation['dictionary_resolutions'])

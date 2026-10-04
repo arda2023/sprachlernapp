@@ -41,7 +41,7 @@ Three core learning surfaces:
 
 ## Capabilities and Constraints
 
-- **Card (the unit of learning)**: A card is one exact word form in one sense. "went" (go, past) is one card; "left" as *links* and "left" as *verließ* are two cards. The lemma or word family only links cards (Word Details "Andere Formen", detection of a wrong form) and never merges them. Every card has three example sentences, each containing exactly that form.
+- **Card (the unit of learning)**: A card is one exact word form in one sense. "went" (go, past) is one card; "left" as *links* and "left" as *verließ* are two cards. The lemma or word family only links cards (Word Details "Andere Formen", detection of a wrong form) and never merges them. Every card has exactly one fixed practice sentence containing that form; repeats reuse it. Historical sentence links remain readable for reviews. A curated word (language + normalized form, independent of sense) has exactly one owner deck and one primary card. 500 deck words mean 500 assigned practice sentences. Case variants and editorial spelling aliases cannot reserve a second word position.
 - **Activation**: A card is created at its first display in a deck session or when the learner taps "Zum Lernen hinzufügen" in a story. Decks and story-added words feed a single spaced-repetition pool.
 - **Disabled cards**: A disabled card (Wortliste, practice menu) is excluded from every queue and every count.
 - **Four Derived Lingvist-Style Categories**:
@@ -49,9 +49,9 @@ Three core learning surfaces:
   2. *Wörter im Aufbau* (Words in progress / actively learning)
   3. *Wörter gemeistert* (Mastered words)
   4. *Noch nicht angezeigt* (New words not yet seen)
-  - **Noch nicht angezeigt** are the forms of active decks that have no card yet, plus cards that have not been answered once (e.g. just added from a story).
+  - **Noch nicht angezeigt** are the forms of active decks that have no card yet, plus eligible Box-0 cards from active primary deck positions or explicit story learning. A displayed-only Box-0 secondary sense is preserved but excluded from automatic introduction and counts.
   - **Assignment order** (makes the categories disjoint): not yet shown → *Noch nicht angezeigt*; otherwise due (`dueAt ≤ now`) → *Verfügbare Wiederholungen*; otherwise Box 5 → *Wörter gemeistert*; otherwise (Box 1–4) → *Wörter im Aufbau*. A Box-5 card that falls due therefore counts as a due repetition until reviewed, so the due count always matches the practice queue.
-  - **Invariant**: The sum of these four categories always equals the total: all non-disabled cards plus the unseen forms of active decks.
+  - **Invariant**: The sum of these four categories always equals the total: all resolvable non-disabled/non-retired learned cards, eligible Box-0 cards and unseen primary words of active decks.
   - **Dynamic Derivation**: These numbers are **always derived dynamically** from card state and scheduling timestamps; they are never stored as independent counter columns. Formulas: `docs/srs.md`.
   - The former static "core vocabulary progress bar over 3,000 words" is discarded.
 - **Spaced Repetition System (v1 Leitner)**:
@@ -76,10 +76,10 @@ Three core learning surfaces:
   - **In-session repeat**: a failed card, or a card solved with a synonym hint, returns once, about 3 cards later. The box is decided by the card's first pass only; the repeat changes neither box nor due date.
 - **Practice Modes**:
   - **Gemischt**: (1) due cards of all origins, (2) new words from active decks up to the daily goal, (3) more new words, (4) early practice (*Vorab-Üben*). The deck toggle ("Stapel lernen") controls only new words here; seen cards are always reviewed.
-  - **Lerne mit diesem Stapel**: only this deck's forms and sentences, never story-only cards; works even if the deck is inactive.
-  - **Stapel-Revue**: seen cards only; a correct answer keeps the box, an error or a synonym hint sends the card to Box 1.
+  - **Lerne mit diesem Stapel**: only this deck's primary cards and sentences, never secondary senses or story-only cards; works even if the deck is inactive.
+  - **Stapel-Revue**: seen primary cards of this deck only; a correct answer keeps the box, an error or a synonym hint sends the card to Box 1.
   - Early practice rule (Vorab-Üben and Stapel-Revue): correct answers do not advance the box; errors and synonym hints reset the card to Box 1.
-- **Story Words**: The story sentence is the main context for the card in Gemischt. A local pre-check runs first (≤ 20 words, ≤ 1 subordinate clause, the word is present). A server-side AI check then decides whether the sentence is understandable without context; if not, the AI rewrites a sentence with the same form and sense. Until that is done the original sentence is used. "Inhalte" exercises never add words.
+- **Story Words (Package B, locally implemented)**: tapping only opens the translation; the explicit Add button persists a learning decision. Existing sense-specific state and its fixed sentence remain unchanged. An explicitly selected own context is separate, needs complete annotation/translation and editorial validation (≤20 words, ≤1 subordinate clause), and may be local-only. No mandatory cloud check or automatic fallback. "Inhalte" exercises never add words.
 - **Text Exercises (Inhalte → Texte)**:
   - Whole texts with gaps, offered in two modes: *Lückentext-Übungen: Verben* (only verb gaps; the learner types the inflected form, e.g. "dressed" for base "dress") and *Beliebige Wortart* (all gaps; the learner picks from answer chips, no keyboard).
   - Each gap shows its base word as a hint. Typed answers follow the general answer rules: exact match (case-insensitive, trimmed) solves the gap; a near miss (one edit, words of four letters or more) shows "Fast richtig", keeps the input and is not an error; anything else is an error and clears the input.
@@ -103,7 +103,7 @@ Three core learning surfaces:
 - **Audio & Pronunciation**:
   - Words and sentences are pronounced from pre-generated audio, produced with the Cloud Text-to-Speech API (model Gemini 2.5 Flash TTS, ADC login, no API key). Full-story continuous narration is deferred to post-v1.
 - **Content Pipeline & Runtime AI Boundary**:
-  - Content is generated offline in advance via an automated AI pipeline (external script, not in the app).
+  - Content is produced offline through the existing pipeline, either with optional AI or a fully annotated, reviewed editorial Create import. Gemini/ADC is not required for editorial production.
   - Sentences are AI-generated with automated QA (linter, blind gap test by a second model, 5 % manual sample). Alternatives proposed by the blind test are only candidates; each must pass a full-sentence check in the gap before it becomes a valid alternative (`docs/pipeline.md`). Frequency comes from the wordfreq word forms; BNC/COCA serves only as an English cross-check.
   - The client never calls AI providers directly. Curated content is generated before release. Runtime AI only via Supabase Edge Functions that call Vertex AI (project `sprachlernapp-510508`) for user-generated content: dictionary miss lookup, sentence translation on tap in imported texts, story-word sentence check/rewrite.
 - **Accounts**: Learning works offline without an account. An email account is needed only for online features (import, AI checks); Google/Apple sign-in before release.
@@ -165,3 +165,10 @@ Funktionswort; pro Sitzung nur eine neue Karte je Lemma und Oberfläche. Bekannt
 Lemmas folgen innerhalb ihrer Gruppe auf ungesehene. Bei kleinem Angebot kürzere
 Sitzung statt Nebenbedeutungs-Refill (Details und Grenzfälle: `docs/srs.md`).
 Fällige Reviews, SRS und In-Session-Wiederholungen behalten ihre bisherigen Regeln.
+
+## Ein-Satz-Stapel: Bestandsübergang (04.10.2026)
+160 reguläre Lernwörter im bestehenden Stapel, 264 erhaltene Karten-IDs. Die 53 mehrdeutigen Formgruppen haben ausdrücklich redaktionell gewählte Primärbedeutungen. 104 zusätzliche Senses bleiben getrennte Lernidentitäten: gelernte Karten weiter in Wortliste/Gemischt, bloß angezeigte Box-0-Zeilen ohne Storyentscheidung nicht neu einführen. Keine Lernstands- oder Reviewzusammenführung. Paket B ergänzt explizites Story-Hinzufügen und vollständige lokale Kontexte; Eigentümerstapel und 160 Primärplätze bleiben unverändert.
+
+### Story learning — local Package B (04.10.2026)
+The real annotated story library, Home and reader share the content repository. A word tap only reads its exact sentence/token/sense reference. Add awaits an atomic commit; new decisions start in box 0 without reviews or daily-goal progress. Existing state, flags, origin and curated context remain unchanged. Disabled cards require explicit reactivation; retired cards cannot be bypassed by local duplicates.
+Explicit story additions appear immediately as “Ungelernt” in the word list and take priority after due cards in Mixed, independently of deck activation and the automatic 4:1 mix. Complete local cards remain available without a content pack. Exact later content counterparts do not create a second first encounter; existing conflicting states remain separate and visible. No context-selection UI or sync is included.

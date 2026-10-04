@@ -1,0 +1,15 @@
+{
+  "format_version": 1,
+  "version": "fixture-v1",
+  "normalization": "NFC-lower-apostrophe-v1",
+  "words": [
+    {
+      "lang": "en",
+      "form_norm": "cats",
+      "aliases": [],
+      "owner_deck_ref": "animals",
+      "primary_card_id": "ead1abfa3c821a498d3cf9040c226a5f"
+    }
+  ],
+  "parent_sha256": "de2c1adeb49640826486e89081759a82c3f4be8f5ae63fe72324bf64c1b3cfc4"
+}

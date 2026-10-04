@@ -1,0 +1,176 @@
+{
+  "format": "sprachapp.editorial-content",
+  "format_version": 2,
+  "operation_id": "synthetic-cats-v1",
+  "version": "cats-test-v2",
+  "source_sha256": "1bbe281e21963f55e32eacdf8c004cd468cd1fbf3e7759215733ea498d66e389",
+  "registry_sha256": "ba13fbd14fe48b20d8a262bc5ea6a521ea9c3e8ebbf00b29d08173a3e9a67bf2",
+  "reviewer": "Synthetic test fixture, not approved app content",
+  "add": {
+    "lemmas": [
+      {
+        "ref": "cat",
+        "lemma": "cat",
+        "pos": "NOUN"
+      },
+      {
+        "ref": "rest",
+        "lemma": "rest",
+        "pos": "VERB"
+      }
+    ],
+    "senses": [
+      {
+        "ref": "cat-animal",
+        "lemma": "cat",
+        "sense_key": "cat#animal",
+        "gloss_de": "Katze",
+        "definition_de": "Ein kleines Haustier."
+      },
+      {
+        "ref": "rest-verb",
+        "lemma": "rest",
+        "sense_key": "rest#verb",
+        "gloss_de": "ruhen",
+        "definition_de": "Sich ausruhen."
+      }
+    ],
+    "cards": [
+      {
+        "ref": "cats",
+        "form": "cats",
+        "sense": "cat-animal",
+        "translation_de": "Katzen",
+        "form_kind": "plural",
+        "form_label_de": "Substantiv, Plural",
+        "cefr_band": "anfaenger"
+      }
+    ],
+    "decks": [
+      {
+        "ref": "animals",
+        "slug": "animals-fixture",
+        "title_de": "Synthetischer Test",
+        "sort": 1
+      }
+    ],
+    "deck_cards": [
+      {
+        "deck": "animals",
+        "card": "cats",
+        "position": 1
+      }
+    ],
+    "deck_words": [
+      {
+        "form_norm": "cats",
+        "deck": "animals",
+        "primary_card": "cats",
+        "position": 1
+      }
+    ],
+    "sentences": [
+      {
+        "ref": "s1",
+        "text": "Cats rest.",
+        "translation_de": "Katzen ruhen sich aus.",
+        "origins": [
+          "deck",
+          "story"
+        ]
+      }
+    ],
+    "card_sentences": [
+      {
+        "card": "cats",
+        "sentence": "s1",
+        "position": 1,
+        "gap_start": 0,
+        "gap_end": 4,
+        "accepted": [
+          "cats"
+        ],
+        "valid_alternatives": []
+      }
+    ],
+    "sentence_tokens": [
+      {
+        "sentence": "s1",
+        "idx": 0,
+        "start_pos": 0,
+        "end_pos": 4,
+        "surface": "Cats",
+        "lemma": "cat",
+        "sense": "cat-animal",
+        "card": "cats"
+      },
+      {
+        "sentence": "s1",
+        "idx": 1,
+        "start_pos": 5,
+        "end_pos": 9,
+        "surface": "rest",
+        "lemma": "rest",
+        "sense": "rest-verb",
+        "card": null
+      },
+      {
+        "sentence": "s1",
+        "idx": 2,
+        "start_pos": 9,
+        "end_pos": 10,
+        "surface": ".",
+        "lemma": null,
+        "sense": null,
+        "card": null
+      }
+    ],
+    "dictionary_forms": [
+      {
+        "form": "cats",
+        "sense": "cat-animal",
+        "card": "cats",
+        "gloss_de": "Katzen",
+        "rank": 1
+      },
+      {
+        "form": "rest",
+        "sense": "rest-verb",
+        "gloss_de": "ruhen sich aus",
+        "rank": 1
+      }
+    ],
+    "stories": [
+      {
+        "ref": "story1",
+        "slug": "cats-fixture",
+        "title": "Cats",
+        "kind": "story",
+        "cefr_band": "anfaenger",
+        "minutes": 1
+      }
+    ],
+    "story_sentences": [
+      {
+        "story": "story1",
+        "sentence": "s1",
+        "idx": 0,
+        "paragraph_idx": 0
+      }
+    ]
+  },
+  "reviews": [
+    {
+      "sentence": "s1",
+      "decision": "approved",
+      "reason": "Synthetic complete test of both transports.",
+      "checked": {
+        "text": "Cats rest.",
+        "translation_de": "Katzen ruhen sich aus.",
+        "tokens_sha256": "998fa3732ee02498dec54b6347de1ed5c521a18ec4ee67dff212210f35708b6e",
+        "links_sha256": "042c1780abdb499d7323a1e857a34039214434ce34876c62d307e4e8d6fda386"
+      },
+      "alternatives_checked": []
+    }
+  ]
+}

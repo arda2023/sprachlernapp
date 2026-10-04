@@ -1,3 +1,6 @@
+import 'package:sprachapp/domain/story_learning.dart';
+import 'package:sprachapp/models/sample_content.dart';
+import 'package:sprachapp/presentation/providers/story_learning_providers.dart';
 import 'package:sprachapp/domain/preferences.dart';
 
 import 'dart:async';
@@ -128,6 +131,19 @@ class TestContent implements ContentRepository {
           ? {'go', 'goes', 'went', 'gone'}
           : {},
     );
+  }
+
+  @override
+  Future<CardSentence?> historicalSentence(
+    String cardId,
+    String sentenceId,
+  ) async {
+    for (final item in await practiceItems([cardId])) {
+      for (final sentence in item.sentences) {
+        if (sentence.sentenceId == sentenceId) return sentence;
+      }
+    }
+    return null;
   }
 
   @override
@@ -309,6 +325,25 @@ Widget testScope(
       return owned;
     }),
     clockProvider.overrideWithValue(() => testNow),
+    libraryStoriesProvider.overrideWith(
+      (ref) => const AsyncData(sampleStories),
+    ),
+    storyDocumentProvider.overrideWith(
+      (ref, id) async => StoryDocument(
+        StorySummary(id: id, title: id, titleDe: id, level: 'A2', minutes: 1),
+        'fixture',
+        [
+          for (final (i, text) in sampleStoryText(id).paragraphs.indexed)
+            StorySentence(
+              id: '$id/$i',
+              text: text,
+              translation: '',
+              paragraph: i,
+              tokens: [],
+            ),
+        ],
+      ),
+    ),
     appInfoProvider.overrideWith((ref) async => 'test+1'),
   ],
   child: child,

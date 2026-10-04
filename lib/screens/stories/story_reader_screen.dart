@@ -1,4 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../domain/story_learning.dart';
+import '../../domain/content.dart';
+import '../../presentation/providers/story_learning_providers.dart';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' show Colors, Scaffold;
 import 'package:flutter/semantics.dart';
@@ -29,12 +35,14 @@ class StoryReaderScreen extends StatefulWidget {
     super.key,
     required this.story,
     required this.text,
+    this.document,
     this.lookup = sampleLookup,
     this.initialMarks = sampleWordMarks,
     this.translate = sampleTranslateSentence,
   });
 
   final Story story;
+  final StoryDocument? document;
   final StoryText text;
   final WordEntry Function(String surface) lookup;
 
@@ -47,8 +55,7 @@ class StoryReaderScreen extends StatefulWidget {
   static Future<void> open(BuildContext context, Story story) =>
       Navigator.of(context).push(
         CupertinoPageRoute<void>(
-          builder: (_) =>
-              StoryReaderScreen(story: story, text: sampleStoryText(story.id)),
+          builder: (_) => _StoredStoryReader(story: story),
         ),
       );
 
@@ -67,7 +74,15 @@ class StoryReaderScreen extends StatefulWidget {
 }
 
 class _Word {
-  _Word(this.text, this.entry, this.recognizer);
+  _Word(
+    this.text,
+    this.entry,
+    this.recognizer, {
+    this.sentenceId,
+    this.tokenIndex,
+  });
+  final String? sentenceId;
+  final int? tokenIndex;
 
   final String text;
   final WordEntry entry;
@@ -104,14 +119,58 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   @override
   void initState() {
     super.initState();
-    _paragraphSentences = [
-      for (final p in widget.text.paragraphs)
-        [
-          for (final range in splitSentences(p))
-            _addSentence(p.substring(range.start, range.end)),
-        ],
-    ];
+    _paragraphSentences = widget.document != null
+        ? [
+            for (final sentence in widget.document!.sentences)
+              [_addAnnotated(sentence)],
+          ]
+        : [
+            for (final p in widget.text.paragraphs)
+              [
+                for (final range in splitSentences(p))
+                  _addSentence(p.substring(range.start, range.end)),
+              ],
+          ];
     _narration.addListener(_onNarration);
+  }
+
+  int _addAnnotated(StorySentence source) {
+    final index = _sentences.length;
+    final sentence = _Sentence(
+      source.text,
+      TapGestureRecognizer()..onTap = () => _translate(index),
+    );
+    var cursor = 0;
+    for (final t in source.tokens) {
+      if (t.start > cursor) {
+        sentence.tokens.add(source.text.substring(cursor, t.start));
+      }
+      if (t.lemmaId == null) {
+        sentence.tokens.add(t.surface);
+      } else {
+        final word = _words.length;
+        _words.add(
+          _Word(
+            t.surface,
+            WordEntry(
+              headword: t.lemma ?? t.surface,
+              partOfSpeech: t.pos ?? '',
+              translation: t.gloss ?? 'Übersetzung nicht verfügbar',
+            ),
+            TapGestureRecognizer()..onTap = () => _lookUp(word),
+            sentenceId: source.id,
+            tokenIndex: t.index,
+          ),
+        );
+        sentence.tokens.add(word);
+      }
+      cursor = t.end;
+    }
+    if (cursor < source.text.length) {
+      sentence.tokens.add(source.text.substring(cursor));
+    }
+    _sentences.add(sentence);
+    return index;
   }
 
   int _addSentence(String text) {
@@ -139,6 +198,16 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     if (last < text.length) sentence.tokens.add(text.substring(last));
     _sentences.add(sentence);
     return index;
+  }
+
+  @override
+  void didUpdateWidget(covariant StoryReaderScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.document != null) {
+      _marks
+        ..clear()
+        ..addAll(widget.initialMarks);
+    }
   }
 
   @override
@@ -184,7 +253,9 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     await SentenceTranslationSheet.show(
       context,
       original: sentence,
-      translation: widget.translate(sentence),
+      translation:
+          widget.document?.sentences[index].translation ??
+          widget.translate(sentence),
     );
     if (mounted) setState(() => _selectedSentence = null);
   }
@@ -204,39 +275,18 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     final background = index == _selectedSentence
         ? context.appColors.hairline
         : (narrated ? context.appColors.playback : null);
-    final children = <InlineSpan>[];
-    var last = 0;
-    for (final match in _wordPattern.allMatches(sentence.text)) {
-      if (match.start > last) {
-        children.add(
+    final children = <InlineSpan>[
+      for (final token in sentence.tokens)
+        if (token is String)
+          TextSpan(text: token, recognizer: sentence.recognizer)
+        else
           TextSpan(
-            text: sentence.text.substring(last, match.start),
+            text: _words[token as int].text,
             recognizer: sentence.recognizer,
+            style: _wordSpan(token).style
+                ?.copyWith(backgroundColor: background),
           ),
-        );
-      }
-      final ink = _inkFor(match[0]!);
-      children.add(
-        TextSpan(
-          text: match[0],
-          recognizer: sentence.recognizer,
-          style: TextStyle(
-            decoration: ink == null ? null : TextDecoration.underline,
-            decorationColor: ink,
-            decorationThickness: 2,
-          ),
-        ),
-      );
-      last = match.end;
-    }
-    if (last < sentence.text.length) {
-      children.add(
-        TextSpan(
-          text: sentence.text.substring(last),
-          recognizer: sentence.recognizer,
-        ),
-      );
-    }
+    ];
     return TextSpan(
       style: TextStyle(backgroundColor: background),
       children: children,
@@ -247,21 +297,76 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     final word = _words[index];
     final headword = word.entry.headword;
     setState(() => _selected = index);
-    await WordLookupSheet.show(
-      context,
-      surface: word.text,
-      entry: word.entry,
-      mark: _marks[headword],
-      // TODO: write to the vocabulary store once the Drift layer exists.
-      learningAvailable: false,
-      onAdd: () {},
-    );
+    if (widget.document != null && word.sentenceId != null) {
+      try {
+        final service = ProviderScope.containerOf(
+          context,
+          listen: false,
+        ).read(storyLearningServiceProvider);
+        final candidate = await service.candidate(
+          widget.story.id,
+          word.sentenceId!,
+          word.tokenIndex!,
+        );
+        final status = await service.status(candidate);
+        if (!mounted) return;
+        await WordLookupSheet.show(
+          context,
+          surface: word.text,
+          entry: word.entry,
+          mark: status.state == StoryAddState.added ? WordMark.active : null,
+          status: status,
+          onAdd: () => service.add(candidate),
+          onReactivate: () => service.reactivate(candidate),
+        );
+        if (mounted) {
+          final after = await service.status(candidate);
+          if (mounted && after.state == StoryAddState.added) {
+            setState(
+              () => _marks['${word.sentenceId}/${word.tokenIndex}'] =
+                  WordMark.active,
+            );
+          }
+        }
+      } catch (_) {
+        if (mounted) {
+          await WordLookupSheet.show(
+            context,
+            surface: word.text,
+            entry: word.entry,
+            mark: null,
+            learningAvailable: false,
+            status: const StoryAddResult(
+              StoryAddState.unavailable,
+              message: 'Storydaten konnten nicht geladen werden. Bitte erneut öffnen.',
+            ),
+            onAdd: () async => const StoryAddResult(StoryAddState.unavailable),
+          );
+        }
+      }
+    } else {
+      await WordLookupSheet.show(
+        context,
+        surface: word.text,
+        entry: word.entry,
+        mark: _marks[headword],
+        learningAvailable: false,
+        onAdd: () async => const StoryAddResult(StoryAddState.unavailable),
+      );
+    }
     if (mounted) setState(() => _selected = null);
   }
 
   TextSpan _wordSpan(int index) {
     final word = _words[index];
-    final ink = _inkFor(word.text);
+    final ink = widget.document == null
+        ? _inkFor(word.text)
+        : (_marks['${word.sentenceId}/${word.tokenIndex}'] == null
+              ? null
+              : _marks['${word.sentenceId}/${word.tokenIndex}'] ==
+                    WordMark.mastered
+              ? context.appColors.mastered
+              : context.appColors.active);
     return TextSpan(
       text: word.text,
       recognizer: word.recognizer,
@@ -413,4 +518,66 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
       ),
     );
   }
+}
+
+class _StoredStoryReader extends ConsumerWidget {
+  const _StoredStoryReader({required this.story});
+  final Story story;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => ref
+      .watch(storyDocumentProvider(story.id))
+      .when(
+        data: (doc) => StoryReaderScreen(
+          story: story,
+          document: doc,
+          text: StoryText(
+            storyId: story.id,
+            paragraphs: doc.sentences.map((s) => s.text).toList(),
+          ),
+          initialMarks: {
+            for (final sentence in doc.sentences)
+              for (final token in sentence.tokens)
+                if (token.senseId != null)
+                  if (ref.watch(practiceResolverProvider).value
+                      case final resolver?)
+                    if ((resolver.bindings[LearningIdentity(
+                              'en',
+                              contentFormNorm(token.surface),
+                              token.senseId!,
+                            ).key] ??
+                            resolver.cards.values
+                                .where(
+                                  (c) =>
+                                      c.formNorm ==
+                                          contentFormNorm(token.surface) &&
+                                      c.senseId == token.senseId,
+                                )
+                                .firstOrNull
+                                ?.id)
+                        case final id?)
+                      if (resolver.states[id] case final state?)
+                        if (state.box > 0 || resolver.additions.containsKey(id))
+                          '${sentence.id}/${token.index}': state.box == 5
+                              ? WordMark.mastered
+                              : WordMark.active,
+          },
+        ),
+        loading: () =>
+            const Scaffold(body: Center(child: CupertinoActivityIndicator())),
+        error: (_, _) => Scaffold(
+          body: SafeArea(
+            child: Column(
+              children: [
+                BackBar(onBack: () => Navigator.of(context).maybePop()),
+                const Text('Story-Inhalt nicht verfügbar.'),
+                CupertinoButton(
+                  onPressed: () =>
+                      ref.invalidate(storyDocumentProvider(story.id)),
+                  child: const Text('Erneut versuchen'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
 }

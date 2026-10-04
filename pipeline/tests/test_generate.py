@@ -111,9 +111,9 @@ def test_five_candidates_pack_only_ok(cfg, tmp_path):
     aborted, pack = run(cfg, tmp_path, llm)
     assert aborted is None
     assert llm.calls.count("sentences") == 1
-    assert llm.calls.count("sense_key") == 3
+    assert llm.calls.count("sense_key") == 1
     assert llm.calls.count("annotate") == 1
-    assert len(pack["card_sentences"]) == 3
+    assert len(pack["card_sentences"]) == 1
     assert len(pack["deck_cards"]) == 1
     assert pack["decks"][0]["slug"] == "allgemeine-sprache"
     assert all(s["qa_report"]["meaning_check_result"]["translation_ok"]
@@ -139,28 +139,22 @@ def test_second_run_reuses_meanings_without_model_call(cfg, tmp_path):
         s["sense_key"] for s in second_pack["senses"]]
 
 
-def test_second_round_of_three_after_duplicate_rejections(cfg, tmp_path):
-    texts = [SENTENCES[0]] * 5 + SENTENCES[1:4]
-    llm = FakeVertex(cfg, tmp_path / "ledger.csv", 1.0, sentences=texts)
+def test_one_good_candidate_does_not_need_two_more(cfg, tmp_path):
+    llm = FakeVertex(cfg, tmp_path / "ledger.csv", 1.0, sentences=[SENTENCES[0]] * 5)
     aborted, pack = run(cfg, tmp_path, llm)
     assert aborted is None
-    assert llm.calls.count("sentences") == 2
-    assert len(pack["card_sentences"]) == 3
-    review = list(csv.DictReader(open(tmp_path / "review.csv", encoding="utf-8-sig")))
-    assert sum(r["verworfen_grund"] == "Duplikat" for r in review) == 4
-    assert "| Duplikat | 4 |" in (tmp_path / "run_report.md").read_text(encoding="utf-8")
+    assert llm.calls.count("sentences") == 1
+    assert len(pack["card_sentences"]) == 1
 
 
-def test_two_extra_rounds_then_report_all_rejections(cfg, tmp_path):
-    llm = FakeVertex(cfg, tmp_path / "ledger.csv", 1.0,
-                     sentences=[SENTENCES[0]] * 11)
+def test_two_extra_candidate_rounds_when_every_candidate_fails_lint(cfg, tmp_path):
+    llm = FakeVertex(cfg, tmp_path / "ledger.csv", 1.0, sentences=["No target word here."] * 100)
     aborted, pack = run(cfg, tmp_path, llm)
     assert aborted is None
-    assert llm.calls.count("sentences") == 3
+    assert llm.calls.count("sentences") == 3 + 11 * cfg["generate"]["lint_retries"]
     assert pack["cards"] == []
     report = (tmp_path / "run_report.md").read_text(encoding="utf-8")
-    assert "went (go#gehen): 1/3 angenommene Sätze" in report
-    assert report.count("Duplikat; Satz:") == 10
+    assert "went (go#gehen): 0/1 angenommene Sätze" in report
 
 
 def test_blind_mismatch_feedback_in_generation(cfg, tmp_path):
@@ -318,14 +312,14 @@ def test_confirmed_alternative_in_pack_csv_report_and_ledger(cfg, tmp_path):
                      checks={"Headed": (True, "Natürlich, gleiche Bedeutung.")})
     aborted, pack = run(cfg, tmp_path, llm)
     assert aborted is None and len(pack["cards"]) == 1
-    assert llm.calls.count("answer") == 3          # no retry because of alternatives
+    assert llm.calls.count("answer") == 1          # no retry because of alternatives
     assert llm.calls.count("results") == 1          # one check for the one sentence with candidates
     assert llm.calls.count("sentences") == 1
     assert all(cs["accepted"] == ["went"] for cs in pack["card_sentences"])
     texts = {s["ref"]: s for s in pack["sentences"]}
     by_text = {texts[cs["sentence"]]["text"]: cs["valid_alternatives"] for cs in pack["card_sentences"]}
     assert by_text[SENTENCES[0]] == ["headed"]
-    assert [v for t, v in by_text.items() if t != SENTENCES[0]] == [[], []]
+    assert [v for t, v in by_text.items() if t != SENTENCES[0]] == []
     report_0 = next(s["qa_report"] for s in pack["sentences"] if s["text"] == SENTENCES[0])
     assert report_0["blind"] == "passed"
     assert report_0["alternative_candidates"] == ["Headed", "went home"]

@@ -31,7 +31,7 @@ def content_lemmas(text: str, form: str, *, nlp=None) -> set[str]:
 def common_lemmas(cards: list[dict]) -> list[str]:
     counts: Counter[str] = Counter()
     for card in cards:
-        if len(card.get("accepted", [])) == 3:
+        if len(card.get("accepted", [])) == 1:
             for a in card["accepted"]:
                 counts.update(content_lemmas(a["text"], card["form"]))
     return [lemma for lemma, _ in counts.most_common(15)]

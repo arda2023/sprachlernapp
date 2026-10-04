@@ -36,7 +36,7 @@ String manifestFor(
 }) => ContentManifest(
   lang: lang,
   version: version,
-  schemaVersion: supportedContentSchemaVersion,
+  schemaVersion: 1,
   sha256: sha256.convert(bytes).toString(),
   sizeBytes: bytes.length,
   internalTestPack: true,

@@ -25,7 +25,7 @@ docs/               Detaildokus (siehe unten)
 ### lib/data
 - **`user.db`** (Drift): Karten des Lernenden (`card_id`, Box, `due_at`, Herkunft, deaktiviert, Favorit, Notiz), Einstellungen, Importe, **`review_log`** (nur anhängen).
 - **`content.sqlite`** (schreibgeschützt, eine Datei je Sprache): Wörterbuch, Karten, Sätze, Token-Annotation, Stapel, Stories, Übungen, Audio-Verweise. Schema: `docs/content-schema.md`.
-- Verbindung nur über **stabile IDs** (Hash des normalisierten Inhalts). `user.db` enthält nie Inhaltstexte, nur IDs und Zustand.
+- Verbindung nur über **stabile IDs** (Hash des normalisierten Inhalts). Kuratierte Inhalte werden in `user.db` nur referenziert. Vollständige lokale Karten speichern eigene Metadaten und unveränderliche Kontexte mit Quellenreferenzen; sie bleiben ohne Content-Pack übbar.
 - Inhaltsimport ist idempotent; entfernte Zeilen bleiben als Tombstone.
 
 ### lib/presentation
@@ -64,3 +64,7 @@ Nur für nutzergenerierte Inhalte, nur über Edge Functions: `lookup-word`, `tra
 
 ## Weitere Doku
 `docs/srs.md` (Wiederholung), `docs/content-schema.md` (Inhaltsschema), `docs/backend.md`, `docs/pipeline.md`, `docs/setup.md`.
+
+## Inhaltsvertrag Paket A (04.10.2026)
+Der vorhandene Offline-Pipeline-/Exportweg liefert Schema 2, die App liest Schema 1 und 2 read-only. `deck_words` trennt Wortbesitz/Primärplatz von der sinnbezogenen Lernkarte. Repositories liefern Primärkarten für direkte Stapel und alle erhaltenen Karten für gelernte Altstände in Gemischt. Ein fester Übungssatz plus gesonderte historische Satzabfrage ersetzt Rotation. Vor Austausch eines installierten Packs werden Version und Schema des Kandidaten geprüft.
+Paket A ließ `user.db` auf Schema 3. Paket B migriert additiv auf Schema 4: lokale Kartenmetadaten, unveränderliche `card_contexts`, getrennte explizite Story-Lernentscheidungen und exakte Identitätsbindungen. `PracticeItemResolver` verbindet beide Repositories für Wortliste, Zähler und den bestehenden Übungscontroller. Domain-Typen enthalten keine Flutter-Imports. Kein Cloud-Aufruf und keine Servermigration.

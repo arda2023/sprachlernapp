@@ -1,0 +1,2833 @@
+{
+  "format_version": 1,
+  "version": "en.v1",
+  "normalization": "NFC-lower-apostrophe-v1",
+  "source_pack_sha256": "7dd8cbee4855e47c9dbb864e76e0cf3138e88b8a67fa613a892e6c4641b8bbef",
+  "source_sqlite_sha256": "bb71bd0ec9466e931500678b98c6838cf5208f67d82c6cd2cbd6f6fe3fcedf29",
+  "words": [
+    {
+      "lang": "en",
+      "form_norm": "the",
+      "display_form": "the",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "the|the/DET|the#bestimmter_artikel",
+      "primary_card_id": "d0980b611fd3e292e0dcdedf7c3d58b1",
+      "sense_key": "the#bestimmter_artikel",
+      "meaning_de": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+      "sense_card_ids": [
+        "0f8456704a8b09be994c320a0d22eb58",
+        "d0980b611fd3e292e0dcdedf7c3d58b1"
+      ],
+      "reason": "Vorgegeben; spezifische Kerzen statt besonderer Komparativkonstruktion.",
+      "previous_position": 1,
+      "position": 1
+    },
+    {
+      "lang": "en",
+      "form_norm": "to",
+      "display_form": "to",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "to|to/ADP|to#nach_richtung",
+      "primary_card_id": "9cbf63e6494fa806cd7c5d6a8c1ad60c",
+      "sense_key": "to#nach_richtung",
+      "meaning_de": "Richtung oder Zielort (z. B. 'go to London')",
+      "sense_card_ids": [
+        "107c027bb626e769f5326ef4ea1eca2d",
+        "8c4ff8b225bdf270519c5e557737aa74",
+        "9cbf63e6494fa806cd7c5d6a8c1ad60c",
+        "ccac6915710397c2f26fe86cee8b0823"
+      ],
+      "reason": "Konkreter Zielort beim Weg zum Supermarkt.",
+      "previous_position": 4,
+      "position": 2
+    },
+    {
+      "lang": "en",
+      "form_norm": "and",
+      "display_form": "and",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "and|and/CCONJ|and#und",
+      "primary_card_id": "a20802b54e4c3489e763f4f701b144f2",
+      "sense_key": "and#und",
+      "meaning_de": "und",
+      "sense_card_ids": [
+        "7fe5eb8d5d740e711ad641064ce7b63e",
+        "a20802b54e4c3489e763f4f701b144f2"
+      ],
+      "reason": "Vorgegeben; transparente Verbindung zweier Reisegegenstände.",
+      "previous_position": 6,
+      "position": 3
+    },
+    {
+      "lang": "en",
+      "form_norm": "of",
+      "display_form": "of",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "of|of/ADP|of#genitiv_besitz",
+      "primary_card_id": "e9633db20e856c02c7a48c74746cdb31",
+      "sense_key": "of#genitiv_besitz",
+      "meaning_de": "Zugehörigkeit oder Besitz (oft dem deutschen Genitiv entsprechend)",
+      "sense_card_ids": [
+        "14aaff5c5fe7739f1500f5b496b9deb7",
+        "a50ec7bacd3e9949b15d1350d34c9b78",
+        "bd12a120741aaa2c287423327508bece",
+        "e9633db20e856c02c7a48c74746cdb31"
+      ],
+      "reason": "Vorgegeben; Zugehörigkeit des Namens zum Lied ist verständlich.",
+      "previous_position": 7,
+      "position": 4
+    },
+    {
+      "lang": "en",
+      "form_norm": "a",
+      "display_form": "a",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "a|a/DET|a#ein",
+      "primary_card_id": "c5f36879ac1d89d23113aec9f32f32ba",
+      "sense_key": "a#ein",
+      "meaning_de": "ein",
+      "sense_card_ids": [
+        "c5f36879ac1d89d23113aec9f32f32ba",
+        "fb553df4d5faf8591c9c95231b208b72"
+      ],
+      "reason": "Unbestimmter Artikel als grundlegende Nomenbegleitung.",
+      "previous_position": 10,
+      "position": 5
+    },
+    {
+      "lang": "en",
+      "form_norm": "in",
+      "display_form": "in",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "in|in/ADP|in#in_raeumlich",
+      "primary_card_id": "c02007a451a1b5e2f3bed287c846c212",
+      "sense_key": "in#in_raeumlich",
+      "meaning_de": "in (räumlich: innerhalb eines Ortes oder Raumes)",
+      "sense_card_ids": [
+        "1a28d99dca99d76c3f23bb2bf3eac664",
+        "3f8fbd9705744ad9d5d51d16cefc6f6c",
+        "c02007a451a1b5e2f3bed287c846c212"
+      ],
+      "reason": "Vorgegeben; Küchenort als konkrete räumliche Beziehung.",
+      "previous_position": 11,
+      "position": 6
+    },
+    {
+      "lang": "en",
+      "form_norm": "i",
+      "display_form": "i",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "i|I/PRON|i#ich",
+      "primary_card_id": "e0fc2c1a554d68dce874e31cb4c6dd89",
+      "sense_key": "i#ich",
+      "meaning_de": "ich",
+      "sense_card_ids": [
+        "e0fc2c1a554d68dce874e31cb4c6dd89"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 13,
+      "position": 7
+    },
+    {
+      "lang": "en",
+      "form_norm": "is",
+      "display_form": "is",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "is|be/AUX|be#sein_vollverb",
+      "primary_card_id": "b325798ce493fd8ad1968460d3a038ab",
+      "sense_key": "be#sein_vollverb",
+      "meaning_de": "sein (als Vollverb oder Kopula zur Angabe von Zustand, Identität oder Eigenschaft)",
+      "sense_card_ids": [
+        "b325798ce493fd8ad1968460d3a038ab",
+        "be35fb211a8582edb75368f25ce09f74"
+      ],
+      "reason": "Kopula mit unmittelbar beschriebener Eigenschaft des Grases.",
+      "previous_position": 14,
+      "position": 8
+    },
+    {
+      "lang": "en",
+      "form_norm": "for",
+      "display_form": "for",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "for|for/ADP|for#fuer_zweck_empfaenger",
+      "primary_card_id": "7834d8713b083f5b479d37fbbca21ae3",
+      "sense_key": "for#fuer_zweck_empfaenger",
+      "meaning_de": "für (bestimmt für, zugunsten von oder zu einem Zweck)",
+      "sense_card_ids": [
+        "6193aa760f0f5e795ad049c3f11a986c",
+        "7834d8713b083f5b479d37fbbca21ae3",
+        "a084762edd0baa4fa627b849f35b686b"
+      ],
+      "reason": "Empfänger des Liedes ist ausdrücklich genannt.",
+      "previous_position": 16,
+      "position": 9
+    },
+    {
+      "lang": "en",
+      "form_norm": "that",
+      "display_form": "that",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "that|that/SCONJ|that#dass",
+      "primary_card_id": "41df9a1f38904eda71953de86117a3eb",
+      "sense_key": "that#dass",
+      "meaning_de": "dass",
+      "sense_card_ids": [
+        "0869e1b9c1b642e8a91d43dce5908918",
+        "192616821d1ddb5972fe7928880be903",
+        "41df9a1f38904eda71953de86117a3eb",
+        "daafa35d85f0731715799a9b50433a69"
+      ],
+      "reason": "Häufige Konjunktion in einer vollständigen Aussage über Suppe.",
+      "previous_position": 18,
+      "position": 10
+    },
+    {
+      "lang": "en",
+      "form_norm": "you",
+      "display_form": "you",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "you|you/PRON|you#du_sie_ihr",
+      "primary_card_id": "45a328566b1b55c20712430ee3b49a35",
+      "sense_key": "you#du_sie_ihr",
+      "meaning_de": "Personalpronomen der 2. Person (Singular oder Plural, vertraulich oder höflich)",
+      "sense_card_ids": [
+        "45a328566b1b55c20712430ee3b49a35",
+        "f88855086d4d6b53706d82415cfe1ae8"
+      ],
+      "reason": "Direkte Anrede statt unpersönlicher Verallgemeinerung.",
+      "previous_position": 20,
+      "position": 11
+    },
+    {
+      "lang": "en",
+      "form_norm": "it",
+      "display_form": "it",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "it|it/PRON|it#es_ding",
+      "primary_card_id": "083366a1da956c4c859d9474f969dc55",
+      "sense_key": "it#es_ding",
+      "meaning_de": "Personalpronomen der 3. Person Singular für sächliche Dinge oder Tiere",
+      "sense_card_ids": [
+        "083366a1da956c4c859d9474f969dc55",
+        "0e1e66ba9eafe5695174a291bc23964d"
+      ],
+      "reason": "Sachlicher Bezug mit im selben Satz genanntem Gegenstand.",
+      "previous_position": 21,
+      "position": 12
+    },
+    {
+      "lang": "en",
+      "form_norm": "on",
+      "display_form": "on",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "on|on/ADP|on#auf",
+      "primary_card_id": "352639235c92764f49c19d0fe464ba7e",
+      "sense_key": "on#auf",
+      "meaning_de": "auf",
+      "sense_card_ids": [
+        "352639235c92764f49c19d0fe464ba7e",
+        "481bb1b1047afc58e4953c47532ffabd",
+        "74bbaed48cd9bb8808cc9d00642ef815",
+        "d4d73fd6c98b5ad470d31dc1d14fed70"
+      ],
+      "reason": "Konkrete räumliche Grundbedeutung auf dem Gras.",
+      "previous_position": 23,
+      "position": 13
+    },
+    {
+      "lang": "en",
+      "form_norm": "with",
+      "display_form": "with",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "with|with/ADP|with#zusammen_mit",
+      "primary_card_id": "45a28a7bd56845468592061ed66f1bf8",
+      "sense_key": "with#zusammen_mit",
+      "meaning_de": "in Begleitung oder Gesellschaft von (zusammen mit)",
+      "sense_card_ids": [
+        "45a28a7bd56845468592061ed66f1bf8",
+        "69da8b3da51c5c1fe0083936419f24b3",
+        "b40a2b636116fb3593a01068d5df4b3d",
+        "c056c0393665c7bda36b860cbba4aa3d"
+      ],
+      "reason": "Grundlegende Begleitung mit ausdrücklich genannter Schwester.",
+      "previous_position": 27,
+      "position": 14
+    },
+    {
+      "lang": "en",
+      "form_norm": "this",
+      "display_form": "this",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "this|this/DET|this#dieser_begleitend",
+      "primary_card_id": "e74a07c9b33f57050076ed90f35a69ff",
+      "sense_key": "this#dieser_begleitend",
+      "meaning_de": "dieser/diese/dieses (begleitend vor einem Nomen, weist auf Nahes hin)",
+      "sense_card_ids": [
+        "bf209775a119fe97f93462dde437edcd",
+        "e74a07c9b33f57050076ed90f35a69ff"
+      ],
+      "reason": "Grundlegender Demonstrativbegleiter mit genanntem Foto.",
+      "previous_position": 30,
+      "position": 15
+    },
+    {
+      "lang": "en",
+      "form_norm": "was",
+      "display_form": "was",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "was|be/AUX|be#sein_vollverb",
+      "primary_card_id": "319aa2e30453222cf8a74fad14b00e91",
+      "sense_key": "be#sein_vollverb",
+      "meaning_de": "sein (als Vollverb oder Kopula zur Angabe von Zustand, Identität oder Eigenschaft)",
+      "sense_card_ids": [
+        "184c370935a8fdcca112804c9318fce6",
+        "319aa2e30453222cf8a74fad14b00e91"
+      ],
+      "reason": "Vergangene Eigenschaft statt zusätzlicher Passiv- oder Verlaufsbildung.",
+      "previous_position": 32,
+      "position": 16
+    },
+    {
+      "lang": "en",
+      "form_norm": "be",
+      "display_form": "be",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "be|be/AUX|be#sein_existieren",
+      "primary_card_id": "7be993be34e9d87e7156cfc02256dc0f",
+      "sense_key": "be#sein_existieren",
+      "meaning_de": "sein (einen Zustand, eine Eigenschaft oder Identität haben)",
+      "sense_card_ids": [
+        "7be993be34e9d87e7156cfc02256dc0f",
+        "bdac6410e29b305386120132d1a7c724",
+        "d2ef9df94be5dd1c9ec9e98860c00764"
+      ],
+      "reason": "Grundbedeutung sein im eigenständigen Imperativ be quiet.",
+      "previous_position": 35,
+      "position": 17
+    },
+    {
+      "lang": "en",
+      "form_norm": "as",
+      "display_form": "as",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "as|as/ADP|as#als_funktion",
+      "primary_card_id": "503f355fc9ec66a574014ef2a76143bd",
+      "sense_key": "as#als_funktion",
+      "meaning_de": "in der Funktion oder Eigenschaft von (z. B. as a doctor)",
+      "sense_card_ids": [
+        "18b001042bbc2053736de82d3c8b07c7",
+        "3ad02ff215742b0530fdc4437a9e9a98",
+        "503f355fc9ec66a574014ef2a76143bd",
+        "94a554df515f5244f6a1d6b910862c2f"
+      ],
+      "reason": "Berufsrolle als waiter ist ohne Vorkontext verständlich.",
+      "previous_position": 37,
+      "position": 18
+    },
+    {
+      "lang": "en",
+      "form_norm": "are",
+      "display_form": "are",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "are|be/AUX|be#sein_vollverb",
+      "primary_card_id": "08470372ea71b7c40444c2b7bc738766",
+      "sense_key": "be#sein_vollverb",
+      "meaning_de": "sein (als Vollverb oder Kopula zur Angabe von Zustand, Identität oder Eigenschaft)",
+      "sense_card_ids": [
+        "08470372ea71b7c40444c2b7bc738766",
+        "51dbd6a6a6191ebb64ec997433395997"
+      ],
+      "reason": "Kopula für Zustand und Eigenschaft als grundlegende Präsensverwendung.",
+      "previous_position": 42,
+      "position": 19
+    },
+    {
+      "lang": "en",
+      "form_norm": "have",
+      "display_form": "have",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "have|have/VERB|have#besitzen",
+      "primary_card_id": "60b73f88916bf4e77a016fc0217b3546",
+      "sense_key": "have#besitzen",
+      "meaning_de": "besitzen oder über etwas verfügen (Vollverb)",
+      "sense_card_ids": [
+        "5fe7dac3084ed03cd31838121cd64c12",
+        "60b73f88916bf4e77a016fc0217b3546",
+        "bd3d032b4485d07ef7bd7dea0642c5fc",
+        "cf6fe06fa4d63562563ffb8c7835790a"
+      ],
+      "reason": "Verfügbarkeit eines Gegenstands ohne zusätzliche Modal- oder Perfektkonstruktion.",
+      "previous_position": 43,
+      "position": 20
+    },
+    {
+      "lang": "en",
+      "form_norm": "at",
+      "display_form": "at",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "at|at/ADP|at#ort",
+      "primary_card_id": "eaf00558ad72608f9a7d1ad7f1899b79",
+      "sense_key": "at#ort",
+      "meaning_de": "räumlich (an einem bestimmten Ort oder Punkt)",
+      "sense_card_ids": [
+        "1d7c1464111fbd735fde00f572d68de6",
+        "6f055178c29b1a724cd3c189defa28f6",
+        "d94ebe8a3dc64cf488621fdc1a2d3255",
+        "eaf00558ad72608f9a7d1ad7f1899b79"
+      ],
+      "reason": "Konkreter Ort am Schreibtisch macht die Ortsangabe deutlich.",
+      "previous_position": 46,
+      "position": 21
+    },
+    {
+      "lang": "en",
+      "form_norm": "he",
+      "display_form": "he",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "he|he/PRON|he#er",
+      "primary_card_id": "ec8808d0a88005c21d01521da8ff468c",
+      "sense_key": "he#er",
+      "meaning_de": "er",
+      "sense_card_ids": [
+        "ec8808d0a88005c21d01521da8ff468c"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 49,
+      "position": 22
+    },
+    {
+      "lang": "en",
+      "form_norm": "not",
+      "display_form": "not",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "not|not/PART|not#nicht",
+      "primary_card_id": "05f5c519ff76c3267775f5e763e81c0a",
+      "sense_key": "not#nicht",
+      "meaning_de": "nicht (drückt Verneinung von Verben, Adjektiven oder Aussagen aus)",
+      "sense_card_ids": [
+        "05f5c519ff76c3267775f5e763e81c0a"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 50,
+      "position": 23
+    },
+    {
+      "lang": "en",
+      "form_norm": "by",
+      "display_form": "by",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "by|by/ADP|by#mit_mittel",
+      "primary_card_id": "147818776dd235b355da2345411d2725",
+      "sense_key": "by#mit_mittel",
+      "meaning_de": "mit, per (Mittel, Methode oder Verkehrsmittel)",
+      "sense_card_ids": [
+        "147818776dd235b355da2345411d2725",
+        "4ff5b54d82682e1d897e1e0911d2153c",
+        "90778bdc1f837627bbc88c356e0445ac",
+        "e69ed92ba3e9db8cd33587b08a1a2ef6"
+      ],
+      "reason": "Alltägliche Verkehrsmittelangabe by train.",
+      "previous_position": 53,
+      "position": 24
+    },
+    {
+      "lang": "en",
+      "form_norm": "but",
+      "display_form": "but",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "but|but/CCONJ|but#aber",
+      "primary_card_id": "213d01a88db6d095d2acf84969076666",
+      "sense_key": "but#aber",
+      "meaning_de": "aber",
+      "sense_card_ids": [
+        "0065fd23e02598866109b759ee755d60",
+        "1c2c20bfd0a6e94f28af93a7e54dc097",
+        "213d01a88db6d095d2acf84969076666"
+      ],
+      "reason": "Grundlegender Gegensatz zwischen Müdigkeit und Hilfe.",
+      "previous_position": 55,
+      "position": 25
+    },
+    {
+      "lang": "en",
+      "form_norm": "from",
+      "display_form": "from",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "from|from/ADP|from#von_ausgangspunkt",
+      "primary_card_id": "8fe6badbcc62e5a8ab1e0b57a6492479",
+      "sense_key": "from#von_ausgangspunkt",
+      "meaning_de": "von, aus (räumlicher, zeitlicher oder persönlicher Ausgangspunkt)",
+      "sense_card_ids": [
+        "1d8412bb72fa75a127f15fa3b158736b",
+        "8747aa8df50048d35964d478a82d0491",
+        "8fe6badbcc62e5a8ab1e0b57a6492479"
+      ],
+      "reason": "Grundlegende Herkunftsangabe mit Postkarte und Absender.",
+      "previous_position": 57,
+      "position": 26
+    },
+    {
+      "lang": "en",
+      "form_norm": "my",
+      "display_form": "my",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "my|my/DET|my#mein",
+      "primary_card_id": "9671708492e8b505af729a721e2faa87",
+      "sense_key": "my#mein",
+      "meaning_de": "mein (Possessivbegleiter der 1. Person Singular)",
+      "sense_card_ids": [
+        "9671708492e8b505af729a721e2faa87"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 59,
+      "position": 27
+    },
+    {
+      "lang": "en",
+      "form_norm": "or",
+      "display_form": "or",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "or|or/CCONJ|or#oder",
+      "primary_card_id": "cf4b560ed7e5c78dcc2e6a3292abec79",
+      "sense_key": "or#oder",
+      "meaning_de": "oder",
+      "sense_card_ids": [
+        "cf4b560ed7e5c78dcc2e6a3292abec79",
+        "d1154feb4df651948e14b11edc48d97f"
+      ],
+      "reason": "Einfache Wahl zwischen Tee und Kaffee statt Warnkonstruktion.",
+      "previous_position": 60,
+      "position": 28
+    },
+    {
+      "lang": "en",
+      "form_norm": "we",
+      "display_form": "we",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "we|we/PRON|we#wir",
+      "primary_card_id": "5d1287c0e79aa7212a44a9ef58b7fa33",
+      "sense_key": "we#wir",
+      "meaning_de": "wir",
+      "sense_card_ids": [
+        "5d1287c0e79aa7212a44a9ef58b7fa33"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 61,
+      "position": 29
+    },
+    {
+      "lang": "en",
+      "form_norm": "an",
+      "display_form": "an",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "an|a/DET|a#ein",
+      "primary_card_id": "961a212c2ecbded7b8f66c308905ec95",
+      "sense_key": "a#ein",
+      "meaning_de": "ein",
+      "sense_card_ids": [
+        "961a212c2ecbded7b8f66c308905ec95"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 62,
+      "position": 30
+    },
+    {
+      "lang": "en",
+      "form_norm": "your",
+      "display_form": "your",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "your|your/DET|your#dein",
+      "primary_card_id": "485bd46e3f9a5428326a3a78c7f193dc",
+      "sense_key": "your#dein",
+      "meaning_de": "von dir besessen / zu dir gehörend (Singular, informell)",
+      "sense_card_ids": [
+        "0f6290ed36b9ed483756be881e52117f",
+        "485bd46e3f9a5428326a3a78c7f193dc",
+        "8aece370d9cef21e089ef06f6aa0dc89"
+      ],
+      "reason": "Singularischer Besitz mit direkter Anrede Omar.",
+      "previous_position": 63,
+      "position": 31
+    },
+    {
+      "lang": "en",
+      "form_norm": "all",
+      "display_form": "all",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "all|all/DET|all#alle_det",
+      "primary_card_id": "8229c971f275e5a5313ef34b400183a1",
+      "sense_key": "all#alle_det",
+      "meaning_de": "alle, ganz (bestimmt ein Nomen im Plural oder als Gesamtheit)",
+      "sense_card_ids": [
+        "8229c971f275e5a5313ef34b400183a1",
+        "dd0593758f52e7b09b2d721231c57178",
+        "e98635c0bcf57c2184e0a72ab4504bfd"
+      ],
+      "reason": "Gesamtheit vor einem Nomen ist an den Taschen unmittelbar erkennbar.",
+      "previous_position": 66,
+      "position": 32
+    },
+    {
+      "lang": "en",
+      "form_norm": "so",
+      "display_form": "so",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "so|so/ADV|so#so_sehr",
+      "primary_card_id": "edaf95dbbdd46375bc6a288b2e215c3f",
+      "sense_key": "so#so_sehr",
+      "meaning_de": "so, derart (verstärkend vor Adjektiven oder Adverbien)",
+      "sense_card_ids": [
+        "1bbe26267773ad288ddd7bf7063c4437",
+        "c72278c8d304589a181632c8670fe045",
+        "ddc3188ece35cb90d78c397b9a694a83",
+        "edaf95dbbdd46375bc6a288b2e215c3f"
+      ],
+      "reason": "Vorgegeben; Grad und Folge des Gewichts statt zeigender Geste.",
+      "previous_position": 68,
+      "position": 33
+    },
+    {
+      "lang": "en",
+      "form_norm": "his",
+      "display_form": "his",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "his|his/DET|his#sein",
+      "primary_card_id": "35acb1c3ca941209ac89777d18e1d3ff",
+      "sense_key": "his#sein",
+      "meaning_de": "Possessivartikel (gehört einer männlichen Person oder einem Tier)",
+      "sense_card_ids": [
+        "153834c86686774f738102265db46d6a",
+        "35acb1c3ca941209ac89777d18e1d3ff"
+      ],
+      "reason": "Possessivbegleiter mit ausdrücklich genanntem Ali als Bezug.",
+      "previous_position": 71,
+      "position": 34
+    },
+    {
+      "lang": "en",
+      "form_norm": "they",
+      "display_form": "they",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "they|they/PRON|they#sie_plural",
+      "primary_card_id": "d11a96a1e972fd39a4856260ff42ef87",
+      "sense_key": "they#sie_plural",
+      "meaning_de": "Personalpronomen der 3. Person Plural (sie mehrere Personen oder Dinge)",
+      "sense_card_ids": [
+        "46c9da02a79e7d048a83b3d211a6ae13",
+        "81c917635ab867ec78cb06f3153464bf",
+        "d11a96a1e972fd39a4856260ff42ef87"
+      ],
+      "reason": "Vorgegeben; Nachbarn als ausdrücklicher pluralischer Bezug.",
+      "previous_position": 73,
+      "position": 35
+    },
+    {
+      "lang": "en",
+      "form_norm": "me",
+      "display_form": "me",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "me|I/PRON|i#mich",
+      "primary_card_id": "28577e1b0e1e6dc1caf03f3707531963",
+      "sense_key": "i#mich",
+      "meaning_de": "mich (Objektform von 'ich', Akkusativ)",
+      "sense_card_ids": [
+        "28577e1b0e1e6dc1caf03f3707531963",
+        "f229ba34707775f739e7420187e31409"
+      ],
+      "reason": "Direktes Objekt in einem verständlichen Anrufereignis.",
+      "previous_position": 74,
+      "position": 36
+    },
+    {
+      "lang": "en",
+      "form_norm": "if",
+      "display_form": "if",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "if|if/SCONJ|if#wenn",
+      "primary_card_id": "80e47427f4778bee7a61b98128d8cf11",
+      "sense_key": "if#wenn",
+      "meaning_de": "wenn / falls (Konditionalsatz, Bedingung)",
+      "sense_card_ids": [
+        "2e930562675e80b78e2a2630870eb808",
+        "80e47427f4778bee7a61b98128d8cf11"
+      ],
+      "reason": "Alltägliche Bedingung zwischen Regen und Regenschirm.",
+      "previous_position": 76,
+      "position": 37
+    },
+    {
+      "lang": "en",
+      "form_norm": "can",
+      "display_form": "can",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "can|can/AUX|can#koennen",
+      "primary_card_id": "bda329383a5bb29700288cf58d0ec130",
+      "sense_key": "can#koennen",
+      "meaning_de": "können",
+      "sense_card_ids": [
+        "75085ef9b5858d30d79570f2d061de62",
+        "bda329383a5bb29700288cf58d0ec130"
+      ],
+      "reason": "Vorgegeben; Fähigkeit statt Behälternomen.",
+      "previous_position": 78,
+      "position": 38
+    },
+    {
+      "lang": "en",
+      "form_norm": "will",
+      "display_form": "will",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "will|will/AUX|will#zukunft",
+      "primary_card_id": "0975234b8adb54b0b75fbc053931f220",
+      "sense_key": "will#zukunft",
+      "meaning_de": "werden (Hilfsverb zur Bildung des Futurs)",
+      "sense_card_ids": [
+        "0975234b8adb54b0b75fbc053931f220",
+        "33a39f2a2267a82eb443de0bc58dfab9",
+        "ea835754396c7315446ae4f971dcec74"
+      ],
+      "reason": "Vorgegeben; Futur mit morgen statt Testament oder Willensnomen.",
+      "previous_position": 80,
+      "position": 39
+    },
+    {
+      "lang": "en",
+      "form_norm": "just",
+      "display_form": "just",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "just|just/ADV|just#gerade_eben",
+      "primary_card_id": "43ac1032025839d42212f6418e51d054",
+      "sense_key": "just#gerade_eben",
+      "meaning_de": "gerade eben (vor sehr kurzer Zeit)",
+      "sense_card_ids": [
+        "18e76c4391e23671a4f9b94932926057",
+        "43ac1032025839d42212f6418e51d054",
+        "5b32f9e591f512e1b4891d8d070e7d9a",
+        "db6e05c60a20b5ba71b12725dde1683e"
+      ],
+      "reason": "Häufiger Zeitbezug mit abgeschlossenem Einnahmeereignis.",
+      "previous_position": 83,
+      "position": 40
+    },
+    {
+      "lang": "en",
+      "form_norm": "like",
+      "display_form": "like",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "like|like/VERB|like#moegen",
+      "primary_card_id": "7a4f6baef68966c837f421dd2fe7f7c1",
+      "sense_key": "like#moegen",
+      "meaning_de": "etwas oder jemanden gernhaben, mögen",
+      "sense_card_ids": [
+        "33b74cef0db8c7ef7547046e33f7ea4f",
+        "7a4f6baef68966c837f421dd2fe7f7c1",
+        "7e36dbaded1247f91a76a6577dfe5345"
+      ],
+      "reason": "Vorgegeben; eindeutige Vorliebe für Obst statt Füllwort.",
+      "previous_position": 85,
+      "position": 41
+    },
+    {
+      "lang": "en",
+      "form_norm": "about",
+      "display_form": "about",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "about|about/ADP|about#ueber_thema",
+      "primary_card_id": "d58c00b2644a202872ec2709b4f66037",
+      "sense_key": "about#ueber_thema",
+      "meaning_de": "über (ein Thema oder einen Gegenstand betreffend)",
+      "sense_card_ids": [
+        "4c1df047bfec531ec0211aa23731d2da",
+        "bf1813eba582ef73aef5b6e03290ba7f",
+        "d58c00b2644a202872ec2709b4f66037"
+      ],
+      "reason": "Häufiger Themenbezug mit konkret genanntem Straßenlärm.",
+      "previous_position": 87,
+      "position": 42
+    },
+    {
+      "lang": "en",
+      "form_norm": "up",
+      "display_form": "up",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "up|up/ADV|up#hinauf",
+      "primary_card_id": "26f0624cbe450fb6632f6a5c0a7ef923",
+      "sense_key": "up#hinauf",
+      "meaning_de": "hinauf / nach oben (Richtung oder höhere Position)",
+      "sense_card_ids": [
+        "1f5eb122f0235133857c3baf477062ad",
+        "26f0624cbe450fb6632f6a5c0a7ef923",
+        "c48be48a003c60019103f2056f466934"
+      ],
+      "reason": "Aufwärtsrichtung mit eindeutigem Ziel im zweiten Stock.",
+      "previous_position": 90,
+      "position": 43
+    },
+    {
+      "lang": "en",
+      "form_norm": "out",
+      "display_form": "out",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "out|out/ADV|out#hinaus",
+      "primary_card_id": "afbfe3a49f3493c1d30311e4718c872b",
+      "sense_key": "out#hinaus",
+      "meaning_de": "hinaus, heraus (Bewegung aus einem Inneren ins Freie oder nach außen)",
+      "sense_card_ids": [
+        "00534e91f74a68daa7800e19ab080a4a",
+        "94fd54807ce6dacb5935f1ddbe826d30",
+        "afbfe3a49f3493c1d30311e4718c872b",
+        "d36ee7088c486998db353b5491a469ff"
+      ],
+      "reason": "Bewegung nach draußen mit ausdrücklich genannter Straße.",
+      "previous_position": 92,
+      "position": 44
+    },
+    {
+      "lang": "en",
+      "form_norm": "what",
+      "display_form": "what",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "what|what/PRON|what#fragepronomen",
+      "primary_card_id": "499a64eb17b00e0e8ffc6734a1e36f97",
+      "sense_key": "what#fragepronomen",
+      "meaning_de": "was (Fragepronomen nach Dingen oder Sachverhalten)",
+      "sense_card_ids": [
+        "2236db23c86b78a168a3336b148a5d9c",
+        "292baf49d23cb977fd63f94ece2b14be",
+        "499a64eb17b00e0e8ffc6734a1e36f97"
+      ],
+      "reason": "Grundlegende Frage nach dem Inhalt einer Suppe.",
+      "previous_position": 94,
+      "position": 45
+    },
+    {
+      "lang": "en",
+      "form_norm": "has",
+      "display_form": "has",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "has|have/VERB|have#besitzen",
+      "primary_card_id": "4f5d76efc46e3557f443fdcd3f997cb5",
+      "sense_key": "have#besitzen",
+      "meaning_de": "besitzen oder über etwas verfügen (Vollverb)",
+      "sense_card_ids": [
+        "4f5d76efc46e3557f443fdcd3f997cb5",
+        "d2d6c0806ac64de6b2db7fbed8412bfc",
+        "d99d0636c8fdc0f1df7d94564e4ab79d"
+      ],
+      "reason": "Grundlegendes Vollverb in einer verständlichen Familienbeschreibung.",
+      "previous_position": 98,
+      "position": 46
+    },
+    {
+      "lang": "en",
+      "form_norm": "when",
+      "display_form": "when",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "when|when/ADV|when#wann",
+      "primary_card_id": "f9f9ee81d9802076659b63ef13726e75",
+      "sense_key": "when#wann",
+      "meaning_de": "wann (fragend, zu welcher Zeit)",
+      "sense_card_ids": [
+        "8df220108d8c1d699f14b61d0a6eb5c9",
+        "8e628d3753c8c142f8b88dedc7f91632",
+        "f9f9ee81d9802076659b63ef13726e75"
+      ],
+      "reason": "Direkte alltagstaugliche Frage nach dem Besuchszeitpunkt.",
+      "previous_position": 101,
+      "position": 47
+    },
+    {
+      "lang": "en",
+      "form_norm": "more",
+      "display_form": "more",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "more|much/DET|much#mehr_menge",
+      "primary_card_id": "e92e5f088bd147507dc178c261650e35",
+      "sense_key": "much#mehr_menge",
+      "meaning_de": "mehr (eine größere Menge oder Anzahl von etwas vor einem Nomen)",
+      "sense_card_ids": [
+        "259a4eac6c79aa8f7c6898593c751e6b",
+        "534385721917e53a0b21cee3542e6cd6",
+        "b400baead5b6fcff0ddff4c16a5e6bc7",
+        "e92e5f088bd147507dc178c261650e35"
+      ],
+      "reason": "Zusätzlicher Bedarf an Handtüchern ohne ausgelassenen Vergleich.",
+      "previous_position": 103,
+      "position": 48
+    },
+    {
+      "lang": "en",
+      "form_norm": "do",
+      "display_form": "do",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "do|do/VERB|do#tun",
+      "primary_card_id": "fcfbb872406704d91f8cf88e4f60da63",
+      "sense_key": "do#tun",
+      "meaning_de": "tun",
+      "sense_card_ids": [
+        "8d98ffbfa53704bb42aa2814031356ed",
+        "bbd263002dd3d596f5c19a7d8768835a",
+        "fcfbb872406704d91f8cf88e4f60da63"
+      ],
+      "reason": "Konkrete Alltagstätigkeit in der gebräuchlichen Verbindung do the laundry.",
+      "previous_position": 157,
+      "position": 49
+    },
+    {
+      "lang": "en",
+      "form_norm": "no",
+      "display_form": "no",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "no|no/DET|no#kein",
+      "primary_card_id": "f9fc8c6df5a49637df8cfc55888da359",
+      "sense_key": "no#kein",
+      "meaning_de": "kein (Verneinung vor Nomen)",
+      "sense_card_ids": [
+        "019d1a5e69a6ea9afc5d153bb5e50736",
+        "89d126410ae4ceb608536ace5ae709c0",
+        "f7ff9987917c9d1e783df08455054b09",
+        "f9fc8c6df5a49637df8cfc55888da359"
+      ],
+      "reason": "Häufiger verneinender Begleiter mit vollständiger Haustieraussage.",
+      "previous_position": 108,
+      "position": 50
+    },
+    {
+      "lang": "en",
+      "form_norm": "were",
+      "display_form": "were",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "were|be/AUX|be#sein_vergangenheit",
+      "primary_card_id": "dabd113fd63358fa631c89efb2cfeb7a",
+      "sense_key": "be#sein_vergangenheit",
+      "meaning_de": "waren / warst / wart (Vergangenheit von 'be' im Plural sowie bei 'you')",
+      "sense_card_ids": [
+        "a6b2fa00c9aef1ec4c482ba3e9d75579",
+        "dabd113fd63358fa631c89efb2cfeb7a"
+      ],
+      "reason": "Indikativ-Vergangenheit mit Zeit und Ort statt Hypothese.",
+      "previous_position": 109,
+      "position": 51
+    },
+    {
+      "lang": "en",
+      "form_norm": "who",
+      "display_form": "who",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "who|who/PRON|who#wer",
+      "primary_card_id": "a67d47108f2a5ac28dc64f4cf080d61f",
+      "sense_key": "who#wer",
+      "meaning_de": "wer (fragend, als Interrogativpronomen)",
+      "sense_card_ids": [
+        "83020f91b57f125390bf03bf9dbc17bb",
+        "a67d47108f2a5ac28dc64f4cf080d61f"
+      ],
+      "reason": "Grundlegende Personenfrage mit einem konkreten Briefereignis.",
+      "previous_position": 111,
+      "position": 52
+    },
+    {
+      "lang": "en",
+      "form_norm": "had",
+      "display_form": "had",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "had|have/VERB|have#besitzen_past",
+      "primary_card_id": "7a2bafad613452c13366087c6d1315f5",
+      "sense_key": "have#besitzen_past",
+      "meaning_de": "besitzen oder innehaben (einfache Vergangenheit)",
+      "sense_card_ids": [
+        "2bbd48103816b9d1771acb05fa693f3e",
+        "7a2bafad613452c13366087c6d1315f5",
+        "d87a14116c99e04dd033785d502eebd8"
+      ],
+      "reason": "Einfache Vergangenheit mit klarer Zeitangabe yesterday evening.",
+      "previous_position": 114,
+      "position": 53
+    },
+    {
+      "lang": "en",
+      "form_norm": "their",
+      "display_form": "their",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "their|they/PRON|they#ihr_plural",
+      "primary_card_id": "e17ed33172304ec8ec44adfca7f80947",
+      "sense_key": "they#ihr_plural",
+      "meaning_de": "ihr (Possessivpronomen der 3. Person Plural: bezogen auf mehrere Personen oder Dinge)",
+      "sense_card_ids": [
+        "e17ed33172304ec8ec44adfca7f80947"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 115,
+      "position": 54
+    },
+    {
+      "lang": "en",
+      "form_norm": "there",
+      "display_form": "there",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "there|there/PRON|there#es_gibt",
+      "primary_card_id": "eb31f9fe23ecc73e4850e06461ba01a8",
+      "sense_key": "there#es_gibt",
+      "meaning_de": "als grammatisches Scheinsubjekt in Existenzsätzen (there is / there are)",
+      "sense_card_ids": [
+        "ceed2ed4df97f5689d92ddb82719b645",
+        "eb31f9fe23ecc73e4850e06461ba01a8"
+      ],
+      "reason": "Häufige Existenzkonstruktion mit konkret beschriebenem Küchentisch.",
+      "previous_position": 116,
+      "position": 55
+    },
+    {
+      "lang": "en",
+      "form_norm": "her",
+      "display_form": "her",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "her|her/DET|her#ihr_possessiv",
+      "primary_card_id": "c6f0a7e222aa7477f368428545fc5b4d",
+      "sense_key": "her#ihr_possessiv",
+      "meaning_de": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)",
+      "sense_card_ids": [
+        "1336c2f652a878f302c378155e15808f",
+        "16d113647535e83cf50caeb7ee78add8",
+        "c6f0a7e222aa7477f368428545fc5b4d"
+      ],
+      "reason": "Possessivbegleiter mit im Satz genannter Besitzerin.",
+      "previous_position": 118,
+      "position": 56
+    },
+    {
+      "lang": "en",
+      "form_norm": "which",
+      "display_form": "which",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "which|which/DET|which#determiner_auswahl",
+      "primary_card_id": "724b9485f87a31b2f761596f955bb2c4",
+      "sense_key": "which#determiner_auswahl",
+      "meaning_de": "fragendes Begleitwort vor einem Nomen",
+      "sense_card_ids": [
+        "296f5226aa22b9413dc9a9eb7ea6f965",
+        "724b9485f87a31b2f761596f955bb2c4",
+        "8e44001fec1252687d385cd50302f84f"
+      ],
+      "reason": "Eindeutige Auswahlfrage vor dem Nomen bench.",
+      "previous_position": 123,
+      "position": 57
+    },
+    {
+      "lang": "en",
+      "form_norm": "time",
+      "display_form": "time",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "time|time/NOUN|time#zeit",
+      "primary_card_id": "ddb15383296fd24e973ea11e4e5eb00f",
+      "sense_key": "time#zeit",
+      "meaning_de": "Zeit (fortlaufende Dauer, Zeitpunkt oder Uhrzeit)",
+      "sense_card_ids": [
+        "5bd8850ae21030b9f0ae148716c05ccf",
+        "5fc08cf0bd0cda15762dcb744d3c78bb",
+        "796548b81132625f5cff11fd9312f523",
+        "ddb15383296fd24e973ea11e4e5eb00f"
+      ],
+      "reason": "Vorgegeben; alltäglicher Zeitbedarf statt Verb oder Anlasszählung.",
+      "previous_position": 124,
+      "position": 58
+    },
+    {
+      "lang": "en",
+      "form_norm": "get",
+      "display_form": "get",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "get|get/VERB|get#bekommen",
+      "primary_card_id": "31a9cf838af1e911d0b8ba3ce67bd87a",
+      "sense_key": "get#bekommen",
+      "meaning_de": "bekommen, erhalten oder besorgen",
+      "sense_card_ids": [
+        "2fe253fe9595589a8cc728967b8a1059",
+        "31a9cf838af1e911d0b8ba3ce67bd87a",
+        "c1349169486dce2aa137a5407fb0bad1",
+        "ebe7bdfd2aac401e6752b7dbe4e802f7"
+      ],
+      "reason": "Erhalt eines Briefes macht die Grundverwendung deutlich.",
+      "previous_position": 126,
+      "position": 59
+    },
+    {
+      "lang": "en",
+      "form_norm": "been",
+      "display_form": "been",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "been|be/AUX|be#gewesen",
+      "primary_card_id": "a22aaf6961c8ecb13c0316c07e6be64e",
+      "sense_key": "be#gewesen",
+      "meaning_de": "gewesen (Hilfsverb oder Kopulaverb im Perfekt/Plusquamperfekt)",
+      "sense_card_ids": [
+        "9571634153cd34d44b188319e007d49b",
+        "a22aaf6961c8ecb13c0316c07e6be64e"
+      ],
+      "reason": "Gebräuchliche Perfektform mit ausdrücklich genanntem Zustand.",
+      "previous_position": 128,
+      "position": 60
+    },
+    {
+      "lang": "en",
+      "form_norm": "old",
+      "display_form": "old",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "old|old/ADJ|old#alt",
+      "primary_card_id": "0b22b7e132d111536d3516884f74ab19",
+      "sense_key": "old#alt",
+      "meaning_de": "Schon viele Lebensjahre alt",
+      "sense_card_ids": [
+        "0b22b7e132d111536d3516884f74ab19"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 129,
+      "position": 61
+    },
+    {
+      "lang": "en",
+      "form_norm": "money",
+      "display_form": "money",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "money|money/NOUN|money#geld",
+      "primary_card_id": "3c71a38fcd6ec62bb32d220c75ff93f3",
+      "sense_key": "money#geld",
+      "meaning_de": "Zahlungsmittel für Einkäufe",
+      "sense_card_ids": [
+        "3c71a38fcd6ec62bb32d220c75ff93f3"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 136,
+      "position": 62
+    },
+    {
+      "lang": "en",
+      "form_norm": "full",
+      "display_form": "full",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "full|full/ADJ|full#vollen",
+      "primary_card_id": "61ec48794256dc40ace9d3afda5f4eb4",
+      "sense_key": "full#vollen",
+      "meaning_de": "Bis zur verfügbaren Kapazität gefüllt",
+      "sense_card_ids": [
+        "61ec48794256dc40ace9d3afda5f4eb4"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 166,
+      "position": 63
+    },
+    {
+      "lang": "en",
+      "form_norm": "read",
+      "display_form": "read",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "read|read/VERB|read#lesen",
+      "primary_card_id": "fa82bc4e41ba46a0a1187a6b519c2235",
+      "sense_key": "read#lesen",
+      "meaning_de": "Geschriebene Wörter erfassen",
+      "sense_card_ids": [
+        "fa82bc4e41ba46a0a1187a6b519c2235"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 168,
+      "position": 64
+    },
+    {
+      "lang": "en",
+      "form_norm": "hard",
+      "display_form": "hard",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "hard|hard/ADJ|hard#hart",
+      "primary_card_id": "678c782d556383c3a35e851b93a548c0",
+      "sense_key": "hard#hart",
+      "meaning_de": "Bei Druck kaum nachgebend",
+      "sense_card_ids": [
+        "678c782d556383c3a35e851b93a548c0"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 169,
+      "position": 65
+    },
+    {
+      "lang": "en",
+      "form_norm": "head",
+      "display_form": "head",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "head|head/NOUN|head#kopf",
+      "primary_card_id": "bdf9a1aa29a3ccd1959fbc96871c0761",
+      "sense_key": "head#kopf",
+      "meaning_de": "Oberster Körperteil mit Gesicht und Gehirn",
+      "sense_card_ids": [
+        "bdf9a1aa29a3ccd1959fbc96871c0761"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 170,
+      "position": 66
+    },
+    {
+      "lang": "en",
+      "form_norm": "open",
+      "display_form": "open",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "open|open/VERB|open#oeffnete",
+      "primary_card_id": "9a1a28a337cefdbf11bceb185b271668",
+      "sense_key": "open#oeffnete",
+      "meaning_de": "Etwas bisher Geschlossenes zugänglich machen",
+      "sense_card_ids": [
+        "9a1a28a337cefdbf11bceb185b271668"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 171,
+      "position": 67
+    },
+    {
+      "lang": "en",
+      "form_norm": "car",
+      "display_form": "car",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "car|car/NOUN|car#auto",
+      "primary_card_id": "66a5bca32470bdc87ddd6e16532db817",
+      "sense_key": "car#auto",
+      "meaning_de": "Auto",
+      "sense_card_ids": [
+        "66a5bca32470bdc87ddd6e16532db817"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 172,
+      "position": 68
+    },
+    {
+      "lang": "en",
+      "form_norm": "young",
+      "display_form": "young",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "young|young/ADJ|young#jung",
+      "primary_card_id": "692abd8adb6a6c591b20e32a6b3e3e53",
+      "sense_key": "young#jung",
+      "meaning_de": "Erst wenige Lebensjahre alt",
+      "sense_card_ids": [
+        "692abd8adb6a6c591b20e32a6b3e3e53"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 173,
+      "position": 69
+    },
+    {
+      "lang": "en",
+      "form_norm": "hand",
+      "display_form": "hand",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "hand|hand/NOUN|hand#hand",
+      "primary_card_id": "cd767d1d713076842de381082551c9c8",
+      "sense_key": "hand#hand",
+      "meaning_de": "Hand",
+      "sense_card_ids": [
+        "cd767d1d713076842de381082551c9c8"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 174,
+      "position": 70
+    },
+    {
+      "lang": "en",
+      "form_norm": "office",
+      "display_form": "office",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "office|office/NOUN|office#buero",
+      "primary_card_id": "f9dcf6497687431647832b5f7e04247b",
+      "sense_key": "office#buero",
+      "meaning_de": "Raum für Schreibtischarbeit",
+      "sense_card_ids": [
+        "f9dcf6497687431647832b5f7e04247b"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 175,
+      "position": 71
+    },
+    {
+      "lang": "en",
+      "form_norm": "pay",
+      "display_form": "pay",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "pay|pay/VERB|pay#bezahlt",
+      "primary_card_id": "3a4febb432d220f62c6f1d4891e0a3ea",
+      "sense_key": "pay#bezahlt",
+      "meaning_de": "Geld für eine Ware oder Leistung geben",
+      "sense_card_ids": [
+        "3a4febb432d220f62c6f1d4891e0a3ea"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 176,
+      "position": 72
+    },
+    {
+      "lang": "en",
+      "form_norm": "close",
+      "display_form": "close",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "close|close/VERB|close#schliessen",
+      "primary_card_id": "205f0f1f0f700fc4677f3d5a118d63b1",
+      "sense_key": "close#schliessen",
+      "meaning_de": "Etwas Offenes zumachen",
+      "sense_card_ids": [
+        "205f0f1f0f700fc4677f3d5a118d63b1"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 177,
+      "position": 73
+    },
+    {
+      "lang": "en",
+      "form_norm": "wait",
+      "display_form": "wait",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "wait|wait/VERB|wait#warten",
+      "primary_card_id": "47eed138e4bf09bff6135f5b3993dd1a",
+      "sense_key": "wait#warten",
+      "meaning_de": "Bis zu einem erwarteten Ereignis bleiben",
+      "sense_card_ids": [
+        "47eed138e4bf09bff6135f5b3993dd1a"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 178,
+      "position": 74
+    },
+    {
+      "lang": "en",
+      "form_norm": "buy",
+      "display_form": "buy",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "buy|buy/VERB|buy#kaufen",
+      "primary_card_id": "211695c38c0a5270b39247c2486e0cfe",
+      "sense_key": "buy#kaufen",
+      "meaning_de": "Eine Ware gegen Geld erwerben",
+      "sense_card_ids": [
+        "211695c38c0a5270b39247c2486e0cfe"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 179,
+      "position": 75
+    },
+    {
+      "lang": "en",
+      "form_norm": "phone",
+      "display_form": "phone",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "phone|phone/NOUN|phone#telefon",
+      "primary_card_id": "12c292f705a3be680124ab5662656a77",
+      "sense_key": "phone#telefon",
+      "meaning_de": "Gerät zum Telefonieren",
+      "sense_card_ids": [
+        "12c292f705a3be680124ab5662656a77"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 180,
+      "position": 76
+    },
+    {
+      "lang": "en",
+      "form_norm": "ready",
+      "display_form": "ready",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "ready|ready/ADJ|ready#bereit",
+      "primary_card_id": "8bc52012a2d0ee4eaf469e64b0cd3fcc",
+      "sense_key": "ready#bereit",
+      "meaning_de": "Für eine anstehende Handlung vorbereitet",
+      "sense_card_ids": [
+        "8bc52012a2d0ee4eaf469e64b0cd3fcc"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 181,
+      "position": 77
+    },
+    {
+      "lang": "en",
+      "form_norm": "bring",
+      "display_form": "bring",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "bring|bring/VERB|bring#bringt",
+      "primary_card_id": "badadda5072db0c453a6aee6545a012f",
+      "sense_key": "bring#bringt",
+      "meaning_de": "Etwas zu einer Person oder an einen Ort tragen",
+      "sense_card_ids": [
+        "badadda5072db0c453a6aee6545a012f"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 182,
+      "position": 78
+    },
+    {
+      "lang": "en",
+      "form_norm": "cut",
+      "display_form": "cut",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "cut|cut/VERB|cut#schneidet",
+      "primary_card_id": "e613a6a71f931236cb6157e48dda7b52",
+      "sense_key": "cut#schneidet",
+      "meaning_de": "etwas mit einer scharfen Klinge teilen oder einschneiden",
+      "sense_card_ids": [
+        "e613a6a71f931236cb6157e48dda7b52"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 183,
+      "position": 79
+    },
+    {
+      "lang": "en",
+      "form_norm": "road",
+      "display_form": "road",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "road|road/NOUN|road#strasse",
+      "primary_card_id": "4a30a152f12d45bcfbf798afcb11101c",
+      "sense_key": "road#strasse",
+      "meaning_de": "Befestigter Verkehrsweg für Fahrzeuge",
+      "sense_card_ids": [
+        "4a30a152f12d45bcfbf798afcb11101c"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 184,
+      "position": 80
+    },
+    {
+      "lang": "en",
+      "form_norm": "price",
+      "display_form": "price",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "price|price/NOUN|price#preis",
+      "primary_card_id": "2a6cbbf117832ec50f13b880ce16f902",
+      "sense_key": "price#preis",
+      "meaning_de": "Geldbetrag, den eine Ware kostet",
+      "sense_card_ids": [
+        "2a6cbbf117832ec50f13b880ce16f902"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 185,
+      "position": 81
+    },
+    {
+      "lang": "en",
+      "form_norm": "strong",
+      "display_form": "strong",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "strong|strong/ADJ|strong#stark",
+      "primary_card_id": "067512cff1d073634236792dd096a597",
+      "sense_key": "strong#stark",
+      "meaning_de": "Viel körperliche Kraft besitzend",
+      "sense_card_ids": [
+        "067512cff1d073634236792dd096a597"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 186,
+      "position": 82
+    },
+    {
+      "lang": "en",
+      "form_norm": "meeting",
+      "display_form": "meeting",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "meeting|meeting/NOUN|meeting#besprechung",
+      "primary_card_id": "5420125806d3b55a44b32bfabcc971da",
+      "sense_key": "meeting#besprechung",
+      "meaning_de": "Besprechung",
+      "sense_card_ids": [
+        "5420125806d3b55a44b32bfabcc971da"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 187,
+      "position": 83
+    },
+    {
+      "lang": "en",
+      "form_norm": "stand",
+      "display_form": "stand",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "stand|stand/VERB|stand#stehen",
+      "primary_card_id": "b71527ecca7221880ba43d13d442def0",
+      "sense_key": "stand#stehen",
+      "meaning_de": "Mit aufrechtem Körper auf den Füßen sein",
+      "sense_card_ids": [
+        "b71527ecca7221880ba43d13d442def0"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 188,
+      "position": 84
+    },
+    {
+      "lang": "en",
+      "form_norm": "drive",
+      "display_form": "drive",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "drive|drive/VERB|drive#faehrt",
+      "primary_card_id": "ab787b789606405ab7b32d81c872ceba",
+      "sense_key": "drive#faehrt",
+      "meaning_de": "ein Fahrzeug steuern; jemanden mit einem Fahrzeug befördern",
+      "sense_card_ids": [
+        "ab787b789606405ab7b32d81c872ceba"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 189,
+      "position": 85
+    },
+    {
+      "lang": "en",
+      "form_norm": "eat",
+      "display_form": "eat",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "eat|eat/VERB|eat#essen",
+      "primary_card_id": "019d512cd5c76a816b21ddca06c1ed29",
+      "sense_key": "eat#essen",
+      "meaning_de": "Nahrung zu sich nehmen",
+      "sense_card_ids": [
+        "019d512cd5c76a816b21ddca06c1ed29"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 190,
+      "position": 86
+    },
+    {
+      "lang": "en",
+      "form_norm": "key",
+      "display_form": "key",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "key|key/NOUN|key#schluessel",
+      "primary_card_id": "370a358b45692dcb4810c3066bad9a1b",
+      "sense_key": "key#schluessel",
+      "meaning_de": "Gegenstand zum Öffnen eines Schlosses",
+      "sense_card_ids": [
+        "370a358b45692dcb4810c3066bad9a1b"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 191,
+      "position": 87
+    },
+    {
+      "lang": "en",
+      "form_norm": "cup",
+      "display_form": "cup",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "cup|cup/NOUN|cup#tasse",
+      "primary_card_id": "89cfa341419a35011a272d57fa5d27ed",
+      "sense_key": "cup#tasse",
+      "meaning_de": "Trinkgefäß mit Henkel",
+      "sense_card_ids": [
+        "89cfa341419a35011a272d57fa5d27ed"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 192,
+      "position": 88
+    },
+    {
+      "lang": "en",
+      "form_norm": "send",
+      "display_form": "send",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "send|send/VERB|send#schicken",
+      "primary_card_id": "8e33bb3900e1cdba8463b770b9a78b77",
+      "sense_key": "send#schicken",
+      "meaning_de": "Eine Nachricht an einen Empfänger übermitteln",
+      "sense_card_ids": [
+        "8e33bb3900e1cdba8463b770b9a78b77"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 193,
+      "position": 89
+    },
+    {
+      "lang": "en",
+      "form_norm": "walk",
+      "display_form": "walk",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "walk|walk/VERB|walk#geht-zu-fuss",
+      "primary_card_id": "6b2c46748fa80622ecc9ae31fe160077",
+      "sense_key": "walk#geht-zu-fuss",
+      "meaning_de": "Sich gehend fortbewegen",
+      "sense_card_ids": [
+        "6b2c46748fa80622ecc9ae31fe160077"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 194,
+      "position": 90
+    },
+    {
+      "lang": "en",
+      "form_norm": "bed",
+      "display_form": "bed",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "bed|bed/NOUN|bed#bett",
+      "primary_card_id": "4e59cd605e05b2aad64a5b565e42ce29",
+      "sense_key": "bed#bett",
+      "meaning_de": "Bett",
+      "sense_card_ids": [
+        "4e59cd605e05b2aad64a5b565e42ce29"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 195,
+      "position": 91
+    },
+    {
+      "lang": "en",
+      "form_norm": "paper",
+      "display_form": "paper",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "paper|paper/NOUN|paper#papier",
+      "primary_card_id": "387125b38847ee46a3f5359fb9300b15",
+      "sense_key": "paper#papier",
+      "meaning_de": "Dünnes Material zum Schreiben oder Drucken",
+      "sense_card_ids": [
+        "387125b38847ee46a3f5359fb9300b15"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 196,
+      "position": 92
+    },
+    {
+      "lang": "en",
+      "form_norm": "safe",
+      "display_form": "safe",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "safe|safe/ADJ|safe#sicher",
+      "primary_card_id": "eea254cdc9526712ece4523500018555",
+      "sense_key": "safe#sicher",
+      "meaning_de": "Keiner konkreten Gefahr ausgesetzt",
+      "sense_card_ids": [
+        "eea254cdc9526712ece4523500018555"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 197,
+      "position": 93
+    },
+    {
+      "lang": "en",
+      "form_norm": "listen",
+      "display_form": "listen",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "listen|listen/VERB|listen#zuhoert",
+      "primary_card_id": "b578e32d44f29c98795165671a60a32a",
+      "sense_key": "listen#zuhoert",
+      "meaning_de": "Aufmerksam auf gehörte Sprache oder Geräusche achten",
+      "sense_card_ids": [
+        "b578e32d44f29c98795165671a60a32a"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 198,
+      "position": 94
+    },
+    {
+      "lang": "en",
+      "form_norm": "sleep",
+      "display_form": "sleep",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "sleep|sleep/VERB|sleep#schlafen",
+      "primary_card_id": "9fdfb975a144f6c9dca10aed52e2485b",
+      "sense_key": "sleep#schlafen",
+      "meaning_de": "schlafen",
+      "sense_card_ids": [
+        "9fdfb975a144f6c9dca10aed52e2485b"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 199,
+      "position": 95
+    },
+    {
+      "lang": "en",
+      "form_norm": "table",
+      "display_form": "table",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "table|table/NOUN|table#tisch",
+      "primary_card_id": "253982ff9b64b28ab49f9ef47e56b2ff",
+      "sense_key": "table#tisch",
+      "meaning_de": "Möbel mit waagerechter Platte zum Essen oder Arbeiten",
+      "sense_card_ids": [
+        "253982ff9b64b28ab49f9ef47e56b2ff"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 200,
+      "position": 96
+    },
+    {
+      "lang": "en",
+      "form_norm": "box",
+      "display_form": "box",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "box|box/NOUN|box#schachtel",
+      "primary_card_id": "b546d31ecafb2804b3de1c5ec13517f8",
+      "sense_key": "box#schachtel",
+      "meaning_de": "Fester Behälter zum Aufbewahren von Dingen",
+      "sense_card_ids": [
+        "b546d31ecafb2804b3de1c5ec13517f8"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 201,
+      "position": 97
+    },
+    {
+      "lang": "en",
+      "form_norm": "write",
+      "display_form": "write",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "write|write/VERB|write#schreiben",
+      "primary_card_id": "32f136da7304bb82f793eeb8fdb48fd4",
+      "sense_key": "write#schreiben",
+      "meaning_de": "Wörter schriftlich festhalten",
+      "sense_card_ids": [
+        "32f136da7304bb82f793eeb8fdb48fd4"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 202,
+      "position": 98
+    },
+    {
+      "lang": "en",
+      "form_norm": "eye",
+      "display_form": "eye",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "eye|eye/NOUN|eye#auge",
+      "primary_card_id": "d1bfa0fe377b0a7a99df52b21e3ef00b",
+      "sense_key": "eye#auge",
+      "meaning_de": "Sinnesorgan zum Sehen",
+      "sense_card_ids": [
+        "d1bfa0fe377b0a7a99df52b21e3ef00b"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 203,
+      "position": 99
+    },
+    {
+      "lang": "en",
+      "form_norm": "station",
+      "display_form": "station",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "station|station/NOUN|station#bahnhof",
+      "primary_card_id": "f44ab874cc11564009cc1a2f754ae7a3",
+      "sense_key": "station#bahnhof",
+      "meaning_de": "Bahnhof",
+      "sense_card_ids": [
+        "f44ab874cc11564009cc1a2f754ae7a3"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 204,
+      "position": 100
+    },
+    {
+      "lang": "en",
+      "form_norm": "sell",
+      "display_form": "sell",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "sell|sell/VERB|sell#verkaufen",
+      "primary_card_id": "736332b406fe61711b20b567c18066f7",
+      "sense_key": "sell#verkaufen",
+      "meaning_de": "Eine Ware gegen Geld abgeben",
+      "sense_card_ids": [
+        "736332b406fe61711b20b567c18066f7"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 205,
+      "position": 101
+    },
+    {
+      "lang": "en",
+      "form_norm": "clean",
+      "display_form": "clean",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "clean|clean/VERB|clean#putzen",
+      "primary_card_id": "e4d7721061e4264e2dde33947b5b9d01",
+      "sense_key": "clean#putzen",
+      "meaning_de": "putzen",
+      "sense_card_ids": [
+        "e4d7721061e4264e2dde33947b5b9d01"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 206,
+      "position": 102
+    },
+    {
+      "lang": "en",
+      "form_norm": "computer",
+      "display_form": "computer",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "computer|computer/NOUN|computer#computer",
+      "primary_card_id": "9f7e09b6c7a04b306115db9d439e33af",
+      "sense_key": "computer#computer",
+      "meaning_de": "Computer",
+      "sense_card_ids": [
+        "9f7e09b6c7a04b306115db9d439e33af"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 207,
+      "position": 103
+    },
+    {
+      "lang": "en",
+      "form_norm": "heavy",
+      "display_form": "heavy",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "heavy|heavy/ADJ|heavy#schwer",
+      "primary_card_id": "e460f9ece1ea19fb736f42f25be70df8",
+      "sense_key": "heavy#schwer",
+      "meaning_de": "Ein hohes Gewicht habend",
+      "sense_card_ids": [
+        "e460f9ece1ea19fb736f42f25be70df8"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 208,
+      "position": 104
+    },
+    {
+      "lang": "en",
+      "form_norm": "train",
+      "display_form": "train",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "train|train/NOUN|train#zug",
+      "primary_card_id": "d0a8d9bc00ccffed5f69d58553dbba65",
+      "sense_key": "train#zug",
+      "meaning_de": "Zug",
+      "sense_card_ids": [
+        "d0a8d9bc00ccffed5f69d58553dbba65"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 209,
+      "position": 105
+    },
+    {
+      "lang": "en",
+      "form_norm": "letter",
+      "display_form": "letter",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "letter|letter/NOUN|letter#brief",
+      "primary_card_id": "6ad91923af7eae4a68118fe6476b72fa",
+      "sense_key": "letter#brief",
+      "meaning_de": "Schriftliche Nachricht, die man an jemanden schickt; kein Buchstabe",
+      "sense_card_ids": [
+        "6ad91923af7eae4a68118fe6476b72fa"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 210,
+      "position": 106
+    },
+    {
+      "lang": "en",
+      "form_norm": "choose",
+      "display_form": "choose",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "choose|choose/VERB|choose#waehlt-aus",
+      "primary_card_id": "45e5fac61f28be5ea8055b1ea3b1fc4a",
+      "sense_key": "choose#waehlt-aus",
+      "meaning_de": "Sich zwischen mehreren Möglichkeiten entscheiden",
+      "sense_card_ids": [
+        "45e5fac61f28be5ea8055b1ea3b1fc4a"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 211,
+      "position": 107
+    },
+    {
+      "lang": "en",
+      "form_norm": "skin",
+      "display_form": "skin",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "skin|skin/NOUN|skin#haut",
+      "primary_card_id": "83c4f79765c71b622fe3fc2aaaf8fa24",
+      "sense_key": "skin#haut",
+      "meaning_de": "Äußere schützende Schicht des Körpers",
+      "sense_card_ids": [
+        "83c4f79765c71b622fe3fc2aaaf8fa24"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 212,
+      "position": 108
+    },
+    {
+      "lang": "en",
+      "form_norm": "drink",
+      "display_form": "drink",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "drink|drink/VERB|drink#trinkt",
+      "primary_card_id": "a584ea54dc4f089c70f5958e6670f123",
+      "sense_key": "drink#trinkt",
+      "meaning_de": "Flüssigkeit zu sich nehmen",
+      "sense_card_ids": [
+        "a584ea54dc4f089c70f5958e6670f123"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 213,
+      "position": 109
+    },
+    {
+      "lang": "en",
+      "form_norm": "sit",
+      "display_form": "sit",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "sit|sit/VERB|sit#sitzen",
+      "primary_card_id": "e40df1c1a5c0e85f3f57310a0403f23c",
+      "sense_key": "sit#sitzen",
+      "meaning_de": "Auf einem Sitz mit abgestütztem Gesäß ruhen",
+      "sense_card_ids": [
+        "e40df1c1a5c0e85f3f57310a0403f23c"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 214,
+      "position": 110
+    },
+    {
+      "lang": "en",
+      "form_norm": "carry",
+      "display_form": "carry",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "carry|carry/VERB|carry#tragen",
+      "primary_card_id": "d966e92a8730c27fcd5ab097004d509e",
+      "sense_key": "carry#tragen",
+      "meaning_de": "tragen",
+      "sense_card_ids": [
+        "d966e92a8730c27fcd5ab097004d509e"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 215,
+      "position": 111
+    },
+    {
+      "lang": "en",
+      "form_norm": "shop",
+      "display_form": "shop",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "shop|shop/NOUN|shop#geschaeft",
+      "primary_card_id": "26466689d7e586f0c51b0f6e680077e0",
+      "sense_key": "shop#geschaeft",
+      "meaning_de": "Ort, an dem Waren verkauft werden",
+      "sense_card_ids": [
+        "26466689d7e586f0c51b0f6e680077e0"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 216,
+      "position": 112
+    },
+    {
+      "lang": "en",
+      "form_norm": "foot",
+      "display_form": "foot",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "foot|foot/NOUN|foot#fuss",
+      "primary_card_id": "6598d23c3554d5e103e37e9dbf76c260",
+      "sense_key": "foot#fuss",
+      "meaning_de": "Fuß",
+      "sense_card_ids": [
+        "6598d23c3554d5e103e37e9dbf76c260"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 217,
+      "position": 113
+    },
+    {
+      "lang": "en",
+      "form_norm": "bus",
+      "display_form": "bus",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "bus|bus/NOUN|bus#bus",
+      "primary_card_id": "6622d48746ef8346cf9dc8c89e2ec925",
+      "sense_key": "bus#bus",
+      "meaning_de": "Bus",
+      "sense_card_ids": [
+        "6622d48746ef8346cf9dc8c89e2ec925"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 218,
+      "position": 114
+    },
+    {
+      "lang": "en",
+      "form_norm": "window",
+      "display_form": "window",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "window|window/NOUN|window#fenster",
+      "primary_card_id": "d1937efcda74ffee6e336acfc7f92980",
+      "sense_key": "window#fenster",
+      "meaning_de": "Fenster",
+      "sense_card_ids": [
+        "d1937efcda74ffee6e336acfc7f92980"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 219,
+      "position": 115
+    },
+    {
+      "lang": "en",
+      "form_norm": "bag",
+      "display_form": "bag",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "bag|bag/NOUN|bag#tasche",
+      "primary_card_id": "a437af62734f8b043f46262218b688e3",
+      "sense_key": "bag#tasche",
+      "meaning_de": "Tasche",
+      "sense_card_ids": [
+        "a437af62734f8b043f46262218b688e3"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 220,
+      "position": 116
+    },
+    {
+      "lang": "en",
+      "form_norm": "bridge",
+      "display_form": "bridge",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "bridge|bridge/NOUN|bridge#brucke",
+      "primary_card_id": "d6dc9bc537245af0f84f65f06cdd896e",
+      "sense_key": "bridge#brucke",
+      "meaning_de": "Bauwerk, das einen Weg über ein Hindernis führt",
+      "sense_card_ids": [
+        "d6dc9bc537245af0f84f65f06cdd896e"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 221,
+      "position": 117
+    },
+    {
+      "lang": "en",
+      "form_norm": "apple",
+      "display_form": "apple",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "apple|apple/NOUN|apple#aepfel",
+      "primary_card_id": "c00e3410e81e5d7d88d32d85bfc87a0c",
+      "sense_key": "apple#aepfel",
+      "meaning_de": "Runde essbare Frucht des Apfelbaums",
+      "sense_card_ids": [
+        "c00e3410e81e5d7d88d32d85bfc87a0c"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 222,
+      "position": 118
+    },
+    {
+      "lang": "en",
+      "form_norm": "map",
+      "display_form": "map",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "map|map/NOUN|map#karte",
+      "primary_card_id": "3e847869ac637857148cf0b3cb4ef7de",
+      "sense_key": "map#karte",
+      "meaning_de": "Zeichnung zur Orientierung in einem Gebiet",
+      "sense_card_ids": [
+        "3e847869ac637857148cf0b3cb4ef7de"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 223,
+      "position": 119
+    },
+    {
+      "lang": "en",
+      "form_norm": "dry",
+      "display_form": "dry",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "dry|dry/ADJ|dry#trocken",
+      "primary_card_id": "83733c31e4ffa7e7a8fa6f20be312cba",
+      "sense_key": "dry#trocken",
+      "meaning_de": "Nicht nass",
+      "sense_card_ids": [
+        "83733c31e4ffa7e7a8fa6f20be312cba"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 224,
+      "position": 120
+    },
+    {
+      "lang": "en",
+      "form_norm": "arm",
+      "display_form": "arm",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "arm|arm/NOUN|arm#arm",
+      "primary_card_id": "3685c5177ca3849a0d68e81cd07a6815",
+      "sense_key": "arm#arm",
+      "meaning_de": "Körperglied zwischen Schulter und Hand",
+      "sense_card_ids": [
+        "3685c5177ca3849a0d68e81cd07a6815"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 225,
+      "position": 121
+    },
+    {
+      "lang": "en",
+      "form_norm": "cheap",
+      "display_form": "cheap",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "cheap|cheap/ADJ|cheap#billiger",
+      "primary_card_id": "1bcb8de177dee1cacde6d93c41a3b9ca",
+      "sense_key": "cheap#billiger",
+      "meaning_de": "Wenig Geld kostend",
+      "sense_card_ids": [
+        "1bcb8de177dee1cacde6d93c41a3b9ca"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 226,
+      "position": 122
+    },
+    {
+      "lang": "en",
+      "form_norm": "chair",
+      "display_form": "chair",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "chair|chair/NOUN|chair#stuhl",
+      "primary_card_id": "0cf8270c351db5748cc41ade4e33a55c",
+      "sense_key": "chair#stuhl",
+      "meaning_de": "Sitzmöbel für eine Person mit Rückenlehne",
+      "sense_card_ids": [
+        "0cf8270c351db5748cc41ade4e33a55c"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 227,
+      "position": 123
+    },
+    {
+      "lang": "en",
+      "form_norm": "expensive",
+      "display_form": "expensive",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "expensive|expensive/ADJ|expensive#teuer",
+      "primary_card_id": "1be7c9b4139271e54557f008b8197e32",
+      "sense_key": "expensive#teuer",
+      "meaning_de": "teuer",
+      "sense_card_ids": [
+        "1be7c9b4139271e54557f008b8197e32"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 228,
+      "position": 124
+    },
+    {
+      "lang": "en",
+      "form_norm": "soft",
+      "display_form": "soft",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "soft|soft/ADJ|soft#weiche",
+      "primary_card_id": "d3283b97f5551644a4c6fd847e5039c1",
+      "sense_key": "soft#weiche",
+      "meaning_de": "Bei Druck leicht nachgebend",
+      "sense_card_ids": [
+        "d3283b97f5551644a4c6fd847e5039c1"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 229,
+      "position": 125
+    },
+    {
+      "lang": "en",
+      "form_norm": "leg",
+      "display_form": "leg",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "leg|leg/NOUN|leg#bein",
+      "primary_card_id": "1de79a6ef0bc3a9e995524911c2162db",
+      "sense_key": "leg#bein",
+      "meaning_de": "Bein",
+      "sense_card_ids": [
+        "1de79a6ef0bc3a9e995524911c2162db"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 230,
+      "position": 126
+    },
+    {
+      "lang": "en",
+      "form_norm": "milk",
+      "display_form": "milk",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "milk|milk/NOUN|milk#milch",
+      "primary_card_id": "63ff7ac41392c2699ac383798c93c713",
+      "sense_key": "milk#milch",
+      "meaning_de": "Flüssiges Lebensmittel von Kühen",
+      "sense_card_ids": [
+        "63ff7ac41392c2699ac383798c93c713"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 231,
+      "position": 127
+    },
+    {
+      "lang": "en",
+      "form_norm": "cook",
+      "display_form": "cook",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "cook|cook/VERB|cook#kocht",
+      "primary_card_id": "b66fb3986641d2d60613eecfe0b383b7",
+      "sense_key": "cook#kocht",
+      "meaning_de": "Speisen durch Erhitzen zubereiten",
+      "sense_card_ids": [
+        "b66fb3986641d2d60613eecfe0b383b7"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 232,
+      "position": 128
+    },
+    {
+      "lang": "en",
+      "form_norm": "kitchen",
+      "display_form": "kitchen",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "kitchen|kitchen/NOUN|kitchen#kueche",
+      "primary_card_id": "3aae80c6c3cc7d7649c7501af614cbc2",
+      "sense_key": "kitchen#kueche",
+      "meaning_de": "Raum zum Zubereiten von Speisen",
+      "sense_card_ids": [
+        "3aae80c6c3cc7d7649c7501af614cbc2"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 233,
+      "position": 129
+    },
+    {
+      "lang": "en",
+      "form_norm": "quiet",
+      "display_form": "quiet",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "quiet|quiet/ADJ|quiet#ruhig",
+      "primary_card_id": "8ff35160016cdbbe1b0794327afe2200",
+      "sense_key": "quiet#ruhig",
+      "meaning_de": "Wenig Geräusche verursachend",
+      "sense_card_ids": [
+        "8ff35160016cdbbe1b0794327afe2200"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 234,
+      "position": 130
+    },
+    {
+      "lang": "en",
+      "form_norm": "shirt",
+      "display_form": "shirt",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "shirt|shirt/NOUN|shirt#hemd",
+      "primary_card_id": "6b004d82e00ace7361a157cf4a37266d",
+      "sense_key": "shirt#hemd",
+      "meaning_de": "Hemd",
+      "sense_card_ids": [
+        "6b004d82e00ace7361a157cf4a37266d"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 235,
+      "position": 131
+    },
+    {
+      "lang": "en",
+      "form_norm": "ticket",
+      "display_form": "ticket",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "ticket|ticket/NOUN|ticket#fahrkarte",
+      "primary_card_id": "e4b05d00f7a0804f7f5e700cb1aea1cc",
+      "sense_key": "ticket#fahrkarte",
+      "meaning_de": "Fahrkarte",
+      "sense_card_ids": [
+        "e4b05d00f7a0804f7f5e700cb1aea1cc"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 236,
+      "position": 132
+    },
+    {
+      "lang": "en",
+      "form_norm": "empty",
+      "display_form": "empty",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "empty|empty/ADJ|empty#leer",
+      "primary_card_id": "4072954e2fdaa2585e02307a54d4d4f0",
+      "sense_key": "empty#leer",
+      "meaning_de": "Ohne Inhalt",
+      "sense_card_ids": [
+        "4072954e2fdaa2585e02307a54d4d4f0"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 237,
+      "position": 133
+    },
+    {
+      "lang": "en",
+      "form_norm": "bottle",
+      "display_form": "bottle",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "bottle|bottle/NOUN|bottle#flasche",
+      "primary_card_id": "1e00e17d5e790190ed95f01b5d2cb0f3",
+      "sense_key": "bottle#flasche",
+      "meaning_de": "Verschließbares Gefäß für Flüssigkeiten",
+      "sense_card_ids": [
+        "1e00e17d5e790190ed95f01b5d2cb0f3"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 238,
+      "position": 134
+    },
+    {
+      "lang": "en",
+      "form_norm": "cheese",
+      "display_form": "cheese",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "cheese|cheese/NOUN|cheese#kase",
+      "primary_card_id": "17a4dea84895e0cf93245d6e5a04e82d",
+      "sense_key": "cheese#kase",
+      "meaning_de": "Festes Lebensmittel aus Milch",
+      "sense_card_ids": [
+        "17a4dea84895e0cf93245d6e5a04e82d"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 239,
+      "position": 135
+    },
+    {
+      "lang": "en",
+      "form_norm": "plate",
+      "display_form": "plate",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "plate|plate/NOUN|plate#teller",
+      "primary_card_id": "a8f7e7920f3776c26a6a5b85876a491c",
+      "sense_key": "plate#teller",
+      "meaning_de": "Teller",
+      "sense_card_ids": [
+        "a8f7e7920f3776c26a6a5b85876a491c"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 240,
+      "position": 136
+    },
+    {
+      "lang": "en",
+      "form_norm": "wet",
+      "display_form": "wet",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "wet|wet/ADJ|wet#nass",
+      "primary_card_id": "8daa342f4f8c669d1c6de5fd2141be12",
+      "sense_key": "wet#nass",
+      "meaning_de": "Mit Wasser oder anderer Flüssigkeit benetzt",
+      "sense_card_ids": [
+        "8daa342f4f8c669d1c6de5fd2141be12"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 241,
+      "position": 137
+    },
+    {
+      "lang": "en",
+      "form_norm": "bread",
+      "display_form": "bread",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "bread|bread/NOUN|bread#brot",
+      "primary_card_id": "841bdc788655fc1ee5de13aba07090e3",
+      "sense_key": "bread#brot",
+      "meaning_de": "Brot",
+      "sense_card_ids": [
+        "841bdc788655fc1ee5de13aba07090e3"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 242,
+      "position": 138
+    },
+    {
+      "lang": "en",
+      "form_norm": "speaker",
+      "display_form": "speaker",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "speaker|speaker/NOUN|speaker#lautsprecher",
+      "primary_card_id": "5378cac79a552400aea06fd80a4ca9ac",
+      "sense_key": "speaker#lautsprecher",
+      "meaning_de": "Gerät, das elektrische Signale als hörbaren Schall wiedergibt; keine sprechende Person",
+      "sense_card_ids": [
+        "5378cac79a552400aea06fd80a4ca9ac"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 243,
+      "position": 139
+    },
+    {
+      "lang": "en",
+      "form_norm": "mirror",
+      "display_form": "mirror",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "mirror|mirror/NOUN|mirror#spiegel",
+      "primary_card_id": "5357749074d3de5f4542f7b15e98a1b2",
+      "sense_key": "mirror#spiegel",
+      "meaning_de": "Gegenstand, in dem man sein Spiegelbild sieht",
+      "sense_card_ids": [
+        "5357749074d3de5f4542f7b15e98a1b2"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 244,
+      "position": 140
+    },
+    {
+      "lang": "en",
+      "form_norm": "egg",
+      "display_form": "egg",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "egg|egg/NOUN|egg#ei",
+      "primary_card_id": "a8ba408d5d962a13b6017b444a0bba41",
+      "sense_key": "egg#ei",
+      "meaning_de": "Hühnerei als Lebensmittel",
+      "sense_card_ids": [
+        "a8ba408d5d962a13b6017b444a0bba41"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 245,
+      "position": 141
+    },
+    {
+      "lang": "en",
+      "form_norm": "wash",
+      "display_form": "wash",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "wash|wash/VERB|wash#waescht",
+      "primary_card_id": "1b99ac7d85eb8c5ab2134496b94a66d4",
+      "sense_key": "wash#waescht",
+      "meaning_de": "Mit Wasser reinigen",
+      "sense_card_ids": [
+        "1b99ac7d85eb8c5ab2134496b94a66d4"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 246,
+      "position": 142
+    },
+    {
+      "lang": "en",
+      "form_norm": "clock",
+      "display_form": "clock",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "clock|clock/NOUN|clock#uhr",
+      "primary_card_id": "b7d0befbc2629a3ce5a369d7688ac0c7",
+      "sense_key": "clock#uhr",
+      "meaning_de": "Gerät zur Anzeige der Uhrzeit an Wand oder auf Tisch",
+      "sense_card_ids": [
+        "b7d0befbc2629a3ce5a369d7688ac0c7"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 247,
+      "position": 143
+    },
+    {
+      "lang": "en",
+      "form_norm": "desk",
+      "display_form": "desk",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "desk|desk/NOUN|desk#schreibtisch",
+      "primary_card_id": "c0270742454943e7a01361147887a6d6",
+      "sense_key": "desk#schreibtisch",
+      "meaning_de": "Schreibtisch",
+      "sense_card_ids": [
+        "c0270742454943e7a01361147887a6d6"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 248,
+      "position": 144
+    },
+    {
+      "lang": "en",
+      "form_norm": "knife",
+      "display_form": "knife",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "knife|knife/NOUN|knife#messer",
+      "primary_card_id": "eac1e93b65e51055b6123e99510acd66",
+      "sense_key": "knife#messer",
+      "meaning_de": "Messer",
+      "sense_card_ids": [
+        "eac1e93b65e51055b6123e99510acd66"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 249,
+      "position": 145
+    },
+    {
+      "lang": "en",
+      "form_norm": "repair",
+      "display_form": "repair",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "repair|repair/VERB|repair#repariert",
+      "primary_card_id": "1bb2600098a1ffb045fa8d3940fbb333",
+      "sense_key": "repair#repariert",
+      "meaning_de": "Etwas Beschädigtes wieder funktionsfähig machen",
+      "sense_card_ids": [
+        "1bb2600098a1ffb045fa8d3940fbb333"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 250,
+      "position": 146
+    },
+    {
+      "lang": "en",
+      "form_norm": "shoe",
+      "display_form": "shoe",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "shoe|shoe/NOUN|shoe#schuhe",
+      "primary_card_id": "1de22c68ae13c64b606131fe81fb26cd",
+      "sense_key": "shoe#schuhe",
+      "meaning_de": "Kleidungsstück für einen Fuß",
+      "sense_card_ids": [
+        "1de22c68ae13c64b606131fe81fb26cd"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 251,
+      "position": 147
+    },
+    {
+      "lang": "en",
+      "form_norm": "bandage",
+      "display_form": "bandage",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "bandage|bandage/NOUN|bandage#verband",
+      "primary_card_id": "d65bc850e1059c326d4c1bb023cb46e5",
+      "sense_key": "bandage#verband",
+      "meaning_de": "Material zum Bedecken und Schützen einer Wunde; kein Verb",
+      "sense_card_ids": [
+        "d65bc850e1059c326d4c1bb023cb46e5"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 252,
+      "position": 148
+    },
+    {
+      "lang": "en",
+      "form_norm": "basket",
+      "display_form": "basket",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "basket|basket/NOUN|basket#korb",
+      "primary_card_id": "56b49b92c0c28ca1f8d906c540ee949e",
+      "sense_key": "basket#korb",
+      "meaning_de": "Korb als Behälter, etwa zum Aufbewahren oder Tragen",
+      "sense_card_ids": [
+        "56b49b92c0c28ca1f8d906c540ee949e"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 253,
+      "position": 149
+    },
+    {
+      "lang": "en",
+      "form_norm": "bicycle",
+      "display_form": "bicycle",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "bicycle|bicycle/NOUN|bicycle#fahrrad",
+      "primary_card_id": "bb703fc94d2138d9bfe4c86e5a831827",
+      "sense_key": "bicycle#fahrrad",
+      "meaning_de": "Fahrrad",
+      "sense_card_ids": [
+        "bb703fc94d2138d9bfe4c86e5a831827"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 254,
+      "position": 150
+    },
+    {
+      "lang": "en",
+      "form_norm": "blanket",
+      "display_form": "blanket",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "blanket|blanket/NOUN|blanket#decke",
+      "primary_card_id": "8758fb0569b8bbbb4f59edb34ee08b93",
+      "sense_key": "blanket#decke",
+      "meaning_de": "Textile Decke zum Zudecken",
+      "sense_card_ids": [
+        "8758fb0569b8bbbb4f59edb34ee08b93"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 255,
+      "position": 151
+    },
+    {
+      "lang": "en",
+      "form_norm": "colleague",
+      "display_form": "colleague",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "colleague|colleague/NOUN|colleague#kollege_oder_kollegin",
+      "primary_card_id": "f45144ec526dc34aeb44d614d4fad4cb",
+      "sense_key": "colleague#kollege_oder_kollegin",
+      "meaning_de": "Person, mit der man zusammenarbeitet",
+      "sense_card_ids": [
+        "f45144ec526dc34aeb44d614d4fad4cb"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 256,
+      "position": 152
+    },
+    {
+      "lang": "en",
+      "form_norm": "fork",
+      "display_form": "fork",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "fork|fork/NOUN|fork#gabel",
+      "primary_card_id": "e6fb24eb3e75fd9052c1b60f115d3c86",
+      "sense_key": "fork#gabel",
+      "meaning_de": "Besteck mit Zinken",
+      "sense_card_ids": [
+        "e6fb24eb3e75fd9052c1b60f115d3c86"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 257,
+      "position": 153
+    },
+    {
+      "lang": "en",
+      "form_norm": "lamp",
+      "display_form": "lamp",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "lamp|lamp/NOUN|lamp#lampen",
+      "primary_card_id": "6a39e160dd22cc901a4c11fd038313ee",
+      "sense_key": "lamp#lampen",
+      "meaning_de": "Lampe als Beleuchtungsgerät, innen oder außen",
+      "sense_card_ids": [
+        "6a39e160dd22cc901a4c11fd038313ee"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 258,
+      "position": 154
+    },
+    {
+      "lang": "en",
+      "form_norm": "pillow",
+      "display_form": "pillow",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "pillow|pillow/NOUN|pillow#kissen",
+      "primary_card_id": "1ae4248a5ab10837ed0540b216dee579",
+      "sense_key": "pillow#kissen",
+      "meaning_de": "Weiche Unterlage für den Kopf im Bett",
+      "sense_card_ids": [
+        "1ae4248a5ab10837ed0540b216dee579"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 259,
+      "position": 155
+    },
+    {
+      "lang": "en",
+      "form_norm": "receipt",
+      "display_form": "receipt",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "receipt|receipt/NOUN|receipt#kassenbon",
+      "primary_card_id": "c4220fc1b79b75f3e194e920dcb26f5c",
+      "sense_key": "receipt#kassenbon",
+      "meaning_de": "Beleg für einen bezahlten Einkauf",
+      "sense_card_ids": [
+        "c4220fc1b79b75f3e194e920dcb26f5c"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 260,
+      "position": 156
+    },
+    {
+      "lang": "en",
+      "form_norm": "soap",
+      "display_form": "soap",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "soap|soap/NOUN|soap#seife",
+      "primary_card_id": "d06d6cfed8c6b9ff2459264a11ed4333",
+      "sense_key": "soap#seife",
+      "meaning_de": "Mittel zum Waschen der Hände",
+      "sense_card_ids": [
+        "d06d6cfed8c6b9ff2459264a11ed4333"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 261,
+      "position": 157
+    },
+    {
+      "lang": "en",
+      "form_norm": "spoon",
+      "display_form": "spoon",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "spoon|spoon/NOUN|spoon#loeffel",
+      "primary_card_id": "947e1ddef2e388db4b92194cc85598f4",
+      "sense_key": "spoon#loeffel",
+      "meaning_de": "Besteck mit einer kleinen Mulde zum Essen, Schöpfen oder Umrühren",
+      "sense_card_ids": [
+        "947e1ddef2e388db4b92194cc85598f4"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 262,
+      "position": 158
+    },
+    {
+      "lang": "en",
+      "form_norm": "tooth",
+      "display_form": "tooth",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "tooth|tooth/NOUN|tooth#zahn",
+      "primary_card_id": "fc712c6bd26473094dce17fbba0fba8b",
+      "sense_key": "tooth#zahn",
+      "meaning_de": "Hartes Gebilde im Mund zum Kauen",
+      "sense_card_ids": [
+        "fc712c6bd26473094dce17fbba0fba8b"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 263,
+      "position": 159
+    },
+    {
+      "lang": "en",
+      "form_norm": "towel",
+      "display_form": "towel",
+      "aliases": [],
+      "owner_deck_ref": "allgemeine-sprache",
+      "primary_card_ref": "towel|towel/NOUN|towel#handtuch",
+      "primary_card_id": "4dce0407ccf925e94e0a2a58dacb9e1e",
+      "sense_key": "towel#handtuch",
+      "meaning_de": "Tuch zum Abtrocknen",
+      "sense_card_ids": [
+        "4dce0407ccf925e94e0a2a58dacb9e1e"
+      ],
+      "reason": "Einzige bestehende Lernbedeutung dieser Wortform.",
+      "previous_position": 264,
+      "position": 160
+    }
+  ]
+}

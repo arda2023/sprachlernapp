@@ -13,6 +13,7 @@ from pathlib import Path
 
 from .ids import form_norm, stable_id
 from .schema import COLUMNS
+from .content_contract import validate_rows, sentence_count, validate_registry
 
 
 def load_pack(path: str | Path) -> dict:
@@ -57,6 +58,10 @@ def _valid_alternatives(cs: dict, form: str) -> list[str]:
     return list(values)
 
 
+def _tombstones(row):
+    return {k: row[k] for k in ("removed_in", "replaced_by") if k in row}
+
+
 def build_rows(pack: dict) -> dict[str, list[dict]]:
     if (pack.get("curation") or {}).get("pending"):
         raise ValueError("curated working state has pending annotation/QA steps; "
@@ -80,6 +85,7 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
         lemma_ids[lm["ref"]] = lid
         lemma_pos[lid] = lm["pos"]
         rows["lemmas"].append(_complete("lemmas", {
+            **_tombstones(lm),
             "id": lid, "lang": lang, "lemma": lm["lemma"], "pos": lm["pos"],
             "family_key": lm.get("family_key"), "freq_rank": lm.get("freq_rank"),
         }))
@@ -90,6 +96,7 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
         sense_ids[se["ref"]] = sid
         sense_lemma[sid] = lid
         rows["senses"].append(_complete("senses", {
+            **_tombstones(se),
             "id": sid, "lang": lang, "lemma_id": lid, "sense_key": se["sense_key"],
             "gloss_de": se["gloss_de"], "definition_de": se.get("definition_de"),
             "notes_de": se.get("notes_de"), "sense_index": se.get("sense_index"),
@@ -102,6 +109,7 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
         card_forms[ca["ref"]] = ca["form"]
         lid = sense_lemma[sid]
         rows["cards"].append(_complete("cards", {
+            **_tombstones(ca),
             "id": cid, "lang": lang, "form": ca["form"], "sense_id": sid,
             "form_norm": form_norm(ca["form"]), "lemma_id": lid, "pos": lemma_pos[lid],
             "form_kind": ca.get("form_kind"), "form_label_de": ca.get("form_label_de"),
@@ -113,6 +121,7 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
         sid = _lookup(sense_ids, "sense", df["sense"])
         norm = form_norm(df["form"])
         rows["dictionary_forms"].append(_complete("dictionary_forms", {
+            **_tombstones(df),
             "id": stable_id("dictionary_forms", lang=lang, form_norm=norm, sense_id=sid),
             "lang": lang, "form_norm": norm, "sense_id": sid,
             "card_id": _lookup(card_ids, "card", df.get("card")),
@@ -123,6 +132,7 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
         did = stable_id("decks", lang=lang, slug=de["slug"])
         deck_ids[de["ref"]] = did
         rows["decks"].append(_complete("decks", {
+            **_tombstones(de),
             "id": did, "lang": lang, "slug": de["slug"], "title_de": de["title_de"],
             "description_de": de.get("description_de"), "cefr_band": de.get("cefr_band"),
             "icon": de.get("icon"), "sort": de.get("sort"),
@@ -132,6 +142,7 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
         did = _lookup(deck_ids, "deck", dc["deck"])
         cid = _lookup(card_ids, "card", dc["card"])
         rows["deck_cards"].append(_complete("deck_cards", {
+            **_tombstones(dc),
             "id": stable_id("deck_cards", deck_id=did, card_id=cid),
             "deck_id": did, "card_id": cid, "position": dc.get("position"),
         }))
@@ -140,6 +151,7 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
         snid = stable_id("sentences", lang=lang, text=sn["text"])
         sentence_ids[sn["ref"]] = snid
         rows["sentences"].append(_complete("sentences", {
+            **_tombstones(sn),
             "id": snid, "lang": lang, "text": sn["text"], "origins": list(sn.get("origins", [])),
             "translation_de": sn.get("translation_de"), "model": sn.get("model"),
             "qa_status": sn.get("qa_status"), "qa_report": sn.get("qa_report"),
@@ -148,6 +160,7 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
     for tk in pack.get("sentence_tokens", []):
         snid = _lookup(sentence_ids, "sentence", tk["sentence"])
         rows["sentence_tokens"].append(_complete("sentence_tokens", {
+            **_tombstones(tk),
             "id": stable_id("sentence_tokens", sentence_id=snid, idx=tk["idx"]),
             "sentence_id": snid, "idx": tk["idx"], "start_pos": tk["start_pos"],
             "end_pos": tk["end_pos"], "surface": tk["surface"],
@@ -160,12 +173,38 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
         cid = _lookup(card_ids, "card", cs["card"])
         snid = _lookup(sentence_ids, "sentence", cs["sentence"])
         rows["card_sentences"].append(_complete("card_sentences", {
+            **_tombstones(cs),
             "id": stable_id("card_sentences", card_id=cid, sentence_id=snid),
             "card_id": cid, "sentence_id": snid, "position": cs["position"],
             "gap_start": cs["gap_start"], "gap_end": cs["gap_end"],
             "accepted": list(cs.get("accepted", [])),
             "valid_alternatives": _valid_alternatives(cs, card_forms[cs["card"]]),
         }))
+
+    word_ids = {}
+    for w in pack.get("deck_words", []):
+        wid = stable_id("deck_words", lang=lang, form_norm=w["form_norm"])
+        word_ids[w["form_norm"]] = wid
+        rows["deck_words"].append({"id": wid, "lang": lang, "form_norm": w["form_norm"],
+            "deck_id": _lookup(deck_ids, "deck", w["deck"]),
+            "primary_card_id": _lookup(card_ids, "card", w["primary_card"]),
+            "position": w["position"], **_tombstones(w)})
+    for a in pack.get("word_aliases", []):
+        rows["word_aliases"].append({"id": stable_id("word_aliases", lang=lang, form_norm=a["form_norm"]),
+            "lang": lang, "form_norm": a["form_norm"],
+            "word_id": _lookup(word_ids, "word", a["word"]), **_tombstones(a)})
+    story_ids = {}
+    for story in pack.get("stories", []):
+        sid = stable_id("stories", lang=lang, slug=story["slug"])
+        story_ids[story["ref"]] = sid
+        rows["stories"].append(_complete("stories", {"id": sid, "lang": lang,
+            **{k: v for k, v in story.items() if k != "ref"}}))
+    for ss in pack.get("story_sentences", []):
+        sid = _lookup(story_ids, "story", ss["story"])
+        rows["story_sentences"].append(_complete("story_sentences", {
+            "id": stable_id("story_sentences", story_id=sid, idx=ss["idx"]),
+            "story_id": sid, "sentence_id": _lookup(sentence_ids, "sentence", ss["sentence"]),
+            **{k: v for k, v in ss.items() if k not in ("story", "sentence")}}))
 
     release = pack.get("release")
     if release:
@@ -175,6 +214,10 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
             "schema_version": release["schema_version"], "notes": release.get("notes"),
         }))
 
+    sentence_count(pack)
+    validate_rows(rows, pack["release"]["schema_version"])
+    if pack["release"]["schema_version"] == 2:
+        validate_registry(pack, rows)
     return rows
 
 
@@ -209,8 +252,8 @@ def deck_order_key(card: dict) -> tuple:
 
 def assemble_pack(lang: str, cards: list[dict], *, model: str, version: str) -> dict:
     """Pack (schema of tests/fixtures/mini_pack.json) from generated cards.
-    A card goes in only with 3 ok sentences. Sets card['packed']."""
-    pack = {"lang": lang, "release": {"version": version, "schema_version": 1,
+    A card goes in only with one ok sentence. Sets card['packed']."""
+    pack = {"lang": lang, "release": {"version": version, "schema_version": 2,
                                       "notes": "generated by sprachpipe generate"},
             "languages": [{"code": "en", "name_native": "English", "name_de": "Englisch",
                            "gloss_lang": "de"}],
@@ -240,7 +283,7 @@ def assemble_pack(lang: str, cards: list[dict], *, model: str, version: str) -> 
     packed_source = []
     for card in cards:
         finals = card.get("accepted", [])
-        card["packed"] = (len(finals) == 3
+        card["packed"] = (len(finals) == 1
                           and all(a["qa_status"] == "ok" and "tokens" in a for a in finals)
                           and not any(a["text"] in texts for a in finals))
         if not card["packed"]:
@@ -321,4 +364,9 @@ def assemble_pack(lang: str, cards: list[dict], *, model: str, version: str) -> 
         for rank, (_, sref, surface, gloss, cref) in enumerate(sorted(by_form[norm]), start=1):
             pack["dictionary_forms"].append({"form": norm, "sense": sref, "card": cref,
                                              "gloss_de": gloss, "rank": rank})
+    pack["deck_words"] = [{"form_norm": form_norm(c["form"]), "deck": dc["deck"],
+        "primary_card": c["ref"], "position": dc["position"]}
+        for dc in pack["deck_cards"] for c in pack["cards"] if c["ref"] == dc["card"]]
+    from .word_registry import bind_new_pack
+    bind_new_pack(pack)
     return pack

@@ -185,14 +185,9 @@ void main() {
         ),
       ],
     );
-    await expectLater(
-      failed.read(wordListProvider.future),
-      throwsA(isA<ContentUnavailable>()),
-    );
-    await expectLater(
-      failed.read(vocabBreakdownProvider.future),
-      throwsA(isA<ContentUnavailable>()),
-    );
+    expect(await failed.read(wordListProvider.future), isEmpty);
+    expect((await failed.read(learningNoticesProvider.future)), isNotEmpty);
+    expect((await failed.read(vocabBreakdownProvider.future)).total, 0);
     failed.dispose();
   });
 

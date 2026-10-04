@@ -8,6 +8,8 @@ import '../../domain/repositories.dart';
 import '../../domain/review_pass.dart';
 import '../../domain/srs_state.dart';
 import '../providers/database_providers.dart';
+import '../providers/story_learning_providers.dart';
+import '../../data/learning/practice_item_resolver.dart';
 import '../providers/deck_providers.dart';
 import '../providers/preferences_provider.dart';
 import '../../domain/preferences.dart';
@@ -64,7 +66,7 @@ final deckSessionControllerProvider = NotifierProvider.autoDispose
 class DeckSessionController extends Notifier<DeckSessionState> {
   DeckSessionController(this.args);
   final DeckSessionArgs args;
-  late ContentRepository _content;
+  late PracticeItemResolver _resolver;
   late UserRepository _user;
   late String _version, _device;
   late DateTime Function() _clock;
@@ -115,7 +117,7 @@ class DeckSessionController extends Notifier<DeckSessionState> {
     _emit(loading: true);
     try {
       if (!_initialized) {
-        _content = await ref.read(contentRepositoryProvider.future);
+        _resolver = await ref.read(practiceResolverProvider.future);
         if (!ref.mounted) return;
         _user = await ref.read(userRepositoryProvider.future);
         if (!ref.mounted) return;
@@ -123,29 +125,24 @@ class DeckSessionController extends Notifier<DeckSessionState> {
         _device = await _user.deviceId();
         _preferences = await _user.preferences();
         final ids = <String>[];
-        final known = await _content.allCardIds();
         if (args.kind == DeckSessionKind.mixed) {
-          final decks = await _content.decks();
-          final active = await _user.activeDeckIds(decks.map((d) => d.id));
-          for (final deck in decks) {
-            if (active.contains(deck.id)) {
-              ids.addAll(await _content.deckCardIds(deck.id));
-            }
-          }
+          ids.addAll(await _resolver.activePrimaryIds());
         } else {
-          ids.addAll(await _content.deckCardIds(args.deckId));
+          if (_resolver.content == null) {
+            throw _resolver.contentError ?? StateError('Inhaltspaket fehlt');
+          }
+          ids.addAll(
+            _resolver.eligiblePrimaries(
+              await _resolver.content!.deckCardIds(args.deckId),
+            ),
+          );
         }
         final states = await _user.allCardStates();
-        final cards = {
-          for (final c in await _content.selectionCards({
-            ...ids,
-            ...states.keys.where(known.contains),
-          }))
-            c.id: c,
-        };
+        final cards = _resolver.cards;
         _queue = args.kind == DeckSessionKind.mixed
             ? buildMixedQueue(
                 activeDeckCardIds: ids,
+                storyAdditions: _resolver.additions,
                 cards: cards,
                 states: states,
                 now: _clock(),
@@ -159,7 +156,7 @@ class DeckSessionController extends Notifier<DeckSessionState> {
                 now: _clock(),
                 size: args.size,
               );
-        for (final item in await _content.practiceItems(
+        for (final item in await _resolver.practiceItems(
           _queue.map((e) => e.cardId).toList(),
         )) {
           _items[item.card.id] = item;
@@ -190,13 +187,12 @@ class DeckSessionController extends Notifier<DeckSessionState> {
       _queue.removeAt(_index);
       return _showCurrent();
     }
-    final counts = await _user.reviewCounts([entry.cardId]);
     if (!ref.mounted) return;
     final item = _items[entry.cardId]!;
     _pass = ReviewPass(
       id: randomUuidV4(),
       item: item,
-      sentence: item.sentenceForPass(counts[entry.cardId] ?? 0),
+      sentence: item.practiceSentence,
       state: states[entry.cardId],
       mode: entry.mode ?? args.kind.mode,
       startedAt: _clock(),

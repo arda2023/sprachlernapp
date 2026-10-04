@@ -1,0 +1,66 @@
+Ziel: Die mitgelieferte Auswahl von genau 500 Reisewörtern gegen den aktuellen Bestand prüfen, ihre Bedeutungsidentitäten festlegen und die spätere Satzproduktion hier im Chat vorbereiten.
+
+Dateien:
+- AGENTS.md, PRODUCT.md, docs/content-schema.md, docs/pipeline.md
+- docs/decks-and-story-learning-plan.md, NEXTSTEPS.md
+- reisen_500_v1/reisen_500_v1.json (hier gelieferte Wortauswahl)
+- pipeline/data/words/en.v1.json
+- pipeline/src/sprachpipe/word_registry.py
+- pipeline/data/curation/editorial_content_v2.schema.json
+- vorhandene gültige Editorial-Create-Test-Fixture aus Paket A
+- pipeline/out/story_learning_v1/pack.json und aktuelles gestagtes Pack nur lesen
+
+Neu:
+- pipeline/data/selection/reisen_500_v1.json
+- docs/reisen-500-authoring.md
+- build/reisen_authoring_v1/ (Austauschdateien, anschließend als ZIP)
+
+Schritte:
+1. Die gelieferte Datei ist eine redaktionelle Wortauswahl, noch kein Content-Pack und kein fertiger Importinput. Kein Versuch, sie als fertiges Pack zu stagen. Lokalen Iststand zuerst prüfen; Änderungen aus Paket A/B erhalten.
+
+2. Genau 500 normalisierte Wörter, fünf authoring_batch-Gruppen mit je 100 und keine Überschneidung mit vorhandenen Eigentümern oder Aliasen bestätigen. Gegen die tatsächliche Registry einschließlich noch nicht exportierter Reservierungen prüfen. Keine stillen Ersatzwörter, Streichungen oder zusätzlichen Bedeutungsvarianten.
+   train, ticket, bus, station, table, bag und map bleiben im bisherigen Eigentümerstapel. Kein Verschieben bestehender Karten in Reisen. Reise-Begleitwörter dürfen später natürlich in beliebig vielen Sätzen vorkommen.
+
+3. Für jedes Wort eine konkrete Zielbedeutung, Lemma/POS, deutsche Formübersetzung und Sense-Referenz festlegen. target_meaning_de ist die redaktionelle Vorgabe. lemma_proposal und vorhandene dictionary-Sense-Kandidaten sind Prüfhilfen, keine bestätigten Bindungen.
+   Bestehende passende Senses nach Lesen ihrer Definition wiederverwenden; besonders backpack#rucksack und platform#bahnsteig aus der Story erhalten. Keine neue Bedeutung allein wegen anderer Formulierung der deutschen Glosse anlegen. Kein Match nur anhand der Schreibung oder POS. Neue Bedeutungen mit stabilen vorgeschlagenen Schlüsseln und klarer deutscher Definition versionieren, ohne vorhandene Definitionen zu überschreiben.
+   Regionalen Sprachgebrauch und konkrete Bedeutungen erhalten: subway=U-Bahn (US), pavement=Gehweg (UK), licence=Fahrerlaubnis, tablet=Medikament, platform=Bahnsteig. Aliasvorschläge redaktionell prüfen; Aliase sind keine automatisch akzeptierten Antworten.
+
+4. Die Auswahl in das tatsächlich vorhandene Auswahl-/Reservierungsformat überführen. Reisen als vorgesehenen Eigentümer der 500 Wörter im bestehenden Reservierungsweg festhalten, sofern dieser bereits vollständige, gültige Reservierungen vor Satzproduktion unterstützt. Andernfalls ausschließlich einen versionierten, hashgebundenen Reservierungsvorschlag ausgeben und die konkrete fehlende Funktion nennen; keine Platzhalterkarten oder neue Reservierungsarchitektur bauen. Status ehrlich angeben. Das aktive App-Pack bleibt unverändert.
+
+5. Eine kompakte Rückgabedatei build/reisen_authoring_v1/authoring_context.json erstellen: Basis-Packversion und kanonischer Hash, Registry-Version/Hash, Reservierungsstatus, alle 500 Auswahl-IDs mit eindeutiger Zielbedeutung, Lemma/POS, Sense-Referenz, Übersetzung und authoring_batch. Bestehende und vorgeschlagene neue Senses unterscheiden. Beschlossene Bestandsglossen nicht überschreiben.
+
+6. Für die nächste Chat-Satzlieferung bereitstellen:
+   - authoring_context.json
+   - eine Kopie des aktuellen editorial_content_v2.schema.json
+   - ein kleines, tatsächlich validiertes Beispiel aus der bestehenden Create-Fixture
+   - README.txt mit dem exakten vorgesehenen Importbefehl und Pflichtfeldern
+   Alles als build/reisen_authoring_v1.zip bündeln.
+   Keine private user.db, Lernverläufe, Zugangsdaten oder unnötigen Binärdateien aufnehmen.
+   Ein Beispiel ist eine Test-Fixture, keine neue freigegebene Reisekarte.
+
+Nicht anfassen:
+- Keine neuen Übungssätze generieren: Die ersten 100 Sätze erstellt ChatGPT hier im Gespräch.
+- Keine Gemini-/Vertex-Aufrufe oder sonstigen kostenpflichtigen Modellaufrufe.
+- Keine Änderungen am App-Code, Content-Asset, bestehenden Lernständen oder alten out/-Artefakten.
+- Keine Commits, Pushes, Uploads oder Veröffentlichung.
+- Keine bloße Umbenennung von Kategorien in zusätzliche Stapel: alles gehört zu Reisen.
+
+Akzeptanzkriterien:
+- 500 Zielwörter bleiben 500 Zielwörter; pro Wort später genau ein Satz.
+- Null Besitz-/Alias-Konflikte oder sonst genaue, nicht verschluckte Konfliktliste.
+- Bestehende Bedeutungsidentitäten werden bei inhaltlicher Übereinstimmung wiederverwendet.
+- Keine geratenen Bedeutungsbindungen und keine künstlich als fertig markierten Inhalte.
+- Die Rückgabe ermöglicht anschließend 100 Sätze für authoring_batch=1 ohne neue Format- oder Identitätsplanung.
+
+Prüfen mit:
+- Bestehende lokale Auswahl-/Registry-Validatoren und gezielter Beispiel-Validator, Befehle und tatsächlichen Output zeigen.
+- git diff --check
+- git diff --stat
+- git status --short
+Windows-/macOS-spezifische Befehle getrennt angeben. Keine vollständigen App-Tests für diesen Datenvorbereitungsauftrag. Nur bei tatsächlichen Codeänderungen passende Tests ausführen.
+
+Schleifenbremse: Nach 2–3 Fehlversuchen neue Hypothese; nach fünf stoppen und konkrete Ursache melden.
+
+Am Ende: docs/reisen-500-authoring.md und NEXTSTEPS.md aktualisieren (NEXTSTEPS maximal 25 sachliche Zeilen). Anzahl wiederverwendeter/neuer/offener Bedeutungen, Reservierungsstatus, Prüfoutput und ZIP-Pfad nennen. Keine Aussage über fertige 500 Sätze oder einen installierbaren Reisen-Stapel.
+
+Modell: Codex – GPT-5.6 Sol, Hoch | Alternative: Claude CLI – Opus 5.5, Hoch | Danach: /clear

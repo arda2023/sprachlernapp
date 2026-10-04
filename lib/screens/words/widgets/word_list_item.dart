@@ -116,7 +116,7 @@ class WordListItem extends StatelessWidget {
                       Padding(
                         padding: inset,
                         child: Text(
-                          meta,
+                          word.box==0?'Ungelernt · Hinzugefügt ${lastSeenLabel(word.lastSeenAt, now)}':meta,
                           style:
                               AppType.meta(color: context.appColors.textMuted)
                                   .copyWith(

@@ -92,6 +92,8 @@ def cmd_export(args, cfg) -> int:
     from .export import export_sqlite
     from .pack import load_pack
 
+    if load_pack(args.pack)['release']['schema_version'] == 1 and not args.legacy:
+        raise ValueError('schema 1 export requires explicit --legacy; normal exports use schema 2')
     _print_counts(f"exported -> {args.target}", export_sqlite(load_pack(args.pack), args.target))
     return 0
 
@@ -125,17 +127,17 @@ def _process_card(llm, cfg, card, found, avoid_words):
                 llm, cfg, text, gap, tr, candidates))
         card["slots"].append(slot)
         final = slot[-1]
-        if final["qa_status"] == "ok" and len(card["accepted"]) < 3:
+        if final["qa_status"] == "ok" and len(card["accepted"]) < 1:
             card["accepted"].append(final)
 
     for start, count in ((0, 5), (5, 3), (8, 3)):
-        if start and len(card["accepted"]) >= 3:
+        if start and len(card["accepted"]) >= 1:
             break
         contexts = [slot_context(cfg, card, start + i) for i in range(count)]
         batch = sentences(llm, cfg, card, count=count, contexts=contexts,
                           avoid_words=avoid_words)
         for i, first in enumerate(batch):
-            if len(card["accepted"]) >= 3:
+            if len(card["accepted"]) >= 1:
                 card["slots"].append([{
                     "text": first["text"], "translation_de": first["translation_de"],
                     "gap": None, "lint": [], "lint_rules": [], "blind": None,
@@ -151,7 +153,7 @@ def _process_card(llm, cfg, card, found, avoid_words):
                                  feedback=feedback + extra,
                                  contexts=[context], avoid_words=avoid_words)[0]
             evaluate(first, regenerate)
-    if len(card["accepted"]) == 3:
+    if len(card["accepted"]) == 1:
         annotate_card(llm, cfg, card, card["accepted"])
     return card
 
@@ -168,6 +170,9 @@ def run_generate(llm, cfg, forms, out_path, out_dir, *, max_usd, label,
     from .review import write_review_csv, write_run_report
     from .ids import stable_id
 
+    from .word_registry import load_registry, validate_selection
+    registry = load_registry()
+    validate_selection([{'form': f} for f, _ in forms], registry, lang=cfg['generate']['lang'], owner='allgemeine-sprache')
     g, c, lc = cfg["generate"], cfg["llm"], cfg["linter"]
     inventory = MeaningInventory(g["lang"], inventory_path)
     out_dir = Path(out_dir)
@@ -186,6 +191,8 @@ def run_generate(llm, cfg, forms, out_path, out_dir, *, max_usd, label,
                 continue
             active = [(idx, m) for idx, m in enumerate(found, start=1)
                       if m.get("status", "active") == "active"]
+            if len(active) > 1:
+                raise ValueError(f'{form}: select exactly one primary meaning before sentence production')
             remaining[form] = len(active)
             if not active:
                 skipped.append(f"{form}: alle Bedeutungen ausgeschlossen")
@@ -371,6 +378,7 @@ def main(argv: list[str] | None = None) -> int:
     ex = sub.add_parser("export", help="export a pack to content.sqlite")
     ex.add_argument("pack")
     ex.add_argument("target")
+    ex.add_argument("--legacy", action="store_true", help="explicit schema-1 artifact replay")
     ge = sub.add_parser("generate", help="AI generation of cards and sentences (Vertex AI)")
     source = ge.add_mutually_exclusive_group(required=True)
     source.add_argument("--forms", help="'smoke', a number n or 'a,b,c'")

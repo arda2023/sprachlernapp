@@ -175,6 +175,15 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
                   style: AppType.meta(color: context.appColors.textMuted),
                 ),
               ),
+              for (final notice
+                  in ref.watch(learningNoticesProvider).value ?? <String>[])
+                Padding(
+                  padding: _gutter.copyWith(top: 8),
+                  child: Text(
+                    notice,
+                    style: AppType.meta(color: context.appColors.textMuted),
+                  ),
+                ),
               const SizedBox(height: 20),
               Padding(
                 padding: _gutter,

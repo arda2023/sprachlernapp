@@ -10,6 +10,7 @@ import '../models/practice_models.dart';
 import '../models/reading_history.dart';
 import '../models/sample_content.dart';
 import '../presentation/providers/learning_providers.dart';
+import '../presentation/providers/story_learning_providers.dart';
 import '../presentation/providers/preferences_provider.dart';
 import 'decks/deck_practice_screen.dart';
 import '../theme/app_theme.dart';
@@ -169,8 +170,22 @@ class _AppShellState extends ConsumerState<AppShell> {
               onSettings: () => SettingsScreen.open(context),
             ),
             StoryLibraryScreen(
-              stories: sampleStories,
-              continueReading: sampleContinueReading,
+              stories: ref.watch(libraryStoriesProvider).value ?? [],
+
+              status: ref
+                  .watch(libraryStoriesProvider)
+                  .when(
+                    data: (stories) => stories.isEmpty
+                        ? const Text('Noch keine Stories im Inhaltspaket.')
+                        : const SizedBox.shrink(),
+                    loading: () => const CupertinoActivityIndicator(),
+                    error: (_, _) => CupertinoButton(
+                      onPressed: () => ref.invalidate(storySummariesProvider),
+                      child: const Text(
+                        'Stories nicht verfügbar · Erneut versuchen',
+                      ),
+                    ),
+                  ),
               onOpenStory: _openStory,
               news: sampleNews,
               onOpenNews: (article) =>

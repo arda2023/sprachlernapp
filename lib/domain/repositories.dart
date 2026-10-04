@@ -19,12 +19,15 @@ abstract interface class ContentRepository {
   /// cards apart, docs/srs.md counters).
   Future<Set<String>> allCardIds();
 
-  /// Cards with their three sentences and lemma forms, in the order of
+  /// Cards with their fixed practice sentence and lemma forms, in the order of
   /// [cardIds]. Unknown ids are an [ArgumentError].
   /// Lightweight metadata for new-card selection, without sentence loading.
   Future<List<ContentCard>> selectionCards(Iterable<String> cardIds);
 
   Future<List<PracticeItem>> practiceItems(List<String> cardIds);
+
+  /// Read a review sentence even when its card-sentence link is archived.
+  Future<CardSentence?> historicalSentence(String cardId, String sentenceId);
 
   Future<void> close();
 }
@@ -65,7 +68,7 @@ abstract interface class UserRepository {
   /// row or its box is no longer `record.boxBefore`.
   Future<bool> recordReview(ReviewRecord record);
 
-  /// Logged reviews per card (sentence rotation).
+  /// Logged reviews per card (statistics only).
   Future<Map<String, int>> reviewCounts(Iterable<String> cardIds);
 
   /// Review log of one card, oldest first.

@@ -1,6 +1,6 @@
-version: annotate-v2
+version: annotate-v3
 
-You annotate three {lang_name} sentences for German learners. Return one entry per sentence_idx (0, 1, 2), each with a tokens list.
+You annotate the supplied {lang_name} sentence(s) for German learners. Return one entry per supplied sentence_idx, each with a tokens list.
 
 {sentences}
 

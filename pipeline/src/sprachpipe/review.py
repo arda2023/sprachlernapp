@@ -177,12 +177,12 @@ def write_run_report(path: str | Path, *, cards: list[dict], skipped: list[str],
     lines += ["", "## Übersprungene Formen", ""]
     lines += [f"- {s}" for s in skipped] or ["- keine"]
     incomplete = [c for c in cards if not c.get("packed")]
-    lines += ["", "## Karten nicht im Pack (weniger als 3 ok-Sätze)", ""]
+    lines += ["", "## Karten nicht im Pack (kein einzelner ok-Satz)", ""]
     if not incomplete:
         lines.append("- keine")
     for card in incomplete:
         lines.append(f"- {card['form']} ({card['sense_key']}): "
-                     f"{len(card['accepted'])}/3 angenommene Sätze")
+                     f"{len(card['accepted'])}/1 angenommene Sätze")
         discarded_attempts = [a for slot in card["slots"] for a in slot
                               if a.get("discard_reason") or a.get("discard_reasons")]
         if not discarded_attempts:

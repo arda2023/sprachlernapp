@@ -178,7 +178,7 @@ def test_review_report_and_pack_keep_check_details(tmp_path):
     card = {"form": "left", "lemma": "leave", "pos": "VERB", "sense_key": "leave#verlassen",
             "gloss_de": "einen Ort verlassen", "form_kind": "past",
             "form_label_de": "Verb, Vergangenheit", "translation_de": "verließ",
-            "cefr_band": "anfaenger", "rank": 12, "accepted": accepted, "slots": slots}
+            "cefr_band": "anfaenger", "rank": 12, "accepted": accepted[:1], "slots": slots}
     pack = assemble_pack("en", [card], model="fake", version="test")
     saved = pack["sentences"][0]["qa_report"]
     assert saved["meaning_check"] == "leave#verlassen"

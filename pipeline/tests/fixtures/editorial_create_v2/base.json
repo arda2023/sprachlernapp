@@ -1,0 +1,37 @@
+{
+  "lang": "en",
+  "release": {
+    "version": "empty-v2",
+    "schema_version": 2
+  },
+  "languages": [
+    {
+      "code": "en",
+      "name_native": "English",
+      "name_de": "Englisch",
+      "gloss_lang": "de"
+    }
+  ],
+  "lemmas": [],
+  "senses": [],
+  "cards": [],
+  "decks": [],
+  "deck_cards": [],
+  "deck_words": [],
+  "word_aliases": [],
+  "dictionary_forms": [],
+  "sentences": [],
+  "sentence_tokens": [],
+  "card_sentences": [],
+  "stories": [],
+  "story_sentences": [],
+  "word_registry": {
+    "sha256": "de2c1adeb49640826486e89081759a82c3f4be8f5ae63fe72324bf64c1b3cfc4",
+    "snapshot": {
+      "format_version": 1,
+      "version": "fixture-v1",
+      "normalization": "NFC-lower-apostrophe-v1",
+      "words": []
+    }
+  }
+}

@@ -23,6 +23,7 @@ void main() {
     final before = sha256Of(asset);
     final raw = sqlite3.open(asset.path, mode: OpenMode.readOnly);
     late int expectedCards;
+    late int expectedPrimary;
     late int expectedLinks;
     late int expectedAlternatives;
     try {
@@ -30,6 +31,13 @@ void main() {
           raw
                   .select(
                     'SELECT count(*) AS n FROM cards WHERE removed_in IS NULL',
+                  )
+                  .single['n']
+              as int;
+      expectedPrimary =
+          raw
+                  .select(
+                    'SELECT count(DISTINCT c.form_norm) AS n FROM deck_cards dc JOIN cards c ON c.id=dc.card_id WHERE dc.removed_in IS NULL AND c.removed_in IS NULL',
                   )
                   .single['n']
               as int;
@@ -63,7 +71,9 @@ void main() {
     try {
       final decks = await repo.decks();
       final cardIds = await repo.deckCardIds(decks.single.id);
-      final items = await repo.practiceItems(cardIds);
+      final items = await repo.practiceItems(
+        (await repo.allCardIds()).toList(),
+      );
       final sentences = items.expand((i) => i.sentences).toList();
       final withAlternatives = sentences.where(
         (s) => s.validAlternatives.isNotEmpty,
@@ -80,17 +90,25 @@ void main() {
 
       expect(decks.single.slug, 'allgemeine-sprache');
       expect(expectedCards, greaterThan(0));
-      expect(expectedLinks, expectedCards * 3);
-      expect(decks.single.cardCount, expectedCards);
-      expect(cardIds, hasLength(expectedCards));
-      expect(cardIds.toSet(), hasLength(expectedCards));
+      expect(
+        expectedLinks,
+        expectedCards * (repo.info.schemaVersion == 1 ? 3 : 1),
+      );
+      expect(decks.single.cardCount, expectedPrimary);
+      expect(cardIds, hasLength(expectedPrimary));
+      expect(cardIds.toSet(), hasLength(expectedPrimary));
       expect(items, hasLength(expectedCards));
       expect(sentences, hasLength(expectedLinks));
       expect(
         sentences.map((s) => s.sentenceId).toSet(),
         hasLength(expectedLinks),
       );
-      expect(items.every((i) => i.sentences.length == 3), isTrue);
+      expect(
+        items.every(
+          (i) => i.sentences.length == (repo.info.schemaVersion == 1 ? 3 : 1),
+        ),
+        isTrue,
+      );
       expect(withAlternatives, hasLength(expectedAlternatives));
       expect(repo.info.isInternalTestPack, isTrue);
       // ids are the 32-hex content ids, unchanged

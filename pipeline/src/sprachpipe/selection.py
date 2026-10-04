@@ -40,6 +40,7 @@ def plan_selection(path, existing_pack, *, inventory_path=None):
     data = json.loads(Path(path).read_text(encoding='utf-8'))
     if data.get('version') != 1 or data.get('lang') != 'en' or not data.get('entries'):
         raise ValueError('selection requires version 1, lang en and entries')
+    from .word_registry import load_registry, validate_selection
     inventory = MeaningInventory(data['lang'], inventory_path)
     db = sqlite3.connect(Path(existing_pack).resolve().as_uri() + '?mode=ro', uri=True)
     db.row_factory = sqlite3.Row
@@ -50,8 +51,23 @@ def plan_selection(path, existing_pack, *, inventory_path=None):
                  for r in db.execute('SELECT c.id,c.form_norm,l.lemma,l.pos,s.sense_key '
                      'FROM cards c JOIN senses s ON s.id=c.sense_id '
                      'JOIN lemmas l ON l.id=c.lemma_id WHERE c.removed_in IS NULL')}
+        locations = {}
+        for r in db.execute('SELECT c.form_norm,c.id,d.slug,dc.position FROM cards c '
+                            'JOIN deck_cards dc ON dc.card_id=c.id JOIN decks d ON d.id=dc.deck_id '
+                            'WHERE c.removed_in IS NULL AND dc.removed_in IS NULL'):
+            locations.setdefault(r['form_norm'], []).append(
+                f"pack deck {r['slug']} position {r['position']} card {r['id']}")
     finally:
         db.close()
+    selection_entries = []
+    owner = data.get('owner_deck_ref', 'allgemeine-sprache')
+    for i, e in enumerate(data['entries']):
+        identity = (norm(e['form']), norm(e['lemma']), e['pos'], e.get('sense_key') or e.get('proposed_sense_key'))
+        if identity not in cards and any(k[0] == identity[0] for k in cards):
+            raise ValueError(f"word {e['form']}: {locations.get(identity[0], ['existing pack'])} "
+                             f"conflicts with selection[{i}] owner {owner}; different meaning")
+        selection_entries.append({'form': e['form'], 'card_id': cards.get(identity)})
+    validate_selection(selection_entries, load_registry(), lang=data['lang'], owner=owner, allow_reserved=True)
     selected, covered, missing = {}, [], []
     lemmas, surfaces = set(), set()
     reused_keys = inventory_definitions = 0
@@ -135,7 +151,7 @@ def print_plan(plan, cfg, max_usd):
               ('annotate', 'generate', 1, 2500, 1600, 400)]
     per_card = reserved_per_card = 0.0
     print(f"Price snapshot from config.yaml: {cfg['prices']['as_of']} (not refreshed)")
-    print('Assumption per card: first batch of 5 candidates, 3 accepted; no regeneration.')
+    print('Assumption per card: first batch of 5 candidates, 1 accepted; no regeneration.')
     for step, role, calls, inp, out, thinking in stages:
         model = cfg['llm'][role + '_model']
         price = model_price(cfg['prices'], model)

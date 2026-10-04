@@ -156,6 +156,7 @@ class VocabBreakdown {
 /// other ids (e.g. an old VERB card) are kept in user.db but count nowhere,
 /// local-only cards always count.
 VocabBreakdown deriveVocabBreakdown({
+  Set<String> explicitStoryIds = const {},
   required Set<String> activeDeckCardIds,
   required Map<String, UserCardState> cards,
   required Set<String> knownCardIds,
@@ -165,9 +166,13 @@ VocabBreakdown deriveVocabBreakdown({
   var due = 0, building = 0, mastered = 0;
   for (final card in cards.values) {
     if (!card.isActive) continue;
-    if (!card.localOnly && !knownCardIds.contains(card.cardId)) continue;
+    if (!knownCardIds.contains(card.cardId)) continue;
     if (card.box == 0) {
-      unseen++;
+      if (activeDeckCardIds.contains(card.cardId) ||
+          (card.origin == CardOrigin.story ||
+              explicitStoryIds.contains(card.cardId))) {
+        unseen++;
+      }
     } else if (card.isDue(now)) {
       due++;
     } else if (card.box == 5) {
@@ -274,6 +279,7 @@ List<SessionEntry> buildDeckQueue({
 /// Mixed uses only resolvable, connected content. Seen cards remain eligible
 /// independently of deck activation; activation gates only new deck cards.
 List<SessionEntry> buildMixedQueue({
+  Map<String, DateTime> storyAdditions = const {},
   required List<String> activeDeckCardIds,
   required Map<String, ContentCard> cards,
   required Map<String, UserCardState> states,
@@ -289,30 +295,53 @@ List<SessionEntry> buildMixedQueue({
   }
 
   final due = eligible.where((s) => s.isDue(now)).toList()..sort(dueOrder);
-  final freshIds = <String>{
-    for (final s
-        in eligible
-            .where((s) => s.box == 0 && s.origin == CardOrigin.story)
-            .toList()
-          ..sort(
-            (a, b) => (a.createdAt ?? DateTime(1970)).compareTo(
-              b.createdAt ?? DateTime(1970),
-            ),
-          ))
-      s.cardId,
-    for (final id in activeDeckCardIds)
-      if (cards.containsKey(id) &&
-          (states[id]?.isActive ?? true) &&
-          (states[id]?.box ?? 0) == 0)
-        id,
-  };
-  final fresh = selectNewCards(
-    candidates: [for (final id in freshIds) cards[id]!],
-    knownLemmas: {
-      for (final id in states.keys)
-        if (cards[id] case final card?) selectionLemma(card),
-    },
-    limit: size - due.length,
+  final storyNew =
+      eligible
+          .where(
+            (s) =>
+                s.box == 0 &&
+                (storyAdditions.containsKey(s.cardId) ||
+                    s.origin == CardOrigin.story),
+          )
+          .toList()
+        ..sort((a, b) {
+          final d = (storyAdditions[a.cardId] ?? a.createdAt ?? DateTime(1970))
+              .compareTo(
+                storyAdditions[b.cardId] ?? b.createdAt ?? DateTime(1970),
+              );
+          return d != 0 ? d : a.cardId.compareTo(b.cardId);
+        });
+  final fresh = <String>[];
+  final usedLemmas = <String>{}, usedForms = <String>{};
+  for (final state in storyNew) {
+    if (fresh.length >= size - due.length) break;
+    final c = cards[state.cardId]!;
+    if (usedLemmas.contains(selectionLemma(c)) ||
+        usedForms.contains(c.formNorm)) {
+      continue;
+    }
+    fresh.add(c.id);
+    usedLemmas.add(selectionLemma(c));
+    usedForms.add(c.formNorm);
+  }
+  fresh.addAll(
+    selectNewCards(
+      candidates: [
+        for (final id in activeDeckCardIds.toSet())
+          if (cards.containsKey(id) &&
+              (states[id]?.isActive ?? true) &&
+              (states[id]?.box ?? 0) == 0 &&
+              !fresh.contains(id) &&
+              !usedLemmas.contains(selectionLemma(cards[id]!)) &&
+              !usedForms.contains(cards[id]!.formNorm))
+            cards[id]!,
+      ],
+      knownLemmas: {
+        for (final id in states.keys)
+          if (cards[id] case final c?) selectionLemma(c),
+      },
+      limit: size - due.length - fresh.length,
+    ),
   );
   final early = eligible.where((s) => s.box >= 1 && !s.isDue(now)).toList()
     ..sort(dueOrder);

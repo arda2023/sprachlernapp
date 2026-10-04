@@ -306,7 +306,7 @@ void main() {
 
   test('sentence rotation by earlier reviews', () {
     expect(item.sentenceForPass(0).sentenceId, 's1');
-    expect(item.sentenceForPass(1).sentenceId, 's2');
-    expect(item.sentenceForPass(5).sentenceId, 's3');
+    expect(item.sentenceForPass(1).sentenceId, 's1');
+    expect(item.sentenceForPass(5).sentenceId, 's1');
   });
 }

@@ -12,7 +12,8 @@ part 'content_database.g.dart';
 // No Flutter imports: tool/stage_content_pack.dart shares the checks below.
 
 /// The content schema version this app reads (docs/content-schema.md).
-const supportedContentSchemaVersion = 1;
+const supportedContentSchemaVersion = 2;
+const supportedContentSchemaVersions = {1, 2};
 
 /// Tables and columns the app reads; anything missing is incompatible.
 const requiredContentColumns = <String, List<String>>{
@@ -109,13 +110,14 @@ ContentInfo validateContentSchema(Database db, {required String lang}) {
         'Sprache ${release['lang']}, erwartet $lang',
       );
     }
-    if (release['schema_version'] != supportedContentSchemaVersion) {
+    if (!supportedContentSchemaVersions.contains(release['schema_version'])) {
       throw ContentUnavailable(
         ContentUnavailableReason.incompatible,
         'Schema-Version ${release['schema_version']}, erwartet '
         '$supportedContentSchemaVersion',
       );
     }
+    if (release['schema_version'] == 2) validateSingleSentenceContent(db);
     final languages = db.select('SELECT code FROM languages WHERE code = ?', [
       lang,
     ]);
@@ -135,7 +137,7 @@ ContentInfo validateContentSchema(Database db, {required String lang}) {
     return ContentInfo(
       lang: lang,
       version: version,
-      schemaVersion: supportedContentSchemaVersion,
+      schemaVersion: release['schema_version'] as int,
       notes: release['notes'] as String?,
     );
   } on SqliteException catch (e) {
@@ -143,6 +145,98 @@ ContentInfo validateContentSchema(Database db, {required String lang}) {
       ContentUnavailableReason.corrupt,
       'nicht als Inhaltsdatenbank lesbar: ${e.message}',
     );
+  }
+}
+
+/// Schema-2 ownership and active links, checked before installation or use.
+void validateSingleSentenceContent(Database db) {
+  void reject(String message) => throw ContentUnavailable(
+    ContentUnavailableReason.incompatible,
+    'Schema 2: $message',
+  );
+  for (final table in ['deck_words', 'word_aliases']) {
+    if (db.select(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name=?",
+      [table],
+    ).isEmpty) {
+      reject('Pflichttabelle $table fehlt');
+    }
+  }
+  final words = db.select('SELECT * FROM deck_words WHERE removed_in IS NULL');
+  final aliases = db.select(
+    'SELECT id, lang, form_norm, word_id, removed_in FROM word_aliases',
+  );
+  final keys = <String>{};
+  final primaries = <String>{};
+  final positions = <String, List<int>>{};
+  for (final w in words) {
+    if (contentFormNorm(w['form_norm'] as String) != w['form_norm']) {
+      reject('nicht normalisierter Wortbesitz');
+    }
+    if (!keys.add('${w['lang']}/${w['form_norm']}')) {
+      reject('doppelter Wortbesitz ${w['form_norm']}');
+    }
+    final card = db.select(
+      'SELECT * FROM cards WHERE id=? AND removed_in IS NULL',
+      [w['primary_card_id']],
+    );
+    if (card.length != 1 ||
+        card.single['lang'] != w['lang'] ||
+        card.single['form_norm'] != w['form_norm']) {
+      reject('ungültige Primärkarte ${w['primary_card_id']}');
+    }
+    if (db.select(
+          'SELECT id FROM decks WHERE id=? AND lang=? AND removed_in IS NULL',
+          [w['deck_id'], w['lang']],
+        ).length !=
+        1) {
+      reject('Eigentümerstapel fehlt');
+    }
+    primaries.add('${w['deck_id']}/${w['primary_card_id']}/${w['position']}');
+    (positions[w['deck_id'] as String] ??= []).add(w['position'] as int);
+  }
+  for (final pos in positions.values) {
+    pos.sort();
+    if (pos.join(',') != List.generate(pos.length, (i) => i + 1).join(',')) {
+      reject('Stapelpositionen nicht 1..n');
+    }
+  }
+  final aliasKeys = {...keys};
+  for (final a in aliases.where((r) => r['removed_in'] == null)) {
+    if (contentFormNorm(a['form_norm'] as String) != a['form_norm'] ||
+        !aliasKeys.add('${a['lang']}/${a['form_norm']}') ||
+        !words.any((w) => w['id'] == a['word_id'] && w['lang'] == a['lang'])) {
+      reject('Alias ohne eindeutigen Wortbesitz ${a['form_norm']}');
+    }
+  }
+  final membership = db.select(
+    'SELECT * FROM deck_cards WHERE removed_in IS NULL',
+  );
+  if (membership.length != primaries.length ||
+      membership.any(
+        (r) => !primaries.contains(
+          '${r['deck_id']}/${r['card_id']}/${r['position']}',
+        ),
+      )) {
+    reject('Stapelzuordnung entspricht nicht Primärwörtern');
+  }
+  for (final c in db.select('SELECT * FROM cards WHERE removed_in IS NULL')) {
+    if (contentFormNorm(c['form'] as String) != c['form_norm'] ||
+        (c['form'] as String).trim() != c['form']) {
+      reject('ungültige Wortnormalisierung');
+    }
+    if (!keys.contains('${c['lang']}/${c['form_norm']}')) {
+      reject('Wort ohne Eigentümer ${c['form']}');
+    }
+    final links = db.select(
+      'SELECT cs.position, s.removed_in FROM card_sentences cs JOIN sentences s ON s.id=cs.sentence_id WHERE cs.card_id=? AND cs.removed_in IS NULL',
+      [c['id']],
+    );
+    if (links.length != 1 ||
+        links.single['position'] != 1 ||
+        links.single['removed_in'] != null) {
+      reject('Karte ${c['id']} braucht genau einen aktiven Satz (Position 1)');
+    }
   }
 }
 
@@ -215,7 +309,7 @@ class ContentManifest {
         'Manifest für Sprache ${manifest.lang}, erwartet $lang',
       );
     }
-    if (manifest.schemaVersion != supportedContentSchemaVersion) {
+    if (!supportedContentSchemaVersions.contains(manifest.schemaVersion)) {
       throw ContentUnavailable(
         ContentUnavailableReason.incompatible,
         'Manifest-Schema ${manifest.schemaVersion}, erwartet '

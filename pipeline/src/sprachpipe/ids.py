@@ -31,6 +31,8 @@ KEY_FIELDS: dict[str, tuple[str, ...]] = {
     "dictionary_forms": ("lang", "form_norm", "sense_id"),
     "decks": ("lang", "slug"),
     "deck_cards": ("deck_id", "card_id"),
+    "deck_words": ("lang", "form_norm"),
+    "word_aliases": ("lang", "form_norm"),
     "sentences": ("lang", "text"),
     "sentence_tokens": ("sentence_id", "idx"),
     "card_sentences": ("card_id", "sentence_id"),

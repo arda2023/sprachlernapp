@@ -1,4 +1,7 @@
 import 'package:flutter/cupertino.dart';
+
+import '../../../domain/story_learning.dart';
+
 import 'package:flutter/material.dart' show showModalBottomSheet;
 
 import '../../../models/story_models.dart';
@@ -14,6 +17,8 @@ class WordLookupSheet extends StatefulWidget {
     required this.entry,
     required this.mark,
     required this.onAdd,
+    this.status,
+    this.onReactivate,
     this.learningAvailable = true,
   });
 
@@ -21,7 +26,9 @@ class WordLookupSheet extends StatefulWidget {
   final String surface;
   final WordEntry entry;
   final WordMark? mark;
-  final VoidCallback onAdd;
+  final Future<StoryAddResult> Function() onAdd;
+  final StoryAddResult? status;
+  final Future<StoryAddResult> Function()? onReactivate;
   final bool learningAvailable;
 
   static Future<void> show(
@@ -29,7 +36,9 @@ class WordLookupSheet extends StatefulWidget {
     required String surface,
     required WordEntry entry,
     required WordMark? mark,
-    required VoidCallback onAdd,
+    required Future<StoryAddResult> Function() onAdd,
+    StoryAddResult? status,
+    Future<StoryAddResult> Function()? onReactivate,
     bool learningAvailable = true,
   }) => showModalBottomSheet<void>(
     context: context,
@@ -41,6 +50,8 @@ class WordLookupSheet extends StatefulWidget {
       entry: entry,
       mark: mark,
       onAdd: onAdd,
+      status: status,
+      onReactivate: onReactivate,
       learningAvailable: learningAvailable,
     ),
   );
@@ -52,9 +63,33 @@ class WordLookupSheet extends StatefulWidget {
 class _WordLookupSheetState extends State<WordLookupSheet> {
   late WordMark? _mark = widget.mark;
 
-  void _add() {
-    widget.onAdd();
-    setState(() => _mark = WordMark.active);
+  late StoryAddResult _status =
+      widget.status ?? const StoryAddResult(StoryAddState.unavailable);
+  bool _saving = false;
+  String? _error;
+  Future<void> _add({bool reactivate = false}) async {
+    if (_saving) return;
+    setState(() {
+      _saving = true;
+      _error = null;
+    });
+    try {
+      final result = await (reactivate
+          ? widget.onReactivate!()
+          : widget.onAdd());
+      if (mounted) {
+        setState(() {
+          _status = result;
+          if (result.state == StoryAddState.added) _mark = WordMark.active;
+        });
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(() => _error = 'Nicht gespeichert – erneut versuchen.');
+      }
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
   }
 
   @override
@@ -131,14 +166,33 @@ class _WordLookupSheetState extends State<WordLookupSheet> {
             const SizedBox(height: 28),
             if (!widget.learningAvailable)
               const Text(
-                'Story-Prototyp: Zum Lernen hinzufügen ist noch nicht verfügbar.',
+                'Für diesen Text sind keine geprüften Lernreferenzen vorhanden.',
               ),
-            AddToLearningButton(
-              mark: _mark,
-              onPressed: widget.learningAvailable && _mark == null
-                  ? _add
-                  : null,
+            if (_error != null || _status.message != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Semantics(
+                  liveRegion: true,
+                  child: Text(_error ?? _status.message!),
+                ),
+              ),
+            Semantics(
+              liveRegion: true,
+              child: AddToLearningButton(
+                mark: _mark,
+                label: _saving ? 'Wird hinzugefügt …' : _status.label,
+                onPressed:
+                    widget.learningAvailable && _status.canAdd && !_saving
+                    ? () => _add()
+                    : null,
+              ),
             ),
+            if (_status.state == StoryAddState.disabled &&
+                widget.onReactivate != null)
+              CupertinoButton(
+                onPressed: _saving ? null : () => _add(reactivate: true),
+                child: const Text('Wort reaktivieren'),
+              ),
           ],
         ),
       ),
@@ -153,10 +207,12 @@ class AddToLearningButton extends StatelessWidget {
     super.key,
     required this.mark,
     required this.onPressed,
+    this.label,
   });
 
   final WordMark? mark;
   final VoidCallback? onPressed;
+  final String? label;
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +221,10 @@ class AddToLearningButton extends StatelessWidget {
       WordMark.active => ('Wird gelernt', CupertinoIcons.checkmark),
       WordMark.mastered => ('Bereits gemeistert', CupertinoIcons.checkmark),
     };
-    return OutlineActionButton(label: label, icon: icon, onPressed: onPressed);
+    return OutlineActionButton(
+      label: this.label ?? label,
+      icon: icon,
+      onPressed: onPressed,
+    );
   }
 }

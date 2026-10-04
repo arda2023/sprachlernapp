@@ -270,7 +270,7 @@ void main() {
     test(
       'other schema version → incompatible',
       () => expectIncompatible(
-        (db) => db.execute('UPDATE content_releases SET schema_version = 2'),
+        (db) => db.execute('UPDATE content_releases SET schema_version = 77'),
       ),
     );
 

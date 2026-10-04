@@ -318,7 +318,7 @@ void main() {
     expect(find.text('1 Wort geübt'), findsOneWidget);
   });
 
-  testWidgets('Revue retains box / due date and rotates sentence', (
+  testWidgets('Revue retains box / due date and the fixed sentence', (
     tester,
   ) async {
     user.states['deck-0/0'] = UserCardState(
@@ -338,7 +338,7 @@ void main() {
     await tester.pumpAndSettle();
     await practice(tester, size: 1, mode: DeckPracticeMode.review);
     await answer(tester, 'walks');
-    expect(user.records.values.last.sentenceId, 'deck-0/0/s2');
+    expect(user.records.values.last.sentenceId, 'deck-0/0/s1');
   });
 
   testWidgets(
@@ -441,6 +441,8 @@ void main() {
       expect(find.text('Inhalte nicht verfügbar'), findsWidgets);
       expect(find.text('Allgemeine Sprache'), findsNothing);
       expect(find.text('Reisen & Unterwegs'), findsNothing);
+      await tester.drag(find.byType(Scrollable).first, const Offset(0, -300));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Erneut versuchen').first);
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(

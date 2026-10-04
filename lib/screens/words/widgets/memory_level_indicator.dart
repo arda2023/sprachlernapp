@@ -13,10 +13,12 @@ const memoryLevelTitles = [
   'Maximales Erinnerungsvermögen',
 ];
 
-String memoryLevelTitle(int level) => memoryLevelTitles[level - 1];
+String memoryLevelTitle(int level) =>
+    level == 0 ? 'Ungelernt' : memoryLevelTitles[level - 1];
 
 /// "Wiederholung nach 14 Tagen"-style line, derived from the box interval.
 String memoryLevelDetail(int level) {
+  if(level==0) return 'Noch nicht geübt';
   final interval = intervalLabel(leitnerInterval(level));
   final next = 'Nächste Wiederholung nach $interval';
   return level == leitnerBoxCount ? 'Gemeistert · $next' : next;
@@ -30,7 +32,7 @@ class MemoryLevelIndicator extends StatelessWidget {
     super.key,
     required this.level,
     this.dashWidth = 14,
-  }) : assert(level >= 1 && level <= leitnerBoxCount);
+  }) : assert(level >= 0 && level <= leitnerBoxCount);
 
   static const dashHeight = 4.0;
   static const gap = 3.0;
@@ -43,7 +45,7 @@ class MemoryLevelIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lit = context.appColors.memoryLevel(level);
+    final lit = level==0?context.appColors.hairline:context.appColors.memoryLevel(level);
     return ExcludeSemantics(
       child: Row(
         mainAxisSize: MainAxisSize.min,

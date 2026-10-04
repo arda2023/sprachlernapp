@@ -2,13 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../presentation/providers/deck_providers.dart';
 import '../../presentation/providers/learning_providers.dart';
+import '../../presentation/providers/story_learning_providers.dart';
 import '../../presentation/providers/database_providers.dart';
 import '../../presentation/content_unavailable_view.dart';
 
 import 'package:flutter/cupertino.dart';
 
 import '../../models/home_models.dart';
-import '../../models/sample_content.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/section_heading.dart';
 import 'widgets/deck_tile.dart';
@@ -164,10 +164,26 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 10),
-          StoryCarousel(
-            stories: sampleStories.take(5).toList(),
-            onOpen: onOpenStory,
-          ),
+          ref
+              .watch(libraryStoriesProvider)
+              .when(
+                data: (stories) => stories.isEmpty
+                    ? const Padding(
+                        padding: _gutter,
+                        child: Text('Noch keine Stories im Inhaltspaket.'),
+                      )
+                    : StoryCarousel(
+                        stories: stories.take(5).toList(),
+                        onOpen: onOpenStory,
+                      ),
+                loading: () => const CupertinoActivityIndicator(),
+                error: (_, _) => CupertinoButton(
+                  onPressed: () => ref.invalidate(storySummariesProvider),
+                  child: const Text(
+                    'Stories nicht verfügbar · Erneut versuchen',
+                  ),
+                ),
+              ),
         ],
       ),
     );

@@ -1,0 +1,2 @@
+# This offline import fixture binds the exact source bytes across platforms.
+pipeline/tests/fixtures/editorial_create_v2/base.json text eol=lf

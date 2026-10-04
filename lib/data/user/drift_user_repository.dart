@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart';
+
+import '../../domain/content.dart';
+import '../../domain/story_learning.dart';
+
 import 'package:characters/characters.dart';
 
 import '../../domain/preferences.dart';
@@ -8,7 +14,7 @@ import '../../domain/srs_state.dart';
 import 'user_database.dart';
 
 /// [UserRepository] on the Drift user.db of one language.
-class DriftUserRepository implements UserRepository {
+class DriftUserRepository implements UserRepository, StoryLearningRepository {
   DriftUserRepository(this._db, {required this.lang});
 
   final UserDatabase _db;
@@ -242,6 +248,10 @@ class DriftUserRepository implements UserRepository {
           _db.reviewLog,
           _db.deckSettings,
           _db.settings,
+          _db.cardContexts,
+          _db.storyLearningAdditions,
+          _db.storyWordSources,
+          _db.learningIdentityBindings,
         ]),
       )
       .map((_) {});
@@ -342,4 +352,294 @@ class DriftUserRepository implements UserRepository {
         packVersion: s.packVersion,
       ),
   ];
+  @override
+  Future<Map<String, DateTime>> explicitStoryAdditions() async => {
+    for (final row in await _db.select(_db.storyLearningAdditions).get())
+      row.cardId: row.addedAt.toLocal(),
+  };
+  @override
+  Future<Map<String, String>> identityBindings() async => {
+    for (final row in await (_db.select(
+      _db.learningIdentityBindings,
+    )..where((t) => t.lang.equals(lang))).get())
+      row.identityKey: row.cardId,
+  };
+
+  @override
+  Future<StoryAddResult> storyLearningStatus(StoryLearningCandidate c) async {
+    final invalid = c.validationProblem(needsContext: false);
+    if (c.lang != lang || invalid != null) {
+      return StoryAddResult(
+        c.retired ? StoryAddState.retired : StoryAddState.unavailable,
+        message: invalid ?? 'Andere Sprache',
+      );
+    }
+    final bound = (await identityBindings())[c.identity.key];
+    final states = await cardStates({
+      c.identity.localId,
+      if (c.card != null) c.card!.id,
+      ?bound,
+    });
+    if (states.length > 1) {
+      return const StoryAddResult(
+        StoryAddState.conflict,
+        message: 'Für diese genaue Bedeutung bestehen mehrere Lernstände. Beide bleiben erhalten; bitte in der Wortliste prüfen.',
+      );
+    }
+    final id =
+        bound ??
+        (states.isNotEmpty
+            ? states.keys.single
+            : c.card?.id ?? c.identity.localId);
+    final state = states[id];
+    if (state?.localOnly == true &&
+        !(await localPracticeItems()).any((i) => i.card.id == id)) {
+      return StoryAddResult(
+        StoryAddState.unavailable,
+        cardId: id,
+        message: 'Der gespeicherte lokale Übungskontext ist nicht verfügbar. Der Lernstand bleibt erhalten.',
+      );
+    }
+    if (state?.retired == true) {
+      return StoryAddResult(
+        StoryAddState.retired,
+        cardId: id,
+        message: 'Diese Karte wurde zurückgezogen.',
+      );
+    }
+    if (state?.disabled == true) {
+      return StoryAddResult(StoryAddState.disabled, cardId: id);
+    }
+    if (state != null &&
+        (state.box >= 1 ||
+            state.origin == CardOrigin.story ||
+            (await explicitStoryAdditions()).containsKey(id))) {
+      return StoryAddResult(StoryAddState.added, cardId: id);
+    }
+    if (c.unavailableReason != null && state == null) {
+      return StoryAddResult(
+        StoryAddState.unavailable,
+        message: c.unavailableReason,
+      );
+    }
+    return StoryAddResult(StoryAddState.available, cardId: id);
+  }
+
+  @override
+  Future<StoryAddResult> addStoryWord(
+    StoryLearningCandidate c, {
+    required DateTime now,
+  }) => _db.transaction(() async {
+    if (c.validationProblem(needsContext: false) case final problem?) {
+      throw StateError(problem);
+    }
+    final status = await storyLearningStatus(c);
+    if ([
+      StoryAddState.conflict,
+      StoryAddState.retired,
+      StoryAddState.unavailable,
+      StoryAddState.disabled,
+    ].contains(status.state)) {
+      return status;
+    }
+    final id = status.cardId!;
+    final existing = await (_db.select(
+      _db.userCards,
+    )..where((t) => t.cardId.equals(id))).getSingleOrNull();
+    final local = id.startsWith('u:');
+    if (existing == null && local) {
+      if (!c.token.contextApproved) {
+        throw StateError('Kein geprüfter lokaler Kontext');
+      }
+      final contextId = randomUuidV4();
+      await _db
+          .into(_db.userCards)
+          .insert(
+            UserCardsCompanion.insert(
+              cardId: id,
+              lang: lang,
+              box: 0,
+              createdAt: now.toUtc(),
+              origin: CardOrigin.story.code,
+              updatedAt: now.toUtc(),
+              localOnly: const Value(true),
+              form: Value(c.token.surface),
+              formNorm: Value(c.identity.formNorm),
+              glossDe: Value(c.token.gloss),
+              lemma: Value(c.token.lemma),
+              pos: Value(c.token.pos),
+              lemmaIdentity: Value(c.token.lemmaId),
+              senseIdentity: Value(c.token.senseId),
+              senseKey: Value(c.token.senseKey),
+              primaryContextId: Value(contextId),
+            ),
+          );
+      await _db
+          .into(_db.cardContexts)
+          .insert(
+            CardContextsCompanion.insert(
+              id: contextId,
+              cardId: id,
+              textValue: c.sentence.text,
+              translationDe: c.sentence.translation,
+              gapStart: c.token.start,
+              gapEnd: c.token.end,
+              sourceRef: c.storyId,
+              sentenceRef: c.sentence.id,
+              tokenIndex: c.token.index,
+              revision: c.revision,
+              fingerprint: c.sourceFingerprint,
+              lang: lang,
+              provenance: 'editorial_chat_reviewed',
+              createdAt: now.toUtc(),
+              tokensJson: jsonEncode([
+                for (final t in c.sentence.tokens)
+                  {
+                    'start': t.start,
+                    'end': t.end,
+                    'surface': t.surface,
+                    'translation': t.gloss,
+                  },
+              ]),
+              otherFormsJson: jsonEncode(c.otherForms.toList()..sort()),
+            ),
+          );
+    } else if (existing == null) {
+      await ensureCards([id], now: now, origin: CardOrigin.story);
+    }
+    await _db
+        .into(_db.learningIdentityBindings)
+        .insert(
+          LearningIdentityBindingsCompanion.insert(
+            identityKey: c.identity.key,
+            lang: lang,
+            formNorm: c.identity.formNorm,
+            semanticAnchor: c.identity.semanticAnchor,
+            cardId: id,
+          ),
+          mode: InsertMode.insertOrIgnore,
+        );
+    final binding = await (_db.select(
+      _db.learningIdentityBindings,
+    )..where((t) => t.identityKey.equals(c.identity.key))).getSingle();
+    if (binding.cardId != id) {
+      throw StateError(
+        'Lernidentität wurde parallel anders zugeordnet; bitte erneut öffnen.',
+      );
+    }
+    await _db
+        .into(_db.storyLearningAdditions)
+        .insert(
+          StoryLearningAdditionsCompanion.insert(
+            cardId: id,
+            addedAt: now.toUtc(),
+          ),
+          mode: InsertMode.insertOrIgnore,
+        );
+    await _db
+        .into(_db.storyWordSources)
+        .insert(
+          StoryWordSourcesCompanion.insert(
+            cardId: id,
+            fingerprint: c.sourceFingerprint,
+            sourceRef: c.storyId,
+            sentenceRef: c.sentence.id,
+            tokenIndex: c.token.index,
+            revision: c.revision,
+            addedAt: now.toUtc(),
+          ),
+          mode: InsertMode.insertOrIgnore,
+        );
+    return StoryAddResult(StoryAddState.added, cardId: id);
+  });
+
+  CardSentence _context(CardContextRow row) => CardSentence(
+    cardId: row.cardId,
+    sentenceId: row.id,
+    position: 1,
+    text: row.textValue,
+    translationDe: row.translationDe,
+    gapStart: row.gapStart,
+    gapEnd: row.gapEnd,
+    tokens: [
+      for (final t in jsonDecode(row.tokensJson) as List)
+        SentenceToken(
+          start: t['start'] as int,
+          end: t['end'] as int,
+          surface: t['surface'] as String,
+          translation: t['translation'] as String?,
+        ),
+    ],
+  );
+
+  @override
+  Future<List<PracticeItem>> localPracticeItems() async {
+    final result = <PracticeItem>[];
+    final rows = await (_db.select(
+      _db.userCards,
+    )..where((t) => t.localOnly.equals(true) & t.lang.equals(lang))).get();
+    for (final r in rows) {
+      if ([
+        r.form,
+        r.formNorm,
+        r.glossDe,
+        r.lemma,
+        r.pos,
+        r.lemmaIdentity,
+        r.senseIdentity,
+        r.primaryContextId,
+      ].any((v) => v == null || v.isEmpty)) {
+        continue;
+      }
+      final ctx =
+          await (_db.select(_db.cardContexts)..where(
+                (t) =>
+                    t.id.equals(r.primaryContextId!) &
+                    t.cardId.equals(r.cardId),
+              ))
+              .getSingleOrNull();
+      if (ctx == null ||
+          ctx.gapStart < 0 ||
+          ctx.gapEnd > ctx.textValue.length ||
+          ctx.gapStart >= ctx.gapEnd ||
+          contentFormNorm(ctx.textValue.substring(ctx.gapStart, ctx.gapEnd)) !=
+              r.formNorm) {
+        continue;
+      }
+      result.add(
+        PracticeItem(
+          card: ContentCard(
+            id: r.cardId,
+            lang: r.lang,
+            form: r.form!,
+            formNorm: r.formNorm!,
+            lemmaId: r.lemmaIdentity!,
+            lemma: r.lemma!,
+            pos: r.pos!,
+            senseId: r.senseIdentity,
+            senseKey: r.senseKey,
+            translationDe: r.glossDe,
+            formLabelDe: r.pos,
+          ),
+          sentences: [_context(ctx)],
+          otherFormsOfLemma: (jsonDecode(ctx.otherFormsJson) as List)
+              .cast<String>()
+              .toSet(),
+        ),
+      );
+    }
+    return result;
+  }
+
+  @override
+  Future<CardSentence?> localHistoricalSentence(
+    String cardId,
+    String contextId,
+  ) async {
+    final row =
+        await (_db.select(_db.cardContexts)
+              ..where((t) => t.id.equals(contextId) & t.cardId.equals(cardId)))
+            .getSingleOrNull();
+    return row == null ? null : _context(row);
+  }
 }

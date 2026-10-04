@@ -138,7 +138,7 @@ def slot_context(cfg: dict, card: dict, slot: int) -> tuple[str, str]:
     return situations[pos], g["names"][index(slot, "name", len(g["names"]))]
 
 
-def sentences(llm, cfg: dict, card: dict, count: int = 3, feedback: str = "",
+def sentences(llm, cfg: dict, card: dict, count: int = 1, feedback: str = "",
               *, contexts: list[tuple[str, str]] | None = None,
               avoid_words: list[str] | None = None) -> list[dict]:
     """Step B: [count] sentences {text, translation_de} for one card."""

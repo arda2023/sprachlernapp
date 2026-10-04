@@ -17,6 +17,8 @@ state.
 
 from __future__ import annotations
 
+from sprachpipe.content_contract import sentence_count
+
 import copy
 
 from .generate import gap_offsets
@@ -39,7 +41,7 @@ def _reref(name: str, pack: dict) -> None:
     new = {s["ref"]: f"{name}/{s['ref']}" for s in pack["sentences"]}
     for s in pack["sentences"]:
         s["ref"] = new[s["ref"]]
-    for row in pack["sentence_tokens"] + pack["card_sentences"]:
+    for row in pack["sentence_tokens"] + pack["card_sentences"] + pack.get("story_sentences", []):
         row["sentence"] = new[row["sentence"]]
 
 
@@ -131,11 +133,12 @@ def _locate(work: dict, op: dict, where: str) -> tuple[dict, dict]:
 
 
 def _pending_annotation(pending: list, card: str, work: dict) -> None:
-    refs = sorted(cs["sentence"] for cs in work["card_sentences"] if cs["card"] == card)
+    refs = sorted(cs["sentence"] for cs in work["card_sentences"]
+                  if cs["card"] == card and not cs.get("removed_in"))
     entry = next((p for p in pending if p["kind"] == "annotate_card" and p["card"] == card), None)
     if entry is None:
         pending.append({"kind": "annotate_card", "card": card, "sentences": refs,
-                        "note": "annotate_card annotates all three sentences of the card; "
+                        "note": "annotate_card annotates the active sentences required by the source schema; "
                                 "existing token rows of unchanged sentences come from the "
                                 "source pack and stay until then"})
     else:
@@ -395,32 +398,33 @@ def curate(packs: dict[str, dict], curation: dict, card_meta: dict[str, dict]) -
                             "values one by one",
                     "conflicting_keys": dictionary["conflicts"]})
 
-    # deck positions with the existing order rule
-    deck_rows = {d["card"]: d for d in work["deck_cards"]}
-    if set(deck_rows) != set(cards) or len(deck_rows) != len(work["deck_cards"]):
-        raise CurationError("every card needs exactly one deck_cards row")
-    missing_meta = sorted(set(cards) - set(card_meta))
-    if missing_meta:
-        raise CurationError(f"card_meta missing for {missing_meta}")
+    if sentence_count(work) == 3:  # explicit legacy source
+        # deck positions with the existing order rule
+        deck_rows = {d["card"]: d for d in work["deck_cards"]}
+        if set(deck_rows) != set(cards) or len(deck_rows) != len(work["deck_cards"]):
+            raise CurationError("every card needs exactly one deck_cards row")
+        missing_meta = sorted(set(cards) - set(card_meta))
+        if missing_meta:
+            raise CurationError(f"card_meta missing for {missing_meta}")
 
-    def order(ref: str) -> tuple:
-        form, lref, key = ref.split("|")
-        return deck_order_key({**card_meta[ref], "form": form, "sense_key": key})
-    for position, ref in enumerate(sorted(cards, key=order), start=1):
-        deck_rows[ref]["position"] = position
+        def order(ref: str) -> tuple:
+            form, lref, key = ref.split("|")
+            return deck_order_key({**card_meta[ref], "form": form, "sense_key": key})
+        for position, ref in enumerate(sorted(cards, key=order), start=1):
+            deck_rows[ref]["position"] = position
 
     # structure checks and expected counts
     srefs = {s["ref"] for s in work["sentences"]}
     for ref in cards:
-        positions = sorted(cs["position"] for cs in work["card_sentences"] if cs["card"] == ref)
-        if positions != [1, 2, 3]:
+        positions = sorted(cs["position"] for cs in work["card_sentences"] if cs["card"] == ref and not cs.get("removed_in"))
+        if positions != list(range(1, sentence_count(work)+1)):
             raise CurationError(f"card {ref!r} has sentence positions {positions}")
     for cs in work["card_sentences"]:
         text = next(s["text"] for s in work["sentences"] if s["ref"] == cs["sentence"])
         if text[cs["gap_start"]:cs["gap_end"]].casefold() != cards[cs["card"]]["form"].casefold():
             raise CurationError(f"gap of {cs['sentence']!r} does not match {cs['card']!r}")
     if {t["sentence"] for t in work["sentence_tokens"]} - srefs or \
-            {cs["sentence"] for cs in work["card_sentences"]} != srefs:
+            ({cs["sentence"] for cs in work["card_sentences"]} | {ss["sentence"] for ss in work.get("story_sentences", [])}) != srefs:
         raise CurationError("sentence references are inconsistent")
     ids = [sentence_id(lang, s["text"]) for s in work["sentences"]]
     if len(set(ids)) != len(ids):

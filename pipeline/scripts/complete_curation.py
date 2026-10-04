@@ -7,7 +7,7 @@ existing QA functions, Vertex wrapper, cost ledger and budget reservation:
 - sentence_qa: linter, blind test, meaning/language/translation check and
   alternative check of a replaced English sentence; dropped alternatives are
   re-checked in the new sentence and only confirmed ones are taken over;
-- annotate_card: annotate_card() for all three sentences of a card whose
+- annotate_card: annotate_card() for the schema-specific active sentences of a card whose
   replaced sentence passed QA;
 - dictionary_forms: set and rank from the resulting tokens; form translations
   only from source entries or the new annotation, never from sense glosses.
@@ -20,6 +20,8 @@ error, 3 technical or budget abort (partial state is saved).
 """
 
 from __future__ import annotations
+
+from sprachpipe.content_contract import sentence_count
 
 import argparse
 import copy
@@ -65,7 +67,7 @@ def _sentence(work: dict, ref: str) -> dict:
 
 
 def _links(work: dict, card: str) -> list[dict]:
-    return sorted((cs for cs in work["card_sentences"] if cs["card"] == card),
+    return sorted((cs for cs in work["card_sentences"] if cs["card"] == card and not cs.get("removed_in")),
                   key=lambda cs: cs["position"])
 
 
@@ -97,8 +99,8 @@ def check_preconditions(work: dict, curation: dict, inventory, cfg: dict) -> dic
         if o["op"] in ("replace_text", "replace_translation"):
             cards[o["card"]] = card_info(work, inventory, o["card"])
     for p in work["curation"]["pending"]:
-        if p["kind"] == "annotate_card" and len(p["sentences"]) != 3:
-            raise PreconditionError(f"{p['card']!r}: annotation needs three sentences")
+        if p["kind"] == "annotate_card" and len(p["sentences"]) != sentence_count(work):
+            raise PreconditionError(f"{p['card']!r}: annotation needs {sentence_count(work)} active sentences")
     c = cfg["llm"]
     for model_key, _ in CALLS.values():
         try:
@@ -310,7 +312,7 @@ def run_annotation(llm, cfg, work, step, cards, report) -> None:
                "translation_de": _sentence(work, cs["sentence"])["translation_de"],
                "gap": (cs["gap_start"], cs["gap_end"])} for cs in links]
     try:
-        annotate_card(llm, cfg, card, finals)
+        annotate_card(llm, cfg, card, finals, expected_count=sentence_count(work))
         findings = [f"{cs['sentence']}: {p}" for cs, a in zip(links, finals)
                     for p in a["annotate_problems"]]
     except ValueError as e:   # invalid response shape: a finding, not an abort
@@ -454,7 +456,7 @@ def print_plan(work: dict, cards: dict, estimate: dict, max_usd: float) -> None:
             print(f"{i:2}. sentence_qa {p['sentence']} [{_card_of(work, p['sentence'])}]"
                   f" checks={'+'.join(p['checks'])}{extra}\n      {s['text']} | {s['translation_de']}")
         elif p["kind"] == "annotate_card":
-            print(f"{i:2}. annotate_card {p['card']} (3 sentences: {', '.join(p['sentences'])})")
+            print(f"{i:2}. annotate_card {p['card']} ({sentence_count(work)} sentences: {', '.join(p['sentences'])})")
         else:
             print(f"{i:2}. dictionary_forms (local, after annotation; "
                   f"{len(p['conflicting_keys'])} known conflicting source keys stay open)")

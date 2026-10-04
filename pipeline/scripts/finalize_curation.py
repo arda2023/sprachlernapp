@@ -10,6 +10,8 @@ Exit codes: 0 written and verified, 2 argument or precondition error,
 
 from __future__ import annotations
 
+from sprachpipe.content_contract import sentence_count
+
 import argparse
 import copy
 import json
@@ -61,8 +63,8 @@ def check_preconditions(work: dict, report: dict, expect: dict) -> None:
     if len(cards) != len(work["cards"]):
         _fail("duplicate card refs")
     for ref in cards:
-        pos = sorted(cs["position"] for cs in work["card_sentences"] if cs["card"] == ref)
-        if pos != [1, 2, 3]:
+        pos = sorted(cs["position"] for cs in work["card_sentences"] if cs["card"] == ref and not cs.get("removed_in"))
+        if pos != list(range(1, sentence_count(work)+1)):
             _fail(f"card {ref!r} has positions {pos}")
     for cs in work["card_sentences"]:
         s, form = texts.get(cs["sentence"]), cards[cs["card"]]["form"]
@@ -90,7 +92,8 @@ def check_preconditions(work: dict, report: dict, expect: dict) -> None:
             if res["checked"] != {"text": s["text"], "translation_de": s["translation_de"]}:
                 _fail(f"translation_check {s['ref']!r} does not match the current sentence")
         elif step["kind"] == "annotate_card":
-            links = sorted((c for c in work["card_sentences"] if c["card"] == step["card"]),
+            links = sorted((c for c in work["card_sentences"]
+                            if c["card"] == step["card"] and not c.get("removed_in")),
                            key=lambda c: c["position"])
             now = [{"text": texts[c["sentence"]]["text"],
                     "translation_de": texts[c["sentence"]]["translation_de"]} for c in links]
@@ -148,8 +151,8 @@ def check_pack(final: dict, before_rows: dict) -> dict:
         if sorted(r.get("id", r.get("code")) for r in items) != \
                 sorted(r.get("id", r.get("code")) for r in before_rows[table]):
             _fail(f"IDs of {table} changed by finalization")
-    positions = sorted(d["position"] for d in rows["deck_cards"])
-    if positions != list(range(1, len(rows["cards"]) + 1)):
+    positions = sorted(d["position"] for d in rows["deck_cards"] if not d.get("removed_in"))
+    if sentence_count(final) == 3 and positions != list(range(1, len(rows["cards"]) + 1)):
         _fail("deck positions are not 1..n")
     ranks: dict[str, list] = {}
     for d in rows["dictionary_forms"]:
@@ -203,10 +206,10 @@ def finalize_state(work: dict, report: dict, resolutions: dict) -> tuple[dict, d
     if d["token_keys"] != expect["dictionary_keys"] or len(d["entries"]) != d["token_keys"]:
         _fail(f"dictionary keys {d['token_keys']} / entries {len(d['entries'])} != "
               f"expected {expect['dictionary_keys']}")
-    before = build_rows(dict(work, curation=dict(work["curation"], pending=[])))
     [step] = work["curation"]["pending"]
     work["dictionary_forms"] = [{k: e[k] for k in ("form", "sense", "card", "gloss_de", "rank")}
                                 for e in d["entries"]]
+    before = build_rows(dict(work, curation=dict(work["curation"], pending=[])))
     resolved = [{"form": e["form"], "sense": e["sense"], "gloss_de": e["gloss_de"],
                  "origin": e["origin"]} for e in d["entries"] if "resolution" in e["origin"]]
     work["curation"]["pending"].remove(step)
