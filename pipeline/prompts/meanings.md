@@ -1,4 +1,4 @@
-version: meanings-v4
+version: meanings-v5
 
 You are a lexicographer preparing vocabulary cards for adult German speakers learning {lang_name}.
 
@@ -8,7 +8,7 @@ Frequency rank (wordfreq, {lang}): {rank}
 List the meanings of exactly this form that are genuinely relevant for learners who meet this form. At most {max_meanings}, most important first. Treat function words (prepositions, particles, adverbs such as "about", "up", "so", "just", "the") like any other word: give their relevant meanings. Different parts of speech with different German translations are separate meanings, even when their English form is identical: for "left", distinguish adjective "links", adverb "nach links", verb "verließ" and adjective "übrig".
 
 For each meaning:
-- pos: Universal POS tag of the form in this meaning (NOUN, VERB, ADJ, ADV, ADP, PRON, DET, AUX, CCONJ, SCONJ, PART, INTJ).
+- pos: Universal POS tag of the form in this meaning (NOUN, VERB, ADJ, ADV, ADP, PRON, DET, AUX, CCONJ, SCONJ, PART, INTJ). English UD convention: copular "be" (state, property, identity, location) is AUX; "be" meaning "exist" is VERB. Learner terms such as "Vollverb" belong only in form_label_de, not in pos.
 - lemma: dictionary form (e.g. "go" for "went").
 - sense_key: stable slug "<lemma>#<short German keyword>", lowercase, ASCII only (ae/oe/ue/ss for umlauts), e.g. "leave#verlassen", "left#links".
 - gloss_de: short German gloss with a brief distinction from other meanings of this form. For example, for "left": "verlassen (einen Ort verlassen)" versus "zurücklassen (etwas liegen lassen)". Do not merge senses that differ this way.

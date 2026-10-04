@@ -77,9 +77,9 @@ def test_code_inserts_candidates_literally(cfg):
     assert "Original sentence: " + STAIRS in prompt
     assert "German translation: Zoe trägt das Essen die Treppe hinauf." in prompt
     assert kwargs["step"] == "alternative_check"
-    assert kwargs["model"] == cfg["llm"]["blindtest_model"]
-    assert kwargs["thinking"] == cfg["llm"]["blindtest_thinking"]
-    assert kwargs["max_output_tokens"] == cfg["llm"]["max_output_tokens"]["alternative_check"] == 512
+    assert kwargs["model"] == cfg["llm"]["alternative_check_model"] == "gemini-3.8-flash"
+    assert kwargs["thinking"] == cfg["llm"]["alternative_check_thinking"] == {"thinking_level": "LOW"}
+    assert kwargs["max_output_tokens"] == cfg["llm"]["max_output_tokens"]["alternative_check"] == 1024
     assert schema["properties"]["results"]["minItems"] == schema["properties"]["results"]["maxItems"] == 1
     assert results == [{"candidate_index": 1, "candidate": "up the", "norm": "up the",
                         "sentence": "Zoe carries the food up the the stairs.",
@@ -190,13 +190,36 @@ def test_alternative_check_only_after_original_checks(cfg):
 def test_ledger_step_alternative_check(cfg, tmp_path):
     class Vertex(Llm):
         def _call(self, prompt, schema, model, thinking, max_output_tokens):
-            assert max_output_tokens == 512 and model == "gemini-2.5-flash"
-            return json.dumps({"results": [{"candidate_index": 1, "valid": True, "reason": "ok"}]}), (80, 20, 0)
+            assert max_output_tokens == 1024 and model == "gemini-3.8-flash"
+            assert thinking == {"thinking_level": "LOW"}
+            return json.dumps({"results": [{"candidate_index": 1, "valid": True, "reason": "ok"}]}), (80, 20, 10)
     llm = Vertex(cfg, tmp_path / "ledger.csv", 1.0)
     assert check(llm, cfg, ABOUT, ABOUT_GAP, "x", ["approximately"])[0]["status"] == "confirmed"
     rows = list(csv.DictReader(open(tmp_path / "ledger.csv", encoding="utf-8")))
-    assert [r["step"] for r in rows] == ["alternative_check"]
-    assert float(rows[0]["usd"]) == pytest.approx((80 * 0.30 + 20 * 2.50) / 1_000_000)
+    assert [(r["step"], r["model"]) for r in rows] == [("alternative_check", "gemini-3.8-flash")]
+    # priced with the model actually called, no fallback
+    from sprachpipe.llm import cost_usd, model_price
+    assert float(rows[0]["usd"]) == pytest.approx(
+        cost_usd(model_price(cfg["prices"], "gemini-3.8-flash"), 80, 20, 10), abs=1e-6)
+
+
+def test_other_checks_keep_their_models(cfg):
+    from sprachpipe.blindtest import ask
+    from sprachpipe.meaning_check import check as check_meaning
+    c = cfg["llm"]
+    seen = {}
+    class Rec:
+        def generate_json(self, prompt, schema, **kwargs):
+            seen[kwargs["step"]] = (kwargs["model"], kwargs["thinking"], kwargs["max_output_tokens"])
+            if kwargs["step"] == "blindtest":
+                return {"answer": "about", "alternatives": []}
+            return {"sense_key": "about#ungefaehr", "observed_pos": "ADV", "translation_ok": True,
+                    "language_ok": True, "reason": "ok"}
+    ask(Rec(), cfg, ABOUT, ABOUT_GAP, "x", "ungefähr")
+    check_meaning(Rec(), cfg, ABOUT, "about", [{"sense_key": "about#ungefaehr", "pos": "ADV",
+                  "form_kind": "other", "form_label_de": "Adverb", "gloss_de": "ungefähr"}], "x")
+    assert seen == {"blindtest": ("gemini-2.5-flash", {"thinking_budget": 0}, 256),
+                    "meaning_check": (c["meaning_check_model"], c["meaning_check_thinking"], 1024)}
 
 
 ABOUT_YEARS = "David has known his best friend for about ten years."
@@ -245,13 +268,18 @@ def test_rejected_main_answer_never_becomes_alternative(cfg):
     assert all(a["valid_alternatives"] == [] for a in attempts)
 
 
-def test_alternative_prompt_v2_requires_same_statement(cfg):
+def test_alternative_prompt_v3_compares_original_directly(cfg):
     fake = Judge()
     check(fake, cfg, ABOUT_YEARS, ABOUT_YEARS_GAP, ABOUT_YEARS_DE, ["nearly"])
     prompt = fake.calls[0][0]
-    assert load_prompt("alternative_check")[0] == "alternative-check-v2"
+    assert load_prompt("alternative_check")[0] == "alternative-check-v3"
     assert "German translation: " + ABOUT_YEARS_DE in prompt
-    for rule in ("ungefähr", "hinauf", "negation, time reference, modality",
+    for rule in ("ungefähr", "hinauf", "time reference", "negation, modality",
+                 "the people involved", "Compared directly with the original English sentence",
+                 "never justifies a shift between original and candidate",
                  "Do not read extra information", "If in doubt, set valid to false"):
         assert rule in prompt
+    template = load_prompt("alternative_check")[1]
+    for once in ("time reference", "ungefähr", "hinauf"):   # consolidated, not repeated
+        assert template.count(once) == 1, once
     assert "about" not in prompt.replace(ABOUT_YEARS, "")   # no hard-coded word decision

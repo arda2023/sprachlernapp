@@ -54,6 +54,16 @@ def usage_counts(metadata) -> tuple[int, int, int]:
             int(getattr(metadata, "thoughts_token_count", 0) or 0))
 
 
+def parse_context(model: str, max_output_tokens: int, usage, meta: dict) -> str:
+    """Diagnosis for an unparseable response: no prompt, no response text;
+    values the call did not report are named 'unbekannt'."""
+    known = meta.get("usage_known", True)
+    tokens = [f"{k}={v if known else 'unbekannt'}"
+              for k, v in zip(("input_tokens", "output_tokens", "thinking_tokens"), usage)]
+    return ", ".join([f"model={model}", f"max_output_tokens={max_output_tokens}", *tokens,
+                      f"finish_reason={meta.get('finish_reason') or 'unbekannt'}"])
+
+
 class Llm:
     def __init__(self, cfg: dict, ledger: str | Path, max_usd: float):
         self.cfg = cfg["llm"]
@@ -118,7 +128,8 @@ class Llm:
                 if self._fatal_auth.is_set():
                     raise AuthError("Vertex authentication failed in this run")
                 try:
-                    response, usage = self._call(prompt, schema, model, thinking, max_output_tokens)
+                    response, usage, *meta = self._call(prompt, schema, model, thinking,
+                                                        max_output_tokens)
                     inp, out, think = usage
                     with self._budget:
                         usd = cost_usd(price, inp, out, think)
@@ -140,7 +151,10 @@ class Llm:
                     with self._budget:
                         self._budget.notify_all()
                     raise
-                except (LlmError, json.JSONDecodeError) as e:
+                except json.JSONDecodeError as e:   # no retry, no repair
+                    context = parse_context(model, max_output_tokens, usage, meta[0] if meta else {})
+                    raise LlmError(f"{step}: {e} ({context})") from e
+                except LlmError as e:
                     raise LlmError(f"{step}: {e}") from e
         finally:
             with self._budget:
@@ -148,7 +162,8 @@ class Llm:
                 self._budget.notify_all()
 
     def _call(self, prompt, schema, model, thinking, max_output_tokens):
-        """Returns (json_text, (input_tokens, output_tokens, thinking_tokens))."""
+        """Returns (json_text, (input_tokens, output_tokens, thinking_tokens),
+        {finish_reason, usage_known})."""
         from google.auth.exceptions import GoogleAuthError
         from google.genai import errors, types
 
@@ -172,7 +187,9 @@ class Llm:
             raise LlmError(f"{type(e).__name__}: {e}") from e
         u = r.usage_metadata
         usage = usage_counts(u)
-        return r.text, usage
+        finish = getattr((r.candidates or [None])[0], "finish_reason", None)
+        return r.text, usage, {"finish_reason": None if finish is None else getattr(finish, "value", str(finish)),
+                               "usage_known": u is not None}
 
     @property
     def client(self):

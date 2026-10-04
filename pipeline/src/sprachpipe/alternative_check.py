@@ -62,8 +62,8 @@ def check(llm, cfg: dict, text: str, gap: tuple[int, int], translation_de: str,
                             f"{i}. inserted: \"{c}\" -> {s}"
                             for i, (c, s) in enumerate(zip(candidates, sentences), start=1)))
     c = cfg["llm"]
-    result = llm.generate_json(prompt, _schema(len(candidates)), model=c["blindtest_model"],
-                               thinking=c["blindtest_thinking"], step="alternative_check",
+    result = llm.generate_json(prompt, _schema(len(candidates)), model=c["alternative_check_model"],
+                               thinking=c["alternative_check_thinking"], step="alternative_check",
                                max_output_tokens=c["max_output_tokens"]["alternative_check"])
     verdicts = _verdicts(result, len(candidates))
     out = []

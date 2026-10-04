@@ -58,6 +58,9 @@ def _valid_alternatives(cs: dict, form: str) -> list[str]:
 
 
 def build_rows(pack: dict) -> dict[str, list[dict]]:
+    if (pack.get("curation") or {}).get("pending"):
+        raise ValueError("curated working state has pending annotation/QA steps; "
+                         "it is not a final pack")
     lang = pack["lang"]
     rows: dict[str, list[dict]] = {t: [] for t in COLUMNS}
     lemma_ids: dict[str, str] = {}
@@ -197,6 +200,13 @@ def _slug(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", t).strip("-") or "x"
 
 
+def deck_order_key(card: dict) -> tuple:
+    """Deck position order: frequency rank (+200 for 'neben'), then the
+    meaning order of the inventory, form and sense key."""
+    return ((card.get("rank") or 10**9) + (200 if card.get("usage") == "neben" else 0),
+            card.get("sense_index", 0), card["form"], card["sense_key"])
+
+
 def assemble_pack(lang: str, cards: list[dict], *, model: str, version: str) -> dict:
     """Pack (schema of tests/fixtures/mini_pack.json) from generated cards.
     A card goes in only with 3 ok sentences. Sets card['packed']."""
@@ -297,9 +307,7 @@ def assemble_pack(lang: str, cards: list[dict], *, model: str, version: str) -> 
                       ["anfaenger", "mittel", "fortgeschritten"].index(value)))[0]
         pack["decks"].append({"ref": "allgemeine-sprache", "slug": "allgemeine-sprache",
                               "title_de": "Allgemeine Sprache", "cefr_band": band, "sort": 1})
-        ordered = sorted(packed_source, key=lambda c: (
-            (c.get("rank") or 10**9) + (200 if c.get("usage") == "neben" else 0),
-            c.get("sense_index", 0), c["form"], c["sense_key"]))
+        ordered = sorted(packed_source, key=deck_order_key)
         for position, card in enumerate(ordered, start=1):
             pack["deck_cards"].append({"deck": "allgemeine-sprache",
                                        "card": f"{card['form']}|{card['lemma']}/{card['pos']}|{card['sense_key']}",

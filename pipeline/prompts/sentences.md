@@ -1,4 +1,4 @@
-version: sentences-v6
+version: sentences-v7
 
 You write example sentences for a {lang_name} vocabulary card for adult German speakers.
 
@@ -23,5 +23,6 @@ Write exactly {count} sentence(s). Rules for every sentence:
 9. Use a different first word for every sentence, ignoring case. Vary sentence patterns: mix statements, questions, requests, and negation where natural. Make the situations distinct.
 10. Ends with . ? or !  No digits.
 11. Natural, common English that a native speaker would write: idiomatic word choice and collocations, correct spelling and word boundaries. Never split a word or a word normally written as one (e.g. a closed compound) so that the form appears separately; if the form only fits unnaturally, choose a different situation.
+12. Use the form with exactly the part of speech given above ({pos}). If it is PRON, the form stands on its own as a pronoun and is not followed by the noun it refers to; for interrogative "which" as PRON write e.g. "Which is cheaper?" or "Which of these coats is yours?", not "Which coat ..." or "Which red coat ..." (those are DET). If it is DET, the form begins a noun phrase; adjectives may stand between it and the noun.
 translation_de: idiomatic German that preserves the sentence meaning, including time/tense, negation, who does what, and modality. Do not add a time-of-day meaning for "early" when the English means "before expected". Natural phrasing is welcome; changing meaning is not.
 {feedback}

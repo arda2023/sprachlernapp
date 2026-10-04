@@ -343,7 +343,7 @@ def test_confirmed_alternative_in_pack_csv_report_and_ledger(cfg, tmp_path):
     assert "- Kandidaten geprüft: 2" in report
     assert "- bestätigt: 1, abgelehnt: 1, ohne gültiges Urteil (ungültige Prüfantwort): 0" in report
     assert "- In valid_alternatives des Packs: 1" in report
-    assert "blindtest-v3" in report and "alternative-check-v2" in report and "meaning-check-v3" in report and "sentences-v6" in report
+    assert "blindtest-v3" in report and "alternative-check-v3" in report and "meaning-check-v6" in report and "sentences-v7" in report
     assert "Kosten je gepackter Karte:" in report and "(1 Karten im Pack)" in report
     ledger = list(csv.DictReader(open(tmp_path / "ledger.csv", encoding="utf-8")))
     assert sum(r["step"] == "alternative_check" for r in ledger) == 1

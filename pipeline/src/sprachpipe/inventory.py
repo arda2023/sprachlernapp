@@ -87,4 +87,5 @@ class MeaningInventory:
         temporary.replace(self.path)
 
 
-CLOZE_AMBIGUOUS = {"what#ausruf", "there#beruhigung", "like#als_ob", "this#so_graduierend"}
+CLOZE_AMBIGUOUS = {"what#ausruf", "there#beruhigung", "like#als_ob", "this#so_graduierend",
+                   "not#gar_nicht"}   # emphasis lies in "at all", not in the gap word "not"

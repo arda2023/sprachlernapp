@@ -130,3 +130,77 @@ def test_invalid_alternatives_are_rejected(pack, value):
     bad["card_sentences"][0]["valid_alternatives"] = value
     with pytest.raises(ValueError, match="valid_alternatives"):
         build_rows(bad)
+
+
+def old_database(target):
+    """A real existing SQLite target with different content."""
+    con = sqlite3.connect(target)
+    try:
+        with con:
+            con.execute("create table old_content (x integer)")
+            con.execute("insert into old_content values (42)")
+    finally:
+        con.close()
+    return target.read_bytes()
+
+
+def test_refused_curation_state_keeps_existing_target(pack, tmp_path):
+    target = tmp_path / "content.sqlite"
+    before = old_database(target)
+    pending = dict(pack, curation={"version": "t", "pending": [{"kind": "annotate_card"}]})
+    with pytest.raises(ValueError, match="pending annotation/QA"):
+        export_sqlite(pending, target)
+    assert target.read_bytes() == before
+    assert list(tmp_path.iterdir()) == [target]
+
+
+def test_write_error_keeps_existing_target_and_cleans_up(pack, tmp_path, monkeypatch):
+    import sprachpipe.export as export
+    target = tmp_path / "content.sqlite"
+    before = old_database(target)
+    real, calls = export._ddl, []
+
+    def failing_ddl(table):
+        calls.append(table)
+        if len(calls) == 3:
+            raise sqlite3.OperationalError("disk I/O error (simulated)")
+        return real(table)
+    monkeypatch.setattr(export, "_ddl", failing_ddl)
+    with pytest.raises(sqlite3.OperationalError, match="simulated"):
+        export_sqlite(pack, target)
+    assert len(calls) == 3   # failed in the middle of writing
+    assert target.read_bytes() == before
+    assert list(tmp_path.iterdir()) == [target]
+
+
+def test_successful_export_replaces_existing_target(pack, tmp_path):
+    from sprachpipe.schema import COLUMNS, TABLE_ORDER
+    target = tmp_path / "content.sqlite"
+    before = old_database(target)
+    counts = export_sqlite(pack, target)
+    assert target.read_bytes() != before
+    assert list(tmp_path.iterdir()) == [target]
+    con = sqlite3.connect(target)
+    try:
+        tables = [r[0] for r in con.execute("select name from sqlite_master where type='table'")]
+        assert sorted(tables) == sorted(TABLE_ORDER) and "old_content" not in tables
+        for table in TABLE_ORDER:
+            assert [c[1] for c in con.execute(f'pragma table_info("{table}")')] == [n for n, _ in COLUMNS[table]]
+            assert con.execute(f'select count(*) from "{table}"').fetchone()[0] == counts[table]
+    finally:
+        con.close()
+    target.unlink()   # no own handle left open (would fail on Windows)
+
+
+@pytest.mark.parametrize("failure", ["validation", "write"])
+def test_failed_export_without_target_leaves_no_file(pack, tmp_path, monkeypatch, failure):
+    import sprachpipe.export as export
+    target = tmp_path / "new" / "content.sqlite"
+    if failure == "validation":
+        pack = dict(pack, curation={"pending": [{"kind": "sentence_qa"}]})
+    else:
+        monkeypatch.setattr(export, "_value", lambda *a: (_ for _ in ()).throw(RuntimeError("boom")))
+    with pytest.raises((ValueError, RuntimeError)):
+        export_sqlite(pack, target)
+    assert not target.exists()
+    assert not target.parent.exists() or list(target.parent.iterdir()) == []

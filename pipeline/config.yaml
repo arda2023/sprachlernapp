@@ -48,8 +48,12 @@ llm:
   generate_thinking: {thinking_level: LOW}
   blindtest_model: gemini-2.5-flash    # cheaper; availability checked 2026-10-03 with a mini call
   blindtest_thinking: {thinking_budget: 0}
+  meaning_check_model: gemini-3.8-flash   # live QA v2 (2026-10-04): 8/8 vs. 1/8 with blindtest_model
+  meaning_check_thinking: {thinking_level: LOW}
+  alternative_check_model: gemini-3.8-flash   # smoke v8: blindtest_model confirmed nearly for about
+  alternative_check_thinking: {thinking_level: LOW}
   timeout_s: 90
-  max_output_tokens: {meanings: 2048, sentences: 2048, annotate: 4096, blindtest: 256, meaning_check: 256, classify_usage: 1024, alternative_check: 512}   # alternative_check: up to 4 candidates per call
+  max_output_tokens: {meanings: 2048, sentences: 2048, annotate: 4096, blindtest: 256, meaning_check: 1024, classify_usage: 1024, alternative_check: 1024}   # alternative_check: up to 4 candidates per call
 
 generate:
   concurrency: 8

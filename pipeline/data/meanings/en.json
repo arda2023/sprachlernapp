@@ -816,7 +816,7 @@
       "display_form": "was",
       "meanings": [
         {
-          "pos": "VERB",
+          "pos": "AUX",
           "lemma": "be",
           "sense_key": "be#sein_vollverb",
           "gloss_de": "sein (Zustand, Eigenschaft oder Identität in der Vergangenheit)",
@@ -857,7 +857,7 @@
           "status": "active"
         },
         {
-          "pos": "VERB",
+          "pos": "AUX",
           "lemma": "be",
           "sense_key": "be#sein_existieren",
           "gloss_de": "sein (einen Zustand, eine Eigenschaft oder Identität haben)",
@@ -869,7 +869,7 @@
           "status": "active"
         },
         {
-          "pos": "VERB",
+          "pos": "AUX",
           "lemma": "be",
           "sense_key": "be#befinden",
           "gloss_de": "sich an einem bestimmten Ort befinden",
@@ -951,10 +951,10 @@
           "status": "active"
         },
         {
-          "pos": "VERB",
+          "pos": "AUX",
           "lemma": "be",
           "sense_key": "be#sein_vollverb",
-          "gloss_de": "Vollverb / Kopula: existieren oder eine Eigenschaft/Zustand haben",
+          "gloss_de": "sein (als Kopula zur Angabe von Zustand, Identität oder Eigenschaft)",
           "form_kind": "other",
           "form_label_de": "Verb, Präsens Plural / 2. Person",
           "cefr_band": "anfaenger",
@@ -1112,7 +1112,8 @@
           "cefr_band": "anfaenger",
           "translation_de": "gar nicht",
           "usage": "haupt",
-          "status": "active"
+          "status": "excluded",
+          "exclude_reason": "cloze_ambiguous"
         }
       ]
     },
