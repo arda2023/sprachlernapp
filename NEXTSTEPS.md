@@ -1,23 +1,24 @@
 # NEXTSTEPS
 ## Stand Pipeline
-- Inventar, display_form, Ausschlüsse, Parallelität, Stapelreihenfolge, gebündelte Annotation und Bedeutungs-/POS-/Übersetzungsprüfung unverändert.
-- Smoke v5 laut Arda: 13/15 Karten, 39 Sätze, 0,1365 USD; Ursache u. a. Ausschluss echter Synonyme (about=ungefähr).
-## Alternativantworten, Content-Seite (Commit a208cba)
-- blindtest-v3 liefert Kandidaten (abweichende Hauptantwort + ≤ 3 Alternativen, ≤ 4); alternative-check-v1 prüft wörtlich eingesetzte Sätze, ein Aufruf je Satzversuch.
-- Hauptantwort = Zielform oder genau diese Hauptantwort bestätigt → Satz besteht; sonst ein Blindtest-Neuversuch, dann failed.
-- valid_alternatives in Pack, build_rows, schema.py und SQLite-Export; accepted bleibt [Zielform]; IDs unverändert; alte Packs → [].
-- Status: umgesetzt und offline getestet; Migration 20261004000001 erstellt, nicht angewendet; Live-Qualität ungeprüft.
-## Review 04.10.2026 (Code, kein funktionaler Befund)
-- confirmed_alternative besteht in QA, Pack-Aufnahme und Bericht; nur `passed` kennzeichnet den exakten Zielform-Treffer.
-- Eine andere bestätigte Alternative rettet keine abgelehnte Hauptantwort (Ad-hoc-Probe: replaced → failed, valid_alternatives []).
-- Einsetzen per Code in die Originalspanne; Prüfantwort ohne Satz-/Kandidatenfelder; ungültig → failed; Auth/Budget/Transport → Abbruch.
-- Statusangaben in PRODUCT.md und docs/srs.md berichtigt; Produktregeln unverändert.
-- Offline: 162 passed. Keine Code-/Teständerung, keine Cloud-Läufe, DB-Verbindungen, Commits oder Pushes.
+- Inventar, display_form, Ausschlüsse, Parallelität, Stapelreihenfolge, gebündelte Annotation unverändert.
+- Alternativantworten (Commit a208cba): blindtest-v3 liefert Kandidaten, Alternativprüfung je Satzversuch ein Aufruf; valid_alternatives in Pack, schema.py, SQLite-Export; accepted bleibt [Zielform].
+- Migration 20261004000001 erstellt, nicht angewendet.
+## Smoke v6 (laut Arda)
+- 15 Karten, 45 Sätze, 20 gespeicherte Alternativen, 0,1120 USD; Datenfluss funktioniert.
+- Befunde: „sun is too light“ + bright bestätigt; „sun light“ getrennt; about → nearly/almost bestätigt; up the mountain road → along bestätigt.
+## QA-Lücken geschlossen (offline, 04.10.2026)
+- meaning-check-v3: Pflichtfeld language_ok im selben Aufruf; false → failed, Grund „Sprache“, vor der Alternativprüfung.
+- Fehlendes oder falsch typisiertes language_ok → ungültige Prüfantwort. Retry- und Kandidatenlimits unverändert.
+- alternative-check-v2: gleiche Aussage und Übersetzung (Mengen, Richtung, Negation, Zeit, Modalität, Handelnde); im Zweifel false.
+- sentences-v6: natürliche Sprache, keine Wortzerlegung; keine Wortlisten.
+- language_ok in meaning_check_result, qa_report, review.csv („Sprachprüfung“), Bericht; alte Packs lesbar.
+- Prüfsammlung tests/fixtures/qa_language_cases.json und scripts/check_qa_cases.py vorbereitet, nicht live ausgeführt.
+- Live-Qualität der neuen Prompts ungeprüft.
 ## Nächster Schritt
-- Smoke v6 durch Arda im normalen Terminal (Befehle im Review-Bericht): Backup, eindeutiger Pack-Pfad, ein Lauf, Exitcode.
-- Auswertung braucht smoke_pack_v6*.json, run_report.md, review.csv und Konsolenausgabe.
-- Danach: Migration anwenden (nach Freigabe), dann App (valid_alternatives lesen, Hinweis, hint_used-Migration, Box-1-Regel).
+- Arda: `scripts/check_qa_cases.py --out out/qa_language_v1 --max-usd 0.25`, results.json auswerten.
+- Bei Abweichungen Ergebnisse auswerten, Prompts nicht auf die bekannten Beispiele zuschneiden.
+- Danach Smoke v7, dann Migration (nach Freigabe), dann App (valid_alternatives, Hinweis, hint_used, Box-1-Regel).
 ## Offen
 - Empfehlungen (nicht angewendet): their/they#ihr_singular, like#fuellwort, will#testament redaktionell entscheiden.
 - Alternativensuche ist Heuristik, keine Vollständigkeitsgarantie.
-- 60er-Pilot erst nach ausgewertetem Smoke v6.
+- 60er-Pilot erst nach ausgewertetem QA-Vergleich und Smoke v7.

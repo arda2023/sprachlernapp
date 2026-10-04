@@ -11,8 +11,9 @@ from sprachpipe.alternative_check import check, filled
 from sprachpipe.blindtest import judge
 from sprachpipe.config import load_config
 from sprachpipe.cost import BudgetExceeded
-from sprachpipe.generate import qa_sentence
+from sprachpipe.generate import load_prompt, qa_sentence
 from sprachpipe.llm import AuthError, Llm, LlmError
+from sprachpipe.pack import assemble_pack
 
 ABOUT = "Nina walks for about thirty minutes."
 ABOUT_GAP = (15, 20)
@@ -45,7 +46,8 @@ class Judge:
                             for i, c in found]}
 
 
-def run_qa(cfg, text, gap, form, blind_answer, checker, *, meaning_ok=True, regenerate=None):
+def run_qa(cfg, text, gap, form, blind_answer, checker, *, meaning_ok=True, language_ok=True,
+           regenerate=None):
     calls = {"blind": 0, "meaning": 0, "alternative": 0}
     def blind(*_):
         calls["blind"] += 1
@@ -53,7 +55,7 @@ def run_qa(cfg, text, gap, form, blind_answer, checker, *, meaning_ok=True, rege
     def meaning(*_):
         calls["meaning"] += 1
         return {"sense_key": "k" if meaning_ok else "other", "observed_pos": "ADV",
-                "translation_ok": True, "reason": "Passt."}
+                "translation_ok": True, "language_ok": language_ok, "reason": "Passt."}
     def alternative(text, gap, tr, candidates):
         calls["alternative"] += 1
         return check(checker, cfg, text, gap, tr, candidates)
@@ -195,3 +197,61 @@ def test_ledger_step_alternative_check(cfg, tmp_path):
     rows = list(csv.DictReader(open(tmp_path / "ledger.csv", encoding="utf-8")))
     assert [r["step"] for r in rows] == ["alternative_check"]
     assert float(rows[0]["usd"]) == pytest.approx((80 * 0.30 + 20 * 2.50) / 1_000_000)
+
+
+ABOUT_YEARS = "David has known his best friend for about ten years."
+ABOUT_YEARS_GAP = (36, 41)
+ABOUT_YEARS_DE = "David kennt seinen besten Freund seit ungefähr zehn Jahren."
+
+
+@pytest.mark.parametrize("blind_answer", [
+    {"answer": "light", "alternatives": [{"answer": "bright", "reason": "x"}]},   # target form
+    {"answer": "bright", "alternatives": []}])                                     # other main answer
+def test_unnatural_original_is_not_rescued_by_valid_alternative(cfg, blind_answer):
+    text, gap = "Ali sits under a tree because the sun is too light.", (45, 50)
+    fake = Judge({"bright": (True, "Natürlich, gleiche Bedeutung.")})
+    attempts, calls = run_qa(cfg, text, gap, "light", blind_answer, fake, language_ok=False)
+    a = attempts[-1]
+    assert len(attempts) == 1 and a["qa_status"] == "failed"
+    assert a["discard_reasons"] == ["Sprache"]
+    assert a["meaning_check_result"]["language_ok"] is False
+    assert calls["alternative"] == 0 and fake.calls == [] and a["valid_alternatives"] == []
+    a["tokens"] = []
+    card = {"accepted": [dict(a) for _ in range(3)]}
+    pack = assemble_pack("en", [card], model="fake", version="test")
+    assert not card["packed"] and pack["cards"] == [] and pack["card_sentences"] == []
+
+
+def test_only_meaning_preserving_alternatives_are_kept(cfg):
+    fake = Judge({"around": (True, "Ebenfalls ungefähr."),
+                  "nearly": (False, "fast statt ungefähr."),
+                  "almost": (False, "fast statt ungefähr.")})
+    attempts, calls = run_qa(cfg, ABOUT_YEARS, ABOUT_YEARS_GAP, "about", {"answer": "about", "alternatives": [
+        {"answer": "around", "reason": "x"}, {"answer": "nearly", "reason": "x"},
+        {"answer": "almost", "reason": "x"}]}, fake)
+    a = attempts[-1]
+    assert a["qa_status"] == "ok" and a["blind"] == "passed"
+    assert a["valid_alternatives"] == ["around"]
+    assert [r["status"] for r in a["alternative_check"]] == ["confirmed", "rejected", "rejected"]
+    assert calls["alternative"] == 1 and len(fake.calls) == 1
+
+
+def test_rejected_main_answer_never_becomes_alternative(cfg):
+    fake = Judge({"almost": (False, "fast statt ungefähr.")})
+    attempts, _ = run_qa(cfg, ABOUT_YEARS, ABOUT_YEARS_GAP, "about",
+                         {"answer": "almost", "alternatives": []}, fake,
+                         regenerate=lambda fb: {"text": ABOUT_YEARS, "translation_de": "x"})
+    assert [a["qa_status"] for a in attempts] == ["replaced", "failed"]
+    assert all(a["valid_alternatives"] == [] for a in attempts)
+
+
+def test_alternative_prompt_v2_requires_same_statement(cfg):
+    fake = Judge()
+    check(fake, cfg, ABOUT_YEARS, ABOUT_YEARS_GAP, ABOUT_YEARS_DE, ["nearly"])
+    prompt = fake.calls[0][0]
+    assert load_prompt("alternative_check")[0] == "alternative-check-v2"
+    assert "German translation: " + ABOUT_YEARS_DE in prompt
+    for rule in ("ungefähr", "hinauf", "negation, time reference, modality",
+                 "Do not read extra information", "If in doubt, set valid to false"):
+        assert rule in prompt
+    assert "about" not in prompt.replace(ABOUT_YEARS, "")   # no hard-coded word decision

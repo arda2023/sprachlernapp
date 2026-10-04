@@ -1,8 +1,11 @@
-"""Check intended meaning, contextual part of speech, and translation in one call."""
+"""Check intended meaning, contextual part of speech, translation and language
+quality of the original sentence in one call."""
 
 from __future__ import annotations
 
 from .generate import POS_TAGS, load_prompt
+
+FIELDS = ("sense_key", "observed_pos", "translation_ok", "language_ok", "reason")
 
 
 def _schema(keys: list[str]) -> dict:
@@ -10,14 +13,15 @@ def _schema(keys: list[str]) -> dict:
         "sense_key": {"anyOf": [{"type": "string", "enum": keys}, {"type": "null"}]},
         "observed_pos": {"anyOf": [{"type": "string", "enum": POS_TAGS}, {"type": "null"}]},
         "translation_ok": {"type": "boolean"},
+        "language_ok": {"type": "boolean"},
         "reason": {"type": "string"},
-    }, "required": ["sense_key", "observed_pos", "translation_ok", "reason"],
+    }, "required": list(FIELDS),
         "additionalProperties": False}
 
 
 def _invalid(reason: str) -> dict:
     return {"sense_key": None, "observed_pos": None, "translation_ok": False,
-            "reason": f"Ungültige Prüfantwort: {reason}"}
+            "language_ok": False, "reason": f"Ungültige Prüfantwort: {reason}"}
 
 
 def check(llm, cfg: dict, text: str, form: str, meanings: list[dict],
@@ -34,8 +38,7 @@ def check(llm, cfg: dict, text: str, form: str, meanings: list[dict],
     result = llm.generate_json(prompt, _schema(keys), model=c["blindtest_model"],
                                thinking=c["blindtest_thinking"], step="meaning_check",
                                max_output_tokens=c["max_output_tokens"]["meaning_check"])
-    if type(result) is not dict or set(result) != {
-            "sense_key", "observed_pos", "translation_ok", "reason"}:
+    if type(result) is not dict or set(result) != set(FIELDS):
         return _invalid("Felder fehlen oder sind unbekannt")
     sense_key, observed_pos = result["sense_key"], result["observed_pos"]
     translation_ok, reason = result["translation_ok"], result["reason"]
@@ -46,5 +49,8 @@ def check(llm, cfg: dict, text: str, form: str, meanings: list[dict],
         return _invalid("observed_pos ist ungültig")
     if type(translation_ok) is not bool or not isinstance(reason, str) or not reason.strip():
         return _invalid("translation_ok oder reason fehlt bzw. ist ungültig")
+    if type(result["language_ok"]) is not bool:
+        return _invalid("language_ok fehlt bzw. ist ungültig")
     return {"sense_key": sense_key, "observed_pos": observed_pos,
-            "translation_ok": translation_ok, "reason": reason.strip()}
+            "translation_ok": translation_ok, "language_ok": result["language_ok"],
+            "reason": reason.strip()}

@@ -45,7 +45,7 @@ def run_qa(cfg, sentence, translation, form, target_key, target_pos, result):
 
 def test_meaning_check_one_call_includes_pos_and_form_details_and_translation():
     response = {"sense_key": "leave#verlassen", "observed_pos": "VERB",
-                "translation_ok": False, "reason": "early meint hier vorzeitig."}
+                "translation_ok": False, "language_ok": True, "reason": "early meint hier vorzeitig."}
     fake = FakeCheck(response)
     sentence = "Elias left the concert early yesterday because the music was too loud."
     translation = "Elias verließ das Konzert gestern früh, weil die Musik zu laut war."
@@ -56,7 +56,7 @@ def test_meaning_check_one_call_includes_pos_and_form_details_and_translation():
     assert "German translation: " + translation in fake.prompt
     assert result == response
     version, sentence_prompt = load_prompt("sentences")
-    assert version == "sentences-v5"
+    assert version == "sentences-v6"
     assert "who does what" in sentence_prompt and "time/tense" in sentence_prompt
     attempt = run_qa(load_config(), sentence, translation, "left", "leave#verlassen", "VERB", result)
     assert attempt["qa_status"] == "failed"
@@ -69,7 +69,7 @@ def test_same_meaning_wrong_contextual_pos_is_rejected_for_up_regression():
     meanings = [sense("up#hinauf", "ADV", "nach oben", kind="other", label="Adverb"),
                 sense("up#entlang", "ADP", "entlang", kind="other", label="Präposition")]
     fake = FakeCheck({"sense_key": "up#hinauf", "observed_pos": "ADP",
-                      "translation_ok": True, "reason": "up steht vor einer Nominalgruppe."})
+                      "translation_ok": True, "language_ok": True, "reason": "up steht vor einer Nominalgruppe."})
     result = checked(fake, sentence, translation, "up", meanings)
     assert "up#entlang: POS=ADP" in fake.prompt
     attempt = run_qa(load_config(), sentence, translation, "up", "up#hinauf", "ADV", result)
@@ -79,7 +79,7 @@ def test_same_meaning_wrong_contextual_pos_is_rejected_for_up_regression():
 
 def test_matching_sense_pos_and_translation_pass():
     result = {"sense_key": "leave#verlassen", "observed_pos": "VERB",
-              "translation_ok": True, "reason": "Die Person verließ den Ort."}
+              "translation_ok": True, "language_ok": True, "reason": "Die Person verließ den Ort."}
     attempt = run_qa(load_config(), "Elias left the concert early yesterday.",
                      "Elias verließ das Konzert gestern vorzeitig.",
                      "left", "leave#verlassen", "VERB", result)
@@ -90,7 +90,7 @@ def test_matching_sense_pos_and_translation_pass():
 
 def test_sent_schema_requires_nullable_enum_fields():
     fake = FakeCheck({"sense_key": None, "observed_pos": None,
-                      "translation_ok": True, "reason": "Unklar."})
+                      "translation_ok": True, "language_ok": True, "reason": "Unklar."})
     meanings = [sense("leave#verlassen", "VERB", "verlassen"),
                 sense("left#links", "ADJ", "links")]
     checked(fake, "Elias left early.", "Elias ging vorzeitig.", "left", meanings)
@@ -106,7 +106,7 @@ def test_sent_schema_requires_nullable_enum_fields():
 @pytest.mark.parametrize("case", ["null", "unknown", "integer", "boolean", "list", "object", "missing"])
 def test_nullable_fields_never_allow_invalid_qa_or_card(field, case):
     response = {"sense_key": "leave#verlassen", "observed_pos": "VERB",
-                "translation_ok": True, "reason": "Prüfergebnis."}
+                "translation_ok": True, "language_ok": True, "reason": "Prüfergebnis."}
     if case == "missing":
         del response[field]
     else:
@@ -128,8 +128,8 @@ def test_nullable_fields_never_allow_invalid_qa_or_card(field, case):
 
 
 @pytest.mark.parametrize("result", [
-    {"sense_key": None, "observed_pos": "VERB", "translation_ok": True, "reason": "Unklar."},
-    {"sense_key": "invented#key", "observed_pos": "VERB", "translation_ok": True,
+    {"sense_key": None, "observed_pos": "VERB", "translation_ok": True, "language_ok": True, "reason": "Unklar."},
+    {"sense_key": "invented#key", "observed_pos": "VERB", "translation_ok": True, "language_ok": True,
      "reason": "Erfundener Schlüssel."},
     {"sense_key": "leave#verlassen", "observed_pos": "VERB", "translation_ok": True},
 ])
@@ -148,16 +148,21 @@ def test_null_unknown_and_incomplete_responses_never_pass(result):
 def test_review_report_and_pack_keep_check_details(tmp_path):
     cfg = load_config()
     good_result = {"sense_key": "leave#verlassen", "observed_pos": "VERB",
-                   "translation_ok": True, "reason": "Passt."}
+                   "translation_ok": True, "language_ok": True, "reason": "Passt."}
     failed_result = {"sense_key": "leave#verlassen", "observed_pos": "ADJ",
-                     "translation_ok": False, "reason": "Wortart und Übersetzung weichen ab."}
+                     "translation_ok": False, "language_ok": True, "reason": "Wortart und Übersetzung weichen ab."}
     failed = {"text": "Elias left early.", "translation_de": "Elias ging früh.",
               "gap": (6, 10), "qa_status": "failed", "lint": [], "lint_rules": [],
               "blind": "passed", "blind_answer": "left", "meaning_check": "leave#verlassen",
               "meaning_check_result": failed_result, "discard_reason": "Wortart",
               "discard_reasons": ["Wortart", "Übersetzung"]}
+    language_result = {"sense_key": "leave#verlassen", "observed_pos": "VERB",
+                       "translation_ok": True, "language_ok": False,
+                       "reason": "Unidiomatische Wortverwendung."}
+    unnatural = dict(failed, text="Elias left the sun light.", meaning_check_result=language_result,
+                     discard_reason="Sprache", discard_reasons=["Sprache"])
     accepted = []
-    slots = [[failed]]
+    slots = [[failed], [unnatural]]
     for idx, (sentence, gap) in enumerate([
             ("Elias left the concert early.", (6, 10)),
             ("Yesterday Elias left the concert.", (16, 20)),
@@ -178,10 +183,15 @@ def test_review_report_and_pack_keep_check_details(tmp_path):
     saved = pack["sentences"][0]["qa_report"]
     assert saved["meaning_check"] == "leave#verlassen"
     assert saved["meaning_check_result"] == good_result
+    assert saved["language_ok"] is True
     rows = review_rows([card])
     assert rows[0]["Prüfwortart"] == "ADJ"
     assert rows[0]["Übersetzungsprüfung"] == "fehlerhaft"
     assert rows[0]["verworfen_grund"] == "Wortart; Übersetzung"
+    assert rows[0]["Sprachprüfung"] == "ok"
+    assert rows[1]["Sprachprüfung"] == "fehlerhaft"
+    assert rows[1]["verworfen_grund"] == "Sprache"
+    assert rows[1]["Prüfbegründung"] == "Unidiomatische Wortverwendung."
     report_path = tmp_path / "run_report.md"
     write_run_report(report_path, cards=[card], skipped=[], ledger=tmp_path / "none.csv",
                      packed_cards=len(pack["cards"]), info={"forms": "smoke", "n_forms": 1,
@@ -189,4 +199,58 @@ def test_review_report_and_pack_keep_check_details(tmp_path):
     report = report_path.read_text(encoding="utf-8")
     assert "| Wortart | 1 |" in report
     assert "| Übersetzung | 1 |" in report
+    assert "| Sprache | 1 |" in report
     json.dumps(pack)
+
+
+GOOD = {"sense_key": "leave#verlassen", "observed_pos": "VERB", "translation_ok": True,
+        "language_ok": True, "reason": "Prüfergebnis."}
+LEAVE = [sense("leave#verlassen", "VERB", "verlassen")]
+
+
+def test_schema_prompt_and_result_carry_language_ok():
+    fake = FakeCheck(dict(GOOD))
+    result = checked(fake, "Elias left early.", "Elias ging vorzeitig.", "left", LEAVE)
+    assert fake.schema["properties"]["language_ok"] == {"type": "boolean"}
+    assert "language_ok" in fake.schema["required"]
+    assert load_prompt("meaning_check")[0] == "meaning-check-v3"
+    assert "language_ok" in fake.prompt and "word boundaries" in fake.prompt
+    for word in ("light", "about", "sunlight"):
+        assert word not in load_prompt("meaning_check")[1]
+    assert "sunlight" not in load_prompt("sentences")[1]
+    assert result["language_ok"] is True and fake.calls == 1
+
+
+def test_language_false_is_negative_verdict_not_invalid():
+    response = dict(GOOD, language_ok=False, reason="light ist hier nicht idiomatisch.")
+    normalized = checked(FakeCheck(response), "Elias left early.", "Elias ging vorzeitig.", "left", LEAVE)
+    assert normalized == response
+    attempt = run_qa(load_config(), "Elias left early.", "Elias ging vorzeitig.",
+                     "left", "leave#verlassen", "VERB", normalized)
+    assert attempt["qa_status"] == "failed"
+    assert attempt["discard_reasons"] == ["Sprache"]
+
+
+@pytest.mark.parametrize("case", ["missing", "null", "string", "integer", "list"])
+def test_language_ok_missing_or_wrong_type_is_invalid(case):
+    response = dict(GOOD)
+    if case == "missing":
+        del response["language_ok"]
+    else:
+        response["language_ok"] = {"null": None, "string": "true", "integer": 1, "list": []}[case]
+    normalized = checked(FakeCheck(response), "Elias left early.", "Elias ging vorzeitig.", "left", LEAVE)
+    assert normalized["reason"].startswith("Ungültige Prüfantwort:")
+    assert normalized["language_ok"] is False
+    for result in (normalized, response):   # normalized by check() or raw from a callback
+        attempt = run_qa(load_config(), "Elias left early.", "Elias ging vorzeitig.",
+                         "left", "leave#verlassen", "VERB", result)
+        assert attempt["qa_status"] == "failed"
+        assert attempt["discard_reasons"] == ["Ungültige Prüfantwort"]
+
+
+def test_old_pack_without_language_ok_still_builds():
+    from pathlib import Path
+    from sprachpipe.pack import build_rows, load_pack
+    pack = load_pack(Path(__file__).parent / "fixtures" / "mini_pack.json")
+    assert all("language_ok" not in (s.get("qa_report") or {}) for s in pack["sentences"])
+    assert build_rows(pack)["sentences"]

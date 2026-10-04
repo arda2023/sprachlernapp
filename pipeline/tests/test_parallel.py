@@ -52,7 +52,7 @@ class ParallelFake(Llm):
                           {"answer": "left", "alternatives": [{"answer": "Departed", "reason": "Gleicher Sinn."}]})
             elif key == "sense_key":
                 result = {"sense_key": "go#gehen" if "go#gehen" in prompt else "leave#verlassen",
-                          "observed_pos": "VERB", "translation_ok": True, "reason": "Passt."}
+                          "observed_pos": "VERB", "translation_ok": True, "language_ok": True, "reason": "Passt."}
             elif key == "results":
                 n = len(re.findall(r"^\d+\. inserted: ", prompt, flags=re.M))
                 result = {"results": [{"candidate_index": i, "valid": True, "reason": "Passt."}
@@ -88,6 +88,7 @@ def test_same_pack_with_concurrency_one_and_eight(tmp_path):
             ("went", "go#gehen"), ("left", "leave#verlassen")}
         assert len(pack["sentences"]) == 6
         assert all(s["qa_status"] == "ok" for s in pack["sentences"])
+        assert all(s["qa_report"]["language_ok"] is True for s in pack["sentences"])
         sentence_refs = {s["ref"] for s in pack["sentences"]}
         for card in pack["cards"]:
             rows = [s for s in pack["card_sentences"] if s["card"] == card["ref"]]

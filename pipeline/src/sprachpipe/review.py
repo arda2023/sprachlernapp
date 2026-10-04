@@ -10,7 +10,7 @@ from pathlib import Path
 REVIEW_COLUMNS = ["Form", "Bedeutung", "Satz", "Übersetzung", "Linter-Befunde",
                   "Blindtest-Ergebnis", "qa_status", "Modellantwort bei Abweichung",
                   "bedeutung_check", "Prüfwortart", "Übersetzungsprüfung",
-                  "Prüfbegründung", "verworfen_grund", "Blindtest-Alternativen (Modellbefund)",
+                  "Sprachprüfung", "Prüfbegründung", "verworfen_grund", "Blindtest-Alternativen (Modellbefund)",
                   "Alternativkandidaten", "Alternativprüfung", "Gültige Alternativen"]
 
 # attempt["blind"] → report label; "passed" is only the exact target form.
@@ -53,6 +53,8 @@ def review_rows(cards: list[dict]) -> list[dict]:
                     "Prüfwortart": checked.get("observed_pos") or "",
                     "Übersetzungsprüfung": ("ok" if checked.get("translation_ok") is True else
                                            "fehlerhaft" if checked.get("translation_ok") is False else ""),
+                    "Sprachprüfung": ("ok" if checked.get("language_ok") is True else
+                                      "fehlerhaft" if checked.get("language_ok") is False else ""),
                     "Prüfbegründung": checked.get("reason") or "",
                     "verworfen_grund": "; ".join(reasons),
                 })
@@ -149,7 +151,7 @@ def write_run_report(path: str | Path, *, cards: list[dict], skipped: list[str],
               f"- In valid_alternatives des Packs: {in_pack}",
               "", "## Verworfene Sätze je Grund", "",
               "| Grund | Anzahl |", "|---|---:|"]
-    for reason in ("Linter-Regel", "Blindtest", "Bedeutung", "Wortart", "Übersetzung",
+    for reason in ("Linter-Regel", "Blindtest", "Sprache", "Bedeutung", "Wortart", "Übersetzung",
                    "Ungültige Prüfantwort", "Duplikat"):
         n = sum(v for k, v in discarded.items() if k == reason or k.startswith(reason + ":"))
         lines.append(f"| {reason} | {n} |")

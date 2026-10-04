@@ -68,7 +68,7 @@ class FakeVertex(llm_mod.Llm):
         elif key == "sense_key":
             text = re.search(r"^Sentence: (.+)$", prompt, flags=re.M).group(1)
             out = {"sense_key": self.senses.get(text, WENT["sense_key"]),
-                   "observed_pos": WENT["pos"], "translation_ok": True,
+                   "observed_pos": WENT["pos"], "translation_ok": True, "language_ok": True,
                    "reason": "Die Übersetzung entspricht der Bedeutung."}
         elif key == "results":
             found = re.findall(r'^(\d+)\. inserted: "(.*)" -> ', prompt, flags=re.M)
@@ -272,7 +272,7 @@ def test_meaning_check_rejects_left_keys(cfg):
             assert "left#zuruecklassen: POS=VERB" in prompt
             assert "German translation: Tom ließ seine Schlüssel liegen." in prompt
             return {"sense_key": "left#zuruecklassen", "observed_pos": "VERB",
-                    "translation_ok": True, "reason": "Die Schlüssel wurden zurückgelassen."}
+                    "translation_ok": True, "language_ok": True, "reason": "Die Schlüssel wurden zurückgelassen."}
     meanings = [{"sense_key": "left#verlassen", "pos": "VERB", "form_kind": "past",
                  "form_label_de": "Verb, Vergangenheit",
                  "gloss_de": "verlassen (einen Ort verlassen)"},
@@ -343,7 +343,7 @@ def test_confirmed_alternative_in_pack_csv_report_and_ledger(cfg, tmp_path):
     assert "- Kandidaten geprüft: 2" in report
     assert "- bestätigt: 1, abgelehnt: 1, ohne gültiges Urteil (ungültige Prüfantwort): 0" in report
     assert "- In valid_alternatives des Packs: 1" in report
-    assert "blindtest-v3" in report and "alternative-check-v1" in report
+    assert "blindtest-v3" in report and "alternative-check-v2" in report and "meaning-check-v3" in report and "sentences-v6" in report
     assert "Kosten je gepackter Karte:" in report and "(1 Karten im Pack)" in report
     ledger = list(csv.DictReader(open(tmp_path / "ledger.csv", encoding="utf-8")))
     assert sum(r["step"] == "alternative_check" for r in ledger) == 1

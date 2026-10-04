@@ -266,6 +266,7 @@ def assemble_pack(lang: str, cards: list[dict], *, model: str, version: str) -> 
                               "annotate": a.get("annotate_problems", []),
                               "meaning_check": a.get("meaning_check"),
                               "meaning_check_result": a.get("meaning_check_result"),
+                              "language_ok": (a.get("meaning_check_result") or {}).get("language_ok"),
                               "discard_reason": a.get("discard_reason", ""),
                               "discard_reasons": a.get("discard_reasons", []),
                               "attempts": next(len(slot) for slot in card["slots"]

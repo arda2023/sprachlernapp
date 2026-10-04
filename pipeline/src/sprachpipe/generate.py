@@ -245,16 +245,17 @@ def qa_sentence(first: dict, card: dict, cfg: dict, *, regenerate, lint, blind, 
         if meaning_check is not None:
             result = meaning_check(cur["text"], cur["translation_de"])
             if (type(result) is not dict or set(result) !=
-                    {"sense_key", "observed_pos", "translation_ok", "reason"}
+                    {"sense_key", "observed_pos", "translation_ok", "language_ok", "reason"}
                     or (result.get("sense_key") is not None
                         and not isinstance(result.get("sense_key"), str))
                     or (result.get("observed_pos") is not None
                         and not isinstance(result.get("observed_pos"), str))
                     or type(result.get("translation_ok")) is not bool
+                    or type(result.get("language_ok")) is not bool
                     or not isinstance(result.get("reason"), str)
                     or not result.get("reason", "").strip()):
                 result = {"sense_key": None, "observed_pos": None,
-                          "translation_ok": False,
+                          "translation_ok": False, "language_ok": False,
                           "reason": "Ungültige Prüfantwort: ungültige Ergebnisstruktur"}
             a["meaning_check"] = result["sense_key"]
             a["meaning_check_result"] = result
@@ -262,6 +263,10 @@ def qa_sentence(first: dict, card: dict, cfg: dict, *, regenerate, lint, blind, 
             if result["reason"].startswith("Ungültige Prüfantwort:"):
                 reasons.append("Ungültige Prüfantwort")
             else:
+                # The original sentence itself must be natural English; any
+                # rejection returns before the alternative check runs.
+                if result["language_ok"] is not True:
+                    reasons.append("Sprache")
                 if result["sense_key"] != card["sense_key"]:
                     reasons.append("Bedeutung")
                 if result["observed_pos"] != card["pos"]:
