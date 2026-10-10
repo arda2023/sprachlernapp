@@ -1,0 +1,9 @@
+{
+  "jeans/NOUN|jeans#jeans": {
+    "reserved_definition": "Eine robuste Hose aus Denimstoff.",
+    "existing_definition": "Eine Hose aus festem Denimstoff.",
+    "existing_sense_sha256": "b29d37841048920cadbeba56c9d8906199152dcb5fd48a017d42a445edaef66a",
+    "decision": "same_meaning",
+    "reason": "Redaktionell geprüft: robuste Hose aus Denimstoff und Hose aus festem Denimstoff bezeichnen dieselbe Kleidungsart. Nur die Formulierung variiert; Zieldefinition, Kartenglosse, IDs und vorhandener Sense bleiben unverändert."
+  }
+}

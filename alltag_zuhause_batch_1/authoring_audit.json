@@ -1,0 +1,41 @@
+{
+  "status": "offline_checked",
+  "authored_by": "ChatGPT",
+  "independent_human_review": false,
+  "new_cards": 83,
+  "new_sentences": 83,
+  "tokens": 931,
+  "new_alternatives": 9,
+  "new_rows": {
+    "lemmas": 91,
+    "senses": 105,
+    "cards": 83,
+    "decks": 1,
+    "deck_cards": 83,
+    "deck_words": 83,
+    "word_aliases": 2,
+    "sentences": 83,
+    "sentence_tokens": 931,
+    "dictionary_forms": 147,
+    "card_sentences": 83
+  },
+  "topics": {
+    "Wohnen": 10,
+    "Haushalt": 10,
+    "Kleidung": 10,
+    "Einkaufen": 8,
+    "Kochen": 14,
+    "Familie": 10,
+    "Freizeit": 10,
+    "Alltagstätigkeiten": 11
+  },
+  "new_linter_errors": 0,
+  "new_frequency_warnings": 26,
+  "full_pack_frequency_warnings": 290,
+  "local_sqlite_export_and_readback": true,
+  "app_staged": false,
+  "cloud_calls": 0,
+  "cost_usd": 0,
+  "preserved": "all original pack rows, 764 cards, original positions and selected learning metadata",
+  "source_only_legacy_glosses": "Old inflected/compound gloss rows preserved; full card translations follow selection. Not a global dictionary cleanup."
+}

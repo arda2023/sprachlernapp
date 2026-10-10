@@ -1,0 +1,1689 @@
+[
+  {
+    "card_ref": "house|house/NOUN|house#haus",
+    "form_norm": "house",
+    "original_position": 1,
+    "display_position": 1,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "home|home/NOUN|home#hause",
+    "form_norm": "home",
+    "original_position": 2,
+    "display_position": 2,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "room|room/NOUN|room#zimmer",
+    "form_norm": "room",
+    "original_position": 3,
+    "display_position": 3,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "wall|wall/NOUN|wall#wand",
+    "form_norm": "wall",
+    "original_position": 4,
+    "display_position": 4,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "ceiling|ceiling/NOUN|ceiling#zimmerdecke",
+    "form_norm": "ceiling",
+    "original_position": 5,
+    "display_position": 5,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "roof|roof/NOUN|roof#dach",
+    "form_norm": "roof",
+    "original_position": 6,
+    "display_position": 6,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "door|door/NOUN|door#tuer",
+    "form_norm": "door",
+    "original_position": 7,
+    "display_position": 7,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "stairs|stairs/NOUN|stairs#treppe",
+    "form_norm": "stairs",
+    "original_position": 8,
+    "display_position": 8,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "garden|garden/NOUN|garden#garten",
+    "form_norm": "garden",
+    "original_position": 9,
+    "display_position": 9,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "fence|fence/NOUN|fence#zaun",
+    "form_norm": "fence",
+    "original_position": 10,
+    "display_position": 10,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "sofa|sofa/NOUN|sofa#sofa",
+    "form_norm": "sofa",
+    "original_position": 11,
+    "display_position": 11,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "armchair|armchair/NOUN|armchair#sessel",
+    "form_norm": "armchair",
+    "original_position": 12,
+    "display_position": 12,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "carpet|carpet/NOUN|carpet#teppich",
+    "form_norm": "carpet",
+    "original_position": 13,
+    "display_position": 13,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "curtain|curtain/NOUN|curtain#vorhang",
+    "form_norm": "curtain",
+    "original_position": 14,
+    "display_position": 14,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "shelf|shelf/NOUN|shelf#regal",
+    "form_norm": "shelf",
+    "original_position": 15,
+    "display_position": 15,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "drawer|drawer/NOUN|drawer#schublade",
+    "form_norm": "drawer",
+    "original_position": 16,
+    "display_position": 16,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "wardrobe|wardrobe/NOUN|wardrobe#kleiderschrank",
+    "form_norm": "wardrobe",
+    "original_position": 17,
+    "display_position": 17,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "cupboard|cupboard/NOUN|cupboard#schrank",
+    "form_norm": "cupboard",
+    "original_position": 18,
+    "display_position": 18,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "mattress|mattress/NOUN|mattress#matratze",
+    "form_norm": "mattress",
+    "original_position": 20,
+    "display_position": 19,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "sheet|sheet/NOUN|sheet#bettlaken",
+    "form_norm": "sheet",
+    "original_position": 22,
+    "display_position": 20,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "basement|basement/NOUN|basement#keller",
+    "form_norm": "basement",
+    "original_position": 23,
+    "display_position": 21,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "attic|attic/NOUN|attic#dachboden",
+    "form_norm": "attic",
+    "original_position": 24,
+    "display_position": 22,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "entrance|entrance/NOUN|entrance#eingang",
+    "form_norm": "entrance",
+    "original_position": 25,
+    "display_position": 23,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "doorbell|doorbell/NOUN|doorbell#turklingel",
+    "form_norm": "doorbell",
+    "original_position": 26,
+    "display_position": 24,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "neighbour|neighbour/NOUN|neighbour#nachbar",
+    "form_norm": "neighbour",
+    "original_position": 27,
+    "display_position": 25,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "landlord|landlord/NOUN|landlord#vermieter",
+    "form_norm": "landlord",
+    "original_position": 28,
+    "display_position": 26,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "tenant|tenant/NOUN|tenant#mieter",
+    "form_norm": "tenant",
+    "original_position": 29,
+    "display_position": 27,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "address|address/NOUN|address#adresse",
+    "form_norm": "address",
+    "original_position": 30,
+    "display_position": 28,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "broom|broom/NOUN|broom#besen",
+    "form_norm": "broom",
+    "original_position": 31,
+    "display_position": 29,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "mop|mop/NOUN|mop#wischmopp",
+    "form_norm": "mop",
+    "original_position": 32,
+    "display_position": 30,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "bucket|bucket/NOUN|bucket#eimer",
+    "form_norm": "bucket",
+    "original_position": 33,
+    "display_position": 31,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "sponge|sponge/NOUN|sponge#schwamm",
+    "form_norm": "sponge",
+    "original_position": 34,
+    "display_position": 32,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "cloth|cloth/NOUN|cloth#tuch",
+    "form_norm": "cloth",
+    "original_position": 35,
+    "display_position": 33,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "dust|dust/NOUN|dust#staub",
+    "form_norm": "dust",
+    "original_position": 36,
+    "display_position": 34,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "dirt|dirt/NOUN|dirt#schmutz",
+    "form_norm": "dirt",
+    "original_position": 37,
+    "display_position": 35,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "stain|stain/NOUN|stain#fleck",
+    "form_norm": "stain",
+    "original_position": 38,
+    "display_position": 36,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "detergent|detergent/NOUN|detergent#waschmittel",
+    "form_norm": "detergent",
+    "original_position": 39,
+    "display_position": 37,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "bleach|bleach/NOUN|bleach#bleichmittel",
+    "form_norm": "bleach",
+    "original_position": 40,
+    "display_position": 38,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "bin|bin/NOUN|bin#tonnen",
+    "form_norm": "bin",
+    "original_position": 41,
+    "display_position": 39,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "rubbish|rubbish/NOUN|rubbish#mull",
+    "form_norm": "rubbish",
+    "original_position": 42,
+    "display_position": 40,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "recycling|recycling/NOUN|recycling#recycling",
+    "form_norm": "recycling",
+    "original_position": 43,
+    "display_position": 41,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "brush|brush/NOUN|brush#burste",
+    "form_norm": "brush",
+    "original_position": 44,
+    "display_position": 42,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "iron|iron/NOUN|iron#bugeleisen",
+    "form_norm": "iron",
+    "original_position": 45,
+    "display_position": 43,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "hanger|hanger/NOUN|hanger#kleiderbugel",
+    "form_norm": "hanger",
+    "original_position": 46,
+    "display_position": 44,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "peg|peg/NOUN|peg#wascheklammer",
+    "form_norm": "peg",
+    "original_position": 47,
+    "display_position": 45,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "vacuum|vacuum/NOUN|vacuum#staubsauger",
+    "form_norm": "vacuum",
+    "original_position": 48,
+    "display_position": 46,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "dishwasher|dishwasher/NOUN|dishwasher#geschirrspuler",
+    "form_norm": "dishwasher",
+    "original_position": 49,
+    "display_position": 47,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "freezer|freezer/NOUN|freezer#gefrierschrank",
+    "form_norm": "freezer",
+    "original_position": 50,
+    "display_position": 48,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "fridge|fridge/NOUN|fridge#kuehlschrank",
+    "form_norm": "fridge",
+    "original_position": 51,
+    "display_position": 49,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "tap|tap/NOUN|tap#wasserhahn",
+    "form_norm": "tap",
+    "original_position": 52,
+    "display_position": 50,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "sink|sink/NOUN|sink#spuelbecken",
+    "form_norm": "sink",
+    "original_position": 53,
+    "display_position": 51,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "plug|plug/NOUN|plug#stecker",
+    "form_norm": "plug",
+    "original_position": 54,
+    "display_position": 52,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "bulb|bulb/NOUN|bulb#gluhbirne",
+    "form_norm": "bulb",
+    "original_position": 55,
+    "display_position": 53,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "battery|battery/NOUN|battery#batterien",
+    "form_norm": "battery",
+    "original_position": 56,
+    "display_position": 54,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "scissors|scissors/NOUN|scissors#einer-schere",
+    "form_norm": "scissors",
+    "original_position": 57,
+    "display_position": 55,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "glue|glue/NOUN|glue#klebstoff",
+    "form_norm": "glue",
+    "original_position": 58,
+    "display_position": 56,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "tape|tape/NOUN|tape#klebeband",
+    "form_norm": "tape",
+    "original_position": 59,
+    "display_position": 57,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "tool|tool/NOUN|tool#werkzeug",
+    "form_norm": "tool",
+    "original_position": 60,
+    "display_position": 58,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "trousers|trousers/NOUN|trousers#hose",
+    "form_norm": "trousers",
+    "original_position": 61,
+    "display_position": 59,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "jeans|jeans/NOUN|jeans#jeans",
+    "form_norm": "jeans",
+    "original_position": 62,
+    "display_position": 60,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "skirt|skirt/NOUN|skirt#rock",
+    "form_norm": "skirt",
+    "original_position": 63,
+    "display_position": 61,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "dress|dress/NOUN|dress#kleid",
+    "form_norm": "dress",
+    "original_position": 64,
+    "display_position": 62,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "jacket|jacket/NOUN|jacket#jacke",
+    "form_norm": "jacket",
+    "original_position": 65,
+    "display_position": 63,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "coat|coat/NOUN|coat#mantel",
+    "form_norm": "coat",
+    "original_position": 66,
+    "display_position": 64,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "jumper|jumper/NOUN|jumper#pullover",
+    "form_norm": "jumper",
+    "original_position": 67,
+    "display_position": 65,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "cardigan|cardigan/NOUN|cardigan#strickjacke",
+    "form_norm": "cardigan",
+    "original_position": 68,
+    "display_position": 66,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "blouse|blouse/NOUN|blouse#bluse",
+    "form_norm": "blouse",
+    "original_position": 69,
+    "display_position": 67,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "sock|sock/NOUN|sock#socke",
+    "form_norm": "sock",
+    "original_position": 70,
+    "display_position": 68,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "boot|boot/NOUN|boot#stiefel",
+    "form_norm": "boot",
+    "original_position": 71,
+    "display_position": 69,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "trainer|trainer/NOUN|trainer#turnschuh",
+    "form_norm": "trainer",
+    "original_position": 72,
+    "display_position": 70,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "slipper|slipper/NOUN|slipper#hausschuh",
+    "form_norm": "slipper",
+    "original_position": 73,
+    "display_position": 71,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "sandal|sandal/NOUN|sandal#sandale",
+    "form_norm": "sandal",
+    "original_position": 74,
+    "display_position": 72,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "hat|hat/NOUN|hat#hut",
+    "form_norm": "hat",
+    "original_position": 75,
+    "display_position": 73,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "cap|cap/NOUN|cap#kappe",
+    "form_norm": "cap",
+    "original_position": 76,
+    "display_position": 74,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "scarf|scarf/NOUN|scarf#schal",
+    "form_norm": "scarf",
+    "original_position": 77,
+    "display_position": 75,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "glove|glove/NOUN|glove#handschuhe",
+    "form_norm": "glove",
+    "original_position": 78,
+    "display_position": 76,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "belt|belt/NOUN|belt#guertel",
+    "form_norm": "belt",
+    "original_position": 79,
+    "display_position": 77,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "button|button/NOUN|button#knopf",
+    "form_norm": "button",
+    "original_position": 80,
+    "display_position": 78,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "pocket|pocket/NOUN|pocket#taschenfach",
+    "form_norm": "pocket",
+    "original_position": 81,
+    "display_position": 79,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "sleeve|sleeve/NOUN|sleeve#aermeln",
+    "form_norm": "sleeve",
+    "original_position": 82,
+    "display_position": 80,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "collar|collar/NOUN|collar#kragen",
+    "form_norm": "collar",
+    "original_position": 83,
+    "display_position": 81,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "cotton|cotton/NOUN|cotton#baumwolle",
+    "form_norm": "cotton",
+    "original_position": 84,
+    "display_position": 82,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "wool|wool/NOUN|wool#wolle",
+    "form_norm": "wool",
+    "original_position": 85,
+    "display_position": 83,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "silk|silk/NOUN|silk#seide",
+    "form_norm": "silk",
+    "original_position": 86,
+    "display_position": 84,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "underwear|underwear/NOUN|underwear#unterwasche",
+    "form_norm": "underwear",
+    "original_position": 87,
+    "display_position": 85,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "pyjamas|pyjamas/NOUN|pyjamas#schlafanzug",
+    "form_norm": "pyjamas",
+    "original_position": 88,
+    "display_position": 86,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "tights|tights/NOUN|tights#strumpfhose",
+    "form_norm": "tights",
+    "original_position": 89,
+    "display_position": 87,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "apron|apron/NOUN|apron#schurze",
+    "form_norm": "apron",
+    "original_position": 90,
+    "display_position": 88,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "supermarket|supermarket/NOUN|supermarket#supermarkt",
+    "form_norm": "supermarket",
+    "original_position": 91,
+    "display_position": 89,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "bakery|bakery/NOUN|bakery#backerei",
+    "form_norm": "bakery",
+    "original_position": 92,
+    "display_position": 90,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "butcher|butcher/NOUN|butcher#metzger",
+    "form_norm": "butcher",
+    "original_position": 93,
+    "display_position": 91,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "customer|customer/NOUN|customer#kunde-kundin",
+    "form_norm": "customer",
+    "original_position": 94,
+    "display_position": 92,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "cashier|cashier/NOUN|cashier#kassierer",
+    "form_norm": "cashier",
+    "original_position": 95,
+    "display_position": 93,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "checkout|checkout/NOUN|checkout#kasse",
+    "form_norm": "checkout",
+    "original_position": 96,
+    "display_position": 94,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "queue|queue/NOUN|queue#warteschlange",
+    "form_norm": "queue",
+    "original_position": 97,
+    "display_position": 95,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "aisle|aisle/NOUN|aisle#gang",
+    "form_norm": "aisle",
+    "original_position": 98,
+    "display_position": 96,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "label|label/NOUN|label#aufkleber",
+    "form_norm": "label",
+    "original_position": 99,
+    "display_position": 97,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "brand|brand/NOUN|brand#marke",
+    "form_norm": "brand",
+    "original_position": 100,
+    "display_position": 98,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "size|size/NOUN|size#grosse",
+    "form_norm": "size",
+    "original_position": 101,
+    "display_position": 99,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "weight|weight/NOUN|weight#gewicht",
+    "form_norm": "weight",
+    "original_position": 102,
+    "display_position": 100,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "quality|quality/NOUN|quality#qualitat",
+    "form_norm": "quality",
+    "original_position": 103,
+    "display_position": 101,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "quantity|quantity/NOUN|quantity#menge",
+    "form_norm": "quantity",
+    "original_position": 104,
+    "display_position": 102,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "pair|pair/NOUN|pair#paar-in-a-pair-of-scissors-eine-schere",
+    "form_norm": "pair",
+    "original_position": 105,
+    "display_position": 103,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "dozen|dozen/NOUN|dozen#dutzend",
+    "form_norm": "dozen",
+    "original_position": 106,
+    "display_position": 104,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "packet|packet/NOUN|packet#packung",
+    "form_norm": "packet",
+    "original_position": 107,
+    "display_position": 105,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "wrapper|wrapper/NOUN|wrapper#verpackungshulle",
+    "form_norm": "wrapper",
+    "original_position": 108,
+    "display_position": 106,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "coupon|coupon/NOUN|coupon#gutschein",
+    "form_norm": "coupon",
+    "original_position": 109,
+    "display_position": 107,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "sale|sale/NOUN|sale#ausverkauf",
+    "form_norm": "sale",
+    "original_position": 110,
+    "display_position": 108,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "stock|stock/NOUN|stock#warenbestand",
+    "form_norm": "stock",
+    "original_position": 111,
+    "display_position": 109,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "list|list/NOUN|list#liste",
+    "form_norm": "list",
+    "original_position": 112,
+    "display_position": 110,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "pan|pan/NOUN|pan#pfanne",
+    "form_norm": "pan",
+    "original_position": 116,
+    "display_position": 111,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "pot|pot/NOUN|pot#kochtopf",
+    "form_norm": "pot",
+    "original_position": 117,
+    "display_position": 112,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "lid|lid/NOUN|lid#deckel",
+    "form_norm": "lid",
+    "original_position": 118,
+    "display_position": 113,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "oven|oven/NOUN|oven#ofen",
+    "form_norm": "oven",
+    "original_position": 119,
+    "display_position": 114,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "hob|hob/NOUN|hob#kochfeld",
+    "form_norm": "hob",
+    "original_position": 120,
+    "display_position": 115,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "kettle|kettle/NOUN|kettle#wasserkocher",
+    "form_norm": "kettle",
+    "original_position": 121,
+    "display_position": 116,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "microwave|microwave/NOUN|microwave#mikrowelle",
+    "form_norm": "microwave",
+    "original_position": 122,
+    "display_position": 117,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "toaster|toaster/NOUN|toaster#toaster",
+    "form_norm": "toaster",
+    "original_position": 123,
+    "display_position": 118,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "recipe|recipe/NOUN|recipe#rezept",
+    "form_norm": "recipe",
+    "original_position": 124,
+    "display_position": 119,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "ingredient|ingredient/NOUN|ingredient#zutaten",
+    "form_norm": "ingredient",
+    "original_position": 125,
+    "display_position": 120,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "flour|flour/NOUN|flour#mehl",
+    "form_norm": "flour",
+    "original_position": 126,
+    "display_position": 121,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "butter|butter/NOUN|butter#butter",
+    "form_norm": "butter",
+    "original_position": 127,
+    "display_position": 122,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "oil|oil/NOUN|oil#speiseol",
+    "form_norm": "oil",
+    "original_position": 128,
+    "display_position": 123,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "vinegar|vinegar/NOUN|vinegar#essig",
+    "form_norm": "vinegar",
+    "original_position": 129,
+    "display_position": 124,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "garlic|garlic/NOUN|garlic#knoblauch",
+    "form_norm": "garlic",
+    "original_position": 130,
+    "display_position": 125,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "carrot|carrot/NOUN|carrot#karotte",
+    "form_norm": "carrot",
+    "original_position": 131,
+    "display_position": 126,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "cucumber|cucumber/NOUN|cucumber#gurke",
+    "form_norm": "cucumber",
+    "original_position": 132,
+    "display_position": 127,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "lettuce|lettuce/NOUN|lettuce#kopfsalat",
+    "form_norm": "lettuce",
+    "original_position": 133,
+    "display_position": 128,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "bean|bean/NOUN|bean#bohne",
+    "form_norm": "bean",
+    "original_position": 134,
+    "display_position": 129,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "pea|pea/NOUN|pea#erbse",
+    "form_norm": "pea",
+    "original_position": 135,
+    "display_position": 130,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "mushroom|mushroom/NOUN|mushroom#pilz",
+    "form_norm": "mushroom",
+    "original_position": 136,
+    "display_position": 131,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "lemon|lemon/NOUN|lemon#zitrone",
+    "form_norm": "lemon",
+    "original_position": 137,
+    "display_position": 132,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "orange|orange/NOUN|orange#frucht",
+    "form_norm": "orange",
+    "original_position": 138,
+    "display_position": 133,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "banana|banana/NOUN|banana#banane",
+    "form_norm": "banana",
+    "original_position": 139,
+    "display_position": 134,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "strawberry|strawberry/NOUN|strawberry#erdbeere",
+    "form_norm": "strawberry",
+    "original_position": 140,
+    "display_position": 135,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "grape|grape/NOUN|grape#weintraube",
+    "form_norm": "grape",
+    "original_position": 141,
+    "display_position": 136,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "yoghurt|yoghurt/NOUN|yoghurt#joghurt",
+    "form_norm": "yoghurt",
+    "original_position": 142,
+    "display_position": 137,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "cream|cream/NOUN|cream#sahne",
+    "form_norm": "cream",
+    "original_position": 143,
+    "display_position": 138,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "honey|honey/NOUN|honey#honig",
+    "form_norm": "honey",
+    "original_position": 144,
+    "display_position": 139,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "jam|jam/NOUN|jam#konfiture",
+    "form_norm": "jam",
+    "original_position": 145,
+    "display_position": 140,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "sauce|sauce/NOUN|sauce#sosse",
+    "form_norm": "sauce",
+    "original_position": 146,
+    "display_position": 141,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "dough|dough/NOUN|dough#teig",
+    "form_norm": "dough",
+    "original_position": 147,
+    "display_position": 142,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "slice|slice/NOUN|slice#scheiben",
+    "form_norm": "slice",
+    "original_position": 148,
+    "display_position": 143,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "peel|peel/VERB|peel#schalen",
+    "form_norm": "peel",
+    "original_position": 149,
+    "display_position": 144,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "boil|boil/VERB|boil#kocht",
+    "form_norm": "boil",
+    "original_position": 150,
+    "display_position": 145,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "fry|fry/VERB|fry#braten",
+    "form_norm": "fry",
+    "original_position": 151,
+    "display_position": 146,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "bake|bake/VERB|bake#backen",
+    "form_norm": "bake",
+    "original_position": 152,
+    "display_position": 147,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "stir|stir/VERB|stir#umruhren",
+    "form_norm": "stir",
+    "original_position": 153,
+    "display_position": 148,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "pour|pour/VERB|pour#giesst",
+    "form_norm": "pour",
+    "original_position": 154,
+    "display_position": 149,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "taste|taste/VERB|taste#probiert",
+    "form_norm": "taste",
+    "original_position": 155,
+    "display_position": 150,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "family|family/NOUN|family#familie",
+    "form_norm": "family",
+    "original_position": 156,
+    "display_position": 151,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "parent|parent/NOUN|parent#eltern",
+    "form_norm": "parent",
+    "original_position": 157,
+    "display_position": 152,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "mother|mother/NOUN|mother#mutter",
+    "form_norm": "mother",
+    "original_position": 158,
+    "display_position": 153,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "father|father/NOUN|father#vater",
+    "form_norm": "father",
+    "original_position": 159,
+    "display_position": 154,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "child|child/NOUN|child#kind",
+    "form_norm": "child",
+    "original_position": 160,
+    "display_position": 155,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "baby|baby/NOUN|baby#baby",
+    "form_norm": "baby",
+    "original_position": 161,
+    "display_position": 156,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "son|son/NOUN|son#sohn",
+    "form_norm": "son",
+    "original_position": 162,
+    "display_position": 157,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "daughter|daughter/NOUN|daughter#tochter",
+    "form_norm": "daughter",
+    "original_position": 163,
+    "display_position": 158,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "brother|brother/NOUN|brother#bruder",
+    "form_norm": "brother",
+    "original_position": 164,
+    "display_position": 159,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "sister|sister/NOUN|sister#schwester",
+    "form_norm": "sister",
+    "original_position": 165,
+    "display_position": 160,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "grandmother|grandmother/NOUN|grandmother#grossmutter",
+    "form_norm": "grandmother",
+    "original_position": 166,
+    "display_position": 161,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "grandfather|grandfather/NOUN|grandfather#grossvater",
+    "form_norm": "grandfather",
+    "original_position": 167,
+    "display_position": 162,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "grandchild|grandchild/NOUN|grandchild#enkelkind",
+    "form_norm": "grandchild",
+    "original_position": 168,
+    "display_position": 163,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "aunt|aunt/NOUN|aunt#tante",
+    "form_norm": "aunt",
+    "original_position": 169,
+    "display_position": 164,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "uncle|uncle/NOUN|uncle#onkel",
+    "form_norm": "uncle",
+    "original_position": 170,
+    "display_position": 165,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "cousin|cousin/NOUN|cousin#cousin-oder-cousine",
+    "form_norm": "cousin",
+    "original_position": 171,
+    "display_position": 166,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "niece|niece/NOUN|niece#nichte",
+    "form_norm": "niece",
+    "original_position": 172,
+    "display_position": 167,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "nephew|nephew/NOUN|nephew#neffe",
+    "form_norm": "nephew",
+    "original_position": 173,
+    "display_position": 168,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "husband|husband/NOUN|husband#ehemann",
+    "form_norm": "husband",
+    "original_position": 174,
+    "display_position": 169,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "wife|wife/NOUN|wife#ehefrau",
+    "form_norm": "wife",
+    "original_position": 175,
+    "display_position": 170,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "partner|partner/NOUN|partner#partner",
+    "form_norm": "partner",
+    "original_position": 176,
+    "display_position": 171,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "relative|relative/NOUN|relative#verwandter",
+    "form_norm": "relative",
+    "original_position": 177,
+    "display_position": 172,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "twin|twin/NOUN|twin#zwilling",
+    "form_norm": "twin",
+    "original_position": 178,
+    "display_position": 173,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "birthday|birthday/NOUN|birthday#geburtstag",
+    "form_norm": "birthday",
+    "original_position": 179,
+    "display_position": 174,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "wedding|wedding/NOUN|wedding#hochzeit",
+    "form_norm": "wedding",
+    "original_position": 180,
+    "display_position": 175,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "gift|gift/NOUN|gift#geschenk",
+    "form_norm": "gift",
+    "original_position": 181,
+    "display_position": 176,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "pet|pet/NOUN|pet#haustiere",
+    "form_norm": "pet",
+    "original_position": 182,
+    "display_position": 177,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "dog|dog/NOUN|dog#hund",
+    "form_norm": "dog",
+    "original_position": 183,
+    "display_position": 178,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "cat|cat/NOUN|cat#katze",
+    "form_norm": "cat",
+    "original_position": 184,
+    "display_position": 179,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "friend|friend/NOUN|friend#freund",
+    "form_norm": "friend",
+    "original_position": 185,
+    "display_position": 180,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "hobby|hobby/NOUN|hobby#hobby",
+    "form_norm": "hobby",
+    "original_position": 186,
+    "display_position": 181,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "game|game/NOUN|game#spiel",
+    "form_norm": "game",
+    "original_position": 187,
+    "display_position": 182,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "toy|toy/NOUN|toy#spielzeug",
+    "form_norm": "toy",
+    "original_position": 188,
+    "display_position": 183,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "ball|ball/NOUN|ball#ball",
+    "form_norm": "ball",
+    "original_position": 189,
+    "display_position": 184,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "puzzle|puzzle/NOUN|puzzle#puzzle",
+    "form_norm": "puzzle",
+    "original_position": 190,
+    "display_position": 185,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "music|music/NOUN|music#musik",
+    "form_norm": "music",
+    "original_position": 191,
+    "display_position": 186,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "song|song/NOUN|song#lied",
+    "form_norm": "song",
+    "original_position": 192,
+    "display_position": 187,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "guitar|guitar/NOUN|guitar#gitarre",
+    "form_norm": "guitar",
+    "original_position": 193,
+    "display_position": 188,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "piano|piano/NOUN|piano#klavier",
+    "form_norm": "piano",
+    "original_position": 194,
+    "display_position": 189,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "film|film/NOUN|film#film",
+    "form_norm": "film",
+    "original_position": 195,
+    "display_position": 190,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "cinema|cinema/NOUN|cinema#kino",
+    "form_norm": "cinema",
+    "original_position": 196,
+    "display_position": 191,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "television|television/NOUN|television#fernseher",
+    "form_norm": "television",
+    "original_position": 197,
+    "display_position": 192,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "screen|screen/NOUN|screen#bildschirm",
+    "form_norm": "screen",
+    "original_position": 198,
+    "display_position": 193,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "photo|photo/NOUN|photo#foto",
+    "form_norm": "photo",
+    "original_position": 200,
+    "display_position": 194,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "camera|camera/NOUN|camera#kamera",
+    "form_norm": "camera",
+    "original_position": 201,
+    "display_position": 195,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "album|album/NOUN|album#fotoalbum",
+    "form_norm": "album",
+    "original_position": 202,
+    "display_position": 196,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "novel|novel/NOUN|novel#roman",
+    "form_norm": "novel",
+    "original_position": 203,
+    "display_position": 197,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "magazine|magazine/NOUN|magazine#zeitschriften",
+    "form_norm": "magazine",
+    "original_position": 204,
+    "display_position": 198,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "newspaper|newspaper/NOUN|newspaper#zeitung",
+    "form_norm": "newspaper",
+    "original_position": 205,
+    "display_position": 199,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "library|library/NOUN|library#bibliothek",
+    "form_norm": "library",
+    "original_position": 206,
+    "display_position": 200,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "sport|sport/NOUN|sport#sport",
+    "form_norm": "sport",
+    "original_position": 207,
+    "display_position": 201,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "football|football/NOUN|football#fussball",
+    "form_norm": "football",
+    "original_position": 208,
+    "display_position": 202,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "tennis|tennis/NOUN|tennis#tennis",
+    "form_norm": "tennis",
+    "original_position": 209,
+    "display_position": 203,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "swim|swim/VERB|swim#schwimmen",
+    "form_norm": "swim",
+    "original_position": 210,
+    "display_position": 204,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "dance|dance/VERB|dance#tanzen",
+    "form_norm": "dance",
+    "original_position": 211,
+    "display_position": 205,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "sing|sing/VERB|sing#sangen",
+    "form_norm": "sing",
+    "original_position": 212,
+    "display_position": 206,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "draw|draw/VERB|draw#zeichnen",
+    "form_norm": "draw",
+    "original_position": 213,
+    "display_position": 207,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "paint|paint/VERB|paint#malen",
+    "form_norm": "paint",
+    "original_position": 214,
+    "display_position": 208,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "knit|knit/VERB|knit#stricken",
+    "form_norm": "knit",
+    "original_position": 215,
+    "display_position": 209,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "sweep|sweep/VERB|sweep#fegen",
+    "form_norm": "sweep",
+    "original_position": 216,
+    "display_position": 210,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "wipe|wipe/VERB|wipe#abwischen",
+    "form_norm": "wipe",
+    "original_position": 217,
+    "display_position": 211,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "fold|fold/VERB|fold#faltete",
+    "form_norm": "fold",
+    "original_position": 218,
+    "display_position": 212,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "hang|hang/VERB|hang#haengt-auf",
+    "form_norm": "hang",
+    "original_position": 219,
+    "display_position": 213,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "tidy|tidy/VERB|tidy#aufraumen",
+    "form_norm": "tidy",
+    "original_position": 220,
+    "display_position": 214,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "sew|sew/VERB|sew#nahen",
+    "form_norm": "sew",
+    "original_position": 221,
+    "display_position": 215,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "feed|feed/VERB|feed#fuettern",
+    "form_norm": "feed",
+    "original_position": 222,
+    "display_position": 216,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "throw|throw/VERB|throw#wirft",
+    "form_norm": "throw",
+    "original_position": 223,
+    "display_position": 217,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "catch|catch/VERB|catch#fangen",
+    "form_norm": "catch",
+    "original_position": 224,
+    "display_position": 218,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "drop|drop/VERB|drop#fallen-lassen",
+    "form_norm": "drop",
+    "original_position": 225,
+    "display_position": 219,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "push|push/VERB|push#schubsen",
+    "form_norm": "push",
+    "original_position": 226,
+    "display_position": 220,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "pull|pull/VERB|pull#ziehen",
+    "form_norm": "pull",
+    "original_position": 227,
+    "display_position": 221,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "hold|hold/VERB|hold#haelt",
+    "form_norm": "hold",
+    "original_position": 229,
+    "display_position": 222,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "touch|touch/VERB|touch#beruehrt",
+    "form_norm": "touch",
+    "original_position": 230,
+    "display_position": 223,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "smell|smell/VERB|smell#riechen",
+    "form_norm": "smell",
+    "original_position": 231,
+    "display_position": 224,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "laugh|laugh/VERB|laugh#lachen",
+    "form_norm": "laugh",
+    "original_position": 232,
+    "display_position": 225,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "smile|smile/VERB|smile#laechelt",
+    "form_norm": "smile",
+    "original_position": 233,
+    "display_position": 226,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "cry|cry/VERB|cry#weinen",
+    "form_norm": "cry",
+    "original_position": 234,
+    "display_position": 227,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "hug|hug/VERB|hug#umarmen",
+    "form_norm": "hug",
+    "original_position": 235,
+    "display_position": 228,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "kiss|kiss/VERB|kiss#kussen",
+    "form_norm": "kiss",
+    "original_position": 236,
+    "display_position": 229,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "share|share/VERB|share#teilt",
+    "form_norm": "share",
+    "original_position": 237,
+    "display_position": 230,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "invite|invite/VERB|invite#einladen",
+    "form_norm": "invite",
+    "original_position": 238,
+    "display_position": 231,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "celebrate|celebrate/VERB|celebrate#feiert",
+    "form_norm": "celebrate",
+    "original_position": 239,
+    "display_position": 232,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "rest|rest/VERB|rest#ruhte-sich-aus",
+    "form_norm": "rest",
+    "original_position": 240,
+    "display_position": 233,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "exercise|exercise/VERB|exercise#trainieren",
+    "form_norm": "exercise",
+    "original_position": 242,
+    "display_position": 234,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "wear|wear/VERB|wear#tragen",
+    "form_norm": "wear",
+    "original_position": 243,
+    "display_position": 235,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "fit|fit/VERB|fit#passen",
+    "form_norm": "fit",
+    "original_position": 244,
+    "display_position": 236,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "try|try/VERB|try#versuchen",
+    "form_norm": "try",
+    "original_position": 245,
+    "display_position": 237,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "finish|finish/VERB|finish#beenden",
+    "form_norm": "finish",
+    "original_position": 246,
+    "display_position": 238,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "start|start/VERB|start#beginnen",
+    "form_norm": "start",
+    "original_position": 247,
+    "display_position": 239,
+    "authoring_batch": 3
+  },
+  {
+    "card_ref": "break|break/VERB|break#brechen",
+    "form_norm": "break",
+    "original_position": 248,
+    "display_position": 240,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "spill|spill/VERB|spill#verschutten",
+    "form_norm": "spill",
+    "original_position": 249,
+    "display_position": 241,
+    "authoring_batch": 2
+  }
+]

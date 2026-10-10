@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "selected": 241,
+  "excluded": 9,
+  "batches": {
+    "1": 83,
+    "2": 80,
+    "3": 78
+  },
+  "topics_per_batch": {
+    "1": {
+      "Wohnen": 10,
+      "Haushalt": 10,
+      "Kleidung": 10,
+      "Einkaufen": 8,
+      "Kochen": 14,
+      "Familie": 10,
+      "Freizeit": 10,
+      "Alltagstätigkeiten": 11
+    },
+    "2": {
+      "Wohnen": 9,
+      "Haushalt": 10,
+      "Kleidung": 10,
+      "Einkaufen": 7,
+      "Kochen": 13,
+      "Familie": 10,
+      "Freizeit": 10,
+      "Alltagstätigkeiten": 11
+    },
+    "3": {
+      "Wohnen": 9,
+      "Haushalt": 10,
+      "Kleidung": 10,
+      "Einkaufen": 7,
+      "Kochen": 13,
+      "Familie": 10,
+      "Freizeit": 9,
+      "Alltagstätigkeiten": 10
+    }
+  },
+  "existing_senses": 122,
+  "new_senses": 119,
+  "existing_cards": 764,
+  "existing_groups": 752,
+  "new_groups": 241,
+  "registry_words": 901,
+  "partition_selection": "PASS: 0 present",
+  "validate_selection": "PASS: parent and exact reservations",
+  "index_registry": "PASS",
+  "validate_learning": "PASS: existing and planned",
+  "build_rows": "PASS: reservation-only rows unchanged",
+  "semantic_review": "explicit editorial decisions, no automatic equivalence inference"
+}

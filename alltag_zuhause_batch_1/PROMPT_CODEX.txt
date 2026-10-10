@@ -1,0 +1,55 @@
+Ziel: Die offline redigierten 83 Lernziele für „Alltag & Zuhause“ vollständig prüfen, mit dem vorhandenen Schema-3-Importer übernehmen, intern stagen und den Kontext für Batch 2 vorbereiten.
+
+Dateien:
+- Lieferung im Repository-Root als alltag_zuhause_batch_1/ entpacken; keine bestehenden Ordner überschreiben.
+- Lesen: AGENTS.md, PRODUCT.md, docs/content-schema.md, docs/learning-groups-v1.md, docs/alltag-zuhause-authoring.md, NEXTSTEPS.md.
+- Eingaben: alltag_zuhause_batch_1/alltag_zuhause_batch_1.editorial.json, reading.json, annotation_review.txt, manifest.json, reference/authoring_context.json, reference/combined_display_mapping.json.
+- Bestehende Basis: pipeline/out/learning_groups_v1/pack.json.
+- Reservierungen: pipeline/data/words/en.alltag_zuhause_v1.json und pipeline/data/learning_groups/en.alltag_zuhause_v1.json.
+- Auswahl: pipeline/data/selection/alltag_zuhause_v1.json.
+- Vorhandene Werkzeuge: pipeline/scripts/import_editorial_patch.py, pipeline/scripts/export_authoring_context.py, tool/stage_content_pack.dart.
+- Neue Ausgabe: pipeline/out/alltag_zuhause_batch_1_v1/.
+- Bericht: docs/alltag-zuhause-batch-1-import.md; NEXTSTEPS.md.
+
+Schritte:
+1. Git-Status aufnehmen und vorhandene Änderungen erhalten. Liefermanifest und Quellenbindung prüfen. Die gelieferte Basis muss raw SHA256 d0976e3db100638f3712c919501c6f8009a7a9b73d80d7e61549376bfaf299c0 haben. Die mitgelieferten Quellkopien dienen nur als Referenz; niemals Projektcode mit ihnen überschreiben. Vorhandene Ausgabeverzeichnisse nicht überschreiben.
+2. Den Lieferverifier mit --repo . vom Repository-Root ausführen. Er verwendet den vorhandenen Projektimporter und die mitgelieferten spaCy-Modellgewichte. Alle 83 englischen und deutschen Sätze samt Lücke, Zieldefinition und Kontextbindungen gegenlesen; neun Alternativen jeweils wörtlich einsetzen. Neue Begleitwort-Senses auf unnötige Dubletten prüfen. Genau die 83 reservierten Karten und ihre cards.learning-Metadaten übernehmen. Keine weiteren Lernkarten für Begleitwörter anlegen.
+3. Verbindliche Regeln: eine Karte und ein fester Satz pro ausgewähltem Lernziel; accepted ausschließlich Zielform. Die neun geprüften Alternativen bleiben neutral und ändern den Lernstand nicht. Registry-Originalpositionen bleiben unverändert. Im neuen Stapel gelten ausschließlich die 83 dichten Anzeigepositionen aus combined_display_mapping.json; Batch 1 braucht keinen separaten Display-Patch. Alte Karten, Metadaten, Reihenfolgen, Wörterbuchzeilen, Sätze, Storyinhalte und Reviews erhalten.
+4. Nur einen eindeutig belegten Lieferfehler minimal korrigieren, falls einer gefunden wird. Originaldatei erhalten, Korrektur mit vorher/nachher und Grund versionieren; betroffene Review-/Token-/Linkhashes korrekt neu berechnen. Keine neuen Inhaltswünsche, Modellwechsel oder automatische Neugenerierung. Häufigkeitswarnungen sind kein Anlass für Endlosschleifen.
+5. Mit dem vorhandenen Importer in pipeline/out/alltag_zuhause_batch_1_v1 exportieren. Alle 18 SQLite-Tabellen erneut gegen build_rows prüfen. Erwartung: 847 physische Karten, 1381 Satztexte, 1375 Satzverknüpfungen einschließlich Historie; 732 primäre Lernziele für neue Nutzer: Allgemeine Sprache 160, Reisen 489, Alltag & Zuhause 83. Die 743 Wortbesitz-Zeilen sind nicht mit der Lernzielzahl gleichzusetzen. Alle 764 alten Karten-IDs erhalten. Gesamtzahlen des Wörterbuchs können sich nur bei einer dokumentierten Lieferkorrektur ändern.
+6. Vor Staging bisheriges Asset und Manifest sichern. Bei grünen Inhalts- und Exportprüfungen intern stagen, danach --verify und einen Dreistapel-Lesetest mit 160/489/83 Lernzielen durchführen. Normalen App-Einstieg erhalten. Keine echte user.db öffnen, kopieren, zurücksetzen oder ändern. Keine zusätzliche Reviewer-Freigabe verlangen: Offline-Import und internes Staging sind mit diesem Auftrag autorisiert.
+7. Mit den vorhandenen Authoring-Werkzeugen den Batch-2-Kontext (80 reservierte Ziele) auf Basis des tatsächlich exportierten neuen Packs vorbereiten. Alte Auswahl-/Registryversionen und Originalpositionen erhalten; nötige neue Kontext-Snapshots getrennt speichern. Bestehende und kommende Anzeigezuordnungen ausdrücklich unterscheiden. ZIP muss aktuelle Basis, vollständiges Wörterbuch, Reservierungen, Lerngruppen, Schema, Tokenizer/Linter und Hashbindungen enthalten. Noch keine Batch-2-Sätze schreiben. Ergebnis: build/alltag_zuhause_authoring_batch_2.zip; ZIP mit dem vorhandenen Werkzeug prüfen. Falls das Werkzeug die neue Basis noch nicht unterstützt, den konkreten fehlenden Vertrag dokumentieren statt einen ungefragten großen Umbau zu beginnen.
+
+Nicht anfassen:
+- Echte Lernstände, user.db, review_log, alte Packs und alte Registrys.
+- SRS-, Gruppen-, Synonym- und Reihenfolgeregeln, Produktionsmodelle/Budgets, Supabase und Plattformdateien.
+- Keine Cloud-/Modellaufrufe, keine Veröffentlichung, Commits oder Pushes.
+
+Akzeptanzkriterien:
+- Exakt 83 neue Lernziele und 83 neue Satzpaare; ein Satz je neuer Karte.
+- Keine Besitzer-/Lerngruppenkonflikte oder automatische Synonymfreigaben.
+- Vollständige Worttokenbindungen und Formglossen, gültige Reviewhashes, Linter 0 Fehler.
+- Alte Daten unverändert; Schema 3 und alle neuen learning-Werte unverändert aus der Auswahl.
+- Export, SQLite-Abgleich, Staging-Verifikation und App-Lesetest bestanden.
+- Batch-2-ZIP auf die neue tatsächliche Basis gebunden oder konkreter technischer Blocker dokumentiert.
+
+Prüfen mit (Repository-Root):
+Windows PowerShell:
+.\pipeline\.venv\Scripts\python.exe alltag_zuhause_batch_1\verify_alltag_zuhause_batch_1.py --repo .
+.\pipeline\.venv\Scripts\python.exe pipeline\scripts\import_editorial_patch.py --source pipeline/out/learning_groups_v1/pack.json --create alltag_zuhause_batch_1/alltag_zuhause_batch_1.editorial.json --registry pipeline/data/words/en.alltag_zuhause_v1.json --out pipeline/out/alltag_zuhause_batch_1_v1
+macOS Terminal:
+pipeline/.venv/bin/python alltag_zuhause_batch_1/verify_alltag_zuhause_batch_1.py --repo .
+pipeline/.venv/bin/python pipeline/scripts/import_editorial_patch.py --source pipeline/out/learning_groups_v1/pack.json --create alltag_zuhause_batch_1/alltag_zuhause_batch_1.editorial.json --registry pipeline/data/words/en.alltag_zuhause_v1.json --out pipeline/out/alltag_zuhause_batch_1_v1
+Auf beiden Systemen nach erfolgreicher Prüfung und Asset-Sicherung:
+dart run tool/stage_content_pack.dart --from pipeline/out/alltag_zuhause_batch_1_v1
+dart run tool/stage_content_pack.dart --verify
+flutter analyze
+git diff --check
+git status --short
+Zusätzlich den vorhandenen Pack-Lesetest und betroffene Import-/Registry-/Gruppenprüfungen ausführen; exakte Testpfade aus dem Repository verwenden. Keine neue generische Testsuite schreiben. Tatsächlichen Output und Exitcodes zeigen. Geräteprüfung nur melden, wenn sie tatsächlich lief.
+
+Schleifenbremse: Nach 2–3 Fehlversuchen neue Hypothese und Befund nennen; nach 5 stoppen und Lage schildern. Kein automatischer Cloud-Fallback.
+
+Am Ende: NEXTSTEPS.md schreiben (Erledigt, geänderte Dateien, Testergebnisse, Abweichungen, offene Probleme; maximal 25 Zeilen, nur Fakten). Kurzbericht mit neuen Lernzielzahlen, Exportversion, Hash, verbleibenden Befunden und Batch-2-ZIP.
+
+Modell: Codex GPT-5.6 Sol – Hoch | Alternative: Claude Code Opus 5.5 – Hoch | Danach: /clear

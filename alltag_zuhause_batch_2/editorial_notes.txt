@@ -1,0 +1,23 @@
+Redaktion Alltag & Zuhause, Batch 2 – 80 neue Satzpaare
+
+Die Texte sind direkt im Chat verfasst und vollständig gegengelesen. Es wurden keine Gemini-/Vertex-Aufrufe ausgeführt. Das ist eine ChatGPT-Redaktion, keine unabhängige menschliche Qualitätszertifizierung.
+
+Alle 80 Zieldefinitionen/Übersetzungen/Identitäten stammen unverändert aus dem gelieferten Kontext. Alle Worttokens wurden im Satz gelesen; mehrdeutige Begleitwörter wie paint, have, left, light, for, to, on und off sind kontextbezogen gebunden. Neue Formglossen wurden separat auf Zeitform und Numerus geprüft.
+
+Bestehende Senses bleiben unverändert. jeans verwendet die schon vorhandene Sense samt Definition „Eine Hose aus festem Denimstoff.“; die ursprüngliche Reservierung „Eine robuste Hose aus Denimstoff.“ wird nicht überschrieben. Die ausdrückliche Gleichwertigkeitsentscheidung liegt im Referenzkontext.
+
+aisle: Der gelieferte Vertrag bindet das Einkaufsziel „Ein Durchgang zwischen Warenregalen in einem Geschäft.“ an aisle/NOUN|aisle#gang. Dessen alte Definition nennt enger einen Gang zwischen Sitzreihen im Fahrzeug. Der neue Satz verwendet die explizite Zieldefinition im Einkaufskontext; kein neues Lemma, keine neue Sense und keine Änderung der historischen Definition. Diese bereits in der Auswahl enthaltene redaktionelle Reichweitenabweichung bleibt sichtbar dokumentiert. Die Vorrangregel stammt aus import_contract.definitions: Zieldefinition für den Satz, bestehende Sensezeilen unverändert.
+
+Andere historische Senses/Formglossen sind teilweise gebeugt oder knapp (etwa home „Hause“, bin „Tonnen“, battery „Batterien“, tennis „Tennis-“). Vollständige Kartenübersetzungen kommen unverändert aus der Auswahl. Diese Lieferung ist keine globale Altglossenbereinigung und überschreibt keine alten Wörterbucheinträge.
+
+Acht freigegebene Alternativen, jeweils wörtlich im konkreten Satz geprüft:
+- sofa → couch: dieselbe Sitzmöbelbedeutung.
+- bin → rubbish bin / trash can: im Verpackungsabfall-Kontext passende regionale Bezeichnungen.
+- peg → clothes peg / clothespin: durch Handtuch und Wäscheleine eindeutig Wäscheklammer.
+- cinema → movie theater / movie theatre: regionale Bezeichnungen für den Vorführort.
+- photo → photograph: gleichbedeutende Langform.
+Keine automatische Freigabe anderer Gruppenwörter, keine Behauptung einer vollständigen Synonymliste. accepted[] enthält nur die Zielform.
+
+Fortsetzung: 83 bisherige Ziele + 80 neue = 163 Alltag-Lernziele. Neue Mitgliedschaften werden 84–163 angehängt, danach erfolgt nur die autorisierte Anzeigepositionsänderung nach Originalreihenfolge. Der ausführbare Display-Patch ist an Quellen-, Create- und Registryhash sowie die vollständigen Vorher-Zeilen gebunden.
+
+Lokale Prüfung: mitgelieferte unveränderte Projektquellen, Schema, Tokenizer und spaCy-Modell. Der separate ZIP-Verifier des Projekts benötigt zusätzliche Original-Repositorypfade und ist hier nicht als vollständiger Repository-Test ausgebbar. Stattdessen wurden Manifest, Fortsetzungsvertrag, Basis-SQLite, Import, Display-Patch, Linter und neuer SQLite-Export unmittelbar mit den enthaltenen Originalfunktionen geprüft. Flutter, echtes Staging und Mobilgerätetest führt erst der lokale Importauftrag aus.

@@ -1,0 +1,2044 @@
+{
+  "existing": [
+    {
+      "card_ref": "house|house/NOUN|house#haus",
+      "form_norm": "house",
+      "position": 1
+    },
+    {
+      "card_ref": "wall|wall/NOUN|wall#wand",
+      "form_norm": "wall",
+      "position": 2
+    },
+    {
+      "card_ref": "door|door/NOUN|door#tuer",
+      "form_norm": "door",
+      "position": 3
+    },
+    {
+      "card_ref": "fence|fence/NOUN|fence#zaun",
+      "form_norm": "fence",
+      "position": 4
+    },
+    {
+      "card_ref": "carpet|carpet/NOUN|carpet#teppich",
+      "form_norm": "carpet",
+      "position": 5
+    },
+    {
+      "card_ref": "drawer|drawer/NOUN|drawer#schublade",
+      "form_norm": "drawer",
+      "position": 6
+    },
+    {
+      "card_ref": "mattress|mattress/NOUN|mattress#matratze",
+      "form_norm": "mattress",
+      "position": 7
+    },
+    {
+      "card_ref": "attic|attic/NOUN|attic#dachboden",
+      "form_norm": "attic",
+      "position": 8
+    },
+    {
+      "card_ref": "neighbour|neighbour/NOUN|neighbour#nachbar",
+      "form_norm": "neighbour",
+      "position": 9
+    },
+    {
+      "card_ref": "address|address/NOUN|address#adresse",
+      "form_norm": "address",
+      "position": 10
+    },
+    {
+      "card_ref": "broom|broom/NOUN|broom#besen",
+      "form_norm": "broom",
+      "position": 11
+    },
+    {
+      "card_ref": "sponge|sponge/NOUN|sponge#schwamm",
+      "form_norm": "sponge",
+      "position": 12
+    },
+    {
+      "card_ref": "dirt|dirt/NOUN|dirt#schmutz",
+      "form_norm": "dirt",
+      "position": 13
+    },
+    {
+      "card_ref": "bleach|bleach/NOUN|bleach#bleichmittel",
+      "form_norm": "bleach",
+      "position": 14
+    },
+    {
+      "card_ref": "recycling|recycling/NOUN|recycling#recycling",
+      "form_norm": "recycling",
+      "position": 15
+    },
+    {
+      "card_ref": "hanger|hanger/NOUN|hanger#kleiderbugel",
+      "form_norm": "hanger",
+      "position": 16
+    },
+    {
+      "card_ref": "dishwasher|dishwasher/NOUN|dishwasher#geschirrspuler",
+      "form_norm": "dishwasher",
+      "position": 17
+    },
+    {
+      "card_ref": "tap|tap/NOUN|tap#wasserhahn",
+      "form_norm": "tap",
+      "position": 18
+    },
+    {
+      "card_ref": "bulb|bulb/NOUN|bulb#gluhbirne",
+      "form_norm": "bulb",
+      "position": 19
+    },
+    {
+      "card_ref": "glue|glue/NOUN|glue#klebstoff",
+      "form_norm": "glue",
+      "position": 20
+    },
+    {
+      "card_ref": "trousers|trousers/NOUN|trousers#hose",
+      "form_norm": "trousers",
+      "position": 21
+    },
+    {
+      "card_ref": "dress|dress/NOUN|dress#kleid",
+      "form_norm": "dress",
+      "position": 22
+    },
+    {
+      "card_ref": "jumper|jumper/NOUN|jumper#pullover",
+      "form_norm": "jumper",
+      "position": 23
+    },
+    {
+      "card_ref": "sock|sock/NOUN|sock#socke",
+      "form_norm": "sock",
+      "position": 24
+    },
+    {
+      "card_ref": "slipper|slipper/NOUN|slipper#hausschuh",
+      "form_norm": "slipper",
+      "position": 25
+    },
+    {
+      "card_ref": "cap|cap/NOUN|cap#kappe",
+      "form_norm": "cap",
+      "position": 26
+    },
+    {
+      "card_ref": "belt|belt/NOUN|belt#guertel",
+      "form_norm": "belt",
+      "position": 27
+    },
+    {
+      "card_ref": "sleeve|sleeve/NOUN|sleeve#aermeln",
+      "form_norm": "sleeve",
+      "position": 28
+    },
+    {
+      "card_ref": "wool|wool/NOUN|wool#wolle",
+      "form_norm": "wool",
+      "position": 29
+    },
+    {
+      "card_ref": "pyjamas|pyjamas/NOUN|pyjamas#schlafanzug",
+      "form_norm": "pyjamas",
+      "position": 30
+    },
+    {
+      "card_ref": "supermarket|supermarket/NOUN|supermarket#supermarkt",
+      "form_norm": "supermarket",
+      "position": 31
+    },
+    {
+      "card_ref": "customer|customer/NOUN|customer#kunde-kundin",
+      "form_norm": "customer",
+      "position": 32
+    },
+    {
+      "card_ref": "queue|queue/NOUN|queue#warteschlange",
+      "form_norm": "queue",
+      "position": 33
+    },
+    {
+      "card_ref": "brand|brand/NOUN|brand#marke",
+      "form_norm": "brand",
+      "position": 34
+    },
+    {
+      "card_ref": "quality|quality/NOUN|quality#qualitat",
+      "form_norm": "quality",
+      "position": 35
+    },
+    {
+      "card_ref": "dozen|dozen/NOUN|dozen#dutzend",
+      "form_norm": "dozen",
+      "position": 36
+    },
+    {
+      "card_ref": "coupon|coupon/NOUN|coupon#gutschein",
+      "form_norm": "coupon",
+      "position": 37
+    },
+    {
+      "card_ref": "list|list/NOUN|list#liste",
+      "form_norm": "list",
+      "position": 38
+    },
+    {
+      "card_ref": "pan|pan/NOUN|pan#pfanne",
+      "form_norm": "pan",
+      "position": 39
+    },
+    {
+      "card_ref": "oven|oven/NOUN|oven#ofen",
+      "form_norm": "oven",
+      "position": 40
+    },
+    {
+      "card_ref": "microwave|microwave/NOUN|microwave#mikrowelle",
+      "form_norm": "microwave",
+      "position": 41
+    },
+    {
+      "card_ref": "ingredient|ingredient/NOUN|ingredient#zutaten",
+      "form_norm": "ingredient",
+      "position": 42
+    },
+    {
+      "card_ref": "oil|oil/NOUN|oil#speiseol",
+      "form_norm": "oil",
+      "position": 43
+    },
+    {
+      "card_ref": "carrot|carrot/NOUN|carrot#karotte",
+      "form_norm": "carrot",
+      "position": 44
+    },
+    {
+      "card_ref": "bean|bean/NOUN|bean#bohne",
+      "form_norm": "bean",
+      "position": 45
+    },
+    {
+      "card_ref": "lemon|lemon/NOUN|lemon#zitrone",
+      "form_norm": "lemon",
+      "position": 46
+    },
+    {
+      "card_ref": "strawberry|strawberry/NOUN|strawberry#erdbeere",
+      "form_norm": "strawberry",
+      "position": 47
+    },
+    {
+      "card_ref": "cream|cream/NOUN|cream#sahne",
+      "form_norm": "cream",
+      "position": 48
+    },
+    {
+      "card_ref": "sauce|sauce/NOUN|sauce#sosse",
+      "form_norm": "sauce",
+      "position": 49
+    },
+    {
+      "card_ref": "peel|peel/VERB|peel#schalen",
+      "form_norm": "peel",
+      "position": 50
+    },
+    {
+      "card_ref": "bake|bake/VERB|bake#backen",
+      "form_norm": "bake",
+      "position": 51
+    },
+    {
+      "card_ref": "taste|taste/VERB|taste#probiert",
+      "form_norm": "taste",
+      "position": 52
+    },
+    {
+      "card_ref": "family|family/NOUN|family#familie",
+      "form_norm": "family",
+      "position": 53
+    },
+    {
+      "card_ref": "father|father/NOUN|father#vater",
+      "form_norm": "father",
+      "position": 54
+    },
+    {
+      "card_ref": "son|son/NOUN|son#sohn",
+      "form_norm": "son",
+      "position": 55
+    },
+    {
+      "card_ref": "sister|sister/NOUN|sister#schwester",
+      "form_norm": "sister",
+      "position": 56
+    },
+    {
+      "card_ref": "grandchild|grandchild/NOUN|grandchild#enkelkind",
+      "form_norm": "grandchild",
+      "position": 57
+    },
+    {
+      "card_ref": "cousin|cousin/NOUN|cousin#cousin-oder-cousine",
+      "form_norm": "cousin",
+      "position": 58
+    },
+    {
+      "card_ref": "husband|husband/NOUN|husband#ehemann",
+      "form_norm": "husband",
+      "position": 59
+    },
+    {
+      "card_ref": "relative|relative/NOUN|relative#verwandter",
+      "form_norm": "relative",
+      "position": 60
+    },
+    {
+      "card_ref": "wedding|wedding/NOUN|wedding#hochzeit",
+      "form_norm": "wedding",
+      "position": 61
+    },
+    {
+      "card_ref": "dog|dog/NOUN|dog#hund",
+      "form_norm": "dog",
+      "position": 62
+    },
+    {
+      "card_ref": "hobby|hobby/NOUN|hobby#hobby",
+      "form_norm": "hobby",
+      "position": 63
+    },
+    {
+      "card_ref": "ball|ball/NOUN|ball#ball",
+      "form_norm": "ball",
+      "position": 64
+    },
+    {
+      "card_ref": "song|song/NOUN|song#lied",
+      "form_norm": "song",
+      "position": 65
+    },
+    {
+      "card_ref": "film|film/NOUN|film#film",
+      "form_norm": "film",
+      "position": 66
+    },
+    {
+      "card_ref": "screen|screen/NOUN|screen#bildschirm",
+      "form_norm": "screen",
+      "position": 67
+    },
+    {
+      "card_ref": "album|album/NOUN|album#fotoalbum",
+      "form_norm": "album",
+      "position": 68
+    },
+    {
+      "card_ref": "newspaper|newspaper/NOUN|newspaper#zeitung",
+      "form_norm": "newspaper",
+      "position": 69
+    },
+    {
+      "card_ref": "football|football/NOUN|football#fussball",
+      "form_norm": "football",
+      "position": 70
+    },
+    {
+      "card_ref": "dance|dance/VERB|dance#tanzen",
+      "form_norm": "dance",
+      "position": 71
+    },
+    {
+      "card_ref": "paint|paint/VERB|paint#malen",
+      "form_norm": "paint",
+      "position": 72
+    },
+    {
+      "card_ref": "sweep|sweep/VERB|sweep#fegen",
+      "form_norm": "sweep",
+      "position": 73
+    },
+    {
+      "card_ref": "hang|hang/VERB|hang#haengt-auf",
+      "form_norm": "hang",
+      "position": 74
+    },
+    {
+      "card_ref": "feed|feed/VERB|feed#fuettern",
+      "form_norm": "feed",
+      "position": 75
+    },
+    {
+      "card_ref": "drop|drop/VERB|drop#fallen-lassen",
+      "form_norm": "drop",
+      "position": 76
+    },
+    {
+      "card_ref": "hold|hold/VERB|hold#haelt",
+      "form_norm": "hold",
+      "position": 77
+    },
+    {
+      "card_ref": "laugh|laugh/VERB|laugh#lachen",
+      "form_norm": "laugh",
+      "position": 78
+    },
+    {
+      "card_ref": "hug|hug/VERB|hug#umarmen",
+      "form_norm": "hug",
+      "position": 79
+    },
+    {
+      "card_ref": "invite|invite/VERB|invite#einladen",
+      "form_norm": "invite",
+      "position": 80
+    },
+    {
+      "card_ref": "exercise|exercise/VERB|exercise#trainieren",
+      "form_norm": "exercise",
+      "position": 81
+    },
+    {
+      "card_ref": "try|try/VERB|try#versuchen",
+      "form_norm": "try",
+      "position": 82
+    },
+    {
+      "card_ref": "break|break/VERB|break#brechen",
+      "form_norm": "break",
+      "position": 83
+    }
+  ],
+  "append": [
+    {
+      "card_ref": "home|home/NOUN|home#hause",
+      "form_norm": "home",
+      "original_position": 2,
+      "append_position": 84
+    },
+    {
+      "card_ref": "ceiling|ceiling/NOUN|ceiling#zimmerdecke",
+      "form_norm": "ceiling",
+      "original_position": 5,
+      "append_position": 85
+    },
+    {
+      "card_ref": "stairs|stairs/NOUN|stairs#treppe",
+      "form_norm": "stairs",
+      "original_position": 8,
+      "append_position": 86
+    },
+    {
+      "card_ref": "sofa|sofa/NOUN|sofa#sofa",
+      "form_norm": "sofa",
+      "original_position": 11,
+      "append_position": 87
+    },
+    {
+      "card_ref": "curtain|curtain/NOUN|curtain#vorhang",
+      "form_norm": "curtain",
+      "original_position": 14,
+      "append_position": 88
+    },
+    {
+      "card_ref": "wardrobe|wardrobe/NOUN|wardrobe#kleiderschrank",
+      "form_norm": "wardrobe",
+      "original_position": 17,
+      "append_position": 89
+    },
+    {
+      "card_ref": "sheet|sheet/NOUN|sheet#bettlaken",
+      "form_norm": "sheet",
+      "original_position": 22,
+      "append_position": 90
+    },
+    {
+      "card_ref": "entrance|entrance/NOUN|entrance#eingang",
+      "form_norm": "entrance",
+      "original_position": 25,
+      "append_position": 91
+    },
+    {
+      "card_ref": "landlord|landlord/NOUN|landlord#vermieter",
+      "form_norm": "landlord",
+      "original_position": 28,
+      "append_position": 92
+    },
+    {
+      "card_ref": "mop|mop/NOUN|mop#wischmopp",
+      "form_norm": "mop",
+      "original_position": 32,
+      "append_position": 93
+    },
+    {
+      "card_ref": "cloth|cloth/NOUN|cloth#tuch",
+      "form_norm": "cloth",
+      "original_position": 35,
+      "append_position": 94
+    },
+    {
+      "card_ref": "stain|stain/NOUN|stain#fleck",
+      "form_norm": "stain",
+      "original_position": 38,
+      "append_position": 95
+    },
+    {
+      "card_ref": "bin|bin/NOUN|bin#tonnen",
+      "form_norm": "bin",
+      "original_position": 41,
+      "append_position": 96
+    },
+    {
+      "card_ref": "brush|brush/NOUN|brush#burste",
+      "form_norm": "brush",
+      "original_position": 44,
+      "append_position": 97
+    },
+    {
+      "card_ref": "peg|peg/NOUN|peg#wascheklammer",
+      "form_norm": "peg",
+      "original_position": 47,
+      "append_position": 98
+    },
+    {
+      "card_ref": "freezer|freezer/NOUN|freezer#gefrierschrank",
+      "form_norm": "freezer",
+      "original_position": 50,
+      "append_position": 99
+    },
+    {
+      "card_ref": "sink|sink/NOUN|sink#spuelbecken",
+      "form_norm": "sink",
+      "original_position": 53,
+      "append_position": 100
+    },
+    {
+      "card_ref": "battery|battery/NOUN|battery#batterien",
+      "form_norm": "battery",
+      "original_position": 56,
+      "append_position": 101
+    },
+    {
+      "card_ref": "tape|tape/NOUN|tape#klebeband",
+      "form_norm": "tape",
+      "original_position": 59,
+      "append_position": 102
+    },
+    {
+      "card_ref": "jeans|jeans/NOUN|jeans#jeans",
+      "form_norm": "jeans",
+      "original_position": 62,
+      "append_position": 103
+    },
+    {
+      "card_ref": "jacket|jacket/NOUN|jacket#jacke",
+      "form_norm": "jacket",
+      "original_position": 65,
+      "append_position": 104
+    },
+    {
+      "card_ref": "cardigan|cardigan/NOUN|cardigan#strickjacke",
+      "form_norm": "cardigan",
+      "original_position": 68,
+      "append_position": 105
+    },
+    {
+      "card_ref": "boot|boot/NOUN|boot#stiefel",
+      "form_norm": "boot",
+      "original_position": 71,
+      "append_position": 106
+    },
+    {
+      "card_ref": "sandal|sandal/NOUN|sandal#sandale",
+      "form_norm": "sandal",
+      "original_position": 74,
+      "append_position": 107
+    },
+    {
+      "card_ref": "scarf|scarf/NOUN|scarf#schal",
+      "form_norm": "scarf",
+      "original_position": 77,
+      "append_position": 108
+    },
+    {
+      "card_ref": "button|button/NOUN|button#knopf",
+      "form_norm": "button",
+      "original_position": 80,
+      "append_position": 109
+    },
+    {
+      "card_ref": "collar|collar/NOUN|collar#kragen",
+      "form_norm": "collar",
+      "original_position": 83,
+      "append_position": 110
+    },
+    {
+      "card_ref": "silk|silk/NOUN|silk#seide",
+      "form_norm": "silk",
+      "original_position": 86,
+      "append_position": 111
+    },
+    {
+      "card_ref": "tights|tights/NOUN|tights#strumpfhose",
+      "form_norm": "tights",
+      "original_position": 89,
+      "append_position": 112
+    },
+    {
+      "card_ref": "bakery|bakery/NOUN|bakery#backerei",
+      "form_norm": "bakery",
+      "original_position": 92,
+      "append_position": 113
+    },
+    {
+      "card_ref": "cashier|cashier/NOUN|cashier#kassierer",
+      "form_norm": "cashier",
+      "original_position": 95,
+      "append_position": 114
+    },
+    {
+      "card_ref": "aisle|aisle/NOUN|aisle#gang",
+      "form_norm": "aisle",
+      "original_position": 98,
+      "append_position": 115
+    },
+    {
+      "card_ref": "size|size/NOUN|size#grosse",
+      "form_norm": "size",
+      "original_position": 101,
+      "append_position": 116
+    },
+    {
+      "card_ref": "quantity|quantity/NOUN|quantity#menge",
+      "form_norm": "quantity",
+      "original_position": 104,
+      "append_position": 117
+    },
+    {
+      "card_ref": "packet|packet/NOUN|packet#packung",
+      "form_norm": "packet",
+      "original_position": 107,
+      "append_position": 118
+    },
+    {
+      "card_ref": "sale|sale/NOUN|sale#ausverkauf",
+      "form_norm": "sale",
+      "original_position": 110,
+      "append_position": 119
+    },
+    {
+      "card_ref": "pot|pot/NOUN|pot#kochtopf",
+      "form_norm": "pot",
+      "original_position": 117,
+      "append_position": 120
+    },
+    {
+      "card_ref": "hob|hob/NOUN|hob#kochfeld",
+      "form_norm": "hob",
+      "original_position": 120,
+      "append_position": 121
+    },
+    {
+      "card_ref": "toaster|toaster/NOUN|toaster#toaster",
+      "form_norm": "toaster",
+      "original_position": 123,
+      "append_position": 122
+    },
+    {
+      "card_ref": "flour|flour/NOUN|flour#mehl",
+      "form_norm": "flour",
+      "original_position": 126,
+      "append_position": 123
+    },
+    {
+      "card_ref": "vinegar|vinegar/NOUN|vinegar#essig",
+      "form_norm": "vinegar",
+      "original_position": 129,
+      "append_position": 124
+    },
+    {
+      "card_ref": "cucumber|cucumber/NOUN|cucumber#gurke",
+      "form_norm": "cucumber",
+      "original_position": 132,
+      "append_position": 125
+    },
+    {
+      "card_ref": "pea|pea/NOUN|pea#erbse",
+      "form_norm": "pea",
+      "original_position": 135,
+      "append_position": 126
+    },
+    {
+      "card_ref": "orange|orange/NOUN|orange#frucht",
+      "form_norm": "orange",
+      "original_position": 138,
+      "append_position": 127
+    },
+    {
+      "card_ref": "grape|grape/NOUN|grape#weintraube",
+      "form_norm": "grape",
+      "original_position": 141,
+      "append_position": 128
+    },
+    {
+      "card_ref": "honey|honey/NOUN|honey#honig",
+      "form_norm": "honey",
+      "original_position": 144,
+      "append_position": 129
+    },
+    {
+      "card_ref": "dough|dough/NOUN|dough#teig",
+      "form_norm": "dough",
+      "original_position": 147,
+      "append_position": 130
+    },
+    {
+      "card_ref": "boil|boil/VERB|boil#kocht",
+      "form_norm": "boil",
+      "original_position": 150,
+      "append_position": 131
+    },
+    {
+      "card_ref": "stir|stir/VERB|stir#umruhren",
+      "form_norm": "stir",
+      "original_position": 153,
+      "append_position": 132
+    },
+    {
+      "card_ref": "parent|parent/NOUN|parent#eltern",
+      "form_norm": "parent",
+      "original_position": 157,
+      "append_position": 133
+    },
+    {
+      "card_ref": "child|child/NOUN|child#kind",
+      "form_norm": "child",
+      "original_position": 160,
+      "append_position": 134
+    },
+    {
+      "card_ref": "daughter|daughter/NOUN|daughter#tochter",
+      "form_norm": "daughter",
+      "original_position": 163,
+      "append_position": 135
+    },
+    {
+      "card_ref": "grandmother|grandmother/NOUN|grandmother#grossmutter",
+      "form_norm": "grandmother",
+      "original_position": 166,
+      "append_position": 136
+    },
+    {
+      "card_ref": "aunt|aunt/NOUN|aunt#tante",
+      "form_norm": "aunt",
+      "original_position": 169,
+      "append_position": 137
+    },
+    {
+      "card_ref": "niece|niece/NOUN|niece#nichte",
+      "form_norm": "niece",
+      "original_position": 172,
+      "append_position": 138
+    },
+    {
+      "card_ref": "wife|wife/NOUN|wife#ehefrau",
+      "form_norm": "wife",
+      "original_position": 175,
+      "append_position": 139
+    },
+    {
+      "card_ref": "twin|twin/NOUN|twin#zwilling",
+      "form_norm": "twin",
+      "original_position": 178,
+      "append_position": 140
+    },
+    {
+      "card_ref": "gift|gift/NOUN|gift#geschenk",
+      "form_norm": "gift",
+      "original_position": 181,
+      "append_position": 141
+    },
+    {
+      "card_ref": "cat|cat/NOUN|cat#katze",
+      "form_norm": "cat",
+      "original_position": 184,
+      "append_position": 142
+    },
+    {
+      "card_ref": "game|game/NOUN|game#spiel",
+      "form_norm": "game",
+      "original_position": 187,
+      "append_position": 143
+    },
+    {
+      "card_ref": "puzzle|puzzle/NOUN|puzzle#puzzle",
+      "form_norm": "puzzle",
+      "original_position": 190,
+      "append_position": 144
+    },
+    {
+      "card_ref": "guitar|guitar/NOUN|guitar#gitarre",
+      "form_norm": "guitar",
+      "original_position": 193,
+      "append_position": 145
+    },
+    {
+      "card_ref": "cinema|cinema/NOUN|cinema#kino",
+      "form_norm": "cinema",
+      "original_position": 196,
+      "append_position": 146
+    },
+    {
+      "card_ref": "photo|photo/NOUN|photo#foto",
+      "form_norm": "photo",
+      "original_position": 200,
+      "append_position": 147
+    },
+    {
+      "card_ref": "novel|novel/NOUN|novel#roman",
+      "form_norm": "novel",
+      "original_position": 203,
+      "append_position": 148
+    },
+    {
+      "card_ref": "library|library/NOUN|library#bibliothek",
+      "form_norm": "library",
+      "original_position": 206,
+      "append_position": 149
+    },
+    {
+      "card_ref": "tennis|tennis/NOUN|tennis#tennis",
+      "form_norm": "tennis",
+      "original_position": 209,
+      "append_position": 150
+    },
+    {
+      "card_ref": "sing|sing/VERB|sing#sangen",
+      "form_norm": "sing",
+      "original_position": 212,
+      "append_position": 151
+    },
+    {
+      "card_ref": "knit|knit/VERB|knit#stricken",
+      "form_norm": "knit",
+      "original_position": 215,
+      "append_position": 152
+    },
+    {
+      "card_ref": "wipe|wipe/VERB|wipe#abwischen",
+      "form_norm": "wipe",
+      "original_position": 217,
+      "append_position": 153
+    },
+    {
+      "card_ref": "tidy|tidy/VERB|tidy#aufraumen",
+      "form_norm": "tidy",
+      "original_position": 220,
+      "append_position": 154
+    },
+    {
+      "card_ref": "throw|throw/VERB|throw#wirft",
+      "form_norm": "throw",
+      "original_position": 223,
+      "append_position": 155
+    },
+    {
+      "card_ref": "push|push/VERB|push#schubsen",
+      "form_norm": "push",
+      "original_position": 226,
+      "append_position": 156
+    },
+    {
+      "card_ref": "touch|touch/VERB|touch#beruehrt",
+      "form_norm": "touch",
+      "original_position": 230,
+      "append_position": 157
+    },
+    {
+      "card_ref": "smile|smile/VERB|smile#laechelt",
+      "form_norm": "smile",
+      "original_position": 233,
+      "append_position": 158
+    },
+    {
+      "card_ref": "kiss|kiss/VERB|kiss#kussen",
+      "form_norm": "kiss",
+      "original_position": 236,
+      "append_position": 159
+    },
+    {
+      "card_ref": "celebrate|celebrate/VERB|celebrate#feiert",
+      "form_norm": "celebrate",
+      "original_position": 239,
+      "append_position": 160
+    },
+    {
+      "card_ref": "wear|wear/VERB|wear#tragen",
+      "form_norm": "wear",
+      "original_position": 243,
+      "append_position": 161
+    },
+    {
+      "card_ref": "finish|finish/VERB|finish#beenden",
+      "form_norm": "finish",
+      "original_position": 246,
+      "append_position": 162
+    },
+    {
+      "card_ref": "spill|spill/VERB|spill#verschutten",
+      "form_norm": "spill",
+      "original_position": 249,
+      "append_position": 163
+    }
+  ],
+  "rows": [
+    {
+      "card_ref": "house|house/NOUN|house#haus",
+      "form_norm": "house",
+      "original_position": 1,
+      "expected_position": 1,
+      "position": 1
+    },
+    {
+      "card_ref": "home|home/NOUN|home#hause",
+      "form_norm": "home",
+      "original_position": 2,
+      "expected_position": 84,
+      "position": 2
+    },
+    {
+      "card_ref": "wall|wall/NOUN|wall#wand",
+      "form_norm": "wall",
+      "original_position": 4,
+      "expected_position": 2,
+      "position": 3
+    },
+    {
+      "card_ref": "ceiling|ceiling/NOUN|ceiling#zimmerdecke",
+      "form_norm": "ceiling",
+      "original_position": 5,
+      "expected_position": 85,
+      "position": 4
+    },
+    {
+      "card_ref": "door|door/NOUN|door#tuer",
+      "form_norm": "door",
+      "original_position": 7,
+      "expected_position": 3,
+      "position": 5
+    },
+    {
+      "card_ref": "stairs|stairs/NOUN|stairs#treppe",
+      "form_norm": "stairs",
+      "original_position": 8,
+      "expected_position": 86,
+      "position": 6
+    },
+    {
+      "card_ref": "fence|fence/NOUN|fence#zaun",
+      "form_norm": "fence",
+      "original_position": 10,
+      "expected_position": 4,
+      "position": 7
+    },
+    {
+      "card_ref": "sofa|sofa/NOUN|sofa#sofa",
+      "form_norm": "sofa",
+      "original_position": 11,
+      "expected_position": 87,
+      "position": 8
+    },
+    {
+      "card_ref": "carpet|carpet/NOUN|carpet#teppich",
+      "form_norm": "carpet",
+      "original_position": 13,
+      "expected_position": 5,
+      "position": 9
+    },
+    {
+      "card_ref": "curtain|curtain/NOUN|curtain#vorhang",
+      "form_norm": "curtain",
+      "original_position": 14,
+      "expected_position": 88,
+      "position": 10
+    },
+    {
+      "card_ref": "drawer|drawer/NOUN|drawer#schublade",
+      "form_norm": "drawer",
+      "original_position": 16,
+      "expected_position": 6,
+      "position": 11
+    },
+    {
+      "card_ref": "wardrobe|wardrobe/NOUN|wardrobe#kleiderschrank",
+      "form_norm": "wardrobe",
+      "original_position": 17,
+      "expected_position": 89,
+      "position": 12
+    },
+    {
+      "card_ref": "mattress|mattress/NOUN|mattress#matratze",
+      "form_norm": "mattress",
+      "original_position": 20,
+      "expected_position": 7,
+      "position": 13
+    },
+    {
+      "card_ref": "sheet|sheet/NOUN|sheet#bettlaken",
+      "form_norm": "sheet",
+      "original_position": 22,
+      "expected_position": 90,
+      "position": 14
+    },
+    {
+      "card_ref": "attic|attic/NOUN|attic#dachboden",
+      "form_norm": "attic",
+      "original_position": 24,
+      "expected_position": 8,
+      "position": 15
+    },
+    {
+      "card_ref": "entrance|entrance/NOUN|entrance#eingang",
+      "form_norm": "entrance",
+      "original_position": 25,
+      "expected_position": 91,
+      "position": 16
+    },
+    {
+      "card_ref": "neighbour|neighbour/NOUN|neighbour#nachbar",
+      "form_norm": "neighbour",
+      "original_position": 27,
+      "expected_position": 9,
+      "position": 17
+    },
+    {
+      "card_ref": "landlord|landlord/NOUN|landlord#vermieter",
+      "form_norm": "landlord",
+      "original_position": 28,
+      "expected_position": 92,
+      "position": 18
+    },
+    {
+      "card_ref": "address|address/NOUN|address#adresse",
+      "form_norm": "address",
+      "original_position": 30,
+      "expected_position": 10,
+      "position": 19
+    },
+    {
+      "card_ref": "broom|broom/NOUN|broom#besen",
+      "form_norm": "broom",
+      "original_position": 31,
+      "expected_position": 11,
+      "position": 20
+    },
+    {
+      "card_ref": "mop|mop/NOUN|mop#wischmopp",
+      "form_norm": "mop",
+      "original_position": 32,
+      "expected_position": 93,
+      "position": 21
+    },
+    {
+      "card_ref": "sponge|sponge/NOUN|sponge#schwamm",
+      "form_norm": "sponge",
+      "original_position": 34,
+      "expected_position": 12,
+      "position": 22
+    },
+    {
+      "card_ref": "cloth|cloth/NOUN|cloth#tuch",
+      "form_norm": "cloth",
+      "original_position": 35,
+      "expected_position": 94,
+      "position": 23
+    },
+    {
+      "card_ref": "dirt|dirt/NOUN|dirt#schmutz",
+      "form_norm": "dirt",
+      "original_position": 37,
+      "expected_position": 13,
+      "position": 24
+    },
+    {
+      "card_ref": "stain|stain/NOUN|stain#fleck",
+      "form_norm": "stain",
+      "original_position": 38,
+      "expected_position": 95,
+      "position": 25
+    },
+    {
+      "card_ref": "bleach|bleach/NOUN|bleach#bleichmittel",
+      "form_norm": "bleach",
+      "original_position": 40,
+      "expected_position": 14,
+      "position": 26
+    },
+    {
+      "card_ref": "bin|bin/NOUN|bin#tonnen",
+      "form_norm": "bin",
+      "original_position": 41,
+      "expected_position": 96,
+      "position": 27
+    },
+    {
+      "card_ref": "recycling|recycling/NOUN|recycling#recycling",
+      "form_norm": "recycling",
+      "original_position": 43,
+      "expected_position": 15,
+      "position": 28
+    },
+    {
+      "card_ref": "brush|brush/NOUN|brush#burste",
+      "form_norm": "brush",
+      "original_position": 44,
+      "expected_position": 97,
+      "position": 29
+    },
+    {
+      "card_ref": "hanger|hanger/NOUN|hanger#kleiderbugel",
+      "form_norm": "hanger",
+      "original_position": 46,
+      "expected_position": 16,
+      "position": 30
+    },
+    {
+      "card_ref": "peg|peg/NOUN|peg#wascheklammer",
+      "form_norm": "peg",
+      "original_position": 47,
+      "expected_position": 98,
+      "position": 31
+    },
+    {
+      "card_ref": "dishwasher|dishwasher/NOUN|dishwasher#geschirrspuler",
+      "form_norm": "dishwasher",
+      "original_position": 49,
+      "expected_position": 17,
+      "position": 32
+    },
+    {
+      "card_ref": "freezer|freezer/NOUN|freezer#gefrierschrank",
+      "form_norm": "freezer",
+      "original_position": 50,
+      "expected_position": 99,
+      "position": 33
+    },
+    {
+      "card_ref": "tap|tap/NOUN|tap#wasserhahn",
+      "form_norm": "tap",
+      "original_position": 52,
+      "expected_position": 18,
+      "position": 34
+    },
+    {
+      "card_ref": "sink|sink/NOUN|sink#spuelbecken",
+      "form_norm": "sink",
+      "original_position": 53,
+      "expected_position": 100,
+      "position": 35
+    },
+    {
+      "card_ref": "bulb|bulb/NOUN|bulb#gluhbirne",
+      "form_norm": "bulb",
+      "original_position": 55,
+      "expected_position": 19,
+      "position": 36
+    },
+    {
+      "card_ref": "battery|battery/NOUN|battery#batterien",
+      "form_norm": "battery",
+      "original_position": 56,
+      "expected_position": 101,
+      "position": 37
+    },
+    {
+      "card_ref": "glue|glue/NOUN|glue#klebstoff",
+      "form_norm": "glue",
+      "original_position": 58,
+      "expected_position": 20,
+      "position": 38
+    },
+    {
+      "card_ref": "tape|tape/NOUN|tape#klebeband",
+      "form_norm": "tape",
+      "original_position": 59,
+      "expected_position": 102,
+      "position": 39
+    },
+    {
+      "card_ref": "trousers|trousers/NOUN|trousers#hose",
+      "form_norm": "trousers",
+      "original_position": 61,
+      "expected_position": 21,
+      "position": 40
+    },
+    {
+      "card_ref": "jeans|jeans/NOUN|jeans#jeans",
+      "form_norm": "jeans",
+      "original_position": 62,
+      "expected_position": 103,
+      "position": 41
+    },
+    {
+      "card_ref": "dress|dress/NOUN|dress#kleid",
+      "form_norm": "dress",
+      "original_position": 64,
+      "expected_position": 22,
+      "position": 42
+    },
+    {
+      "card_ref": "jacket|jacket/NOUN|jacket#jacke",
+      "form_norm": "jacket",
+      "original_position": 65,
+      "expected_position": 104,
+      "position": 43
+    },
+    {
+      "card_ref": "jumper|jumper/NOUN|jumper#pullover",
+      "form_norm": "jumper",
+      "original_position": 67,
+      "expected_position": 23,
+      "position": 44
+    },
+    {
+      "card_ref": "cardigan|cardigan/NOUN|cardigan#strickjacke",
+      "form_norm": "cardigan",
+      "original_position": 68,
+      "expected_position": 105,
+      "position": 45
+    },
+    {
+      "card_ref": "sock|sock/NOUN|sock#socke",
+      "form_norm": "sock",
+      "original_position": 70,
+      "expected_position": 24,
+      "position": 46
+    },
+    {
+      "card_ref": "boot|boot/NOUN|boot#stiefel",
+      "form_norm": "boot",
+      "original_position": 71,
+      "expected_position": 106,
+      "position": 47
+    },
+    {
+      "card_ref": "slipper|slipper/NOUN|slipper#hausschuh",
+      "form_norm": "slipper",
+      "original_position": 73,
+      "expected_position": 25,
+      "position": 48
+    },
+    {
+      "card_ref": "sandal|sandal/NOUN|sandal#sandale",
+      "form_norm": "sandal",
+      "original_position": 74,
+      "expected_position": 107,
+      "position": 49
+    },
+    {
+      "card_ref": "cap|cap/NOUN|cap#kappe",
+      "form_norm": "cap",
+      "original_position": 76,
+      "expected_position": 26,
+      "position": 50
+    },
+    {
+      "card_ref": "scarf|scarf/NOUN|scarf#schal",
+      "form_norm": "scarf",
+      "original_position": 77,
+      "expected_position": 108,
+      "position": 51
+    },
+    {
+      "card_ref": "belt|belt/NOUN|belt#guertel",
+      "form_norm": "belt",
+      "original_position": 79,
+      "expected_position": 27,
+      "position": 52
+    },
+    {
+      "card_ref": "button|button/NOUN|button#knopf",
+      "form_norm": "button",
+      "original_position": 80,
+      "expected_position": 109,
+      "position": 53
+    },
+    {
+      "card_ref": "sleeve|sleeve/NOUN|sleeve#aermeln",
+      "form_norm": "sleeve",
+      "original_position": 82,
+      "expected_position": 28,
+      "position": 54
+    },
+    {
+      "card_ref": "collar|collar/NOUN|collar#kragen",
+      "form_norm": "collar",
+      "original_position": 83,
+      "expected_position": 110,
+      "position": 55
+    },
+    {
+      "card_ref": "wool|wool/NOUN|wool#wolle",
+      "form_norm": "wool",
+      "original_position": 85,
+      "expected_position": 29,
+      "position": 56
+    },
+    {
+      "card_ref": "silk|silk/NOUN|silk#seide",
+      "form_norm": "silk",
+      "original_position": 86,
+      "expected_position": 111,
+      "position": 57
+    },
+    {
+      "card_ref": "pyjamas|pyjamas/NOUN|pyjamas#schlafanzug",
+      "form_norm": "pyjamas",
+      "original_position": 88,
+      "expected_position": 30,
+      "position": 58
+    },
+    {
+      "card_ref": "tights|tights/NOUN|tights#strumpfhose",
+      "form_norm": "tights",
+      "original_position": 89,
+      "expected_position": 112,
+      "position": 59
+    },
+    {
+      "card_ref": "supermarket|supermarket/NOUN|supermarket#supermarkt",
+      "form_norm": "supermarket",
+      "original_position": 91,
+      "expected_position": 31,
+      "position": 60
+    },
+    {
+      "card_ref": "bakery|bakery/NOUN|bakery#backerei",
+      "form_norm": "bakery",
+      "original_position": 92,
+      "expected_position": 113,
+      "position": 61
+    },
+    {
+      "card_ref": "customer|customer/NOUN|customer#kunde-kundin",
+      "form_norm": "customer",
+      "original_position": 94,
+      "expected_position": 32,
+      "position": 62
+    },
+    {
+      "card_ref": "cashier|cashier/NOUN|cashier#kassierer",
+      "form_norm": "cashier",
+      "original_position": 95,
+      "expected_position": 114,
+      "position": 63
+    },
+    {
+      "card_ref": "queue|queue/NOUN|queue#warteschlange",
+      "form_norm": "queue",
+      "original_position": 97,
+      "expected_position": 33,
+      "position": 64
+    },
+    {
+      "card_ref": "aisle|aisle/NOUN|aisle#gang",
+      "form_norm": "aisle",
+      "original_position": 98,
+      "expected_position": 115,
+      "position": 65
+    },
+    {
+      "card_ref": "brand|brand/NOUN|brand#marke",
+      "form_norm": "brand",
+      "original_position": 100,
+      "expected_position": 34,
+      "position": 66
+    },
+    {
+      "card_ref": "size|size/NOUN|size#grosse",
+      "form_norm": "size",
+      "original_position": 101,
+      "expected_position": 116,
+      "position": 67
+    },
+    {
+      "card_ref": "quality|quality/NOUN|quality#qualitat",
+      "form_norm": "quality",
+      "original_position": 103,
+      "expected_position": 35,
+      "position": 68
+    },
+    {
+      "card_ref": "quantity|quantity/NOUN|quantity#menge",
+      "form_norm": "quantity",
+      "original_position": 104,
+      "expected_position": 117,
+      "position": 69
+    },
+    {
+      "card_ref": "dozen|dozen/NOUN|dozen#dutzend",
+      "form_norm": "dozen",
+      "original_position": 106,
+      "expected_position": 36,
+      "position": 70
+    },
+    {
+      "card_ref": "packet|packet/NOUN|packet#packung",
+      "form_norm": "packet",
+      "original_position": 107,
+      "expected_position": 118,
+      "position": 71
+    },
+    {
+      "card_ref": "coupon|coupon/NOUN|coupon#gutschein",
+      "form_norm": "coupon",
+      "original_position": 109,
+      "expected_position": 37,
+      "position": 72
+    },
+    {
+      "card_ref": "sale|sale/NOUN|sale#ausverkauf",
+      "form_norm": "sale",
+      "original_position": 110,
+      "expected_position": 119,
+      "position": 73
+    },
+    {
+      "card_ref": "list|list/NOUN|list#liste",
+      "form_norm": "list",
+      "original_position": 112,
+      "expected_position": 38,
+      "position": 74
+    },
+    {
+      "card_ref": "pan|pan/NOUN|pan#pfanne",
+      "form_norm": "pan",
+      "original_position": 116,
+      "expected_position": 39,
+      "position": 75
+    },
+    {
+      "card_ref": "pot|pot/NOUN|pot#kochtopf",
+      "form_norm": "pot",
+      "original_position": 117,
+      "expected_position": 120,
+      "position": 76
+    },
+    {
+      "card_ref": "oven|oven/NOUN|oven#ofen",
+      "form_norm": "oven",
+      "original_position": 119,
+      "expected_position": 40,
+      "position": 77
+    },
+    {
+      "card_ref": "hob|hob/NOUN|hob#kochfeld",
+      "form_norm": "hob",
+      "original_position": 120,
+      "expected_position": 121,
+      "position": 78
+    },
+    {
+      "card_ref": "microwave|microwave/NOUN|microwave#mikrowelle",
+      "form_norm": "microwave",
+      "original_position": 122,
+      "expected_position": 41,
+      "position": 79
+    },
+    {
+      "card_ref": "toaster|toaster/NOUN|toaster#toaster",
+      "form_norm": "toaster",
+      "original_position": 123,
+      "expected_position": 122,
+      "position": 80
+    },
+    {
+      "card_ref": "ingredient|ingredient/NOUN|ingredient#zutaten",
+      "form_norm": "ingredient",
+      "original_position": 125,
+      "expected_position": 42,
+      "position": 81
+    },
+    {
+      "card_ref": "flour|flour/NOUN|flour#mehl",
+      "form_norm": "flour",
+      "original_position": 126,
+      "expected_position": 123,
+      "position": 82
+    },
+    {
+      "card_ref": "oil|oil/NOUN|oil#speiseol",
+      "form_norm": "oil",
+      "original_position": 128,
+      "expected_position": 43,
+      "position": 83
+    },
+    {
+      "card_ref": "vinegar|vinegar/NOUN|vinegar#essig",
+      "form_norm": "vinegar",
+      "original_position": 129,
+      "expected_position": 124,
+      "position": 84
+    },
+    {
+      "card_ref": "carrot|carrot/NOUN|carrot#karotte",
+      "form_norm": "carrot",
+      "original_position": 131,
+      "expected_position": 44,
+      "position": 85
+    },
+    {
+      "card_ref": "cucumber|cucumber/NOUN|cucumber#gurke",
+      "form_norm": "cucumber",
+      "original_position": 132,
+      "expected_position": 125,
+      "position": 86
+    },
+    {
+      "card_ref": "bean|bean/NOUN|bean#bohne",
+      "form_norm": "bean",
+      "original_position": 134,
+      "expected_position": 45,
+      "position": 87
+    },
+    {
+      "card_ref": "pea|pea/NOUN|pea#erbse",
+      "form_norm": "pea",
+      "original_position": 135,
+      "expected_position": 126,
+      "position": 88
+    },
+    {
+      "card_ref": "lemon|lemon/NOUN|lemon#zitrone",
+      "form_norm": "lemon",
+      "original_position": 137,
+      "expected_position": 46,
+      "position": 89
+    },
+    {
+      "card_ref": "orange|orange/NOUN|orange#frucht",
+      "form_norm": "orange",
+      "original_position": 138,
+      "expected_position": 127,
+      "position": 90
+    },
+    {
+      "card_ref": "strawberry|strawberry/NOUN|strawberry#erdbeere",
+      "form_norm": "strawberry",
+      "original_position": 140,
+      "expected_position": 47,
+      "position": 91
+    },
+    {
+      "card_ref": "grape|grape/NOUN|grape#weintraube",
+      "form_norm": "grape",
+      "original_position": 141,
+      "expected_position": 128,
+      "position": 92
+    },
+    {
+      "card_ref": "cream|cream/NOUN|cream#sahne",
+      "form_norm": "cream",
+      "original_position": 143,
+      "expected_position": 48,
+      "position": 93
+    },
+    {
+      "card_ref": "honey|honey/NOUN|honey#honig",
+      "form_norm": "honey",
+      "original_position": 144,
+      "expected_position": 129,
+      "position": 94
+    },
+    {
+      "card_ref": "sauce|sauce/NOUN|sauce#sosse",
+      "form_norm": "sauce",
+      "original_position": 146,
+      "expected_position": 49,
+      "position": 95
+    },
+    {
+      "card_ref": "dough|dough/NOUN|dough#teig",
+      "form_norm": "dough",
+      "original_position": 147,
+      "expected_position": 130,
+      "position": 96
+    },
+    {
+      "card_ref": "peel|peel/VERB|peel#schalen",
+      "form_norm": "peel",
+      "original_position": 149,
+      "expected_position": 50,
+      "position": 97
+    },
+    {
+      "card_ref": "boil|boil/VERB|boil#kocht",
+      "form_norm": "boil",
+      "original_position": 150,
+      "expected_position": 131,
+      "position": 98
+    },
+    {
+      "card_ref": "bake|bake/VERB|bake#backen",
+      "form_norm": "bake",
+      "original_position": 152,
+      "expected_position": 51,
+      "position": 99
+    },
+    {
+      "card_ref": "stir|stir/VERB|stir#umruhren",
+      "form_norm": "stir",
+      "original_position": 153,
+      "expected_position": 132,
+      "position": 100
+    },
+    {
+      "card_ref": "taste|taste/VERB|taste#probiert",
+      "form_norm": "taste",
+      "original_position": 155,
+      "expected_position": 52,
+      "position": 101
+    },
+    {
+      "card_ref": "family|family/NOUN|family#familie",
+      "form_norm": "family",
+      "original_position": 156,
+      "expected_position": 53,
+      "position": 102
+    },
+    {
+      "card_ref": "parent|parent/NOUN|parent#eltern",
+      "form_norm": "parent",
+      "original_position": 157,
+      "expected_position": 133,
+      "position": 103
+    },
+    {
+      "card_ref": "father|father/NOUN|father#vater",
+      "form_norm": "father",
+      "original_position": 159,
+      "expected_position": 54,
+      "position": 104
+    },
+    {
+      "card_ref": "child|child/NOUN|child#kind",
+      "form_norm": "child",
+      "original_position": 160,
+      "expected_position": 134,
+      "position": 105
+    },
+    {
+      "card_ref": "son|son/NOUN|son#sohn",
+      "form_norm": "son",
+      "original_position": 162,
+      "expected_position": 55,
+      "position": 106
+    },
+    {
+      "card_ref": "daughter|daughter/NOUN|daughter#tochter",
+      "form_norm": "daughter",
+      "original_position": 163,
+      "expected_position": 135,
+      "position": 107
+    },
+    {
+      "card_ref": "sister|sister/NOUN|sister#schwester",
+      "form_norm": "sister",
+      "original_position": 165,
+      "expected_position": 56,
+      "position": 108
+    },
+    {
+      "card_ref": "grandmother|grandmother/NOUN|grandmother#grossmutter",
+      "form_norm": "grandmother",
+      "original_position": 166,
+      "expected_position": 136,
+      "position": 109
+    },
+    {
+      "card_ref": "grandchild|grandchild/NOUN|grandchild#enkelkind",
+      "form_norm": "grandchild",
+      "original_position": 168,
+      "expected_position": 57,
+      "position": 110
+    },
+    {
+      "card_ref": "aunt|aunt/NOUN|aunt#tante",
+      "form_norm": "aunt",
+      "original_position": 169,
+      "expected_position": 137,
+      "position": 111
+    },
+    {
+      "card_ref": "cousin|cousin/NOUN|cousin#cousin-oder-cousine",
+      "form_norm": "cousin",
+      "original_position": 171,
+      "expected_position": 58,
+      "position": 112
+    },
+    {
+      "card_ref": "niece|niece/NOUN|niece#nichte",
+      "form_norm": "niece",
+      "original_position": 172,
+      "expected_position": 138,
+      "position": 113
+    },
+    {
+      "card_ref": "husband|husband/NOUN|husband#ehemann",
+      "form_norm": "husband",
+      "original_position": 174,
+      "expected_position": 59,
+      "position": 114
+    },
+    {
+      "card_ref": "wife|wife/NOUN|wife#ehefrau",
+      "form_norm": "wife",
+      "original_position": 175,
+      "expected_position": 139,
+      "position": 115
+    },
+    {
+      "card_ref": "relative|relative/NOUN|relative#verwandter",
+      "form_norm": "relative",
+      "original_position": 177,
+      "expected_position": 60,
+      "position": 116
+    },
+    {
+      "card_ref": "twin|twin/NOUN|twin#zwilling",
+      "form_norm": "twin",
+      "original_position": 178,
+      "expected_position": 140,
+      "position": 117
+    },
+    {
+      "card_ref": "wedding|wedding/NOUN|wedding#hochzeit",
+      "form_norm": "wedding",
+      "original_position": 180,
+      "expected_position": 61,
+      "position": 118
+    },
+    {
+      "card_ref": "gift|gift/NOUN|gift#geschenk",
+      "form_norm": "gift",
+      "original_position": 181,
+      "expected_position": 141,
+      "position": 119
+    },
+    {
+      "card_ref": "dog|dog/NOUN|dog#hund",
+      "form_norm": "dog",
+      "original_position": 183,
+      "expected_position": 62,
+      "position": 120
+    },
+    {
+      "card_ref": "cat|cat/NOUN|cat#katze",
+      "form_norm": "cat",
+      "original_position": 184,
+      "expected_position": 142,
+      "position": 121
+    },
+    {
+      "card_ref": "hobby|hobby/NOUN|hobby#hobby",
+      "form_norm": "hobby",
+      "original_position": 186,
+      "expected_position": 63,
+      "position": 122
+    },
+    {
+      "card_ref": "game|game/NOUN|game#spiel",
+      "form_norm": "game",
+      "original_position": 187,
+      "expected_position": 143,
+      "position": 123
+    },
+    {
+      "card_ref": "ball|ball/NOUN|ball#ball",
+      "form_norm": "ball",
+      "original_position": 189,
+      "expected_position": 64,
+      "position": 124
+    },
+    {
+      "card_ref": "puzzle|puzzle/NOUN|puzzle#puzzle",
+      "form_norm": "puzzle",
+      "original_position": 190,
+      "expected_position": 144,
+      "position": 125
+    },
+    {
+      "card_ref": "song|song/NOUN|song#lied",
+      "form_norm": "song",
+      "original_position": 192,
+      "expected_position": 65,
+      "position": 126
+    },
+    {
+      "card_ref": "guitar|guitar/NOUN|guitar#gitarre",
+      "form_norm": "guitar",
+      "original_position": 193,
+      "expected_position": 145,
+      "position": 127
+    },
+    {
+      "card_ref": "film|film/NOUN|film#film",
+      "form_norm": "film",
+      "original_position": 195,
+      "expected_position": 66,
+      "position": 128
+    },
+    {
+      "card_ref": "cinema|cinema/NOUN|cinema#kino",
+      "form_norm": "cinema",
+      "original_position": 196,
+      "expected_position": 146,
+      "position": 129
+    },
+    {
+      "card_ref": "screen|screen/NOUN|screen#bildschirm",
+      "form_norm": "screen",
+      "original_position": 198,
+      "expected_position": 67,
+      "position": 130
+    },
+    {
+      "card_ref": "photo|photo/NOUN|photo#foto",
+      "form_norm": "photo",
+      "original_position": 200,
+      "expected_position": 147,
+      "position": 131
+    },
+    {
+      "card_ref": "album|album/NOUN|album#fotoalbum",
+      "form_norm": "album",
+      "original_position": 202,
+      "expected_position": 68,
+      "position": 132
+    },
+    {
+      "card_ref": "novel|novel/NOUN|novel#roman",
+      "form_norm": "novel",
+      "original_position": 203,
+      "expected_position": 148,
+      "position": 133
+    },
+    {
+      "card_ref": "newspaper|newspaper/NOUN|newspaper#zeitung",
+      "form_norm": "newspaper",
+      "original_position": 205,
+      "expected_position": 69,
+      "position": 134
+    },
+    {
+      "card_ref": "library|library/NOUN|library#bibliothek",
+      "form_norm": "library",
+      "original_position": 206,
+      "expected_position": 149,
+      "position": 135
+    },
+    {
+      "card_ref": "football|football/NOUN|football#fussball",
+      "form_norm": "football",
+      "original_position": 208,
+      "expected_position": 70,
+      "position": 136
+    },
+    {
+      "card_ref": "tennis|tennis/NOUN|tennis#tennis",
+      "form_norm": "tennis",
+      "original_position": 209,
+      "expected_position": 150,
+      "position": 137
+    },
+    {
+      "card_ref": "dance|dance/VERB|dance#tanzen",
+      "form_norm": "dance",
+      "original_position": 211,
+      "expected_position": 71,
+      "position": 138
+    },
+    {
+      "card_ref": "sing|sing/VERB|sing#sangen",
+      "form_norm": "sing",
+      "original_position": 212,
+      "expected_position": 151,
+      "position": 139
+    },
+    {
+      "card_ref": "paint|paint/VERB|paint#malen",
+      "form_norm": "paint",
+      "original_position": 214,
+      "expected_position": 72,
+      "position": 140
+    },
+    {
+      "card_ref": "knit|knit/VERB|knit#stricken",
+      "form_norm": "knit",
+      "original_position": 215,
+      "expected_position": 152,
+      "position": 141
+    },
+    {
+      "card_ref": "sweep|sweep/VERB|sweep#fegen",
+      "form_norm": "sweep",
+      "original_position": 216,
+      "expected_position": 73,
+      "position": 142
+    },
+    {
+      "card_ref": "wipe|wipe/VERB|wipe#abwischen",
+      "form_norm": "wipe",
+      "original_position": 217,
+      "expected_position": 153,
+      "position": 143
+    },
+    {
+      "card_ref": "hang|hang/VERB|hang#haengt-auf",
+      "form_norm": "hang",
+      "original_position": 219,
+      "expected_position": 74,
+      "position": 144
+    },
+    {
+      "card_ref": "tidy|tidy/VERB|tidy#aufraumen",
+      "form_norm": "tidy",
+      "original_position": 220,
+      "expected_position": 154,
+      "position": 145
+    },
+    {
+      "card_ref": "feed|feed/VERB|feed#fuettern",
+      "form_norm": "feed",
+      "original_position": 222,
+      "expected_position": 75,
+      "position": 146
+    },
+    {
+      "card_ref": "throw|throw/VERB|throw#wirft",
+      "form_norm": "throw",
+      "original_position": 223,
+      "expected_position": 155,
+      "position": 147
+    },
+    {
+      "card_ref": "drop|drop/VERB|drop#fallen-lassen",
+      "form_norm": "drop",
+      "original_position": 225,
+      "expected_position": 76,
+      "position": 148
+    },
+    {
+      "card_ref": "push|push/VERB|push#schubsen",
+      "form_norm": "push",
+      "original_position": 226,
+      "expected_position": 156,
+      "position": 149
+    },
+    {
+      "card_ref": "hold|hold/VERB|hold#haelt",
+      "form_norm": "hold",
+      "original_position": 229,
+      "expected_position": 77,
+      "position": 150
+    },
+    {
+      "card_ref": "touch|touch/VERB|touch#beruehrt",
+      "form_norm": "touch",
+      "original_position": 230,
+      "expected_position": 157,
+      "position": 151
+    },
+    {
+      "card_ref": "laugh|laugh/VERB|laugh#lachen",
+      "form_norm": "laugh",
+      "original_position": 232,
+      "expected_position": 78,
+      "position": 152
+    },
+    {
+      "card_ref": "smile|smile/VERB|smile#laechelt",
+      "form_norm": "smile",
+      "original_position": 233,
+      "expected_position": 158,
+      "position": 153
+    },
+    {
+      "card_ref": "hug|hug/VERB|hug#umarmen",
+      "form_norm": "hug",
+      "original_position": 235,
+      "expected_position": 79,
+      "position": 154
+    },
+    {
+      "card_ref": "kiss|kiss/VERB|kiss#kussen",
+      "form_norm": "kiss",
+      "original_position": 236,
+      "expected_position": 159,
+      "position": 155
+    },
+    {
+      "card_ref": "invite|invite/VERB|invite#einladen",
+      "form_norm": "invite",
+      "original_position": 238,
+      "expected_position": 80,
+      "position": 156
+    },
+    {
+      "card_ref": "celebrate|celebrate/VERB|celebrate#feiert",
+      "form_norm": "celebrate",
+      "original_position": 239,
+      "expected_position": 160,
+      "position": 157
+    },
+    {
+      "card_ref": "exercise|exercise/VERB|exercise#trainieren",
+      "form_norm": "exercise",
+      "original_position": 242,
+      "expected_position": 81,
+      "position": 158
+    },
+    {
+      "card_ref": "wear|wear/VERB|wear#tragen",
+      "form_norm": "wear",
+      "original_position": 243,
+      "expected_position": 161,
+      "position": 159
+    },
+    {
+      "card_ref": "try|try/VERB|try#versuchen",
+      "form_norm": "try",
+      "original_position": 245,
+      "expected_position": 82,
+      "position": 160
+    },
+    {
+      "card_ref": "finish|finish/VERB|finish#beenden",
+      "form_norm": "finish",
+      "original_position": 246,
+      "expected_position": 162,
+      "position": 161
+    },
+    {
+      "card_ref": "break|break/VERB|break#brechen",
+      "form_norm": "break",
+      "original_position": 248,
+      "expected_position": 83,
+      "position": 162
+    },
+    {
+      "card_ref": "spill|spill/VERB|spill#verschutten",
+      "form_norm": "spill",
+      "original_position": 249,
+      "expected_position": 163,
+      "position": 163
+    }
+  ]
+}

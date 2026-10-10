@@ -7,6 +7,7 @@ import '../../models/home_models.dart';
 import '../../models/word_list_models.dart';
 import '../../models/story_models.dart';
 import '../../domain/srs_state.dart';
+import '../../domain/learning_groups.dart';
 import 'database_providers.dart';
 import 'story_learning_providers.dart';
 import 'deck_providers.dart';
@@ -89,11 +90,16 @@ final wordListProvider = FutureProvider<List<VocabWord>>((ref) async {
   final known = resolver.knownIds;
   final states = await user.allCardStates();
   // Box zero has not been answered; unknown old IDs remain untouched in user.db.
+  final projected = LearningGroups(
+    resolver.cards,
+    states,
+  ).project(states.keys).toSet();
   final ids = [
     for (final s in states.values)
       if ((s.box >= 1 ||
               resolver.additions.containsKey(s.cardId) ||
               s.origin == CardOrigin.story) &&
+          (s.box >= 1 || projected.contains(s.cardId)) &&
           !s.retired &&
           known.contains(s.cardId))
         s.cardId,

@@ -1,0 +1,16 @@
+{
+  "files": {
+    "all_500_identities.json": "8dd13fa0aa1e34e2238d308720c5ced03f7db38a57c8b9fb5d5e671d08614f16",
+    "annotate.py": "884fc4d327d379049d064c0d5ce7ff44580e360d28f472688ce0fd34b4bca892",
+    "authoring_context.json": "e7a57fd6c15b4e5252ac164e304f831069adfd43a488314faececced5f98c205",
+    "combined_display_mapping.json": "5b116f338d57c64f0455a4379a6bf128a22793b3ff2522ee6fd0cd0340803077",
+    "dictionary_context.json": "45a4be8fc914d7950f00271282d031efef55fc8ecea0cdf8f44387f34c312bad",
+    "editorial_content_v2.schema.json": "24839ce2451931fac319a849bfc790a4179d139861681ac727d76eb90f232b47",
+    "linter.py": "76bad23555209b6cc3a6348839902a62e6ed864f5ff1665d5f567f60675f16d5",
+    "pack.json": "874b4a95d0a060fc9a77d7dc0dc426018942fa35ad7b2119731fb5281ceb6540",
+    "README.txt": "aa46919e1fc6f889a88333adec3a9fbe53d82aef5ad0e6091c2d440d9d0f5274",
+    "registry.json": "4cc059eba3cbb0b211685a2d2bcb87eaf18a1681164be9041e9517d7081ec826",
+    "tokenizer_linter_environment.json": "ca9e571c06ad7ff580756d6548587d1ef183dfdd23b9988618dd061cb6b9ad21",
+    "validation.json": "aeb8c186790f124116f6caa71af48d985766aa8cefa19f00f460eeadee3efcab"
+  }
+}

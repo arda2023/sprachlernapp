@@ -1,4 +1,5 @@
 import 'content.dart';
+import 'learning_groups.dart';
 import 'new_card_selection.dart';
 // Pure Dart: no Flutter imports (see CLAUDE.md, domain layer).
 
@@ -156,20 +157,34 @@ class VocabBreakdown {
 /// other ids (e.g. an old VERB card) are kept in user.db but count nowhere,
 /// local-only cards always count.
 VocabBreakdown deriveVocabBreakdown({
+  Map<String, ContentCard> contentCards = const {},
   Set<String> explicitStoryIds = const {},
   required Set<String> activeDeckCardIds,
   required Map<String, UserCardState> cards,
   required Set<String> knownCardIds,
   required DateTime now,
 }) {
-  var unseen = activeDeckCardIds.where((id) => !cards.containsKey(id)).length;
+  final eligibleNew = contentCards.isEmpty
+      ? null
+      : LearningGroups(contentCards, cards).project([
+          ...activeDeckCardIds,
+          for (final s in cards.values)
+            if (s.box == 0 &&
+                (s.origin == CardOrigin.story ||
+                    explicitStoryIds.contains(s.cardId)))
+              s.cardId,
+        ]).toSet();
+  var unseen = (eligibleNew ?? activeDeckCardIds)
+      .where((id) => !cards.containsKey(id))
+      .length;
   var due = 0, building = 0, mastered = 0;
   for (final card in cards.values) {
     if (!card.isActive) continue;
     if (!knownCardIds.contains(card.cardId)) continue;
     if (card.box == 0) {
-      if (activeDeckCardIds.contains(card.cardId) ||
-          (card.origin == CardOrigin.story ||
+      if (eligibleNew?.contains(card.cardId) ??
+          (activeDeckCardIds.contains(card.cardId) ||
+              card.origin == CardOrigin.story ||
               explicitStoryIds.contains(card.cardId))) {
         unseen++;
       }
@@ -240,7 +255,7 @@ List<SessionEntry> buildDeckQueue({
   int size = 5,
 }) {
   final order = <String, int>{};
-  for (final id in deckCardIds) {
+  for (final id in LearningGroups(cards, states).project(deckCardIds)) {
     order.putIfAbsent(id, () => order.length);
   }
   final ids = order.keys.where((id) => states[id]?.isActive ?? true).toList();
@@ -311,37 +326,22 @@ List<SessionEntry> buildMixedQueue({
               );
           return d != 0 ? d : a.cardId.compareTo(b.cardId);
         });
-  final fresh = <String>[];
-  final usedLemmas = <String>{}, usedForms = <String>{};
-  for (final state in storyNew) {
-    if (fresh.length >= size - due.length) break;
-    final c = cards[state.cardId]!;
-    if (usedLemmas.contains(selectionLemma(c)) ||
-        usedForms.contains(c.formNorm)) {
-      continue;
-    }
-    fresh.add(c.id);
-    usedLemmas.add(selectionLemma(c));
-    usedForms.add(c.formNorm);
-  }
-  fresh.addAll(
-    selectNewCards(
-      candidates: [
-        for (final id in activeDeckCardIds.toSet())
-          if (cards.containsKey(id) &&
-              (states[id]?.isActive ?? true) &&
-              (states[id]?.box ?? 0) == 0 &&
-              !fresh.contains(id) &&
-              !usedLemmas.contains(selectionLemma(cards[id]!)) &&
-              !usedForms.contains(cards[id]!.formNorm))
-            cards[id]!,
-      ],
-      knownLemmas: {
-        for (final id in states.keys)
-          if (cards[id] case final c?) selectionLemma(c),
-      },
-      limit: size - due.length - fresh.length,
-    ),
+  final freshIds = LearningGroups(
+    cards,
+    states,
+  ).project([...storyNew.map((s) => s.cardId), ...activeDeckCardIds]);
+  final fresh = selectNewCards(
+    priorityIds: storyNew.map((s) => s.cardId).toSet(),
+    candidates: [
+      for (final id in freshIds)
+        if ((states[id]?.isActive ?? true) && (states[id]?.box ?? 0) == 0)
+          cards[id]!,
+    ],
+    knownLemmas: {
+      for (final id in states.keys)
+        if (cards[id] case final c?) selectionLemma(c),
+    },
+    limit: size - due.length,
   );
   final early = eligible.where((s) => s.box >= 1 && !s.isDue(now)).toList()
     ..sort(dueOrder);
@@ -356,7 +356,7 @@ List<SessionEntry> buildMixedQueue({
 const inSessionRepeatGap = 3;
 
 /// [queue] with the one in-session repeat of the card at [index] (docs/srs.md:
-/// after an error or a synonym hint the card returns once). Inserted after
+/// after an error or reveal the card returns once). Inserted after
 /// [inSessionRepeatGap] further cards, or at the end of a shorter queue.
 /// A repeat never schedules another one.
 List<SessionEntry> withRepeat(List<SessionEntry> queue, int index) {

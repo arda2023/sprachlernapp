@@ -1,0 +1,1128 @@
+[
+  {
+    "selection_id": "reisen-v1-006",
+    "form": "destination",
+    "topic": "Reiseplanung",
+    "original_position": 6,
+    "display_position": 6,
+    "meaning": "Reiseziel",
+    "text": "Rome is our final destination after two weeks of travel.",
+    "translation_de": "Rom ist nach zwei Wochen auf Reisen unser letztes Ziel.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-007",
+    "form": "itinerary",
+    "topic": "Reiseplanung",
+    "original_position": 7,
+    "display_position": 7,
+    "meaning": "Reiseplan mit Stationen",
+    "text": "Our itinerary includes two nights in Rome and three in Naples.",
+    "translation_de": "Unser Reiseplan umfasst zwei Nächte in Rom und drei in Neapel.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-008",
+    "form": "excursion",
+    "topic": "Reiseplanung",
+    "original_position": 8,
+    "display_position": 8,
+    "meaning": "Ausflug",
+    "text": "The hotel offers a boat excursion to a nearby island.",
+    "translation_de": "Das Hotel bietet einen Bootsausflug zu einer nahe gelegenen Insel an.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-009",
+    "form": "outing",
+    "topic": "Reiseplanung",
+    "original_position": 9,
+    "display_position": 9,
+    "meaning": "kurzer gemeinsamer Ausflug",
+    "text": "We planned a family outing to the beach.",
+    "translation_de": "Wir haben einen Familienausflug zum Strand geplant.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-010",
+    "form": "booking",
+    "topic": "Reiseplanung",
+    "original_position": 10,
+    "display_position": 10,
+    "meaning": "Buchung",
+    "text": "Please show your booking confirmation at reception.",
+    "translation_de": "Bitte zeig deine Buchungsbestätigung an der Rezeption vor.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-031",
+    "form": "citizenship",
+    "topic": "Dokumente und Grenze",
+    "original_position": 31,
+    "display_position": 16,
+    "meaning": "Staatsbürgerschaft",
+    "text": "She has German citizenship and a German passport.",
+    "translation_de": "Sie hat die deutsche Staatsbürgerschaft und einen deutschen Reisepass.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-032",
+    "form": "nationality",
+    "topic": "Dokumente und Grenze",
+    "original_position": 32,
+    "display_position": 17,
+    "meaning": "Staatsangehörigkeit",
+    "text": "Please enter your nationality on the hotel registration form.",
+    "translation_de": "Bitte trag deine Staatsangehörigkeit auf dem Anmeldeformular des Hotels ein.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-033",
+    "form": "identity",
+    "topic": "Dokumente und Grenze",
+    "original_position": 33,
+    "display_position": 18,
+    "meaning": "Identität einer Person",
+    "text": "The officer checks my identity against the photo in my passport.",
+    "translation_de": "Der Beamte überprüft meine Identität anhand des Fotos in meinem Reisepass.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-034",
+    "form": "document",
+    "topic": "Dokumente und Grenze",
+    "original_position": 34,
+    "display_position": 19,
+    "meaning": "Dokument",
+    "text": "Keep this document with your passport during the trip.",
+    "translation_de": "Bewahre dieses Dokument während der Reise zusammen mit deinem Reisepass auf.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-035",
+    "form": "permit",
+    "topic": "Dokumente und Grenze",
+    "original_position": 35,
+    "display_position": 20,
+    "meaning": "Genehmigung",
+    "text": "You need a permit to camp in this national park.",
+    "translation_de": "Du brauchst eine Genehmigung, um in diesem Nationalpark zu campen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-056",
+    "form": "aeroplane",
+    "topic": "Flughafen und Flug",
+    "original_position": 56,
+    "display_position": 26,
+    "meaning": "Flugzeug",
+    "text": "We watch an aeroplane land at the small airport.",
+    "translation_de": "Wir beobachten, wie ein Flugzeug auf dem kleinen Flughafen landet.",
+    "alternatives": [
+      "airplane"
+    ]
+  },
+  {
+    "selection_id": "reisen-v1-057",
+    "form": "pilot",
+    "topic": "Flughafen und Flug",
+    "original_position": 57,
+    "display_position": 27,
+    "meaning": "Pilot oder Pilotin",
+    "text": "The pilot announces our arrival in Madrid.",
+    "translation_de": "Der Pilot kündigt unsere Ankunft in Madrid an.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-058",
+    "form": "crew",
+    "topic": "Flughafen und Flug",
+    "original_position": 58,
+    "display_position": 28,
+    "meaning": "Besatzung",
+    "text": "The crew welcomes passengers on board the ship.",
+    "translation_de": "Die Besatzung begrüßt die Passagiere an Bord des Schiffes.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-059",
+    "form": "passenger",
+    "topic": "Flughafen und Flug",
+    "original_position": 59,
+    "display_position": 29,
+    "meaning": "Passagier oder Passagierin",
+    "text": "Each passenger can take one small bag onto the plane.",
+    "translation_de": "Jeder Passagier darf eine kleine Tasche mit ins Flugzeug nehmen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-060",
+    "form": "runway",
+    "topic": "Flughafen und Flug",
+    "original_position": 60,
+    "display_position": 30,
+    "meaning": "Start- und Landebahn",
+    "text": "The plane waits at the end of the runway.",
+    "translation_de": "Das Flugzeug wartet am Ende der Startbahn.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-081",
+    "form": "carriage",
+    "topic": "Bahn und Nahverkehr",
+    "original_position": 81,
+    "display_position": 36,
+    "meaning": "Eisenbahnwagen",
+    "text": "Our seats are in the last carriage of the train.",
+    "translation_de": "Unsere Sitzplätze sind im letzten Wagen des Zuges.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-082",
+    "form": "compartment",
+    "topic": "Bahn und Nahverkehr",
+    "original_position": 82,
+    "display_position": 37,
+    "meaning": "Zugabteil",
+    "text": "There are six seats in our train compartment.",
+    "translation_de": "In unserem Zugabteil gibt es sechs Sitzplätze.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-083",
+    "form": "berth",
+    "topic": "Bahn und Nahverkehr",
+    "original_position": 83,
+    "display_position": 38,
+    "meaning": "Schlafplatz im Zug oder Schiff",
+    "text": "I booked a lower berth on the night train.",
+    "translation_de": "Ich habe einen unteren Schlafplatz im Nachtzug gebucht.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-084",
+    "form": "sleeper",
+    "topic": "Bahn und Nahverkehr",
+    "original_position": 84,
+    "display_position": 39,
+    "meaning": "Schlafwagen",
+    "text": "The sleeper has beds instead of ordinary seats.",
+    "translation_de": "Der Schlafwagen hat Betten statt gewöhnlicher Sitzplätze.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-085",
+    "form": "conductor",
+    "topic": "Bahn und Nahverkehr",
+    "original_position": 85,
+    "display_position": 40,
+    "meaning": "Zugbegleiter oder Zugbegleiterin",
+    "text": "The conductor checks our tickets after the train leaves.",
+    "translation_de": "Der Zugbegleiter kontrolliert unsere Fahrkarten nach der Abfahrt des Zuges.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-106",
+    "form": "highway",
+    "topic": "Straßenverkehr und Mietwagen",
+    "original_position": 106,
+    "display_position": 46,
+    "meaning": "Fernstraße; amerikanischer Sprachgebrauch",
+    "text": "This highway connects the city with the coast.",
+    "translation_de": "Diese Fernstraße verbindet die Stadt mit der Küste.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-107",
+    "form": "lane",
+    "topic": "Straßenverkehr und Mietwagen",
+    "original_position": 107,
+    "display_position": 47,
+    "meaning": "Fahrspur",
+    "text": "Stay in the left lane until the next exit.",
+    "translation_de": "Bleib bis zur nächsten Ausfahrt auf der linken Fahrspur.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-108",
+    "form": "pavement",
+    "topic": "Straßenverkehr und Mietwagen",
+    "original_position": 108,
+    "display_position": 48,
+    "meaning": "Gehweg; britischer Sprachgebrauch",
+    "text": "Walk on the pavement, not in the road.",
+    "translation_de": "Geh auf dem Gehweg, nicht auf der Fahrbahn.",
+    "alternatives": [
+      "sidewalk"
+    ]
+  },
+  {
+    "selection_id": "reisen-v1-109",
+    "form": "kerb",
+    "topic": "Straßenverkehr und Mietwagen",
+    "original_position": 109,
+    "display_position": 49,
+    "meaning": "Bordstein; britischer Sprachgebrauch",
+    "text": "Be careful of the high kerb at the crossing.",
+    "translation_de": "Pass am Übergang auf den hohen Bordstein auf.",
+    "alternatives": [
+      "curb"
+    ]
+  },
+  {
+    "selection_id": "reisen-v1-110",
+    "form": "intersection",
+    "topic": "Straßenverkehr und Mietwagen",
+    "original_position": 110,
+    "display_position": 50,
+    "meaning": "Straßenkreuzung",
+    "text": "Turn right at the next intersection.",
+    "translation_de": "Bieg an der nächsten Kreuzung rechts ab.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-131",
+    "form": "campsite",
+    "topic": "Unterkunft",
+    "original_position": 131,
+    "display_position": 56,
+    "meaning": "Campingplatz",
+    "text": "The campsite has showers and space for twenty tents.",
+    "translation_de": "Der Campingplatz hat Duschen und Platz für zwanzig Zelte.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-132",
+    "form": "cottage",
+    "topic": "Unterkunft",
+    "original_position": 132,
+    "display_position": 57,
+    "meaning": "kleines Ferienhaus",
+    "text": "We rented a small cottage by the sea for our holiday.",
+    "translation_de": "Wir haben für unseren Urlaub ein kleines Ferienhaus am Meer gemietet.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-133",
+    "form": "apartment",
+    "topic": "Unterkunft",
+    "original_position": 133,
+    "display_position": 58,
+    "meaning": "Wohnung; Ferienwohnung",
+    "text": "Our holiday apartment has a kitchen and two bedrooms.",
+    "translation_de": "Unsere Ferienwohnung hat eine Küche und zwei Schlafzimmer.",
+    "alternatives": [
+      "flat"
+    ]
+  },
+  {
+    "selection_id": "reisen-v1-134",
+    "form": "accommodation",
+    "topic": "Unterkunft",
+    "original_position": 134,
+    "display_position": 59,
+    "meaning": "Unterkunft",
+    "text": "We need accommodation near the station for one night.",
+    "translation_de": "Wir brauchen für eine Nacht eine Unterkunft in Bahnhofsnähe.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-135",
+    "form": "reception",
+    "topic": "Unterkunft",
+    "original_position": 135,
+    "display_position": 60,
+    "meaning": "Rezeption",
+    "text": "Please leave your room key at reception.",
+    "translation_de": "Bitte gib deinen Zimmerschlüssel an der Rezeption ab.",
+    "alternatives": [
+      "the front desk"
+    ]
+  },
+  {
+    "selection_id": "reisen-v1-156",
+    "form": "chef",
+    "topic": "Restaurant und Service",
+    "original_position": 156,
+    "display_position": 66,
+    "meaning": "Koch oder Köchin im Restaurant",
+    "text": "The chef prepares fresh fish in the hotel kitchen.",
+    "translation_de": "Der Koch bereitet in der Hotelküche frischen Fisch zu.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-157",
+    "form": "meal",
+    "topic": "Restaurant und Service",
+    "original_position": 157,
+    "display_position": 67,
+    "meaning": "Mahlzeit",
+    "text": "We had a hot meal after the long journey.",
+    "translation_de": "Nach der langen Reise haben wir eine warme Mahlzeit gegessen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-158",
+    "form": "breakfast",
+    "topic": "Restaurant und Service",
+    "original_position": 158,
+    "display_position": 68,
+    "meaning": "Frühstück",
+    "text": "The hotel serves breakfast from seven until ten.",
+    "translation_de": "Das Hotel serviert Frühstück von sieben bis zehn Uhr.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-159",
+    "form": "lunch",
+    "topic": "Restaurant und Service",
+    "original_position": 159,
+    "display_position": 69,
+    "meaning": "Mittagessen",
+    "text": "Shall we stop for lunch at the next village?",
+    "translation_de": "Wollen wir im nächsten Dorf zum Mittagessen anhalten?",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-160",
+    "form": "dinner",
+    "topic": "Restaurant und Service",
+    "original_position": 160,
+    "display_position": 70,
+    "meaning": "Abendessen",
+    "text": "We have dinner on the terrace every evening.",
+    "translation_de": "Wir essen jeden Abend auf der Terrasse zu Abend.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-181",
+    "form": "wine",
+    "topic": "Essen und Getränke",
+    "original_position": 181,
+    "display_position": 76,
+    "meaning": "Wein",
+    "text": "Would you like a glass of red wine with your meal?",
+    "translation_de": "Möchtest du ein Glas Rotwein zu deinem Essen?",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-182",
+    "form": "sandwich",
+    "topic": "Essen und Getränke",
+    "original_position": 182,
+    "display_position": 77,
+    "meaning": "belegtes Brot; Sandwich",
+    "text": "I bought a cheese sandwich for the train journey.",
+    "translation_de": "Ich habe ein Käsebrot für die Zugfahrt gekauft.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-183",
+    "form": "salad",
+    "topic": "Essen und Getränke",
+    "original_position": 183,
+    "display_position": 78,
+    "meaning": "Salat",
+    "text": "This salad contains tomatoes, cucumber and fresh herbs.",
+    "translation_de": "Dieser Salat enthält Tomaten, Gurke und frische Kräuter.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-184",
+    "form": "soup",
+    "topic": "Essen und Getränke",
+    "original_position": 184,
+    "display_position": 79,
+    "meaning": "Suppe",
+    "text": "A bowl of hot soup warms us after the walk.",
+    "translation_de": "Eine Schüssel heiße Suppe wärmt uns nach dem Spaziergang.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-185",
+    "form": "rice",
+    "topic": "Essen und Getränke",
+    "original_position": 185,
+    "display_position": 80,
+    "meaning": "Reis",
+    "text": "The fish comes with rice and vegetables.",
+    "translation_de": "Zum Fisch gibt es Reis und Gemüse.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-206",
+    "form": "banknote",
+    "topic": "Bezahlen und Einkaufen",
+    "original_position": 206,
+    "display_position": 86,
+    "meaning": "Geldschein",
+    "text": "Can you change this banknote into coins?",
+    "translation_de": "Kannst du diesen Geldschein in Münzen wechseln?",
+    "alternatives": [
+      "bank note"
+    ]
+  },
+  {
+    "selection_id": "reisen-v1-207",
+    "form": "wallet",
+    "topic": "Bezahlen und Einkaufen",
+    "original_position": 207,
+    "display_position": 87,
+    "meaning": "Geldbörse",
+    "text": "I keep my bank cards in my wallet.",
+    "translation_de": "Ich bewahre meine Bankkarten in meiner Geldbörse auf.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-208",
+    "form": "purse",
+    "topic": "Bezahlen und Einkaufen",
+    "original_position": 208,
+    "display_position": 88,
+    "meaning": "kleine Geldbörse; britischer Sprachgebrauch",
+    "text": "She takes a few coins from her purse.",
+    "translation_de": "Sie nimmt ein paar Münzen aus ihrer Geldbörse.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-209",
+    "form": "bill",
+    "topic": "Bezahlen und Einkaufen",
+    "original_position": 209,
+    "display_position": 89,
+    "meaning": "Rechnung",
+    "text": "The waiter brings our bill after the meal.",
+    "translation_de": "Der Kellner bringt uns nach dem Essen die Rechnung.",
+    "alternatives": [
+      "check"
+    ]
+  },
+  {
+    "selection_id": "reisen-v1-210",
+    "form": "tax",
+    "topic": "Bezahlen und Einkaufen",
+    "original_position": 210,
+    "display_position": 90,
+    "meaning": "Steuer",
+    "text": "The room price includes a local tourist tax.",
+    "translation_de": "Im Zimmerpreis ist eine örtliche Touristensteuer enthalten.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-231",
+    "form": "museum",
+    "topic": "Sehenswürdigkeiten und Kultur",
+    "original_position": 231,
+    "display_position": 96,
+    "meaning": "Museum",
+    "text": "The museum displays old boats and fishing tools.",
+    "translation_de": "Das Museum zeigt alte Boote und Fischereigeräte.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-232",
+    "form": "gallery",
+    "topic": "Sehenswürdigkeiten und Kultur",
+    "original_position": 232,
+    "display_position": 97,
+    "meaning": "Kunstgalerie",
+    "text": "We visit a gallery with paintings by local artists.",
+    "translation_de": "Wir besuchen eine Galerie mit Gemälden einheimischer Künstler.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-233",
+    "form": "cathedral",
+    "topic": "Sehenswürdigkeiten und Kultur",
+    "original_position": 233,
+    "display_position": 98,
+    "meaning": "Kathedrale",
+    "text": "We visit the cathedral during our stay in the city.",
+    "translation_de": "Wir besuchen die Kathedrale während unseres Aufenthalts in der Stadt.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-234",
+    "form": "castle",
+    "topic": "Sehenswürdigkeiten und Kultur",
+    "original_position": 234,
+    "display_position": 99,
+    "meaning": "Burg; Schlossanlage",
+    "text": "The castle has thick stone walls and a narrow entrance.",
+    "translation_de": "Die Burg hat dicke Steinmauern und einen schmalen Eingang.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-235",
+    "form": "palace",
+    "topic": "Sehenswürdigkeiten und Kultur",
+    "original_position": 235,
+    "display_position": 100,
+    "meaning": "Palast",
+    "text": "The royal family still lives in this palace.",
+    "translation_de": "Die königliche Familie wohnt noch immer in diesem Palast.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-256",
+    "form": "mountain",
+    "topic": "Natur und Ausflüge",
+    "original_position": 256,
+    "display_position": 106,
+    "meaning": "Berg",
+    "text": "Snow covers the top of the mountain.",
+    "translation_de": "Schnee bedeckt den Gipfel des Berges.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-257",
+    "form": "valley",
+    "topic": "Natur und Ausflüge",
+    "original_position": 257,
+    "display_position": 107,
+    "meaning": "Tal",
+    "text": "A river flows through the valley between the mountains.",
+    "translation_de": "Ein Fluss fließt durch das Tal zwischen den Bergen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-258",
+    "form": "forest",
+    "topic": "Natur und Ausflüge",
+    "original_position": 258,
+    "display_position": 108,
+    "meaning": "Wald",
+    "text": "We follow a path through the forest.",
+    "translation_de": "Wir folgen einem Weg durch den Wald.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-259",
+    "form": "countryside",
+    "topic": "Natur und Ausflüge",
+    "original_position": 259,
+    "display_position": 109,
+    "meaning": "ländliche Gegend",
+    "text": "We leave the busy city for a quiet weekend in the countryside.",
+    "translation_de": "Wir verlassen die geschäftige Stadt für ein ruhiges Wochenende auf dem Land.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-260",
+    "form": "waterfall",
+    "topic": "Natur und Ausflüge",
+    "original_position": 260,
+    "display_position": 110,
+    "meaning": "Wasserfall",
+    "text": "The waterfall is just a short walk from our campsite.",
+    "translation_de": "Der Wasserfall ist nur einen kurzen Spaziergang von unserem Campingplatz entfernt.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-281",
+    "form": "sunlight",
+    "topic": "Wetter",
+    "original_position": 281,
+    "display_position": 116,
+    "meaning": "Sonnenlicht",
+    "text": "The curtains keep the bright sunlight out of our room.",
+    "translation_de": "Die Vorhänge halten das grelle Sonnenlicht aus unserem Zimmer fern.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-282",
+    "form": "shade",
+    "topic": "Wetter",
+    "original_position": 282,
+    "display_position": 117,
+    "meaning": "Schatten als Schutz vor Sonne",
+    "text": "We sit in the shade of a large tree.",
+    "translation_de": "Wir sitzen im Schatten eines großen Baumes.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-283",
+    "form": "shadow",
+    "topic": "Wetter",
+    "original_position": 283,
+    "display_position": 118,
+    "meaning": "Schatten eines Gegenstands",
+    "text": "The tower casts a long shadow across the square.",
+    "translation_de": "Der Turm wirft einen langen Schatten über den Platz.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-284",
+    "form": "rain",
+    "topic": "Wetter",
+    "original_position": 284,
+    "display_position": 119,
+    "meaning": "Regen",
+    "text": "We wait inside the café until the rain stops.",
+    "translation_de": "Wir warten im Café, bis der Regen aufhört.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-285",
+    "form": "drizzle",
+    "topic": "Wetter",
+    "original_position": 285,
+    "display_position": 120,
+    "meaning": "Nieselregen",
+    "text": "Light drizzle makes our jackets damp during the walk.",
+    "translation_de": "Leichter Nieselregen macht unsere Jacken während des Spaziergangs feucht.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-306",
+    "form": "tide",
+    "topic": "Meer und Wassersport",
+    "original_position": 306,
+    "display_position": 126,
+    "meaning": "Gezeitenstand; Ebbe oder Flut",
+    "text": "At low tide, we can walk across the sand to the island.",
+    "translation_de": "Bei Ebbe können wir über den Sand zur Insel laufen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-307",
+    "form": "current",
+    "topic": "Meer und Wassersport",
+    "original_position": 307,
+    "display_position": 127,
+    "meaning": "Wasserströmung",
+    "text": "The strong current carries the boat away from the shore.",
+    "translation_de": "Die starke Strömung trägt das Boot vom Ufer weg.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-308",
+    "form": "port",
+    "topic": "Meer und Wassersport",
+    "original_position": 308,
+    "display_position": 128,
+    "meaning": "Hafen als Verkehrsanlage",
+    "text": "Our ship arrives at the port early in the morning.",
+    "translation_de": "Unser Schiff kommt früh am Morgen im Hafen an.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-309",
+    "form": "dock",
+    "topic": "Meer und Wassersport",
+    "original_position": 309,
+    "display_position": 129,
+    "meaning": "Anlegestelle",
+    "text": "The boat is tied to the dock beside the café.",
+    "translation_de": "Das Boot ist am Anleger neben dem Café festgemacht.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-310",
+    "form": "pier",
+    "topic": "Meer und Wassersport",
+    "original_position": 310,
+    "display_position": 130,
+    "meaning": "Landungssteg",
+    "text": "We walk along the pier to board the ferry.",
+    "translation_de": "Wir gehen den Landungssteg entlang, um an Bord der Fähre zu gehen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-331",
+    "form": "clinic",
+    "topic": "Gesundheit",
+    "original_position": 331,
+    "display_position": 136,
+    "meaning": "medizinische Praxis; Ambulanz",
+    "text": "The doctor at the clinic examines my sore ankle.",
+    "translation_de": "Die Ärztin in der Praxis untersucht meinen schmerzenden Knöchel.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-332",
+    "form": "ambulance",
+    "topic": "Gesundheit",
+    "original_position": 332,
+    "display_position": 137,
+    "meaning": "Krankenwagen",
+    "text": "An ambulance takes the injured driver to hospital.",
+    "translation_de": "Ein Krankenwagen bringt den verletzten Fahrer ins Krankenhaus.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-333",
+    "form": "emergency",
+    "topic": "Gesundheit",
+    "original_position": 333,
+    "display_position": 138,
+    "meaning": "Notfall",
+    "text": "In an emergency, use this phone to call for help.",
+    "translation_de": "Benutze im Notfall dieses Telefon, um Hilfe zu rufen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-334",
+    "form": "injury",
+    "topic": "Gesundheit",
+    "original_position": 334,
+    "display_position": 139,
+    "meaning": "Verletzung",
+    "text": "A knee injury prevents him from joining the walking tour.",
+    "translation_de": "Eine Knieverletzung hindert ihn daran, an dem Rundgang teilzunehmen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-335",
+    "form": "wound",
+    "topic": "Gesundheit",
+    "original_position": 335,
+    "display_position": 140,
+    "meaning": "Wunde",
+    "text": "The nurse cleans the wound on my hand.",
+    "translation_de": "Die Pflegekraft reinigt die Wunde an meiner Hand.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-356",
+    "form": "padlock",
+    "topic": "Gepäck und Sicherheit",
+    "original_position": 356,
+    "display_position": 146,
+    "meaning": "Vorhängeschloss",
+    "text": "I secure my locker with a small padlock.",
+    "translation_de": "Ich sichere mein Schließfach mit einem kleinen Vorhängeschloss.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-357",
+    "form": "charger",
+    "topic": "Gepäck und Sicherheit",
+    "original_position": 357,
+    "display_position": 147,
+    "meaning": "Ladegerät",
+    "text": "I left my charger in the hotel room.",
+    "translation_de": "Ich habe mein Ladegerät im Hotelzimmer liegen lassen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-358",
+    "form": "umbrella",
+    "topic": "Gepäck und Sicherheit",
+    "original_position": 358,
+    "display_position": 148,
+    "meaning": "Regenschirm",
+    "text": "Take an umbrella because it might rain later.",
+    "translation_de": "Nimm einen Regenschirm mit, denn später könnte es regnen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-359",
+    "form": "sunscreen",
+    "topic": "Gepäck und Sicherheit",
+    "original_position": 359,
+    "display_position": 149,
+    "meaning": "Sonnenschutzmittel",
+    "text": "We put on sunscreen before going to the beach.",
+    "translation_de": "Wir tragen Sonnenschutzmittel auf, bevor wir zum Strand gehen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-360",
+    "form": "toiletries",
+    "topic": "Gepäck und Sicherheit",
+    "original_position": 360,
+    "display_position": 150,
+    "meaning": "Körperpflegeartikel für die Reise",
+    "text": "Pack your toiletries in a separate bag.",
+    "translation_de": "Pack deine Körperpflegeartikel in eine separate Tasche.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-381",
+    "form": "reserve",
+    "topic": "Unterwegs handeln",
+    "original_position": 381,
+    "display_position": 156,
+    "meaning": "reservieren",
+    "text": "Can we reserve a table for two this evening?",
+    "translation_de": "Können wir für heute Abend einen Tisch für zwei Personen reservieren?",
+    "alternatives": [
+      "book"
+    ]
+  },
+  {
+    "selection_id": "reisen-v1-382",
+    "form": "cancel",
+    "topic": "Unterwegs handeln",
+    "original_position": 382,
+    "display_position": 157,
+    "meaning": "stornieren",
+    "text": "I need to cancel my hotel booking because I am ill.",
+    "translation_de": "Ich muss meine Hotelbuchung stornieren, weil ich krank bin.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-383",
+    "form": "confirm",
+    "topic": "Unterwegs handeln",
+    "original_position": 383,
+    "display_position": 158,
+    "meaning": "bestätigen",
+    "text": "Please confirm your arrival time by email.",
+    "translation_de": "Bitte bestätige deine Ankunftszeit per E-Mail.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-384",
+    "form": "check",
+    "topic": "Unterwegs handeln",
+    "original_position": 384,
+    "display_position": 159,
+    "meaning": "überprüfen",
+    "text": "Please check the departure time on your ticket.",
+    "translation_de": "Bitte überprüf die Abfahrtszeit auf deiner Fahrkarte.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-385",
+    "form": "plan",
+    "topic": "Unterwegs handeln",
+    "original_position": 385,
+    "display_position": 160,
+    "meaning": "planen",
+    "text": "We plan our route with a map before each trip.",
+    "translation_de": "Wir planen unsere Route vor jeder Reise mit einer Karte.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-406",
+    "form": "pronounce",
+    "topic": "Verständigung und Organisation",
+    "original_position": 406,
+    "display_position": 166,
+    "meaning": "aussprechen",
+    "text": "How do you pronounce the name of this town?",
+    "translation_de": "Wie spricht man den Namen dieser Stadt aus?",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-407",
+    "form": "spell",
+    "topic": "Verständigung und Organisation",
+    "original_position": 407,
+    "display_position": 167,
+    "meaning": "buchstabieren",
+    "text": "Could you spell your surname for me, please?",
+    "translation_de": "Könntest du mir bitte deinen Nachnamen buchstabieren?",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-408",
+    "form": "translate",
+    "topic": "Verständigung und Organisation",
+    "original_position": 408,
+    "display_position": 168,
+    "meaning": "übersetzen",
+    "text": "Can you translate this menu into German?",
+    "translation_de": "Kannst du diese Speisekarte ins Deutsche übersetzen?",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-409",
+    "form": "speak",
+    "topic": "Verständigung und Organisation",
+    "original_position": 409,
+    "display_position": 169,
+    "meaning": "sprechen",
+    "text": "Does anyone here speak English?",
+    "translation_de": "Spricht hier jemand Englisch?",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-410",
+    "form": "say",
+    "topic": "Verständigung und Organisation",
+    "original_position": 410,
+    "display_position": 170,
+    "meaning": "sagen",
+    "text": "Please say your name slowly.",
+    "translation_de": "Bitte sag deinen Namen langsam.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-431",
+    "form": "search",
+    "topic": "Orientierung und Probleme lösen",
+    "original_position": 431,
+    "display_position": 176,
+    "meaning": "suchen",
+    "text": "We search our bags for the missing ticket.",
+    "translation_de": "Wir durchsuchen unsere Taschen nach der fehlenden Fahrkarte.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-432",
+    "form": "locate",
+    "topic": "Orientierung und Probleme lösen",
+    "original_position": 432,
+    "display_position": 177,
+    "meaning": "ausfindig machen",
+    "text": "Can you locate our hotel on this map?",
+    "translation_de": "Kannst du unser Hotel auf dieser Karte ausfindig machen?",
+    "alternatives": [
+      "find"
+    ]
+  },
+  {
+    "selection_id": "reisen-v1-433",
+    "form": "miss",
+    "topic": "Orientierung und Probleme lösen",
+    "original_position": 433,
+    "display_position": 178,
+    "meaning": "ein Verkehrsmittel verpassen",
+    "text": "We might miss the train because the bus is late.",
+    "translation_de": "Wir könnten den Zug verpassen, weil der Bus Verspätung hat.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-434",
+    "form": "lose",
+    "topic": "Orientierung und Probleme lösen",
+    "original_position": 434,
+    "display_position": 179,
+    "meaning": "verlieren",
+    "text": "Keep your ticket safe so you do not lose it.",
+    "translation_de": "Bewahre deine Fahrkarte sicher auf, damit du sie nicht verlierst.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-435",
+    "form": "forget",
+    "topic": "Orientierung und Probleme lösen",
+    "original_position": 435,
+    "display_position": 180,
+    "meaning": "vergessen",
+    "text": "Please do not forget your passport.",
+    "translation_de": "Bitte vergiss deinen Reisepass nicht.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-456",
+    "form": "local",
+    "topic": "Angebote und Orte beschreiben",
+    "original_position": 456,
+    "display_position": 186,
+    "meaning": "örtlich",
+    "text": "The local bus connects the village with the railway station.",
+    "translation_de": "Der örtliche Bus verbindet das Dorf mit dem Bahnhof.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-457",
+    "form": "foreign",
+    "topic": "Angebote und Orte beschreiben",
+    "original_position": 457,
+    "display_position": 187,
+    "meaning": "ausländisch",
+    "text": "I keep foreign coins as souvenirs from my travels.",
+    "translation_de": "Ich bewahre ausländische Münzen als Andenken an meine Reisen auf.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-458",
+    "form": "international",
+    "topic": "Angebote und Orte beschreiben",
+    "original_position": 458,
+    "display_position": 188,
+    "meaning": "international",
+    "text": "This international train crosses three borders on its journey.",
+    "translation_de": "Dieser internationale Zug überquert auf seiner Fahrt drei Grenzen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-459",
+    "form": "domestic",
+    "topic": "Angebote und Orte beschreiben",
+    "original_position": 459,
+    "display_position": 189,
+    "meaning": "inländisch; innerhalb eines Landes",
+    "text": "This airport handles only domestic flights within Spain.",
+    "translation_de": "Dieser Flughafen fertigt nur Inlandsflüge innerhalb Spaniens ab.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-460",
+    "form": "direct",
+    "topic": "Angebote und Orte beschreiben",
+    "original_position": 460,
+    "display_position": 190,
+    "meaning": "direkt; ohne Umsteigen",
+    "text": "Is there a direct train to the airport without any changes?",
+    "translation_de": "Gibt es einen direkten Zug zum Flughafen ohne Umsteigen?",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-481",
+    "form": "necessary",
+    "topic": "Bedürfnisse und Eigenschaften",
+    "original_position": 481,
+    "display_position": 196,
+    "meaning": "notwendig",
+    "text": "A passport is necessary for this journey.",
+    "translation_de": "Für diese Reise ist ein Reisepass notwendig.",
+    "alternatives": [
+      "required"
+    ]
+  },
+  {
+    "selection_id": "reisen-v1-482",
+    "form": "essential",
+    "topic": "Bedürfnisse und Eigenschaften",
+    "original_position": 482,
+    "display_position": 197,
+    "meaning": "unerlässlich",
+    "text": "Good walking shoes are essential for this mountain hike.",
+    "translation_de": "Gute Wanderschuhe sind für diese Bergwanderung unerlässlich.",
+    "alternatives": [
+      "indispensable"
+    ]
+  },
+  {
+    "selection_id": "reisen-v1-483",
+    "form": "optional",
+    "topic": "Bedürfnisse und Eigenschaften",
+    "original_position": 483,
+    "display_position": 198,
+    "meaning": "freiwillig; wählbar",
+    "text": "The boat trip is optional, so you can stay at the hotel.",
+    "translation_de": "Der Bootsausflug ist freiwillig, du kannst also im Hotel bleiben.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "reisen-v1-484",
+    "form": "suitable",
+    "topic": "Bedürfnisse und Eigenschaften",
+    "original_position": 484,
+    "display_position": 199,
+    "meaning": "geeignet",
+    "text": "Is this walking route suitable for young children?",
+    "translation_de": "Ist dieser Wanderweg für kleine Kinder geeignet?",
+    "alternatives": [
+      "appropriate"
+    ]
+  },
+  {
+    "selection_id": "reisen-v1-485",
+    "form": "reliable",
+    "topic": "Bedürfnisse und Eigenschaften",
+    "original_position": 485,
+    "display_position": 200,
+    "meaning": "zuverlässig",
+    "text": "We need a reliable taxi service for our early flight.",
+    "translation_de": "Wir brauchen für unseren frühen Flug einen zuverlässigen Taxidienst.",
+    "alternatives": [
+      "dependable"
+    ]
+  }
+]

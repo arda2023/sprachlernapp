@@ -1,0 +1,1000 @@
+house | Their house has three bedrooms and a small garden. | Ihr Haus hat drei Schlafzimmer und einen kleinen Garten.
+Their => they/PRON|they#ihr_plural
+house => house/NOUN|house#haus
+has => have/VERB|have#besitzen
+three => three/NUM|three#drei
+bedrooms => bedroom/NOUN|bedroom#schlafzimmer
+and => and/CCONJ|and#und
+a => a/DET|a#ein
+small => small/ADJ|small#klein
+garden => garden/NOUN|garden#garten
+
+wall | We put the sofa against the wall to save space. | Wir stellten das Sofa an die Wand, um Platz zu sparen.
+We => we/PRON|we#wir
+put => put/VERB|put#legen-bringen
+the => the/DET|the#bestimmter_artikel
+sofa => sofa/NOUN|sofa#sofa
+against => against/ADP|against#an
+the => the/DET|the#bestimmter_artikel
+wall => wall/NOUN|wall#wand
+to => to/PART|to#infinitivpartikel
+save => save/VERB|save#sparen
+space => space/NOUN|space#platz
+
+door | Please close the door; it is cold in here. | Mach bitte die Tür zu; hier drin ist es kalt.
+Please => please/INTJ|please#bitte
+close => close/VERB|close#schliessen
+the => the/DET|the#bestimmter_artikel
+door => door/NOUN|door#tuer
+it => it/PRON|it#es_ding
+is => be/AUX|be#sein_vollverb
+cold => cold/ADJ|cold#kalt
+in => in/ADV|in#herein_drinnen
+here => here/ADV|here#hier
+
+fence | The dog cannot jump over the tall wooden fence. | Der Hund kann nicht über den hohen Holzzaun springen.
+The => the/DET|the#bestimmter_artikel
+dog => dog/NOUN|dog#hund
+can => can/AUX|can#koennen
+not => not/PART|not#nicht
+jump => jump/VERB|jump#springen
+over => over/ADP|over#ueber
+the => the/DET|the#bestimmter_artikel
+tall => tall/ADJ|tall#hohe
+wooden => wooden/ADJ|wooden#hoelzern
+fence => fence/NOUN|fence#zaun
+
+carpet | Please take your muddy shoes off before walking on the carpet. | Zieh bitte deine schlammigen Schuhe aus, bevor du auf den Teppich gehst.
+Please => please/INTJ|please#bitte
+take => take/VERB|take#ausziehen
+your => your/DET|your#dein-deine
+muddy => muddy/ADJ|muddy#schlammig
+shoes => shoe/NOUN|shoe#schuhe
+off => off/PART|off#ausziehen_partikel
+before => before/SCONJ|before#bevor
+walking => walk/VERB|walk#gehend
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+carpet => carpet/NOUN|carpet#teppich
+
+drawer | The scissors are in the top drawer beside the sink. | Die Schere liegt in der obersten Schublade neben der Spüle.
+The => the/DET|the#bestimmter_artikel
+scissors => scissors/NOUN|scissors#einer-schere
+are => be/AUX|be#befinden
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+top => top/ADJ|top#obersten
+drawer => drawer/NOUN|drawer#schublade
+beside => beside/ADP|beside#neben
+the => the/DET|the#bestimmter_artikel
+sink => sink/NOUN|sink#spuelbecken
+
+mattress | This mattress is too soft; my back hurts every morning. | Diese Matratze ist zu weich; mir tut jeden Morgen der Rücken weh.
+This => this/DET|this#dieser_begleitend
+mattress => mattress/NOUN|mattress#matratze
+is => be/AUX|be#sein_vollverb
+too => too/ADV|too#zu
+soft => soft/ADJ|soft#weiche
+my => my/DET|my#mein
+back => back/NOUN|back#ruecken
+hurts => hurt/VERB|hurt#schmerzt
+every => every/DET|every#jede
+morning => morning/NOUN|morning#morgen
+
+attic | We keep our old toys in boxes in the attic. | Wir bewahren unser altes Spielzeug in Kisten auf dem Dachboden auf.
+We => we/PRON|we#wir
+keep => keep/VERB|keep#bewahrt-auf
+our => our/DET|our#unser-unsere
+old => old/ADJ|old#alte
+toys => toy/NOUN|toy#spielzeug
+in => in/ADP|in#in_raeumlich
+boxes => box/NOUN|box#schachtel
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+attic => attic/NOUN|attic#dachboden
+
+neighbour | Our new neighbour brought us a cake to say hello. | Unser neuer Nachbar hat uns zur Begrüßung einen Kuchen gebracht.
+Our => our/DET|our#unser-unsere
+new => new/ADJ|new#neu
+neighbour => neighbour/NOUN|neighbour#nachbar
+brought => bring/VERB|bring#bringt
+us => we/PRON|we#uns
+a => a/DET|a#ein
+cake => cake/NOUN|cake#kuchen
+to => to/PART|to#infinitivpartikel
+say => say/VERB|say#sagen
+hello => hello/INTJ|hello#hallo
+
+address | Please write your full address on the back of the envelope. | Schreib bitte deine vollständige Adresse auf die Rückseite des Umschlags.
+Please => please/INTJ|please#bitte
+write => write/VERB|write#schreiben
+your => your/DET|your#dein-deine
+full => full/ADJ|full#vollstaendig
+address => address/NOUN|address#adresse
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+back => back/NOUN|back#rueckseite
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+envelope => envelope/NOUN|envelope#umschlag
+
+broom | Use the broom to sweep the leaves off the steps. | Feg die Blätter mit dem Besen von den Stufen.
+Use => use/VERB|use#benutzen
+the => the/DET|the#bestimmter_artikel
+broom => broom/NOUN|broom#besen
+to => to/PART|to#infinitivpartikel
+sweep => sweep/VERB|sweep#fegen
+the => the/DET|the#bestimmter_artikel
+leaves => leaf/NOUN|leaf#blatt
+off => off/ADP|off#von_herunter
+the => the/DET|the#bestimmter_artikel
+steps => step/NOUN|step#treppenstufe
+
+sponge | Wipe the kitchen table with a damp sponge after lunch. | Wisch den Küchentisch nach dem Mittagessen mit einem feuchten Schwamm ab.
+Wipe => wipe/VERB|wipe#abwischen
+the => the/DET|the#bestimmter_artikel
+kitchen => kitchen/NOUN|kitchen#kueche
+table => table/NOUN|table#tisch
+with => with/ADP|with#mit
+a => a/DET|a#ein
+damp => damp/ADJ|damp#feucht
+sponge => sponge/NOUN|sponge#schwamm
+after => after/ADP|after#nach
+lunch => lunch/NOUN|lunch#mittagessen
+
+dirt | There is still some dirt on your boots from yesterday. | An deinen Stiefeln ist noch etwas Schmutz von gestern.
+There => there/PRON|there#es_gibt
+is => be/VERB|be#gibt
+still => still/ADV|still#immer-noch
+some => some/DET|some#etwas
+dirt => dirt/NOUN|dirt#schmutz
+on => on/ADP|on#auf
+your => your/DET|your#dein-deine
+boots => boot/NOUN|boot#stiefel
+from => from/ADP|from#von_ausgangspunkt
+yesterday => yesterday/NOUN|yesterday#gestern
+
+bleach | The bleach left a pale patch on my black shirt. | Das Bleichmittel hat einen hellen Fleck auf meinem schwarzen Hemd hinterlassen.
+The => the/DET|the#bestimmter_artikel
+bleach => bleach/NOUN|bleach#bleichmittel
+left => leave/VERB|leave#hinterliess
+a => a/DET|a#ein
+pale => pale/ADJ|pale#hell
+patch => patch/NOUN|patch#fleck
+on => on/ADP|on#auf
+my => my/DET|my#mein
+black => black/ADJ|black#schwarz
+shirt => shirt/NOUN|shirt#hemd
+
+recycling | This bin is for recycling; put food waste in the other one. | Dieser Behälter ist fürs Recycling; wirf Essensreste in den anderen.
+This => this/DET|this#dieser_begleitend
+bin => bin/NOUN|bin#tonnen
+is => be/AUX|be#sein_vollverb
+for => for/ADP|for#fuer_zweck_empfaenger
+recycling => recycling/NOUN|recycling#recycling
+put => put/VERB|put#legen-bringen
+food => food/NOUN|food#essen
+waste => waste/NOUN|waste#abfall
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+other => other/ADJ|other#anderen
+one => one/PRON|one#stellvertreter
+
+hanger | Put your jacket on a hanger to keep it tidy. | Häng deine Jacke ordentlich auf einen Kleiderbügel.
+Put => put/VERB|put#legen-bringen
+your => your/DET|your#dein-deine
+jacket => jacket/NOUN|jacket#jacke
+on => on/ADP|on#auf
+a => a/DET|a#ein
+hanger => hanger/NOUN|hanger#kleiderbugel
+to => to/PART|to#infinitivpartikel
+keep => keep/VERB|keep#halten
+it => it/PRON|it#es_ding
+tidy => tidy/ADJ|tidy#ordentlich
+
+dishwasher | The dishwasher is full, so wash this cup by hand. | Der Geschirrspüler ist voll, also spül diese Tasse von Hand.
+The => the/DET|the#bestimmter_artikel
+dishwasher => dishwasher/NOUN|dishwasher#geschirrspuler
+is => be/AUX|be#sein_vollverb
+full => full/ADJ|full#vollen
+so => so/CCONJ|so#deshalb
+wash => wash/VERB|wash#waescht
+this => this/DET|this#dieser_begleitend
+cup => cup/NOUN|cup#tasse
+by => by/ADP|by#mit_mittel
+hand => hand/NOUN|hand#hand
+
+tap | Please turn off the tap while you brush your teeth. | Dreh bitte den Wasserhahn zu, während du dir die Zähne putzt.
+Please => please/INTJ|please#bitte
+turn => turn/VERB|turn#gedreht-geschaltet-teil-von-turn-off
+off => off/ADP|off#aus-teil-von-turn-off
+the => the/DET|the#bestimmter_artikel
+tap => tap/NOUN|tap#wasserhahn
+while => while/SCONJ|while#waehrend
+you => you/PRON|you#du_sie_ihr
+brush => brush/VERB|brush#buersten
+your => your/DET|your#dein-deine
+teeth => tooth/NOUN|tooth#zahn
+
+bulb | The lamp needs a new bulb; the old one has stopped working. | Die Lampe braucht eine neue Glühbirne; die alte funktioniert nicht mehr.
+The => the/DET|the#bestimmter_artikel
+lamp => lamp/NOUN|lamp#lampen
+needs => need/VERB|need#brauchen
+a => a/DET|a#ein
+new => new/ADJ|new#neu
+bulb => bulb/NOUN|bulb#gluhbirne
+the => the/DET|the#bestimmter_artikel
+old => old/ADJ|old#alte
+one => one/PRON|one#stellvertreter
+has => have/AUX|have#hilfsverb
+stopped => stop/VERB|stop#aufhoeren
+working => work/VERB|work#funktionieren
+
+glue | Use a little glue to stick the photo onto the card. | Klebe das Foto mit etwas Klebstoff auf die Karte.
+Use => use/VERB|use#benutzen
+a => a/DET|a#ein
+little => little/DET|little#wenig
+glue => glue/NOUN|glue#klebstoff
+to => to/PART|to#infinitivpartikel
+stick => stick/VERB|stick#kleben-sie
+the => the/DET|the#bestimmter_artikel
+photo => photo/NOUN|photo#foto
+onto => onto/ADP|onto#auf
+the => the/DET|the#bestimmter_artikel
+card => card/NOUN|card#karte
+
+trousers | These trousers fit well, but they are a little too long. | Diese Hose passt gut, ist aber etwas zu lang.
+These => these/DET|these#diese
+trousers => trousers/NOUN|trousers#hose
+fit => fit/VERB|fit#passen
+well => well/ADV|well#gut
+but => but/CCONJ|but#aber
+they => they/PRON|they#sie_plural
+are => be/AUX|be#sein_vollverb
+a => a/DET|a#ein
+little => little/ADV|little#etwas
+too => too/ADV|too#zu
+long => long/ADJ|long#lange
+
+dress | Mia wore a green dress to her sister's wedding. | Mia trug zur Hochzeit ihrer Schwester ein grünes Kleid.
+Mia => Mia/PROPN|mia#mia
+wore => wear/VERB|wear#tragen
+a => a/DET|a#ein
+green => green/ADJ|green#gruen
+dress => dress/NOUN|dress#kleid
+to => to/ADP|to#nach_richtung
+her => her/DET|her#ihr_possessiv
+sister => sister/NOUN|sister#schwester
+'s => 's/PART|s#genitiv-endung
+wedding => wedding/NOUN|wedding#hochzeit
+
+jumper | Put on a warm jumper before you go outside. | Zieh einen warmen Pullover an, bevor du nach draußen gehst.
+Put => put/VERB|put#zieh-an
+on => on/ADP|on#an-partikel-in-put-on
+a => a/DET|a#ein
+warm => warm/ADJ|warm#warm
+jumper => jumper/NOUN|jumper#pullover
+before => before/SCONJ|before#bevor
+you => you/PRON|you#du_sie_ihr
+go => go/VERB|go#gehen
+outside => outside/ADV|outside#draussen
+
+sock | I found the missing sock behind the washing machine. | Ich habe die vermisste Socke hinter der Waschmaschine gefunden.
+I => I/PRON|i#ich
+found => find/VERB|find#finden
+the => the/DET|the#bestimmter_artikel
+missing => missing/ADJ|missing#verschwundenen
+sock => sock/NOUN|sock#socke
+behind => behind/ADP|behind#hinter
+the => the/DET|the#bestimmter_artikel
+washing => washing/NOUN|washing#wasch
+machine => machine/NOUN|machine#maschine
+
+slipper | The dog is chewing my slipper under the table. | Der Hund kaut unter dem Tisch auf meinem Hausschuh herum.
+The => the/DET|the#bestimmter_artikel
+dog => dog/NOUN|dog#hund
+is => be/AUX|be#hilfsverb
+chewing => chew/VERB|chew#kauen
+my => my/DET|my#mein
+slipper => slipper/NOUN|slipper#hausschuh
+under => under/ADP|under#unter
+the => the/DET|the#bestimmter_artikel
+table => table/NOUN|table#tisch
+
+cap | Ben wears a blue cap when he plays outside. | Ben trägt eine blaue Kappe, wenn er draußen spielt.
+Ben => Ben/PROPN|ben#ben
+wears => wear/VERB|wear#tragen
+a => a/DET|a#ein
+blue => blue/ADJ|blue#blau
+cap => cap/NOUN|cap#kappe
+when => when/SCONJ|when#wenn
+he => he/PRON|he#er
+plays => play/VERB|play#spielen
+outside => outside/ADV|outside#draussen
+
+belt | These jeans are too loose; I need a belt. | Diese Jeans ist zu weit; ich brauche einen Gürtel.
+These => these/DET|these#diese
+jeans => jeans/NOUN|jeans#jeans
+are => be/AUX|be#sein_vollverb
+too => too/ADV|too#zu
+loose => loose/ADJ|loose#weit
+I => I/PRON|i#ich
+need => need/VERB|need#brauchen
+a => a/DET|a#ein
+belt => belt/NOUN|belt#guertel
+
+sleeve | There is a small hole in the left sleeve of my shirt. | Im linken Ärmel meines Hemdes ist ein kleines Loch.
+There => there/PRON|there#es_gibt
+is => be/VERB|be#gibt
+a => a/DET|a#ein
+small => small/ADJ|small#klein
+hole => hole/NOUN|hole#loch
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+left => left/ADJ|left#linke
+sleeve => sleeve/NOUN|sleeve#aermeln
+of => of/ADP|of#genitiv_besitz
+my => my/DET|my#mein
+shirt => shirt/NOUN|shirt#hemd
+
+wool | This scarf is made of wool and keeps my neck warm. | Dieser Schal ist aus Wolle und hält meinen Hals warm.
+This => this/DET|this#dieser_begleitend
+scarf => scarf/NOUN|scarf#schal
+is => be/AUX|be#hilfsverb
+made => make/VERB|make#herstellen
+of => of/ADP|of#material_herkunft
+wool => wool/NOUN|wool#wolle
+and => and/CCONJ|and#und
+keeps => keep/VERB|keep#halten
+my => my/DET|my#mein
+neck => neck/NOUN|neck#hals
+warm => warm/ADJ|warm#warm
+
+pyjamas | The children put on their pyjamas after their evening bath. | Die Kinder ziehen nach ihrem abendlichen Bad ihre Schlafanzüge an.
+The => the/DET|the#bestimmter_artikel
+children => child/NOUN|child#kinder
+put => put/VERB|put#zieh-an
+on => on/ADP|on#an-partikel-in-put-on
+their => they/PRON|they#ihr_plural
+pyjamas => pyjamas/NOUN|pyjamas#schlafanzug
+after => after/ADP|after#nach
+their => they/PRON|they#ihr_plural
+evening => evening/NOUN|evening#abend
+bath => bath/NOUN|bath#baden
+
+supermarket | The supermarket on our street stays open until ten. | Der Supermarkt in unserer Straße hat bis zehn Uhr geöffnet.
+The => the/DET|the#bestimmter_artikel
+supermarket => supermarket/NOUN|supermarket#supermarkt
+on => on/ADP|on#auf
+our => our/DET|our#unser-unsere
+street => street/NOUN|street#strasse
+stays => stay/VERB|stay#bleiben
+open => open/ADJ|open#offen
+until => until/ADP|until#bis
+ten => ten/NUM|ten#zehn
+
+customer | The customer asked for a bag to carry her shopping. | Die Kundin bat um eine Tasche für ihre Einkäufe.
+The => the/DET|the#bestimmter_artikel
+customer => customer/NOUN|customer#kunde-kundin
+asked => ask/VERB|ask#bat
+for => for/ADP|for#um
+a => a/DET|a#ein
+bag => bag/NOUN|bag#tasche
+to => to/PART|to#infinitivpartikel
+carry => carry/VERB|carry#tragen
+her => her/DET|her#ihr_possessiv
+shopping => shopping/NOUN|shopping#einkaeufe
+
+queue | There is a long queue at the only open checkout. | An der einzigen geöffneten Kasse steht eine lange Warteschlange.
+There => there/PRON|there#es_gibt
+is => be/VERB|be#gibt
+a => a/DET|a#ein
+long => long/ADJ|long#lange
+queue => queue/NOUN|queue#warteschlange
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+only => only/ADJ|only#einzig
+open => open/ADJ|open#offen
+checkout => checkout/NOUN|checkout#kasse
+
+brand | This brand of coffee costs less than our usual one. | Diese Kaffeemarke kostet weniger als die, die wir sonst kaufen.
+This => this/DET|this#dieser_begleitend
+brand => brand/NOUN|brand#marke
+of => of/ADP|of#teil_menge
+coffee => coffee/NOUN|coffee#kaffee
+costs => cost/VERB|cost#kostete
+less => less/PRON|less#weniger
+than => than/ADP|than#als
+our => our/DET|our#unser-unsere
+usual => usual/ADJ|usual#ueblich
+one => one/PRON|one#stellvertreter
+
+quality | The coat is expensive, but the quality of the fabric is excellent. | Der Mantel ist teuer, aber die Qualität des Stoffes ist ausgezeichnet.
+The => the/DET|the#bestimmter_artikel
+coat => coat/NOUN|coat#mantel
+is => be/AUX|be#sein_vollverb
+expensive => expensive/ADJ|expensive#teuer
+but => but/CCONJ|but#aber
+the => the/DET|the#bestimmter_artikel
+quality => quality/NOUN|quality#qualitat
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+fabric => fabric/NOUN|fabric#stoff
+is => be/AUX|be#sein_vollverb
+excellent => excellent/ADJ|excellent#ausgezeichnet
+
+dozen | We need a dozen eggs, so buy a box of twelve. | Wir brauchen ein Dutzend Eier, also kauf eine Packung mit zwölf Stück.
+We => we/PRON|we#wir
+need => need/VERB|need#brauchen
+a => a/DET|a#ein
+dozen => dozen/NOUN|dozen#dutzend
+eggs => egg/NOUN|egg#ei
+so => so/CCONJ|so#deshalb
+buy => buy/VERB|buy#kaufen
+a => a/DET|a#ein
+box => box/NOUN|box#schachtel
+of => of/ADP|of#teil_menge
+twelve => twelve/NUM|twelve#zwoelf
+
+coupon | This coupon gives you ten percent off your next purchase. | Mit diesem Gutschein bekommst du zehn Prozent Rabatt auf deinen nächsten Einkauf.
+This => this/DET|this#dieser_begleitend
+coupon => coupon/NOUN|coupon#gutschein
+gives => give/VERB|give#geben
+you => you/PRON|you#du_sie_ihr
+ten => ten/NUM|ten#zehn
+percent => percent/NOUN|percent#prozent
+off => off/ADP|off#rabatt
+your => your/DET|your#dein-deine
+next => next/ADJ|next#naechsten
+purchase => purchase/NOUN|purchase#kauf
+
+list | I wrote a list so I would not forget anything at the shops. | Ich habe eine Liste geschrieben, damit ich beim Einkaufen nichts vergesse.
+I => I/PRON|i#ich
+wrote => write/VERB|write#schreiben
+a => a/DET|a#ein
+list => list/NOUN|list#liste
+so => so/SCONJ|so#damit
+I => I/PRON|i#ich
+would => would/AUX|would#wuerde
+not => not/PART|not#nicht
+forget => forget/VERB|forget#vergessen
+anything => anything/PRON|anything#irgendetwas
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+shops => shop/NOUN|shop#geschaeft
+
+pan | Heat a little oil in the pan before adding the onions. | Erhitze etwas Öl in der Pfanne, bevor du die Zwiebeln hineingibst.
+Heat => heat/VERB|heat#erhitzen
+a => a/DET|a#ein
+little => little/DET|little#wenig
+oil => oil/NOUN|oil#speiseol
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+pan => pan/NOUN|pan#pfanne
+before => before/SCONJ|before#bevor
+adding => add/VERB|add#gibt
+the => the/DET|the#bestimmter_artikel
+onions => onion/NOUN|onion#zwiebel
+
+oven | The bread is in the oven and will be ready soon. | Das Brot ist im Backofen und wird bald fertig sein.
+The => the/DET|the#bestimmter_artikel
+bread => bread/NOUN|bread#brot
+is => be/AUX|be#befinden
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+oven => oven/NOUN|oven#ofen
+and => and/CCONJ|and#und
+will => will/AUX|will#zukunft
+be => be/AUX|be#sein_vollverb
+ready => ready/ADJ|ready#fertig
+soon => soon/ADV|soon#bald
+
+microwave | You can heat yesterday's soup in the microwave for lunch. | Du kannst die Suppe von gestern zum Mittagessen in der Mikrowelle aufwärmen.
+You => you/PRON|you#du_sie_ihr
+can => can/AUX|can#koennen
+heat => heat/VERB|heat#erhitzen
+yesterday => yesterday/NOUN|yesterday#gestern
+'s => 's/PART|s#genitiv-endung
+soup => soup/NOUN|soup#suppe
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+microwave => microwave/NOUN|microwave#mikrowelle
+for => for/ADP|for#fuer_zweck_empfaenger
+lunch => lunch/NOUN|lunch#mittagessen
+
+ingredient | Flour is the main ingredient in this simple bread recipe. | Mehl ist die Hauptzutat in diesem einfachen Brotrezept.
+Flour => flour/NOUN|flour#mehl
+is => be/AUX|be#sein_vollverb
+the => the/DET|the#bestimmter_artikel
+main => main/ADJ|main#haupt
+ingredient => ingredient/NOUN|ingredient#zutaten
+in => in/ADP|in#in_raeumlich
+this => this/DET|this#dieser_begleitend
+simple => simple/ADJ|simple#einfache
+bread => bread/NOUN|bread#brot
+recipe => recipe/NOUN|recipe#rezept
+
+oil | Add a little oil to the pan before frying the eggs. | Gib etwas Öl in die Pfanne, bevor du die Eier brätst.
+Add => add/VERB|add#gibt
+a => a/DET|a#ein
+little => little/DET|little#wenig
+oil => oil/NOUN|oil#speiseol
+to => to/ADP|to#nach_richtung
+the => the/DET|the#bestimmter_artikel
+pan => pan/NOUN|pan#pfanne
+before => before/SCONJ|before#bevor
+frying => fry/VERB|fry#braten
+the => the/DET|the#bestimmter_artikel
+eggs => egg/NOUN|egg#ei
+
+carrot | Cut the carrot into small pieces for the soup. | Schneide die Karotte für die Suppe in kleine Stücke.
+Cut => cut/VERB|cut#schneidet
+the => the/DET|the#bestimmter_artikel
+carrot => carrot/NOUN|carrot#karotte
+into => into/ADP|into#in
+small => small/ADJ|small#klein
+pieces => piece/NOUN|piece#stueck
+for => for/ADP|for#fuer_zweck_empfaenger
+the => the/DET|the#bestimmter_artikel
+soup => soup/NOUN|soup#suppe
+
+bean | Plant a bean in the pot and water it every day. | Pflanze eine Bohne in den Topf und gieße sie jeden Tag.
+Plant => plant/VERB|plant#pflanzen
+a => a/DET|a#ein
+bean => bean/NOUN|bean#bohne
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+pot => pot/NOUN|pot#blumentopf
+and => and/CCONJ|and#und
+water => water/VERB|water#giessen
+it => it/PRON|it#es_ding
+every => every/DET|every#jede
+day => day/NOUN|day#tag
+
+lemon | Squeeze half a lemon over the fish before serving it. | Presse vor dem Servieren eine halbe Zitrone über dem Fisch aus.
+Squeeze => squeeze/VERB|squeeze#auspressen
+half => half/DET|half#halb
+a => a/DET|a#ein
+lemon => lemon/NOUN|lemon#zitrone
+over => over/ADP|over#ueber
+the => the/DET|the#bestimmter_artikel
+fish => fish/NOUN|fish#fisch
+before => before/SCONJ|before#bevor
+serving => serve/VERB|serve#servieren
+it => it/PRON|it#es_ding
+
+strawberry | There is one ripe strawberry left on the plant. | An der Pflanze hängt noch eine reife Erdbeere.
+There => there/PRON|there#es_gibt
+is => be/VERB|be#gibt
+one => one/NUM|one#ein
+ripe => ripe/ADJ|ripe#reif
+strawberry => strawberry/NOUN|strawberry#erdbeere
+left => leave/VERB|leave#uebrig-partizip-in-paper-left
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+plant => plant/NOUN|plant#pflanzen
+
+cream | Pour some cream over the strawberries for a simple dessert. | Gieß für einen einfachen Nachtisch etwas Sahne über die Erdbeeren.
+Pour => pour/VERB|pour#giesst
+some => some/DET|some#etwas
+cream => cream/NOUN|cream#sahne
+over => over/ADP|over#ueber
+the => the/DET|the#bestimmter_artikel
+strawberries => strawberry/NOUN|strawberry#erdbeere
+for => for/ADP|for#fuer_zweck_empfaenger
+a => a/DET|a#ein
+simple => simple/ADJ|simple#einfache
+dessert => dessert/NOUN|dessert#dessert
+
+sauce | This tomato sauce goes well with pasta and grated cheese. | Diese Tomatensoße passt gut zu Nudeln und geriebenem Käse.
+This => this/DET|this#dieser_begleitend
+tomato => tomato/NOUN|tomato#tomaten
+sauce => sauce/NOUN|sauce#sosse
+goes => go/VERB|go#passen_zu
+well => well/ADV|well#gut
+with => with/ADP|with#mit
+pasta => pasta/NOUN|pasta#nudeln
+and => and/CCONJ|and#und
+grated => grate/VERB|grate#reiben
+cheese => cheese/NOUN|cheese#kase
+
+peel | Please peel the potatoes while I chop the onions. | Schäl bitte die Kartoffeln, während ich die Zwiebeln hacke.
+Please => please/INTJ|please#bitte
+peel => peel/VERB|peel#schalen
+the => the/DET|the#bestimmter_artikel
+potatoes => potato/NOUN|potato#kartoffel
+while => while/SCONJ|while#waehrend
+I => I/PRON|i#ich
+chop => chop/VERB|chop#hacken
+the => the/DET|the#bestimmter_artikel
+onions => onion/NOUN|onion#zwiebel
+
+bake | We bake fresh bread together every Sunday morning. | Wir backen jeden Sonntagmorgen zusammen frisches Brot.
+We => we/PRON|we#wir
+bake => bake/VERB|bake#backen
+fresh => fresh/ADJ|fresh#frische
+bread => bread/NOUN|bread#brot
+together => together/ADV|together#zusammen
+every => every/DET|every#jede
+Sunday => Sunday/PROPN|sunday#sonntag
+morning => morning/NOUN|morning#morgen
+
+taste | Please taste the soup before you add any more salt. | Probier bitte die Suppe, bevor du noch mehr Salz hinzugibst.
+Please => please/INTJ|please#bitte
+taste => taste/VERB|taste#probiert
+the => the/DET|the#bestimmter_artikel
+soup => soup/NOUN|soup#suppe
+before => before/SCONJ|before#bevor
+you => you/PRON|you#du_sie_ihr
+add => add/VERB|add#gibt
+any => any/DET|any#irgendeine
+more => much/DET|much#mehr_menge
+salt => salt/NOUN|salt#salz
+
+family | My whole family comes together for dinner on Sundays. | Meine ganze Familie kommt sonntags zum Abendessen zusammen.
+My => my/DET|my#mein
+whole => whole/ADJ|whole#ganz
+family => family/NOUN|family#familie
+comes => come/VERB|come#kommen
+together => together/ADV|together#zusammen
+for => for/ADP|for#fuer_zweck_empfaenger
+dinner => dinner/NOUN|dinner#abendessen
+on => on/ADP|on#an_zeitlich
+Sundays => Sunday/PROPN|sunday#sonntag
+
+father | Her father taught her to ride a bike last summer. | Ihr Vater hat ihr letzten Sommer das Fahrradfahren beigebracht.
+Her => her/DET|her#ihr_possessiv
+father => father/NOUN|father#vater
+taught => teach/VERB|teach#unterrichtet
+her => she/PRON|she#ihr_dativ
+to => to/PART|to#infinitivpartikel
+ride => ride/VERB|ride#fahren
+a => a/DET|a#ein
+bike => bike/NOUN|bike#fahrrad
+last => last/ADJ|last#letzter
+summer => summer/NOUN|summer#sommer
+
+son | Our son starts school next week and is very excited. | Unser Sohn kommt nächste Woche in die Schule und freut sich sehr.
+Our => our/DET|our#unser-unsere
+son => son/NOUN|son#sohn
+starts => start/VERB|start#beginnt
+school => school/NOUN|school#schule-hier-schul
+next => next/ADJ|next#naechsten
+week => week/NOUN|week#woche
+and => and/CCONJ|and#und
+is => be/AUX|be#sein_vollverb
+very => very/ADV|very#sehr
+excited => excited/ADJ|excited#freudig_aufgeregt
+
+sister | My sister is two years older than me. | Meine Schwester ist zwei Jahre älter als ich.
+My => my/DET|my#mein
+sister => sister/NOUN|sister#schwester
+is => be/AUX|be#sein_vollverb
+two => two/NUM|two#zwei
+years => year/NOUN|year#jahr
+older => old/ADJ|old#alt
+than => than/ADP|than#als
+me => I/PRON|i#ich
+
+grandchild | Their first grandchild was born early this morning. | Ihr erstes Enkelkind ist heute früh zur Welt gekommen.
+Their => they/PRON|they#ihr_plural
+first => first/ADJ|first#ersten
+grandchild => grandchild/NOUN|grandchild#enkelkind
+was => be/AUX|be#hilfsverb
+born => bear/VERB|bear#geboren_werden
+early => early/ADV|early#frueh
+this => this/DET|this#dieser_begleitend
+morning => morning/NOUN|morning#morgen
+
+cousin | My cousin Sara lives nearby, so we often meet after work. | Meine Cousine Sara wohnt in der Nähe, deshalb treffen wir uns oft nach der Arbeit.
+My => my/DET|my#mein
+cousin => cousin/NOUN|cousin#cousin-oder-cousine
+Sara => Sara/PROPN|sara#sara
+lives => live/VERB|live#wohnt
+nearby => nearby/ADV|nearby#in_der_naehe
+so => so/CCONJ|so#deshalb
+we => we/PRON|we#wir
+often => often/ADV|often#oft
+meet => meet/VERB|meet#treffen
+after => after/ADP|after#nach
+work => work/NOUN|work#arbeit
+
+husband | Her husband is cooking dinner while she reads to the children. | Ihr Ehemann kocht das Abendessen, während sie den Kindern vorliest.
+Her => her/DET|her#ihr_possessiv
+husband => husband/NOUN|husband#ehemann
+is => be/AUX|be#hilfsverb
+cooking => cook/VERB|cook#kocht
+dinner => dinner/NOUN|dinner#abendessen
+while => while/SCONJ|while#waehrend
+she => she/PRON|she#sie
+reads => read/VERB|read#lesen
+to => to/ADP|to#fuer_empfaenger
+the => the/DET|the#bestimmter_artikel
+children => child/NOUN|child#kinder
+
+relative | I met a distant relative at our family gathering. | Ich habe bei unserem Familientreffen einen entfernten Verwandten getroffen.
+I => I/PRON|i#ich
+met => meet/VERB|meet#treffen
+a => a/DET|a#ein
+distant => distant/ADJ|distant#entfernt_verwandt
+relative => relative/NOUN|relative#verwandter
+at => at/ADP|at#ort
+our => our/DET|our#unser-unsere
+family => family/NOUN|family#familie
+gathering => gathering/NOUN|gathering#zusammenkunft
+
+wedding | They invited eighty guests to their wedding next month. | Sie haben achtzig Gäste zu ihrer Hochzeit nächsten Monat eingeladen.
+They => they/PRON|they#sie_plural
+invited => invite/VERB|invite#einladen
+eighty => eighty/NUM|eighty#achtzig
+guests => guest/NOUN|guest#gaeste
+to => to/ADP|to#zu
+their => they/PRON|they#ihr_plural
+wedding => wedding/NOUN|wedding#hochzeit
+next => next/ADJ|next#naechsten
+month => month/NOUN|month#monat
+
+dog | Our dog waits by the door when it wants a walk. | Unser Hund wartet an der Tür, wenn er spazieren gehen möchte.
+Our => our/DET|our#unser-unsere
+dog => dog/NOUN|dog#hund
+waits => wait/VERB|wait#wartet
+by => by/ADP|by#neben_ort
+the => the/DET|the#bestimmter_artikel
+door => door/NOUN|door#tuer
+when => when/SCONJ|when#wenn
+it => it/PRON|it#es_ding
+wants => want/VERB|want#wollen
+a => a/DET|a#ein
+walk => walk/NOUN|walk#spaziergang
+
+hobby | My favourite hobby is making toys for my grandchildren. | Mein liebstes Hobby ist es, Spielzeug für meine Enkelkinder zu basteln.
+My => my/DET|my#mein
+favourite => favourite/ADJ|favourite#lieblings
+hobby => hobby/NOUN|hobby#hobby
+is => be/AUX|be#sein_vollverb
+making => make/VERB|make#herstellen
+toys => toy/NOUN|toy#spielzeug
+for => for/ADP|for#fuer_zweck_empfaenger
+my => my/DET|my#mein
+grandchildren => grandchild/NOUN|grandchild#enkelkind
+
+ball | The children kicked the ball across the grass in the park. | Die Kinder kickten den Ball im Park über den Rasen.
+The => the/DET|the#bestimmter_artikel
+children => child/NOUN|child#kinder
+kicked => kick/VERB|kick#treten
+the => the/DET|the#bestimmter_artikel
+ball => ball/NOUN|ball#ball
+across => across/ADP|across#ueber
+the => the/DET|the#bestimmter_artikel
+grass => grass/NOUN|grass#gras
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+park => park/NOUN|park#park
+
+song | I know this song, but I cannot remember all the words. | Ich kenne dieses Lied, aber ich kann mich nicht an den ganzen Text erinnern.
+I => I/PRON|i#ich
+know => know/VERB|know#kennen
+this => this/DET|this#dieser_begleitend
+song => song/NOUN|song#lied
+but => but/CCONJ|but#aber
+I => I/PRON|i#ich
+can => can/AUX|can#koennen
+not => not/PART|not#nicht
+remember => remember/VERB|remember#erinnern-dich-an
+all => all/DET|all#alle_det
+the => the/DET|the#bestimmter_artikel
+words => word/NOUN|word#wort
+
+film | We watched a funny film at the cinema last night. | Wir haben gestern Abend im Kino einen lustigen Film gesehen.
+We => we/PRON|we#wir
+watched => watch/VERB|watch#beobachtet
+a => a/DET|a#ein
+funny => funny/ADJ|funny#lustig
+film => film/NOUN|film#film
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+cinema => cinema/NOUN|cinema#kino
+last => last/ADJ|last#letzter
+night => night/NOUN|night#nacht
+
+screen | The text on this screen is too small to read. | Der Text auf diesem Bildschirm ist zu klein zum Lesen.
+The => the/DET|the#bestimmter_artikel
+text => text/NOUN|text#text
+on => on/ADP|on#auf
+this => this/DET|this#dieser_begleitend
+screen => screen/NOUN|screen#bildschirm
+is => be/AUX|be#sein_vollverb
+too => too/ADV|too#zu
+small => small/ADJ|small#klein
+to => to/PART|to#infinitivpartikel
+read => read/VERB|read#lesen
+
+album | We keep our wedding photos in an album with a blue cover. | Wir bewahren unsere Hochzeitsfotos in einem Album mit blauem Einband auf.
+We => we/PRON|we#wir
+keep => keep/VERB|keep#bewahrt-auf
+our => our/DET|our#unser-unsere
+wedding => wedding/NOUN|wedding#hochzeit
+photos => photo/NOUN|photo#foto
+in => in/ADP|in#in_raeumlich
+an => a/DET|a#ein
+album => album/NOUN|album#fotoalbum
+with => with/ADP|with#mit
+a => a/DET|a#ein
+blue => blue/ADJ|blue#blau
+cover => cover/NOUN|cover#einband
+
+newspaper | My grandfather reads the newspaper at breakfast every morning. | Mein Großvater liest jeden Morgen beim Frühstück die Zeitung.
+My => my/DET|my#mein
+grandfather => grandfather/NOUN|grandfather#grossvater
+reads => read/VERB|read#lesen
+the => the/DET|the#bestimmter_artikel
+newspaper => newspaper/NOUN|newspaper#zeitung
+at => at/ADP|at#zeit
+breakfast => breakfast/NOUN|breakfast#fruehstueck
+every => every/DET|every#jede
+morning => morning/NOUN|morning#morgen
+
+football | We play football in the park after school on Fridays. | Wir spielen freitags nach der Schule im Park Fußball.
+We => we/PRON|we#wir
+play => play/VERB|play#spielen
+football => football/NOUN|football#fussball
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+park => park/NOUN|park#park
+after => after/ADP|after#nach
+school => school/NOUN|school#schule-hier-schul
+on => on/ADP|on#an_zeitlich
+Fridays => Friday/PROPN|friday#freitag
+
+dance | Would you like to dance with me to this song? | Möchtest du zu diesem Lied mit mir tanzen?
+Would => would/AUX|would#wuerde
+you => you/PRON|you#du_sie_ihr
+like => like/VERB|like#moegen-would-like-moechten
+to => to/PART|to#infinitivpartikel
+dance => dance/VERB|dance#tanzen
+with => with/ADP|with#mit
+me => I/PRON|i#mir
+to => to/ADP|to#zu
+this => this/DET|this#dieser_begleitend
+song => song/NOUN|song#lied
+
+paint | The children want to paint a picture of their dog. | Die Kinder möchten ein Bild von ihrem Hund malen.
+The => the/DET|the#bestimmter_artikel
+children => child/NOUN|child#kinder
+want => want/VERB|want#wollen
+to => to/PART|to#infinitivpartikel
+paint => paint/VERB|paint#malen
+a => a/DET|a#ein
+picture => picture/NOUN|picture#bild
+of => of/ADP|of#ueber_bezug
+their => they/PRON|they#ihr_plural
+dog => dog/NOUN|dog#hund
+
+sweep | Please sweep the kitchen floor after you finish baking. | Feg bitte den Küchenboden, wenn du mit dem Backen fertig bist.
+Please => please/INTJ|please#bitte
+sweep => sweep/VERB|sweep#fegen
+the => the/DET|the#bestimmter_artikel
+kitchen => kitchen/NOUN|kitchen#kueche
+floor => floor/NOUN|floor#boden
+after => after/SCONJ|after#nachdem
+you => you/PRON|you#du_sie_ihr
+finish => finish/VERB|finish#beenden
+baking => bake/VERB|bake#backen
+
+hang | You can hang your coat on the hook by the door. | Du kannst deinen Mantel an den Haken neben der Tür hängen.
+You => you/PRON|you#du_sie_ihr
+can => can/AUX|can#koennen
+hang => hang/VERB|hang#haengt-auf
+your => your/DET|your#dein-deine
+coat => coat/NOUN|coat#mantel
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+hook => hook/NOUN|hook#haken
+by => by/ADP|by#neben_ort
+the => the/DET|the#bestimmter_artikel
+door => door/NOUN|door#tuer
+
+feed | Please feed the cat before you leave for work. | Füttere bitte die Katze, bevor du zur Arbeit gehst.
+Please => please/INTJ|please#bitte
+feed => feed/VERB|feed#fuettern
+the => the/DET|the#bestimmter_artikel
+cat => cat/NOUN|cat#katze
+before => before/SCONJ|before#bevor
+you => you/PRON|you#du_sie_ihr
+leave => leave/VERB|leave#gehen
+for => for/ADP|for#fuer_zweck_empfaenger
+work => work/NOUN|work#arbeit
+
+drop | Hold the bowl with both hands so you do not drop it. | Halte die Schüssel mit beiden Händen, damit du sie nicht fallen lässt.
+Hold => hold/VERB|hold#haelt
+the => the/DET|the#bestimmter_artikel
+bowl => bowl/NOUN|bowl#schuesseln
+with => with/ADP|with#mit
+both => both/DET|both#beide
+hands => hand/NOUN|hand#hand
+so => so/SCONJ|so#damit
+you => you/PRON|you#du_sie_ihr
+do => do/AUX|do#hilfsverb
+not => not/PART|not#nicht
+drop => drop/VERB|drop#fallen-lassen
+it => it/PRON|it#es_ding
+
+hold | Can you hold this box while I open the door? | Kannst du diese Kiste halten, während ich die Tür aufmache?
+Can => can/AUX|can#koennen
+you => you/PRON|you#du_sie_ihr
+hold => hold/VERB|hold#haelt
+this => this/DET|this#dieser_begleitend
+box => box/NOUN|box#schachtel
+while => while/SCONJ|while#waehrend
+I => I/PRON|i#ich
+open => open/VERB|open#oeffnen
+the => the/DET|the#bestimmter_artikel
+door => door/NOUN|door#tuer
+
+laugh | His silly jokes always make the children laugh. | Seine albernen Witze bringen die Kinder immer zum Lachen.
+His => his/DET|his#sein
+silly => silly/ADJ|silly#albern
+jokes => joke/NOUN|joke#witz
+always => always/ADV|always#immer
+make => make/VERB|make#veranlassen
+the => the/DET|the#bestimmter_artikel
+children => child/NOUN|child#kinder
+laugh => laugh/VERB|laugh#lachen
+
+hug | I always hug my grandmother when I visit her. | Ich umarme meine Großmutter immer, wenn ich sie besuche.
+I => I/PRON|i#ich
+always => always/ADV|always#immer
+hug => hug/VERB|hug#umarmen
+my => my/DET|my#mein
+grandmother => grandmother/NOUN|grandmother#grossmutter
+when => when/SCONJ|when#wenn
+I => I/PRON|i#ich
+visit => visit/VERB|visit#besuchen
+her => she/PRON|she#sie_akkusativ
+
+invite | We want to invite our neighbours over for dinner. | Wir möchten unsere Nachbarn zum Abendessen einladen.
+We => we/PRON|we#wir
+want => want/VERB|want#wollen
+to => to/PART|to#infinitivpartikel
+invite => invite/VERB|invite#einladen
+our => our/DET|our#unser-unsere
+neighbours => neighbour/NOUN|neighbour#nachbar
+over => over/ADV|over#zu_besuch
+for => for/ADP|for#fuer_zweck_empfaenger
+dinner => dinner/NOUN|dinner#abendessen
+
+exercise | I exercise three times a week to stay fit. | Ich trainiere dreimal pro Woche, um fit zu bleiben.
+I => I/PRON|i#ich
+exercise => exercise/VERB|exercise#trainieren
+three => three/NUM|three#drei
+times => time/NOUN|time#mal
+a => a/ADP|a#pro
+week => week/NOUN|week#woche
+to => to/PART|to#infinitivpartikel
+stay => stay/VERB|stay#bleiben
+fit => fit/ADJ|fit#koerperlich_fit
+
+try | Please try to open the jar; the lid is very tight. | Versuch bitte, das Glas aufzumachen; der Deckel sitzt sehr fest.
+Please => please/INTJ|please#bitte
+try => try/VERB|try#versuchen
+to => to/PART|to#infinitivpartikel
+open => open/VERB|open#oeffnen
+the => the/DET|the#bestimmter_artikel
+jar => jar/NOUN|jar#schraubglas
+the => the/DET|the#bestimmter_artikel
+lid => lid/NOUN|lid#deckel
+is => be/AUX|be#sein_vollverb
+very => very/ADV|very#sehr
+tight => tight/ADJ|tight#fest
+
+break | Be careful with that glass; it is easy to break. | Sei vorsichtig mit dem Glas; es zerbricht leicht.
+Be => be/AUX|be#sein_vollverb
+careful => careful/ADJ|careful#vorsichtig
+with => with/ADP|with#mit
+that => that/DET|that#jener
+glass => glass/NOUN|glass#glas
+it => it/PRON|it#es_ding
+is => be/AUX|be#sein_vollverb
+easy => easy/ADJ|easy#einfach
+to => to/PART|to#infinitivpartikel
+break => break/VERB|break#brechen

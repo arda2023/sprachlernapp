@@ -1,0 +1,20 @@
+{
+  "registry_index": "PASS",
+  "registry_word_rows_unchanged": true,
+  "parent_matches_actual_export_snapshot": true,
+  "batch_5_count": 100,
+  "exact_reserved_ids": "PASS",
+  "existing_batch_5_cards": 0,
+  "in_memory_rows_with_revision_unchanged": true,
+  "combined_display_positions": "1..500",
+  "promoted_senses": [
+    "traveller",
+    "trolley",
+    "junction",
+    "payment",
+    "souvenir",
+    "hike",
+    "sunset",
+    "rent"
+  ]
+}

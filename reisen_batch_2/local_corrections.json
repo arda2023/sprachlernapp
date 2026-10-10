@@ -1,0 +1,32 @@
+{
+  "reviewer": "Codex/ChatGPT; keine unabhängige menschliche Freigabe",
+  "sentence_pairs_read": 100,
+  "original_alternatives_read": 14,
+  "final_alternatives": 13,
+  "changes": [
+    {
+      "sentence": "reisen-v1-056-s1",
+      "text": "We watch an aeroplane land at the small airport.",
+      "before": [
+        "airplane",
+        "plane"
+      ],
+      "after": [
+        "airplane"
+      ],
+      "reason": "plane ergibt an plane; Artikel passt nicht zum Konsonantenlaut."
+    },
+    {
+      "sentence": "reisen-v1-135-s1",
+      "text": "Please leave your room key at reception.",
+      "before": [
+        "front desk"
+      ],
+      "after": [
+        "the front desk"
+      ],
+      "reason": "front desk benötigt hier einen Artikel; at the front desk ist vollständig und bedeutungsgleich."
+    }
+  ],
+  "all_sentence_pairs_tokens_and_dictionary_unchanged": true
+}

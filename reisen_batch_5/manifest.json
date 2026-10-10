@@ -1,0 +1,31 @@
+{
+  "format": "reisen-editorial-delivery",
+  "version": 5,
+  "files": {
+    "PROMPT_CODEX.txt": "56e90062264f0e45e15cfe7ef7cbf78a314c10a2048e1b47faeb12dbfdbbe12d",
+    "README.txt": "1772e1590e807a80204d5c4266048c781d148c4fb4edcf71932d65e5e344f653",
+    "annotation_review.txt": "e2362378a6359f1d1529aa734f3265e8ff6b192c8740562bc84c5db851fcebfc",
+    "authoring_audit.json": "e9b52c54da24f086e93de6304cd1e772eb6f457bfc4e8ac1d839ab1514b8d5a1",
+    "deck_display_patch.json": "5fbf600c160747be6238d473f45323e33e171d4545fd5507eb5b2919c1dc5937",
+    "linter_findings.json": "237cdb337833cedaa43db956b724a122983d8c734f4756ec8b8c2ed4fdb7c8e5",
+    "reading.json": "1069e666a249749424d73c329eab98e0d0d6f192663dd15e09715459afee97cb",
+    "reference/README.txt": "7dcc59e14e9923dfeb9facf155d9f5225f786fbf0cea9ad403ec7ac7b346c016",
+    "reference/all_500_identities.json": "8dd13fa0aa1e34e2238d308720c5ced03f7db38a57c8b9fb5d5e671d08614f16",
+    "reference/annotate.py": "884fc4d327d379049d064c0d5ce7ff44580e360d28f472688ce0fd34b4bca892",
+    "reference/authoring_context.json": "2a3e5db42ed45129f9a24d4f3db6baf30f285a594032ab2c9e24a1c30cb36a27",
+    "reference/combined_display_mapping.json": "31f681d44f7b52a02c58ada47bcca8fafaf69669f0744e3b1e46b3f903a46589",
+    "reference/deck_display.py": "fc6cbc01b5660f95572fd89831886ba077eb4f4491654983d7cb1e6c8cac8080",
+    "reference/dictionary_context.json": "4378c89610aa673ba66699513185270a5e49273094de170d52202bfe67357be2",
+    "reference/editorial_content_v2.schema.json": "24839ce2451931fac319a849bfc790a4179d139861681ac727d76eb90f232b47",
+    "reference/linter.py": "76bad23555209b6cc3a6348839902a62e6ed864f5ff1665d5f567f60675f16d5",
+    "reference/manifest.json": "9895c7dc9d68ede522f84c0194514236912f5d314e30c1a0cbbdb87ef2590640",
+    "reference/pack.json": "97015c3c12b9f5e2fb2d900ee9544029189e1f51a3741c1a9100f206dcf5b4d3",
+    "reference/registry.json": "d12a84c84c8d0ae2af9a5df3dcd536a63b3fb1721d13dd68376dbbca129ceecf",
+    "reference/tokenizer_linter_environment.json": "037395ae1a1abfad3e1a6a5acd7fb554c0f639a9bba4d428402e219ff45c1bf8",
+    "reference/validation.json": "8dfbcfcda52446d01b92cd83d03bd88bfa9095cae7acfbb666d2236495c6f322",
+    "reisen_batch_5.editorial.json": "a4b04234766e953727bc3d137f103305568ca7b8e2933a88214f427ec5314c8e",
+    "reisen_batch_5.html": "07af8d497704ff5f1421b582a6757e2939a70010fb6ad1245d4b4be4a7e5d876",
+    "validation.txt": "5407808352dfeb11da9098e637bcd0841b61931d042484e13207ee50a7440ba0",
+    "verify_reisen_batch_5.py": "b61796e8c89ced0673ac1ea2d9d55cb72a8677db61304f5486ecbf7e84a8311b"
+  }
+}

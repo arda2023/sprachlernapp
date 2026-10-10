@@ -1,5 +1,15 @@
 # Reisen 500: Bedeutungsbindung und Satzvorbereitung
 
+## Abschluss am 06.10.2026
+
+Alle fünf Batches offline importiert; `reisen_batch_5_v1` intern gestagt und technisch vollständig abgenommen. Genau 500 verschiedene Reisen-Primärwörter mit je einem festen Satz, 160 allgemeine Primärwörter, 764 Karten insgesamt; 1298 Satztexte und 1292 aktuelle/historische Links, Schema 2, zwei Stapel. Alle 500 reservierten Form-/Lemma-/POS-/Sense-/Kartenidentitäten, Besitzaliase und Positionen 1–500 gegen Auswahl/Registry/Pack geprüft; alte Inhalte und Lernstände nicht verändert.
+
+Batch 5: zwei neue Tokenfehlbindungen (for im Einreisesatz, exit beim Gepäckband) und die neue took-Formglosse korrigiert; Originalunterlagen erhalten. Gesamtlinter 0 Fehler / 264 Häufigkeitswarnungen, davon 38 neu. Projektimport, alle 18 SQLite-Tabellen, Staging-Verifikation, echter Lesetest 160/500 und flutter analyze erfolgreich (Exit 0). SQLite SHA256: `5921e5f481d6a1ee78ee20041405803d2610b539ecf781a0c160ead7baafd1dd`.
+
+Vollständiger Nachweis, Korrekturen und manueller iPhone-Prüfweg: [Reisen Batch 5](reisen-batch-5-import.md). Technischer Gesamtabschluss ist keine erneute vollständige redaktionelle Prüfung aller alten Sätze oder öffentliche Freigabe. Bekannte historische Glossenthemen, POS-Altfehler und Sense-Überschneidungen bleiben eigene offene Aufgaben. Kein Mobilgerätetest durchgeführt, keine Lernstandzugriffe, keine Modellaufrufe, kein Batch 6.
+
+## Historischer Vorbereitungsstand vom 04.10.2026
+
 Stand: 04.10.2026. **500 Wörter, fünf Batches zu je 100; 144 vorhandene Senses wiederverwendet, 356 neue Senses vorgeschlagen, keine offene Zielbindung.** Vollständige lokale Besitzreservierung im bestehenden Format. Keine Reisesätze erzeugt, keine Reisen-Karten exportiert oder installiert.
 
 ## Ausgangsstand und Prüfumfang

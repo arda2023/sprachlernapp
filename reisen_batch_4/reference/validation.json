@@ -1,0 +1,23 @@
+{
+  "registry_index": "PASS",
+  "registry_word_rows_unchanged": true,
+  "parent_matches_actual_export_snapshot": true,
+  "batch_4_count": 100,
+  "exact_reserved_ids": "PASS",
+  "existing_batch_4_cards": 0,
+  "in_memory_rows_with_revision_unchanged": true,
+  "combined_display_positions": "1..400",
+  "promoted_senses": [
+    "route",
+    "petrol",
+    "shower",
+    "toilet",
+    "fish",
+    "fee",
+    "path",
+    "sail",
+    "board",
+    "land",
+    "replace"
+  ]
+}

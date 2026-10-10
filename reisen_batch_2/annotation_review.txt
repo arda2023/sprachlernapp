@@ -1,0 +1,1077 @@
+destination | Rome is our final destination after two weeks of travel. | Rom ist nach zwei Wochen auf Reisen unser letztes Ziel.
+Rome => Rome/PROPN|rome#rom
+is => be/AUX|be#sein_vollverb
+our => our/DET|our#unser-unsere
+final => final/ADJ|final#letzter
+destination => destination/NOUN|destination#reiseziel
+after => after/ADP|after#nach
+two => two/NUM|two#zwei
+weeks => week/NOUN|week#woche
+of => of/ADP|of#teil_menge
+travel => travel/NOUN|travel#reise
+
+itinerary | Our itinerary includes two nights in Rome and three in Naples. | Unser Reiseplan umfasst zwei Nächte in Rom und drei in Neapel.
+Our => our/DET|our#unser-unsere
+itinerary => itinerary/NOUN|itinerary#reiseplan
+includes => include/VERB|include#umfassen
+two => two/NUM|two#zwei
+nights => night/NOUN|night#nacht
+in => in/ADP|in#in_raeumlich
+Rome => Rome/PROPN|rome#rom
+and => and/CCONJ|and#und
+three => three/NUM|three#drei
+in => in/ADP|in#in_raeumlich
+Naples => Naples/PROPN|naples#neapel
+
+excursion | The hotel offers a boat excursion to a nearby island. | Das Hotel bietet einen Bootsausflug zu einer nahe gelegenen Insel an.
+The => the/DET|the#bestimmter_artikel
+hotel => hotel/NOUN|hotel#hotel
+offers => offer/VERB|offer#anbot
+a => a/DET|a#ein
+boat => boat/NOUN|boat#boot
+excursion => excursion/NOUN|excursion#ausflug
+to => to/ADP|to#nach_richtung
+a => a/DET|a#ein
+nearby => nearby/ADJ|nearby#nahe_gelegen
+island => island/NOUN|island#insel
+
+outing | We planned a family outing to the beach. | Wir haben einen Familienausflug zum Strand geplant.
+We => we/PRON|we#wir
+planned => plan/VERB|plan#planen
+a => a/DET|a#ein
+family => family/NOUN|family#familie
+outing => outing/NOUN|outing#ausflug
+to => to/ADP|to#nach_richtung
+the => the/DET|the#bestimmter_artikel
+beach => beach/NOUN|beach#strand
+
+booking | Please show your booking confirmation at reception. | Bitte zeig deine Buchungsbestätigung an der Rezeption vor.
+Please => please/INTJ|please#bitte
+show => show/VERB|show#zeigt
+your => your/DET|your#dein-deine
+booking => booking/NOUN|booking#buchung
+confirmation => confirmation/NOUN|confirmation#bestaetigung
+at => at/ADP|at#ort
+reception => reception/NOUN|reception#rezeption
+
+citizenship | She has German citizenship and a German passport. | Sie hat die deutsche Staatsbürgerschaft und einen deutschen Reisepass.
+She => she/PRON|she#sie
+has => have/VERB|have#besitzen
+German => German/ADJ|german#deutsch
+citizenship => citizenship/NOUN|citizenship#staatsbuergerschaft
+and => and/CCONJ|and#und
+a => a/DET|a#ein
+German => German/ADJ|german#deutsch
+passport => passport/NOUN|passport#reisepass
+
+nationality | Please enter your nationality on the hotel registration form. | Bitte trag deine Staatsangehörigkeit auf dem Anmeldeformular des Hotels ein.
+Please => please/INTJ|please#bitte
+enter => enter/VERB|enter#eintragen
+your => your/DET|your#dein-deine
+nationality => nationality/NOUN|nationality#staatsangehoerigkeit
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+hotel => hotel/NOUN|hotel#hotel
+registration => registration/NOUN|registration#anmeldung
+form => form/NOUN|form#formular
+
+identity | The officer checks my identity against the photo in my passport. | Der Beamte überprüft meine Identität anhand des Fotos in meinem Reisepass.
+The => the/DET|the#bestimmter_artikel
+officer => officer/NOUN|officer#beamter
+checks => check/VERB|check#ueberprueft
+my => my/DET|my#mein
+identity => identity/NOUN|identity#identitaet
+against => against/ADP|against#abgleich
+the => the/DET|the#bestimmter_artikel
+photo => photo/NOUN|photo#foto
+in => in/ADP|in#in_raeumlich
+my => my/DET|my#mein
+passport => passport/NOUN|passport#reisepass
+
+document | Keep this document with your passport during the trip. | Bewahre dieses Dokument während der Reise zusammen mit deinem Reisepass auf.
+Keep => keep/VERB|keep#bewahre-auf
+this => this/DET|this#dieser_begleitend
+document => document/NOUN|document#dokumente
+with => with/ADP|with#mit
+your => your/DET|your#dein-deine
+passport => passport/NOUN|passport#reisepass
+during => during/ADP|during#waehrend
+the => the/DET|the#bestimmter_artikel
+trip => trip/NOUN|trip#reise
+
+permit | You need a permit to camp in this national park. | Du brauchst eine Genehmigung, um in diesem Nationalpark zu campen.
+You => you/PRON|you#du_sie_ihr
+need => need/VERB|need#brauchen
+a => a/DET|a#ein
+permit => permit/NOUN|permit#genehmigung
+to => to/PART|to#infinitivpartikel
+camp => camp/VERB|camp#campen
+in => in/ADP|in#in_raeumlich
+this => this/DET|this#dieser_begleitend
+national => national/ADJ|national#national
+park => park/NOUN|park#park
+
+aeroplane | We watch an aeroplane land at the small airport. | Wir beobachten, wie ein Flugzeug auf dem kleinen Flughafen landet.
+We => we/PRON|we#wir
+watch => watch/VERB|watch#beobachtet
+an => a/DET|a#ein
+aeroplane => aeroplane/NOUN|aeroplane#flugzeug
+land => land/VERB|land#landen
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+small => small/ADJ|small#klein
+airport => airport/NOUN|airport#flughafen
+
+pilot | The pilot announces our arrival in Madrid. | Der Pilot kündigt unsere Ankunft in Madrid an.
+The => the/DET|the#bestimmter_artikel
+pilot => pilot/NOUN|pilot#pilot
+announces => announce/VERB|announce#ankuendigen
+our => our/DET|our#unser-unsere
+arrival => arrival/NOUN|arrival#ankunft
+in => in/ADP|in#in_raeumlich
+Madrid => Madrid/PROPN|madrid#madrid
+
+crew | The crew welcomes passengers on board the ship. | Die Besatzung begrüßt die Passagiere an Bord des Schiffes.
+The => the/DET|the#bestimmter_artikel
+crew => crew/NOUN|crew#besatzung
+welcomes => welcome/VERB|welcome#begruessen
+passengers => passenger/NOUN|passenger#fahrgaeste
+on => on/ADP|on#auf
+board => board/NOUN|board#bord
+the => the/DET|the#bestimmter_artikel
+ship => ship/NOUN|ship#schiff
+
+passenger | Each passenger can take one small bag onto the plane. | Jeder Passagier darf eine kleine Tasche mit ins Flugzeug nehmen.
+Each => each/DET|each#jede
+passenger => passenger/NOUN|passenger#fahrgast
+can => can/AUX|can#darfst-kannst
+take => take/VERB|take#mitnehmen
+one => one/NUM|one#ein
+small => small/ADJ|small#klein
+bag => bag/NOUN|bag#tasche
+onto => onto/ADP|onto#in
+the => the/DET|the#bestimmter_artikel
+plane => plane/NOUN|plane#flugzeug
+
+runway | The plane waits at the end of the runway. | Das Flugzeug wartet am Ende der Startbahn.
+The => the/DET|the#bestimmter_artikel
+plane => plane/NOUN|plane#flugzeug
+waits => wait/VERB|wait#wartet
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+end => end/NOUN|end#ende
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+runway => runway/NOUN|runway#start-und-landebahn
+
+carriage | Our seats are in the last carriage of the train. | Unsere Sitzplätze sind im letzten Wagen des Zuges.
+Our => our/DET|our#unser-unsere
+seats => seat/NOUN|seat#sitzplatz
+are => be/AUX|be#sein_vollverb
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+last => last/ADJ|last#letzter
+carriage => carriage/NOUN|carriage#eisenbahnwagen
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+train => train/NOUN|train#zug
+
+compartment | There are six seats in our train compartment. | In unserem Zugabteil gibt es sechs Sitzplätze.
+There => there/PRON|there#es_gibt
+are => be/VERB|be#gibt
+six => six/NUM|six#sechs
+seats => seat/NOUN|seat#sitzplatz
+in => in/ADP|in#in_raeumlich
+our => our/DET|our#unser-unsere
+train => train/NOUN|train#zug
+compartment => compartment/NOUN|compartment#zugabteil
+
+berth | I booked a lower berth on the night train. | Ich habe einen unteren Schlafplatz im Nachtzug gebucht.
+I => I/PRON|i#ich
+booked => book/VERB|book#bucht
+a => a/DET|a#ein
+lower => low/ADJ|low#niedrigen
+berth => berth/NOUN|berth#schlafplatz
+on => on/ADP|on#in-an
+the => the/DET|the#bestimmter_artikel
+night => night/NOUN|night#nacht
+train => train/NOUN|train#zug
+
+sleeper | The sleeper has beds instead of ordinary seats. | Der Schlafwagen hat Betten statt gewöhnlicher Sitzplätze.
+The => the/DET|the#bestimmter_artikel
+sleeper => sleeper/NOUN|sleeper#schlafwagen
+has => have/VERB|have#besitzen
+beds => bed/NOUN|bed#bett
+instead => instead/ADV|instead#anstatt
+of => of/ADP|of#zu
+ordinary => ordinary/ADJ|ordinary#gewoehnlich
+seats => seat/NOUN|seat#sitzplatz
+
+conductor | The conductor checks our tickets after the train leaves. | Der Zugbegleiter kontrolliert unsere Fahrkarten nach der Abfahrt des Zuges.
+The => the/DET|the#bestimmter_artikel
+conductor => conductor/NOUN|conductor#zugbegleiter
+checks => check/VERB|check#ueberprueft
+our => our/DET|our#unser-unsere
+tickets => ticket/NOUN|ticket#fahrkarte
+after => after/SCONJ|after#nachdem
+the => the/DET|the#bestimmter_artikel
+train => train/NOUN|train#zug
+leaves => leave/VERB|leave#abfahren
+
+highway | This highway connects the city with the coast. | Diese Fernstraße verbindet die Stadt mit der Küste.
+This => this/DET|this#dieser_begleitend
+highway => highway/NOUN|highway#fernstrasse
+connects => connect/VERB|connect#orte_verbinden
+the => the/DET|the#bestimmter_artikel
+city => city/NOUN|city#stadt
+with => with/ADP|with#mit
+the => the/DET|the#bestimmter_artikel
+coast => coast/NOUN|coast#kueste
+
+lane | Stay in the left lane until the next exit. | Bleib bis zur nächsten Ausfahrt auf der linken Fahrspur.
+Stay => stay/VERB|stay#bleiben
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+left => left/ADJ|left#linken
+lane => lane/NOUN|lane#fahrspur
+until => until/ADP|until#bis
+the => the/DET|the#bestimmter_artikel
+next => next/ADJ|next#naechsten
+exit => exit/NOUN|exit#autobahnausfahrt
+
+pavement | Walk on the pavement, not in the road. | Geh auf dem Gehweg, nicht auf der Fahrbahn.
+Walk => walk/VERB|walk#geht-zu-fuss
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+pavement => pavement/NOUN|pavement#gehweg
+not => not/PART|not#nicht
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+road => road/NOUN|road#strasse
+
+kerb | Be careful of the high kerb at the crossing. | Pass am Übergang auf den hohen Bordstein auf.
+Be => be/AUX|be#sein_vollverb
+careful => careful/ADJ|careful#vorsichtig
+of => of/ADP|of#vor
+the => the/DET|the#bestimmter_artikel
+high => high/ADJ|high#hoch
+kerb => kerb/NOUN|kerb#bordstein
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+crossing => crossing/NOUN|crossing#uebergang
+
+intersection | Turn right at the next intersection. | Bieg an der nächsten Kreuzung rechts ab.
+Turn => turn/VERB|turn#abbiegen
+right => right/ADV|right#nach_rechts
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+next => next/ADJ|next#naechsten
+intersection => intersection/NOUN|intersection#strassenkreuzung
+
+campsite | The campsite has showers and space for twenty tents. | Der Campingplatz hat Duschen und Platz für zwanzig Zelte.
+The => the/DET|the#bestimmter_artikel
+campsite => campsite/NOUN|campsite#campingplatz
+has => have/VERB|have#besitzen
+showers => shower/NOUN|shower#dusche
+and => and/CCONJ|and#und
+space => space/NOUN|space#platz
+for => for/ADP|for#fuer_zweck_empfaenger
+twenty => twenty/NUM|twenty#zwanzig
+tents => tent/NOUN|tent#zelt
+
+cottage | We rented a small cottage by the sea for our holiday. | Wir haben für unseren Urlaub ein kleines Ferienhaus am Meer gemietet.
+We => we/PRON|we#wir
+rented => rent/VERB|rent#mieten
+a => a/DET|a#ein
+small => small/ADJ|small#klein
+cottage => cottage/NOUN|cottage#ferienhaus
+by => by/ADP|by#neben_ort
+the => the/DET|the#bestimmter_artikel
+sea => sea/NOUN|sea#meer
+for => for/ADP|for#fuer_zweck_empfaenger
+our => our/DET|our#unser-unsere
+holiday => holiday/NOUN|holiday#urlaub
+
+apartment | Our holiday apartment has a kitchen and two bedrooms. | Unsere Ferienwohnung hat eine Küche und zwei Schlafzimmer.
+Our => our/DET|our#unser-unsere
+holiday => holiday/NOUN|holiday#urlaub
+apartment => apartment/NOUN|apartment#wohnung
+has => have/VERB|have#besitzen
+a => a/DET|a#ein
+kitchen => kitchen/NOUN|kitchen#kueche
+and => and/CCONJ|and#und
+two => two/NUM|two#zwei
+bedrooms => bedroom/NOUN|bedroom#schlafzimmer
+
+accommodation | We need accommodation near the station for one night. | Wir brauchen für eine Nacht eine Unterkunft in Bahnhofsnähe.
+We => we/PRON|we#wir
+need => need/VERB|need#brauchen
+accommodation => accommodation/NOUN|accommodation#unterkunft
+near => near/ADP|near#nahe-bei
+the => the/DET|the#bestimmter_artikel
+station => station/NOUN|station#bahnhof
+for => for/ADP|for#seit_lang_dauer
+one => one/NUM|one#ein
+night => night/NOUN|night#nacht
+
+reception | Please leave your room key at reception. | Bitte gib deinen Zimmerschlüssel an der Rezeption ab.
+Please => please/INTJ|please#bitte
+leave => leave/VERB|leave#liess-liegen
+your => your/DET|your#dein-deine
+room => room/NOUN|room#zimmer
+key => key/NOUN|key#schluessel
+at => at/ADP|at#ort
+reception => reception/NOUN|reception#rezeption
+
+chef | The chef prepares fresh fish in the hotel kitchen. | Der Koch bereitet in der Hotelküche frischen Fisch zu.
+The => the/DET|the#bestimmter_artikel
+chef => chef/NOUN|chef#koch
+prepares => prepare/VERB|prepare#bereitete-vor
+fresh => fresh/ADJ|fresh#frische
+fish => fish/NOUN|fish#fisch
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+hotel => hotel/NOUN|hotel#hotel
+kitchen => kitchen/NOUN|kitchen#kueche
+
+meal | We had a hot meal after the long journey. | Nach der langen Reise haben wir eine warme Mahlzeit gegessen.
+We => we/PRON|we#wir
+had => have/VERB|have#einnehmen
+a => a/DET|a#ein
+hot => hot/ADJ|hot#heiss
+meal => meal/NOUN|meal#mahlzeit
+after => after/ADP|after#nach
+the => the/DET|the#bestimmter_artikel
+long => long/ADJ|long#lange
+journey => journey/NOUN|journey#reise
+
+breakfast | The hotel serves breakfast from seven until ten. | Das Hotel serviert Frühstück von sieben bis zehn Uhr.
+The => the/DET|the#bestimmter_artikel
+hotel => hotel/NOUN|hotel#hotel
+serves => serve/VERB|serve#servieren
+breakfast => breakfast/NOUN|breakfast#fruehstueck
+from => from/ADP|from#von_ausgangspunkt
+seven => seven/NUM|seven#sieben
+until => until/ADP|until#bis
+ten => ten/NUM|ten#zehn
+
+lunch | Shall we stop for lunch at the next village? | Wollen wir im nächsten Dorf zum Mittagessen anhalten?
+Shall => shall/AUX|shall#vorschlag
+we => we/PRON|we#wir
+stop => stop/VERB|stop#anzuhalten
+for => for/ADP|for#fuer_zweck_empfaenger
+lunch => lunch/NOUN|lunch#mittagessen
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+next => next/ADJ|next#naechsten
+village => village/NOUN|village#dorf
+
+dinner | We have dinner on the terrace every evening. | Wir essen jeden Abend auf der Terrasse zu Abend.
+We => we/PRON|we#wir
+have => have/VERB|have#einnehmen
+dinner => dinner/NOUN|dinner#abendessen
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+terrace => terrace/NOUN|terrace#terrasse
+every => every/DET|every#jede
+evening => evening/NOUN|evening#abend
+
+wine | Would you like a glass of red wine with your meal? | Möchtest du ein Glas Rotwein zu deinem Essen?
+Would => would/AUX|would#wuerde
+you => you/PRON|you#du_sie_ihr
+like => like/VERB|like#moegen-would-like-moechten
+a => a/DET|a#ein
+glass => glass/NOUN|glass#glas
+of => of/ADP|of#teil_menge
+red => red/ADJ|red#rot
+wine => wine/NOUN|wine#wein
+with => with/ADP|with#mit
+your => your/DET|your#dein-deine
+meal => meal/NOUN|meal#mahlzeit
+
+sandwich | I bought a cheese sandwich for the train journey. | Ich habe ein Käsebrot für die Zugfahrt gekauft.
+I => I/PRON|i#ich
+bought => buy/VERB|buy#kaufte
+a => a/DET|a#ein
+cheese => cheese/NOUN|cheese#kase
+sandwich => sandwich/NOUN|sandwich#sandwich
+for => for/ADP|for#fuer_zweck_empfaenger
+the => the/DET|the#bestimmter_artikel
+train => train/NOUN|train#zug
+journey => journey/NOUN|journey#reise
+
+salad | This salad contains tomatoes, cucumber and fresh herbs. | Dieser Salat enthält Tomaten, Gurke und frische Kräuter.
+This => this/DET|this#dieser_begleitend
+salad => salad/NOUN|salad#salat
+contains => contain/VERB|contain#enthalten
+tomatoes => tomato/NOUN|tomato#tomaten
+cucumber => cucumber/NOUN|cucumber#gurke
+and => and/CCONJ|and#und
+fresh => fresh/ADJ|fresh#frische
+herbs => herb/NOUN|herb#kuechenkraut
+
+soup | A bowl of hot soup warms us after the walk. | Eine Schüssel heiße Suppe wärmt uns nach dem Spaziergang.
+A => a/DET|a#ein
+bowl => bowl/NOUN|bowl#schuesseln
+of => of/ADP|of#teil_menge
+hot => hot/ADJ|hot#heiss
+soup => soup/NOUN|soup#suppe
+warms => warm/VERB|warm#waermte
+us => we/PRON|we#uns
+after => after/ADP|after#nach
+the => the/DET|the#bestimmter_artikel
+walk => walk/NOUN|walk#spaziergang
+
+rice | The fish comes with rice and vegetables. | Zum Fisch gibt es Reis und Gemüse.
+The => the/DET|the#bestimmter_artikel
+fish => fish/NOUN|fish#fisch
+comes => come/VERB|come#serviert_werden
+with => with/ADP|with#mit
+rice => rice/NOUN|rice#reis
+and => and/CCONJ|and#und
+vegetables => vegetable/NOUN|vegetable#gemuese
+
+banknote | Can you change this banknote into coins? | Kannst du diesen Geldschein in Münzen wechseln?
+Can => can/AUX|can#koennen
+you => you/PRON|you#du_sie_ihr
+change => change/VERB|change#wechseln
+this => this/DET|this#dieser_begleitend
+banknote => banknote/NOUN|banknote#geldschein
+into => into/ADP|into#in
+coins => coin/NOUN|coin#muenzen
+
+wallet | I keep my bank cards in my wallet. | Ich bewahre meine Bankkarten in meiner Geldbörse auf.
+I => I/PRON|i#ich
+keep => keep/VERB|keep#bewahre-auf
+my => my/DET|my#mein
+bank => bank/NOUN|bank#geldinstitut
+cards => card/NOUN|card#karte
+in => in/ADP|in#in_raeumlich
+my => my/DET|my#mein
+wallet => wallet/NOUN|wallet#geldboerse
+
+purse | She takes a few coins from her purse. | Sie nimmt ein paar Münzen aus ihrer Geldbörse.
+She => she/PRON|she#sie
+takes => take/VERB|take#nimmt
+a => a/DET|a#ein
+few => few/ADJ|few#wenigen
+coins => coin/NOUN|coin#muenzen
+from => from/ADP|from#von_ausgangspunkt
+her => her/DET|her#ihr_possessiv
+purse => purse/NOUN|purse#geldboerse
+
+bill | The waiter brings our bill after the meal. | Der Kellner bringt uns nach dem Essen die Rechnung.
+The => the/DET|the#bestimmter_artikel
+waiter => waiter/NOUN|waiter#kellner
+brings => bring/VERB|bring#bringen
+our => our/DET|our#unser-unsere
+bill => bill/NOUN|bill#rechnung
+after => after/ADP|after#nach
+the => the/DET|the#bestimmter_artikel
+meal => meal/NOUN|meal#mahlzeit
+
+tax | The room price includes a local tourist tax. | Im Zimmerpreis ist eine örtliche Touristensteuer enthalten.
+The => the/DET|the#bestimmter_artikel
+room => room/NOUN|room#zimmer
+price => price/NOUN|price#preis
+includes => include/VERB|include#umfassen
+a => a/DET|a#ein
+local => local/ADJ|local#oertlichen
+tourist => tourist/NOUN|tourist#touristen
+tax => tax/NOUN|tax#steuer
+
+museum | The museum displays old boats and fishing tools. | Das Museum zeigt alte Boote und Fischereigeräte.
+The => the/DET|the#bestimmter_artikel
+museum => museum/NOUN|museum#museum
+displays => display/VERB|display#ausstellen
+old => old/ADJ|old#alte
+boats => boat/NOUN|boat#boot
+and => and/CCONJ|and#und
+fishing => fishing/NOUN|fishing#fischfang
+tools => tool/NOUN|tool#werkzeuge
+
+gallery | We visit a gallery with paintings by local artists. | Wir besuchen eine Galerie mit Gemälden einheimischer Künstler.
+We => we/PRON|we#wir
+visit => visit/VERB|visit#besuchen
+a => a/DET|a#ein
+gallery => gallery/NOUN|gallery#kunstgalerie
+with => with/ADP|with#mit
+paintings => painting/NOUN|painting#gemaelde
+by => by/ADP|by#von_urheber
+local => local/ADJ|local#oertlichen
+artists => artist/NOUN|artist#kuenstler
+
+cathedral | We visit the cathedral during our stay in the city. | Wir besuchen die Kathedrale während unseres Aufenthalts in der Stadt.
+We => we/PRON|we#wir
+visit => visit/VERB|visit#besuchen
+the => the/DET|the#bestimmter_artikel
+cathedral => cathedral/NOUN|cathedral#kathedrale
+during => during/ADP|during#waehrend
+our => our/DET|our#unser-unsere
+stay => stay/NOUN|stay#aufenthalt
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+city => city/NOUN|city#stadt
+
+castle | The castle has thick stone walls and a narrow entrance. | Die Burg hat dicke Steinmauern und einen schmalen Eingang.
+The => the/DET|the#bestimmter_artikel
+castle => castle/NOUN|castle#burg
+has => have/VERB|have#besitzen
+thick => thick/ADJ|thick#dick
+stone => stone/NOUN|stone#stein
+walls => wall/NOUN|wall#waende
+and => and/CCONJ|and#und
+a => a/DET|a#ein
+narrow => narrow/ADJ|narrow#schmal
+entrance => entrance/NOUN|entrance#eingang
+
+palace | The royal family still lives in this palace. | Die königliche Familie wohnt noch immer in diesem Palast.
+The => the/DET|the#bestimmter_artikel
+royal => royal/ADJ|royal#koeniglich
+family => family/NOUN|family#familie
+still => still/ADV|still#immer-noch
+lives => live/VERB|live#wohnt
+in => in/ADP|in#in_raeumlich
+this => this/DET|this#dieser_begleitend
+palace => palace/NOUN|palace#palast
+
+mountain | Snow covers the top of the mountain. | Schnee bedeckt den Gipfel des Berges.
+Snow => snow/NOUN|snow#schnee
+covers => cover/VERB|cover#bedecken
+the => the/DET|the#bestimmter_artikel
+top => top/NOUN|top#gipfel
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+mountain => mountain/NOUN|mountain#berg
+
+valley | A river flows through the valley between the mountains. | Ein Fluss fließt durch das Tal zwischen den Bergen.
+A => a/DET|a#ein
+river => river/NOUN|river#fluss
+flows => flow/VERB|flow#fliessen
+through => through/ADP|through#durch
+the => the/DET|the#bestimmter_artikel
+valley => valley/NOUN|valley#tal
+between => between/ADP|between#zwischen
+the => the/DET|the#bestimmter_artikel
+mountains => mountain/NOUN|mountain#berg
+
+forest | We follow a path through the forest. | Wir folgen einem Weg durch den Wald.
+We => we/PRON|we#wir
+follow => follow/VERB|follow#folgen-sie
+a => a/DET|a#ein
+path => path/NOUN|path#fussweg
+through => through/ADP|through#durch
+the => the/DET|the#bestimmter_artikel
+forest => forest/NOUN|forest#wald
+
+countryside | We leave the busy city for a quiet weekend in the countryside. | Wir verlassen die geschäftige Stadt für ein ruhiges Wochenende auf dem Land.
+We => we/PRON|we#wir
+leave => leave/VERB|leave#verlassen
+the => the/DET|the#bestimmter_artikel
+busy => busy/ADJ|busy#belebte
+city => city/NOUN|city#stadt
+for => for/ADP|for#fuer_zweck_empfaenger
+a => a/DET|a#ein
+quiet => quiet/ADJ|quiet#ruhig
+weekend => weekend/NOUN|weekend#wochenende
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+countryside => countryside/NOUN|countryside#laendliche-gegend
+
+waterfall | The waterfall is just a short walk from our campsite. | Der Wasserfall ist nur einen kurzen Spaziergang von unserem Campingplatz entfernt.
+The => the/DET|the#bestimmter_artikel
+waterfall => waterfall/NOUN|waterfall#wasserfall
+is => be/AUX|be#sein_vollverb
+just => just/ADV|just#nur
+a => a/DET|a#ein
+short => short/ADJ|short#kurze
+walk => walk/NOUN|walk#spaziergang
+from => from/ADP|from#von_ausgangspunkt
+our => our/DET|our#unser-unsere
+campsite => campsite/NOUN|campsite#campingplatz
+
+sunlight | The curtains keep the bright sunlight out of our room. | Die Vorhänge halten das grelle Sonnenlicht aus unserem Zimmer fern.
+The => the/DET|the#bestimmter_artikel
+curtains => curtain/NOUN|curtain#vorhang
+keep => keep/VERB|keep#fernhalten
+the => the/DET|the#bestimmter_artikel
+bright => bright/ADJ|bright#helle
+sunlight => sunlight/NOUN|sunlight#sonnenlicht
+out => out/ADP|out#heraus_aus
+of => of/ADP|of#aus
+our => our/DET|our#unser-unsere
+room => room/NOUN|room#zimmer
+
+shade | We sit in the shade of a large tree. | Wir sitzen im Schatten eines großen Baumes.
+We => we/PRON|we#wir
+sit => sit/VERB|sit#sitzen
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+shade => shade/NOUN|shade#schatten
+of => of/ADP|of#genitiv_besitz
+a => a/DET|a#ein
+large => large/ADJ|large#gross
+tree => tree/NOUN|tree#baum
+
+shadow | The tower casts a long shadow across the square. | Der Turm wirft einen langen Schatten über den Platz.
+The => the/DET|the#bestimmter_artikel
+tower => tower/NOUN|tower#turm
+casts => cast/VERB|cast#schatten_werfen
+a => a/DET|a#ein
+long => long/ADJ|long#lange
+shadow => shadow/NOUN|shadow#schatten
+across => across/ADP|across#ueber
+the => the/DET|the#bestimmter_artikel
+square => square/NOUN|square#platz
+
+rain | We wait inside the café until the rain stops. | Wir warten im Café, bis der Regen aufhört.
+We => we/PRON|we#wir
+wait => wait/VERB|wait#warten
+inside => inside/ADP|inside#in
+the => the/DET|the#bestimmter_artikel
+café => café/NOUN|café#cafe
+until => until/SCONJ|until#bis
+the => the/DET|the#bestimmter_artikel
+rain => rain/NOUN|rain#regen
+stops => stop/VERB|stop#aufhoeren
+
+drizzle | Light drizzle makes our jackets damp during the walk. | Leichter Nieselregen macht unsere Jacken während des Spaziergangs feucht.
+Light => light/ADJ|light#schwach
+drizzle => drizzle/NOUN|drizzle#nieselregen
+makes => make/VERB|make#macht
+our => our/DET|our#unser-unsere
+jackets => jacket/NOUN|jacket#jacke
+damp => damp/ADJ|damp#feucht
+during => during/ADP|during#waehrend
+the => the/DET|the#bestimmter_artikel
+walk => walk/NOUN|walk#spaziergang
+
+tide | At low tide, we can walk across the sand to the island. | Bei Ebbe können wir über den Sand zur Insel laufen.
+At => at/ADP|at#zeit
+low => low/ADJ|low#niedrigen
+tide => tide/NOUN|tide#gezeitenstand
+we => we/PRON|we#wir
+can => can/AUX|can#koennen
+walk => walk/VERB|walk#geht-zu-fuss
+across => across/ADP|across#ueber
+the => the/DET|the#bestimmter_artikel
+sand => sand/NOUN|sand#sand
+to => to/ADP|to#nach_richtung
+the => the/DET|the#bestimmter_artikel
+island => island/NOUN|island#insel
+
+current | The strong current carries the boat away from the shore. | Die starke Strömung trägt das Boot vom Ufer weg.
+The => the/DET|the#bestimmter_artikel
+strong => strong/ADJ|strong#kraeftige_stroemung
+current => current/NOUN|current#wasserstroemung
+carries => carry/VERB|carry#traegt
+the => the/DET|the#bestimmter_artikel
+boat => boat/NOUN|boat#boot
+away => away/ADV|away#weg
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+shore => shore/NOUN|shore#ufer
+
+port | Our ship arrives at the port early in the morning. | Unser Schiff kommt früh am Morgen im Hafen an.
+Our => our/DET|our#unser-unsere
+ship => ship/NOUN|ship#schiff
+arrives => arrive/VERB|arrive#ankommt
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+port => port/NOUN|port#hafen
+early => early/ADV|early#frueh
+in => in/ADP|in#in_zeitlich
+the => the/DET|the#bestimmter_artikel
+morning => morning/NOUN|morning#morgen
+
+dock | The boat is tied to the dock beside the café. | Das Boot ist am Anleger neben dem Café festgemacht.
+The => the/DET|the#bestimmter_artikel
+boat => boat/NOUN|boat#boot
+is => be/AUX|be#hilfsverb
+tied => tie/VERB|tie#bindet
+to => to/ADP|to#zu
+the => the/DET|the#bestimmter_artikel
+dock => dock/NOUN|dock#anlegestelle
+beside => beside/ADP|beside#neben
+the => the/DET|the#bestimmter_artikel
+café => café/NOUN|café#cafe
+
+pier | We walk along the pier to board the ferry. | Wir gehen den Landungssteg entlang, um an Bord der Fähre zu gehen.
+We => we/PRON|we#wir
+walk => walk/VERB|walk#geht-zu-fuss
+along => along/ADP|along#entlang
+the => the/DET|the#bestimmter_artikel
+pier => pier/NOUN|pier#landungssteg
+to => to/PART|to#infinitivpartikel
+board => board/VERB|board#einsteigen
+the => the/DET|the#bestimmter_artikel
+ferry => ferry/NOUN|ferry#faehre
+
+clinic | The doctor at the clinic examines my sore ankle. | Die Ärztin in der Praxis untersucht meinen schmerzenden Knöchel.
+The => the/DET|the#bestimmter_artikel
+doctor => doctor/NOUN|doctor#arzt
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+clinic => clinic/NOUN|clinic#praxis
+examines => examine/VERB|examine#untersucht
+my => my/DET|my#mein
+sore => sore/ADJ|sore#wunden
+ankle => ankle/NOUN|ankle#knoechel
+
+ambulance | An ambulance takes the injured driver to hospital. | Ein Krankenwagen bringt den verletzten Fahrer ins Krankenhaus.
+An => a/DET|a#ein
+ambulance => ambulance/NOUN|ambulance#krankenwagen
+takes => take/VERB|take#bringt
+the => the/DET|the#bestimmter_artikel
+injured => injured/ADJ|injured#verletzt
+driver => driver/NOUN|driver#fahrer
+to => to/ADP|to#nach_richtung
+hospital => hospital/NOUN|hospital#krankenhaus
+
+emergency | In an emergency, use this phone to call for help. | Benutze im Notfall dieses Telefon, um Hilfe zu rufen.
+In => in/ADP|in#bei
+an => a/DET|a#ein
+emergency => emergency/NOUN|emergency#notfaelle
+use => use/VERB|use#benutzen
+this => this/DET|this#dieser_begleitend
+phone => phone/NOUN|phone#telefon
+to => to/PART|to#infinitivpartikel
+call => call/VERB|call#rufen
+for => for/ADP|for#um
+help => help/NOUN|help#hilfe
+
+injury | A knee injury prevents him from joining the walking tour. | Eine Knieverletzung hindert ihn daran, an dem Rundgang teilzunehmen.
+A => a/DET|a#ein
+knee => knee/NOUN|knee#knie
+injury => injury/NOUN|injury#verletzung
+prevents => prevent/VERB|prevent#hindern
+him => he/PRON|he#ihm
+from => from/ADP|from#verhinderte_handlung
+joining => join/VERB|join#teilnehmen-an
+the => the/DET|the#bestimmter_artikel
+walking => walk/NOUN|walk#gehen
+tour => tour/NOUN|tour#tour
+
+wound | The nurse cleans the wound on my hand. | Die Pflegekraft reinigt die Wunde an meiner Hand.
+The => the/DET|the#bestimmter_artikel
+nurse => nurse/NOUN|nurse#krankenschwester
+cleans => clean/VERB|clean#putzen
+the => the/DET|the#bestimmter_artikel
+wound => wound/NOUN|wound#wunde
+on => on/ADP|on#auf
+my => my/DET|my#mein
+hand => hand/NOUN|hand#hand
+
+padlock | I secure my locker with a small padlock. | Ich sichere mein Schließfach mit einem kleinen Vorhängeschloss.
+I => I/PRON|i#ich
+secure => secure/VERB|secure#sichern
+my => my/DET|my#mein
+locker => locker/NOUN|locker#schliessfach
+with => with/ADP|with#mit
+a => a/DET|a#ein
+small => small/ADJ|small#klein
+padlock => padlock/NOUN|padlock#vorhaengeschloss
+
+charger | I left my charger in the hotel room. | Ich habe mein Ladegerät im Hotelzimmer liegen lassen.
+I => I/PRON|i#ich
+left => leave/VERB|leave#liess-liegen
+my => my/DET|my#mein
+charger => charger/NOUN|charger#ladegeraet
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+hotel => hotel/NOUN|hotel#hotel
+room => room/NOUN|room#zimmer
+
+umbrella | Take an umbrella because it might rain later. | Nimm einen Regenschirm mit, denn später könnte es regnen.
+Take => take/VERB|take#mitnehmen
+an => a/DET|a#ein
+umbrella => umbrella/NOUN|umbrella#regenschirm
+because => because/SCONJ|because#weil
+it => it/PRON|it#unpersoenlich
+might => might/AUX|might#moeglichkeit
+rain => rain/VERB|rain#regnet
+later => late/ADV|late#spaeter
+
+sunscreen | We put on sunscreen before going to the beach. | Wir tragen Sonnenschutzmittel auf, bevor wir zum Strand gehen.
+We => we/PRON|we#wir
+put => put/VERB|put#auftragen
+on => on/ADP|on#auftragen_partikel
+sunscreen => sunscreen/NOUN|sunscreen#sonnenschutzmittel
+before => before/SCONJ|before#bevor
+going => go/VERB|go#gehen
+to => to/ADP|to#nach_richtung
+the => the/DET|the#bestimmter_artikel
+beach => beach/NOUN|beach#strand
+
+toiletries | Pack your toiletries in a separate bag. | Pack deine Körperpflegeartikel in eine separate Tasche.
+Pack => pack/VERB|pack#einpacken
+your => your/DET|your#dein-deine
+toiletries => toiletry/NOUN|toiletry#koerperpflegeartikel
+in => in/ADP|in#in_raeumlich
+a => a/DET|a#ein
+separate => separate/ADJ|separate#getrennt
+bag => bag/NOUN|bag#tasche
+
+reserve | Can we reserve a table for two this evening? | Können wir für heute Abend einen Tisch für zwei Personen reservieren?
+Can => can/AUX|can#koennen
+we => we/PRON|we#wir
+reserve => reserve/VERB|reserve#reservieren
+a => a/DET|a#ein
+table => table/NOUN|table#tisch
+for => for/ADP|for#fuer_zweck_empfaenger
+two => two/NUM|two#zwei
+this => this/DET|this#dieser_begleitend
+evening => evening/NOUN|evening#abend
+
+cancel | I need to cancel my hotel booking because I am ill. | Ich muss meine Hotelbuchung stornieren, weil ich krank bin.
+I => I/PRON|i#ich
+need => need/VERB|need#muessen
+to => to/PART|to#infinitivpartikel
+cancel => cancel/VERB|cancel#stornieren
+my => my/DET|my#mein
+hotel => hotel/NOUN|hotel#hotel
+booking => booking/NOUN|booking#buchung
+because => because/SCONJ|because#weil
+I => I/PRON|i#ich
+am => be/AUX|be#sein_vollverb
+ill => ill/ADJ|ill#krank
+
+confirm | Please confirm your arrival time by email. | Bitte bestätige deine Ankunftszeit per E-Mail.
+Please => please/INTJ|please#bitte
+confirm => confirm/VERB|confirm#bestaetigen
+your => your/DET|your#dein-deine
+arrival => arrival/NOUN|arrival#ankunft
+time => time/NOUN|time#zeit
+by => by/ADP|by#mit_mittel
+email => email/NOUN|email#e-mail
+
+check | Please check the departure time on your ticket. | Bitte überprüf die Abfahrtszeit auf deiner Fahrkarte.
+Please => please/INTJ|please#bitte
+check => check/VERB|check#ueberprueft
+the => the/DET|the#bestimmter_artikel
+departure => departure/NOUN|departure#abfahrt
+time => time/NOUN|time#zeit
+on => on/ADP|on#auf
+your => your/DET|your#dein-deine
+ticket => ticket/NOUN|ticket#fahrkarte
+
+plan | We plan our route with a map before each trip. | Wir planen unsere Route vor jeder Reise mit einer Karte.
+We => we/PRON|we#wir
+plan => plan/VERB|plan#planen
+our => our/DET|our#unser-unsere
+route => route/NOUN|route#route
+with => with/ADP|with#mit
+a => a/DET|a#ein
+map => map/NOUN|map#karte
+before => before/ADP|before#vor
+each => each/DET|each#jede
+trip => trip/NOUN|trip#reise
+
+pronounce | How do you pronounce the name of this town? | Wie spricht man den Namen dieser Stadt aus?
+How => how/ADV|how#wie
+do => do/AUX|do#hilfsverb
+you => you/PRON|you#du_sie_ihr
+pronounce => pronounce/VERB|pronounce#aussprechen
+the => the/DET|the#bestimmter_artikel
+name => name/NOUN|name#namen
+of => of/ADP|of#genitiv_besitz
+this => this/DET|this#dieser_begleitend
+town => town/NOUN|town#die-stadt
+
+spell | Could you spell your surname for me, please? | Könntest du mir bitte deinen Nachnamen buchstabieren?
+Could => could/AUX|could#koenntest
+you => you/PRON|you#du_sie_ihr
+spell => spell/VERB|spell#buchstabieren
+your => your/DET|your#dein-deine
+surname => surname/NOUN|surname#nachname
+for => for/ADP|for#fuer_zweck_empfaenger
+me => I/PRON|i#mir
+please => please/INTJ|please#bitte
+
+translate | Can you translate this menu into German? | Kannst du diese Speisekarte ins Deutsche übersetzen?
+Can => can/AUX|can#koennen
+you => you/PRON|you#du_sie_ihr
+translate => translate/VERB|translate#uebersetzen
+this => this/DET|this#dieser_begleitend
+menu => menu/NOUN|menu#karte
+into => into/ADP|into#zielsprache
+German => German/PROPN|german#deutsch
+
+speak | Does anyone here speak English? | Spricht hier jemand Englisch?
+Does => do/AUX|do#hilfsverb
+anyone => anyone/PRON|anyone#jemand
+here => here/ADV|here#hier
+speak => speak/VERB|speak#sprechen
+English => English/PROPN|english#englisch
+
+say | Please say your name slowly. | Bitte sag deinen Namen langsam.
+Please => please/INTJ|please#bitte
+say => say/VERB|say#sagen
+your => your/DET|your#dein-deine
+name => name/NOUN|name#namen
+slowly => slowly/ADV|slowly#langsam
+
+search | We search our bags for the missing ticket. | Wir durchsuchen unsere Taschen nach der fehlenden Fahrkarte.
+We => we/PRON|we#wir
+search => search/VERB|search#suchen
+our => our/DET|our#unser-unsere
+bags => bag/NOUN|bag#tasche
+for => for/ADP|for#nach
+the => the/DET|the#bestimmter_artikel
+missing => missing/ADJ|missing#verschwundenen
+ticket => ticket/NOUN|ticket#fahrkarte
+
+locate | Can you locate our hotel on this map? | Kannst du unser Hotel auf dieser Karte ausfindig machen?
+Can => can/AUX|can#koennen
+you => you/PRON|you#du_sie_ihr
+locate => locate/VERB|locate#ausfindig-machen
+our => our/DET|our#unser-unsere
+hotel => hotel/NOUN|hotel#hotel
+on => on/ADP|on#auf
+this => this/DET|this#dieser_begleitend
+map => map/NOUN|map#karte
+
+miss | We might miss the train because the bus is late. | Wir könnten den Zug verpassen, weil der Bus Verspätung hat.
+We => we/PRON|we#wir
+might => might/AUX|might#moeglichkeit
+miss => miss/VERB|miss#verpassen
+the => the/DET|the#bestimmter_artikel
+train => train/NOUN|train#zug
+because => because/SCONJ|because#weil
+the => the/DET|the#bestimmter_artikel
+bus => bus/NOUN|bus#bus
+is => be/AUX|be#sein_vollverb
+late => late/ADJ|late#verspaetet
+
+lose | Keep your ticket safe so you do not lose it. | Bewahre deine Fahrkarte sicher auf, damit du sie nicht verlierst.
+Keep => keep/VERB|keep#bewahre-auf
+your => your/DET|your#dein-deine
+ticket => ticket/NOUN|ticket#fahrkarte
+safe => safe/ADJ|safe#sicher
+so => so/SCONJ|so#damit
+you => you/PRON|you#du_sie_ihr
+do => do/AUX|do#hilfsverb
+not => not/PART|not#nicht
+lose => lose/VERB|lose#verloren
+it => it/PRON|it#es_ding
+
+forget | Please do not forget your passport. | Bitte vergiss deinen Reisepass nicht.
+Please => please/INTJ|please#bitte
+do => do/AUX|do#hilfsverb
+not => not/PART|not#nicht
+forget => forget/VERB|forget#vergessen
+your => your/DET|your#dein-deine
+passport => passport/NOUN|passport#reisepass
+
+local | The local bus connects the village with the railway station. | Der örtliche Bus verbindet das Dorf mit dem Bahnhof.
+The => the/DET|the#bestimmter_artikel
+local => local/ADJ|local#oertlichen
+bus => bus/NOUN|bus#bus
+connects => connect/VERB|connect#orte_verbinden
+the => the/DET|the#bestimmter_artikel
+village => village/NOUN|village#dorf
+with => with/ADP|with#mit
+the => the/DET|the#bestimmter_artikel
+railway => railway/NOUN|railway#eisenbahn
+station => station/NOUN|station#bahnhof
+
+foreign | I keep foreign coins as souvenirs from my travels. | Ich bewahre ausländische Münzen als Andenken an meine Reisen auf.
+I => I/PRON|i#ich
+keep => keep/VERB|keep#bewahre-auf
+foreign => foreign/ADJ|foreign#auslaendisch
+coins => coin/NOUN|coin#muenzen
+as => as/ADP|as#als_funktion
+souvenirs => souvenir/NOUN|souvenir#andenken
+from => from/ADP|from#von_ausgangspunkt
+my => my/DET|my#mein
+travels => travel/NOUN|travel#reise
+
+international | This international train crosses three borders on its journey. | Dieser internationale Zug überquert auf seiner Fahrt drei Grenzen.
+This => this/DET|this#dieser_begleitend
+international => international/ADJ|international#international
+train => train/NOUN|train#zug
+crosses => cross/VERB|cross#ueberquerte
+three => three/NUM|three#drei
+borders => border/NOUN|border#landesgrenze
+on => on/ADP|on#auf
+its => its/DET|its#sein_ihr
+journey => journey/NOUN|journey#reise
+
+domestic | This airport handles only domestic flights within Spain. | Dieser Flughafen fertigt nur Inlandsflüge innerhalb Spaniens ab.
+This => this/DET|this#dieser_begleitend
+airport => airport/NOUN|airport#flughafen
+handles => handle/VERB|handle#abfertigen
+only => only/ADV|only#nur
+domestic => domestic/ADJ|domestic#inlaendisch
+flights => flight/NOUN|flight#flug
+within => within/ADP|within#innerhalb
+Spain => Spain/PROPN|spain#spanien
+
+direct | Is there a direct train to the airport without any changes? | Gibt es einen direkten Zug zum Flughafen ohne Umsteigen?
+Is => be/VERB|be#gibt
+there => there/PRON|there#es_gibt
+a => a/DET|a#ein
+direct => direct/ADJ|direct#direkt
+train => train/NOUN|train#zug
+to => to/ADP|to#nach_richtung
+the => the/DET|the#bestimmter_artikel
+airport => airport/NOUN|airport#flughafen
+without => without/ADP|without#ohne
+any => any/DET|any#irgendeine
+changes => change/NOUN|change#umstieg
+
+necessary | A passport is necessary for this journey. | Für diese Reise ist ein Reisepass notwendig.
+A => a/DET|a#ein
+passport => passport/NOUN|passport#reisepass
+is => be/AUX|be#sein_vollverb
+necessary => necessary/ADJ|necessary#notwendig
+for => for/ADP|for#fuer_zweck_empfaenger
+this => this/DET|this#dieser_begleitend
+journey => journey/NOUN|journey#reise
+
+essential | Good walking shoes are essential for this mountain hike. | Gute Wanderschuhe sind für diese Bergwanderung unerlässlich.
+Good => good/ADJ|good#gut
+walking => walk/NOUN|walk#gehen
+shoes => shoe/NOUN|shoe#schuhe
+are => be/AUX|be#sein_vollverb
+essential => essential/ADJ|essential#unerlaesslich
+for => for/ADP|for#fuer_zweck_empfaenger
+this => this/DET|this#dieser_begleitend
+mountain => mountain/NOUN|mountain#berg
+hike => hike/NOUN|hike#wanderung
+
+optional | The boat trip is optional, so you can stay at the hotel. | Der Bootsausflug ist freiwillig, du kannst also im Hotel bleiben.
+The => the/DET|the#bestimmter_artikel
+boat => boat/NOUN|boat#boot
+trip => trip/NOUN|trip#reise
+is => be/AUX|be#sein_vollverb
+optional => optional/ADJ|optional#wahlweise
+so => so/CCONJ|so#deshalb
+you => you/PRON|you#du_sie_ihr
+can => can/AUX|can#koennen
+stay => stay/VERB|stay#bleiben
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+hotel => hotel/NOUN|hotel#hotel
+
+suitable | Is this walking route suitable for young children? | Ist dieser Wanderweg für kleine Kinder geeignet?
+Is => be/AUX|be#sein_vollverb
+this => this/DET|this#dieser_begleitend
+walking => walk/NOUN|walk#gehen
+route => route/NOUN|route#route
+suitable => suitable/ADJ|suitable#geeignet
+for => for/ADP|for#fuer_zweck_empfaenger
+young => young/ADJ|young#jung
+children => child/NOUN|child#kinder
+
+reliable | We need a reliable taxi service for our early flight. | Wir brauchen für unseren frühen Flug einen zuverlässigen Taxidienst.
+We => we/PRON|we#wir
+need => need/VERB|need#brauchen
+a => a/DET|a#ein
+reliable => reliable/ADJ|reliable#zuverlaessige
+taxi => taxi/NOUN|taxi#taxi
+service => service/NOUN|service#service
+for => for/ADP|for#fuer_zweck_empfaenger
+our => our/DET|our#unser-unsere
+early => early/ADJ|early#frueheren
+flight => flight/NOUN|flight#flug

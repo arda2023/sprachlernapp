@@ -1,0 +1,52 @@
+{
+  "python": "3.11.3",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "packages": {
+    "spacy": "3.8.16",
+    "en_core_web_sm": "3.8.0",
+    "wordfreq": "3.1.1",
+    "PyYAML": "6.0.3",
+    "python-dotenv": "1.2.4",
+    "google-genai": "2.28.0"
+  },
+  "model": "en_core_web_sm",
+  "model_version": "3.8.0",
+  "disabled_pipes": [
+    "senter",
+    "ner"
+  ],
+  "linter": {
+    "max_words": 14,
+    "max_subclauses": 1,
+    "min_zipf": {
+      "anfaenger": 4.0,
+      "mittel": 3.5,
+      "fortgeschritten": 3.0
+    }
+  },
+  "names": [
+    "Mia",
+    "Leo",
+    "Sara",
+    "Amir",
+    "Emma",
+    "Luca",
+    "Sofia",
+    "Noah",
+    "Maya",
+    "Elias",
+    "Lina",
+    "Omar",
+    "Eva",
+    "Ben",
+    "Nina",
+    "Ali",
+    "Rosa",
+    "Luis",
+    "Zoe",
+    "David"
+  ],
+  "offline_model_path": "runtime/en_core_web_sm",
+  "sources": "pipeline/src/sprachpipe",
+  "runtime_note": "Python packages are specified by pyproject.toml and requirements.lock; installed interpreter/venv not bundled. Model data bundled. No network or provider access needed for tokenize/lint."
+}

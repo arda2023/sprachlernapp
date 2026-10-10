@@ -15,11 +15,10 @@ class PassFeedback {
 }
 
 /// One pass of a card in a session (docs/srs.md): records every checked
-/// input, the synonym hint and "Wort erfahren", and yields the review record
+/// input and "Wort erfahren", and yields the review record
 /// exactly once.
 ///
-/// - [submit]: target form solves; a checked alternative sets [hintUsed] for
-///   good (no error); "Fast richtig" changes nothing; a wrong form or wrong
+/// - [submit]: target form solves; a checked alternative is neutral; "Fast richtig" changes nothing; a wrong form or wrong
 ///   answer counts an error. Empty input is not checked.
 /// - [reveal]: sets [revealed], independent of [hintUsed]; the learner still
 ///   types the form to solve the gap.
@@ -62,7 +61,7 @@ class ReviewPass {
   DateTime? _firstResponseAt;
   int _errorCount = 0;
   bool _revealed = false;
-  bool _hintUsed = false;
+  final bool _hintUsed = false;
   bool _solved = false;
   bool _completed = false;
 
@@ -72,11 +71,11 @@ class ReviewPass {
   bool get solved => _solved;
   bool get completed => _completed;
 
-  /// Only an exact first checked input counts (literal observation); false
-  /// after a typo, an alternative, an error or "Wort erfahren" first.
+  /// First non-synonym checked input: exact is true; typo/error/reveal false.
+  /// Neutral alternatives do not consume the assessed first attempt.
   bool get firstAttemptCorrect => _firstAttemptCorrect ?? false;
 
-  /// An error, "Wort erfahren" or a synonym hint: the card returns once later
+  /// An error or "Wort erfahren": the card returns once later
   /// in the session (in-session repeat). Repeat passes never repeat again.
   bool get needsRepeat => logged && (_hintUsed || _errorCount > 0 || _revealed);
 
@@ -98,13 +97,14 @@ class ReviewPass {
       otherFormsOfLemma: item.otherFormsOfLemma,
       includeDiacritics: includeDiacritics,
     );
-    _firstAttemptCorrect ??= verdict == AnswerVerdict.target;
+    if (verdict != AnswerVerdict.alternative) {
+      _firstAttemptCorrect ??= verdict == AnswerVerdict.target;
+    }
     switch (verdict) {
       case AnswerVerdict.target:
         _solved = true;
         return const PassFeedback(AnswerVerdict.target);
       case AnswerVerdict.alternative:
-        _hintUsed = true;
         return PassFeedback(verdict, message: synonymHint(input, card.form));
       case AnswerVerdict.almost:
         return const PassFeedback(AnswerVerdict.almost);

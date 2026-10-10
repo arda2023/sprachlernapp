@@ -1,0 +1,135 @@
+{
+  "errors": [],
+  "warnings": [
+    [
+      "wall",
+      "i+1",
+      "'sofa'/'sofa' Zipf 3.81 below 4.0"
+    ],
+    [
+      "carpet",
+      "i+1",
+      "'muddy'/'muddy' Zipf 3.60 below 4.0"
+    ],
+    [
+      "drawer",
+      "i+1",
+      "'scissor'/'scissors' Zipf 3.58 below 4.0"
+    ],
+    [
+      "address",
+      "i+1",
+      "'envelope'/'envelope' Zipf 3.86 below 4.0"
+    ],
+    [
+      "broom",
+      "i+1",
+      "'sweep'/'sweep' Zipf 3.97 below 4.0"
+    ],
+    [
+      "sponge",
+      "i+1",
+      "'damp'/'damp' Zipf 3.62 below 4.0"
+    ],
+    [
+      "hanger",
+      "i+1",
+      "'tidy'/'tidy' Zipf 3.53 below 4.0"
+    ],
+    [
+      "slipper",
+      "i+1",
+      "'chew'/'chewing' Zipf 3.66 below 4.0"
+    ],
+    [
+      "wool",
+      "i+1",
+      "'scarf'/'scarf' Zipf 3.68 below 4.0"
+    ],
+    [
+      "queue",
+      "i+1",
+      "'checkout'/'checkout' Zipf 3.64 below 4.0"
+    ],
+    [
+      "pan",
+      "i+1",
+      "'onion'/'onions' Zipf 3.89 below 4.0"
+    ],
+    [
+      "oil",
+      "i+1",
+      "'fry'/'frying' Zipf 3.89 below 4.0"
+    ],
+    [
+      "lemon",
+      "i+1",
+      "'squeeze'/'squeeze' Zipf 3.94 below 4.0"
+    ],
+    [
+      "strawberry",
+      "i+1",
+      "'ripe'/'ripe' Zipf 3.67 below 4.0"
+    ],
+    [
+      "cream",
+      "i+1",
+      "'strawberry'/'strawberries' Zipf 3.72 below 4.0"
+    ],
+    [
+      "cream",
+      "i+1",
+      "'dessert'/'dessert' Zipf 3.83 below 4.0"
+    ],
+    [
+      "sauce",
+      "i+1",
+      "'tomato'/'tomato' Zipf 3.85 below 4.0"
+    ],
+    [
+      "sauce",
+      "i+1",
+      "'pasta'/'pasta' Zipf 3.92 below 4.0"
+    ],
+    [
+      "sauce",
+      "i+1",
+      "'grated'/'grated' Zipf 3.12 below 4.0"
+    ],
+    [
+      "peel",
+      "i+1",
+      "'chop'/'chop' Zipf 3.77 below 4.0"
+    ],
+    [
+      "peel",
+      "i+1",
+      "'onion'/'onions' Zipf 3.89 below 4.0"
+    ],
+    [
+      "hobby",
+      "i+1",
+      "'grandchild'/'grandchildren' Zipf 3.79 below 4.0"
+    ],
+    [
+      "sweep",
+      "i+1",
+      "'bake'/'baking' Zipf 3.92 below 4.0"
+    ],
+    [
+      "invite",
+      "i+1",
+      "'neighbour'/'neighbours' Zipf 3.87 below 4.0"
+    ],
+    [
+      "try",
+      "i+1",
+      "'jar'/'jar' Zipf 3.93 below 4.0"
+    ],
+    [
+      "try",
+      "i+1",
+      "'lid'/'lid' Zipf 3.81 below 4.0"
+    ]
+  ]
+}

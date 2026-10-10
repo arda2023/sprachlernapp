@@ -1,0 +1,1802 @@
+[
+  {
+    "card_ref": "travel|travel/NOUN|travel#reise",
+    "original_position": 1,
+    "display_position": 1,
+    "already_exported": true
+  },
+  {
+    "card_ref": "trip|trip/NOUN|trip#reise",
+    "original_position": 2,
+    "display_position": 2,
+    "already_exported": true
+  },
+  {
+    "card_ref": "journey|journey/NOUN|journey#reise",
+    "original_position": 3,
+    "display_position": 3,
+    "already_exported": true
+  },
+  {
+    "card_ref": "tour|tour/NOUN|tour#tour",
+    "original_position": 4,
+    "display_position": 4,
+    "already_exported": true
+  },
+  {
+    "card_ref": "holiday|holiday/NOUN|holiday#urlaub",
+    "original_position": 5,
+    "display_position": 5,
+    "already_exported": true
+  },
+  {
+    "card_ref": "destination|destination/NOUN|destination#reiseziel",
+    "original_position": 6,
+    "display_position": 6,
+    "already_exported": true
+  },
+  {
+    "card_ref": "itinerary|itinerary/NOUN|itinerary#reiseplan",
+    "original_position": 7,
+    "display_position": 7,
+    "already_exported": true
+  },
+  {
+    "card_ref": "excursion|excursion/NOUN|excursion#ausflug",
+    "original_position": 8,
+    "display_position": 8,
+    "already_exported": true
+  },
+  {
+    "card_ref": "outing|outing/NOUN|outing#ausflug",
+    "original_position": 9,
+    "display_position": 9,
+    "already_exported": true
+  },
+  {
+    "card_ref": "booking|booking/NOUN|booking#buchung",
+    "original_position": 10,
+    "display_position": 10,
+    "already_exported": true
+  },
+  {
+    "card_ref": "reservation|reservation/NOUN|reservation#reservierung",
+    "original_position": 11,
+    "display_position": 11,
+    "already_exported": false
+  },
+  {
+    "card_ref": "confirmation|confirmation/NOUN|confirmation#buchungsbestaetigung",
+    "original_position": 12,
+    "display_position": 12,
+    "already_exported": false
+  },
+  {
+    "card_ref": "cancellation|cancellation/NOUN|cancellation#stornierung",
+    "original_position": 13,
+    "display_position": 13,
+    "already_exported": false
+  },
+  {
+    "card_ref": "availability|availability/NOUN|availability#verfuegbarkeit",
+    "original_position": 14,
+    "display_position": 14,
+    "already_exported": false
+  },
+  {
+    "card_ref": "date|date/NOUN|date#datum",
+    "original_position": 15,
+    "display_position": 15,
+    "already_exported": false
+  },
+  {
+    "card_ref": "passport|passport/NOUN|passport#reisepass",
+    "original_position": 26,
+    "display_position": 16,
+    "already_exported": true
+  },
+  {
+    "card_ref": "visa|visa/NOUN|visa#visum",
+    "original_position": 27,
+    "display_position": 17,
+    "already_exported": true
+  },
+  {
+    "card_ref": "border|border/NOUN|border#landesgrenze",
+    "original_position": 28,
+    "display_position": 18,
+    "already_exported": true
+  },
+  {
+    "card_ref": "customs|customs/NOUN|customs#zoll",
+    "original_position": 29,
+    "display_position": 19,
+    "already_exported": true
+  },
+  {
+    "card_ref": "immigration|immigration/NOUN|immigration#einreisekontrolle",
+    "original_position": 30,
+    "display_position": 20,
+    "already_exported": true
+  },
+  {
+    "card_ref": "citizenship|citizenship/NOUN|citizenship#staatsbuergerschaft",
+    "original_position": 31,
+    "display_position": 21,
+    "already_exported": true
+  },
+  {
+    "card_ref": "nationality|nationality/NOUN|nationality#staatsangehoerigkeit",
+    "original_position": 32,
+    "display_position": 22,
+    "already_exported": true
+  },
+  {
+    "card_ref": "identity|identity/NOUN|identity#identitaet",
+    "original_position": 33,
+    "display_position": 23,
+    "already_exported": true
+  },
+  {
+    "card_ref": "document|document/NOUN|document#dokumente",
+    "original_position": 34,
+    "display_position": 24,
+    "already_exported": true
+  },
+  {
+    "card_ref": "permit|permit/NOUN|permit#genehmigung",
+    "original_position": 35,
+    "display_position": 25,
+    "already_exported": true
+  },
+  {
+    "card_ref": "embassy|embassy/NOUN|embassy#botschaft",
+    "original_position": 36,
+    "display_position": 26,
+    "already_exported": false
+  },
+  {
+    "card_ref": "consulate|consulate/NOUN|consulate#konsulat",
+    "original_position": 37,
+    "display_position": 27,
+    "already_exported": false
+  },
+  {
+    "card_ref": "official|official/NOUN|official#amtsperson",
+    "original_position": 38,
+    "display_position": 28,
+    "already_exported": false
+  },
+  {
+    "card_ref": "stamp|stamp/NOUN|stamp#stempelabdruck",
+    "original_position": 39,
+    "display_position": 29,
+    "already_exported": false
+  },
+  {
+    "card_ref": "signature|signature/NOUN|signature#unterschrift",
+    "original_position": 40,
+    "display_position": 30,
+    "already_exported": false
+  },
+  {
+    "card_ref": "airport|airport/NOUN|airport#flughafen",
+    "original_position": 51,
+    "display_position": 31,
+    "already_exported": true
+  },
+  {
+    "card_ref": "airline|airline/NOUN|airline#fluggesellschaft",
+    "original_position": 52,
+    "display_position": 32,
+    "already_exported": true
+  },
+  {
+    "card_ref": "terminal|terminal/NOUN|terminal#flughafenterminal",
+    "original_position": 53,
+    "display_position": 33,
+    "already_exported": true
+  },
+  {
+    "card_ref": "flight|flight/NOUN|flight#flug",
+    "original_position": 54,
+    "display_position": 34,
+    "already_exported": true
+  },
+  {
+    "card_ref": "aircraft|aircraft/NOUN|aircraft#luftfahrzeug",
+    "original_position": 55,
+    "display_position": 35,
+    "already_exported": true
+  },
+  {
+    "card_ref": "aeroplane|aeroplane/NOUN|aeroplane#flugzeug",
+    "original_position": 56,
+    "display_position": 36,
+    "already_exported": true
+  },
+  {
+    "card_ref": "pilot|pilot/NOUN|pilot#pilot",
+    "original_position": 57,
+    "display_position": 37,
+    "already_exported": true
+  },
+  {
+    "card_ref": "crew|crew/NOUN|crew#besatzung",
+    "original_position": 58,
+    "display_position": 38,
+    "already_exported": true
+  },
+  {
+    "card_ref": "passenger|passenger/NOUN|passenger#fahrgast",
+    "original_position": 59,
+    "display_position": 39,
+    "already_exported": true
+  },
+  {
+    "card_ref": "runway|runway/NOUN|runway#start-und-landebahn",
+    "original_position": 60,
+    "display_position": 40,
+    "already_exported": true
+  },
+  {
+    "card_ref": "gate|gate/NOUN|gate#flugsteig",
+    "original_position": 61,
+    "display_position": 41,
+    "already_exported": false
+  },
+  {
+    "card_ref": "boarding|boarding/NOUN|boarding#einsteigen",
+    "original_position": 62,
+    "display_position": 42,
+    "already_exported": false
+  },
+  {
+    "card_ref": "landing|landing/NOUN|landing#landung",
+    "original_position": 63,
+    "display_position": 43,
+    "already_exported": false
+  },
+  {
+    "card_ref": "takeoff|takeoff/NOUN|takeoff#start",
+    "original_position": 64,
+    "display_position": 44,
+    "already_exported": false
+  },
+  {
+    "card_ref": "layover|layover/NOUN|layover#zwischenaufenthalt",
+    "original_position": 65,
+    "display_position": 45,
+    "already_exported": false
+  },
+  {
+    "card_ref": "railway|railway/NOUN|railway#eisenbahn",
+    "original_position": 76,
+    "display_position": 46,
+    "already_exported": true
+  },
+  {
+    "card_ref": "rail|rail/NOUN|rail#schiene",
+    "original_position": 77,
+    "display_position": 47,
+    "already_exported": true
+  },
+  {
+    "card_ref": "platform|platform/NOUN|platform#bahnsteig",
+    "original_position": 78,
+    "display_position": 48,
+    "already_exported": true
+  },
+  {
+    "card_ref": "timetable|timetable/NOUN|timetable#fahrplan",
+    "original_position": 79,
+    "display_position": 49,
+    "already_exported": true
+  },
+  {
+    "card_ref": "schedule|schedule/NOUN|schedule#fahrplan",
+    "original_position": 80,
+    "display_position": 50,
+    "already_exported": true
+  },
+  {
+    "card_ref": "carriage|carriage/NOUN|carriage#eisenbahnwagen",
+    "original_position": 81,
+    "display_position": 51,
+    "already_exported": true
+  },
+  {
+    "card_ref": "compartment|compartment/NOUN|compartment#zugabteil",
+    "original_position": 82,
+    "display_position": 52,
+    "already_exported": true
+  },
+  {
+    "card_ref": "berth|berth/NOUN|berth#schlafplatz",
+    "original_position": 83,
+    "display_position": 53,
+    "already_exported": true
+  },
+  {
+    "card_ref": "sleeper|sleeper/NOUN|sleeper#schlafwagen",
+    "original_position": 84,
+    "display_position": 54,
+    "already_exported": true
+  },
+  {
+    "card_ref": "conductor|conductor/NOUN|conductor#zugbegleiter",
+    "original_position": 85,
+    "display_position": 55,
+    "already_exported": true
+  },
+  {
+    "card_ref": "locomotive|locomotive/NOUN|locomotive#lokomotive",
+    "original_position": 86,
+    "display_position": 56,
+    "already_exported": false
+  },
+  {
+    "card_ref": "subway|subway/NOUN|subway#u-bahn",
+    "original_position": 87,
+    "display_position": 57,
+    "already_exported": false
+  },
+  {
+    "card_ref": "tram|tram/NOUN|tram#strassenbahn",
+    "original_position": 88,
+    "display_position": 58,
+    "already_exported": false
+  },
+  {
+    "card_ref": "escalator|escalator/NOUN|escalator#rolltreppe",
+    "original_position": 89,
+    "display_position": 59,
+    "already_exported": false
+  },
+  {
+    "card_ref": "lift|lift/NOUN|lift#aufzug",
+    "original_position": 90,
+    "display_position": 60,
+    "already_exported": false
+  },
+  {
+    "card_ref": "coach|coach/NOUN|coach#reisebus",
+    "original_position": 101,
+    "display_position": 61,
+    "already_exported": true
+  },
+  {
+    "card_ref": "taxi|taxi/NOUN|taxi#taxi",
+    "original_position": 102,
+    "display_position": 62,
+    "already_exported": true
+  },
+  {
+    "card_ref": "vehicle|vehicle/NOUN|vehicle#fahrzeug",
+    "original_position": 103,
+    "display_position": 63,
+    "already_exported": true
+  },
+  {
+    "card_ref": "traffic|traffic/NOUN|traffic#verkehr",
+    "original_position": 104,
+    "display_position": 64,
+    "already_exported": true
+  },
+  {
+    "card_ref": "motorway|motorway/NOUN|motorway#autobahn",
+    "original_position": 105,
+    "display_position": 65,
+    "already_exported": true
+  },
+  {
+    "card_ref": "highway|highway/NOUN|highway#fernstrasse",
+    "original_position": 106,
+    "display_position": 66,
+    "already_exported": true
+  },
+  {
+    "card_ref": "lane|lane/NOUN|lane#fahrspur",
+    "original_position": 107,
+    "display_position": 67,
+    "already_exported": true
+  },
+  {
+    "card_ref": "pavement|pavement/NOUN|pavement#gehweg",
+    "original_position": 108,
+    "display_position": 68,
+    "already_exported": true
+  },
+  {
+    "card_ref": "kerb|kerb/NOUN|kerb#bordstein",
+    "original_position": 109,
+    "display_position": 69,
+    "already_exported": true
+  },
+  {
+    "card_ref": "intersection|intersection/NOUN|intersection#strassenkreuzung",
+    "original_position": 110,
+    "display_position": 70,
+    "already_exported": true
+  },
+  {
+    "card_ref": "roundabout|roundabout/NOUN|roundabout#kreisverkehr",
+    "original_position": 111,
+    "display_position": 71,
+    "already_exported": false
+  },
+  {
+    "card_ref": "crossroads|crossroads/NOUN|crossroads#kreuzung",
+    "original_position": 112,
+    "display_position": 72,
+    "already_exported": false
+  },
+  {
+    "card_ref": "tunnel|tunnel/NOUN|tunnel#tunnel",
+    "original_position": 113,
+    "display_position": 73,
+    "already_exported": false
+  },
+  {
+    "card_ref": "toll|toll/NOUN|toll#maut",
+    "original_position": 114,
+    "display_position": 74,
+    "already_exported": false
+  },
+  {
+    "card_ref": "parking|parking/NOUN|parking#park",
+    "original_position": 115,
+    "display_position": 75,
+    "already_exported": false
+  },
+  {
+    "card_ref": "hotel|hotel/NOUN|hotel#hotel",
+    "original_position": 126,
+    "display_position": 76,
+    "already_exported": true
+  },
+  {
+    "card_ref": "hostel|hostel/NOUN|hostel#hostel",
+    "original_position": 127,
+    "display_position": 77,
+    "already_exported": true
+  },
+  {
+    "card_ref": "motel|motel/NOUN|motel#motel",
+    "original_position": 128,
+    "display_position": 78,
+    "already_exported": true
+  },
+  {
+    "card_ref": "guesthouse|guesthouse/NOUN|guesthouse#pension",
+    "original_position": 129,
+    "display_position": 79,
+    "already_exported": true
+  },
+  {
+    "card_ref": "resort|resort/NOUN|resort#ferienanlage",
+    "original_position": 130,
+    "display_position": 80,
+    "already_exported": true
+  },
+  {
+    "card_ref": "campsite|campsite/NOUN|campsite#campingplatz",
+    "original_position": 131,
+    "display_position": 81,
+    "already_exported": true
+  },
+  {
+    "card_ref": "cottage|cottage/NOUN|cottage#ferienhaus",
+    "original_position": 132,
+    "display_position": 82,
+    "already_exported": true
+  },
+  {
+    "card_ref": "apartment|apartment/NOUN|apartment#wohnung",
+    "original_position": 133,
+    "display_position": 83,
+    "already_exported": true
+  },
+  {
+    "card_ref": "accommodation|accommodation/NOUN|accommodation#unterkunft",
+    "original_position": 134,
+    "display_position": 84,
+    "already_exported": true
+  },
+  {
+    "card_ref": "reception|reception/NOUN|reception#rezeption",
+    "original_position": 135,
+    "display_position": 85,
+    "already_exported": true
+  },
+  {
+    "card_ref": "receptionist|receptionist/NOUN|receptionist#empfangsmitarbeiter",
+    "original_position": 136,
+    "display_position": 86,
+    "already_exported": false
+  },
+  {
+    "card_ref": "lobby|lobby/NOUN|lobby#lobby",
+    "original_position": 137,
+    "display_position": 87,
+    "already_exported": false
+  },
+  {
+    "card_ref": "corridor|corridor/NOUN|corridor#flur",
+    "original_position": 138,
+    "display_position": 88,
+    "already_exported": false
+  },
+  {
+    "card_ref": "floor|floor/NOUN|floor#stockwerk",
+    "original_position": 139,
+    "display_position": 89,
+    "already_exported": false
+  },
+  {
+    "card_ref": "balcony|balcony/NOUN|balcony#balkon",
+    "original_position": 140,
+    "display_position": 90,
+    "already_exported": false
+  },
+  {
+    "card_ref": "restaurant|restaurant/NOUN|restaurant#restaurant",
+    "original_position": 151,
+    "display_position": 91,
+    "already_exported": true
+  },
+  {
+    "card_ref": "café|café/NOUN|café#cafe",
+    "original_position": 152,
+    "display_position": 92,
+    "already_exported": true
+  },
+  {
+    "card_ref": "menu|menu/NOUN|menu#karte",
+    "original_position": 153,
+    "display_position": 93,
+    "already_exported": true
+  },
+  {
+    "card_ref": "waiter|waiter/NOUN|waiter#kellner",
+    "original_position": 154,
+    "display_position": 94,
+    "already_exported": true
+  },
+  {
+    "card_ref": "waitress|waitress/NOUN|waitress#kellnerin",
+    "original_position": 155,
+    "display_position": 95,
+    "already_exported": true
+  },
+  {
+    "card_ref": "chef|chef/NOUN|chef#koch",
+    "original_position": 156,
+    "display_position": 96,
+    "already_exported": true
+  },
+  {
+    "card_ref": "meal|meal/NOUN|meal#mahlzeit",
+    "original_position": 157,
+    "display_position": 97,
+    "already_exported": true
+  },
+  {
+    "card_ref": "breakfast|breakfast/NOUN|breakfast#fruehstueck",
+    "original_position": 158,
+    "display_position": 98,
+    "already_exported": true
+  },
+  {
+    "card_ref": "lunch|lunch/NOUN|lunch#mittagessen",
+    "original_position": 159,
+    "display_position": 99,
+    "already_exported": true
+  },
+  {
+    "card_ref": "dinner|dinner/NOUN|dinner#abendessen",
+    "original_position": 160,
+    "display_position": 100,
+    "already_exported": true
+  },
+  {
+    "card_ref": "snack|snack/NOUN|snack#snack",
+    "original_position": 161,
+    "display_position": 101,
+    "already_exported": false
+  },
+  {
+    "card_ref": "starter|starter/NOUN|starter#vorspeise",
+    "original_position": 162,
+    "display_position": 102,
+    "already_exported": false
+  },
+  {
+    "card_ref": "course|course/NOUN|course#menuegang",
+    "original_position": 163,
+    "display_position": 103,
+    "already_exported": false
+  },
+  {
+    "card_ref": "dessert|dessert/NOUN|dessert#dessert",
+    "original_position": 164,
+    "display_position": 104,
+    "already_exported": false
+  },
+  {
+    "card_ref": "buffet|buffet/NOUN|buffet#buefett",
+    "original_position": 165,
+    "display_position": 105,
+    "already_exported": false
+  },
+  {
+    "card_ref": "water|water/NOUN|water#wasser",
+    "original_position": 176,
+    "display_position": 106,
+    "already_exported": true
+  },
+  {
+    "card_ref": "juice|juice/NOUN|juice#saft",
+    "original_position": 177,
+    "display_position": 107,
+    "already_exported": true
+  },
+  {
+    "card_ref": "coffee|coffee/NOUN|coffee#kaffee",
+    "original_position": 178,
+    "display_position": 108,
+    "already_exported": true
+  },
+  {
+    "card_ref": "tea|tea/NOUN|tea#tee",
+    "original_position": 179,
+    "display_position": 109,
+    "already_exported": true
+  },
+  {
+    "card_ref": "beer|beer/NOUN|beer#bier",
+    "original_position": 180,
+    "display_position": 110,
+    "already_exported": true
+  },
+  {
+    "card_ref": "wine|wine/NOUN|wine#wein",
+    "original_position": 181,
+    "display_position": 111,
+    "already_exported": true
+  },
+  {
+    "card_ref": "sandwich|sandwich/NOUN|sandwich#sandwich",
+    "original_position": 182,
+    "display_position": 112,
+    "already_exported": true
+  },
+  {
+    "card_ref": "salad|salad/NOUN|salad#salat",
+    "original_position": 183,
+    "display_position": 113,
+    "already_exported": true
+  },
+  {
+    "card_ref": "soup|soup/NOUN|soup#suppe",
+    "original_position": 184,
+    "display_position": 114,
+    "already_exported": true
+  },
+  {
+    "card_ref": "rice|rice/NOUN|rice#reis",
+    "original_position": 185,
+    "display_position": 115,
+    "already_exported": true
+  },
+  {
+    "card_ref": "pasta|pasta/NOUN|pasta#nudeln",
+    "original_position": 186,
+    "display_position": 116,
+    "already_exported": false
+  },
+  {
+    "card_ref": "pizza|pizza/NOUN|pizza#pizza",
+    "original_position": 187,
+    "display_position": 117,
+    "already_exported": false
+  },
+  {
+    "card_ref": "chicken|chicken/NOUN|chicken#haehnchenfleisch",
+    "original_position": 188,
+    "display_position": 118,
+    "already_exported": false
+  },
+  {
+    "card_ref": "beef|beef/NOUN|beef#rindfleisch",
+    "original_position": 189,
+    "display_position": 119,
+    "already_exported": false
+  },
+  {
+    "card_ref": "pork|pork/NOUN|pork#schweinefleisch",
+    "original_position": 190,
+    "display_position": 120,
+    "already_exported": false
+  },
+  {
+    "card_ref": "cash|cash/NOUN|cash#bargeld",
+    "original_position": 201,
+    "display_position": 121,
+    "already_exported": true
+  },
+  {
+    "card_ref": "currency|currency/NOUN|currency#waehrung",
+    "original_position": 202,
+    "display_position": 122,
+    "already_exported": true
+  },
+  {
+    "card_ref": "exchange|exchange/NOUN|exchange#geldumtausch",
+    "original_position": 203,
+    "display_position": 123,
+    "already_exported": true
+  },
+  {
+    "card_ref": "rate|rate/NOUN|rate#wechselkurs",
+    "original_position": 204,
+    "display_position": 124,
+    "already_exported": true
+  },
+  {
+    "card_ref": "coin|coin/NOUN|coin#muenzen",
+    "original_position": 205,
+    "display_position": 125,
+    "already_exported": true
+  },
+  {
+    "card_ref": "banknote|banknote/NOUN|banknote#geldschein",
+    "original_position": 206,
+    "display_position": 126,
+    "already_exported": true
+  },
+  {
+    "card_ref": "wallet|wallet/NOUN|wallet#geldboerse",
+    "original_position": 207,
+    "display_position": 127,
+    "already_exported": true
+  },
+  {
+    "card_ref": "purse|purse/NOUN|purse#geldboerse",
+    "original_position": 208,
+    "display_position": 128,
+    "already_exported": true
+  },
+  {
+    "card_ref": "bill|bill/NOUN|bill#rechnung",
+    "original_position": 209,
+    "display_position": 129,
+    "already_exported": true
+  },
+  {
+    "card_ref": "tax|tax/NOUN|tax#steuer",
+    "original_position": 210,
+    "display_position": 130,
+    "already_exported": true
+  },
+  {
+    "card_ref": "tip|tip/NOUN|tip#trinkgeld",
+    "original_position": 211,
+    "display_position": 131,
+    "already_exported": false
+  },
+  {
+    "card_ref": "surcharge|surcharge/NOUN|surcharge#aufpreis",
+    "original_position": 212,
+    "display_position": 132,
+    "already_exported": false
+  },
+  {
+    "card_ref": "refund|refund/NOUN|refund#rueckerstattung",
+    "original_position": 213,
+    "display_position": 133,
+    "already_exported": false
+  },
+  {
+    "card_ref": "discount|discount/NOUN|discount#rabatt",
+    "original_position": 214,
+    "display_position": 134,
+    "already_exported": false
+  },
+  {
+    "card_ref": "bargain|bargain/NOUN|bargain#schnaeppchen",
+    "original_position": 215,
+    "display_position": 135,
+    "already_exported": false
+  },
+  {
+    "card_ref": "tourist|tourist/NOUN|tourist#touristen",
+    "original_position": 226,
+    "display_position": 136,
+    "already_exported": true
+  },
+  {
+    "card_ref": "tourism|tourism/NOUN|tourism#tourismus",
+    "original_position": 227,
+    "display_position": 137,
+    "already_exported": true
+  },
+  {
+    "card_ref": "guide|guide/NOUN|guide#reisefuehrer",
+    "original_position": 228,
+    "display_position": 138,
+    "already_exported": true
+  },
+  {
+    "card_ref": "landmark|landmark/NOUN|landmark#wahrzeichen",
+    "original_position": 229,
+    "display_position": 139,
+    "already_exported": true
+  },
+  {
+    "card_ref": "monument|monument/NOUN|monument#denkmal",
+    "original_position": 230,
+    "display_position": 140,
+    "already_exported": true
+  },
+  {
+    "card_ref": "museum|museum/NOUN|museum#museum",
+    "original_position": 231,
+    "display_position": 141,
+    "already_exported": true
+  },
+  {
+    "card_ref": "gallery|gallery/NOUN|gallery#kunstgalerie",
+    "original_position": 232,
+    "display_position": 142,
+    "already_exported": true
+  },
+  {
+    "card_ref": "cathedral|cathedral/NOUN|cathedral#kathedrale",
+    "original_position": 233,
+    "display_position": 143,
+    "already_exported": true
+  },
+  {
+    "card_ref": "castle|castle/NOUN|castle#burg",
+    "original_position": 234,
+    "display_position": 144,
+    "already_exported": true
+  },
+  {
+    "card_ref": "palace|palace/NOUN|palace#palast",
+    "original_position": 235,
+    "display_position": 145,
+    "already_exported": true
+  },
+  {
+    "card_ref": "square|square/NOUN|square#platz",
+    "original_position": 236,
+    "display_position": 146,
+    "already_exported": false
+  },
+  {
+    "card_ref": "fountain|fountain/NOUN|fountain#brunnen",
+    "original_position": 237,
+    "display_position": 147,
+    "already_exported": false
+  },
+  {
+    "card_ref": "statue|statue/NOUN|statue#statue",
+    "original_position": 238,
+    "display_position": 148,
+    "already_exported": false
+  },
+  {
+    "card_ref": "ruins|ruin/NOUN|ruin#ruinen",
+    "original_position": 239,
+    "display_position": 149,
+    "already_exported": false
+  },
+  {
+    "card_ref": "harbour|harbour/NOUN|harbour#hafen",
+    "original_position": 240,
+    "display_position": 150,
+    "already_exported": false
+  },
+  {
+    "card_ref": "beach|beach/NOUN|beach#strand",
+    "original_position": 251,
+    "display_position": 151,
+    "already_exported": true
+  },
+  {
+    "card_ref": "coast|coast/NOUN|coast#kueste",
+    "original_position": 252,
+    "display_position": 152,
+    "already_exported": true
+  },
+  {
+    "card_ref": "island|island/NOUN|island#insel",
+    "original_position": 253,
+    "display_position": 153,
+    "already_exported": true
+  },
+  {
+    "card_ref": "lake|lake/NOUN|lake#see",
+    "original_position": 254,
+    "display_position": 154,
+    "already_exported": true
+  },
+  {
+    "card_ref": "river|river/NOUN|river#fluss",
+    "original_position": 255,
+    "display_position": 155,
+    "already_exported": true
+  },
+  {
+    "card_ref": "mountain|mountain/NOUN|mountain#berg",
+    "original_position": 256,
+    "display_position": 156,
+    "already_exported": true
+  },
+  {
+    "card_ref": "valley|valley/NOUN|valley#tal",
+    "original_position": 257,
+    "display_position": 157,
+    "already_exported": true
+  },
+  {
+    "card_ref": "forest|forest/NOUN|forest#wald",
+    "original_position": 258,
+    "display_position": 158,
+    "already_exported": true
+  },
+  {
+    "card_ref": "countryside|countryside/NOUN|countryside#laendliche-gegend",
+    "original_position": 259,
+    "display_position": 159,
+    "already_exported": true
+  },
+  {
+    "card_ref": "waterfall|waterfall/NOUN|waterfall#wasserfall",
+    "original_position": 260,
+    "display_position": 160,
+    "already_exported": true
+  },
+  {
+    "card_ref": "cliff|cliff/NOUN|cliff#klippe",
+    "original_position": 261,
+    "display_position": 161,
+    "already_exported": false
+  },
+  {
+    "card_ref": "cave|cave/NOUN|cave#hoehle",
+    "original_position": 262,
+    "display_position": 162,
+    "already_exported": false
+  },
+  {
+    "card_ref": "desert|desert/NOUN|desert#wueste",
+    "original_position": 263,
+    "display_position": 163,
+    "already_exported": false
+  },
+  {
+    "card_ref": "volcano|volcano/NOUN|volcano#vulkan",
+    "original_position": 264,
+    "display_position": 164,
+    "already_exported": false
+  },
+  {
+    "card_ref": "glacier|glacier/NOUN|glacier#gletscher",
+    "original_position": 265,
+    "display_position": 165,
+    "already_exported": false
+  },
+  {
+    "card_ref": "weather|weather/NOUN|weather#wetter",
+    "original_position": 276,
+    "display_position": 166,
+    "already_exported": true
+  },
+  {
+    "card_ref": "forecast|forecast/NOUN|forecast#wettervorhersage",
+    "original_position": 277,
+    "display_position": 167,
+    "already_exported": true
+  },
+  {
+    "card_ref": "temperature|temperature/NOUN|temperature#temperatur",
+    "original_position": 278,
+    "display_position": 168,
+    "already_exported": true
+  },
+  {
+    "card_ref": "climate|climate/NOUN|climate#klima",
+    "original_position": 279,
+    "display_position": 169,
+    "already_exported": true
+  },
+  {
+    "card_ref": "sunshine|sunshine/NOUN|sunshine#sonnenschein",
+    "original_position": 280,
+    "display_position": 170,
+    "already_exported": true
+  },
+  {
+    "card_ref": "sunlight|sunlight/NOUN|sunlight#sonnenlicht",
+    "original_position": 281,
+    "display_position": 171,
+    "already_exported": true
+  },
+  {
+    "card_ref": "shade|shade/NOUN|shade#schatten",
+    "original_position": 282,
+    "display_position": 172,
+    "already_exported": true
+  },
+  {
+    "card_ref": "shadow|shadow/NOUN|shadow#schatten",
+    "original_position": 283,
+    "display_position": 173,
+    "already_exported": true
+  },
+  {
+    "card_ref": "rain|rain/NOUN|rain#regen",
+    "original_position": 284,
+    "display_position": 174,
+    "already_exported": true
+  },
+  {
+    "card_ref": "drizzle|drizzle/NOUN|drizzle#nieselregen",
+    "original_position": 285,
+    "display_position": 175,
+    "already_exported": true
+  },
+  {
+    "card_ref": "downpour|downpour/NOUN|downpour#platzregen",
+    "original_position": 286,
+    "display_position": 176,
+    "already_exported": false
+  },
+  {
+    "card_ref": "snow|snow/NOUN|snow#schnee",
+    "original_position": 287,
+    "display_position": 177,
+    "already_exported": false
+  },
+  {
+    "card_ref": "frost|frost/NOUN|frost#frost",
+    "original_position": 288,
+    "display_position": 178,
+    "already_exported": false
+  },
+  {
+    "card_ref": "ice|ice/NOUN|ice#eis",
+    "original_position": 289,
+    "display_position": 179,
+    "already_exported": false
+  },
+  {
+    "card_ref": "wind|wind/NOUN|wind#wind",
+    "original_position": 290,
+    "display_position": 180,
+    "already_exported": false
+  },
+  {
+    "card_ref": "sea|sea/NOUN|sea#meer",
+    "original_position": 301,
+    "display_position": 181,
+    "already_exported": true
+  },
+  {
+    "card_ref": "ocean|ocean/NOUN|ocean#ozean",
+    "original_position": 302,
+    "display_position": 182,
+    "already_exported": true
+  },
+  {
+    "card_ref": "bay|bay/NOUN|bay#bucht",
+    "original_position": 303,
+    "display_position": 183,
+    "already_exported": true
+  },
+  {
+    "card_ref": "shore|shore/NOUN|shore#ufer",
+    "original_position": 304,
+    "display_position": 184,
+    "already_exported": true
+  },
+  {
+    "card_ref": "wave|wave/NOUN|wave#welle",
+    "original_position": 305,
+    "display_position": 185,
+    "already_exported": true
+  },
+  {
+    "card_ref": "tide|tide/NOUN|tide#gezeitenstand",
+    "original_position": 306,
+    "display_position": 186,
+    "already_exported": true
+  },
+  {
+    "card_ref": "current|current/NOUN|current#wasserstroemung",
+    "original_position": 307,
+    "display_position": 187,
+    "already_exported": true
+  },
+  {
+    "card_ref": "port|port/NOUN|port#hafen",
+    "original_position": 308,
+    "display_position": 188,
+    "already_exported": true
+  },
+  {
+    "card_ref": "dock|dock/NOUN|dock#anlegestelle",
+    "original_position": 309,
+    "display_position": 189,
+    "already_exported": true
+  },
+  {
+    "card_ref": "pier|pier/NOUN|pier#landungssteg",
+    "original_position": 310,
+    "display_position": 190,
+    "already_exported": true
+  },
+  {
+    "card_ref": "ferry|ferry/NOUN|ferry#faehre",
+    "original_position": 311,
+    "display_position": 191,
+    "already_exported": false
+  },
+  {
+    "card_ref": "boat|boat/NOUN|boat#boot",
+    "original_position": 312,
+    "display_position": 192,
+    "already_exported": false
+  },
+  {
+    "card_ref": "ship|ship/NOUN|ship#schiff",
+    "original_position": 313,
+    "display_position": 193,
+    "already_exported": false
+  },
+  {
+    "card_ref": "yacht|yacht/NOUN|yacht#jacht",
+    "original_position": 314,
+    "display_position": 194,
+    "already_exported": false
+  },
+  {
+    "card_ref": "cruise|cruise/NOUN|cruise#kreuzfahrt",
+    "original_position": 315,
+    "display_position": 195,
+    "already_exported": false
+  },
+  {
+    "card_ref": "pharmacy|pharmacy/NOUN|pharmacy#apotheke",
+    "original_position": 326,
+    "display_position": 196,
+    "already_exported": true
+  },
+  {
+    "card_ref": "doctor|doctor/NOUN|doctor#arzt",
+    "original_position": 327,
+    "display_position": 197,
+    "already_exported": true
+  },
+  {
+    "card_ref": "dentist|dentist/NOUN|dentist#zahnarzt",
+    "original_position": 328,
+    "display_position": 198,
+    "already_exported": true
+  },
+  {
+    "card_ref": "nurse|nurse/NOUN|nurse#krankenschwester",
+    "original_position": 329,
+    "display_position": 199,
+    "already_exported": true
+  },
+  {
+    "card_ref": "hospital|hospital/NOUN|hospital#krankenhaus",
+    "original_position": 330,
+    "display_position": 200,
+    "already_exported": true
+  },
+  {
+    "card_ref": "clinic|clinic/NOUN|clinic#praxis",
+    "original_position": 331,
+    "display_position": 201,
+    "already_exported": true
+  },
+  {
+    "card_ref": "ambulance|ambulance/NOUN|ambulance#krankenwagen",
+    "original_position": 332,
+    "display_position": 202,
+    "already_exported": true
+  },
+  {
+    "card_ref": "emergency|emergency/NOUN|emergency#notfaelle",
+    "original_position": 333,
+    "display_position": 203,
+    "already_exported": true
+  },
+  {
+    "card_ref": "injury|injury/NOUN|injury#verletzung",
+    "original_position": 334,
+    "display_position": 204,
+    "already_exported": true
+  },
+  {
+    "card_ref": "wound|wound/NOUN|wound#wunde",
+    "original_position": 335,
+    "display_position": 205,
+    "already_exported": true
+  },
+  {
+    "card_ref": "burn|burn/NOUN|burn#brandwunde",
+    "original_position": 336,
+    "display_position": 206,
+    "already_exported": false
+  },
+  {
+    "card_ref": "blister|blister/NOUN|blister#blase",
+    "original_position": 337,
+    "display_position": 207,
+    "already_exported": false
+  },
+  {
+    "card_ref": "bruise|bruise/NOUN|bruise#blauer-fleck",
+    "original_position": 338,
+    "display_position": 208,
+    "already_exported": false
+  },
+  {
+    "card_ref": "pain|pain/NOUN|pain#schmerzen",
+    "original_position": 339,
+    "display_position": 209,
+    "already_exported": false
+  },
+  {
+    "card_ref": "fever|fever/NOUN|fever#fieber",
+    "original_position": 340,
+    "display_position": 210,
+    "already_exported": false
+  },
+  {
+    "card_ref": "backpack|backpack/NOUN|backpack#rucksack",
+    "original_position": 351,
+    "display_position": 211,
+    "already_exported": true
+  },
+  {
+    "card_ref": "rucksack|rucksack/NOUN|rucksack#rucksack",
+    "original_position": 352,
+    "display_position": 212,
+    "already_exported": true
+  },
+  {
+    "card_ref": "luggage|luggage/NOUN|luggage#gepaeck",
+    "original_position": 353,
+    "display_position": 213,
+    "already_exported": true
+  },
+  {
+    "card_ref": "pouch|pouch/NOUN|pouch#beutel",
+    "original_position": 354,
+    "display_position": 214,
+    "already_exported": true
+  },
+  {
+    "card_ref": "zip|zip/NOUN|zip#reissverschluss",
+    "original_position": 355,
+    "display_position": 215,
+    "already_exported": true
+  },
+  {
+    "card_ref": "padlock|padlock/NOUN|padlock#vorhaengeschloss",
+    "original_position": 356,
+    "display_position": 216,
+    "already_exported": true
+  },
+  {
+    "card_ref": "charger|charger/NOUN|charger#ladegeraet",
+    "original_position": 357,
+    "display_position": 217,
+    "already_exported": true
+  },
+  {
+    "card_ref": "umbrella|umbrella/NOUN|umbrella#regenschirm",
+    "original_position": 358,
+    "display_position": 218,
+    "already_exported": true
+  },
+  {
+    "card_ref": "sunscreen|sunscreen/NOUN|sunscreen#sonnenschutzmittel",
+    "original_position": 359,
+    "display_position": 219,
+    "already_exported": true
+  },
+  {
+    "card_ref": "toiletries|toiletry/NOUN|toiletry#koerperpflegeartikel",
+    "original_position": 360,
+    "display_position": 220,
+    "already_exported": true
+  },
+  {
+    "card_ref": "police|police/NOUN|police#polizei",
+    "original_position": 361,
+    "display_position": 221,
+    "already_exported": false
+  },
+  {
+    "card_ref": "theft|theft/NOUN|theft#diebstahl",
+    "original_position": 362,
+    "display_position": 222,
+    "already_exported": false
+  },
+  {
+    "card_ref": "thief|thief/NOUN|thief#dieb",
+    "original_position": 363,
+    "display_position": 223,
+    "already_exported": false
+  },
+  {
+    "card_ref": "pickpocket|pickpocket/NOUN|pickpocket#taschendieb",
+    "original_position": 364,
+    "display_position": 224,
+    "already_exported": false
+  },
+  {
+    "card_ref": "scam|scam/NOUN|scam#betrugsmasche",
+    "original_position": 365,
+    "display_position": 225,
+    "already_exported": false
+  },
+  {
+    "card_ref": "arrive|arrive/VERB|arrive#ankommen",
+    "original_position": 376,
+    "display_position": 226,
+    "already_exported": true
+  },
+  {
+    "card_ref": "depart|depart/VERB|depart#abreisen",
+    "original_position": 377,
+    "display_position": 227,
+    "already_exported": true
+  },
+  {
+    "card_ref": "visit|visit/VERB|visit#besuchen",
+    "original_position": 378,
+    "display_position": 228,
+    "already_exported": true
+  },
+  {
+    "card_ref": "explore|explore/VERB|explore#erkunden",
+    "original_position": 379,
+    "display_position": 229,
+    "already_exported": true
+  },
+  {
+    "card_ref": "book|book/VERB|book#bucht",
+    "original_position": 380,
+    "display_position": 230,
+    "already_exported": true
+  },
+  {
+    "card_ref": "reserve|reserve/VERB|reserve#reservieren",
+    "original_position": 381,
+    "display_position": 231,
+    "already_exported": true
+  },
+  {
+    "card_ref": "cancel|cancel/VERB|cancel#stornieren",
+    "original_position": 382,
+    "display_position": 232,
+    "already_exported": true
+  },
+  {
+    "card_ref": "confirm|confirm/VERB|confirm#bestaetigen",
+    "original_position": 383,
+    "display_position": 233,
+    "already_exported": true
+  },
+  {
+    "card_ref": "check|check/VERB|check#ueberprueft",
+    "original_position": 384,
+    "display_position": 234,
+    "already_exported": true
+  },
+  {
+    "card_ref": "plan|plan/VERB|plan#planen",
+    "original_position": 385,
+    "display_position": 235,
+    "already_exported": true
+  },
+  {
+    "card_ref": "prepare|prepare/VERB|prepare#bereitete-vor",
+    "original_position": 386,
+    "display_position": 236,
+    "already_exported": false
+  },
+  {
+    "card_ref": "pack|pack/VERB|pack#packen",
+    "original_position": 387,
+    "display_position": 237,
+    "already_exported": false
+  },
+  {
+    "card_ref": "unpack|unpack/VERB|unpack#auspacken",
+    "original_position": 388,
+    "display_position": 238,
+    "already_exported": false
+  },
+  {
+    "card_ref": "leave|leave/VERB|leave#verlassen",
+    "original_position": 389,
+    "display_position": 239,
+    "already_exported": false
+  },
+  {
+    "card_ref": "return|return/VERB|return#zurueckkehren",
+    "original_position": 390,
+    "display_position": 240,
+    "already_exported": false
+  },
+  {
+    "card_ref": "ask|ask/VERB|ask#fragen",
+    "original_position": 401,
+    "display_position": 241,
+    "already_exported": true
+  },
+  {
+    "card_ref": "answer|answer/VERB|answer#antworten",
+    "original_position": 402,
+    "display_position": 242,
+    "already_exported": true
+  },
+  {
+    "card_ref": "explain|explain/VERB|explain#erklaere",
+    "original_position": 403,
+    "display_position": 243,
+    "already_exported": true
+  },
+  {
+    "card_ref": "understand|understand/VERB|understand#verstehen",
+    "original_position": 404,
+    "display_position": 244,
+    "already_exported": true
+  },
+  {
+    "card_ref": "repeat|repeat/VERB|repeat#wiederholen",
+    "original_position": 405,
+    "display_position": 245,
+    "already_exported": true
+  },
+  {
+    "card_ref": "pronounce|pronounce/VERB|pronounce#aussprechen",
+    "original_position": 406,
+    "display_position": 246,
+    "already_exported": true
+  },
+  {
+    "card_ref": "spell|spell/VERB|spell#buchstabieren",
+    "original_position": 407,
+    "display_position": 247,
+    "already_exported": true
+  },
+  {
+    "card_ref": "translate|translate/VERB|translate#uebersetzen",
+    "original_position": 408,
+    "display_position": 248,
+    "already_exported": true
+  },
+  {
+    "card_ref": "speak|speak/VERB|speak#sprechen",
+    "original_position": 409,
+    "display_position": 249,
+    "already_exported": true
+  },
+  {
+    "card_ref": "say|say/VERB|say#sagen",
+    "original_position": 410,
+    "display_position": 250,
+    "already_exported": true
+  },
+  {
+    "card_ref": "tell|tell/VERB|tell#sagen",
+    "original_position": 411,
+    "display_position": 251,
+    "already_exported": false
+  },
+  {
+    "card_ref": "show|show/VERB|show#zeigt",
+    "original_position": 412,
+    "display_position": 252,
+    "already_exported": false
+  },
+  {
+    "card_ref": "describe|describe/VERB|describe#beschreiben",
+    "original_position": 413,
+    "display_position": 253,
+    "already_exported": false
+  },
+  {
+    "card_ref": "recommend|recommend/VERB|recommend#empfehlen",
+    "original_position": 414,
+    "display_position": 254,
+    "already_exported": false
+  },
+  {
+    "card_ref": "suggest|suggest/VERB|suggest#vorschlagen",
+    "original_position": 415,
+    "display_position": 255,
+    "already_exported": false
+  },
+  {
+    "card_ref": "follow|follow/VERB|follow#folgen-sie",
+    "original_position": 426,
+    "display_position": 256,
+    "already_exported": true
+  },
+  {
+    "card_ref": "turn|turn/VERB|turn#abbiegen",
+    "original_position": 427,
+    "display_position": 257,
+    "already_exported": true
+  },
+  {
+    "card_ref": "continue|continue/VERB|continue#weitergehen",
+    "original_position": 428,
+    "display_position": 258,
+    "already_exported": true
+  },
+  {
+    "card_ref": "stop|stop/VERB|stop#anzuhalten",
+    "original_position": 429,
+    "display_position": 259,
+    "already_exported": true
+  },
+  {
+    "card_ref": "find|find/VERB|find#finden",
+    "original_position": 430,
+    "display_position": 260,
+    "already_exported": true
+  },
+  {
+    "card_ref": "search|search/VERB|search#suchen",
+    "original_position": 431,
+    "display_position": 261,
+    "already_exported": true
+  },
+  {
+    "card_ref": "locate|locate/VERB|locate#ausfindig-machen",
+    "original_position": 432,
+    "display_position": 262,
+    "already_exported": true
+  },
+  {
+    "card_ref": "miss|miss/VERB|miss#verpassen",
+    "original_position": 433,
+    "display_position": 263,
+    "already_exported": true
+  },
+  {
+    "card_ref": "lose|lose/VERB|lose#verloren",
+    "original_position": 434,
+    "display_position": 264,
+    "already_exported": true
+  },
+  {
+    "card_ref": "forget|forget/VERB|forget#vergessen",
+    "original_position": 435,
+    "display_position": 265,
+    "already_exported": true
+  },
+  {
+    "card_ref": "remember|remember/VERB|remember#erinnern-dich-an",
+    "original_position": 436,
+    "display_position": 266,
+    "already_exported": false
+  },
+  {
+    "card_ref": "help|help/VERB|help#helfen",
+    "original_position": 437,
+    "display_position": 267,
+    "already_exported": false
+  },
+  {
+    "card_ref": "assist|assist/VERB|assist#unterstuetzen",
+    "original_position": 438,
+    "display_position": 268,
+    "already_exported": false
+  },
+  {
+    "card_ref": "report|report/VERB|report#melden",
+    "original_position": 439,
+    "display_position": 269,
+    "already_exported": false
+  },
+  {
+    "card_ref": "contact|contact/VERB|contact#kontakt-aufnehmen",
+    "original_position": 440,
+    "display_position": 270,
+    "already_exported": false
+  },
+  {
+    "card_ref": "available|available/ADJ|available#verfuegbar",
+    "original_position": 451,
+    "display_position": 271,
+    "already_exported": true
+  },
+  {
+    "card_ref": "vacant|vacant/ADJ|vacant#frei",
+    "original_position": 452,
+    "display_position": 272,
+    "already_exported": true
+  },
+  {
+    "card_ref": "occupied|occupied/ADJ|occupied#besetzt",
+    "original_position": 453,
+    "display_position": 273,
+    "already_exported": true
+  },
+  {
+    "card_ref": "private|private/ADJ|private#privat",
+    "original_position": 454,
+    "display_position": 274,
+    "already_exported": true
+  },
+  {
+    "card_ref": "public|public/ADJ|public#oeffentlichen",
+    "original_position": 455,
+    "display_position": 275,
+    "already_exported": true
+  },
+  {
+    "card_ref": "local|local/ADJ|local#oertlichen",
+    "original_position": 456,
+    "display_position": 276,
+    "already_exported": true
+  },
+  {
+    "card_ref": "foreign|foreign/ADJ|foreign#auslaendisch",
+    "original_position": 457,
+    "display_position": 277,
+    "already_exported": true
+  },
+  {
+    "card_ref": "international|international/ADJ|international#international",
+    "original_position": 458,
+    "display_position": 278,
+    "already_exported": true
+  },
+  {
+    "card_ref": "domestic|domestic/ADJ|domestic#inlaendisch",
+    "original_position": 459,
+    "display_position": 279,
+    "already_exported": true
+  },
+  {
+    "card_ref": "direct|direct/ADJ|direct#direkt",
+    "original_position": 460,
+    "display_position": 280,
+    "already_exported": true
+  },
+  {
+    "card_ref": "crowded|crowded/ADJ|crowded#voll-mit-menschen",
+    "original_position": 461,
+    "display_position": 281,
+    "already_exported": false
+  },
+  {
+    "card_ref": "busy|busy/ADJ|busy#belebten",
+    "original_position": 462,
+    "display_position": 282,
+    "already_exported": false
+  },
+  {
+    "card_ref": "peaceful|peaceful/ADJ|peaceful#ruhig",
+    "original_position": 463,
+    "display_position": 283,
+    "already_exported": false
+  },
+  {
+    "card_ref": "comfortable|comfortable/ADJ|comfortable#bequem",
+    "original_position": 464,
+    "display_position": 284,
+    "already_exported": false
+  },
+  {
+    "card_ref": "convenient|convenient/ADJ|convenient#praktisch-gelegen",
+    "original_position": 465,
+    "display_position": 285,
+    "already_exported": false
+  },
+  {
+    "card_ref": "affordable|affordable/ADJ|affordable#bezahlbar",
+    "original_position": 476,
+    "display_position": 286,
+    "already_exported": true
+  },
+  {
+    "card_ref": "inclusive|inclusive/ADJ|inclusive#einschliesslich",
+    "original_position": 477,
+    "display_position": 287,
+    "already_exported": true
+  },
+  {
+    "card_ref": "refundable|refundable/ADJ|refundable#erstattungsfaehig",
+    "original_position": 478,
+    "display_position": 288,
+    "already_exported": true
+  },
+  {
+    "card_ref": "flexible|flexible/ADJ|flexible#veraenderbar",
+    "original_position": 479,
+    "display_position": 289,
+    "already_exported": true
+  },
+  {
+    "card_ref": "urgent|urgent/ADJ|urgent#dringend",
+    "original_position": 480,
+    "display_position": 290,
+    "already_exported": true
+  },
+  {
+    "card_ref": "necessary|necessary/ADJ|necessary#notwendig",
+    "original_position": 481,
+    "display_position": 291,
+    "already_exported": true
+  },
+  {
+    "card_ref": "essential|essential/ADJ|essential#unerlaesslich",
+    "original_position": 482,
+    "display_position": 292,
+    "already_exported": true
+  },
+  {
+    "card_ref": "optional|optional/ADJ|optional#wahlweise",
+    "original_position": 483,
+    "display_position": 293,
+    "already_exported": true
+  },
+  {
+    "card_ref": "suitable|suitable/ADJ|suitable#geeignet",
+    "original_position": 484,
+    "display_position": 294,
+    "already_exported": true
+  },
+  {
+    "card_ref": "reliable|reliable/ADJ|reliable#zuverlaessige",
+    "original_position": 485,
+    "display_position": 295,
+    "already_exported": true
+  },
+  {
+    "card_ref": "secure|secure/ADJ|secure#gesichert",
+    "original_position": 486,
+    "display_position": 296,
+    "already_exported": false
+  },
+  {
+    "card_ref": "dangerous|dangerous/ADJ|dangerous#gefaehrlich",
+    "original_position": 487,
+    "display_position": 297,
+    "already_exported": false
+  },
+  {
+    "card_ref": "slippery|slippery/ADJ|slippery#rutschig",
+    "original_position": 488,
+    "display_position": 298,
+    "already_exported": false
+  },
+  {
+    "card_ref": "steep|steep/ADJ|steep#steile",
+    "original_position": 489,
+    "display_position": 299,
+    "already_exported": false
+  },
+  {
+    "card_ref": "shallow|shallow/ADJ|shallow#flach",
+    "original_position": 490,
+    "display_position": 300,
+    "already_exported": false
+  }
+]

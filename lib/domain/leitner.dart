@@ -67,7 +67,7 @@ DateTime startOfLocalDay(DateTime moment, {int plusDays = 0}) {
 }
 
 /// Box and due date after the first pass of a card (PRODUCT.md, docs/srs.md):
-/// - synonym hint ([hintUsed]) → box 1, in every mode and from every box;
+/// - legacy penalizing help ([hintUsed]) → box 1; neutral synonyms never set it;
 /// - an error ([errorCount] > 0) or "Wort erfahren" ([revealed]) → box 1;
 /// - otherwise clean ("Fast richtig" before the exact form included): first
 ///   contact (box 0) → box 3; Revue and Vorab-Üben keep box and due date;

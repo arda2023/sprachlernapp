@@ -1,0 +1,66 @@
+{
+  "status": "authored_editorially_reviewed_and_locally_validated_project_import_pending",
+  "author": "ChatGPT",
+  "batch": 2,
+  "sentences": 100,
+  "target_words": 100,
+  "tokens": 984,
+  "reviewed_alternatives": 14,
+  "pos_counts": {
+    "NOUN": 75,
+    "VERB": 15,
+    "ADJ": 10
+  },
+  "new_lemmas": 119,
+  "new_senses": 135,
+  "new_dictionary_forms": 171,
+  "existing_target_senses": 35,
+  "new_target_senses": 65,
+  "source_sha256": "874b4a95d0a060fc9a77d7dc0dc426018942fa35ad7b2119731fb5281ceb6540",
+  "registry_sha256": "e2331264c70e18c2bbb8e92ce8ead4e7d81f14a342da466e7b1c1c990c5a3642",
+  "create_sha256": "fd78d0eb2001ed60d3b87e045199af2c48dcc4f44631fb6a2f8400b8ca5b862d",
+  "validation": {
+    "spacy": "3.8.16",
+    "model": "en_core_web_sm 3.8.0",
+    "max_words": 14,
+    "max_subclauses": 1,
+    "linter_errors": 0,
+    "linter_frequency_warnings": 14,
+    "display_reference_tests": 6,
+    "word_lengths_min": 5,
+    "word_lengths_max": 12
+  },
+  "positions": {
+    "original_selection_unchanged": true,
+    "create_append_positions": "101..200",
+    "final_display_positions": "1..200",
+    "existing_rows_with_changed_display": 95
+  },
+  "expected_after_project_import": {
+    "cards": 464,
+    "sentences_including_story": 998,
+    "card_sentences_including_history": 992,
+    "primary_words": 360,
+    "travel_primary_words": 200,
+    "general_primary_words": 160,
+    "decks": 2
+  },
+  "limits": [
+    "No current-repository create_content/build_rows execution here; --repo must run after integration.",
+    "No SQLite export, app staging or device testing here.",
+    "No Vertex/Gemini or external annotation API calls. This editorial creation itself uses ChatGPT.",
+    "No independent human review or public content release.",
+    "Model POS tags are not authoritative; supplied project sense/POS references and editorial grammar determine annotation.",
+    "CEFR bands are editorial categories, not certified levels.",
+    "Empty alternatives do not imply uniqueness.",
+    "Existing word/sense glosses remain unchanged, including historically abbreviated or inflected glosses."
+  ],
+  "companion_decisions": [
+    "Existing sense reused for rain/regnet, book/bucht, offer/anbot and other inflected historical keys; new form translations express actual inflection.",
+    "registration/anmeldung is separate from existing vehicle registration.",
+    "light/schwach differs from weight/light material; strong current differs from the existing physical-strength definition.",
+    "walking is annotated as the activity in walking tour/shoes/route; changes is the noun for transfers, not the verb.",
+    "Future reserved senses such as route, shower, snow, souvenir and board may occur as companions; their learning cards and ownership rows are not created now."
+  ],
+  "known_source_metadata_note": "Registry source_sqlite_sha256 is inherited historical metadata. The uploaded contract binds this import with source_pack_sha256/raw pack hash and canonical registry hash; source registry is preserved."
+}

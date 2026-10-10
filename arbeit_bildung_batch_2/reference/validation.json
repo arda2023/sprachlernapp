@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "selected": 245,
+  "excluded": 11,
+  "partition_counts": {
+    "imported": 82,
+    "current": 82,
+    "future": 81
+  },
+  "reused_proposed_senses": 11,
+  "batches": {
+    "1": 82,
+    "2": 82,
+    "3": 81
+  },
+  "topics_per_batch": {
+    "1": {
+      "Beruf und Arbeitsplatz": 11,
+      "Schule und Unterricht": 11,
+      "Aufgaben, Fähigkeiten und Arbeitsabläufe": 10,
+      "Büro und Organisation": 10,
+      "Zusammenarbeit und Kommunikation": 10,
+      "Bewerbung und Berufseinstieg": 10,
+      "Ausbildung und Studium": 10,
+      "Lernen und Prüfungen": 10
+    },
+    "2": {
+      "Ausbildung und Studium": 10,
+      "Lernen und Prüfungen": 11,
+      "Beruf und Arbeitsplatz": 11,
+      "Schule und Unterricht": 10,
+      "Aufgaben, Fähigkeiten und Arbeitsabläufe": 10,
+      "Büro und Organisation": 10,
+      "Zusammenarbeit und Kommunikation": 10,
+      "Bewerbung und Berufseinstieg": 10
+    },
+    "3": {
+      "Büro und Organisation": 10,
+      "Zusammenarbeit und Kommunikation": 10,
+      "Bewerbung und Berufseinstieg": 11,
+      "Ausbildung und Studium": 10,
+      "Lernen und Prüfungen": 11,
+      "Beruf und Arbeitsplatz": 10,
+      "Aufgaben, Fähigkeiten und Arbeitsabläufe": 9,
+      "Schule und Unterricht": 10
+    }
+  },
+  "existing_senses": 48,
+  "new_senses": 197,
+  "existing_cards": 1087,
+  "existing_groups": 1075,
+  "new_groups": 163,
+  "registry_words": 1146,
+  "partition_selection": "PASS: 82 present",
+  "validate_selection": "PASS: parent and exact reservations",
+  "index_registry": "PASS",
+  "validate_learning": "PASS: existing and planned",
+  "build_rows": "PASS: reservation-only rows unchanged",
+  "semantic_review": "explicit editorial decisions, no automatic equivalence inference"
+}

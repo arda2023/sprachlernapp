@@ -1,0 +1,195 @@
+{
+  "errors": [],
+  "warnings": [
+    [
+      "preference",
+      "i+1",
+      "'aisle'/'aisle' Zipf 3.72 below 4.0"
+    ],
+    [
+      "restriction",
+      "i+1",
+      "'luggage'/'luggage' Zipf 3.80 below 4.0"
+    ],
+    [
+      "inspection",
+      "i+1",
+      "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+    ],
+    [
+      "exit",
+      "i+1",
+      "'corridor'/'corridor' Zipf 3.88 below 4.0"
+    ],
+    [
+      "baggage",
+      "i+1",
+      "'unattended'/'unattended' Zipf 3.18 below 4.0"
+    ],
+    [
+      "suitcase",
+      "i+1",
+      "'upstairs'/'upstairs' Zipf 3.87 below 4.0"
+    ],
+    [
+      "trolley",
+      "i+1",
+      "'suitcase'/'suitcases' Zipf 3.55 below 4.0"
+    ],
+    [
+      "trolley",
+      "i+1",
+      "'luggage'/'luggage' Zipf 3.80 below 4.0"
+    ],
+    [
+      "junction",
+      "i+1",
+      "'petrol'/'petrol' Zipf 3.72 below 4.0"
+    ],
+    [
+      "zone",
+      "i+1",
+      "'fare'/'fare' Zipf 3.94 below 4.0"
+    ],
+    [
+      "steering",
+      "i+1",
+      "'mechanic'/'mechanic' Zipf 3.79 below 4.0"
+    ],
+    [
+      "helmet",
+      "i+1",
+      "'bicycle'/'bicycle' Zipf 3.98 below 4.0"
+    ],
+    [
+      "puncture",
+      "i+1",
+      "'bicycle'/'bicycle' Zipf 3.98 below 4.0"
+    ],
+    [
+      "puncture",
+      "i+1",
+      "'tyre'/'tyre' Zipf 3.51 below 4.0"
+    ],
+    [
+      "keycard",
+      "i+1",
+      "'unlock'/'unlock' Zipf 3.90 below 4.0"
+    ],
+    [
+      "napkin",
+      "i+1",
+      "'waiter'/'waiter' Zipf 3.61 below 4.0"
+    ],
+    [
+      "chopsticks",
+      "i+1",
+      "'noodle'/'noodles' Zipf 3.70 below 4.0"
+    ],
+    [
+      "tomato",
+      "i+1",
+      "'sliced'/'sliced' Zipf 3.57 below 4.0"
+    ],
+    [
+      "onion",
+      "i+1",
+      "'garlic'/'garlic' Zipf 3.92 below 4.0"
+    ],
+    [
+      "change",
+      "i+1",
+      "'banknote'/'banknote' Zipf 2.49 below 4.0"
+    ],
+    [
+      "purchase",
+      "i+1",
+      "'receipt'/'receipt' Zipf 3.92 below 4.0"
+    ],
+    [
+      "adventure",
+      "i+1",
+      "'rainforest'/'rainforest' Zipf 3.39 below 4.0"
+    ],
+    [
+      "adventure",
+      "i+1",
+      "'unforgettable'/'unforgettable' Zipf 3.49 below 4.0"
+    ],
+    [
+      "sunrise",
+      "i+1",
+      "'balcony'/'balcony' Zipf 3.78 below 4.0"
+    ],
+    [
+      "humidity",
+      "i+1",
+      "'towel'/'towels' Zipf 3.94 below 4.0"
+    ],
+    [
+      "prescription",
+      "i+1",
+      "'pharmacist'/'pharmacist' Zipf 3.34 below 4.0"
+    ],
+    [
+      "tablet",
+      "i+1",
+      "'pharmacist'/'pharmacist' Zipf 3.34 below 4.0"
+    ],
+    [
+      "assistance",
+      "i+1",
+      "'luggage'/'luggage' Zipf 3.80 below 4.0"
+    ],
+    [
+      "coverage",
+      "i+1",
+      "'luggage'/'luggage' Zipf 3.80 below 4.0"
+    ],
+    [
+      "claim",
+      "i+1",
+      "'insurer'/'insurer' Zipf 3.53 below 4.0"
+    ],
+    [
+      "claim",
+      "i+1",
+      "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+    ],
+    [
+      "prefer",
+      "i+1",
+      "'aisle'/'aisle' Zipf 3.72 below 4.0"
+    ],
+    [
+      "want",
+      "i+1",
+      "'balcony'/'balcony' Zipf 3.78 below 4.0"
+    ],
+    [
+      "deliver",
+      "i+1",
+      "'luggage'/'luggage' Zipf 3.80 below 4.0"
+    ],
+    [
+      "weigh",
+      "i+1",
+      "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+    ],
+    [
+      "fasten",
+      "i+1",
+      "'seatbelt'/'seatbelt' Zipf 3.07 below 4.0"
+    ],
+    [
+      "accessible",
+      "i+1",
+      "'wheelchair'/'wheelchairs' Zipf 3.86 below 4.0"
+    ],
+    [
+      "vegan",
+      "i+1",
+      "'dessert'/'dessert' Zipf 3.83 below 4.0"
+    ]
+  ]
+}

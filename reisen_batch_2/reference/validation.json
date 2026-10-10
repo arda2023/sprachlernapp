@@ -1,0 +1,19 @@
+{
+  "registry_index": "PASS",
+  "registry_word_rows_unchanged": true,
+  "parent_matches_actual_export_snapshot": true,
+  "batch_2_count": 100,
+  "exact_reserved_ids": "PASS",
+  "existing_batch_2_cards": 0,
+  "in_memory_rows_with_revision_unchanged": true,
+  "combined_display_positions": "1..200",
+  "promoted_senses": [
+    "campsite",
+    "tax",
+    "castle",
+    "ambulance",
+    "reserve",
+    "cancel",
+    "miss"
+  ]
+}

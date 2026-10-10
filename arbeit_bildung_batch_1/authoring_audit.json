@@ -1,0 +1,47 @@
+{
+  "status": "offline_checked",
+  "authored_by": "ChatGPT",
+  "independent_human_review": false,
+  "new_cards": 82,
+  "new_sentences": 82,
+  "tokens": 900,
+  "new_alternatives": 6,
+  "new_rows": {
+    "lemmas": 112,
+    "senses": 129,
+    "cards": 82,
+    "decks": 1,
+    "deck_cards": 82,
+    "deck_words": 82,
+    "word_aliases": 2,
+    "sentences": 82,
+    "sentence_tokens": 900,
+    "dictionary_forms": 175,
+    "card_sentences": 82
+  },
+  "topics": {
+    "Beruf und Arbeitsplatz": 11,
+    "Schule und Unterricht": 11,
+    "Aufgaben, Fähigkeiten und Arbeitsabläufe": 10,
+    "Büro und Organisation": 10,
+    "Zusammenarbeit und Kommunikation": 10,
+    "Bewerbung und Berufseinstieg": 10,
+    "Ausbildung und Studium": 10,
+    "Lernen und Prüfungen": 10
+  },
+  "new_linter_errors": 0,
+  "new_frequency_warnings": 4,
+  "full_pack_frequency_warnings": 356,
+  "local_sqlite_export_and_readback": true,
+  "expected_learning_goals": {
+    "allgemeine-sprache": 160,
+    "reisen": 489,
+    "alltag-zuhause": 241,
+    "arbeit-bildung": 82
+  },
+  "app_staged": false,
+  "cloud_calls": 0,
+  "cost_usd": 0,
+  "preserved": "1005 old card IDs and all original content and deck positions preserved; 82 new display positions 1..82; registry original positions and learning metadata remain unchanged",
+  "source_only_legacy_glosses": "Old inflected/compound gloss rows preserved; full card translations follow selection. Not a global dictionary cleanup."
+}

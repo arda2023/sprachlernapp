@@ -1,0 +1,9 @@
+verify_reisen_batch_3.py
+PASS supplied JSON Schema (strict standard-library adapter)
+PASS 100 sentences, 978 tokens, 6-11 words; 100 review hashes
+PASS actual tokenizer and linter: 0 errors, 23 frequency warnings
+PASS literal reviewed alternatives: 7
+PASS in-memory 300-word display mapping; all other data unchanged
+NOT RUN: current repository importer/build_rows, SQLite export, staging or device tests
+No export, staging, cloud calls or database writes.
+Exitcode: 0

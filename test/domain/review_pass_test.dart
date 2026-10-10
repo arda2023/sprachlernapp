@@ -122,63 +122,75 @@ void main() {
     expect([r.boxBefore, r.boxAfter, r.firstAttemptCorrect], [2, 3, false]);
   });
 
-  test('synonym then exact → box 1, hint_used, no error', () {
-    final p = pass(
-      state: UserCardState(
-        cardId: 'card-went',
-        box: 4,
-        dueAt: DateTime(2026, 10, 3),
-      ),
-    );
-    final hint = p.submit('Walked', at(2))!;
-    expect(hint.verdict, AnswerVerdict.alternative);
-    expect(
-      hint.message,
-      'Walked passt hier auch. Gesucht ist ein anderes Wort: w…',
-    );
-    expect(p.solved, isFalse);
-    expect(p.hintUsed, isTrue);
-    p.submit('went', at(7));
-    final r = finish(p)!;
-    expect(r.boxAfter, 1);
-    expect(r.dueAtAfter, DateTime(2026, 10, 4));
-    expect(r.hintUsed, isTrue);
-    expect(r.errorCount, 0);
-    expect(r.revealed, isFalse);
-    expect(r.firstAttemptCorrect, isFalse);
-    expect(p.needsRepeat, isTrue);
-  });
-
-  test('synonym on first contact → box 1, not box 3', () {
-    final p = pass();
-    p.submit('walked', at(1));
-    p.submit('went', at(2));
-    expect(finish(p)!.boxAfter, 1);
-  });
-
-  test('synonym then "Wort erfahren" → hint_used and revealed both true', () {
+  test(
+    'synonym then exact advances normally without hint, error or repeat',
+    () {
+      final p = pass(
+        state: UserCardState(
+          cardId: 'card-went',
+          box: 4,
+          dueAt: DateTime(2026, 10, 3),
+        ),
+      );
+      final hint = p.submit('Walked', at(2))!;
+      expect(hint.verdict, AnswerVerdict.alternative);
+      expect(
+        hint.message,
+        'Das passt auch. Gesucht ist hier ein anderes Wort. Versuch es noch einmal.',
+      );
+      expect(p.solved, isFalse);
+      expect(p.hintUsed, isFalse);
+      p.submit('went', at(7));
+      final r = finish(p)!;
+      expect(r.boxAfter, 5);
+      expect(
+        [r.hintUsed, r.errorCount, r.revealed, r.firstAttemptCorrect],
+        [false, 0, false, true],
+      );
+      expect(p.needsRepeat, isFalse);
+    },
+  );
+  for (final count in [1, 2, 5]) {
+    test('$count neutral synonyms then exact: clean Box 3, one record', () {
+      final p = pass();
+      for (var i = 0; i < count; i++) {
+        p.submit('walked', at(1));
+      }
+      expect(finish(p), isNull);
+      p.submit('went', at(2));
+      final r = finish(p)!;
+      expect(
+        [r.boxAfter, r.firstAttemptCorrect, r.hintUsed, r.errorCount],
+        [3, true, false, 0],
+      );
+      expect(finish(p), isNull);
+      expect(p.needsRepeat, isFalse);
+    });
+  }
+  test('synonym then reveal retains penalty', () {
     final p = pass();
     p.submit('walked', at(1));
     expect(p.reveal(at(3)), isTrue);
-    expect(p.reveal(at(4)), isFalse); // once only
-    expect(p.solved, isFalse); // the form still has to be typed
+    expect(p.reveal(at(4)), isFalse);
     p.submit('went', at(6));
     final r = finish(p)!;
-    expect(r.hintUsed, isTrue);
-    expect(r.revealed, isTrue);
-    expect(r.errorCount, 0);
-    expect(r.boxAfter, 1);
+    expect(
+      [r.hintUsed, r.revealed, r.errorCount, r.boxAfter, r.firstAttemptCorrect],
+      [false, true, 0, 1, false],
+    );
   });
-
-  test('hint_used stays set; later errors still count, box stays 1', () {
+  test('wrong then repeated synonym then exact preserves error', () {
     final p = pass();
-    p.submit('walked', at(1));
-    p.submit('walked', at(2)); // repeated alternative: same hint, no error
-    expect(p.errorCount, 0);
-    expect(p.submit('ran', at(3))!.verdict, AnswerVerdict.wrong);
+    p.submit('ran', at(1));
+    p.submit('walked', at(2));
+    p.submit('walked', at(3));
     p.submit('went', at(4));
     final r = finish(p)!;
-    expect([r.hintUsed, r.errorCount, r.boxAfter], [true, 1, 1]);
+    expect(
+      [r.hintUsed, r.errorCount, r.boxAfter, r.firstAttemptCorrect],
+      [false, 1, 1, false],
+    );
+    expect(p.needsRepeat, isTrue);
   });
 
   test('wrong answer → error, box 1', () {
@@ -242,7 +254,7 @@ void main() {
     expect(p.errorCount, 0);
   });
 
-  test('early practice: clean keeps the box, synonym resets', () {
+  test('early practice: clean and neutral synonym keep the box', () {
     final due = DateTime(2026, 10, 20);
     final clean = pass(
       mode: ReviewMode.revue,
@@ -258,7 +270,7 @@ void main() {
     );
     helped.submit('walked', at(1));
     helped.submit('went', at(2));
-    expect(finish(helped)!.boxAfter, 1);
+    expect(finish(helped)!.boxAfter, 4);
   });
 
   test('a repeat pass is practised but never logged', () {

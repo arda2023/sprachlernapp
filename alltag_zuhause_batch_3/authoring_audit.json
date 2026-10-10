@@ -1,0 +1,46 @@
+{
+  "status": "offline_checked",
+  "authored_by": "ChatGPT",
+  "independent_human_review": false,
+  "new_cards": 78,
+  "new_sentences": 78,
+  "tokens": 937,
+  "new_alternatives": 7,
+  "new_rows": {
+    "lemmas": 50,
+    "senses": 63,
+    "cards": 78,
+    "decks": 0,
+    "deck_cards": 78,
+    "deck_words": 78,
+    "word_aliases": 1,
+    "sentences": 78,
+    "sentence_tokens": 937,
+    "dictionary_forms": 94,
+    "card_sentences": 78
+  },
+  "topics": {
+    "Wohnen": 9,
+    "Haushalt": 10,
+    "Kleidung": 10,
+    "Einkaufen": 7,
+    "Kochen": 13,
+    "Familie": 10,
+    "Freizeit": 9,
+    "Alltagstätigkeiten": 10
+  },
+  "new_linter_errors": 0,
+  "new_frequency_warnings": 28,
+  "full_pack_frequency_warnings": 352,
+  "local_sqlite_export_and_readback": true,
+  "expected_learning_goals": {
+    "allgemeine-sprache": 160,
+    "reisen": 489,
+    "alltag-zuhause": 241
+  },
+  "app_staged": false,
+  "cloud_calls": 0,
+  "cost_usd": 0,
+  "preserved": "927 old card IDs and all original content preserved; only the authorized Alltag deck display positions change; registry original positions and learning metadata remain unchanged",
+  "source_only_legacy_glosses": "Old inflected/compound gloss rows preserved; full card translations follow selection. Not a global dictionary cleanup."
+}

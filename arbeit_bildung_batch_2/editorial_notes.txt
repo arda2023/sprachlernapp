@@ -1,0 +1,45 @@
+ARBEIT & BILDUNG – BATCH 2
+
+82 direkt von ChatGPT geschriebene englisch/deutsche Satzpaare, vollständig gegengelesen mit Zielbedeutung, Übersetzung und 934 Tokenpositionen. Keine externen Gemini-/Vertex-Aufrufe; keine unabhängige menschliche Qualitätszertifizierung.
+
+Verträge:
+- Exakt die 82 aktuellen Identitäten aus authoring_context.json. Die ersten 82 bleiben erhalten, die letzten 81 reserviert. Keine vorgezogene Lernkarte für Begleitwörter.
+- Alle cards.learning, Zielübersetzungen, Originalpositionen und expliziten Definitionen bleiben unverändert. Neue Karten haben je einen festen Satz.
+- Der bestehende Stapel wird zunächst mit Positionen 83–164 erweitert. Der separate hashgebundene Display-Patch führt die Anzeige anschließend gemäß der gelieferten Auswahl auf 1–164 zusammen. Nur die beiden Positionsfelder dieses Stapels ändern sich; alle anderen alten Inhaltswerte bleiben erhalten.
+- Die korrigierte front-Bindung im Basis-Pack bleibt durch vollständigen Vergleich sämtlicher alter Zeilen erhalten.
+- Neue Sätze verwenden die vorhandene technische Stufe mittel und die konfigurierte Zipf-Grenze 3,5; das ist keine formelle CEFR-Einstufung. Vier Häufigkeitshinweise: simplify, timetable, cupboard, trainee. Keine Linterfehler.
+
+Bedeutungsentscheidungen:
+- career bezeichnet den beruflichen Weg, interview das Vorstellungsgespräch, argument einen Streit, notebook ein Papierheft und reference eine berufliche Referenz.
+- college wird im britischen Ausbildungskontext verwendet. primary und secondary beschreiben Schulstufen. Die Zielglossen bleiben dem Auswahlvertrag entsprechend erhalten.
+- revise bedeutet Lernstoff wiederholen. recruit bezeichnet Personalgewinnung, resign die eigene Kündigung, teach systematischen Unterricht.
+- drive ist im Backup-Satz ein digitales Laufwerk, kein Autofahren. left bedeutet im Druckersatz übrig, nicht links. Beide benötigen eigene Begleitwort-Senses.
+- design ist beim Ziel impress ein Entwurf (Nomen), beim eigenen Lernziel ein Verb. plans sind je nach Satz Zukunftsvorhaben oder technische Baupläne, nicht das Verb planen.
+- track in keep track of ist ein Überblick und kein Gleis. schedule und timetable meinen hier Arbeits-/Terminpläne statt ausschließlich Verkehrspläne; budget ist kein Reisebudget.
+- secure ist im Datenbanksatz ein Adjektiv; store beschreibt Datenspeicherung. name im Quellenhinweis ist ein Verb, printing im Digitalsatz ebenfalls.
+- lesson in lessons learned bezeichnet eine Erkenntnis aus Erfahrung, keine Unterrichtsstunde. taught erhält dazu eine Erfahrungsbedeutung, statt es blind an den systematischen Unterricht zu binden.
+- working in working day ist ein Attribut für einen Arbeitstag. Beispielkontexte wie break out, move on to, instead of und Präpositionen wurden gesondert gelesen.
+- Passende bestehende sowie später reservierte Wörterbuch-Senses werden wiederverwendet. Beispielsweise sind presentation, example, secondary und pass noch keine zusätzlichen Lernkarten in dieser Lieferung.
+- Historische knappe oder gebeugte Glossen bleiben erhalten. Neue Formglossen wurden nach Numerus und Verbform redigiert; sie werden nicht pauschal aus der Hauptglosse abgeleitet.
+
+Vier freigegebene Alternativen, jeweils vollständig eingesetzt und gegengelesen:
+1. enrol → enroll
+   You can enroll on the evening course until the end of August.
+   Orthografische Variante desselben Verbs; der Anschluss on bleibt grammatisch möglich.
+2. analyse → analyze
+   We need to analyze the results before we write our report.
+   Orthografische Variante; Bedeutung und Satzstruktur bleiben gleich.
+3. polite → courteous
+   It is courteous to thank someone who has helped you.
+   Beide bezeichnen in dieser allgemeinen Höflichkeitsaussage angemessenes, rücksichtsvolles Verhalten.
+4. difficult → hard
+   The first question was easy, but the last one was hard.
+   hard bezeichnet hier die Schwierigkeit der Frage, keine materielle Härte.
+
+accepted enthält nur die Zielform. Keine automatische Antwortfreigabe aus Besitzalias oder Lerngruppe; Alternativen sind nicht vollständig. Neutrale Synonymhinweise ohne Lernstandsabzug gelten unverändert.
+
+Tatsächliche Prüfung:
+Unveränderte mitgelieferte Projektfunktionen für Schema, Kontext, Registry, Gruppen, Tokens, Reviewhashes, Import, Display-Patch und SQLite wurden ausgeführt. Der portable Verifier wählt nur den explizit mitgelieferten spaCy-Modellpfad; keine Änderungen an den Validatorregeln. Ein separater lokaler Export mit vollständigem Abgleich aller 18 Tabellen ist bestanden.
+Erwarteter Import: 1169 Karten; 1054 primäre Lernziele (160/489/241/164); 1703 Satztexte und 1697 Satzverknüpfungen einschließlich Historie.
+Kein App-Staging, Flutter-Test, Mobilgerätetest oder user.db-Zugriff hier. Keine öffentliche Inhaltsfreigabe.
+reference/content.sqlite ist ausschließlich die unveränderte Quelle arbeit_bildung_batch_1_v1.

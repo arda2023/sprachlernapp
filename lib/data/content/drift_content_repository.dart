@@ -52,7 +52,9 @@ class DriftContentRepository
           titleDe: r.read<String>('title_de'),
           descriptionDe: r.readNullable<String>('description_de'),
           cefrBand: r.readNullable<String>('cefr_band'),
-          cardCount: (await deckCardIds(r.read<String>('id'))).length,
+          cardCount: (await selectionCards(
+            await deckCardIds(r.read<String>('id')),
+          )).map((c) => c.learningGroup).toSet().length,
         ),
     ];
   }
@@ -70,7 +72,7 @@ class DriftContentRepository
     final seen = <String>{};
     return [
       for (final r in rows)
-        if ((_db.info.schemaVersion == 2 ||
+        if ((_db.info.schemaVersion >= 2 ||
                 seen.add(contentFormNorm(r.read<String>('form')))) &&
             r.read<String>('deck_id') == deckId)
           r.read<String>('card_id'),
@@ -95,13 +97,20 @@ class DriftContentRepository
       final marks = _marks(chunk.length);
       for (final r in await _select(
         'SELECT c.id, c.lang, c.form, c.form_norm, c.lemma_id, l.lemma, c.pos, '
-        'c.form_kind, c.form_label_de, c.translation_de, c.cefr_band, c.sense_id, s.sense_key '
+        'c.form_kind, c.form_label_de, c.translation_de, c.cefr_band, c.sense_id, s.sense_key, '
+        '${info.schemaVersion >= 3 ? 'c.learning' : 'NULL'} AS learning '
         'FROM cards c JOIN lemmas l ON l.id = c.lemma_id '
         'JOIN senses s ON s.id = c.sense_id '
         'WHERE c.id IN ($marks) AND c.lang = ? AND c.removed_in IS NULL',
         [...chunk, _lang],
       )) {
         final card = ContentCard(
+          learning: r.readNullable<String>('learning') == null
+              ? null
+              : LearningTarget.fromJson(
+                  jsonDecode(r.read<String>('learning'))
+                      as Map<String, dynamic>,
+                ),
           id: r.read<String>('id'),
           lang: r.read<String>('lang'),
           form: r.read<String>('form'),
@@ -465,6 +474,11 @@ class DriftContentRepository
       retired: retired,
       problem: problem,
       otherForms: {...forms}..remove(contentFormNorm(token.surface)),
+      groupMembers: card?.learning == null
+          ? const []
+          : (await selectionCards(await allCardIds()))
+                .where((c) => c.learningGroup == card!.learningGroup)
+                .toList(),
     );
   }
 }

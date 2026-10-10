@@ -1,4 +1,5 @@
 import '../../domain/content.dart';
+import '../../domain/learning_groups.dart';
 import '../../domain/repositories.dart';
 import '../../domain/story_learning.dart';
 import '../../domain/srs_state.dart';
@@ -35,14 +36,12 @@ class PracticeItemResolver {
       for (final i in await story?.localPracticeItems() ?? <PracticeItem>[])
         i.card.id: i,
     };
-    final cards = {
-      for (final c
-          in content == null
-              ? <ContentCard>[]
-              : await content.selectionCards(await content.allCardIds()))
-        c.id: c,
-      for (final i in locals.values) i.card.id: i.card,
-    };
+    final cards = attachLocalLearning(
+      content == null
+          ? <ContentCard>[]
+          : await content.selectionCards(await content.allCardIds()),
+      locals.values.map((i) => i.card),
+    );
     return PracticeItemResolver._(
       content,
       user,
@@ -70,13 +69,11 @@ class PracticeItemResolver {
   String? bindingFor(ContentCard card) => card.senseId == null
       ? null
       : bindings[LearningIdentity(card.lang, card.formNorm, card.senseId!).key];
-  List<String> eligiblePrimaries(Iterable<String> ids) => [
-    for (final id in ids)
-      if (states.containsKey(id) ||
-          bindingFor(cards[id]!) == null ||
-          bindingFor(cards[id]!) == id)
-        id,
-  ];
+  List<String> eligiblePrimaries(Iterable<String> ids) =>
+      LearningGroups(cards, states).project([
+        for (final id in ids)
+          states.containsKey(id) ? id : bindingFor(cards[id]!) ?? id,
+      ]);
   Future<List<String>> activePrimaryIds() async {
     if (content == null) return [];
     final decks = await content!.decks();

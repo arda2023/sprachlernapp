@@ -1,0 +1,60 @@
+Ziel: Die ersten 82 redigierten Lernziele für „Arbeit & Bildung“ offline prüfen, importieren und intern stagen; danach die Authoring-ZIP für die nächsten 82 Ziele bereitstellen.
+
+Dateien:
+- Lieferung im Repository-Root als arbeit_bildung_batch_1/ entpacken, vorhandene Ordner nicht überschreiben.
+- Lesen: AGENTS.md, PRODUCT.md, docs/content-schema.md, docs/learning-groups-v1.md, docs/arbeit-bildung-authoring.md, docs/alltag-zuhause-batch-3-import.md, NEXTSTEPS.md.
+- Lieferung: arbeit_bildung_batch_1.editorial.json, reading.json, annotation_review.txt, editorial_notes.txt, manifest.json, reference/authoring_context.json.
+- Basis: pipeline/out/alltag_zuhause_batch_3_v1/pack.json und content.sqlite.
+- Auswahl/Registry/Gruppen: pipeline/data/selection/arbeit_bildung_v1.json, pipeline/data/words/en.arbeit_bildung_v1.json, pipeline/data/learning_groups/en.arbeit_bildung_v1.json.
+- Vorhandene Werkzeuge: pipeline/scripts/import_editorial_patch.py, pipeline/scripts/export_authoring_context.py, tool/stage_content_pack.dart, test/data/real_pack_test.dart.
+- Neue Ausgabe: pipeline/out/arbeit_bildung_batch_1_v1/.
+- Bericht: docs/arbeit-bildung-batch-1-import.md.
+- Neue Kontext-Snapshots für Batch 2 getrennt unter pipeline/data/selection/, pipeline/data/words/ und pipeline/data/learning_groups/ nach dem bisherigen Namensschema.
+- Nächste ZIP: build/arbeit_bildung_authoring_batch_2.zip.
+- NEXTSTEPS.md aktualisieren.
+
+Schritte:
+1. Git-Status und Ausgangshashes sichern. Bestehende Änderungen erhalten. Basis-JSON muss Rohbyte-SHA256 bb092533f44af47f168f1b432226f4999585e8b4ad5f789ca544abe04fe32be0 haben; Basis-SQLite 9fd1a5e546ba32e92bdbb519008414dc34225f76552e79d8271a71af50a1cbe3. Liefermanifest prüfen. Referenzcode nicht über Projektcode kopieren. Ausgaben nicht überschreiben.
+2. Den gelieferten verify_arbeit_bildung_batch_1.py --repo . ausführen. Registry/Gruppen kanonisch vergleichen, Pack/SQLite rohbytegebunden. Vorhandene Pipeline-Umgebung verwenden. Bei echten Vertragsabweichungen konkrete Unterschiede melden; keine Hashprüfung umgehen.
+3. Alle 82 Satzpaare, Wortbindungen und sechs Alternativen gegenlesen; Alternativen wörtlich einsetzen. Die vorgesehenen Bedeutungen beachten, etwa save = Daten speichern, mouse = Computermaus, manage = eine Aufgabe bewältigen. Neue Begleitwort-Senses lösen echte Unterschiede zum Bestand, z. B. button = Schaltfläche statt Kleiderknopf und claim = Behauptung statt Versicherungsantrag. Bereits vorhandene und für spätere Batches reservierte Bedeutungen wiederverwenden. Keine zusätzliche Lernkarte für ein Begleitwort erzeugen. Historische Senses/Formglossen nicht nebenbei ändern.
+4. Genau die 82 aktuellen Identitäten mit unveränderten Zielübersetzungen und cards.learning importieren. Pro Karte genau ein fester Satz. CV bleibt als Form und Lemma großgeschrieben, die Besitzform ist normalisiert cv. accepted[] enthält nur die Zielform; valid_alternatives sind neutral ohne Lernstandsabzug. Nur konkret belegte Lieferfehler minimal korrigieren, Original erhalten und Vorher/Nachher begründen; betroffene Reviewhashes korrekt neu berechnen. Keine automatische Neugenerierung oder pauschale weitere Freigabeschleife.
+5. Genau den neuen Stapel arbeit-bildung anlegen. Seine Mitgliedschaften folgen combined_display_mapping.json mit lückenloser Anzeige 1–82. Originalpositionen der Auswahl/Registry bleiben erhalten. In diesem ersten Batch wird kein Display-Patch für alte Stapel benötigt. Alle bisherigen Anzeigepositionen unverändert erhalten.
+6. Mit dem bestehenden Importer in den neuen Ausgabeordner exportieren. Alle 18 SQLite-Tabellen vollständig gegen build_rows prüfen. Erwartet: 1087 Karten, 1621 Satztexte, 1615 Satzverknüpfungen einschließlich Historie, 983 Wortbesitzzeilen. 972 primäre Lernziele: 160 Allgemeine Sprache / 489 Reisen / 241 Alltag & Zuhause / 82 Arbeit & Bildung. Alle 1005 alten Karten-IDs und sämtliche bisherigen Inhaltszeilen erhalten. Die aktuelle 82er-Menge exakt gegen reservierte IDs und Lerngruppen abgleichen; keine zukünftige Lernkarte vorzeitig anlegen.
+7. Asset und Manifest sichern, nach grünen Prüfungen intern stagen. --verify und Vierstapel-Lesetest 160/489/241/82 ausführen. Bestehende Testerwartungen gezielt erweitern. App-Einstieg und echte user.db nicht verändern. Prüfung, Import und internes Staging sind mit diesem Auftrag autorisiert.
+8. Den bestehenden Fortsetzungsmodus für Arbeit & Bildung Batch 2 nutzen: 82 importiert / 82 aktuell / 81 später. Vollständige ursprüngliche 245er-Auswahl, Originalpositionen, Zieldefinitionen und Reservierungen erhalten. Die in Batch 1 als Begleitwörter angelegten Senses jetzt korrekt als vorhanden behandeln; weder doppelt definieren noch deren reservierte IDs ändern. Neue Kontext-Snapshots auf den tatsächlich erzeugten Pack binden. Künftige Mitgliedschaften 83–164 anhängen, gemeinsame Anzeige 1–164 gemäß bestehendem separatem Display-Patch-Vertrag vorbereiten. Noch keine Batch-2-Sätze schreiben.
+9. build/arbeit_bildung_authoring_batch_2.zip mit vollständigem Kontext erstellen: Basis-Pack/SQLite, Wörterbuch, alle 245 Identitäten, Auswahl, Registry, Lerngruppen, Schema, relevante Quellen, lokale Sprachmodell-Dateien, Manifest und Fortsetzungszuordnung. Zunächst unter temporärem Namen schreiben, vollständig schließen, erneut öffnen und alle CRCs/Manifest-Hashes prüfen. Erst danach auf den endgültigen Namen setzen und den vorhandenen ZIP-Verifier ausführen. Niemals eine noch laufende oder teilweise geschriebene ZIP ausgeben.
+
+Nicht anfassen:
+- user.db, review_log, echte Lernstände, historische Packs/Registrys/Auswahlen und unveränderte Original-Lieferung.
+- App-Logik, SRS, Synonymregeln, Modelle, Budgets, Supabase oder Plattformdateien.
+- Keine Cloud-/Modellaufrufe, Veröffentlichung, Commits oder Pushes.
+
+Akzeptanzkriterien:
+- 82 neue Lernziele, 82 Satzpaare und sechs geprüfte Alternativen; vollständige Wortbindungen und gültige Reviewhashes.
+- Exakte Karten-, Sense- und Lemma-IDs sowie Lernmetadaten; kein Besitzer-/Alias-/Gruppenkonflikt.
+- Alte Inhalte und Reihenfolgen unverändert; ein neuer Stapel mit Positionen 1–82.
+- Linter: 0 Fehler; vier neue Häufigkeitswarnungen bei der verwendeten Stufe mittel dokumentieren. Wegen solcher Hinweise nicht wiederholt umformulieren.
+- Vollständiger SQLite-Abgleich, Staging, Verifikation und Vierstapel-Lesetest bestanden.
+- Batch-2-ZIP geschlossen und geprüft, an tatsächlichen neuen Pack gebunden, noch ohne neue Batch-2-Sätze.
+
+Prüfen mit, ab Repository-Root:
+Windows PowerShell:
+.\pipeline\.venv\Scripts\python.exe arbeit_bildung_batch_1\verify_arbeit_bildung_batch_1.py --repo .
+.\pipeline\.venv\Scripts\python.exe pipeline\scripts\import_editorial_patch.py --source pipeline/out/alltag_zuhause_batch_3_v1/pack.json --create arbeit_bildung_batch_1/arbeit_bildung_batch_1.editorial.json --registry pipeline/data/words/en.arbeit_bildung_v1.json --out pipeline/out/arbeit_bildung_batch_1_v1
+macOS Terminal:
+pipeline/.venv/bin/python arbeit_bildung_batch_1/verify_arbeit_bildung_batch_1.py --repo .
+pipeline/.venv/bin/python pipeline/scripts/import_editorial_patch.py --source pipeline/out/alltag_zuhause_batch_3_v1/pack.json --create arbeit_bildung_batch_1/arbeit_bildung_batch_1.editorial.json --registry pipeline/data/words/en.arbeit_bildung_v1.json --out pipeline/out/arbeit_bildung_batch_1_v1
+Auf beiden Systemen, nach Prüfung und Asset-Sicherung:
+dart run tool/stage_content_pack.dart --from pipeline/out/arbeit_bildung_batch_1_v1
+dart run tool/stage_content_pack.dart --verify
+flutter test test/data/real_pack_test.dart
+flutter analyze
+git diff --check
+git status --short
+Zusätzlich betroffene vorhandene Import-/Registry-/Gruppen-/Authoring-/Fortsetzungstests ausführen; exakte Testpfade im Repository prüfen. ZIP-Verifier mit dem jeweiligen Pipeline-Interpreter ausführen. Tatsächliche Outputs und Exitcodes zeigen. Keine neue generische Testsuite oder ungefragte Features.
+
+Schleifenbremse: Nach 2–3 Fehlversuchen neue Hypothese aus dem konkreten Befund formulieren; nach 5 stoppen und Lage schildern. Kein Cloud-Fallback.
+
+Am Ende: NEXTSTEPS.md aktualisieren (Erledigt, geänderte Dateien, Testergebnis, Abweichungen, offene Probleme; höchstens 25 Zeilen, nur Fakten). Packversion, SHA256, Lernzielzahlen und genauen Pfad der Batch-2-ZIP nennen. Geräteprüfung nur behaupten, wenn ausgeführt.
+
+Modell: Codex GPT-5.6 Sol – Hoch | Alternative: Claude Code Opus 5.5 – Hoch | Danach: /clear

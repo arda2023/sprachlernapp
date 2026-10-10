@@ -1,0 +1,22 @@
+Alltag & Zuhause – dritte und letzte Gruppe, 78 Satzpaare
+
+Direkt von ChatGPT redigiert und vollständig gegengelesen; keine Gemini-/Vertex-Aufrufe. Das ist keine unabhängige menschliche Qualitätszertifizierung. Grammatik, natürliche deutsche Wiedergabe, festgelegte Zielbedeutung, Wortbindungen und wörtlich eingesetzte Alternativen wurden geprüft.
+
+Alle 78 Zielidentitäten und Zielübersetzungen bleiben unverändert. Kontextuelles Beispiel: iron ist das Bügeleisen, television das Gerät, smell als Lernziel die Geruchswahrnehmung. smell als Begleitwort bei rubbish verwendet dagegen die bereits bestehende Bedeutung für Geruchsabgabe. cupboard/go bedeutet hingehören, tenant/move einziehen; diese Begleitbedeutungen bekommen keine Lernkarten.
+
+Sieben satzbezogene Alternativen:
+- rubbish → trash / garbage: derselbe Haushaltsabfall im Mülleimer.
+- vacuum → vacuum cleaner: identisches Gerät im Teppichreinigungskontext.
+- fridge → refrigerator: Kurz-/Langform desselben Geräts.
+- trainer → sneaker: regional unterschiedliche Bezeichnungen für denselben Schuh.
+- yoghurt → yogurt: Schreibvariante.
+- television → tv: Kurzform des zu großen Geräts im Wohnzimmer, gespeichert gemäß Normalisierungsvertrag.
+accepted[] enthält ausschließlich die Zielform. Keine automatische Übernahme aller Gruppenmitglieder, keine Vollständigkeitsgarantie der Synonymliste.
+
+Wörterbuchhinweis wrapper: Die reservierte neue Lernkarte ist an wrapper/NOUN|wrapper#verpackungshulle gebunden. Aus Batch 2 existiert schon ein gleichbedeutender Begleitwort-Sense wrapper/NOUN|wrapper#verpackung. Die neue reservierte Identität wird nicht still geändert; der alte Eintrag bleibt unverändert. Es entsteht genau eine Lernkarte für wrapper, keine doppelte Lernaufgabe. Die semantische Wörterbuchredundanz bleibt als mögliche spätere Bereinigung dokumentiert, ohne IDs oder historische Tokens umzuhängen.
+
+Bestehende Senses und Formglossen werden nicht überschrieben. Manche historische Einträge sind gebeugt oder knapp. Neue Formglossen wurden separat nach Numerus und Zeitform geprüft; Kartenübersetzungen stammen unverändert aus der Auswahl. Dies ist keine globale Altglossenbereinigung.
+
+Fortsetzung und Abschluss: 163 alte + 78 neue = 241 Alltag-Lernziele. Neue Mitgliedschaften zunächst 164–241, danach ausschließlich die autorisierten Anzeigepositionen auf die vollständige Originalreihenfolge 1–241 setzen. Auswahl-/Registrypositionen und cards.learning bleiben unverändert. Der Display-Patch bindet Quelle, Create-Datei, Registry und die Vorher-Zeilen per Hash.
+
+Lokale Prüfung mit den mitgelieferten unveränderten Projektfunktionen und spaCy-Modell: Manifest, Kontextvertrag, Basis-SQLite, Schema, Tokenisierung, Import, Display-Patch, Linter und neuer SQLite-Export. Kein echtes App-Staging, Flutter-Test, Gerätezugriff oder user.db-Zugriff hier. Das übernimmt ausschließlich der lokale Importauftrag. reference/content.sqlite ist die alte Batch-2-Quelle, kein neuer App-Pack.

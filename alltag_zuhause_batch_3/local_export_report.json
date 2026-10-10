@@ -1,0 +1,2145 @@
+{
+  "status": "ok",
+  "internal_test_pack": true,
+  "ai_calls": 0,
+  "ai_cost_usd": 0,
+  "lint": {
+    "sentences": 1533,
+    "errors": 0,
+    "findings": [
+      {
+        "card": "it|it/PRON|it#es_ding",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'puzzle'/'puzzle' Zipf 3.96 below 4.0"
+      },
+      {
+        "card": "will|will/AUX|will#zukunft",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'tomato'/'tomato' Zipf 3.85 below 4.0"
+      },
+      {
+        "card": "your|your/DET|your#ihr",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'racket'/'racket' Zipf 3.33 below 4.0"
+      },
+      {
+        "card": "the|the/ADV|the#umso",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'quieter'/'quieter' Zipf 3.34 below 3.5"
+      },
+      {
+        "card": "her|she/PRON|she#sie_akkusativ",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'greet'/'greeted' Zipf 3.73 below 4.0"
+      },
+      {
+        "card": "by|by/ADP|by#mit_mittel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'neighbour'/'neighbour' Zipf 3.69 below 4.0"
+      },
+      {
+        "card": "her|she/PRON|she#ihr_dativ",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'supermarket'/'supermarket' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "her|she/PRON|she#ihr_dativ",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'checkout'/'checkout' Zipf 3.64 below 4.0"
+      },
+      {
+        "card": "was|be/AUX|be#hilfsverb",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'mailman'/'mailman' Zipf 2.88 below 4.0"
+      },
+      {
+        "card": "as|as/SCONJ|as#waehrend_zeit",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'rang'/'rang' Zipf 3.72 below 4.0"
+      },
+      {
+        "card": "just|just/ADV|just#nur",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'headache'/'headache' Zipf 3.97 below 4.0"
+      },
+      {
+        "card": "from|from/ADP|from#ursache",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'shiver'/'shivering' Zipf 3.14 below 3.5"
+      },
+      {
+        "card": "up|up/ADJ|up#wach",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'softly'/'softly' Zipf 3.77 below 4.0"
+      },
+      {
+        "card": "up|up/ADV|up#hinauf",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'parcel'/'parcel' Zipf 3.67 below 4.0"
+      },
+      {
+        "card": "up|up/ADV|up#hinauf",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'terrace'/'terrace' Zipf 3.88 below 4.0"
+      },
+      {
+        "card": "had|have/VERB|have#besitzen_partizip",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'umbrella'/'umbrella' Zipf 3.89 below 4.0"
+      },
+      {
+        "card": "get|get/VERB|get#bekommen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'workspace'/'workspace' Zipf 2.85 below 4.0"
+      },
+      {
+        "card": "will|will/NOUN|will#testament",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'handwritten'/'handwritten' Zipf 3.33 below 3.5"
+      },
+      {
+        "card": "like|like/ADP|like#wie",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'berry'/'berries' Zipf 3.97 below 4.0"
+      },
+      {
+        "card": "his|his/DET|his#sein",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'neighbour'/'neighbour' Zipf 3.69 below 4.0"
+      },
+      {
+        "card": "just|just/ADV|just#gerade_eben",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'headache'/'headache' Zipf 3.97 below 4.0"
+      },
+      {
+        "card": "with|with/ADP|with#zusammen_mit",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'roommate'/'roommate' Zipf 3.81 below 4.0"
+      },
+      {
+        "card": "your|your/DET|your#dein",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bicycle'/'bicycle' Zipf 3.98 below 4.0"
+      },
+      {
+        "card": "as|as/ADP|as#als_funktion",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'waiter'/'waiter' Zipf 3.61 below 4.0"
+      },
+      {
+        "card": "as|as/ADP|as#als_funktion",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'towel'/'towel' Zipf 3.94 below 4.0"
+      },
+      {
+        "card": "as|as/ADP|as#als_funktion",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'scarf'/'scarf' Zipf 3.68 below 4.0"
+      },
+      {
+        "card": "time|time/VERB|time#stoppen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'stopwatch'/'stopwatch' Zipf 2.59 below 3.5"
+      },
+      {
+        "card": "time|time/VERB|time#stoppen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'stopwatch'/'stopwatch' Zipf 2.59 below 3.5"
+      },
+      {
+        "card": "we|we/PRON|we#wir",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'umbrella'/'umbrella' Zipf 3.89 below 4.0"
+      },
+      {
+        "card": "with|with/ADP|with#mittels",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'hose'/'hose' Zipf 3.73 below 4.0"
+      },
+      {
+        "card": "can|can/NOUN|can#dose",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'tomato'/'tomatoes' Zipf 3.90 below 4.0"
+      },
+      {
+        "card": "can|can/NOUN|can#dose",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'lemonade'/'lemonade' Zipf 3.44 below 4.0"
+      },
+      {
+        "card": "time|time/NOUN|time#mal",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bake'/'bakes' Zipf 3.91 below 4.0"
+      },
+      {
+        "card": "had|have/VERB|have#besitzen_past",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'reservation'/'reservation' Zipf 3.95 below 4.0"
+      },
+      {
+        "card": "had|have/VERB|have#besitzen_past",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'candle'/'candles' Zipf 3.88 below 4.0"
+      },
+      {
+        "card": "if|if/SCONJ|if#wenn",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'umbrella'/'umbrella' Zipf 3.89 below 4.0"
+      },
+      {
+        "card": "to|to/PART|to#infinitivpartikel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bake'/'bake' Zipf 3.91 below 4.0"
+      },
+      {
+        "card": "do|do/VERB|do#reichen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bandage'/'bandage' Zipf 3.24 below 3.5"
+      },
+      {
+        "card": "when|when/SCONJ|when#als_wenn",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'boil'/'boils' Zipf 3.83 below 4.0"
+      },
+      {
+        "card": "which|which/PRON|which#relativpronomen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'sore'/'sore' Zipf 3.99 below 4.0"
+      },
+      {
+        "card": "from|from/ADP|from#von_ausgangspunkt",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'postcard'/'postcard' Zipf 3.44 below 4.0"
+      },
+      {
+        "card": "by|by/ADP|by#neben_ort",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'patiently'/'patiently' Zipf 3.48 below 4.0"
+      },
+      {
+        "card": "as|as/ADV|as#so_vergleich",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'crowded'/'crowded' Zipf 3.98 below 4.0"
+      },
+      {
+        "card": "an|a/DET|a#ein",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'eraser'/'eraser' Zipf 2.94 below 4.0"
+      },
+      {
+        "card": "to|to/ADP|to#nach_richtung",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'supermarket'/'supermarket' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "for|for/ADP|for#seit_lang_dauer",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'supermarket'/'supermarket' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "who|who/PRON|who#wer",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'umbrella'/'umbrella' Zipf 3.89 below 4.0"
+      },
+      {
+        "card": "out|out/ADV|out#hinaus",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'parcel'/'parcel' Zipf 3.67 below 4.0"
+      },
+      {
+        "card": "is|be/AUX|be#sein_vollverb",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'printer'/'printer' Zipf 3.93 below 4.0"
+      },
+      {
+        "card": "more|more/ADV|more#wieder_noch",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'printer'/'printer' Zipf 3.93 below 4.0"
+      },
+      {
+        "card": "of|of/ADP|of#material_herkunft",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bandage'/'bandage' Zipf 3.24 below 4.0"
+      },
+      {
+        "card": "can|can/AUX|can#koennen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bake'/'bake' Zipf 3.91 below 4.0"
+      },
+      {
+        "card": "about|about/ADV|about#ungefaehr",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'kilometer'/'kilometers' Zipf 3.82 below 4.0"
+      },
+      {
+        "card": "about|about/ADV|about#ungefaehr",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'classmate'/'classmate' Zipf 3.34 below 4.0"
+      },
+      {
+        "card": "with|with/ADP|with#bei",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'neighbour'/'neighbours' Zipf 3.87 below 4.0"
+      },
+      {
+        "card": "get|get/VERB|get#werden",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'sleepy'/'sleepy' Zipf 3.68 below 4.0"
+      },
+      {
+        "card": "up|up/ADP|up#entlang",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'steep'/'steep' Zipf 3.99 below 4.0"
+      },
+      {
+        "card": "a|a/DET|a#ein",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'balcony'/'balcony' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "her|her/DET|her#ihr_possessiv",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'classmate'/'classmates' Zipf 3.64 below 4.0"
+      },
+      {
+        "card": "to|to/ADP|to#fuer_empfaenger",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'umbrella'/'umbrella' Zipf 3.89 below 4.0"
+      },
+      {
+        "card": "to|to/ADP|to#fuer_empfaenger",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'lend'/'lend' Zipf 3.92 below 4.0"
+      },
+      {
+        "card": "the|the/DET|the#bestimmter_artikel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'candle'/'candles' Zipf 3.88 below 4.0"
+      },
+      {
+        "card": "the|the/DET|the#bestimmter_artikel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'cupboard'/'cupboard' Zipf 3.44 below 4.0"
+      },
+      {
+        "card": "or|or/CCONJ|or#andernfalls",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'amplifier'/'amplifier' Zipf 3.45 below 3.5"
+      },
+      {
+        "card": "they|they/PRON|they#sie_plural",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'microphone'/'microphones' Zipf 3.72 below 4.0"
+      },
+      {
+        "card": "they|they/PRON|they#sie_plural",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'neighbour'/'neighbours' Zipf 3.87 below 4.0"
+      },
+      {
+        "card": "out|out/ADP|out#heraus_aus",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'neighbour'/'neighbour' Zipf 3.69 below 4.0"
+      },
+      {
+        "card": "about|about/ADP|about#ueber_thema",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bake'/'baking' Zipf 3.92 below 4.0"
+      },
+      {
+        "card": "about|about/ADP|about#ueber_thema",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'waiter'/'waiter' Zipf 3.61 below 4.0"
+      },
+      {
+        "card": "had|have/AUX|have#hilfsverb",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'supermarket'/'supermarket' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "at|at/ADP|at#zeit",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bedtime'/'bedtime' Zipf 3.56 below 4.0"
+      },
+      {
+        "card": "that|that/DET|that#jener",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'spoon'/'spoon' Zipf 3.88 below 4.0"
+      },
+      {
+        "card": "time|time/NOUN|time#zeit",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'pharmacy'/'pharmacy' Zipf 3.87 below 4.0"
+      },
+      {
+        "card": "so|so/CCONJ|so#deshalb",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'neighbour'/'neighbour' Zipf 3.69 below 4.0"
+      },
+      {
+        "card": "so|so/CCONJ|so#deshalb",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'waiter'/'waiter' Zipf 3.61 below 4.0"
+      },
+      {
+        "card": "their|they/PRON|they#ihr_plural",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'gardener'/'gardeners' Zipf 3.49 below 4.0"
+      },
+      {
+        "card": "this|this/DET|this#dieser_begleitend",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'racket'/'racket' Zipf 3.33 below 4.0"
+      },
+      {
+        "card": "more|much/DET|much#mehr_menge",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'towel'/'towels' Zipf 3.94 below 4.0"
+      },
+      {
+        "card": "of|of/ADP|of#genitiv_besitz",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'dislike'/'dislikes' Zipf 3.89 below 4.0"
+      },
+      {
+        "card": "will|will/NOUN|will#wille",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'setback'/'setbacks' Zipf 3.37 below 3.5"
+      },
+      {
+        "card": "at|at/ADP|at#ort",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'fountain'/'fountain' Zipf 3.91 below 4.0"
+      },
+      {
+        "card": "there|there/PRON|there#es_gibt",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'pharmacy'/'pharmacy' Zipf 3.87 below 4.0"
+      },
+      {
+        "card": "me|I/PRON|i#mir",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'towel'/'towel' Zipf 3.94 below 4.0"
+      },
+      {
+        "card": "you|you/PRON|you#man",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'neighbourhood'/'neighbourhood' Zipf 3.94 below 4.0"
+      },
+      {
+        "card": "be|be/AUX|be#sein_existieren",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'polite'/'polite' Zipf 3.92 below 4.0"
+      },
+      {
+        "card": "eat|eat/VERB|eat#essen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'snack'/'snacks' Zipf 3.90 below 4.0"
+      },
+      {
+        "card": "cheese|cheese/NOUN|cheese#kase",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'picnic'/'picnic' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "cheese|cheese/NOUN|cheese#kase",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'pasta'/'pasta' Zipf 3.92 below 4.0"
+      },
+      {
+        "card": "pillow|pillow/NOUN|pillow#kissen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'cardboard'/'cardboard' Zipf 3.66 below 4.0"
+      },
+      {
+        "card": "wash|wash/VERB|wash#waescht",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'muddy'/'muddy' Zipf 3.60 below 4.0"
+      },
+      {
+        "card": "wash|wash/VERB|wash#waescht",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bicycle'/'bicycles' Zipf 3.98 below 4.0"
+      },
+      {
+        "card": "repair|repair/VERB|repair#repariert",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bicycle'/'bicycle' Zipf 3.98 below 4.0"
+      },
+      {
+        "card": "shoe|shoe/NOUN|shoe#schuhe",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'lace'/'lace' Zipf 3.82 below 4.0"
+      },
+      {
+        "card": "bottle|bottle/NOUN|bottle#flasche",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'supermarket'/'supermarket' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "buy|buy/VERB|buy#kaufen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'notebook'/'notebooks' Zipf 3.74 below 4.0"
+      },
+      {
+        "card": "price|price/NOUN|price#preis",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'packet'/'packet' Zipf 3.77 below 4.0"
+      },
+      {
+        "card": "write|write/VERB|write#schreiben",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'postcard'/'postcard' Zipf 3.44 below 4.0"
+      },
+      {
+        "card": "write|write/VERB|write#schreiben",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'notebook'/'notebook' Zipf 3.74 below 4.0"
+      },
+      {
+        "card": "arm|arm/NOUN|arm#arm",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'parcel'/'parcel' Zipf 3.67 below 4.0"
+      },
+      {
+        "card": "key|key/NOUN|key#schluessel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'unlock'/'unlock' Zipf 3.90 below 4.0"
+      },
+      {
+        "card": "paper|paper/NOUN|paper#papier",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'printer'/'printer' Zipf 3.93 below 4.0"
+      },
+      {
+        "card": "choose|choose/VERB|choose#waehlt-aus",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'snack'/'snack' Zipf 3.90 below 4.0"
+      },
+      {
+        "card": "wait|wait/VERB|wait#warten",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'unlock'/'unlocks' Zipf 3.90 below 4.0"
+      },
+      {
+        "card": "mirror|mirror/NOUN|mirror#spiegel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'restroom'/'restroom' Zipf 3.39 below 4.0"
+      },
+      {
+        "card": "speaker|speaker/NOUN|speaker#lautsprecher",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+      },
+      {
+        "card": "full|full/ADJ|full#vollen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'picnic'/'picnic' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "milk|milk/NOUN|milk#milch",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'cereal'/'cereal' Zipf 3.74 below 4.0"
+      },
+      {
+        "card": "foot|foot/NOUN|foot#fuss",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'hike'/'hiking' Zipf 3.95 below 4.0"
+      },
+      {
+        "card": "lamp|lamp/NOUN|lamp#lampen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'stove'/'stove' Zipf 3.71 below 4.0"
+      },
+      {
+        "card": "letter|letter/NOUN|letter#brief",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'envelope'/'envelope' Zipf 3.86 below 4.0"
+      },
+      {
+        "card": "shirt|shirt/NOUN|shirt#hemd",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'elegant'/'elegant' Zipf 3.95 below 4.0"
+      },
+      {
+        "card": "shirt|shirt/NOUN|shirt#hemd",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'sleeve'/'sleeves' Zipf 3.93 below 4.0"
+      },
+      {
+        "card": "shirt|shirt/NOUN|shirt#hemd",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'playful'/'playful' Zipf 3.53 below 4.0"
+      },
+      {
+        "card": "walk|walk/VERB|walk#geht-zu-fuss",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'comfortably'/'comfortably' Zipf 3.74 below 4.0"
+      },
+      {
+        "card": "skin|skin/NOUN|skin#haut",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'cardboard'/'cardboard' Zipf 3.66 below 4.0"
+      },
+      {
+        "card": "bread|bread/NOUN|bread#brot",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bake'/'bakes' Zipf 3.91 below 4.0"
+      },
+      {
+        "card": "bread|bread/NOUN|bread#brot",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'picnic'/'picnic' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "blanket|blanket/NOUN|blanket#decke",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'attendant'/'attendant' Zipf 3.60 below 4.0"
+      },
+      {
+        "card": "cup|cup/NOUN|cup#tasse",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'saucer'/'saucer' Zipf 3.06 below 4.0"
+      },
+      {
+        "card": "spoon|spoon/NOUN|spoon#loeffel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'vegetable'/'vegetable' Zipf 3.94 below 4.0"
+      },
+      {
+        "card": "spoon|spoon/NOUN|spoon#loeffel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'yogurt'/'yogurt' Zipf 3.63 below 4.0"
+      },
+      {
+        "card": "open|open/VERB|open#oeffnete",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'screwdriver'/'screwdriver' Zipf 3.13 below 4.0"
+      },
+      {
+        "card": "egg|egg/NOUN|egg#ei",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'supermarket'/'supermarket' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "plate|plate/NOUN|plate#teller",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'ceramic'/'ceramic' Zipf 3.74 below 4.0"
+      },
+      {
+        "card": "box|box/NOUN|box#schachtel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'cardboard'/'cardboard' Zipf 3.66 below 4.0"
+      },
+      {
+        "card": "box|box/NOUN|box#schachtel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'gardening'/'gardening' Zipf 3.67 below 4.0"
+      },
+      {
+        "card": "cook|cook/VERB|cook#kocht",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'workweek'/'workweek' Zipf 2.58 below 4.0"
+      },
+      {
+        "card": "head|head/NOUN|head#kopf",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'nod'/'nods' Zipf 3.74 below 4.0"
+      },
+      {
+        "card": "apple|apple/NOUN|apple#aepfel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bake'/'baked' Zipf 3.92 below 4.0"
+      },
+      {
+        "card": "soap|soap/NOUN|soap#seife",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'restroom'/'restroom' Zipf 3.39 below 4.0"
+      },
+      {
+        "card": "soap|soap/NOUN|soap#seife",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'washroom'/'washroom' Zipf 2.80 below 4.0"
+      },
+      {
+        "card": "window|window/NOUN|window#fenster",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'flute'/'flute' Zipf 3.52 below 4.0"
+      },
+      {
+        "card": "eye|eye/NOUN|eye#auge",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'gust'/'gust' Zipf 3.10 below 4.0"
+      },
+      {
+        "card": "bandage|bandage/NOUN|bandage#verband",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'sterile'/'sterile' Zipf 3.43 below 4.0"
+      },
+      {
+        "card": "carry|carry/VERB|carry#tragen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'supermarket'/'supermarket' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "cut|cut/VERB|cut#schneidet",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'scissor'/'scissors' Zipf 3.58 below 4.0"
+      },
+      {
+        "card": "cut|cut/VERB|cut#schneidet",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bandage'/'bandage' Zipf 3.24 below 4.0"
+      },
+      {
+        "card": "fork|fork/NOUN|fork#gabel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'picnic'/'picnic' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "fork|fork/NOUN|fork#gabel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'drawer'/'drawer' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "fork|fork/NOUN|fork#gabel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'dessert'/'dessert' Zipf 3.83 below 4.0"
+      },
+      {
+        "card": "old|old/ADJ|old#alt",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+      },
+      {
+        "card": "cheap|cheap/ADJ|cheap#billiger",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'umbrella'/'umbrella' Zipf 3.89 below 4.0"
+      },
+      {
+        "card": "expensive|expensive/ADJ|expensive#teuer",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'supermarket'/'supermarket' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "hard|hard/ADJ|hard#hart",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'comfortably'/'comfortably' Zipf 3.74 below 4.0"
+      },
+      {
+        "card": "young|young/ADJ|young#jung",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'licence'/'licence' Zipf 3.97 below 4.0"
+      },
+      {
+        "card": "young|young/ADJ|young#jung",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'waiter'/'waiter' Zipf 3.61 below 4.0"
+      },
+      {
+        "card": "wet|wet/ADJ|wet#nass",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'umbrella'/'umbrella' Zipf 3.89 below 4.0"
+      },
+      {
+        "card": "wet|wet/ADJ|wet#nass",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'balloon'/'balloons' Zipf 3.90 below 4.0"
+      },
+      {
+        "card": "soft|soft/ADJ|soft#weiche",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'pillow'/'pillow' Zipf 3.96 below 4.0"
+      },
+      {
+        "card": "heavy|heavy/ADJ|heavy#schwer",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'litter'/'litter' Zipf 3.71 below 4.0"
+      },
+      {
+        "card": "airline|airline/NOUN|airline#fluggesellschaft",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'refund'/'refund' Zipf 3.94 below 4.0"
+      },
+      {
+        "card": "coach|coach/NOUN|coach#reisebus",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'luggage'/'luggage' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "hostel|hostel/NOUN|hostel#hostel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'traveller'/'travellers' Zipf 3.68 below 4.0"
+      },
+      {
+        "card": "rate|rate/NOUN|rate#wechselkurs",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'euros'/'euros' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "coin|coin/NOUN|coin#muenzen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'unlock'/'unlock' Zipf 3.90 below 4.0"
+      },
+      {
+        "card": "coin|coin/NOUN|coin#muenzen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'luggage'/'luggage' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "coin|coin/NOUN|coin#muenzen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'trolley'/'trolley' Zipf 3.44 below 4.0"
+      },
+      {
+        "card": "beach|beach/NOUN|beach#strand",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'towel'/'towels' Zipf 3.94 below 4.0"
+      },
+      {
+        "card": "nurse|nurse/NOUN|nurse#krankenschwester",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bandage'/'bandage' Zipf 3.24 below 4.0"
+      },
+      {
+        "card": "zip|zip/NOUN|zip#reissverschluss",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+      },
+      {
+        "card": "turn|turn/VERB|turn#abbiegen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'junction'/'junction' Zipf 3.94 below 4.0"
+      },
+      {
+        "card": "turn|turn/VERB|turn#abbiegen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'harbour'/'harbour' Zipf 3.98 below 4.0"
+      },
+      {
+        "card": "public|public/ADJ|public#oeffentlichen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'campsite'/'campsite' Zipf 3.09 below 4.0"
+      },
+      {
+        "card": "dinner|dinner/NOUN|dinner#abendessen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'terrace'/'terrace' Zipf 3.88 below 4.0"
+      },
+      {
+        "card": "salad|salad/NOUN|salad#salat",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'tomato'/'tomatoes' Zipf 3.90 below 4.0"
+      },
+      {
+        "card": "salad|salad/NOUN|salad#salat",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'herb'/'herbs' Zipf 3.77 below 4.0"
+      },
+      {
+        "card": "bill|bill/NOUN|bill#rechnung",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'waiter'/'waiter' Zipf 3.61 below 4.0"
+      },
+      {
+        "card": "waterfall|waterfall/NOUN|waterfall#wasserfall",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'campsite'/'campsite' Zipf 3.09 below 4.0"
+      },
+      {
+        "card": "sunlight|sunlight/NOUN|sunlight#sonnenlicht",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'curtain'/'curtains' Zipf 3.86 below 4.0"
+      },
+      {
+        "card": "rain|rain/NOUN|rain#regen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'café'/'café' Zipf 3.75 below 4.0"
+      },
+      {
+        "card": "dock|dock/NOUN|dock#anlegestelle",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'café'/'café' Zipf 3.75 below 4.0"
+      },
+      {
+        "card": "clinic|clinic/NOUN|clinic#praxis",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'sore'/'sore' Zipf 3.99 below 4.0"
+      },
+      {
+        "card": "clinic|clinic/NOUN|clinic#praxis",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'ankle'/'ankle' Zipf 3.97 below 4.0"
+      },
+      {
+        "card": "padlock|padlock/NOUN|padlock#vorhaengeschloss",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'locker'/'locker' Zipf 3.95 below 4.0"
+      },
+      {
+        "card": "cancel|cancel/VERB|cancel#stornieren",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'booking'/'booking' Zipf 3.86 below 4.0"
+      },
+      {
+        "card": "spell|spell/VERB|spell#buchstabieren",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'surname'/'surname' Zipf 3.50 below 4.0"
+      },
+      {
+        "card": "foreign|foreign/ADJ|foreign#auslaendisch",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'souvenir'/'souvenirs' Zipf 3.36 below 4.0"
+      },
+      {
+        "card": "confirmation|confirmation/NOUN|confirmation#buchungsbestaetigung",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'booking'/'booking' Zipf 3.86 below 4.0"
+      },
+      {
+        "card": "takeoff|takeoff/NOUN|takeoff#start",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'fasten'/'fastened' Zipf 3.02 below 4.0"
+      },
+      {
+        "card": "lift|lift/NOUN|lift#aufzug",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+      },
+      {
+        "card": "crossroads|crossroads/NOUN|crossroads#kreuzung",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'petrol'/'petrol' Zipf 3.72 below 4.0"
+      },
+      {
+        "card": "pasta|pasta/NOUN|pasta#nudeln",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'tomato'/'tomato' Zipf 3.85 below 4.0"
+      },
+      {
+        "card": "chicken|chicken/NOUN|chicken#haehnchenfleisch",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'grill'/'grilled' Zipf 3.84 below 4.0"
+      },
+      {
+        "card": "tip|tip/NOUN|tip#trinkgeld",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'waiter'/'waiter' Zipf 3.61 below 4.0"
+      },
+      {
+        "card": "surcharge|surcharge/NOUN|surcharge#aufpreis",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'balcony'/'balcony' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "bargain|bargain/NOUN|bargain#schnaeppchen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+      },
+      {
+        "card": "fountain|fountain/NOUN|fountain#brunnen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'splash'/'splashes' Zipf 3.85 below 4.0"
+      },
+      {
+        "card": "cave|cave/NOUN|cave#hoehle",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'torch'/'torch' Zipf 3.74 below 4.0"
+      },
+      {
+        "card": "yacht|yacht/NOUN|yacht#jacht",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'harbour'/'harbour' Zipf 3.98 below 4.0"
+      },
+      {
+        "card": "blister|blister/NOUN|blister#blase",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'heel'/'heel' Zipf 3.84 below 4.0"
+      },
+      {
+        "card": "pain|pain/NOUN|pain#schmerzen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'ankle'/'ankle' Zipf 3.97 below 4.0"
+      },
+      {
+        "card": "police|police/NOUN|police#polizei",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'luggage'/'luggage' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "pickpocket|pickpocket/NOUN|pickpocket#taschendieb",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'crowded'/'crowded' Zipf 3.98 below 4.0"
+      },
+      {
+        "card": "unpack|unpack/VERB|unpack#auspacken",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'suitcase'/'suitcases' Zipf 3.55 below 4.0"
+      },
+      {
+        "card": "describe|describe/VERB|describe#beschreiben",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+      },
+      {
+        "card": "recommend|recommend/VERB|recommend#empfehlen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'harbour'/'harbour' Zipf 3.98 below 4.0"
+      },
+      {
+        "card": "help|help/VERB|help#helfen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+      },
+      {
+        "card": "report|report/VERB|report#melden",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'luggage'/'luggage' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "contact|contact/VERB|contact#kontakt-aufnehmen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'reservation'/'reservation' Zipf 3.95 below 4.0"
+      },
+      {
+        "card": "secure|secure/ADJ|secure#gesichert",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bicycle'/'bicycles' Zipf 3.98 below 4.0"
+      },
+      {
+        "card": "expiry|expiry/NOUN|expiry#ablauf",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'booking'/'booking' Zipf 3.86 below 4.0"
+      },
+      {
+        "card": "garage|garage/NOUN|garage#autowerkstatt",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'mechanic'/'mechanic' Zipf 3.79 below 4.0"
+      },
+      {
+        "card": "rental|rental/NOUN|rental#anmietung",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bicycle'/'bicycle' Zipf 3.98 below 4.0"
+      },
+      {
+        "card": "bathroom|bathroom/NOUN|bathroom#badezimmer",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'towel'/'towels' Zipf 3.94 below 4.0"
+      },
+      {
+        "card": "toilet|toilet/NOUN|toilet#toilette",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'flush'/'flush' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "bowl|bowl/NOUN|bowl#schuesseln",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'waiter'/'waiter' Zipf 3.61 below 4.0"
+      },
+      {
+        "card": "fish|fish/NOUN|fish#fisch",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'grill'/'grilled' Zipf 3.84 below 4.0"
+      },
+      {
+        "card": "seafood|seafood/NOUN|seafood#meeresfruechte",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'harbour'/'harbour' Zipf 3.98 below 4.0"
+      },
+      {
+        "card": "potato|potato/NOUN|potato#kartoffel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bake'/'baked' Zipf 3.92 below 4.0"
+      },
+      {
+        "card": "temple|temple/NOUN|temple#tempel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'buddhist'/'buddhist' Zipf 3.85 below 4.0"
+      },
+      {
+        "card": "trail|trail/NOUN|trail#wanderpfad",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'hiking'/'hiking' Zipf 3.87 below 4.0"
+      },
+      {
+        "card": "trail|trail/NOUN|trail#wanderpfad",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'waterfall'/'waterfall' Zipf 3.54 below 4.0"
+      },
+      {
+        "card": "storm|storm/NOUN|storm#sturms",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'harbour'/'harbour' Zipf 3.98 below 4.0"
+      },
+      {
+        "card": "kayak|kayak/NOUN|kayak#kajak",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'paddle'/'paddle' Zipf 3.49 below 4.0"
+      },
+      {
+        "card": "allergy|allergy/NOUN|allergy#allergie",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'waiter'/'waiter' Zipf 3.61 below 4.0"
+      },
+      {
+        "card": "medicine|medicine/NOUN|medicine#medikamente",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'luggage'/'luggage' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "reach|reach/VERB|reach#erreichen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'campsite'/'campsite' Zipf 3.09 below 4.0"
+      },
+      {
+        "card": "request|request/VERB|request#erbitten",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'balcony'/'balcony' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "refuse|refuse/VERB|refuse#ablehnen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'booking'/'booking' Zipf 3.86 below 4.0"
+      },
+      {
+        "card": "call|call/VERB|call#anrufen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'booking'/'booking' Zipf 3.86 below 4.0"
+      },
+      {
+        "card": "borrow|borrow/VERB|borrow#ausleihen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'umbrella'/'umbrella' Zipf 3.89 below 4.0"
+      },
+      {
+        "card": "collect|collect/VERB|collect#abholen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'luggage'/'luggage' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "nearby|nearby/ADJ|nearby#nahe-gelegen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'pharmacy'/'pharmacy' Zipf 3.87 below 4.0"
+      },
+      {
+        "card": "rural|rural/ADJ|rural#laendlich",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'campsite'/'campsite' Zipf 3.09 below 4.0"
+      },
+      {
+        "card": "raw|raw/ADJ|raw#roh",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'carrot'/'carrots' Zipf 3.63 below 4.0"
+      },
+      {
+        "card": "spicy|spicy/ADJ|spicy#scharf-gewuerzt",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'curry'/'curry' Zipf 3.96 below 4.0"
+      },
+      {
+        "card": "preference|preference/NOUN|preference#vorliebe",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'aisle'/'aisle' Zipf 3.72 below 4.0"
+      },
+      {
+        "card": "restriction|restriction/NOUN|restriction#beschraenkung",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'luggage'/'luggage' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "inspection|inspection/NOUN|inspection#kontrolle",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+      },
+      {
+        "card": "exit|exit/NOUN|exit#ausgang",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'corridor'/'corridor' Zipf 3.88 below 4.0"
+      },
+      {
+        "card": "baggage|baggage/NOUN|baggage#gepaeck",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'unattended'/'unattended' Zipf 3.18 below 4.0"
+      },
+      {
+        "card": "suitcase|suitcase/NOUN|suitcase#koffer",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'upstairs'/'upstairs' Zipf 3.87 below 4.0"
+      },
+      {
+        "card": "trolley|trolley/NOUN|trolley#gepaeckwagen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'suitcase'/'suitcases' Zipf 3.55 below 4.0"
+      },
+      {
+        "card": "trolley|trolley/NOUN|trolley#gepaeckwagen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'luggage'/'luggage' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "junction|junction/NOUN|junction#verkehrsknotenpunkt",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'petrol'/'petrol' Zipf 3.72 below 4.0"
+      },
+      {
+        "card": "zone|zone/NOUN|zone#tarifzone",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'fare'/'fare' Zipf 3.94 below 4.0"
+      },
+      {
+        "card": "steering|steering/NOUN|steering#lenkung",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'mechanic'/'mechanic' Zipf 3.79 below 4.0"
+      },
+      {
+        "card": "helmet|helmet/NOUN|helmet#helm",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bicycle'/'bicycle' Zipf 3.98 below 4.0"
+      },
+      {
+        "card": "puncture|puncture/NOUN|puncture#reifenpanne",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bicycle'/'bicycle' Zipf 3.98 below 4.0"
+      },
+      {
+        "card": "puncture|puncture/NOUN|puncture#reifenpanne",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'tyre'/'tyre' Zipf 3.51 below 4.0"
+      },
+      {
+        "card": "keycard|keycard/NOUN|keycard#schluesselkarte",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'unlock'/'unlock' Zipf 3.90 below 4.0"
+      },
+      {
+        "card": "napkin|napkin/NOUN|napkin#serviette",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'waiter'/'waiter' Zipf 3.61 below 4.0"
+      },
+      {
+        "card": "chopsticks|chopstick/NOUN|chopstick#essstaebchen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'noodle'/'noodles' Zipf 3.70 below 4.0"
+      },
+      {
+        "card": "tomato|tomato/NOUN|tomato#tomaten",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'sliced'/'sliced' Zipf 3.57 below 4.0"
+      },
+      {
+        "card": "onion|onion/NOUN|onion#zwiebel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'garlic'/'garlic' Zipf 3.92 below 4.0"
+      },
+      {
+        "card": "change|change/NOUN|change#wechselgeld",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'banknote'/'banknote' Zipf 2.49 below 4.0"
+      },
+      {
+        "card": "purchase|purchase/NOUN|purchase#kauf",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'receipt'/'receipt' Zipf 3.92 below 4.0"
+      },
+      {
+        "card": "adventure|adventure/NOUN|adventure#abenteuer",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'rainforest'/'rainforest' Zipf 3.39 below 4.0"
+      },
+      {
+        "card": "adventure|adventure/NOUN|adventure#abenteuer",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'unforgettable'/'unforgettable' Zipf 3.49 below 4.0"
+      },
+      {
+        "card": "sunrise|sunrise/NOUN|sunrise#sonnenaufgang",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'balcony'/'balcony' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "humidity|humidity/NOUN|humidity#luftfeuchtigkeit",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'towel'/'towels' Zipf 3.94 below 4.0"
+      },
+      {
+        "card": "prescription|prescription/NOUN|prescription#rezept",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'pharmacist'/'pharmacist' Zipf 3.34 below 4.0"
+      },
+      {
+        "card": "tablet|tablet/NOUN|tablet#tablette",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'pharmacist'/'pharmacist' Zipf 3.34 below 4.0"
+      },
+      {
+        "card": "assistance|assistance/NOUN|assistance#hilfe",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'luggage'/'luggage' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "coverage|coverage/NOUN|coverage#versicherungsschutz",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'luggage'/'luggage' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "claim|claim/NOUN|claim#leistungsantrag",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'insurer'/'insurer' Zipf 3.53 below 4.0"
+      },
+      {
+        "card": "claim|claim/NOUN|claim#leistungsantrag",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+      },
+      {
+        "card": "prefer|prefer/VERB|prefer#bevorzugen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'aisle'/'aisle' Zipf 3.72 below 4.0"
+      },
+      {
+        "card": "want|want/VERB|want#wollen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'balcony'/'balcony' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "deliver|deliver/VERB|deliver#zugestellt-geliefert",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'luggage'/'luggage' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "weigh|weigh/VERB|weigh#wiegen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+      },
+      {
+        "card": "fasten|fasten/VERB|fasten#schliessen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'seatbelt'/'seatbelt' Zipf 3.07 below 4.0"
+      },
+      {
+        "card": "accessible|accessible/ADJ|accessible#barrierefrei-erreichbar",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'wheelchair'/'wheelchairs' Zipf 3.86 below 4.0"
+      },
+      {
+        "card": "vegan|vegan/ADJ|vegan#vegan",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'dessert'/'dessert' Zipf 3.83 below 4.0"
+      },
+      {
+        "card": "wall|wall/NOUN|wall#wand",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'sofa'/'sofa' Zipf 3.81 below 4.0"
+      },
+      {
+        "card": "carpet|carpet/NOUN|carpet#teppich",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'muddy'/'muddy' Zipf 3.60 below 4.0"
+      },
+      {
+        "card": "drawer|drawer/NOUN|drawer#schublade",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'scissor'/'scissors' Zipf 3.58 below 4.0"
+      },
+      {
+        "card": "address|address/NOUN|address#adresse",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'envelope'/'envelope' Zipf 3.86 below 4.0"
+      },
+      {
+        "card": "broom|broom/NOUN|broom#besen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'sweep'/'sweep' Zipf 3.97 below 4.0"
+      },
+      {
+        "card": "sponge|sponge/NOUN|sponge#schwamm",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'damp'/'damp' Zipf 3.62 below 4.0"
+      },
+      {
+        "card": "hanger|hanger/NOUN|hanger#kleiderbugel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'tidy'/'tidy' Zipf 3.53 below 4.0"
+      },
+      {
+        "card": "slipper|slipper/NOUN|slipper#hausschuh",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'chew'/'chewing' Zipf 3.66 below 4.0"
+      },
+      {
+        "card": "wool|wool/NOUN|wool#wolle",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'scarf'/'scarf' Zipf 3.68 below 4.0"
+      },
+      {
+        "card": "queue|queue/NOUN|queue#warteschlange",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'checkout'/'checkout' Zipf 3.64 below 4.0"
+      },
+      {
+        "card": "pan|pan/NOUN|pan#pfanne",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'onion'/'onions' Zipf 3.89 below 4.0"
+      },
+      {
+        "card": "oil|oil/NOUN|oil#speiseol",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'fry'/'frying' Zipf 3.89 below 4.0"
+      },
+      {
+        "card": "lemon|lemon/NOUN|lemon#zitrone",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'squeeze'/'squeeze' Zipf 3.94 below 4.0"
+      },
+      {
+        "card": "strawberry|strawberry/NOUN|strawberry#erdbeere",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'ripe'/'ripe' Zipf 3.67 below 4.0"
+      },
+      {
+        "card": "cream|cream/NOUN|cream#sahne",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'strawberry'/'strawberries' Zipf 3.72 below 4.0"
+      },
+      {
+        "card": "cream|cream/NOUN|cream#sahne",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'dessert'/'dessert' Zipf 3.83 below 4.0"
+      },
+      {
+        "card": "sauce|sauce/NOUN|sauce#sosse",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'tomato'/'tomato' Zipf 3.85 below 4.0"
+      },
+      {
+        "card": "sauce|sauce/NOUN|sauce#sosse",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'pasta'/'pasta' Zipf 3.92 below 4.0"
+      },
+      {
+        "card": "sauce|sauce/NOUN|sauce#sosse",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'grated'/'grated' Zipf 3.12 below 4.0"
+      },
+      {
+        "card": "peel|peel/VERB|peel#schalen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'chop'/'chop' Zipf 3.77 below 4.0"
+      },
+      {
+        "card": "peel|peel/VERB|peel#schalen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'onion'/'onions' Zipf 3.89 below 4.0"
+      },
+      {
+        "card": "hobby|hobby/NOUN|hobby#hobby",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'grandchild'/'grandchildren' Zipf 3.79 below 4.0"
+      },
+      {
+        "card": "sweep|sweep/VERB|sweep#fegen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bake'/'baking' Zipf 3.92 below 4.0"
+      },
+      {
+        "card": "invite|invite/VERB|invite#einladen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'neighbour'/'neighbours' Zipf 3.87 below 4.0"
+      },
+      {
+        "card": "try|try/VERB|try#versuchen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'jar'/'jar' Zipf 3.93 below 4.0"
+      },
+      {
+        "card": "try|try/VERB|try#versuchen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'lid'/'lid' Zipf 3.81 below 4.0"
+      },
+      {
+        "card": "sheet|sheet/NOUN|sheet#bettlaken",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'mattress'/'mattress' Zipf 3.67 below 4.0"
+      },
+      {
+        "card": "entrance|entrance/NOUN|entrance#eingang",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'umbrella'/'umbrella' Zipf 3.89 below 4.0"
+      },
+      {
+        "card": "cloth|cloth/NOUN|cloth#tuch",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'damp'/'damp' Zipf 3.62 below 4.0"
+      },
+      {
+        "card": "stain|stain/NOUN|stain#fleck",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'sleeve'/'sleeve' Zipf 3.93 below 4.0"
+      },
+      {
+        "card": "bin|bin/NOUN|bin#tonnen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'wrapper'/'wrapper' Zipf 3.16 below 4.0"
+      },
+      {
+        "card": "peg|peg/NOUN|peg#wascheklammer",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'towel'/'towel' Zipf 3.94 below 4.0"
+      },
+      {
+        "card": "freezer|freezer/NOUN|freezer#gefrierschrank",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'melt'/'melts' Zipf 3.96 below 4.0"
+      },
+      {
+        "card": "tape|tape/NOUN|tape#klebeband",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'cardboard'/'cardboard' Zipf 3.66 below 4.0"
+      },
+      {
+        "card": "jeans|jeans/NOUN|jeans#jeans",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'shorten'/'shorten' Zipf 3.38 below 4.0"
+      },
+      {
+        "card": "cardigan|cardigan/NOUN|cardigan#strickjacke",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'blouse'/'blouse' Zipf 3.38 below 4.0"
+      },
+      {
+        "card": "sandal|sandal/NOUN|sandal#sandale",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'strap'/'strap' Zipf 3.79 below 4.0"
+      },
+      {
+        "card": "scarf|scarf/NOUN|scarf#schal",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'windy'/'windy' Zipf 3.57 below 4.0"
+      },
+      {
+        "card": "button|button/NOUN|button#knopf",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'sew'/'sew' Zipf 3.45 below 4.0"
+      },
+      {
+        "card": "silk|silk/NOUN|silk#seide",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'blouse'/'blouse' Zipf 3.38 below 4.0"
+      },
+      {
+        "card": "tights|tights/NOUN|tights#strumpfhose",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'skirt'/'skirt' Zipf 3.96 below 4.0"
+      },
+      {
+        "card": "cashier|cashier/NOUN|cashier#kassierer",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'receipt'/'receipt' Zipf 3.92 below 4.0"
+      },
+      {
+        "card": "aisle|aisle/NOUN|aisle#gang",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'pasta'/'pasta' Zipf 3.92 below 4.0"
+      },
+      {
+        "card": "packet|packet/NOUN|packet#packung",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'biscuit'/'biscuits' Zipf 3.60 below 4.0"
+      },
+      {
+        "card": "toaster|toaster/NOUN|toaster#toaster",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'unplug'/'unplug' Zipf 2.95 below 4.0"
+      },
+      {
+        "card": "flour|flour/NOUN|flour#mehl",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'sprinkle'/'sprinkle' Zipf 3.39 below 4.0"
+      },
+      {
+        "card": "flour|flour/NOUN|flour#mehl",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'dough'/'dough' Zipf 3.86 below 4.0"
+      },
+      {
+        "card": "cucumber|cucumber/NOUN|cucumber#gurke",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'thinly'/'thinly' Zipf 3.27 below 4.0"
+      },
+      {
+        "card": "orange|orange/NOUN|orange#frucht",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'peel'/'peel' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "honey|honey/NOUN|honey#honig",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'spoonful'/'spoonful' Zipf 2.87 below 4.0"
+      },
+      {
+        "card": "boil|boil/VERB|boil#kocht",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'pasta'/'pasta' Zipf 3.92 below 4.0"
+      },
+      {
+        "card": "stir|stir/VERB|stir#umruhren",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'spoon'/'spoon' Zipf 3.88 below 4.0"
+      },
+      {
+        "card": "grandmother|grandmother/NOUN|grandmother#grossmutter",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bake'/'bake' Zipf 3.91 below 4.0"
+      },
+      {
+        "card": "gift|gift/NOUN|gift#geschenk",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'neighbour'/'neighbours' Zipf 3.87 below 4.0"
+      },
+      {
+        "card": "cat|cat/NOUN|cat#katze",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'sofa'/'sofa' Zipf 3.81 below 4.0"
+      },
+      {
+        "card": "photo|photo/NOUN|photo#foto",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'grandparent'/'grandparents' Zipf 3.88 below 4.0"
+      },
+      {
+        "card": "wipe|wipe/VERB|wipe#abwischen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'spill'/'spilled' Zipf 3.84 below 4.0"
+      },
+      {
+        "card": "push|push/VERB|push#schubsen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'sofa'/'sofa' Zipf 3.81 below 4.0"
+      },
+      {
+        "card": "kiss|kiss/VERB|kiss#kussen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'goodnight'/'goodnight' Zipf 3.64 below 4.0"
+      },
+      {
+        "card": "celebrate|celebrate/VERB|celebrate#feiert",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'picnic'/'picnic' Zipf 3.80 below 4.0"
+      },
+      {
+        "card": "room|room/NOUN|room#zimmer",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'sunlight'/'sunlight' Zipf 3.86 below 4.0"
+      },
+      {
+        "card": "roof|roof/NOUN|roof#dach",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'dripping'/'dripping' Zipf 3.48 below 4.0"
+      },
+      {
+        "card": "garden|garden/NOUN|garden#garten",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'tomato'/'tomatoes' Zipf 3.90 below 4.0"
+      },
+      {
+        "card": "dust|dust/NOUN|dust#staub",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'cupboard'/'cupboard' Zipf 3.44 below 4.0"
+      },
+      {
+        "card": "plug|plug/NOUN|plug#stecker",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'socket'/'socket' Zipf 3.52 below 4.0"
+      },
+      {
+        "card": "plug|plug/NOUN|plug#stecker",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'toaster'/'toaster' Zipf 3.33 below 4.0"
+      },
+      {
+        "card": "scissors|scissors/NOUN|scissors#einer-schere",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'blunt'/'blunt' Zipf 3.90 below 4.0"
+      },
+      {
+        "card": "tool|tool/NOUN|tool#werkzeug",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'tighten'/'tighten' Zipf 3.51 below 4.0"
+      },
+      {
+        "card": "blouse|blouse/NOUN|blouse#bluse",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'trouser'/'trousers' Zipf 3.70 below 4.0"
+      },
+      {
+        "card": "hat|hat/NOUN|hat#hut",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'brim'/'brim' Zipf 3.06 below 4.0"
+      },
+      {
+        "card": "pocket|pocket/NOUN|pocket#taschenfach",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'trouser'/'trousers' Zipf 3.70 below 4.0"
+      },
+      {
+        "card": "apron|apron/NOUN|apron#schurze",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'batter'/'batter' Zipf 3.56 below 4.0"
+      },
+      {
+        "card": "label|label/NOUN|label#aufkleber",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'jar'/'jar' Zipf 3.93 below 4.0"
+      },
+      {
+        "card": "lid|lid/NOUN|lid#deckel",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'jar'/'jar' Zipf 3.93 below 4.0"
+      },
+      {
+        "card": "garlic|garlic/NOUN|garlic#knoblauch",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'clove'/'clove' Zipf 2.91 below 4.0"
+      },
+      {
+        "card": "mushroom|mushroom/NOUN|mushroom#pilz",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'thinly'/'thinly' Zipf 3.27 below 4.0"
+      },
+      {
+        "card": "mushroom|mushroom/NOUN|mushroom#pilz",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'onion'/'onions' Zipf 3.89 below 4.0"
+      },
+      {
+        "card": "jam|jam/NOUN|jam#konfiture",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'strawberry'/'strawberry' Zipf 3.72 below 4.0"
+      },
+      {
+        "card": "jam|jam/NOUN|jam#konfiture",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'toast'/'toast' Zipf 3.96 below 4.0"
+      },
+      {
+        "card": "fry|fry/VERB|fry#braten",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'onion'/'onions' Zipf 3.89 below 4.0"
+      },
+      {
+        "card": "piano|piano/NOUN|piano#klavier",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'practise'/'practises' Zipf 3.52 below 4.0"
+      },
+      {
+        "card": "draw|draw/VERB|draw#zeichnen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'coloured'/'coloured' Zipf 3.92 below 4.0"
+      },
+      {
+        "card": "draw|draw/VERB|draw#zeichnen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'pencil'/'pencils' Zipf 3.95 below 4.0"
+      },
+      {
+        "card": "fold|fold/VERB|fold#faltete",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'towel'/'towels' Zipf 3.94 below 4.0"
+      },
+      {
+        "card": "fold|fold/VERB|fold#faltete",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'cupboard'/'cupboard' Zipf 3.44 below 4.0"
+      },
+      {
+        "card": "pull|pull/VERB|pull#ziehen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'drawer'/'drawer' Zipf 3.78 below 4.0"
+      },
+      {
+        "card": "smell|smell/VERB|smell#riechen",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'bakery'/'bakery' Zipf 3.67 below 4.0"
+      },
+      {
+        "card": "share|share/VERB|share#teilt",
+        "level": "warn",
+        "rule": "i+1",
+        "message": "'dessert'/'dessert' Zipf 3.83 below 4.0"
+      }
+    ]
+  },
+  "sqlite_counts": {
+    "languages": 1,
+    "lemmas": 1958,
+    "senses": 3143,
+    "cards": 1005,
+    "dictionary_forms": 3492,
+    "decks": 3,
+    "deck_cards": 1005,
+    "deck_words": 901,
+    "word_aliases": 11,
+    "sentences": 1539,
+    "sentence_tokens": 16372,
+    "card_sentences": 1533,
+    "stories": 1,
+    "story_sentences": 6,
+    "exercises": 0,
+    "grammar_rules": 0,
+    "audio_assets": 0,
+    "content_releases": 1
+  },
+  "sha256": "1632b3612ab1071e479a116644e42dc872018ad46ba67c24f3d4f9b4b19e2ff5"
+}

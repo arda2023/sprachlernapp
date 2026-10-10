@@ -24,37 +24,31 @@ Jede Box-Änderung setzt `due_at` nach der neuen Box neu.
 
 Eine Karte entsteht bei der ersten Anzeige in einem Stapel oder per "Zum Lernen hinzufügen" (Box 0). Der erste Versuch entscheidet:
 
-- richtig (ohne falschen Versuch, ohne "Wort erfahren", ohne Synonymhinweis) → Box 3; ein vorheriges "Fast richtig" ändert daran nichts
+- richtig (ohne falschen Versuch, ohne "Wort erfahren") → Box 3; ein vorheriges "Fast richtig" ändert daran nichts
 - sonst → Box 1
 
 ## Danach
 
-- **Antwort sauber** (ohne Fehler, ohne Synonymhinweis, ohne "Wort erfahren"; ein vorheriges "Fast richtig" ist erlaubt, beschlossen 04.10.2026) → Box + 1 (höchstens 5), `due_at` nach neuer Box. Die Box wird nie allein aus `first_attempt_correct` abgeleitet.
+- **Antwort sauber** (ohne Fehler, ohne "Wort erfahren"; ein vorheriges "Fast richtig" ist erlaubt, beschlossen 04.10.2026) → Box + 1 (höchstens 5), `due_at` nach neuer Box. Die Box wird nie allein aus `first_attempt_correct` abgeleitet.
 - **Fehler** (falscher Versuch, falsche Form, "Wort erfahren") → Box 1, `due_at` nach Box 1.
-- **Mit Hilfe gelöst** (Synonymhinweis, `hint_used = true`) → Box 1, `due_at` nach Box 1. Kein Fehler.
+- Geprüfte Synonyme sind neutrale erneute Versuche ohne Box-Nachteil. Historische `hint_used=true`-Reviews bleiben unverändert; der Scheduler versteht den alten Hilfeflag weiterhin, neue Synonymversuche setzen ihn nicht.
 - "Fast richtig" ist kein Fehler.
-- **Vorab-Üben** und **Stapel-Revue** (Karte nicht fällig): richtig → Box und `due_at` unverändert; Fehler oder Synonymhinweis → Box 1, `due_at` nach Box 1.
+- **Vorab-Üben** und **Stapel-Revue** (Karte nicht fällig): richtig → Box und `due_at` unverändert; Fehler → Box 1, `due_at` nach Box 1.
 
-## Synonymhinweis
+## Neutrale Synonymversuche (06.10.2026)
 
-Beschlossene Regel (04.10.2026). Stand: Content-Pipeline sowie lokaler Pack- und `content.sqlite`-Transport von `valid_alternatives` sind umgesetzt und offline getestet; die Content-Migration ist erstellt, aber nicht angewendet. Stapel-App-Anbindung und lokales `user.db.hint_used` sind umgesetzt. Ausstehend: Cloud-`hint_used`-Migration und Live-Qualität der Alternativprüfung (`NEXTSTEPS.md`). Produktregel: `PRODUCT.md`, Darstellung: `DESIGN.md`.
+Ersetzt die frühere Hinweissanktion. Ausschließlich `valid_alternatives` des konkreten Karte-Satz-Lücken-Paares gilt; Gruppenmitgliedschaft gibt keine zusätzliche Antwort frei. Normalisierung und Prüfpriorität bleiben unverändert, vollständig lokal.
 
-- **Auslöser**: Die Eingabe entspricht einer geprüften Alternative aus `card_sentences.valid_alternatives` genau dieses Karte-Satz-Lücken-Paares (`docs/content-schema.md`); Vergleich wie bei der Zielform (Groß-/Kleinschreibung egal, getrimmt, typografischer Apostroph `’` gilt wie in `form_norm` als `'`). Die Prüfung läuft vollständig lokal.
-- **"Fast richtig"**: eine fehlende, zusätzliche oder ersetzte Stelle oder zwei vertauschte Nachbarbuchstaben, nur bei Zielformen ab vier Buchstaben. Eigene Sätze aus `card_contexts` haben keine Alternativen und verhalten sich wie eine leere Liste.
-- **Prüfreihenfolge** je Eingabe: (1) Zielform → gelöst; (2) geprüfte Alternative → Hinweis; (3) nachweislich andere Form desselben Lemmas → Fehler; (4) "Fast richtig" (nur gegen die Zielform); (5) alles andere → Fehler.
-- **Formnachweis**: Bekannte Formen kommen ausschließlich aus vorhandenen Content-Forminformationen; keine Endungsheuristik. Eine bekannte andere Form darf trotz geringer Zeichenentfernung kein Tippfehler sein.
-- **Abschluss** nur mit der Zielform oder "Wort erfahren". Unbekannte oder unbestätigte Alternativen sind Fehler nach (5); es gibt keine KI-Prüfung der Eingabe zur Laufzeit.
-- `hint_used`: bool, Standard `false`. Beim ersten Synonymhinweis `true` und bis zum Ende des Durchgangs dauerhaft `true`.
-- Eine geprüfte Alternative erhöht `error_count` nicht. Andere falsche Eingaben im selben Durchgang zählen wie bisher.
-- `first_attempt_correct` bleibt `false`, wenn die erste Eingabe eine Alternative ist.
-- Ein mit `hint_used = true` abgeschlossener Durchgang ergibt Box 1, auch beim Erstkontakt, aus höheren Boxen, beim Vorab-Üben und bei der Stapel-Revue, unabhängig von einer später exakt richtigen Eingabe. `due_at` = Beginn des nächsten lokalen Tages beim Standardintervall der Box 1; ein konfiguriertes Box-1-Intervall gilt stattdessen.
-- Weitere Eingaben desselben Durchgangs (erneute Alternative, Fehler, "Wort erfahren") stufen nicht erneut zurück und erzeugen keine zusätzliche `review_log`-Zeile; die eine Zeile hält den Durchgang vollständig fest.
-- `revealed` bleibt getrennt: Der Anfangsbuchstabe im Hinweis ist kein "Wort erfahren". Wird danach "Wort erfahren" benutzt, sind `hint_used` und `revealed` beide `true`.
-- "Fast richtig" bei Tippfehlern bleibt unverändert: kein Synonymhinweis, keine neue Rückstufungsregel.
+- Meldung: „Das passt auch. Gesucht ist hier ein anderes Wort. Versuch es noch einmal.“ Keine Fehlerfarbe/-vibration, kein Lösungspräfix und kein Aufdecken.
+- Kein `error_count`, kein `hint_used`, kein Rücksetzen und keine In-Session-Wiederholung allein durch Synonyme. Abschluss weiterhin mit exakter Zielform (auch nach Aufdecken muss sie eingegeben werden).
+- `first_attempt_correct`: erste **nicht neutrale** geprüfte Eingabe exakt. Synonym → exakt und Synonym → Synonym → exakt ergeben `true`, Box 3 beim Erstkontakt. Fast richtig → exakt ergibt weiter `false` ohne Box-Strafe. Bewertungsgrundlage bleiben Fehler/Aufdecken, nicht dieses Beobachtungsfeld allein.
+- Falsch → Synonym → exakt behält den Fehler, `first_attempt_correct=false`, Box 1. Synonym → Aufdecken behält `revealed=true`, `hint_used=false`, Box 1.
+- `hint_used` bleibt für neue Synonymversuche false. Historische Zeilen einschließlich echter alter Hilfeflags werden nicht verändert oder neu bewertet.
+- Weitere neutrale Eingaben erzeugen keine Reviewzeile. Ein erfolgreicher Erstpass wird einmal gespeichert, Wiederholung und doppeltes Speichern derselben Pass-ID erzeugen keinen zweiten Review.
 
 ## In-Session-Wiederholung
 
-Eine Karte mit Fehler oder mit Synonymhinweis kommt einmal wieder, etwa 3 Karten später. Die Box entscheidet allein der erste Durchgang; die Wiederholung ändert Box und `due_at` nicht und erzeugt keine eigene Zeile im `review_log`.
+Eine Karte mit Fehler oder Aufdecken kommt einmal wieder, etwa 3 Karten später. Die Box entscheidet allein der erste Durchgang; die Wiederholung ändert Box und `due_at` nicht und erzeugt keine eigene Zeile im `review_log`.
 
 ## Queue je Modus
 
@@ -100,10 +94,10 @@ Eine Zeile je Karte und Session, geschrieben nach dem ersten Durchgang der Karte
 | created_at | timestamp | Zeitpunkt (UTC) |
 | mode | text | `mixed`, `deck`, `revue`, `early` |
 | sentence_id | text | gezeigter Satz (`sentences.id` oder `card_contexts.id`) |
-| first_attempt_correct | bool | erste geprüfte Eingabe exakt (wörtliche Beobachtung: "Fast richtig", dann exakt → `false`; Box-Regel davon unabhängig) |
+| first_attempt_correct | bool | erste nicht neutrale geprüfte Eingabe exakt (Synonyme übersprungen; "Fast richtig", dann exakt → `false`; Box-Regel davon unabhängig) |
 | error_count | int | falsche Versuche im ersten Durchgang |
 | revealed | bool | "Wort erfahren" benutzt |
-| hint_used | bool | Synonymhinweis im ersten Durchgang gezeigt; Standard `false` (lokal umgesetzt; Cloud-Migration offen) |
+| hint_used | bool | historischer Hilfeflag; neue neutrale Synonyme setzen ihn nicht; Standard `false` |
 | box_before | int | Box vor der Antwort (0–5) |
 | box_after | int | Box nach der Antwort (1–5) |
 | due_at_after | timestamp | neue Fälligkeit |
@@ -117,7 +111,7 @@ Eine Zeile je Karte und Session, geschrieben nach dem ersten Durchgang der Karte
 - Tagesziel = verschiedene Karten mit `review_log`-Zeile heute. ✔
 - `mode = early` kennzeichnet Vorab-Üben innerhalb von Gemischt (Box-Regel wie Revue). ✔
 - Eine `review_log`-Zeile je Karte und Session; die In-Session-Wiederholung wird nicht geloggt. ✔
-- Geprüfte Alternative → Synonymhinweis, Abschluss nur mit Zielform oder "Wort erfahren", danach Box 1 ohne zusätzlichen Fehler (beschlossen 04.10.2026; Stapel-App-Anbindung umgesetzt). ✔
+- Geprüfte Alternative → neutraler erneuter Versuch; sauberer Erstkontakt nach Zielform Box 3, echte Fehler/Aufdecken bleiben wirksam (06.10.2026). ✔
 
 ### Vielfalt bei der Einführung neuer Karten (2026-10-04)
 
@@ -183,3 +177,9 @@ Direkte Stapelübungen und Revue enthalten ausschließlich Primärkarten. Gelern
 `PracticeItemResolver` liefert kuratierte und vollständige lokale Karten. Zähler berücksichtigen nur diesen auflösbaren Bestand; fehlende alte IDs bleiben gespeichert und werden in der Wortliste als Inhaltsbefund ausgewiesen. Explizite Story-Box-0-Karten sind sofort „Ungelernt“ in der Wortliste; kein Tagesziel-/Wochenfortschritt ohne Review.
 Gemischt reserviert nach fälligen Karten zuerst Slots für explizite Story-Box-0-Karten (älteste Entscheidung zuerst), dann automatische Primärwörter, zuletzt Vorab-Üben. Die 4:1-Auswahl betrifft nur automatische neue Karten und kann Story-Slots nicht verdrängen. Vielfalt bei neuen Karten gilt pro Sitzung; vorhandene Box-0-Zustände bleiben spätere Kandidaten. Gelernte unterschiedliche Bedeutungen werden nach Karten-ID getrennt behandelt.
 Exakte Bindungen einer lokalen Karte an spätere Content-Entsprechungen verhindern einen zweiten automatischen Erstkontakt. Der lokale Stand kann einen Primärplatz als „über Story gelernt“ abdecken; Besitz/Deckgröße ändern sich nicht. Haben beide IDs bereits Zustände, bleiben beide erreichbar und der Konflikt sichtbar. Keine automatische Verschmelzung.
+
+## Gruppenprojektion und Reihenfolge v1 (06.10.2026)
+`LearningGroups.project` ist die gemeinsame Regel: genaue Gruppe der relevanten Primär-/Storykarte ermitteln; alle bereits gelernten Mitglieder erhalten, andernfalls ältesten vorhandenen Box-0-Stand (Zeitpunkt, dann ID) oder redaktionellen Kopf auswählen. Inaktive Zustände reservieren die Gruppe, erscheinen aber nicht in Queue/Zählern. Bereits gelernte mehrere Mitglieder behalten einzeln fällige Reviews und Revueplätze. Auch Kopf außerhalb des gewählten Stapels wird appweit wiederverwendet. Einzelne historische Nebenbedeutungen ohne explizite Gruppe bleiben getrennt.
+Die vier Zähler verwenden diese Projektion nur für neue Ziele; die disjunkten Kategorien der gelernten Karten bleiben unverändert. Stapelfortschritt hat dieselbe abgeleitete Menge, keine gespeicherten Zähler. Die Wortliste erhält alle gelernten Zeilen und nur einen unbewerteten Gruppenvertreter; deaktivierte Zeilen bleiben dort bedienbar.
+`selectNewCards` verwendet Themen und explizite Kontrasttags aus Content. Verwandt bedeutet gleiches Thema oder gemeinsames Kontrasttag. Drei andere neue Ziele dazwischen; falls kein Kandidat die Inhalts-/Funktionswortquote erfüllt, kontrolliert 2/1/0. Unbekannte Lemmas, stabile Eingangsreihenfolge und die bestehende 4:1-Regel bleiben; explizite Storyziele haben Vorrang innerhalb der Abstandsstufe. Jede Auswahl verbraucht einen Kandidaten; bei späteren Sessions rücken übrig gebliebene Wörter nach, ohne Zufallsneusortierung. Ein einmal aufgebauter Controller behält seine Session über Provider-Neuberechnungen. Reviews und In-Session-Wiederholungen unterliegen nicht dem Themenabstand.
+Die vorherigen Paket-A/B-Abschnitte beschreiben den historischen Stand; für gruppierte Schema-3-Inhalte gelten die hier beschriebenen Ergänzungen. Quelle, Vorher/Nachher-Auswahl und Bestandsprüfungen: `docs/learning-groups-v1.md`.

@@ -1,0 +1,25 @@
+{
+  "errors": [],
+  "warnings": [
+    [
+      "process",
+      "i+1",
+      "'simplify'/'simplify' Zipf 3.46 below 3.5"
+    ],
+    [
+      "discuss",
+      "i+1",
+      "'timetable'/'timetable' Zipf 3.44 below 3.5"
+    ],
+    [
+      "stationery",
+      "i+1",
+      "'cupboard'/'cupboard' Zipf 3.44 below 3.5"
+    ],
+    [
+      "keen",
+      "i+1",
+      "'trainee'/'trainee' Zipf 3.43 below 3.5"
+    ]
+  ]
+}

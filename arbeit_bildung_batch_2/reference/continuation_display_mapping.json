@@ -1,0 +1,2058 @@
+{
+  "existing": [
+    {
+      "card_ref": "job|job/NOUN|job#arbeitsstelle",
+      "form_norm": "job",
+      "position": 1
+    },
+    {
+      "card_ref": "school|school/NOUN|school#schule-hier-schul",
+      "form_norm": "school",
+      "position": 2
+    },
+    {
+      "card_ref": "task|task/NOUN|task#aufgabe",
+      "form_norm": "task",
+      "position": 3
+    },
+    {
+      "card_ref": "folder|folder/NOUN|folder#ordner",
+      "form_norm": "folder",
+      "position": 4
+    },
+    {
+      "card_ref": "discussion|discussion/NOUN|discussion#diskussion",
+      "form_norm": "discussion",
+      "position": 5
+    },
+    {
+      "card_ref": "applicant|applicant/NOUN|applicant#bewerber",
+      "form_norm": "applicant",
+      "position": 6
+    },
+    {
+      "card_ref": "university|university/NOUN|university#universitat",
+      "form_norm": "university",
+      "position": 7
+    },
+    {
+      "card_ref": "mark|mark/NOUN|mark#note",
+      "form_norm": "mark",
+      "position": 8
+    },
+    {
+      "card_ref": "employer|employer/NOUN|employer#arbeitgeber",
+      "form_norm": "employer",
+      "position": 9
+    },
+    {
+      "card_ref": "method|method/NOUN|method#methode",
+      "form_norm": "method",
+      "position": 10
+    },
+    {
+      "card_ref": "mouse|mouse/NOUN|mouse#maus",
+      "form_norm": "mouse",
+      "position": 11
+    },
+    {
+      "card_ref": "CV|CV/NOUN|CV#lebenslauf",
+      "form_norm": "cv",
+      "position": 12
+    },
+    {
+      "card_ref": "lesson|lesson/NOUN|lesson#unterrichtsstunde",
+      "form_norm": "lesson",
+      "position": 13
+    },
+    {
+      "card_ref": "message|message/NOUN|message#nachricht",
+      "form_norm": "message",
+      "position": 14
+    },
+    {
+      "card_ref": "lecture|lecture/NOUN|lecture#vorlesung",
+      "form_norm": "lecture",
+      "position": 15
+    },
+    {
+      "card_ref": "question|question/NOUN|question#frage",
+      "form_norm": "question",
+      "position": 16
+    },
+    {
+      "card_ref": "department|department/NOUN|department#abteilung",
+      "form_norm": "department",
+      "position": 17
+    },
+    {
+      "card_ref": "instruction|instruction/NOUN|instruction#anweisung",
+      "form_norm": "instruction",
+      "position": 18
+    },
+    {
+      "card_ref": "spreadsheet|spreadsheet/NOUN|spreadsheet#tabellenkalkulation",
+      "form_norm": "spreadsheet",
+      "position": 19
+    },
+    {
+      "card_ref": "experience|experience/NOUN|experience#berufserfahrung",
+      "form_norm": "experience",
+      "position": 20
+    },
+    {
+      "card_ref": "textbook|textbook/NOUN|textbook#lehrbuch",
+      "form_norm": "textbook",
+      "position": 21
+    },
+    {
+      "card_ref": "audience|audience/NOUN|audience#publikum",
+      "form_norm": "audience",
+      "position": 22
+    },
+    {
+      "card_ref": "attention|attention/NOUN|attention#aufmerksamkeit",
+      "form_norm": "attention",
+      "position": 23
+    },
+    {
+      "card_ref": "workplace|workplace/NOUN|workplace#arbeitsort",
+      "form_norm": "workplace",
+      "position": 24
+    },
+    {
+      "card_ref": "certificate|certificate/NOUN|certificate#bescheinigung",
+      "form_norm": "certificate",
+      "position": 25
+    },
+    {
+      "card_ref": "effort|effort/NOUN|effort#anstrengung",
+      "form_norm": "effort",
+      "position": 26
+    },
+    {
+      "card_ref": "inbox|inbox/NOUN|inbox#posteingang",
+      "form_norm": "inbox",
+      "position": 27
+    },
+    {
+      "card_ref": "weakness|weakness/NOUN|weakness#personliche-schwache",
+      "form_norm": "weakness",
+      "position": 28
+    },
+    {
+      "card_ref": "chalk|chalk/NOUN|chalk#kreide",
+      "form_norm": "chalk",
+      "position": 29
+    },
+    {
+      "card_ref": "decision|decision/NOUN|decision#entscheidung",
+      "form_norm": "decision",
+      "position": 30
+    },
+    {
+      "card_ref": "vocabulary|vocabulary/NOUN|vocabulary#wortschatz",
+      "form_norm": "vocabulary",
+      "position": 31
+    },
+    {
+      "card_ref": "overtime|overtime/NOUN|overtime#uberstunden",
+      "form_norm": "overtime",
+      "position": 32
+    },
+    {
+      "card_ref": "research|research/NOUN|research#forschung",
+      "form_norm": "research",
+      "position": 33
+    },
+    {
+      "card_ref": "success|success/NOUN|success#erfolg",
+      "form_norm": "success",
+      "position": 34
+    },
+    {
+      "card_ref": "deadline|deadline/NOUN|deadline#abgabefrist",
+      "form_norm": "deadline",
+      "position": 35
+    },
+    {
+      "card_ref": "motivation|motivation/NOUN|motivation#motivation",
+      "form_norm": "motivation",
+      "position": 36
+    },
+    {
+      "card_ref": "pencil|pencil/NOUN|pencil#stift",
+      "form_norm": "pencil",
+      "position": 37
+    },
+    {
+      "card_ref": "cooperate|cooperate/VERB|cooperate#zusammenarbeiten",
+      "form_norm": "cooperate",
+      "position": 38
+    },
+    {
+      "card_ref": "spelling|spelling/NOUN|spelling#rechtschreibung",
+      "form_norm": "spelling",
+      "position": 39
+    },
+    {
+      "card_ref": "strike|strike/NOUN|strike#streik",
+      "form_norm": "strike",
+      "position": 40
+    },
+    {
+      "card_ref": "evidence|evidence/NOUN|evidence#belegmaterial",
+      "form_norm": "evidence",
+      "position": 41
+    },
+    {
+      "card_ref": "performance|performance/NOUN|performance#arbeitsleistung",
+      "form_norm": "performance",
+      "position": 42
+    },
+    {
+      "card_ref": "trainee|trainee/NOUN|trainee#person-in-betrieblicher-ausbildung",
+      "form_norm": "trainee",
+      "position": 43
+    },
+    {
+      "card_ref": "uniform|uniform/NOUN|uniform#schuluniform",
+      "form_norm": "uniform",
+      "position": 44
+    },
+    {
+      "card_ref": "equipment|equipment/NOUN|equipment#ausstattung",
+      "form_norm": "equipment",
+      "position": 45
+    },
+    {
+      "card_ref": "disagree|disagree/VERB|disagree#nicht-uebereinstimmt",
+      "form_norm": "disagree",
+      "position": 46
+    },
+    {
+      "card_ref": "chapter|chapter/NOUN|chapter#kapitel",
+      "form_norm": "chapter",
+      "position": 47
+    },
+    {
+      "card_ref": "retire|retire/VERB|retire#in-rente-gehen",
+      "form_norm": "retire",
+      "position": 48
+    },
+    {
+      "card_ref": "apprenticeship|apprenticeship/NOUN|apprenticeship#berufsausbildung",
+      "form_norm": "apprenticeship",
+      "position": 49
+    },
+    {
+      "card_ref": "employ|employ/VERB|employ#beschaftigen",
+      "form_norm": "employ",
+      "position": 50
+    },
+    {
+      "card_ref": "attendance|attendance/NOUN|attendance#anwesenheit",
+      "form_norm": "attendance",
+      "position": 51
+    },
+    {
+      "card_ref": "manage|manage/VERB|manage#bewaltigen",
+      "form_norm": "manage",
+      "position": 52
+    },
+    {
+      "card_ref": "stapler|stapler/NOUN|stapler#heftgerat",
+      "form_norm": "stapler",
+      "position": 53
+    },
+    {
+      "card_ref": "learn|learn/VERB|learn#lernen",
+      "form_norm": "learn",
+      "position": 54
+    },
+    {
+      "card_ref": "earn|earn/VERB|earn#verdienen",
+      "form_norm": "earn",
+      "position": 55
+    },
+    {
+      "card_ref": "persuade|persuade/VERB|persuade#uberzeugen",
+      "form_norm": "persuade",
+      "position": 56
+    },
+    {
+      "card_ref": "graduate|graduate/VERB|graduate#das-studium-abschliessen",
+      "form_norm": "graduate",
+      "position": 57
+    },
+    {
+      "card_ref": "discipline|discipline/NOUN|discipline#disziplin",
+      "form_norm": "discipline",
+      "position": 58
+    },
+    {
+      "card_ref": "save|save/VERB|save#speichern",
+      "form_norm": "save",
+      "position": 59
+    },
+    {
+      "card_ref": "achieve|achieve/VERB|achieve#erreichen",
+      "form_norm": "achieve",
+      "position": 60
+    },
+    {
+      "card_ref": "memorise|memorise/VERB|memorise#auswendig-lernen",
+      "form_norm": "memorise",
+      "position": 61
+    },
+    {
+      "card_ref": "permanent|permanent/ADJ|permanent#unbefristet",
+      "form_norm": "permanent",
+      "position": 62
+    },
+    {
+      "card_ref": "apologise|apologise/VERB|apologise#sich-entschuldigen",
+      "form_norm": "apologise",
+      "position": 63
+    },
+    {
+      "card_ref": "investigate|investigate/VERB|investigate#untersuchen",
+      "form_norm": "investigate",
+      "position": 64
+    },
+    {
+      "card_ref": "estimate|estimate/VERB|estimate#schatzen",
+      "form_norm": "estimate",
+      "position": 65
+    },
+    {
+      "card_ref": "behave|behave/VERB|behave#sich-benehmen",
+      "form_norm": "behave",
+      "position": 66
+    },
+    {
+      "card_ref": "download|download/VERB|download#laedt-herunter",
+      "form_norm": "download",
+      "position": 67
+    },
+    {
+      "card_ref": "qualified|qualified/ADJ|qualified#qualifiziert",
+      "form_norm": "qualified",
+      "position": 68
+    },
+    {
+      "card_ref": "fail|fail/VERB|fail#durchfallen",
+      "form_norm": "fail",
+      "position": 69
+    },
+    {
+      "card_ref": "promotion|promotion/NOUN|promotion#beforderung-im-beruf",
+      "form_norm": "promotion",
+      "position": 70
+    },
+    {
+      "card_ref": "respect|respect/VERB|respect#respektieren",
+      "form_norm": "respect",
+      "position": 71
+    },
+    {
+      "card_ref": "practical|practical/ADJ|practical#praktisch",
+      "form_norm": "practical",
+      "position": 72
+    },
+    {
+      "card_ref": "efficient|efficient/ADJ|efficient#effizient",
+      "form_norm": "efficient",
+      "position": 73
+    },
+    {
+      "card_ref": "strict|strict/ADJ|strict#streng",
+      "form_norm": "strict",
+      "position": 74
+    },
+    {
+      "card_ref": "personal|personal/ADJ|personal#personlich",
+      "form_norm": "personal",
+      "position": 75
+    },
+    {
+      "card_ref": "compare|compare/VERB|compare#vergleichen",
+      "form_norm": "compare",
+      "position": 76
+    },
+    {
+      "card_ref": "plumber|plumber/NOUN|plumber#installateur",
+      "form_norm": "plumber",
+      "position": 77
+    },
+    {
+      "card_ref": "confidential|confidential/ADJ|confidential#vertraulich",
+      "form_norm": "confidential",
+      "position": 78
+    },
+    {
+      "card_ref": "clear|clear/ADJ|clear#klares",
+      "form_norm": "clear",
+      "position": 79
+    },
+    {
+      "card_ref": "creative|creative/ADJ|creative#kreativ",
+      "form_norm": "creative",
+      "position": 80
+    },
+    {
+      "card_ref": "classmate|classmate/NOUN|classmate#mitschueler",
+      "form_norm": "classmate",
+      "position": 81
+    },
+    {
+      "card_ref": "vocational|vocational/ADJ|vocational#berufsbezogen",
+      "form_norm": "vocational",
+      "position": 82
+    }
+  ],
+  "append": [
+    {
+      "card_ref": "education|education/NOUN|education#bildung",
+      "form_norm": "education",
+      "original_position": 6,
+      "append_position": 83
+    },
+    {
+      "card_ref": "exam|exam/NOUN|exam#pruefung",
+      "form_norm": "exam",
+      "original_position": 7,
+      "append_position": 84
+    },
+    {
+      "card_ref": "career|career/NOUN|career#berufliche-laufbahn",
+      "form_norm": "career",
+      "original_position": 9,
+      "append_position": 85
+    },
+    {
+      "card_ref": "teacher|teacher/NOUN|teacher#lehrkraft",
+      "form_norm": "teacher",
+      "original_position": 13,
+      "append_position": 86
+    },
+    {
+      "card_ref": "project|project/NOUN|project#projekt",
+      "form_norm": "project",
+      "original_position": 16,
+      "append_position": 87
+    },
+    {
+      "card_ref": "printer|printer/NOUN|printer#drucker",
+      "form_norm": "printer",
+      "original_position": 18,
+      "append_position": 88
+    },
+    {
+      "card_ref": "opinion|opinion/NOUN|opinion#meinung",
+      "form_norm": "opinion",
+      "original_position": 19,
+      "append_position": 89
+    },
+    {
+      "card_ref": "interview|interview/NOUN|interview#vorstellungsgesprach",
+      "form_norm": "interview",
+      "original_position": 20,
+      "append_position": 90
+    },
+    {
+      "card_ref": "college|college/NOUN|college#college",
+      "form_norm": "college",
+      "original_position": 30,
+      "append_position": 91
+    },
+    {
+      "card_ref": "result|result/NOUN|result#ergebnis",
+      "form_norm": "result",
+      "original_position": 31,
+      "append_position": 92
+    },
+    {
+      "card_ref": "manager|manager/NOUN|manager#manager",
+      "form_norm": "manager",
+      "original_position": 33,
+      "append_position": 93
+    },
+    {
+      "card_ref": "process|process/NOUN|process#ablauf",
+      "form_norm": "process",
+      "original_position": 40,
+      "append_position": 94
+    },
+    {
+      "card_ref": "software|software/NOUN|software#software",
+      "form_norm": "software",
+      "original_position": 42,
+      "append_position": 95
+    },
+    {
+      "card_ref": "reference|reference/NOUN|reference#berufliche-referenz",
+      "form_norm": "reference",
+      "original_position": 44,
+      "append_position": 96
+    },
+    {
+      "card_ref": "subject|subject/NOUN|subject#schulfach",
+      "form_norm": "subject",
+      "original_position": 45,
+      "append_position": 97
+    },
+    {
+      "card_ref": "conversation|conversation/NOUN|conversation#gesprach",
+      "form_norm": "conversation",
+      "original_position": 51,
+      "append_position": 98
+    },
+    {
+      "card_ref": "seminar|seminar/NOUN|seminar#seminar",
+      "form_norm": "seminar",
+      "original_position": 54,
+      "append_position": 99
+    },
+    {
+      "card_ref": "knowledge|knowledge/NOUN|knowledge#wissen",
+      "form_norm": "knowledge",
+      "original_position": 55,
+      "append_position": 100
+    },
+    {
+      "card_ref": "company|company/NOUN|company#firma",
+      "form_norm": "company",
+      "original_position": 57,
+      "append_position": 101
+    },
+    {
+      "card_ref": "responsibility|responsibility/NOUN|responsibility#verantwortung",
+      "form_norm": "responsibility",
+      "original_position": 64,
+      "append_position": 102
+    },
+    {
+      "card_ref": "database|database/NOUN|database#datenbank",
+      "form_norm": "database",
+      "original_position": 66,
+      "append_position": 103
+    },
+    {
+      "card_ref": "skill|skill/NOUN|skill#fahigkeit",
+      "form_norm": "skill",
+      "original_position": 68,
+      "append_position": 104
+    },
+    {
+      "card_ref": "notebook|notebook/NOUN|notebook#hefte",
+      "form_norm": "notebook",
+      "original_position": 69,
+      "append_position": 105
+    },
+    {
+      "card_ref": "argument|argument/NOUN|argument#streit",
+      "form_norm": "argument",
+      "original_position": 75,
+      "append_position": 106
+    },
+    {
+      "card_ref": "progress|progress/NOUN|progress#fortschritt",
+      "form_norm": "progress",
+      "original_position": 79,
+      "append_position": 107
+    },
+    {
+      "card_ref": "salary|salary/NOUN|salary#gehalt",
+      "form_norm": "salary",
+      "original_position": 81,
+      "append_position": 108
+    },
+    {
+      "card_ref": "campus|campus/NOUN|campus#hochschulgelande",
+      "form_norm": "campus",
+      "original_position": 86,
+      "append_position": 109
+    },
+    {
+      "card_ref": "challenge|challenge/NOUN|challenge#herausforderung",
+      "form_norm": "challenge",
+      "original_position": 88,
+      "append_position": 110
+    },
+    {
+      "card_ref": "calendar|calendar/NOUN|calendar#kalender",
+      "form_norm": "calendar",
+      "original_position": 90,
+      "append_position": 111
+    },
+    {
+      "card_ref": "achievement|achievement/NOUN|achievement#erbrachte-leistung",
+      "form_norm": "achievement",
+      "original_position": 92,
+      "append_position": 112
+    },
+    {
+      "card_ref": "ruler|ruler/NOUN|ruler#lineal",
+      "form_norm": "ruler",
+      "original_position": 93,
+      "append_position": 113
+    },
+    {
+      "card_ref": "compromise|compromise/NOUN|compromise#kompromiss",
+      "form_norm": "compromise",
+      "original_position": 99,
+      "append_position": 114
+    },
+    {
+      "card_ref": "grammar|grammar/NOUN|grammar#grammatik",
+      "form_norm": "grammar",
+      "original_position": 103,
+      "append_position": 115
+    },
+    {
+      "card_ref": "pension|pension/NOUN|pension#rente",
+      "form_norm": "pension",
+      "original_position": 105,
+      "append_position": 116
+    },
+    {
+      "card_ref": "experiment|experiment/NOUN|experiment#experiment",
+      "form_norm": "experiment",
+      "original_position": 110,
+      "append_position": 117
+    },
+    {
+      "card_ref": "failure|failure/NOUN|failure#misserfolg",
+      "form_norm": "failure",
+      "original_position": 112,
+      "append_position": 118
+    },
+    {
+      "card_ref": "agenda|agenda/NOUN|agenda#tagesordnung",
+      "form_norm": "agenda",
+      "original_position": 114,
+      "append_position": 119
+    },
+    {
+      "card_ref": "confidence|confidence/NOUN|confidence#selbstvertrauen",
+      "form_norm": "confidence",
+      "original_position": 116,
+      "append_position": 120
+    },
+    {
+      "card_ref": "pen|pen/NOUN|pen#stift",
+      "form_norm": "pen",
+      "original_position": 117,
+      "append_position": 121
+    },
+    {
+      "card_ref": "discuss|discuss/VERB|discuss#besprechen",
+      "form_norm": "discuss",
+      "original_position": 123,
+      "append_position": 122
+    },
+    {
+      "card_ref": "meaning|meaning/NOUN|meaning#bedeutung",
+      "form_norm": "meaning",
+      "original_position": 127,
+      "append_position": 123
+    },
+    {
+      "card_ref": "contract|contract/NOUN|contract#vertrag",
+      "form_norm": "contract",
+      "original_position": 129,
+      "append_position": 124
+    },
+    {
+      "card_ref": "source|source/NOUN|source#informationsquelle",
+      "form_norm": "source",
+      "original_position": 134,
+      "append_position": 125
+    },
+    {
+      "card_ref": "recruit|recruit/VERB|recruit#personal-gewinnen",
+      "form_norm": "recruit",
+      "original_position": 140,
+      "append_position": 126
+    },
+    {
+      "card_ref": "playground|playground/NOUN|playground#schulhof",
+      "form_norm": "playground",
+      "original_position": 141,
+      "append_position": 127
+    },
+    {
+      "card_ref": "develop|develop/VERB|develop#entwickeln",
+      "form_norm": "develop",
+      "original_position": 144,
+      "append_position": 128
+    },
+    {
+      "card_ref": "stationery|stationery/NOUN|stationery#schreibwaren",
+      "form_norm": "stationery",
+      "original_position": 146,
+      "append_position": 129
+    },
+    {
+      "card_ref": "interrupt|interrupt/VERB|interrupt#unterbrechen",
+      "form_norm": "interrupt",
+      "original_position": 147,
+      "append_position": 130
+    },
+    {
+      "card_ref": "paragraph|paragraph/NOUN|paragraph#absatz",
+      "form_norm": "paragraph",
+      "original_position": 151,
+      "append_position": 131
+    },
+    {
+      "card_ref": "resign|resign/VERB|resign#kundigen",
+      "form_norm": "resign",
+      "original_position": 153,
+      "append_position": 132
+    },
+    {
+      "card_ref": "tutor|tutor/NOUN|tutor#lernbetreuer",
+      "form_norm": "tutor",
+      "original_position": 158,
+      "append_position": 133
+    },
+    {
+      "card_ref": "absence|absence/NOUN|absence#abwesenheit",
+      "form_norm": "absence",
+      "original_position": 165,
+      "append_position": 134
+    },
+    {
+      "card_ref": "backup|backup/NOUN|backup#sicherungskopie",
+      "form_norm": "backup",
+      "original_position": 170,
+      "append_position": 135
+    },
+    {
+      "card_ref": "impress|impress/VERB|impress#beeindrucken",
+      "form_norm": "impress",
+      "original_position": 172,
+      "append_position": 136
+    },
+    {
+      "card_ref": "revise|revise/VERB|revise#lernstoff-wiederholen",
+      "form_norm": "revise",
+      "original_position": 175,
+      "append_position": 137
+    },
+    {
+      "card_ref": "unemployed|unemployed/ADJ|unemployed#arbeitslos",
+      "form_norm": "unemployed",
+      "original_position": 177,
+      "append_position": 138
+    },
+    {
+      "card_ref": "negotiate|negotiate/VERB|negotiate#verhandeln",
+      "form_norm": "negotiate",
+      "original_position": 179,
+      "append_position": 139
+    },
+    {
+      "card_ref": "enrol|enrol/VERB|enrol#sich-einschreiben",
+      "form_norm": "enrol",
+      "original_position": 182,
+      "append_position": 140
+    },
+    {
+      "card_ref": "measure|measure/VERB|measure#messen",
+      "form_norm": "measure",
+      "original_position": 184,
+      "append_position": 141
+    },
+    {
+      "card_ref": "teach|teach/VERB|teach#unterrichtet",
+      "form_norm": "teach",
+      "original_position": 189,
+      "append_position": 142
+    },
+    {
+      "card_ref": "delete|delete/VERB|delete#loeschte",
+      "form_norm": "delete",
+      "original_position": 194,
+      "append_position": 143
+    },
+    {
+      "card_ref": "ambitious|ambitious/ADJ|ambitious#ehrgeizig",
+      "form_norm": "ambitious",
+      "original_position": 196,
+      "append_position": 144
+    },
+    {
+      "card_ref": "concentrate|concentrate/VERB|concentrate#sich-konzentrieren",
+      "form_norm": "concentrate",
+      "original_position": 199,
+      "append_position": 145
+    },
+    {
+      "card_ref": "professional|professional/ADJ|professional#professionell",
+      "form_norm": "professional",
+      "original_position": 201,
+      "append_position": 146
+    },
+    {
+      "card_ref": "introduce|introduce/VERB|introduce#vorstellen",
+      "form_norm": "introduce",
+      "original_position": 203,
+      "append_position": 147
+    },
+    {
+      "card_ref": "analyse|analyse/VERB|analyse#analysieren",
+      "form_norm": "analyse",
+      "original_position": 206,
+      "append_position": 148
+    },
+    {
+      "card_ref": "design|design/VERB|design#entwerfen",
+      "form_norm": "design",
+      "original_position": 208,
+      "append_position": 149
+    },
+    {
+      "card_ref": "raise|raise/VERB|raise#hebt",
+      "form_norm": "raise",
+      "original_position": 213,
+      "append_position": 150
+    },
+    {
+      "card_ref": "attach|attach/VERB|attach#anhangen",
+      "form_norm": "attach",
+      "original_position": 218,
+      "append_position": 151
+    },
+    {
+      "card_ref": "keen|keen/ADJ|keen#sehr-interessiert",
+      "form_norm": "keen",
+      "original_position": 220,
+      "append_position": 152
+    },
+    {
+      "card_ref": "solve|solve/VERB|solve#geloest",
+      "form_norm": "solve",
+      "original_position": 223,
+      "append_position": 153
+    },
+    {
+      "card_ref": "engineer|engineer/NOUN|engineer#ingenieur",
+      "form_norm": "engineer",
+      "original_position": 225,
+      "append_position": 154
+    },
+    {
+      "card_ref": "polite|polite/ADJ|polite#hoeflich",
+      "form_norm": "polite",
+      "original_position": 227,
+      "append_position": 155
+    },
+    {
+      "card_ref": "theoretical|theoretical/ADJ|theoretical#theoretisch",
+      "form_norm": "theoretical",
+      "original_position": 230,
+      "append_position": 156
+    },
+    {
+      "card_ref": "effective|effective/ADJ|effective#wirksam",
+      "form_norm": "effective",
+      "original_position": 232,
+      "append_position": 157
+    },
+    {
+      "card_ref": "primary|primary/ADJ|primary#grundschul",
+      "form_norm": "primary",
+      "original_position": 237,
+      "append_position": 158
+    },
+    {
+      "card_ref": "recruitment|recruitment/NOUN|recruitment#personalgewinnung",
+      "form_norm": "recruitment",
+      "original_position": 244,
+      "append_position": 159
+    },
+    {
+      "card_ref": "difficult|difficult/ADJ|difficult#schwierig",
+      "form_norm": "difficult",
+      "original_position": 247,
+      "append_position": 160
+    },
+    {
+      "card_ref": "accountant|accountant/NOUN|accountant#buchhalter",
+      "form_norm": "accountant",
+      "original_position": 249,
+      "append_position": 161
+    },
+    {
+      "card_ref": "digital|digital/ADJ|digital#digitale",
+      "form_norm": "digital",
+      "original_position": 250,
+      "append_position": 162
+    },
+    {
+      "card_ref": "patient|patient/ADJ|patient#geduldig",
+      "form_norm": "patient",
+      "original_position": 251,
+      "append_position": 163
+    },
+    {
+      "card_ref": "responsible|responsible/ADJ|responsible#zustandig",
+      "form_norm": "responsible",
+      "original_position": 256,
+      "append_position": 164
+    }
+  ],
+  "rows": [
+    {
+      "card_ref": "job|job/NOUN|job#arbeitsstelle",
+      "form_norm": "job",
+      "original_position": 1,
+      "expected_position": 1,
+      "position": 1
+    },
+    {
+      "card_ref": "school|school/NOUN|school#schule-hier-schul",
+      "form_norm": "school",
+      "original_position": 5,
+      "expected_position": 2,
+      "position": 2
+    },
+    {
+      "card_ref": "education|education/NOUN|education#bildung",
+      "form_norm": "education",
+      "original_position": 6,
+      "expected_position": 83,
+      "position": 3
+    },
+    {
+      "card_ref": "exam|exam/NOUN|exam#pruefung",
+      "form_norm": "exam",
+      "original_position": 7,
+      "expected_position": 84,
+      "position": 4
+    },
+    {
+      "card_ref": "task|task/NOUN|task#aufgabe",
+      "form_norm": "task",
+      "original_position": 8,
+      "expected_position": 3,
+      "position": 5
+    },
+    {
+      "card_ref": "career|career/NOUN|career#berufliche-laufbahn",
+      "form_norm": "career",
+      "original_position": 9,
+      "expected_position": 85,
+      "position": 6
+    },
+    {
+      "card_ref": "folder|folder/NOUN|folder#ordner",
+      "form_norm": "folder",
+      "original_position": 10,
+      "expected_position": 4,
+      "position": 7
+    },
+    {
+      "card_ref": "discussion|discussion/NOUN|discussion#diskussion",
+      "form_norm": "discussion",
+      "original_position": 11,
+      "expected_position": 5,
+      "position": 8
+    },
+    {
+      "card_ref": "applicant|applicant/NOUN|applicant#bewerber",
+      "form_norm": "applicant",
+      "original_position": 12,
+      "expected_position": 6,
+      "position": 9
+    },
+    {
+      "card_ref": "teacher|teacher/NOUN|teacher#lehrkraft",
+      "form_norm": "teacher",
+      "original_position": 13,
+      "expected_position": 86,
+      "position": 10
+    },
+    {
+      "card_ref": "project|project/NOUN|project#projekt",
+      "form_norm": "project",
+      "original_position": 16,
+      "expected_position": 87,
+      "position": 11
+    },
+    {
+      "card_ref": "printer|printer/NOUN|printer#drucker",
+      "form_norm": "printer",
+      "original_position": 18,
+      "expected_position": 88,
+      "position": 12
+    },
+    {
+      "card_ref": "opinion|opinion/NOUN|opinion#meinung",
+      "form_norm": "opinion",
+      "original_position": 19,
+      "expected_position": 89,
+      "position": 13
+    },
+    {
+      "card_ref": "interview|interview/NOUN|interview#vorstellungsgesprach",
+      "form_norm": "interview",
+      "original_position": 20,
+      "expected_position": 90,
+      "position": 14
+    },
+    {
+      "card_ref": "university|university/NOUN|university#universitat",
+      "form_norm": "university",
+      "original_position": 22,
+      "expected_position": 7,
+      "position": 15
+    },
+    {
+      "card_ref": "mark|mark/NOUN|mark#note",
+      "form_norm": "mark",
+      "original_position": 23,
+      "expected_position": 8,
+      "position": 16
+    },
+    {
+      "card_ref": "employer|employer/NOUN|employer#arbeitgeber",
+      "form_norm": "employer",
+      "original_position": 25,
+      "expected_position": 9,
+      "position": 17
+    },
+    {
+      "card_ref": "college|college/NOUN|college#college",
+      "form_norm": "college",
+      "original_position": 30,
+      "expected_position": 91,
+      "position": 18
+    },
+    {
+      "card_ref": "result|result/NOUN|result#ergebnis",
+      "form_norm": "result",
+      "original_position": 31,
+      "expected_position": 92,
+      "position": 19
+    },
+    {
+      "card_ref": "method|method/NOUN|method#methode",
+      "form_norm": "method",
+      "original_position": 32,
+      "expected_position": 10,
+      "position": 20
+    },
+    {
+      "card_ref": "manager|manager/NOUN|manager#manager",
+      "form_norm": "manager",
+      "original_position": 33,
+      "expected_position": 93,
+      "position": 21
+    },
+    {
+      "card_ref": "mouse|mouse/NOUN|mouse#maus",
+      "form_norm": "mouse",
+      "original_position": 34,
+      "expected_position": 11,
+      "position": 22
+    },
+    {
+      "card_ref": "CV|CV/NOUN|CV#lebenslauf",
+      "form_norm": "cv",
+      "original_position": 36,
+      "expected_position": 12,
+      "position": 23
+    },
+    {
+      "card_ref": "lesson|lesson/NOUN|lesson#unterrichtsstunde",
+      "form_norm": "lesson",
+      "original_position": 37,
+      "expected_position": 13,
+      "position": 24
+    },
+    {
+      "card_ref": "process|process/NOUN|process#ablauf",
+      "form_norm": "process",
+      "original_position": 40,
+      "expected_position": 94,
+      "position": 25
+    },
+    {
+      "card_ref": "software|software/NOUN|software#software",
+      "form_norm": "software",
+      "original_position": 42,
+      "expected_position": 95,
+      "position": 26
+    },
+    {
+      "card_ref": "message|message/NOUN|message#nachricht",
+      "form_norm": "message",
+      "original_position": 43,
+      "expected_position": 14,
+      "position": 27
+    },
+    {
+      "card_ref": "reference|reference/NOUN|reference#berufliche-referenz",
+      "form_norm": "reference",
+      "original_position": 44,
+      "expected_position": 96,
+      "position": 28
+    },
+    {
+      "card_ref": "subject|subject/NOUN|subject#schulfach",
+      "form_norm": "subject",
+      "original_position": 45,
+      "expected_position": 97,
+      "position": 29
+    },
+    {
+      "card_ref": "lecture|lecture/NOUN|lecture#vorlesung",
+      "form_norm": "lecture",
+      "original_position": 46,
+      "expected_position": 15,
+      "position": 30
+    },
+    {
+      "card_ref": "question|question/NOUN|question#frage",
+      "form_norm": "question",
+      "original_position": 47,
+      "expected_position": 16,
+      "position": 31
+    },
+    {
+      "card_ref": "department|department/NOUN|department#abteilung",
+      "form_norm": "department",
+      "original_position": 49,
+      "expected_position": 17,
+      "position": 32
+    },
+    {
+      "card_ref": "conversation|conversation/NOUN|conversation#gesprach",
+      "form_norm": "conversation",
+      "original_position": 51,
+      "expected_position": 98,
+      "position": 33
+    },
+    {
+      "card_ref": "seminar|seminar/NOUN|seminar#seminar",
+      "form_norm": "seminar",
+      "original_position": 54,
+      "expected_position": 99,
+      "position": 34
+    },
+    {
+      "card_ref": "knowledge|knowledge/NOUN|knowledge#wissen",
+      "form_norm": "knowledge",
+      "original_position": 55,
+      "expected_position": 100,
+      "position": 35
+    },
+    {
+      "card_ref": "instruction|instruction/NOUN|instruction#anweisung",
+      "form_norm": "instruction",
+      "original_position": 56,
+      "expected_position": 18,
+      "position": 36
+    },
+    {
+      "card_ref": "company|company/NOUN|company#firma",
+      "form_norm": "company",
+      "original_position": 57,
+      "expected_position": 101,
+      "position": 37
+    },
+    {
+      "card_ref": "spreadsheet|spreadsheet/NOUN|spreadsheet#tabellenkalkulation",
+      "form_norm": "spreadsheet",
+      "original_position": 58,
+      "expected_position": 19,
+      "position": 38
+    },
+    {
+      "card_ref": "experience|experience/NOUN|experience#berufserfahrung",
+      "form_norm": "experience",
+      "original_position": 60,
+      "expected_position": 20,
+      "position": 39
+    },
+    {
+      "card_ref": "textbook|textbook/NOUN|textbook#lehrbuch",
+      "form_norm": "textbook",
+      "original_position": 61,
+      "expected_position": 21,
+      "position": 40
+    },
+    {
+      "card_ref": "responsibility|responsibility/NOUN|responsibility#verantwortung",
+      "form_norm": "responsibility",
+      "original_position": 64,
+      "expected_position": 102,
+      "position": 41
+    },
+    {
+      "card_ref": "database|database/NOUN|database#datenbank",
+      "form_norm": "database",
+      "original_position": 66,
+      "expected_position": 103,
+      "position": 42
+    },
+    {
+      "card_ref": "audience|audience/NOUN|audience#publikum",
+      "form_norm": "audience",
+      "original_position": 67,
+      "expected_position": 22,
+      "position": 43
+    },
+    {
+      "card_ref": "skill|skill/NOUN|skill#fahigkeit",
+      "form_norm": "skill",
+      "original_position": 68,
+      "expected_position": 104,
+      "position": 44
+    },
+    {
+      "card_ref": "notebook|notebook/NOUN|notebook#hefte",
+      "form_norm": "notebook",
+      "original_position": 69,
+      "expected_position": 105,
+      "position": 45
+    },
+    {
+      "card_ref": "attention|attention/NOUN|attention#aufmerksamkeit",
+      "form_norm": "attention",
+      "original_position": 71,
+      "expected_position": 23,
+      "position": 46
+    },
+    {
+      "card_ref": "workplace|workplace/NOUN|workplace#arbeitsort",
+      "form_norm": "workplace",
+      "original_position": 73,
+      "expected_position": 24,
+      "position": 47
+    },
+    {
+      "card_ref": "argument|argument/NOUN|argument#streit",
+      "form_norm": "argument",
+      "original_position": 75,
+      "expected_position": 106,
+      "position": 48
+    },
+    {
+      "card_ref": "certificate|certificate/NOUN|certificate#bescheinigung",
+      "form_norm": "certificate",
+      "original_position": 78,
+      "expected_position": 25,
+      "position": 49
+    },
+    {
+      "card_ref": "progress|progress/NOUN|progress#fortschritt",
+      "form_norm": "progress",
+      "original_position": 79,
+      "expected_position": 107,
+      "position": 50
+    },
+    {
+      "card_ref": "effort|effort/NOUN|effort#anstrengung",
+      "form_norm": "effort",
+      "original_position": 80,
+      "expected_position": 26,
+      "position": 51
+    },
+    {
+      "card_ref": "salary|salary/NOUN|salary#gehalt",
+      "form_norm": "salary",
+      "original_position": 81,
+      "expected_position": 108,
+      "position": 52
+    },
+    {
+      "card_ref": "inbox|inbox/NOUN|inbox#posteingang",
+      "form_norm": "inbox",
+      "original_position": 82,
+      "expected_position": 27,
+      "position": 53
+    },
+    {
+      "card_ref": "weakness|weakness/NOUN|weakness#personliche-schwache",
+      "form_norm": "weakness",
+      "original_position": 84,
+      "expected_position": 28,
+      "position": 54
+    },
+    {
+      "card_ref": "chalk|chalk/NOUN|chalk#kreide",
+      "form_norm": "chalk",
+      "original_position": 85,
+      "expected_position": 29,
+      "position": 55
+    },
+    {
+      "card_ref": "campus|campus/NOUN|campus#hochschulgelande",
+      "form_norm": "campus",
+      "original_position": 86,
+      "expected_position": 109,
+      "position": 56
+    },
+    {
+      "card_ref": "challenge|challenge/NOUN|challenge#herausforderung",
+      "form_norm": "challenge",
+      "original_position": 88,
+      "expected_position": 110,
+      "position": 57
+    },
+    {
+      "card_ref": "calendar|calendar/NOUN|calendar#kalender",
+      "form_norm": "calendar",
+      "original_position": 90,
+      "expected_position": 111,
+      "position": 58
+    },
+    {
+      "card_ref": "decision|decision/NOUN|decision#entscheidung",
+      "form_norm": "decision",
+      "original_position": 91,
+      "expected_position": 30,
+      "position": 59
+    },
+    {
+      "card_ref": "achievement|achievement/NOUN|achievement#erbrachte-leistung",
+      "form_norm": "achievement",
+      "original_position": 92,
+      "expected_position": 112,
+      "position": 60
+    },
+    {
+      "card_ref": "ruler|ruler/NOUN|ruler#lineal",
+      "form_norm": "ruler",
+      "original_position": 93,
+      "expected_position": 113,
+      "position": 61
+    },
+    {
+      "card_ref": "vocabulary|vocabulary/NOUN|vocabulary#wortschatz",
+      "form_norm": "vocabulary",
+      "original_position": 95,
+      "expected_position": 31,
+      "position": 62
+    },
+    {
+      "card_ref": "overtime|overtime/NOUN|overtime#uberstunden",
+      "form_norm": "overtime",
+      "original_position": 97,
+      "expected_position": 32,
+      "position": 63
+    },
+    {
+      "card_ref": "compromise|compromise/NOUN|compromise#kompromiss",
+      "form_norm": "compromise",
+      "original_position": 99,
+      "expected_position": 114,
+      "position": 64
+    },
+    {
+      "card_ref": "research|research/NOUN|research#forschung",
+      "form_norm": "research",
+      "original_position": 102,
+      "expected_position": 33,
+      "position": 65
+    },
+    {
+      "card_ref": "grammar|grammar/NOUN|grammar#grammatik",
+      "form_norm": "grammar",
+      "original_position": 103,
+      "expected_position": 115,
+      "position": 66
+    },
+    {
+      "card_ref": "success|success/NOUN|success#erfolg",
+      "form_norm": "success",
+      "original_position": 104,
+      "expected_position": 34,
+      "position": 67
+    },
+    {
+      "card_ref": "pension|pension/NOUN|pension#rente",
+      "form_norm": "pension",
+      "original_position": 105,
+      "expected_position": 116,
+      "position": 68
+    },
+    {
+      "card_ref": "deadline|deadline/NOUN|deadline#abgabefrist",
+      "form_norm": "deadline",
+      "original_position": 106,
+      "expected_position": 35,
+      "position": 69
+    },
+    {
+      "card_ref": "motivation|motivation/NOUN|motivation#motivation",
+      "form_norm": "motivation",
+      "original_position": 108,
+      "expected_position": 36,
+      "position": 70
+    },
+    {
+      "card_ref": "pencil|pencil/NOUN|pencil#stift",
+      "form_norm": "pencil",
+      "original_position": 109,
+      "expected_position": 37,
+      "position": 71
+    },
+    {
+      "card_ref": "experiment|experiment/NOUN|experiment#experiment",
+      "form_norm": "experiment",
+      "original_position": 110,
+      "expected_position": 117,
+      "position": 72
+    },
+    {
+      "card_ref": "failure|failure/NOUN|failure#misserfolg",
+      "form_norm": "failure",
+      "original_position": 112,
+      "expected_position": 118,
+      "position": 73
+    },
+    {
+      "card_ref": "agenda|agenda/NOUN|agenda#tagesordnung",
+      "form_norm": "agenda",
+      "original_position": 114,
+      "expected_position": 119,
+      "position": 74
+    },
+    {
+      "card_ref": "cooperate|cooperate/VERB|cooperate#zusammenarbeiten",
+      "form_norm": "cooperate",
+      "original_position": 115,
+      "expected_position": 38,
+      "position": 75
+    },
+    {
+      "card_ref": "confidence|confidence/NOUN|confidence#selbstvertrauen",
+      "form_norm": "confidence",
+      "original_position": 116,
+      "expected_position": 120,
+      "position": 76
+    },
+    {
+      "card_ref": "pen|pen/NOUN|pen#stift",
+      "form_norm": "pen",
+      "original_position": 117,
+      "expected_position": 121,
+      "position": 77
+    },
+    {
+      "card_ref": "spelling|spelling/NOUN|spelling#rechtschreibung",
+      "form_norm": "spelling",
+      "original_position": 119,
+      "expected_position": 39,
+      "position": 78
+    },
+    {
+      "card_ref": "strike|strike/NOUN|strike#streik",
+      "form_norm": "strike",
+      "original_position": 121,
+      "expected_position": 40,
+      "position": 79
+    },
+    {
+      "card_ref": "discuss|discuss/VERB|discuss#besprechen",
+      "form_norm": "discuss",
+      "original_position": 123,
+      "expected_position": 122,
+      "position": 80
+    },
+    {
+      "card_ref": "evidence|evidence/NOUN|evidence#belegmaterial",
+      "form_norm": "evidence",
+      "original_position": 126,
+      "expected_position": 41,
+      "position": 81
+    },
+    {
+      "card_ref": "meaning|meaning/NOUN|meaning#bedeutung",
+      "form_norm": "meaning",
+      "original_position": 127,
+      "expected_position": 123,
+      "position": 82
+    },
+    {
+      "card_ref": "performance|performance/NOUN|performance#arbeitsleistung",
+      "form_norm": "performance",
+      "original_position": 128,
+      "expected_position": 42,
+      "position": 83
+    },
+    {
+      "card_ref": "contract|contract/NOUN|contract#vertrag",
+      "form_norm": "contract",
+      "original_position": 129,
+      "expected_position": 124,
+      "position": 84
+    },
+    {
+      "card_ref": "trainee|trainee/NOUN|trainee#person-in-betrieblicher-ausbildung",
+      "form_norm": "trainee",
+      "original_position": 132,
+      "expected_position": 43,
+      "position": 85
+    },
+    {
+      "card_ref": "uniform|uniform/NOUN|uniform#schuluniform",
+      "form_norm": "uniform",
+      "original_position": 133,
+      "expected_position": 44,
+      "position": 86
+    },
+    {
+      "card_ref": "source|source/NOUN|source#informationsquelle",
+      "form_norm": "source",
+      "original_position": 134,
+      "expected_position": 125,
+      "position": 87
+    },
+    {
+      "card_ref": "equipment|equipment/NOUN|equipment#ausstattung",
+      "form_norm": "equipment",
+      "original_position": 138,
+      "expected_position": 45,
+      "position": 88
+    },
+    {
+      "card_ref": "disagree|disagree/VERB|disagree#nicht-uebereinstimmt",
+      "form_norm": "disagree",
+      "original_position": 139,
+      "expected_position": 46,
+      "position": 89
+    },
+    {
+      "card_ref": "recruit|recruit/VERB|recruit#personal-gewinnen",
+      "form_norm": "recruit",
+      "original_position": 140,
+      "expected_position": 126,
+      "position": 90
+    },
+    {
+      "card_ref": "playground|playground/NOUN|playground#schulhof",
+      "form_norm": "playground",
+      "original_position": 141,
+      "expected_position": 127,
+      "position": 91
+    },
+    {
+      "card_ref": "chapter|chapter/NOUN|chapter#kapitel",
+      "form_norm": "chapter",
+      "original_position": 143,
+      "expected_position": 47,
+      "position": 92
+    },
+    {
+      "card_ref": "develop|develop/VERB|develop#entwickeln",
+      "form_norm": "develop",
+      "original_position": 144,
+      "expected_position": 128,
+      "position": 93
+    },
+    {
+      "card_ref": "retire|retire/VERB|retire#in-rente-gehen",
+      "form_norm": "retire",
+      "original_position": 145,
+      "expected_position": 48,
+      "position": 94
+    },
+    {
+      "card_ref": "stationery|stationery/NOUN|stationery#schreibwaren",
+      "form_norm": "stationery",
+      "original_position": 146,
+      "expected_position": 129,
+      "position": 95
+    },
+    {
+      "card_ref": "interrupt|interrupt/VERB|interrupt#unterbrechen",
+      "form_norm": "interrupt",
+      "original_position": 147,
+      "expected_position": 130,
+      "position": 96
+    },
+    {
+      "card_ref": "apprenticeship|apprenticeship/NOUN|apprenticeship#berufsausbildung",
+      "form_norm": "apprenticeship",
+      "original_position": 150,
+      "expected_position": 49,
+      "position": 97
+    },
+    {
+      "card_ref": "paragraph|paragraph/NOUN|paragraph#absatz",
+      "form_norm": "paragraph",
+      "original_position": 151,
+      "expected_position": 131,
+      "position": 98
+    },
+    {
+      "card_ref": "resign|resign/VERB|resign#kundigen",
+      "form_norm": "resign",
+      "original_position": 153,
+      "expected_position": 132,
+      "position": 99
+    },
+    {
+      "card_ref": "employ|employ/VERB|employ#beschaftigen",
+      "form_norm": "employ",
+      "original_position": 156,
+      "expected_position": 50,
+      "position": 100
+    },
+    {
+      "card_ref": "attendance|attendance/NOUN|attendance#anwesenheit",
+      "form_norm": "attendance",
+      "original_position": 157,
+      "expected_position": 51,
+      "position": 101
+    },
+    {
+      "card_ref": "tutor|tutor/NOUN|tutor#lernbetreuer",
+      "form_norm": "tutor",
+      "original_position": 158,
+      "expected_position": 133,
+      "position": 102
+    },
+    {
+      "card_ref": "manage|manage/VERB|manage#bewaltigen",
+      "form_norm": "manage",
+      "original_position": 160,
+      "expected_position": 52,
+      "position": 103
+    },
+    {
+      "card_ref": "stapler|stapler/NOUN|stapler#heftgerat",
+      "form_norm": "stapler",
+      "original_position": 162,
+      "expected_position": 53,
+      "position": 104
+    },
+    {
+      "card_ref": "absence|absence/NOUN|absence#abwesenheit",
+      "form_norm": "absence",
+      "original_position": 165,
+      "expected_position": 134,
+      "position": 105
+    },
+    {
+      "card_ref": "learn|learn/VERB|learn#lernen",
+      "form_norm": "learn",
+      "original_position": 167,
+      "expected_position": 54,
+      "position": 106
+    },
+    {
+      "card_ref": "earn|earn/VERB|earn#verdienen",
+      "form_norm": "earn",
+      "original_position": 169,
+      "expected_position": 55,
+      "position": 107
+    },
+    {
+      "card_ref": "backup|backup/NOUN|backup#sicherungskopie",
+      "form_norm": "backup",
+      "original_position": 170,
+      "expected_position": 135,
+      "position": 108
+    },
+    {
+      "card_ref": "persuade|persuade/VERB|persuade#uberzeugen",
+      "form_norm": "persuade",
+      "original_position": 171,
+      "expected_position": 56,
+      "position": 109
+    },
+    {
+      "card_ref": "impress|impress/VERB|impress#beeindrucken",
+      "form_norm": "impress",
+      "original_position": 172,
+      "expected_position": 136,
+      "position": 110
+    },
+    {
+      "card_ref": "graduate|graduate/VERB|graduate#das-studium-abschliessen",
+      "form_norm": "graduate",
+      "original_position": 174,
+      "expected_position": 57,
+      "position": 111
+    },
+    {
+      "card_ref": "revise|revise/VERB|revise#lernstoff-wiederholen",
+      "form_norm": "revise",
+      "original_position": 175,
+      "expected_position": 137,
+      "position": 112
+    },
+    {
+      "card_ref": "unemployed|unemployed/ADJ|unemployed#arbeitslos",
+      "form_norm": "unemployed",
+      "original_position": 177,
+      "expected_position": 138,
+      "position": 113
+    },
+    {
+      "card_ref": "negotiate|negotiate/VERB|negotiate#verhandeln",
+      "form_norm": "negotiate",
+      "original_position": 179,
+      "expected_position": 139,
+      "position": 114
+    },
+    {
+      "card_ref": "discipline|discipline/NOUN|discipline#disziplin",
+      "form_norm": "discipline",
+      "original_position": 181,
+      "expected_position": 58,
+      "position": 115
+    },
+    {
+      "card_ref": "enrol|enrol/VERB|enrol#sich-einschreiben",
+      "form_norm": "enrol",
+      "original_position": 182,
+      "expected_position": 140,
+      "position": 116
+    },
+    {
+      "card_ref": "measure|measure/VERB|measure#messen",
+      "form_norm": "measure",
+      "original_position": 184,
+      "expected_position": 141,
+      "position": 117
+    },
+    {
+      "card_ref": "save|save/VERB|save#speichern",
+      "form_norm": "save",
+      "original_position": 186,
+      "expected_position": 59,
+      "position": 118
+    },
+    {
+      "card_ref": "achieve|achieve/VERB|achieve#erreichen",
+      "form_norm": "achieve",
+      "original_position": 188,
+      "expected_position": 60,
+      "position": 119
+    },
+    {
+      "card_ref": "teach|teach/VERB|teach#unterrichtet",
+      "form_norm": "teach",
+      "original_position": 189,
+      "expected_position": 142,
+      "position": 120
+    },
+    {
+      "card_ref": "memorise|memorise/VERB|memorise#auswendig-lernen",
+      "form_norm": "memorise",
+      "original_position": 191,
+      "expected_position": 61,
+      "position": 121
+    },
+    {
+      "card_ref": "permanent|permanent/ADJ|permanent#unbefristet",
+      "form_norm": "permanent",
+      "original_position": 193,
+      "expected_position": 62,
+      "position": 122
+    },
+    {
+      "card_ref": "delete|delete/VERB|delete#loeschte",
+      "form_norm": "delete",
+      "original_position": 194,
+      "expected_position": 143,
+      "position": 123
+    },
+    {
+      "card_ref": "apologise|apologise/VERB|apologise#sich-entschuldigen",
+      "form_norm": "apologise",
+      "original_position": 195,
+      "expected_position": 63,
+      "position": 124
+    },
+    {
+      "card_ref": "ambitious|ambitious/ADJ|ambitious#ehrgeizig",
+      "form_norm": "ambitious",
+      "original_position": 196,
+      "expected_position": 144,
+      "position": 125
+    },
+    {
+      "card_ref": "investigate|investigate/VERB|investigate#untersuchen",
+      "form_norm": "investigate",
+      "original_position": 198,
+      "expected_position": 64,
+      "position": 126
+    },
+    {
+      "card_ref": "concentrate|concentrate/VERB|concentrate#sich-konzentrieren",
+      "form_norm": "concentrate",
+      "original_position": 199,
+      "expected_position": 145,
+      "position": 127
+    },
+    {
+      "card_ref": "estimate|estimate/VERB|estimate#schatzen",
+      "form_norm": "estimate",
+      "original_position": 200,
+      "expected_position": 65,
+      "position": 128
+    },
+    {
+      "card_ref": "professional|professional/ADJ|professional#professionell",
+      "form_norm": "professional",
+      "original_position": 201,
+      "expected_position": 146,
+      "position": 129
+    },
+    {
+      "card_ref": "introduce|introduce/VERB|introduce#vorstellen",
+      "form_norm": "introduce",
+      "original_position": 203,
+      "expected_position": 147,
+      "position": 130
+    },
+    {
+      "card_ref": "behave|behave/VERB|behave#sich-benehmen",
+      "form_norm": "behave",
+      "original_position": 205,
+      "expected_position": 66,
+      "position": 131
+    },
+    {
+      "card_ref": "analyse|analyse/VERB|analyse#analysieren",
+      "form_norm": "analyse",
+      "original_position": 206,
+      "expected_position": 148,
+      "position": 132
+    },
+    {
+      "card_ref": "design|design/VERB|design#entwerfen",
+      "form_norm": "design",
+      "original_position": 208,
+      "expected_position": 149,
+      "position": 133
+    },
+    {
+      "card_ref": "download|download/VERB|download#laedt-herunter",
+      "form_norm": "download",
+      "original_position": 210,
+      "expected_position": 67,
+      "position": 134
+    },
+    {
+      "card_ref": "qualified|qualified/ADJ|qualified#qualifiziert",
+      "form_norm": "qualified",
+      "original_position": 212,
+      "expected_position": 68,
+      "position": 135
+    },
+    {
+      "card_ref": "raise|raise/VERB|raise#hebt",
+      "form_norm": "raise",
+      "original_position": 213,
+      "expected_position": 150,
+      "position": 136
+    },
+    {
+      "card_ref": "fail|fail/VERB|fail#durchfallen",
+      "form_norm": "fail",
+      "original_position": 215,
+      "expected_position": 69,
+      "position": 137
+    },
+    {
+      "card_ref": "promotion|promotion/NOUN|promotion#beforderung-im-beruf",
+      "form_norm": "promotion",
+      "original_position": 217,
+      "expected_position": 70,
+      "position": 138
+    },
+    {
+      "card_ref": "attach|attach/VERB|attach#anhangen",
+      "form_norm": "attach",
+      "original_position": 218,
+      "expected_position": 151,
+      "position": 139
+    },
+    {
+      "card_ref": "respect|respect/VERB|respect#respektieren",
+      "form_norm": "respect",
+      "original_position": 219,
+      "expected_position": 71,
+      "position": 140
+    },
+    {
+      "card_ref": "keen|keen/ADJ|keen#sehr-interessiert",
+      "form_norm": "keen",
+      "original_position": 220,
+      "expected_position": 152,
+      "position": 141
+    },
+    {
+      "card_ref": "practical|practical/ADJ|practical#praktisch",
+      "form_norm": "practical",
+      "original_position": 222,
+      "expected_position": 72,
+      "position": 142
+    },
+    {
+      "card_ref": "solve|solve/VERB|solve#geloest",
+      "form_norm": "solve",
+      "original_position": 223,
+      "expected_position": 153,
+      "position": 143
+    },
+    {
+      "card_ref": "efficient|efficient/ADJ|efficient#effizient",
+      "form_norm": "efficient",
+      "original_position": 224,
+      "expected_position": 73,
+      "position": 144
+    },
+    {
+      "card_ref": "engineer|engineer/NOUN|engineer#ingenieur",
+      "form_norm": "engineer",
+      "original_position": 225,
+      "expected_position": 154,
+      "position": 145
+    },
+    {
+      "card_ref": "polite|polite/ADJ|polite#hoeflich",
+      "form_norm": "polite",
+      "original_position": 227,
+      "expected_position": 155,
+      "position": 146
+    },
+    {
+      "card_ref": "strict|strict/ADJ|strict#streng",
+      "form_norm": "strict",
+      "original_position": 229,
+      "expected_position": 74,
+      "position": 147
+    },
+    {
+      "card_ref": "theoretical|theoretical/ADJ|theoretical#theoretisch",
+      "form_norm": "theoretical",
+      "original_position": 230,
+      "expected_position": 156,
+      "position": 148
+    },
+    {
+      "card_ref": "effective|effective/ADJ|effective#wirksam",
+      "form_norm": "effective",
+      "original_position": 232,
+      "expected_position": 157,
+      "position": 149
+    },
+    {
+      "card_ref": "personal|personal/ADJ|personal#personlich",
+      "form_norm": "personal",
+      "original_position": 236,
+      "expected_position": 75,
+      "position": 150
+    },
+    {
+      "card_ref": "primary|primary/ADJ|primary#grundschul",
+      "form_norm": "primary",
+      "original_position": 237,
+      "expected_position": 158,
+      "position": 151
+    },
+    {
+      "card_ref": "compare|compare/VERB|compare#vergleichen",
+      "form_norm": "compare",
+      "original_position": 239,
+      "expected_position": 76,
+      "position": 152
+    },
+    {
+      "card_ref": "plumber|plumber/NOUN|plumber#installateur",
+      "form_norm": "plumber",
+      "original_position": 241,
+      "expected_position": 77,
+      "position": 153
+    },
+    {
+      "card_ref": "confidential|confidential/ADJ|confidential#vertraulich",
+      "form_norm": "confidential",
+      "original_position": 242,
+      "expected_position": 78,
+      "position": 154
+    },
+    {
+      "card_ref": "clear|clear/ADJ|clear#klares",
+      "form_norm": "clear",
+      "original_position": 243,
+      "expected_position": 79,
+      "position": 155
+    },
+    {
+      "card_ref": "recruitment|recruitment/NOUN|recruitment#personalgewinnung",
+      "form_norm": "recruitment",
+      "original_position": 244,
+      "expected_position": 159,
+      "position": 156
+    },
+    {
+      "card_ref": "difficult|difficult/ADJ|difficult#schwierig",
+      "form_norm": "difficult",
+      "original_position": 247,
+      "expected_position": 160,
+      "position": 157
+    },
+    {
+      "card_ref": "creative|creative/ADJ|creative#kreativ",
+      "form_norm": "creative",
+      "original_position": 248,
+      "expected_position": 80,
+      "position": 158
+    },
+    {
+      "card_ref": "accountant|accountant/NOUN|accountant#buchhalter",
+      "form_norm": "accountant",
+      "original_position": 249,
+      "expected_position": 161,
+      "position": 159
+    },
+    {
+      "card_ref": "digital|digital/ADJ|digital#digitale",
+      "form_norm": "digital",
+      "original_position": 250,
+      "expected_position": 162,
+      "position": 160
+    },
+    {
+      "card_ref": "patient|patient/ADJ|patient#geduldig",
+      "form_norm": "patient",
+      "original_position": 251,
+      "expected_position": 163,
+      "position": 161
+    },
+    {
+      "card_ref": "classmate|classmate/NOUN|classmate#mitschueler",
+      "form_norm": "classmate",
+      "original_position": 253,
+      "expected_position": 81,
+      "position": 162
+    },
+    {
+      "card_ref": "vocational|vocational/ADJ|vocational#berufsbezogen",
+      "form_norm": "vocational",
+      "original_position": 254,
+      "expected_position": 82,
+      "position": 163
+    },
+    {
+      "card_ref": "responsible|responsible/ADJ|responsible#zustandig",
+      "form_norm": "responsible",
+      "original_position": 256,
+      "expected_position": 164,
+      "position": 164
+    }
+  ]
+}

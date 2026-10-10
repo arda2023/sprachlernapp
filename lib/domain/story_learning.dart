@@ -97,6 +97,7 @@ class StoryLearningCandidate {
     this.retired = false,
     this.problem,
     this.otherForms = const {},
+    this.groupMembers = const [],
   });
   final String storyId, revision, lang;
   final StorySentence sentence;
@@ -105,6 +106,7 @@ class StoryLearningCandidate {
   final bool retired;
   final String? problem;
   final Set<String> otherForms;
+  final List<ContentCard> groupMembers;
   LearningIdentity get identity => LearningIdentity(
     lang,
     contentFormNorm(token.surface),

@@ -1,0 +1,43 @@
+{
+  "spacy_version": "3.8.16",
+  "model": "en_core_web_sm",
+  "model_version": "3.8.0",
+  "tokenizer_function": "sprachpipe.annotate.tokenize",
+  "linter_function": "sprachpipe.linter.lint_sentence",
+  "disabled_pipes": [
+    "senter",
+    "ner"
+  ],
+  "linter": {
+    "max_words": 14,
+    "max_subclauses": 1,
+    "min_zipf": {
+      "anfaenger": 4.0,
+      "mittel": 3.5,
+      "fortgeschritten": 3.0
+    }
+  },
+  "names": [
+    "Mia",
+    "Leo",
+    "Sara",
+    "Amir",
+    "Emma",
+    "Luca",
+    "Sofia",
+    "Noah",
+    "Maya",
+    "Elias",
+    "Lina",
+    "Omar",
+    "Eva",
+    "Ben",
+    "Nina",
+    "Ali",
+    "Rosa",
+    "Luis",
+    "Zoe",
+    "David"
+  ],
+  "runtime": "Use the existing pipeline environment; full model binaries are not included."
+}

@@ -1,0 +1,86 @@
+{
+  "status": "authored_editorially_reviewed_and_locally_validated_project_import_pending",
+  "author": "ChatGPT",
+  "batch": 5,
+  "sentences": 100,
+  "target_words": 100,
+  "tokens": 1021,
+  "reviewed_alternatives": 7,
+  "pos_counts": {
+    "NOUN": 75,
+    "VERB": 15,
+    "ADJ": 10
+  },
+  "new_lemmas": 107,
+  "new_senses": 116,
+  "new_dictionary_forms": 142,
+  "new_ownership_aliases": [
+    {
+      "form_norm": "traveler",
+      "word": "traveller"
+    },
+    {
+      "form_norm": "license",
+      "word": "licence"
+    },
+    {
+      "form_norm": "theater",
+      "word": "theatre"
+    }
+  ],
+  "existing_target_senses": 31,
+  "new_target_senses": 69,
+  "source_sha256": "97015c3c12b9f5e2fb2d900ee9544029189e1f51a3741c1a9100f206dcf5b4d3",
+  "registry_sha256": "4148c720b983fe66c01683db760208c7b85cb0a59f98bb5a40ae7d049198f2b4",
+  "create_sha256": "a4b04234766e953727bc3d137f103305568ca7b8e2933a88214f427ec5314c8e",
+  "validation": {
+    "spacy": "3.8.16",
+    "model": "en_core_web_sm 3.8.0",
+    "max_words": 14,
+    "max_subclauses": 1,
+    "linter_errors": 0,
+    "linter_frequency_warnings": 38,
+    "word_lengths_min": 7,
+    "word_lengths_max": 11
+  },
+  "positions": {
+    "original_selection_unchanged": true,
+    "create_append_positions": "401..500",
+    "final_display_positions": "1..500",
+    "existing_rows_with_changed_display": 380
+  },
+  "expected_after_project_import": {
+    "cards": 764,
+    "sentences_including_story": 1298,
+    "card_sentences_including_history": 1292,
+    "primary_words": 660,
+    "travel_primary_words": 500,
+    "general_primary_words": 160,
+    "decks": 2
+  },
+  "limits": [
+    "Current repository create_content/build_rows/stable_id and deck_display were NOT executed here; run the verifier with --repo in the project.",
+    "Local display validation is arithmetic against the supplied source/registry/mapping, not a replacement for the current project implementation.",
+    "No SQLite export, app staging, device test, or learner data access here.",
+    "No Vertex/Gemini or external annotation API calls. Editorial creation itself uses ChatGPT.",
+    "No independent human review or public content release.",
+    "Parser POS is advisory; contextual grammar and project conventions determine bindings.",
+    "CEFR categories are editorial, not certified.",
+    "Empty alternative lists do not assert uniqueness.",
+    "Existing abbreviated or inflected source glosses are preserved."
+  ],
+  "companion_decisions": [
+    "31 existing targets reused, including traveller/trolley/junction/payment/souvenir/hike/sunset/rent; 69 proposed target senses unchanged from supplied context.",
+    "ride target is passenger travel; ride in helmet uses existing bicycle-riding sense. park in concert is a noun.",
+    "entry in require uses the new entry#einreise target, not existing entry#eintritt. station in petrol station reuses station#tankstelle_bestandteil.",
+    "working describes functioning equipment; dry is intransitive drying, not the old drying-by-wiping sense. turn in unlock is literal rotation, not turning off a device or turning at a junction.",
+    "ask request senses are reused from ask#bat, with new present/imperative form glosses; plural eggs/noodles/wheelchairs and singular country/person have correct new form glosses.",
+    "Existential there was uses existing be/VERB convention; enough uses existing adjectival quantity reference. No global grammatical retagging.",
+    "Proper names Japan and Germany and adjective British have explicit bindings; no unannotated alphabetic tokens.",
+    "All seven alternatives read literally in complete sentences: traveler, luggage, license, seat belt, theater, rent, buckle.",
+    "Historical fixed target glosses such as Tomaten-/Konzert-/Durchsagen/Symptome/geparkt are unchanged; new card translations use the supplied base-form wording. No silent sense merges.",
+    "sliced reuses existing slice#schneiden after comparison with its kitchen-knife/apple sentence; no duplicate slice sense.",
+    "New companion sense candidates were searched by form/lemma and compared with existing sentence uses; only distinct contextual meanings receive new refs."
+  ],
+  "known_source_metadata_note": "Registry source_sqlite_sha256 is inherited metadata; actual source-pack bytes and canonical registry hash bind this delivery."
+}

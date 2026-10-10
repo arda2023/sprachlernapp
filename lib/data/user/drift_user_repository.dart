@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:drift/drift.dart';
 
 import '../../domain/content.dart';
+import '../../domain/learning_groups.dart';
 import '../../domain/story_learning.dart';
 
 import 'package:characters/characters.dart';
@@ -374,6 +375,37 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
         message: invalid ?? 'Andere Sprache',
       );
     }
+    if (c.groupMembers.isNotEmpty && c.card?.learning != null) {
+      final members = attachLocalLearning(
+        c.groupMembers,
+        (await localPracticeItems()).map((i) => i.card),
+      );
+      final states = await allCardStates();
+      final selected = LearningGroups(members, states).project([c.card!.id]);
+      if (selected.isNotEmpty) {
+        // Prefer an active existing member, retaining every other learned row.
+        final id = selected.firstWhere(
+          (id) => states[id]?.isActive ?? true,
+          orElse: () => selected.first,
+        );
+        final state = states[id];
+        if (state?.retired == true) {
+          return StoryAddResult(StoryAddState.retired, cardId: id);
+        }
+        if (state?.disabled == true) {
+          return StoryAddResult(StoryAddState.disabled, cardId: id);
+        }
+        return StoryAddResult(
+          state != null &&
+                  (state.box >= 1 ||
+                      state.origin == CardOrigin.story ||
+                      (await explicitStoryAdditions()).containsKey(id))
+              ? StoryAddState.added
+              : StoryAddState.available,
+          cardId: id,
+        );
+      }
+    }
     final bound = (await identityBindings())[c.identity.key];
     final states = await cardStates({
       c.identity.localId,
@@ -507,25 +539,30 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
     } else if (existing == null) {
       await ensureCards([id], now: now, origin: CardOrigin.story);
     }
-    await _db
-        .into(_db.learningIdentityBindings)
-        .insert(
-          LearningIdentityBindingsCompanion.insert(
-            identityKey: c.identity.key,
-            lang: lang,
-            formNorm: c.identity.formNorm,
-            semanticAnchor: c.identity.semanticAnchor,
-            cardId: id,
-          ),
-          mode: InsertMode.insertOrIgnore,
+    // A group redirect is not an exact spelling/sense identity binding.
+    if (c.groupMembers.isEmpty ||
+        id == c.card?.id ||
+        id == c.identity.localId) {
+      await _db
+          .into(_db.learningIdentityBindings)
+          .insert(
+            LearningIdentityBindingsCompanion.insert(
+              identityKey: c.identity.key,
+              lang: lang,
+              formNorm: c.identity.formNorm,
+              semanticAnchor: c.identity.semanticAnchor,
+              cardId: id,
+            ),
+            mode: InsertMode.insertOrIgnore,
+          );
+      final binding = await (_db.select(
+        _db.learningIdentityBindings,
+      )..where((t) => t.identityKey.equals(c.identity.key))).getSingle();
+      if (binding.cardId != id) {
+        throw StateError(
+          'Lernidentität wurde parallel anders zugeordnet; bitte erneut öffnen.',
         );
-    final binding = await (_db.select(
-      _db.learningIdentityBindings,
-    )..where((t) => t.identityKey.equals(c.identity.key))).getSingle();
-    if (binding.cardId != id) {
-      throw StateError(
-        'Lernidentität wurde parallel anders zugeordnet; bitte erneut öffnen.',
-      );
+      }
     }
     await _db
         .into(_db.storyLearningAdditions)

@@ -1,0 +1,86 @@
+Ziel: Reisen-Batch 2 vollständig offline importieren, die 200 Reisen-Primärwörter nach ihrer ursprünglichen Auswahlposition anzeigen und das geprüfte interne Pack reisen_batch_2_v1 exportieren und stagen; alle vorhandenen Inhalte, IDs und Lernstände erhalten.
+
+Arbeite im Repository sprachapp. Der entpackte Lieferordner liegt unter reisen_batch_2/. Falls beim Entpacken eine zusätzliche Ordnerebene entstand, ermittle einmal den tatsächlichen Pfad anhand reisen_batch_2.editorial.json und verwende ihn durchgehend. Kein neuer Planungs- oder Freigabeturn für die hier ausdrücklich beauftragte Umsetzung. Kleinste zusammenhängende Lösung, keine zusätzlichen Features.
+
+Dateien:
+Lesen:
+@AGENTS.md @CLAUDE.md @PRODUCT.md @DESIGN.md @ARCHITECTURE.md @NEXTSTEPS.md
+@docs/content-schema.md @docs/pipeline.md @docs/reisen-batch-1-import.md
+@reisen_batch_2/README.txt @reisen_batch_2/authoring_audit.json
+@reisen_batch_2/reisen_batch_2.editorial.json @reisen_batch_2/deck_display_patch.json
+@reisen_batch_2/deck_display_patch.py @reisen_batch_2/test_deck_display_patch.py
+@reisen_batch_2/verify_reisen_batch_2.py @reisen_batch_2/reference/combined_display_mapping.json
+@pipeline/out/reisen_batch_1_v1/pack.json
+@pipeline/data/words/en.reisen_batch_2_v1.json
+@pipeline/data/curation/editorial_content_v2.schema.json
+@pipeline/src/sprachpipe/pack.py @pipeline/src/sprachpipe/export.py
+@pipeline/src/sprachpipe/content_contract.py @pipeline/src/sprachpipe/word_registry.py
+Ändern/neu, soweit für genau dieses Inkrement nötig:
+@pipeline/scripts/import_editorial_patch.py
+@pipeline/src/sprachpipe/deck_display.py (neu)
+@pipeline/tests/test_deck_display.py (neu; bestehende Importtests ergänzen, Pfad zuerst ermitteln)
+@pipeline/data/curation/reisen_batch_2.editorial.json (versionierte Lieferkopie)
+@pipeline/data/curation/reisen_batch_2_display_v1.json (versionierte Positionskopie)
+@test/data/real_pack_test.dart (erwartete Reisen-Anzahl 200; Allgemeine Sprache 160)
+@docs/reisen-batch-2-import.md (neu) @NEXTSTEPS.md
+Ausgaben neu: pipeline/out/reisen_batch_2_v1/
+Assets ausschließlich nach bestandener Abnahme: assets/content/en/content.sqlite und content.manifest.json über vorhandenes Stage-Werkzeug.
+
+Schritte:
+1. Arbeitsbaum und vorhandene Änderungen erfassen und bewahren. README, Audit, Liefermanifest und Quellbindungen prüfen. Der Basis-Pack muss raw SHA256 874b4a95d0a060fc9a77d7dc0dc426018942fa35ad7b2119731fb5281ceb6540 haben; Registry canonical SHA256 e2331264c70e18c2bbb8e92ce8ead4e7d81f14a342da466e7b1c1c990c5a3642. Keine Hashes umschreiben, um einen abweichenden Bestand passend zu machen. Ein schon vorhandenes Outputverzeichnis nicht überschreiben. Beide Quelldateien bleiben unverändert.
+2. Alle 100 Satzpaare, Zielbindungen und 14 wörtlich eingesetzten Alternativen anhand der Lieferung gegengelesen abnehmen. Die Herkunft ist ChatGPT-Redaktion, keine unabhängige menschliche Freigabe. Keine Gemini-/Vertex-Prüfung starten. Gelieferte Bedeutungen gegen Bestand prüfen, insbesondere neu angelegte Begleitwort-Senses nicht mit bloß anders flektierten Alt-Senses duplizieren. Zielsenses und Registryidentitäten sind fest. Keine Neugenerierung oder eigenständige Stilrunde. Bei einem klar belegten Lieferfehler nur diesen gezielt korrigieren, abhängige Tokens/Lücken/Review-Hashes und Create-Bindung im Display-Patch neu berechnen und den Vorher/Nachher-Befund protokollieren; keine unverwandten Sätze ändern.
+3. Standard-Create bleibt unverändert und append-only: Das Delta enthält KEINEN neuen Reisen-Stapel und hängt die neuen Karten vorübergehend auf Anzeigen 101–200 an. Originalpositionen in Auswahl/Registry bleiben unverändert. Die finale Reihenfolge kommt aus deck_display_patch.json mit genau 200 Zeilen. 95 vorhandene Reisen-Anzeigen wechseln dabei ihre Position. Keine Doppelzeilen anlegen.
+4. Die kleine reine Funktion aus deck_display_patch.py in pipeline/src/sprachpipe/deck_display.py integrieren (Schnittstelle apply_deck_display_patch(pack, patch, *, source_sha256, create_sha256, registry_sha256)). Sie bekommt das Ergebnis von create_content, erstellt eine Kopie und verändert ausschließlich position in deck_cards/deck_words des genannten Stapels. Sämtliche Hashbindungen, die vollständige Deckmenge, Vorzustand, Originalreihenfolge, lückenlose Endpositionen und Karten-/Wortpaarungen prüfen; keine unbekannten Felder stillschweigend ignorieren. Referenzimplementierung ist beigefügt und mit synthetischen Daten getestet. Zusätzliche lokale Regeln übernehmen, ohne den Schutz zu lockern.
+5. Im vorhandenen Import-CLI eine optionale --display-patch DATEI für --create ergänzen. Tatsächlichen Rohbytehash der Quelle und des Creates sowie kanonischen Registryhash berechnen und an die Funktion übergeben. Reihenfolge: Quelldateien validieren → create_content im Speicher → Display-Patch im Speicher → vollständige Packprüfung/Linter → sicherer Export. Der Zwischenstand mit Anhangreihenfolge wird nicht separat exportiert oder gestagt. Ein Patch ohne --create ist ein Argumentfehler vor jedem Schreiben. Ohne --display-patch bleibt das bisherige Verhalten gleich. Keine neue Umgehung von build_rows, keine Lockerung der 1..n-Regel und keine Schemaerweiterung im Create-JSON nötig. Die gelieferten unveränderten Referenzdateien bleiben als Herkunftsbeleg erhalten.
+6. Referenztests in die Pipeline-Tests übernehmen und die CLI-Anbindung gezielt testen: korrekte 200er-Reihenfolge; falscher Quell-/Create-/Registryhash; fehlende/zusätzliche/doppelte Karten; Lücken, falsche Formen oder Vorpositionen; zweites Anwenden; Schreibschutz der Eingaben; andere Stapel, Satztexte, IDs und Registrypositionen unverändert; Fehler vor Export erhalten eine vorhandene Zieldatei. Alte Importpfade ohne Display-Patch ebenfalls durch bestehende Tests prüfen. Keine Tests an echten Lernständen.
+7. Read-only --repo-Prüfung mit dem echten create_content, stable_id, tokenize, Linter und build_rows ausführen. Bei Erfolg intern nach pipeline/out/reisen_batch_2_v1 exportieren. Erwartet: 464 Karten, 998 Satztexte einschließlich 6 Story-Sätzen, 992 Karten-Satz-Verknüpfungen einschließlich Historie, 360 Primärwörter, genau zwei Stapel. Allgemeine Sprache: unverändert 160 Primärwörter. Reisen: 200 verschiedene Primärwörter, jeweils genau ein fester Übungssatz, Anzeigen 1–200 entsprechend reference/combined_display_mapping.json. Alle bestehenden Karten und Texte bleiben erhalten. Bestehende Wörterbuchzeilen nicht überschreiben; neue Begleitwörter verleihen keinem anderen Stapel Wortbesitz.
+8. SQLite neu öffnen und alle 18 Tabellen gegen build_rows abgleichen. Runtime-Metadaten wie created_at gesondert gegen ihren tatsächlichen Vertrag prüfen, keine festen Zeitstempel erwarten. Nicht bei einem Fehler zum Staging weiterlaufen. VOR dem ersten Stage-Aufruf die tatsächlich vorhandenen beiden Assets in einen neuen Backupordner kopieren und deren Hashes sichern. Erst nach erfolgreicher Pack-/SQLite-Abnahme Stage ausführen, danach --verify und den Zweistapel-Lesetest. Alle abhängigen Schritte mit expliziter Exitcode-Prüfung; keine Shellkette, die nach einem Fehler weitermacht.
+9. Importbericht mit echten Befehlen, Exitcodes, Linterbefunden, Tabellenzahlen und SHA256 schreiben. Stage-Version reisen_batch_2_v1 und die echte neue SQLite-Prüfsumme nennen. Keine Emulator-/iOS-Abnahme behaupten, wenn nicht ausgeführt. user.db weder öffnen noch verändern. Der interne Status bleibt bestehen.
+10. In demselben Auftrag den nächsten Authoring-Kontext als build/reisen_authoring_batch_3.zip vorbereiten: genau authoring_batch=3 (nicht IDs 201–300), tatsächlicher exportierter Pack/Dictionary, alle 500 unveränderten Identitäten, kompatible Registryrevision mit unveränderten Besitzbindungen und ursprünglichen Auswahlpositionen, aktualisierte Quell-/Elternbindung. Sinne, die als Begleitwörter bereits existieren, als bestehend kennzeichnen. Anzeigezuordnung für alle 300 dann vorhandenen Reisen-Wörter, echtes Schema, annotate.py/linter.py, Modell-/Linterumgebung und Hashmanifest beilegen. Keine Sätze für Batch 3 erzeugen. Keine erfundenen Felder; vorhandenen Authoring-Exportpfad wiederverwenden, einen nötigen neuen Hilfsskriptpfad im Bericht nennen.
+
+Nicht anfassen:
+Bestehende out/-Läufe und Quellpacks, reale user.db/Lernstände/review_log, Inhalte von Batch 1 und Allgemeine Sprache, Storytexte, ursprüngliche 500 Wortidentitäten/Besitzer/Registrypositionen, KI-Modelle und Budgets, SRS/Antwortlogik/UI, Plattformordner. Keine Cloud-Aufrufe, keine Datenbank-Uploads/Migrationen, keine Tombstones, keine Commits/Pushes und keine öffentliche Veröffentlichung. Kein pip install, kein Flutter-Paketupdate für diese Aufgabe. jsonschema ist nicht erforderlich; die Lieferung hat einen strikten Adapter für die tatsächlich verwendeten Schema-Schlüsselwörter.
+
+Akzeptanzkriterien:
+- 100 neue Reisen-Karten/100 Satzpaare, keine Duplikate, erwartete Gesamtzahlen und bestehende IDs/Inhalte erhalten.
+- Reisen-Anzeigen 1–200 nach Originalauswahl; Registry/Selektionspositionen unverändert. Andere Stapel unverändert.
+- Vollständige Worttoken-/Wörterbuchabdeckung; Review-Hashes und Alternativsubstitutionen stimmen.
+- Aktueller Projektlinter: 0 Fehler; verbleibende Häufigkeitswarnungen zählen und nennen.
+- Integrations-/Regressionstests, SQLite-Abgleich, Stage-Verify, Zweistapel-Lesetest und Diff-Prüfung bestanden.
+- Fehler können keine bestehenden Packs/Assets zerstören und führen nicht zu anschließendem Staging.
+- Batch-3-Kontext ist an den wirklich exportierten neuen Stand gebunden.
+- Keine öffentliche Inhaltsfreigabe aus technischen Testergebnissen ableiten.
+
+Prüfen mit (Repository-Root; Ausgabe kürzen, relevante Fehler und Exitcodes exakt zeigen):
+Windows PowerShell:
+.\pipeline\.venv\Scripts\python.exe -X utf8 reisen_batch_2\verify_reisen_batch_2.py
+.\pipeline\.venv\Scripts\python.exe -X utf8 reisen_batch_2\test_deck_display_patch.py
+$env:PYTHONPATH = 'pipeline/src'
+.\pipeline\.venv\Scripts\python.exe -X utf8 -m pytest pipeline/tests -q
+.\pipeline\.venv\Scripts\python.exe -X utf8 reisen_batch_2\verify_reisen_batch_2.py --repo .
+# Erst nach Implementierung und bestandener Read-only-Abnahme:
+.\pipeline\.venv\Scripts\python.exe -X utf8 pipeline\scripts\import_editorial_patch.py --source pipeline\out\reisen_batch_1_v1\pack.json --create pipeline\data\curation\reisen_batch_2.editorial.json --registry pipeline\data\words\en.reisen_batch_2_v1.json --display-patch pipeline\data\curation\reisen_batch_2_display_v1.json --out pipeline\out\reisen_batch_2_v1
+
+macOS Terminal:
+pipeline/.venv/bin/python -X utf8 reisen_batch_2/verify_reisen_batch_2.py
+pipeline/.venv/bin/python -X utf8 reisen_batch_2/test_deck_display_patch.py
+PYTHONPATH=pipeline/src pipeline/.venv/bin/python -X utf8 -m pytest pipeline/tests -q
+pipeline/.venv/bin/python -X utf8 reisen_batch_2/verify_reisen_batch_2.py --repo .
+# Erst nach Implementierung und bestandener Read-only-Abnahme:
+PYTHONPATH=pipeline/src pipeline/.venv/bin/python -X utf8 pipeline/scripts/import_editorial_patch.py --source pipeline/out/reisen_batch_1_v1/pack.json --create pipeline/data/curation/reisen_batch_2.editorial.json --registry pipeline/data/words/en.reisen_batch_2_v1.json --display-patch pipeline/data/curation/reisen_batch_2_display_v1.json --out pipeline/out/reisen_batch_2_v1
+
+Danach auf beiden Systemen identisch, jeweils nur bei Erfolg des Vorgängers und nach Assetbackup:
+dart run tool/stage_content_pack.dart --from pipeline/out/reisen_batch_2_v1
+dart run tool/stage_content_pack.dart --verify
+flutter test test/data/real_pack_test.dart
+flutter analyze
+git diff --check
+git status --short
+
+Die CLI-Option --display-patch ist TEIL DIESES AUFTRAGS und derzeit noch nicht vorhanden. Vor dem Import über --help bestätigen. Falls die aktuelle CLI bestehende Argumentnamen geändert hat, den nachgewiesenen bestehenden Namen verwenden und dokumentieren; keine ungetesteten Befehle als ausgeführt ausgeben.
+
+Schleifenbremse: Nach 2–3 Fehlversuchen neue Hypothese formulieren, nach 5 stoppen und genaue Ursache berichten. Keine Abnahme durch Abschwächen von Schema/Linter oder Änderung von erwarteten Identitäten erzwingen.
+
+Am Ende: NEXTSTEPS.md aktualisieren (max. 25 Zeilen: Erledigt, Dateien, echte Testergebnisse, Abweichungen, offene Punkte). Details in docs/reisen-batch-2-import.md. Nie „fertig“ ohne gezeigten Output. Ein zusammenhängendes Inkrement, kein automatischer Commit.
+
+Modell: Codex GPT-5.6 Sol – Hoch | Alternative: Claude CLI Opus 5.5 – Hoch | Danach: /clear

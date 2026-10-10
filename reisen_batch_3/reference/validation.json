@@ -1,0 +1,20 @@
+{
+  "registry_index": "PASS",
+  "registry_word_rows_unchanged": true,
+  "parent_matches_actual_export_snapshot": true,
+  "batch_3_count": 100,
+  "exact_reserved_ids": "PASS",
+  "existing_batch_3_cards": 0,
+  "in_memory_rows_with_revision_unchanged": true,
+  "combined_display_positions": "1..300",
+  "promoted_senses": [
+    "date",
+    "refund",
+    "square",
+    "harbour",
+    "snow",
+    "ferry",
+    "ship",
+    "recommend"
+  ]
+}

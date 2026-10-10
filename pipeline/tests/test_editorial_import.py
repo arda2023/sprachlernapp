@@ -296,3 +296,54 @@ def test_complete_finish_export_roundtrip_is_offline_and_source_preserving(tmp_p
     assert report['status'] == 'ok' and report['internal_test_pack'] and report['ai_calls'] == 0
     assert check_sqlite(out/'content.sqlite', build_rows(final)) == report['sqlite_counts']
     assert all(p.read_bytes() == b for p, b in before.items())
+
+
+@pytest.mark.parametrize('failure', [None, 'source_sha256', 'create_sha256', 'registry_sha256', 'mapping', 'existing_output'])
+def test_create_cli_display_patch_hashes_and_safe_export(tmp_path, failure):
+    from test_content_contract import fixture as create_fixture
+    from import_editorial_patch import create_content
+    from sprachpipe.deck_display import canonical_sha256
+    source, entry, registry, source_hash = create_fixture()
+    card = entry['add']['cards'][0]['ref']
+    registry['words'][0].update(primary_card_ref=card, position=7)
+    entry['registry_sha256'] = digest(registry)
+    source_path = tmp_path/'source.json'; save(source_path, source)
+    entry['source_sha256'] = hashlib.sha256(source_path.read_bytes()).hexdigest()
+    create_path = tmp_path/'create.json'; save(create_path, entry)
+    registry_path = tmp_path/'registry.json'; save(registry_path, registry)
+    created = create_content(source, entry, registry, source_hash=entry['source_sha256'])
+    patch = {'format':'sprachapp.deck-display-patch','format_version':1,'operation_id':'test',
+             'deck':'animals','source_sha256':entry['source_sha256'],
+             'create_sha256':hashlib.sha256(create_path.read_bytes()).hexdigest(),
+             'registry_sha256':digest(registry),
+             'expected_before_sha256':{t:canonical_sha256(created[t]) for t in ['deck_cards','deck_words']},
+             'rows':[{'card_ref':card,'form_norm':'cats','original_position':7,'expected_position':1,'position':1}]}
+    if failure in ('source_sha256','create_sha256','registry_sha256'):
+        patch[failure] = '0'*64
+    if failure == 'mapping': patch['rows'][0]['original_position'] = 8
+    patch_path = tmp_path/'display.json'; save(patch_path,patch)
+    paths = [source_path, create_path, registry_path, patch_path]
+    protected = [p.read_bytes() for p in paths]
+    out = tmp_path/'out'
+    if failure == 'existing_output':
+        out.mkdir(); (out/'content.sqlite').write_bytes(b'protected existing target')
+    args = ['--source',str(source_path),'--create',str(create_path),'--registry',str(registry_path),
+            '--display-patch',str(patch_path),'--out',str(out)]
+    assert main(args) == (0 if failure is None else 2)
+    assert [p.read_bytes() for p in paths] == protected
+    if failure == 'existing_output':
+        assert (out/'content.sqlite').read_bytes() == b'protected existing target'
+        assert list(out.iterdir()) == [out/'content.sqlite']
+    elif failure:
+        assert not out.exists()
+    else:
+        final = json.loads((out/'pack.json').read_text(encoding='utf-8'))
+        assert final == created
+        assert (out/'content.sqlite').exists()
+
+
+def test_display_patch_requires_create_before_any_file_read_or_write(tmp_path):
+    with pytest.raises(SystemExit) as exc:
+        main(['--display-patch',str(tmp_path/'missing.json'),'--out',str(tmp_path/'out')])
+    assert exc.value.code == 2
+    assert not (tmp_path/'out').exists()

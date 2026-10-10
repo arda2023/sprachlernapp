@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -183,56 +184,78 @@ void main() {
   });
 
   for (final reveal in [false, true]) {
-    testWidgets(
-      'Synonym → ${reveal ? 'reveal → ' : ''}exact → repeat, one log',
-      (tester) async {
-        await practice(tester, size: 1);
-        await answer(tester, 'strolls');
-        const message =
-            'Strolls passt hier auch. Gesucht ist ein anderes Wort: w…';
-        expect(find.text(message), findsOneWidget);
+    testWidgets('Synonym → ${reveal ? 'reveal → ' : ''}exact → repeat, one log', (
+      tester,
+    ) async {
+      await practice(tester, size: 1);
+      final haptics = <MethodCall>[];
+      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        (call) async {
+          if (call.method == 'HapticFeedback.vibrate') haptics.add(call);
+          return null;
+        },
+      );
+      addTearDown(
+        () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+          SystemChannels.platform,
+          null,
+        ),
+      );
+      final originalHint = gap(tester).hintText;
+      await answer(tester, 'strolls');
+      expect(haptics, isEmpty);
+      expect(gap(tester).hintText, originalHint);
+      const message =
+          'Das passt auch. Gesucht ist hier ein anderes Wort. Versuch es noch einmal.';
+      expect(find.text(message), findsOneWidget);
+      expect(
+        tester.widget<Text>(find.text(message)).style!.color,
+        AppColors.textMuted,
+      );
+      expect(
+        tester.widget<TextField>(find.byType(TextField)).controller!.text,
+        'strolls',
+      );
+      expect(gap(tester).filled, isTrue);
+      expect(find.text('Weiter'), findsNothing);
+      expect(user.records, isEmpty);
+      if (reveal) {
+        await tester.enterText(find.byType(TextField), '');
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Wort erfahren'));
+        await tester.pump();
+        expect(gap(tester).hintText, 'walks');
         expect(
-          tester.widget<Text>(find.text(message)).style!.color,
-          AppColors.textMuted,
+          gap(tester).hintStyle!.color,
+          AppColors.memoryLevel2.withValues(alpha: 0.5),
         );
-        expect(
-          tester.widget<TextField>(find.byType(TextField)).controller!.text,
-          'strolls',
-        );
-        expect(gap(tester).filled, isTrue);
-        expect(find.text('Weiter'), findsNothing);
-        expect(user.records, isEmpty);
-        if (reveal) {
-          await tester.enterText(find.byType(TextField), '');
-          await tester.pumpAndSettle();
-          await tester.tap(find.text('Wort erfahren'));
-          await tester.pump();
-          expect(gap(tester).hintText, 'walks');
-          expect(
-            gap(tester).hintStyle!.color,
-            AppColors.memoryLevel2.withValues(alpha: 0.5),
-          );
-        }
-        await answer(tester, 'walks');
-        final record = user.records.values.single;
-        expect(record.hintUsed, isTrue);
-        expect(record.revealed, reveal);
-        expect(record.errorCount, 0);
-        expect(record.boxAfter, 1);
-        expect(record.dueAtAfter, DateTime(2026, 10, 5));
-        await next(tester);
+      }
+      await answer(tester, 'walks');
+      final record = user.records.values.single;
+      expect(record.hintUsed, isFalse);
+      expect(record.revealed, reveal);
+      expect(record.errorCount, 0);
+      expect(record.boxAfter, reveal ? 1 : 3);
+      expect(record.dueAtAfter, DateTime(2026, 10, reveal ? 5 : 18));
+      await next(tester);
+      if (reveal) {
         expect(find.byType(TextField), findsOneWidget);
         await answer(tester, 'walks');
         await next(tester);
-        expect(user.records, hasLength(1));
-        expect(user.states.values.single.box, 1);
-        expect(find.text('1 Wort geübt'), findsOneWidget);
-        expect(
-          find.text('0 auf Anhieb richtig · 1 zurück auf Stufe 1'),
-          findsOneWidget,
-        );
-      },
-    );
+      }
+      expect(user.records, hasLength(1));
+      expect(user.states.values.single.box, reveal ? 1 : 3);
+      expect(find.text('1 Wort geübt'), findsOneWidget);
+      expect(
+        find.text(
+          reveal
+              ? '0 auf Anhieb richtig · 1 zurück auf Stufe 1'
+              : '1 auf Anhieb richtig · 0 zurück auf Stufe 1',
+        ),
+        findsOneWidget,
+      );
+    });
   }
 
   testWidgets('One-letter target hint has no initial and remains editable', (
@@ -247,7 +270,9 @@ void main() {
     await next(tester);
     await answer(tester, 'one');
     expect(
-      find.text('One passt hier auch. Gesucht ist ein anderes Wort.'),
+      find.text(
+        'Das passt auch. Gesucht ist hier ein anderes Wort. Versuch es noch einmal.',
+      ),
       findsOneWidget,
     );
     expect(find.text('Weiter'), findsNothing);
@@ -379,7 +404,7 @@ void main() {
         tester
             .widget<Text>(
               find.text(
-                'Approximately passt hier auch. Gesucht ist ein anderes Wort: a…',
+                'Das passt auch. Gesucht ist hier ein anderes Wort. Versuch es noch einmal.',
               ),
             )
             .maxLines,

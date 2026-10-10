@@ -1,0 +1,35 @@
+PASS source manifest: all files match
+PASS supplied JSON Schema
+PASS create_content, all old rows preserved
+PASS 83 exact reserved card/lemma/sense IDs and learning metadata
+PASS build_rows: 847 cards; 18 tables
+counts {'languages': 1, 'lemmas': 1834, 'senses': 2991, 'cards': 847, 'dictionary_forms': 3271, 'decks': 3, 'deck_cards': 847, 'deck_words': 743, 'word_aliases': 10, 'sentences': 1381, 'sentence_tokens': 14468, 'card_sentences': 1375, 'stories': 1, 'story_sentences': 6, 'exercises': 0, 'grammar_rules': 0, 'audio_assets': 0, 'content_releases': 1}
+PASS new-sentence linter: 0 errors, 26 warnings
+{
+  "status": "ok",
+  "internal_test_pack": true,
+  "ai_calls": 0,
+  "ai_cost_usd": 0,
+  "sqlite_counts": {
+    "languages": 1,
+    "lemmas": 1834,
+    "senses": 2991,
+    "cards": 847,
+    "dictionary_forms": 3271,
+    "decks": 3,
+    "deck_cards": 847,
+    "deck_words": 743,
+    "word_aliases": 10,
+    "sentences": 1381,
+    "sentence_tokens": 14468,
+    "card_sentences": 1375,
+    "stories": 1,
+    "story_sentences": 6,
+    "exercises": 0,
+    "grammar_rules": 0,
+    "audio_assets": 0,
+    "content_releases": 1
+  },
+  "sha256": "fc2db5f184f7414ec98e4bd904ccd8a430f2959a2a29bdcbbc17a41dd30b34be"
+}
+PASS actual supplied exporter and row-by-row SQLite check; NOT staged or device-tested

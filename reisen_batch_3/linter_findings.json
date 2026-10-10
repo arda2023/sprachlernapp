@@ -1,0 +1,120 @@
+{
+  "errors": [],
+  "warnings": [
+    [
+      "confirmation",
+      "i+1",
+      "'booking'/'booking' Zipf 3.86 below 4.0"
+    ],
+    [
+      "takeoff",
+      "i+1",
+      "'fasten'/'fastened' Zipf 3.02 below 4.0"
+    ],
+    [
+      "lift",
+      "i+1",
+      "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+    ],
+    [
+      "crossroads",
+      "i+1",
+      "'petrol'/'petrol' Zipf 3.72 below 4.0"
+    ],
+    [
+      "pasta",
+      "i+1",
+      "'tomato'/'tomato' Zipf 3.85 below 4.0"
+    ],
+    [
+      "chicken",
+      "i+1",
+      "'grill'/'grilled' Zipf 3.84 below 4.0"
+    ],
+    [
+      "tip",
+      "i+1",
+      "'waiter'/'waiter' Zipf 3.61 below 4.0"
+    ],
+    [
+      "surcharge",
+      "i+1",
+      "'balcony'/'balcony' Zipf 3.78 below 4.0"
+    ],
+    [
+      "bargain",
+      "i+1",
+      "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+    ],
+    [
+      "fountain",
+      "i+1",
+      "'splash'/'splashes' Zipf 3.85 below 4.0"
+    ],
+    [
+      "cave",
+      "i+1",
+      "'torch'/'torch' Zipf 3.74 below 4.0"
+    ],
+    [
+      "yacht",
+      "i+1",
+      "'harbour'/'harbour' Zipf 3.98 below 4.0"
+    ],
+    [
+      "blister",
+      "i+1",
+      "'heel'/'heel' Zipf 3.84 below 4.0"
+    ],
+    [
+      "pain",
+      "i+1",
+      "'ankle'/'ankle' Zipf 3.97 below 4.0"
+    ],
+    [
+      "police",
+      "i+1",
+      "'luggage'/'luggage' Zipf 3.80 below 4.0"
+    ],
+    [
+      "pickpocket",
+      "i+1",
+      "'crowded'/'crowded' Zipf 3.98 below 4.0"
+    ],
+    [
+      "unpack",
+      "i+1",
+      "'suitcase'/'suitcases' Zipf 3.55 below 4.0"
+    ],
+    [
+      "describe",
+      "i+1",
+      "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+    ],
+    [
+      "recommend",
+      "i+1",
+      "'harbour'/'harbour' Zipf 3.98 below 4.0"
+    ],
+    [
+      "help",
+      "i+1",
+      "'suitcase'/'suitcase' Zipf 3.55 below 4.0"
+    ],
+    [
+      "report",
+      "i+1",
+      "'luggage'/'luggage' Zipf 3.80 below 4.0"
+    ],
+    [
+      "contact",
+      "i+1",
+      "'reservation'/'reservation' Zipf 3.95 below 4.0"
+    ],
+    [
+      "secure",
+      "i+1",
+      "'bicycle'/'bicycles' Zipf 3.98 below 4.0"
+    ]
+  ]
+}

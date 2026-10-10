@@ -12,7 +12,8 @@ abstract interface class ContentRepository {
   /// Decks of the pack, by `sort`.
   Future<List<DeckSummary>> decks();
 
-  /// Card ids of [deckId] in deck order (`deck_cards.position`).
+  /// Raw ownership card ids in deck order (`deck_cards.position`).
+  /// Project through LearningGroups for introduction/progress; retain all for reviews.
   Future<List<String>> deckCardIds(String deckId);
 
   /// Every card id of the pack (to tell learner rows of removed or foreign

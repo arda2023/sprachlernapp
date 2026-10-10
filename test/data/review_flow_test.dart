@@ -77,13 +77,14 @@ void main() {
         return r != null && await user.recordReview(r);
       }
 
-      // went: synonym from the pack ("walked"), then the form → box 1, repeat.
+      // went: synonym from the pack ("walked"), then the form → box 3, no repeat.
       final went = passFor('card-went');
       expect(went.submit('walked', start)!.verdict, AnswerVerdict.alternative);
       went.submit('went', start);
       expect(await book(went), isTrue);
       expect(await book(went), isFalse); // second completion: nothing
-      var session = withRepeat(queue, 0);
+      final session = went.needsRepeat ? withRepeat(queue, 0) : queue;
+      expect(went.needsRepeat, isFalse);
 
       // about: typo, then exact → clean first contact, box 3, no repeat.
       final about = passFor('card-about');
@@ -107,11 +108,10 @@ void main() {
       a.submit('a', start);
       expect(await book(a), isTrue);
 
-      // in-session repeat of went: practised, never booked.
+      // No automatic repeat for a neutral synonym; an explicit repeat is never booked.
       expect(session.map((e) => e.repeat ? '${e.cardId}*' : e.cardId), [
         'card-went',
         'card-about',
-        'card-went*',
       ]);
       final repeat = passFor('card-went', logged: false);
       repeat.submit('went', start);
@@ -123,9 +123,9 @@ void main() {
       final after = await user.cardStates(deckIds);
       expect(
         {for (final e in after.entries) e.key: e.value.box},
-        {'card-went': 1, 'card-about': 3, 'card-a': 3},
+        {'card-went': 3, 'card-about': 3, 'card-a': 3},
       );
-      expect(after['card-went']!.dueAt, DateTime(2026, 10, 4));
+      expect(after['card-went']!.dueAt, DateTime(2026, 10, 17));
       expect(after['card-about']!.dueAt, DateTime(2026, 10, 17));
       final [wentLog] = await user.reviewsFor('card-went');
       expect(
@@ -135,7 +135,7 @@ void main() {
           wentLog.revealed,
           wentLog.firstAttemptCorrect,
         ],
-        [true, 0, false, false],
+        [false, 0, false, true],
       );
       expect(wentLog.sentenceId, 's-went-1');
       final [aboutLog] = await user.reviewsFor('card-about');
@@ -165,11 +165,11 @@ void main() {
           breakdown.building,
           breakdown.mastered,
         ],
-        [1, 1, 2, 0],
-      ); // goes unseen, went due, about + a building
+        [1, 0, 3, 0],
+      ); // goes unseen, went + about + a building
       expect(breakdown.total, 4);
 
-      // next day: went is due first; the next pass uses the second sentence
+      // next day: only goes is new; went retains its fixed sentence
       final next = buildDeckQueue(
         deckCardIds: deckIds,
         cards: {for (final c in await content.selectionCards(deckIds)) c.id: c},
@@ -177,7 +177,7 @@ void main() {
         kind: DeckSessionKind.learn,
         now: DateTime(2026, 10, 4, 8),
       );
-      expect(next.map((e) => e.cardId), ['card-went', 'card-goes']);
+      expect(next.map((e) => e.cardId), ['card-goes']);
       expect(items['card-went']!.sentenceForPass(1).sentenceId, 's-went-1');
 
       // A different asset version replaces only the closed content database.
@@ -204,7 +204,7 @@ void main() {
       expect(content.info.version, 'mini-v2');
       expect(userFile.readAsBytesSync(), savedUserBytes);
       user = openUser();
-      expect((await user.cardStates(deckIds))['card-went']!.box, 1);
+      expect((await user.cardStates(deckIds))['card-went']!.box, 3);
       expect(await user.reviewCounts(deckIds), {
         'card-went': 1,
         'card-about': 1,

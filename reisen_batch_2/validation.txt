@@ -1,0 +1,17 @@
+verify_reisen_batch_2.py
+PASS supplied JSON Schema (strict standard-library adapter)
+PASS 100 sentences, 984 tokens, 5-12 words; 100 review hashes
+PASS actual tokenizer and linter: 0 errors, 14 frequency warnings
+PASS literal reviewed alternatives: 14
+PASS in-memory 200-word display mapping; all other data unchanged
+NOT RUN: current repository importer/build_rows, SQLite export, staging or device tests
+No export, staging, cloud calls or database writes.
+Exitcode: 0
+
+test_deck_display_patch.py
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.003s
+
+OK
+Exitcode: 0

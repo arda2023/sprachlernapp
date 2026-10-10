@@ -1,0 +1,17 @@
+{
+  "files": {
+    "all_500_identities.json": "8dd13fa0aa1e34e2238d308720c5ced03f7db38a57c8b9fb5d5e671d08614f16",
+    "annotate.py": "884fc4d327d379049d064c0d5ce7ff44580e360d28f472688ce0fd34b4bca892",
+    "authoring_context.json": "53ec69a0c908bae002cf60c02e2fa89594b56bb1503ed58c64827e75522e39e5",
+    "combined_display_mapping.json": "3fa30dbb45eb676746776d0acdd982289977a5ff901078cedecfa4124e85d7bf",
+    "deck_display.py": "fc6cbc01b5660f95572fd89831886ba077eb4f4491654983d7cb1e6c8cac8080",
+    "dictionary_context.json": "c197a400d5c8e09afb85528128e9d8e5357e0012ff82d61c8c5f2baf308efdc6",
+    "editorial_content_v2.schema.json": "24839ce2451931fac319a849bfc790a4179d139861681ac727d76eb90f232b47",
+    "linter.py": "76bad23555209b6cc3a6348839902a62e6ed864f5ff1665d5f567f60675f16d5",
+    "pack.json": "27d2ef97c9a188e7313cdb7e12b84336f37266f0cca865d1a5c836a4dc17251f",
+    "README.txt": "5b12afa065e38e7b01aee1b10858de30a4a61a1da93c92b0ef99d270614837a2",
+    "registry.json": "f0fbd9b8fa2887ba0cbf324bf241aab3e44ace9816a5a4ef710c7bcb6daf627d",
+    "tokenizer_linter_environment.json": "037395ae1a1abfad3e1a6a5acd7fb554c0f639a9bba4d428402e219ff45c1bf8",
+    "validation.json": "d55894d51a0fdb9c6efeb3d156bb2ae14edd6f59307fe9d5dd5cdf546599799d"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "format": 1,
+  "lang": "en",
+  "version": "learning_groups_v1",
+  "schema_version": 3,
+  "sha256": "a8359628ed273ee81037abcf24cdb494a2d8b2dc29d667100190c4b6a985651e",
+  "size_bytes": 6684672,
+  "internal_test_pack": true,
+  "notes": "INTERNES TEST-PACK: editorial learning groups v1; preserved cards and sentences; offline, no new AI QA.",
+  "source": {
+    "path": "pipeline/out/learning_groups_v1/content.sqlite",
+    "finalization_status": "ok",
+    "table_counts": {
+      "audio_assets": 0,
+      "card_sentences": 1292,
+      "cards": 764,
+      "content_releases": 1,
+      "deck_cards": 764,
+      "deck_words": 660,
+      "decks": 2,
+      "dictionary_forms": 3124,
+      "exercises": 0,
+      "grammar_rules": 0,
+      "languages": 1,
+      "lemmas": 1743,
+      "senses": 2886,
+      "sentence_tokens": 13537,
+      "sentences": 1298,
+      "stories": 1,
+      "story_sentences": 6,
+      "word_aliases": 8
+    }
+  }
+}

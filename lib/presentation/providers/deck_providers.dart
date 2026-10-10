@@ -26,18 +26,18 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
   final active = await user.activeDeckIds(summaries.map((d) => d.id));
   final result = <Deck>[];
   for (final deck in summaries) {
-    final ids = await content.deckCardIds(deck.id);
+    final ids = resolver.eligiblePrimaries(await content.deckCardIds(deck.id));
     final states = await user.cardStates(ids);
-    var viaStory = 0;
-    for (final id in ids) {
-      if (states.containsKey(id)) continue;
-      final bound = resolver.bindingFor(resolver.cards[id]!);
-      final local = resolver.states[bound];
-      if (local != null) {
-        states[id] = local;
-        if (local.box >= 1 && local.isActive) viaStory++;
-      }
-    }
+    final viaStory = states.values
+        .where(
+          (s) =>
+              s.isActive &&
+              s.box >= 1 &&
+              (s.localOnly ||
+                  s.origin == CardOrigin.story ||
+                  resolver.additions.containsKey(s.cardId)),
+        )
+        .length;
     final seen = states.values.where((s) => s.isActive && s.box >= 1);
     final recent = <(String, DateTime)>[];
     for (final state in seen) {
@@ -62,7 +62,9 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
           'fortgeschritten' => DeckDifficulty.advanced,
           _ => DeckDifficulty.beginner,
         },
-        totalWords: ids.length,
+        totalWords: ids
+            .where((id) => resolver.states[id]?.isActive ?? true)
+            .length,
         seenWords: seen.length,
         masteredWords: seen.where((s) => s.box == 5).length,
         isActive: active.contains(deck.id),
@@ -86,6 +88,7 @@ final vocabBreakdownProvider = FutureProvider<VocabBreakdown>((ref) async {
   return deriveVocabBreakdown(
     activeDeckCardIds: (await resolver.activePrimaryIds()).toSet(),
     cards: resolver.states,
+    contentCards: resolver.cards,
     knownCardIds: resolver.knownIds,
     explicitStoryIds: resolver.additions.keys.toSet(),
     now: now,

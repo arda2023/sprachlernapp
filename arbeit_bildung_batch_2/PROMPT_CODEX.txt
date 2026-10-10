@@ -1,0 +1,61 @@
+Ziel: Die nächsten 82 redigierten Lernziele für „Arbeit & Bildung“ vollständig offline prüfen, importieren und intern stagen; anschließend die Authoring-ZIP für die letzten 81 Ziele vorbereiten.
+
+Dateien:
+- Lieferung im Repository-Root als arbeit_bildung_batch_2/ entpacken; bestehende Ordner nicht überschreiben.
+- Lesen: AGENTS.md, PRODUCT.md, docs/content-schema.md, docs/learning-groups-v1.md, docs/arbeit-bildung-authoring.md, docs/arbeit-bildung-batch-1-import.md, NEXTSTEPS.md.
+- Lieferung: arbeit_bildung_batch_2/arbeit_bildung_batch_2.editorial.json, arbeit_bildung_batch_2.display.json, manifest.json, editorial_notes.txt, annotation_review.txt, reading.json und reference/.
+- Basis: pipeline/out/arbeit_bildung_batch_1_v1/pack.json und content.sqlite.
+- Registry: pipeline/data/words/en.arbeit_bildung_batch_2_context_v1.json.
+- Gruppen: pipeline/data/learning_groups/en.arbeit_bildung_batch_2_context_v1.json.
+- Originalauswahl: pipeline/data/selection/arbeit_bildung_v1.json; aktuelle Fortsetzung laut docs/arbeit-bildung-batch-1-import.md und gelieferter reference/selection.json.
+- Bestehende Werkzeuge: pipeline/scripts/import_editorial_patch.py, pipeline/scripts/export_authoring_context.py, tool/stage_content_pack.dart, test/data/real_pack_test.dart.
+- Neue Ausgabe: pipeline/out/arbeit_bildung_batch_2_v1/.
+- Bericht: docs/arbeit-bildung-batch-2-import.md; NEXTSTEPS.md.
+- Neue Fortsetzungs-Snapshots für Batch 3 unter pipeline/data/selection/, pipeline/data/words/ und pipeline/data/learning_groups/ nach bestehendem Namensschema.
+- Nächste ZIP: build/arbeit_bildung_authoring_batch_3.zip.
+
+Schritte:
+1. Git-Status und Ausgangshashes sichern. Vorhandene Änderungen erhalten. Basis-JSON muss SHA256 ebe5fd764d290d671682cff10f55f1b06e35026b5a19b1c3216ab6dadd89b3a2 haben; Basis-SQLite 4b7a1899e9c0b9247ba3cddd153aaa56fe1a2470eb7e41c2ade31ea01656e9dd. Liefermanifest prüfen. Referenzquellen nicht über Projektcode kopieren. Neue Ausgaben nicht überschreiben.
+2. Den gelieferten verify_arbeit_bildung_batch_2.py --repo . mit dem vorhandenen Pipeline-Interpreter ausführen. Registry/Gruppen kanonisch und Pack/SQLite rohbytegebunden prüfen. Bei einer echten Abweichung exakte Ursache melden; keinen Hashvergleich umgehen.
+3. Alle 82 Satzpaare, 934 Tokenpositionen und vier Alternativen gegenlesen. Alternativen wörtlich einsetzen. Besonders die im editorial_notes.txt erklärten Bedeutungen beachten: drive = Laufwerk, left = übrig, design als Nomen/Verb, plans als Vorhaben/Baupläne, track als Überblick, lesson als Erfahrungserkenntnis. Keine Bindung allein nach identischer Schreibweise übernehmen. Die korrigierte front-Bindung aus Batch 1 erhalten.
+4. Exakt die aktuellen 82 Ziele importieren: unveränderte Identitäten, Zielübersetzungen, cards.learning und ein Satz pro Karte. Bestehende Senses sowie früher reservierte Begleitwort-Senses wiederverwenden. Keine Lernkarten für Begleitwörter und keine neuen Sätze für die letzten 81 Ziele. accepted[] enthält ausschließlich die Zielform. valid_alternatives sind neutral und beeinflussen den Lernstand nicht negativ. Nur konkret belegte Lieferfehler minimal korrigieren, Original behalten und Vorher/Nachher dokumentieren. Danach betroffene Reviewhashes und Create-Hash im Display-Patch korrekt neu berechnen; eine unveränderte Datei nicht normalisieren.
+5. Keinen neuen Stapel anlegen. Zuerst die neuen Mitgliedschaften 83–164 anhängen. Dann den gelieferten separaten Display-Patch anwenden: Er ist an Source-, Create-, Registry- und Vorher-Zeilenhashes gebunden und führt beide Anzeige-Positionsspalten auf 1–164 zusammen. Originalpositionen der Auswahl/Registry unverändert lassen. Außer diesen beiden Arbeit-&-Bildung-Positionsspalten keine alten Inhaltswerte ändern.
+6. Mit dem bestehenden Importer inklusive --display-patch in den neuen Ausgabeordner exportieren. Alle 18 SQLite-Tabellen vollständig gegen build_rows abgleichen. Erwartet: 1169 Karten, 1703 Satztexte, 1697 Satzverknüpfungen einschließlich Historie, 1065 Wortbesitzzeilen. Primäre Lernziele: 1054 = 160 Allgemeine Sprache + 489 Reisen + 241 Alltag & Zuhause + 164 Arbeit & Bildung. Alle bisherigen 1087 Karten-IDs, Sätze, Annotationen und Metadaten erhalten. Die 164 importierten Arbeit-Identitäten exakt gegen die ursprüngliche 245er-Auswahl abgleichen.
+7. Nach grünen Prüfungen Assets sichern und den Pack intern stagen. --verify, Vierstapel-Lesetest 160/489/241/164 und Flutter-Analyse ausführen. Bestehende konkrete Testerwartungen gezielt erweitern. App-Einstieg und echte user.db nicht verändern. Prüfung, Import und internes Staging sind mit diesem Auftrag autorisiert.
+8. Die bestehende Fortsetzung für Batch 3 vorbereiten: 164 importiert / 81 aktuell / 0 später. Vollständige ursprüngliche 245er-Auswahl, Originalpositionen, Zieldefinitionen und Reservierungen erhalten. Aktuelle Begleitwort-Senses beim nächsten Export korrekt als vorhanden behandeln. Neue Snapshots an den tatsächlich erzeugten Pack binden. Für den nächsten Import Anhängepositionen 165–245 und gemeinsamen Display-Patch 1–245 vorbereiten; jetzt keinen solchen Patch anwenden und keine Batch-3-Sätze schreiben.
+9. build/arbeit_bildung_authoring_batch_3.zip mit vollständigem Kontext erstellen: Basis-Pack/SQLite, Wörterbuch, alle 245 Identitäten, Auswahl, Registry, Lerngruppen, Schema, relevante Quellen, lokale Sprachmodell-Dateien, Manifest und Fortsetzungszuordnung. Unter temporärem Namen schreiben, vollständig schließen, erneut öffnen, CRCs und alle Manifest-Hashes prüfen. Erst danach endgültig benennen und den bestehenden ZIP-Verifier ausführen. Keine noch laufende oder teilweise geschriebene ZIP ausgeben.
+
+Nicht anfassen:
+- Echte user.db, review_log, Lernstände, historische Packs, alte Registrys/Auswahlen und Original-Lieferung.
+- App-/SRS-/Synonymlogik, Modelle, Budgets, Supabase und Plattformdateien.
+- Keine Cloud-/Modellaufrufe, öffentliche Veröffentlichung, Commits oder Pushes.
+
+Akzeptanzkriterien:
+- Genau 82 neue Lernziele mit 82 Satzpaaren, vollständigen Wortbindungen und vier geprüften Alternativen; keine fremden oder zukünftigen Karten.
+- Alle alten Inhalte einschließlich front-Korrektur erhalten; nur autorisierte Anzeige-Positionsänderungen innerhalb Arbeit & Bildung.
+- Kein Besitz-, Alias-, Identitäts- oder Lerngruppenkonflikt; alle Review-/Importhashes gültig.
+- Linter 0 Fehler. Vier neue Häufigkeitshinweise bei Stufe mittel dokumentieren; allein dafür keine weitere Umformulierungsschleife.
+- Vollständiger SQLite-Abgleich, Staging-Verifikation, Vierstapel-Lesetest und Analyse bestanden.
+- Batch-3-ZIP vollständig geschlossen und geprüft; genau 81 aktuelle Ziele ohne neue Sätze und Kontext für alle 245.
+
+Prüfen mit, ab Repository-Root:
+Windows PowerShell:
+.\pipeline\.venv\Scripts\python.exe arbeit_bildung_batch_2\verify_arbeit_bildung_batch_2.py --repo .
+.\pipeline\.venv\Scripts\python.exe pipeline\scripts\import_editorial_patch.py --source pipeline/out/arbeit_bildung_batch_1_v1/pack.json --create arbeit_bildung_batch_2/arbeit_bildung_batch_2.editorial.json --registry pipeline/data/words/en.arbeit_bildung_batch_2_context_v1.json --display-patch arbeit_bildung_batch_2/arbeit_bildung_batch_2.display.json --out pipeline/out/arbeit_bildung_batch_2_v1
+macOS Terminal:
+pipeline/.venv/bin/python arbeit_bildung_batch_2/verify_arbeit_bildung_batch_2.py --repo .
+pipeline/.venv/bin/python pipeline/scripts/import_editorial_patch.py --source pipeline/out/arbeit_bildung_batch_1_v1/pack.json --create arbeit_bildung_batch_2/arbeit_bildung_batch_2.editorial.json --registry pipeline/data/words/en.arbeit_bildung_batch_2_context_v1.json --display-patch arbeit_bildung_batch_2/arbeit_bildung_batch_2.display.json --out pipeline/out/arbeit_bildung_batch_2_v1
+Auf beiden Systemen, nach erfolgreichem Export und Asset-Sicherung:
+dart run tool/stage_content_pack.dart --from pipeline/out/arbeit_bildung_batch_2_v1
+dart run tool/stage_content_pack.dart --verify
+flutter test test/data/real_pack_test.dart
+flutter analyze
+git diff --check
+git status --short
+Zusätzlich die betroffenen bestehenden Import-/Display-/Registry-/Gruppen-/Authoring-/Fortsetzungstests mit dem Pipeline-Interpreter ausführen; konkrete Testpfade im Repository prüfen. Für den geschlossenen Batch-3-Export pipeline/scripts/export_authoring_context.py --verify-zip build/arbeit_bildung_authoring_batch_3.zip nutzen. Tatsächliche Outputs und Exitcodes zeigen. Kleinste Lösung, keine ungefragten Features oder neue generische Testsuite.
+
+Schleifenbremse: Nach 2–3 Fehlversuchen neue Hypothese anhand des konkreten Fehlers formulieren; nach 5 stoppen und Lage schildern. Kein Cloud-Fallback.
+
+Am Ende: NEXTSTEPS.md aktualisieren (Erledigt, geänderte Dateien, Testergebnis, Abweichungen, offene Probleme; höchstens 25 Zeilen, nur Fakten). Packversion, SHA256, Lernzielzahlen und genauen Batch-3-ZIP-Pfad nennen. Geräteprüfung nur behaupten, wenn tatsächlich ausgeführt.
+
+Modell: Codex GPT-6 Luna – Sehr Hoch | Alternative: Codex GPT-5.6 Sol – Mittel | Danach: /clear

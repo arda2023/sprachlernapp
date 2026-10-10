@@ -50,7 +50,7 @@ class ContentInfo {
       notes?.startsWith('INTERNES TEST-PACK') ?? false;
 }
 
-/// A deck (`decks`) with the number of its cards.
+/// A deck with its number of editorial learning targets (without learner state).
 class DeckSummary {
   const DeckSummary({
     required this.id,
@@ -82,6 +82,7 @@ class ContentCard {
     required this.lemmaId,
     required this.lemma,
     required this.pos,
+    this.learning,
     this.senseKey,
     this.senseId,
     this.formKind,
@@ -99,6 +100,9 @@ class ContentCard {
   /// Lemma text, for the wrong-form hint.
   final String lemma;
   final String pos;
+  final LearningTarget? learning;
+  String get learningGroup => learning?.groupId ?? id;
+  String get learningHead => learning?.primaryCardId ?? id;
   final String? senseKey;
   final String? senseId;
   final String? formKind;
@@ -176,4 +180,24 @@ class PracticeItem {
 
   /// Compatibility API: prior reviews never rotate the assigned sentence.
   CardSentence sentenceForPass(int priorReviews) => practiceSentence;
+}
+
+/// Editorial introduction metadata; never grants accepted answers or merges state.
+class LearningTarget {
+  const LearningTarget({
+    required this.groupId,
+    required this.primaryCardId,
+    required this.topic,
+    this.related = const [],
+    required this.note,
+  });
+  final String groupId, primaryCardId, topic, note;
+  final List<String> related;
+  factory LearningTarget.fromJson(Map<String, dynamic> value) => LearningTarget(
+    groupId: value['group_id'] as String,
+    primaryCardId: value['primary_card_id'] as String,
+    topic: value['topic'] as String,
+    related: (value['related'] as List).cast<String>(),
+    note: value['note'] as String,
+  );
 }

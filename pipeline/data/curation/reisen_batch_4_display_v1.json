@@ -1,0 +1,2815 @@
+{
+  "format": "sprachapp.deck-display-patch",
+  "format_version": 1,
+  "operation_id": "reisen-batch-4-display-v1",
+  "deck": "reisen",
+  "source_sha256": "27d2ef97c9a188e7313cdb7e12b84336f37266f0cca865d1a5c836a4dc17251f",
+  "create_sha256": "71da79069c88bb25be5455a4100a384a52f2a39fb2f58cae6c9144d7ff73a89f",
+  "registry_sha256": "8f1e9307f30639616ba4e1ac757b7e1f5eeeeb72aa1c2c75ec13d791ba3edb33",
+  "expected_before_sha256": {
+    "deck_cards": "f2ad22a66942bf8c2f347fcaed72b4d8c575c1458c90af44b75aab4e9b345289",
+    "deck_words": "d7835dfe05e2e95adb3c0f5df64909a14cb9df6d1ec3b8f45eb02df6accfb5c4"
+  },
+  "rows": [
+    {
+      "card_ref": "travel|travel/NOUN|travel#reise",
+      "form_norm": "travel",
+      "original_position": 1,
+      "expected_position": 1,
+      "position": 1
+    },
+    {
+      "card_ref": "trip|trip/NOUN|trip#reise",
+      "form_norm": "trip",
+      "original_position": 2,
+      "expected_position": 2,
+      "position": 2
+    },
+    {
+      "card_ref": "journey|journey/NOUN|journey#reise",
+      "form_norm": "journey",
+      "original_position": 3,
+      "expected_position": 3,
+      "position": 3
+    },
+    {
+      "card_ref": "tour|tour/NOUN|tour#tour",
+      "form_norm": "tour",
+      "original_position": 4,
+      "expected_position": 4,
+      "position": 4
+    },
+    {
+      "card_ref": "holiday|holiday/NOUN|holiday#urlaub",
+      "form_norm": "holiday",
+      "original_position": 5,
+      "expected_position": 5,
+      "position": 5
+    },
+    {
+      "card_ref": "destination|destination/NOUN|destination#reiseziel",
+      "form_norm": "destination",
+      "original_position": 6,
+      "expected_position": 6,
+      "position": 6
+    },
+    {
+      "card_ref": "itinerary|itinerary/NOUN|itinerary#reiseplan",
+      "form_norm": "itinerary",
+      "original_position": 7,
+      "expected_position": 7,
+      "position": 7
+    },
+    {
+      "card_ref": "excursion|excursion/NOUN|excursion#ausflug",
+      "form_norm": "excursion",
+      "original_position": 8,
+      "expected_position": 8,
+      "position": 8
+    },
+    {
+      "card_ref": "outing|outing/NOUN|outing#ausflug",
+      "form_norm": "outing",
+      "original_position": 9,
+      "expected_position": 9,
+      "position": 9
+    },
+    {
+      "card_ref": "booking|booking/NOUN|booking#buchung",
+      "form_norm": "booking",
+      "original_position": 10,
+      "expected_position": 10,
+      "position": 10
+    },
+    {
+      "card_ref": "reservation|reservation/NOUN|reservation#reservierung",
+      "form_norm": "reservation",
+      "original_position": 11,
+      "expected_position": 11,
+      "position": 11
+    },
+    {
+      "card_ref": "confirmation|confirmation/NOUN|confirmation#buchungsbestaetigung",
+      "form_norm": "confirmation",
+      "original_position": 12,
+      "expected_position": 12,
+      "position": 12
+    },
+    {
+      "card_ref": "cancellation|cancellation/NOUN|cancellation#stornierung",
+      "form_norm": "cancellation",
+      "original_position": 13,
+      "expected_position": 13,
+      "position": 13
+    },
+    {
+      "card_ref": "availability|availability/NOUN|availability#verfuegbarkeit",
+      "form_norm": "availability",
+      "original_position": 14,
+      "expected_position": 14,
+      "position": 14
+    },
+    {
+      "card_ref": "date|date/NOUN|date#datum",
+      "form_norm": "date",
+      "original_position": 15,
+      "expected_position": 15,
+      "position": 15
+    },
+    {
+      "card_ref": "duration|duration/NOUN|duration#dauer",
+      "form_norm": "duration",
+      "original_position": 16,
+      "expected_position": 301,
+      "position": 16
+    },
+    {
+      "card_ref": "budget|budget/NOUN|budget#reisebudget",
+      "form_norm": "budget",
+      "original_position": 17,
+      "expected_position": 302,
+      "position": 17
+    },
+    {
+      "card_ref": "package|package/NOUN|package#pauschalreiseangebot",
+      "form_norm": "package",
+      "original_position": 18,
+      "expected_position": 303,
+      "position": 18
+    },
+    {
+      "card_ref": "agency|agency/NOUN|agency#reiseagentur",
+      "form_norm": "agency",
+      "original_position": 19,
+      "expected_position": 304,
+      "position": 19
+    },
+    {
+      "card_ref": "agent|agent/NOUN|agent#reisevermittler",
+      "form_norm": "agent",
+      "original_position": 20,
+      "expected_position": 305,
+      "position": 20
+    },
+    {
+      "card_ref": "passport|passport/NOUN|passport#reisepass",
+      "form_norm": "passport",
+      "original_position": 26,
+      "expected_position": 16,
+      "position": 21
+    },
+    {
+      "card_ref": "visa|visa/NOUN|visa#visum",
+      "form_norm": "visa",
+      "original_position": 27,
+      "expected_position": 17,
+      "position": 22
+    },
+    {
+      "card_ref": "border|border/NOUN|border#landesgrenze",
+      "form_norm": "border",
+      "original_position": 28,
+      "expected_position": 18,
+      "position": 23
+    },
+    {
+      "card_ref": "customs|customs/NOUN|customs#zoll",
+      "form_norm": "customs",
+      "original_position": 29,
+      "expected_position": 19,
+      "position": 24
+    },
+    {
+      "card_ref": "immigration|immigration/NOUN|immigration#einreisekontrolle",
+      "form_norm": "immigration",
+      "original_position": 30,
+      "expected_position": 20,
+      "position": 25
+    },
+    {
+      "card_ref": "citizenship|citizenship/NOUN|citizenship#staatsbuergerschaft",
+      "form_norm": "citizenship",
+      "original_position": 31,
+      "expected_position": 21,
+      "position": 26
+    },
+    {
+      "card_ref": "nationality|nationality/NOUN|nationality#staatsangehoerigkeit",
+      "form_norm": "nationality",
+      "original_position": 32,
+      "expected_position": 22,
+      "position": 27
+    },
+    {
+      "card_ref": "identity|identity/NOUN|identity#identitaet",
+      "form_norm": "identity",
+      "original_position": 33,
+      "expected_position": 23,
+      "position": 28
+    },
+    {
+      "card_ref": "document|document/NOUN|document#dokumente",
+      "form_norm": "document",
+      "original_position": 34,
+      "expected_position": 24,
+      "position": 29
+    },
+    {
+      "card_ref": "permit|permit/NOUN|permit#genehmigung",
+      "form_norm": "permit",
+      "original_position": 35,
+      "expected_position": 25,
+      "position": 30
+    },
+    {
+      "card_ref": "embassy|embassy/NOUN|embassy#botschaft",
+      "form_norm": "embassy",
+      "original_position": 36,
+      "expected_position": 26,
+      "position": 31
+    },
+    {
+      "card_ref": "consulate|consulate/NOUN|consulate#konsulat",
+      "form_norm": "consulate",
+      "original_position": 37,
+      "expected_position": 27,
+      "position": 32
+    },
+    {
+      "card_ref": "official|official/NOUN|official#amtsperson",
+      "form_norm": "official",
+      "original_position": 38,
+      "expected_position": 28,
+      "position": 33
+    },
+    {
+      "card_ref": "stamp|stamp/NOUN|stamp#stempelabdruck",
+      "form_norm": "stamp",
+      "original_position": 39,
+      "expected_position": 29,
+      "position": 34
+    },
+    {
+      "card_ref": "signature|signature/NOUN|signature#unterschrift",
+      "form_norm": "signature",
+      "original_position": 40,
+      "expected_position": 30,
+      "position": 35
+    },
+    {
+      "card_ref": "expiry|expiry/NOUN|expiry#ablauf",
+      "form_norm": "expiry",
+      "original_position": 41,
+      "expected_position": 306,
+      "position": 36
+    },
+    {
+      "card_ref": "validity|validity/NOUN|validity#gueltigkeit",
+      "form_norm": "validity",
+      "original_position": 42,
+      "expected_position": 307,
+      "position": 37
+    },
+    {
+      "card_ref": "photocopy|photocopy/NOUN|photocopy#fotokopie",
+      "form_norm": "photocopy",
+      "original_position": 43,
+      "expected_position": 308,
+      "position": 38
+    },
+    {
+      "card_ref": "requirement|requirement/NOUN|requirement#anforderung",
+      "form_norm": "requirement",
+      "original_position": 44,
+      "expected_position": 309,
+      "position": 39
+    },
+    {
+      "card_ref": "declaration|declaration/NOUN|declaration#zollerklaerung",
+      "form_norm": "declaration",
+      "original_position": 45,
+      "expected_position": 310,
+      "position": 40
+    },
+    {
+      "card_ref": "airport|airport/NOUN|airport#flughafen",
+      "form_norm": "airport",
+      "original_position": 51,
+      "expected_position": 31,
+      "position": 41
+    },
+    {
+      "card_ref": "airline|airline/NOUN|airline#fluggesellschaft",
+      "form_norm": "airline",
+      "original_position": 52,
+      "expected_position": 32,
+      "position": 42
+    },
+    {
+      "card_ref": "terminal|terminal/NOUN|terminal#flughafenterminal",
+      "form_norm": "terminal",
+      "original_position": 53,
+      "expected_position": 33,
+      "position": 43
+    },
+    {
+      "card_ref": "flight|flight/NOUN|flight#flug",
+      "form_norm": "flight",
+      "original_position": 54,
+      "expected_position": 34,
+      "position": 44
+    },
+    {
+      "card_ref": "aircraft|aircraft/NOUN|aircraft#luftfahrzeug",
+      "form_norm": "aircraft",
+      "original_position": 55,
+      "expected_position": 35,
+      "position": 45
+    },
+    {
+      "card_ref": "aeroplane|aeroplane/NOUN|aeroplane#flugzeug",
+      "form_norm": "aeroplane",
+      "original_position": 56,
+      "expected_position": 36,
+      "position": 46
+    },
+    {
+      "card_ref": "pilot|pilot/NOUN|pilot#pilot",
+      "form_norm": "pilot",
+      "original_position": 57,
+      "expected_position": 37,
+      "position": 47
+    },
+    {
+      "card_ref": "crew|crew/NOUN|crew#besatzung",
+      "form_norm": "crew",
+      "original_position": 58,
+      "expected_position": 38,
+      "position": 48
+    },
+    {
+      "card_ref": "passenger|passenger/NOUN|passenger#fahrgast",
+      "form_norm": "passenger",
+      "original_position": 59,
+      "expected_position": 39,
+      "position": 49
+    },
+    {
+      "card_ref": "runway|runway/NOUN|runway#start-und-landebahn",
+      "form_norm": "runway",
+      "original_position": 60,
+      "expected_position": 40,
+      "position": 50
+    },
+    {
+      "card_ref": "gate|gate/NOUN|gate#flugsteig",
+      "form_norm": "gate",
+      "original_position": 61,
+      "expected_position": 41,
+      "position": 51
+    },
+    {
+      "card_ref": "boarding|boarding/NOUN|boarding#einsteigen",
+      "form_norm": "boarding",
+      "original_position": 62,
+      "expected_position": 42,
+      "position": 52
+    },
+    {
+      "card_ref": "landing|landing/NOUN|landing#landung",
+      "form_norm": "landing",
+      "original_position": 63,
+      "expected_position": 43,
+      "position": 53
+    },
+    {
+      "card_ref": "takeoff|takeoff/NOUN|takeoff#start",
+      "form_norm": "takeoff",
+      "original_position": 64,
+      "expected_position": 44,
+      "position": 54
+    },
+    {
+      "card_ref": "layover|layover/NOUN|layover#zwischenaufenthalt",
+      "form_norm": "layover",
+      "original_position": 65,
+      "expected_position": 45,
+      "position": 55
+    },
+    {
+      "card_ref": "stopover|stopover/NOUN|stopover#zwischenaufenthalt",
+      "form_norm": "stopover",
+      "original_position": 66,
+      "expected_position": 311,
+      "position": 56
+    },
+    {
+      "card_ref": "connection|connection/NOUN|connection#anschlussverbindung",
+      "form_norm": "connection",
+      "original_position": 67,
+      "expected_position": 312,
+      "position": 57
+    },
+    {
+      "card_ref": "transfer|transfer/NOUN|transfer#transfer",
+      "form_norm": "transfer",
+      "original_position": 68,
+      "expected_position": 313,
+      "position": 58
+    },
+    {
+      "card_ref": "turbulence|turbulence/NOUN|turbulence#turbulenzen",
+      "form_norm": "turbulence",
+      "original_position": 69,
+      "expected_position": 314,
+      "position": 59
+    },
+    {
+      "card_ref": "delay|delay/NOUN|delay#verspaetung",
+      "form_norm": "delay",
+      "original_position": 70,
+      "expected_position": 315,
+      "position": 60
+    },
+    {
+      "card_ref": "railway|railway/NOUN|railway#eisenbahn",
+      "form_norm": "railway",
+      "original_position": 76,
+      "expected_position": 46,
+      "position": 61
+    },
+    {
+      "card_ref": "rail|rail/NOUN|rail#schiene",
+      "form_norm": "rail",
+      "original_position": 77,
+      "expected_position": 47,
+      "position": 62
+    },
+    {
+      "card_ref": "platform|platform/NOUN|platform#bahnsteig",
+      "form_norm": "platform",
+      "original_position": 78,
+      "expected_position": 48,
+      "position": 63
+    },
+    {
+      "card_ref": "timetable|timetable/NOUN|timetable#fahrplan",
+      "form_norm": "timetable",
+      "original_position": 79,
+      "expected_position": 49,
+      "position": 64
+    },
+    {
+      "card_ref": "schedule|schedule/NOUN|schedule#fahrplan",
+      "form_norm": "schedule",
+      "original_position": 80,
+      "expected_position": 50,
+      "position": 65
+    },
+    {
+      "card_ref": "carriage|carriage/NOUN|carriage#eisenbahnwagen",
+      "form_norm": "carriage",
+      "original_position": 81,
+      "expected_position": 51,
+      "position": 66
+    },
+    {
+      "card_ref": "compartment|compartment/NOUN|compartment#zugabteil",
+      "form_norm": "compartment",
+      "original_position": 82,
+      "expected_position": 52,
+      "position": 67
+    },
+    {
+      "card_ref": "berth|berth/NOUN|berth#schlafplatz",
+      "form_norm": "berth",
+      "original_position": 83,
+      "expected_position": 53,
+      "position": 68
+    },
+    {
+      "card_ref": "sleeper|sleeper/NOUN|sleeper#schlafwagen",
+      "form_norm": "sleeper",
+      "original_position": 84,
+      "expected_position": 54,
+      "position": 69
+    },
+    {
+      "card_ref": "conductor|conductor/NOUN|conductor#zugbegleiter",
+      "form_norm": "conductor",
+      "original_position": 85,
+      "expected_position": 55,
+      "position": 70
+    },
+    {
+      "card_ref": "locomotive|locomotive/NOUN|locomotive#lokomotive",
+      "form_norm": "locomotive",
+      "original_position": 86,
+      "expected_position": 56,
+      "position": 71
+    },
+    {
+      "card_ref": "subway|subway/NOUN|subway#u-bahn",
+      "form_norm": "subway",
+      "original_position": 87,
+      "expected_position": 57,
+      "position": 72
+    },
+    {
+      "card_ref": "tram|tram/NOUN|tram#strassenbahn",
+      "form_norm": "tram",
+      "original_position": 88,
+      "expected_position": 58,
+      "position": 73
+    },
+    {
+      "card_ref": "escalator|escalator/NOUN|escalator#rolltreppe",
+      "form_norm": "escalator",
+      "original_position": 89,
+      "expected_position": 59,
+      "position": 74
+    },
+    {
+      "card_ref": "lift|lift/NOUN|lift#aufzug",
+      "form_norm": "lift",
+      "original_position": 90,
+      "expected_position": 60,
+      "position": 75
+    },
+    {
+      "card_ref": "crossing|crossing/NOUN|crossing#bahnuebergang",
+      "form_norm": "crossing",
+      "original_position": 91,
+      "expected_position": 316,
+      "position": 76
+    },
+    {
+      "card_ref": "track|track/NOUN|track#gleis",
+      "form_norm": "track",
+      "original_position": 92,
+      "expected_position": 317,
+      "position": 77
+    },
+    {
+      "card_ref": "route|route/NOUN|route#route",
+      "form_norm": "route",
+      "original_position": 93,
+      "expected_position": 318,
+      "position": 78
+    },
+    {
+      "card_ref": "service|service/NOUN|service#verkehrsverbindung",
+      "form_norm": "service",
+      "original_position": 94,
+      "expected_position": 319,
+      "position": 79
+    },
+    {
+      "card_ref": "express|express/NOUN|express#expresszug",
+      "form_norm": "express",
+      "original_position": 95,
+      "expected_position": 320,
+      "position": 80
+    },
+    {
+      "card_ref": "coach|coach/NOUN|coach#reisebus",
+      "form_norm": "coach",
+      "original_position": 101,
+      "expected_position": 61,
+      "position": 81
+    },
+    {
+      "card_ref": "taxi|taxi/NOUN|taxi#taxi",
+      "form_norm": "taxi",
+      "original_position": 102,
+      "expected_position": 62,
+      "position": 82
+    },
+    {
+      "card_ref": "vehicle|vehicle/NOUN|vehicle#fahrzeug",
+      "form_norm": "vehicle",
+      "original_position": 103,
+      "expected_position": 63,
+      "position": 83
+    },
+    {
+      "card_ref": "traffic|traffic/NOUN|traffic#verkehr",
+      "form_norm": "traffic",
+      "original_position": 104,
+      "expected_position": 64,
+      "position": 84
+    },
+    {
+      "card_ref": "motorway|motorway/NOUN|motorway#autobahn",
+      "form_norm": "motorway",
+      "original_position": 105,
+      "expected_position": 65,
+      "position": 85
+    },
+    {
+      "card_ref": "highway|highway/NOUN|highway#fernstrasse",
+      "form_norm": "highway",
+      "original_position": 106,
+      "expected_position": 66,
+      "position": 86
+    },
+    {
+      "card_ref": "lane|lane/NOUN|lane#fahrspur",
+      "form_norm": "lane",
+      "original_position": 107,
+      "expected_position": 67,
+      "position": 87
+    },
+    {
+      "card_ref": "pavement|pavement/NOUN|pavement#gehweg",
+      "form_norm": "pavement",
+      "original_position": 108,
+      "expected_position": 68,
+      "position": 88
+    },
+    {
+      "card_ref": "kerb|kerb/NOUN|kerb#bordstein",
+      "form_norm": "kerb",
+      "original_position": 109,
+      "expected_position": 69,
+      "position": 89
+    },
+    {
+      "card_ref": "intersection|intersection/NOUN|intersection#strassenkreuzung",
+      "form_norm": "intersection",
+      "original_position": 110,
+      "expected_position": 70,
+      "position": 90
+    },
+    {
+      "card_ref": "roundabout|roundabout/NOUN|roundabout#kreisverkehr",
+      "form_norm": "roundabout",
+      "original_position": 111,
+      "expected_position": 71,
+      "position": 91
+    },
+    {
+      "card_ref": "crossroads|crossroads/NOUN|crossroads#kreuzung",
+      "form_norm": "crossroads",
+      "original_position": 112,
+      "expected_position": 72,
+      "position": 92
+    },
+    {
+      "card_ref": "tunnel|tunnel/NOUN|tunnel#tunnel",
+      "form_norm": "tunnel",
+      "original_position": 113,
+      "expected_position": 73,
+      "position": 93
+    },
+    {
+      "card_ref": "toll|toll/NOUN|toll#maut",
+      "form_norm": "toll",
+      "original_position": 114,
+      "expected_position": 74,
+      "position": 94
+    },
+    {
+      "card_ref": "parking|parking/NOUN|parking#park",
+      "form_norm": "parking",
+      "original_position": 115,
+      "expected_position": 75,
+      "position": 95
+    },
+    {
+      "card_ref": "petrol|petrol/NOUN|petrol#benzin",
+      "form_norm": "petrol",
+      "original_position": 116,
+      "expected_position": 321,
+      "position": 96
+    },
+    {
+      "card_ref": "diesel|diesel/NOUN|diesel#dieselkraftstoff",
+      "form_norm": "diesel",
+      "original_position": 117,
+      "expected_position": 322,
+      "position": 97
+    },
+    {
+      "card_ref": "fuel|fuel/NOUN|fuel#kraftstoff",
+      "form_norm": "fuel",
+      "original_position": 118,
+      "expected_position": 323,
+      "position": 98
+    },
+    {
+      "card_ref": "garage|garage/NOUN|garage#autowerkstatt",
+      "form_norm": "garage",
+      "original_position": 119,
+      "expected_position": 324,
+      "position": 99
+    },
+    {
+      "card_ref": "rental|rental/NOUN|rental#anmietung",
+      "form_norm": "rental",
+      "original_position": 120,
+      "expected_position": 325,
+      "position": 100
+    },
+    {
+      "card_ref": "hotel|hotel/NOUN|hotel#hotel",
+      "form_norm": "hotel",
+      "original_position": 126,
+      "expected_position": 76,
+      "position": 101
+    },
+    {
+      "card_ref": "hostel|hostel/NOUN|hostel#hostel",
+      "form_norm": "hostel",
+      "original_position": 127,
+      "expected_position": 77,
+      "position": 102
+    },
+    {
+      "card_ref": "motel|motel/NOUN|motel#motel",
+      "form_norm": "motel",
+      "original_position": 128,
+      "expected_position": 78,
+      "position": 103
+    },
+    {
+      "card_ref": "guesthouse|guesthouse/NOUN|guesthouse#pension",
+      "form_norm": "guesthouse",
+      "original_position": 129,
+      "expected_position": 79,
+      "position": 104
+    },
+    {
+      "card_ref": "resort|resort/NOUN|resort#ferienanlage",
+      "form_norm": "resort",
+      "original_position": 130,
+      "expected_position": 80,
+      "position": 105
+    },
+    {
+      "card_ref": "campsite|campsite/NOUN|campsite#campingplatz",
+      "form_norm": "campsite",
+      "original_position": 131,
+      "expected_position": 81,
+      "position": 106
+    },
+    {
+      "card_ref": "cottage|cottage/NOUN|cottage#ferienhaus",
+      "form_norm": "cottage",
+      "original_position": 132,
+      "expected_position": 82,
+      "position": 107
+    },
+    {
+      "card_ref": "apartment|apartment/NOUN|apartment#wohnung",
+      "form_norm": "apartment",
+      "original_position": 133,
+      "expected_position": 83,
+      "position": 108
+    },
+    {
+      "card_ref": "accommodation|accommodation/NOUN|accommodation#unterkunft",
+      "form_norm": "accommodation",
+      "original_position": 134,
+      "expected_position": 84,
+      "position": 109
+    },
+    {
+      "card_ref": "reception|reception/NOUN|reception#rezeption",
+      "form_norm": "reception",
+      "original_position": 135,
+      "expected_position": 85,
+      "position": 110
+    },
+    {
+      "card_ref": "receptionist|receptionist/NOUN|receptionist#empfangsmitarbeiter",
+      "form_norm": "receptionist",
+      "original_position": 136,
+      "expected_position": 86,
+      "position": 111
+    },
+    {
+      "card_ref": "lobby|lobby/NOUN|lobby#lobby",
+      "form_norm": "lobby",
+      "original_position": 137,
+      "expected_position": 87,
+      "position": 112
+    },
+    {
+      "card_ref": "corridor|corridor/NOUN|corridor#flur",
+      "form_norm": "corridor",
+      "original_position": 138,
+      "expected_position": 88,
+      "position": 113
+    },
+    {
+      "card_ref": "floor|floor/NOUN|floor#stockwerk",
+      "form_norm": "floor",
+      "original_position": 139,
+      "expected_position": 89,
+      "position": 114
+    },
+    {
+      "card_ref": "balcony|balcony/NOUN|balcony#balkon",
+      "form_norm": "balcony",
+      "original_position": 140,
+      "expected_position": 90,
+      "position": 115
+    },
+    {
+      "card_ref": "terrace|terrace/NOUN|terrace#terrasse",
+      "form_norm": "terrace",
+      "original_position": 141,
+      "expected_position": 326,
+      "position": 116
+    },
+    {
+      "card_ref": "bedroom|bedroom/NOUN|bedroom#schlafzimmer",
+      "form_norm": "bedroom",
+      "original_position": 142,
+      "expected_position": 327,
+      "position": 117
+    },
+    {
+      "card_ref": "bathroom|bathroom/NOUN|bathroom#badezimmer",
+      "form_norm": "bathroom",
+      "original_position": 143,
+      "expected_position": 328,
+      "position": 118
+    },
+    {
+      "card_ref": "shower|shower/NOUN|shower#dusche",
+      "form_norm": "shower",
+      "original_position": 144,
+      "expected_position": 329,
+      "position": 119
+    },
+    {
+      "card_ref": "toilet|toilet/NOUN|toilet#toilette",
+      "form_norm": "toilet",
+      "original_position": 145,
+      "expected_position": 330,
+      "position": 120
+    },
+    {
+      "card_ref": "restaurant|restaurant/NOUN|restaurant#restaurant",
+      "form_norm": "restaurant",
+      "original_position": 151,
+      "expected_position": 91,
+      "position": 121
+    },
+    {
+      "card_ref": "café|café/NOUN|café#cafe",
+      "form_norm": "café",
+      "original_position": 152,
+      "expected_position": 92,
+      "position": 122
+    },
+    {
+      "card_ref": "menu|menu/NOUN|menu#karte",
+      "form_norm": "menu",
+      "original_position": 153,
+      "expected_position": 93,
+      "position": 123
+    },
+    {
+      "card_ref": "waiter|waiter/NOUN|waiter#kellner",
+      "form_norm": "waiter",
+      "original_position": 154,
+      "expected_position": 94,
+      "position": 124
+    },
+    {
+      "card_ref": "waitress|waitress/NOUN|waitress#kellnerin",
+      "form_norm": "waitress",
+      "original_position": 155,
+      "expected_position": 95,
+      "position": 125
+    },
+    {
+      "card_ref": "chef|chef/NOUN|chef#koch",
+      "form_norm": "chef",
+      "original_position": 156,
+      "expected_position": 96,
+      "position": 126
+    },
+    {
+      "card_ref": "meal|meal/NOUN|meal#mahlzeit",
+      "form_norm": "meal",
+      "original_position": 157,
+      "expected_position": 97,
+      "position": 127
+    },
+    {
+      "card_ref": "breakfast|breakfast/NOUN|breakfast#fruehstueck",
+      "form_norm": "breakfast",
+      "original_position": 158,
+      "expected_position": 98,
+      "position": 128
+    },
+    {
+      "card_ref": "lunch|lunch/NOUN|lunch#mittagessen",
+      "form_norm": "lunch",
+      "original_position": 159,
+      "expected_position": 99,
+      "position": 129
+    },
+    {
+      "card_ref": "dinner|dinner/NOUN|dinner#abendessen",
+      "form_norm": "dinner",
+      "original_position": 160,
+      "expected_position": 100,
+      "position": 130
+    },
+    {
+      "card_ref": "snack|snack/NOUN|snack#snack",
+      "form_norm": "snack",
+      "original_position": 161,
+      "expected_position": 101,
+      "position": 131
+    },
+    {
+      "card_ref": "starter|starter/NOUN|starter#vorspeise",
+      "form_norm": "starter",
+      "original_position": 162,
+      "expected_position": 102,
+      "position": 132
+    },
+    {
+      "card_ref": "course|course/NOUN|course#menuegang",
+      "form_norm": "course",
+      "original_position": 163,
+      "expected_position": 103,
+      "position": 133
+    },
+    {
+      "card_ref": "dessert|dessert/NOUN|dessert#dessert",
+      "form_norm": "dessert",
+      "original_position": 164,
+      "expected_position": 104,
+      "position": 134
+    },
+    {
+      "card_ref": "buffet|buffet/NOUN|buffet#buefett",
+      "form_norm": "buffet",
+      "original_position": 165,
+      "expected_position": 105,
+      "position": 135
+    },
+    {
+      "card_ref": "portion|portion/NOUN|portion#portion",
+      "form_norm": "portion",
+      "original_position": 166,
+      "expected_position": 331,
+      "position": 136
+    },
+    {
+      "card_ref": "dish|dish/NOUN|dish#gericht",
+      "form_norm": "dish",
+      "original_position": 167,
+      "expected_position": 332,
+      "position": 137
+    },
+    {
+      "card_ref": "bowl|bowl/NOUN|bowl#schuesseln",
+      "form_norm": "bowl",
+      "original_position": 168,
+      "expected_position": 333,
+      "position": 138
+    },
+    {
+      "card_ref": "glass|glass/NOUN|glass#glas",
+      "form_norm": "glass",
+      "original_position": 169,
+      "expected_position": 334,
+      "position": 139
+    },
+    {
+      "card_ref": "mug|mug/NOUN|mug#trinkbecher",
+      "form_norm": "mug",
+      "original_position": 170,
+      "expected_position": 335,
+      "position": 140
+    },
+    {
+      "card_ref": "water|water/NOUN|water#wasser",
+      "form_norm": "water",
+      "original_position": 176,
+      "expected_position": 106,
+      "position": 141
+    },
+    {
+      "card_ref": "juice|juice/NOUN|juice#saft",
+      "form_norm": "juice",
+      "original_position": 177,
+      "expected_position": 107,
+      "position": 142
+    },
+    {
+      "card_ref": "coffee|coffee/NOUN|coffee#kaffee",
+      "form_norm": "coffee",
+      "original_position": 178,
+      "expected_position": 108,
+      "position": 143
+    },
+    {
+      "card_ref": "tea|tea/NOUN|tea#tee",
+      "form_norm": "tea",
+      "original_position": 179,
+      "expected_position": 109,
+      "position": 144
+    },
+    {
+      "card_ref": "beer|beer/NOUN|beer#bier",
+      "form_norm": "beer",
+      "original_position": 180,
+      "expected_position": 110,
+      "position": 145
+    },
+    {
+      "card_ref": "wine|wine/NOUN|wine#wein",
+      "form_norm": "wine",
+      "original_position": 181,
+      "expected_position": 111,
+      "position": 146
+    },
+    {
+      "card_ref": "sandwich|sandwich/NOUN|sandwich#sandwich",
+      "form_norm": "sandwich",
+      "original_position": 182,
+      "expected_position": 112,
+      "position": 147
+    },
+    {
+      "card_ref": "salad|salad/NOUN|salad#salat",
+      "form_norm": "salad",
+      "original_position": 183,
+      "expected_position": 113,
+      "position": 148
+    },
+    {
+      "card_ref": "soup|soup/NOUN|soup#suppe",
+      "form_norm": "soup",
+      "original_position": 184,
+      "expected_position": 114,
+      "position": 149
+    },
+    {
+      "card_ref": "rice|rice/NOUN|rice#reis",
+      "form_norm": "rice",
+      "original_position": 185,
+      "expected_position": 115,
+      "position": 150
+    },
+    {
+      "card_ref": "pasta|pasta/NOUN|pasta#nudeln",
+      "form_norm": "pasta",
+      "original_position": 186,
+      "expected_position": 116,
+      "position": 151
+    },
+    {
+      "card_ref": "pizza|pizza/NOUN|pizza#pizza",
+      "form_norm": "pizza",
+      "original_position": 187,
+      "expected_position": 117,
+      "position": 152
+    },
+    {
+      "card_ref": "chicken|chicken/NOUN|chicken#haehnchenfleisch",
+      "form_norm": "chicken",
+      "original_position": 188,
+      "expected_position": 118,
+      "position": 153
+    },
+    {
+      "card_ref": "beef|beef/NOUN|beef#rindfleisch",
+      "form_norm": "beef",
+      "original_position": 189,
+      "expected_position": 119,
+      "position": 154
+    },
+    {
+      "card_ref": "pork|pork/NOUN|pork#schweinefleisch",
+      "form_norm": "pork",
+      "original_position": 190,
+      "expected_position": 120,
+      "position": 155
+    },
+    {
+      "card_ref": "fish|fish/NOUN|fish#fisch",
+      "form_norm": "fish",
+      "original_position": 191,
+      "expected_position": 336,
+      "position": 156
+    },
+    {
+      "card_ref": "seafood|seafood/NOUN|seafood#meeresfruechte",
+      "form_norm": "seafood",
+      "original_position": 192,
+      "expected_position": 337,
+      "position": 157
+    },
+    {
+      "card_ref": "vegetable|vegetable/NOUN|vegetable#gemuese",
+      "form_norm": "vegetable",
+      "original_position": 193,
+      "expected_position": 338,
+      "position": 158
+    },
+    {
+      "card_ref": "fruit|fruit/NOUN|fruit#obst",
+      "form_norm": "fruit",
+      "original_position": 194,
+      "expected_position": 339,
+      "position": 159
+    },
+    {
+      "card_ref": "potato|potato/NOUN|potato#kartoffel",
+      "form_norm": "potato",
+      "original_position": 195,
+      "expected_position": 340,
+      "position": 160
+    },
+    {
+      "card_ref": "cash|cash/NOUN|cash#bargeld",
+      "form_norm": "cash",
+      "original_position": 201,
+      "expected_position": 121,
+      "position": 161
+    },
+    {
+      "card_ref": "currency|currency/NOUN|currency#waehrung",
+      "form_norm": "currency",
+      "original_position": 202,
+      "expected_position": 122,
+      "position": 162
+    },
+    {
+      "card_ref": "exchange|exchange/NOUN|exchange#geldumtausch",
+      "form_norm": "exchange",
+      "original_position": 203,
+      "expected_position": 123,
+      "position": 163
+    },
+    {
+      "card_ref": "rate|rate/NOUN|rate#wechselkurs",
+      "form_norm": "rate",
+      "original_position": 204,
+      "expected_position": 124,
+      "position": 164
+    },
+    {
+      "card_ref": "coin|coin/NOUN|coin#muenzen",
+      "form_norm": "coin",
+      "original_position": 205,
+      "expected_position": 125,
+      "position": 165
+    },
+    {
+      "card_ref": "banknote|banknote/NOUN|banknote#geldschein",
+      "form_norm": "banknote",
+      "original_position": 206,
+      "expected_position": 126,
+      "position": 166
+    },
+    {
+      "card_ref": "wallet|wallet/NOUN|wallet#geldboerse",
+      "form_norm": "wallet",
+      "original_position": 207,
+      "expected_position": 127,
+      "position": 167
+    },
+    {
+      "card_ref": "purse|purse/NOUN|purse#geldboerse",
+      "form_norm": "purse",
+      "original_position": 208,
+      "expected_position": 128,
+      "position": 168
+    },
+    {
+      "card_ref": "bill|bill/NOUN|bill#rechnung",
+      "form_norm": "bill",
+      "original_position": 209,
+      "expected_position": 129,
+      "position": 169
+    },
+    {
+      "card_ref": "tax|tax/NOUN|tax#steuer",
+      "form_norm": "tax",
+      "original_position": 210,
+      "expected_position": 130,
+      "position": 170
+    },
+    {
+      "card_ref": "tip|tip/NOUN|tip#trinkgeld",
+      "form_norm": "tip",
+      "original_position": 211,
+      "expected_position": 131,
+      "position": 171
+    },
+    {
+      "card_ref": "surcharge|surcharge/NOUN|surcharge#aufpreis",
+      "form_norm": "surcharge",
+      "original_position": 212,
+      "expected_position": 132,
+      "position": 172
+    },
+    {
+      "card_ref": "refund|refund/NOUN|refund#rueckerstattung",
+      "form_norm": "refund",
+      "original_position": 213,
+      "expected_position": 133,
+      "position": 173
+    },
+    {
+      "card_ref": "discount|discount/NOUN|discount#rabatt",
+      "form_norm": "discount",
+      "original_position": 214,
+      "expected_position": 134,
+      "position": 174
+    },
+    {
+      "card_ref": "bargain|bargain/NOUN|bargain#schnaeppchen",
+      "form_norm": "bargain",
+      "original_position": 215,
+      "expected_position": 135,
+      "position": 175
+    },
+    {
+      "card_ref": "fare|fare/NOUN|fare#fahrpreis",
+      "form_norm": "fare",
+      "original_position": 216,
+      "expected_position": 341,
+      "position": 176
+    },
+    {
+      "card_ref": "fee|fee/NOUN|fee#gebuehr",
+      "form_norm": "fee",
+      "original_position": 217,
+      "expected_position": 342,
+      "position": 177
+    },
+    {
+      "card_ref": "charge|charge/NOUN|charge#entgelt",
+      "form_norm": "charge",
+      "original_position": 218,
+      "expected_position": 343,
+      "position": 178
+    },
+    {
+      "card_ref": "cost|cost/NOUN|cost#kosten",
+      "form_norm": "cost",
+      "original_position": 219,
+      "expected_position": 344,
+      "position": 179
+    },
+    {
+      "card_ref": "total|total/NOUN|total#gesamtbetrag",
+      "form_norm": "total",
+      "original_position": 220,
+      "expected_position": 345,
+      "position": 180
+    },
+    {
+      "card_ref": "tourist|tourist/NOUN|tourist#touristen",
+      "form_norm": "tourist",
+      "original_position": 226,
+      "expected_position": 136,
+      "position": 181
+    },
+    {
+      "card_ref": "tourism|tourism/NOUN|tourism#tourismus",
+      "form_norm": "tourism",
+      "original_position": 227,
+      "expected_position": 137,
+      "position": 182
+    },
+    {
+      "card_ref": "guide|guide/NOUN|guide#reisefuehrer",
+      "form_norm": "guide",
+      "original_position": 228,
+      "expected_position": 138,
+      "position": 183
+    },
+    {
+      "card_ref": "landmark|landmark/NOUN|landmark#wahrzeichen",
+      "form_norm": "landmark",
+      "original_position": 229,
+      "expected_position": 139,
+      "position": 184
+    },
+    {
+      "card_ref": "monument|monument/NOUN|monument#denkmal",
+      "form_norm": "monument",
+      "original_position": 230,
+      "expected_position": 140,
+      "position": 185
+    },
+    {
+      "card_ref": "museum|museum/NOUN|museum#museum",
+      "form_norm": "museum",
+      "original_position": 231,
+      "expected_position": 141,
+      "position": 186
+    },
+    {
+      "card_ref": "gallery|gallery/NOUN|gallery#kunstgalerie",
+      "form_norm": "gallery",
+      "original_position": 232,
+      "expected_position": 142,
+      "position": 187
+    },
+    {
+      "card_ref": "cathedral|cathedral/NOUN|cathedral#kathedrale",
+      "form_norm": "cathedral",
+      "original_position": 233,
+      "expected_position": 143,
+      "position": 188
+    },
+    {
+      "card_ref": "castle|castle/NOUN|castle#burg",
+      "form_norm": "castle",
+      "original_position": 234,
+      "expected_position": 144,
+      "position": 189
+    },
+    {
+      "card_ref": "palace|palace/NOUN|palace#palast",
+      "form_norm": "palace",
+      "original_position": 235,
+      "expected_position": 145,
+      "position": 190
+    },
+    {
+      "card_ref": "square|square/NOUN|square#platz",
+      "form_norm": "square",
+      "original_position": 236,
+      "expected_position": 146,
+      "position": 191
+    },
+    {
+      "card_ref": "fountain|fountain/NOUN|fountain#brunnen",
+      "form_norm": "fountain",
+      "original_position": 237,
+      "expected_position": 147,
+      "position": 192
+    },
+    {
+      "card_ref": "statue|statue/NOUN|statue#statue",
+      "form_norm": "statue",
+      "original_position": 238,
+      "expected_position": 148,
+      "position": 193
+    },
+    {
+      "card_ref": "ruins|ruin/NOUN|ruin#ruinen",
+      "form_norm": "ruins",
+      "original_position": 239,
+      "expected_position": 149,
+      "position": 194
+    },
+    {
+      "card_ref": "harbour|harbour/NOUN|harbour#hafen",
+      "form_norm": "harbour",
+      "original_position": 240,
+      "expected_position": 150,
+      "position": 195
+    },
+    {
+      "card_ref": "temple|temple/NOUN|temple#tempel",
+      "form_norm": "temple",
+      "original_position": 241,
+      "expected_position": 346,
+      "position": 196
+    },
+    {
+      "card_ref": "mosque|mosque/NOUN|mosque#moschee",
+      "form_norm": "mosque",
+      "original_position": 242,
+      "expected_position": 347,
+      "position": 197
+    },
+    {
+      "card_ref": "market|market/NOUN|market#markt",
+      "form_norm": "market",
+      "original_position": 243,
+      "expected_position": 348,
+      "position": 198
+    },
+    {
+      "card_ref": "festival|festival/NOUN|festival#festival",
+      "form_norm": "festival",
+      "original_position": 244,
+      "expected_position": 349,
+      "position": 199
+    },
+    {
+      "card_ref": "exhibition|exhibition/NOUN|exhibition#ausstellung",
+      "form_norm": "exhibition",
+      "original_position": 245,
+      "expected_position": 350,
+      "position": 200
+    },
+    {
+      "card_ref": "beach|beach/NOUN|beach#strand",
+      "form_norm": "beach",
+      "original_position": 251,
+      "expected_position": 151,
+      "position": 201
+    },
+    {
+      "card_ref": "coast|coast/NOUN|coast#kueste",
+      "form_norm": "coast",
+      "original_position": 252,
+      "expected_position": 152,
+      "position": 202
+    },
+    {
+      "card_ref": "island|island/NOUN|island#insel",
+      "form_norm": "island",
+      "original_position": 253,
+      "expected_position": 153,
+      "position": 203
+    },
+    {
+      "card_ref": "lake|lake/NOUN|lake#see",
+      "form_norm": "lake",
+      "original_position": 254,
+      "expected_position": 154,
+      "position": 204
+    },
+    {
+      "card_ref": "river|river/NOUN|river#fluss",
+      "form_norm": "river",
+      "original_position": 255,
+      "expected_position": 155,
+      "position": 205
+    },
+    {
+      "card_ref": "mountain|mountain/NOUN|mountain#berg",
+      "form_norm": "mountain",
+      "original_position": 256,
+      "expected_position": 156,
+      "position": 206
+    },
+    {
+      "card_ref": "valley|valley/NOUN|valley#tal",
+      "form_norm": "valley",
+      "original_position": 257,
+      "expected_position": 157,
+      "position": 207
+    },
+    {
+      "card_ref": "forest|forest/NOUN|forest#wald",
+      "form_norm": "forest",
+      "original_position": 258,
+      "expected_position": 158,
+      "position": 208
+    },
+    {
+      "card_ref": "countryside|countryside/NOUN|countryside#laendliche-gegend",
+      "form_norm": "countryside",
+      "original_position": 259,
+      "expected_position": 159,
+      "position": 209
+    },
+    {
+      "card_ref": "waterfall|waterfall/NOUN|waterfall#wasserfall",
+      "form_norm": "waterfall",
+      "original_position": 260,
+      "expected_position": 160,
+      "position": 210
+    },
+    {
+      "card_ref": "cliff|cliff/NOUN|cliff#klippe",
+      "form_norm": "cliff",
+      "original_position": 261,
+      "expected_position": 161,
+      "position": 211
+    },
+    {
+      "card_ref": "cave|cave/NOUN|cave#hoehle",
+      "form_norm": "cave",
+      "original_position": 262,
+      "expected_position": 162,
+      "position": 212
+    },
+    {
+      "card_ref": "desert|desert/NOUN|desert#wueste",
+      "form_norm": "desert",
+      "original_position": 263,
+      "expected_position": 163,
+      "position": 213
+    },
+    {
+      "card_ref": "volcano|volcano/NOUN|volcano#vulkan",
+      "form_norm": "volcano",
+      "original_position": 264,
+      "expected_position": 164,
+      "position": 214
+    },
+    {
+      "card_ref": "glacier|glacier/NOUN|glacier#gletscher",
+      "form_norm": "glacier",
+      "original_position": 265,
+      "expected_position": 165,
+      "position": 215
+    },
+    {
+      "card_ref": "wildlife|wildlife/NOUN|wildlife#wildtiere",
+      "form_norm": "wildlife",
+      "original_position": 266,
+      "expected_position": 351,
+      "position": 216
+    },
+    {
+      "card_ref": "scenery|scenery/NOUN|scenery#landschaft",
+      "form_norm": "scenery",
+      "original_position": 267,
+      "expected_position": 352,
+      "position": 217
+    },
+    {
+      "card_ref": "landscape|landscape/NOUN|landscape#landschaft",
+      "form_norm": "landscape",
+      "original_position": 268,
+      "expected_position": 353,
+      "position": 218
+    },
+    {
+      "card_ref": "path|path/NOUN|path#fussweg",
+      "form_norm": "path",
+      "original_position": 269,
+      "expected_position": 354,
+      "position": 219
+    },
+    {
+      "card_ref": "trail|trail/NOUN|trail#wanderpfad",
+      "form_norm": "trail",
+      "original_position": 270,
+      "expected_position": 355,
+      "position": 220
+    },
+    {
+      "card_ref": "weather|weather/NOUN|weather#wetter",
+      "form_norm": "weather",
+      "original_position": 276,
+      "expected_position": 166,
+      "position": 221
+    },
+    {
+      "card_ref": "forecast|forecast/NOUN|forecast#wettervorhersage",
+      "form_norm": "forecast",
+      "original_position": 277,
+      "expected_position": 167,
+      "position": 222
+    },
+    {
+      "card_ref": "temperature|temperature/NOUN|temperature#temperatur",
+      "form_norm": "temperature",
+      "original_position": 278,
+      "expected_position": 168,
+      "position": 223
+    },
+    {
+      "card_ref": "climate|climate/NOUN|climate#klima",
+      "form_norm": "climate",
+      "original_position": 279,
+      "expected_position": 169,
+      "position": 224
+    },
+    {
+      "card_ref": "sunshine|sunshine/NOUN|sunshine#sonnenschein",
+      "form_norm": "sunshine",
+      "original_position": 280,
+      "expected_position": 170,
+      "position": 225
+    },
+    {
+      "card_ref": "sunlight|sunlight/NOUN|sunlight#sonnenlicht",
+      "form_norm": "sunlight",
+      "original_position": 281,
+      "expected_position": 171,
+      "position": 226
+    },
+    {
+      "card_ref": "shade|shade/NOUN|shade#schatten",
+      "form_norm": "shade",
+      "original_position": 282,
+      "expected_position": 172,
+      "position": 227
+    },
+    {
+      "card_ref": "shadow|shadow/NOUN|shadow#schatten",
+      "form_norm": "shadow",
+      "original_position": 283,
+      "expected_position": 173,
+      "position": 228
+    },
+    {
+      "card_ref": "rain|rain/NOUN|rain#regen",
+      "form_norm": "rain",
+      "original_position": 284,
+      "expected_position": 174,
+      "position": 229
+    },
+    {
+      "card_ref": "drizzle|drizzle/NOUN|drizzle#nieselregen",
+      "form_norm": "drizzle",
+      "original_position": 285,
+      "expected_position": 175,
+      "position": 230
+    },
+    {
+      "card_ref": "downpour|downpour/NOUN|downpour#platzregen",
+      "form_norm": "downpour",
+      "original_position": 286,
+      "expected_position": 176,
+      "position": 231
+    },
+    {
+      "card_ref": "snow|snow/NOUN|snow#schnee",
+      "form_norm": "snow",
+      "original_position": 287,
+      "expected_position": 177,
+      "position": 232
+    },
+    {
+      "card_ref": "frost|frost/NOUN|frost#frost",
+      "form_norm": "frost",
+      "original_position": 288,
+      "expected_position": 178,
+      "position": 233
+    },
+    {
+      "card_ref": "ice|ice/NOUN|ice#eis",
+      "form_norm": "ice",
+      "original_position": 289,
+      "expected_position": 179,
+      "position": 234
+    },
+    {
+      "card_ref": "wind|wind/NOUN|wind#wind",
+      "form_norm": "wind",
+      "original_position": 290,
+      "expected_position": 180,
+      "position": 235
+    },
+    {
+      "card_ref": "breeze|breeze/NOUN|breeze#brise",
+      "form_norm": "breeze",
+      "original_position": 291,
+      "expected_position": 356,
+      "position": 236
+    },
+    {
+      "card_ref": "storm|storm/NOUN|storm#sturms",
+      "form_norm": "storm",
+      "original_position": 292,
+      "expected_position": 357,
+      "position": 237
+    },
+    {
+      "card_ref": "thunder|thunder/NOUN|thunder#donner",
+      "form_norm": "thunder",
+      "original_position": 293,
+      "expected_position": 358,
+      "position": 238
+    },
+    {
+      "card_ref": "lightning|lightning/NOUN|lightning#blitz",
+      "form_norm": "lightning",
+      "original_position": 294,
+      "expected_position": 359,
+      "position": 239
+    },
+    {
+      "card_ref": "cloud|cloud/NOUN|cloud#wolken",
+      "form_norm": "cloud",
+      "original_position": 295,
+      "expected_position": 360,
+      "position": 240
+    },
+    {
+      "card_ref": "sea|sea/NOUN|sea#meer",
+      "form_norm": "sea",
+      "original_position": 301,
+      "expected_position": 181,
+      "position": 241
+    },
+    {
+      "card_ref": "ocean|ocean/NOUN|ocean#ozean",
+      "form_norm": "ocean",
+      "original_position": 302,
+      "expected_position": 182,
+      "position": 242
+    },
+    {
+      "card_ref": "bay|bay/NOUN|bay#bucht",
+      "form_norm": "bay",
+      "original_position": 303,
+      "expected_position": 183,
+      "position": 243
+    },
+    {
+      "card_ref": "shore|shore/NOUN|shore#ufer",
+      "form_norm": "shore",
+      "original_position": 304,
+      "expected_position": 184,
+      "position": 244
+    },
+    {
+      "card_ref": "wave|wave/NOUN|wave#welle",
+      "form_norm": "wave",
+      "original_position": 305,
+      "expected_position": 185,
+      "position": 245
+    },
+    {
+      "card_ref": "tide|tide/NOUN|tide#gezeitenstand",
+      "form_norm": "tide",
+      "original_position": 306,
+      "expected_position": 186,
+      "position": 246
+    },
+    {
+      "card_ref": "current|current/NOUN|current#wasserstroemung",
+      "form_norm": "current",
+      "original_position": 307,
+      "expected_position": 187,
+      "position": 247
+    },
+    {
+      "card_ref": "port|port/NOUN|port#hafen",
+      "form_norm": "port",
+      "original_position": 308,
+      "expected_position": 188,
+      "position": 248
+    },
+    {
+      "card_ref": "dock|dock/NOUN|dock#anlegestelle",
+      "form_norm": "dock",
+      "original_position": 309,
+      "expected_position": 189,
+      "position": 249
+    },
+    {
+      "card_ref": "pier|pier/NOUN|pier#landungssteg",
+      "form_norm": "pier",
+      "original_position": 310,
+      "expected_position": 190,
+      "position": 250
+    },
+    {
+      "card_ref": "ferry|ferry/NOUN|ferry#faehre",
+      "form_norm": "ferry",
+      "original_position": 311,
+      "expected_position": 191,
+      "position": 251
+    },
+    {
+      "card_ref": "boat|boat/NOUN|boat#boot",
+      "form_norm": "boat",
+      "original_position": 312,
+      "expected_position": 192,
+      "position": 252
+    },
+    {
+      "card_ref": "ship|ship/NOUN|ship#schiff",
+      "form_norm": "ship",
+      "original_position": 313,
+      "expected_position": 193,
+      "position": 253
+    },
+    {
+      "card_ref": "yacht|yacht/NOUN|yacht#jacht",
+      "form_norm": "yacht",
+      "original_position": 314,
+      "expected_position": 194,
+      "position": 254
+    },
+    {
+      "card_ref": "cruise|cruise/NOUN|cruise#kreuzfahrt",
+      "form_norm": "cruise",
+      "original_position": 315,
+      "expected_position": 195,
+      "position": 255
+    },
+    {
+      "card_ref": "canoe|canoe/NOUN|canoe#kanu",
+      "form_norm": "canoe",
+      "original_position": 316,
+      "expected_position": 361,
+      "position": 256
+    },
+    {
+      "card_ref": "kayak|kayak/NOUN|kayak#kajak",
+      "form_norm": "kayak",
+      "original_position": 317,
+      "expected_position": 362,
+      "position": 257
+    },
+    {
+      "card_ref": "paddle|paddle/NOUN|paddle#paddel",
+      "form_norm": "paddle",
+      "original_position": 318,
+      "expected_position": 363,
+      "position": 258
+    },
+    {
+      "card_ref": "sail|sail/NOUN|sail#segel",
+      "form_norm": "sail",
+      "original_position": 319,
+      "expected_position": 364,
+      "position": 259
+    },
+    {
+      "card_ref": "anchor|anchor/NOUN|anchor#anker",
+      "form_norm": "anchor",
+      "original_position": 320,
+      "expected_position": 365,
+      "position": 260
+    },
+    {
+      "card_ref": "pharmacy|pharmacy/NOUN|pharmacy#apotheke",
+      "form_norm": "pharmacy",
+      "original_position": 326,
+      "expected_position": 196,
+      "position": 261
+    },
+    {
+      "card_ref": "doctor|doctor/NOUN|doctor#arzt",
+      "form_norm": "doctor",
+      "original_position": 327,
+      "expected_position": 197,
+      "position": 262
+    },
+    {
+      "card_ref": "dentist|dentist/NOUN|dentist#zahnarzt",
+      "form_norm": "dentist",
+      "original_position": 328,
+      "expected_position": 198,
+      "position": 263
+    },
+    {
+      "card_ref": "nurse|nurse/NOUN|nurse#krankenschwester",
+      "form_norm": "nurse",
+      "original_position": 329,
+      "expected_position": 199,
+      "position": 264
+    },
+    {
+      "card_ref": "hospital|hospital/NOUN|hospital#krankenhaus",
+      "form_norm": "hospital",
+      "original_position": 330,
+      "expected_position": 200,
+      "position": 265
+    },
+    {
+      "card_ref": "clinic|clinic/NOUN|clinic#praxis",
+      "form_norm": "clinic",
+      "original_position": 331,
+      "expected_position": 201,
+      "position": 266
+    },
+    {
+      "card_ref": "ambulance|ambulance/NOUN|ambulance#krankenwagen",
+      "form_norm": "ambulance",
+      "original_position": 332,
+      "expected_position": 202,
+      "position": 267
+    },
+    {
+      "card_ref": "emergency|emergency/NOUN|emergency#notfaelle",
+      "form_norm": "emergency",
+      "original_position": 333,
+      "expected_position": 203,
+      "position": 268
+    },
+    {
+      "card_ref": "injury|injury/NOUN|injury#verletzung",
+      "form_norm": "injury",
+      "original_position": 334,
+      "expected_position": 204,
+      "position": 269
+    },
+    {
+      "card_ref": "wound|wound/NOUN|wound#wunde",
+      "form_norm": "wound",
+      "original_position": 335,
+      "expected_position": 205,
+      "position": 270
+    },
+    {
+      "card_ref": "burn|burn/NOUN|burn#brandwunde",
+      "form_norm": "burn",
+      "original_position": 336,
+      "expected_position": 206,
+      "position": 271
+    },
+    {
+      "card_ref": "blister|blister/NOUN|blister#blase",
+      "form_norm": "blister",
+      "original_position": 337,
+      "expected_position": 207,
+      "position": 272
+    },
+    {
+      "card_ref": "bruise|bruise/NOUN|bruise#blauer-fleck",
+      "form_norm": "bruise",
+      "original_position": 338,
+      "expected_position": 208,
+      "position": 273
+    },
+    {
+      "card_ref": "pain|pain/NOUN|pain#schmerzen",
+      "form_norm": "pain",
+      "original_position": 339,
+      "expected_position": 209,
+      "position": 274
+    },
+    {
+      "card_ref": "fever|fever/NOUN|fever#fieber",
+      "form_norm": "fever",
+      "original_position": 340,
+      "expected_position": 210,
+      "position": 275
+    },
+    {
+      "card_ref": "cough|cough/NOUN|cough#husten",
+      "form_norm": "cough",
+      "original_position": 341,
+      "expected_position": 366,
+      "position": 276
+    },
+    {
+      "card_ref": "headache|headache/NOUN|headache#kopfschmerzen",
+      "form_norm": "headache",
+      "original_position": 342,
+      "expected_position": 367,
+      "position": 277
+    },
+    {
+      "card_ref": "stomachache|stomachache/NOUN|stomachache#bauchschmerzen",
+      "form_norm": "stomachache",
+      "original_position": 343,
+      "expected_position": 368,
+      "position": 278
+    },
+    {
+      "card_ref": "allergy|allergy/NOUN|allergy#allergie",
+      "form_norm": "allergy",
+      "original_position": 344,
+      "expected_position": 369,
+      "position": 279
+    },
+    {
+      "card_ref": "medicine|medicine/NOUN|medicine#medikamente",
+      "form_norm": "medicine",
+      "original_position": 345,
+      "expected_position": 370,
+      "position": 280
+    },
+    {
+      "card_ref": "backpack|backpack/NOUN|backpack#rucksack",
+      "form_norm": "backpack",
+      "original_position": 351,
+      "expected_position": 211,
+      "position": 281
+    },
+    {
+      "card_ref": "rucksack|rucksack/NOUN|rucksack#rucksack",
+      "form_norm": "rucksack",
+      "original_position": 352,
+      "expected_position": 212,
+      "position": 282
+    },
+    {
+      "card_ref": "luggage|luggage/NOUN|luggage#gepaeck",
+      "form_norm": "luggage",
+      "original_position": 353,
+      "expected_position": 213,
+      "position": 283
+    },
+    {
+      "card_ref": "pouch|pouch/NOUN|pouch#beutel",
+      "form_norm": "pouch",
+      "original_position": 354,
+      "expected_position": 214,
+      "position": 284
+    },
+    {
+      "card_ref": "zip|zip/NOUN|zip#reissverschluss",
+      "form_norm": "zip",
+      "original_position": 355,
+      "expected_position": 215,
+      "position": 285
+    },
+    {
+      "card_ref": "padlock|padlock/NOUN|padlock#vorhaengeschloss",
+      "form_norm": "padlock",
+      "original_position": 356,
+      "expected_position": 216,
+      "position": 286
+    },
+    {
+      "card_ref": "charger|charger/NOUN|charger#ladegeraet",
+      "form_norm": "charger",
+      "original_position": 357,
+      "expected_position": 217,
+      "position": 287
+    },
+    {
+      "card_ref": "umbrella|umbrella/NOUN|umbrella#regenschirm",
+      "form_norm": "umbrella",
+      "original_position": 358,
+      "expected_position": 218,
+      "position": 288
+    },
+    {
+      "card_ref": "sunscreen|sunscreen/NOUN|sunscreen#sonnenschutzmittel",
+      "form_norm": "sunscreen",
+      "original_position": 359,
+      "expected_position": 219,
+      "position": 289
+    },
+    {
+      "card_ref": "toiletries|toiletry/NOUN|toiletry#koerperpflegeartikel",
+      "form_norm": "toiletries",
+      "original_position": 360,
+      "expected_position": 220,
+      "position": 290
+    },
+    {
+      "card_ref": "police|police/NOUN|police#polizei",
+      "form_norm": "police",
+      "original_position": 361,
+      "expected_position": 221,
+      "position": 291
+    },
+    {
+      "card_ref": "theft|theft/NOUN|theft#diebstahl",
+      "form_norm": "theft",
+      "original_position": 362,
+      "expected_position": 222,
+      "position": 292
+    },
+    {
+      "card_ref": "thief|thief/NOUN|thief#dieb",
+      "form_norm": "thief",
+      "original_position": 363,
+      "expected_position": 223,
+      "position": 293
+    },
+    {
+      "card_ref": "pickpocket|pickpocket/NOUN|pickpocket#taschendieb",
+      "form_norm": "pickpocket",
+      "original_position": 364,
+      "expected_position": 224,
+      "position": 294
+    },
+    {
+      "card_ref": "scam|scam/NOUN|scam#betrugsmasche",
+      "form_norm": "scam",
+      "original_position": 365,
+      "expected_position": 225,
+      "position": 295
+    },
+    {
+      "card_ref": "danger|danger/NOUN|danger#gefahr",
+      "form_norm": "danger",
+      "original_position": 366,
+      "expected_position": 371,
+      "position": 296
+    },
+    {
+      "card_ref": "warning|warning/NOUN|warning#warnung",
+      "form_norm": "warning",
+      "original_position": 367,
+      "expected_position": 372,
+      "position": 297
+    },
+    {
+      "card_ref": "alarm|alarm/NOUN|alarm#alarm",
+      "form_norm": "alarm",
+      "original_position": 368,
+      "expected_position": 373,
+      "position": 298
+    },
+    {
+      "card_ref": "fire|fire/NOUN|fire#brand",
+      "form_norm": "fire",
+      "original_position": 369,
+      "expected_position": 374,
+      "position": 299
+    },
+    {
+      "card_ref": "evacuation|evacuation/NOUN|evacuation#evakuierung",
+      "form_norm": "evacuation",
+      "original_position": 370,
+      "expected_position": 375,
+      "position": 300
+    },
+    {
+      "card_ref": "arrive|arrive/VERB|arrive#ankommen",
+      "form_norm": "arrive",
+      "original_position": 376,
+      "expected_position": 226,
+      "position": 301
+    },
+    {
+      "card_ref": "depart|depart/VERB|depart#abreisen",
+      "form_norm": "depart",
+      "original_position": 377,
+      "expected_position": 227,
+      "position": 302
+    },
+    {
+      "card_ref": "visit|visit/VERB|visit#besuchen",
+      "form_norm": "visit",
+      "original_position": 378,
+      "expected_position": 228,
+      "position": 303
+    },
+    {
+      "card_ref": "explore|explore/VERB|explore#erkunden",
+      "form_norm": "explore",
+      "original_position": 379,
+      "expected_position": 229,
+      "position": 304
+    },
+    {
+      "card_ref": "book|book/VERB|book#bucht",
+      "form_norm": "book",
+      "original_position": 380,
+      "expected_position": 230,
+      "position": 305
+    },
+    {
+      "card_ref": "reserve|reserve/VERB|reserve#reservieren",
+      "form_norm": "reserve",
+      "original_position": 381,
+      "expected_position": 231,
+      "position": 306
+    },
+    {
+      "card_ref": "cancel|cancel/VERB|cancel#stornieren",
+      "form_norm": "cancel",
+      "original_position": 382,
+      "expected_position": 232,
+      "position": 307
+    },
+    {
+      "card_ref": "confirm|confirm/VERB|confirm#bestaetigen",
+      "form_norm": "confirm",
+      "original_position": 383,
+      "expected_position": 233,
+      "position": 308
+    },
+    {
+      "card_ref": "check|check/VERB|check#ueberprueft",
+      "form_norm": "check",
+      "original_position": 384,
+      "expected_position": 234,
+      "position": 309
+    },
+    {
+      "card_ref": "plan|plan/VERB|plan#planen",
+      "form_norm": "plan",
+      "original_position": 385,
+      "expected_position": 235,
+      "position": 310
+    },
+    {
+      "card_ref": "prepare|prepare/VERB|prepare#bereitete-vor",
+      "form_norm": "prepare",
+      "original_position": 386,
+      "expected_position": 236,
+      "position": 311
+    },
+    {
+      "card_ref": "pack|pack/VERB|pack#packen",
+      "form_norm": "pack",
+      "original_position": 387,
+      "expected_position": 237,
+      "position": 312
+    },
+    {
+      "card_ref": "unpack|unpack/VERB|unpack#auspacken",
+      "form_norm": "unpack",
+      "original_position": 388,
+      "expected_position": 238,
+      "position": 313
+    },
+    {
+      "card_ref": "leave|leave/VERB|leave#verlassen",
+      "form_norm": "leave",
+      "original_position": 389,
+      "expected_position": 239,
+      "position": 314
+    },
+    {
+      "card_ref": "return|return/VERB|return#zurueckkehren",
+      "form_norm": "return",
+      "original_position": 390,
+      "expected_position": 240,
+      "position": 315
+    },
+    {
+      "card_ref": "reach|reach/VERB|reach#erreichen",
+      "form_norm": "reach",
+      "original_position": 391,
+      "expected_position": 376,
+      "position": 316
+    },
+    {
+      "card_ref": "enter|enter/VERB|enter#betreten-hast",
+      "form_norm": "enter",
+      "original_position": 392,
+      "expected_position": 377,
+      "position": 317
+    },
+    {
+      "card_ref": "board|board/VERB|board#einsteigen",
+      "form_norm": "board",
+      "original_position": 393,
+      "expected_position": 378,
+      "position": 318
+    },
+    {
+      "card_ref": "land|land/VERB|land#landen",
+      "form_norm": "land",
+      "original_position": 394,
+      "expected_position": 379,
+      "position": 319
+    },
+    {
+      "card_ref": "fly|fly/VERB|fly#flugreise",
+      "form_norm": "fly",
+      "original_position": 395,
+      "expected_position": 380,
+      "position": 320
+    },
+    {
+      "card_ref": "ask|ask/VERB|ask#fragen",
+      "form_norm": "ask",
+      "original_position": 401,
+      "expected_position": 241,
+      "position": 321
+    },
+    {
+      "card_ref": "answer|answer/VERB|answer#antworten",
+      "form_norm": "answer",
+      "original_position": 402,
+      "expected_position": 242,
+      "position": 322
+    },
+    {
+      "card_ref": "explain|explain/VERB|explain#erklaere",
+      "form_norm": "explain",
+      "original_position": 403,
+      "expected_position": 243,
+      "position": 323
+    },
+    {
+      "card_ref": "understand|understand/VERB|understand#verstehen",
+      "form_norm": "understand",
+      "original_position": 404,
+      "expected_position": 244,
+      "position": 324
+    },
+    {
+      "card_ref": "repeat|repeat/VERB|repeat#wiederholen",
+      "form_norm": "repeat",
+      "original_position": 405,
+      "expected_position": 245,
+      "position": 325
+    },
+    {
+      "card_ref": "pronounce|pronounce/VERB|pronounce#aussprechen",
+      "form_norm": "pronounce",
+      "original_position": 406,
+      "expected_position": 246,
+      "position": 326
+    },
+    {
+      "card_ref": "spell|spell/VERB|spell#buchstabieren",
+      "form_norm": "spell",
+      "original_position": 407,
+      "expected_position": 247,
+      "position": 327
+    },
+    {
+      "card_ref": "translate|translate/VERB|translate#uebersetzen",
+      "form_norm": "translate",
+      "original_position": 408,
+      "expected_position": 248,
+      "position": 328
+    },
+    {
+      "card_ref": "speak|speak/VERB|speak#sprechen",
+      "form_norm": "speak",
+      "original_position": 409,
+      "expected_position": 249,
+      "position": 329
+    },
+    {
+      "card_ref": "say|say/VERB|say#sagen",
+      "form_norm": "say",
+      "original_position": 410,
+      "expected_position": 250,
+      "position": 330
+    },
+    {
+      "card_ref": "tell|tell/VERB|tell#sagen",
+      "form_norm": "tell",
+      "original_position": 411,
+      "expected_position": 251,
+      "position": 331
+    },
+    {
+      "card_ref": "show|show/VERB|show#zeigt",
+      "form_norm": "show",
+      "original_position": 412,
+      "expected_position": 252,
+      "position": 332
+    },
+    {
+      "card_ref": "describe|describe/VERB|describe#beschreiben",
+      "form_norm": "describe",
+      "original_position": 413,
+      "expected_position": 253,
+      "position": 333
+    },
+    {
+      "card_ref": "recommend|recommend/VERB|recommend#empfehlen",
+      "form_norm": "recommend",
+      "original_position": 414,
+      "expected_position": 254,
+      "position": 334
+    },
+    {
+      "card_ref": "suggest|suggest/VERB|suggest#vorschlagen",
+      "form_norm": "suggest",
+      "original_position": 415,
+      "expected_position": 255,
+      "position": 335
+    },
+    {
+      "card_ref": "request|request/VERB|request#erbitten",
+      "form_norm": "request",
+      "original_position": 416,
+      "expected_position": 381,
+      "position": 336
+    },
+    {
+      "card_ref": "order|order/VERB|order#bestellen",
+      "form_norm": "order",
+      "original_position": 417,
+      "expected_position": 382,
+      "position": 337
+    },
+    {
+      "card_ref": "offer|offer/VERB|offer#anbot",
+      "form_norm": "offer",
+      "original_position": 418,
+      "expected_position": 383,
+      "position": 338
+    },
+    {
+      "card_ref": "accept|accept/VERB|accept#annehmen",
+      "form_norm": "accept",
+      "original_position": 419,
+      "expected_position": 384,
+      "position": 339
+    },
+    {
+      "card_ref": "refuse|refuse/VERB|refuse#ablehnen",
+      "form_norm": "refuse",
+      "original_position": 420,
+      "expected_position": 385,
+      "position": 340
+    },
+    {
+      "card_ref": "follow|follow/VERB|follow#folgen-sie",
+      "form_norm": "follow",
+      "original_position": 426,
+      "expected_position": 256,
+      "position": 341
+    },
+    {
+      "card_ref": "turn|turn/VERB|turn#abbiegen",
+      "form_norm": "turn",
+      "original_position": 427,
+      "expected_position": 257,
+      "position": 342
+    },
+    {
+      "card_ref": "continue|continue/VERB|continue#weitergehen",
+      "form_norm": "continue",
+      "original_position": 428,
+      "expected_position": 258,
+      "position": 343
+    },
+    {
+      "card_ref": "stop|stop/VERB|stop#anzuhalten",
+      "form_norm": "stop",
+      "original_position": 429,
+      "expected_position": 259,
+      "position": 344
+    },
+    {
+      "card_ref": "find|find/VERB|find#finden",
+      "form_norm": "find",
+      "original_position": 430,
+      "expected_position": 260,
+      "position": 345
+    },
+    {
+      "card_ref": "search|search/VERB|search#suchen",
+      "form_norm": "search",
+      "original_position": 431,
+      "expected_position": 261,
+      "position": 346
+    },
+    {
+      "card_ref": "locate|locate/VERB|locate#ausfindig-machen",
+      "form_norm": "locate",
+      "original_position": 432,
+      "expected_position": 262,
+      "position": 347
+    },
+    {
+      "card_ref": "miss|miss/VERB|miss#verpassen",
+      "form_norm": "miss",
+      "original_position": 433,
+      "expected_position": 263,
+      "position": 348
+    },
+    {
+      "card_ref": "lose|lose/VERB|lose#verloren",
+      "form_norm": "lose",
+      "original_position": 434,
+      "expected_position": 264,
+      "position": 349
+    },
+    {
+      "card_ref": "forget|forget/VERB|forget#vergessen",
+      "form_norm": "forget",
+      "original_position": 435,
+      "expected_position": 265,
+      "position": 350
+    },
+    {
+      "card_ref": "remember|remember/VERB|remember#erinnern-dich-an",
+      "form_norm": "remember",
+      "original_position": 436,
+      "expected_position": 266,
+      "position": 351
+    },
+    {
+      "card_ref": "help|help/VERB|help#helfen",
+      "form_norm": "help",
+      "original_position": 437,
+      "expected_position": 267,
+      "position": 352
+    },
+    {
+      "card_ref": "assist|assist/VERB|assist#unterstuetzen",
+      "form_norm": "assist",
+      "original_position": 438,
+      "expected_position": 268,
+      "position": 353
+    },
+    {
+      "card_ref": "report|report/VERB|report#melden",
+      "form_norm": "report",
+      "original_position": 439,
+      "expected_position": 269,
+      "position": 354
+    },
+    {
+      "card_ref": "contact|contact/VERB|contact#kontakt-aufnehmen",
+      "form_norm": "contact",
+      "original_position": 440,
+      "expected_position": 270,
+      "position": 355
+    },
+    {
+      "card_ref": "call|call/VERB|call#anrufen",
+      "form_norm": "call",
+      "original_position": 441,
+      "expected_position": 386,
+      "position": 356
+    },
+    {
+      "card_ref": "replace|replace/VERB|replace#ersetzen",
+      "form_norm": "replace",
+      "original_position": 442,
+      "expected_position": 387,
+      "position": 357
+    },
+    {
+      "card_ref": "borrow|borrow/VERB|borrow#ausleihen",
+      "form_norm": "borrow",
+      "original_position": 443,
+      "expected_position": 388,
+      "position": 358
+    },
+    {
+      "card_ref": "lend|lend/VERB|lend#geliehen-leihen",
+      "form_norm": "lend",
+      "original_position": 444,
+      "expected_position": 389,
+      "position": 359
+    },
+    {
+      "card_ref": "collect|collect/VERB|collect#abholen",
+      "form_norm": "collect",
+      "original_position": 445,
+      "expected_position": 390,
+      "position": 360
+    },
+    {
+      "card_ref": "available|available/ADJ|available#verfuegbar",
+      "form_norm": "available",
+      "original_position": 451,
+      "expected_position": 271,
+      "position": 361
+    },
+    {
+      "card_ref": "vacant|vacant/ADJ|vacant#frei",
+      "form_norm": "vacant",
+      "original_position": 452,
+      "expected_position": 272,
+      "position": 362
+    },
+    {
+      "card_ref": "occupied|occupied/ADJ|occupied#besetzt",
+      "form_norm": "occupied",
+      "original_position": 453,
+      "expected_position": 273,
+      "position": 363
+    },
+    {
+      "card_ref": "private|private/ADJ|private#privat",
+      "form_norm": "private",
+      "original_position": 454,
+      "expected_position": 274,
+      "position": 364
+    },
+    {
+      "card_ref": "public|public/ADJ|public#oeffentlichen",
+      "form_norm": "public",
+      "original_position": 455,
+      "expected_position": 275,
+      "position": 365
+    },
+    {
+      "card_ref": "local|local/ADJ|local#oertlichen",
+      "form_norm": "local",
+      "original_position": 456,
+      "expected_position": 276,
+      "position": 366
+    },
+    {
+      "card_ref": "foreign|foreign/ADJ|foreign#auslaendisch",
+      "form_norm": "foreign",
+      "original_position": 457,
+      "expected_position": 277,
+      "position": 367
+    },
+    {
+      "card_ref": "international|international/ADJ|international#international",
+      "form_norm": "international",
+      "original_position": 458,
+      "expected_position": 278,
+      "position": 368
+    },
+    {
+      "card_ref": "domestic|domestic/ADJ|domestic#inlaendisch",
+      "form_norm": "domestic",
+      "original_position": 459,
+      "expected_position": 279,
+      "position": 369
+    },
+    {
+      "card_ref": "direct|direct/ADJ|direct#direkt",
+      "form_norm": "direct",
+      "original_position": 460,
+      "expected_position": 280,
+      "position": 370
+    },
+    {
+      "card_ref": "crowded|crowded/ADJ|crowded#voll-mit-menschen",
+      "form_norm": "crowded",
+      "original_position": 461,
+      "expected_position": 281,
+      "position": 371
+    },
+    {
+      "card_ref": "busy|busy/ADJ|busy#belebten",
+      "form_norm": "busy",
+      "original_position": 462,
+      "expected_position": 282,
+      "position": 372
+    },
+    {
+      "card_ref": "peaceful|peaceful/ADJ|peaceful#ruhig",
+      "form_norm": "peaceful",
+      "original_position": 463,
+      "expected_position": 283,
+      "position": 373
+    },
+    {
+      "card_ref": "comfortable|comfortable/ADJ|comfortable#bequem",
+      "form_norm": "comfortable",
+      "original_position": 464,
+      "expected_position": 284,
+      "position": 374
+    },
+    {
+      "card_ref": "convenient|convenient/ADJ|convenient#praktisch-gelegen",
+      "form_norm": "convenient",
+      "original_position": 465,
+      "expected_position": 285,
+      "position": 375
+    },
+    {
+      "card_ref": "central|central/ADJ|central#zentral-gelegen",
+      "form_norm": "central",
+      "original_position": 466,
+      "expected_position": 391,
+      "position": 376
+    },
+    {
+      "card_ref": "nearby|nearby/ADJ|nearby#nahe-gelegen",
+      "form_norm": "nearby",
+      "original_position": 467,
+      "expected_position": 392,
+      "position": 377
+    },
+    {
+      "card_ref": "remote|remote/ADJ|remote#abgelegen",
+      "form_norm": "remote",
+      "original_position": 468,
+      "expected_position": 393,
+      "position": 378
+    },
+    {
+      "card_ref": "rural|rural/ADJ|rural#laendlich",
+      "form_norm": "rural",
+      "original_position": 469,
+      "expected_position": 394,
+      "position": 379
+    },
+    {
+      "card_ref": "urban|urban/ADJ|urban#staedtisch",
+      "form_norm": "urban",
+      "original_position": 470,
+      "expected_position": 395,
+      "position": 380
+    },
+    {
+      "card_ref": "affordable|affordable/ADJ|affordable#bezahlbar",
+      "form_norm": "affordable",
+      "original_position": 476,
+      "expected_position": 286,
+      "position": 381
+    },
+    {
+      "card_ref": "inclusive|inclusive/ADJ|inclusive#einschliesslich",
+      "form_norm": "inclusive",
+      "original_position": 477,
+      "expected_position": 287,
+      "position": 382
+    },
+    {
+      "card_ref": "refundable|refundable/ADJ|refundable#erstattungsfaehig",
+      "form_norm": "refundable",
+      "original_position": 478,
+      "expected_position": 288,
+      "position": 383
+    },
+    {
+      "card_ref": "flexible|flexible/ADJ|flexible#veraenderbar",
+      "form_norm": "flexible",
+      "original_position": 479,
+      "expected_position": 289,
+      "position": 384
+    },
+    {
+      "card_ref": "urgent|urgent/ADJ|urgent#dringend",
+      "form_norm": "urgent",
+      "original_position": 480,
+      "expected_position": 290,
+      "position": 385
+    },
+    {
+      "card_ref": "necessary|necessary/ADJ|necessary#notwendig",
+      "form_norm": "necessary",
+      "original_position": 481,
+      "expected_position": 291,
+      "position": 386
+    },
+    {
+      "card_ref": "essential|essential/ADJ|essential#unerlaesslich",
+      "form_norm": "essential",
+      "original_position": 482,
+      "expected_position": 292,
+      "position": 387
+    },
+    {
+      "card_ref": "optional|optional/ADJ|optional#wahlweise",
+      "form_norm": "optional",
+      "original_position": 483,
+      "expected_position": 293,
+      "position": 388
+    },
+    {
+      "card_ref": "suitable|suitable/ADJ|suitable#geeignet",
+      "form_norm": "suitable",
+      "original_position": 484,
+      "expected_position": 294,
+      "position": 389
+    },
+    {
+      "card_ref": "reliable|reliable/ADJ|reliable#zuverlaessige",
+      "form_norm": "reliable",
+      "original_position": 485,
+      "expected_position": 295,
+      "position": 390
+    },
+    {
+      "card_ref": "secure|secure/ADJ|secure#gesichert",
+      "form_norm": "secure",
+      "original_position": 486,
+      "expected_position": 296,
+      "position": 391
+    },
+    {
+      "card_ref": "dangerous|dangerous/ADJ|dangerous#gefaehrlich",
+      "form_norm": "dangerous",
+      "original_position": 487,
+      "expected_position": 297,
+      "position": 392
+    },
+    {
+      "card_ref": "slippery|slippery/ADJ|slippery#rutschig",
+      "form_norm": "slippery",
+      "original_position": 488,
+      "expected_position": 298,
+      "position": 393
+    },
+    {
+      "card_ref": "steep|steep/ADJ|steep#steile",
+      "form_norm": "steep",
+      "original_position": 489,
+      "expected_position": 299,
+      "position": 394
+    },
+    {
+      "card_ref": "shallow|shallow/ADJ|shallow#flach",
+      "form_norm": "shallow",
+      "original_position": 490,
+      "expected_position": 300,
+      "position": 395
+    },
+    {
+      "card_ref": "deep|deep/ADJ|deep#gewaessertiefe",
+      "form_norm": "deep",
+      "original_position": 491,
+      "expected_position": 396,
+      "position": 396
+    },
+    {
+      "card_ref": "fresh|fresh/ADJ|fresh#frisches",
+      "form_norm": "fresh",
+      "original_position": 492,
+      "expected_position": 397,
+      "position": 397
+    },
+    {
+      "card_ref": "raw|raw/ADJ|raw#roh",
+      "form_norm": "raw",
+      "original_position": 493,
+      "expected_position": 398,
+      "position": 398
+    },
+    {
+      "card_ref": "spicy|spicy/ADJ|spicy#scharf-gewuerzt",
+      "form_norm": "spicy",
+      "original_position": 494,
+      "expected_position": 399,
+      "position": 399
+    },
+    {
+      "card_ref": "vegetarian|vegetarian/ADJ|vegetarian#vegetarisch",
+      "form_norm": "vegetarian",
+      "original_position": 495,
+      "expected_position": 400,
+      "position": 400
+    }
+  ]
+}

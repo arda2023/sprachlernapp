@@ -1,0 +1,9 @@
+PASS source/delivery hashes, JSON Schema, continuation 163/78/0 and base SQLite
+PASS display patch: append 164..241, final 1..241, original registry positions preserved
+PASS all 241 original identities and learning metadata; no remaining batch
+PASS create_content/build_rows: 1005 cards, 890 primary learning goals, 18 tables
+PASS 78 reserved identities; 78 sentence reviews; all historical rows preserved
+PASS tokenizer and linter: 937 tokens, 0 errors, 28 warnings
+PASS 7 sentence-specific alternative substitutions; no automatic group synonyms
+Export omitted (use --export-check NEW_DIRECTORY for SQLite readback)
+NOT RUN: asset staging, Flutter tests, device tests or user database access

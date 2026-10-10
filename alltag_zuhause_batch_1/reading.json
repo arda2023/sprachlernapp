@@ -1,0 +1,933 @@
+[
+  {
+    "selection_id": "alltag-zuhause-v1-001",
+    "form": "house",
+    "topic": "Wohnen",
+    "original_position": 1,
+    "display_position": 1,
+    "meaning": "Ein Gebäude, das Menschen als Wohnraum dient.",
+    "text": "Their house has three bedrooms and a small garden.",
+    "translation_de": "Ihr Haus hat drei Schlafzimmer und einen kleinen Garten.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-004",
+    "form": "wall",
+    "topic": "Wohnen",
+    "original_position": 4,
+    "display_position": 2,
+    "meaning": "Eine senkrechte Begrenzung eines Raums.",
+    "text": "We put the sofa against the wall to save space.",
+    "translation_de": "Wir stellten das Sofa an die Wand, um Platz zu sparen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-007",
+    "form": "door",
+    "topic": "Wohnen",
+    "original_position": 7,
+    "display_position": 3,
+    "meaning": "Eine bewegliche Vorrichtung zum Öffnen und Schließen eines Raumzugangs.",
+    "text": "Please close the door; it is cold in here.",
+    "translation_de": "Mach bitte die Tür zu; hier drin ist es kalt.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-010",
+    "form": "fence",
+    "topic": "Wohnen",
+    "original_position": 10,
+    "display_position": 4,
+    "meaning": "Eine freistehende Abgrenzung eines Grundstücks.",
+    "text": "The dog cannot jump over the tall wooden fence.",
+    "translation_de": "Der Hund kann nicht über den hohen Holzzaun springen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-013",
+    "form": "carpet",
+    "topic": "Wohnen",
+    "original_position": 13,
+    "display_position": 5,
+    "meaning": "Ein textiler Bodenbelag, nicht ein kleines tragbares Tuch.",
+    "text": "Please take your muddy shoes off before walking on the carpet.",
+    "translation_de": "Zieh bitte deine schlammigen Schuhe aus, bevor du auf den Teppich gehst.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-016",
+    "form": "drawer",
+    "topic": "Wohnen",
+    "original_position": 16,
+    "display_position": 6,
+    "meaning": "Ein herausziehbares Fach in einem Möbelstück.",
+    "text": "The scissors are in the top drawer beside the sink.",
+    "translation_de": "Die Schere liegt in der obersten Schublade neben der Spüle.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-020",
+    "form": "mattress",
+    "topic": "Wohnen",
+    "original_position": 20,
+    "display_position": 7,
+    "meaning": "Das gepolsterte Liegeteil eines Betts.",
+    "text": "This mattress is too soft; my back hurts every morning.",
+    "translation_de": "Diese Matratze ist zu weich; mir tut jeden Morgen der Rücken weh.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-024",
+    "form": "attic",
+    "topic": "Wohnen",
+    "original_position": 24,
+    "display_position": 8,
+    "meaning": "Ein Raum direkt unter dem Dach eines Hauses.",
+    "text": "We keep our old toys in boxes in the attic.",
+    "translation_de": "Wir bewahren unser altes Spielzeug in Kisten auf dem Dachboden auf.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-027",
+    "form": "neighbour",
+    "topic": "Wohnen",
+    "original_position": 27,
+    "display_position": 9,
+    "meaning": "Eine Person, die in der Nähe der eigenen Wohnung wohnt.",
+    "text": "Our new neighbour brought us a cake to say hello.",
+    "translation_de": "Unser neuer Nachbar hat uns zur Begrüßung einen Kuchen gebracht.",
+    "alternatives": [
+      "neighbor"
+    ]
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-030",
+    "form": "address",
+    "topic": "Wohnen",
+    "original_position": 30,
+    "display_position": 10,
+    "meaning": "Die Ortsangabe einer Wohnung mit Straße, Hausnummer und Ort.",
+    "text": "Please write your full address on the back of the envelope.",
+    "translation_de": "Schreib bitte deine vollständige Adresse auf die Rückseite des Umschlags.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-031",
+    "form": "broom",
+    "topic": "Haushalt",
+    "original_position": 31,
+    "display_position": 11,
+    "meaning": "Ein Gerät mit Stiel und Borsten zum Fegen des Bodens.",
+    "text": "Use the broom to sweep the leaves off the steps.",
+    "translation_de": "Feg die Blätter mit dem Besen von den Stufen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-034",
+    "form": "sponge",
+    "topic": "Haushalt",
+    "original_position": 34,
+    "display_position": 12,
+    "meaning": "Ein saugfähiger Gegenstand zum Reinigen von Oberflächen.",
+    "text": "Wipe the kitchen table with a damp sponge after lunch.",
+    "translation_de": "Wisch den Küchentisch nach dem Mittagessen mit einem feuchten Schwamm ab.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-037",
+    "form": "dirt",
+    "topic": "Haushalt",
+    "original_position": 37,
+    "display_position": 13,
+    "meaning": "Unerwünschte Verunreinigung auf Gegenständen oder Flächen.",
+    "text": "There is still some dirt on your boots from yesterday.",
+    "translation_de": "An deinen Stiefeln ist noch etwas Schmutz von gestern.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-040",
+    "form": "bleach",
+    "topic": "Haushalt",
+    "original_position": 40,
+    "display_position": 14,
+    "meaning": "Ein Mittel zum Aufhellen oder Entfernen von Verfärbungen.",
+    "text": "The bleach left a pale patch on my black shirt.",
+    "translation_de": "Das Bleichmittel hat einen hellen Fleck auf meinem schwarzen Hemd hinterlassen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-043",
+    "form": "recycling",
+    "topic": "Haushalt",
+    "original_position": 43,
+    "display_position": 15,
+    "meaning": "Das Wiederverwerten von Abfällen als Material.",
+    "text": "This bin is for recycling; put food waste in the other one.",
+    "translation_de": "Dieser Behälter ist fürs Recycling; wirf Essensreste in den anderen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-046",
+    "form": "hanger",
+    "topic": "Haushalt",
+    "original_position": 46,
+    "display_position": 16,
+    "meaning": "Ein geformter Gegenstand zum Aufhängen eines Kleidungsstücks.",
+    "text": "Put your jacket on a hanger to keep it tidy.",
+    "translation_de": "Häng deine Jacke ordentlich auf einen Kleiderbügel.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-049",
+    "form": "dishwasher",
+    "topic": "Haushalt",
+    "original_position": 49,
+    "display_position": 17,
+    "meaning": "Eine Maschine zum Reinigen von Geschirr.",
+    "text": "The dishwasher is full, so wash this cup by hand.",
+    "translation_de": "Der Geschirrspüler ist voll, also spül diese Tasse von Hand.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-052",
+    "form": "tap",
+    "topic": "Haushalt",
+    "original_position": 52,
+    "display_position": 18,
+    "meaning": "Eine Vorrichtung zum Öffnen und Schließen eines Wasserzulaufs.",
+    "text": "Please turn off the tap while you brush your teeth.",
+    "translation_de": "Dreh bitte den Wasserhahn zu, während du dir die Zähne putzt.",
+    "alternatives": [
+      "faucet"
+    ]
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-055",
+    "form": "bulb",
+    "topic": "Haushalt",
+    "original_position": 55,
+    "display_position": 19,
+    "meaning": "Ein auswechselbarer Leuchtkörper für eine Lampe, nicht eine Pflanzenzwiebel.",
+    "text": "The lamp needs a new bulb; the old one has stopped working.",
+    "translation_de": "Die Lampe braucht eine neue Glühbirne; die alte funktioniert nicht mehr.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-058",
+    "form": "glue",
+    "topic": "Haushalt",
+    "original_position": 58,
+    "display_position": 20,
+    "meaning": "Eine Masse zum dauerhaften Verbinden von Oberflächen.",
+    "text": "Use a little glue to stick the photo onto the card.",
+    "translation_de": "Klebe das Foto mit etwas Klebstoff auf die Karte.",
+    "alternatives": [
+      "adhesive"
+    ]
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-061",
+    "form": "trousers",
+    "topic": "Kleidung",
+    "original_position": 61,
+    "display_position": 21,
+    "meaning": "Ein Kleidungsstück, das beide Beine jeweils einzeln bedeckt.",
+    "text": "These trousers fit well, but they are a little too long.",
+    "translation_de": "Diese Hose passt gut, ist aber etwas zu lang.",
+    "alternatives": [
+      "pants"
+    ]
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-064",
+    "form": "dress",
+    "topic": "Kleidung",
+    "original_position": 64,
+    "display_position": 22,
+    "meaning": "Ein einteiliges Kleidungsstück mit Oberteil und Rockteil.",
+    "text": "Mia wore a green dress to her sister's wedding.",
+    "translation_de": "Mia trug zur Hochzeit ihrer Schwester ein grünes Kleid.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-067",
+    "form": "jumper",
+    "topic": "Kleidung",
+    "original_position": 67,
+    "display_position": 23,
+    "meaning": "Ein gestricktes Oberteil, das über den Kopf gezogen wird.",
+    "text": "Put on a warm jumper before you go outside.",
+    "translation_de": "Zieh einen warmen Pullover an, bevor du nach draußen gehst.",
+    "alternatives": [
+      "sweater"
+    ]
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-070",
+    "form": "sock",
+    "topic": "Kleidung",
+    "original_position": 70,
+    "display_position": 24,
+    "meaning": "Ein weiches Kleidungsstück für Fuß und Knöchel.",
+    "text": "I found the missing sock behind the washing machine.",
+    "translation_de": "Ich habe die vermisste Socke hinter der Waschmaschine gefunden.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-073",
+    "form": "slipper",
+    "topic": "Kleidung",
+    "original_position": 73,
+    "display_position": 25,
+    "meaning": "Ein leichter Schuh zum Tragen in der Wohnung.",
+    "text": "The dog is chewing my slipper under the table.",
+    "translation_de": "Der Hund kaut unter dem Tisch auf meinem Hausschuh herum.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-076",
+    "form": "cap",
+    "topic": "Kleidung",
+    "original_position": 76,
+    "display_position": 26,
+    "meaning": "Eine weiche Kopfbedeckung mit Schirm.",
+    "text": "Ben wears a blue cap when he plays outside.",
+    "translation_de": "Ben trägt eine blaue Kappe, wenn er draußen spielt.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-079",
+    "form": "belt",
+    "topic": "Kleidung",
+    "original_position": 79,
+    "display_position": 27,
+    "meaning": "Ein Band um die Taille zum Halten von Kleidung, nicht ein Sicherheitsgurt.",
+    "text": "These jeans are too loose; I need a belt.",
+    "translation_de": "Diese Jeans ist zu weit; ich brauche einen Gürtel.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-082",
+    "form": "sleeve",
+    "topic": "Kleidung",
+    "original_position": 82,
+    "display_position": 28,
+    "meaning": "Der Teil eines Kleidungsstücks, der einen Arm bedeckt.",
+    "text": "There is a small hole in the left sleeve of my shirt.",
+    "translation_de": "Im linken Ärmel meines Hemdes ist ein kleines Loch.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-085",
+    "form": "wool",
+    "topic": "Kleidung",
+    "original_position": 85,
+    "display_position": 29,
+    "meaning": "Tierische Fasern, die zu warmem Garn und Stoff verarbeitet werden.",
+    "text": "This scarf is made of wool and keeps my neck warm.",
+    "translation_de": "Dieser Schal ist aus Wolle und hält meinen Hals warm.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-088",
+    "form": "pyjamas",
+    "topic": "Kleidung",
+    "original_position": 88,
+    "display_position": 30,
+    "meaning": "Ein meist zweiteiliges Kleidungsstück zum Schlafen.",
+    "text": "The children put on their pyjamas after their evening bath.",
+    "translation_de": "Die Kinder ziehen nach ihrem abendlichen Bad ihre Schlafanzüge an.",
+    "alternatives": [
+      "pajamas"
+    ]
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-091",
+    "form": "supermarket",
+    "topic": "Einkaufen",
+    "original_position": 91,
+    "display_position": 31,
+    "meaning": "Ein großer Selbstbedienungsladen für Lebensmittel und Haushaltswaren.",
+    "text": "The supermarket on our street stays open until ten.",
+    "translation_de": "Der Supermarkt in unserer Straße hat bis zehn Uhr geöffnet.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-094",
+    "form": "customer",
+    "topic": "Einkaufen",
+    "original_position": 94,
+    "display_position": 32,
+    "meaning": "Eine Person, die Waren oder Dienstleistungen kauft.",
+    "text": "The customer asked for a bag to carry her shopping.",
+    "translation_de": "Die Kundin bat um eine Tasche für ihre Einkäufe.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-097",
+    "form": "queue",
+    "topic": "Einkaufen",
+    "original_position": 97,
+    "display_position": 33,
+    "meaning": "Eine Reihe von Menschen, die auf ihre Bedienung warten.",
+    "text": "There is a long queue at the only open checkout.",
+    "translation_de": "An der einzigen geöffneten Kasse steht eine lange Warteschlange.",
+    "alternatives": [
+      "line"
+    ]
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-100",
+    "form": "brand",
+    "topic": "Einkaufen",
+    "original_position": 100,
+    "display_position": 34,
+    "meaning": "Der Name, unter dem ein Hersteller seine Waren anbietet.",
+    "text": "This brand of coffee costs less than our usual one.",
+    "translation_de": "Diese Kaffeemarke kostet weniger als die, die wir sonst kaufen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-103",
+    "form": "quality",
+    "topic": "Einkaufen",
+    "original_position": 103,
+    "display_position": 35,
+    "meaning": "Wie gut eine Ware beschaffen oder verarbeitet ist.",
+    "text": "The coat is expensive, but the quality of the fabric is excellent.",
+    "translation_de": "Der Mantel ist teuer, aber die Qualität des Stoffes ist ausgezeichnet.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-106",
+    "form": "dozen",
+    "topic": "Einkaufen",
+    "original_position": 106,
+    "display_position": 36,
+    "meaning": "Eine Anzahl von genau zwölf Stück.",
+    "text": "We need a dozen eggs, so buy a box of twelve.",
+    "translation_de": "Wir brauchen ein Dutzend Eier, also kauf eine Packung mit zwölf Stück.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-109",
+    "form": "coupon",
+    "topic": "Einkaufen",
+    "original_position": 109,
+    "display_position": 37,
+    "meaning": "Ein Beleg, der beim Einkauf eine Vergünstigung ermöglicht.",
+    "text": "This coupon gives you ten percent off your next purchase.",
+    "translation_de": "Mit diesem Gutschein bekommst du zehn Prozent Rabatt auf deinen nächsten Einkauf.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-112",
+    "form": "list",
+    "topic": "Einkaufen",
+    "original_position": 112,
+    "display_position": 38,
+    "meaning": "Eine geordnete Aufstellung von Einträgen, etwa benötigten Einkäufen.",
+    "text": "I wrote a list so I would not forget anything at the shops.",
+    "translation_de": "Ich habe eine Liste geschrieben, damit ich beim Einkaufen nichts vergesse.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-116",
+    "form": "pan",
+    "topic": "Kochen",
+    "original_position": 116,
+    "display_position": 39,
+    "meaning": "Ein flaches Kochgefäß mit Griff zum Braten.",
+    "text": "Heat a little oil in the pan before adding the onions.",
+    "translation_de": "Erhitze etwas Öl in der Pfanne, bevor du die Zwiebeln hineingibst.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-119",
+    "form": "oven",
+    "topic": "Kochen",
+    "original_position": 119,
+    "display_position": 40,
+    "meaning": "Ein geschlossener beheizbarer Garraum zum Backen oder Braten.",
+    "text": "The bread is in the oven and will be ready soon.",
+    "translation_de": "Das Brot ist im Backofen und wird bald fertig sein.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-122",
+    "form": "microwave",
+    "topic": "Kochen",
+    "original_position": 122,
+    "display_position": 41,
+    "meaning": "Ein Küchengerät zum schnellen Erhitzen von Speisen durch Mikrowellen.",
+    "text": "You can heat yesterday's soup in the microwave for lunch.",
+    "translation_de": "Du kannst die Suppe von gestern zum Mittagessen in der Mikrowelle aufwärmen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-125",
+    "form": "ingredient",
+    "topic": "Kochen",
+    "original_position": 125,
+    "display_position": 42,
+    "meaning": "Ein Lebensmittel, das für ein Gericht verwendet wird.",
+    "text": "Flour is the main ingredient in this simple bread recipe.",
+    "translation_de": "Mehl ist die Hauptzutat in diesem einfachen Brotrezept.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-128",
+    "form": "oil",
+    "topic": "Kochen",
+    "original_position": 128,
+    "display_position": 43,
+    "meaning": "Flüssiges Fett zum Kochen oder für Salate, nicht Treibstoff.",
+    "text": "Add a little oil to the pan before frying the eggs.",
+    "translation_de": "Gib etwas Öl in die Pfanne, bevor du die Eier brätst.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-131",
+    "form": "carrot",
+    "topic": "Kochen",
+    "original_position": 131,
+    "display_position": 44,
+    "meaning": "Ein meist orangefarbenes längliches Wurzelgemüse.",
+    "text": "Cut the carrot into small pieces for the soup.",
+    "translation_de": "Schneide die Karotte für die Suppe in kleine Stücke.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-134",
+    "form": "bean",
+    "topic": "Kochen",
+    "original_position": 134,
+    "display_position": 45,
+    "meaning": "Eine essbare Hülsenfrucht oder ihr Samen.",
+    "text": "Plant a bean in the pot and water it every day.",
+    "translation_de": "Pflanze eine Bohne in den Topf und gieße sie jeden Tag.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-137",
+    "form": "lemon",
+    "topic": "Kochen",
+    "original_position": 137,
+    "display_position": 46,
+    "meaning": "Eine gelbe Zitrusfrucht mit saurem Saft.",
+    "text": "Squeeze half a lemon over the fish before serving it.",
+    "translation_de": "Presse vor dem Servieren eine halbe Zitrone über dem Fisch aus.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-140",
+    "form": "strawberry",
+    "topic": "Kochen",
+    "original_position": 140,
+    "display_position": 47,
+    "meaning": "Eine kleine rote süße Frucht mit Samen an der Oberfläche.",
+    "text": "There is one ripe strawberry left on the plant.",
+    "translation_de": "An der Pflanze hängt noch eine reife Erdbeere.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-143",
+    "form": "cream",
+    "topic": "Kochen",
+    "original_position": 143,
+    "display_position": 48,
+    "meaning": "Der fettreiche Anteil der Milch als Lebensmittel, nicht Hautcreme.",
+    "text": "Pour some cream over the strawberries for a simple dessert.",
+    "translation_de": "Gieß für einen einfachen Nachtisch etwas Sahne über die Erdbeeren.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-146",
+    "form": "sauce",
+    "topic": "Kochen",
+    "original_position": 146,
+    "display_position": 49,
+    "meaning": "Eine flüssige oder dickflüssige Ergänzung zu einem Gericht.",
+    "text": "This tomato sauce goes well with pasta and grated cheese.",
+    "translation_de": "Diese Tomatensoße passt gut zu Nudeln und geriebenem Käse.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-149",
+    "form": "peel",
+    "topic": "Kochen",
+    "original_position": 149,
+    "display_position": 50,
+    "meaning": "Die äußere Schale eines Lebensmittels entfernen.",
+    "text": "Please peel the potatoes while I chop the onions.",
+    "translation_de": "Schäl bitte die Kartoffeln, während ich die Zwiebeln hacke.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-152",
+    "form": "bake",
+    "topic": "Kochen",
+    "original_position": 152,
+    "display_position": 51,
+    "meaning": "Ein Lebensmittel durch trockene Hitze im Ofen garen.",
+    "text": "We bake fresh bread together every Sunday morning.",
+    "translation_de": "Wir backen jeden Sonntagmorgen zusammen frisches Brot.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-155",
+    "form": "taste",
+    "topic": "Kochen",
+    "original_position": 155,
+    "display_position": 52,
+    "meaning": "Eine kleine Menge eines Lebensmittels kosten, um den Geschmack zu prüfen.",
+    "text": "Please taste the soup before you add any more salt.",
+    "translation_de": "Probier bitte die Suppe, bevor du noch mehr Salz hinzugibst.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-156",
+    "form": "family",
+    "topic": "Familie",
+    "original_position": 156,
+    "display_position": 53,
+    "meaning": "Eine Gemeinschaft miteinander verwandter Menschen.",
+    "text": "My whole family comes together for dinner on Sundays.",
+    "translation_de": "Meine ganze Familie kommt sonntags zum Abendessen zusammen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-159",
+    "form": "father",
+    "topic": "Familie",
+    "original_position": 159,
+    "display_position": 54,
+    "meaning": "Der männliche Elternteil eines Kindes.",
+    "text": "Her father taught her to ride a bike last summer.",
+    "translation_de": "Ihr Vater hat ihr letzten Sommer das Fahrradfahren beigebracht.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-162",
+    "form": "son",
+    "topic": "Familie",
+    "original_position": 162,
+    "display_position": 55,
+    "meaning": "Ein männliches Kind in seiner Beziehung zu den Eltern.",
+    "text": "Our son starts school next week and is very excited.",
+    "translation_de": "Unser Sohn kommt nächste Woche in die Schule und freut sich sehr.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-165",
+    "form": "sister",
+    "topic": "Familie",
+    "original_position": 165,
+    "display_position": 56,
+    "meaning": "Ein weibliches Geschwister derselben Familie, nicht eine Pflegekraft.",
+    "text": "My sister is two years older than me.",
+    "translation_de": "Meine Schwester ist zwei Jahre älter als ich.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-168",
+    "form": "grandchild",
+    "topic": "Familie",
+    "original_position": 168,
+    "display_position": 57,
+    "meaning": "Ein Kind des eigenen Kindes.",
+    "text": "Their first grandchild was born early this morning.",
+    "translation_de": "Ihr erstes Enkelkind ist heute früh zur Welt gekommen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-171",
+    "form": "cousin",
+    "topic": "Familie",
+    "original_position": 171,
+    "display_position": 58,
+    "meaning": "Ein Kind einer Tante oder eines Onkels, ohne Festlegung des Geschlechts.",
+    "text": "My cousin Sara lives nearby, so we often meet after work.",
+    "translation_de": "Meine Cousine Sara wohnt in der Nähe, deshalb treffen wir uns oft nach der Arbeit.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-174",
+    "form": "husband",
+    "topic": "Familie",
+    "original_position": 174,
+    "display_position": 59,
+    "meaning": "Ein Mann in seiner Beziehung zur Person, mit der er verheiratet ist.",
+    "text": "Her husband is cooking dinner while she reads to the children.",
+    "translation_de": "Ihr Ehemann kocht das Abendessen, während sie den Kindern vorliest.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-177",
+    "form": "relative",
+    "topic": "Familie",
+    "original_position": 177,
+    "display_position": 60,
+    "meaning": "Eine Person, mit der man familiär verwandt ist.",
+    "text": "I met a distant relative at our family gathering.",
+    "translation_de": "Ich habe bei unserem Familientreffen einen entfernten Verwandten getroffen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-180",
+    "form": "wedding",
+    "topic": "Familie",
+    "original_position": 180,
+    "display_position": 61,
+    "meaning": "Die Feier oder Zeremonie einer Eheschließung.",
+    "text": "They invited eighty guests to their wedding next month.",
+    "translation_de": "Sie haben achtzig Gäste zu ihrer Hochzeit nächsten Monat eingeladen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-183",
+    "form": "dog",
+    "topic": "Familie",
+    "original_position": 183,
+    "display_position": 62,
+    "meaning": "Ein häufig als Haustier gehaltener bellender Vierbeiner.",
+    "text": "Our dog waits by the door when it wants a walk.",
+    "translation_de": "Unser Hund wartet an der Tür, wenn er spazieren gehen möchte.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-186",
+    "form": "hobby",
+    "topic": "Freizeit",
+    "original_position": 186,
+    "display_position": 63,
+    "meaning": "Eine Tätigkeit, der man in der freien Zeit aus Interesse nachgeht.",
+    "text": "My favourite hobby is making toys for my grandchildren.",
+    "translation_de": "Mein liebstes Hobby ist es, Spielzeug für meine Enkelkinder zu basteln.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-189",
+    "form": "ball",
+    "topic": "Freizeit",
+    "original_position": 189,
+    "display_position": 64,
+    "meaning": "Ein runder Gegenstand für Sport und Spiele, nicht eine Tanzveranstaltung.",
+    "text": "The children kicked the ball across the grass in the park.",
+    "translation_de": "Die Kinder kickten den Ball im Park über den Rasen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-192",
+    "form": "song",
+    "topic": "Freizeit",
+    "original_position": 192,
+    "display_position": 65,
+    "meaning": "Ein Musikstück mit gesungenem Text.",
+    "text": "I know this song, but I cannot remember all the words.",
+    "translation_de": "Ich kenne dieses Lied, aber ich kann mich nicht an den ganzen Text erinnern.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-195",
+    "form": "film",
+    "topic": "Freizeit",
+    "original_position": 195,
+    "display_position": 66,
+    "meaning": "Eine erzählte Folge bewegter Bilder zur Unterhaltung.",
+    "text": "We watched a funny film at the cinema last night.",
+    "translation_de": "Wir haben gestern Abend im Kino einen lustigen Film gesehen.",
+    "alternatives": [
+      "movie"
+    ]
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-198",
+    "form": "screen",
+    "topic": "Freizeit",
+    "original_position": 198,
+    "display_position": 67,
+    "meaning": "Die Fläche eines Geräts, auf der digitale Bilder angezeigt werden.",
+    "text": "The text on this screen is too small to read.",
+    "translation_de": "Der Text auf diesem Bildschirm ist zu klein zum Lesen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-202",
+    "form": "album",
+    "topic": "Freizeit",
+    "original_position": 202,
+    "display_position": 68,
+    "meaning": "Ein Buch oder eine Sammlung zum Aufbewahren von Fotos, nicht ein Musikalbum.",
+    "text": "We keep our wedding photos in an album with a blue cover.",
+    "translation_de": "Wir bewahren unsere Hochzeitsfotos in einem Album mit blauem Einband auf.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-205",
+    "form": "newspaper",
+    "topic": "Freizeit",
+    "original_position": 205,
+    "display_position": 69,
+    "meaning": "Eine regelmäßig erscheinende Publikation mit aktuellen Nachrichten.",
+    "text": "My grandfather reads the newspaper at breakfast every morning.",
+    "translation_de": "Mein Großvater liest jeden Morgen beim Frühstück die Zeitung.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-208",
+    "form": "football",
+    "topic": "Freizeit",
+    "original_position": 208,
+    "display_position": 70,
+    "meaning": "Ein Mannschaftssport, bei dem ein Ball vorwiegend mit dem Fuß gespielt wird.",
+    "text": "We play football in the park after school on Fridays.",
+    "translation_de": "Wir spielen freitags nach der Schule im Park Fußball.",
+    "alternatives": [
+      "soccer"
+    ]
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-211",
+    "form": "dance",
+    "topic": "Freizeit",
+    "original_position": 211,
+    "display_position": 71,
+    "meaning": "Den Körper rhythmisch zur Musik bewegen.",
+    "text": "Would you like to dance with me to this song?",
+    "translation_de": "Möchtest du zu diesem Lied mit mir tanzen?",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-214",
+    "form": "paint",
+    "topic": "Freizeit",
+    "original_position": 214,
+    "display_position": 72,
+    "meaning": "Ein Bild mit Farben gestalten, nicht eine Wand streichen.",
+    "text": "The children want to paint a picture of their dog.",
+    "translation_de": "Die Kinder möchten ein Bild von ihrem Hund malen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-216",
+    "form": "sweep",
+    "topic": "Alltagstätigkeiten",
+    "original_position": 216,
+    "display_position": 73,
+    "meaning": "Loser Schmutz wird mit einem Besen vom Boden entfernt.",
+    "text": "Please sweep the kitchen floor after you finish baking.",
+    "translation_de": "Feg bitte den Küchenboden, wenn du mit dem Backen fertig bist.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-219",
+    "form": "hang",
+    "topic": "Alltagstätigkeiten",
+    "original_position": 219,
+    "display_position": 74,
+    "meaning": "Einen Gegenstand so befestigen, dass er nach unten hängt.",
+    "text": "You can hang your coat on the hook by the door.",
+    "translation_de": "Du kannst deinen Mantel an den Haken neben der Tür hängen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-222",
+    "form": "feed",
+    "topic": "Alltagstätigkeiten",
+    "original_position": 222,
+    "display_position": 75,
+    "meaning": "Einem Tier oder einem kleinen Kind Nahrung geben.",
+    "text": "Please feed the cat before you leave for work.",
+    "translation_de": "Füttere bitte die Katze, bevor du zur Arbeit gehst.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-225",
+    "form": "drop",
+    "topic": "Alltagstätigkeiten",
+    "original_position": 225,
+    "display_position": 76,
+    "meaning": "Einen gehaltenen Gegenstand loslassen, sodass er fällt.",
+    "text": "Hold the bowl with both hands so you do not drop it.",
+    "translation_de": "Halte die Schüssel mit beiden Händen, damit du sie nicht fallen lässt.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-229",
+    "form": "hold",
+    "topic": "Alltagstätigkeiten",
+    "original_position": 229,
+    "display_position": 77,
+    "meaning": "Einen Gegenstand mit der Hand festhalten.",
+    "text": "Can you hold this box while I open the door?",
+    "translation_de": "Kannst du diese Kiste halten, während ich die Tür aufmache?",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-232",
+    "form": "laugh",
+    "topic": "Alltagstätigkeiten",
+    "original_position": 232,
+    "display_position": 78,
+    "meaning": "Durch Stimme und Gesicht Belustigung ausdrücken.",
+    "text": "His silly jokes always make the children laugh.",
+    "translation_de": "Seine albernen Witze bringen die Kinder immer zum Lachen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-235",
+    "form": "hug",
+    "topic": "Alltagstätigkeiten",
+    "original_position": 235,
+    "display_position": 79,
+    "meaning": "Eine Person mit den Armen umfassen.",
+    "text": "I always hug my grandmother when I visit her.",
+    "translation_de": "Ich umarme meine Großmutter immer, wenn ich sie besuche.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-238",
+    "form": "invite",
+    "topic": "Alltagstätigkeiten",
+    "original_position": 238,
+    "display_position": 80,
+    "meaning": "Eine Person bitten, als Gast zu kommen.",
+    "text": "We want to invite our neighbours over for dinner.",
+    "translation_de": "Wir möchten unsere Nachbarn zum Abendessen einladen.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-242",
+    "form": "exercise",
+    "topic": "Alltagstätigkeiten",
+    "original_position": 242,
+    "display_position": 81,
+    "meaning": "Sich körperlich betätigen, um fit zu bleiben.",
+    "text": "I exercise three times a week to stay fit.",
+    "translation_de": "Ich trainiere dreimal pro Woche, um fit zu bleiben.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-245",
+    "form": "try",
+    "topic": "Alltagstätigkeiten",
+    "original_position": 245,
+    "display_position": 82,
+    "meaning": "Sich bemühen, eine Handlung erfolgreich auszuführen.",
+    "text": "Please try to open the jar; the lid is very tight.",
+    "translation_de": "Versuch bitte, das Glas aufzumachen; der Deckel sitzt sehr fest.",
+    "alternatives": []
+  },
+  {
+    "selection_id": "alltag-zuhause-v1-248",
+    "form": "break",
+    "topic": "Alltagstätigkeiten",
+    "original_position": 248,
+    "display_position": 83,
+    "meaning": "Einen festen Gegenstand in Teile brechen.",
+    "text": "Be careful with that glass; it is easy to break.",
+    "translation_de": "Sei vorsichtig mit dem Glas; es zerbricht leicht.",
+    "alternatives": []
+  }
+]

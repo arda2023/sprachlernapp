@@ -1,0 +1,175 @@
+{
+  "errors": [],
+  "warnings": [
+    [
+      "sheet",
+      "i+1",
+      "'mattress'/'mattress' Zipf 3.67 below 4.0"
+    ],
+    [
+      "entrance",
+      "i+1",
+      "'umbrella'/'umbrella' Zipf 3.89 below 4.0"
+    ],
+    [
+      "cloth",
+      "i+1",
+      "'damp'/'damp' Zipf 3.62 below 4.0"
+    ],
+    [
+      "stain",
+      "i+1",
+      "'sleeve'/'sleeve' Zipf 3.93 below 4.0"
+    ],
+    [
+      "bin",
+      "i+1",
+      "'wrapper'/'wrapper' Zipf 3.16 below 4.0"
+    ],
+    [
+      "peg",
+      "i+1",
+      "'towel'/'towel' Zipf 3.94 below 4.0"
+    ],
+    [
+      "freezer",
+      "i+1",
+      "'melt'/'melts' Zipf 3.96 below 4.0"
+    ],
+    [
+      "tape",
+      "i+1",
+      "'cardboard'/'cardboard' Zipf 3.66 below 4.0"
+    ],
+    [
+      "jeans",
+      "i+1",
+      "'shorten'/'shorten' Zipf 3.38 below 4.0"
+    ],
+    [
+      "cardigan",
+      "i+1",
+      "'blouse'/'blouse' Zipf 3.38 below 4.0"
+    ],
+    [
+      "sandal",
+      "i+1",
+      "'strap'/'strap' Zipf 3.79 below 4.0"
+    ],
+    [
+      "scarf",
+      "i+1",
+      "'windy'/'windy' Zipf 3.57 below 4.0"
+    ],
+    [
+      "button",
+      "i+1",
+      "'sew'/'sew' Zipf 3.45 below 4.0"
+    ],
+    [
+      "silk",
+      "i+1",
+      "'blouse'/'blouse' Zipf 3.38 below 4.0"
+    ],
+    [
+      "tights",
+      "i+1",
+      "'skirt'/'skirt' Zipf 3.96 below 4.0"
+    ],
+    [
+      "cashier",
+      "i+1",
+      "'receipt'/'receipt' Zipf 3.92 below 4.0"
+    ],
+    [
+      "aisle",
+      "i+1",
+      "'pasta'/'pasta' Zipf 3.92 below 4.0"
+    ],
+    [
+      "packet",
+      "i+1",
+      "'biscuit'/'biscuits' Zipf 3.60 below 4.0"
+    ],
+    [
+      "toaster",
+      "i+1",
+      "'unplug'/'unplug' Zipf 2.95 below 4.0"
+    ],
+    [
+      "flour",
+      "i+1",
+      "'sprinkle'/'sprinkle' Zipf 3.39 below 4.0"
+    ],
+    [
+      "flour",
+      "i+1",
+      "'dough'/'dough' Zipf 3.86 below 4.0"
+    ],
+    [
+      "cucumber",
+      "i+1",
+      "'thinly'/'thinly' Zipf 3.27 below 4.0"
+    ],
+    [
+      "orange",
+      "i+1",
+      "'peel'/'peel' Zipf 3.80 below 4.0"
+    ],
+    [
+      "honey",
+      "i+1",
+      "'spoonful'/'spoonful' Zipf 2.87 below 4.0"
+    ],
+    [
+      "boil",
+      "i+1",
+      "'pasta'/'pasta' Zipf 3.92 below 4.0"
+    ],
+    [
+      "stir",
+      "i+1",
+      "'spoon'/'spoon' Zipf 3.88 below 4.0"
+    ],
+    [
+      "grandmother",
+      "i+1",
+      "'bake'/'bake' Zipf 3.91 below 4.0"
+    ],
+    [
+      "gift",
+      "i+1",
+      "'neighbour'/'neighbours' Zipf 3.87 below 4.0"
+    ],
+    [
+      "cat",
+      "i+1",
+      "'sofa'/'sofa' Zipf 3.81 below 4.0"
+    ],
+    [
+      "photo",
+      "i+1",
+      "'grandparent'/'grandparents' Zipf 3.88 below 4.0"
+    ],
+    [
+      "wipe",
+      "i+1",
+      "'spill'/'spilled' Zipf 3.84 below 4.0"
+    ],
+    [
+      "push",
+      "i+1",
+      "'sofa'/'sofa' Zipf 3.81 below 4.0"
+    ],
+    [
+      "kiss",
+      "i+1",
+      "'goodnight'/'goodnight' Zipf 3.64 below 4.0"
+    ],
+    [
+      "celebrate",
+      "i+1",
+      "'picnic'/'picnic' Zipf 3.80 below 4.0"
+    ]
+  ]
+}

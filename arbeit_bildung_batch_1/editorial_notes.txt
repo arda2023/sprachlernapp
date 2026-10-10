@@ -1,0 +1,44 @@
+ARBEIT & BILDUNG – BATCH 1
+
+82 direkt von ChatGPT geschriebene englisch/deutsche Satzpaare. Vollständige redaktionelle Gegenlesung der Zielbedeutung, Übersetzung, Wortbindungen und freigegebenen Alternativen. Keine Gemini-/Vertex-Aufrufe; keine unabhängige menschliche Qualitätszertifizierung.
+
+Verträge:
+- Alle 82 Ziele sind unverändert aus entries übernommen. Die übrigen 163 Ziele bleiben reserviert. Keine Lernkarten für Begleitwörter.
+- Karten- und Lemmaschreibweise CV bleibt erhalten, Wortbesitz und Wörterbuchformen sind normalisiert cv.
+- Ein neuer Stapel arbeit-bildung, Anzeige 1–82 aus combined_display_mapping.json; Originalpositionen bleiben erhalten. Alte Anzeigepositionen werden nicht verändert.
+- cards.learning, Zielübersetzungen und explizite Zieldefinitionen unverändert. Wiederverwendete Senses und alte Formglossen bleiben erhalten.
+- Neue Sätze verwenden die vorhandene technische Stufe mittel; deren Lintergrenze liegt laut Konfiguration bei Zipf 3,5. Das ist keine formelle CEFR-Zertifizierung. Vier Häufigkeitswarnungen: unread, electrician in zwei Sätzen, fasten. Keine Linterfehler.
+
+Kontextuelle Entscheidungen:
+- manage bedeutet eine Aufgabe bewältigen, save digitale Arbeit speichern, graduate das Hochschulstudium abschließen.
+- mouse bezeichnet das Eingabegerät; button als Begleitwort erhält eine Bildschirmbedeutung, da der Bestand ausdrücklich den Kleiderknopf definiert.
+- claim = Behauptung ist vom bestehenden Versicherungsantrag getrennt.
+- pay beim Ziel attention ist Aufmerksamkeit schenken, bei overtime dagegen das Nomen Vergütung; es ist nicht überall bezahlen.
+- course ist der Bildungskurs, nicht der Menügang. report ist das Nomen Bericht, nicht das Verb melden.
+- take beim Wiederholen einer Prüfung verwendet die bestehende Prüfungsbedeutung; bei estimate die Dauerbedeutung.
+- board erhält eine Schreibtafelbedeutung, fasten eine Papierbefestigungsbedeutung. Die älteren Brett-/Gurtbedeutungen bleiben erhalten.
+- Verfügbarkeit passender Wörterbuchbedeutungen wurde auch gegen alle 245 reservierten Identitäten abgeglichen. Spätere Ziele können schon als Begleitwörter vorkommen; dadurch entsteht keine zusätzliche Lernkarte und ihr reservierter Sense darf beim Folgeimport nicht doppelt angelegt werden.
+- Bestehende teilweise gebeugte oder knappe Glossen werden nicht global korrigiert. Neue Formglossen wurden separat nach Numerus und Zeitform redigiert. school und andere wiederverwendete Senses behalten ihre ursprünglichen Schlüssel.
+
+Sechs freigegebene Alternativen in vier Sätzen, jeweils wörtlich eingesetzt:
+1. CV → résumé
+   Please send your résumé with a short letter about your experience.
+2. CV → resume
+   Please send your resume with a short letter about your experience.
+3. CV → curriculum vitae
+   Please send your curriculum vitae with a short letter about your experience.
+   Alle drei bezeichnen im gegebenen Bewerbungskontext die Übersicht über Ausbildung und Berufserfahrung.
+4. cooperate → collaborate
+   The two teams must collaborate to finish the project on time.
+   Gemeinsame zielgerichtete Zusammenarbeit im gleichen Projekt.
+5. memorise → memorize
+   We have to memorize this poem for the next lesson.
+6. apologise → apologize
+   I need to apologize for sending you the wrong file.
+   Die beiden letzten Alternativen sind Schreibvarianten.
+Keine pauschale Freigabe weiterer Synonyme oder Gruppenmitglieder, keine Vollständigkeitsgarantie. accepted enthält nur die Zielform. Die bestehenden neutralen Synonymregeln gelten weiter.
+
+Prüfung:
+Die mitgelieferten unveränderten Projektfunktionen prüfen Quellenhashes, Auswahl, Registry, Gruppen, Schema, sämtliche Tokens/Reviewhashes, Import, alle historischen Zeilen und alle 18 SQLite-Tabellen. Der Verifier lädt lediglich den explizit mitgelieferten spaCy-Modellpfad vor den Importfunktionen; die Tokenisierungs- und Linterregeln bleiben unverändert.
+Hier wurde in einen separaten Prüfbereich exportiert. Kein App-Staging, Flutter-Test, Mobilgerätetest oder user.db-Zugriff. Das übernimmt der lokale Importauftrag.
+Die SQLite unter reference/ ist ausschließlich die unveränderte Basis alltag_zuhause_batch_3_v1, kein neuer App-Pack.

@@ -44,20 +44,40 @@ List<String> selectNewCards({
   required List<ContentCard> candidates,
   required Set<String> knownLemmas,
   required int limit,
+  Set<String> priorityIds = const {},
+  void Function(ContentCard card, int minimumGap)? onSelected,
 }) {
   if (limit <= 0) return [];
   final pool = [
-    ...candidates.where((c) => !knownLemmas.contains(selectionLemma(c))),
-    ...candidates.where((c) => knownLemmas.contains(selectionLemma(c))),
+    ...candidates.where((c) => priorityIds.contains(c.id)),
+    ...candidates.where(
+      (c) =>
+          !priorityIds.contains(c.id) &&
+          !knownLemmas.contains(selectionLemma(c)),
+    ),
+    ...candidates.where(
+      (c) =>
+          !priorityIds.contains(c.id) &&
+          knownLemmas.contains(selectionLemma(c)),
+    ),
   ];
-  final lemmas = <String>{}, surfaces = <String>{};
+  final lemmas = <String>{}, surfaces = <String>{}, groups = <String>{};
+  final recent = <ContentCard>[];
   final picked = <String>[];
   var contentCount = 0, functionCount = 0;
-  ContentCard? next(bool content) {
+  bool related(ContentCard a, ContentCard b) =>
+      a.learning != null &&
+      b.learning != null &&
+      (a.learning!.topic == b.learning!.topic ||
+          a.learning!.related.any(b.learning!.related.contains));
+  ContentCard? next(bool? content, int gap, {bool priorityOnly = false}) {
     for (final c in pool) {
-      if (isContentWord(c) == content &&
+      if ((content == null || isContentWord(c) == content) &&
+          (!priorityOnly || priorityIds.contains(c.id)) &&
           !lemmas.contains(selectionLemma(c)) &&
-          !surfaces.contains(c.formNorm)) {
+          !surfaces.contains(c.formNorm) &&
+          !groups.contains(c.learningGroup) &&
+          !recent.reversed.take(gap).any((r) => related(c, r))) {
         return c;
       }
     }
@@ -71,12 +91,23 @@ List<String> selectNewCards({
         contentCount > 0 &&
         contentCount % 4 == 0 &&
         functionCount < contentCount ~/ 4;
-    final c =
-        (preferFunction ? next(false) : null) ??
-        next(true) ??
-        (functionAllowed ? next(false) : null);
+    ContentCard? c;
+    var selectedGap = 3;
+    // Bounded relaxation: 3 intervening new targets, then 2, 1, 0 only
+    // when the available content/function quota offers no such candidate.
+    for (var gap = 3; gap >= 0 && c == null; gap--) {
+      selectedGap = gap;
+      c =
+          next(null, gap, priorityOnly: true) ??
+          (preferFunction ? next(false, gap) : null) ??
+          next(true, gap) ??
+          (functionAllowed ? next(false, gap) : null);
+    }
     if (c == null) break;
+    onSelected?.call(c, selectedGap);
     picked.add(c.id);
+    recent.add(c);
+    groups.add(c.learningGroup);
     lemmas.add(selectionLemma(c));
     surfaces.add(c.formNorm);
     if (isContentWord(c)) {

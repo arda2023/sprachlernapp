@@ -1,0 +1,25 @@
+{
+  "errors": [],
+  "warnings": [
+    [
+      "inbox",
+      "i+1",
+      "'unread'/'unread' Zipf 2.71 below 3.5"
+    ],
+    [
+      "apprenticeship",
+      "i+1",
+      "'electrician'/'electrician' Zipf 3.26 below 3.5"
+    ],
+    [
+      "stapler",
+      "i+1",
+      "'fasten'/'fasten' Zipf 2.98 below 3.5"
+    ],
+    [
+      "qualified",
+      "i+1",
+      "'electrician'/'electrician' Zipf 3.26 below 3.5"
+    ]
+  ]
+}

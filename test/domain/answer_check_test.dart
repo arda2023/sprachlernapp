@@ -130,21 +130,21 @@ void main() {
   });
 
   group('hint texts', () {
-    test('synonym hint names the first letter of the target', () {
+    test('neutral synonym message never reveals a prefix', () {
       expect(
         synonymHint('approximately', 'about'),
-        'Approximately passt hier auch. Gesucht ist ein anderes Wort: a…',
+        'Das passt auch. Gesucht ist hier ein anderes Wort. Versuch es noch einmal.',
       );
       expect(
         synonymHint('  around ', 'about'),
-        'Around passt hier auch. Gesucht ist ein anderes Wort: a…',
+        'Das passt auch. Gesucht ist hier ein anderes Wort. Versuch es noch einmal.',
       );
     });
 
     test('a one-letter target gives no letter away', () {
       expect(
         synonymHint('one', 'a'),
-        'One passt hier auch. Gesucht ist ein anderes Wort.',
+        'Das passt auch. Gesucht ist hier ein anderes Wort. Versuch es noch einmal.',
       );
     });
 

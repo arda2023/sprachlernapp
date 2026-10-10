@@ -24,6 +24,7 @@ void main() {
     final raw = sqlite3.open(asset.path, mode: OpenMode.readOnly);
     late int expectedCards;
     late int expectedPrimary;
+    late int expectedLearningTargets;
     late int expectedLinks;
     late int expectedAlternatives;
     final expectedDeckCardIds = <String, List<String>>{};
@@ -43,6 +44,19 @@ void main() {
                   )
                   .single['n']
               as int;
+      final schema =
+          raw
+                  .select('SELECT schema_version FROM content_releases')
+                  .single['schema_version']
+              as int;
+      expectedLearningTargets = schema >= 3
+          ? raw
+                    .select(
+                      "SELECT count(DISTINCT json_extract(c.learning, '\$.group_id')) n FROM deck_words w JOIN cards c ON c.id=w.primary_card_id WHERE w.removed_in IS NULL",
+                    )
+                    .single['n']
+                as int
+          : expectedPrimary;
       expectedLinks =
           raw
                   .select(
@@ -91,15 +105,55 @@ void main() {
     try {
       final decks = await repo.decks();
       final bySlug = {for (final deck in decks) deck.slug: deck};
-      expect(bySlug.keys, unorderedEquals(['allgemeine-sprache', 'reisen']));
+      expect(bySlug.keys, unorderedEquals(expectedDeckCardIds.keys));
       expect(bySlug['allgemeine-sprache']!.cardCount, 160);
-      expect(bySlug['reisen']!.cardCount, 100);
+      expect(
+        bySlug['reisen']!.cardCount,
+        repo.info.schemaVersion >= 3 ? 489 : 500,
+      );
+      if (repo.info.version == 'alltag_zuhause_batch_1_v1') {
+        expect(bySlug.keys, hasLength(3));
+        expect(bySlug['alltag-zuhause']!.cardCount, 83);
+      }
+      if (repo.info.version == 'alltag_zuhause_batch_2_v1') {
+        expect(bySlug.keys, hasLength(3));
+        expect(bySlug['alltag-zuhause']!.cardCount, 163);
+        expect(expectedCards, 927);
+        expect(expectedPrimary, 823);
+        expect(expectedLearningTargets, 812);
+      }
+      if (repo.info.version == 'alltag_zuhause_batch_3_v1') {
+        expect(bySlug.keys, hasLength(3));
+        expect(bySlug['alltag-zuhause']!.cardCount, 241);
+        expect(expectedCards, 1005);
+        expect(expectedPrimary, 901);
+        expect(expectedLearningTargets, 890);
+      }
+      if (repo.info.version == 'arbeit_bildung_batch_1_v1') {
+        expect(bySlug.keys, hasLength(4));
+        expect(bySlug['alltag-zuhause']!.cardCount, 241);
+        expect(bySlug['arbeit-bildung']!.cardCount, 82);
+        expect(expectedCards, 1087);
+        expect(expectedPrimary, 983);
+        expect(expectedLearningTargets, 972);
+      }
+      if (repo.info.version == 'arbeit_bildung_batch_2_v1') {
+        expect(bySlug.keys, hasLength(4));
+        expect(bySlug['alltag-zuhause']!.cardCount, 241);
+        expect(bySlug['arbeit-bildung']!.cardCount, 164);
+        expect(expectedCards, 1169);
+        expect(expectedPrimary, 1065);
+        expect(expectedLearningTargets, 1054);
+      }
       final cardIds = <String>[];
-      for (final slug in ['allgemeine-sprache', 'reisen']) {
+      for (final slug in expectedDeckCardIds.keys) {
         final deck = bySlug[slug]!;
         final ids = await repo.deckCardIds(deck.id);
         expect(ids, orderedEquals(expectedDeckCardIds[slug]!));
-        expect(ids, hasLength(deck.cardCount));
+        expect(
+          (await repo.selectionCards(ids)).map((c) => c.learningGroup).toSet(),
+          hasLength(deck.cardCount),
+        );
         final deckItems = await repo.practiceItems(ids);
         expect(deckItems, hasLength(ids.length));
         for (final item in deckItems) {
@@ -112,7 +166,7 @@ void main() {
         cardIds.addAll(ids);
         // ignore: avoid_print
         print(
-          'deck $slug: ${ids.length} primary cards, ${deckItems.length} fixed sentence assignments verified',
+          'deck $slug: ${deck.cardCount} learning targets, ${ids.length} ownership cards, ${deckItems.length} fixed sentence assignments verified',
         );
       }
       final items = await repo.practiceItems(
@@ -139,7 +193,7 @@ void main() {
       );
       expect(
         decks.fold<int>(0, (sum, deck) => sum + deck.cardCount),
-        expectedPrimary,
+        expectedLearningTargets,
       );
       expect(cardIds, hasLength(expectedPrimary));
       expect(cardIds.toSet(), hasLength(expectedPrimary));

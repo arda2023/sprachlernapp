@@ -125,21 +125,9 @@ AnswerVerdict evaluateAnswer(
   return AnswerVerdict.wrong;
 }
 
-/// The neutral synonym hint (PRODUCT.md): the input with a capital first
-/// letter, then the first letter of the target form. A one-letter target
-/// gives no letter away.
-String synonymHint(String input, String target) {
-  final shown = input.trim();
-  final word = shown.isEmpty
-      ? shown
-      : shown.substring(0, 1).toUpperCase() + shown.substring(1);
-  final goal = target.trim();
-  if (goal.runes.length <= 1) {
-    return '$word passt hier auch. Gesucht ist ein anderes Wort.';
-  }
-  final first = String.fromCharCode(goal.runes.first);
-  return '$word passt hier auch. Gesucht ist ein anderes Wort: $first…';
-}
+/// The neutral synonym hint (PRODUCT.md): no solution prefix and no penalty.
+String synonymHint(String input, String target) =>
+    'Das passt auch. Gesucht ist hier ein anderes Wort. Versuch es noch einmal.';
 
 /// The wrong-form hint (PRODUCT.md): „Andere Form von „go“ – gesucht: Verb,
 /// Vergangenheit“. Without a form label only the lemma is named.

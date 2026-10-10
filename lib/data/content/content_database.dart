@@ -12,8 +12,8 @@ part 'content_database.g.dart';
 // No Flutter imports: tool/stage_content_pack.dart shares the checks below.
 
 /// The content schema version this app reads (docs/content-schema.md).
-const supportedContentSchemaVersion = 2;
-const supportedContentSchemaVersions = {1, 2};
+const supportedContentSchemaVersion = 3;
+const supportedContentSchemaVersions = {1, 2, 3};
 
 /// Tables and columns the app reads; anything missing is incompatible.
 const requiredContentColumns = <String, List<String>>{
@@ -117,7 +117,10 @@ ContentInfo validateContentSchema(Database db, {required String lang}) {
         '$supportedContentSchemaVersion',
       );
     }
-    if (release['schema_version'] == 2) validateSingleSentenceContent(db);
+    if ((release['schema_version'] as int) >= 2) {
+      validateSingleSentenceContent(db);
+    }
+    if (release['schema_version'] == 3) validateLearningGroups(db);
     final languages = db.select('SELECT code FROM languages WHERE code = ?', [
       lang,
     ]);
@@ -145,6 +148,59 @@ ContentInfo validateContentSchema(Database db, {required String lang}) {
       ContentUnavailableReason.corrupt,
       'nicht als Inhaltsdatenbank lesbar: ${e.message}',
     );
+  }
+}
+
+/// Schema 3 rejects ambiguous/missing metadata before staging or opening.
+void validateLearningGroups(Database db) {
+  void reject() => throw const ContentUnavailable(
+    ContentUnavailableReason.incompatible,
+    'Schema 3: ungültige Lerngruppen',
+  );
+  if (!db
+      .select('PRAGMA table_info(cards)')
+      .any((r) => r['name'] == 'learning')) {
+    reject();
+  }
+  final rows = {
+    for (final r in db.select(
+      'SELECT id, lang, removed_in, learning FROM cards',
+    ))
+      r['id'] as String: r,
+  };
+  final metadata = <String, Map<String, dynamic>>{};
+  try {
+    for (final r in rows.values) {
+      final m = jsonDecode(r['learning'] as String) as Map<String, dynamic>;
+      if (m.length != 5 ||
+          [
+            'group_id',
+            'primary_card_id',
+            'topic',
+            'note',
+          ].any((k) => m[k] is! String || (m[k] as String).trim().isEmpty) ||
+          m['related'] is! List ||
+          (m['related'] as List).any((v) => v is! String || v.isEmpty) ||
+          (m['related'] as List).toSet().length !=
+              (m['related'] as List).length) {
+        reject();
+      }
+      metadata[r['id'] as String] = m;
+    }
+    for (final r in rows.values) {
+      final m = metadata[r['id']]!;
+      final head = rows[m['primary_card_id']];
+      final hm = metadata[m['primary_card_id']];
+      if (head == null ||
+          head['removed_in'] != null ||
+          head['lang'] != r['lang'] ||
+          hm?['group_id'] != m['group_id'] ||
+          hm?['primary_card_id'] != head['id']) {
+        reject();
+      }
+    }
+  } catch (_) {
+    reject();
   }
 }
 

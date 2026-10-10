@@ -1,0 +1,976 @@
+job | Maya starts her new job at the hospital on Monday. | Maya tritt am Montag ihre neue Stelle im Krankenhaus an.
+Maya => Maya/PROPN|maya#maya
+starts => start/VERB|start#beginnt
+her => her/DET|her#ihr_possessiv
+new => new/ADJ|new#neu
+job => job/NOUN|job#arbeitsstelle
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+hospital => hospital/NOUN|hospital#krankenhaus
+on => on/ADP|on#an_zeitlich
+Monday => Monday/PROPN|monday#montag
+
+school | The children walk to school together every morning. | Die Kinder gehen jeden Morgen zusammen zur Schule.
+The => the/DET|the#bestimmter_artikel
+children => child/NOUN|child#kinder
+walk => walk/VERB|walk#geht-zu-fuss
+to => to/ADP|to#nach_richtung
+school => school/NOUN|school#schule-hier-schul
+together => together/ADV|together#zusammen
+every => every/DET|every#jede
+morning => morning/NOUN|morning#morgen
+
+task | Your first task is to check the names on this list. | Deine erste Aufgabe ist, die Namen auf dieser Liste zu prüfen.
+Your => your/DET|your#dein-deine
+first => first/ADJ|first#ersten
+task => task/NOUN|task#aufgabe
+is => be/AUX|be#sein_vollverb
+to => to/PART|to#infinitivpartikel
+check => check/VERB|check#ueberprueft
+the => the/DET|the#bestimmter_artikel
+names => name/NOUN|name#namen
+on => on/ADP|on#auf
+this => this/DET|this#dieser_begleitend
+list => list/NOUN|list#liste
+
+folder | Keep the signed forms in the blue folder on my desk. | Bewahre die unterschriebenen Formulare im blauen Ordner auf meinem Schreibtisch auf.
+Keep => keep/VERB|keep#bewahrt-auf
+the => the/DET|the#bestimmter_artikel
+signed => sign/VERB|sign#unterschreibt
+forms => form/NOUN|form#formular
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+blue => blue/ADJ|blue#blau
+folder => folder/NOUN|folder#ordner
+on => on/ADP|on#auf
+my => my/DET|my#mein
+desk => desk/NOUN|desk#schreibtisch
+
+discussion | We had a long discussion about the new working hours. | Wir haben lange über die neuen Arbeitszeiten diskutiert.
+We => we/PRON|we#wir
+had => have/VERB|have#einnehmen
+a => a/DET|a#ein
+long => long/ADJ|long#lange
+discussion => discussion/NOUN|discussion#diskussion
+about => about/ADP|about#ueber_thema
+the => the/DET|the#bestimmter_artikel
+new => new/ADJ|new#neu
+working => work/VERB|work#arbeiten
+hours => hour/NOUN|hour#stunde
+
+applicant | Each applicant has to answer the same three questions. | Jeder Bewerber muss dieselben drei Fragen beantworten.
+Each => each/DET|each#jede
+applicant => applicant/NOUN|applicant#bewerber
+has => have/VERB|have#muessen
+to => to/PART|to#infinitivpartikel
+answer => answer/VERB|answer#antworten
+the => the/DET|the#bestimmter_artikel
+same => same/ADJ|same#gleichen-selben
+three => three/NUM|three#drei
+questions => question/NOUN|question#frage
+
+university | Lina wants to study history at a university near home. | Lina möchte an einer Universität in der Nähe ihres Wohnorts Geschichte studieren.
+Lina => Lina/PROPN|lina#lina
+wants => want/VERB|want#wollen
+to => to/PART|to#infinitivpartikel
+study => study/VERB|study#studieren
+history => history/NOUN|history#geschichts
+at => at/ADP|at#ort
+a => a/DET|a#ein
+university => university/NOUN|university#universitat
+near => near/ADP|near#nahe-bei
+home => home/NOUN|home#hause
+
+mark | Ben got a good mark for his essay about local history. | Ben hat für seinen Aufsatz über die Geschichte der Region eine gute Note bekommen.
+Ben => Ben/PROPN|ben#ben
+got => get/VERB|get#bekommen
+a => a/DET|a#ein
+good => good/ADJ|good#gut
+mark => mark/NOUN|mark#note
+for => for/ADP|for#fuer_zweck_empfaenger
+his => his/DET|his#sein
+essay => essay/NOUN|essay#aufsatz
+about => about/ADP|about#ueber_thema
+local => local/ADJ|local#oertlichen
+history => history/NOUN|history#geschichts
+
+employer | My employer pays for the training I need for my job. | Mein Arbeitgeber bezahlt die Schulung, die ich für meine Arbeit brauche.
+My => my/DET|my#mein
+employer => employer/NOUN|employer#arbeitgeber
+pays => pay/VERB|pay#bezahlen
+for => for/ADP|for#fuer_zweck_empfaenger
+the => the/DET|the#bestimmter_artikel
+training => training/NOUN|training#trainings
+I => I/PRON|i#ich
+need => need/VERB|need#brauchen
+for => for/ADP|for#fuer_zweck_empfaenger
+my => my/DET|my#mein
+job => job/NOUN|job#arbeitsstelle
+
+method | This method helps me remember new words more easily. | Mit dieser Methode kann ich mir neue Wörter leichter merken.
+This => this/DET|this#dieser_begleitend
+method => method/NOUN|method#methode
+helps => help/VERB|help#helfen
+me => I/PRON|i#mir
+remember => remember/VERB|remember#erinnern-dich-an
+new => new/ADJ|new#neu
+words => word/NOUN|word#wort
+more => more/ADV|more#mehr_steigerung
+easily => easily/ADV|easily#leicht
+
+mouse | Move the mouse to place the pointer over the blue button. | Bewege die Maus, um den Zeiger auf die blaue Schaltfläche zu setzen.
+Move => move/VERB|move#bewegen
+the => the/DET|the#bestimmter_artikel
+mouse => mouse/NOUN|mouse#maus
+to => to/PART|to#infinitivpartikel
+place => place/VERB|place#lege
+the => the/DET|the#bestimmter_artikel
+pointer => pointer/NOUN|pointer#bildschirmzeiger
+over => over/ADP|over#ueber
+the => the/DET|the#bestimmter_artikel
+blue => blue/ADJ|blue#blau
+button => button/NOUN|button#schaltflaeche
+
+CV | Please send your CV with a short letter about your experience. | Bitte schicke deinen Lebenslauf mit einem kurzen Schreiben über deine Berufserfahrung.
+Please => please/INTJ|please#bitte
+send => send/VERB|send#verschicken
+your => your/DET|your#dein-deine
+CV => CV/NOUN|CV#lebenslauf
+with => with/ADP|with#mit
+a => a/DET|a#ein
+short => short/ADJ|short#kurze
+letter => letter/NOUN|letter#brief
+about => about/ADP|about#ueber_thema
+your => your/DET|your#dein-deine
+experience => experience/NOUN|experience#berufserfahrung
+
+lesson | Our first lesson starts at nine and lasts fifty minutes. | Unsere erste Unterrichtsstunde beginnt um neun und dauert fünfzig Minuten.
+Our => our/DET|our#unser-unsere
+first => first/ADJ|first#ersten
+lesson => lesson/NOUN|lesson#unterrichtsstunde
+starts => start/VERB|start#beginnt
+at => at/ADP|at#zeit
+nine => nine/NUM|nine#neun
+and => and/CCONJ|and#und
+lasts => last/VERB|last#dauern
+fifty => fifty/NUM|fifty#fuenfzig
+minutes => minute/NOUN|minute#minuten
+
+message | Leave me a message if I do not answer the phone. | Hinterlass mir eine Nachricht, wenn ich nicht ans Telefon gehe.
+Leave => leave/VERB|leave#hinterliess
+me => I/PRON|i#mir
+a => a/DET|a#ein
+message => message/NOUN|message#nachricht
+if => if/SCONJ|if#wenn
+I => I/PRON|i#ich
+do => do/AUX|do#hilfsverb
+not => not/PART|not#nicht
+answer => answer/VERB|answer#geht-an
+the => the/DET|the#bestimmter_artikel
+phone => phone/NOUN|phone#telefon
+
+lecture | The lecture on modern history begins in the main hall at ten. | Die Vorlesung über moderne Geschichte beginnt um zehn im Hauptsaal.
+The => the/DET|the#bestimmter_artikel
+lecture => lecture/NOUN|lecture#vorlesung
+on => on/ADP|on#ueber-am
+modern => modern/ADJ|modern#modernen
+history => history/NOUN|history#geschichts
+begins => begin/VERB|begin#beginnt
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+main => main/ADJ|main#haupt
+hall => hall/NOUN|hall#saal
+at => at/ADP|at#zeit
+ten => ten/NUM|ten#zehn
+
+question | I have a question about the last part of the homework. | Ich habe eine Frage zum letzten Teil der Hausaufgaben.
+I => I/PRON|i#ich
+have => have/VERB|have#besitzen
+a => a/DET|a#ein
+question => question/NOUN|question#frage
+about => about/ADP|about#ueber_thema
+the => the/DET|the#bestimmter_artikel
+last => last/ADJ|last#letzter
+part => part/NOUN|part#teil
+of => of/ADP|of#teil_menge
+the => the/DET|the#bestimmter_artikel
+homework => homework/NOUN|homework#hausaufgaben
+
+department | Our department handles all the orders from customers abroad. | Unsere Abteilung bearbeitet alle Bestellungen von Kunden im Ausland.
+Our => our/DET|our#unser-unsere
+department => department/NOUN|department#abteilung
+handles => handle/VERB|handle#dem-umgang-mit
+all => all/DET|all#alle_det
+the => the/DET|the#bestimmter_artikel
+orders => order/NOUN|order#auftrag
+from => from/ADP|from#von_ausgangspunkt
+customers => customer/NOUN|customer#kunde-kundin
+abroad => abroad/ADV|abroad#im_ausland
+
+instruction | The first instruction says to switch off the machine. | Die erste Anweisung lautet, die Maschine auszuschalten.
+The => the/DET|the#bestimmter_artikel
+first => first/ADJ|first#ersten
+instruction => instruction/NOUN|instruction#anweisung
+says => say/VERB|say#anzeigt
+to => to/PART|to#infinitivpartikel
+switch => switch/VERB|switch#schaltet
+off => off/ADP|off#aus
+the => the/DET|the#bestimmter_artikel
+machine => machine/NOUN|machine#maschine
+
+spreadsheet | I use a spreadsheet to calculate our monthly costs. | Ich nutze eine Tabellenkalkulation, um unsere monatlichen Kosten zu berechnen.
+I => I/PRON|i#ich
+use => use/VERB|use#benutzen
+a => a/DET|a#ein
+spreadsheet => spreadsheet/NOUN|spreadsheet#tabellenkalkulation
+to => to/PART|to#infinitivpartikel
+calculate => calculate/VERB|calculate#berechnen
+our => our/DET|our#unser-unsere
+monthly => monthly/ADJ|monthly#monatlich
+costs => cost/NOUN|cost#kosten
+
+experience | You need two years of experience in sales for this job. | Für diese Stelle brauchst du zwei Jahre Berufserfahrung im Verkauf.
+You => you/PRON|you#du_sie_ihr
+need => need/VERB|need#brauchen
+two => two/NUM|two#zwei
+years => year/NOUN|year#jahr
+of => of/ADP|of#teil_menge
+experience => experience/NOUN|experience#berufserfahrung
+in => in/ADP|in#taetigkeitsbereich
+sales => sales/NOUN|sales#verkauf
+for => for/ADP|for#fuer_zweck_empfaenger
+this => this/DET|this#dieser_begleitend
+job => job/NOUN|job#arbeitsstelle
+
+textbook | The answer is in the first chapter of your textbook. | Die Antwort steht im ersten Kapitel deines Lehrbuchs.
+The => the/DET|the#bestimmter_artikel
+answer => answer/NOUN|answer#antwort
+is => be/AUX|be#sein_vollverb
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+first => first/ADJ|first#ersten
+chapter => chapter/NOUN|chapter#kapitel
+of => of/ADP|of#genitiv_besitz
+your => your/DET|your#dein-deine
+textbook => textbook/NOUN|textbook#lehrbuch
+
+audience | The audience asked several questions after the short talk. | Nach dem kurzen Vortrag stellte das Publikum mehrere Fragen.
+The => the/DET|the#bestimmter_artikel
+audience => audience/NOUN|audience#publikum
+asked => ask/VERB|ask#fragen
+several => several/DET|several#mehrere
+questions => question/NOUN|question#frage
+after => after/ADP|after#nach
+the => the/DET|the#bestimmter_artikel
+short => short/ADJ|short#kurze
+talk => talk/NOUN|talk#vortrag
+
+attention | Please pay attention while I explain the safety rules. | Pass bitte auf, während ich die Sicherheitsregeln erkläre.
+Please => please/INTJ|please#bitte
+pay => pay/VERB|pay#aufmerksamkeit_schenken
+attention => attention/NOUN|attention#aufmerksamkeit
+while => while/SCONJ|while#waehrend
+I => I/PRON|i#ich
+explain => explain/VERB|explain#erklaere
+the => the/DET|the#bestimmter_artikel
+safety => safety/NOUN|safety#sicherheit
+rules => rule/NOUN|rule#regeln
+
+workplace | My workplace is close enough to reach on foot. | Mein Arbeitsort ist nah genug, um zu Fuß dorthin zu kommen.
+My => my/DET|my#mein
+workplace => workplace/NOUN|workplace#arbeitsort
+is => be/AUX|be#sein_vollverb
+close => close/ADJ|close#nahe
+enough => enough/ADV|enough#genug
+to => to/PART|to#infinitivpartikel
+reach => reach/VERB|reach#erreichen
+on => on/ADP|on#zu_fuss
+foot => foot/NOUN|foot#fuss
+
+certificate | You receive a certificate after you complete the course. | Nach Abschluss des Kurses bekommst du eine Bescheinigung.
+You => you/PRON|you#du_sie_ihr
+receive => receive/VERB|receive#erhielt
+a => a/DET|a#ein
+certificate => certificate/NOUN|certificate#bescheinigung
+after => after/SCONJ|after#nachdem
+you => you/PRON|you#du_sie_ihr
+complete => complete/VERB|complete#abschliessen
+the => the/DET|the#bestimmter_artikel
+course => course/NOUN|course#kurs
+
+effort | Learning a new language takes time and effort. | Eine neue Sprache zu lernen kostet Zeit und Anstrengung.
+Learning => learn/VERB|learn#lernen
+a => a/DET|a#ein
+new => new/ADJ|new#neu
+language => language/NOUN|language#sprachen
+takes => take/VERB|take#erfordern
+time => time/NOUN|time#zeit
+and => and/CCONJ|and#und
+effort => effort/NOUN|effort#anstrengung
+
+inbox | There are three unread emails in my inbox this morning. | Heute Morgen sind drei ungelesene E-Mails in meinem Posteingang.
+There => there/PRON|there#es_gibt
+are => be/VERB|be#gibt
+three => three/NUM|three#drei
+unread => unread/ADJ|unread#ungelesen
+emails => email/NOUN|email#e-mail
+in => in/ADP|in#in_raeumlich
+my => my/DET|my#mein
+inbox => inbox/NOUN|inbox#posteingang
+this => this/DET|this#dieser_begleitend
+morning => morning/NOUN|morning#morgen
+
+weakness | My main weakness is speaking in front of large groups. | Meine größte Schwäche ist das Sprechen vor großen Gruppen.
+My => my/DET|my#mein
+main => main/ADJ|main#haupt
+weakness => weakness/NOUN|weakness#personliche-schwache
+is => be/AUX|be#sein_vollverb
+speaking => speak/VERB|speak#sprechen
+in => in/ADP|in#in_raeumlich
+front => front/NOUN|front#vorderseite
+of => of/ADP|of#genitiv_besitz
+large => large/ADJ|large#gross
+groups => group/NOUN|group#gruppe
+
+chalk | The teacher used white chalk to write on the board. | Die Lehrerin schrieb mit weißer Kreide an die Tafel.
+The => the/DET|the#bestimmter_artikel
+teacher => teacher/NOUN|teacher#lehrkraft
+used => use/VERB|use#benutzen
+white => white/ADJ|white#weisses
+chalk => chalk/NOUN|chalk#kreide
+to => to/PART|to#infinitivpartikel
+write => write/VERB|write#schreiben
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+board => board/NOUN|board#schreibtafel
+
+decision | We need to make a decision before the next meeting. | Wir müssen vor der nächsten Besprechung eine Entscheidung treffen.
+We => we/PRON|we#wir
+need => need/VERB|need#brauchen
+to => to/PART|to#infinitivpartikel
+make => make/VERB|make#macht
+a => a/DET|a#ein
+decision => decision/NOUN|decision#entscheidung
+before => before/ADP|before#vor
+the => the/DET|the#bestimmter_artikel
+next => next/ADJ|next#naechsten
+meeting => meeting/NOUN|meeting#besprechung
+
+vocabulary | I use short stories to improve my English vocabulary. | Ich nutze kurze Geschichten, um meinen englischen Wortschatz zu verbessern.
+I => I/PRON|i#ich
+use => use/VERB|use#benutzen
+short => short/ADJ|short#kurze
+stories => story/NOUN|story#geschichte
+to => to/PART|to#infinitivpartikel
+improve => improve/VERB|improve#verbessern
+my => my/DET|my#mein
+English => English/ADJ|english#englisch-englisches
+vocabulary => vocabulary/NOUN|vocabulary#wortschatz
+
+overtime | We receive extra pay for any overtime at the factory. | Für Überstunden in der Fabrik bekommen wir eine zusätzliche Vergütung.
+We => we/PRON|we#wir
+receive => receive/VERB|receive#erhielt
+extra => extra/ADJ|extra#zusaetzliche
+pay => pay/NOUN|pay#arbeitsverguetung
+for => for/ADP|for#fuer_zweck_empfaenger
+any => any/DET|any#irgendeine
+overtime => overtime/NOUN|overtime#uberstunden
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+factory => factory/NOUN|factory#fabrik
+
+research | The team is doing research into how children learn languages. | Das Team erforscht, wie Kinder Sprachen lernen.
+The => the/DET|the#bestimmter_artikel
+team => team/NOUN|team#team
+is => be/AUX|be#hilfsverb
+doing => do/VERB|do#tun
+research => research/NOUN|research#forschung
+into => into/ADP|into#untersuchungsthema
+how => how/ADV|how#wie
+children => child/NOUN|child#kinder
+learn => learn/VERB|learn#lernen
+languages => language/NOUN|language#sprachen
+
+success | The success of our project depends on everyone helping. | Der Erfolg unseres Projekts hängt davon ab, dass alle mithelfen.
+The => the/DET|the#bestimmter_artikel
+success => success/NOUN|success#erfolg
+of => of/ADP|of#genitiv_besitz
+our => our/DET|our#unser-unsere
+project => project/NOUN|project#projekt
+depends => depend/VERB|depend#abhaengen
+on => on/ADP|on#abhaengigkeit
+everyone => everyone/PRON|everyone#alle
+helping => help/VERB|help#helfen
+
+deadline | The deadline for this essay is next Friday. | Die Abgabefrist für diesen Aufsatz endet nächsten Freitag.
+The => the/DET|the#bestimmter_artikel
+deadline => deadline/NOUN|deadline#abgabefrist
+for => for/ADP|for#fuer_zweck_empfaenger
+this => this/DET|this#dieser_begleitend
+essay => essay/NOUN|essay#aufsatz
+is => be/AUX|be#sein_vollverb
+next => next/ADJ|next#naechsten
+Friday => Friday/PROPN|friday#freitag
+
+motivation | Seeing my progress gives me the motivation to keep studying. | Meine Fortschritte zu sehen motiviert mich, weiterzulernen.
+Seeing => see/VERB|see#sehen
+my => my/DET|my#mein
+progress => progress/NOUN|progress#fortschritt
+gives => give/VERB|give#geben
+me => I/PRON|i#mir
+the => the/DET|the#bestimmter_artikel
+motivation => motivation/NOUN|motivation#motivation
+to => to/PART|to#infinitivpartikel
+keep => keep/VERB|keep#fortsetzen
+studying => study/VERB|study#studieren
+
+pencil | Write your answers in pencil so you can correct them later. | Schreib deine Antworten mit Bleistift, damit du sie später korrigieren kannst.
+Write => write/VERB|write#schreiben
+your => your/DET|your#dein-deine
+answers => answer/NOUN|answer#antwort
+in => in/ADP|in#schreibmittel
+pencil => pencil/NOUN|pencil#stift
+so => so/SCONJ|so#damit
+you => you/PRON|you#du_sie_ihr
+can => can/AUX|can#koennen
+correct => correct/VERB|correct#berichtigen
+them => they/PRON|they#sie_plural
+later => late/ADV|late#spaeter
+
+cooperate | The two teams must cooperate to finish the project on time. | Die beiden Teams müssen zusammenarbeiten, um das Projekt rechtzeitig fertigzustellen.
+The => the/DET|the#bestimmter_artikel
+two => two/NUM|two#zwei
+teams => team/NOUN|team#team
+must => must/AUX|must#muessen
+cooperate => cooperate/VERB|cooperate#zusammenarbeiten
+to => to/PART|to#infinitivpartikel
+finish => finish/VERB|finish#beenden
+the => the/DET|the#bestimmter_artikel
+project => project/NOUN|project#projekt
+on => on/ADP|on#puenktlich-teil-von-on-time
+time => time/NOUN|time#zeit
+
+spelling | Check the spelling of every name before you send the letter. | Prüfe die Schreibweise jedes Namens, bevor du den Brief abschickst.
+Check => check/VERB|check#ueberprueft
+the => the/DET|the#bestimmter_artikel
+spelling => spelling/NOUN|spelling#rechtschreibung
+of => of/ADP|of#genitiv_besitz
+every => every/DET|every#jede
+name => name/NOUN|name#namen
+before => before/SCONJ|before#bevor
+you => you/PRON|you#du_sie_ihr
+send => send/VERB|send#verschicken
+the => the/DET|the#bestimmter_artikel
+letter => letter/NOUN|letter#brief
+
+strike | The strike at our factory lasted three days. | Der Streik in unserer Fabrik dauerte drei Tage.
+The => the/DET|the#bestimmter_artikel
+strike => strike/NOUN|strike#streik
+at => at/ADP|at#ort
+our => our/DET|our#unser-unsere
+factory => factory/NOUN|factory#fabrik
+lasted => last/VERB|last#dauern
+three => three/NUM|three#drei
+days => day/NOUN|day#tag
+
+evidence | What evidence supports the claim in your report? | Welche Belege stützen die Behauptung in deinem Bericht?
+What => what/DET|what#welcher
+evidence => evidence/NOUN|evidence#belegmaterial
+supports => support/VERB|support#belegen
+the => the/DET|the#bestimmter_artikel
+claim => claim/NOUN|claim#behauptung
+in => in/ADP|in#in_raeumlich
+your => your/DET|your#dein-deine
+report => report/NOUN|report#bericht
+
+performance | My manager reviews my performance at the end of each year. | Meine Führungskraft beurteilt am Ende jedes Jahres meine Arbeitsleistung.
+My => my/DET|my#mein
+manager => manager/NOUN|manager#manager
+reviews => review/VERB|review#beurteilen
+my => my/DET|my#mein
+performance => performance/NOUN|performance#arbeitsleistung
+at => at/ADP|at#zeit
+the => the/DET|the#bestimmter_artikel
+end => end/NOUN|end#schluss
+of => of/ADP|of#genitiv_besitz
+each => each/DET|each#jede
+year => year/NOUN|year#jahr
+
+trainee | An experienced colleague shows the new trainee how to use the machine. | Ein erfahrener Kollege zeigt dem neuen Auszubildenden, wie man die Maschine bedient.
+An => a/DET|a#ein
+experienced => experienced/ADJ|experienced#erfahren
+colleague => colleague/NOUN|colleague#kollege_oder_kollegin
+shows => show/VERB|show#zeigt
+the => the/DET|the#bestimmter_artikel
+new => new/ADJ|new#neu
+trainee => trainee/NOUN|trainee#person-in-betrieblicher-ausbildung
+how => how/ADV|how#wie
+to => to/PART|to#infinitivpartikel
+use => use/VERB|use#benutzen
+the => the/DET|the#bestimmter_artikel
+machine => machine/NOUN|machine#maschine
+
+uniform | Every child at this school wears the same uniform. | Jedes Kind an dieser Schule trägt dieselbe Schuluniform.
+Every => every/DET|every#jede
+child => child/NOUN|child#kind
+at => at/ADP|at#ort
+this => this/DET|this#dieser_begleitend
+school => school/NOUN|school#schule-hier-schul
+wears => wear/VERB|wear#tragen
+the => the/DET|the#bestimmter_artikel
+same => same/ADJ|same#gleichen-selben
+uniform => uniform/NOUN|uniform#schuluniform
+
+equipment | Check all the equipment before you begin the experiment. | Prüfe die gesamte Ausstattung, bevor du mit dem Experiment beginnst.
+Check => check/VERB|check#ueberprueft
+all => all/DET|all#alle_det
+the => the/DET|the#bestimmter_artikel
+equipment => equipment/NOUN|equipment#ausstattung
+before => before/SCONJ|before#bevor
+you => you/PRON|you#du_sie_ihr
+begin => begin/VERB|begin#beginnt
+the => the/DET|the#bestimmter_artikel
+experiment => experiment/NOUN|experiment#experiment
+
+disagree | I disagree with your suggestion, but I understand your reasons. | Ich bin mit deinem Vorschlag nicht einverstanden, aber ich verstehe deine Gründe.
+I => I/PRON|i#ich
+disagree => disagree/VERB|disagree#nicht-uebereinstimmt
+with => with/ADP|with#mit
+your => your/DET|your#dein-deine
+suggestion => suggestion/NOUN|suggestion#vorschlag
+but => but/CCONJ|but#aber
+I => I/PRON|i#ich
+understand => understand/VERB|understand#verstehen
+your => your/DET|your#dein-deine
+reasons => reason/NOUN|reason#grund
+
+chapter | Read the next chapter before our lesson on Tuesday. | Lies vor unserer Unterrichtsstunde am Dienstag das nächste Kapitel.
+Read => read/VERB|read#lesen
+the => the/DET|the#bestimmter_artikel
+next => next/ADJ|next#naechsten
+chapter => chapter/NOUN|chapter#kapitel
+before => before/ADP|before#vor
+our => our/DET|our#unser-unsere
+lesson => lesson/NOUN|lesson#unterrichtsstunde
+on => on/ADP|on#an_zeitlich
+Tuesday => Tuesday/PROPN|tuesday#dienstag
+
+retire | My father plans to retire after forty years at the factory. | Mein Vater will nach vierzig Jahren in der Fabrik in Rente gehen.
+My => my/DET|my#mein
+father => father/NOUN|father#vater
+plans => plan/VERB|plan#planen
+to => to/PART|to#infinitivpartikel
+retire => retire/VERB|retire#in-rente-gehen
+after => after/ADP|after#nach
+forty => forty/NUM|forty#vierzig
+years => year/NOUN|year#jahr
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+factory => factory/NOUN|factory#fabrik
+
+apprenticeship | Luca started an apprenticeship to become an electrician. | Luca hat eine Berufsausbildung zum Elektriker begonnen.
+Luca => Luca/PROPN|luca#luca
+started => start/VERB|start#beginnen
+an => a/DET|a#ein
+apprenticeship => apprenticeship/NOUN|apprenticeship#berufsausbildung
+to => to/PART|to#infinitivpartikel
+become => become/VERB|become#wurde
+an => a/DET|a#ein
+electrician => electrician/NOUN|electrician#elektriker
+
+employ | We employ twelve people in our small printing business. | Wir beschäftigen zwölf Personen in unserer kleinen Druckerei.
+We => we/PRON|we#wir
+employ => employ/VERB|employ#beschaftigen
+twelve => twelve/NUM|twelve#zwoelf
+people => people/NOUN|people#leute
+in => in/ADP|in#in_raeumlich
+our => our/DET|our#unser-unsere
+small => small/ADJ|small#klein
+printing => printing/NOUN|printing#drucken
+business => business/NOUN|business#betrieb
+
+attendance | The teacher checks attendance at the start of each lesson. | Die Lehrerin prüft zu Beginn jeder Unterrichtsstunde die Anwesenheit.
+The => the/DET|the#bestimmter_artikel
+teacher => teacher/NOUN|teacher#lehrkraft
+checks => check/VERB|check#ueberprueft
+attendance => attendance/NOUN|attendance#anwesenheit
+at => at/ADP|at#zeit
+the => the/DET|the#bestimmter_artikel
+start => start/NOUN|start#beginn
+of => of/ADP|of#genitiv_besitz
+each => each/DET|each#jede
+lesson => lesson/NOUN|lesson#unterrichtsstunde
+
+manage | Can you manage to finish the report before lunch? | Schaffst du es, den Bericht vor dem Mittagessen fertigzustellen?
+Can => can/AUX|can#koennen
+you => you/PRON|you#du_sie_ihr
+manage => manage/VERB|manage#bewaltigen
+to => to/PART|to#infinitivpartikel
+finish => finish/VERB|finish#beenden
+the => the/DET|the#bestimmter_artikel
+report => report/NOUN|report#bericht
+before => before/ADP|before#vor
+lunch => lunch/NOUN|lunch#mittagessen
+
+stapler | Use the stapler to fasten these three pages together. | Hefte diese drei Seiten mit dem Heftgerät zusammen.
+Use => use/VERB|use#benutzen
+the => the/DET|the#bestimmter_artikel
+stapler => stapler/NOUN|stapler#heftgerat
+to => to/PART|to#infinitivpartikel
+fasten => fasten/VERB|fasten#befestigen
+these => these/DET|these#diese
+three => three/NUM|three#drei
+pages => page/NOUN|page#seite
+together => together/ADV|together#zusammen
+
+learn | I want to learn how to repair bikes. | Ich möchte lernen, wie man Fahrräder repariert.
+I => I/PRON|i#ich
+want => want/VERB|want#wollen
+to => to/PART|to#infinitivpartikel
+learn => learn/VERB|learn#lernen
+how => how/ADV|how#wie
+to => to/PART|to#infinitivpartikel
+repair => repair/VERB|repair#repariert
+bikes => bike/NOUN|bike#fahrrad
+
+earn | How much do you earn per hour at the shop? | Wie viel verdienst du pro Stunde im Geschäft?
+How => how/ADV|how#wie
+much => much/DET|much#viel_menge
+do => do/AUX|do#hilfsverb
+you => you/PRON|you#du_sie_ihr
+earn => earn/VERB|earn#verdienen
+per => per/ADP|per#pro
+hour => hour/NOUN|hour#stunde
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+shop => shop/NOUN|shop#geschaeft
+
+persuade | We need to persuade the manager to give us more time. | Wir müssen die Führungskraft überzeugen, uns mehr Zeit zu geben.
+We => we/PRON|we#wir
+need => need/VERB|need#brauchen
+to => to/PART|to#infinitivpartikel
+persuade => persuade/VERB|persuade#uberzeugen
+the => the/DET|the#bestimmter_artikel
+manager => manager/NOUN|manager#manager
+to => to/PART|to#infinitivpartikel
+give => give/VERB|give#geben
+us => we/PRON|we#uns
+more => more/ADJ|more#mehr
+time => time/NOUN|time#zeit
+
+graduate | Sara hopes to graduate from university next summer. | Sara hofft, nächsten Sommer ihr Studium abzuschließen.
+Sara => Sara/PROPN|sara#sara
+hopes => hope/VERB|hope#hofft
+to => to/PART|to#infinitivpartikel
+graduate => graduate/VERB|graduate#das-studium-abschliessen
+from => from/ADP|from#von_ausgangspunkt
+university => university/NOUN|university#universitat
+next => next/ADJ|next#naechsten
+summer => summer/NOUN|summer#sommer
+
+discipline | You need discipline to study every evening after work. | Du brauchst Disziplin, um jeden Abend nach der Arbeit zu lernen.
+You => you/PRON|you#du_sie_ihr
+need => need/VERB|need#brauchen
+discipline => discipline/NOUN|discipline#disziplin
+to => to/PART|to#infinitivpartikel
+study => study/VERB|study#studieren
+every => every/DET|every#jede
+evening => evening/NOUN|evening#abend
+after => after/ADP|after#nach
+work => work/NOUN|work#arbeit
+
+save | Please save your work before you close the program. | Speichere bitte deine Arbeit, bevor du das Programm schließt.
+Please => please/INTJ|please#bitte
+save => save/VERB|save#speichern
+your => your/DET|your#dein-deine
+work => work/NOUN|work#arbeit
+before => before/SCONJ|before#bevor
+you => you/PRON|you#du_sie_ihr
+close => close/VERB|close#schliessen
+the => the/DET|the#bestimmter_artikel
+program => program/NOUN|program#computerprogramm
+
+achieve | What do you hope to achieve by the end of this course? | Was möchtest du bis zum Ende dieses Kurses erreichen?
+What => what/PRON|what#fragepronomen
+do => do/AUX|do#hilfsverb
+you => you/PRON|you#du_sie_ihr
+hope => hope/VERB|hope#hofft
+to => to/PART|to#infinitivpartikel
+achieve => achieve/VERB|achieve#erreichen
+by => by/ADP|by#bis_spaetestens
+the => the/DET|the#bestimmter_artikel
+end => end/NOUN|end#schluss
+of => of/ADP|of#genitiv_besitz
+this => this/DET|this#dieser_begleitend
+course => course/NOUN|course#kurs
+
+memorise | We have to memorise this poem for the next lesson. | Wir müssen dieses Gedicht für die nächste Unterrichtsstunde auswendig lernen.
+We => we/PRON|we#wir
+have => have/VERB|have#muessen
+to => to/PART|to#infinitivpartikel
+memorise => memorise/VERB|memorise#auswendig-lernen
+this => this/DET|this#dieser_begleitend
+poem => poem/NOUN|poem#gedicht
+for => for/ADP|for#fuer_zweck_empfaenger
+the => the/DET|the#bestimmter_artikel
+next => next/ADJ|next#naechsten
+lesson => lesson/NOUN|lesson#unterrichtsstunde
+
+permanent | After six months, the company offered me a permanent contract. | Nach sechs Monaten bot mir das Unternehmen einen unbefristeten Vertrag an.
+After => after/ADP|after#nach
+six => six/NUM|six#sechs
+months => month/NOUN|month#monat
+the => the/DET|the#bestimmter_artikel
+company => company/NOUN|company#firma
+offered => offer/VERB|offer#anbot
+me => I/PRON|i#mir
+a => a/DET|a#ein
+permanent => permanent/ADJ|permanent#unbefristet
+contract => contract/NOUN|contract#vertrag
+
+apologise | I need to apologise for sending you the wrong file. | Ich muss mich dafür entschuldigen, dass ich dir die falsche Datei geschickt habe.
+I => I/PRON|i#ich
+need => need/VERB|need#brauchen
+to => to/PART|to#infinitivpartikel
+apologise => apologise/VERB|apologise#sich-entschuldigen
+for => for/ADP|for#anlass
+sending => send/VERB|send#senden
+you => you/PRON|you#du_sie_ihr
+the => the/DET|the#bestimmter_artikel
+wrong => wrong/ADJ|wrong#falsch
+file => file/NOUN|file#datei
+
+investigate | We must investigate why the printer keeps stopping. | Wir müssen untersuchen, warum der Drucker ständig stehen bleibt.
+We => we/PRON|we#wir
+must => must/AUX|must#muessen
+investigate => investigate/VERB|investigate#untersuchen
+why => why/SCONJ|why#warum
+the => the/DET|the#bestimmter_artikel
+printer => printer/NOUN|printer#drucker
+keeps => keep/VERB|keep#fortsetzen
+stopping => stop/VERB|stop#aufhoeren
+
+estimate | Can you estimate how long this task will take? | Kannst du schätzen, wie lange diese Aufgabe dauern wird?
+Can => can/AUX|can#koennen
+you => you/PRON|you#du_sie_ihr
+estimate => estimate/VERB|estimate#schatzen
+how => how/ADV|how#wie
+long => long/ADV|long#lange
+this => this/DET|this#dieser_begleitend
+task => task/NOUN|task#aufgabe
+will => will/AUX|will#zukunft
+take => take/VERB|take#dauert
+
+behave | The children know how to behave during a school visit. | Die Kinder wissen, wie sie sich bei einem Schulbesuch benehmen sollen.
+The => the/DET|the#bestimmter_artikel
+children => child/NOUN|child#kinder
+know => know/VERB|know#wissen
+how => how/ADV|how#wie
+to => to/PART|to#infinitivpartikel
+behave => behave/VERB|behave#sich-benehmen
+during => during/ADP|during#waehrend
+a => a/DET|a#ein
+school => school/NOUN|school#schule-hier-schul
+visit => visit/NOUN|visit#besuch
+
+download | You can download the course notes from our website. | Du kannst die Kursunterlagen von unserer Website herunterladen.
+You => you/PRON|you#du_sie_ihr
+can => can/AUX|can#koennen
+download => download/VERB|download#laedt-herunter
+the => the/DET|the#bestimmter_artikel
+course => course/NOUN|course#kurs
+notes => note/NOUN|note#notiz
+from => from/ADP|from#von_ausgangspunkt
+our => our/DET|our#unser-unsere
+website => website/NOUN|website#website
+
+qualified | Only a qualified electrician should repair this machine. | Nur ein qualifizierter Elektriker sollte diese Maschine reparieren.
+Only => only/ADV|only#nur
+a => a/DET|a#ein
+qualified => qualified/ADJ|qualified#qualifiziert
+electrician => electrician/NOUN|electrician#elektriker
+should => should/AUX|should#sollten
+repair => repair/VERB|repair#repariert
+this => this/DET|this#dieser_begleitend
+machine => machine/NOUN|machine#maschine
+
+fail | If you fail the exam, you can take it again in June. | Wenn du durch die Prüfung fällst, kannst du sie im Juni wiederholen.
+If => if/SCONJ|if#wenn
+you => you/PRON|you#du_sie_ihr
+fail => fail/VERB|fail#durchfallen
+the => the/DET|the#bestimmter_artikel
+exam => exam/NOUN|exam#pruefung
+you => you/PRON|you#du_sie_ihr
+can => can/AUX|can#koennen
+take => take/VERB|take#pruefung_ablegen
+it => it/PRON|it#es_ding
+again => again/ADV|again#noch-einmal
+in => in/ADP|in#in_zeitlich
+June => June/PROPN|june#juni
+
+promotion | Her promotion means she will lead the team from next month. | Durch ihre Beförderung wird sie ab nächstem Monat das Team leiten.
+Her => her/DET|her#ihr_possessiv
+promotion => promotion/NOUN|promotion#beforderung-im-beruf
+means => mean/VERB|mean#bedeuten
+she => she/PRON|she#sie
+will => will/AUX|will#zukunft
+lead => lead/VERB|lead#leiten
+the => the/DET|the#bestimmter_artikel
+team => team/NOUN|team#team
+from => from/ADP|from#von_ausgangspunkt
+next => next/ADJ|next#naechsten
+month => month/NOUN|month#monat
+
+respect | We should respect other people's views during a discussion. | Wir sollten bei einer Diskussion die Ansichten anderer respektieren.
+We => we/PRON|we#wir
+should => should/AUX|should#sollten
+respect => respect/VERB|respect#respektieren
+other => other/ADJ|other#anderen
+people => people/NOUN|people#leute
+'s => 's/PART|s#genitiv-endung
+views => view/NOUN|view#ansicht
+during => during/ADP|during#waehrend
+a => a/DET|a#ein
+discussion => discussion/NOUN|discussion#diskussion
+
+practical | The course includes practical work in a real kitchen. | Der Kurs umfasst praktische Arbeit in einer richtigen Küche.
+The => the/DET|the#bestimmter_artikel
+course => course/NOUN|course#kurs
+includes => include/VERB|include#umfassen
+practical => practical/ADJ|practical#praktisch
+work => work/NOUN|work#arbeit
+in => in/ADP|in#in_raeumlich
+a => a/DET|a#ein
+real => real/ADJ|real#echt
+kitchen => kitchen/NOUN|kitchen#kueche
+
+efficient | This new system is more efficient and saves us an hour each day. | Dieses neue System ist effizienter und spart uns jeden Tag eine Stunde.
+This => this/DET|this#dieser_begleitend
+new => new/ADJ|new#neu
+system => system/NOUN|system#system
+is => be/AUX|be#sein_vollverb
+more => more/ADV|more#mehr_steigerung
+efficient => efficient/ADJ|efficient#effizient
+and => and/CCONJ|and#und
+saves => save/VERB|save#sparen
+us => we/PRON|we#uns
+an => a/DET|a#ein
+hour => hour/NOUN|hour#stunde
+each => each/DET|each#jede
+day => day/NOUN|day#tag
+
+strict | Our teacher is strict about handing homework in on time. | Unsere Lehrerin achtet streng darauf, dass wir die Hausaufgaben pünktlich abgeben.
+Our => our/DET|our#unser-unsere
+teacher => teacher/NOUN|teacher#lehrkraft
+is => be/AUX|be#sein_vollverb
+strict => strict/ADJ|strict#streng
+about => about/ADP|about#ueber_thema
+handing => hand/VERB|hand#abgeben
+homework => homework/NOUN|homework#hausaufgaben
+in => in/ADP|in#ein-in-hand-in
+on => on/ADP|on#puenktlich-teil-von-on-time
+time => time/NOUN|time#zeit
+
+personal | Please keep your personal files separate from the work documents. | Bewahre deine persönlichen Dateien bitte getrennt von den Arbeitsunterlagen auf.
+Please => please/INTJ|please#bitte
+keep => keep/VERB|keep#halten
+your => your/DET|your#dein-deine
+personal => personal/ADJ|personal#personlich
+files => file/NOUN|file#datei
+separate => separate/ADJ|separate#getrennt
+from => from/ADP|from#unterscheidung
+the => the/DET|the#bestimmter_artikel
+work => work/NOUN|work#arbeit
+documents => document/NOUN|document#dokumente
+
+compare | Compare the two answers and explain how they differ. | Vergleiche die beiden Antworten und erkläre, wie sie sich unterscheiden.
+Compare => compare/VERB|compare#vergleichen
+the => the/DET|the#bestimmter_artikel
+two => two/NUM|two#zwei
+answers => answer/NOUN|answer#antwort
+and => and/CCONJ|and#und
+explain => explain/VERB|explain#erklaere
+how => how/ADV|how#wie
+they => they/PRON|they#sie_plural
+differ => differ/VERB|differ#sich_unterscheiden
+
+plumber | We called a plumber because water was leaking under the sink. | Wir haben einen Installateur gerufen, weil unter dem Spülbecken Wasser austrat.
+We => we/PRON|we#wir
+called => call/VERB|call#rufen
+a => a/DET|a#ein
+plumber => plumber/NOUN|plumber#installateur
+because => because/SCONJ|because#weil
+water => water/NOUN|water#wasser
+was => be/AUX|be#hilfsverb
+leaking => leak/VERB|leak#austreten
+under => under/ADP|under#unter
+the => the/DET|the#bestimmter_artikel
+sink => sink/NOUN|sink#spuelbecken
+
+confidential | This report is confidential; please do not share it outside the team. | Dieser Bericht ist vertraulich; gib ihn bitte nicht außerhalb des Teams weiter.
+This => this/DET|this#dieser_begleitend
+report => report/NOUN|report#bericht
+is => be/AUX|be#sein_vollverb
+confidential => confidential/ADJ|confidential#vertraulich
+please => please/INTJ|please#bitte
+do => do/AUX|do#hilfsverb
+not => not/PART|not#nicht
+share => share/VERB|share#teilt
+it => it/PRON|it#es_ding
+outside => outside/ADP|outside#vor-ausserhalb
+the => the/DET|the#bestimmter_artikel
+team => team/NOUN|team#team
+
+clear | Your explanation was clear, and I knew what to do next. | Deine Erklärung war verständlich, und ich wusste, was ich als Nächstes tun sollte.
+Your => your/DET|your#dein-deine
+explanation => explanation/NOUN|explanation#erklaerung
+was => be/AUX|be#sein_vollverb
+clear => clear/ADJ|clear#klares
+and => and/CCONJ|and#und
+I => I/PRON|i#ich
+knew => know/VERB|know#wissen
+what => what/PRON|what#fragepronomen
+to => to/PART|to#infinitivpartikel
+do => do/VERB|do#tun
+next => next/ADV|next#als_naechstes
+
+creative | We need a creative idea for the cover of our school magazine. | Wir brauchen eine kreative Idee für das Titelblatt unserer Schülerzeitung.
+We => we/PRON|we#wir
+need => need/VERB|need#brauchen
+a => a/DET|a#ein
+creative => creative/ADJ|creative#kreativ
+idea => idea/NOUN|idea#idee
+for => for/ADP|for#fuer_zweck_empfaenger
+the => the/DET|the#bestimmter_artikel
+cover => cover/NOUN|cover#titelseite
+of => of/ADP|of#genitiv_besitz
+our => our/DET|our#unser-unsere
+school => school/NOUN|school#schule-hier-schul
+magazine => magazine/NOUN|magazine#zeitschriften
+
+classmate | My classmate lent me his notes after I missed a week of school. | Mein Klassenkamerad lieh mir seine Notizen, nachdem ich eine Woche in der Schule gefehlt hatte.
+My => my/DET|my#mein
+classmate => classmate/NOUN|classmate#mitschueler
+lent => lend/VERB|lend#leihen
+me => I/PRON|i#mir
+his => his/DET|his#sein
+notes => note/NOUN|note#notiz
+after => after/SCONJ|after#nachdem
+I => I/PRON|i#ich
+missed => miss/VERB|miss#verpassen
+a => a/DET|a#ein
+week => week/NOUN|week#woche
+of => of/ADP|of#teil_menge
+school => school/NOUN|school#schule-hier-schul
+
+vocational | This college offers vocational courses in cooking and car repair. | Diese Bildungseinrichtung bietet berufsbezogene Kurse in Kochen und Autoreparatur an.
+This => this/DET|this#dieser_begleitend
+college => college/NOUN|college#college
+offers => offer/VERB|offer#anbot
+vocational => vocational/ADJ|vocational#berufsbezogen
+courses => course/NOUN|course#kurs
+in => in/ADP|in#taetigkeitsbereich
+cooking => cook/VERB|cook#kocht
+and => and/CCONJ|and#und
+car => car/NOUN|car#auto
+repair => repair/NOUN|repair#reparatur

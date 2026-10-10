@@ -24,7 +24,7 @@ Der gemeinsame Entwurf gilt für Drift `user.db` und Supabase-Schema `app`; die 
 
 `id` uuid, `card_id`, `text`, `translation_de`, `gap_start`, `gap_end`, `source` (`story` / `import` / `ai_rewrite`), `source_ref`, `status` (`pending` / `ok` / `rewritten` / `failed`), `is_primary` bool, `created_at`.
 
-Eigene Kontexte haben keine geprüften Alternativen und verhalten sich wie `valid_alternatives` = leere Liste (`docs/srs.md`, Abschnitt Synonymhinweis). Unbestätigte Synonyme, etwa aus Story-Prüfung oder KI-Umschreibung, werden nicht übernommen.
+Eigene Kontexte haben keine geprüften Alternativen und verhalten sich wie `valid_alternatives` = leere Liste (`docs/srs.md`, Abschnitt Neutrale Synonymversuche). Unbestätigte Synonyme, etwa aus Story-Prüfung oder KI-Umschreibung, werden nicht übernommen.
 
 **`review_log`** — Spalten wie in `docs/srs.md`. Nur anhängen; im Schema `app` nur Insert und Select. Beschlossener Zielvertrag, noch nicht migriert: zusätzliche Spalte `hint_used` bool, Standard `false`; bestehende Zeilen behalten `false`, ohne nachträglich erfundene Hinweise.
 
@@ -73,3 +73,8 @@ Migration auch ab v1/v2 additiv; keine Zeilen werden zusammengeführt oder nach 
 - `learning_identity_bindings`: `identity_key` PK, `lang`, `form_norm`, `semantic_anchor`, `card_id`; zusätzlich UNIQUE (`lang`, `form_norm`, `semantic_anchor`). Anker ist die belegte stabile Sense-ID. Neue lokale ID: `u:` + SHA256 über JSON `["local-card-v1", lang, form_norm, semantic_anchor]`.
 
 Karte, erster Kontext, Bindung, Quelle und Lernentscheidung werden in einer Transaktion gespeichert. INSERT OR IGNORE dient nur idempotenten Entscheidungen/Bindungen; kein INSERT OR REPLACE. Konflikt nach paralleler Bindung führt zum Rollback. Kein Review beim Add. Lokale Reviews referenzieren `card_contexts.id`; akzeptierte Zielantwort ist die exakte Form, `valid_alternatives` bleibt leer. Unvollständige alte lokale Karten bleiben erhalten und werden als nicht verfügbar ausgewiesen.
+
+## Gruppen und neutrale Synonyme (06.10.2026)
+Keine neue user.db-Version und keine Migration vorhandener Lernstände. Gruppen leben ausschließlich in Content-Schema 3. Eigene Karten werden zur Laufzeit nur über belegte Sprache + form_norm + sense_identity zugeordnet. Alle alten Zustände, Favoriten, Notizen, Zeitpunkte und Reviews bleiben getrennt erhalten.
+Story-Add reserviert das bestehende Gruppenziel oder den Kopf atomar und idempotent. `story_word_sources` belegt die tatsächlich angetippte Quelle; sie muss nicht die Form des ausgewählten Übungsziels enthalten. In diesem Fall wird dessen vorhandener geprüfter Satz verwendet. Eine Gruppenweiterleitung schreibt **keine** falsche `learning_identity_bindings`-Gleichsetzung für unterschiedliche Formen/Bedeutungen.
+Neue neutrale Synonymversuche setzen `hint_used` nicht; `first_attempt_correct` überspringt diese Versuche. Historische Hilfeflags bleiben unverändert; weder Neubewertung noch Umschreiben alter Reviews. Regeln: `srs.md`, Nachweise: `learning-groups-v1.md`.

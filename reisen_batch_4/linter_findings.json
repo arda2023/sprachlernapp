@@ -1,0 +1,135 @@
+{
+  "errors": [],
+  "warnings": [
+    [
+      "expiry",
+      "i+1",
+      "'booking'/'booking' Zipf 3.86 below 4.0"
+    ],
+    [
+      "garage",
+      "i+1",
+      "'mechanic'/'mechanic' Zipf 3.79 below 4.0"
+    ],
+    [
+      "rental",
+      "i+1",
+      "'bicycle'/'bicycle' Zipf 3.98 below 4.0"
+    ],
+    [
+      "bathroom",
+      "i+1",
+      "'towel'/'towels' Zipf 3.94 below 4.0"
+    ],
+    [
+      "toilet",
+      "i+1",
+      "'flush'/'flush' Zipf 3.80 below 4.0"
+    ],
+    [
+      "bowl",
+      "i+1",
+      "'waiter'/'waiter' Zipf 3.61 below 4.0"
+    ],
+    [
+      "fish",
+      "i+1",
+      "'grill'/'grilled' Zipf 3.84 below 4.0"
+    ],
+    [
+      "seafood",
+      "i+1",
+      "'harbour'/'harbour' Zipf 3.98 below 4.0"
+    ],
+    [
+      "potato",
+      "i+1",
+      "'bake'/'baked' Zipf 3.92 below 4.0"
+    ],
+    [
+      "temple",
+      "i+1",
+      "'buddhist'/'buddhist' Zipf 3.85 below 4.0"
+    ],
+    [
+      "trail",
+      "i+1",
+      "'hiking'/'hiking' Zipf 3.87 below 4.0"
+    ],
+    [
+      "trail",
+      "i+1",
+      "'waterfall'/'waterfall' Zipf 3.54 below 4.0"
+    ],
+    [
+      "storm",
+      "i+1",
+      "'harbour'/'harbour' Zipf 3.98 below 4.0"
+    ],
+    [
+      "kayak",
+      "i+1",
+      "'paddle'/'paddle' Zipf 3.49 below 4.0"
+    ],
+    [
+      "allergy",
+      "i+1",
+      "'waiter'/'waiter' Zipf 3.61 below 4.0"
+    ],
+    [
+      "medicine",
+      "i+1",
+      "'luggage'/'luggage' Zipf 3.80 below 4.0"
+    ],
+    [
+      "reach",
+      "i+1",
+      "'campsite'/'campsite' Zipf 3.09 below 4.0"
+    ],
+    [
+      "request",
+      "i+1",
+      "'balcony'/'balcony' Zipf 3.78 below 4.0"
+    ],
+    [
+      "refuse",
+      "i+1",
+      "'booking'/'booking' Zipf 3.86 below 4.0"
+    ],
+    [
+      "call",
+      "i+1",
+      "'booking'/'booking' Zipf 3.86 below 4.0"
+    ],
+    [
+      "borrow",
+      "i+1",
+      "'umbrella'/'umbrella' Zipf 3.89 below 4.0"
+    ],
+    [
+      "collect",
+      "i+1",
+      "'luggage'/'luggage' Zipf 3.80 below 4.0"
+    ],
+    [
+      "nearby",
+      "i+1",
+      "'pharmacy'/'pharmacy' Zipf 3.87 below 4.0"
+    ],
+    [
+      "rural",
+      "i+1",
+      "'campsite'/'campsite' Zipf 3.09 below 4.0"
+    ],
+    [
+      "raw",
+      "i+1",
+      "'carrot'/'carrots' Zipf 3.63 below 4.0"
+    ],
+    [
+      "spicy",
+      "i+1",
+      "'curry'/'curry' Zipf 3.96 below 4.0"
+    ]
+  ]
+}

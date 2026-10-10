@@ -1,0 +1,145 @@
+{
+  "errors": [],
+  "warnings": [
+    [
+      "room",
+      "i+1",
+      "'sunlight'/'sunlight' Zipf 3.86 below 4.0"
+    ],
+    [
+      "roof",
+      "i+1",
+      "'dripping'/'dripping' Zipf 3.48 below 4.0"
+    ],
+    [
+      "garden",
+      "i+1",
+      "'tomato'/'tomatoes' Zipf 3.90 below 4.0"
+    ],
+    [
+      "dust",
+      "i+1",
+      "'cupboard'/'cupboard' Zipf 3.44 below 4.0"
+    ],
+    [
+      "plug",
+      "i+1",
+      "'socket'/'socket' Zipf 3.52 below 4.0"
+    ],
+    [
+      "plug",
+      "i+1",
+      "'toaster'/'toaster' Zipf 3.33 below 4.0"
+    ],
+    [
+      "scissors",
+      "i+1",
+      "'blunt'/'blunt' Zipf 3.90 below 4.0"
+    ],
+    [
+      "tool",
+      "i+1",
+      "'tighten'/'tighten' Zipf 3.51 below 4.0"
+    ],
+    [
+      "blouse",
+      "i+1",
+      "'trouser'/'trousers' Zipf 3.70 below 4.0"
+    ],
+    [
+      "hat",
+      "i+1",
+      "'brim'/'brim' Zipf 3.06 below 4.0"
+    ],
+    [
+      "pocket",
+      "i+1",
+      "'trouser'/'trousers' Zipf 3.70 below 4.0"
+    ],
+    [
+      "apron",
+      "i+1",
+      "'batter'/'batter' Zipf 3.56 below 4.0"
+    ],
+    [
+      "label",
+      "i+1",
+      "'jar'/'jar' Zipf 3.93 below 4.0"
+    ],
+    [
+      "lid",
+      "i+1",
+      "'jar'/'jar' Zipf 3.93 below 4.0"
+    ],
+    [
+      "garlic",
+      "i+1",
+      "'clove'/'clove' Zipf 2.91 below 4.0"
+    ],
+    [
+      "mushroom",
+      "i+1",
+      "'thinly'/'thinly' Zipf 3.27 below 4.0"
+    ],
+    [
+      "mushroom",
+      "i+1",
+      "'onion'/'onions' Zipf 3.89 below 4.0"
+    ],
+    [
+      "jam",
+      "i+1",
+      "'strawberry'/'strawberry' Zipf 3.72 below 4.0"
+    ],
+    [
+      "jam",
+      "i+1",
+      "'toast'/'toast' Zipf 3.96 below 4.0"
+    ],
+    [
+      "fry",
+      "i+1",
+      "'onion'/'onions' Zipf 3.89 below 4.0"
+    ],
+    [
+      "piano",
+      "i+1",
+      "'practise'/'practises' Zipf 3.52 below 4.0"
+    ],
+    [
+      "draw",
+      "i+1",
+      "'coloured'/'coloured' Zipf 3.92 below 4.0"
+    ],
+    [
+      "draw",
+      "i+1",
+      "'pencil'/'pencils' Zipf 3.95 below 4.0"
+    ],
+    [
+      "fold",
+      "i+1",
+      "'towel'/'towels' Zipf 3.94 below 4.0"
+    ],
+    [
+      "fold",
+      "i+1",
+      "'cupboard'/'cupboard' Zipf 3.44 below 4.0"
+    ],
+    [
+      "pull",
+      "i+1",
+      "'drawer'/'drawer' Zipf 3.78 below 4.0"
+    ],
+    [
+      "smell",
+      "i+1",
+      "'bakery'/'bakery' Zipf 3.67 below 4.0"
+    ],
+    [
+      "share",
+      "i+1",
+      "'dessert'/'dessert' Zipf 3.83 below 4.0"
+    ]
+  ]
+}

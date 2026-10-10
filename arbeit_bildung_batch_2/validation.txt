@@ -1,0 +1,35 @@
+PASS source/registry/groups/manifest hashes, Schema 3, context and base SQLite
+PASS hash-bound display patch: append 83..164, final display 1..164; original registry positions preserved
+PASS create_content/build_rows: 1169 cards; 1054 primary goals (160/489/241/164); 18 tables
+PASS 82 reserved identities, display 1..164; 1087 old IDs and all historical rows preserved
+PASS 934 token positions; four reviewed alternatives; linter 0 errors, 4 warnings
+WARNINGS [["process", "i+1", "'simplify'/'simplify' Zipf 3.46 below 3.5"], ["discuss", "i+1", "'timetable'/'timetable' Zipf 3.44 below 3.5"], ["stationery", "i+1", "'cupboard'/'cupboard' Zipf 3.44 below 3.5"], ["keen", "i+1", "'trainee'/'trainee' Zipf 3.43 below 3.5"]]
+{
+  "status": "ok",
+  "internal_test_pack": true,
+  "ai_calls": 0,
+  "ai_cost_usd": 0,
+  "sqlite_counts": {
+    "languages": 1,
+    "lemmas": 2171,
+    "senses": 3401,
+    "cards": 1169,
+    "dictionary_forms": 3844,
+    "decks": 4,
+    "deck_cards": 1169,
+    "deck_words": 1065,
+    "word_aliases": 15,
+    "sentences": 1703,
+    "sentence_tokens": 18206,
+    "card_sentences": 1697,
+    "stories": 1,
+    "story_sentences": 6,
+    "exercises": 0,
+    "grammar_rules": 0,
+    "audio_assets": 0,
+    "content_releases": 1
+  },
+  "sha256": "35cb6adc6b443330633bb7c2b474ce3411d9564deaef33792331a77fbcad0846"
+}
+PASS actual offline export and complete row-by-row SQLite readback
+NOT RUN: App staging, Flutter/device tests, user database access

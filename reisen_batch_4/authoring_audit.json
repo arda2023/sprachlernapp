@@ -1,0 +1,69 @@
+{
+  "status": "authored_editorially_reviewed_and_locally_validated_project_import_pending",
+  "author": "ChatGPT",
+  "batch": 4,
+  "sentences": 100,
+  "target_words": 100,
+  "tokens": 982,
+  "reviewed_alternatives": 5,
+  "pos_counts": {
+    "NOUN": 75,
+    "VERB": 15,
+    "ADJ": 10
+  },
+  "new_lemmas": 100,
+  "new_senses": 117,
+  "new_dictionary_forms": 150,
+  "existing_target_senses": 34,
+  "new_target_senses": 66,
+  "source_sha256": "27d2ef97c9a188e7313cdb7e12b84336f37266f0cca865d1a5c836a4dc17251f",
+  "registry_sha256": "8f1e9307f30639616ba4e1ac757b7e1f5eeeeb72aa1c2c75ec13d791ba3edb33",
+  "create_sha256": "71da79069c88bb25be5455a4100a384a52f2a39fb2f58cae6c9144d7ff73a89f",
+  "validation": {
+    "spacy": "3.8.16",
+    "model": "en_core_web_sm 3.8.0",
+    "max_words": 14,
+    "max_subclauses": 1,
+    "linter_errors": 0,
+    "linter_frequency_warnings": 26,
+    "word_lengths_min": 6,
+    "word_lengths_max": 12
+  },
+  "positions": {
+    "original_selection_unchanged": true,
+    "create_append_positions": "301..400",
+    "final_display_positions": "1..400",
+    "existing_rows_with_changed_display": 285
+  },
+  "expected_after_project_import": {
+    "cards": 664,
+    "sentences_including_story": 1198,
+    "card_sentences_including_history": 1192,
+    "primary_words": 560,
+    "travel_primary_words": 400,
+    "general_primary_words": 160,
+    "decks": 2
+  },
+  "limits": [
+    "Current repository create_content/build_rows/stable_id and deck_display were NOT executed here; run the verifier with --repo in the project.",
+    "Local display check is independent arithmetic with source/registry/mapping checks, not a replacement for the current project validator.",
+    "No SQLite export, app staging or device testing here.",
+    "No Vertex/Gemini or external annotation API calls. Editorial creation itself uses ChatGPT.",
+    "No independent human review or public content release.",
+    "Parser POS is advisory, not authoritative. Supplied project senses and contextual grammatical analysis determine annotation.",
+    "CEFR bands are editorial categories, not certified levels.",
+    "Empty alternatives do not imply uniqueness.",
+    "Existing abbreviated or inflected sense/form glosses are preserved."
+  ],
+  "companion_decisions": [
+    "Fixed new target nearby#nahe-gelegen overlaps with existing companion nearby#nahe_gelegen; identity preserved from supplied authoring context. No silent merges.",
+    "All five redundant companion sense groups removed in Batch 3 remain absent from this delta; current dictionary and source sentences were consulted.",
+    "Newly existing route, petrol, shower, toilet, fish, fee, path, sail, board, land and replace target senses are reused.",
+    "warm is a verb in the mug sentence; stops is a noun in the express sentence; inside/outside are adverbs; to distinguishes destination and infinitive.",
+    "Existing historical inflected keys are reused when their contextual meaning matches; new form glosses include actual inflection.",
+    "New lower/VERB is distinct from the old erroneous lower/ADJ reference; old data was not modified.",
+    "Five alternatives were read in full substitution: expiration, gasoline, stomach ache, phone, uncooked. No claim of exhaustive synonyms.",
+    "Future reserved senses as dictionary companions create no new learning cards or ownership rows."
+  ],
+  "known_source_metadata_note": "Registry source_sqlite_sha256 is inherited historical metadata; actual source-pack bytes and canonical registry hash bind this delivery."
+}
