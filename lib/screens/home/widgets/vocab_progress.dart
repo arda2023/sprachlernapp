@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../../models/home_models.dart';
+import '../../../domain/srs_state.dart' show LexicalBreakdown;
 import '../../../theme/app_theme.dart';
 
 String formatCountDe(int n) =>
@@ -10,9 +11,10 @@ String formatCountDe(int n) =>
 /// underline rather than colored text: mastered violet on the dark ground is
 /// too low-contrast (~2.7:1) to carry text. Due and unseen stay neutral.
 class VocabProgress extends StatelessWidget {
-  const VocabProgress({super.key, required this.breakdown});
+  const VocabProgress({super.key, required this.breakdown, this.lexical});
 
   final VocabBreakdown breakdown;
+  final LexicalBreakdown? lexical;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +24,10 @@ class VocabProgress extends StatelessWidget {
       container: true,
       label:
           '$due ${b.due == 1 ? 'Wiederholung' : 'Wiederholungen'} verfügbar. '
-          '${formatCountDe(b.building)} Wörter im Aufbau, '
+          '${formatCountDe(b.building)} Übungen im Aufbau, '
           '${formatCountDe(b.mastered)} gemeistert, '
-          '${formatCountDe(b.unseen)} noch nicht angezeigt',
+          '${formatCountDe(b.unseen)} noch nicht geübt. '
+          '${lexical == null ? '' : '${lexical!.total} Wörter, davon ${lexical!.practiced} bereits geübt.'}',
       excludeSemantics: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,16 +63,21 @@ class VocabProgress extends StatelessWidget {
           _SegmentedTrack(breakdown: b),
           const SizedBox(height: 12),
           _LedgerRow(
-            label: 'Wörter im Aufbau',
+            label: 'Übungen im Aufbau',
             count: b.building,
             ink: context.appColors.active,
           ),
           _LedgerRow(
-            label: 'Wörter gemeistert',
+            label: 'Gemeisterte Übungen',
             count: b.mastered,
             ink: context.appColors.mastered,
           ),
-          _LedgerRow(label: 'Noch nicht angezeigt', count: b.unseen),
+          _LedgerRow(label: 'Noch nicht geübt', count: b.unseen),
+          if (lexical != null) ...[
+            _LedgerRow(label: 'Wörter', count: lexical!.total),
+            _LedgerRow(label: 'Davon bereits geübt', count: lexical!.practiced),
+            Text('Ein Wort kann mehrere Übungen haben.', style: AppType.chrome(color: context.appColors.textMuted)),
+          ],
         ],
       ),
     );

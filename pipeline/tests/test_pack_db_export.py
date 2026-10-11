@@ -160,11 +160,11 @@ def test_write_error_keeps_existing_target_and_cleans_up(pack, tmp_path, monkeyp
     before = old_database(target)
     real, calls = export._ddl, []
 
-    def failing_ddl(table):
+    def failing_ddl(table, columns=None):
         calls.append(table)
         if len(calls) == 3:
             raise sqlite3.OperationalError("disk I/O error (simulated)")
-        return real(table)
+        return real(table, columns)
     monkeypatch.setattr(export, "_ddl", failing_ddl)
     with pytest.raises(sqlite3.OperationalError, match="simulated"):
         export_sqlite(pack, target)
@@ -174,7 +174,9 @@ def test_write_error_keeps_existing_target_and_cleans_up(pack, tmp_path, monkeyp
 
 
 def test_successful_export_replaces_existing_target(pack, tmp_path):
-    from sprachpipe.schema import COLUMNS, TABLE_ORDER
+    from sprachpipe.schema import columns_for
+    COLUMNS = columns_for(pack["release"]["schema_version"])
+    TABLE_ORDER = list(COLUMNS)
     target = tmp_path / "content.sqlite"
     before = old_database(target)
     counts = export_sqlite(pack, target)

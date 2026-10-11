@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "scope": "Standalone delivery validation; repository importer/build_rows/export/Flutter NOT executed",
+  "source_files_sha256_verified": 77,
+  "json_schema": "editorial_content_v3",
+  "sentence_pairs": 83,
+  "token_positions": 826,
+  "word_tokens": 738,
+  "punctuation_tokens": 88,
+  "current_form_targets": 105,
+  "unchanged_reuse": 22,
+  "regional_alternatives": 9,
+  "lint_rules_checked": [
+    "gap",
+    "single target occurrence",
+    "14-word limit",
+    "one subordinate clause",
+    "sentence ending"
+  ],
+  "lint_errors": 0,
+  "frequency_warnings": [
+    {
+      "sentence": "irregular-v1-b2-s051",
+      "word": "unkind",
+      "zipf": 2.99
+    },
+    {
+      "sentence": "irregular-v1-b2-s057",
+      "word": "gardener",
+      "zipf": 3.49
+    }
+  ],
+  "source_sqlite_integrity": "ok",
+  "source_table_counts": {
+    "languages": 1,
+    "lemmas": 3497,
+    "senses": 4989,
+    "cards": 2319,
+    "dictionary_forms": 5889,
+    "decks": 11,
+    "deck_cards": 2290,
+    "deck_words": 2186,
+    "word_aliases": 37,
+    "sentences": 2853,
+    "sentence_tokens": 31715,
+    "card_sentences": 2847,
+    "stories": 1,
+    "story_sentences": 6,
+    "exercises": 0,
+    "grammar_rules": 0,
+    "audio_assets": 0,
+    "content_releases": 1,
+    "lexical_targets": 33,
+    "card_lexical_targets": 101,
+    "form_targets": 99,
+    "deck_practice_targets": 99
+  },
+  "new_dictionary_forms": 62,
+  "new_accompanying_senses": 17,
+  "versions": {
+    "spacy": "3.8.16",
+    "wordfreq": "3.1.1",
+    "jsonschema": "4.26.0"
+  },
+  "source_sha256": "23e6731e358f7e9f59a4dfa0f304ac850ef4a7abf5786649a7ca384f1c5f2a46",
+  "selection_sha256": "28d30de9e6d85974f6d9ca1f635d2928edfbd3defc922e56ee6838e1582c556b",
+  "delivery_sha256": "6299063f695d7d3209ec4623fcf1c42acd6db9996e3ef88de5034461b3bf65cb"
+}

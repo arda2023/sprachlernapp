@@ -1,0 +1,1 @@
+PASS 14 tokenizer checks: compounds, offsets, default compatibility, malformed spans

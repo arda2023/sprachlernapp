@@ -149,7 +149,7 @@
               },
               "learning": {
                 "type": "object",
-                "description": "Required for every new card when the source pack uses schema 3. Group heads must resolve in the resulting pack. Schema 2 remains supported.",
+                "description": "Required for every new card when the source pack uses schema 3 or 4. Group heads must resolve in the resulting pack. Schema 2 remains supported.",
                 "additionalProperties": false,
                 "required": [
                   "group_id",

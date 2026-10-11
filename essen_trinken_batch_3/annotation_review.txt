@@ -1,0 +1,1028 @@
+raspberry | Lina placed a raspberry on top of each small cake. | Lina legte auf jedes kleine Küchlein eine Himbeere.
+Lina => Lina/PROPN|lina#lina
+placed => place/VERB|place#lege
+a => a/DET|a#ein
+raspberry => raspberry/NOUN|raspberry#himbeere
+on => on/ADP|on#auf
+top => top/NOUN|top#oberseite
+of => of/ADP|of#genitiv_besitz
+each => each/DET|each#jede
+small => small/ADJ|small#klein
+cake => cake/NOUN|cake#kuchen
+
+apricot | Ben cut an apricot in half and removed the stone. | Ben halbierte eine Aprikose und entfernte den Kern.
+Ben => Ben/PROPN|ben#ben
+cut => cut/VERB|cut#schneidet
+an => a/DET|a#ein
+apricot => apricot/NOUN|apricot#aprikose
+in => in/ADP|in#teilung
+half => half/NOUN|half#halfte
+and => and/CCONJ|and#und
+removed => remove/VERB|remove#entfernt
+the => the/DET|the#bestimmter_artikel
+stone => stone/NOUN|stone#fruchtkern
+
+herb | Which herb did you add to the tomato sauce? | Welches Küchenkraut hast du in die Tomatensoße gegeben?
+Which => which/DET|which#determiner_auswahl
+herb => herb/NOUN|herb#kuechenkraut
+did => do/AUX|do#hilfsverb
+you => you/PRON|you#du_sie_ihr
+add => add/VERB|add#gibt
+to => to/ADP|to#zu
+the => the/DET|the#bestimmter_artikel
+tomato => tomato/NOUN|tomato#tomaten
+sauce => sauce/NOUN|sauce#sosse
+
+buttermilk | Maya poured buttermilk into a glass and took a sip. | Maya goss Buttermilch in ein Glas und nahm einen Schluck.
+Maya => Maya/PROPN|maya#maya
+poured => pour/VERB|pour#giesst
+buttermilk => buttermilk/NOUN|buttermilk#buttermilch
+into => into/ADP|into#in
+a => a/DET|a#ein
+glass => glass/NOUN|glass#glas
+and => and/CCONJ|and#und
+took => take/VERB|take#nehmen
+a => a/DET|a#ein
+sip => sip/NOUN|sip#schluck
+
+rye | The baker uses rye flour for this dark bread. | Der Bäcker verwendet für dieses dunkle Brot Roggenmehl.
+The => the/DET|the#bestimmter_artikel
+baker => baker/NOUN|baker#baecker
+uses => use/VERB|use#benutzen
+rye => rye/NOUN|rye#roggen
+flour => flour/NOUN|flour#mehl
+for => for/ADP|for#fuer_zweck_empfaenger
+this => this/DET|this#dieser_begleitend
+dark => dark/ADJ|dark#dunkel
+bread => bread/NOUN|bread#brot
+
+grate | Could you grate some cheese for the pasta? | Könntest du etwas Käse für die Nudeln reiben?
+Could => could/AUX|could#koenntest
+you => you/PRON|you#du_sie_ihr
+grate => grate/VERB|grate#reiben
+some => some/DET|some#etwas
+cheese => cheese/NOUN|cheese#kase
+for => for/ADP|for#fuer_zweck_empfaenger
+the => the/DET|the#bestimmter_artikel
+pasta => pasta/NOUN|pasta#nudeln
+
+cranberry | Rosa tasted a fresh cranberry and found it very sour. | Rosa probierte eine frische Cranberry und fand sie sehr sauer.
+Rosa => Rosa/PROPN|rosa#rosa
+tasted => taste/VERB|taste#probiert
+a => a/DET|a#ein
+fresh => fresh/ADJ|fresh#frische
+cranberry => cranberry/NOUN|cranberry#cranberry
+and => and/CCONJ|and#und
+found => find/VERB|find#empfinden-beurteilen
+it => it/PRON|it#es_ding
+very => very/ADV|very#sehr
+sour => sour/ADJ|sour#sauer
+
+parsley | Omar scattered chopped parsley over the boiled potatoes. | Omar streute gehackte Petersilie über die gekochten Kartoffeln.
+Omar => Omar/PROPN|omar#omar
+scattered => scatter/VERB|scatter#verstreuen
+chopped => chop/VERB|chop#hacken
+parsley => parsley/NOUN|parsley#petersilie
+over => over/ADP|over#ueber
+the => the/DET|the#bestimmter_artikel
+boiled => boil/VERB|boil#kocht
+potatoes => potato/NOUN|potato#kartoffel
+
+feta | Emma added cubes of feta to the cucumber salad. | Emma gab Fetawürfel zum Gurkensalat.
+Emma => Emma/PROPN|emma#emma
+added => add/VERB|add#gibt
+cubes => cube/NOUN|cube#wurfel
+of => of/ADP|of#teil_menge
+feta => feta/NOUN|feta#feta
+to => to/ADP|to#zu
+the => the/DET|the#bestimmter_artikel
+cucumber => cucumber/NOUN|cucumber#gurke
+salad => salad/NOUN|salad#salat
+
+maize | The farmer grows maize for making flour. | Der Bauer baut Mais zur Herstellung von Mehl an.
+The => the/DET|the#bestimmter_artikel
+farmer => farmer/NOUN|farmer#landwirt
+grows => grow/VERB|grow#anbauen
+maize => maize/NOUN|maize#mais
+for => for/ADP|for#fuer_zweck_empfaenger
+making => make/VERB|make#herstellen
+flour => flour/NOUN|flour#mehl
+
+sift | Please sift the flour into the bowl before adding the eggs. | Bitte siebe das Mehl in die Schüssel, bevor du die Eier hinzugibst.
+Please => please/INTJ|please#bitte
+sift => sift/VERB|sift#sieben
+the => the/DET|the#bestimmter_artikel
+flour => flour/NOUN|flour#mehl
+into => into/ADP|into#in
+the => the/DET|the#bestimmter_artikel
+bowl => bowl/NOUN|bowl#schuesseln
+before => before/SCONJ|before#bevor
+adding => add/VERB|add#gibt
+the => the/DET|the#bestimmter_artikel
+eggs => egg/NOUN|egg#ei
+
+mandarin | David peeled a mandarin and shared the pieces with his daughter. | David schälte eine Mandarine und teilte die Stücke mit seiner Tochter.
+David => David/PROPN|david#david
+peeled => peel/VERB|peel#schalen
+a => a/DET|a#ein
+mandarin => mandarin/NOUN|mandarin#mandarine
+and => and/CCONJ|and#und
+shared => share/VERB|share#teilt
+the => the/DET|the#bestimmter_artikel
+pieces => piece/NOUN|piece#stueck
+with => with/ADP|with#mit
+his => his/DET|his#sein
+daughter => daughter/NOUN|daughter#tochter
+
+oregano | Ali added a little dried oregano to the tomato sauce. | Ali gab etwas getrockneten Oregano in die Tomatensoße.
+Ali => Ali/PROPN|ali#ali
+added => add/VERB|add#gibt
+a => a/DET|a#ein
+little => little/DET|little#wenig
+dried => dry/VERB|dry#trocknen-lebensmittel
+oregano => oregano/NOUN|oregano#oregano
+to => to/ADP|to#zu
+the => the/DET|the#bestimmter_artikel
+tomato => tomato/NOUN|tomato#tomaten
+sauce => sauce/NOUN|sauce#sosse
+
+yolk | Lina separated the yolk from the white and put it in a bowl. | Lina trennte das Eigelb vom Eiweiß und gab es in eine Schüssel.
+Lina => Lina/PROPN|lina#lina
+separated => separate/VERB|separate#trennt
+the => the/DET|the#bestimmter_artikel
+yolk => yolk/NOUN|yolk#eigelb
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+white => white/NOUN|white#eiweiss
+and => and/CCONJ|and#und
+put => put/VERB|put#legen-bringen
+it => it/PRON|it#es_ding
+in => in/ADP|in#in_raeumlich
+a => a/DET|a#ein
+bowl => bowl/NOUN|bowl#schuesseln
+
+feast | The family prepared a feast to celebrate their grandmother's birthday. | Die Familie bereitete ein Festmahl zum Geburtstag ihrer Großmutter vor.
+The => the/DET|the#bestimmter_artikel
+family => family/NOUN|family#familie
+prepared => prepare/VERB|prepare#bereitete-vor
+a => a/DET|a#ein
+feast => feast/NOUN|feast#festmahl
+to => to/PART|to#infinitivpartikel
+celebrate => celebrate/VERB|celebrate#feiert
+their => they/PRON|they#ihr_plural
+grandmother => grandmother/NOUN|grandmother#grossmutter
+'s => 's/PART|s#genitiv-endung
+birthday => birthday/NOUN|birthday#geburtstag
+
+semolina | Ben stirred semolina into the hot milk to make a pudding. | Ben rührte Grieß in die heiße Milch, um einen Pudding zuzubereiten.
+Ben => Ben/PROPN|ben#ben
+stirred => stir/VERB|stir#umruhren
+semolina => semolina/NOUN|semolina#grie
+into => into/ADP|into#in
+the => the/DET|the#bestimmter_artikel
+hot => hot/ADJ|hot#heiss
+milk => milk/NOUN|milk#milch
+to => to/PART|to#infinitivpartikel
+make => make/VERB|make#herstellen
+a => a/DET|a#ein
+pudding => pudding/NOUN|pudding#pudding
+
+season | Taste the soup before you season it with salt and pepper. | Probiere die Suppe, bevor du sie mit Salz und Pfeffer würzt.
+Taste => taste/VERB|taste#probiert
+the => the/DET|the#bestimmter_artikel
+soup => soup/NOUN|soup#suppe
+before => before/SCONJ|before#bevor
+you => you/PRON|you#du_sie_ihr
+season => season/VERB|season#wurzen
+it => it/PRON|it#es_ding
+with => with/ADP|with#mit
+salt => salt/NOUN|salt#salz
+and => and/CCONJ|and#und
+pepper => pepper/NOUN|pepper#pfeffer
+
+melon | Maya cut the melon into slices for everyone at the picnic. | Maya schnitt die Melone für alle beim Picknick in Scheiben.
+Maya => Maya/PROPN|maya#maya
+cut => cut/VERB|cut#schneidet
+the => the/DET|the#bestimmter_artikel
+melon => melon/NOUN|melon#melone
+into => into/ADP|into#in
+slices => slice/NOUN|slice#scheiben
+for => for/ADP|for#fuer_zweck_empfaenger
+everyone => everyone/PRON|everyone#alle
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+picnic => picnic/NOUN|picnic#picknick
+
+coriander | Rosa scattered fresh coriander leaves over the curry. | Rosa streute frische Korianderblätter über das Curry.
+Rosa => Rosa/PROPN|rosa#rosa
+scattered => scatter/VERB|scatter#verstreuen
+fresh => fresh/ADJ|fresh#frische
+coriander => coriander/NOUN|coriander#koriander
+leaves => leaf/NOUN|leaf#blatt
+over => over/ADP|over#ueber
+the => the/DET|the#bestimmter_artikel
+curry => curry/NOUN|curry#currygericht
+
+sausage | Omar put a grilled sausage in a bun and added mustard. | Omar legte eine gegrillte Wurst in ein Brötchen und gab Senf darauf.
+Omar => Omar/PROPN|omar#omar
+put => put/VERB|put#legen-bringen
+a => a/DET|a#ein
+grilled => grilled/ADJ|grilled#gegrillt
+sausage => sausage/NOUN|sausage#wurst
+in => in/ADP|in#in_raeumlich
+a => a/DET|a#ein
+bun => bun/NOUN|bun#brotchen
+and => and/CCONJ|and#und
+added => add/VERB|add#gibt
+mustard => mustard/NOUN|mustard#senf
+
+diner | A diner at the next table asked the waiter for more water. | Ein Gast am Nebentisch bat den Kellner um mehr Wasser.
+A => a/DET|a#ein
+diner => diner/NOUN|diner#essensgast
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+next => next/ADJ|next#naechsten
+table => table/NOUN|table#tisch
+asked => ask/VERB|ask#bat
+the => the/DET|the#bestimmter_artikel
+waiter => waiter/NOUN|waiter#kellner
+for => for/ADP|for#fuer_zweck_empfaenger
+more => more/DET|more#mehr-menge
+water => water/NOUN|water#wasser
+
+loaf | Emma bought a loaf of bread and cut two slices for breakfast. | Emma kaufte einen Laib Brot und schnitt zwei Scheiben fürs Frühstück ab.
+Emma => Emma/PROPN|emma#emma
+bought => buy/VERB|buy#kaufte
+a => a/DET|a#ein
+loaf => loaf/NOUN|loaf#brotlaib
+of => of/ADP|of#teil_menge
+bread => bread/NOUN|bread#brot
+and => and/CCONJ|and#und
+cut => cut/VERB|cut#schneidet
+two => two/NUM|two#zwei
+slices => slice/NOUN|slice#scheiben
+for => for/ADP|for#fuer_zweck_empfaenger
+breakfast => breakfast/NOUN|breakfast#fruehstueck
+
+steam | You can steam the broccoli while the rice cooks. | Du kannst den Brokkoli dämpfen, während der Reis kocht.
+You => you/PRON|you#du_sie_ihr
+can => can/AUX|can#koennen
+steam => steam/VERB|steam#dampfen
+the => the/DET|the#bestimmter_artikel
+broccoli => broccoli/NOUN|broccoli#brokkoli
+while => while/SCONJ|while#waehrend
+the => the/DET|the#bestimmter_artikel
+rice => rice/NOUN|rice#reis
+cooks => cook/VERB|cook#kocht
+
+coconut | David opened the coconut and cut out some of the white flesh. | David öffnete die Kokosnuss und schnitt etwas von dem weißen Fruchtfleisch heraus.
+David => David/PROPN|david#david
+opened => open/VERB|open#oeffnete
+the => the/DET|the#bestimmter_artikel
+coconut => coconut/NOUN|coconut#kokosnuss
+and => and/CCONJ|and#und
+cut => cut/VERB|cut#schneidet
+out => out/ADV|out#heraus
+some => some/PRON|some#etwas
+of => of/ADP|of#teil_menge
+the => the/DET|the#bestimmter_artikel
+white => white/ADJ|white#weisses
+flesh => flesh/NOUN|flesh#fruchtfleisch
+
+latte | Ali ordered a latte with oat milk at the café. | Ali bestellte im Café einen Milchkaffee mit Hafermilch.
+Ali => Ali/PROPN|ali#ali
+ordered => order/VERB|order#bestellte
+a => a/DET|a#ein
+latte => latte/NOUN|latte#milchkaffee
+with => with/ADP|with#mit
+oat => oat/NOUN|oat#hafer
+milk => milk/NOUN|milk#milch
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+café => café/NOUN|café#cafe
+
+colander | Lina drained the pasta in a colander over the sink. | Lina goss die Nudeln in einem Durchschlag über der Spüle ab.
+Lina => Lina/PROPN|lina#lina
+drained => drain/VERB|drain#abgieen
+the => the/DET|the#bestimmter_artikel
+pasta => pasta/NOUN|pasta#nudeln
+in => in/ADP|in#in_raeumlich
+a => a/DET|a#ein
+colander => colander/NOUN|colander#durchschlag
+over => over/ADP|over#ueber
+the => the/DET|the#bestimmter_artikel
+sink => sink/NOUN|sink#spuelbecken
+
+nutmeg | Ben grated a little nutmeg into the creamy sauce. | Ben rieb etwas Muskatnuss in die cremige Soße.
+Ben => Ben/PROPN|ben#ben
+grated => grate/VERB|grate#reiben
+a => a/DET|a#ein
+little => little/DET|little#wenig
+nutmeg => nutmeg/NOUN|nutmeg#muskatnuss
+into => into/ADP|into#in
+the => the/DET|the#bestimmter_artikel
+creamy => creamy/ADJ|creamy#cremig
+sauce => sauce/NOUN|sauce#sosse
+
+lamb | Maya served roast lamb with potatoes and mint sauce. | Maya servierte Lammbraten mit Kartoffeln und Minzsoße.
+Maya => Maya/PROPN|maya#maya
+served => serve/VERB|serve#servieren
+roast => roast/ADJ|roast#im-ofen-gebraten
+lamb => lamb/NOUN|lamb#lammfleisch
+with => with/ADP|with#mit
+potatoes => potato/NOUN|potato#kartoffel
+and => and/CCONJ|and#und
+mint => mint/NOUN|mint#minze
+sauce => sauce/NOUN|sauce#sosse
+
+bun | Rosa sliced a bun and filled it with cheese and tomato. | Rosa schnitt ein Brötchen auf und belegte es mit Käse und Tomate.
+Rosa => Rosa/PROPN|rosa#rosa
+sliced => slice/VERB|slice#schneiden
+a => a/DET|a#ein
+bun => bun/NOUN|bun#brotchen
+and => and/CCONJ|and#und
+filled => fill/VERB|fill#fuellen
+it => it/PRON|it#es_ding
+with => with/ADP|with#mit
+cheese => cheese/NOUN|cheese#kase
+and => and/CCONJ|and#und
+tomato => tomato/NOUN|tomato#tomaten
+
+texture | The soup has a smooth texture after a few minutes in the blender. | Die Suppe hat nach ein paar Minuten im Standmixer eine glatte Konsistenz.
+The => the/DET|the#bestimmter_artikel
+soup => soup/NOUN|soup#suppe
+has => have/VERB|have#besitzen
+a => a/DET|a#ein
+smooth => smooth/ADJ|smooth#glatt
+texture => texture/NOUN|texture#konsistenz
+after => after/ADP|after#nach
+a => a/DET|a#ein
+few => few/DET|few#einige
+minutes => minute/NOUN|minute#minuten
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+blender => blender/NOUN|blender#standmixer
+
+poach | Omar will poach the eggs in gently simmering water. | Omar wird die Eier in sanft siedendem Wasser pochieren.
+Omar => Omar/PROPN|omar#omar
+will => will/AUX|will#zukunft
+poach => poach/VERB|poach#pochieren
+the => the/DET|the#bestimmter_artikel
+eggs => egg/NOUN|egg#ei
+in => in/ADP|in#in_raeumlich
+gently => gently/ADV|gently#behutsam
+simmering => simmer/VERB|simmer#kocheln
+water => water/NOUN|water#wasser
+
+pomegranate | Emma opened a pomegranate and scattered the red seeds over her salad. | Emma öffnete einen Granatapfel und verteilte die roten Kerne auf ihrem Salat.
+Emma => Emma/PROPN|emma#emma
+opened => open/VERB|open#oeffnete
+a => a/DET|a#ein
+pomegranate => pomegranate/NOUN|pomegranate#granatapfel
+and => and/CCONJ|and#und
+scattered => scatter/VERB|scatter#verstreuen
+the => the/DET|the#bestimmter_artikel
+red => red/ADJ|red#rot
+seeds => seed/NOUN|seed#samen
+over => over/ADP|over#ueber
+her => her/DET|her#ihr_possessiv
+salad => salad/NOUN|salad#salat
+
+milkshake | David made a milkshake with milk and a ripe banana. | David bereitete einen Milchshake aus Milch und einer reifen Banane zu.
+David => David/PROPN|david#david
+made => make/VERB|make#herstellen
+a => a/DET|a#ein
+milkshake => milkshake/NOUN|milkshake#milchshake
+with => with/ADP|with#mit
+milk => milk/NOUN|milk#milch
+and => and/CCONJ|and#und
+a => a/DET|a#ein
+ripe => ripe/ADJ|ripe#reif
+banana => banana/NOUN|banana#banane
+
+peeler | Ali used a peeler to remove the thin skin from the carrot. | Ali entfernte die dünne Schale der Karotte mit einem Sparschäler.
+Ali => Ali/PROPN|ali#ali
+used => use/VERB|use#benutzen
+a => a/DET|a#ein
+peeler => peeler/NOUN|peeler#sparschaler
+to => to/PART|to#infinitivpartikel
+remove => remove/VERB|remove#entfernt
+the => the/DET|the#bestimmter_artikel
+thin => thin/ADJ|thin#duenn
+skin => skin/NOUN|skin#gemueseschale
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+carrot => carrot/NOUN|carrot#karotte
+
+turmeric | A little turmeric gave Lina's rice a bright yellow colour. | Etwas Kurkuma gab Linas Reis eine leuchtend gelbe Farbe.
+A => a/DET|a#ein
+little => little/DET|little#wenig
+turmeric => turmeric/NOUN|turmeric#kurkuma
+gave => give/VERB|give#geben
+Lina => Lina/PROPN|lina#lina
+'s => 's/PART|s#genitiv-endung
+rice => rice/NOUN|rice#reis
+a => a/DET|a#ein
+bright => bright/ADJ|bright#leuchtend
+yellow => yellow/ADJ|yellow#gelben
+colour => colour/NOUN|colour#farbe
+
+duck | Ben ordered roast duck with vegetables at the restaurant. | Ben bestellte im Restaurant Entenbraten mit Gemüse.
+Ben => Ben/PROPN|ben#ben
+ordered => order/VERB|order#bestellte
+roast => roast/ADJ|roast#im-ofen-gebraten
+duck => duck/NOUN|duck#entenfleisch
+with => with/ADP|with#mit
+vegetables => vegetable/NOUN|vegetable#gemuese
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+restaurant => restaurant/NOUN|restaurant#restaurant
+
+flatbread | Maya tore a piece of flatbread and dipped it in the sauce. | Maya riss ein Stück Fladenbrot ab und tunkte es in die Soße.
+Maya => Maya/PROPN|maya#maya
+tore => tear/VERB|tear#zerreien
+a => a/DET|a#ein
+piece => piece/NOUN|piece#stueck
+of => of/ADP|of#teil_menge
+flatbread => flatbread/NOUN|flatbread#fladenbrot
+and => and/CCONJ|and#und
+dipped => dip/VERB|dip#eintauchen
+it => it/PRON|it#es_ding
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+sauce => sauce/NOUN|sauce#sosse
+
+tender | The meat was so tender that Rosa could cut it with a fork. | Das Fleisch war so zart, dass Rosa es mit einer Gabel zerteilen konnte.
+The => the/DET|the#bestimmter_artikel
+meat => meat/NOUN|meat#fleisch
+was => be/AUX|be#sein_vollverb
+so => so/ADV|so#so_sehr
+tender => tender/ADJ|tender#zart
+that => that/SCONJ|that#dass
+Rosa => Rosa/PROPN|rosa#rosa
+could => could/AUX|could#konnten
+cut => cut/VERB|cut#schneidet
+it => it/PRON|it#es_ding
+with => with/ADP|with#mit
+a => a/DET|a#ein
+fork => fork/NOUN|fork#gabel
+
+defrost | Omar will defrost the frozen soup in the fridge overnight. | Omar wird die gefrorene Suppe über Nacht im Kühlschrank auftauen lassen.
+Omar => Omar/PROPN|omar#omar
+will => will/AUX|will#zukunft
+defrost => defrost/VERB|defrost#auftauen
+the => the/DET|the#bestimmter_artikel
+frozen => frozen/ADJ|frozen#gefroren
+soup => soup/NOUN|soup#suppe
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+fridge => fridge/NOUN|fridge#kuehlschrank
+overnight => overnight/ADV|overnight#uber-nacht
+
+broccoli | Emma cut the broccoli into small pieces for the soup. | Emma schnitt den Brokkoli für die Suppe in kleine Stücke.
+Emma => Emma/PROPN|emma#emma
+cut => cut/VERB|cut#schneidet
+the => the/DET|the#bestimmter_artikel
+broccoli => broccoli/NOUN|broccoli#brokkoli
+into => into/ADP|into#in
+small => small/ADJ|small#klein
+pieces => piece/NOUN|piece#stueck
+for => for/ADP|for#fuer_zweck_empfaenger
+the => the/DET|the#bestimmter_artikel
+soup => soup/NOUN|soup#suppe
+
+mocktail | David ordered a mocktail because he did not want any alcohol. | David bestellte einen alkoholfreien Cocktail, weil er keinen Alkohol wollte.
+David => David/PROPN|david#david
+ordered => order/VERB|order#bestellte
+a => a/DET|a#ein
+mocktail => mocktail/NOUN|mocktail#alkoholfreier-cocktail
+because => because/SCONJ|because#weil
+he => he/PRON|he#er
+did => do/AUX|do#hilfsverb
+not => not/PART|not#nicht
+want => want/VERB|want#wollen
+any => any/DET|any#irgendeine
+alcohol => alcohol/NOUN|alcohol#alkohol
+
+tongs | Ali used tongs to lift the hot sausages onto a plate. | Ali hob die heißen Würste mit einer Küchenzange auf einen Teller.
+Ali => Ali/PROPN|ali#ali
+used => use/VERB|use#benutzen
+tongs => tongs/NOUN|tongs#kuchenzange
+to => to/PART|to#infinitivpartikel
+lift => lift/VERB|lift#heben
+the => the/DET|the#bestimmter_artikel
+hot => hot/ADJ|hot#heiss
+sausages => sausage/NOUN|sausage#wurst
+onto => onto/ADP|onto#auf
+a => a/DET|a#ein
+plate => plate/NOUN|plate#teller
+
+vanilla | Lina added vanilla to the milk before making the pudding. | Lina gab Vanille in die Milch, bevor sie den Pudding zubereitete.
+Lina => Lina/PROPN|lina#lina
+added => add/VERB|add#gibt
+vanilla => vanilla/NOUN|vanilla#vanille
+to => to/ADP|to#zu
+the => the/DET|the#bestimmter_artikel
+milk => milk/NOUN|milk#milch
+before => before/SCONJ|before#bevor
+making => make/VERB|make#herstellen
+the => the/DET|the#bestimmter_artikel
+pudding => pudding/NOUN|pudding#pudding
+
+mince | Ben fried the mince with onions for the pasta sauce. | Ben briet das Hackfleisch mit Zwiebeln für die Nudelsoße an.
+Ben => Ben/PROPN|ben#ben
+fried => fry/VERB|fry#braten
+the => the/DET|the#bestimmter_artikel
+mince => mince/NOUN|mince#hackfleisch
+with => with/ADP|with#mit
+onions => onion/NOUN|onion#zwiebel
+for => for/ADP|for#fuer_zweck_empfaenger
+the => the/DET|the#bestimmter_artikel
+pasta => pasta/NOUN|pasta#nudeln
+sauce => sauce/NOUN|sauce#sosse
+
+crispbread | Maya spread soft cheese on a piece of crispbread. | Maya bestrich eine Scheibe Knäckebrot mit weichem Käse.
+Maya => Maya/PROPN|maya#maya
+spread => spread/VERB|spread#breitet-aus
+soft => soft/ADJ|soft#weiche
+cheese => cheese/NOUN|cheese#kase
+on => on/ADP|on#auf
+a => a/DET|a#ein
+piece => piece/NOUN|piece#stueck
+of => of/ADP|of#teil_menge
+crispbread => crispbread/NOUN|crispbread#knackebrot
+
+stale | The bread was stale, so Rosa used it to make breadcrumbs. | Das Brot war altbacken, deshalb machte Rosa daraus Semmelbrösel.
+The => the/DET|the#bestimmter_artikel
+bread => bread/NOUN|bread#brot
+was => be/AUX|be#sein_vollverb
+stale => stale/ADJ|stale#altbacken
+so => so/CCONJ|so#deshalb
+Rosa => Rosa/PROPN|rosa#rosa
+used => use/VERB|use#benutzen
+it => it/PRON|it#es_ding
+to => to/PART|to#infinitivpartikel
+make => make/VERB|make#herstellen
+breadcrumbs => breadcrumb/NOUN|breadcrumb#semmelbrosel
+
+soak | Omar will soak the dried beans in water overnight. | Omar wird die getrockneten Bohnen über Nacht in Wasser einweichen.
+Omar => Omar/PROPN|omar#omar
+will => will/AUX|will#zukunft
+soak => soak/VERB|soak#einweichen
+the => the/DET|the#bestimmter_artikel
+dried => dry/VERB|dry#trocknen-lebensmittel
+beans => bean/NOUN|bean#bohne
+in => in/ADP|in#in_raeumlich
+water => water/NOUN|water#wasser
+overnight => overnight/ADV|overnight#uber-nacht
+
+leek | Emma washed a leek and cut it into thin rings for the soup. | Emma wusch eine Stange Lauch und schnitt sie für die Suppe in dünne Ringe.
+Emma => Emma/PROPN|emma#emma
+washed => wash/VERB|wash#waescht
+a => a/DET|a#ein
+leek => leek/NOUN|leek#lauch
+and => and/CCONJ|and#und
+cut => cut/VERB|cut#schneidet
+it => it/PRON|it#es_ding
+into => into/ADP|into#in
+thin => thin/ADJ|thin#duenn
+rings => ring/NOUN|ring#ringformiges-stuck
+for => for/ADP|for#fuer_zweck_empfaenger
+the => the/DET|the#bestimmter_artikel
+soup => soup/NOUN|soup#suppe
+
+gin | David ordered a small gin with ice at the hotel bar. | David bestellte an der Hotelbar einen kleinen Gin mit Eis.
+David => David/PROPN|david#david
+ordered => order/VERB|order#bestellte
+a => a/DET|a#ein
+small => small/ADJ|small#klein
+gin => gin/NOUN|gin#gin
+with => with/ADP|with#mit
+ice => ice/NOUN|ice#eis
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+hotel => hotel/NOUN|hotel#hotel
+bar => bar/NOUN|bar#getrankebar
+
+mixer | Ali used an electric mixer to beat the cake batter. | Ali schlug den Kuchenteig mit einem elektrischen Rührgerät auf.
+Ali => Ali/PROPN|ali#ali
+used => use/VERB|use#benutzen
+an => a/DET|a#ein
+electric => electric/ADJ|electric#elektrisch
+mixer => mixer/NOUN|mixer#ruhrgerat
+to => to/PART|to#infinitivpartikel
+beat => beat/VERB|beat#aufschlagen
+the => the/DET|the#bestimmter_artikel
+cake => cake/NOUN|cake#kuchen
+batter => batter/NOUN|batter#ruehrteig
+
+mayonnaise | Lina spread a little mayonnaise on the bread before adding the chicken. | Lina strich etwas Mayonnaise auf das Brot, bevor sie das Hähnchenfleisch darauflegte.
+Lina => Lina/PROPN|lina#lina
+spread => spread/VERB|spread#breitet-aus
+a => a/DET|a#ein
+little => little/DET|little#wenig
+mayonnaise => mayonnaise/NOUN|mayonnaise#mayonnaise
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+bread => bread/NOUN|bread#brot
+before => before/SCONJ|before#bevor
+adding => add/VERB|add#gibt
+the => the/DET|the#bestimmter_artikel
+chicken => chicken/NOUN|chicken#haehnchenfleisch
+
+salmon | Ben served the salmon with boiled potatoes and a slice of lemon. | Ben servierte den Lachs mit gekochten Kartoffeln und einer Zitronenscheibe.
+Ben => Ben/PROPN|ben#ben
+served => serve/VERB|serve#servieren
+the => the/DET|the#bestimmter_artikel
+salmon => salmon/NOUN|salmon#lachs
+with => with/ADP|with#mit
+boiled => boil/VERB|boil#kocht
+potatoes => potato/NOUN|potato#kartoffel
+and => and/CCONJ|and#und
+a => a/DET|a#ein
+slice => slice/NOUN|slice#scheiben
+of => of/ADP|of#teil_menge
+lemon => lemon/NOUN|lemon#zitrone
+
+biscuit | Maya dipped a biscuit into her tea and took a bite. | Maya tunkte einen Keks in ihren Tee und biss hinein.
+Maya => Maya/PROPN|maya#maya
+dipped => dip/VERB|dip#eintauchen
+a => a/DET|a#ein
+biscuit => biscuit/NOUN|biscuit#keks
+into => into/ADP|into#in
+her => her/DET|her#ihr_possessiv
+tea => tea/NOUN|tea#tee
+and => and/CCONJ|and#und
+took => take/VERB|take#bissen-nehmen
+a => a/DET|a#ein
+bite => bite/NOUN|bite#bissen
+
+savoury | Rosa chose a savoury pancake with cheese instead of a sweet one. | Rosa wählte einen herzhaften Pfannkuchen mit Käse statt eines süßen.
+Rosa => Rosa/PROPN|rosa#rosa
+chose => choose/VERB|choose#waehlt-aus
+a => a/DET|a#ein
+savoury => savoury/ADJ|savoury#herzhaft
+pancake => pancake/NOUN|pancake#pfannkuchen
+with => with/ADP|with#mit
+cheese => cheese/NOUN|cheese#kase
+instead => instead/ADV|instead#anstatt
+of => of/ADP|of#instead_of
+a => a/DET|a#ein
+sweet => sweet/ADJ|sweet#suess
+one => one/PRON|one#stellvertreter
+
+thicken | Add a little flour to thicken the sauce. | Gib etwas Mehl hinzu, um die Soße anzudicken.
+Add => add/VERB|add#gibt
+a => a/DET|a#ein
+little => little/DET|little#wenig
+flour => flour/NOUN|flour#mehl
+to => to/PART|to#infinitivpartikel
+thicken => thicken/VERB|thicken#andicken
+the => the/DET|the#bestimmter_artikel
+sauce => sauce/NOUN|sauce#sosse
+
+beetroot | Omar sliced the cooked beetroot and added it to the salad. | Omar schnitt die gekochte Rote Bete in Scheiben und gab sie zum Salat.
+Omar => Omar/PROPN|omar#omar
+sliced => slice/VERB|slice#schneiden
+the => the/DET|the#bestimmter_artikel
+cooked => cook/VERB|cook#kocht
+beetroot => beetroot/NOUN|beetroot#rote-bete
+and => and/CCONJ|and#und
+added => add/VERB|add#gibt
+it => it/PRON|it#es_ding
+to => to/ADP|to#zu
+the => the/DET|the#bestimmter_artikel
+salad => salad/NOUN|salad#salat
+
+decaffeinated | Emma asked for decaffeinated coffee after dinner. | Emma bat nach dem Abendessen um entkoffeinierten Kaffee.
+Emma => Emma/PROPN|emma#emma
+asked => ask/VERB|ask#bat
+for => for/ADP|for#fuer_zweck_empfaenger
+decaffeinated => decaffeinated/ADJ|decaffeinated#entkoffeiniert
+coffee => coffee/NOUN|coffee#kaffee
+after => after/ADP|after#nach
+dinner => dinner/NOUN|dinner#abendessen
+
+saucer | David put his teaspoon on the saucer beside his cup. | David legte seinen Teelöffel neben die Tasse auf die Untertasse.
+David => David/PROPN|david#david
+put => put/VERB|put#legen-bringen
+his => his/DET|his#sein
+teaspoon => teaspoon/NOUN|teaspoon#teeloffel
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+saucer => saucer/NOUN|saucer#untertasse
+beside => beside/ADP|beside#neben
+his => his/DET|his#sein
+cup => cup/NOUN|cup#tasse
+
+gravy | Ali poured gravy over his roast meat and potatoes. | Ali goss Bratensoße über seinen Braten und die Kartoffeln.
+Ali => Ali/PROPN|ali#ali
+poured => pour/VERB|pour#giesst
+gravy => gravy/NOUN|gravy#bratensoe
+over => over/ADP|over#ueber
+his => his/DET|his#sein
+roast => roast/ADJ|roast#im-ofen-gebraten
+meat => meat/NOUN|meat#fleisch
+and => and/CCONJ|and#und
+potatoes => potato/NOUN|potato#kartoffel
+
+trout | Lina cooked the trout with lemon and fresh herbs. | Lina bereitete die Forelle mit Zitrone und frischen Kräutern zu.
+Lina => Lina/PROPN|lina#lina
+cooked => cook/VERB|cook#kocht
+the => the/DET|the#bestimmter_artikel
+trout => trout/NOUN|trout#forelle
+with => with/ADP|with#mit
+lemon => lemon/NOUN|lemon#zitrone
+and => and/CCONJ|and#und
+fresh => fresh/ADJ|fresh#frische
+herbs => herb/NOUN|herb#kuechenkraut
+
+muffin | Ben bought a blueberry muffin to eat on the train. | Ben kaufte einen Blaubeermuffin für die Zugfahrt.
+Ben => Ben/PROPN|ben#ben
+bought => buy/VERB|buy#kaufte
+a => a/DET|a#ein
+blueberry => blueberry/NOUN|blueberry#heidelbeere
+muffin => muffin/NOUN|muffin#muffin
+to => to/PART|to#infinitivpartikel
+eat => eat/VERB|eat#essen
+on => on/ADP|on#auf-in
+the => the/DET|the#bestimmter_artikel
+train => train/NOUN|train#zug
+
+smoky | This cheese has a smoky flavour and goes well with dark bread. | Dieser Käse schmeckt rauchig und passt gut zu dunklem Brot.
+This => this/DET|this#dieser_begleitend
+cheese => cheese/NOUN|cheese#kase
+has => have/VERB|have#besitzen
+a => a/DET|a#ein
+smoky => smoky/ADJ|smoky#rauchig
+flavour => flavour/NOUN|flavour#geschmack
+and => and/CCONJ|and#und
+goes => go/VERB|go#passen_zu
+well => well/ADV|well#gut
+with => with/ADP|with#mit
+dark => dark/ADJ|dark#dunkel
+bread => bread/NOUN|bread#brot
+
+sprinkle | Please sprinkle some chopped nuts over the dessert. | Bitte streue ein paar gehackte Nüsse über das Dessert.
+Please => please/INTJ|please#bitte
+sprinkle => sprinkle/VERB|sprinkle#streuen
+some => some/DET|some#einige
+chopped => chop/VERB|chop#hacken
+nuts => nut/NOUN|nut#nuss
+over => over/ADP|over#ueber
+the => the/DET|the#bestimmter_artikel
+dessert => dessert/NOUN|dessert#dessert
+
+asparagus | Maya served the asparagus with melted butter. | Maya servierte den Spargel mit zerlassener Butter.
+Maya => Maya/PROPN|maya#maya
+served => serve/VERB|serve#servieren
+the => the/DET|the#bestimmter_artikel
+asparagus => asparagus/NOUN|asparagus#spargel
+with => with/ADP|with#mit
+melted => melt/VERB|melt#schmelzen
+butter => butter/NOUN|butter#butter
+
+brew | Rosa will brew a fresh pot of coffee for her guests. | Rosa wird für ihre Gäste eine frische Kanne Kaffee aufbrühen.
+Rosa => Rosa/PROPN|rosa#rosa
+will => will/AUX|will#zukunft
+brew => brew/VERB|brew#aufbruhen
+a => a/DET|a#ein
+fresh => fresh/ADJ|fresh#frische
+pot => pot/NOUN|pot#getraenkekanne
+of => of/ADP|of#teil_menge
+coffee => coffee/NOUN|coffee#kaffee
+for => for/ADP|for#fuer_zweck_empfaenger
+her => her/DET|her#ihr_possessiv
+guests => guest/NOUN|guest#gaeste
+
+tin | Omar opened a tin of beans and poured them into the pot. | Omar öffnete eine Dose Bohnen und schüttete sie in den Topf.
+Omar => Omar/PROPN|omar#omar
+opened => open/VERB|open#oeffnete
+a => a/DET|a#ein
+tin => tin/NOUN|tin#konservendose
+of => of/ADP|of#teil_menge
+beans => bean/NOUN|bean#bohne
+and => and/CCONJ|and#und
+poured => pour/VERB|pour#giesst
+them => they/PRON|they#sie_plural
+into => into/ADP|into#in
+the => the/DET|the#bestimmter_artikel
+pot => pot/NOUN|pot#kochtopf
+
+cocoa | Emma mixed cocoa with flour and sugar for the chocolate cake. | Emma vermischte Kakaopulver mit Mehl und Zucker für den Schokoladenkuchen.
+Emma => Emma/PROPN|emma#emma
+mixed => mix/VERB|mix#mischen
+cocoa => cocoa/NOUN|cocoa#kakaopulver
+with => with/ADP|with#mit
+flour => flour/NOUN|flour#mehl
+and => and/CCONJ|and#und
+sugar => sugar/NOUN|sugar#zucker
+for => for/ADP|for#fuer_zweck_empfaenger
+the => the/DET|the#bestimmter_artikel
+chocolate => chocolate/NOUN|chocolate#schokolade
+cake => cake/NOUN|cake#kuchen
+
+prawn | David removed the shell from a cooked prawn before eating it. | David entfernte die Schale einer gegarten Garnele, bevor er sie aß.
+David => David/PROPN|david#david
+removed => remove/VERB|remove#entfernt
+the => the/DET|the#bestimmter_artikel
+shell => shell/NOUN|shell#harte-hulle
+from => from/ADP|from#von_ausgangspunkt
+a => a/DET|a#ein
+cooked => cook/VERB|cook#kocht
+prawn => prawn/NOUN|prawn#garnele
+before => before/SCONJ|before#bevor
+eating => eat/VERB|eat#essen
+it => it/PRON|it#es_ding
+
+pie | Ali served a chicken pie with a crisp pastry lid. | Ali servierte eine Hähnchenpastete mit einer knusprigen Teigdecke.
+Ali => Ali/PROPN|ali#ali
+served => serve/VERB|serve#servieren
+a => a/DET|a#ein
+chicken => chicken/NOUN|chicken#haehnchenfleisch
+pie => pie/NOUN|pie#pastete
+with => with/ADP|with#mit
+a => a/DET|a#ein
+crisp => crisp/ADJ|crisp#knusprig
+pastry => pastry/NOUN|pastry#gebackteig
+lid => lid/NOUN|lid#deckel
+
+organic | Lina bought organic carrots from the farm shop. | Lina kaufte Bio-Karotten im Hofladen.
+Lina => Lina/PROPN|lina#lina
+bought => buy/VERB|buy#kaufte
+organic => organic/ADJ|organic#bio
+carrots => carrot/NOUN|carrot#karotte
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+farm => farm/NOUN|farm#bauernhof
+shop => shop/NOUN|shop#geschaeft
+
+flip | Use a spatula to flip the pancake onto its other side. | Wende den Pfannkuchen mit einem Pfannenwender auf die andere Seite.
+Use => use/VERB|use#benutzen
+a => a/DET|a#ein
+spatula => spatula/NOUN|spatula#pfannenwender
+to => to/PART|to#infinitivpartikel
+flip => flip/VERB|flip#wenden
+the => the/DET|the#bestimmter_artikel
+pancake => pancake/NOUN|pancake#pfannkuchen
+onto => onto/ADP|onto#auf
+its => its/DET|its#sein_ihr
+other => other/ADJ|other#anderen
+side => side/NOUN|side#seite
+
+pumpkin | Ben cut the pumpkin into small pieces and roasted them. | Ben schnitt den Kürbis in kleine Stücke und röstete sie.
+Ben => Ben/PROPN|ben#ben
+cut => cut/VERB|cut#schneidet
+the => the/DET|the#bestimmter_artikel
+pumpkin => pumpkin/NOUN|pumpkin#kurbis
+into => into/ADP|into#in
+small => small/ADJ|small#klein
+pieces => piece/NOUN|piece#stueck
+and => and/CCONJ|and#und
+roasted => roast/VERB|roast#im-ofen-braten
+them => they/PRON|they#sie_plural
+
+straw | Maya drank her milkshake through a paper straw. | Maya trank ihren Milchshake durch einen Papiertrinkhalm.
+Maya => Maya/PROPN|maya#maya
+drank => drink/VERB|drink#trinkt
+her => her/DET|her#ihr_possessiv
+milkshake => milkshake/NOUN|milkshake#milchshake
+through => through/ADP|through#durch
+a => a/DET|a#ein
+paper => paper/NOUN|paper#papier
+straw => straw/NOUN|straw#trinkhalm
+
+corkscrew | Rosa used a corkscrew to open the bottle of wine. | Rosa öffnete die Weinflasche mit einem Korkenzieher.
+Rosa => Rosa/PROPN|rosa#rosa
+used => use/VERB|use#benutzen
+a => a/DET|a#ein
+corkscrew => corkscrew/NOUN|corkscrew#korkenzieher
+to => to/PART|to#infinitivpartikel
+open => open/VERB|open#oeffnen
+the => the/DET|the#bestimmter_artikel
+bottle => bottle/NOUN|bottle#flasche
+of => of/ADP|of#teil_menge
+wine => wine/NOUN|wine#wein
+
+walnut | Omar cracked a walnut and ate the kernel inside. | Omar knackte eine Walnuss und aß den Kern darin.
+Omar => Omar/PROPN|omar#omar
+cracked => crack/VERB|crack#knacken
+a => a/DET|a#ein
+walnut => walnut/NOUN|walnut#walnuss
+and => and/CCONJ|and#und
+ate => eat/VERB|eat#essen
+the => the/DET|the#bestimmter_artikel
+kernel => kernel/NOUN|kernel#nusskern
+inside => inside/ADV|inside#im-inneren
+
+crab | Emma picked the meat from the cooked crab and put it in a bowl. | Emma löste das Fleisch aus der gegarten Krabbe und gab es in eine Schüssel.
+Emma => Emma/PROPN|emma#emma
+picked => pick/VERB|pick#herausnehmen
+the => the/DET|the#bestimmter_artikel
+meat => meat/NOUN|meat#fleisch
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+cooked => cook/VERB|cook#kocht
+crab => crab/NOUN|crab#krabbe
+and => and/CCONJ|and#und
+put => put/VERB|put#legen-bringen
+it => it/PRON|it#es_ding
+in => in/ADP|in#in_raeumlich
+a => a/DET|a#ein
+bowl => bowl/NOUN|bowl#schuesseln
+
+batter | David poured the batter into the pan to make a pancake. | David goss den Teig in die Pfanne, um einen Pfannkuchen zu backen.
+David => David/PROPN|david#david
+poured => pour/VERB|pour#giesst
+the => the/DET|the#bestimmter_artikel
+batter => batter/NOUN|batter#ruehrteig
+into => into/ADP|into#in
+the => the/DET|the#bestimmter_artikel
+pan => pan/NOUN|pan#pfanne
+to => to/PART|to#infinitivpartikel
+make => make/VERB|make#herstellen
+a => a/DET|a#ein
+pancake => pancake/NOUN|pancake#pfannkuchen
+
+well-done | Ali asked for his steak to be well-done, with no pink meat inside. | Ali bestellte sein Steak durchgebraten, ohne rosa Fleisch im Inneren.
+Ali => Ali/PROPN|ali#ali
+asked => ask/VERB|ask#bat
+for => for/ADP|for#fuer_zweck_empfaenger
+his => his/DET|his#sein
+steak => steak/NOUN|steak#steak
+to => to/PART|to#infinitivpartikel
+be => be/AUX|be#sein_vollverb
+well-done => well-done/ADJ|well-done#durchgebraten
+with => with/ADP|with#mit
+no => no/DET|no#kein
+pink => pink/ADJ|pink#rosa
+meat => meat/NOUN|meat#fleisch
+inside => inside/ADV|inside#im-inneren
+
+core | Lina will core the apples before filling them with raisins. | Lina wird die Äpfel entkernen, bevor sie sie mit Rosinen füllt.
+Lina => Lina/PROPN|lina#lina
+will => will/AUX|will#zukunft
+core => core/VERB|core#entkernen
+the => the/DET|the#bestimmter_artikel
+apples => apple/NOUN|apple#aepfel
+before => before/SCONJ|before#bevor
+filling => fill/VERB|fill#fuellen
+them => they/PRON|they#sie_plural
+with => with/ADP|with#mit
+raisins => raisin/NOUN|raisin#rosine
+
+sprout | Ben tasted a bean sprout before adding the rest to the salad. | Ben probierte eine Bohnensprosse, bevor er die übrigen zum Salat gab.
+Ben => Ben/PROPN|ben#ben
+tasted => taste/VERB|taste#probiert
+a => a/DET|a#ein
+bean => bean/NOUN|bean#bohne
+sprout => sprout/NOUN|sprout#spross
+before => before/SCONJ|before#bevor
+adding => add/VERB|add#gibt
+the => the/DET|the#bestimmter_artikel
+rest => rest/NOUN|rest#rest
+to => to/ADP|to#zu
+the => the/DET|the#bestimmter_artikel
+salad => salad/NOUN|salad#salat
+
+teabag | Maya put a teabag in her cup and poured hot water over it. | Maya legte einen Teebeutel in ihre Tasse und goss heißes Wasser darüber.
+Maya => Maya/PROPN|maya#maya
+put => put/VERB|put#legen-bringen
+a => a/DET|a#ein
+teabag => teabag/NOUN|teabag#teebeutel
+in => in/ADP|in#in_raeumlich
+her => her/DET|her#ihr_possessiv
+cup => cup/NOUN|cup#tasse
+and => and/CCONJ|and#und
+poured => pour/VERB|pour#giesst
+hot => hot/ADJ|hot#heiss
+water => water/NOUN|water#wasser
+over => over/ADP|over#ueber
+it => it/PRON|it#es_ding
+
+container | Rosa put the leftover soup in a container with a tight lid. | Rosa füllte die übrig gebliebene Suppe in einen Behälter mit dicht schließendem Deckel.
+Rosa => Rosa/PROPN|rosa#rosa
+put => put/VERB|put#legen-bringen
+the => the/DET|the#bestimmter_artikel
+leftover => leftover/ADJ|leftover#ubrig-geblieben
+soup => soup/NOUN|soup#suppe
+in => in/ADP|in#in_raeumlich
+a => a/DET|a#ein
+container => container/NOUN|container#behaelter
+with => with/ADP|with#mit
+a => a/DET|a#ein
+tight => tight/ADJ|tight#fest
+lid => lid/NOUN|lid#deckel
+
+sesame | Omar scattered sesame seeds over the bread dough before baking it. | Omar streute vor dem Backen Sesamsamen über den Brotteig.
+Omar => Omar/PROPN|omar#omar
+scattered => scatter/VERB|scatter#verstreuen
+sesame => sesame/NOUN|sesame#sesam
+seeds => seed/NOUN|seed#samen
+over => over/ADP|over#ueber
+the => the/DET|the#bestimmter_artikel
+bread => bread/NOUN|bread#brot
+dough => dough/NOUN|dough#teig
+before => before/SCONJ|before#bevor
+baking => bake/VERB|bake#backen
+it => it/PRON|it#es_ding

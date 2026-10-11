@@ -1,0 +1,1248 @@
+[
+  {
+    "card_ref": "nevertheless|nevertheless/ADV|nevertheless#dennoch",
+    "form_norm": "nevertheless",
+    "original_position": 1,
+    "display_position": 1,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "no harm done|no harm done/INTJ|no-harm-done#es-ist-nichts-passiert",
+    "form_norm": "no harm done",
+    "original_position": 2,
+    "display_position": 2,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "put two and two together|put two and two together/VERB|put-two-and-two-together#eins-und-eins-zusammenzahlen",
+    "form_norm": "put two and two together",
+    "original_position": 3,
+    "display_position": 3,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "chitchat|chitchat/NOUN|chitchat#geplauder",
+    "form_norm": "chitchat",
+    "original_position": 4,
+    "display_position": 4,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "by the way|by the way/ADV|by-the-way#ubrigens",
+    "form_norm": "by the way",
+    "original_position": 5,
+    "display_position": 5,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "see eye to eye|see eye to eye/VERB|see-eye-to-eye#einer-meinung-sein",
+    "form_norm": "see eye to eye",
+    "original_position": 6,
+    "display_position": 6,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "incidentally|incidentally/ADV|incidentally#nebenbei-bemerkt",
+    "form_norm": "incidentally",
+    "original_position": 7,
+    "display_position": 7,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "suit yourself|suit yourself/INTJ|suit-yourself#wie-du-willst",
+    "form_norm": "suit yourself",
+    "original_position": 8,
+    "display_position": 8,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "a piece of cake|a piece of cake/NOUN|a-piece-of-cake#ein-kinderspiel",
+    "form_norm": "a piece of cake",
+    "original_position": 9,
+    "display_position": 9,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "ultimately|ultimately/ADV|ultimately#letztlich",
+    "form_norm": "ultimately",
+    "original_position": 10,
+    "display_position": 10,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "long time no see|long time no see/INTJ|long-time-no-see#lange-nicht-gesehen",
+    "form_norm": "long time no see",
+    "original_position": 11,
+    "display_position": 11,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "stand on ceremony|stand on ceremony/VERB|stand-on-ceremony#formlich-sein",
+    "form_norm": "stand on ceremony",
+    "original_position": 12,
+    "display_position": 12,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "bias|bias/NOUN|bias#voreingenommenheit",
+    "form_norm": "bias",
+    "original_position": 13,
+    "display_position": 13,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "you must be joking|you must be joking/INTJ|you-must-be-joking#das-kann-nicht-dein-ernst-sein",
+    "form_norm": "you must be joking",
+    "original_position": 14,
+    "display_position": 14,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "take a rain check|take a rain check/VERB|take-a-rain-check#auf-spater-verschieben",
+    "form_norm": "take a rain check",
+    "original_position": 15,
+    "display_position": 15,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "obstacle|obstacle/NOUN|obstacle#hindernis",
+    "form_norm": "obstacle",
+    "original_position": 16,
+    "display_position": 16,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "in other words|in other words/ADV|in-other-words#mit-anderen-worten",
+    "form_norm": "in other words",
+    "original_position": 17,
+    "display_position": 17,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "out of the blue|out of the blue/ADV|out-of-the-blue#vollig-unerwartet",
+    "form_norm": "out of the blue",
+    "original_position": 18,
+    "display_position": 18,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "courtesy|courtesy/NOUN|courtesy#hoflichkeit",
+    "form_norm": "courtesy",
+    "original_position": 19,
+    "display_position": 19,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "to my mind|to my mind/ADV|to-my-mind#nach-meinem-dafurhalten",
+    "form_norm": "to my mind",
+    "original_position": 20,
+    "display_position": 20,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "under the weather|under the weather/ADJ|under-the-weather#nicht-ganz-auf-dem-damm",
+    "form_norm": "under the weather",
+    "original_position": 21,
+    "display_position": 21,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "impulse|impulse/NOUN|impulse#spontaner-drang",
+    "form_norm": "impulse",
+    "original_position": 22,
+    "display_position": 22,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "there must be a way|there must be a way/INTJ|there-must-be-a-way#es-muss-einen-weg-geben",
+    "form_norm": "there must be a way",
+    "original_position": 23,
+    "display_position": 23,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "rub salt in the wound|rub salt in the wound/VERB|rub-salt-in-the-wound#salz-in-die-wunde-streuen",
+    "form_norm": "rub salt in the wound",
+    "original_position": 24,
+    "display_position": 24,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "literally|literally/ADV|literally#buchstablich",
+    "form_norm": "literally",
+    "original_position": 25,
+    "display_position": 25,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "how have you been|how have you been/INTJ|how-have-you-been#wie-ist-es-dir-ergangen",
+    "form_norm": "how have you been",
+    "original_position": 26,
+    "display_position": 26,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "would you mind|would you mind/INTJ|would-you-mind#wurde-es-dir-etwas-ausmachen",
+    "form_norm": "would you mind",
+    "original_position": 27,
+    "display_position": 27,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "convincing|convincing/ADJ|convincing#uberzeugend",
+    "form_norm": "convincing",
+    "original_position": 28,
+    "display_position": 28,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "good riddance|good riddance/INTJ|good-riddance#endlich-weg",
+    "form_norm": "good riddance",
+    "original_position": 29,
+    "display_position": 29,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "take a back seat|take a back seat/VERB|take-a-back-seat#in-den-hintergrund-treten",
+    "form_norm": "take a back seat",
+    "original_position": 30,
+    "display_position": 30,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "hassle|hassle/NOUN|hassle#lastiger-aufwand",
+    "form_norm": "hassle",
+    "original_position": 31,
+    "display_position": 31,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "mind your own business|mind your own business/INTJ|mind-your-own-business#kummere-dich-um-deine-eigenen-angelegenheiten",
+    "form_norm": "mind your own business",
+    "original_position": 32,
+    "display_position": 32,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "give the game away|give the game away/VERB|give-the-game-away#sich-verraten",
+    "form_norm": "give the game away",
+    "original_position": 33,
+    "display_position": 33,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "reserved|reserved/ADJ|reserved#zuruckhaltend",
+    "form_norm": "reserved",
+    "original_position": 34,
+    "display_position": 34,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "could you repeat that|could you repeat that/INTJ|could-you-repeat-that#konntest-du-das-wiederholen",
+    "form_norm": "could you repeat that",
+    "original_position": 35,
+    "display_position": 35,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "call a spade a spade|call a spade a spade/VERB|call-a-spade-a-spade#klartext-reden",
+    "form_norm": "call a spade a spade",
+    "original_position": 36,
+    "display_position": 36,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "dismay|dismay/NOUN|dismay#besturzung",
+    "form_norm": "dismay",
+    "original_position": 37,
+    "display_position": 37,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "on second thoughts|on second thoughts/INTJ|on-second-thoughts#bei-genauerem-uberlegen",
+    "form_norm": "on second thoughts",
+    "original_position": 38,
+    "display_position": 38,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "the tip of the iceberg|the tip of the iceberg/NOUN|the-tip-of-the-iceberg#die-spitze-des-eisbergs",
+    "form_norm": "the tip of the iceberg",
+    "original_position": 39,
+    "display_position": 39,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "sincere|sincere/ADJ|sincere#aufrichtig",
+    "form_norm": "sincere",
+    "original_position": 40,
+    "display_position": 40,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "as a rule|as a rule/ADV|as-a-rule#in-der-regel",
+    "form_norm": "as a rule",
+    "original_position": 41,
+    "display_position": 41,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "from time to time|from time to time/ADV|from-time-to-time#von-zeit-zu-zeit",
+    "form_norm": "from time to time",
+    "original_position": 42,
+    "display_position": 42,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "tactful|tactful/ADJ|tactful#taktvoll",
+    "form_norm": "tactful",
+    "original_position": 43,
+    "display_position": 43,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "not necessarily|not necessarily/INTJ|not-necessarily#nicht-unbedingt",
+    "form_norm": "not necessarily",
+    "original_position": 44,
+    "display_position": 44,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "jump for joy|jump for joy/VERB|jump-for-joy#vor-freude-springen",
+    "form_norm": "jump for joy",
+    "original_position": 45,
+    "display_position": 45,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "spontaneous|spontaneous/ADJ|spontaneous#spontan",
+    "form_norm": "spontaneous",
+    "original_position": 46,
+    "display_position": 46,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "so far, so good|so far, so good/INTJ|so-far-so-good#bis-jetzt-lauft-alles-gut",
+    "form_norm": "so far, so good",
+    "original_position": 47,
+    "display_position": 47,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "meet halfway|meet halfway/VERB|meet-halfway#einen-kompromiss-eingehen",
+    "form_norm": "meet halfway",
+    "original_position": 48,
+    "display_position": 48,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "to begin with|to begin with/ADV|to-begin-with#zunachst-einmal",
+    "form_norm": "to begin with",
+    "original_position": 49,
+    "display_position": 49,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "help yourself|help yourself/INTJ|help-yourself#bedien-dich",
+    "form_norm": "help yourself",
+    "original_position": 50,
+    "display_position": 50,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "never mind|never mind/INTJ|never-mind#macht-nichts",
+    "form_norm": "never mind",
+    "original_position": 51,
+    "display_position": 51,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "subjective|subjective/ADJ|subjective#subjektiv",
+    "form_norm": "subjective",
+    "original_position": 52,
+    "display_position": 52,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "that's the spirit|that's the spirit/INTJ|that-s-the-spirit#genau-diese-einstellung-ist-richtig",
+    "form_norm": "that's the spirit",
+    "original_position": 53,
+    "display_position": 53,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "follow suit|follow suit/VERB|follow-suit#es-ebenso-machen",
+    "form_norm": "follow suit",
+    "original_position": 54,
+    "display_position": 54,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "manageable|manageable/ADJ|manageable#bewaltigbar",
+    "form_norm": "manageable",
+    "original_position": 55,
+    "display_position": 55,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "it's not your fault|it's not your fault/INTJ|it-s-not-your-fault#du-bist-nicht-schuld",
+    "form_norm": "it's not your fault",
+    "original_position": 56,
+    "display_position": 56,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "word for word|word for word/ADV|word-for-word#wort-fur-wort",
+    "form_norm": "word for word",
+    "original_position": 57,
+    "display_position": 57,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "anecdote|anecdote/NOUN|anecdote#anekdote",
+    "form_norm": "anecdote",
+    "original_position": 58,
+    "display_position": 58,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "allow me|allow me/INTJ|allow-me#darf-ich-helfen",
+    "form_norm": "allow me",
+    "original_position": 59,
+    "display_position": 59,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "miss the point|miss the point/VERB|miss-the-point#den-kern-verfehlen",
+    "form_norm": "miss the point",
+    "original_position": 60,
+    "display_position": 60,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "uneasy|uneasy/ADJ|uneasy#unbehaglich",
+    "form_norm": "uneasy",
+    "original_position": 61,
+    "display_position": 61,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "for now|for now/INTJ|for-now#vorerst",
+    "form_norm": "for now",
+    "original_position": 62,
+    "display_position": 62,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "up in the air|up in the air/ADJ|up-in-the-air#noch-ungewiss",
+    "form_norm": "up in the air",
+    "original_position": 63,
+    "display_position": 63,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "clingy|clingy/ADJ|clingy#anhanglich",
+    "form_norm": "clingy",
+    "original_position": 64,
+    "display_position": 64,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "on the other hand|on the other hand/ADV|on-the-other-hand#andererseits",
+    "form_norm": "on the other hand",
+    "original_position": 65,
+    "display_position": 65,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "not too bad|not too bad/INTJ|not-too-bad#ganz-ordentlich",
+    "form_norm": "not too bad",
+    "original_position": 66,
+    "display_position": 66,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "appreciative|appreciative/ADJ|appreciative#anerkennend",
+    "form_norm": "appreciative",
+    "original_position": 67,
+    "display_position": 67,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "it depends on the circumstances|it depends on the circumstances/INTJ|it-depends-on-the-circumstances#es-hangt-von-den-umstanden-ab",
+    "form_norm": "it depends on the circumstances",
+    "original_position": 68,
+    "display_position": 68,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "cry over spilt milk|cry over spilt milk/VERB|cry-over-spilt-milk#vergeblich-vergangenem-nachtrauern",
+    "form_norm": "cry over spilt milk",
+    "original_position": 69,
+    "display_position": 69,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "worthwhile|worthwhile/ADJ|worthwhile#lohnend",
+    "form_norm": "worthwhile",
+    "original_position": 70,
+    "display_position": 70,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "you'll manage|you'll manage/INTJ|you-ll-manage#du-schaffst-das",
+    "form_norm": "you'll manage",
+    "original_position": 71,
+    "display_position": 71,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "that's between us|that's between us/INTJ|that-s-between-us#das-bleibt-unter-uns",
+    "form_norm": "that's between us",
+    "original_position": 72,
+    "display_position": 72,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "to be honest|to be honest/ADV|to-be-honest#ehrlich-gesagt",
+    "form_norm": "to be honest",
+    "original_position": 73,
+    "display_position": 73,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "see you around|see you around/INTJ|see-you-around#man-sieht-sich",
+    "form_norm": "see you around",
+    "original_position": 74,
+    "display_position": 74,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "you shouldn't have|you shouldn't have/INTJ|you-shouldn-t-have#das-ware-nicht-notig-gewesen",
+    "form_norm": "you shouldn't have",
+    "original_position": 75,
+    "display_position": 75,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "for the sake of argument|for the sake of argument/INTJ|for-the-sake-of-argument#nehmen-wir-es-fur-die-diskussion-an",
+    "form_norm": "for the sake of argument",
+    "original_position": 76,
+    "display_position": 76,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "easy does it|easy does it/INTJ|easy-does-it#ganz-vorsichtig",
+    "form_norm": "easy does it",
+    "original_position": 77,
+    "display_position": 77,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "better late than never|better late than never/INTJ|better-late-than-never#besser-spat-als-nie",
+    "form_norm": "better late than never",
+    "original_position": 78,
+    "display_position": 78,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "oops|oops/INTJ|oops#hoppla",
+    "form_norm": "oops",
+    "original_position": 79,
+    "display_position": 79,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "keep in touch|keep in touch/INTJ|keep-in-touch#bleiben-wir-in-kontakt",
+    "form_norm": "keep in touch",
+    "original_position": 80,
+    "display_position": 80,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "correct me if I'm wrong|correct me if I'm wrong/ADV|correct-me-if-i-m-wrong#korrigiere-mich-wenn-ich-mich-irre",
+    "form_norm": "correct me if i'm wrong",
+    "original_position": 81,
+    "display_position": 81,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "sweet dreams|sweet dreams/INTJ|sweet-dreams#traum-schon",
+    "form_norm": "sweet dreams",
+    "original_position": 82,
+    "display_position": 82,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "thanks for the heads-up|thanks for the heads-up/INTJ|thanks-for-the-heads-up#danke-fur-den-hinweis",
+    "form_norm": "thanks for the heads-up",
+    "original_position": 83,
+    "display_position": 83,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "in principle|in principle/ADV|in-principle#grundsatzlich",
+    "form_norm": "in principle",
+    "original_position": 84,
+    "display_position": 84,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "mortified|mortified/ADJ|mortified#peinlich-beruhrt",
+    "form_norm": "mortified",
+    "original_position": 85,
+    "display_position": 85,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "there's no time like the present|there's no time like the present/INTJ|there-s-no-time-like-the-present#warum-nicht-gleich",
+    "form_norm": "there's no time like the present",
+    "original_position": 86,
+    "display_position": 86,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "go back to the drawing board|go back to the drawing board/VERB|go-back-to-the-drawing-board#noch-einmal-neu-planen",
+    "form_norm": "go back to the drawing board",
+    "original_position": 87,
+    "display_position": 87,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "you have my word|you have my word/INTJ|you-have-my-word#darauf-gebe-ich-dir-mein-wort",
+    "form_norm": "you have my word",
+    "original_position": 88,
+    "display_position": 88,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "now that you mention it|now that you mention it/INTJ|now-that-you-mention-it#wo-du-es-gerade-erwahnst",
+    "form_norm": "now that you mention it",
+    "original_position": 89,
+    "display_position": 89,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "apparently|apparently/ADV|apparently#offenbar",
+    "form_norm": "apparently",
+    "original_position": 90,
+    "display_position": 90,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "my mistake|my mistake/INTJ|my-mistake#mein-fehler",
+    "form_norm": "my mistake",
+    "original_position": 91,
+    "display_position": 91,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "get straight to the point|get straight to the point/VERB|get-straight-to-the-point#direkt-zur-sache-kommen",
+    "form_norm": "get straight to the point",
+    "original_position": 92,
+    "display_position": 92,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "disbelief|disbelief/NOUN|disbelief#unglaube",
+    "form_norm": "disbelief",
+    "original_position": 93,
+    "display_position": 93,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "that is to say|that is to say/ADV|that-is-to-say#das-hei-t",
+    "form_norm": "that is to say",
+    "original_position": 94,
+    "display_position": 94,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "go with the flow|go with the flow/VERB|go-with-the-flow#sich-dem-verlauf-anpassen",
+    "form_norm": "go with the flow",
+    "original_position": 95,
+    "display_position": 95,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "furthermore|furthermore/ADV|furthermore#au-erdem",
+    "form_norm": "furthermore",
+    "original_position": 96,
+    "display_position": 96,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "I'll see what I can do|I'll see what I can do/INTJ|i-ll-see-what-i-can-do#ich-schaue-was-sich-machen-lasst",
+    "form_norm": "i'll see what i can do",
+    "original_position": 97,
+    "display_position": 97,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "paint a picture|paint a picture/VERB|paint-a-picture#ein-bild-vermitteln",
+    "form_norm": "paint a picture",
+    "original_position": 98,
+    "display_position": 98,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "banter|banter/NOUN|banter#scherzgeplankel",
+    "form_norm": "banter",
+    "original_position": 99,
+    "display_position": 99,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "may I ask|may I ask/INTJ|may-i-ask#darf-ich-fragen",
+    "form_norm": "may i ask",
+    "original_position": 100,
+    "display_position": 100,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "sit on the fence|sit on the fence/VERB|sit-on-the-fence#sich-nicht-festlegen",
+    "form_norm": "sit on the fence",
+    "original_position": 101,
+    "display_position": 101,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "thrilled|thrilled/ADJ|thrilled#begeistert",
+    "form_norm": "thrilled",
+    "original_position": 102,
+    "display_position": 102,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "count me in|count me in/INTJ|count-me-in#ich-bin-dabei",
+    "form_norm": "count me in",
+    "original_position": 103,
+    "display_position": 103,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "a blessing in disguise|a blessing in disguise/NOUN|a-blessing-in-disguise#ein-gluck-im-ungluck",
+    "form_norm": "a blessing in disguise",
+    "original_position": 104,
+    "display_position": 104,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "arguably|arguably/ADV|arguably#vertretbarerweise",
+    "form_norm": "arguably",
+    "original_position": 105,
+    "display_position": 105,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "nice to meet you|nice to meet you/INTJ|nice-to-meet-you#freut-mich-dich-kennenzulernen",
+    "form_norm": "nice to meet you",
+    "original_position": 106,
+    "display_position": 106,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "go the extra mile|go the extra mile/VERB|go-the-extra-mile#sich-besonders-viel-muhe-geben",
+    "form_norm": "go the extra mile",
+    "original_position": 107,
+    "display_position": 107,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "biased|biased/ADJ|biased#voreingenommen",
+    "form_norm": "biased",
+    "original_position": 108,
+    "display_position": 108,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "what a relief|what a relief/INTJ|what-a-relief#was-fur-eine-erleichterung",
+    "form_norm": "what a relief",
+    "original_position": 109,
+    "display_position": 109,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "go for broke|go for broke/VERB|go-for-broke#alles-riskieren",
+    "form_norm": "go for broke",
+    "original_position": 110,
+    "display_position": 110,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "drawback|drawback/NOUN|drawback#nachteil",
+    "form_norm": "drawback",
+    "original_position": 111,
+    "display_position": 111,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "don't take it personally|don't take it personally/INTJ|don-t-take-it-personally#nimm-es-nicht-personlich",
+    "form_norm": "don't take it personally",
+    "original_position": 112,
+    "display_position": 112,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "talk a mile a minute|talk a mile a minute/VERB|talk-a-mile-a-minute#reden-wie-ein-wasserfall",
+    "form_norm": "talk a mile a minute",
+    "original_position": 113,
+    "display_position": 113,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "familiar|familiar/ADJ|familiar#vertraut",
+    "form_norm": "familiar",
+    "original_position": 114,
+    "display_position": 114,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "thanks anyway|thanks anyway/INTJ|thanks-anyway#trotzdem-danke",
+    "form_norm": "thanks anyway",
+    "original_position": 115,
+    "display_position": 115,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "in a nutshell|in a nutshell/ADV|in-a-nutshell#kurz-gesagt",
+    "form_norm": "in a nutshell",
+    "original_position": 116,
+    "display_position": 116,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "speechless|speechless/ADJ|speechless#sprachlos",
+    "form_norm": "speechless",
+    "original_position": 117,
+    "display_position": 117,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "come to think of it|come to think of it/INTJ|come-to-think-of-it#wenn-ich-genauer-daruber-nachdenke",
+    "form_norm": "come to think of it",
+    "original_position": 118,
+    "display_position": 118,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "the last straw|the last straw/NOUN|the-last-straw#der-tropfen-der-das-fass-zum-uberlaufen-bringt",
+    "form_norm": "the last straw",
+    "original_position": 119,
+    "display_position": 119,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "supportive|supportive/ADJ|supportive#unterstutzend",
+    "form_norm": "supportive",
+    "original_position": 120,
+    "display_position": 120,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "above all|above all/ADV|above-all#vor-allem",
+    "form_norm": "above all",
+    "original_position": 121,
+    "display_position": 121,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "go way back|go way back/VERB|go-way-back#sich-schon-sehr-lange-kennen",
+    "form_norm": "go way back",
+    "original_position": 122,
+    "display_position": 122,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "etiquette|etiquette/NOUN|etiquette#umgangsregeln",
+    "form_norm": "etiquette",
+    "original_position": 123,
+    "display_position": 123,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "as far as I'm concerned|as far as I'm concerned/ADV|as-far-as-i-m-concerned#was-mich-betrifft",
+    "form_norm": "as far as i'm concerned",
+    "original_position": 124,
+    "display_position": 124,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "on edge|on edge/ADJ|on-edge#angespannt",
+    "form_norm": "on edge",
+    "original_position": 125,
+    "display_position": 125,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "indecisive|indecisive/ADJ|indecisive#unentschlossen",
+    "form_norm": "indecisive",
+    "original_position": 126,
+    "display_position": 126,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "what went wrong|what went wrong/INTJ|what-went-wrong#was-ist-schiefgegangen",
+    "form_norm": "what went wrong",
+    "original_position": 127,
+    "display_position": 127,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "add insult to injury|add insult to injury/VERB|add-insult-to-injury#die-sache-noch-schlimmer-machen",
+    "form_norm": "add insult to injury",
+    "original_position": 128,
+    "display_position": 128,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "initially|initially/ADV|initially#anfangs",
+    "form_norm": "initially",
+    "original_position": 129,
+    "display_position": 129,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "fancy seeing you here|fancy seeing you here/INTJ|fancy-seeing-you-here#dich-hier-zu-treffen-ist-eine-uberraschung",
+    "form_norm": "fancy seeing you here",
+    "original_position": 130,
+    "display_position": 130,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "eat humble pie|eat humble pie/VERB|eat-humble-pie#kleinlaut-einen-fehler-eingestehen",
+    "form_norm": "eat humble pie",
+    "original_position": 131,
+    "display_position": 131,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "unanimous|unanimous/ADJ|unanimous#einstimmig",
+    "form_norm": "unanimous",
+    "original_position": 132,
+    "display_position": 132,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "are you serious|are you serious/INTJ|are-you-serious#meinst-du-das-ernst",
+    "form_norm": "are you serious",
+    "original_position": 133,
+    "display_position": 133,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "at the last minute|at the last minute/ADV|at-the-last-minute#in-letzter-minute",
+    "form_norm": "at the last minute",
+    "original_position": 134,
+    "display_position": 134,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "predicament|predicament/NOUN|predicament#missliche-lage",
+    "form_norm": "predicament",
+    "original_position": 135,
+    "display_position": 135,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "I'm here for you|I'm here for you/INTJ|i-m-here-for-you#ich-bin-fur-dich-da",
+    "form_norm": "i'm here for you",
+    "original_position": 136,
+    "display_position": 136,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "in plain English|in plain English/ADV|in-plain-english#klar-und-verstandlich",
+    "form_norm": "in plain english",
+    "original_position": 137,
+    "display_position": 137,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "nosy|nosy/ADJ|nosy#neugierig-auf-privates",
+    "form_norm": "nosy",
+    "original_position": 138,
+    "display_position": 138,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "by all means|by all means/INTJ|by-all-means#selbstverstandlich",
+    "form_norm": "by all means",
+    "original_position": 139,
+    "display_position": 139,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "fair enough|fair enough/INTJ|fair-enough#das-ist-nachvollziehbar",
+    "form_norm": "fair enough",
+    "original_position": 140,
+    "display_position": 140,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "thank goodness|thank goodness/INTJ|thank-goodness#zum-gluck",
+    "form_norm": "thank goodness",
+    "original_position": 141,
+    "display_position": 141,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "just in case|just in case/INTJ|just-in-case#fur-alle-falle",
+    "form_norm": "just in case",
+    "original_position": 142,
+    "display_position": 142,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "on thin ice|on thin ice/ADJ|on-thin-ice#auf-dunnem-eis",
+    "form_norm": "on thin ice",
+    "original_position": 143,
+    "display_position": 143,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "pushy|pushy/ADJ|pushy#aufdringlich",
+    "form_norm": "pushy",
+    "original_position": 144,
+    "display_position": 144,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "in the first place|in the first place/ADV|in-the-first-place#von-vornherein",
+    "form_norm": "in the first place",
+    "original_position": 145,
+    "display_position": 145,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "a breath of fresh air|a breath of fresh air/NOUN|a-breath-of-fresh-air#eine-wohltuende-abwechslung",
+    "form_norm": "a breath of fresh air",
+    "original_position": 146,
+    "display_position": 146,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "inconsiderate|inconsiderate/ADJ|inconsiderate#rucksichtslos",
+    "form_norm": "inconsiderate",
+    "original_position": 147,
+    "display_position": 147,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "I wouldn't say that|I wouldn't say that/INTJ|i-wouldn-t-say-that#so-wurde-ich-das-nicht-sagen",
+    "form_norm": "i wouldn't say that",
+    "original_position": 148,
+    "display_position": 148,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "see red|see red/VERB|see-red#rotsehen",
+    "form_norm": "see red",
+    "original_position": 149,
+    "display_position": 149,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "deliberate|deliberate/ADJ|deliberate#absichtlich",
+    "form_norm": "deliberate",
+    "original_position": 150,
+    "display_position": 150,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "give me a moment|give me a moment/INTJ|give-me-a-moment#gib-mir-einen-augenblick",
+    "form_norm": "give me a moment",
+    "original_position": 151,
+    "display_position": 151,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "thick as thieves|thick as thieves/ADJ|thick-as-thieves#eng-vertraut",
+    "form_norm": "thick as thieves",
+    "original_position": 152,
+    "display_position": 152,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "tangent|tangent/NOUN|tangent#abschweifung",
+    "form_norm": "tangent",
+    "original_position": 153,
+    "display_position": 153,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "good for you|good for you/INTJ|good-for-you#das-freut-mich-fur-dich",
+    "form_norm": "good for you",
+    "original_position": 154,
+    "display_position": 154,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "make way|make way/INTJ|make-way#platz-machen",
+    "form_norm": "make way",
+    "original_position": 155,
+    "display_position": 155,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "credible|credible/ADJ|credible#glaubwurdig",
+    "form_norm": "credible",
+    "original_position": 156,
+    "display_position": 156,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "fingers crossed|fingers crossed/INTJ|fingers-crossed#hoffentlich-geht-es-gut",
+    "form_norm": "fingers crossed",
+    "original_position": 157,
+    "display_position": 157,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "now or never|now or never/INTJ|now-or-never#jetzt-oder-nie",
+    "form_norm": "now or never",
+    "original_position": 158,
+    "display_position": 158,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "tricky|tricky/ADJ|tricky#knifflig",
+    "form_norm": "tricky",
+    "original_position": 159,
+    "display_position": 159,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "no offence|no offence/INTJ|no-offence#nicht-bose-gemeint",
+    "form_norm": "no offence",
+    "original_position": 160,
+    "display_position": 160,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "as it turns out|as it turns out/ADV|as-it-turns-out#wie-sich-herausstellt",
+    "form_norm": "as it turns out",
+    "original_position": 161,
+    "display_position": 161,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "can't complain|can't complain/INTJ|can-t-complain#ich-kann-mich-nicht-beklagen",
+    "form_norm": "can't complain",
+    "original_position": 162,
+    "display_position": 162,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "it's the least I can do|it's the least I can do/INTJ|it-s-the-least-i-can-do#das-ist-das-mindeste-was-ich-tun-kann",
+    "form_norm": "it's the least i can do",
+    "original_position": 163,
+    "display_position": 163,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "I see your point|I see your point/INTJ|i-see-your-point#ich-verstehe-deinen-standpunkt",
+    "form_norm": "i see your point",
+    "original_position": 164,
+    "display_position": 164,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "chin up|chin up/INTJ|chin-up#kopf-hoch",
+    "form_norm": "chin up",
+    "original_position": 165,
+    "display_position": 165,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "easier said than done|easier said than done/INTJ|easier-said-than-done#leichter-gesagt-als-getan",
+    "form_norm": "easier said than done",
+    "original_position": 166,
+    "display_position": 166,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "keep the ball rolling|keep the ball rolling/VERB|keep-the-ball-rolling#die-sache-in-gang-halten",
+    "form_norm": "keep the ball rolling",
+    "original_position": 167,
+    "display_position": 167,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "take care|take care/INTJ|take-care#pass-auf-dich-auf",
+    "form_norm": "take care",
+    "original_position": 168,
+    "display_position": 168,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "if memory serves|if memory serves/ADV|if-memory-serves#wenn-ich-mich-recht-erinnere",
+    "form_norm": "if memory serves",
+    "original_position": 169,
+    "display_position": 169,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "have a good one|have a good one/INTJ|have-a-good-one#mach-s-gut",
+    "form_norm": "have a good one",
+    "original_position": 170,
+    "display_position": 170,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "obliging|obliging/ADJ|obliging#hilfsbereit",
+    "form_norm": "obliging",
+    "original_position": 171,
+    "display_position": 171,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "generally speaking|generally speaking/ADV|generally-speaking#im-allgemeinen",
+    "form_norm": "generally speaking",
+    "original_position": 172,
+    "display_position": 172,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "get cold feet|get cold feet/VERB|get-cold-feet#kalte-fu-e-bekommen",
+    "form_norm": "get cold feet",
+    "original_position": 173,
+    "display_position": 173,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "feasible|feasible/ADJ|feasible#machbar",
+    "form_norm": "feasible",
+    "original_position": 174,
+    "display_position": 174,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "what a bother|what a bother/INTJ|what-a-bother#wie-lastig",
+    "form_norm": "what a bother",
+    "original_position": 175,
+    "display_position": 175,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "let's keep it that way|let's keep it that way/INTJ|let-s-keep-it-that-way#belassen-wir-es-dabei",
+    "form_norm": "let's keep it that way",
+    "original_position": 176,
+    "display_position": 176,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "where was I|where was I/INTJ|where-was-i#wo-war-ich-stehen-geblieben",
+    "form_norm": "where was i",
+    "original_position": 177,
+    "display_position": 177,
+    "authoring_batch": 2
+  },
+  {
+    "card_ref": "welcome back|welcome back/INTJ|welcome-back#willkommen-zuruck",
+    "form_norm": "welcome back",
+    "original_position": 178,
+    "display_position": 178,
+    "authoring_batch": 2
+  }
+]

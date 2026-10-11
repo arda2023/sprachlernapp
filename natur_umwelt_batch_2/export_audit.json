@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "all_tables": {
+    "languages": 1,
+    "lemmas": 3377,
+    "senses": 4829,
+    "cards": 2156,
+    "dictionary_forms": 5656,
+    "decks": 8,
+    "deck_cards": 2156,
+    "deck_words": 2052,
+    "word_aliases": 36,
+    "sentences": 2690,
+    "sentence_tokens": 29982,
+    "card_sentences": 2684,
+    "stories": 1,
+    "story_sentences": 6,
+    "exercises": 0,
+    "grammar_rules": 0,
+    "audio_assets": 0,
+    "content_releases": 1
+  },
+  "source_rows_preserved_except_authorized_nature_display_positions": true,
+  "delivery_matches_actual_export": true,
+  "new_sentence_count": 81,
+  "new_token_count": 939,
+  "word_token_count": 853,
+  "sqlite_sha256": "85b2feb651bf4a2597d9e66bcd0506b4e5ca89ab5eb36ebb2c4c80a6a738aef3",
+  "pack_sha256": "1697d065a3fdeab37e481a41f5483dd2e88e2d9e71b7f60ba25347b4ff486556"
+}

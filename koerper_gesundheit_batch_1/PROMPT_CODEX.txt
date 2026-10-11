@@ -1,0 +1,65 @@
+Schwierigkeit: mittelschwer.
+Codex: GPT-6.1 Sol · Denkstärke Mittel.
+Claude: Sonnet 5.5 · Denkstärke Hoch.
+
+Ziel: Die ersten 83 redigierten Lernziele für „Körper & Gesundheit“ offline prüfen, importieren und intern stagen; danach die geprüfte Authoring-ZIP für Batch 2 vorbereiten.
+
+Dateien:
+- Lieferung im Repository-Root als koerper_gesundheit_batch_1/ entpacken, nichts überschreiben.
+- Lesen: AGENTS.md, PRODUCT.md, docs/content-schema.md, docs/learning-groups-v1.md, docs/koerper-gesundheit-authoring.md, docs/menschen-beziehungen-batch-3-import.md, NEXTSTEPS.md.
+- Lieferung: koerper_gesundheit_batch_1/koerper_gesundheit_batch_1.editorial.json, verify_koerper_gesundheit_batch_1.py, manifest.json, editorial_notes.txt, reading.json, annotation_review.txt und reference/.
+- Basis: pipeline/out/menschen_beziehungen_batch_3_v1/pack.json und content.sqlite.
+- Registry: pipeline/data/words/en.koerper_gesundheit_v1.json.
+- Gruppen: pipeline/data/learning_groups/en.koerper_gesundheit_v1.json.
+- Auswahl: pipeline/data/selection/koerper_gesundheit_v1.json.
+- Bestehende Werkzeuge: pipeline/scripts/import_editorial_patch.py, pipeline/scripts/export_authoring_context.py, tool/stage_content_pack.dart, test/data/real_pack_test.dart.
+- Neue Ausgabe: pipeline/out/koerper_gesundheit_batch_1_v1/.
+- Bericht: docs/koerper-gesundheit-batch-1-import.md; NEXTSTEPS.md.
+
+Schritte:
+1. Git-Status, bestehende Änderungen und Ausgangshashes erfassen. Basis-JSON muss SHA256 080e7948e77552d3055b7569032f164c2d6c92640287a8622ced5a29a8cc2855 haben; Basis-SQLite 9811bf3e0aa71b44d01e66a872b9a0981fd82e990f47571cd1e56ba2cd79a388. Liefermanifest prüfen. Referenzquellen niemals über aktuellen Projektcode kopieren. Bestehende Ausgaben nicht überschreiben.
+2. verify_koerper_gesundheit_batch_1.py --repo . mit dem passenden Pipeline-Interpreter ausführen. Registry und Gruppen kanonisch, Basisdateien rohbytegebunden abgleichen. Prüfer benutzt die aktuellen Projektquellen. Keine Pipeline-Codeänderung oder Validatorlockerung vorgesehen.
+3. Alle 83 Satzpaare, 1037 Tokenpositionen und die eine Schreibalternative gegenlesen. Besonders prüfen: minutes = Zeitminuten, nicht Sitzungsprotokoll; left bei lung/sling = linke, bei numb = verließ; used = benutzte, nicht used to; lower = untere; office = Arztpraxis; shape/rest/change/serving als Nomen; sweat Nomen/Verb; wake = jemanden wecken gegenüber woke = aufwachen; have to, Perfect-have und Vollverb-have. shake entspricht der ausdrücklich transitiven Zieldefinition. Die Alternative diarrhea im Satz zu diarrhoea wörtlich einsetzen; accepted nur Zielform. Alternative bleibt lernstandsneutral.
+   Nur belegte Lieferfehler gezielt korrigieren. Originalbytes erhalten, separate Importkopie erstellen und Vorher/Nachher dokumentieren. Bei Korrekturen betroffene Reviewhashes und das Manifest der Importkopie aktualisieren. Bestehende flektierte Altglossen nicht pauschal bereinigen und keine unveränderten Dateien normalisieren.
+4. Genau die 83 aktuellen Ziele mit unveränderten Identitäten, Zieldefinitionen, Wortbesitzbindungen und cards.learning importieren. Je ein fester Übungssatz. Genau einen neuen Stapel koerper-gesundheit anlegen. Begleitwort-Senses sind Wörterbucheinträge, keine zusätzlichen Lernkarten und keine vorgezogenen späteren Ziele. Bestehende passende Senses wiederverwenden.
+5. Die gelieferten Anzeigepositionen 1–83 aus combined_display_mapping.json übernehmen. Originalpositionen in Auswahl/Registry bleiben unverändert. In Batch 1 werden keinerlei bestehende Stapelpositionen verändert; kein Display-Patch erforderlich.
+6. In den neuen Ausgabeordner exportieren. Alle 18 SQLite-Tabellen vollständig gegen build_rows abgleichen. Erwartet: 1578 Karten, 2112 Satztexte, 2106 Satzverknüpfungen einschließlich Historie, 1474 Wortbesitzzeilen. Primäre Lernziele: 1463 = 160 Allgemeine Sprache + 489 Reisen + 241 Alltag & Zuhause + 245 Arbeit & Bildung + 245 Menschen & Beziehungen + 83 Körper & Gesundheit. Alle bisherigen 1495 Karten-IDs, Satztexte, Annotationen, Lerngruppen und Stapelmitgliedschaften unverändert erhalten, einschließlich front und der beiden korrigierten each-other-Bindungen aus Menschen Batch 3.
+7. Nach grünen Prüfungen Assets sichern und intern stagen. Asset-Verifikation, Sechsstapel-Lesetest 160/489/241/245/245/83 und Flutter-Analyse ausführen. Nur konkrete bestehende Testerwartungen ergänzen. App-Einstieg und echte user.db/review_log nicht öffnen oder ändern. Prüfung, Import, Export und internes Staging sind mit diesem Auftrag autorisiert.
+8. Im selben Auftrag die Batch-2-Authoring-ZIP mit dem vorhandenen Fortsetzungs-Exporter und dem tatsächlich geprüften neuen Pack vorbereiten. Neue separate Kontextdateien für Auswahl/Registry/Gruppen; Originale erhalten. Partition 83 importiert / 83 aktuell / 83 später; vollständiger Kontext aller 249 Originalidentitäten und Definitionen. Späterer Folgeimport: Mitgliedschaften 84–166 anhängen und gemäß Originalauswahl hashgebunden neu positionieren. Keine Batch-2-Sätze erstellen. build/koerper_gesundheit_authoring_batch_2.zip vollständig schließen und erneut öffnen; CRCs, alle Manifesthashes, Referenzen und SQLite prüfen. Absoluten Pfad ausgeben.
+
+Nicht anfassen:
+- Echte user.db, Lernstände, review_log, historische Packs und Original-Lieferung.
+- Ursprüngliche Registrys/Auswahlen, App-/SRS-/Synonymlogik, Modelle, Budgets, Supabase und Plattformdateien.
+- Keine Cloud-/Modellaufrufe, Veröffentlichung, Commits oder Pushes.
+
+Akzeptanzkriterien:
+- Genau 83 neue Ziele, 83 Satzpaare und 1037 vollständig gebundene Tokenpositionen.
+- Eine geprüfte Schreibalternative; kein Besitz-, Alias- oder Gruppenkonflikt.
+- Sechs Stapel mit 1463 primären Zielen; alle alten Inhalte unverändert.
+- Alle Source-/Registry-/Review-/Manifesthashes gültig.
+- Linter 0 Fehler; 14 neue Häufigkeitshinweise dokumentieren. Keine Umformulierung nur aufgrund einer Frequenzwarnung.
+- Vollständiger 18-Tabellen-Abgleich, Asset-Verifikation, Sechsstapel-Lesetest und Analyse bestanden.
+- Batch-2-ZIP erneut geprüft, Partition 83/83/83, noch ohne neue Sätze.
+
+Prüfen mit, ab Repository-Root:
+macOS Terminal:
+pipeline/.venv-macos/bin/python koerper_gesundheit_batch_1/verify_koerper_gesundheit_batch_1.py --repo .
+pipeline/.venv-macos/bin/python pipeline/scripts/import_editorial_patch.py --source pipeline/out/menschen_beziehungen_batch_3_v1/pack.json --create koerper_gesundheit_batch_1/koerper_gesundheit_batch_1.editorial.json --registry pipeline/data/words/en.koerper_gesundheit_v1.json --out pipeline/out/koerper_gesundheit_batch_1_v1
+Windows PowerShell:
+.\pipeline\.venv\Scripts\python.exe koerper_gesundheit_batch_1\verify_koerper_gesundheit_batch_1.py --repo .
+.\pipeline\.venv\Scripts\python.exe pipeline\scripts\import_editorial_patch.py --source pipeline/out/menschen_beziehungen_batch_3_v1/pack.json --create koerper_gesundheit_batch_1/koerper_gesundheit_batch_1.editorial.json --registry pipeline/data/words/en.koerper_gesundheit_v1.json --out pipeline/out/koerper_gesundheit_batch_1_v1
+Bei einer dokumentierten Korrektur stattdessen den Pfad der geprüften Importkopie einsetzen.
+Auf beiden Systemen nach erfolgreichem Export und Asset-Sicherung:
+dart run tool/stage_content_pack.dart --from pipeline/out/koerper_gesundheit_batch_1_v1
+dart run tool/stage_content_pack.dart --verify
+flutter test test/data/real_pack_test.dart
+flutter analyze
+git diff --check
+git status --short
+Zusätzlich betroffene vorhandene Import-/Vertrags-/Registry-/Gruppen-/Authoring-/Fortsetzungstests ausführen, Pfade vorher im aktuellen Projekt nachlesen. Outputs und Exitcodes zeigen. Bekannte CRLF-/Whitespace-Altbefunde getrennt ausweisen, keine globale Bereinigung. Kleinste Lösung, keine ungefragten Features oder generische Testsuite.
+
+Schleifenbremse: Nach 2–3 Fehlversuchen neue Hypothese anhand des konkreten Fehlers; nach 5 stoppen und Lage schildern. Kein Cloud-Fallback.
+
+Am Ende: docs/koerper-gesundheit-batch-1-import.md mit Entscheidungen, tatsächlichen Prüfoutputs und Hashes schreiben. NEXTSTEPS.md aktualisieren: Erledigt, geänderte Dateien, Testergebnis, Abweichungen, offene Probleme; max. 25 Zeilen, nur Fakten. Nie „fertig“ ohne gezeigten Output.
+
+Schwierigkeit: mittelschwer | Codex: GPT-6.1 Sol · Mittel | Claude: Sonnet 5.5 · Hoch | Danach: /clear

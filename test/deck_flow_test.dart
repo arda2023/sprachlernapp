@@ -84,7 +84,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(DeckDetailsScreen), findsOneWidget);
     expect(
-      find.bySemanticsLabel('0 von 5 neuen Wörtern gesehen, 0 Wörter gelernt'),
+      find.bySemanticsLabel('0 von 5 Übungen gesehen, 0 Übungen gemeistert'),
       findsOneWidget,
     );
     await tester.tap(find.text('Lerne mit diesem Stapel'));
@@ -96,7 +96,7 @@ void main() {
       await answer(tester, form);
       await next(tester);
     }
-    expect(find.text('4 Wörter geübt'), findsOneWidget);
+    expect(find.text('4 Übungen geübt'), findsOneWidget);
     expect(
       find.text('4 auf Anhieb richtig · 0 zurück auf Stufe 1'),
       findsOneWidget,
@@ -106,7 +106,7 @@ void main() {
     await tester.tap(find.text('Zurück zum Stapel'));
     await tester.pumpAndSettle();
     expect(
-      find.bySemanticsLabel('4 von 5 neuen Wörtern gesehen, 0 Wörter gelernt'),
+      find.bySemanticsLabel('4 von 5 Übungen gesehen, 0 Übungen gemeistert'),
       findsOneWidget,
     );
   });
@@ -246,7 +246,7 @@ void main() {
       }
       expect(user.records, hasLength(1));
       expect(user.states.values.single.box, reveal ? 1 : 3);
-      expect(find.text('1 Wort geübt'), findsOneWidget);
+      expect(find.text('1 Übung geübt'), findsOneWidget);
       expect(
         find.text(
           reveal
@@ -307,7 +307,7 @@ void main() {
         expect(user.attempts.toSet(), hasLength(1));
         expect(user.records, hasLength(1));
         await next(tester);
-        expect(find.text('1 Wort geübt'), findsOneWidget);
+        expect(find.text('1 Übung geübt'), findsOneWidget);
       },
     );
   }
@@ -340,7 +340,7 @@ void main() {
     await controller.next();
     await tester.pumpAndSettle();
     expect(user.records, hasLength(1));
-    expect(find.text('1 Wort geübt'), findsOneWidget);
+    expect(find.text('1 Übung geübt'), findsOneWidget);
   });
 
   testWidgets('Revue retains box / due date and the fixed sentence', (
@@ -462,6 +462,8 @@ void main() {
           child: const SprachApp(),
         ),
       );
+      await tester.pumpAndSettle();
+      await tester.drag(find.byType(Scrollable).first, const Offset(0, -300));
       await tester.pumpAndSettle();
       expect(find.text('Inhalte nicht verfügbar'), findsWidgets);
       expect(find.text('Allgemeine Sprache'), findsNothing);

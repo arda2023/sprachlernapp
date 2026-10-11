@@ -72,10 +72,10 @@ Nie gespeichert. Mit `A` = aktive Stapel, `C` = Karten mit `disabled = false` un
 
 | Zähler | Definition |
 |---|---|
-| Noch nicht angezeigt | distinct `card_id` aus `deck_cards` von `A` ohne Zeile in `user_cards` **plus** Karten in `C` mit `box = 0`, die aktive Primärwörter oder belegte Story-Lernentscheidungen sind |
+| Noch nicht geübt | distinct `card_id` aus `deck_cards` von `A` ohne Zeile in `user_cards` **plus** Karten in `C` mit `box = 0`, die aktive Primärwörter oder belegte Story-Lernentscheidungen sind |
 | Verfügbare Wiederholungen | Karten in `C` mit `box ≥ 1` und `due_at ≤ now` |
-| Wörter gemeistert | Karten in `C` mit `box = 5` und `due_at > now` |
-| Wörter im Aufbau | Karten in `C` mit `box` 1–4 und `due_at > now` |
+| Gemeisterte Übungen | Karten in `C` mit `box = 5` und `due_at > now` |
+| Übungen im Aufbau | Karten in `C` mit `box` 1–4 und `due_at > now` |
 
 Zuordnung in dieser Reihenfolge, damit die Zähler disjunkt sind. **Invariante:** Summe der vier = gelernte auflösbare Karten in `C` + zulässige Box-0-Karten + unbekannte Primärkarten aus `A`. Retired Karten zählen wie deaktivierte nirgends mit.
 
@@ -107,7 +107,7 @@ Eine Zeile je Karte und Session, geschrieben nach dem ersten Durchgang der Karte
 
 ## Bestätigte Regeln (früher Annahmen)
 
-- Karte in Box 0 (aus Story, noch nie beantwortet) zählt als "Noch nicht angezeigt". ✔
+- Karte in Box 0 (aus Story, noch nie beantwortet) zählt als "Noch nicht geübt". ✔
 - Tagesziel = verschiedene Karten mit `review_log`-Zeile heute. ✔
 - `mode = early` kennzeichnet Vorab-Üben innerhalb von Gemischt (Box-Regel wie Revue). ✔
 - Eine `review_log`-Zeile je Karte und Session; die In-Session-Wiederholung wird nicht geloggt. ✔
@@ -183,3 +183,13 @@ Exakte Bindungen einer lokalen Karte an spätere Content-Entsprechungen verhinde
 Die vier Zähler verwenden diese Projektion nur für neue Ziele; die disjunkten Kategorien der gelernten Karten bleiben unverändert. Stapelfortschritt hat dieselbe abgeleitete Menge, keine gespeicherten Zähler. Die Wortliste erhält alle gelernten Zeilen und nur einen unbewerteten Gruppenvertreter; deaktivierte Zeilen bleiben dort bedienbar.
 `selectNewCards` verwendet Themen und explizite Kontrasttags aus Content. Verwandt bedeutet gleiches Thema oder gemeinsames Kontrasttag. Drei andere neue Ziele dazwischen; falls kein Kandidat die Inhalts-/Funktionswortquote erfüllt, kontrolliert 2/1/0. Unbekannte Lemmas, stabile Eingangsreihenfolge und die bestehende 4:1-Regel bleiben; explizite Storyziele haben Vorrang innerhalb der Abstandsstufe. Jede Auswahl verbraucht einen Kandidaten; bei späteren Sessions rücken übrig gebliebene Wörter nach, ohne Zufallsneusortierung. Ein einmal aufgebauter Controller behält seine Session über Provider-Neuberechnungen. Reviews und In-Session-Wiederholungen unterliegen nicht dem Themenabstand.
 Die vorherigen Paket-A/B-Abschnitte beschreiben den historischen Stand; für gruppierte Schema-3-Inhalte gelten die hier beschriebenen Ergänzungen. Quelle, Vorher/Nachher-Auswahl und Bestandsprüfungen: `docs/learning-groups-v1.md`.
+
+## Historischer Verben-Paket-A-Stand: Transport (durch Paket B ergänzt)
+Content-Schema 4 kann mehrere formbezogene Karten desselben Lemmas transportieren. Jede neue Karte bleibt eine ID in der bestehenden cards-Struktur; es gibt keine zweite SRS-Engine. Altkarte mit passender belegter Funktion wird unverändert referenziert, einschließlich festem Satz. Die vorhandene user.db bleibt Version 4; keine Zustände, Flags oder Reviews werden angelegt, zusammengeführt oder migriert.
+`deckPracticeTargets` liefert zusätzliche Übungsmitgliedschaften getrennt vom Besitzerinventar. Eine Karte in zwei Ansichten hat weiterhin nur eine Kartenidentität. Die gemeinsame App-Projektion, ID-Dedup bei Sessions, Formeinführung und getrennte Begriffs-/Übungszahlen gehören zu Verben-Paket B. Bis dahin bleibt Schema-4-Produktionsstaging/-Installation gesperrt. Bestehende Antwort-/Alternativen-/Queue-Regeln gelten unverändert. [Genaue Übergabe](irregular-verbs-package-a.md).
+
+## Verben-Paket B: verbindlicher integrierter Stand (10.10.2026)
+`PracticeItemResolver` löst `deckPracticeTargets` für Stapel, Gemischt, Revue und Fortschritt auf. Ordinary behält Gruppenwahl; Formziele referenzieren die konkrete Funktion und exakte lokale Bindung. Die resultierenden IDs werden dedupliziert und mit `targetsResolved: true` an bestehende Queues/Zähler übergeben. Wortliste und Story-Markierungen verwenden dieselbe Identitätsauflösung. Gelernte Doppelstände werden nicht verschmolzen.
+`eligiblePracticeIds` bestimmt die gemeinsame berechtigte Menge für die vier Übungszahlen und `deriveLexicalBreakdown`. Lexikalische Zahlen sind DISTINCT über belegte L bzw. den Altgruppen-Fallback; eine explizite Zuordnung propagiert innerhalb belegter Sense-/Gruppenkomponenten, um Doppelzählung im Rückfall zu vermeiden. `practiced` bedeutet eine Form mit Box ≥1. Es gibt keinen lexikalischen Scheduler und keine gemeinsame Verb-Box.
+Neue Formen: eine Oberfläche und ein normalisiertes Lemma pro neuem Sitzungssegment; bekannte Lemmas bleiben später wählbar. Bereits fällige Karten unterliegen diesen Einführungssperren nicht. Alte und neue Formkarten nutzen unverändert `ReviewPass`, `ensureCards`, `recordReview`, Pass-ID-Schutz und In-Session-Wiederholung. Alternativen gelten nur im konkreten Satz; Formzugehörigkeit erzeugt keine zusätzliche erlaubte Antwort. Bei cut/cut/cut wird ausschließlich die sichtbare Antwort im aktuellen Satz geprüft.
+user.db ist nun v5. Schema-4-Staging/-Installation ist technisch freigegeben, Produktionsinhalt bleibt unverändert. [Abnahme](irregular-verbs-package-b.md).

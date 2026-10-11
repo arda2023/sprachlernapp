@@ -157,6 +157,7 @@ class VocabBreakdown {
 /// other ids (e.g. an old VERB card) are kept in user.db but count nowhere,
 /// local-only cards always count.
 VocabBreakdown deriveVocabBreakdown({
+  bool targetsResolved = false,
   Map<String, ContentCard> contentCards = const {},
   Set<String> explicitStoryIds = const {},
   required Set<String> activeDeckCardIds,
@@ -164,44 +165,55 @@ VocabBreakdown deriveVocabBreakdown({
   required Set<String> knownCardIds,
   required DateTime now,
 }) {
-  final eligibleNew = contentCards.isEmpty
-      ? null
-      : LearningGroups(contentCards, cards).project([
-          ...activeDeckCardIds,
-          for (final s in cards.values)
-            if (s.box == 0 &&
-                (s.origin == CardOrigin.story ||
-                    explicitStoryIds.contains(s.cardId)))
-              s.cardId,
-        ]).toSet();
-  var unseen = (eligibleNew ?? activeDeckCardIds)
-      .where((id) => !cards.containsKey(id))
-      .length;
-  var due = 0, building = 0, mastered = 0;
-  for (final card in cards.values) {
-    if (!card.isActive) continue;
-    if (!knownCardIds.contains(card.cardId)) continue;
-    if (card.box == 0) {
-      if (eligibleNew?.contains(card.cardId) ??
-          (activeDeckCardIds.contains(card.cardId) ||
-              card.origin == CardOrigin.story ||
-              explicitStoryIds.contains(card.cardId))) {
-        unseen++;
-      }
-    } else if (card.isDue(now)) {
-      due++;
-    } else if (card.box == 5) {
-      mastered++;
-    } else {
-      building++;
-    }
+  final ids = eligiblePracticeIds(activeDeckCardIds: activeDeckCardIds,
+    states: cards, contentCards: contentCards, knownCardIds: knownCardIds,
+    explicitStoryIds: explicitStoryIds, targetsResolved: targetsResolved);
+  var due = 0, building = 0, mastered = 0, unseen = 0;
+  for (final id in ids) {
+    final card = cards[id];
+    if (card == null || card.box == 0) { unseen++; }
+    else if (card.isDue(now)) { due++; }
+    else if (card.box == 5) { mastered++; }
+    else { building++; }
   }
-  return VocabBreakdown(
-    due: due,
-    building: building,
-    mastered: mastered,
-    unseen: unseen,
-  );
+  return VocabBreakdown(due: due, building: building, mastered: mastered, unseen: unseen);
+}
+
+/// One eligible exercise inventory for state counters and lexical counts.
+Set<String> eligiblePracticeIds({
+  required Set<String> activeDeckCardIds,
+  required Map<String, UserCardState> states,
+  required Set<String> knownCardIds,
+  Map<String, ContentCard> contentCards = const {},
+  Set<String> explicitStoryIds = const {},
+  bool targetsResolved = false,
+}) {
+  final story = [for (final s in states.values)
+    if (s.box == 0 && (s.origin == CardOrigin.story || explicitStoryIds.contains(s.cardId))) s.cardId];
+  final groups = LearningGroups(contentCards, states);
+  final newIds = contentCards.isEmpty ? {...activeDeckCardIds, ...story}
+      : targetsResolved ? {...activeDeckCardIds, ...groups.project(story, exactForms: true)}
+      : groups.project([...activeDeckCardIds, ...story], exactForms: true).toSet();
+  return {for (final id in {...newIds, ...states.values.where((s) => s.box >= 1).map((s) => s.cardId)})
+    if ((knownCardIds.contains(id) || (!states.containsKey(id) && newIds.contains(id))) && (states[id]?.isActive ?? true)) id};
+}
+
+class LexicalBreakdown {
+  const LexicalBreakdown({required this.total, required this.practiced});
+  final int total, practiced;
+}
+
+LexicalBreakdown deriveLexicalBreakdown(Set<String> eligibleIds,
+    Map<String, ContentCard> cards, Map<String, UserCardState> states) {
+  final total = <String>{}, practiced = <String>{};
+  final keys = lexicalCountingKeys(cards);
+  for (final id in eligibleIds) {
+    final c = cards[id];
+    if (c == null) continue;
+    total.add(keys[id]!);
+    if ((states[id]?.box ?? 0) >= 1) practiced.add(keys[id]!);
+  }
+  return LexicalBreakdown(total: total.length, practiced: practiced.length);
 }
 
 /// The two deck sessions (PRODUCT.md, Practice Modes).
@@ -247,6 +259,7 @@ class SessionEntry {
 /// or box 0) through the shared diverse selector. Revue: seen cards (box ≥ 1), soonest due first.
 /// Disabled and retired cards never appear. At most [size] entries.
 List<SessionEntry> buildDeckQueue({
+  bool targetsResolved = false,
   required List<String> deckCardIds,
   required Map<String, ContentCard> cards,
   required Map<String, UserCardState> states,
@@ -255,7 +268,7 @@ List<SessionEntry> buildDeckQueue({
   int size = 5,
 }) {
   final order = <String, int>{};
-  for (final id in LearningGroups(cards, states).project(deckCardIds)) {
+  for (final id in targetsResolved ? deckCardIds : LearningGroups(cards, states).project(deckCardIds, exactForms: true)) {
     order.putIfAbsent(id, () => order.length);
   }
   final ids = order.keys.where((id) => states[id]?.isActive ?? true).toList();
@@ -294,6 +307,7 @@ List<SessionEntry> buildDeckQueue({
 /// Mixed uses only resolvable, connected content. Seen cards remain eligible
 /// independently of deck activation; activation gates only new deck cards.
 List<SessionEntry> buildMixedQueue({
+  bool targetsResolved = false,
   Map<String, DateTime> storyAdditions = const {},
   required List<String> activeDeckCardIds,
   required Map<String, ContentCard> cards,
@@ -326,10 +340,10 @@ List<SessionEntry> buildMixedQueue({
               );
           return d != 0 ? d : a.cardId.compareTo(b.cardId);
         });
-  final freshIds = LearningGroups(
-    cards,
-    states,
-  ).project([...storyNew.map((s) => s.cardId), ...activeDeckCardIds]);
+  final groups = LearningGroups(cards, states);
+  final freshIds = targetsResolved
+      ? {...groups.project(storyNew.map((s) => s.cardId), exactForms: true), ...activeDeckCardIds}.toList()
+      : groups.project([...storyNew.map((s) => s.cardId), ...activeDeckCardIds], exactForms: true);
   final fresh = selectNewCards(
     priorityIds: storyNew.map((s) => s.cardId).toSet(),
     candidates: [

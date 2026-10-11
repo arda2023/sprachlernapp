@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/story_learning.dart';
-import '../../domain/content.dart';
 import '../../presentation/providers/story_learning_providers.dart';
 
 import 'package:flutter/gestures.dart';
@@ -540,20 +539,7 @@ class _StoredStoryReader extends ConsumerWidget {
                 if (token.senseId != null)
                   if (ref.watch(practiceResolverProvider).value
                       case final resolver?)
-                    if ((resolver.bindings[LearningIdentity(
-                              'en',
-                              contentFormNorm(token.surface),
-                              token.senseId!,
-                            ).key] ??
-                            resolver.cards.values
-                                .where(
-                                  (c) =>
-                                      c.formNorm ==
-                                          contentFormNorm(token.surface) &&
-                                      c.senseId == token.senseId,
-                                )
-                                .firstOrNull
-                                ?.id)
+                    if (resolver.storyStateId('en', token)
                         case final id?)
                       if (resolver.states[id] case final state?)
                         if (state.box > 0 || resolver.additions.containsKey(id))

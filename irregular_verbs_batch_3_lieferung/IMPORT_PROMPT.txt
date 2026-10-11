@@ -1,0 +1,35 @@
+Arbeite im bestehenden Repository sprachapp. Führe den vollständigen Import von Unregelmäßige Verben – Batch 3 einschließlich internem Staging und geprüfter Batch-4-Übergabe durch.
+
+Lies AGENTS.md, NEXTSTEPS.md, docs/irregular-verbs-implementation-plan.md, die Paket-A/B-Berichte, docs/irregular-verbs-authoring.md und docs/irregular-verbs-batch-2-import.md sowie die aktuellen Schema-/Importverträge. Vorhandene Änderungen erhalten. Nutze den bestehenden V3-Importer und die vorhandenen Validatoren; keine zweite Importpipeline bauen.
+
+EINGABEN UND ZIEL
+Die beigefügte Lieferung irregular_verbs_batch_3_lieferung.zip im Projekt lokalisieren. Falls bereits entpackt, den tatsächlichen Ordner verwenden. Originalbytes erhalten; Liefermanifest und Dateien prüfen. editorial_content_v3.json importieren, README.txt, token_review.json, inherited_gloss_comparison.json, validation_report.json und satzuebersicht.html als Begleitnachweise lesen.
+Authoring-Kontext: build/irregular_verbs_authoring_batch_3.zip; bei abweichendem Ort anhand des Berichts auflösen.
+Basis: irregular_verbs_batch_2_v1, Content-Schema 4.
+Basis-JSON-SHA256: 78368d24b9a585b5d2f9cf5b1e336b2f459f3c38410fa76e02f9fe3c99ff0197
+Basis-SQLite-/Asset-SHA256: ca9256a877172cb3390e54ff8d4208fff084764239d6df7b1fcc28a80fa98758
+Bei einem echten Basis-/Identitätskonflikt nicht umgehen oder neu auf eine andere Basis schreiben; konkret berichten.
+Ziel: pipeline/out/irregular_verbs_batch_3_v1/ mit Pack, SQLite und Finalisierungsnachweisen. Bestehende Ausgabe nicht überschreiben.
+
+1. INHALT UND VERTRAG PRÜFEN
+84 neue Satzpaare und alle 857 Tokenpositionen mit Zielbedeutung, Formfunktion, deutscher Übersetzung und Kontextbindung prüfen. Genau 99 aktuelle Formziele: 84 neue Karten und 15 hashgebundene Wiederverwendungen. Die zwei Alternativen mowed (s018) und proved (s028) wörtlich einsetzen und als passende Partizipvarianten prüfen. accepted bleibt ausschließlich die Zielform. Keine weiteren Synonyme automatisch ergänzen.
+Die 27 zusätzlichen Begleitwortsenses dürfen keine neuen Lernkarten oder Besitzer erzeugen. Vorhandene geeignete Bedeutungen wiederverwenden; keine Bindung nur nach gleicher Schreibweise wählen. Bestehende Formglossen nicht stillschweigend überschreiben. Die 20 geerbten Batch-2-Befunde und die neue Vergleichsliste separat dokumentieren; reine Formulierungsunterschiede nicht pauschal als Fehler zählen.
+Belegte kleine Lieferfehler darfst du gezielt in einer separaten Importkopie korrigieren, mit Vorher/Nachher/Grund und neu berechneten abhängigen Hashes. Keine pauschale Satzneugenerierung. Bei unauflösbarem Bedeutungs-/Identitätskonflikt nur den konkreten Blocker nennen.
+
+2. IMPORT UND EXPORT
+Quellpack, historische Lieferungen, Reservierungen, Wortbesitz und Lernstände erhalten. Auswahl, Registry und Lerngruppen ausdrücklich aus dem geprüften Batch-3-Kontext verwenden. Die 15 Wiederverwendungen müssen vorhandene Karten/Sätze referenzieren; keine neuen IDs oder SRS-Kopien dafür anlegen. Batch-1-Korrektur und sämtliche Batch-2-Inhalte erhalten.
+Import, build_rows und regulären Satzlinter ausführen. Fünf erwartete Frequenzhinweise der Lieferung sind dokumentiert; tatsächlichen Output berichten und keine seltenen, hier passenden Wörter bloß zur Warnungsbeseitigung umschreiben.
+Sollbestand nach Import: 2486 Karten, 303 Formziele, drei Verbenansichten mit je 101 Übungen. Alle acht normalen Stapel unverändert. Globale Übungs-/Wortzahlen mit der echten gemeinsamen Projektion berechnen; Wiederverwendungen können bisher unsichtbare Bestandskarten sichtbar machen, daher nicht aus Kartenzuwächsen schätzen.
+Alle 22 SQLite-Tabellen vollständig gegen build_rows abgleichen, nicht nur Zeilenanzahlen. Quellen und Original-Lieferung per Hash unverändert nachweisen.
+
+3. GESICHERT STAGEN UND PRÜFEN
+Aktuelles Asset und Manifest nachweislich VOR dem Staging sichern. Den validierten Pack mit dem vorhandenen Werkzeug intern stagen und --verify ausführen. Kein echter user.db-Zugriff, keine Rücksetzung, keine Lernstandsübertragung, keine öffentliche Freigabe.
+Relevante Pipeline-Tests einschließlich Formauswahl/Import/Teilfortsetzung sowie Flutter-Pack-/Formprojektions-Lesetests ausführen; flutter analyze. Testumfang an tatsächlichen Änderungen ausrichten. Bestands-Schema-Kompatibilität erhalten. Bei eigenem Fehler gezielt korrigieren und betroffene Prüfungen wiederholen; keine endlosen optionalen Tests oder globalen Refactorings. Geräteprüfung nur behaupten, wenn tatsächlich ausgeführt; dafür ausschließlich isolierte Datenkopie.
+
+4. BATCH 4 FERTIG ÜBERGEBEN
+Nach erfolgreichem Staging die Fortsetzung an den tatsächlich exportierten Batch-3-Pack binden. build/irregular_verbs_authoring_batch_4.zip mit dem bestehenden Exporter erzeugen: 303 importierte / 99 aktuelle / 0 spätere Formziele; genau 81 neue Satzaufträge und 18 Wiederverwendungen. Vollständigen Kontext aller 402 Ziele erhalten. Keine Batch-4-Sätze erstellen.
+ZIP schließen, erneut öffnen und CRCs, Manifesthashes, Referenzen, Partition, exakte Identitäten, Metadatenpräfixe und alle 22 Quelltabellen prüfen. Keine veraltete Basis oder Batch-3-Datei lediglich umbenennen.
+
+ABSCHLUSS
+docs/irregular-verbs-batch-3-import.md mit tatsächlichen Befehlen, Outputs, Exitcodes, Korrekturen, Hashes und offenen Befunden schreiben; NEXTSTEPS.md auf höchstens 25 Zeilen halten. Eigene Änderungen auf Whitespace prüfen, bekannte CRLF-/Whitespace-Altbefunde getrennt nennen und nicht global bereinigen. Keine Cloud-/Modellaufrufe, keine ungefragten Commits oder Pushes.
+Am Ende knapp: Import-/Stagingstatus, drei Ansichten, globale Übungen/Wörter, echte Prüfresultate, verbleibende Befunde und vollständiger Pfad zur geprüften Batch-4-ZIP. Nicht nach jedem Teilschritt um Erlaubnis bitten; dieser Auftrag autorisiert Prüfung, gezielte Korrektur, Export, gesichertes internes Staging und die nächste ZIP zusammen.

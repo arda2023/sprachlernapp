@@ -1,0 +1,35 @@
+PASS source/registry/groups/manifest hashes, Schema 3, context and base SQLite
+PASS hash-bound display patch: append 165..245, final display 1..245; original registry positions preserved
+PASS create_content/build_rows: 1250 cards; 1135 primary goals (160/489/241/245); 18 tables
+PASS 81 reserved identities, display 1..245; 1169 old IDs and all historical rows preserved
+PASS 915 token positions; four reviewed alternatives; linter 0 errors, 2 warnings
+WARNINGS [["practice", "i+1", "'confidently'/'confidently' Zipf 3.41 below 3.5"], ["independent", "i+1", "'learner'/'learners' Zipf 3.48 below 3.5"]]
+{
+  "status": "ok",
+  "internal_test_pack": true,
+  "ai_calls": 0,
+  "ai_cost_usd": 0,
+  "sqlite_counts": {
+    "languages": 1,
+    "lemmas": 2252,
+    "senses": 3510,
+    "cards": 1250,
+    "dictionary_forms": 4002,
+    "decks": 4,
+    "deck_cards": 1250,
+    "deck_words": 1146,
+    "word_aliases": 15,
+    "sentences": 1784,
+    "sentence_tokens": 19121,
+    "card_sentences": 1778,
+    "stories": 1,
+    "story_sentences": 6,
+    "exercises": 0,
+    "grammar_rules": 0,
+    "audio_assets": 0,
+    "content_releases": 1
+  },
+  "sha256": "ba0756a05c92bfa71fd72b296b39d49606946af751645f28c843c76b6ae826e2"
+}
+PASS actual offline export and complete row-by-row SQLite readback
+NOT RUN: App staging, Flutter/device tests, user database access

@@ -1,0 +1,18 @@
+Essen & Trinken – Batch 2, ChatGPT-Redaktion, 10.10.2026
+83 aktuelle Ziele vollständig redigiert; je ein fester Satz und natürliche deutsche Übersetzung.
+971 Tokenpositionen; jede Wortbindung kontextuell gegengelesen. 44 neue Formglossen ausdrücklich geprüft.
+Vier freigegebene Alternativen: omelette→omelet, caramelise→caramelize, chilli→chili, courgette→zucchini.
+Die Varianten wurden wörtlich in ihre jeweilige Lücke eingesetzt. accepted enthält nur die Zielform. Keine Vollständigkeitsbehauptung.
+Linter: 0 Fehler und 10 Häufigkeitshinweise, siehe validation_output.txt. Keine Umformulierungen allein wegen Wortfrequenz.
+Basis: essen_trinken_batch_1_v1 einschließlich zweier korrigierter tin-Bindungen; alte Inhalte bleiben unverändert.
+Neue tin-Bindungen: sardine→Konservendose, pit→Backform; tray bei rosemary/parchment→Backblech, Ziel tray→Tablett.
+Weitere Kontextentscheidungen stehen im Importprompt und annotation_review.txt.
+Neue Begleitwort-Senses sind keine neuen Lernkarten; reservierte spätere Ziele werden nicht vorzeitig eingeführt.
+Originalpositionen und Identitäten bleiben erhalten; neue Mitgliedschaften 85–167, separate hashgebundene Anzeige 1–167.
+Realer create_content/build_rows-Lauf, Offline-SQLite-Export und vollständiger Zeilenabgleich aller 18 Tabellen bestanden.
+Erwartet: 1911 Karten, 2445 Satztexte, 2439 Verknüpfungen einschließlich Historie, 1807 Wortbesitzzeilen.
+1796 primäre Lernziele: 160/489/241/245/245/249/167. Alle 1828 bisherigen Karten-IDs und Altinhalte erhalten.
+Prüfung mit unveränderten bereitgestellten Pipelinequellen; keine Validatorlockerung, keine allgemeine Altglossenbereinigung.
+Keine unabhängige menschliche Sprachfreigabe behauptet. Nicht auf dem Gerät geprüft oder hier in der App gestagt.
+0 Cloud-/Modellaufrufe, 0 zusätzliche Pipelinekosten; keine Lernstandzugriffe.
+Nächster Schritt: lokaler Import/Staging mit PROMPT_CODEX.txt; danach Batch-3-ZIP 167/83/0 erzeugen.

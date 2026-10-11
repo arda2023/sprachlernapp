@@ -1,0 +1,216 @@
+[
+  {
+    "form": "fell",
+    "sense": "fall/VERB|fall#fallen",
+    "existing_gloss": "fiel; gefallen",
+    "proposed_gloss_not_applied": "fiel; fielen",
+    "sentences": [
+      3
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "felt",
+    "sense": "feel/VERB|feel#fuehlen",
+    "existing_gloss": "fühlte sich",
+    "proposed_gloss_not_applied": "fühlte sich; sich gefühlt",
+    "sentences": [
+      7,
+      8
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "found",
+    "sense": "find/VERB|find#finden",
+    "existing_gloss": "gefunden",
+    "proposed_gloss_not_applied": "fand; gefunden",
+    "sentences": [
+      11,
+      12
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "got",
+    "sense": "get/VERB|get#bekommen",
+    "existing_gloss": "bekam",
+    "proposed_gloss_not_applied": "bekam; bekommen",
+    "sentences": [
+      27,
+      28
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "heard",
+    "sense": "hear/VERB|hear#hoeren",
+    "existing_gloss": "hörten",
+    "proposed_gloss_not_applied": "hörte; gehört",
+    "sentences": [
+      41,
+      42
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "hid",
+    "sense": "hide/VERB|hide#verstecken",
+    "existing_gloss": "versteckte sich",
+    "proposed_gloss_not_applied": "versteckte",
+    "sentences": [
+      44
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "hit",
+    "sense": "hit/VERB|hit#schlagen",
+    "existing_gloss": "schlug; schlugen",
+    "proposed_gloss_not_applied": "schlagen; schlug; geschlagen",
+    "sentences": [
+      46,
+      47,
+      48
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "held",
+    "sense": "hold/VERB|hold#haelt",
+    "existing_gloss": "hielt",
+    "proposed_gloss_not_applied": "hielt; gehalten",
+    "sentences": [
+      49,
+      50
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "hurt",
+    "sense": "hurt/VERB|hurt#verletzte",
+    "existing_gloss": "verletzte",
+    "proposed_gloss_not_applied": "verletzte; verletzt",
+    "sentences": [
+      51,
+      52
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "keep",
+    "sense": "keep/VERB|keep#aufbewahrt",
+    "existing_gloss": "aufbewahrt",
+    "proposed_gloss_not_applied": "aufbewahren",
+    "sentences": [
+      53
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "kept",
+    "sense": "keep/VERB|keep#aufbewahrt",
+    "existing_gloss": "hielt bereit",
+    "proposed_gloss_not_applied": "bewahrte auf; aufbewahrt",
+    "sentences": [
+      54,
+      55
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "knelt",
+    "sense": "kneel/VERB|kneel#knien",
+    "existing_gloss": "kniete",
+    "proposed_gloss_not_applied": "kniete; gekniet",
+    "sentences": [
+      56,
+      57
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "left",
+    "sense": "leave/VERB|leave#verlassen",
+    "existing_gloss": "verließ",
+    "proposed_gloss_not_applied": "verließ; verlassen",
+    "sentences": [
+      74,
+      75
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "concert",
+    "sense": "concert/NOUN|concert#konzert",
+    "existing_gloss": "Konzert-",
+    "proposed_gloss_not_applied": "Konzert",
+    "sentences": [
+      31
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "summer",
+    "sense": "summer/NOUN|summer#sommer",
+    "existing_gloss": "Sommer-",
+    "proposed_gloss_not_applied": "Sommer",
+    "sentences": [
+      36,
+      72
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "home",
+    "sense": "home/NOUN|home#heim-zu-hause",
+    "existing_gloss": "Heim- / zu Hause",
+    "proposed_gloss_not_applied": "Zuhause; Heim",
+    "sentences": [
+      13
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "spread",
+    "sense": "spread/VERB|spread#breitet-aus",
+    "existing_gloss": "breiten aus",
+    "proposed_gloss_not_applied": "breitete sich aus; sich ausbreiten",
+    "sentences": [
+      14
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "wall",
+    "sense": "wall/NOUN|wall#wand",
+    "existing_gloss": "Wand",
+    "proposed_gloss_not_applied": "Wand; Mauer",
+    "sentences": [
+      37,
+      49
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "words",
+    "sense": "word/NOUN|word#wort",
+    "existing_gloss": "Wörter; Liedtext",
+    "proposed_gloss_not_applied": "Wörter; Worte",
+    "sentences": [
+      51,
+      73
+    ],
+    "status": "inherited; no mutation in this delivery"
+  },
+  {
+    "form": "sleeping",
+    "sense": "sleep/VERB|sleep#schlafen",
+    "existing_gloss": "schlafen",
+    "proposed_gloss_not_applied": "schlafend",
+    "sentences": [
+      62
+    ],
+    "status": "inherited; no mutation in this delivery"
+  }
+]

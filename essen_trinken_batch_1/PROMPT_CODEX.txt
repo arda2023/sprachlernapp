@@ -1,0 +1,88 @@
+Ziel: Die 84 redigierten Lernziele für „Essen & Trinken“ offline prüfen, importieren und intern stagen; danach im selben Auftrag die geprüfte Authoring-ZIP für Batch 2 erstellen.
+
+Dateien:
+- Lieferung im Repository-Root als essen_trinken_batch_1/ entpacken; bestehende Dateien nicht überschreiben.
+- Lesen: AGENTS.md, PRODUCT.md, docs/content-schema.md, docs/learning-groups-v1.md, docs/essen-trinken-authoring.md, docs/koerper-gesundheit-batch-3-import.md, NEXTSTEPS.md.
+- Lieferung: essen_trinken_batch_1/essen_trinken_batch_1.editorial.json, verify_essen_trinken_batch_1.py, manifest.json, editorial_notes.txt, reading.json, annotation_review.txt und reference/.
+- Basis: pipeline/out/koerper_gesundheit_batch_3_v1/pack.json und content.sqlite.
+- Originalauswahl: pipeline/data/selection/essen_trinken_v1.json.
+- Kontextauswahl: pipeline/data/selection/essen_trinken_batch_1_context_v1.json.
+- Registry: pipeline/data/words/en.essen_trinken_batch_1_context_v1.json.
+- Gruppen: pipeline/data/learning_groups/en.essen_trinken_batch_1_context_v1.json.
+- Werkzeuge: pipeline/scripts/import_editorial_patch.py, pipeline/scripts/export_authoring_context.py, tool/stage_content_pack.dart, test/data/real_pack_test.dart.
+- Neue Ausgabe: pipeline/out/essen_trinken_batch_1_v1/.
+- Bericht: docs/essen-trinken-batch-1-import.md; NEXTSTEPS.md.
+
+Schritte:
+1. Arbeitsbaum, vorhandene Änderungen und Ausgangshashes erfassen. Basis-JSON-SHA256:
+   c03047452c197a5bd4985af0faf64fb1e0614765a8a7c3f475f8c088a595f457
+   Basis-SQLite-SHA256:
+   98aaf290c04d7f5305b607ebe9a4c5233f0a1a0eb88271acd90af37af9ffac04
+   Liefermanifest prüfen. Referenzquellen niemals über aktuellen Projektcode kopieren. Vorhandene Ausgaben nicht überschreiben.
+
+2. Lieferverifier mit --repo . und dem vorhandenen Pipeline-Interpreter ausführen. Basisdateien rohbytegebunden, Registry/Gruppen kanonisch prüfen. Aktuelle Projektquellen verwenden. Keine Validatorlockerung oder allgemeinen Umbauten.
+
+3. Alle 84 Satzpaare, 960 Tokenpositionen und fünf Alternativantworten redaktionell gegenlesen. Kontextbindungen insbesondere:
+   - stone = Fruchtkern; skin = Fruchtschale; rings = ringförmige Stücke.
+   - glasses = Trinkgläser; pepper beim Spieß = Paprika; clove = Gewürznelke.
+   - scales = Küchenwaage; pastry = Teig; rare = Garstufe.
+   - tin bei Keksen/Thunfisch = Dose, bei baking tin = Backform.
+   - still beim Speck = noch, bei Wasser = ohne Kohlensäure.
+   - cream = Sahne; ice = gefrorenes Wasser; heat = Kochhitze.
+   - off nach rolled = von einer Oberfläche, nach broke = Abtrennpartikel.
+   - cut ist Verb; each vor bowl ist Determinierer, kein each other.
+   - use ist Verb; save time heißt Zeit sparen; fit beim Verschluss beschreibt die Passform des Gegenstands.
+   Die alternativen Eingaben flavour→flavor, whisky→whiskey, aubergine→eggplant sowie foil→aluminium foil/aluminum foil wörtlich einsetzen und prüfen. accepted bleibt ausschließlich die Zielform. Alternativen bleiben lernstandsneutral; Aliasreservierungen sind keine automatische Antwortfreigabe.
+   Nur belegte Lieferfehler gezielt korrigieren: Originalbytes erhalten und separate Importkopie anlegen. Betroffene Reviewhashes und das Manifest dieser Kopie korrekt erneuern; Vorher/Nachher dokumentieren. Keine pauschale Altglossenbereinigung oder Zeilenendennormalisierung.
+
+4. Genau 84 aktuelle Ziele und genau einen neuen Stapel essen-trinken importieren. Je Ziel ein aktiver fester Satz; cards.learning, Identitäten, Definitionen, Besitz und Aliase aus dem verbindlichen Kontext erhalten. Neue Begleitwort-Senses bleiben Wörterbucheinträge, keine vorgezogenen Lernkarten.
+   Die erste Gruppe verwendet unmittelbar die gelieferten Anzeigepositionen 1–84 aus combined_display_mapping.json. Kein Display-Patch nötig. Originalpositionen in Auswahl/Registry unverändert lassen.
+
+5. In den neuen Ausgabeordner exportieren und alle 18 SQLite-Tabellen vollständig gegen build_rows vergleichen. Erwartet:
+   - 1828 Karten, 2362 Satztexte, 2356 Satzverknüpfungen einschließlich Historie, 1724 Wortbesitzzeilen.
+   - 1713 primäre Lernziele: 160 Allgemeine Sprache / 489 Reisen / 241 Alltag & Zuhause / 245 Arbeit & Bildung / 245 Menschen & Beziehungen / 249 Körper & Gesundheit / 84 Essen & Trinken.
+   Alle bisherigen 1744 Karten und historischen Inhalte erhalten, einschließlich sämtlicher vorherigen Tokenkorrekturen und Lerngruppen. Keine alten Anzeigepositionen verändern.
+
+6. VOR Staging die bestehenden Assets samt Manifest in einem neuen Sicherungsordner kopieren und deren Hashgleichheit mit dem Ausgangsstand bestätigen. Falls ein Vorbereitungsschritt fehlschlägt, Staging nicht trotzdem starten. Danach intern stagen und Asset-Verifikation, Siebenstapel-Lesetest 160/489/241/245/245/249/84 sowie Flutter-Analyse ausführen. Nur nötige konkrete Testerwartungen ergänzen. App-Einstieg und echte user.db/review_log nicht öffnen oder ändern. Prüfung, Import, Export und internes Staging sind beauftragt.
+
+7. Aus dem tatsächlich geprüften neuen Pack mit dem vorhandenen Fortsetzungs-Exporter die nächste Authoring-ZIP erzeugen:
+   build/essen_trinken_authoring_batch_2.zip
+   Neue separate Kontextdateien für Auswahl/Registry/Gruppen; alte Dateien erhalten. Partition 84 importiert / 83 aktuell / 83 später; vollständiger Kontext aller 250 Originalziele. Nächster Import hängt 85–167 an und ordnet ausschließlich Essen-Anzeigen nach dem bestehenden hashgebundenen Display-Vertrag neu. Keine Batch-2-Sätze erstellen.
+   ZIP schließen und erneut öffnen; CRCs, sämtliche Manifesthashes, Referenzen, Identitäten, Partition und SQLite prüfen. Absoluten ZIP-Pfad ausgeben.
+
+Nicht anfassen:
+- Echte user.db, Lernstände, review_log, historische Packs und Original-Lieferung.
+- Originalauswahl und historische Registrys/Gruppen; App-/SRS-/Synonymlogik, Modelle, Budgets, Supabase und Plattformdateien.
+- Keine Cloud-/Modellaufrufe, Veröffentlichung, Commits oder Pushes.
+- Keine globale Bereinigung bestehender Whitespace-Befunde.
+
+Akzeptanzkriterien:
+- Genau 84 neue Ziele und Satzpaare, 960 vollständig annotierte Tokenpositionen, fünf einzeln geprüfte Alternativen.
+- Keine Besitz-/Alias-/Identitäts-/Lerngruppenkonflikte oder vorgezogenen Karten.
+- 84 Essen-Ziele, 1713 insgesamt; alter Bestand erhalten.
+- Source-/Registry-/Review-/Manifesthashes gültig.
+- Linter 0 Fehler, 14 neue Häufigkeitshinweise dokumentiert; keine Umformulierung allein deswegen.
+- Vollständiger SQLite-Abgleich, Asset-Verifikation, Siebenstapel-Lesetest und Analyse bestanden.
+- Sicherung nachweislich vor Staging erstellt und geprüft.
+- Batch-2-ZIP mit Partition 84/83/83 geschlossen und erneut vollständig geprüft.
+
+Prüfen mit, ab Repository-Root:
+macOS Terminal:
+pipeline/.venv-macos/bin/python essen_trinken_batch_1/verify_essen_trinken_batch_1.py --repo .
+pipeline/.venv-macos/bin/python pipeline/scripts/import_editorial_patch.py --source pipeline/out/koerper_gesundheit_batch_3_v1/pack.json --create essen_trinken_batch_1/essen_trinken_batch_1.editorial.json --registry pipeline/data/words/en.essen_trinken_batch_1_context_v1.json --out pipeline/out/essen_trinken_batch_1_v1
+Windows PowerShell:
+.\pipeline\.venv\Scripts\python.exe essen_trinken_batch_1\verify_essen_trinken_batch_1.py --repo .
+.\pipeline\.venv\Scripts\python.exe pipeline\scripts\import_editorial_patch.py --source pipeline/out/koerper_gesundheit_batch_3_v1/pack.json --create essen_trinken_batch_1/essen_trinken_batch_1.editorial.json --registry pipeline/data/words/en.essen_trinken_batch_1_context_v1.json --out pipeline/out/essen_trinken_batch_1_v1
+Bei einer belegten Lieferkorrektur die geprüfte separate Importkopie verwenden.
+Beide Systeme nach erfolgreichem Export und geprüfter Asset-Sicherung:
+dart run tool/stage_content_pack.dart --from pipeline/out/essen_trinken_batch_1_v1
+dart run tool/stage_content_pack.dart --verify
+flutter test test/data/real_pack_test.dart
+flutter analyze
+git diff --check
+git status --short
+Zusätzlich die betroffenen bestehenden Import-/Vertrags-/Registry-/Gruppen-/Authoring-/Fortsetzungstests ausführen; konkrete Testpfade im Projekt lesen. Exporterargumente nach tatsächlichem --help wählen. Outputs und Exitcodes zeigen. Bekannte CRLF-/Whitespace-Altbefunde getrennt ausweisen.
+
+Schleifenbremse: Nach 2–3 Fehlversuchen eine neue Hypothese am konkreten Fehler formulieren; nach 5 stoppen und die Lage schildern. Kleinste Lösung, keine ungefragten Features oder allgemeinen Testframeworks. Kein Cloud-Fallback.
+
+Am Ende: docs/essen-trinken-batch-1-import.md mit Entscheidungen, tatsächlichen Prüfoutputs und Hashes schreiben. NEXTSTEPS.md aktualisieren: Erledigt, geänderte Dateien, Testergebnis, Abweichungen, offene Probleme; höchstens 25 Zeilen, nur Fakten. Nie „fertig“ ohne gezeigten Output.

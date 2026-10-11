@@ -1,0 +1,34 @@
+{
+  "format": 1,
+  "lang": "en",
+  "version": "menschen_beziehungen_batch_3_v1",
+  "schema_version": 3,
+  "sha256": "9811bf3e0aa71b44d01e66a872b9a0981fd82e990f47571cd1e56ba2cd79a388",
+  "size_bytes": 10768384,
+  "internal_test_pack": true,
+  "notes": "INTERNES TEST-PACK: offline editorial create; no Vertex QA.",
+  "source": {
+    "path": "pipeline/out/menschen_beziehungen_batch_3_v1/content.sqlite",
+    "finalization_status": "ok",
+    "table_counts": {
+      "audio_assets": 0,
+      "card_sentences": 2023,
+      "cards": 1495,
+      "content_releases": 1,
+      "deck_cards": 1495,
+      "deck_words": 1391,
+      "decks": 5,
+      "dictionary_forms": 4502,
+      "exercises": 0,
+      "grammar_rules": 0,
+      "languages": 1,
+      "lemmas": 2570,
+      "senses": 3898,
+      "sentence_tokens": 22174,
+      "sentences": 2029,
+      "stories": 1,
+      "story_sentences": 6,
+      "word_aliases": 22
+    }
+  }
+}

@@ -76,7 +76,7 @@ List<String> selectNewCards({
           (!priorityOnly || priorityIds.contains(c.id)) &&
           !lemmas.contains(selectionLemma(c)) &&
           !surfaces.contains(c.formNorm) &&
-          !groups.contains(c.learningGroup) &&
+          !groups.contains(c.introductionKey) &&
           !recent.reversed.take(gap).any((r) => related(c, r))) {
         return c;
       }
@@ -107,7 +107,7 @@ List<String> selectNewCards({
     onSelected?.call(c, selectedGap);
     picked.add(c.id);
     recent.add(c);
-    groups.add(c.learningGroup);
+    groups.add(c.introductionKey);
     lemmas.add(selectionLemma(c));
     surfaces.add(c.formNorm);
     if (isContentWord(c)) {

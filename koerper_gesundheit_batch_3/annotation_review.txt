@@ -1,0 +1,1114 @@
+sight | Rosa relies on her sense of touch because her sight is poor. | Rosa verlässt sich auf ihren Tastsinn, weil sie schlecht sieht.
+Rosa => Rosa/PROPN|rosa#rosa
+relies => rely/VERB|rely#sich-verlassen
+on => on/ADP|on#abhaengigkeit
+her => her/DET|her#ihr_possessiv
+sense => sense/NOUN|sense#wahrnehmungssinn
+of => of/ADP|of#ueber_bezug
+touch => touch/NOUN|touch#tastsinn
+because => because/SCONJ|because#weil
+her => her/DET|her#ihr_possessiv
+sight => sight/NOUN|sight#sehvermogen
+is => be/AUX|be#sein_vollverb
+poor => poor/ADJ|poor#schwach-ausgepraegt
+
+twist | Please turn your whole body rather than twist your neck. | Bitte drehe deinen ganzen Körper, statt den Hals zu verdrehen.
+Please => please/INTJ|please#bitte
+turn => turn/VERB|turn#drehen
+your => your/DET|your#dein-deine
+whole => whole/ADJ|whole#ganz
+body => body/NOUN|body#koerper
+rather => rather/ADV|rather#rather-than-statt
+than => than/SCONJ|than#alternative-handlung
+twist => twist/VERB|twist#verdrehen
+your => your/DET|your#dein-deine
+neck => neck/NOUN|neck#hals
+
+checkup | Ben booked a routine checkup at the local clinic for next week. | Ben vereinbarte für nächste Woche eine Routineuntersuchung in der örtlichen Praxis.
+Ben => Ben/PROPN|ben#ben
+booked => book/VERB|book#bucht
+a => a/DET|a#ein
+routine => routine/ADJ|routine#routinemaessig
+checkup => checkup/NOUN|checkup#kontrolluntersuchung
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+local => local/ADJ|local#oertlichen
+clinic => clinic/NOUN|clinic#praxis
+for => for/ADP|for#geplanter-zeitpunkt
+next => next/ADJ|next#naechsten
+week => week/NOUN|week#woche
+
+heal | The cut on Emma's hand took several weeks to heal completely. | Der Schnitt an Emmas Hand brauchte mehrere Wochen, um vollständig zu heilen.
+The => the/DET|the#bestimmter_artikel
+cut => cut/NOUN|cut#schnittwunde
+on => on/ADP|on#auf
+Emma => Emma/PROPN|emma#emma
+'s => 's/PART|s#genitiv-endung
+hand => hand/NOUN|hand#hand
+took => take/VERB|take#dauert
+several => several/DET|several#mehrere
+weeks => week/NOUN|week#woche
+to => to/PART|to#infinitivpartikel
+heal => heal/VERB|heal#heilen-von-gewebe
+completely => completely/ADV|completely#voellig
+
+asthma | Ali mentioned his asthma when the doctor asked about existing health conditions. | Ali erwähnte sein Asthma, als die Ärztin nach bestehenden Erkrankungen fragte.
+Ali => Ali/PROPN|ali#ali
+mentioned => mention/VERB|mention#erwahnen
+his => his/DET|his#sein
+asthma => asthma/NOUN|asthma#asthma
+when => when/SCONJ|when#als_wenn
+the => the/DET|the#bestimmter_artikel
+doctor => doctor/NOUN|doctor#arzt
+asked => ask/VERB|ask#fragen
+about => about/ADP|about#ueber_thema
+existing => existing/ADJ|existing#bestehend
+health => health/NOUN|health#gesundheits
+conditions => condition/NOUN|condition#erkrankung
+
+asleep | The baby was already asleep when Sara switched off the bedroom light. | Das Baby schlief bereits, als Sara das Licht im Schlafzimmer ausschaltete.
+The => the/DET|the#bestimmter_artikel
+baby => baby/NOUN|baby#baby
+was => be/AUX|be#sein_vollverb
+already => already/ADV|already#schon
+asleep => asleep/ADJ|asleep#schlafend
+when => when/SCONJ|when#als_wenn
+Sara => Sara/PROPN|sara#sara
+switched => switch/VERB|switch#schaltet
+off => off/PART|off#ausschalten
+the => the/DET|the#bestimmter_artikel
+bedroom => bedroom/NOUN|bedroom#schlafzimmer
+light => light/NOUN|light#lichter
+
+deaf | The deaf student followed the lecture with help from a sign language interpreter. | Der gehörlose Student verfolgte die Vorlesung mithilfe einer Gebärdensprachdolmetscherin.
+The => the/DET|the#bestimmter_artikel
+deaf => deaf/ADJ|deaf#gehorlos
+student => student/NOUN|student#lernende
+followed => follow/VERB|follow#inhaltlich-folgen
+the => the/DET|the#bestimmter_artikel
+lecture => lecture/NOUN|lecture#vorlesung
+with => with/ADP|with#mit
+help => help/NOUN|help#hilfe
+from => from/ADP|from#von_ausgangspunkt
+a => a/DET|a#ein
+sign => sign/NOUN|sign#gebaerde
+language => language/NOUN|language#sprachen
+interpreter => interpreter/NOUN|interpreter#dolmetscher
+
+limp | After hurting his ankle, Omar began to limp towards the bench. | Nachdem Omar sich am Knöchel verletzt hatte, begann er zur Bank zu hinken.
+After => after/SCONJ|after#nach-hier-vor-einer-ing-form
+hurting => hurt/VERB|hurt#verletzte
+his => his/DET|his#sein
+ankle => ankle/NOUN|ankle#knoechel
+Omar => Omar/PROPN|omar#omar
+began => begin/VERB|begin#beginnt
+to => to/PART|to#infinitivpartikel
+limp => limp/VERB|limp#hinken
+towards => towards/ADP|towards#in_richtung
+the => the/DET|the#bestimmter_artikel
+bench => bench/NOUN|bench#bank
+
+arthritis | Maya asked her doctor whether arthritis could explain the pain in her fingers. | Maya fragte ihren Arzt, ob eine Arthritis die Schmerzen in ihren Fingern erklären könnte.
+Maya => Maya/PROPN|maya#maya
+asked => ask/VERB|ask#fragen
+her => her/DET|her#ihr_possessiv
+doctor => doctor/NOUN|doctor#arzt
+whether => whether/SCONJ|whether#ob
+arthritis => arthritis/NOUN|arthritis#arthritis
+could => could/AUX|could#koennte
+explain => explain/VERB|explain#erklaere
+the => the/DET|the#bestimmter_artikel
+pain => pain/NOUN|pain#schmerzen
+in => in/ADP|in#in_raeumlich
+her => her/DET|her#ihr_possessiv
+fingers => finger/NOUN|finger#finger
+
+fracture | The doctor showed David the fracture in his wrist on the scan. | Die Ärztin zeigte David auf der Aufnahme den Bruch in seinem Handgelenk.
+The => the/DET|the#bestimmter_artikel
+doctor => doctor/NOUN|doctor#arzt
+showed => show/VERB|show#zeigt
+David => David/PROPN|david#david
+the => the/DET|the#bestimmter_artikel
+fracture => fracture/NOUN|fracture#knochenbruch
+in => in/ADP|in#in_raeumlich
+his => his/DET|his#sein
+wrist => wrist/NOUN|wrist#handgelenk
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+scan => scan/NOUN|scan#medizinische-aufnahme
+
+test | Lina waited in the corridor for the results of her blood test. | Lina wartete auf dem Flur auf die Ergebnisse ihrer Blutuntersuchung.
+Lina => Lina/PROPN|lina#lina
+waited => wait/VERB|wait#wartete
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+corridor => corridor/NOUN|corridor#flur
+for => for/ADP|for#auf
+the => the/DET|the#bestimmter_artikel
+results => result/NOUN|result#ergebnis
+of => of/ADP|of#genitiv_besitz
+her => her/DET|her#ihr_possessiv
+blood => blood/NOUN|blood#blut
+test => test/NOUN|test#test
+
+dream | Luis described a strange dream about flying over his old school. | Luis beschrieb einen seltsamen Traum, in dem er über seine alte Schule flog.
+Luis => Luis/PROPN|luis#luis
+described => describe/VERB|describe#beschreiben
+a => a/DET|a#ein
+strange => strange/ADJ|strange#seltsam
+dream => dream/NOUN|dream#traum
+about => about/ADP|about#ueber_thema
+flying => fly/VERB|fly#fliegt
+over => over/ADP|over#ueber
+his => his/DET|his#sein
+old => old/ADJ|old#von-fruher
+school => school/NOUN|school#schule-hier-schul
+
+itch | The woollen scarf made Emma's neck itch during the walk. | Der Wollschal ließ Emmas Hals während des Spaziergangs jucken.
+The => the/DET|the#bestimmter_artikel
+woollen => woollen/ADJ|woollen#aus-wolle
+scarf => scarf/NOUN|scarf#schal
+made => make/VERB|make#veranlassen
+Emma => Emma/PROPN|emma#emma
+'s => 's/PART|s#genitiv-endung
+neck => neck/NOUN|neck#hals
+itch => itch/VERB|itch#jucken
+during => during/ADP|during#waehrend
+the => the/DET|the#bestimmter_artikel
+walk => walk/NOUN|walk#spaziergang
+
+vomit | During the rough crossing, Ben felt ill and began to vomit. | Während der unruhigen Überfahrt wurde Ben übel, und er begann sich zu übergeben.
+During => during/ADP|during#waehrend
+the => the/DET|the#bestimmter_artikel
+rough => rough/ADJ|rough#unruhige-ueberfahrt
+crossing => crossing/NOUN|crossing#ueberfahrt
+Ben => Ben/PROPN|ben#ben
+felt => feel/VERB|feel#fuehlen
+ill => ill/ADJ|ill#krank
+and => and/CCONJ|and#und
+began => begin/VERB|begin#beginnt
+to => to/PART|to#infinitivpartikel
+vomit => vomit/VERB|vomit#sich-ubergeben
+
+concussion | The doctor examined Sara for a possible concussion after the bicycle accident. | Die Ärztin untersuchte Sara nach dem Fahrradunfall auf eine mögliche Gehirnerschütterung.
+The => the/DET|the#bestimmter_artikel
+doctor => doctor/NOUN|doctor#arzt
+examined => examine/VERB|examine#untersucht
+Sara => Sara/PROPN|sara#sara
+for => for/ADP|for#auf
+a => a/DET|a#ein
+possible => possible/ADJ|possible#moeglich
+concussion => concussion/NOUN|concussion#gehirnerschutterung
+after => after/ADP|after#nach
+the => the/DET|the#bestimmter_artikel
+bicycle => bicycle/NOUN|bicycle#fahrrad
+accident => accident/NOUN|accident#unfall
+
+mouth | Ali opened his mouth wide so the dentist could examine his teeth. | Ali öffnete den Mund weit, damit die Zahnärztin seine Zähne untersuchen konnte.
+Ali => Ali/PROPN|ali#ali
+opened => open/VERB|open#oeffnete
+his => his/DET|his#sein
+mouth => mouth/NOUN|mouth#mund
+wide => wide/ADV|wide#weit-geoeffnet
+so => so/SCONJ|so#damit
+the => the/DET|the#bestimmter_artikel
+dentist => dentist/NOUN|dentist#zahnarzt
+could => could/AUX|could#konnten
+examine => examine/VERB|examine#untersucht
+his => his/DET|his#sein
+teeth => tooth/NOUN|tooth#zahn
+
+ultrasound | Rosa watched the screen during the ultrasound at the hospital. | Rosa sah während der Ultraschalluntersuchung im Krankenhaus auf den Bildschirm.
+Rosa => Rosa/PROPN|rosa#rosa
+watched => watch/VERB|watch#beobachtet
+the => the/DET|the#bestimmter_artikel
+screen => screen/NOUN|screen#bildschirm
+during => during/ADP|during#waehrend
+the => the/DET|the#bestimmter_artikel
+ultrasound => ultrasound/NOUN|ultrasound#ultraschalluntersuchung
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+hospital => hospital/NOUN|hospital#krankenhaus
+
+painkiller | Omar asked the pharmacist about the name of the painkiller on his prescription. | Omar fragte die Apothekerin nach dem Namen des Schmerzmittels auf seinem Rezept.
+Omar => Omar/PROPN|omar#omar
+asked => ask/VERB|ask#fragen
+the => the/DET|the#bestimmter_artikel
+pharmacist => pharmacist/NOUN|pharmacist#apotheker
+about => about/ADP|about#ueber_thema
+the => the/DET|the#bestimmter_artikel
+name => name/NOUN|name#namen
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+painkiller => painkiller/NOUN|painkiller#schmerzmittel
+on => on/ADP|on#auf
+his => his/DET|his#sein
+prescription => prescription/NOUN|prescription#rezept
+
+shiver | Maya began to shiver while waiting outside in her wet clothes. | Maya begann zu zittern, während sie draußen in ihrer nassen Kleidung wartete.
+Maya => Maya/PROPN|maya#maya
+began => begin/VERB|begin#beginnt
+to => to/PART|to#infinitivpartikel
+shiver => shiver/VERB|shiver#zitternd
+while => while/SCONJ|while#waehrend
+waiting => wait/VERB|wait#warten
+outside => outside/ADV|outside#draussen
+in => in/ADP|in#in_raeumlich
+her => her/DET|her#ihr_possessiv
+wet => wet/ADJ|wet#nass
+clothes => clothes/NOUN|clothes#kleidung
+
+roll | The baby tried to roll onto her back on the soft blanket. | Das Baby versuchte, sich auf der weichen Decke auf den Rücken zu rollen.
+The => the/DET|the#bestimmter_artikel
+baby => baby/NOUN|baby#baby
+tried => try/VERB|try#versuchen
+to => to/PART|to#infinitivpartikel
+roll => roll/VERB|roll#rollen
+onto => onto/ADP|onto#auf
+her => her/DET|her#ihr_possessiv
+back => back/NOUN|back#ruecken
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+soft => soft/ADJ|soft#weiche
+blanket => blanket/NOUN|blanket#decke
+
+rash | The doctor looked closely at the rash on Leo's arm. | Die Ärztin betrachtete den Ausschlag an Leos Arm genau.
+The => the/DET|the#bestimmter_artikel
+doctor => doctor/NOUN|doctor#arzt
+looked => look/VERB|look#schauen
+closely => closely/ADV|closely#genau
+at => at/ADP|at#richtung
+the => the/DET|the#bestimmter_artikel
+rash => rash/NOUN|rash#hautausschlag
+on => on/ADP|on#auf
+Leo => Leo/PROPN|leo#leo
+'s => 's/PART|s#genitiv-endung
+arm => arm/NOUN|arm#arm
+
+drowsy | After the sleepless night, Lina felt drowsy during the morning meeting. | Nach der schlaflosen Nacht fühlte Lina sich in der morgendlichen Besprechung schläfrig.
+After => after/ADP|after#nach
+the => the/DET|the#bestimmter_artikel
+sleepless => sleepless/ADJ|sleepless#schlaflos
+night => night/NOUN|night#nacht
+Lina => Lina/PROPN|lina#lina
+felt => feel/VERB|feel#fuehlen
+drowsy => drowsy/ADJ|drowsy#schlafrig
+during => during/ADP|during#waehrend
+the => the/DET|the#bestimmter_artikel
+morning => morning/NOUN|morning#morgen
+meeting => meeting/NOUN|meeting#besprechung
+
+throat | David told the doctor about the burning feeling in his throat. | David erzählte der Ärztin von dem brennenden Gefühl im Hals.
+David => David/PROPN|david#david
+told => tell/VERB|tell#erzaehlte
+the => the/DET|the#bestimmter_artikel
+doctor => doctor/NOUN|doctor#arzt
+about => about/ADP|about#ueber_thema
+the => the/DET|the#bestimmter_artikel
+burning => burning/ADJ|burning#brennende-empfindung
+feeling => feeling/NOUN|feeling#koerperliche-empfindung
+in => in/ADP|in#in_raeumlich
+his => his/DET|his#sein
+throat => throat/NOUN|throat#hals
+
+stool | The nurse gave Rosa a container for a stool sample. | Die Pflegekraft gab Rosa einen Behälter für eine Stuhlprobe.
+The => the/DET|the#bestimmter_artikel
+nurse => nurse/NOUN|nurse#krankenschwester
+gave => give/VERB|give#geben
+Rosa => Rosa/PROPN|rosa#rosa
+a => a/DET|a#ein
+container => container/NOUN|container#behaelter
+for => for/ADP|for#fuer_zweck_empfaenger
+a => a/DET|a#ein
+stool => stool/NOUN|stool#stuhlgang-ausscheidung
+sample => sample/NOUN|sample#probe
+
+cramp | Ali stopped during the race with a painful cramp in his calf. | Ali hielt während des Rennens mit einem schmerzhaften Krampf in der Wade an.
+Ali => Ali/PROPN|ali#ali
+stopped => stop/VERB|stop#anzuhalten
+during => during/ADP|during#waehrend
+the => the/DET|the#bestimmter_artikel
+race => race/NOUN|race#rennen
+with => with/ADP|with#mit
+a => a/DET|a#ein
+painful => painful/ADJ|painful#schmerzhaft
+cramp => cramp/NOUN|cramp#muskelkrampf
+in => in/ADP|in#in_raeumlich
+his => his/DET|his#sein
+calf => calf/NOUN|calf#wade
+
+choke | Sara saw the child choke on a piece of food and called for help. | Sara sah, wie das Kind an einem Stück Essen zu ersticken drohte, und rief um Hilfe.
+Sara => Sara/PROPN|sara#sara
+saw => see/VERB|see#sehen
+the => the/DET|the#bestimmter_artikel
+child => child/NOUN|child#kind
+choke => choke/VERB|choke#keine-luft-bekommen
+on => on/ADP|on#ursache-ersticken
+a => a/DET|a#ein
+piece => piece/NOUN|piece#stueck
+of => of/ADP|of#teil_menge
+food => food/NOUN|food#essen
+and => and/CCONJ|and#und
+called => call/VERB|call#rufen
+for => for/ADP|for#fuer_zweck_empfaenger
+help => help/NOUN|help#hilfe
+
+chest | The nurse placed the small sensor on Ben's chest. | Die Pflegekraft legte den kleinen Sensor auf Bens Brustkorb.
+The => the/DET|the#bestimmter_artikel
+nurse => nurse/NOUN|nurse#krankenschwester
+placed => place/VERB|place#lege
+the => the/DET|the#bestimmter_artikel
+small => small/ADJ|small#klein
+sensor => sensor/NOUN|sensor#sensor
+on => on/ADP|on#auf
+Ben => Ben/PROPN|ben#ben
+'s => 's/PART|s#genitiv-endung
+chest => chest/NOUN|chest#brustkorb
+
+inhale | Maya paused to inhale deeply before singing the next line. | Maya hielt kurz inne, um vor der nächsten Liedzeile tief einzuatmen.
+Maya => Maya/PROPN|maya#maya
+paused => pause/VERB|pause#innehalten
+to => to/PART|to#infinitivpartikel
+inhale => inhale/VERB|inhale#einatmen
+deeply => deeply/ADV|deeply#tief
+before => before/SCONJ|before#bevor
+singing => sing/VERB|sing#sangen
+the => the/DET|the#bestimmter_artikel
+next => next/ADJ|next#naechsten
+line => line/NOUN|line#textzeile
+
+hop | The child tried to hop across the room on her left foot. | Das Kind versuchte, auf dem linken Fuß durch das Zimmer zu hüpfen.
+The => the/DET|the#bestimmter_artikel
+child => child/NOUN|child#kind
+tried => try/VERB|try#versuchen
+to => to/PART|to#infinitivpartikel
+hop => hop/VERB|hop#auf-einem-bein-hupfen
+across => across/ADP|across#ueber
+the => the/DET|the#bestimmter_artikel
+room => room/NOUN|room#zimmer
+on => on/ADP|on#auf
+her => her/DET|her#ihr_possessiv
+left => left/ADJ|left#linke
+foot => foot/NOUN|foot#fuss
+
+inhaler | Luis searched his sports bag for the inhaler in its blue case. | Luis suchte in seiner Sporttasche nach dem Inhalator in der blauen Hülle.
+Luis => Luis/PROPN|luis#luis
+searched => search/VERB|search#durchsucht
+his => his/DET|his#sein
+sports => sport/NOUN|sport#sport
+bag => bag/NOUN|bag#tasche
+for => for/ADP|for#nach
+the => the/DET|the#bestimmter_artikel
+inhaler => inhaler/NOUN|inhaler#inhalator
+in => in/ADP|in#in_raeumlich
+its => its/DET|its#sein_ihr
+blue => blue/ADJ|blue#blau
+case => case/NOUN|case#huelle
+
+alert | Despite the late hour, the nurse remained alert throughout the night shift. | Trotz der späten Stunde blieb die Pflegekraft während der ganzen Nachtschicht wachsam.
+Despite => despite/ADP|despite#trotz
+the => the/DET|the#bestimmter_artikel
+late => late/ADJ|late#spaet-zeitlich
+hour => hour/NOUN|hour#stunde
+the => the/DET|the#bestimmter_artikel
+nurse => nurse/NOUN|nurse#krankenschwester
+remained => remain/VERB|remain#bleiben
+alert => alert/ADJ|alert#wachsam
+throughout => throughout/ADP|throughout#waehrend_gesamter
+the => the/DET|the#bestimmter_artikel
+night => night/NOUN|night#nacht
+shift => shift/NOUN|shift#arbeitsschicht
+
+resuscitate | The ambulance crew worked together to resuscitate the unconscious man. | Das Rettungsteam arbeitete gemeinsam daran, den bewusstlosen Mann wiederzubeleben.
+The => the/DET|the#bestimmter_artikel
+ambulance => ambulance/NOUN|ambulance#krankenwagen
+crew => crew/NOUN|crew#besatzung
+worked => work/VERB|work#arbeiten
+together => together/ADV|together#zusammen
+to => to/PART|to#infinitivpartikel
+resuscitate => resuscitate/VERB|resuscitate#wiederbeleben
+the => the/DET|the#bestimmter_artikel
+unconscious => unconscious/ADJ|unconscious#bewusstlos
+man => man/NOUN|man#mann
+
+heart | The doctor listened to Emma's heart through a stethoscope. | Der Arzt hörte Emmas Herz mit einem Stethoskop ab.
+The => the/DET|the#bestimmter_artikel
+doctor => doctor/NOUN|doctor#arzt
+listened => listen/VERB|listen#zuhoert
+to => to/ADP|to#zu-in-zuhoeren
+Emma => Emma/PROPN|emma#emma
+'s => 's/PART|s#genitiv-endung
+heart => heart/NOUN|heart#herz
+through => through/ADP|through#durch
+a => a/DET|a#ein
+stethoscope => stethoscope/NOUN|stethoscope#stethoskop
+
+sneeze | Dust from the old blanket made Omar sneeze several times. | Staub aus der alten Decke ließ Omar mehrmals niesen.
+Dust => dust/NOUN|dust#staub
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+old => old/ADJ|old#alten
+blanket => blanket/NOUN|blanket#decke
+made => make/VERB|make#veranlassen
+Omar => Omar/PROPN|omar#omar
+sneeze => sneeze/VERB|sneeze#niesen
+several => several/DET|several#mehrere
+times => time/NOUN|time#mal
+
+climb | Ben used both hands to climb over the low garden wall. | Ben benutzte beide Hände, um über die niedrige Gartenmauer zu klettern.
+Ben => Ben/PROPN|ben#ben
+used => use/VERB|use#benutzen
+both => both/DET|both#beide
+hands => hand/NOUN|hand#hand
+to => to/PART|to#infinitivpartikel
+climb => climb/VERB|climb#klettern
+over => over/ADP|over#ueber
+the => the/DET|the#bestimmter_artikel
+low => low/ADJ|low#niedrigen
+garden => garden/NOUN|garden#garten
+wall => wall/NOUN|wall#wand
+
+stethoscope | The nurse warmed the stethoscope in her hands before using it. | Die Pflegekraft wärmte das Stethoskop vor der Benutzung in ihren Händen.
+The => the/DET|the#bestimmter_artikel
+nurse => nurse/NOUN|nurse#krankenschwester
+warmed => warm/VERB|warm#waermte
+the => the/DET|the#bestimmter_artikel
+stethoscope => stethoscope/NOUN|stethoscope#stethoskop
+in => in/ADP|in#in_raeumlich
+her => her/DET|her#ihr_possessiv
+hands => hand/NOUN|hand#hand
+before => before/SCONJ|before#bevor
+using => use/VERB|use#benutzen
+it => it/PRON|it#es_ding
+
+disinfect | After the appointment, the nurse began to disinfect the examination table. | Nach dem Termin begann die Pflegekraft, die Untersuchungsliege zu desinfizieren.
+After => after/ADP|after#nach
+the => the/DET|the#bestimmter_artikel
+appointment => appointment/NOUN|appointment#termin
+the => the/DET|the#bestimmter_artikel
+nurse => nurse/NOUN|nurse#krankenschwester
+began => begin/VERB|begin#beginnt
+to => to/PART|to#infinitivpartikel
+disinfect => disinfect/VERB|disinfect#desinfizieren
+the => the/DET|the#bestimmter_artikel
+examination => examination/NOUN|examination#medizinische-untersuchung
+table => table/NOUN|table#untersuchungsliege
+
+liver | The teacher showed the liver on a model of the human body. | Die Lehrerin zeigte die Leber an einem Modell des menschlichen Körpers.
+The => the/DET|the#bestimmter_artikel
+teacher => teacher/NOUN|teacher#lehrkraft
+showed => show/VERB|show#zeigt
+the => the/DET|the#bestimmter_artikel
+liver => liver/NOUN|liver#leber
+on => on/ADP|on#auf
+a => a/DET|a#ein
+model => model/NOUN|model#anschauungsmodell
+of => of/ADP|of#ueber_bezug
+the => the/DET|the#bestimmter_artikel
+human => human/ADJ|human#menschlich
+body => body/NOUN|body#koerper
+
+swallow | Rosa paused to swallow her food before answering the question. | Rosa hielt kurz inne und schluckte ihr Essen, bevor sie die Frage beantwortete.
+Rosa => Rosa/PROPN|rosa#rosa
+paused => pause/VERB|pause#innehalten
+to => to/PART|to#infinitivpartikel
+swallow => swallow/VERB|swallow#schlucken
+her => her/DET|her#ihr_possessiv
+food => food/NOUN|food#essen
+before => before/SCONJ|before#bevor
+answering => answer/VERB|answer#antworten
+the => the/DET|the#bestimmter_artikel
+question => question/NOUN|question#frage
+
+acute | The doctor described the sudden illness as acute rather than chronic. | Die Ärztin bezeichnete die plötzlich aufgetretene Erkrankung als akut statt chronisch.
+The => the/DET|the#bestimmter_artikel
+doctor => doctor/NOUN|doctor#arzt
+described => describe/VERB|describe#beschreiben
+the => the/DET|the#bestimmter_artikel
+sudden => sudden/ADJ|sudden#ploetzlichen
+illness => illness/NOUN|illness#krankheit
+as => as/ADP|as#als_funktion
+acute => acute/ADJ|acute#akut
+rather => rather/ADV|rather#rather-than-statt
+than => than/ADP|than#alternative-eigenschaft
+chronic => chronic/ADJ|chronic#chronisch
+
+punch | The boxer tried to punch his opponent, but the referee stepped between them. | Der Boxer versuchte, seinen Gegner mit der Faust zu schlagen, doch der Ringrichter trat zwischen sie.
+The => the/DET|the#bestimmter_artikel
+boxer => boxer/NOUN|boxer#boxer
+tried => try/VERB|try#versuchen
+to => to/PART|to#infinitivpartikel
+punch => punch/VERB|punch#mit-faust-schlagen
+his => his/DET|his#sein
+opponent => opponent/NOUN|opponent#gegner
+but => but/CCONJ|but#aber
+the => the/DET|the#bestimmter_artikel
+referee => referee/NOUN|referee#schiedsrichter
+stepped => step/VERB|step#treten
+between => between/ADP|between#zwischen
+them => they/PRON|they#sie_plural
+
+poison | The bottle had a warning label showing that it contained poison. | Die Flasche trug einen Warnhinweis, dass sie Gift enthielt.
+The => the/DET|the#bestimmter_artikel
+bottle => bottle/NOUN|bottle#flasche
+had => have/VERB|have#besitzen_past
+a => a/DET|a#ein
+warning => warning/NOUN|warning#warnung
+label => label/NOUN|label#aufkleber
+showing => show/VERB|show#zeigt
+that => that/SCONJ|that#dass
+it => it/PRON|it#es_ding
+contained => contain/VERB|contain#enthalten
+poison => poison/NOUN|poison#gift
+
+muscle | The muscle in Maya's upper arm tightened as she lifted the bag. | Der Muskel in Mayas Oberarm spannte sich an, als sie die Tasche anhob.
+The => the/DET|the#bestimmter_artikel
+muscle => muscle/NOUN|muscle#muskel
+in => in/ADP|in#in_raeumlich
+Maya => Maya/PROPN|maya#maya
+'s => 's/PART|s#genitiv-endung
+upper => upper/ADJ|upper#obere
+arm => arm/NOUN|arm#arm
+tightened => tighten/VERB|tighten#sich-anspannen
+as => as/SCONJ|as#waehrend_zeit
+she => she/PRON|she#sie
+lifted => lift/VERB|lift#heben
+the => the/DET|the#bestimmter_artikel
+bag => bag/NOUN|bag#tasche
+
+surgeon | The surgeon explained the operation to Ali before he signed the form. | Die Chirurgin erklärte Ali die Operation, bevor er das Formular unterschrieb.
+The => the/DET|the#bestimmter_artikel
+surgeon => surgeon/NOUN|surgeon#chirurg
+explained => explain/VERB|explain#erklaert
+the => the/DET|the#bestimmter_artikel
+operation => operation/NOUN|operation#operation
+to => to/ADP|to#fuer_empfaenger
+Ali => Ali/PROPN|ali#ali
+before => before/SCONJ|before#bevor
+he => he/PRON|he#er
+signed => sign/VERB|sign#unterschreibt
+the => the/DET|the#bestimmter_artikel
+form => form/NOUN|form#formular
+
+hiccup | A sudden hiccup interrupted Lina's sentence and made her laugh. | Ein plötzlicher Schluckauf unterbrach Linas Satz und brachte sie zum Lachen.
+A => a/DET|a#ein
+sudden => sudden/ADJ|sudden#ploetzlichen
+hiccup => hiccup/NOUN|hiccup#schluckauf
+interrupted => interrupt/VERB|interrupt#unterbrechen
+Lina => Lina/PROPN|lina#lina
+'s => 's/PART|s#genitiv-endung
+sentence => sentence/NOUN|sentence#satz
+and => and/CCONJ|and#und
+made => make/VERB|make#veranlassen
+her => her/PRON|her#sie_objekt
+laugh => laugh/VERB|laugh#lachen
+
+gargle | Ben took a sip of water and began to gargle over the sink. | Ben nahm einen Schluck Wasser und begann, über dem Waschbecken zu gurgeln.
+Ben => Ben/PROPN|ben#ben
+took => take/VERB|take#nehmen
+a => a/DET|a#ein
+sip => sip/NOUN|sip#schluck
+of => of/ADP|of#teil_menge
+water => water/NOUN|water#wasser
+and => and/CCONJ|and#und
+began => begin/VERB|begin#beginnt
+to => to/PART|to#infinitivpartikel
+gargle => gargle/VERB|gargle#gurgeln
+over => over/ADP|over#ueber
+the => the/DET|the#bestimmter_artikel
+sink => sink/NOUN|sink#spuelbecken
+
+hoarse | After cheering at the match, David's voice sounded unusually hoarse. | Nachdem David beim Spiel laut angefeuert hatte, klang seine Stimme ungewöhnlich heiser.
+After => after/SCONJ|after#nach-hier-vor-einer-ing-form
+cheering => cheer/VERB|cheer#anfeuern
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+match => match/NOUN|match#spiel
+David => David/PROPN|david#david
+'s => 's/PART|s#genitiv-endung
+voice => voice/NOUN|voice#stimme
+sounded => sound/VERB|sound#klingt
+unusually => unusually/ADV|unusually#ungewoehnlich
+hoarse => hoarse/ADJ|hoarse#heiser
+
+wrist | Emma fastened the watch around her wrist before leaving home. | Emma legte die Uhr um ihr Handgelenk, bevor sie das Haus verließ.
+Emma => Emma/PROPN|emma#emma
+fastened => fasten/VERB|fasten#befestigen
+the => the/DET|the#bestimmter_artikel
+watch => watch/NOUN|watch#armbanduhr
+around => around/ADP|around#um_herum
+her => her/DET|her#ihr_possessiv
+wrist => wrist/NOUN|wrist#handgelenk
+before => before/SCONJ|before#bevor
+leaving => leave/VERB|leave#verlassen
+home => home/NOUN|home#hause
+
+midwife | The midwife visited Rosa and her newborn baby at home. | Die Hebamme besuchte Rosa und ihr neugeborenes Baby zu Hause.
+The => the/DET|the#bestimmter_artikel
+midwife => midwife/NOUN|midwife#hebamme
+visited => visit/VERB|visit#besuchen
+Rosa => Rosa/PROPN|rosa#rosa
+and => and/CCONJ|and#und
+her => her/DET|her#ihr_possessiv
+newborn => newborn/ADJ|newborn#neugeboren
+baby => baby/NOUN|baby#baby
+at => at/ADP|at#ort
+home => home/NOUN|home#hause
+
+accident | Luis hurt his shoulder in a cycling accident near the station. | Luis verletzte sich bei einem Fahrradunfall in der Nähe des Bahnhofs an der Schulter.
+Luis => Luis/PROPN|luis#luis
+hurt => hurt/VERB|hurt#verletzte
+his => his/DET|his#sein
+shoulder => shoulder/NOUN|shoulder#schulter
+in => in/ADP|in#bei
+a => a/DET|a#ein
+cycling => cycling/NOUN|cycling#radfahren
+accident => accident/NOUN|accident#unfall
+near => near/ADP|near#nahe-bei
+the => the/DET|the#bestimmter_artikel
+station => station/NOUN|station#bahnhof
+
+coordination | The therapist assessed Omar's coordination while he caught and threw a ball. | Die Therapeutin überprüfte Omars Bewegungskoordination, während er einen Ball fing und warf.
+The => the/DET|the#bestimmter_artikel
+therapist => therapist/NOUN|therapist#therapeut
+assessed => assess/VERB|assess#beurteilen
+Omar => Omar/PROPN|omar#omar
+'s => 's/PART|s#genitiv-endung
+coordination => coordination/NOUN|coordination#bewegungskoordination
+while => while/SCONJ|while#waehrend
+he => he/PRON|he#er
+caught => catch/VERB|catch#fangen
+and => and/CCONJ|and#und
+threw => throw/VERB|throw#wirft
+a => a/DET|a#ein
+ball => ball/NOUN|ball#ball
+
+nutrition | Sara attended a talk about nutrition at the local community centre. | Sara besuchte im örtlichen Gemeindezentrum einen Vortrag über Ernährung.
+Sara => Sara/PROPN|sara#sara
+attended => attend/VERB|attend#besuchen
+a => a/DET|a#ein
+talk => talk/NOUN|talk#vortrag
+about => about/ADP|about#ueber_thema
+nutrition => nutrition/NOUN|nutrition#ernahrung
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+local => local/ADJ|local#oertlichen
+community => community/NOUN|community#gemeinschaft
+centre => centre/NOUN|centre#einrichtung
+
+knee | Ben bent his knee slowly while the doctor watched the movement. | Ben beugte langsam das Knie, während die Ärztin die Bewegung beobachtete.
+Ben => Ben/PROPN|ben#ben
+bent => bend/VERB|bend#beugen
+his => his/DET|his#sein
+knee => knee/NOUN|knee#knie
+slowly => slowly/ADV|slowly#langsam
+while => while/SCONJ|while#waehrend
+the => the/DET|the#bestimmter_artikel
+doctor => doctor/NOUN|doctor#arzt
+watched => watch/VERB|watch#beobachtet
+the => the/DET|the#bestimmter_artikel
+movement => movement/NOUN|movement#bewegung
+
+indigestion | Maya described the uncomfortable indigestion she often felt after large meals. | Maya beschrieb die unangenehmen Verdauungsbeschwerden, die sie oft nach großen Mahlzeiten hatte.
+Maya => Maya/PROPN|maya#maya
+described => describe/VERB|describe#beschreiben
+the => the/DET|the#bestimmter_artikel
+uncomfortable => uncomfortable/ADJ|uncomfortable#unbehaglich
+indigestion => indigestion/NOUN|indigestion#verdauungsbeschwerden
+she => she/PRON|she#sie
+often => often/ADV|often#oft
+felt => feel/VERB|feel#fuehlen
+after => after/ADP|after#nach
+large => large/ADJ|large#gross
+meals => meal/NOUN|meal#mahlzeit
+
+cast | Ali asked his friends to write their names on his arm cast. | Ali bat seine Freunde, ihre Namen auf seinen Gipsverband am Arm zu schreiben.
+Ali => Ali/PROPN|ali#ali
+asked => ask/VERB|ask#bat
+his => his/DET|his#sein
+friends => friend/NOUN|friend#freund
+to => to/PART|to#infinitivpartikel
+write => write/VERB|write#schreiben
+their => they/PRON|they#ihr_plural
+names => name/NOUN|name#namen
+on => on/ADP|on#auf
+his => his/DET|his#sein
+arm => arm/NOUN|arm#arm
+cast => cast/NOUN|cast#gipsverband
+
+fibre | Emma compared the amount of fibre in two packets of breakfast cereal. | Emma verglich den Ballaststoffgehalt zweier Packungen Frühstücksflocken.
+Emma => Emma/PROPN|emma#emma
+compared => compare/VERB|compare#vergleichen
+the => the/DET|the#bestimmter_artikel
+amount => amount/NOUN|amount#menge
+of => of/ADP|of#teil_menge
+fibre => fibre/NOUN|fibre#ballaststoffe
+in => in/ADP|in#in_raeumlich
+two => two/NUM|two#zwei
+packets => packet/NOUN|packet#packung
+of => of/ADP|of#teil_menge
+breakfast => breakfast/NOUN|breakfast#fruehstueck
+cereal => cereal/NOUN|cereal#fruehstuecksflocken
+
+stamina | The long uphill walk tested David's stamina more than he expected. | Der lange Weg bergauf forderte Davids Ausdauer stärker als erwartet.
+The => the/DET|the#bestimmter_artikel
+long => long/ADJ|long#lange
+uphill => uphill/ADJ|uphill#bergauf-fuehrend
+walk => walk/NOUN|walk#spaziergang
+tested => test/VERB|test#auf-die-probe-stellen
+David => David/PROPN|david#david
+'s => 's/PART|s#genitiv-endung
+stamina => stamina/NOUN|stamina#ausdauer
+more => more/ADV|more#mehr_steigerung
+than => than/SCONJ|than#als_vergleichssatz
+he => he/PRON|he#er
+expected => expect/VERB|expect#erwarten
+
+medical | Rosa brought her medical records to the appointment with the new doctor. | Rosa brachte ihre medizinischen Unterlagen zum Termin bei der neuen Ärztin mit.
+Rosa => Rosa/PROPN|rosa#rosa
+brought => bring/VERB|bring#mitbringen
+her => her/DET|her#ihr_possessiv
+medical => medical/ADJ|medical#medizinisch
+records => record/NOUN|record#unterlage
+to => to/ADP|to#nach_richtung
+the => the/DET|the#bestimmter_artikel
+appointment => appointment/NOUN|appointment#termin
+with => with/ADP|with#mit
+the => the/DET|the#bestimmter_artikel
+new => new/ADJ|new#neu
+doctor => doctor/NOUN|doctor#arzt
+
+heel | The stiff back of the shoe rubbed against Lina's heel. | Der steife hintere Teil des Schuhs rieb an Linas Ferse.
+The => the/DET|the#bestimmter_artikel
+stiff => stiff/ADJ|stiff#steif
+back => back/NOUN|back#rueckseite
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+shoe => shoe/NOUN|shoe#schuhe
+rubbed => rub/VERB|rub#reiben
+against => against/ADP|against#an
+Lina => Lina/PROPN|lina#lina
+'s => 's/PART|s#genitiv-endung
+heel => heel/NOUN|heel#ferse
+
+wheelchair | Luis moved his wheelchair closer to the table before lunch. | Luis fuhr mit seinem Rollstuhl vor dem Mittagessen näher an den Tisch.
+Luis => Luis/PROPN|luis#luis
+moved => move/VERB|move#bewegen
+his => his/DET|his#sein
+wheelchair => wheelchair/NOUN|wheelchair#rollstuhl
+closer => close/ADV|close#nah
+to => to/ADP|to#nach_richtung
+the => the/DET|the#bestimmter_artikel
+table => table/NOUN|table#tisch
+before => before/ADP|before#vor
+lunch => lunch/NOUN|lunch#mittagessen
+
+faint | Omar felt weak and feared he might faint in the crowded room. | Omar fühlte sich schwach und befürchtete, in dem überfüllten Raum ohnmächtig zu werden.
+Omar => Omar/PROPN|omar#omar
+felt => feel/VERB|feel#fuehlen
+weak => weak/ADJ|weak#koerperlich-schwach
+and => and/CCONJ|and#und
+feared => fear/VERB|fear#befuerchten
+he => he/PRON|he#er
+might => might/AUX|might#moeglichkeit
+faint => faint/VERB|faint#ohnmachtig-werden
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+crowded => crowded/ADJ|crowded#voll-mit-menschen
+room => room/NOUN|room#zimmer
+
+anaesthetic | The dentist explained the local anaesthetic before beginning the procedure. | Die Zahnärztin erklärte vor Beginn der Behandlung das örtliche Betäubungsmittel.
+The => the/DET|the#bestimmter_artikel
+dentist => dentist/NOUN|dentist#zahnarzt
+explained => explain/VERB|explain#erklaert
+the => the/DET|the#bestimmter_artikel
+local => local/ADJ|local#auf-einen-koerperbereich-begrenzt
+anaesthetic => anaesthetic/NOUN|anaesthetic#betaubungsmittel
+before => before/SCONJ|before#bevor
+beginning => begin/VERB|begin#beginnt
+the => the/DET|the#bestimmter_artikel
+procedure => procedure/NOUN|procedure#medizinische-behandlung
+
+mineral | Maya asked which mineral the nutrition label listed beside the vitamins. | Maya fragte, welcher Mineralstoff auf dem Nährwertetikett neben den Vitaminen aufgeführt war.
+Maya => Maya/PROPN|maya#maya
+asked => ask/VERB|ask#fragen
+which => which/DET|which#determiner_auswahl
+mineral => mineral/NOUN|mineral#mineralstoff
+the => the/DET|the#bestimmter_artikel
+nutrition => nutrition/NOUN|nutrition#ernahrung
+label => label/NOUN|label#aufkleber
+listed => list/VERB|list#auflisten
+beside => beside/ADP|beside#neben
+the => the/DET|the#bestimmter_artikel
+vitamins => vitamin/NOUN|vitamin#vitamin
+
+chin | Ben rested his chin on his hand while listening to the story. | Ben stützte beim Zuhören sein Kinn auf die Hand.
+Ben => Ben/PROPN|ben#ben
+rested => rest/VERB|rest#lehnt
+his => his/DET|his#sein
+chin => chin/NOUN|chin#kinn
+on => on/ADP|on#auf
+his => his/DET|his#sein
+hand => hand/NOUN|hand#hand
+while => while/SCONJ|while#waehrend
+listening => listen/VERB|listen#zuhoert
+to => to/ADP|to#zu-in-zuhoeren
+the => the/DET|the#bestimmter_artikel
+story => story/NOUN|story#geschichte
+
+plaster | Sara covered the small cut on her finger with a plaster. | Sara deckte den kleinen Schnitt am Finger mit einem Pflaster ab.
+Sara => Sara/PROPN|sara#sara
+covered => cover/VERB|cover#bedecken
+the => the/DET|the#bestimmter_artikel
+small => small/ADJ|small#klein
+cut => cut/NOUN|cut#schnittwunde
+on => on/ADP|on#auf
+her => her/DET|her#ihr_possessiv
+finger => finger/NOUN|finger#finger
+with => with/ADP|with#mit
+a => a/DET|a#ein
+plaster => plaster/NOUN|plaster#wundpflaster
+
+sour | The lemon sauce tasted too sour for Emma, so she left it. | Die Zitronensoße schmeckte Emma zu sauer, deshalb ließ sie sie stehen.
+The => the/DET|the#bestimmter_artikel
+lemon => lemon/NOUN|lemon#zitrone
+sauce => sauce/NOUN|sauce#sosse
+tasted => taste/VERB|taste#schmeckt
+too => too/ADV|too#zu
+sour => sour/ADJ|sour#sauer
+for => for/ADP|for#persoenliche-beurteilung
+Emma => Emma/PROPN|emma#emma
+so => so/CCONJ|so#deshalb
+she => she/PRON|she#sie
+left => leave/VERB|leave#stehen-lassen
+it => it/PRON|it#es_ding
+
+positive | Ali read the positive test result and called his doctor. | Ali las das positive Testergebnis und rief seinen Arzt an.
+Ali => Ali/PROPN|ali#ali
+read => read/VERB|read#lesen
+the => the/DET|the#bestimmter_artikel
+positive => positive/ADJ|positive#positiv-getestet
+test => test/NOUN|test#test
+result => result/NOUN|result#ergebnis
+and => and/CCONJ|and#und
+called => call/VERB|call#anrufen
+his => his/DET|his#sein
+doctor => doctor/NOUN|doctor#arzt
+
+waist | Rosa wrapped the measuring tape around her waist to check the size. | Rosa legte das Maßband um ihre Taille, um die Größe zu überprüfen.
+Rosa => Rosa/PROPN|rosa#rosa
+wrapped => wrap/VERB|wrap#herumlegen
+the => the/DET|the#bestimmter_artikel
+measuring => measure/VERB|measure#messen
+tape => tape/NOUN|tape#messband
+around => around/ADP|around#um_herum
+her => her/DET|her#ihr_possessiv
+waist => waist/NOUN|waist#taille
+to => to/PART|to#infinitivpartikel
+check => check/VERB|check#ueberprueft
+the => the/DET|the#bestimmter_artikel
+size => size/NOUN|size#grosse
+
+steady | Despite feeling nervous, Lina kept her hand steady during the exercise. | Obwohl Lina nervös war, hielt sie ihre Hand während der Übung ruhig.
+Despite => despite/ADP|despite#trotz
+feeling => feel/VERB|feel#fuehlen
+nervous => nervous/ADJ|nervous#nervoes
+Lina => Lina/PROPN|lina#lina
+kept => keep/VERB|keep#halten
+her => her/DET|her#ihr_possessiv
+hand => hand/NOUN|hand#hand
+steady => steady/ADJ|steady#sicher-und-ruhig
+during => during/ADP|during#waehrend
+the => the/DET|the#bestimmter_artikel
+exercise => exercise/NOUN|exercise#uebungen
+
+diet | Luis described his usual diet when the nurse asked about his eating habits. | Luis beschrieb seine übliche Ernährung, als die Pflegekraft nach seinen Essgewohnheiten fragte.
+Luis => Luis/PROPN|luis#luis
+described => describe/VERB|describe#beschreiben
+his => his/DET|his#sein
+usual => usual/ADJ|usual#ueblich
+diet => diet/NOUN|diet#kost
+when => when/SCONJ|when#als_wenn
+the => the/DET|the#bestimmter_artikel
+nurse => nurse/NOUN|nurse#krankenschwester
+asked => ask/VERB|ask#fragen
+about => about/ADP|about#ueber_thema
+his => his/DET|his#sein
+eating => eat/VERB|eat#essen
+habits => habit/NOUN|habit#gewohnheit
+
+smooth | Maya ran her fingers over the smooth surface of the wooden handle. | Maya strich mit den Fingern über die glatte Oberfläche des Holzgriffs.
+Maya => Maya/PROPN|maya#maya
+ran => run/VERB|run#entlangfuehren
+her => her/DET|her#ihr_possessiv
+fingers => finger/NOUN|finger#finger
+over => over/ADP|over#ueber
+the => the/DET|the#bestimmter_artikel
+smooth => smooth/ADJ|smooth#glatt
+surface => surface/NOUN|surface#oberflaeche
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+wooden => wooden/ADJ|wooden#hoelzern
+handle => handle/NOUN|handle#griff
+
+sedative | The doctor explained why Ben had been given a sedative before the procedure. | Die Ärztin erklärte, warum Ben vor der Behandlung ein Beruhigungsmittel bekommen hatte.
+The => the/DET|the#bestimmter_artikel
+doctor => doctor/NOUN|doctor#arzt
+explained => explain/VERB|explain#erklaert
+why => why/SCONJ|why#warum
+Ben => Ben/PROPN|ben#ben
+had => have/AUX|have#hilfsverb
+been => be/AUX|be#hilfsverb
+given => give/VERB|give#geben
+a => a/DET|a#ein
+sedative => sedative/NOUN|sedative#beruhigungsmittel
+before => before/ADP|before#vor
+the => the/DET|the#bestimmter_artikel
+procedure => procedure/NOUN|procedure#medizinische-behandlung
+
+skull | The students examined the model of a skull during the anatomy lesson. | Die Schüler betrachteten im Anatomieunterricht das Modell eines Schädels.
+The => the/DET|the#bestimmter_artikel
+students => student/NOUN|student#lernende
+examined => examine/VERB|examine#genau-betrachten
+the => the/DET|the#bestimmter_artikel
+model => model/NOUN|model#anschauungsmodell
+of => of/ADP|of#ueber_bezug
+a => a/DET|a#ein
+skull => skull/NOUN|skull#schadel
+during => during/ADP|during#waehrend
+the => the/DET|the#bestimmter_artikel
+anatomy => anatomy/NOUN|anatomy#anatomie
+lesson => lesson/NOUN|lesson#unterrichtsstunde
+
+breathless | After running up the stairs, Omar was too breathless to speak. | Nach dem schnellen Lauf die Treppe hinauf war Omar so außer Atem, dass er nicht sprechen konnte.
+After => after/SCONJ|after#nach-hier-vor-einer-ing-form
+running => run/VERB|run#laufen
+up => up/ADP|up#entlang
+the => the/DET|the#bestimmter_artikel
+stairs => stairs/NOUN|stairs#treppe
+Omar => Omar/PROPN|omar#omar
+was => be/AUX|be#sein_vollverb
+too => too/ADV|too#zu
+breathless => breathless/ADJ|breathless#auer-atem
+to => to/PART|to#infinitivpartikel
+speak => speak/VERB|speak#sprechen
+
+monitor | The nurse will monitor Rosa's temperature throughout the night. | Die Pflegekraft wird Rosas Temperatur die ganze Nacht über überwachen.
+The => the/DET|the#bestimmter_artikel
+nurse => nurse/NOUN|nurse#krankenschwester
+will => will/AUX|will#zukunft
+monitor => monitor/VERB|monitor#uberwachen
+Rosa => Rosa/PROPN|rosa#rosa
+'s => 's/PART|s#genitiv-endung
+temperature => temperature/NOUN|temperature#temperatur
+throughout => throughout/ADP|throughout#waehrend_gesamter
+the => the/DET|the#bestimmter_artikel
+night => night/NOUN|night#nacht
+
+squat | Ali had to squat beside the low shelf to reach his shoes. | Ali musste sich neben dem niedrigen Regal hinhocken, um seine Schuhe zu erreichen.
+Ali => Ali/PROPN|ali#ali
+had => have/VERB|have#muessen
+to => to/PART|to#infinitivpartikel
+squat => squat/VERB|squat#in-die-hocke-gehen
+beside => beside/ADP|beside#neben
+the => the/DET|the#bestimmter_artikel
+low => low/ADJ|low#niedrigen
+shelf => shelf/NOUN|shelf#regal
+to => to/PART|to#infinitivpartikel
+reach => reach/VERB|reach#erreichen
+his => his/DET|his#sein
+shoes => shoe/NOUN|shoe#schuhe
+
+artery | The doctor pointed to an artery on the diagram beside the bed. | Der Arzt zeigte auf der Zeichnung neben dem Bett auf eine Arterie.
+The => the/DET|the#bestimmter_artikel
+doctor => doctor/NOUN|doctor#arzt
+pointed => point/VERB|point#zeigt
+to => to/ADP|to#nach_richtung
+an => a/DET|a#ein
+artery => artery/NOUN|artery#arterie
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+diagram => diagram/NOUN|diagram#zeichnung
+beside => beside/ADP|beside#neben
+the => the/DET|the#bestimmter_artikel
+bed => bed/NOUN|bed#bett
+
+hygiene | The new hospital staff attended a training session about hand hygiene. | Die neuen Krankenhausmitarbeiter nahmen an einer Schulung zur Handhygiene teil.
+The => the/DET|the#bestimmter_artikel
+new => new/ADJ|new#neu
+hospital => hospital/NOUN|hospital#krankenhaus
+staff => staff/NOUN|staff#mitarbeiter
+attended => attend/VERB|attend#besuchen
+a => a/DET|a#ein
+training => training/NOUN|training#trainings
+session => session/NOUN|session#trainingseinheit
+about => about/ADP|about#ueber_thema
+hand => hand/NOUN|hand#hand
+hygiene => hygiene/NOUN|hygiene#hygiene
+
+nail | Emma noticed a small white mark on the nail of her thumb. | Emma bemerkte einen kleinen weißen Fleck auf ihrem Daumennagel.
+Emma => Emma/PROPN|emma#emma
+noticed => notice/VERB|notice#bemerkt
+a => a/DET|a#ein
+small => small/ADJ|small#klein
+white => white/ADJ|white#weisses
+mark => mark/NOUN|mark#spur
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+nail => nail/NOUN|nail#nagel
+of => of/ADP|of#genitiv_besitz
+her => her/DET|her#ihr_possessiv
+thumb => thumb/NOUN|thumb#daumen
+
+reflex | The doctor tapped below David's knee to check the reflex. | Die Ärztin klopfte unterhalb von Davids Knie, um den Reflex zu überprüfen.
+The => the/DET|the#bestimmter_artikel
+doctor => doctor/NOUN|doctor#arzt
+tapped => tap/VERB|tap#tippt
+below => below/ADP|below#unterhalb
+David => David/PROPN|david#david
+'s => 's/PART|s#genitiv-endung
+knee => knee/NOUN|knee#knie
+to => to/PART|to#infinitivpartikel
+check => check/VERB|check#ueberprueft
+the => the/DET|the#bestimmter_artikel
+reflex => reflex/NOUN|reflex#reflex
+
+nostril | The nurse asked Lina to close one nostril during the examination. | Die Pflegekraft bat Lina, während der Untersuchung ein Nasenloch zuzuhalten.
+The => the/DET|the#bestimmter_artikel
+nurse => nurse/NOUN|nurse#krankenschwester
+asked => ask/VERB|ask#bat
+Lina => Lina/PROPN|lina#lina
+to => to/PART|to#infinitivpartikel
+close => close/VERB|close#schliessen
+one => one/NUM|one#ein
+nostril => nostril/NOUN|nostril#nasenloch
+during => during/ADP|during#waehrend
+the => the/DET|the#bestimmter_artikel
+examination => examination/NOUN|examination#medizinische-untersuchung
+
+bladder | The doctor pointed out the bladder on the model beside the desk. | Der Arzt zeigte die Harnblase an dem Modell neben dem Schreibtisch.
+The => the/DET|the#bestimmter_artikel
+doctor => doctor/NOUN|doctor#arzt
+pointed => point/VERB|point#zeigt
+out => out/PART|out#hervorheben
+the => the/DET|the#bestimmter_artikel
+bladder => bladder/NOUN|bladder#harnblase
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+model => model/NOUN|model#anschauungsmodell
+beside => beside/ADP|beside#neben
+the => the/DET|the#bestimmter_artikel
+desk => desk/NOUN|desk#schreibtisch
+
+scar | Ben showed his sister the scar from his old cycling injury. | Ben zeigte seiner Schwester die Narbe von seiner früheren Verletzung beim Radfahren.
+Ben => Ben/PROPN|ben#ben
+showed => show/VERB|show#zeigt
+his => his/DET|his#sein
+sister => sister/NOUN|sister#schwester
+the => the/DET|the#bestimmter_artikel
+scar => scar/NOUN|scar#narbe
+from => from/ADP|from#von_ausgangspunkt
+his => his/DET|his#sein
+old => old/ADJ|old#von-fruher
+cycling => cycling/NOUN|cycling#radfahren
+injury => injury/NOUN|injury#verletzung

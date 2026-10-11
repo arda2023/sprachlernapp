@@ -26,7 +26,7 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
   final active = await user.activeDeckIds(summaries.map((d) => d.id));
   final result = <Deck>[];
   for (final deck in summaries) {
-    final ids = resolver.eligiblePrimaries(await content.deckCardIds(deck.id));
+    final ids = await resolver.deckPracticeIds(deck.id);
     final states = await user.cardStates(ids);
     final viaStory = states.values
         .where(
@@ -86,6 +86,7 @@ final vocabBreakdownProvider = FutureProvider<VocabBreakdown>((ref) async {
   final now = ref.watch(learningNowProvider);
   final resolver = await ref.watch(practiceResolverProvider.future);
   return deriveVocabBreakdown(
+    targetsResolved: true,
     activeDeckCardIds: (await resolver.activePrimaryIds()).toSet(),
     cards: resolver.states,
     contentCards: resolver.cards,
@@ -93,6 +94,15 @@ final vocabBreakdownProvider = FutureProvider<VocabBreakdown>((ref) async {
     explicitStoryIds: resolver.additions.keys.toSet(),
     now: now,
   );
+}, retry: (_, _) => null);
+
+final lexicalBreakdownProvider = FutureProvider<LexicalBreakdown>((ref) async {
+  ref.watch(userChangesProvider);
+  final resolver = await ref.watch(practiceResolverProvider.future);
+  final ids = eligiblePracticeIds(activeDeckCardIds: (await resolver.activePrimaryIds()).toSet(),
+    states: resolver.states, contentCards: resolver.cards, knownCardIds: resolver.knownIds,
+    explicitStoryIds: resolver.additions.keys.toSet(), targetsResolved: true);
+  return deriveLexicalBreakdown(ids, resolver.cards, resolver.states);
 }, retry: (_, _) => null);
 
 final deckActiveControllerProvider =

@@ -1,0 +1,15 @@
+{
+  "errors": [],
+  "warnings": [
+    [
+      "outsider",
+      "i+1",
+      "'newcomer'/'newcomer' Zipf 3.40 below 3.5"
+    ],
+    [
+      "regret",
+      "i+1",
+      "'hurtful'/'hurtful' Zipf 3.30 below 3.5"
+    ]
+  ]
+}

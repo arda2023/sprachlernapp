@@ -3,36 +3,24 @@
 import 'dart:io';
 
 import 'package:sqlite3/sqlite3.dart';
-import 'package:sprachapp/domain/content.dart';
+import 'package:sprachapp/data/content/content_database.dart';
+import 'package:sprachapp/data/content/drift_content_repository.dart';
+import 'package:sprachapp/domain/learning_groups.dart';
 import 'package:sprachapp/domain/new_card_selection.dart';
 import 'package:sprachapp/domain/srs_state.dart';
 
-void main(List<String> args) {
+Future<void> main(List<String> args) async {
   final pack = sqlite3.open(
     args.isEmpty ? 'assets/content/en/content.sqlite' : args[0],
     mode: OpenMode.readOnly,
   );
   final now = args.length > 2 ? DateTime.parse(args[2]) : DateTime.now();
-  final cards = <String, ContentCard>{};
-  final sensesByForm = <String, Set<String>>{};
-  final formsByLemma = <String, Set<String>>{};
-  for (final r in pack.select(
-    'SELECT c.*,l.lemma,s.sense_key FROM cards c '
-    'JOIN lemmas l ON l.id=c.lemma_id JOIN senses s ON s.id=c.sense_id WHERE c.removed_in IS NULL',
-  )) {
-    final c = ContentCard(
-      id: r['id'],
-      lang: r['lang'],
-      form: r['form'],
-      formNorm: r['form_norm'],
-      lemmaId: r['lemma_id'],
-      lemma: r['lemma'],
-      pos: r['pos'],
-      senseKey: r['sense_key'],
-    );
-    cards[c.id] = c;
-    (sensesByForm[c.formNorm] ??= {}).add(r['sense_id']);
-    (formsByLemma[selectionLemma(c)] ??= {}).add(c.formNorm);
+  final repository=DriftContentRepository(ContentDatabase.open(File(args.isEmpty ? 'assets/content/en/content.sqlite' : args[0]),lang:'en'));
+  final cards={for(final c in await repository.selectionCards(await repository.allCardIds())) c.id:c};
+  final sensesByForm=<String,Set<String>>{}, formsByLemma=<String,Set<String>>{};
+  for(final c in cards.values) {
+    (sensesByForm[c.formNorm]??={}).add(c.senseId??c.id);
+    (formsByLemma[selectionLemma(c)]??={}).add(c.formNorm);
   }
   final states = <String, UserCardState>{};
   if (args.length > 1) {
@@ -96,19 +84,15 @@ void main(List<String> args) {
   for (final deck in pack.select(
     'SELECT id,title_de FROM decks WHERE removed_in IS NULL ORDER BY sort',
   )) {
-    final ids = pack
-        .select(
-          'SELECT dc.card_id FROM deck_cards dc JOIN cards c ON c.id=dc.card_id '
-          'WHERE dc.deck_id=? AND dc.removed_in IS NULL AND c.removed_in IS NULL ORDER BY dc.position,dc.card_id',
-          [deck['id']],
-        )
-        .map((r) => r['card_id'] as String)
-        .toList();
+    final targets=await repository.deckPracticeTargets(deck['id'] as String);
     for (final scenario in ['unseen profile, size 20', 'snapshot, size 5']) {
       if (scenario.startsWith('snapshot') && args.length < 2) continue;
       final profile = scenario.startsWith('snapshot')
           ? states
           : <String, UserCardState>{};
+      final ids={for(final target in targets) ...LearningGroups(cards,profile).project([target.cardId],exactForms:target.isForm)}.toList();
+      final lexical=deriveLexicalBreakdown(ids.toSet(),cards,profile);
+      stdout.writeln('${ids.length} exercises / ${lexical.total} words; ${targets.where((t)=>t.isForm).length} form memberships');
       final size = scenario.startsWith('snapshot') ? 5 : 20;
       final eligible = ids
           .where((id) => profile[id]?.isActive ?? true)
@@ -129,6 +113,7 @@ void main(List<String> args) {
         ...eligible.where((id) => (profile[id]?.box ?? 0) == 0),
       ].take(size).toList();
       final after = buildDeckQueue(
+        targetsResolved: true,
         deckCardIds: ids,
         cards: cards,
         states: profile,
@@ -168,4 +153,5 @@ void main(List<String> args) {
     }
   }
   pack.close();
+  await repository.close();
 }

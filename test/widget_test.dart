@@ -111,7 +111,7 @@ void main() {
     expect(find.text('Stories'), findsWidgets);
     expect(find.text('Mehr entdecken'), findsOneWidget);
     expect(
-      find.bySemanticsLabel('Lernen, Tagesziel 0 von 10 Wörtern'),
+      find.bySemanticsLabel('Lernen, Tagesziel 0 von 10 Übungen'),
       findsOneWidget,
     );
     expect(tester.takeException(), isNull);
@@ -128,7 +128,7 @@ void main() {
       reason: label,
     );
     for (final label in [
-      'Lernen, Tagesziel 0 von 10 Wörtern',
+      'Lernen, Tagesziel 0 von 10 Übungen',
       'Profil',
       'Einstellungen',
       'Tagesziel ändern',
@@ -276,14 +276,14 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Tagesziel ändern'));
     await tester.pumpAndSettle();
     expect(find.text('Tagesziel'), findsOneWidget);
-    await tester.tap(find.text('20 Wörter pro Tag'));
+    await tester.tap(find.text('20 Übungen pro Tag'));
     await tester.pumpAndSettle();
     expect(
-      find.bySemanticsLabel('Tagesziel: 0 von 20 Wörtern'),
+      find.bySemanticsLabel('Tagesziel: 0 von 20 Übungen'),
       findsOneWidget,
     );
     expect(
-      find.bySemanticsLabel('Lernen, Tagesziel 0 von 20 Wörtern'),
+      find.bySemanticsLabel('Lernen, Tagesziel 0 von 20 Übungen'),
       findsOneWidget,
     );
   });
@@ -425,13 +425,13 @@ void main() {
     await openMedizin(tester);
     expect(find.byType(DeckDetailsScreen), findsOneWidget);
     expect(
-      find.bySemanticsLabel('3 von 5 neuen Wörtern gesehen, 1 Wörter gelernt'),
+      find.bySemanticsLabel('3 von 5 Übungen gesehen, 1 Übungen gemeistert'),
       findsOneWidget,
     );
     expect(find.text('Fortgeschritten'), findsOneWidget);
     for (final label in [
       'Lerne mit diesem Stapel',
-      'Deine letzten 3 gesehenen Wörter',
+      'Deine letzten 3 geübten Formen',
     ]) {
       expect(
         tester.getSemantics(find.bySemanticsLabel(label)),
@@ -441,7 +441,7 @@ void main() {
     }
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
 
-    await tester.tap(find.text('Deine letzten 3 gesehenen Wörter'));
+    await tester.tap(find.text('Deine letzten 3 geübten Formen'));
     await tester.pumpAndSettle();
     expect(find.text('walks'), findsOneWidget);
     expect(find.text('geht'), findsOneWidget);
@@ -508,7 +508,7 @@ void main() {
       findsOneWidget,
     );
     expect(
-      find.bySemanticsLabel('Tagesziel: 0 von 10 Wörtern'),
+      find.bySemanticsLabel('Tagesziel: 0 von 10 Übungen'),
       findsOneWidget,
     );
   });
@@ -1118,7 +1118,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(WordListScreen), findsOneWidget);
     expect(find.text('Wörter suchen'), findsOneWidget);
-    expect(find.bySemanticsLabel(RegExp(r'^Playlist, \d+ Wörter$')), findsOne);
+    expect(find.bySemanticsLabel(RegExp(r'^Playlist, \d+ Übungen$')), findsOne);
     expect(
       tester.getSemantics(
         find.descendant(

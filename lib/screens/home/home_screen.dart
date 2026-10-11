@@ -102,7 +102,7 @@ class HomeScreen extends ConsumerWidget {
                       ref.invalidate(decksProvider);
                     },
                   ),
-                  data: (value) => VocabProgress(breakdown: value),
+                  data: (value) => VocabProgress(breakdown: value, lexical: ref.watch(lexicalBreakdownProvider).asData?.value),
                 ),
           ),
           const SizedBox(height: 22),

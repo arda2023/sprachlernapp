@@ -205,6 +205,8 @@ class _WordDetailsSheetState extends ConsumerState<WordDetailsSheet> {
                           label: 'Zeit zwischen Wiederholungen',
                           value: word.box==0?'Noch nicht geübt':intervalLabel(word.reviewInterval),
                         ),
+                        _LedgerRow(label: 'Nächste Wiederholung', value: word.dueAt == null
+                            ? 'Offen' : '${word.dueAt!.day}.${word.dueAt!.month}.${word.dueAt!.year}'),
                         const _Rule(),
                         const SizedBox(height: 16),
                         Text(
@@ -313,12 +315,15 @@ class _LedgerRow extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-            Text(
-              value,
-              style: AppType.chrome(
-                color: context.appColors.textPrimary,
-                weight: FontWeight.w600,
-                tabular: true,
+            Flexible(
+              child: Text(
+                value,
+                textAlign: TextAlign.end,
+                style: AppType.chrome(
+                  color: context.appColors.textPrimary,
+                  weight: FontWeight.w600,
+                  tabular: true,
+                ),
               ),
             ),
           ],

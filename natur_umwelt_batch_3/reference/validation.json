@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "selected": 242,
+  "excluded": 452,
+  "partition_counts": {
+    "imported": 162,
+    "current": 80,
+    "future": 0
+  },
+  "reused_proposed_senses": 10,
+  "batches": {
+    "1": 81,
+    "2": 81,
+    "3": 80
+  },
+  "topics_per_batch": {
+    "1": {
+      "Tiere und ihre Lebensräume": 15,
+      "Pflanzen, Bäume und Pflanzenteile": 12,
+      "Klima, Energie und Naturschutz": 11,
+      "Materialien und natürliche Ressourcen": 11,
+      "Umwelt, Abfall und Recycling": 9,
+      "Landschaften und Gewässer": 9,
+      "Naturvorgänge und Jahreszeiten": 8,
+      "Wetter und Temperatur": 6
+    },
+    "2": {
+      "Tiere und ihre Lebensräume": 15,
+      "Pflanzen, Bäume und Pflanzenteile": 12,
+      "Materialien und natürliche Ressourcen": 12,
+      "Klima, Energie und Naturschutz": 11,
+      "Umwelt, Abfall und Recycling": 9,
+      "Naturvorgänge und Jahreszeiten": 8,
+      "Landschaften und Gewässer": 8,
+      "Wetter und Temperatur": 6
+    },
+    "3": {
+      "Tiere und ihre Lebensräume": 15,
+      "Pflanzen, Bäume und Pflanzenteile": 12,
+      "Materialien und natürliche Ressourcen": 11,
+      "Klima, Energie und Naturschutz": 10,
+      "Umwelt, Abfall und Recycling": 10,
+      "Naturvorgänge und Jahreszeiten": 8,
+      "Landschaften und Gewässer": 8,
+      "Wetter und Temperatur": 6
+    }
+  },
+  "existing_senses": 30,
+  "new_senses": 212,
+  "existing_cards": 2156,
+  "existing_groups": 2144,
+  "new_groups": 80,
+  "registry_words": 2132,
+  "partition_selection": "PASS: 162 present",
+  "validate_selection": "PASS: parent and exact reservations",
+  "index_registry": "PASS",
+  "validate_learning": "PASS: existing and planned",
+  "build_rows": "PASS: reservation-only rows unchanged",
+  "semantic_review": "explicit editorial decisions, no automatic equivalence inference"
+}

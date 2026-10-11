@@ -57,6 +57,7 @@ class DeckSummary {
     required this.slug,
     required this.titleDe,
     required this.cardCount,
+    this.practiceKind = 'ordinary',
     this.descriptionDe,
     this.cefrBand,
   });
@@ -69,6 +70,7 @@ class DeckSummary {
   /// `anfaenger`, `mittel` or `fortgeschritten`.
   final String? cefrBand;
   final int cardCount;
+  final String practiceKind;
 }
 
 /// One card (`cards`): an exact form in one sense. [id] is the stable
@@ -83,6 +85,10 @@ class ContentCard {
     required this.lemma,
     required this.pos,
     this.learning,
+    this.formTarget,
+    this.identityFunction,
+    this.introductionScope = 'ordinary',
+    this.lexicalTargetId,
     this.senseKey,
     this.senseId,
     this.formKind,
@@ -101,6 +107,18 @@ class ContentCard {
   final String lemma;
   final String pos;
   final LearningTarget? learning;
+  final FormTarget? formTarget;
+  final String? identityFunction, lexicalTargetId;
+  final String introductionScope;
+  String? get formFunction => formTarget?.function ?? identityFunction;
+  String get introductionKey => formFunction == null ? learningGroup : 'form:$id';
+  String get lexicalKey => lexicalTargetId == null ? 'group:$learningGroup' : 'lexical:$lexicalTargetId';
+  String get exerciseLabel => switch (formFunction) {
+    'base' => 'Grundform',
+    'past' => 'Präteritum',
+    'past_participle' => 'Partizip Perfekt',
+    _ => formLabelDe ?? pos,
+  };
   String get learningGroup => learning?.groupId ?? id;
   String get learningHead => learning?.primaryCardId ?? id;
   final String? senseKey;
@@ -200,4 +218,19 @@ class LearningTarget {
     related: (value['related'] as List).cast<String>(),
     note: value['note'] as String,
   );
+}
+
+/// Read-only form transport. State and review still belong to cardId.
+class FormTarget {
+  const FormTarget({required this.id, required this.cardId, required this.senseId,
+    required this.form, required this.function, required this.lexicalTargetId});
+  final String id, cardId, senseId, form, function, lexicalTargetId;
+}
+
+/// Ordinary refs retain group projection; form refs must keep exact function.
+class DeckPracticeTarget {
+  const DeckPracticeTarget({required this.cardId, this.formTarget});
+  final String cardId;
+  final FormTarget? formTarget;
+  bool get isForm => formTarget != null;
 }

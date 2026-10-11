@@ -105,3 +105,19 @@ TABLE_ORDER: list[str] = list(COLUMNS)
 
 def primary_key(table: str) -> str:
     return "code" if table == "languages" else "id"
+
+# Schema 4 is additive; legacy exports retain their exact 18-table shape.
+LEGACY_COLUMNS = {t: list(c) for t, c in COLUMNS.items()}
+COLUMNS['cards'].extend([('identity_function', 'text'), ('introduction_scope', 'text')])
+COLUMNS['decks'].extend([('practice_kind', 'text')])
+COLUMNS['sentence_tokens'].extend([('form_target_id', 'text')])
+COLUMNS['lexical_targets'] = [('id', 'text'), ('lang', 'text'), ('anchor_key', 'text'), ('note', 'text'), ('removed_in', 'text'), ('replaced_by', 'text')]
+COLUMNS['card_lexical_targets'] = [('id', 'text'), ('lang', 'text'), ('card_id', 'text'), ('lexical_target_id', 'text'), ('note', 'text'), ('removed_in', 'text'), ('replaced_by', 'text')]
+COLUMNS['form_targets'] = [('id', 'text'), ('lang', 'text'), ('sense_id', 'text'), ('form', 'text'), ('form_norm', 'text'), ('function', 'text'), ('card_id', 'text'), ('lexical_target_id', 'text'), ('note', 'text'), ('removed_in', 'text'), ('replaced_by', 'text')]
+COLUMNS['deck_practice_targets'] = [('id', 'text'), ('deck_id', 'text'), ('form_target_id', 'text'), ('position', 'integer'), ('removed_in', 'text'), ('replaced_by', 'text')]
+TABLE_ORDER = list(COLUMNS)
+
+def columns_for(version):
+    if version not in (1, 2, 3, 4):
+        raise ValueError(f"unsupported content schema {version}")
+    return COLUMNS if version == 4 else LEGACY_COLUMNS

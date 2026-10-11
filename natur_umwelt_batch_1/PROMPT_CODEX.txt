@@ -1,0 +1,91 @@
+Ziel: Die 81 redigierten Lernziele für „Natur & Umwelt“ offline prüfen, importieren und intern stagen; danach im selben Auftrag die geprüfte Authoring-ZIP für Batch 2 erstellen.
+
+Dateien:
+- Lieferung im Repository-Root als natur_umwelt_batch_1/ entpacken; bestehende Dateien nicht überschreiben.
+- Lesen: AGENTS.md, PRODUCT.md, docs/content-roadmap-v1.md, docs/content-schema.md, docs/learning-groups-v1.md, docs/natur-umwelt-authoring.md, docs/essen-trinken-batch-3-import.md, NEXTSTEPS.md.
+- Lieferung: natur_umwelt_batch_1/natur_umwelt_batch_1.editorial.json, verify_natur_umwelt_batch_1.py, manifest.json, editorial_notes.txt, reading.json, annotation_review.txt und reference/.
+- Basis: pipeline/out/essen_trinken_batch_3_v1/pack.json und content.sqlite.
+- Originalauswahl: pipeline/data/selection/natur_umwelt_v1.json.
+- Kontextauswahl: pipeline/data/selection/natur_umwelt_batch_1_context_v1.json.
+- Registry: pipeline/data/words/en.natur_umwelt_batch_1_context_v1.json.
+- Gruppen: pipeline/data/learning_groups/en.natur_umwelt_batch_1_context_v1.json.
+- Werkzeuge: pipeline/scripts/import_editorial_patch.py, pipeline/scripts/export_authoring_context.py, tool/stage_content_pack.dart, test/data/real_pack_test.dart.
+- Neue Ausgabe: pipeline/out/natur_umwelt_batch_1_v1/.
+- Bericht: docs/natur-umwelt-batch-1-import.md; NEXTSTEPS.md.
+
+Schritte:
+1. Arbeitsbaum, vorhandene Änderungen und Ausgangshashes erfassen. Basis-JSON-SHA256:
+   0a7a73b424f1625f71a2af892ff2a610f6103aef263d210bdcc3fc528d0ce521
+   Basis-SQLite-SHA256:
+   cffc9e4529ada7f61e0bbf7e2e1e7d7d0926f68957b616f2497e38234405d2ce
+   Liefermanifest prüfen. Referenzquellen niemals über aktuellen Projektcode kopieren. Vorhandene Ausgaben nicht überschreiben.
+
+2. Lieferverifier mit --repo . und dem vorhandenen Pipeline-Interpreter ausführen. Basisdateien rohbytegebunden, Registry/Gruppen kanonisch prüfen. Aktuelle Projektquellen verwenden. Keine Validatorlockerung oder allgemeinen Umbauten.
+
+3. Alle 81 Satzpaare, 915 Tokenpositionen und die eine Alternative redaktionell gegenlesen. Besonderheiten:
+   - bank beim Frosch = Ufer, iron bei Rost = Metall, bath = Badewanne.
+   - heat bei gas = Gebäude beheizen, bei solar = Wasser erhitzen.
+   - fell bei petal/branch = physisch fallen, bei sleet = Temperatur sinkt.
+   - growing bei root = wachsen, bei fertile = anbauen; grows bei greenhouse = anbauen.
+   - has bei nest/pollution/poaching ist Hilfsverb, bei mainland/steel Vollverb.
+   - save bei extinction = retten, bei hibernate = Ressourcen sparen.
+   - hire = Personal einstellen, nicht mieten; bills = Rechnungen.
+   - panels = Solarmodule, nutrients = Pflanzennährstoffe, ground = Boden.
+   - most = überwiegende Menge, enough = Mengenangabe, just before = kurz vor.
+   - mosquito: me = mich, by = Mittel; stem: by = Anfassstelle.
+   - guards = Wächter/Wildhüter; plastic = Nomen, kein Adjektiv; drinking bei water als nominale Zweckangabe.
+   - aufgeteilte feste Wendungen wie picked up und looking for müssen gemeinsam verständlich bleiben; keine Bestandsglossen pauschal umschreiben.
+   Die Alternative fertiliser→fertilizer wörtlich einsetzen und prüfen. accepted bleibt ausschließlich Zielform. Die Schreibvariante ist lernstandsneutral; Besitzaliase allein erlauben keine automatischen Alternativen.
+   Nur belegte Lieferfehler gezielt korrigieren: Originalbytes erhalten und separate Importkopie anlegen. Betroffene Reviewhashes und das Manifest dieser Kopie korrekt erneuern; Vorher/Nachher dokumentieren. Keine pauschale Altglossenbereinigung oder Zeilenendennormalisierung.
+
+4. Genau 81 aktuelle Ziele und genau einen neuen Stapel natur-umwelt importieren. Je Ziel ein aktiver fester Satz; cards.learning, Identitäten, Definitionen, Besitz und Aliase aus dem verbindlichen Kontext erhalten. Neue Begleitwort-Senses bleiben Wörterbucheinträge, keine vorgezogenen Lernkarten.
+   Die erste Gruppe verwendet unmittelbar die gelieferten Anzeigepositionen 1–81 aus combined_display_mapping.json. Kein Display-Patch nötig. Originalpositionen in Auswahl/Registry unverändert lassen.
+
+5. In den neuen Ausgabeordner exportieren und alle 18 SQLite-Tabellen vollständig gegen build_rows vergleichen. Erwartet:
+   - 2075 Karten, 2609 Satztexte, 2603 Satzverknüpfungen einschließlich Historie, 1971 Wortbesitzzeilen.
+   - 1960 primäre Lernziele: 160 Allgemeine Sprache / 489 Reisen / 241 Alltag & Zuhause / 245 Arbeit & Bildung / 245 Menschen & Beziehungen / 249 Körper & Gesundheit / 250 Essen & Trinken / 81 Natur & Umwelt.
+   Alle bisherigen 1994 Karten und historischen Inhalte erhalten, einschließlich sämtlicher vorherigen Tokenkorrekturen und Lerngruppen. Keine alten Anzeigepositionen verändern.
+
+6. VOR Staging die bestehenden Assets samt Manifest in einem neuen Sicherungsordner kopieren und deren Hashgleichheit mit dem Ausgangsstand bestätigen. Falls ein Vorbereitungsschritt fehlschlägt, Staging nicht trotzdem starten. Danach intern stagen und Asset-Verifikation, Achtstapel-Lesetest 160/489/241/245/245/249/250/81 sowie Flutter-Analyse ausführen. Nur nötige konkrete Testerwartungen ergänzen. App-Einstieg und echte user.db/review_log nicht öffnen oder ändern. Prüfung, Import, Export und internes Staging sind beauftragt.
+
+7. Aus dem tatsächlich geprüften neuen Pack mit dem vorhandenen Fortsetzungs-Exporter die nächste Authoring-ZIP erzeugen:
+   build/natur_umwelt_authoring_batch_2.zip
+   Neue separate Kontextdateien für Auswahl/Registry/Gruppen; alte Dateien erhalten. Partition 81 importiert / 81 aktuell / 80 später; vollständiger Kontext aller 242 Originalziele. Nächster Import hängt 82–162 an und ordnet ausschließlich Natur-Anzeigen nach dem bestehenden hashgebundenen Display-Vertrag neu. Keine Batch-2-Sätze erstellen. Die Roadmap mit genau 14 Stapeln beibehalten; jetzt keine weiteren Kategorien oder Verbenstapel vorbereiten.
+   ZIP schließen und erneut öffnen; CRCs, sämtliche Manifesthashes, Referenzen, Identitäten, Partition und SQLite prüfen. Absoluten ZIP-Pfad ausgeben.
+
+Nicht anfassen:
+- Echte user.db, Lernstände, review_log, historische Packs und Original-Lieferung.
+- Originalauswahl und historische Registrys/Gruppen; App-/SRS-/Synonymlogik, Modelle, Budgets, Supabase und Plattformdateien.
+- Keine Cloud-/Modellaufrufe, Veröffentlichung, Commits oder Pushes.
+- Keine globale Bereinigung bestehender Whitespace-Befunde.
+
+Akzeptanzkriterien:
+- Genau 81 neue Ziele und Satzpaare, 915 vollständig annotierte Tokenpositionen, eine einzeln geprüfte Alternative.
+- Keine Besitz-/Alias-/Identitäts-/Lerngruppenkonflikte oder vorgezogenen Karten.
+- 81 Natur-Ziele, 1960 insgesamt; alter Bestand erhalten.
+- Source-/Registry-/Review-/Manifesthashes gültig.
+- Linter 0 Fehler, vier neue Häufigkeitshinweise dokumentiert; keine Umformulierung allein deswegen.
+- Vollständiger SQLite-Abgleich, Asset-Verifikation, Achtstapel-Lesetest und Analyse bestanden.
+- Sicherung nachweislich vor Staging erstellt und geprüft.
+- Batch-2-ZIP mit Partition 81/81/80 geschlossen und erneut vollständig geprüft.
+
+Prüfen mit, ab Repository-Root:
+macOS Terminal:
+pipeline/.venv-macos/bin/python natur_umwelt_batch_1/verify_natur_umwelt_batch_1.py --repo .
+pipeline/.venv-macos/bin/python pipeline/scripts/import_editorial_patch.py --source pipeline/out/essen_trinken_batch_3_v1/pack.json --create natur_umwelt_batch_1/natur_umwelt_batch_1.editorial.json --registry pipeline/data/words/en.natur_umwelt_batch_1_context_v1.json --out pipeline/out/natur_umwelt_batch_1_v1
+Windows PowerShell:
+.\pipeline\.venv\Scripts\python.exe natur_umwelt_batch_1\verify_natur_umwelt_batch_1.py --repo .
+.\pipeline\.venv\Scripts\python.exe pipeline\scripts\import_editorial_patch.py --source pipeline/out/essen_trinken_batch_3_v1/pack.json --create natur_umwelt_batch_1/natur_umwelt_batch_1.editorial.json --registry pipeline/data/words/en.natur_umwelt_batch_1_context_v1.json --out pipeline/out/natur_umwelt_batch_1_v1
+Bei einer belegten Lieferkorrektur die geprüfte separate Importkopie verwenden.
+Beide Systeme nach erfolgreichem Export und geprüfter Asset-Sicherung:
+dart run tool/stage_content_pack.dart --from pipeline/out/natur_umwelt_batch_1_v1
+dart run tool/stage_content_pack.dart --verify
+flutter test test/data/real_pack_test.dart
+flutter analyze
+git diff --check -- <konkret bearbeitete Dateien>
+git status --short
+Zusätzlich die betroffenen bestehenden Import-/Vertrags-/Registry-/Gruppen-/Authoring-/Fortsetzungstests ausführen; konkrete Testpfade im Projekt lesen. Exporterargumente nach tatsächlichem --help wählen. Outputs und Exitcodes zeigen. Für neue unversionierte Textdateien zusätzlich einen Whitespace-Check ausführen. Bekannte CRLF-/Whitespace-Altbefunde getrennt ausweisen; bei erhaltener CRLF-Konvention zusätzlich git -c core.whitespace=cr-at-eol diff --check auf die konkreten Dateien. Keine riesige repositoryweite Diff-Ausgabe. Fehlende Python-Pakete konkret nennen; nicht stillschweigend installieren.
+
+Schleifenbremse: Nach 2–3 Fehlversuchen eine neue Hypothese am konkreten Fehler formulieren; nach 5 stoppen und die Lage schildern. Kleinste Lösung, keine ungefragten Features oder allgemeinen Testframeworks. Kein Cloud-Fallback.
+
+Am Ende: docs/natur-umwelt-batch-1-import.md mit Entscheidungen, tatsächlichen Prüfoutputs und Hashes schreiben. NEXTSTEPS.md aktualisieren: Erledigt, geänderte Dateien, Testergebnis, Abweichungen, offene Probleme; höchstens 25 Zeilen, nur Fakten. Nie „fertig“ ohne gezeigten Output.

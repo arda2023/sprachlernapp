@@ -1,0 +1,28 @@
+{
+  "format": "sprachapp.chat-editorial-delivery",
+  "format_version": 1,
+  "files": {
+    "IMPORT_PROMPT.txt": "5b925229950f6a327d779e4f708920173dba59bc18a156c3acc690d21d568469",
+    "README.txt": "e214b98037095c2bb1f50eaddbfd63880d2b39db40a9f8732c9c1b3c689563ad",
+    "alternative_review.json": "1eac3d4a7ecffd5a7e0b7dc5f50e75761e86ce2fbebd40c71cedfb9abab2396a",
+    "authoring_evidence/form_glosses.json": "aa8301729cf6d564559097b91148dca59dca565d1a30d42e02e3f4c7c48e02c6",
+    "authoring_evidence/linter.json": "63f1029190c6c792b5d50c3962debfc96868aefa50f2b97c23dfd2b484a79f56",
+    "authoring_evidence/sentences.txt": "aaef5272bcca2d2d54c9512656f6762d4fc36d1049fe2028285ecbf169314dff",
+    "authoring_evidence/tokens.json": "5deb2bc7bebc08f4cbd0bf5aa3f4877354f70792163118cd24dae330a2a22745",
+    "editorial_content_v2.json": "b3b45ab5f4c3142565db74ae4468ebfd48eda6fb514595031dbf6bff1404a388",
+    "inherited_gloss_comparison.json": "5637ad59d077ff6540a5ea8929158cacb0b7fb5543efb1b6e8d805e602d046ac",
+    "reading.json": "e9b107a83d602bf67b3ebd42a84674772518088b621823b0c12275911dd2d68b",
+    "reference/all_selection_identities.json": "1257263a370c8595404982b6cbb3e2738a09fd810584c8446263cb78dc852fe4",
+    "reference/authoring_context.json": "6db6603c16f71a074bf968ed260c0ad75644ff707ac5301c1e480be4ca45eb79",
+    "reference/combined_display_mapping.json": "5a9e5308d1ff55b87ad0a954b2e51f6fe63eb2d6533c5ce9046cac673667fa43",
+    "reference/editorial_content_v2.schema.json": "7f05f7bb5b5f229cd93020589e1eb951af9c620856994d5fc625f13fdda15389",
+    "reference/learning_groups.json": "bf2cf6ac5e6403615043fe5f84dc0e418f367c06d9e733feac3e1a4e81156f25",
+    "reference/manifest.json": "657746f7e1f1772f07778fa468ab5d02fa2e11163f54b41ab362629afc75b7d9",
+    "reference/registry.json": "51d19fc324afed93c74dc8a4918797977bc35da797f78b8816a7da0d6da6cc1b",
+    "reference/selection.json": "12779941a0cd3aad7954652f75d293a315a7ca69c71d56839730790413c4b416",
+    "reference/tokenizer_linter_environment.json": "26bcba34953c5497f61332b5976f8712057d2344f049ec09f9113553e246c821",
+    "satzredaktion.html": "c11b0fb02f3d949b70bd2020575e28fddb4d7314fee33d514b58e09773b5c7dc",
+    "token_review.json": "ba0a4f0be490e7c7db43861b0f4c49e60a48718d7f3fbf1d3683a5f30f49a0b0",
+    "validation_report.json": "cc7c1c3c60f14073b9e1d0c0dcf6be06049365d4673507048dd3b1fad99a250e"
+  }
+}

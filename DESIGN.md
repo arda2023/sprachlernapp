@@ -80,7 +80,7 @@ The vibe is focused and editorial, not playful. There is no mascot, no confetti,
 **Key Characteristics:**
 - Editorial ground with persisted Automatic / Light / Dark motifs; dark keeps the near-black identity.
 - Exactly two accent colors, each with one fixed, non-decorative meaning: mastered vs. active vocabulary. Two scoped exceptions exist: the Memory Level Indicator (Wortliste and the deck practice card only) and the Audio Playback Highlight (only while something is read aloud); see the Two-Ink Rule.
-- Categories outside active/mastered (*Verfügbare Wiederholungen* and *Noch nicht angezeigt*) receive no new accent color; they are rendered in neutral text or an unfilled hairline track.
+- Categories outside active/mastered (*Verfügbare Wiederholungen* and *Noch nicht geübt*) receive no new accent color; they are rendered in neutral text or an unfilled hairline track.
 - The streak is supported, but strictly quiet: a neutral week row of checks and crosses, no flame iconography, no orange highlight.
 - Deck difficulty is shown with three bolt icons — the one sanctioned piece of pictorial metadata, always backed by a text or semantics label.
 - Serif for anything the learner reads as content; sans for anything that is app chrome.
@@ -134,7 +134,7 @@ Mastered and active status inks retain their values and meanings. Practice blue 
 ### Named Rules
 
 **The Two-Ink Rule.** Only two accent colors exist anywhere in the system — Editorial Violet (`#7B2CBF`) for mastered words and Field Orange (`#F77F00`) for active/in-progress words. Neither is ever used decoratively (no brand-colored buttons, decorative illustrations, or colorful category chips).
-- *Verfügbare Wiederholungen* (Due repetitions) and *Noch nicht angezeigt* (New/unseen words) **do not** receive a third or fourth accent color; they are rendered neutrally in text (`textPrimary`/`textMuted`) or represented by the unfilled hairline track.
+- *Verfügbare Wiederholungen* (Due repetitions) and *Noch nicht geübt* (New/unseen words) **do not** receive a third or fourth accent color; they are rendered neutrally in text (`textPrimary`/`textMuted`) or represented by the unfilled hairline track.
 - **Official exceptions.** Exactly two, each with a fixed scope. Nowhere else may these colors appear.
   1. **Memory Level Indicator** (Wortliste tab and its sheets — Memory Level Legend, Word Details — and the sentence card of the deck practice session, only). Five rounded dashes (`14 × 4pt`, `3pt` gaps, `999pt` radius) above a word show its Leitner box (1–5). The first *n* dashes take the color of level *n*; the rest stay Hairline. Level 1 is Field Orange (a new word is "active"), Level 2 Pale Sky, Level 3 Mint, Level 4 Light Green, Level 5 a saturated Deep Green. The color describes the word's memory strength, never a reward: no animation, no glow, no badge. The level is always also given as text (legend sheet, details sheet) or as a semantics label (`'Erinnerungsstufe 3 von 5: Gut verankert'`); tapping the dashes opens the Memory Level Legend. In practice the card shows the level the word had when the session started; it never changes mid-card, so a right answer is not rewarded with a lit dash. Outside these places, word status keeps the two inks: a Level 5 word is still underlined in Editorial Violet in the reader.
      *Reveal hint (deck practice only).* After "Wort erfahren", the word stands in the gap as the field's hint in Pale Sky at 50% opacity. This scoped practice use of the level-2 color says "this is the word, type it", disappears as soon as the learner types, and is always announced ("Das Wort lautet …"). Deck typing, solved words, prefix hints and grammar examples also use Pale Sky under the practice rules below.
@@ -294,7 +294,7 @@ Depth is purely tonal, not shadow-driven. In light mode, light-page and light-su
 - **Do** build depth exclusively through the Night Page → Raised Ink tonal step and hairline borders.
 
 ### Don't:
-- **Don't** assign new accent colors to "Verfügbare Wiederholungen" or "Noch nicht angezeigt"; keep them neutral.
+- **Don't** assign new accent colors to "Verfügbare Wiederholungen" or "Noch nicht geübt"; keep them neutral.
 - **Don't** color the central play button in violet or orange.
 - **Don't** use playful game-app iconography such as flame icons, mascots, confetti, or star badges. Bolts are allowed only as the deck difficulty indicator.
 - **Don't** use drop shadows, glows, or glossy skeuomorphic gradients.
@@ -303,3 +303,6 @@ Depth is purely tonal, not shadow-driven. In light mode, light-page and light-su
 - **Don't** use memory level colors as a word's status anywhere else (reader underlines, deck rings, home tracks keep Editorial Violet and Field Orange), and don't leave the playback highlight on after playback ends.
 - **Don’t** persist red feedback outside its exercise attempt: choice chips flash; deck input keeps its first checked feedback until the next text edit.
 - **Do** resolve semantic colors through the current theme; motif changes preserve navigation and editing state.
+
+## Formübungen (Verben-Paket B, 10.10.2026)
+Bestehende Gestaltung bleibt: vier SRS-Werte benennen Übungen; daneben „Wörter“ und „Davon bereits geübt“ mit „Ein Wort kann mehrere Übungen haben.“ Stapel und Tagesziel verwenden Übungen. Wortliste zeigt Formzeilen mit Grundform/Präteritum/Partizip Perfekt und eigenem Zustand. Details zeigen den Termin der konkreten Form; Favorit, Deaktivierung, Playlist und Notiz bleiben getrennt bedienbar. Keine gemeinsame Verb-Box und keine technischen Identitätsbegriffe. VoiceOver und große Schrift sind mit den neuen Labels geprüft.

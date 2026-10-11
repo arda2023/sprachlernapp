@@ -1,0 +1,26 @@
+Essen & Trinken – Batch 1, 84 von 250 Zielen, 10.10.2026
+84 EN/DE-Satzpaare und 960 Tokenpositionen durch ChatGPT redigiert und vollständig gegengelesen. Keine unabhängige menschliche Sprachfreigabe behauptet. Referenz ist ausschließlich die hochgeladene Authoring-ZIP. Aktuelle 84 Ziele werden umgesetzt, 166 spätere Ziele bleiben reserviert. Begleitwort-Senses können bereits verwendet werden, ohne zusätzliche Lernkarten anzulegen.
+
+Satzbezogen geprüfte Alternativen:
+- flavour → flavor: The lemon gives this cake a fresh flavor.
+- whisky → whiskey: David gave his father a bottle of whiskey for his birthday.
+- aubergine → eggplant: Ben cut the eggplant into thick slices for the grill.
+- foil → aluminium foil: Ali covered the dish with aluminium foil before putting it in the oven.
+- foil → aluminum foil: Ali covered the dish with aluminum foil before putting it in the oven.
+Die ersten drei sind regionale Schreibweisen beziehungsweise Benennungen. Im vierten/fünften Fall ist die ausdrücklich gewählte Zielbedeutung Küchen-Alufolie; Material und Ofenszene passen. Keine andere Antwort freigegeben, keine Vollständigkeitsbehauptung. accepted enthält nur die Zielform. Lernstandsneutralität bleibt App-Vertrag.
+
+Wichtige Bedeutungsabgrenzungen:
+clove bezeichnet die Gewürznelke, nicht eine Knoblauchzehe. rare ist die Garstufe, scales die Küchenwaage, pastry der Teig und nicht ein einzelnes süßes Gebäck. broth meint Brühe. Cider ist Apfelwein entsprechend der verbindlichen Zieldefinition. Margarine, Gewürze und Küchenhandlungen sind in konkreten Alltagsszenen eingebunden.
+
+Begleitwortbindungen:
+stone=Fruchtkern, skin=Fruchtschale, rings=ringförmige Fruchtstücke, bed=Speisenunterlage, glasses=Trinkgläser. pepper am Spieß bedeutet Paprika und nicht Pfeffer; cream ist Sahne und ice gefrorenes Wasser. tin bezeichnet bei Keksen/Thunfisch eine Dose, in baking tin eine Backform. still ist beim Speck ein Zeitadverb, beim Wasser das Fehlen von Kohlensäure. old bei Butter beschreibt die Lagerdauer, nicht Lebensalter. heat ist Kochhitze, nicht das Verb erhitzen. cut und use sind Verben; each vor bowl ist ein Determinierer, kein Teil von each other. Einzelne Partikeln und Präpositionen wurden kontextbezogen überprüft: roll out, break off, instead of, in half sowie das präpositionale und das infinitivische to. Existentielles be in There was wurde an die vorhandene VERB-Bedeutung gebunden, Verlaufsform was sizzling an AUX.
+
+66 neue Begleitwort-Formglossen ausdrücklich gegengelesen, darunter squeezed=presste aus, served=servierte, roasted=geröstet, rings=Ringe, glasses=Gläser, slid=schob, pepper=Paprika, weighed=wog ab, lining=Auslegen, tin=Backform/Dose. Alte Wörterbuchzeilen werden nicht umgeschrieben. Ihr Erhalt ist keine erneute Freigabe sämtlicher Altglossen.
+
+Linter: keine Fehler, 14 Häufigkeitshinweise für grate/grated, yoghurt, sprinkle/sprinkled, cucumber, spoonful (zweimal), lentil/lentils, sizzle/sizzling, teaspoon, napkin, fishmonger, stalk/stalks, pickle/pickled und yolk. Sinnvolle Begleitwörter im Essen-Kontext; keine Umformulierung nur wegen der Zipf-Schwelle.
+
+Erster Import legt genau einen Stapel mit gelieferten dichten Anzeigepositionen 1–84 an. Kein Display-Patch, keine alten Positionen ändern. Originalpositionen der gesamten Auswahl unverändert. Folgebatches brauchen den bestehenden Fortsetzungs-/Display-Vertrag.
+
+Unveränderte gelieferte Pipelinequellen und spaCy-Modell verwendet. Offline-Verifikation, echter Export und vollständiger Rückvergleich aller 18 SQLite-Tabellen: validation_output.txt und local_export_report.json. Keine Cloud-Aufrufe oder zusätzlichen Pipeline-Kosten. Hier kein App-Staging, keine Flutter-/Geräteprüfung und kein user.db-Zugriff.
+
+Nach Import: 1828 Karten, 2362 Satztexte, 2356 Satzverknüpfungen einschließlich Historie, 1724 Wortbesitzzeilen; 1713 primäre Ziele (160/489/241/245/245/249/84). Bisherige 1744 Karten und alle historischen Inhalte erhalten. Nächste Partition 84 importiert / 83 aktuell / 83 später.

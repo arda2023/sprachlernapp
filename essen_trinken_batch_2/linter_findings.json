@@ -1,0 +1,55 @@
+{
+  "errors": [],
+  "warnings": [
+    [
+      "curd",
+      "i+1",
+      "'cheesemaker'/'cheesemaker' Zipf 1.67 below 3.5"
+    ],
+    [
+      "oat",
+      "i+1",
+      "'flake'/'flakes' Zipf 3.38 below 3.5"
+    ],
+    [
+      "rosemary",
+      "i+1",
+      "'sprig'/'sprig' Zipf 2.43 below 3.5"
+    ],
+    [
+      "mint",
+      "i+1",
+      "'jug'/'jug' Zipf 3.30 below 3.5"
+    ],
+    [
+      "cappuccino",
+      "i+1",
+      "'croissant'/'croissant' Zipf 2.78 below 3.5"
+    ],
+    [
+      "cinnamon",
+      "i+1",
+      "'sprinkle'/'sprinkled' Zipf 3.39 below 3.5"
+    ],
+    [
+      "spatula",
+      "i+1",
+      "'pancake'/'pancake' Zipf 3.35 below 3.5"
+    ],
+    [
+      "kale",
+      "i+1",
+      "'stalk'/'stalks' Zipf 3.46 below 3.5"
+    ],
+    [
+      "blender",
+      "i+1",
+      "'rinse'/'rinsed' Zipf 3.48 below 3.5"
+    ],
+    [
+      "refill",
+      "i+1",
+      "'jug'/'jug' Zipf 3.30 below 3.5"
+    ]
+  ]
+}

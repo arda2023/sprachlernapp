@@ -1,0 +1,35 @@
+PASS source/registry/groups/manifest hashes, Schema 3, context and base SQLite
+PASS hash-bound display patch: append 165..245, final display 1..245; original registry positions preserved
+PASS create_content/build_rows: 1495 cards; 1380 primary goals (160/489/241/245/245); 18 tables
+PASS 81 reserved identities, display 1..245; 1414 old IDs and all historical rows preserved
+PASS 1001 token positions; two reviewed alternatives; linter 0 errors, 1 warnings
+WARNINGS [["stress", "i+1", "'housework'/'housework' Zipf 3.08 below 3.5"]]
+{
+  "status": "ok",
+  "internal_test_pack": true,
+  "ai_calls": 0,
+  "ai_cost_usd": 0,
+  "sqlite_counts": {
+    "languages": 1,
+    "lemmas": 2570,
+    "senses": 3898,
+    "cards": 1495,
+    "dictionary_forms": 4502,
+    "decks": 5,
+    "deck_cards": 1495,
+    "deck_words": 1391,
+    "word_aliases": 22,
+    "sentences": 2029,
+    "sentence_tokens": 22174,
+    "card_sentences": 2023,
+    "stories": 1,
+    "story_sentences": 6,
+    "exercises": 0,
+    "grammar_rules": 0,
+    "audio_assets": 0,
+    "content_releases": 1
+  },
+  "sha256": "ae9b3937895bf653ffb409365cc7905d75854699ac5b2e393d07ace222347756"
+}
+PASS actual offline export and complete row-by-row SQLite readback
+NOT RUN: App staging, Flutter/device tests, user database access

@@ -1,0 +1,53 @@
+{
+  "status": "offline_checked_with_unchanged_supplied_sources",
+  "authored_by": "ChatGPT",
+  "independent_human_review": false,
+  "new_cards": 81,
+  "new_sentences": 81,
+  "token_positions": 1001,
+  "word_tokens": 911,
+  "alternatives": 2,
+  "new_rows": {
+    "lemmas": 97,
+    "senses": 116,
+    "cards": 81,
+    "decks": 0,
+    "deck_cards": 81,
+    "deck_words": 81,
+    "word_aliases": 1,
+    "sentences": 81,
+    "sentence_tokens": 1001,
+    "dictionary_forms": 145,
+    "card_sentences": 81
+  },
+  "topics": {
+    "Gespräche und gegenseitiges Verständnis": 11,
+    "Partnerschaft und Nähe": 9,
+    "Freundschaft und soziale Kontakte": 9,
+    "Gefühle und Stimmungen": 11,
+    "Persönlichkeit und Verhalten": 11,
+    "Unterstützung, Vertrauen und Zusammenleben": 11,
+    "Familie und Verwandtschaft": 10,
+    "Konflikte, Grenzen und Versöhnung": 9
+  },
+  "new_linter_errors": 0,
+  "new_frequency_warnings": 1,
+  "full_pack_frequency_warnings": 366,
+  "pipeline_source_changes": [],
+  "base_reference_unchanged": true,
+  "actual_sqlite_export_readback": true,
+  "expected_cards": 1495,
+  "expected_primary_goals": {
+    "allgemeine-sprache": 160,
+    "reisen": 489,
+    "alltag-zuhause": 241,
+    "arbeit-bildung": 245,
+    "menschen-beziehungen": 245
+  },
+  "app_staged": false,
+  "flutter_tests_run": false,
+  "device_tests_run": false,
+  "user_database_accessed": false,
+  "cloud_calls": 0,
+  "additional_pipeline_cost_usd": 0
+}

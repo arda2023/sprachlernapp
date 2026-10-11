@@ -1,0 +1,80 @@
+{
+  "errors": [],
+  "warnings": [
+    [
+      "feta",
+      "i+1",
+      "'cucumber'/'cucumber' Zipf 3.41 below 3.5"
+    ],
+    [
+      "latte",
+      "i+1",
+      "'oat'/'oat' Zipf 2.90 below 3.5"
+    ],
+    [
+      "nutmeg",
+      "i+1",
+      "'grate'/'grated' Zipf 3.17 below 3.5"
+    ],
+    [
+      "nutmeg",
+      "i+1",
+      "'creamy'/'creamy' Zipf 3.43 below 3.5"
+    ],
+    [
+      "texture",
+      "i+1",
+      "'blender'/'blender' Zipf 3.43 below 3.5"
+    ],
+    [
+      "poach",
+      "i+1",
+      "'simmer'/'simmering' Zipf 3.27 below 3.5"
+    ],
+    [
+      "stale",
+      "i+1",
+      "'breadcrumb'/'breadcrumbs' Zipf 2.75 below 3.5"
+    ],
+    [
+      "savoury",
+      "i+1",
+      "'pancake'/'pancake' Zipf 3.35 below 3.5"
+    ],
+    [
+      "saucer",
+      "i+1",
+      "'teaspoon'/'teaspoon' Zipf 3.30 below 3.5"
+    ],
+    [
+      "muffin",
+      "i+1",
+      "'blueberry'/'blueberry' Zipf 3.30 below 3.5"
+    ],
+    [
+      "flip",
+      "i+1",
+      "'spatula'/'spatula' Zipf 2.86 below 3.5"
+    ],
+    [
+      "flip",
+      "i+1",
+      "'pancake'/'pancake' Zipf 3.35 below 3.5"
+    ],
+    [
+      "straw",
+      "i+1",
+      "'milkshake'/'milkshake' Zipf 3.03 below 3.5"
+    ],
+    [
+      "batter",
+      "i+1",
+      "'pancake'/'pancake' Zipf 3.35 below 3.5"
+    ],
+    [
+      "core",
+      "i+1",
+      "'raisin'/'raisins' Zipf 3.14 below 3.5"
+    ]
+  ]
+}

@@ -1,0 +1,43 @@
+Arbeite im bestehenden Repository sprachapp. Schließe die drei Stapel für unregelmäßige Verben mit Batch 4 vollständig ab: Lieferung prüfen, gezielt importieren, exportieren, gesichert intern stagen und den Gesamtabschluss dokumentieren.
+
+Lies AGENTS.md, NEXTSTEPS.md, docs/content-roadmap-v1.md, docs/irregular-verbs-implementation-plan.md, die Paket-A/B-Berichte, docs/irregular-verbs-authoring.md und docs/irregular-verbs-batch-3-import.md. Nutze die vorhandenen Auswahl-, V3-Import-, Form-, Gruppen- und Exportverträge. Bestehende Änderungen erhalten, keine zweite Importpipeline bauen.
+
+EINGABEN
+Die beigefügte irregular_verbs_batch_4_lieferung.zip im Projekt lokalisieren bzw. ihren entpackten Ordner verwenden. Originaldateien unverändert erhalten. Liefermanifest, editorial_content_v3.json, README.txt, token_review.json, inherited_gloss_comparison.json, validation_report.json und satzuebersicht.html lesen.
+Authoring-Kontext: build/irregular_verbs_authoring_batch_4.zip. Bei anderem Speicherort den tatsächlichen Pfad aus dem Bericht verwenden; keine Ersatzbasis erfinden.
+Basis: irregular_verbs_batch_3_v1, Schema 4.
+Basis-JSON-SHA256: 89fffbe42331ef1283f9a3dec0ddc0ef1bbd6001846bd3636962e38db953edfe
+Basis-SQLite-/Asset-SHA256: f0adf97135225d240078cd92209a9af93597932f82c3c4dab1340e015628ddeb
+Zielausgabe: pipeline/out/irregular_verbs_batch_4_v1/. Bestehende Ausgabe nicht überschreiben.
+
+1. LIEFERUNG UND SPRACHE PRÜFEN
+ZIP/Manifest, Quellenbindung und aktuelle Partition 303 importiert / 99 aktuell / 0 später prüfen. 81 neue Satzpaare, alle 820 Tokenpositionen und die neun alternativen Einsetzungen im vollständigen Satz prüfen. Genau 18 unveränderte Wiederverwendungen. Aktuelle Metadaten exakt aus dem Kontext übernehmen, einschließlich der 100 card_lexical_targets-Zuordnungen bei 99 Formzielen; diesen Unterschied nicht pauschal auf 99 kürzen.
+Die Definitionen entscheiden über die Bindung: spend Zeit verbringen; withdraw Geld abheben; wake jemanden wecken; stick anhaften; spin/swing intransitiv; spread Butter aufstreichen. Begleitwort-Bankkonto ist nicht Benutzerkonto. since September ist präpositional; to in from side to side ist keine Infinitivpartikel; three times bedeutet dreimal. 16 ergänzte Begleitwortsenses dürfen keine weiteren Lernkarten oder Wortbesitzer erzeugen.
+Alternativen: smelled in s004/s005; sowed in s007; spelled in s010/s011; spilled in s015/s016; spoiled in s026/s027. Wörtlich einsetzen, Formfunktion und Bedeutungsidentität prüfen. accepted enthält nur die Zielform; bestätigte Alternativen bleiben lernstandsneutral.
+Belegte kleine Fehler darfst du in einer separaten Importkopie gezielt korrigieren, mit Vorher/Nachher/Grund und neu berechneten abhängigen Hashes. Original-Lieferung erhalten. Keine pauschale Neuformulierung oder KI-Neugenerierung. Nur bei einem tatsächlichen, nicht auflösbaren Basis-/Identitäts-/Vertragskonflikt stoppen und genau den Blocker benennen.
+
+2. BESTAND ERHALTEN UND IMPORTIEREN
+Auswahl, Registry und Lerngruppen ausdrücklich aus dem verifizierten Batch-4-Kontext verwenden. Alle bisherigen Karten, IDs, Satztexte, Lernstände, historischen Verknüpfungen und die drei dokumentierten Batch-3-Tokenkorrekturen sowie frühere Korrekturen erhalten. Wiederverwendungen referenzieren vorhandene Karten/Sätze, ohne neue SRS-Kopien oder IDs. Bestehende Formglossen nicht stillschweigend überschreiben; die 20 geerbten Befunde, 12 früheren Vergleichseinträge und neue Vergleichsliste getrennt dokumentieren. Ein bloßer Wortlautunterschied ist noch kein Inhaltsfehler.
+Vorhandenen Importer, build_rows, Satzlinter und Export nutzen. Erwartet sind 81 zusätzliche Karten: 2486 → 2567. Linterwarnungen nicht durch unnötige Umformulierungen beseitigen; die Lieferung dokumentiert sieben Frequenzhinweise an fünf verschiedenen Wörtern. Tatsächliche Ergebnisse berichten.
+
+3. GESAMTABNAHME ALLER DREI VERBENSTAPEL
+Gegen die ursprüngliche gemeinsame Auswahl exakt nachweisen:
+- 134 lexikalische Verbidentitäten und jeweils 134 Übungen in Grundform, Präteritum, Partizip Perfekt; 402 Formziele insgesamt.
+- Über alle vier Batches 331 neue Satzpaare und 71 Wiederverwendungen; kein offenes Ziel oder Restbatch.
+- Jede Formübung hat ihren vertraglichen festen Satz und die korrekte Funktion. Identische Oberflächen verschiedener Funktionen dürfen nicht zusammenfallen.
+- Wortbesitz, Aliase, Gruppenrepräsentanten und lexikalische Zuordnungen sind konsistent; keine künstliche Zählung von drei neuen Wörtern je Verb.
+- Alle acht bisherigen normalen Stapel und ihre Lernziele bleiben erhalten.
+Globale Übungs- und Wortzahlen aus der echten gemeinsamen App-Projektion ermitteln, nicht durch Addition schätzen. Ausgangswert des letzten Berichts: 2372 Übungen / 2167 Wörter. Wiederverwendungen können zuvor unsichtbare Bestandsübungen sichtbar machen.
+Alle 22 exportierten SQLite-Tabellen vollständig Zeile für Zeile mit build_rows abgleichen, einschließlich Schema, Referenzen, Gruppen und Formtabellen. Quell- und Originaldateihashes vorher/nachher prüfen.
+
+4. GESICHERT STAGEN UND APP PRÜFEN
+Aktuelles Asset und Manifest nachweislich VOR Staging sichern. Nur bei erfolgreicher Inhalts- und Exportprüfung den neuen Pack mit dem bestehenden Werkzeug intern stagen; anschließend --verify ausführen.
+Relevante Pipeline-Tests für Auswahl/Import/Formfunktionen/Wiederverwendung/Abschluss sowie Flutter-Pack-Lesetest und Formprojektion ausführen. Alle elf Stapel lesbar, drei Verbenansichten 134/134/134, alte Ansichten unverändert. flutter analyze ausführen. Testumfang an tatsächlichen Änderungen ausrichten; eigene Fehler gezielt beheben, danach ausreichende Prüfung statt endloser optionaler Wiederholungen.
+Keine echte user.db öffnen oder verändern, keine Lernstände übertragen/zurücksetzen, keine App deinstallieren. Gerätetest nur auf isolierter Datenkopie und nur behaupten, wenn ausgeführt. Ansonsten kurze iPhone-Anleitung mit Asset-Verifikation und Aktualisierung ohne Deinstallation geben.
+
+5. ABSCHLUSS UND ROADMAP
+Keinen Batch 5 und keine weitere Verben-Authoring-ZIP erstellen. docs/irregular-verbs-batch-4-import.md mit Dateiliste, tatsächlichen Befehlen, Outputs, Exitcodes, Hashes, Korrekturen und offenen Befunden schreiben. Gemeinsamen Authoring-Bericht und Roadmap auf technischen internen Abschluss der drei Verbenstapel aktualisieren, sofern alle Prüfungen bestehen. Öffentliche Sprach-/Inhaltsfreigabe nicht behaupten.
+NEXTSTEPS.md auf höchstens 25 Zeilen halten. Nächster Inhaltsschritt ist gemäß Roadmap Alltagssprache & Redewendungen (Richtwert ca. 450 nach Dublettenprüfung), anschließend Verbalphrasen und zuletzt Business & E-Mail. In diesem Auftrag noch keine neue Auswahl oder Reservierung dafür anlegen.
+Eigene Änderungen auf Whitespace prüfen; bekannte CRLF-/Whitespace-Altbefunde getrennt nennen, nicht global bereinigen. Keine Cloud-/Modellaufrufe, keine ungefragten Commits oder Pushes. Dieser Auftrag autorisiert Prüfung, gezielte Importkorrektur, Export und gesichertes internes Staging zusammen; keine Zwischenfreigaben für Routinearbeit nötig.
+
+Am Ende knapp berichten: Export-/Stagingstatus, 134/134/134, tatsächliche globale Übungen/Wörter, bestandene Prüfungen, verbleibende Befunde, Pack-/Assethash und nächster Roadmap-Schritt. Nicht allein wegen technisch gültiger Tabellen eine unabhängige menschliche Sprachfreigabe erklären.

@@ -1,0 +1,57 @@
+Ziel: Die letzten 81 redigierten Lernziele für „Menschen & Beziehungen“ offline prüfen, importieren und intern stagen; den Stapel mit exakt 245 Zielen abschließen.
+
+Dateien:
+- Lieferung im Repository-Root als menschen_beziehungen_batch_3/ entpacken; nichts überschreiben.
+- Lesen: AGENTS.md, PRODUCT.md, docs/content-schema.md, docs/learning-groups-v1.md, docs/menschen-beziehungen-authoring.md, docs/menschen-beziehungen-batch-2-import.md, NEXTSTEPS.md.
+- Lieferung: menschen_beziehungen_batch_3/menschen_beziehungen_batch_3.editorial.json, menschen_beziehungen_batch_3.display.json, verify_menschen_beziehungen_batch_3.py, manifest.json, editorial_notes.txt, reading.json, annotation_review.txt und reference/.
+- Basis: pipeline/out/menschen_beziehungen_batch_2_v1/pack.json und content.sqlite.
+- Registry: pipeline/data/words/en.menschen_beziehungen_batch_3_context_v1.json.
+- Gruppen: pipeline/data/learning_groups/en.menschen_beziehungen_batch_3_context_v1.json.
+- Aktuelle Auswahl: pipeline/data/selection/menschen_beziehungen_batch_3_context_v1.json; Originalauswahl pipeline/data/selection/menschen_beziehungen_v1.json.
+- Bestehende Werkzeuge: pipeline/scripts/import_editorial_patch.py, tool/stage_content_pack.dart, test/data/real_pack_test.dart.
+- Neue Ausgabe: pipeline/out/menschen_beziehungen_batch_3_v1/.
+- Bericht: docs/menschen-beziehungen-batch-3-import.md; NEXTSTEPS.md.
+
+Schritte:
+1. Git-Status, Ausgangshashes und bestehende Änderungen erfassen. Basis-JSON: SHA256 7d3b2a2f0d716df0f12e69b097ff72e1a1b430ca5bac9c858503ead557028bbb. Basis-SQLite: 96f6fab1d2b151f1c57f9645d90acf1a39fd7deb1d43df13615268c21b1c360c. Liefermanifest prüfen. Referenzquellen nicht über Projektcode kopieren. Bestehende Ausgaben nicht überschreiben.
+2. Gelieferten Verifier mit --repo . ausführen. Er prüft Registry/Gruppen kanonisch, Basisdateien rohbytegebunden, alle reservierten Identitäten und den Import mit den aktuellen Projektquellen. Vollständige Zielspannen father-in-law und daughter-in-law bleiben je ein Token; der vorhandene Tokenizer unterstützt das bereits. Keine Pipeline-Codeänderung geplant, keine Validatorlockerung.
+3. Alle 81 Satzpaare, 1001 Tokenpositionen und zwei Alternativen gegenlesen. Prüfschwerpunkte: company = Gesellschaft; hand bei cheat = Kartenblatt; call = bezeichnen; watch = aufpassen; trust als Substantiv; each generation gegenüber each other; existenzielles there was gegenüber Kopula/Verlauf; have als Vollverb, Perfect-Hilfsverb oder have to; meeting als Substantiv. Alternativen wörtlich einsetzen: barbecue→barbeque (Schreibvariante), relax→unwind (im konkreten Satz). accepted[] nur Zielform; Alternativen lernstandsneutral. Bestehende Glossen nicht pauschal bereinigen. Nur belegte Lieferfehler gezielt korrigieren, Originalbytes erhalten und Vorher/Nachher dokumentieren. Bei Änderungen betroffene Reviewhashes, Create-Hash im Display-Patch und Liefermanifest nachvollziehbar aktualisieren; keine unveränderten Dateien normalisieren.
+4. Genau die 81 aktuellen Ziele mit unveränderten IDs, Definitionen und cards.learning importieren, je ein fester Satz. Bestehende Senses wiederverwenden. Neue Begleitwort-Senses nur als Wörterbucheinträge, keine zusätzlichen Lernkarten. Bestehenden Stapel weiterführen.
+5. Mitgliedschaften zunächst auf 165–245 anhängen. Danach den gelieferten hashgebundenen Display-Patch anwenden: deck_cards.position und deck_words.position für Menschen gemäß gemeinsamer Originalauswahl auf 1–245. Originalpositionen in Auswahl/Registry bleiben unverändert. An alten Inhaltszeilen dürfen nur diese beiden autorisierten Positionsfelder verändert werden.
+6. In neuen Ausgabeordner exportieren und alle 18 SQLite-Tabellen vollständig gegen build_rows abgleichen. Erwartet: 1495 Karten, 2029 Satztexte, 2023 Satzverknüpfungen einschließlich Historie, 1391 Wortbesitzzeilen. Primäre Lernziele: 1380 = 160 Allgemeine Sprache + 489 Reisen + 241 Alltag & Zuhause + 245 Arbeit & Bildung + 245 Menschen & Beziehungen. Alle bisherigen 1414 Karten-IDs und Inhalte einschließlich front-Korrektur bleiben erhalten. Alle 245 Menschen-Identitäten, Definitionen, Gruppen, Besitzbindungen und festen Übungssätze exakt gegen die Originalauswahl prüfen; Abschluss 245 importiert / 0 aktuell / 0 später.
+7. Nach bestandenen Prüfungen Assets sichern und intern stagen. --verify, Fünfstapel-Lesetest 160/489/241/245/245 und Flutter-Analyse ausführen. Nur konkrete vorhandene Testerwartungen erweitern. App-Einstieg, echte user.db und review_log nicht verändern. Prüfung, Import, Export und internes Staging sind mit diesem Auftrag autorisiert. Supabase wird dafür nicht benötigt; das pausierte Projekt bleibt unangetastet.
+8. Abschlussbericht mit tatsächlichen Befehlen, Outputs, Exitcodes, Pfaden und SHA256 schreiben. Bekannte Altbefunde getrennt ausweisen. Keine Batch-4-ZIP und keine weitere Auswahl erstellen. Kurze Anleitung zur Geräteprüfung geben, ohne eine nicht durchgeführte Geräteprüfung zu behaupten.
+
+Nicht anfassen:
+- Echte user.db, Lernstände, review_log, historische Packs, Original-Lieferung, ursprüngliche Registrys/Auswahlen.
+- App-/SRS-/Synonymlogik, Modelle, Budgets, Supabase und Plattformdateien.
+- Keine Cloud-/Modellaufrufe, Veröffentlichung, Commits oder Pushes.
+
+Akzeptanzkriterien:
+- Genau 81 neue Lernziele, 81 Satzpaare, vollständige 1001 Tokenpositionen und zwei geprüfte Alternativen.
+- Menschen & Beziehungen vollständig mit 245 Zielen; fünf Stapel insgesamt 1380 Ziele.
+- Alle alten IDs und Inhalte bis auf die autorisierten Anzeigenpositionen unverändert; keine Besitz-/Alias-/Gruppenkonflikte.
+- Review-, Registry-, Source- und Displayhashes gültig; Linter 0 Fehler. Ein neuer Häufigkeitshinweis: housework, Zipf 3,08 unter 3,5. Allein deswegen keine Umformulierungsschleife.
+- Vollständiger 18-Tabellen-Abgleich, Asset-Verifikation, Fünfstapel-Lesetest und Analyse bestanden.
+
+Prüfen mit, ab Repository-Root:
+macOS Terminal:
+pipeline/.venv-macos/bin/python menschen_beziehungen_batch_3/verify_menschen_beziehungen_batch_3.py --repo .
+pipeline/.venv-macos/bin/python pipeline/scripts/import_editorial_patch.py --source pipeline/out/menschen_beziehungen_batch_2_v1/pack.json --create menschen_beziehungen_batch_3/menschen_beziehungen_batch_3.editorial.json --registry pipeline/data/words/en.menschen_beziehungen_batch_3_context_v1.json --display-patch menschen_beziehungen_batch_3/menschen_beziehungen_batch_3.display.json --out pipeline/out/menschen_beziehungen_batch_3_v1
+Windows PowerShell:
+.\pipeline\.venv\Scripts\python.exe menschen_beziehungen_batch_3\verify_menschen_beziehungen_batch_3.py --repo .
+.\pipeline\.venv\Scripts\python.exe pipeline\scripts\import_editorial_patch.py --source pipeline/out/menschen_beziehungen_batch_2_v1/pack.json --create menschen_beziehungen_batch_3/menschen_beziehungen_batch_3.editorial.json --registry pipeline/data/words/en.menschen_beziehungen_batch_3_context_v1.json --display-patch menschen_beziehungen_batch_3/menschen_beziehungen_batch_3.display.json --out pipeline/out/menschen_beziehungen_batch_3_v1
+Auf beiden Systemen nach erfolgreichem Export und Asset-Sicherung:
+dart run tool/stage_content_pack.dart --from pipeline/out/menschen_beziehungen_batch_3_v1
+dart run tool/stage_content_pack.dart --verify
+flutter test test/data/real_pack_test.dart
+flutter analyze
+git diff --check
+git status --short
+Zusätzlich betroffene vorhandene Import-/Display-/Registry-/Gruppen-/Authoring-Tests mit passendem Interpreter ausführen; konkrete Testpfade zuerst im Projekt prüfen. Outputs und Exitcodes zeigen. Bekannte CRLF-/Whitespace-Altbefunde von eigenen Änderungen getrennt ausweisen, keine globale Bereinigung. Kleinste Lösung, keine ungefragten Features oder generische Testsuite.
+
+Schleifenbremse: Nach 2–3 Fehlversuchen neue Hypothese anhand des konkreten Fehlers; nach 5 stoppen und Lage schildern. Kein Cloud-Fallback.
+
+Am Ende: docs/menschen-beziehungen-batch-3-import.md schreiben. NEXTSTEPS.md aktualisieren: Erledigt, geänderte Dateien, Testergebnis, Abweichungen, offene Probleme; max. 25 Zeilen, nur Fakten. Nie „fertig“ ohne gezeigten Output.
+
+Modell: Codex GPT-6 Luna · Sehr Hoch | Alternative: Codex GPT-5.6 Sol · Mittel | Danach: /clear

@@ -52,6 +52,7 @@ class WordListItem extends StatelessWidget {
     const inset = EdgeInsets.only(left: PlaybackHighlight.inset);
     final headword = word.entry.headword;
     final meta = [
+      if (const ['Grundform', 'Präteritum', 'Partizip Perfekt'].contains(word.entry.partOfSpeech)) word.entry.partOfSpeech,
       if (word.isDisabled) 'Deaktiviert',
       'Zuletzt gesehen: ${lastSeenLabel(word.lastSeenAt, now)}',
       'Wiederholt: ${reviewCountLabel(word.reviewCount)}',
@@ -116,7 +117,7 @@ class WordListItem extends StatelessWidget {
                       Padding(
                         padding: inset,
                         child: Text(
-                          word.box==0?'Ungelernt · Hinzugefügt ${lastSeenLabel(word.lastSeenAt, now)}':meta,
+                          word.box==0?'${word.entry.partOfSpeech} · Ungelernt · Hinzugefügt ${lastSeenLabel(word.lastSeenAt, now)}':meta,
                           style:
                               AppType.meta(color: context.appColors.textMuted)
                                   .copyWith(

@@ -90,10 +90,7 @@ final wordListProvider = FutureProvider<List<VocabWord>>((ref) async {
   final known = resolver.knownIds;
   final states = await user.allCardStates();
   // Box zero has not been answered; unknown old IDs remain untouched in user.db.
-  final projected = LearningGroups(
-    resolver.cards,
-    states,
-  ).project(states.keys).toSet();
+  final projected = resolver.projectExisting(states.keys).toSet();
   final ids = [
     for (final s in states.values)
       if ((s.box >= 1 ||
@@ -106,6 +103,7 @@ final wordListProvider = FutureProvider<List<VocabWord>>((ref) async {
   ];
   final items = await resolver.practiceItems(ids);
   final words = <VocabWord>[];
+  final lexicalKeys = lexicalCountingKeys(resolver.cards);
   for (final item in items) {
     final state = states[item.card.id]!;
     final reviews = await user.reviewsFor(item.card.id);
@@ -124,9 +122,11 @@ final wordListProvider = FutureProvider<List<VocabWord>>((ref) async {
     words.add(
       VocabWord(
         id: item.card.id,
+        dueAt: state.dueAt,
+        lexicalKey: lexicalKeys[item.card.id],
         entry: WordEntry(
           headword: item.card.form,
-          partOfSpeech: item.card.formLabelDe ?? item.card.pos,
+          partOfSpeech: item.card.exerciseLabel,
           translation: item.card.translationDe ?? '',
         ),
         sentence: sentence.text,

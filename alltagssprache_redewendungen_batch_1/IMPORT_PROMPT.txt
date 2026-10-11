@@ -1,0 +1,102 @@
+Ziel: Die 89 redigierten Ziele von „Alltagssprache & Redewendungen“ offline in die aktuelle Schema-4-Basis importieren, als internes Pack prüfen und stagen und anschließend die geprüfte Batch-2-Authoring-ZIP bereitstellen.
+
+Dateien:
+- @AGENTS.md, gegebenenfalls @CLAUDE.md, @NEXTSTEPS.md
+- @docs/content-roadmap-v1.md
+- @docs/alltagssprache-redewendungen-authoring.md
+- @docs/normal-authoring-schema4-compatibility.md
+- @docs/irregular-verbs-batch-4-import.md
+- @docs/content-schema.md und @docs/learning-groups-v1.md
+- @pipeline/scripts/import_editorial_patch.py
+- @pipeline/scripts/export_authoring_context.py
+- @pipeline/data/curation/editorial_content_v2.schema.json
+- @pipeline/data/selection/alltagssprache_redewendungen_v1.json
+- @pipeline/data/selection/alltagssprache_redewendungen_batch_1_context_v1.json
+- @pipeline/data/words/en.alltagssprache_redewendungen_batch_1_context_v1.json
+- @pipeline/data/learning_groups/en.alltagssprache_redewendungen_batch_1_context_v1.json
+- @pipeline/out/irregular_verbs_batch_4_v1/pack.json und content.sqlite
+- @assets/content/en/content.sqlite und @assets/content/en/content.manifest.json
+- @tool/stage_content_pack.dart
+- Lieferung: alltagssprache_redewendungen_batch_1_lieferung.zip; darin Ordner alltagssprache_redewendungen_batch_1 mit editorial_content_v2.json, token_review.json, alternative_review.json, inherited_gloss_comparison.json, validation_report.json, satzredaktion.html, manifest.json und reference/.
+
+Verbindliche Ausgaben:
+- pipeline/out/alltagssprache_redewendungen_batch_1_v1/
+- docs/alltagssprache-redewendungen-batch-1-import.md
+- build/alltagssprache_batch_1_checks/
+- build/alltagssprache_redewendungen_authoring_batch_2.zip
+- Batch-2-Kontextauswahl/Registry/Gruppen gemäß dem bestehenden Fortsetzungsvertrag und dem dokumentierten Namensschema, ohne historische Dateien zu ersetzen.
+
+Schritte:
+1. Lies die genannten lokalen Verträge und den Authoringbericht. Prüfe Arbeitsbaum und Index; halte vorbestehende Änderungen getrennt. Die Schema-4-/450-Ziele-Kompatibilität ist bereits umgesetzt und getestet. Sie wird nicht erneut implementiert. Nenne die konkreten Dateien und bestehenden Schnittstellen für Import, Staging und Fortsetzung; dann setze diesen bestehenden Ablauf um. Kleinste Lösung, keine ungefragten Features oder Refactorings.
+
+2. Finde die hochgeladene Lieferung anhand des exakten ZIP-Namens oder des bereits entpackten Ordners; bei mehreren unterschiedlichen Kopien zuerst Hashes vergleichen. Originaldateien erhalten. Prüfe ZIP-CRCs und manifest.json. Fehlende Lieferung nicht durch selbst generierte Sätze ersetzen. Verifiziere die Basis:
+   Packversion irregular_verbs_batch_4_v1, Schema 4.
+   Pack-JSON-SHA256 bf13af162d0cd12122665f9f8dc2edfd57daaf38c9e2a6ee58125452c3a267dc
+   SQLite-/Asset-SHA256 e99074c535015c7875a5c8ac5e4c68e318ab4d569825db488e01dd4947bdcde3
+   Import-JSON-SHA256 b3b45ab5f4c3142565db74ae4468ebfd48eda6fb514595031dbf6bff1404a388
+   Registry-Digest aus Importdatei und Authoring-Kontext prüfen; Dateibytehash und kanonischen Digest nicht verwechseln. reference/registry.json muss mit der lokalen Batch-1-Registry übereinstimmen. Bei Basisabweichung nicht blind umbasieren.
+
+3. Prüfe die 89 Satzpaare, vollständigen Lücken, 870 Tokenpositionen und acht Alternativen gegen Zieldefinitionen und Auswahl. Benutze den mitgelieferten vollständigen Tokenbericht; prüfe auch Begleitwörter. Besonderheiten:
+   - Ganze Gesprächsformeln/Redewendungen bilden eine zusammenhängende Lücke und einen lexical_span. Interne Apostrophe, Bindestriche und das Komma in „so far, so good“ erhalten.
+   - accepted[] ist exakt [card.form], einschließlich großem I in „correct me if I'm wrong“. Normalisierung des Vergleichs ist kein Grund, die gespeicherte Zielform umzuschreiben.
+   - cards.learning, Kartenidentitäten, Zieldefinitionen und Originalpositionen unverändert übernehmen.
+   - membership/display_position 1–89 aus combined_display_mapping.json; keine erfundenen Positionen und kein Display-Patch ohne tatsächlichen Bedarf.
+   - Alternativen nur satzbezogen aus der geprüften Lieferung übernehmen, keine Freigabe aus Alias- oder Gruppendaten ableiten.
+   - Neuer Wörterbuchsinn close#betrieb-einstellen betrifft das Ende des Geschäftsbetriebs; close#schliessen bei „closing the window“ bleibt getrennt.
+   Belegte Lieferfehler darfst du minimal in einer gesonderten Importkopie korrigieren, abhängige Token-/Reviewhashes mit bestehenden Funktionen erneuern und genau dokumentieren. Kein stilles Ändern von Zielbindung oder Bedeutung, kein Senken von Validatorgrenzen.
+
+4. inherited_gloss_comparison.json enthält acht konkrete Altglossenbefunde. Sie wurden nicht in den Bestand zurückgeschrieben. Erhalte die gemeinsamen alten Wörterbuchzeilen; übernehme die Befunde mit Kontext in den Bericht. Keine künstlichen neuen Senses allein zur Umgehung einer alten Glosse. Ein echter neuer Zuordnungsfehler ist zu korrigieren; geerbte Glossen und neue Lieferfehler getrennt bewerten. Die früheren Glossenlisten bleiben eigenständige offene Befunde und werden nicht als erledigt erklärt.
+
+5. Importiere ausschließlich offline mit dem vorhandenen V2-Create-Weg und ausdrücklich angegebener Registry. Vorhandene Ausgabeverzeichnisse nicht überschreiben. Beispiel ab Repository-Root, <LIEFERORDNER> durch den tatsächlich gefundenen Pfad ersetzen:
+   macOS:
+   pipeline/.venv-macos/bin/python pipeline/scripts/import_editorial_patch.py --source pipeline/out/irregular_verbs_batch_4_v1/pack.json --create "<LIEFERORDNER>/editorial_content_v2.json" --registry pipeline/data/words/en.alltagssprache_redewendungen_batch_1_context_v1.json --out pipeline/out/alltagssprache_redewendungen_batch_1_v1
+   Windows PowerShell:
+   .\pipeline\.venv\Scripts\python.exe pipeline\scripts\import_editorial_patch.py --source pipeline/out/irregular_verbs_batch_4_v1/pack.json --create "<LIEFERORDNER>/editorial_content_v2.json" --registry pipeline/data/words/en.alltagssprache_redewendungen_batch_1_context_v1.json --out pipeline/out/alltagssprache_redewendungen_batch_1_v1
+   Für eine dokumentierte Korrekturkopie verwende deren Pfad. Keine Modellaufrufe, keine automatische Ersatzgenerierung.
+
+6. Prüfe Export und Bestandsschutz mit dem bestehenden Audit: alle 22 SQLite-Tabellen gegen build_rows, Referenzen, IDs, Lern-/Besitzgruppen, eindeutige Wörterbuchschlüssel, ein aktiver fester Satz je neuer Karte. Alle alten exportierten Inhaltszeilen bleiben erhalten; nur Release- und Registry-Metadaten ändern sich vertragsgemäß. Die vier Formtabellen und 134/134/134 Verbenübungen müssen unverändert bleiben. Erwartet: 89 neue Karten, 2656 Karten insgesamt, zwölf Stapel. Ermittle Übungen/Wörter über die bestehende Projektion; rechnerisch zu prüfen sind 2542 Übungen / 2271 Wörter. Zähler nicht aus Karten- oder Besitzzeilen ableiten.
+
+7. Sichere Assets und Manifest nachweislich VOR dem Staging in build/alltagssprache_batch_1_checks/backup/, notiere ihre SHA256-Werte und prüfe die Sicherung. Erst nach bestandenem Import/Audit intern stagen und --verify ausführen. Keine echte user.db öffnen, kopieren, migrieren oder verändern. Kein Gerätetest nötig für diesen Inhaltsimport; ohne tatsächlichen Lauf nicht behaupten.
+
+8. Erzeuge Batch 2 mit dem vorhandenen Fortsetzungsexporter, gebunden an den tatsächlich geprüften neuen Pack. 442 Identitäten insgesamt; Partition 89 importiert / 89 aktuell / 264 später; ursprüngliche Aufteilung 89/89/88/88/88. Kompletter Wörterbuch-, Besitzer-, Gruppen- und Formkontext mitgeben. Keine Batch-2-Sätze erzeugen. ZIP schließen, erneut öffnen und CRCs, Manifesthashes, Referenzen, aktuelle Partition sowie alle 22 Quelltabellen prüfen. Finale ZIP und vollständigen lokalen Pfad nennen.
+
+Nicht anfassen:
+- Original-Lieferung, historische Packs/Registrys/Auswahlen und ihre Bytes.
+- Bestehende Karten-IDs, feste Sätze, Formmetadaten, SRS, Antwort-/Synonymlogik, App-Einstieg und echte Lernstände.
+- Modelle, Limits, API-Konfiguration, Supabase oder Produktionsdatenbanken.
+- AGENTS.md/CLAUDE.md und globale Zeilenenden-/Whitespacebereinigung.
+- Vorbestehende uncommittete Änderungen und fremde Indexeinträge.
+
+Akzeptanzkriterien:
+- Genau 89 aktuelle Auswahlziele übernommen; 353 spätere Ziele nicht importiert.
+- Schema 4 bleibt erhalten; keine bestehenden Formdaten verloren.
+- Linter 0 Fehler. Erwarteter neuer Hinweis: reopen, Zipf 3,42 unter 3,5; einen Warnhinweis nicht als Fehler oder Prüfungserfolg verschweigen.
+- Schema, Hashbindungen, Tokenabdeckung, Reviews und sämtliche Alternativersetzungen bestanden.
+- Vollständiger 22-Tabellen-Abgleich und Bestandsschutz bestanden, Assets vor Staging gesichert.
+- Staging, Asset-Verifikation und App-Lesetest für zwölf Stapel erfolgreich.
+- Batch-2-ZIP hat exakt 89 aktuelle Ziele und ist erneut vollständig geprüft.
+- Kein Cloud-Aufruf, kein Zugriff auf echte Lernstände, keine öffentliche Freigabe.
+
+Prüfen mit:
+Ab Repository-Root, macOS:
+- pipeline/.venv-macos/bin/python -m pytest pipeline/tests -q
+- pipeline/.venv-macos/bin/python pipeline/scripts/export_authoring_context.py --help
+- pipeline/.venv-macos/bin/python pipeline/scripts/export_authoring_context.py --verify-zip build/alltagssprache_redewendungen_authoring_batch_2.zip
+Windows: denselben Python-Befehlen .\pipeline\.venv\Scripts\python.exe voranstellen statt pipeline/.venv-macos/bin/python.
+Auf beiden Systemen:
+- dart run tool/stage_content_pack.dart --from pipeline/out/alltagssprache_redewendungen_batch_1_v1
+- dart run tool/stage_content_pack.dart --verify
+- flutter analyze
+- Bestehenden echten Pack-Lesetest mit zwölf erwarteten Stapeln gezielt ausführen. Den tatsächlichen Testpfad aus dem bisherigen Bericht übernehmen und den exakten ausgeführten Befehl nennen; keine Dateinamen erfinden.
+- git diff --check nur für eigene Änderungen, zusätzlich bei erhaltenen CRLF: git -c core.whitespace=cr-at-eol diff --check -- <eigene Pfade>
+- git status --short
+Zeige Befehle, relevante Outputs und Exitcodes. Chat-Prüfungen ersetzen den Projektimport nicht. Gekürzte Logs enthalten Fehler mit unmittelbarem Kontext, keine ANSI-Codes oder wiederholten Stacktraces.
+
+Commit:
+Ein abgeschlossener Import ist ein Inkrement. Nur eigene, sicher isolierbare und geprüfte Änderungen committen, keine pauschale Aufnahme des Arbeitsbaums. Wenn vorhandene uncommittete Schema-4-Abhängigkeiten oder gemischte Dokumenthunks das verhindern, nichts erzwingen; konkrete Abhängigkeit und unveränderten Index dokumentieren. Kein Push.
+
+Schleifenbremse:
+Nach 2–3 Fehlversuchen neue Hypothese formulieren und den kleinsten aussagekräftigen Nachweis suchen; nach fünf erfolglosen Versuchen am selben Problem stoppen und Befund mit genauer Fehlermeldung melden. Keine wiederholte Generierung, kein JSON-Reparaturtrick, keine Abschwächung von Prüfungen. Lange Jobs nicht engmaschig pollen.
+
+Am Ende:
+Bericht docs/alltagssprache-redewendungen-batch-1-import.md mit Änderungen, eventuellen Korrekturkopien, Prüfoutputs, Hashes, Bestandsschutz und Glossenbefunden schreiben. NEXTSTEPS.md mit Erledigt, geänderten Dateien, tatsächlichen Testergebnissen, Abweichungen und offenen Punkten aktualisieren: maximal 25 Zeilen, nur Fakten. Kurz Ergebnis, Packpfad und geprüfte Batch-2-ZIP nennen. Nie „fertig“ ohne tatsächlichen Prüfoutput.

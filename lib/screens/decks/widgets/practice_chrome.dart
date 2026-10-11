@@ -25,8 +25,8 @@ class PracticeSessionBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final left = total - done;
     final label = left == 0
-        ? 'Alle Wörter geübt'
-        : 'Noch $left ${left == 1 ? 'Wort' : 'Wörter'}';
+        ? 'Alle Übungen geübt'
+        : 'Noch $left ${left == 1 ? 'Übung' : 'Übungen'}';
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
@@ -39,8 +39,8 @@ class PracticeSessionBar extends StatelessWidget {
           Expanded(
             child: Semantics(
               label: left == 0
-                  ? 'Alle $total Wörter geübt'
-                  : 'Noch $left von $total Wörtern',
+                  ? 'Alle $total Übungen geübt'
+                  : 'Noch $left von $total Übungen',
               excludeSemantics: true,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

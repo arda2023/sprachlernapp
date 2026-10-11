@@ -9,9 +9,9 @@ import 'package:sprachapp/domain/srs_state.dart';
 import '../fixtures/story_learning.dart';
 
 void main() {
-  for (final version in [2, 3]) {
+  for (final version in [2, 3, 4]) {
     test(
-      'v$version to v4 preserves all prior column values and append-only triggers',
+      'v$version to v5 preserves all prior column values and append-only triggers',
       () async {
         final dir = Directory.systemTemp.createTempSync('story-migrate-');
         addTearDown(() => dir.deleteSync(recursive: true));
@@ -28,8 +28,13 @@ void main() {
           inPlaylist: true,
         );
         await repo.setDeckActive('deck', false, now: now);
+        if (version == 4) await repo.addStoryWord(storyCandidate(), now: now);
         await repo.close();
         final raw = sqlite3.open(file.path);
+        raw.execute('DROP TABLE form_identity_bindings');
+        raw.execute('ALTER TABLE user_cards DROP COLUMN form_function');
+        raw.execute('ALTER TABLE user_cards DROP COLUMN lexical_target_id');
+        if (version < 4) {
         for (final table in [
           'story_word_sources',
           'learning_identity_bindings',
@@ -51,6 +56,7 @@ void main() {
         ]) {
           raw.execute('ALTER TABLE user_cards DROP COLUMN $col');
         }
+        }
         if (version == 2) {
           raw.execute('ALTER TABLE user_cards DROP COLUMN note');
           raw.execute('ALTER TABLE user_cards DROP COLUMN in_playlist');
@@ -68,6 +74,7 @@ void main() {
           'deck_settings',
           'review_log',
           'local_submissions',
+          if (version == 4) ...['card_contexts', 'learning_identity_bindings', 'story_word_sources', 'story_learning_additions'],
         ]) {
           columns[table] = raw
               .select('PRAGMA table_info($table)')
@@ -85,9 +92,9 @@ void main() {
         await repo.close();
         final migrated = sqlite3.open(file.path);
         addTearDown(migrated.close);
-        expect(migrated.select('PRAGMA user_version').single.values.first, 4);
+        expect(migrated.select('PRAGMA user_version').single.values.first, 5);
         for (final table in columns.keys) {
-          final where = table == 'user_cards'
+          final where = table == 'user_cards' && version < 4
               ? " WHERE card_id='existing'"
               : '';
           expect(

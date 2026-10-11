@@ -42,6 +42,9 @@ def export(selection_path, output, batch):
     from sprachpipe.linter import _nlp
     require(not output.exists(), 'output already exists')
     selection = read(selection_path)
+    if selection.get('format') == 'sprachapp.form-selection':
+        require(batch == selection['authoring_batch'], 'form snapshot batch mismatch')
+        return export_form_context(selection_path, output)
     continuation = selection.get('continuation')
     if not continuation:
         require(batch == 1, 'later batches require a continuation snapshot')
@@ -78,7 +81,7 @@ def export(selection_path, output, batch):
                'artifact_paths':{selection['source_pack']['path']:'pack.json',staged['source']['path']:'content.sqlite',
                    selection['registry_path']:'registry.json',selection['learning_groups_path']:'learning_groups.json'},
                'entries':batch_entries,'new_deck':{'ref':selection['owner_deck_ref'],'slug':selection['owner_deck_ref'],'title_de':selection['title_de']},
-               'import_contract':{'format':'sprachapp.editorial-content','format_version':2,'content_schema_version':3,
+               'import_contract':{'format':'sprachapp.editorial-content','format_version':2,'content_schema_version':pack['release']['schema_version'],
                    'source_sha256':sha(source_raw),'registry_sha256':digest(registry),
                    'importer':'pipeline/scripts/import_editorial_patch.py','schema':'pipeline/data/curation/editorial_content_v2.schema.json',
                    'learning_required':True,'new_card_sentence_count':1,'existing_rows':'preserve byte-equivalent JSON values',
@@ -120,14 +123,14 @@ def export(selection_path, output, batch):
         if p.is_file() and '__pycache__' not in p.parts and p.suffix != '.pyc':
             payload['runtime/en_core_web_sm/'+p.relative_to(model).as_posix()] = p.read_bytes()
     payload['README.txt'] = f'''{selection['title_de']} – Authoring-Gruppe {batch}, {len(batch_entries)} von {len(selection['entries'])} Zielen
-Basis: {pack['release']['version']}, Schema 3, Rohbyte-SHA256 {sha(source_raw)}.
+Basis: {pack['release']['version']}, Schema {pack['release']['schema_version']}, Rohbyte-SHA256 {sha(source_raw)}.
 Nur die entries in authoring_context.json redigieren. Es wurden noch keine Sätze erstellt.
 Alle Identitäten, Ausschlüsse, Definitionen und Entscheidungen stehen in selection.json.
 Das vollständige aktuelle Wörterbuch steht in dictionary_context.json und pack.json.
 Gruppen sind unabhängig vom Wortbesitz: learning_groups.json enthält unveränderte
 Altentscheidungen und separat reservierte neue Köpfe. Der historische Hash in
 existing beschreibt die frühere Umstellung; der äußere Hash bindet an diese Basis.
-Schema 3 verlangt cards.learning unverändert aus dem jeweiligen Auswahlziel.
+Schema {pack['release']['schema_version']} verlangt cards.learning unverändert aus dem jeweiligen Auswahlziel.
 Keine Variante/Synonymgruppe automatisch als gültige Lückenantwort freigeben.
 Die vorhandene Satzprüfung (reviewer, reviews, Token-/Linkhashes und geprüfte
 Alternativen) bleibt Teil des Imports; keine zusätzliche formelle Freigabe nötig.
@@ -173,7 +176,7 @@ manifest.json listet alle Nutzdateien mit SHA256; der ZIP-Gesamthash steht im Pr
     return {'export':'PASS','zip':str(output),'files':len(payload),**result}
 
 
-def verify_zip(path):
+def verify_zip(path, *, historical=False):
     # Reopen the ZIP, do not trust the in-memory exporter validation report.
     with zipfile.ZipFile(path) as z:
         require(z.testzip() is None,'ZIP CRC')
@@ -184,12 +187,16 @@ def verify_zip(path):
         data={n.split('/',1)[1]:z.read(n) for n in names}
     require('manifest.json' in data,'missing manifest')
     manifest=json.loads(data['manifest.json'])
+    require(manifest.get('format_version', 1)==1, 'unknown hash manifest version')
     require(set(data)==set(manifest['files'])|{'manifest.json'},'manifest completeness')
     require(all(sha(data[n])==h for n,h in manifest['files'].items()),'file hashes')
     forbidden={'.env','user.db','credentials.json','application_default_credentials.json'}
     require(not any(set(PurePosixPath(n).parts)&forbidden or n.endswith(('.pem','.key')) for n in data),'private file')
+    if json.loads(data.get('authoring_context.json', b'{}')).get('format_version') == 3:
+        return verify_form_context(path, data)
     for name,raw in data.items():
         if name.startswith(('pipeline/src/','pipeline/scripts/')) or name in ('pipeline/data/curation/editorial_content_v2.schema.json','pipeline/config.yaml','pipeline/pyproject.toml','pipeline/requirements.lock'):
+            if historical: continue  # snapshot hashes checked; archived code is never executed
             require((ROOT/name).is_file() and raw==(ROOT/name).read_bytes(),'stale source/environment: '+name)
     required={'pack.json','content.sqlite','registry.json','learning_groups.json','selection.json','authoring_context.json',
               'all_selection_identities.json','dictionary_context.json','combined_display_mapping.json','all_batch_display_mappings.json',
@@ -222,15 +229,19 @@ def verify_zip(path):
             selection['registry_path']:'registry.json',selection['learning_groups_path']:'learning_groups.json'},'provenance path mapping')
     require(context['entries']==[e for e in selection['entries'] if e['authoring_batch']==batch],'batch definitions')
     require(context['import_contract']['source_sha256']==sha(data['pack.json']) and context['import_contract']['registry_sha256']==digest(registry),'import binding')
-    require(context['import_contract']['content_schema_version']==3 and context['import_contract']['learning_required'] is True,'schema-3 contract')
+    require(context['import_contract']['format']=='sprachapp.editorial-content' and context['import_contract']['format_version']==2,
+            'normal V2 import contract')
+    require(context['import_contract']['content_schema_version']==pack['release']['schema_version'] and context['import_contract']['learning_required'] is True,
+            'normal content-schema contract')
     require(obj('combined_display_mapping.json')==mapping(selection['entries'],batch),'batch positions')
     require(obj('all_batch_display_mappings.json')=={str(b):mapping(selection['entries'],b) for b in sorted({e['authoring_batch'] for e in selection['entries']})},'all positions')
     staged=obj('staged_manifest.json')
     if selection.get('continuation'):
         require(registry['source_sqlite_sha256']==staged['sha256'],'continuation SQLite binding')
     require(sha(data['content.sqlite'])==staged['sha256'] and pack['release']['version']==staged['version'],'SQLite manifest binding')
-    require(read(ROOT/'assets/content/en/content.manifest.json')==staged,'staged manifest changed')
-    require((ROOT/selection['source_pack']['path']).read_bytes()==data['pack.json'],'actual base source changed')
+    if not historical:
+        require(read(ROOT/'assets/content/en/content.manifest.json')==staged,'staged manifest changed')
+        require((ROOT/selection['source_pack']['path']).read_bytes()==data['pack.json'],'actual base source changed')
     from finalize_curation import check_sqlite
     with tempfile.TemporaryDirectory(prefix='authoring-verify-') as td:
         sqlite_path=Path(td)/'content.sqlite';sqlite_path.write_bytes(data['content.sqlite'])
@@ -240,18 +251,188 @@ def verify_zip(path):
             'sqlite_tables':len(counts),'sqlite_cards':counts['cards'],'credentials_and_learning_states':'none; explicit content/source/model whitelist',**result}
 
 
+
+def form_authoring_details(pack, selection):
+    """Derive planned groups and current tasks without creating sentence rows."""
+    import copy
+    from sprachpipe.pack import _build_rows
+    from sprachpipe.authoring_context import sentence_binding
+    work = copy.deepcopy(pack)
+    work['release']['schema_version'] = 4
+    for delta in selection['batches'].values():
+        for table, values in delta.items():
+            existing = work.setdefault(table, [])
+            existing.extend(copy.deepcopy(r) for r in values if r not in existing)
+    rows = _build_rows(work)
+    refs = {r['id']: c['ref'] for c, r in zip(work['cards'], rows['cards'])}
+    groups = {'version': 'en.learning_groups.v1', 'status': 'planned-form-metadata-only',
+              'source_pack_sha256': selection['source_sha256'],
+              'cards': [dict(card_ref=c['ref'], card_id=r['id'],
+                             primary_card_ref=refs[r['learning']['primary_card_id']], **c['learning'])
+                        for c, r in zip(work['cards'], rows['cards'])]}
+    cards = {c['ref']: c for c in work['cards']}
+    senses = {s['ref']: s for s in work['senses']}
+    forms = {f['ref']: f for f in work['form_targets']}
+    tasks = {'new_sentence_pairs': [], 'unchanged_reuse': []}
+    for entry in selection['entries']:
+        if entry['authoring_batch'] != selection['authoring_batch']:
+            continue
+        target = forms[entry['form_target']]
+        task = {'form_target': target, 'card': cards[target['card']],
+                'sense': senses[target['sense']]}
+        if entry['reuse'] is not None:
+            task.update(evidence=entry['reuse'], context=sentence_binding(pack, target['card']))
+            tasks['unchanged_reuse'].append(task)
+        else:
+            tasks['new_sentence_pairs'].append(task)
+    return groups, tasks
+
+
+def export_form_context(selection_path, output):
+    from sprachpipe.authoring_context import form_context
+    from sprachpipe.deck_display import form_display_mapping
+    from sprachpipe.linter import _nlp
+    from finalize_curation import check_sqlite
+    import os
+    selection=read(selection_path)
+    source_path=ROOT/selection['source_pack']['path']
+    raw=source_path.read_bytes();pack=json.loads(raw)
+    registry=read(ROOT/selection['registry_path'])
+    context=form_context(pack,selection,registry,source_bytes=raw)
+    groups, tasks = form_authoring_details(pack, selection)
+    if 'learning_groups_path' in selection:
+        require(read(ROOT/selection['learning_groups_path']) == groups, 'planned form learning snapshot')
+        require(digest(groups) == selection['learning_groups_sha256'], 'planned form learning hash')
+    sqlite_path=ROOT/selection['source_pack']['sqlite_path']
+    require(sha(sqlite_path.read_bytes())==selection['source_pack']['sqlite_sha256'],'form source SQLite hash')
+    check_sqlite(sqlite_path,build_rows(pack))
+    payload={'pack.json':raw,'content.sqlite':sqlite_path.read_bytes(),
+             'selection.json':encode(selection),'registry.json':encode(registry),
+             'authoring_context.json':encode(context),
+             'display_mapping.json':encode(form_display_mapping(selection)),
+             'dictionary_context.json':encode({k:pack[k] for k in ('lemmas','senses','dictionary_forms')}),
+             'learning_groups.json':encode({c['ref']:c['learning'] for c in pack['cards']}),
+             'planned_learning_groups.json':encode(groups),
+             'current_authoring_tasks.json':encode(tasks),
+             'README.txt':b'Schema 4 form authoring, editorial-content v3. The actual source schema is declared separately in authoring_context.json. Only current_metadata may be imported. current_authoring_tasks.json separates new_sentence_pairs from unchanged_reuse (including exact old context and evidence). Write exactly one sentence pair per new task, none for reuse. Function and meaning are in form_target.note; legacy card labels stay unchanged. selection.json contains every batch and any editorial_catalog/authoring_policy. planned_learning_groups.json includes future cards; learning_groups.json preserves source groups. Metadata validation does not approve missing sentences. Ownership aliases never approve answers. No model calls; no staging. Run the existing importer only after sentence-bound review.\n'}
+    sources=list((ROOT/'pipeline/src/sprachpipe').glob('*.py'))+[ROOT/p for p in (
+        'pipeline/scripts/import_editorial_patch.py','pipeline/scripts/finalize_curation.py',
+        'pipeline/scripts/export_authoring_context.py','pipeline/data/curation/editorial_content_v3.schema.json',
+        'pipeline/config.yaml','pipeline/pyproject.toml','pipeline/requirements.lock',
+        'PRODUCT.md','docs/content-schema.md','docs/learning-groups-v1.md')]
+    for p in sources:payload[p.relative_to(ROOT).as_posix()]=p.read_bytes()
+    nlp=_nlp();model=Path(nlp.path)
+    for p in model.rglob('*'):
+        if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc':
+            payload['runtime/en_core_web_sm/'+p.relative_to(model).as_posix()]=p.read_bytes()
+    payload['tokenizer_linter_environment.json']=encode({'python':platform.python_version(),
+        'packages':{k:importlib.metadata.version(k) for k in ('spacy','en_core_web_sm','wordfreq','jsonschema')},
+        'model':'en_core_web_sm','model_version':nlp.meta['version'],'disabled_pipes':list(nlp.disabled)})
+    payload['manifest.json']=encode({'format':'sprachapp.authoring-hash-manifest','format_version':1,
+                                    'files':{n:sha(b) for n,b in sorted(payload.items())}})
+    output.parent.mkdir(parents=True,exist_ok=True)
+    # Closed temporary ZIP is verified before atomic publication.
+    fd,name=tempfile.mkstemp(prefix='.form-authoring-',suffix='.zip',dir=output.parent);os.close(fd)
+    tmp=Path(name)
+    try:
+        with zipfile.ZipFile(tmp,'w',compression=zipfile.ZIP_DEFLATED) as z:
+            for n,b in sorted(payload.items()):z.writestr('authoring/'+n,b)
+        result=verify_zip(tmp)
+        require(not output.exists(),'output already exists')
+        os.link(tmp,output)  # exclusive publication; never overwrite historical ZIP
+        return result
+    finally:tmp.unlink(missing_ok=True)
+
+
+def verify_form_context(path, data):
+    from sprachpipe.authoring_context import form_context
+    from sprachpipe.deck_display import form_display_mapping
+    from finalize_curation import check_sqlite
+    required={'pack.json','content.sqlite','selection.json','registry.json','authoring_context.json',
+              'display_mapping.json','dictionary_context.json','learning_groups.json',
+              'pipeline/data/curation/editorial_content_v3.schema.json',
+              'pipeline/scripts/import_editorial_patch.py','tokenizer_linter_environment.json',
+              'runtime/en_core_web_sm/config.cfg','runtime/en_core_web_sm/tokenizer','runtime/en_core_web_sm/meta.json'}
+    require(required<=set(data),'incomplete form context')
+    obj=lambda n:json.loads(data[n])
+    pack=obj('pack.json');selection=obj('selection.json');registry=obj('registry.json')
+    context=form_context(pack,selection,registry,source_bytes=data['pack.json'])
+    require(obj('authoring_context.json')==context,'stale form context/version')
+    require(obj('display_mapping.json')==form_display_mapping(selection),'form display mapping')
+    require(obj('dictionary_context.json')=={k:pack[k] for k in ('lemmas','senses','dictionary_forms')},'form dictionary context')
+    require(obj('learning_groups.json')=={c['ref']:c['learning'] for c in pack['cards']},'form learning context')
+    # Older form archives remain verifiable; new declared snapshots are mandatory.
+    if 'planned_learning_groups.json' in data or 'learning_groups_path' in selection:
+        groups, tasks = form_authoring_details(pack, selection)
+        require('planned_learning_groups.json' in data and 'current_authoring_tasks.json' in data,
+                'missing planned form authoring context')
+        require(obj('planned_learning_groups.json') == groups, 'planned form learning snapshot')
+        require(obj('current_authoring_tasks.json') == tasks, 'current form authoring tasks')
+        if 'learning_groups_path' in selection:
+            require(digest(groups) == selection['learning_groups_sha256'], 'planned form learning hash')
+    require(sha(data['content.sqlite'])==selection['source_pack']['sqlite_sha256'],'form SQLite hash')
+    with tempfile.TemporaryDirectory(prefix='form-context-verify-') as td:
+        p=Path(td)/'content.sqlite';p.write_bytes(data['content.sqlite'])
+        counts=check_sqlite(p,build_rows(pack))
+    return {'zip_verification':'PASS','zip_sha256':sha(path.read_bytes()),'content_schema_version':4,
+            'sqlite_tables':len(counts),'partitions':context['partitions'],'counts':context['counts']}
+
+
+def export_form_continuation(selection_path, source_path, sqlite_path, out, batch, version):
+    """Publish fresh, local snapshots against the explicit partial-import output."""
+    from sprachpipe.authoring_context import prepare_form_continuation
+    from finalize_curation import check_sqlite
+    original=read(selection_path)
+    require(not out.exists(), 'continuation output already exists')
+    source_bytes=source_path.read_bytes();pack=json.loads(source_bytes)
+    check_sqlite(sqlite_path,build_rows(pack))
+    registry=read(ROOT/original['registry_path'])
+    selection,registry=prepare_form_continuation(pack,original,registry,source_bytes=source_bytes,
+        source_path=source_path.resolve(),sqlite_path=sqlite_path.resolve(),
+        sqlite_sha256=sha(sqlite_path.read_bytes()),batch=batch)
+    selection['registry_path']=str((out/'registry.json').resolve())
+    selection['snapshot_version']=version
+    groups = None
+    if 'learning_groups_path' in selection:
+        groups, _ = form_authoring_details(pack, selection)
+        selection['learning_groups_path'] = str((out/'learning_groups.json').resolve())
+        selection['learning_groups_sha256'] = digest(groups)
+    # Validate before publishing either file; no asset-manifest dependency.
+    from sprachpipe.authoring_context import form_context
+    context=form_context(pack,selection,registry,source_bytes=source_bytes)
+    out.parent.mkdir(parents=True,exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='form-continuation-',dir=out.parent) as td:
+        staging=Path(td)/'snapshots';staging.mkdir()
+        (staging/'selection.json').write_bytes(encode(selection))
+        (staging/'registry.json').write_bytes(encode(registry))
+        if groups is not None:
+            (staging/'learning_groups.json').write_bytes(encode(groups))
+        staging.rename(out)
+    return {'snapshots':'PASS','selection':str(out/'selection.json'),'registry':str(out/'registry.json'),
+            'partition_counts':{k:len(v) for k,v in context['partitions'].items()}}
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--historical',action='store_true',help='Validate archived hashes/content with current validators, without requiring current staged/source bytes')
     p.add_argument('--selection',type=Path);p.add_argument('--out',type=Path)
     p.add_argument('--batch',type=int,default=1);p.add_argument('--verify-zip',type=Path)
     p.add_argument('--prepare-continuation', metavar='VERSION', help='Write fresh versioned snapshots against the staged pack; requires original --selection and --batch')
+    p.add_argument('--source-pack',type=Path,help='Form continuation: explicit partial-import pack.json')
+    p.add_argument('--source-sqlite',type=Path,help='Form continuation: matching content.sqlite')
     p.add_argument('--definition-equivalences',type=Path,help='Explicit hash-bound editorial decisions for equivalent definition wording')
     a=p.parse_args()
     if a.prepare_continuation:
         if not a.selection or a.batch < 2:p.error('continuation needs original --selection and --batch >= 2')
         version=a.prepare_continuation
         require(version.replace('_','').replace('-','').isalnum(),'unsafe snapshot version')
-        original=read(a.selection);staged=read(ROOT/'assets/content/en/content.manifest.json')
+        original=read(a.selection)
+        if original.get('format')=='sprachapp.form-selection':
+            if not a.out or not a.source_pack or not a.source_sqlite:
+                p.error('form continuation needs --out, --source-pack and --source-sqlite')
+            result=export_form_continuation(a.selection,a.source_pack,a.source_sqlite,a.out,a.batch,version)
+            print(json.dumps(result,ensure_ascii=False,indent=2));return
+        staged=read(ROOT/'assets/content/en/content.manifest.json')
         require(sha((ROOT/staged['source']['path']).read_bytes())==staged['sha256'] and
                 sha((ROOT/'assets/content/en/content.sqlite').read_bytes())==staged['sha256'],'staged SQLite differs')
         source=Path(staged['source']['path']).with_name('pack.json')
@@ -266,7 +447,7 @@ def main():
              source_sqlite_sha256=staged['sha256'])
         for path,value in zip(paths.values(),(s,r,g)):(ROOT/path).write_bytes(encode(value))
         result={'snapshots':'PASS','paths':paths,'partition_counts':{k:len(v) for k,v in s['continuation']['partitions'].items()}}
-    elif a.verify_zip:result=verify_zip(a.verify_zip.resolve())
+    elif a.verify_zip:result=verify_zip(a.verify_zip.resolve(), historical=a.historical)
     else:
         if not a.selection or not a.out:p.error('--selection and --out required')
         result=export(a.selection.resolve(),a.out.resolve(),a.batch)

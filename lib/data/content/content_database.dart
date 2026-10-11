@@ -7,13 +7,15 @@ import 'package:sqlite3/sqlite3.dart';
 
 import '../../domain/content.dart';
 
+import 'form_content_validation.dart';
+
 part 'content_database.g.dart';
 
 // No Flutter imports: tool/stage_content_pack.dart shares the checks below.
 
 /// The content schema version this app reads (docs/content-schema.md).
-const supportedContentSchemaVersion = 3;
-const supportedContentSchemaVersions = {1, 2, 3};
+const supportedContentSchemaVersion = 4;
+const supportedContentSchemaVersions = {1, 2, 3, 4};
 
 /// Tables and columns the app reads; anything missing is incompatible.
 const requiredContentColumns = <String, List<String>>{
@@ -118,9 +120,14 @@ ContentInfo validateContentSchema(Database db, {required String lang}) {
       );
     }
     if ((release['schema_version'] as int) >= 2) {
-      validateSingleSentenceContent(db);
+      validateSingleSentenceContent(db, schemaVersion: release['schema_version'] as int);
     }
-    if (release['schema_version'] == 3) validateLearningGroups(db);
+    if ((release['schema_version'] as int) >= 3) validateLearningGroups(db);
+    if (release['schema_version'] == 4) {
+      try { validateFormContent(db); } on ContentUnavailable { rethrow; } catch (e) {
+        throw ContentUnavailable(ContentUnavailableReason.incompatible, 'Schema 4: ungültige Formmetadaten ($e)');
+      }
+    }
     final languages = db.select('SELECT code FROM languages WHERE code = ?', [
       lang,
     ]);
@@ -205,7 +212,7 @@ void validateLearningGroups(Database db) {
 }
 
 /// Schema-2 ownership and active links, checked before installation or use.
-void validateSingleSentenceContent(Database db) {
+void validateSingleSentenceContent(Database db, {int schemaVersion = 2}) {
   void reject(String message) => throw ContentUnavailable(
     ContentUnavailableReason.incompatible,
     'Schema 2: $message',
@@ -281,7 +288,7 @@ void validateSingleSentenceContent(Database db) {
         (c['form'] as String).trim() != c['form']) {
       reject('ungültige Wortnormalisierung');
     }
-    if (!keys.contains('${c['lang']}/${c['form_norm']}')) {
+    if (!keys.contains('${c['lang']}/${c['form_norm']}') && !(schemaVersion == 4 && c['introduction_scope'] == 'form_only' && aliasKeys.contains('${c['lang']}/${c['form_norm']}'))) {
       reject('Wort ohne Eigentümer ${c['form']}');
     }
     final links = db.select(

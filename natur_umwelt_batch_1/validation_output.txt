@@ -1,0 +1,9 @@
+PASS source/registry/groups/manifest hashes, Schema 3, context and base SQLite
+PASS new deck display 1..81; original registry positions preserved
+PASS create_content/build_rows: 2075 cards; 1960 primary goals (160/489/241/245/245/249/250/81); 18 tables
+PASS 81 reserved identities, display 1..81; 1994 old IDs and all historical rows preserved
+PASS 915 token positions; one reviewed alternative; linter 0 errors, 4 warnings
+WARNINGS [["steel", "i+1", "'walkway'/'walkway' Zipf 3.16 below 3.5"], ["oak", "i+1", "'acorn'/'acorns' Zipf 3.08 below 3.5"], ["slope", "i+1", "'grassy'/'grassy' Zipf 3.24 below 3.5"], ["exhaust", "i+1", "'lorry'/'lorry' Zipf 3.21 below 3.5"]]
+NOT RUN: App staging, Flutter/device tests, user database access
+
+Exitcode: 0

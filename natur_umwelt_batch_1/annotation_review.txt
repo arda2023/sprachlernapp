@@ -1,0 +1,990 @@
+predator | The rabbit hid under a bush as the predator came closer. | Das Kaninchen versteckte sich unter einem Busch, als das Raubtier näher kam.
+The => the/DET|the#bestimmter_artikel
+rabbit => rabbit/NOUN|rabbit#kaninchen
+hid => hide/VERB|hide#verstecken
+under => under/ADP|under#unter
+a => a/DET|a#ein
+bush => bush/NOUN|bush#strauch
+as => as/SCONJ|as#waehrend_zeit
+the => the/DET|the#bestimmter_artikel
+predator => predator/NOUN|predator#raubtier
+came => come/VERB|come#kommen
+closer => close/ADV|close#nah
+
+mammal | A dolphin is a mammal, even though it lives in water. | Ein Delfin ist ein Säugetier, obwohl er im Wasser lebt.
+A => a/DET|a#ein
+dolphin => dolphin/NOUN|dolphin#delfin
+is => be/AUX|be#sein_vollverb
+a => a/DET|a#ein
+mammal => mammal/NOUN|mammal#saugetier
+even => even/ADV|even#sogar
+though => though/SCONJ|though#obwohl
+it => it/PRON|it#es_ding
+lives => live/VERB|live#leben
+in => in/ADP|in#in_raeumlich
+water => water/NOUN|water#wasser
+
+herd | We stopped the car to let a herd of cows cross the road. | Wir hielten mit dem Auto an, um eine Kuhherde über die Straße zu lassen.
+We => we/PRON|we#wir
+stopped => stop/VERB|stop#anzuhalten
+the => the/DET|the#bestimmter_artikel
+car => car/NOUN|car#auto
+to => to/PART|to#infinitivpartikel
+let => let/VERB|let#ermoeglichen
+a => a/DET|a#ein
+herd => herd/NOUN|herd#herde
+of => of/ADP|of#teil_menge
+cows => cow/NOUN|cow#kuh
+cross => cross/VERB|cross#ueberquerte
+the => the/DET|the#bestimmter_artikel
+road => road/NOUN|road#strasse
+
+hedge | Our neighbour planted a hedge between the two gardens. | Unser Nachbar hat zwischen den beiden Gärten eine Hecke gepflanzt.
+Our => our/DET|our#unser-unsere
+neighbour => neighbour/NOUN|neighbour#nachbar
+planted => plant/VERB|plant#pflanzen
+a => a/DET|a#ein
+hedge => hedge/NOUN|hedge#hecke
+between => between/ADP|between#zwischen
+the => the/DET|the#bestimmter_artikel
+two => two/NUM|two#zwei
+gardens => garden/NOUN|garden#garten
+
+nest | A bird has built a nest above our kitchen window. | Ein Vogel hat über unserem Küchenfenster ein Nest gebaut.
+A => a/DET|a#ein
+bird => bird/NOUN|bird#vogel
+has => have/AUX|have#hilfsverb
+built => build/VERB|build#erstellen
+a => a/DET|a#ein
+nest => nest/NOUN|nest#nest
+above => above/ADP|above#ueber
+our => our/DET|our#unser-unsere
+kitchen => kitchen/NOUN|kitchen#kueche
+window => window/NOUN|window#fenster
+
+electricity | The storm left the whole village without electricity for several hours. | Nach dem Sturm war das ganze Dorf mehrere Stunden lang ohne Strom.
+The => the/DET|the#bestimmter_artikel
+storm => storm/NOUN|storm#sturms
+left => leave/VERB|leave#in-zustand-hinterlassen
+the => the/DET|the#bestimmter_artikel
+whole => whole/ADJ|whole#ganz
+village => village/NOUN|village#dorf
+without => without/ADP|without#ohne
+electricity => electricity/NOUN|electricity#elektrischer-strom
+for => for/ADP|for#seit_lang_dauer
+several => several/DET|several#mehrere
+hours => hour/NOUN|hour#stunde
+
+metal | This gate is made of metal rather than wood. | Dieses Tor ist aus Metall statt aus Holz.
+This => this/DET|this#dieser_begleitend
+gate => gate/NOUN|gate#tor
+is => be/AUX|be#hilfsverb
+made => make/VERB|make#herstellen
+of => of/ADP|of#material_herkunft
+metal => metal/NOUN|metal#metall
+rather => rather/ADV|rather#rather-than-statt
+than => than/ADP|than#alternative-eigenschaft
+wood => wood/NOUN|wood#holz
+
+petal | A pink petal fell from the rose onto the table. | Ein rosa Blütenblatt fiel von der Rose auf den Tisch.
+A => a/DET|a#ein
+pink => pink/ADJ|pink#rosa
+petal => petal/NOUN|petal#blutenblatt
+fell => fall/VERB|fall#fallen
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+rose => rose/NOUN|rose#rosen
+onto => onto/ADP|onto#auf
+the => the/DET|the#bestimmter_artikel
+table => table/NOUN|table#tisch
+
+habitat | The new road will destroy part of the animals' natural habitat. | Die neue Straße wird einen Teil des natürlichen Lebensraums der Tiere zerstören.
+The => the/DET|the#bestimmter_artikel
+new => new/ADJ|new#neu
+road => road/NOUN|road#strasse
+will => will/AUX|will#zukunft
+destroy => destroy/VERB|destroy#zerstoeren
+part => part/NOUN|part#teil
+of => of/ADP|of#teil_menge
+the => the/DET|the#bestimmter_artikel
+animals => animal/NOUN|animal#tier
+natural => natural/ADJ|natural#echte
+habitat => habitat/NOUN|habitat#lebensraum
+
+greenhouse | Maya grows tomatoes in a small greenhouse behind her house. | Maya baut in einem kleinen Gewächshaus hinter ihrem Haus Tomaten an.
+Maya => Maya/PROPN|maya#maya
+grows => grow/VERB|grow#anbauen
+tomatoes => tomato/NOUN|tomato#tomaten
+in => in/ADP|in#in_raeumlich
+a => a/DET|a#ein
+small => small/ADJ|small#klein
+greenhouse => greenhouse/NOUN|greenhouse#gewachshaus
+behind => behind/ADP|behind#hinter
+her => her/DET|her#ihr_possessiv
+house => house/NOUN|house#haus
+
+gas | We use gas to heat our home and cook our meals. | Wir heizen unser Zuhause und kochen unser Essen mit Gas.
+We => we/PRON|we#wir
+use => use/VERB|use#benutzen
+gas => gas/NOUN|gas#gas
+to => to/PART|to#infinitivpartikel
+heat => heat/VERB|heat#beheizen
+our => our/DET|our#unser-unsere
+home => home/NOUN|home#heim-zu-hause
+and => and/CCONJ|and#und
+cook => cook/VERB|cook#kocht
+our => our/DET|our#unser-unsere
+meals => meal/NOUN|meal#mahlzeit
+
+root | A thick root was growing through a crack in the wall. | Eine dicke Wurzel wuchs durch einen Riss in der Mauer.
+A => a/DET|a#ein
+thick => thick/ADJ|thick#dick
+root => root/NOUN|root#wurzel
+was => be/AUX|be#hilfsverb
+growing => grow/VERB|grow#wachsen
+through => through/ADP|through#durch
+a => a/DET|a#ein
+crack => crack/NOUN|crack#riss
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+wall => wall/NOUN|wall#wand
+
+claw | The cat caught a claw in my sleeve while climbing onto my lap. | Die Katze blieb beim Klettern auf meinen Schoß mit einer Kralle in meinem Ärmel hängen.
+The => the/DET|the#bestimmter_artikel
+cat => cat/NOUN|cat#katze
+caught => catch/VERB|catch#anstossen-haengenbleiben
+a => a/DET|a#ein
+claw => claw/NOUN|claw#kralle
+in => in/ADP|in#in_raeumlich
+my => my/DET|my#mein
+sleeve => sleeve/NOUN|sleeve#aermeln
+while => while/SCONJ|while#waehrend
+climbing => climb/VERB|climb#klettern
+onto => onto/ADP|onto#auf
+my => my/DET|my#mein
+lap => lap/NOUN|lap#schoss
+
+pollution | The factory has installed new filters to reduce air pollution. | Die Fabrik hat neue Filter eingebaut, um die Luftverschmutzung zu verringern.
+The => the/DET|the#bestimmter_artikel
+factory => factory/NOUN|factory#fabrik
+has => have/AUX|have#hilfsverb
+installed => install/VERB|install#einbauen
+new => new/ADJ|new#neu
+filters => filter/NOUN|filter#filter
+to => to/PART|to#infinitivpartikel
+reduce => reduce/VERB|reduce#verringern
+air => air/NOUN|air#luft
+pollution => pollution/NOUN|pollution#umweltverschmutzung
+
+solar | The family uses solar energy to heat water for their showers. | Die Familie nutzt Sonnenenergie, um Wasser zum Duschen zu erwärmen.
+The => the/DET|the#bestimmter_artikel
+family => family/NOUN|family#familie
+uses => use/VERB|use#benutzen
+solar => solar/ADJ|solar#solar
+energy => energy/NOUN|energy#energie
+to => to/PART|to#infinitivpartikel
+heat => heat/VERB|heat#erhitzen
+water => water/NOUN|water#wasser
+for => for/ADP|for#fuer_zweck_empfaenger
+their => they/PRON|they#ihr_plural
+showers => shower/NOUN|shower#dusche
+
+clay | Ben shaped the wet clay into a small bowl. | Ben formte den feuchten Ton zu einer kleinen Schüssel.
+Ben => Ben/PROPN|ben#ben
+shaped => shape/VERB|shape#geformt
+the => the/DET|the#bestimmter_artikel
+wet => wet/ADJ|wet#nass
+clay => clay/NOUN|clay#ton
+into => into/ADP|into#anordnung
+a => a/DET|a#ein
+small => small/ADJ|small#klein
+bowl => bowl/NOUN|bowl#schuesseln
+
+nature | Spending time in nature helps me relax after a busy week. | Zeit in der Natur hilft mir, mich nach einer anstrengenden Woche zu entspannen.
+Spending => spend/VERB|spend#zeit_verbringen
+time => time/NOUN|time#zeit
+in => in/ADP|in#in_raeumlich
+nature => nature/NOUN|nature#natur
+helps => help/VERB|help#helfen
+me => I/PRON|i#mir
+relax => relax/VERB|relax#sich-entspannen
+after => after/ADP|after#nach
+a => a/DET|a#ein
+busy => busy/ADJ|busy#arbeitsreich
+week => week/NOUN|week#woche
+
+branch | A heavy branch fell from the tree and blocked the path. | Ein schwerer Ast fiel vom Baum und versperrte den Weg.
+A => a/DET|a#ein
+heavy => heavy/ADJ|heavy#schwer
+branch => branch/NOUN|branch#ast
+fell => fall/VERB|fall#fallen
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+tree => tree/NOUN|tree#baum
+and => and/CCONJ|and#und
+blocked => block/VERB|block#versperren
+the => the/DET|the#bestimmter_artikel
+path => path/NOUN|path#fussweg
+
+beak | The bird carried a piece of bread in its beak. | Der Vogel trug ein Stück Brot in seinem Schnabel.
+The => the/DET|the#bestimmter_artikel
+bird => bird/NOUN|bird#vogel
+carried => carry/VERB|carry#tragen
+a => a/DET|a#ein
+piece => piece/NOUN|piece#stueck
+of => of/ADP|of#teil_menge
+bread => bread/NOUN|bread#brot
+in => in/ADP|in#in_raeumlich
+its => its/DET|its#sein_ihr
+beak => beak/NOUN|beak#schnabel
+
+sewage | Sewage flowed from a broken pipe into the river. | Aus einem kaputten Rohr floss Abwasser in den Fluss.
+Sewage => sewage/NOUN|sewage#abwasser
+flowed => flow/VERB|flow#fliessen
+from => from/ADP|from#von_ausgangspunkt
+a => a/DET|a#ein
+broken => broken/ADJ|broken#kaputte
+pipe => pipe/NOUN|pipe#rohr
+into => into/ADP|into#in
+the => the/DET|the#bestimmter_artikel
+river => river/NOUN|river#fluss
+
+granite | The steps outside the museum are made of grey granite. | Die Stufen vor dem Museum sind aus grauem Granit.
+The => the/DET|the#bestimmter_artikel
+steps => step/NOUN|step#treppenstufe
+outside => outside/ADP|outside#vor-ausserhalb
+the => the/DET|the#bestimmter_artikel
+museum => museum/NOUN|museum#museum
+are => be/AUX|be#hilfsverb
+made => make/VERB|make#herstellen
+of => of/ADP|of#material_herkunft
+grey => grey/ADJ|grey#grau
+granite => granite/NOUN|granite#granit
+
+insulation | Better insulation keeps the house warm and lowers our heating bills. | Eine bessere Dämmung hält das Haus warm und senkt unsere Heizkosten.
+Better => good/ADJ|good#gut
+insulation => insulation/NOUN|insulation#dammung
+keeps => keep/VERB|keep#halten
+the => the/DET|the#bestimmter_artikel
+house => house/NOUN|house#haus
+warm => warm/ADJ|warm#warm
+and => and/CCONJ|and#und
+lowers => lower/VERB|lower#verringern
+our => our/DET|our#unser-unsere
+heating => heating/NOUN|heating#heizung
+bills => bill/NOUN|bill#rechnung
+
+winter | We keep extra blankets in the car during winter. | Im Winter haben wir zusätzliche Decken im Auto.
+We => we/PRON|we#wir
+keep => keep/VERB|keep#bewahrt-auf
+extra => extra/ADJ|extra#zusaetzliche
+blankets => blanket/NOUN|blanket#decke
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+car => car/NOUN|car#auto
+during => during/ADP|during#waehrend
+winter => winter/NOUN|winter#winter
+
+dune | We climbed a sandy dune to get a better view of the sea. | Wir stiegen auf eine Sanddüne, um das Meer besser sehen zu können.
+We => we/PRON|we#wir
+climbed => climb/VERB|climb#klettern
+a => a/DET|a#ein
+sandy => sandy/ADJ|sandy#sandig
+dune => dune/NOUN|dune#dune
+to => to/PART|to#infinitivpartikel
+get => get/VERB|get#bekommen
+a => a/DET|a#ein
+better => good/ADJ|good#gut
+view => view/NOUN|view#aussicht
+of => of/ADP|of#ueber_bezug
+the => the/DET|the#bestimmter_artikel
+sea => sea/NOUN|sea#meer
+
+cone | Sara picked up a pine cone from the forest floor. | Sara hob einen Kiefernzapfen vom Waldboden auf.
+Sara => Sara/PROPN|sara#sara
+picked => pick/VERB|pick#hob-in-picked-up
+up => up/ADP|up#auf-partikel-in-picked-up
+a => a/DET|a#ein
+pine => pine/NOUN|pine#kiefer
+cone => cone/NOUN|cone#zapfen
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+forest => forest/NOUN|forest#wald
+floor => floor/NOUN|floor#boden
+
+fin | We saw a shark's fin rise above the surface of the water. | Wir sahen, wie die Flosse eines Hais aus dem Wasser auftauchte.
+We => we/PRON|we#wir
+saw => see/VERB|see#sehen
+a => a/DET|a#ein
+shark => shark/NOUN|shark#hai
+'s => 's/PART|s#genitiv-endung
+fin => fin/NOUN|fin#flosse
+rise => rise/VERB|rise#aufsteigen
+above => above/ADP|above#ueber
+the => the/DET|the#bestimmter_artikel
+surface => surface/NOUN|surface#oberflaeche
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+water => water/NOUN|water#wasser
+
+carton | Please put the empty milk carton in the recycling bin. | Gib bitte den leeren Milchkarton in den Recyclingbehälter.
+Please => please/INTJ|please#bitte
+put => put/VERB|put#legen-bringen
+the => the/DET|the#bestimmter_artikel
+empty => empty/ADJ|empty#leer
+milk => milk/NOUN|milk#milch
+carton => carton/NOUN|carton#pappbehalter
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+recycling => recycling/NOUN|recycling#recycling
+bin => bin/NOUN|bin#tonnen
+
+generate | These panels generate enough electricity for the whole building. | Diese Module erzeugen genug Strom für das ganze Gebäude.
+These => these/DET|these#diese
+panels => panel/NOUN|panel#solarmodul
+generate => generate/VERB|generate#erzeugen
+enough => enough/ADJ|enough#genug
+electricity => electricity/NOUN|electricity#elektrischer-strom
+for => for/ADP|for#fuer_zweck_empfaenger
+the => the/DET|the#bestimmter_artikel
+whole => whole/ADJ|whole#ganz
+building => building/NOUN|building#gebaeude
+
+steel | The bridge has a strong steel frame beneath the wooden walkway. | Die Brücke hat unter dem hölzernen Gehweg ein stabiles Stahlgerüst.
+The => the/DET|the#bestimmter_artikel
+bridge => bridge/NOUN|bridge#brucke
+has => have/VERB|have#besitzen
+a => a/DET|a#ein
+strong => strong/ADJ|strong#stabil
+steel => steel/NOUN|steel#stahl
+frame => frame/NOUN|frame#geruest
+beneath => beneath/ADP|beneath#unter
+the => the/DET|the#bestimmter_artikel
+wooden => wooden/ADJ|wooden#hoelzern
+walkway => walkway/NOUN|walkway#gehweg
+
+growth | A lack of sunlight can slow the growth of young plants. | Ein Mangel an Sonnenlicht kann das Wachstum junger Pflanzen verlangsamen.
+A => a/DET|a#ein
+lack => lack/NOUN|lack#mangel
+of => of/ADP|of#teil_menge
+sunlight => sunlight/NOUN|sunlight#sonnenlicht
+can => can/AUX|can#koennen
+slow => slow/VERB|slow#verlangsamen
+the => the/DET|the#bestimmter_artikel
+growth => growth/NOUN|growth#wachstum
+of => of/ADP|of#genitiv_besitz
+young => young/ADJ|young#jung
+plants => plant/NOUN|plant#pflanzen
+
+mainland | The island has a daily ferry service to the mainland. | Von der Insel fährt täglich eine Fähre zum Festland.
+The => the/DET|the#bestimmter_artikel
+island => island/NOUN|island#insel
+has => have/VERB|have#besitzen
+a => a/DET|a#ein
+daily => daily/ADJ|daily#taglich
+ferry => ferry/NOUN|ferry#faehre
+service => service/NOUN|service#verkehrsverbindung
+to => to/ADP|to#nach_richtung
+the => the/DET|the#bestimmter_artikel
+mainland => mainland/NOUN|mainland#festland
+
+nettle | Wear gloves before you pull that nettle out of the soil. | Zieh Handschuhe an, bevor du diese Brennnessel aus der Erde ziehst.
+Wear => wear/VERB|wear#tragen
+gloves => glove/NOUN|glove#handschuhe
+before => before/SCONJ|before#bevor
+you => you/PRON|you#du_sie_ihr
+pull => pull/VERB|pull#ziehen
+that => that/DET|that#jener
+nettle => nettle/NOUN|nettle#brennnessel
+out => out/ADV|out#hinaus
+of => of/ADP|of#von
+the => the/DET|the#bestimmter_artikel
+soil => soil/NOUN|soil#boden
+
+butterfly | A yellow butterfly landed on the flowers beside our tent. | Ein gelber Schmetterling landete auf den Blumen neben unserem Zelt.
+A => a/DET|a#ein
+yellow => yellow/ADJ|yellow#gelben
+butterfly => butterfly/NOUN|butterfly#schmetterling
+landed => land/VERB|land#aufkommen
+on => on/ADP|on#gegenstand-verbot
+the => the/DET|the#bestimmter_artikel
+flowers => flower/NOUN|flower#blumen
+beside => beside/ADP|beside#neben
+our => our/DET|our#unser-unsere
+tent => tent/NOUN|tent#zelt
+
+sun | The sun disappeared behind a thick cloud just before noon. | Kurz vor Mittag verschwand die Sonne hinter einer dichten Wolke.
+The => the/DET|the#bestimmter_artikel
+sun => sun/NOUN|sun#sonne
+disappeared => disappear/VERB|disappear#verschwunden
+behind => behind/ADP|behind#hinter
+a => a/DET|a#ein
+thick => thick/ADJ|thick#dick
+cloud => cloud/NOUN|cloud#wolken
+just => just/ADV|just#kurz-zeitlich
+before => before/ADP|before#vor
+noon => noon/NOUN|noon#mittag
+
+recyclable | The label tells you whether this packaging is recyclable. | Auf dem Etikett steht, ob diese Verpackung recycelbar ist.
+The => the/DET|the#bestimmter_artikel
+label => label/NOUN|label#aufkleber
+tells => tell/VERB|tell#sagen
+you => you/PRON|you#du_sie_ihr
+whether => whether/SCONJ|whether#ob
+this => this/DET|this#dieser_begleitend
+packaging => packaging/NOUN|packaging#verpackung
+is => be/AUX|be#sein_vollverb
+recyclable => recyclable/ADJ|recyclable#recycelbar
+
+radiation | These special windows block most of the sun's harmful radiation. | Diese speziellen Fenster halten den größten Teil der schädlichen Sonnenstrahlung ab.
+These => these/DET|these#diese
+special => special/ADJ|special#speziell
+windows => window/NOUN|window#fenster
+block => block/VERB|block#abhalten
+most => most/PRON|most#groesster-teil
+of => of/ADP|of#teil_menge
+the => the/DET|the#bestimmter_artikel
+sun => sun/NOUN|sun#sonne
+'s => 's/PART|s#genitiv-endung
+harmful => harmful/ADJ|harmful#schadlich
+radiation => radiation/NOUN|radiation#strahlung
+
+gold | Her wedding ring is made of gold. | Ihr Ehering ist aus Gold.
+Her => her/DET|her#ihr_possessiv
+wedding => wedding/NOUN|wedding#hochzeit
+ring => ring/NOUN|ring#schmuckring
+is => be/AUX|be#hilfsverb
+made => make/VERB|make#herstellen
+of => of/ADP|of#material_herkunft
+gold => gold/NOUN|gold#gold
+
+gravity | Without gravity, the ball would not fall to the ground. | Ohne Schwerkraft würde der Ball nicht zu Boden fallen.
+Without => without/ADP|without#ohne
+gravity => gravity/NOUN|gravity#schwerkraft
+the => the/DET|the#bestimmter_artikel
+ball => ball/NOUN|ball#ball
+would => would/AUX|would#wuerde
+not => not/PART|not#nicht
+fall => fall/VERB|fall#fallen
+to => to/ADP|to#nach_richtung
+the => the/DET|the#bestimmter_artikel
+ground => ground/NOUN|ground#boden
+
+hill | There is an old stone tower at the top of the hill. | Oben auf dem Hügel steht ein alter Steinturm.
+There => there/PRON|there#es_gibt
+is => be/VERB|be#gibt-ist
+an => a/DET|a#ein
+old => old/ADJ|old#alten
+stone => stone/NOUN|stone#stein
+tower => tower/NOUN|tower#turm
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+top => top/NOUN|top#oberseite
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+hill => hill/NOUN|hill#huegel
+
+oak | The children collected acorns under a large oak. | Die Kinder sammelten unter einer großen Eiche Eicheln.
+The => the/DET|the#bestimmter_artikel
+children => child/NOUN|child#kinder
+collected => collect/VERB|collect#sammeln
+acorns => acorn/NOUN|acorn#eichel
+under => under/ADP|under#unter
+a => a/DET|a#ein
+large => large/ADJ|large#gross
+oak => oak/NOUN|oak#eiche
+
+mosquito | A mosquito kept me awake by buzzing near my ear. | Eine Mücke hielt mich wach, indem sie nahe an meinem Ohr summte.
+A => a/DET|a#ein
+mosquito => mosquito/NOUN|mosquito#stechmucke
+kept => keep/VERB|keep#halten
+me => I/PRON|i#mich
+awake => awake/ADJ|awake#wach
+by => by/ADP|by#mit_mittel
+buzzing => buzz/VERB|buzz#summen
+near => near/ADP|near#nahe-bei
+my => my/DET|my#mein
+ear => ear/NOUN|ear#ohren
+
+thunderstorm | We left the lake when we heard a thunderstorm approaching. | Wir verließen den See, als wir ein Gewitter heranziehen hörten.
+We => we/PRON|we#wir
+left => leave/VERB|leave#verlassen
+the => the/DET|the#bestimmter_artikel
+lake => lake/NOUN|lake#see
+when => when/SCONJ|when#als_wenn
+we => we/PRON|we#wir
+heard => hear/VERB|hear#hoeren
+a => a/DET|a#ein
+thunderstorm => thunderstorm/NOUN|thunderstorm#gewitter
+approaching => approach/VERB|approach#sich-naehern
+
+contaminate | Chemicals from the factory could contaminate the local water supply. | Chemikalien aus der Fabrik könnten die örtliche Wasserversorgung verunreinigen.
+Chemicals => chemical/NOUN|chemical#chemikalie
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+factory => factory/NOUN|factory#fabrik
+could => could/AUX|could#koennte
+contaminate => contaminate/VERB|contaminate#verunreinigen
+the => the/DET|the#bestimmter_artikel
+local => local/ADJ|local#oertlichen
+water => water/NOUN|water#wasser
+supply => supply/NOUN|supply#versorgung
+
+ozone | High in the atmosphere, ozone protects us from harmful rays. | Hoch in der Atmosphäre schützt uns Ozon vor schädlicher Strahlung.
+High => high/ADV|high#hoch
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+atmosphere => atmosphere/NOUN|atmosphere#atmosphare
+ozone => ozone/NOUN|ozone#ozon
+protects => protect/VERB|protect#schuetzen
+us => we/PRON|we#uns
+from => from/ADP|from#schutz_vor
+harmful => harmful/ADJ|harmful#schadlich
+rays => ray/NOUN|ray#strahl
+
+leather | These boots are made of leather and need regular cleaning. | Diese Stiefel sind aus Leder und müssen regelmäßig gereinigt werden.
+These => these/DET|these#diese
+boots => boot/NOUN|boot#stiefel
+are => be/AUX|be#hilfsverb
+made => make/VERB|make#herstellen
+of => of/ADP|of#material_herkunft
+leather => leather/NOUN|leather#leder
+and => and/CCONJ|and#und
+need => need/VERB|need#brauchen
+regular => regular/ADJ|regular#regelmaessig
+cleaning => cleaning/NOUN|cleaning#putzen
+
+evergreen | We chose an evergreen tree to keep the garden green all year. | Wir haben einen immergrünen Baum ausgewählt, damit der Garten das ganze Jahr über grün bleibt.
+We => we/PRON|we#wir
+chose => choose/VERB|choose#waehlt-aus
+an => a/DET|a#ein
+evergreen => evergreen/ADJ|evergreen#immergrun
+tree => tree/NOUN|tree#baum
+to => to/PART|to#infinitivpartikel
+keep => keep/VERB|keep#halten
+the => the/DET|the#bestimmter_artikel
+garden => garden/NOUN|garden#garten
+green => green/ADJ|green#gruen
+all => all/DET|all#alle_det
+year => year/NOUN|year#jahr
+
+earthquake | The earthquake damaged several buildings, but nobody was injured. | Das Erdbeben beschädigte mehrere Gebäude, aber niemand wurde verletzt.
+The => the/DET|the#bestimmter_artikel
+earthquake => earthquake/NOUN|earthquake#erdbeben
+damaged => damage/VERB|damage#beschaedigen
+several => several/DET|several#mehrere
+buildings => building/NOUN|building#gebaeude
+but => but/CCONJ|but#aber
+nobody => nobody/PRON|nobody#niemand
+was => be/AUX|be#hilfsverb
+injured => injure/VERB|injure#verletzen
+
+slope | The children rolled down the grassy slope beside the playground. | Die Kinder rollten den grasbewachsenen Hang neben dem Spielplatz hinunter.
+The => the/DET|the#bestimmter_artikel
+children => child/NOUN|child#kinder
+rolled => roll/VERB|roll#rollen
+down => down/ADP|down#hinunter-entlang
+the => the/DET|the#bestimmter_artikel
+grassy => grassy/ADJ|grassy#grasbewachsen
+slope => slope/NOUN|slope#hang
+beside => beside/ADP|beside#neben
+the => the/DET|the#bestimmter_artikel
+playground => playground/NOUN|playground#spielplatz
+
+frog | A green frog jumped from the bank into the pond. | Ein grüner Frosch sprang vom Ufer in den Teich.
+A => a/DET|a#ein
+green => green/ADJ|green#gruen
+frog => frog/NOUN|frog#frosch
+jumped => jump/VERB|jump#springen
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+bank => bank/NOUN|bank#ufer
+into => into/ADP|into#in
+the => the/DET|the#bestimmter_artikel
+pond => pond/NOUN|pond#teich
+
+sleet | The rain turned to sleet as the temperature fell. | Als die Temperatur sank, ging der Regen in Schneeregen über.
+The => the/DET|the#bestimmter_artikel
+rain => rain/NOUN|rain#regen
+turned => turn/VERB|turn#uebergehen
+to => to/ADP|to#zu
+sleet => sleet/NOUN|sleet#schneeregen
+as => as/SCONJ|as#waehrend_zeit
+the => the/DET|the#bestimmter_artikel
+temperature => temperature/NOUN|temperature#temperatur
+fell => fall/VERB|fall#sinken
+
+separate | Please separate the glass bottles from the rest of the rubbish. | Trenne bitte die Glasflaschen vom restlichen Müll.
+Please => please/INTJ|please#bitte
+separate => separate/VERB|separate#trennt
+the => the/DET|the#bestimmter_artikel
+glass => glass/NOUN|glass#glas
+bottles => bottle/NOUN|bottle#flasche
+from => from/ADP|from#unterscheidung
+the => the/DET|the#bestimmter_artikel
+rest => rest/NOUN|rest#rest
+of => of/ADP|of#teil_menge
+the => the/DET|the#bestimmter_artikel
+rubbish => rubbish/NOUN|rubbish#mull
+
+extinction | Protecting wild habitats can save animals from extinction. | Der Schutz natürlicher Lebensräume kann Tiere vor dem Aussterben bewahren.
+Protecting => protect/VERB|protect#schuetzen
+wild => wild/ADJ|wild#naturbelassen
+habitats => habitat/NOUN|habitat#lebensraum
+can => can/AUX|can#koennen
+save => save/VERB|save#retten
+animals => animal/NOUN|animal#tier
+from => from/ADP|from#schutz_vor
+extinction => extinction/NOUN|extinction#aussterben
+
+rust | There is a patch of rust on the old iron gate. | An dem alten Eisentor ist eine Roststelle.
+There => there/PRON|there#es_gibt
+is => be/VERB|be#gibt-ist
+a => a/DET|a#ein
+patch => patch/NOUN|patch#fleck
+of => of/ADP|of#teil_menge
+rust => rust/NOUN|rust#rost
+on => on/ADP|on#gegenstand-verbot
+the => the/DET|the#bestimmter_artikel
+old => old/ADJ|old#alten
+iron => iron/NOUN|iron#eisen
+gate => gate/NOUN|gate#tor
+
+flame | A sudden breeze blew out the candle's flame. | Ein plötzlicher Luftzug löschte die Flamme der Kerze.
+A => a/DET|a#ein
+sudden => sudden/ADJ|sudden#ploetzlichen
+breeze => breeze/NOUN|breeze#brise
+blew => blow/VERB|blow#wehte
+out => out/ADP|out#aus-in-blow-out
+the => the/DET|the#bestimmter_artikel
+candle => candle/NOUN|candle#kerzen
+'s => 's/PART|s#genitiv-endung
+flame => flame/NOUN|flame#flamme
+
+reef | We saw colourful fish swimming above the coral reef. | Wir sahen bunte Fische über dem Korallenriff schwimmen.
+We => we/PRON|we#wir
+saw => see/VERB|see#sehen
+colourful => colourful/ADJ|colourful#bunt
+fish => fish/NOUN|fish#fisch
+swimming => swim/VERB|swim#schwimmen
+above => above/ADP|above#ueber
+the => the/DET|the#bestimmter_artikel
+coral => coral/NOUN|coral#koralle
+reef => reef/NOUN|reef#riff
+
+prune | We need to prune this apple tree before spring. | Wir müssen diesen Apfelbaum vor dem Frühling zurückschneiden.
+We => we/PRON|we#wir
+need => need/VERB|need#brauchen
+to => to/PART|to#infinitivpartikel
+prune => prune/VERB|prune#zuruckschneiden
+this => this/DET|this#dieser_begleitend
+apple => apple/NOUN|apple#aepfel
+tree => tree/NOUN|tree#baum
+before => before/ADP|before#vor
+spring => spring/NOUN|spring#fruehling
+
+hedgehog | A hedgehog was looking for food among the fallen leaves. | Ein Igel suchte zwischen den heruntergefallenen Blättern nach Futter.
+A => a/DET|a#ein
+hedgehog => hedgehog/NOUN|hedgehog#igel
+was => be/AUX|be#hilfsverb
+looking => look/VERB|look#suchen
+for => for/ADP|for#nach
+food => food/NOUN|food#essen
+among => among/ADP|among#zwischen
+the => the/DET|the#bestimmter_artikel
+fallen => fall/VERB|fall#fallen
+leaves => leaf/NOUN|leaf#blatt
+
+gust | A sudden gust of wind blew my hat into the river. | Eine plötzliche Windböe wehte meinen Hut in den Fluss.
+A => a/DET|a#ein
+sudden => sudden/ADJ|sudden#ploetzlichen
+gust => gust/NOUN|gust#stoss-des-windes
+of => of/ADP|of#teil_menge
+wind => wind/NOUN|wind#wind
+blew => blow/VERB|blow#wehte
+my => my/DET|my#mein
+hat => hat/NOUN|hat#hut
+into => into/ADP|into#in
+the => the/DET|the#bestimmter_artikel
+river => river/NOUN|river#fluss
+
+exhaust | Black exhaust poured from the old lorry as it climbed the hill. | Schwarze Abgase strömten aus dem alten Lastwagen, als er den Hügel hinauffuhr.
+Black => black/ADJ|black#schwarz
+exhaust => exhaust/NOUN|exhaust#abgas
+poured => pour/VERB|pour#stroemen
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+old => old/ADJ|old#alten
+lorry => lorry/NOUN|lorry#lastwagen
+as => as/SCONJ|as#waehrend_zeit
+it => it/PRON|it#es_ding
+climbed => climb/VERB|climb#hinauffahren
+the => the/DET|the#bestimmter_artikel
+hill => hill/NOUN|hill#huegel
+
+poaching | The park has hired more guards to protect elephants from poaching. | Der Park hat mehr Wildhüter eingestellt, um Elefanten vor Wilderei zu schützen.
+The => the/DET|the#bestimmter_artikel
+park => park/NOUN|park#park
+has => have/AUX|have#hilfsverb
+hired => hire/VERB|hire#einstellen
+more => more/DET|more#mehr-menge
+guards => guard/NOUN|guard#waechter
+to => to/PART|to#infinitivpartikel
+protect => protect/VERB|protect#schuetzen
+elephants => elephant/NOUN|elephant#elefant
+from => from/ADP|from#schutz_vor
+poaching => poaching/NOUN|poaching#wilderei
+
+brittle | The old plastic had become brittle and broke in my hands. | Der alte Kunststoff war spröde geworden und zerbrach in meinen Händen.
+The => the/DET|the#bestimmter_artikel
+old => old/ADJ|old#alten
+plastic => plastic/NOUN|plastic#plastik
+had => have/AUX|have#hilfsverb
+become => become/VERB|become#wurde
+brittle => brittle/ADJ|brittle#sprode
+and => and/CCONJ|and#und
+broke => break/VERB|break#brechen
+in => in/ADP|in#in_raeumlich
+my => my/DET|my#mein
+hands => hand/NOUN|hand#hand
+
+flow | The water can flow freely through the pipe again. | Das Wasser kann wieder ungehindert durch das Rohr fließen.
+The => the/DET|the#bestimmter_artikel
+water => water/NOUN|water#wasser
+can => can/AUX|can#koennen
+flow => flow/VERB|flow#fliessen
+freely => freely/ADV|freely#ungezwungen
+through => through/ADP|through#durch
+the => the/DET|the#bestimmter_artikel
+pipe => pipe/NOUN|pipe#rohr
+again => again/ADV|again#noch-einmal
+
+iceberg | The ship changed direction to avoid a large iceberg. | Das Schiff änderte seinen Kurs, um einem großen Eisberg auszuweichen.
+The => the/DET|the#bestimmter_artikel
+ship => ship/NOUN|ship#schiff
+changed => change/VERB|change#verandern
+direction => direction/NOUN|direction#richtung
+to => to/PART|to#infinitivpartikel
+avoid => avoid/VERB|avoid#vermeiden
+a => a/DET|a#ein
+large => large/ADJ|large#gross
+iceberg => iceberg/NOUN|iceberg#eisberg
+
+fertile | The soil beside the river is fertile and ideal for growing vegetables. | Der Boden am Fluss ist fruchtbar und ideal für den Gemüseanbau.
+The => the/DET|the#bestimmter_artikel
+soil => soil/NOUN|soil#boden
+beside => beside/ADP|beside#neben
+the => the/DET|the#bestimmter_artikel
+river => river/NOUN|river#fluss
+is => be/AUX|be#sein_vollverb
+fertile => fertile/ADJ|fertile#fruchtbar
+and => and/CCONJ|and#und
+ideal => ideal/ADJ|ideal#ideal
+for => for/ADP|for#fuer_zweck_empfaenger
+growing => grow/VERB|grow#anbauen
+vegetables => vegetable/NOUN|vegetable#gemuese
+
+whale | We watched a whale rise to the surface to breathe. | Wir beobachteten, wie ein Wal zum Atmen an die Oberfläche kam.
+We => we/PRON|we#wir
+watched => watch/VERB|watch#beobachtet
+a => a/DET|a#ein
+whale => whale/NOUN|whale#wal
+rise => rise/VERB|rise#aufsteigen
+to => to/ADP|to#nach_richtung
+the => the/DET|the#bestimmter_artikel
+surface => surface/NOUN|surface#oberflaeche
+to => to/PART|to#infinitivpartikel
+breathe => breathe/VERB|breathe#atmen
+
+humid | The air felt hot and humid after the afternoon rain. | Nach dem Regen am Nachmittag fühlte sich die Luft heiß und feucht an.
+The => the/DET|the#bestimmter_artikel
+air => air/NOUN|air#luft
+felt => feel/VERB|feel#fuehlen
+hot => hot/ADJ|hot#heiss
+and => and/CCONJ|and#und
+humid => humid/ADJ|humid#feucht
+after => after/ADP|after#nach
+the => the/DET|the#bestimmter_artikel
+afternoon => afternoon/NOUN|afternoon#nachmittag
+rain => rain/NOUN|rain#regen
+
+overflow | Turn off the tap before the bath begins to overflow. | Dreh den Wasserhahn zu, bevor die Badewanne überläuft.
+Turn => turn/VERB|turn#gedreht-geschaltet-teil-von-turn-off
+off => off/ADP|off#aus-teil-von-turn-off
+the => the/DET|the#bestimmter_artikel
+tap => tap/NOUN|tap#wasserhahn
+before => before/SCONJ|before#bevor
+the => the/DET|the#bestimmter_artikel
+bath => bath/NOUN|bath#badewanne
+begins => begin/VERB|begin#beginnt
+to => to/PART|to#infinitivpartikel
+overflow => overflow/VERB|overflow#uberlaufen
+
+extract | Workers use large machines to extract oil from the seeds. | Arbeiter gewinnen mit großen Maschinen Öl aus den Samen.
+Workers => worker/NOUN|worker#arbeiter
+use => use/VERB|use#benutzen
+large => large/ADJ|large#gross
+machines => machine/NOUN|machine#maschine
+to => to/PART|to#infinitivpartikel
+extract => extract/VERB|extract#gewinnen
+oil => oil/NOUN|oil#speiseol
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+seeds => seed/NOUN|seed#samen
+
+shortage | The long dry summer caused a shortage of drinking water. | Der lange, trockene Sommer verursachte einen Trinkwassermangel.
+The => the/DET|the#bestimmter_artikel
+long => long/ADJ|long#lange
+dry => dry/ADJ|dry#trocken
+summer => summer/NOUN|summer#sommer
+caused => cause/VERB|cause#verursachen
+a => a/DET|a#ein
+shortage => shortage/NOUN|shortage#mangel
+of => of/ADP|of#teil_menge
+drinking => drinking/NOUN|drinking#trinken
+water => water/NOUN|water#wasser
+
+float | Dry leaves float on the surface of the pond. | Trockene Blätter schwimmen auf der Oberfläche des Teichs.
+Dry => dry/ADJ|dry#trocken
+leaves => leaf/NOUN|leaf#blatt
+float => float/VERB|float#schwimmen
+on => on/ADP|on#gegenstand-verbot
+the => the/DET|the#bestimmter_artikel
+surface => surface/NOUN|surface#oberflaeche
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+pond => pond/NOUN|pond#teich
+
+horizon | We saw a small boat on the horizon from the beach. | Vom Strand aus sahen wir ein kleines Boot am Horizont.
+We => we/PRON|we#wir
+saw => see/VERB|see#sehen
+a => a/DET|a#ein
+small => small/ADJ|small#klein
+boat => boat/NOUN|boat#boot
+on => on/ADP|on#gegenstand-verbot
+the => the/DET|the#bestimmter_artikel
+horizon => horizon/NOUN|horizon#horizont
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+beach => beach/NOUN|beach#strand
+
+orchard | We spent the afternoon picking apples in the orchard. | Wir verbrachten den Nachmittag damit, im Obstgarten Äpfel zu pflücken.
+We => we/PRON|we#wir
+spent => spend/VERB|spend#zeit_verbringen
+the => the/DET|the#bestimmter_artikel
+afternoon => afternoon/NOUN|afternoon#nachmittag
+picking => pick/VERB|pick#pfluecken
+apples => apple/NOUN|apple#aepfel
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+orchard => orchard/NOUN|orchard#obstgarten
+
+graze | The sheep graze in the field behind the farm. | Die Schafe grasen auf der Wiese hinter dem Bauernhof.
+The => the/DET|the#bestimmter_artikel
+sheep => sheep/NOUN|sheep#schaf
+graze => graze/VERB|graze#grasen
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+field => field/NOUN|field#feld
+behind => behind/ADP|behind#hinter
+the => the/DET|the#bestimmter_artikel
+farm => farm/NOUN|farm#bauernhof
+
+blizzard | The blizzard closed the mountain road and trapped several drivers. | Wegen des Schneesturms wurde die Bergstraße gesperrt, und mehrere Autofahrer saßen fest.
+The => the/DET|the#bestimmter_artikel
+blizzard => blizzard/NOUN|blizzard#schneesturm
+closed => close/VERB|close#sperren
+the => the/DET|the#bestimmter_artikel
+mountain => mountain/NOUN|mountain#berg
+road => road/NOUN|road#strasse
+and => and/CCONJ|and#und
+trapped => trap/VERB|trap#festsitzen-lassen
+several => several/DET|several#mehrere
+drivers => driver/NOUN|driver#fahrer
+
+fertiliser | This fertiliser gives the plants the nutrients they need. | Dieser Dünger versorgt die Pflanzen mit den Nährstoffen, die sie brauchen.
+This => this/DET|this#dieser_begleitend
+fertiliser => fertiliser/NOUN|fertiliser#dunger
+gives => give/VERB|give#geben
+the => the/DET|the#bestimmter_artikel
+plants => plant/NOUN|plant#pflanzen
+the => the/DET|the#bestimmter_artikel
+nutrients => nutrient/NOUN|nutrient#pflanzennahrung
+they => they/PRON|they#sie_plural
+need => need/VERB|need#brauchen
+
+natural | The path is made of natural stone rather than concrete. | Der Weg besteht aus Naturstein statt aus Beton.
+The => the/DET|the#bestimmter_artikel
+path => path/NOUN|path#fussweg
+is => be/AUX|be#hilfsverb
+made => make/VERB|make#herstellen
+of => of/ADP|of#material_herkunft
+natural => natural/ADJ|natural#echte
+stone => stone/NOUN|stone#stein
+rather => rather/ADV|rather#rather-than-statt
+than => than/ADP|than#alternative-eigenschaft
+concrete => concrete/NOUN|concrete#beton
+
+ban | There is a ban on lighting fires in the forest during dry weather. | Bei trockenem Wetter ist es verboten, im Wald Feuer zu machen.
+There => there/PRON|there#es_gibt
+is => be/VERB|be#gibt-ist
+a => a/DET|a#ein
+ban => ban/NOUN|ban#verbot
+on => on/ADP|on#gegenstand-verbot
+lighting => light/VERB|light#anzuenden
+fires => fire/NOUN|fire#feuer
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+forest => forest/NOUN|forest#wald
+during => during/ADP|during#waehrend
+dry => dry/ADJ|dry#trocken
+weather => weather/NOUN|weather#wetter
+
+dormant | The seeds can remain dormant in the soil for several years. | Die Samen können mehrere Jahre lang im Boden ruhen.
+The => the/DET|the#bestimmter_artikel
+seeds => seed/NOUN|seed#samen
+can => can/AUX|can#koennen
+remain => remain/VERB|remain#bleiben
+dormant => dormant/ADJ|dormant#ruhend
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+soil => soil/NOUN|soil#boden
+for => for/ADP|for#seit_lang_dauer
+several => several/DET|several#mehrere
+years => year/NOUN|year#jahr
+
+stem | Hold the flower gently by its stem. | Halte die Blume vorsichtig am Stängel fest.
+Hold => hold/VERB|hold#haelt
+the => the/DET|the#bestimmter_artikel
+flower => flower/NOUN|flower#blumen
+gently => gently/ADV|gently#behutsam
+by => by/ADP|by#anfassstelle
+its => its/DET|its#sein_ihr
+stem => stem/NOUN|stem#stangel
+
+mud | Our boots were covered in mud after the walk through the wet field. | Nach dem Spaziergang über die nasse Wiese waren unsere Stiefel voller Schlamm.
+Our => our/DET|our#unser-unsere
+boots => boot/NOUN|boot#stiefel
+were => be/AUX|be#hilfsverb
+covered => cover/VERB|cover#bedecken
+in => in/ADP|in#in_raeumlich
+mud => mud/NOUN|mud#schlamm
+after => after/ADP|after#nach
+the => the/DET|the#bestimmter_artikel
+walk => walk/NOUN|walk#spaziergang
+through => through/ADP|through#durch
+the => the/DET|the#bestimmter_artikel
+wet => wet/ADJ|wet#nass
+field => field/NOUN|field#feld
+
+hibernate | Some animals hibernate to save energy during the coldest months. | Einige Tiere halten Winterschlaf, um in den kältesten Monaten Energie zu sparen.
+Some => some/DET|some#einige
+animals => animal/NOUN|animal#tier
+hibernate => hibernate/VERB|hibernate#winterschlaf-halten
+to => to/PART|to#infinitivpartikel
+save => save/VERB|save#sparen
+energy => energy/NOUN|energy#energie
+during => during/ADP|during#waehrend
+the => the/DET|the#bestimmter_artikel
+coldest => cold/ADJ|cold#kalt
+months => month/NOUN|month#monat

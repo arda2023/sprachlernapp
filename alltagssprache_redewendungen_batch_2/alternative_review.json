@@ -1,0 +1,30 @@
+[
+  {
+    "target": "no offence",
+    "original": "No offence, but this soup needs a little more salt.",
+    "translation_de": "Nichts für ungut, aber diese Suppe braucht etwas mehr Salz.",
+    "reason": "no offense ist die amerikanische Schreibweise derselben vorsichtigen Gesprächseinleitung. Aussage und Satzanschluss bleiben gleich.",
+    "candidates": [
+      {
+        "card": "no offence|no offence/INTJ|no-offence#nicht-bose-gemeint",
+        "alternative": "no offense",
+        "text": "no offense, but this soup needs a little more salt."
+      }
+    ],
+    "selection_owner_alias_check": "PASS: all 441 selection targets and existing ownership/aliases checked; no collision"
+  },
+  {
+    "target": "if memory serves",
+    "original": "If memory serves, we first met at your cousin's wedding.",
+    "translation_de": "Wenn ich mich recht erinnere, haben wir uns auf der Hochzeit deines Cousins kennengelernt.",
+    "reason": "if memory serves me nennt die ohnehin auf den Sprecher bezogene Erinnerung ausdrücklich; dieselbe Erinnerungseinschränkung und derselbe Satzanschluss.",
+    "candidates": [
+      {
+        "card": "if memory serves|if memory serves/ADV|if-memory-serves#wenn-ich-mich-recht-erinnere",
+        "alternative": "if memory serves me",
+        "text": "if memory serves me, we first met at your cousin's wedding."
+      }
+    ],
+    "selection_owner_alias_check": "PASS: all 441 selection targets and existing ownership/aliases checked; no collision"
+  }
+]

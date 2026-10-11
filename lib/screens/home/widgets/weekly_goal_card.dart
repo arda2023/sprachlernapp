@@ -87,7 +87,7 @@ class WeeklyGoalCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Semantics(
-                  label: 'Tagesziel: ${goal.done} von ${goal.target} Wörtern',
+                  label: 'Tagesziel: ${goal.done} von ${goal.target} Übungen',
                   excludeSemantics: true,
                   child: Text.rich(
                     TextSpan(
@@ -105,7 +105,7 @@ class WeeklyGoalCard extends StatelessWidget {
                             tabular: true,
                           ),
                         ),
-                        TextSpan(text: ' von ${goal.target} Wörtern'),
+                        TextSpan(text: ' von ${goal.target} Übungen'),
                       ],
                     ),
                   ),

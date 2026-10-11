@@ -9,6 +9,31 @@ class $UserCardsTable extends UserCards
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $UserCardsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _formFunctionMeta = const VerificationMeta(
+    'formFunction',
+  );
+  @override
+  late final GeneratedColumn<String> formFunction = GeneratedColumn<String>(
+    'form_function',
+    aliasedName,
+    true,
+    check: () => const CustomExpression(
+      "form_function IS NULL OR form_function IN ('base','past','past_participle')",
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _lexicalTargetIdMeta = const VerificationMeta(
+    'lexicalTargetId',
+  );
+  @override
+  late final GeneratedColumn<String> lexicalTargetId = GeneratedColumn<String>(
+    'lexical_target_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _formMeta = const VerificationMeta('form');
   @override
   late final GeneratedColumn<String> form = GeneratedColumn<String>(
@@ -258,6 +283,8 @@ class $UserCardsTable extends UserCards
   );
   @override
   List<GeneratedColumn> get $columns => [
+    formFunction,
+    lexicalTargetId,
     form,
     formNorm,
     glossDe,
@@ -293,6 +320,24 @@ class $UserCardsTable extends UserCards
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('form_function')) {
+      context.handle(
+        _formFunctionMeta,
+        formFunction.isAcceptableOrUnknown(
+          data['form_function']!,
+          _formFunctionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('lexical_target_id')) {
+      context.handle(
+        _lexicalTargetIdMeta,
+        lexicalTargetId.isAcceptableOrUnknown(
+          data['lexical_target_id']!,
+          _lexicalTargetIdMeta,
+        ),
+      );
+    }
     if (data.containsKey('form')) {
       context.handle(
         _formMeta,
@@ -455,6 +500,14 @@ class $UserCardsTable extends UserCards
   UserCardRow map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return UserCardRow(
+      formFunction: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}form_function'],
+      ),
+      lexicalTargetId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lexical_target_id'],
+      ),
       form: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}form'],
@@ -553,6 +606,8 @@ class $UserCardsTable extends UserCards
 }
 
 class UserCardRow extends DataClass implements Insertable<UserCardRow> {
+  final String? formFunction;
+  final String? lexicalTargetId;
   final String? form;
   final String? formNorm;
   final String? glossDe;
@@ -578,6 +633,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   final bool retired;
   final DateTime updatedAt;
   const UserCardRow({
+    this.formFunction,
+    this.lexicalTargetId,
     this.form,
     this.formNorm,
     this.glossDe,
@@ -604,6 +661,12 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (!nullToAbsent || formFunction != null) {
+      map['form_function'] = Variable<String>(formFunction);
+    }
+    if (!nullToAbsent || lexicalTargetId != null) {
+      map['lexical_target_id'] = Variable<String>(lexicalTargetId);
+    }
     if (!nullToAbsent || form != null) {
       map['form'] = Variable<String>(form);
     }
@@ -651,6 +714,12 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
 
   UserCardsCompanion toCompanion(bool nullToAbsent) {
     return UserCardsCompanion(
+      formFunction: formFunction == null && nullToAbsent
+          ? const Value.absent()
+          : Value(formFunction),
+      lexicalTargetId: lexicalTargetId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lexicalTargetId),
       form: form == null && nullToAbsent ? const Value.absent() : Value(form),
       formNorm: formNorm == null && nullToAbsent
           ? const Value.absent()
@@ -698,6 +767,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return UserCardRow(
+      formFunction: serializer.fromJson<String?>(json['formFunction']),
+      lexicalTargetId: serializer.fromJson<String?>(json['lexicalTargetId']),
       form: serializer.fromJson<String?>(json['form']),
       formNorm: serializer.fromJson<String?>(json['formNorm']),
       glossDe: serializer.fromJson<String?>(json['glossDe']),
@@ -726,6 +797,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'formFunction': serializer.toJson<String?>(formFunction),
+      'lexicalTargetId': serializer.toJson<String?>(lexicalTargetId),
       'form': serializer.toJson<String?>(form),
       'formNorm': serializer.toJson<String?>(formNorm),
       'glossDe': serializer.toJson<String?>(glossDe),
@@ -752,6 +825,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   }
 
   UserCardRow copyWith({
+    Value<String?> formFunction = const Value.absent(),
+    Value<String?> lexicalTargetId = const Value.absent(),
     Value<String?> form = const Value.absent(),
     Value<String?> formNorm = const Value.absent(),
     Value<String?> glossDe = const Value.absent(),
@@ -775,6 +850,10 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
     bool? retired,
     DateTime? updatedAt,
   }) => UserCardRow(
+    formFunction: formFunction.present ? formFunction.value : this.formFunction,
+    lexicalTargetId: lexicalTargetId.present
+        ? lexicalTargetId.value
+        : this.lexicalTargetId,
     form: form.present ? form.value : this.form,
     formNorm: formNorm.present ? formNorm.value : this.formNorm,
     glossDe: glossDe.present ? glossDe.value : this.glossDe,
@@ -806,6 +885,12 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   );
   UserCardRow copyWithCompanion(UserCardsCompanion data) {
     return UserCardRow(
+      formFunction: data.formFunction.present
+          ? data.formFunction.value
+          : this.formFunction,
+      lexicalTargetId: data.lexicalTargetId.present
+          ? data.lexicalTargetId.value
+          : this.lexicalTargetId,
       form: data.form.present ? data.form.value : this.form,
       formNorm: data.formNorm.present ? data.formNorm.value : this.formNorm,
       glossDe: data.glossDe.present ? data.glossDe.value : this.glossDe,
@@ -842,6 +927,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   @override
   String toString() {
     return (StringBuffer('UserCardRow(')
+          ..write('formFunction: $formFunction, ')
+          ..write('lexicalTargetId: $lexicalTargetId, ')
           ..write('form: $form, ')
           ..write('formNorm: $formNorm, ')
           ..write('glossDe: $glossDe, ')
@@ -870,6 +957,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
 
   @override
   int get hashCode => Object.hashAll([
+    formFunction,
+    lexicalTargetId,
     form,
     formNorm,
     glossDe,
@@ -897,6 +986,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is UserCardRow &&
+          other.formFunction == this.formFunction &&
+          other.lexicalTargetId == this.lexicalTargetId &&
           other.form == this.form &&
           other.formNorm == this.formNorm &&
           other.glossDe == this.glossDe &&
@@ -922,6 +1013,8 @@ class UserCardRow extends DataClass implements Insertable<UserCardRow> {
 }
 
 class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
+  final Value<String?> formFunction;
+  final Value<String?> lexicalTargetId;
   final Value<String?> form;
   final Value<String?> formNorm;
   final Value<String?> glossDe;
@@ -946,6 +1039,8 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
   final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const UserCardsCompanion({
+    this.formFunction = const Value.absent(),
+    this.lexicalTargetId = const Value.absent(),
     this.form = const Value.absent(),
     this.formNorm = const Value.absent(),
     this.glossDe = const Value.absent(),
@@ -971,6 +1066,8 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
     this.rowid = const Value.absent(),
   });
   UserCardsCompanion.insert({
+    this.formFunction = const Value.absent(),
+    this.lexicalTargetId = const Value.absent(),
     this.form = const Value.absent(),
     this.formNorm = const Value.absent(),
     this.glossDe = const Value.absent(),
@@ -1001,6 +1098,8 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
        origin = Value(origin),
        updatedAt = Value(updatedAt);
   static Insertable<UserCardRow> custom({
+    Expression<String>? formFunction,
+    Expression<String>? lexicalTargetId,
     Expression<String>? form,
     Expression<String>? formNorm,
     Expression<String>? glossDe,
@@ -1026,6 +1125,8 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
+      if (formFunction != null) 'form_function': formFunction,
+      if (lexicalTargetId != null) 'lexical_target_id': lexicalTargetId,
       if (form != null) 'form': form,
       if (formNorm != null) 'form_norm': formNorm,
       if (glossDe != null) 'gloss_de': glossDe,
@@ -1053,6 +1154,8 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
   }
 
   UserCardsCompanion copyWith({
+    Value<String?>? formFunction,
+    Value<String?>? lexicalTargetId,
     Value<String?>? form,
     Value<String?>? formNorm,
     Value<String?>? glossDe,
@@ -1078,6 +1181,8 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
     Value<int>? rowid,
   }) {
     return UserCardsCompanion(
+      formFunction: formFunction ?? this.formFunction,
+      lexicalTargetId: lexicalTargetId ?? this.lexicalTargetId,
       form: form ?? this.form,
       formNorm: formNorm ?? this.formNorm,
       glossDe: glossDe ?? this.glossDe,
@@ -1107,6 +1212,12 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (formFunction.present) {
+      map['form_function'] = Variable<String>(formFunction.value);
+    }
+    if (lexicalTargetId.present) {
+      map['lexical_target_id'] = Variable<String>(lexicalTargetId.value);
+    }
     if (form.present) {
       map['form'] = Variable<String>(form.value);
     }
@@ -1182,6 +1293,8 @@ class UserCardsCompanion extends UpdateCompanion<UserCardRow> {
   @override
   String toString() {
     return (StringBuffer('UserCardsCompanion(')
+          ..write('formFunction: $formFunction, ')
+          ..write('lexicalTargetId: $lexicalTargetId, ')
           ..write('form: $form, ')
           ..write('formNorm: $formNorm, ')
           ..write('glossDe: $glossDe, ')
@@ -5423,6 +5536,442 @@ class LearningIdentityBindingsCompanion
   }
 }
 
+class $FormIdentityBindingsTable extends FormIdentityBindings
+    with TableInfo<$FormIdentityBindingsTable, FormBindingRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FormIdentityBindingsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _identityKeyMeta = const VerificationMeta(
+    'identityKey',
+  );
+  @override
+  late final GeneratedColumn<String> identityKey = GeneratedColumn<String>(
+    'identity_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _langMeta = const VerificationMeta('lang');
+  @override
+  late final GeneratedColumn<String> lang = GeneratedColumn<String>(
+    'lang',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _formNormMeta = const VerificationMeta(
+    'formNorm',
+  );
+  @override
+  late final GeneratedColumn<String> formNorm = GeneratedColumn<String>(
+    'form_norm',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _semanticAnchorMeta = const VerificationMeta(
+    'semanticAnchor',
+  );
+  @override
+  late final GeneratedColumn<String> semanticAnchor = GeneratedColumn<String>(
+    'semantic_anchor',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _functionMeta = const VerificationMeta(
+    'function',
+  );
+  @override
+  late final GeneratedColumn<String> function = GeneratedColumn<String>(
+    'function',
+    aliasedName,
+    false,
+    check: () =>
+        const CustomExpression("function IN ('base','past','past_participle')"),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _cardIdMeta = const VerificationMeta('cardId');
+  @override
+  late final GeneratedColumn<String> cardId = GeneratedColumn<String>(
+    'card_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES user_cards (card_id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    identityKey,
+    lang,
+    formNorm,
+    semanticAnchor,
+    function,
+    cardId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'form_identity_bindings';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FormBindingRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('identity_key')) {
+      context.handle(
+        _identityKeyMeta,
+        identityKey.isAcceptableOrUnknown(
+          data['identity_key']!,
+          _identityKeyMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_identityKeyMeta);
+    }
+    if (data.containsKey('lang')) {
+      context.handle(
+        _langMeta,
+        lang.isAcceptableOrUnknown(data['lang']!, _langMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_langMeta);
+    }
+    if (data.containsKey('form_norm')) {
+      context.handle(
+        _formNormMeta,
+        formNorm.isAcceptableOrUnknown(data['form_norm']!, _formNormMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_formNormMeta);
+    }
+    if (data.containsKey('semantic_anchor')) {
+      context.handle(
+        _semanticAnchorMeta,
+        semanticAnchor.isAcceptableOrUnknown(
+          data['semantic_anchor']!,
+          _semanticAnchorMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_semanticAnchorMeta);
+    }
+    if (data.containsKey('function')) {
+      context.handle(
+        _functionMeta,
+        function.isAcceptableOrUnknown(data['function']!, _functionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_functionMeta);
+    }
+    if (data.containsKey('card_id')) {
+      context.handle(
+        _cardIdMeta,
+        cardId.isAcceptableOrUnknown(data['card_id']!, _cardIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_cardIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {identityKey};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {lang, formNorm, semanticAnchor, function},
+  ];
+  @override
+  FormBindingRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FormBindingRow(
+      identityKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}identity_key'],
+      )!,
+      lang: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lang'],
+      )!,
+      formNorm: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}form_norm'],
+      )!,
+      semanticAnchor: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}semantic_anchor'],
+      )!,
+      function: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}function'],
+      )!,
+      cardId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}card_id'],
+      )!,
+    );
+  }
+
+  @override
+  $FormIdentityBindingsTable createAlias(String alias) {
+    return $FormIdentityBindingsTable(attachedDatabase, alias);
+  }
+}
+
+class FormBindingRow extends DataClass implements Insertable<FormBindingRow> {
+  final String identityKey;
+  final String lang;
+  final String formNorm;
+  final String semanticAnchor;
+  final String function;
+  final String cardId;
+  const FormBindingRow({
+    required this.identityKey,
+    required this.lang,
+    required this.formNorm,
+    required this.semanticAnchor,
+    required this.function,
+    required this.cardId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['identity_key'] = Variable<String>(identityKey);
+    map['lang'] = Variable<String>(lang);
+    map['form_norm'] = Variable<String>(formNorm);
+    map['semantic_anchor'] = Variable<String>(semanticAnchor);
+    map['function'] = Variable<String>(function);
+    map['card_id'] = Variable<String>(cardId);
+    return map;
+  }
+
+  FormIdentityBindingsCompanion toCompanion(bool nullToAbsent) {
+    return FormIdentityBindingsCompanion(
+      identityKey: Value(identityKey),
+      lang: Value(lang),
+      formNorm: Value(formNorm),
+      semanticAnchor: Value(semanticAnchor),
+      function: Value(function),
+      cardId: Value(cardId),
+    );
+  }
+
+  factory FormBindingRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FormBindingRow(
+      identityKey: serializer.fromJson<String>(json['identityKey']),
+      lang: serializer.fromJson<String>(json['lang']),
+      formNorm: serializer.fromJson<String>(json['formNorm']),
+      semanticAnchor: serializer.fromJson<String>(json['semanticAnchor']),
+      function: serializer.fromJson<String>(json['function']),
+      cardId: serializer.fromJson<String>(json['cardId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'identityKey': serializer.toJson<String>(identityKey),
+      'lang': serializer.toJson<String>(lang),
+      'formNorm': serializer.toJson<String>(formNorm),
+      'semanticAnchor': serializer.toJson<String>(semanticAnchor),
+      'function': serializer.toJson<String>(function),
+      'cardId': serializer.toJson<String>(cardId),
+    };
+  }
+
+  FormBindingRow copyWith({
+    String? identityKey,
+    String? lang,
+    String? formNorm,
+    String? semanticAnchor,
+    String? function,
+    String? cardId,
+  }) => FormBindingRow(
+    identityKey: identityKey ?? this.identityKey,
+    lang: lang ?? this.lang,
+    formNorm: formNorm ?? this.formNorm,
+    semanticAnchor: semanticAnchor ?? this.semanticAnchor,
+    function: function ?? this.function,
+    cardId: cardId ?? this.cardId,
+  );
+  FormBindingRow copyWithCompanion(FormIdentityBindingsCompanion data) {
+    return FormBindingRow(
+      identityKey: data.identityKey.present
+          ? data.identityKey.value
+          : this.identityKey,
+      lang: data.lang.present ? data.lang.value : this.lang,
+      formNorm: data.formNorm.present ? data.formNorm.value : this.formNorm,
+      semanticAnchor: data.semanticAnchor.present
+          ? data.semanticAnchor.value
+          : this.semanticAnchor,
+      function: data.function.present ? data.function.value : this.function,
+      cardId: data.cardId.present ? data.cardId.value : this.cardId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FormBindingRow(')
+          ..write('identityKey: $identityKey, ')
+          ..write('lang: $lang, ')
+          ..write('formNorm: $formNorm, ')
+          ..write('semanticAnchor: $semanticAnchor, ')
+          ..write('function: $function, ')
+          ..write('cardId: $cardId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    identityKey,
+    lang,
+    formNorm,
+    semanticAnchor,
+    function,
+    cardId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FormBindingRow &&
+          other.identityKey == this.identityKey &&
+          other.lang == this.lang &&
+          other.formNorm == this.formNorm &&
+          other.semanticAnchor == this.semanticAnchor &&
+          other.function == this.function &&
+          other.cardId == this.cardId);
+}
+
+class FormIdentityBindingsCompanion extends UpdateCompanion<FormBindingRow> {
+  final Value<String> identityKey;
+  final Value<String> lang;
+  final Value<String> formNorm;
+  final Value<String> semanticAnchor;
+  final Value<String> function;
+  final Value<String> cardId;
+  final Value<int> rowid;
+  const FormIdentityBindingsCompanion({
+    this.identityKey = const Value.absent(),
+    this.lang = const Value.absent(),
+    this.formNorm = const Value.absent(),
+    this.semanticAnchor = const Value.absent(),
+    this.function = const Value.absent(),
+    this.cardId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FormIdentityBindingsCompanion.insert({
+    required String identityKey,
+    required String lang,
+    required String formNorm,
+    required String semanticAnchor,
+    required String function,
+    required String cardId,
+    this.rowid = const Value.absent(),
+  }) : identityKey = Value(identityKey),
+       lang = Value(lang),
+       formNorm = Value(formNorm),
+       semanticAnchor = Value(semanticAnchor),
+       function = Value(function),
+       cardId = Value(cardId);
+  static Insertable<FormBindingRow> custom({
+    Expression<String>? identityKey,
+    Expression<String>? lang,
+    Expression<String>? formNorm,
+    Expression<String>? semanticAnchor,
+    Expression<String>? function,
+    Expression<String>? cardId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (identityKey != null) 'identity_key': identityKey,
+      if (lang != null) 'lang': lang,
+      if (formNorm != null) 'form_norm': formNorm,
+      if (semanticAnchor != null) 'semantic_anchor': semanticAnchor,
+      if (function != null) 'function': function,
+      if (cardId != null) 'card_id': cardId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FormIdentityBindingsCompanion copyWith({
+    Value<String>? identityKey,
+    Value<String>? lang,
+    Value<String>? formNorm,
+    Value<String>? semanticAnchor,
+    Value<String>? function,
+    Value<String>? cardId,
+    Value<int>? rowid,
+  }) {
+    return FormIdentityBindingsCompanion(
+      identityKey: identityKey ?? this.identityKey,
+      lang: lang ?? this.lang,
+      formNorm: formNorm ?? this.formNorm,
+      semanticAnchor: semanticAnchor ?? this.semanticAnchor,
+      function: function ?? this.function,
+      cardId: cardId ?? this.cardId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (identityKey.present) {
+      map['identity_key'] = Variable<String>(identityKey.value);
+    }
+    if (lang.present) {
+      map['lang'] = Variable<String>(lang.value);
+    }
+    if (formNorm.present) {
+      map['form_norm'] = Variable<String>(formNorm.value);
+    }
+    if (semanticAnchor.present) {
+      map['semantic_anchor'] = Variable<String>(semanticAnchor.value);
+    }
+    if (function.present) {
+      map['function'] = Variable<String>(function.value);
+    }
+    if (cardId.present) {
+      map['card_id'] = Variable<String>(cardId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FormIdentityBindingsCompanion(')
+          ..write('identityKey: $identityKey, ')
+          ..write('lang: $lang, ')
+          ..write('formNorm: $formNorm, ')
+          ..write('semanticAnchor: $semanticAnchor, ')
+          ..write('function: $function, ')
+          ..write('cardId: $cardId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$UserDatabase extends GeneratedDatabase {
   _$UserDatabase(QueryExecutor e) : super(e);
   late final $UserCardsTable userCards = $UserCardsTable(this);
@@ -5440,6 +5989,8 @@ abstract class _$UserDatabase extends GeneratedDatabase {
   );
   late final $LearningIdentityBindingsTable learningIdentityBindings =
       $LearningIdentityBindingsTable(this);
+  late final $FormIdentityBindingsTable formIdentityBindings =
+      $FormIdentityBindingsTable(this);
   late final Index reviewLogCard = Index(
     'review_log_card',
     'CREATE INDEX review_log_card ON review_log (card_id)',
@@ -5458,6 +6009,7 @@ abstract class _$UserDatabase extends GeneratedDatabase {
     storyLearningAdditions,
     storyWordSources,
     learningIdentityBindings,
+    formIdentityBindings,
     reviewLogCard,
   ];
   @override

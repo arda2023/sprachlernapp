@@ -16,6 +16,8 @@ abstract interface class ContentRepository {
   /// Project through LearningGroups for introduction/progress; retain all for reviews.
   Future<List<String>> deckCardIds(String deckId);
 
+  Future<List<DeckPracticeTarget>> deckPracticeTargets(String deckId);
+
   /// Every card id of the pack (to tell learner rows of removed or foreign
   /// cards apart, docs/srs.md counters).
   Future<Set<String>> allCardIds();

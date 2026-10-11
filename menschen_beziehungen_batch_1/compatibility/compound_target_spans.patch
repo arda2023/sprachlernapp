@@ -1,0 +1,51 @@
+--- a/pipeline/src/sprachpipe/annotate.py
++++ b/pipeline/src/sprachpipe/annotate.py
+@@ -18,12 +18,33 @@
+ }
+ 
+ 
+-def tokenize(text: str, nlp=None) -> list[dict]:
++def tokenize(text: str, nlp=None, *, lexical_spans=None) -> list[dict]:
+     """All spaCy tokens: idx, start_pos, end_pos, surface, pos, is_word."""
+     doc = (nlp or _nlp())(text)
+-    return [{"idx": t.i, "start_pos": t.idx, "end_pos": t.idx + len(t.text),
+-             "surface": t.text, "pos": t.pos_, "is_word": any(ch.isalpha() for ch in t.text)}
+-            for t in doc]
++    tokens = [{"idx": t.i, "start_pos": t.idx, "end_pos": t.idx + len(t.text),
++               "surface": t.text, "pos": t.pos_, "is_word": any(ch.isalpha() for ch in t.text)}
++              for t in doc]
++    spans = sorted(set(tuple(span) for span in (lexical_spans or ())))
++    previous_end = -1
++    for start, end in spans:
++        if (type(start) is not int or type(end) is not int or
++                not 0 <= start < end <= len(text) or start < previous_end):
++            raise ValueError("invalid or overlapping lexical spans")
++        selected = [t for t in tokens if start <= t["start_pos"] and t["end_pos"] <= end]
++        if (not selected or selected[0]["start_pos"] != start or
++                selected[-1]["end_pos"] != end or
++                not any(t["is_word"] for t in selected)):
++            raise ValueError("lexical span must cover complete word tokens")
++        # Merge only an explicitly supplied card gap. Never rewrite all hyphens.
++        first = tokens.index(selected[0]); last = tokens.index(selected[-1])
++        surface = text[start:end]
++        tokens[first:last+1] = [{"idx": first, "start_pos": start, "end_pos": end,
++                               "surface": surface, "pos": selected[0]["pos"],
++                               "is_word": True}]
++        previous_end = end
++    for idx, token in enumerate(tokens):
++        token["idx"] = idx
++    return tokens
+ 
+ 
+ CARD_SCHEMA = {
+--- a/pipeline/scripts/import_editorial_patch.py
++++ b/pipeline/scripts/import_editorial_patch.py
+@@ -569,7 +569,7 @@
+         require(r and r.get('decision') == 'approved' and r.get('reason') and
+                 r['checked'] == {'text': sn['text'], 'translation_de': sn['translation_de'],
+                                  'tokens_sha256': digest(tokens), 'links_sha256': digest(links)}, 'missing/stale editorial review')
+-        expected = tokenize(sn['text'])
++        expected = tokenize(sn['text'], lexical_spans=[(c['gap_start'], c['gap_end']) for c in links])
+         require([{k:t[k] for k in ('idx','surface','start_pos','end_pos')} for t in tokens] ==
+                 [{k:t[k] for k in ('idx','surface','start_pos','end_pos')} for t in expected], 'incomplete token coverage')
+         for t, e in zip(tokens, expected):

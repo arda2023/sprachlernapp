@@ -1,0 +1,24 @@
+Natur & Umwelt – Batch 1, 10.10.2026
+
+81 neue Satzpaare, direkt von ChatGPT geschrieben und vollständig gegengelesen. Alle 81 vorgegebenen Zielidentitäten, Definitionen, Übersetzungen und Lerngruppen sind aus dem verbindlichen Kontext übernommen. Keine unabhängige menschliche Freigabe behauptet.
+
+Die 242 Ziele bleiben in 81/81/80 aufgeteilt. Nur die aktuellen 81 erhalten Karten und feste Sätze. Reservierte spätere Bedeutungen dürfen als Begleitwort-Wörterbucheintrag vorkommen, ohne ihre Lernkarte vorzuziehen. Anzeigepositionen 1–81 folgen combined_display_mapping.json; Originalpositionen bleiben unverändert.
+
+Jede Wortposition ist anhand des Satzes gebunden, Satzzeichen tragen keine Wortbedeutung. Vollständige Prüfung der 915 Tokenpositionen, davon siehe authoring_audit.json Worttokens. Neue Begleitbedeutungen sind ausdrücklich definiert, vorhandene geeignete Bedeutungen wiederverwendet. Neue Formglossen sind separat nach Form und Bedeutung geprüft, nicht pauschal aus der Sense-Glosse abgeleitet.
+
+Besonders geprüft: bank=Ufer, iron=Metall, bath=Badewanne; heat=beheizen/erhitzen; fell=physisch fallen/Temperatur sinkt; growing=wachsen/anbauen; has=Hilfsverb/Besitz; save=retten/sparen; hire=Personal einstellen; nutrients=Pflanzennährstoffe; panels=Solarmodule; most=Mengenpronomen; by=Mittel/Anfassstelle; me=mich bei mosquito. Kopula, Hilfsverb und existenzielles be getrennt. Die Genitivendung in animals' ist Satzzeichen; 's bei shark/sun/candle ist wie im Bestand gebunden.
+
+Eine kontextuell geprüfte Alternative: fertiliser → fertilizer. Wörtlich eingesetzt: This fertilizer gives the plants the nutrients they need. Dies ist die amerikanische Schreibweise derselben Bedeutung, ohne Satz- oder Bedeutungsänderung. Keine zusätzlichen Synonyme behauptet und keine Vollständigkeitsgarantie. accepted enthält jeweils nur die Zielform; die bestätigte Alternative bleibt lernstandsneutral.
+
+Linter für die 81 neuen Sätze: 0 Fehler, 4 Häufigkeitshinweise:
+- steel: walkway, Zipf 3.16
+- oak: acorns/acorn, Zipf 3.08
+- slope: grassy, Zipf 3.24
+- exhaust: lorry, Zipf 3.21
+Diese passenden Begleitwörter bleiben erhalten. Die Hinweise sind keine Grammatikfehler.
+
+Bestandsgrenzen: Ältere flektierte oder zusammengesetzte Glossen bleiben im Basis-Wörterbuch unverändert, beispielsweise natural#echte. Bestehende Lernziele wurden weder umdefiniert noch zusammengelegt. Kein pauschales Wörterbuch-Cleanup. Neue Bindungen sind nicht nur anhand der englischen Schreibweise gewählt.
+
+Echter Offline-Import und SQLite-Export wurden mit den unveränderten gelieferten Quellen geprüft. Exportabgleich aller 18 Tabellen und Bestandserhalt stehen in export_audit.json; tatsächliche Prüfausgaben in validation_output.txt. App-Staging, Flutter-Tests und Geräteprüfung finden erst im lokalen Projekt statt und sind hier nicht ausgeführt. Keine user.db-Zugriffe, keine zusätzlichen Pipeline-Modellaufrufe, keine Cloud-Kosten.
+
+Nach lokalem Import: 2075 Karten, 1960 primäre Lernziele; acht Stapel mit 160/489/241/245/245/249/250/81 Zielen. Anschließend Batch-2-Authoring-Kontext aus der neuen Basis mit Partition 81/81/80 erstellen. Keine weiteren Kategorien vorziehen; der bestätigte Abschlussplan mit 14 Stapeln bleibt maßgeblich.

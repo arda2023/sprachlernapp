@@ -80,7 +80,7 @@ class _GoalOption extends StatelessWidget {
         padding: EdgeInsets.zero,
         minimumSize: const Size(44, 52),
         child: Semantics(
-          label: '$target Wörter pro Tag',
+          label: '$target Übungen pro Tag',
           selected: selected,
           excludeSemantics: true,
           child: Container(
@@ -94,7 +94,7 @@ class _GoalOption extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    '$target Wörter pro Tag',
+                    '$target Übungen pro Tag',
                     style: AppType.chrome(
                       color: context.appColors.textPrimary,
                       weight: selected ? FontWeight.w700 : FontWeight.w500,

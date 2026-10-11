@@ -112,7 +112,7 @@ class ReviewPass {
         _errorCount++;
         return PassFeedback(
           verdict,
-          message: wrongFormHint(card.lemma, card.formLabelDe),
+          message: wrongFormHint(card.lemma, card.formFunction == null ? card.formLabelDe : card.exerciseLabel),
         );
       case AnswerVerdict.wrong:
         _errorCount++;

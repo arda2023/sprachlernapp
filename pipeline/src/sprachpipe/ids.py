@@ -25,6 +25,11 @@ SEPARATOR = "\u001f"
 # Fixed field order per table. Changing an entry changes every ID of that
 # table, so this map is frozen (see docs/content-schema.md).
 KEY_FIELDS: dict[str, tuple[str, ...]] = {
+    "lexical_targets": ("lang", "anchor_key"),
+    "card_lexical_targets": ("card_id",),
+    "form_targets": ("lang", "sense_id", "form", "function"),
+    "form_cards": ("lang", "form", "sense_id", "function"),
+    "deck_practice_targets": ("deck_id", "form_target_id"),
     "lemmas": ("lang", "lemma", "pos"),
     "senses": ("lemma_id", "sense_key"),
     "cards": ("lang", "form", "sense_id"),

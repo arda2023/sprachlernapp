@@ -1,0 +1,847 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "sprachapp offline editorial create v3 (schema 4)",
+  "type": "object",
+  "required": [
+    "format",
+    "format_version",
+    "operation_id",
+    "version",
+    "source_sha256",
+    "registry_sha256",
+    "reviewer",
+    "add",
+    "reviews",
+    "selection",
+    "selection_sha256"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "format": {
+      "const": "sprachapp.editorial-content"
+    },
+    "format_version": {
+      "const": 3
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "registry_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "add": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lemmas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "ref",
+              "lemma",
+              "pos"
+            ],
+            "properties": {
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "lemma": {
+                "type": "string",
+                "minLength": 1
+              },
+              "pos": {
+                "type": "string",
+                "minLength": 1
+              },
+              "family_key": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "freq_rank": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "senses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "ref",
+              "lemma",
+              "sense_key",
+              "gloss_de",
+              "definition_de"
+            ],
+            "properties": {
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "lemma": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sense_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "gloss_de": {
+                "type": "string",
+                "minLength": 1
+              },
+              "definition_de": {
+                "type": "string",
+                "minLength": 1
+              },
+              "notes_de": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "sense_index": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "cards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "ref",
+              "form",
+              "sense",
+              "translation_de",
+              "form_kind",
+              "form_label_de",
+              "cefr_band",
+              "learning",
+              "identity_function",
+              "introduction_scope"
+            ],
+            "properties": {
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "form": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sense": {
+                "type": "string",
+                "minLength": 1
+              },
+              "translation_de": {
+                "type": "string",
+                "minLength": 1
+              },
+              "form_kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "form_label_de": {
+                "type": "string",
+                "minLength": 1
+              },
+              "cefr_band": {
+                "type": "string",
+                "minLength": 1
+              },
+              "learning": {
+                "type": "object",
+                "description": "Required for every new card when the source pack uses schema 3. Group heads must resolve in the resulting pack. Schema 2 remains supported.",
+                "additionalProperties": false,
+                "required": [
+                  "group_id",
+                  "primary_card_id",
+                  "topic",
+                  "related",
+                  "note"
+                ],
+                "properties": {
+                  "group_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "primary_card_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "topic": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "note": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "related": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              },
+              "freq_rank": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "identity_function": {
+                "enum": [
+                  "base",
+                  "past",
+                  "past_participle"
+                ]
+              },
+              "introduction_scope": {
+                "const": "form_only"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "decks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "ref",
+              "slug",
+              "title_de"
+            ],
+            "properties": {
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "slug": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title_de": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description_de": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "cefr_band": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "icon": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "sort": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "practice_kind": {
+                "enum": [
+                  "ordinary",
+                  "verb_base",
+                  "verb_past",
+                  "verb_participle"
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "deck_cards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "deck",
+              "card",
+              "position"
+            ],
+            "properties": {
+              "deck": {
+                "type": "string",
+                "minLength": 1
+              },
+              "card": {
+                "type": "string",
+                "minLength": 1
+              },
+              "position": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "deck_words": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "form_norm",
+              "deck",
+              "primary_card",
+              "position"
+            ],
+            "properties": {
+              "form_norm": {
+                "type": "string",
+                "minLength": 1
+              },
+              "deck": {
+                "type": "string",
+                "minLength": 1
+              },
+              "primary_card": {
+                "type": "string",
+                "minLength": 1
+              },
+              "position": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "sentences": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "ref",
+              "text",
+              "translation_de"
+            ],
+            "properties": {
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "translation_de": {
+                "type": "string",
+                "minLength": 1
+              },
+              "origins": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "card_sentences": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "card",
+              "sentence",
+              "position",
+              "gap_start",
+              "gap_end",
+              "accepted",
+              "valid_alternatives"
+            ],
+            "properties": {
+              "card": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sentence": {
+                "type": "string",
+                "minLength": 1
+              },
+              "position": {
+                "const": 1
+              },
+              "gap_start": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "gap_end": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "accepted": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "valid_alternatives": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "sentence_tokens": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "sentence",
+              "idx",
+              "surface",
+              "start_pos",
+              "end_pos"
+            ],
+            "properties": {
+              "sentence": {
+                "type": "string",
+                "minLength": 1
+              },
+              "idx": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "surface": {
+                "type": "string",
+                "minLength": 1
+              },
+              "start_pos": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end_pos": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "lemma": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "sense": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "card": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "form_target": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "dictionary_forms": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "form",
+              "sense",
+              "gloss_de",
+              "rank"
+            ],
+            "properties": {
+              "form": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sense": {
+                "type": "string",
+                "minLength": 1
+              },
+              "gloss_de": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rank": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "card": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "stories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "ref",
+              "slug",
+              "title",
+              "kind",
+              "cefr_band",
+              "minutes"
+            ],
+            "properties": {
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "slug": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "cefr_band": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minutes": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "topic": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "cover": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "story_sentences": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "story",
+              "sentence",
+              "idx",
+              "paragraph_idx"
+            ],
+            "properties": {
+              "story": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sentence": {
+                "type": "string",
+                "minLength": 1
+              },
+              "idx": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "paragraph_idx": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "word_aliases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "form_norm",
+              "word"
+            ],
+            "properties": {
+              "form_norm": {
+                "type": "string",
+                "minLength": 1
+              },
+              "word": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "lexical_targets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "ref",
+              "anchor_key",
+              "note"
+            ],
+            "properties": {
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "anchor_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "card_lexical_targets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "card",
+              "lexical_target",
+              "note"
+            ],
+            "properties": {
+              "card": {
+                "type": "string",
+                "minLength": 1
+              },
+              "lexical_target": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "form_targets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "ref",
+              "sense",
+              "form",
+              "function",
+              "card",
+              "lexical_target",
+              "note"
+            ],
+            "properties": {
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sense": {
+                "type": "string",
+                "minLength": 1
+              },
+              "form": {
+                "type": "string",
+                "minLength": 1
+              },
+              "function": {
+                "type": "string",
+                "minLength": 1
+              },
+              "card": {
+                "type": "string",
+                "minLength": 1
+              },
+              "lexical_target": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "deck_practice_targets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "deck",
+              "form_target",
+              "position"
+            ],
+            "properties": {
+              "deck": {
+                "type": "string",
+                "minLength": 1
+              },
+              "form_target": {
+                "type": "string",
+                "minLength": 1
+              },
+              "position": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "sentence",
+          "decision",
+          "reason",
+          "checked",
+          "alternatives_checked"
+        ],
+        "properties": {
+          "sentence": {
+            "type": "string"
+          },
+          "decision": {
+            "const": "approved"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "checked": {
+            "type": "object",
+            "required": [
+              "text",
+              "translation_de",
+              "tokens_sha256",
+              "links_sha256"
+            ]
+          },
+          "alternatives_checked": {
+            "type": "array"
+          },
+          "learning_contexts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "token_index",
+                "surface",
+                "sense",
+                "approved",
+                "reason"
+              ],
+              "properties": {
+                "token_index": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "surface": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sense": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "approved": {
+                  "const": true
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "selection": {
+      "type": "object"
+    },
+    "selection_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

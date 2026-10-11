@@ -21,6 +21,15 @@ def partition_selection(entries, pack):
     """
     from .pack import build_rows
     rows = build_rows(pack)
+    if entries and 'function' in entries[0]:
+        from .form_targets import require
+        present, missing, seen = [], [], set()
+        current = {(r['lang'], r['form_norm'], r['sense_id'], r['function']) for r in rows.get('form_targets', []) if not r.get('removed_in')}
+        for e in entries:
+            key = (pack['lang'], norm(e['form']), e['sense_id'], e['function'])
+            require(key not in seen, 'duplicate selection identity'); seen.add(key)
+            (present if key in current else missing).append(e)
+        return present, missing
     lemmas = {r['id']: r for r in rows['lemmas']}
     senses = {r['id']: r for r in rows['senses']}
     packed = {(norm(c['form']), norm(lemmas[c['lemma_id']]['lemma']), c['pos'],
@@ -38,6 +47,12 @@ def partition_selection(entries, pack):
 
 def plan_selection(path, existing_pack, *, inventory_path=None):
     data = json.loads(Path(path).read_text(encoding='utf-8'))
+    if data.get('format') == 'sprachapp.form-selection':
+        from .form_targets import validate_form_selection
+        source = json.loads(Path(existing_pack).read_bytes())
+        import hashlib
+        registry = json.loads(Path(data['registry_path']).read_bytes())
+        return validate_form_selection(source, data, registry, source_hash=hashlib.sha256(Path(existing_pack).read_bytes()).hexdigest())
     if data.get('version') != 1 or data.get('lang') != 'en' or not data.get('entries'):
         raise ValueError('selection requires version 1, lang en and entries')
     from .word_registry import load_registry, validate_selection

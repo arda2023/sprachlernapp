@@ -1,0 +1,106 @@
+[
+  {
+    "target": "nevertheless",
+    "original": "The tickets were expensive; nevertheless, we decided to go.",
+    "translation_de": "Die Karten waren teuer; dennoch beschlossen wir hinzugehen.",
+    "reason": "nonetheless erhält den Gegensatz trotz teurer Karten.",
+    "candidates": [
+      {
+        "card": "nevertheless|nevertheless/ADV|nevertheless#dennoch",
+        "alternative": "nonetheless",
+        "text": "The tickets were expensive; nonetheless, we decided to go."
+      }
+    ]
+  },
+  {
+    "target": "a piece of cake",
+    "original": "After all that practice, the test was a piece of cake.",
+    "translation_de": "Nach all dem Üben war die Prüfung ein Kinderspiel.",
+    "reason": "a breeze bezeichnet hier ebenfalls eine sehr leicht empfundene Prüfung; Artikel und Anschluss passen.",
+    "candidates": [
+      {
+        "card": "a piece of cake|a piece of cake/NOUN|a-piece-of-cake#ein-kinderspiel",
+        "alternative": "a breeze",
+        "text": "After all that practice, the test was a breeze."
+      }
+    ]
+  },
+  {
+    "target": "to my mind",
+    "original": "To my mind, this plan is much too risky.",
+    "translation_de": "Meiner Meinung nach ist dieser Plan viel zu riskant.",
+    "reason": "in my opinion kennzeichnet dieselbe persönliche Einschätzung.",
+    "candidates": [
+      {
+        "card": "to my mind|to my mind/ADV|to-my-mind#nach-meinem-dafurhalten",
+        "alternative": "in my opinion",
+        "text": "in my opinion, this plan is much too risky."
+      }
+    ]
+  },
+  {
+    "target": "on second thoughts",
+    "original": "On second thoughts, I would rather stay home tonight.",
+    "translation_de": "Wenn ich es mir recht überlege, bleibe ich heute Abend lieber zu Hause.",
+    "reason": "on second thought ist die gebräuchliche amerikanische Variante derselben Umentscheidung.",
+    "candidates": [
+      {
+        "card": "on second thoughts|on second thoughts/INTJ|on-second-thoughts#bei-genauerem-uberlegen",
+        "alternative": "on second thought",
+        "text": "on second thought, I would rather stay home tonight."
+      }
+    ]
+  },
+  {
+    "target": "from time to time",
+    "original": "We still meet for coffee from time to time.",
+    "translation_de": "Wir treffen uns immer noch ab und zu auf einen Kaffee.",
+    "reason": "occasionally bezeichnet dieselben gelegentlichen Treffen ohne festen Rhythmus.",
+    "candidates": [
+      {
+        "card": "from time to time|from time to time/ADV|from-time-to-time#von-zeit-zu-zeit",
+        "alternative": "occasionally",
+        "text": "We still meet for coffee occasionally."
+      }
+    ]
+  },
+  {
+    "target": "word for word",
+    "original": "She repeated his message word for word.",
+    "translation_de": "Sie wiederholte seine Nachricht Wort für Wort.",
+    "reason": "verbatim bedeutet hier die wortgetreue Wiederholung der Nachricht.",
+    "candidates": [
+      {
+        "card": "word for word|word for word/ADV|word-for-word#wort-fur-wort",
+        "alternative": "verbatim",
+        "text": "She repeated his message verbatim."
+      }
+    ]
+  },
+  {
+    "target": "cry over spilt milk",
+    "original": "We cannot change yesterday, so let us not cry over spilt milk.",
+    "translation_de": "Wir können gestern nicht ändern, also sollten wir Vergangenem nicht nachtrauern.",
+    "reason": "cry over spilled milk unterscheidet sich hier nur in der Partizipvariante.",
+    "candidates": [
+      {
+        "card": "cry over spilt milk|cry over spilt milk/VERB|cry-over-spilt-milk#vergeblich-vergangenem-nachtrauern",
+        "alternative": "cry over spilled milk",
+        "text": "We cannot change yesterday, so let us not cry over spilled milk."
+      }
+    ]
+  },
+  {
+    "target": "to be honest",
+    "original": "To be honest, I did not enjoy the film.",
+    "translation_de": "Ehrlich gesagt hat mir der Film nicht gefallen.",
+    "reason": "honestly leitet hier dieselbe offene persönliche Einschätzung des Films ein.",
+    "candidates": [
+      {
+        "card": "to be honest|to be honest/ADV|to-be-honest#ehrlich-gesagt",
+        "alternative": "honestly",
+        "text": "honestly, I did not enjoy the film."
+      }
+    ]
+  }
+]

@@ -165,16 +165,23 @@ def check_pack(final: dict, before_rows: dict) -> dict:
 def check_sqlite(path: Path, rows: dict) -> dict:
     """Reopen the export and compare every row with build_rows."""
     from sprachpipe.export import _value
-    from sprachpipe.schema import COLUMNS, TABLE_ORDER
+    from sprachpipe.schema import columns_for
 
-    conn = sqlite3.connect(path)
+    conn = sqlite3.connect(path.resolve().as_uri() + "?mode=ro", uri=True)
     try:
         counts = {}
-        for table in TABLE_ORDER:
-            names = [n for n, _ in COLUMNS[table] if n != "created_at"]
+        tables = {r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")}
+        if tables != set(rows):
+            _fail("SQLite table set differs from build_rows")
+        columns = columns_for(rows["content_releases"][0]["schema_version"])
+        for table in rows:
+            actual_columns = [r[1] for r in conn.execute(f'PRAGMA table_info("{table}")')]
+            if actual_columns != [name for name, _ in columns[table]]:
+                _fail(f"SQLite columns {table} differ from schema")
+            names = [n for n, _ in columns[table] if n != "created_at"]
             got = conn.execute(f'SELECT {", ".join(chr(34) + n + chr(34) for n in names)} '
                                f'FROM "{table}"').fetchall()
-            want = [tuple(_value(pg, r.get(n)) for n, pg in COLUMNS[table] if n != "created_at")
+            want = [tuple(_value(pg, r.get(n)) for n, pg in columns[table] if n != "created_at")
                     for r in rows[table]]
             if sorted(got, key=repr) != sorted(want, key=repr):
                 _fail(f"SQLite table {table} differs from build_rows")

@@ -1,0 +1,73 @@
+{
+  "status": "PASS",
+  "input_hashed_files": 83,
+  "source_sqlite_tables_compared": 22,
+  "source_comparison_exception": "content_releases.created_at is export-generated; presence checked, omitted from value comparison",
+  "new_cards": 89,
+  "new_sentences": 89,
+  "token_positions": 889,
+  "word_tokens": 742,
+  "alternatives": 2,
+  "new_senses": 121,
+  "new_dictionary_forms": 138,
+  "linter_errors": 0,
+  "linter_warnings": [
+    {
+      "form": "eat humble pie",
+      "level": "warn",
+      "rule": "i+1",
+      "message": "'unfairly'/'unfairly' Zipf 3.36 below 3.5"
+    },
+    {
+      "form": "I wouldn't say that",
+      "level": "warn",
+      "rule": "i+1",
+      "message": "'unfriendly'/'unfriendly' Zipf 3.10 below 3.5"
+    }
+  ],
+  "in_memory_create_content": "PASS: unmodified source function extracted by AST, exact source tokenizer; no CLI/export",
+  "in_memory_build_rows": "PASS",
+  "display_patch": "PASS: only deck positions changed; final 1..178",
+  "alternative_selection_owner_alias_scan": "PASS: all 441 selection identities and current ownership",
+  "selection_count": 441,
+  "batch_partition": [
+    89,
+    89,
+    263
+  ],
+  "source_rows_preserved": "PASS",
+  "schema4_form_tables_unchanged": "PASS",
+  "result_table_counts": {
+    "languages": 1,
+    "lemmas": 3771,
+    "senses": 5307,
+    "cards": 2745,
+    "dictionary_forms": 6365,
+    "decks": 12,
+    "deck_cards": 2638,
+    "deck_words": 2534,
+    "word_aliases": 37,
+    "sentences": 3279,
+    "sentence_tokens": 35977,
+    "card_sentences": 3273,
+    "stories": 1,
+    "story_sentences": 6,
+    "exercises": 0,
+    "grammar_rules": 0,
+    "audio_assets": 0,
+    "content_releases": 1,
+    "lexical_targets": 134,
+    "card_lexical_targets": 406,
+    "form_targets": 402,
+    "deck_practice_targets": 402
+  },
+  "production_import_executed": false,
+  "staging_executed": false,
+  "flutter_tests_executed": false,
+  "device_test_executed": false,
+  "cloud_model_calls": 0,
+  "limitations": [
+    "No independent human language review.",
+    "Full repository import/export and device acceptance remain local tasks."
+  ]
+}

@@ -1,0 +1,32 @@
+Natur & Umwelt – Batch 2, 10.10.2026
+
+81 aktuelle Ziele aus der unveränderten Authoring-ZIP redaktionell bearbeitet.
+81 neue Satzpaare; 939 Tokenpositionen (853 Wörter, 86 Satzzeichen).
+Keine Alternativantwort freigegeben; keine Eindeutigkeitsgarantie. accepted enthält nur die Zielform.
+Alle reservierten Zielidentitäten, Definitionen und Lerngruppen beibehalten.
+Die neue Lieferung enthält 101 zusätzliche Lemma- und 116 Sense-Zeilen sowie 147 Formübersetzungen. Begleitwort-Senses sind keine zusätzlichen Lernkarten.
+
+Kontextprüfung:
+- camp/campen und fly/fliegt wiederverwenden; bereits vorhandene Tierflug-Sätze geprüft.
+- energy/physikalische-energie aus dem korrigierten Batch 1 übernehmen.
+- Alle räumlichen on-Vorkommen im aktuellen Batch explizit an on#auf gebunden.
+- Schnittstelle bei sap ist cut als Nomen; living bei coral ein Adjektiv.
+- after bei pollen und vor cutting als Konjunktion; zeitliches after vor Nomen als Präposition.
+- from bei rock = Schutz vor, bei dew = Ursache. out of bei weed/filter bezeichnet die räumliche Herkunft.
+- Mine/Bergwerk, Pass/Gebirgspass, bed/Beet, treat/Leckerli gegenüber treats/Abwasseraufbereitung getrennt.
+- Textilfasern, Gesteinsadern und gasförmige Stoffe nicht an Ballaststoffe, Venen oder Brenngas binden.
+- Der feste Ausdruck keep out wird im Kontext als fernhalten verstanden; keine neue Mehrwort-Lernkarte.
+- Keine Altglossen pauschal bereinigt, keine alten Zeilen geändert.
+
+Technischer Nachweis:
+Mit den unveränderten beigefügten Pipelinequellen create_content, hashgebundenen Display-Patch und build_rows ausgeführt, echtes SQLite exportiert und alle 18 Tabellen erneut vollständig gelesen/abgeglichen. Export-Audit vergleicht Quelle und Ergebnis einschließlich der neuen Tokens und Reviewhashes.
+2075 bestehende Karten unverändert, 81 neue: 2156 Karten; 2690 Satztexte; 2684 Satzverknüpfungen; 2052 Wortbesitzzeilen.
+2041 primäre Lernziele: 160/489/241/245/245/249/250/162.
+Nur Natur-deck_cards.position und Natur-deck_words.position dürfen sich ändern: Anfügen 82–162, anschließend Anzeige 1–162 anhand Referenzmapping. Originalpositionen bleiben erhalten.
+Linter neue Sätze: 0 Fehler, 4 Häufigkeitshinweise (geese 3,35; snowfall 3,22; grazing/graze 3,49; swam 3,34).
+Die Häufigkeitshinweise sind keine Grammatikfehler. Sie bleiben im Bericht sichtbar.
+
+Grenzen:
+Redaktionelle Erstellung und Prüfung durch ChatGPT, keine unabhängige menschliche Inhaltsfreigabe. Die Offline-Validatoren belegen Struktur und Verträge, keine sprachliche Fehlerfreiheit.
+Keine zusätzlichen Pipeline-Modellaufrufe, App-Staging, Flutter-/Gerätetests oder Lernstandzugriffe in dieser Chat-Umgebung. Die Produktionsschritte stehen im Importprompt.
+Die nächste Authoring-ZIP erst lokal aus dem tatsächlich geprüften Import erzeugen: 162 importiert / 80 aktuell / 0 später. Keine Batch-3-Sätze in dieser Lieferung.

@@ -1,0 +1,129 @@
+{
+  "status": "Existing shared rows preserved. These contextual limitations are not newly created form glosses. Earlier lists are not closed by this report.",
+  "items": [
+    {
+      "key": "met|meet/VERB|meet#treffen",
+      "original": {
+        "form": "met",
+        "sense": "meet/VERB|meet#treffen",
+        "gloss_de": "trafen",
+        "rank": 1
+      },
+      "suggested_gloss": "traf; trafen; kennengelernt",
+      "reason": "Die geerbte Formglosse trafen deckt Singular und Partizip bzw. Erstbegegnung nicht vollständig ab.",
+      "uses": [
+        {
+          "target": "a blessing in disguise",
+          "text": "That cancelled trip was a blessing in disguise; I met my partner here."
+        },
+        {
+          "target": "go way back",
+          "text": "Tom and I go way back; we met at primary school."
+        },
+        {
+          "target": "if memory serves",
+          "text": "If memory serves, we first met at your cousin's wedding."
+        }
+      ],
+      "applied": false
+    },
+    {
+      "key": "could|could/AUX|could#konnten",
+      "original": {
+        "form": "could",
+        "sense": "could/AUX|could#konnten",
+        "gloss_de": "konnten",
+        "rank": 3
+      },
+      "suggested_gloss": "konnte; konnten",
+      "reason": "Die geerbte Pluralglosse konnten passt nicht zu I could.",
+      "uses": [
+        {
+          "target": "familiar",
+          "text": "Her voice sounded familiar, but I could not remember her name."
+        }
+      ],
+      "applied": false
+    },
+    {
+      "key": "name|name/NOUN|name#namen",
+      "original": {
+        "form": "name",
+        "sense": "name/NOUN|name#namen",
+        "card": null,
+        "gloss_de": "Namen",
+        "rank": 1
+      },
+      "suggested_gloss": "Name",
+      "reason": "Die gebeugte Form Namen ist keine geeignete allgemeine Wortglosse.",
+      "uses": [
+        {
+          "target": "familiar",
+          "text": "Her voice sounded familiar, but I could not remember her name."
+        }
+      ],
+      "applied": false
+    },
+    {
+      "key": "home|home/NOUN|home#hause",
+      "original": {
+        "form": "home",
+        "sense": "home/NOUN|home#hause",
+        "card": null,
+        "gloss_de": "Hause",
+        "rank": 1
+      },
+      "suggested_gloss": "Zuhause",
+      "reason": "In far from home bezeichnet das Nomen das Zuhause; Hause allein ist unvollständig.",
+      "uses": [
+        {
+          "target": "fancy seeing you here",
+          "text": "Fancy seeing you here, so far from home!"
+        },
+        {
+          "target": "can't complain",
+          "text": "Can't complain: work is going well and everyone at home is healthy."
+        }
+      ],
+      "applied": false
+    },
+    {
+      "key": "first|first/ADJ|first#ersten",
+      "original": {
+        "form": "first",
+        "sense": "first/ADJ|first#ersten",
+        "card": null,
+        "gloss_de": "ersten",
+        "rank": 1
+      },
+      "suggested_gloss": "erste; erster; erstes",
+      "reason": "Die geerbte Flexionsform ersten passt nicht zur isolierten Grundglosse.",
+      "uses": [
+        {
+          "target": "good for you",
+          "text": "Good for you—that first swimming lesson took courage!"
+        }
+      ],
+      "applied": false
+    },
+    {
+      "key": "left|leave/VERB|leave#liess-liegen",
+      "original": {
+        "form": "left",
+        "sense": "leave/VERB|leave#liess-liegen",
+        "card": null,
+        "gloss_de": "ließ liegen",
+        "rank": 4
+      },
+      "suggested_gloss": "liegen gelassen; ließ liegen",
+      "reason": "Im Perfekt have left steht das Partizip; geerbt ist nur ließ liegen.",
+      "uses": [
+        {
+          "target": "what a bother",
+          "text": "What a bother, I have left my keys at the office!"
+        }
+      ],
+      "applied": false
+    }
+  ]
+}

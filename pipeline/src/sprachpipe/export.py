@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .pack import build_rows
-from .schema import COLUMNS, TABLE_ORDER, primary_key
+from .schema import COLUMNS, TABLE_ORDER, primary_key, columns_for
 
 SQLITE_TYPES = {
     "text": "TEXT", "integer": "INTEGER", "smallint": "INTEGER", "bigint": "INTEGER",
@@ -19,11 +19,11 @@ SQLITE_TYPES = {
 }
 
 
-def _ddl(table: str) -> str:
+def _ddl(table: str, columns=None) -> str:
     pk = primary_key(table)
     cols = ", ".join(
         f'"{name}" {SQLITE_TYPES[pg]}' + (" PRIMARY KEY" if name == pk else "")
-        for name, pg in COLUMNS[table]
+        for name, pg in (columns or COLUMNS)[table]
     )
     return f'CREATE TABLE "{table}" ({cols})'
 
@@ -45,6 +45,7 @@ def export_sqlite(pack: dict, path: str | Path) -> dict[str, int]:
     it was and the error propagates."""
     path = Path(path)
     rows = build_rows(pack)   # validation before the target is touched
+    columns = columns_for(pack["release"]["schema_version"])
     now = datetime.now(timezone.utc).isoformat()
     for r in rows["content_releases"]:
         r.setdefault("created_at", now)
@@ -57,9 +58,9 @@ def export_sqlite(pack: dict, path: str | Path) -> dict[str, int]:
         conn = sqlite3.connect(tmp)
         try:
             with conn:
-                for table in TABLE_ORDER:
-                    conn.execute(_ddl(table))
-                    cols = COLUMNS[table]
+                for table in rows:
+                    conn.execute(_ddl(table, columns))
+                    cols = columns[table]
                     placeholders = ", ".join("?" for _ in cols)
                     names = ", ".join(f'"{n}"' for n, _ in cols)
                     conn.executemany(
@@ -72,4 +73,4 @@ def export_sqlite(pack: dict, path: str | Path) -> dict[str, int]:
     except BaseException:
         tmp.unlink(missing_ok=True)
         raise
-    return {t: len(rows[t]) for t in TABLE_ORDER}
+    return {t: len(rows[t]) for t in rows}

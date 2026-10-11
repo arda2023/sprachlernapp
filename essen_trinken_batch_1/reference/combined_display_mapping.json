@@ -1,0 +1,590 @@
+[
+  {
+    "card_ref": "pear|pear/NOUN|pear#birne",
+    "form_norm": "pear",
+    "original_position": 1,
+    "display_position": 1,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "blueberry|blueberry/NOUN|blueberry#heidelbeere",
+    "form_norm": "blueberry",
+    "original_position": 4,
+    "display_position": 2,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "chop|chop/VERB|chop#hacken",
+    "form_norm": "chop",
+    "original_position": 9,
+    "display_position": 3,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "plum|plum/NOUN|plum#pflaume",
+    "form_norm": "plum",
+    "original_position": 10,
+    "display_position": 4,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "spice|spice/NOUN|spice#gewurz",
+    "form_norm": "spice",
+    "original_position": 13,
+    "display_position": 5,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "margarine|margarine/NOUN|margarine#margarine",
+    "form_norm": "margarine",
+    "original_position": 17,
+    "display_position": 6,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "barley|barley/NOUN|barley#gerste",
+    "form_norm": "barley",
+    "original_position": 21,
+    "display_position": 7,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "whisk|whisk/VERB|whisk#verquirlen",
+    "form_norm": "whisk",
+    "original_position": 24,
+    "display_position": 8,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "grapefruit|grapefruit/NOUN|grapefruit#grapefruit",
+    "form_norm": "grapefruit",
+    "original_position": 25,
+    "display_position": 9,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "thyme|thyme/NOUN|thyme#thymian",
+    "form_norm": "thyme",
+    "original_position": 28,
+    "display_position": 10,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "cheddar|cheddar/NOUN|cheddar#cheddar",
+    "form_norm": "cheddar",
+    "original_position": 32,
+    "display_position": 11,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "brunch|brunch/NOUN|brunch#brunch",
+    "form_norm": "brunch",
+    "original_position": 36,
+    "display_position": 12,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "couscous|couscous/NOUN|couscous#couscous",
+    "form_norm": "couscous",
+    "original_position": 37,
+    "display_position": 13,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "blend|blend/VERB|blend#mixen",
+    "form_norm": "blend",
+    "original_position": 40,
+    "display_position": 14,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "pineapple|pineapple/NOUN|pineapple#ananas",
+    "form_norm": "pineapple",
+    "original_position": 41,
+    "display_position": 15,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "dill|dill/NOUN|dill#dill",
+    "form_norm": "dill",
+    "original_position": 45,
+    "display_position": 16,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "eggshell|eggshell/NOUN|eggshell#eierschale",
+    "form_norm": "eggshell",
+    "original_position": 50,
+    "display_position": 17,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "takeaway|takeaway/NOUN|takeaway#essen-zum-mitnehmen",
+    "form_norm": "takeaway",
+    "original_position": 54,
+    "display_position": 18,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "bran|bran/NOUN|bran#kleie",
+    "form_norm": "bran",
+    "original_position": 55,
+    "display_position": 19,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "marinate|marinate/VERB|marinate#marinieren",
+    "form_norm": "marinate",
+    "original_position": 58,
+    "display_position": 20,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "watermelon|watermelon/NOUN|watermelon#wassermelone",
+    "form_norm": "watermelon",
+    "original_position": 59,
+    "display_position": 21,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "espresso|espresso/NOUN|espresso#espresso",
+    "form_norm": "espresso",
+    "original_position": 60,
+    "display_position": 22,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "cumin|cumin/NOUN|cumin#kreuzkummel",
+    "form_norm": "cumin",
+    "original_position": 64,
+    "display_position": 23,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "bacon|bacon/NOUN|bacon#speck",
+    "form_norm": "bacon",
+    "original_position": 71,
+    "display_position": 24,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "crust|crust/NOUN|crust#kruste",
+    "form_norm": "crust",
+    "original_position": 77,
+    "display_position": 25,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "flavour|flavour/NOUN|flavour#geschmack",
+    "form_norm": "flavour",
+    "original_position": 78,
+    "display_position": 26,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "roast|roast/VERB|roast#im-ofen-braten",
+    "form_norm": "roast",
+    "original_position": 81,
+    "display_position": 27,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "avocado|avocado/NOUN|avocado#avocado",
+    "form_norm": "avocado",
+    "original_position": 82,
+    "display_position": 28,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "lemonade|lemonade/NOUN|lemonade#limonade",
+    "form_norm": "lemonade",
+    "original_position": 83,
+    "display_position": 29,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "sieve|sieve/NOUN|sieve#sieb",
+    "form_norm": "sieve",
+    "original_position": 84,
+    "display_position": 30,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "clove|clove/NOUN|clove#gewurznelke",
+    "form_norm": "clove",
+    "original_position": 88,
+    "display_position": 31,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "veal|veal/NOUN|veal#kalbfleisch",
+    "form_norm": "veal",
+    "original_position": 95,
+    "display_position": 32,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "bagel|bagel/NOUN|bagel#bagel",
+    "form_norm": "bagel",
+    "original_position": 101,
+    "display_position": 33,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "braise|braise/VERB|braise#schmoren",
+    "form_norm": "braise",
+    "original_position": 104,
+    "display_position": 34,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "crunchy|crunchy/ADJ|crunchy#knusprig",
+    "form_norm": "crunchy",
+    "original_position": 105,
+    "display_position": 35,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "cabbage|cabbage/NOUN|cabbage#kohl",
+    "form_norm": "cabbage",
+    "original_position": 106,
+    "display_position": 36,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "cider|cider/NOUN|cider#apfelwein",
+    "form_norm": "cider",
+    "original_position": 107,
+    "display_position": 37,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "ladle|ladle/NOUN|ladle#schopfkelle",
+    "form_norm": "ladle",
+    "original_position": 108,
+    "display_position": 38,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "paprika|paprika/NOUN|paprika#paprikapulver",
+    "form_norm": "paprika",
+    "original_position": 111,
+    "display_position": 39,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "venison|venison/NOUN|venison#hirschfleisch",
+    "form_norm": "venison",
+    "original_position": 118,
+    "display_position": 40,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "sourdough|sourdough/NOUN|sourdough#sauerteig",
+    "form_norm": "sourdough",
+    "original_position": 125,
+    "display_position": 41,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "juicy|juicy/ADJ|juicy#saftig",
+    "form_norm": "juicy",
+    "original_position": 128,
+    "display_position": 42,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "reheat|reheat/VERB|reheat#aufwarmen",
+    "form_norm": "reheat",
+    "original_position": 129,
+    "display_position": 43,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "spinach|spinach/NOUN|spinach#spinat",
+    "form_norm": "spinach",
+    "original_position": 130,
+    "display_position": 44,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "whisky|whisky/NOUN|whisky#whisky",
+    "form_norm": "whisky",
+    "original_position": 131,
+    "display_position": 45,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "skewer|skewer/NOUN|skewer#spie",
+    "form_norm": "skewer",
+    "original_position": 132,
+    "display_position": 46,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "mustard|mustard/NOUN|mustard#senf",
+    "form_norm": "mustard",
+    "original_position": 135,
+    "display_position": 47,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "fillet|fillet/NOUN|fillet#filet",
+    "form_norm": "fillet",
+    "original_position": 142,
+    "display_position": 48,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "toast|toast/NOUN|toast#toastbrot",
+    "form_norm": "toast",
+    "original_position": 149,
+    "display_position": 49,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "rancid|rancid/ADJ|rancid#ranzig",
+    "form_norm": "rancid",
+    "original_position": 152,
+    "display_position": 50,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "melt|melt/VERB|melt#schmelzen",
+    "form_norm": "melt",
+    "original_position": 153,
+    "display_position": 51,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "celery|celery/NOUN|celery#stangensellerie",
+    "form_norm": "celery",
+    "original_position": 154,
+    "display_position": 52,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "vodka|vodka/NOUN|vodka#wodka",
+    "form_norm": "vodka",
+    "original_position": 155,
+    "display_position": 53,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "scales|scales/NOUN|scales#kuchenwaage",
+    "form_norm": "scales",
+    "original_position": 156,
+    "display_position": 54,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "pesto|pesto/NOUN|pesto#pesto",
+    "form_norm": "pesto",
+    "original_position": 159,
+    "display_position": 55,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "tuna|tuna/NOUN|tuna#thunfisch",
+    "form_norm": "tuna",
+    "original_position": 166,
+    "display_position": 56,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "pastry|pastry/NOUN|pastry#gebackteig",
+    "form_norm": "pastry",
+    "original_position": 173,
+    "display_position": 57,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "rich|rich/ADJ|rich#gehaltvoll",
+    "form_norm": "rich",
+    "original_position": 176,
+    "display_position": 58,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "reduce|reduce/VERB|reduce#verringern",
+    "form_norm": "reduce",
+    "original_position": 177,
+    "display_position": 59,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "turnip|turnip/NOUN|turnip#speiserube",
+    "form_norm": "turnip",
+    "original_position": 178,
+    "display_position": 60,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "fizzy|fizzy/ADJ|fizzy#sprudelnd",
+    "form_norm": "fizzy",
+    "original_position": 179,
+    "display_position": 61,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "platter|platter/NOUN|platter#servierplatte",
+    "form_norm": "platter",
+    "original_position": 180,
+    "display_position": 62,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "broth|broth/NOUN|broth#bruhe",
+    "form_norm": "broth",
+    "original_position": 183,
+    "display_position": 63,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "herring|herring/NOUN|herring#hering",
+    "form_norm": "herring",
+    "original_position": 190,
+    "display_position": 64,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "pancake|pancake/NOUN|pancake#pfannkuchen",
+    "form_norm": "pancake",
+    "original_position": 197,
+    "display_position": 65,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "edible|edible/ADJ|edible#essbar",
+    "form_norm": "edible",
+    "original_position": 200,
+    "display_position": 66,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "spread|spread/VERB|spread#breitet-aus",
+    "form_norm": "spread",
+    "original_position": 201,
+    "display_position": 67,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "aubergine|aubergine/NOUN|aubergine#aubergine",
+    "form_norm": "aubergine",
+    "original_position": 202,
+    "display_position": 68,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "sip|sip/VERB|sip#nippen",
+    "form_norm": "sip",
+    "original_position": 203,
+    "display_position": 69,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "foil|foil/NOUN|foil#alufolie",
+    "form_norm": "foil",
+    "original_position": 204,
+    "display_position": 70,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "chocolate|chocolate/NOUN|chocolate#schokolade",
+    "form_norm": "chocolate",
+    "original_position": 207,
+    "display_position": 71,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "mussel|mussel/NOUN|mussel#miesmuschel",
+    "form_norm": "mussel",
+    "original_position": 214,
+    "display_position": 72,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "tart|tart/NOUN|tart#tarte",
+    "form_norm": "tart",
+    "original_position": 221,
+    "display_position": 73,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "boneless|boneless/ADJ|boneless#ohne-knochen",
+    "form_norm": "boneless",
+    "original_position": 224,
+    "display_position": 74,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "crack|crack/VERB|crack#aufschlagen",
+    "form_norm": "crack",
+    "original_position": 225,
+    "display_position": 75,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "lentil|lentil/NOUN|lentil#linse",
+    "form_norm": "lentil",
+    "original_position": 226,
+    "display_position": 76,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "coaster|coaster/NOUN|coaster#glasuntersetzer",
+    "form_norm": "coaster",
+    "original_position": 227,
+    "display_position": 77,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "stopper|stopper/NOUN|stopper#flaschenverschluss",
+    "form_norm": "stopper",
+    "original_position": 228,
+    "display_position": 78,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "hazelnut|hazelnut/NOUN|hazelnut#haselnuss",
+    "form_norm": "hazelnut",
+    "original_position": 231,
+    "display_position": 79,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "squid|squid/NOUN|squid#tintenfisch",
+    "form_norm": "squid",
+    "original_position": 238,
+    "display_position": 80,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "porridge|porridge/NOUN|porridge#haferbrei",
+    "form_norm": "porridge",
+    "original_position": 245,
+    "display_position": 81,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "rare|rare/ADJ|rare#blutig-gebraten",
+    "form_norm": "rare",
+    "original_position": 248,
+    "display_position": 82,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "serve|serve/VERB|serve#servieren",
+    "form_norm": "serve",
+    "original_position": 249,
+    "display_position": 83,
+    "authoring_batch": 1
+  },
+  {
+    "card_ref": "olive|olive/NOUN|olive#olive",
+    "form_norm": "olive",
+    "original_position": 250,
+    "display_position": 84,
+    "authoring_batch": 1
+  }
+]

@@ -16,6 +16,9 @@ final testNow = DateTime(2026, 10, 4, 12);
 
 /// Small explicit content independent of production assets and sample_content.
 class TestContent implements ContentRepository {
+  @override
+  Future<List<DeckPracticeTarget>> deckPracticeTargets(String deckId) async =>
+      [for (final id in await deckCardIds(deckId)) DeckPracticeTarget(cardId: id)];
   TestContent({this.library = false});
   final bool library;
   static const titles = [

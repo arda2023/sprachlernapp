@@ -227,7 +227,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final hint = grammarHint(card, solved: solved);
     await FormInfoSheet.show(
       context,
-      label: card.formLabelDe ?? card.pos,
+      label: card.exerciseLabel,
       explanation: hint.explanation,
       examples: hint.examples,
       forms: solved && snapshot == null
@@ -395,7 +395,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                     : !canShow
                                     ? state.total == 0
                                           ? Text(
-                                              'Gerade gibt es keine Wörter zum Üben.',
+                                              'Gerade gibt es keine Übungen.',
                                               style: AppType.chrome(
                                                 color: context
                                                     .appColors
@@ -504,9 +504,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                                     children: [
                                                       Expanded(
                                                         child: Text(
-                                                          contentCard!
-                                                                  .formLabelDe ??
-                                                              contentCard.pos,
+                                                          contentCard!.exerciseLabel,
                                                           style: AppType.chrome(
                                                             color: context
                                                                 .appColors
@@ -653,14 +651,14 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final afterTypo = records.length - first - reset;
     return SuccessFeedbackCard(
       title:
-          '${records.length} ${records.length == 1 ? 'Wort' : 'Wörter'} geübt',
+          '${records.length} ${records.length == 1 ? 'Übung' : 'Übungen'} geübt',
       subtitle:
           '$first auf Anhieb richtig · $reset zurück auf Stufe 1${afterTypo > 0 ? ' · $afterTypo nach Schreibkorrektur' : ''}',
       explanation: widget.mode == DeckPracticeMode.review
           ? 'In der Stapel-Revue bleiben saubere Antworten auf ihrer Stufe. Fehler, Hinweise und „Wort erfahren“ führen zu Stufe 1.'
           : widget.mode == DeckPracticeMode.mixed
-          ? 'Fällige Karten werden zuerst geübt. Neue Wörter starten ohne Hilfe auf Stufe 3. Beim Vorab-Üben bleiben saubere Antworten auf ihrer Stufe.'
-          : 'Neue Wörter starten ohne Hilfe auf Stufe 3. Saubere Wiederholungen rücken eine Stufe auf. Fehler, Hinweise und „Wort erfahren“ führen zu Stufe 1.',
+          ? 'Fällige Karten werden zuerst geübt. Neue Übungen starten ohne Hilfe auf Stufe 3. Beim Vorab-Üben bleiben saubere Antworten auf ihrer Stufe.'
+          : 'Neue Übungen starten ohne Hilfe auf Stufe 3. Saubere Wiederholungen rücken eine Stufe auf. Fehler, Hinweise und „Wort erfahren“ führen zu Stufe 1.',
       actionLabel: widget.mode == DeckPracticeMode.mixed
           ? 'Zurück zur Startseite'
           : 'Zurück zum Stapel',

@@ -508,9 +508,24 @@ def import_patch(source_path, patch_path, corpus_path, plan_path, out, finish_pa
 def create_content(source, entry, registry, *, source_hash):
     """Offline schema-2/3 create, using the same rows, linter and exporter."""
     from sprachpipe.word_registry import digest as registry_digest, validate_selection
-    require(entry.get('format') == 'sprachapp.editorial-content' and entry.get('format_version') == 2,
+    v3 = entry.get('format_version') == 3
+    require(entry.get('format') == 'sprachapp.editorial-content' and entry.get('format_version') in (2, 3),
             'unsupported create format')
-    spec = read(ROOT/'pipeline/data/curation/editorial_content_v2.schema.json')
+    spec = read(ROOT/('pipeline/data/curation/editorial_content_v3.schema.json' if v3 else 'pipeline/data/curation/editorial_content_v2.schema.json'))
+    if v3:
+        import jsonschema
+        try:
+            jsonschema.validate(entry, spec)
+        except jsonschema.ValidationError as error:
+            raise ValueError('v3 schema: '+error.message) from None
+        from sprachpipe.form_targets import validate_form_selection, TABLES
+        require(digest(entry['selection']) == entry['selection_sha256'], 'selection hash mismatch')
+        validate_form_selection(source, entry['selection'], registry, source_hash=source_hash)
+        delta = entry['selection']['batches'][str(entry['selection']['authoring_batch'])]
+        for table in ('cards', 'decks', 'deck_words', 'deck_cards', 'word_aliases', *TABLES):
+            require(entry['add'].get(table, []) == delta.get(table, []), 'v3 selection delta mismatch: '+table)
+        for table in ('lemmas', 'senses'):
+            require(all(r in entry['add'].get(table, []) for r in delta.get(table, [])), 'missing selected '+table)
     require(all(k in entry for k in spec['required']), 'missing required create field')
     for table, values in entry['add'].items():
         require(table in spec['properties']['add']['properties'], f'unsupported create table {table}')
@@ -522,7 +537,8 @@ def create_content(source, entry, registry, *, source_hash):
     require(source_hash == entry['source_sha256'], 'create source hash mismatch')
     require(registry_digest(registry) == entry['registry_sha256'], 'create registry hash mismatch')
     schema_version = source['release']['schema_version']
-    require(schema_version in (2, 3), 'create requires schema-2 or schema-3 base')
+    require(schema_version in ((3, 4) if v3 else (2, 3, 4)), 'create source schema incompatible with format')
+    if v3: schema_version = 4
     require(registry.get('parent_sha256') == source['word_registry']['sha256'], 'registry must extend this base snapshot')
     old_words = source['word_registry']['snapshot']['words']
     require(all(w in registry['words'] for w in old_words), 'create registry changes existing ownership')
@@ -530,6 +546,7 @@ def create_content(source, entry, registry, *, source_hash):
     work = copy.deepcopy(source)
     tables = {'lemmas', 'senses', 'cards', 'decks', 'deck_cards', 'deck_words', 'word_aliases',
               'sentences', 'sentence_tokens', 'card_sentences', 'dictionary_forms', 'stories', 'story_sentences'}
+    if v3: tables |= set(TABLES)
     require(set(entry['add']) <= tables, 'unsupported create table')
     for table, values in entry['add'].items():
         require(isinstance(values, list), f'{table} must be an array')
@@ -551,11 +568,20 @@ def create_content(source, entry, registry, *, source_hash):
     for card in entry['add'].get('cards', []):
         se = senses[card['sense']]; lm = lemmas[se['lemma']]
         sid = stable_id('senses', lemma_id=stable_id('lemmas', lang=work['lang'], lemma=lm['lemma'], pos=lm['pos']), sense_key=se['sense_key'])
-        cid = stable_id('cards', lang=work['lang'], form=card['form'], sense_id=sid)
+        from sprachpipe.form_targets import card_id
+        cid = card_id(work['lang'], card, sid)
+        if v3:
+            # Complete owner/alias and canonical-target checks run in build_rows.
+            continue
         require(card['ref'] in memberships, 'new card must have a reserved primary membership')
         grouped.setdefault(memberships[card['ref']], []).append({'form': card['form'], 'card_id': cid})
     for owner, cards in grouped.items():
         validate_selection(cards, registry, lang=work['lang'], owner=owner, allow_reserved=True)
+    if v3:
+        old_refs = {c['ref'] for c in source['cards']}
+        require(not any(l['card'] in old_refs for l in entry['add'].get('card_sentences', [])), 'v3 cannot change existing fixed sentences')
+        old_sentences = {s['ref'] for s in source['sentences']}
+        require(not any(t['sentence'] in old_sentences for t in entry['add'].get('sentence_tokens', [])), 'v3 cannot change existing tokens')
     reviews = {r['sentence']: r for r in entry['reviews']}
     added_sentences = entry['add'].get('sentences', [])
     require(len(reviews) == len(entry['reviews']) == len(added_sentences), 'one review per new sentence required')
@@ -569,7 +595,7 @@ def create_content(source, entry, registry, *, source_hash):
         require(r and r.get('decision') == 'approved' and r.get('reason') and
                 r['checked'] == {'text': sn['text'], 'translation_de': sn['translation_de'],
                                  'tokens_sha256': digest(tokens), 'links_sha256': digest(links)}, 'missing/stale editorial review')
-        expected = tokenize(sn['text'])
+        expected = tokenize(sn['text'], lexical_spans=[(c['gap_start'], c['gap_end']) for c in links])
         require([{k:t[k] for k in ('idx','surface','start_pos','end_pos')} for t in tokens] ==
                 [{k:t[k] for k in ('idx','surface','start_pos','end_pos')} for t in expected], 'incomplete token coverage')
         for t, e in zip(tokens, expected):

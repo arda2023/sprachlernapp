@@ -253,6 +253,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
           _db.storyLearningAdditions,
           _db.storyWordSources,
           _db.learningIdentityBindings,
+          _db.formIdentityBindings,
         ]),
       )
       .map((_) {});
@@ -364,6 +365,8 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
       _db.learningIdentityBindings,
     )..where((t) => t.lang.equals(lang))).get())
       row.identityKey: row.cardId,
+    for (final row in await (_db.select(_db.formIdentityBindings)..where((t) => t.lang.equals(lang))).get())
+      row.identityKey: row.cardId,
   };
 
   @override
@@ -375,7 +378,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
         message: invalid ?? 'Andere Sprache',
       );
     }
-    if (c.groupMembers.isNotEmpty && c.card?.learning != null) {
+    if (c.token.function == null && c.groupMembers.isNotEmpty && c.card?.learning != null) {
       final members = attachLocalLearning(
         c.groupMembers,
         (await localPracticeItems()).map((i) => i.card),
@@ -406,7 +409,17 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
         );
       }
     }
-    final bound = (await identityBindings())[c.identity.key];
+    final bindings = await identityBindings();
+    if (c.token.function != null) {
+      final oldIdentity = LearningIdentity(c.lang, c.identity.formNorm, c.identity.semanticAnchor);
+      final old = bindings[oldIdentity.key] ?? oldIdentity.localId;
+      final row = await (_db.select(_db.userCards)..where((t) => t.cardId.equals(old))).getSingleOrNull();
+      if (row != null && row.localOnly && old != c.card?.id && row.formFunction == null) {
+        return const StoryAddResult(StoryAddState.conflict,
+          message: 'Ein älterer Lernstand hat keine belegte Form. Er bleibt erhalten; bitte die Zuordnung klären.');
+      }
+    }
+    final bound = bindings[c.identity.key];
     final states = await cardStates({
       c.identity.localId,
       if (c.card != null) c.card!.id,
@@ -504,6 +517,8 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
               senseIdentity: Value(c.token.senseId),
               senseKey: Value(c.token.senseKey),
               primaryContextId: Value(contextId),
+              formFunction: Value(c.token.function),
+              lexicalTargetId: Value(c.token.lexicalId),
             ),
           );
       await _db
@@ -540,7 +555,14 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
       await ensureCards([id], now: now, origin: CardOrigin.story);
     }
     // A group redirect is not an exact spelling/sense identity binding.
-    if (c.groupMembers.isEmpty ||
+    if (c.token.function != null) {
+      await _db.into(_db.formIdentityBindings).insert(
+        FormIdentityBindingsCompanion.insert(identityKey: c.identity.key, lang: lang,
+          formNorm: c.identity.formNorm, semanticAnchor: c.identity.semanticAnchor,
+          function: c.token.function!, cardId: id), mode: InsertMode.insertOrIgnore);
+      final binding = await (_db.select(_db.formIdentityBindings)..where((t) => t.identityKey.equals(c.identity.key))).getSingle();
+      if (binding.cardId != id) throw StateError('Form wurde parallel anders zugeordnet; bitte erneut öffnen.');
+    } else if (c.groupMembers.isEmpty ||
         id == c.card?.id ||
         id == c.identity.localId) {
       await _db
@@ -657,6 +679,9 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
             senseKey: r.senseKey,
             translationDe: r.glossDe,
             formLabelDe: r.pos,
+            identityFunction: r.formFunction,
+            introductionScope: r.formFunction == null ? 'ordinary' : 'form_only',
+            lexicalTargetId: r.lexicalTargetId,
           ),
           sentences: [_context(ctx)],
           otherFormsOfLemma: (jsonDecode(ctx.otherFormsJson) as List)

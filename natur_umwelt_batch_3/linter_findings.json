@@ -1,0 +1,30 @@
+{
+  "errors": [],
+  "warnings": [
+    [
+      "flower",
+      "i+1",
+      "'petal'/'petals' Zipf 3.46 below 3.5"
+    ],
+    [
+      "tail",
+      "i+1",
+      "'wag'/'wagged' Zipf 3.03 below 3.5"
+    ],
+    [
+      "harmful",
+      "i+1",
+      "'wastewater'/'wastewater' Zipf 3.36 below 3.5"
+    ],
+    [
+      "deer",
+      "i+1",
+      "'antler'/'antlers' Zipf 2.95 below 3.5"
+    ],
+    [
+      "absorb",
+      "i+1",
+      "'rainwater'/'rainwater' Zipf 3.00 below 3.5"
+    ]
+  ]
+}

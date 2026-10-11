@@ -97,3 +97,10 @@ def apply_deck_display_patch(pack, patch, *, source_sha256, create_sha256, regis
             if row["deck"] == deck:
                 row["position"] = by_card[row[key]]["position"]
     return result
+
+
+def form_display_mapping(selection):
+    """Form selection freezes independent practice and ownership positions."""
+    return {number:{'ownership':delta.get('deck_words', []),
+                    'practice':delta.get('deck_practice_targets', [])}
+            for number,delta in selection['batches'].items()}

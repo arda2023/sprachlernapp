@@ -37,6 +37,7 @@ class DriftContentRepository
   Future<List<DeckSummary>> decks() async {
     final rows = await _select(
       'SELECT d.id, d.slug, d.title_de, d.description_de, d.cefr_band, '
+      '${info.schemaVersion >= 4 ? 'd.practice_kind' : "'ordinary'"} AS practice_kind, '
       '(SELECT count(*) FROM deck_cards dc JOIN cards c ON c.id = dc.card_id '
       ' WHERE dc.deck_id = d.id AND dc.removed_in IS NULL '
       ' AND c.removed_in IS NULL) AS card_count '
@@ -48,13 +49,14 @@ class DriftContentRepository
       for (final r in rows)
         DeckSummary(
           id: r.read<String>('id'),
+          practiceKind: r.read<String>('practice_kind'),
           slug: r.read<String>('slug'),
           titleDe: r.read<String>('title_de'),
           descriptionDe: r.readNullable<String>('description_de'),
           cefrBand: r.readNullable<String>('cefr_band'),
-          cardCount: (await selectionCards(
-            await deckCardIds(r.read<String>('id')),
-          )).map((c) => c.learningGroup).toSet().length,
+          cardCount: r.read<String>('practice_kind') == 'ordinary'
+              ? (await selectionCards(await deckCardIds(r.read<String>('id')))).where((c)=>c.introductionScope=='ordinary').map((c)=>c.learningGroup).toSet().length
+              : (await deckPracticeTargets(r.read<String>('id'))).length,
         ),
     ];
   }
@@ -79,6 +81,29 @@ class DriftContentRepository
     ];
   }
 
+  Future<FormTarget?> _formTarget(String cardId) async {
+    if (info.schemaVersion < 4) return null;
+    final rows = await _select('SELECT * FROM form_targets WHERE card_id=? AND removed_in IS NULL', [cardId]);
+    if (rows.isEmpty) return null;
+    if (rows.length != 1) throw _broken('Mehrdeutige Formkarte');
+    final r = rows.single;
+    return FormTarget(id:r.read<String>('id'),cardId:cardId,senseId:r.read<String>('sense_id'),
+      form:r.read<String>('form'),function:r.read<String>('function'),lexicalTargetId:r.read<String>('lexical_target_id'));
+  }
+
+  @override
+  Future<List<DeckPracticeTarget>> deckPracticeTargets(String deckId) async {
+    if (info.schemaVersion >= 4) {
+      final decks = await _select('SELECT practice_kind FROM decks WHERE id=? AND removed_in IS NULL', [deckId]);
+      if (decks.isNotEmpty && decks.single.read<String>('practice_kind') != 'ordinary') {
+        final rows=await _select('SELECT f.card_id FROM deck_practice_targets d JOIN form_targets f ON f.id=d.form_target_id WHERE d.deck_id=? AND d.removed_in IS NULL AND f.removed_in IS NULL ORDER BY d.position', [deckId]);
+        return [for (final r in rows) DeckPracticeTarget(cardId:r.read<String>('card_id'),formTarget:await _formTarget(r.read<String>('card_id')))];
+      }
+    }
+    final cards = await selectionCards(await deckCardIds(deckId));
+    return [for (final c in cards) if(c.introductionScope == 'ordinary') DeckPracticeTarget(cardId:c.id)];
+  }
+
   @override
   Future<Set<String>> allCardIds() async {
     final rows = await _select(
@@ -98,13 +123,20 @@ class DriftContentRepository
       for (final r in await _select(
         'SELECT c.id, c.lang, c.form, c.form_norm, c.lemma_id, l.lemma, c.pos, '
         'c.form_kind, c.form_label_de, c.translation_de, c.cefr_band, c.sense_id, s.sense_key, '
-        '${info.schemaVersion >= 3 ? 'c.learning' : 'NULL'} AS learning '
+        '${info.schemaVersion >= 3 ? 'c.learning' : 'NULL'} AS learning, '
+        '${info.schemaVersion >= 4 ? 'c.identity_function' : 'NULL'} AS identity_function, '
+        '${info.schemaVersion >= 4 ? 'c.introduction_scope' : "'ordinary'"} AS introduction_scope, '
+        '${info.schemaVersion >= 4 ? '(SELECT lexical_target_id FROM card_lexical_targets WHERE card_id=c.id AND removed_in IS NULL)' : 'NULL'} AS lexical_target_id '
         'FROM cards c JOIN lemmas l ON l.id = c.lemma_id '
         'JOIN senses s ON s.id = c.sense_id '
         'WHERE c.id IN ($marks) AND c.lang = ? AND c.removed_in IS NULL',
         [...chunk, _lang],
       )) {
         final card = ContentCard(
+          formTarget: await _formTarget(r.read<String>('id')),
+          identityFunction: r.readNullable<String>('identity_function'),
+          introductionScope: r.read<String>('introduction_scope'),
+          lexicalTargetId: r.readNullable<String>('lexical_target_id'),
           learning: r.readNullable<String>('learning') == null
               ? null
               : LearningTarget.fromJson(
@@ -403,6 +435,8 @@ class DriftContentRepository
             end: end,
             surface: surface,
             cardId: t.readNullable<String>('card_id'),
+            formTarget: info.schemaVersion >= 4 && t.readNullable<String>('form_target_id') != null
+                ? await _formTarget(t.read<String>('card_id')) : null,
             lemmaId: t.readNullable<String>('lemma_id'),
             lemma: t.readNullable<String>('lemma'),
             pos: t.readNullable<String>('pos'),
@@ -440,10 +474,11 @@ class DriftContentRepository
     final doc = await storyDocument(storyId);
     final sentence = doc.sentences.singleWhere((s) => s.id == sentenceId);
     final token = sentence.tokens.singleWhere((t) => t.index == tokenIndex);
-    final matches = await _select(
+    final candidates = await _select(
       'SELECT id,removed_in FROM cards WHERE lang=? AND form_norm=? AND sense_id=?',
       [_lang, contentFormNorm(token.surface), token.senseId],
     );
+    final matches = token.formTarget == null ? candidates : candidates.where((r) => r.read<String>('id') == token.formTarget!.cardId).toList();
     ContentCard? card;
     final retired = matches.any(
       (r) => r.readNullable<String>('removed_in') != null,
@@ -460,6 +495,9 @@ class DriftContentRepository
     if (matches.length == 1 && !retired) {
       final items = await practiceItems([matches.single.read<String>('id')]);
       card = items.single.card;
+      if (token.formTarget == null && card.introductionScope == 'form_only') {
+        problem = 'Die Form ist im Satz nicht eindeutig belegt. Die Übersetzung bleibt verfügbar.';
+      }
     }
     final forms = token.lemmaId == null
         ? <String>{}

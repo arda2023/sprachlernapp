@@ -1,0 +1,487 @@
+# Content-Pipeline (`pipeline/`)
+
+Offline-Werkzeug in Python, läuft nie in der App (siehe `PRODUCT.md`, Abschnitt Runtime AI Boundary).
+
+## Aktueller Vertrag: Paket A (04.10.2026)
+
+Neue Produktion und Offline-Create exportieren **Schema 2: genau einen aktiven Satz je Karte**. Kandidaten-Batches (5/3/3), Retrygrenzen, Linter und Alternativenregeln bleiben eigenständige Regeln. Schema 1 wird ausdrücklich als Legacy gelesen/geprüft; `sprachpipe export … --legacy` und historische Patch-/Finish-/Merge-Skripte mit `--legacy` erlauben die Reproduktion alter Artefakte. `complete_curation`/`finalize_curation` übernehmen das ausdrücklich im gespeicherten Arbeitsstand angegebene Schema; sie erzeugen keine neue Auswahl. Die folgenden 3a–3d-Abschnitte und Laufzahlen dokumentieren historische Stände, nicht den neuen Satzvertrag.
+
+`word_registry.py` prüft Sprache + NFC/lowercase/typografisches Apostroph vor Satzproduktion/Import; aktive Primärkarte und Eigentümerstapel sind eindeutig. Mehrere neue Bedeutungen derselben Form müssen vor Produktion redaktionell auf eine Primärbedeutung begrenzt werden. Konflikte führen zu Fehlern mit beiden Stellen/Eigentümern, nicht zu Ersatzwörtern. Die Registry wird als kanonischer SHA-256 plus Snapshot im Pack gebunden. Neue Reservierungen benötigen `parent_sha256` des Basissnapshots; vorhandene Einträge bleiben unverändert. Der nächste Lauf muss den fortgeschriebenen Snapshot verwenden (`bind_new_pack`/Import), nicht eine veraltete Registry als aktuellen Bestand ausgeben. Kein verteilter Reservierungsdienst.
+
+`build_rows` prüft Schema-2-Kardinalität, Primärbesitz/Aliase, IDs/Referenzen, Gap/accepted/Alternativen, vollständige Tokenabdeckung und Formglossen sowie Storyreferenzen vor Export. `removed_in`/`replaced_by` werden transportiert. Historische Links zählen nicht als aktive Sätze; Karten werden dadurch nicht retirert. `check_sqlite` öffnet den Export erneut und vergleicht alle Zeilen aller 18 Tabellen. Die additive SQL-Migration ist nur ein lokaler Inhaltsschema-Spiegel und wurde nicht remote angewendet.
+
+### Offline-Create: verbindliche Lieferung
+
+Schema: `pipeline/data/curation/editorial_content_v2.schema.json`; ausführbares kleines Beispiel: `pipeline/tests/fixtures/editorial_create_v2/{base,input,registry}.json`. Die Katzen-Story ist ausschließlich synthetische Test-Fixture und nicht im App-Pack.
+
+Pflichtfelder: `format=sprachapp.editorial-content`, `format_version=2`, `operation_id`, neue `version`, `reviewer`, `source_sha256` (exakte Bytes des Basis-pack.json), `registry_sha256` (kanonisches JSON der erweiterten Registry), `add`, `reviews`. `add` enthält neue Referenzen in vorhandenen Tabellen; keine Änderung/Löschung bestehender Datensätze. Für eine Karte sind Form, genaue Sense/Lemma-Referenz, deutsche Übersetzung/Formbezeichnung/Definition, Primärzuordnung/Reservierung, ein Satz mit Übersetzung, Lücke, genau `[form]` als accepted und geprüfte valid_alternatives erforderlich. Alle Texttokens haben idx, Oberfläche und Offsets; Worttokens zusätzlich genaue Lemma/Sense-Referenzen und Formglossen in dictionary_forms, optional exakte Kartenreferenz. Satzzeichen besitzen keine erfundene Bedeutung. Neue Stories transportieren Metadaten und lückenlose story_sentences-Indizes/Absatzindizes über dieselben annotierten Sätze.
+
+Je neuem Satz genau ein `reviews`-Eintrag mit `sentence`, `decision=approved`, begründeter `reason`, `checked` (exakter Text, Übersetzung, kanonische SHA-256 von Token- und Linkarrays) sowie `alternatives_checked`: jede Alternative mit Karte und wörtlich eingesetztem vollständigem Satz. Ein leeres Array ist nur ohne Alternativen vollständig. Fehlende/veraltete Annotation oder Review blockiert. Der Import behauptet keine Modell-QA: qa_status=editorial_reviewed, Modell=NULL, Redaktion/Operation als Provenienz. Anschließend unveränderte Linter-/Export-/Readback-Prüfung; kein LLM-Client/ADC nötig.
+
+Ab Repository-Root, Windows PowerShell:
+```powershell
+.\pipeline\.venv\Scripts\python.exe -X utf8 pipeline/scripts/import_editorial_patch.py --source <basis-pack.json> --create <input.json> --registry <registry.json> --out <frischer-ordner>
+```
+macOS Terminal:
+```sh
+pipeline/.venv/bin/python pipeline/scripts/import_editorial_patch.py --source <basis-pack.json> --create <input.json> --registry <registry.json> --out <frischer-ordner>
+```
+
+Der separate Übergangsmodus `--single-sentence pipeline/data/curation/single_sentence_v1.json` verwendet das gesicherte chat_editorial_finish_v1/pack.json und `--registry pipeline/data/words/en.v1.json`. Ausgabe: `pipeline/out/single_sentence_v1/`; erneute Ausführung darf diesen Ordner nicht überschreiben. Auswahlbegründungen und Quellhashes sind versioniert. Details/Abnahme: `docs/decks-and-story-learning-plan.md`.
+
+## 3a Stand (historisch)
+
+Gerüst ohne KI-Aufrufe: stabile IDs, Lemma-Auswahl, Satz-Linter, DB-Schreiber, Export nach `content.sqlite`, Kosten-Protokoll.
+
+Ordner: `pipeline/src/sprachpipe/` (Code), `pipeline/tests/` (pytest, Fixture `tests/fixtures/mini_pack.json`), `pipeline/config.yaml`, `pipeline/out/` und `pipeline/.venv/` (beide nicht im Repo). Verbindung nur über `SUPABASE_DB_URL` in `pipeline/.env` (Vorlage: `pipeline/.env.example`).
+
+Windows (PowerShell), im Ordner `pipeline`:
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -e ".[test]"
+.\.venv\Scripts\python.exe -m pytest
+.\.venv\Scripts\python.exe -m sprachpipe.cli lemmas
+.\.venv\Scripts\python.exe -m sprachpipe.cli lint tests\fixtures\mini_pack.json
+.\.venv\Scripts\python.exe -m sprachpipe.cli upsert tests\fixtures\mini_pack.json            # Dry-Run
+.\.venv\Scripts\python.exe -m sprachpipe.cli upsert tests\fixtures\mini_pack.json --publish  # schreibt
+.\.venv\Scripts\python.exe -m sprachpipe.cli export tests\fixtures\mini_pack.json out\content.sqlite --legacy
+.\.venv\Scripts\python.exe -m sprachpipe.cli check-db                                         # nur lesen
+```
+
+macOS (Terminal), im Ordner `pipeline`:
+```bash
+python3.11 -m venv .venv
+.venv/bin/python -m pip install -e ".[test]"
+.venv/bin/python -m pytest
+.venv/bin/python -m sprachpipe.cli lemmas
+.venv/bin/python -m sprachpipe.cli upsert tests/fixtures/mini_pack.json --publish
+.venv/bin/python -m sprachpipe.cli export tests/fixtures/mini_pack.json out/content.sqlite --legacy
+```
+
+`upsert` ist ohne `--publish` ein Dry-Run. Lokale DB nach `supabase start`: `postgresql://postgres:postgres@127.0.0.1:54322/postgres`.
+
+**Funktionswörter** (entschieden in 3b): werden Karten wie alle anderen Wörter. Der `lemmas`-Befehl aus 3a filtert weiter nur NOUN, VERB, ADJ, ADV; `generate` nutzt ihn nicht.
+
+**Bekannte Grenze:** spaCy bestimmt Lemma und Wortart am einzelnen Wort ohne Kontext. Dadurch stehen z. B. `about`, `up`, `out` als ADV in der Liste und `best`/`better` bei `well`.
+
+## 3b Stand
+
+KI-Generierung über Vertex AI, Blindtest, Kostenkontrolle, Review-Liste. Kein Schreiben in eine Datenbank.
+
+Windows (PowerShell), im Ordner `pipeline`:
+```powershell
+gcloud auth application-default login                       # einmalig, ADC
+.\.venv\Scripts\python.exe -m pip install -e ".[test]"
+.\.venv\Scripts\python.exe -m pytest
+.\.venv\Scripts\python.exe -m sprachpipe.cli generate --forms smoke --out out\smoke_pack.json --max-usd 1.0
+```
+
+macOS (Terminal), im Ordner `pipeline`:
+```bash
+gcloud auth application-default login
+.venv/bin/python -m pip install -e ".[test]"
+.venv/bin/python -m pytest
+.venv/bin/python -m sprachpipe.cli generate --forms smoke --out out/smoke_pack.json --max-usd 1.0
+```
+
+`--forms`: `smoke` (`smoke_forms` in `config.yaml`), eine Zahl n (die n häufigsten wordfreq-Formen) oder `a,b,c`. `--max-usd` (Standard 1.0) ist die Kostengrenze des Laufs; für `smoke` ist sie im Code auf höchstens 1.0 begrenzt. Ausgaben in `pipeline/out/`: Pack, `ledger.csv` (je Aufruf: Schritt, Modell, Token Eingabe/Ausgabe/Denken, USD; ein vorhandenes Ledger wird zu `ledger-<zeit>.csv` umbenannt), `review.csv` (UTF-8 mit BOM, Trenner `;`, eine Zeile je erzeugtem Satz), `run_report.md`.
+
+Module: `llm.py` (Wrapper: Kostenschätzung → `check_budget` → Aufruf → Ledger mit echten Token aus `usage_metadata`; transiente Fehler höchstens 2× wiederholt; 401/403 nie), `generate.py` (Schritt A Bedeutungen, Schritt B Sätze, Gap-Offsets, QA-Schleife), `annotate.py`, `blindtest.py`, `review.py`; Befehl in `cli.py`, Pack in `pack.py`.
+
+**Prompts** (`pipeline/prompts/`, erste Zeile = Version): `meanings-v1`, `sentences-v1`, `annotate-v1`, `blindtest-v1`.
+
+**Preise** (abgerufen 2026-10-03, https://cloud.google.com/vertex-ai/generative-ai/pricing, leitet weiter auf https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing; Global, Standard, ≤ 200K Eingabe-Token; Denk-Token = Ausgabepreis):
+
+| Modell | Eingabe / 1 Mio. | Ausgabe inkl. Denken / 1 Mio. |
+|---|---|---|
+| `gemini-3.8-flash` | 0,75 USD | 3,75 USD (Einführungspreis bis 31.12.2026; ab 1.1.2027: 1,50 / 7,50) |
+| `gemini-2.5-flash` | 0,30 USD | 2,50 USD |
+
+**Denk-Parameter** (geprüft 2026-10-03 gegen https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking und …/models/guides/gemini-3-8-flash): Gemini 3 nutzt `thinking_level` (3.8 Flash: `LOW`, `MEDIUM` Standard, `HIGH`; `MINIMAL` ergibt einen Fehler) → gesetzt `LOW`. Gemini 2.5 nutzt `thinking_budget` → Blindtest `0` (aus).
+
+**Blindtest-Modell**: `gemini-2.5-flash` (billiger als die Generierung, Verfügbarkeit im Projekt am 2026-10-03 per Mini-Aufruf geprüft).
+
+**Qualitätsregeln**
+- Karten-Kandidaten: wordfreq-Formen mit Rang; Wortart und Bedeutung bestimmt das Modell (höchstens 3 Bedeutungen je Form). Funktionswörter werden Karten wie alle anderen Wörter. Leere Liste (Fragment, Eigenname, Zahl) → Form übersprungen, im Report.
+- Gap-Offsets berechnet der Code (ganzes Token, erst case-sensitiv, dann case-insensitiv), nie das Modell.
+- Linter-Fehler → Satz höchstens 2× neu (Befund im Prompt), danach `qa_status = failed`.
+- Blindtest (Satz mit Lücke, `translation_de`, `gloss_de`, ohne Form): Antwort = Form oder in `accepted[]` → `passed`. Kein Wort oder andere Form desselben Lemmas → nicht bestanden, Satz 1× neu, danach `failed`. Anderes echtes Wort → `review` mit der Antwort in `qa_report`; nie automatisch in `accepted[]`.
+- `failed`-Sätze kommen nicht in den Pack; eine Karte kommt nur mit 3 Sätzen ohne `failed` in den Pack.
+- Annotation: spaCy-Tokens mit Offsets, ein Modellaufruf je Satz für Lemma + Glosse jedes Wort-Tokens (auch Funktionswörter), geprüft gegen Index und Surface. Daraus `sentence_tokens` und `dictionary_forms` (`rank` = Reihenfolge der Bedeutungen einer Form nach Häufigkeit im Pack).
+
+**Smoke-Test** (2026-10-03, `went, left, about, up, light`): 14 Karten, 42 Sätze (33 passed, 9 review, 0 failed), 104 Aufrufe, 0,0951 USD gesamt, **0,0068 USD je Karte** (davon Annotation 0,072 USD). Blindtest-review-Quote 21 %, Linter-Fehler 1/43 (`subclauses`).
+
+## 3c Stand
+
+Generierung über Vertex AI und ADC wie in 3b. Die folgenden Regeln ersetzen die 3b-Qualitätsregeln; ältere 3b-Zahlen bleiben als historischer Vergleich stehen. Kein Datenbankzugriff beim Generieren.
+
+- Schritt A (`meanings-v2`) gibt bis zu drei Bedeutungen je Form zurück. `gloss_de` grenzt ähnliche Bedeutungen kurz ab. Der Bedeutungs-Check (`meaning-check-v1`, Blindtest-Modell) erhält Satz, Form sowie **alle** `sense_key` und `gloss_de` dieser Form und muss den Karten-`sense_key` wählen. Abweichung verwirft den Satz.
+- Schritt B (`sentences-v2`) erzeugt je Karte fünf einzelne Kandidaten. Die ersten drei mit Linter, Blindtest, Bedeutungs-Check und Vielfaltprüfung werden angenommen. Sind es weniger als drei, folgt genau eine Runde mit drei weiteren Kandidaten. Nur Karten mit drei angenommenen Sätzen kommen in den Pack.
+- Blindtest (`blindtest-v1`): Nur die exakte Zielform besteht. Bei jeder abweichenden Antwort wird der Satz einmal neu erzeugt; Antwort und Anweisung, den Kontext auf **nur** die Zielform festzulegen, stehen im Prompt. Bei erneuter Abweichung `failed`. `accepted[]` bleibt auf die Zielform beschränkt. Pack-Sätze haben ausschließlich `qa_status = ok`; `review` und `failed` bleiben außerhalb des Packs.
+- Vielfalt: Innerhalb einer Karte werden identische Fenster von je zwei Tokens vor und nach der Zielform sowie identische erste vier Tokens verworfen. Jeder Kandidaten-Slot erhält eine deterministisch gewählte, innerhalb der Karte unterschiedliche Alltagssituation und einen erlaubten Vornamen aus `config.yaml` (ohne Tom/Anna). Die 15 bisher im Pack häufigsten Inhaltswort-Lemmata stehen als Vermeidungsliste im Prompt. Übernutzung eines Inhaltsworts in mehr als `max(4, 5 %)` aller Pack-Sätze erscheint nur als Warnung im Bericht.
+- i+1 ist bei `generate` standardmäßig aktiv: Top 5000 `wordfreq`-Formen werden wie in `lemmas.py` lemmatisiert; die Warnschwellen nach `cefr_band` sind 1500/3000/5000. Verstöße blockieren den Satz nicht und werden je Karte im Bericht gezählt.
+- `review.csv` ist UTF-8 mit BOM und Semikolon für deutsches Excel; sie enthält jeden Versuch sowie `bedeutung_check` und `verworfen_grund`. `run_report.md` zeigt die Verwerfungen nach Linter-Regel, Blindtest, Bedeutung und Duplikat.
+- Das Ledger verwendet `prompt_token_count`, `candidates_token_count` und `thoughts_token_count` aus `usage_metadata`. `thinking_tokens` werden mit dem Denk-Preis berechnet. Ein Vertex-Miniaufruf mit `HIGH` am 03.10.2026 lieferte 5 Eingabe-, 1 Ausgabe- und 105 Denk-Token. Preise und Modellparameter bleiben wie in `config.yaml` dokumentiert.
+- Einmaliger Smoke-Test 3c (03.10.2026, fünf Formen, Budget 1,00 USD): 14 Karten erzeugt, 13 im Pack mit 39 `ok`-Sätzen; 267 Ledger-Aufrufe, 380 Denk-Token, 0,150474 USD. Eine Karte (`left#links`) erreichte keine drei Sätze. Alle Pack-Gaps und `qa_status` wurden geprüft. Die Artefakte wurden geschrieben; der Prozess beendete sich erst beim anschließenden Konsolen-`print` wegen `UnicodeEncodeError` (Windows cp1252, Zeichen `→`) mit Exit 1. Die Ausgabe wurde auf ASCII umgestellt; der Smoke-Test wurde nicht wiederholt.
+
+## 3d Stand
+
+- Schritt A verwendet das versionierte Inventar `pipeline/data/meanings/en.json`. Ein vorhandener Formeintrag wird ohne Modellaufruf übernommen. `--refresh-meanings <form>` fordert Bedeutungen neu an und hängt nur neue `sense_key` an; bestehende Schlüssel und ihre Inhalte bleiben erhalten. Für wordfreq-Rang ≤ 1000 gelten höchstens vier Bedeutungen, sonst drei. `meanings-v3` trennt Wortarten mit verschiedenen deutschen Übersetzungen, z. B. `left#links` (Adjektiv) und `left#nach_links` (Adverb). Die fünf Smoke-Formen sind aus dem bisherigen Pack vorbefüllt; beide `left`-Schlüssel sind ergänzt.
+- Schritt B (`sentences-v3`) erzeugt fünf Kandidaten in **einem** Aufruf mit je einer vorgegebenen Alltagssituation und einem erlaubten Namen. Er bittet um verschiedene Satzanfänge und Satzmuster. Bis zu zwei zusätzliche Runden mit je drei Kandidaten sind möglich. Nach drei angenommenen Sätzen werden übrige Kandidaten nicht mehr kostenpflichtig geprüft. Blindtest-Neuversuche bleiben Einzelaufrufe. Innerhalb einer Karte ist höchstens ein Satz mit demselben ersten Wort erlaubt.
+- i+1 ist eine reine Warnung: Für jedes Inhaltswort außer Zielform, Namenspool und Zahlen gilt der höhere Wert aus `wordfreq.zipf_frequency(lemma, "en")` und `wordfreq.zipf_frequency(Form, "en")`. Mindestwerte nach `cefr_band`: Anfänger 4,0; Mittel 3,5; Fortgeschritten 3,0.
+- `review.csv` verwendet UTF-8 mit BOM und Komma. Der Bericht nennt für jede nicht gepackte Karte alle protokollierten Verwerfungsgründe und Blindtest-Antworten. Die Konsolenausgabe bleibt ASCII.
+- `--forms 60` wählt die ersten 60 zulässigen wordfreq-Formen nach Ausschluss von Fragmenten, Zahlen und Eigennamen. Funktionswörter bleiben enthalten. `--forms smoke` bleibt die Liste aus `config.yaml`.
+- Einmaliger Smoke-Test 3d: alle fünf Formen und `left#links` im Pack, 15 Karten mit je drei `ok`-Sätzen, alle Gap-Spannen korrekt; 169 Aufrufe, 0,121110 USD, 0 Denk-Token.
+- Einmaliger Pilot 3d mit 60 Formen: 177 Karten erzeugt, 169 im Pack (95,48 %), 507 `ok`-Sätze; 2.443 Aufrufe, 1,674511 USD, 6.431 Denk-Token. Alle Pack-Gaps und Satzanzahlen sind geprüft. Acht Karten blieben unvollständig; der Bericht nennt je Karte alle Verwerfungsgründe und Blindtest-Antworten. Häufige Verwerfungen betreffen `what` (61), `there` (38), `like` (34), `this` (29), `i` und `your` (je 22). Die Wortform `i` aus wordfreq ist kleingeschrieben und scheitert im Blindtest an `I`; die Inventar- und Formnormalisierung dafür ist noch offen.
+
+Windows (PowerShell), im Ordner `pipeline`:
+```powershell
+.\.venv\Scripts\python.exe -m pytest
+.\.venv\Scripts\python.exe -m sprachpipe.cli generate --forms smoke --out out\smoke_pack_v3.json --max-usd 1.0
+.\.venv\Scripts\python.exe -m sprachpipe.cli generate --forms 60 --out out\pilot_pack.json --max-usd 5.0
+```
+
+macOS (Terminal), im Ordner `pipeline`:
+```bash
+.venv/bin/python -m pytest
+.venv/bin/python -m sprachpipe.cli generate --forms smoke --out out/smoke_pack_v3.json --max-usd 1.0
+.venv/bin/python -m sprachpipe.cli generate --forms 60 --out out/pilot_pack.json --max-usd 5.0
+```
+
+Der Pilot folgt nur auf einen Smoke-Test, bei dem alle fünf Formen mindestens eine Karte im Pack haben und `left#links` im Pack ist. Die Ergebnisse des aktuellen Laufs stehen in `NEXTSTEPS.md`.
+
+## 3e Stand
+
+- Das Bedeutungs-Inventar speichert je Form `display_form` (`i` → `I`) und je `sense_key` `usage` (`haupt`, `neben`, `selten`), `status` (`active`, `excluded`) sowie gegebenenfalls `exclude_reason`. `classify-usage` bewertet die 63 vorhandenen Formen einmal mit genau einem Modellaufruf je Form und ändert keine Schlüssel. `meanings-v4` liefert `usage` direkt für neue Bedeutungen. `selten` wird mit Grund `selten` ausgeschlossen. `what#ausruf`, `there#beruhigung`, `like#als_ob` und `this#so_graduierend` bleiben mit Grund `cloze_ambiguous` im Inventar, erzeugen aber keine Karten. Seit Pilot 60 v1 ebenso `not#gar_nicht` (`usage` bleibt `haupt`): Alle 11 Versuche lauteten „not … at all“; die Verstärkung liegt im Mehrwortausdruck „not at all“, das Lückenwort „not“ allein bedeutet „nicht“ und wurde 11× als `not#nicht` geprüft. Im Einzelwort-Lückenmodell ist die Bedeutung nicht unterscheidbar; eine spätere Mehrwortkarte ist offen. `not#nicht` bleibt aktiv.
+- Prompts verwenden `display_form`. Lücken-Offsets berechnet der Code; Lücke, Blindtest und Formvergleich beachten die Groß-/Kleinschreibung nicht. Der Linter akzeptiert nach `.?!` auch schließende Anführungszeichen und Klammern.
+- Der Pack enthält den Stapel `allgemeine-sprache`. Dessen `cefr_band` ist die Mehrheit der gepackten Karten (bei Gleichstand die niedrigere Stufe). `deck_cards.position` folgt `form_rank + 0` für `haupt` beziehungsweise `form_rank + 200` für `neben`, danach der Bedeutungsreihenfolge im Inventar. Nur aktive, vollständige Karten kommen in den Stapel.
+- `generate.concurrency` in `config.yaml` begrenzt die parallelen Karten (Standard 8). Fertige Karten werden nach stabiler Karten-ID sortiert. Das Kostenledger reserviert vor jedem Aufruf ein Budget unter Sperre und verrechnet danach die echten Tokenkosten. Bei 429/`RESOURCE_EXHAUSTED` und 5xx folgen höchstens fünf Versuche mit exponentiellem Rückzug und Zufallsanteil; Auth-Fehler beenden den Lauf sofort. Annotation (`annotate-v2`) erfolgt mit einem Aufruf für die drei Sätze einer Karte, mit Tokenprüfung wie bisher.
+- `out/progress.txt` enthält fertige/gesamte Formen, abgeschlossene Aufrufe, USD und Laufzeit. Es wird nach jeweils 25 Aufrufen, bei einer fertigen Form und am Laufende aktualisiert. Der 60er-Lauf wird im eigenen Terminal gestartet (siehe `pipeline/README.md`); dieser Schritt startet nur den Smoke-Test.
+- Ausführung am 03.10.2026: `pytest -q` bestand mit 75 Tests. Der einmal gestartete `classify-usage`-Lauf endete vor dem ersten Modellaufruf mit `AuthError: ADC TransportError`; es entstanden keine Vertex-Kosten. Der Smoke-Test wurde wegen der festgelegten Stop-Regel nicht gestartet. Das Inventar enthält bis zur erfolgreichen Klassifikation vorläufig `usage: haupt` für ältere Bedeutungen; die vier `cloze_ambiguous`-Einträge sind bereits ausgeschlossen.
+
+Windows PowerShell, im Ordner `pipeline`:
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q
+.\.venv\Scripts\python.exe -m sprachpipe.cli classify-usage --max-usd 0.50
+.\.venv\Scripts\python.exe -m sprachpipe.cli generate --forms smoke --out out\smoke_pack_v4.json --max-usd 1.0
+Get-Content out\progress.txt
+```
+
+macOS Terminal, im Ordner `pipeline`:
+```bash
+.venv/bin/python -m pytest -q
+.venv/bin/python -m sprachpipe.cli classify-usage --max-usd 0.50
+.venv/bin/python -m sprachpipe.cli generate --forms smoke --out out/smoke_pack_v4.json --max-usd 1.0
+cat out/progress.txt
+```
+
+### Bedeutungs-, Wortart- und Übersetzungsprüfung
+
+`meaning-check-v2` erweitert den bestehenden Bedeutungs-Check in demselben Aufruf: Er erhält alle Kandidaten mit `sense_key`, Glosse, POS und Formbeschreibung sowie `translation_de`. Ein Satz besteht diese Prüfung nur, wenn Bedeutung und kontextuelle Wortart zur Karte passen und `translation_ok` wahr ist. Unklare `null`-Werte, unbekannte Schlüssel und unvollständige Antworten werden verworfen; die Gründe Bedeutung, Wortart, Übersetzung und ungültige Prüfantwort werden getrennt gezählt und in Review-Ausgabe sowie `qa_report` festgehalten. Es gibt keine zusätzliche Retry-Schleife.
+
+`meaning-check-v3` liefert im selben Aufruf zusätzlich das Pflichtfeld `language_ok` (boolean). Es bewertet den Originalsatz mit der Zielform an ihrer Stelle: Grammatik, idiomatische Wortverwendung, Rechtschreibung und Wortgrenzen, keine künstliche Zerlegung eines Wortes, um die Zielform zu erhalten. `language_ok = false` ist ein negatives Urteil (Grund „Sprache“), kein ungültiges JSON; fehlt das Feld oder hat es einen falschen Typ, ist die Prüfantwort ungültig. Der Satz scheitert ohne Neuversuch und vor der Alternativprüfung, eine bestätigte Alternative kann ihn also nie retten. `language_ok` steht in `meaning_check_result`, als `qa_report.language_ok`, in der Review-Spalte „Sprachprüfung“ und in der Grundzählung des Berichts. Alte Packs ohne das Feld bleiben lesbar. `sentences-v6` verlangt natürliche, übliche Sprache und verbietet das Aufspalten von Wörtern für die Zielform, ohne Wortlisten. **POS-Konvention „be“** (`meanings-v5`, `meaning-check-v5`): englische UD-Konvention, kopulares „be“ (Zustand, Eigenschaft, Identität, Ort) = `AUX`, „be“ = „existieren“ = `VERB`; Lernbegriffe nur in `form_label_de`. Korrigiert: `are`/`was` `be#sein_vollverb`, `be#sein_existieren`, `be#befinden` → `AUX` (neue Karten-IDs); `been/be#besucht` bleibt `VERB`. `be#sein_vollverb` ist kopulares „sein“; die existenzielle Angabe in der Glosse von `are` wurde entfernt. Alt-/Neu-IDs, Tombstone-Hinweis und Konflikte: `docs/be-pos-correction.md`. `sentences-v7` verlangt die angegebene Wortart: PRON steht selbstständig ohne folgendes Bezugsnomen (für interrogatives „which“ z. B. „Which is cheaper?“, „Which of these coats is yours?“; „Which coat …“/„Which red coat …“ sind DET); DET leitet eine Nominalgruppe ein, Adjektive dazwischen sind erlaubt. Anlass: Pilot 60 v1, `which#fragepronomen` 9× als „which + Nomen“ erzeugt und korrekt als DET verworfen. Live-Ausbeute ungeprüft.
+
+`meaning-check-v4` (04.10.2026) verlangt `reason` immer als kurzen, nicht-leeren String, auch wenn alle Prüfungen bestehen; das Schema setzt `minLength: 1`, der Parser lehnt leere und reine Leerzeichen-Begründungen weiterhin als ungültige Prüfantwort ab. Sonstige Sprachregeln, `null`-Regeln und Annahmekriterien sind unverändert. Die Originalsatzprüfung nutzt eigene Einträge `llm.meaning_check_model: gemini-3.8-flash` und `llm.meaning_check_thinking: {thinking_level: LOW}`, `max_output_tokens.meaning_check` ist seit Smoke v7 1024 (vorher 256; Spielraum, kein Reparaturnachweis). Parsefehler nennen Schritt, Modell, Limit, Token und `finish_reason` (fehlende Werte: „unbekannt“). Blindtest und `classify-usage` bleiben bei `blindtest_model` (`gemini-2.5-flash`, `thinking_budget: 0`); die Alternativprüfung hat eigene Einträge (siehe QA-Regeln). Das Ledger berechnet die Kosten mit dem tatsächlich aufgerufenen Modell. Grundlage ist der Live-Vergleich v2 (8 Originalsatz-Fälle, `meaning-check-v3`): altes Prüfmodell 1/8 bestanden, davon sieben Antworten mit leerer Begründung; die Rohurteile akzeptierten alle vier fehlerhaften Originalsätze. `gemini-3.8-flash` mit `LOW`: 8/8, 0,007905 USD für acht Prüfungen. Begrenzte Stichprobe; der vollständige Smoke-Test steht aus.
+
+`sentences-v4` fordert Übersetzungen an, die insbesondere Zeit/Tempus, Negation, Handelnde und Modalität erhalten, und erlaubt idiomatische sinngleiche Formulierungen. Die Offline-Tests prüfen Promptaufbau und Verarbeitung, nicht die Urteilsqualität des Live-Modells. Eine Live-Validierung ist ausstehend.
+
+## KI-Zugang: Vertex AI
+
+- Projekt `sprachlernapp-510508`, Region `global`.
+- Modell `gemini-3.8-flash` (getestet am 2026-10-03, Antwort erfolgreich).
+- Kein API-Key-Zugang. Es gibt keinen Key, der in `.env` oder Repo liegt.
+- Python mit `google-genai`:
+
+```python
+from google import genai
+client = genai.Client(vertexai=True, project="sprachlernapp-510508", location="global")
+```
+
+- Login über Application Default Credentials: `gcloud auth application-default login`.
+
+## Denk-Token
+
+Denk-Token zählen als Ausgabe. Jede Anfrage bekommt ein Denk-Budget.
+Gemini 3.8 Flash: `thinking_level` (geprüft 2026-10-03, siehe „3b Stand“).
+
+## Schritte
+
+1. **wordfreq**: Wortformen mit Rang je Sprache. BNC/COCA nur als Gegenprobe für Englisch.
+2. **Karten**: Form + Bedeutung, Lemma-Verknüpfung, Stapelzuordnung.
+3. **Sätze**: je Karte genau ein aktiver Satz, der genau diese Form enthält (Schema 2).
+4. **Annotation**: Token → Bedeutung im Satz (`sentence_tokens`).
+5. **Wörterbuch**: Form → Bedeutungen mit deutscher Glosse (`dictionary_forms`), Satzübersetzungen.
+6. **QA** (siehe unten). Nur bestandene Zeilen gehen weiter.
+7. **Supabase**: Schreiben ins Schema `content` (idempotent, stabile IDs, Tombstones).
+8. **Export**: `content.sqlite` je Sprache, Upload in Bucket `packs`, Eintrag in `content_releases`.
+9. **Audio**: Cloud Text-to-Speech, Upload in Bucket `audio`, Eintrag in `audio_assets`.
+
+Jeder Schritt ist wiederholbar und schreibt nur über stabile IDs (`docs/content-schema.md`).
+
+## QA-Regeln
+
+- **Linter** (automatisch, jeder Satz): höchstens 14 Wörter und 1 Nebensatz; Lücken-Offsets treffen genau die Form. i+1 wird nach den Zipf-Mindestwerten aus 3d nur als Warnung ausgegeben.
+- **Blindtest (`blindtest-v3`)**: Ein zweites Modell bekommt ausschließlich Lückensatz, deutsche Satzübersetzung und Glosse. Ein Aufruf liefert die Hauptantwort und höchstens drei begründete Alternativen, auch Mehrwortlösungen; jede Antwort ersetzt genau die Lücke. Der Blindtest liefert **Kandidaten, keine Freigaben**.
+- **Kandidaten** (`blindtest.candidates_for`): die Hauptantwort, falls sie nicht der Zielform entspricht, dazu die Alternativen. Bereinigt wie bisher (Randzeichen, Leerraum), dedupliziert über `form_norm`, Zielform entfernt, höchstens vier. Keine Lemmatisierung, keine Ähnlichkeitsprüfung. Ungültige Blindtest-Strukturen ergeben keine Kandidaten und bestehen nicht.
+- **Alternativprüfung (`alternative-check-v2`, Ledger-Schritt `alternative_check`)**: Läuft erst, nachdem der Originalsatz Linter, Blindtest-Struktur sowie Bedeutungs-, Wortart- und Übersetzungsprüfung bestanden hat, und nur bei mindestens einem Kandidaten. Der Code setzt jeden Kandidaten wörtlich als `text[:gap_start] + Kandidat + text[gap_end:]` ein. Ein gemeinsamer Aufruf je Satzversuch (`llm.alternative_check_model: gemini-3.8-flash`, `llm.alternative_check_thinking: {thinking_level: LOW}`, `max_output_tokens.alternative_check` = 1024, normale Budgetreservierung mit dem tatsächlich aufgerufenen Modell, kein automatischer Fallback, Fehlerbehandlung wie bisher; bis Smoke v8: `gemini-2.5-flash`, `thinking_budget: 0`, 512) erhält Originalsatz, deutsche Übersetzung und die eingesetzten Sätze. Antwort je Kandidat: `candidate_index`, `valid`, `reason`. `valid = true` nur für grammatisch korrekte, natürliche Sätze, die dieselbe Aussage wie das Original treffen, sodass die deutsche Übersetzung weiter exakt passt; dasselbe Thema oder eine mögliche Situation genügt nicht. Zu erhalten sind besonders Mengen und Grenzen (ungefähr ≠ fast, mindestens, höchstens), Richtung (hinauf ≠ entlang), Negation, Zeitbezug, Modalität und Handelnde; keine hineininterpretierte Information. Wortlänge oder Register allein sind kein Ablehnungsgrund; im Zweifel `false`. Fehlende, doppelte oder erfundene Indizes, falsche Typen oder zusätzliche Felder sind eine **ungültige Prüfantwort**: Der Satzversuch scheitert (`Ungültige Prüfantwort: Alternativprüfung`), ohne Neuversuch. Auth-, Budget- und Transportfehler brechen den Lauf wie bisher ab.
+- **Entscheidung (aktuelle Regel, ersetzt die zwingende Zielform-Hauptantwort):** Hauptantwort = Zielform → Satz besteht (`blind = passed`); nur bestätigte Kandidaten werden übernommen. Hauptantwort weicht ab und wird selbst als gültige Alternative bestätigt → Satz besteht (`blind = confirmed_alternative`). Abweichende Hauptantwort nicht bestätigt (`blind = unconfirmed`) → bestehender Blindtest-Neuversuch (einer), danach `failed`. Abgelehnte Zusatzkandidaten verwerfen nur sich selbst, nicht den Satz. Gültige Alternativen lösen keine Neugenerierung aus. Keine neue Retry-Schleife, keine erhöhten Kandidatenlimits. Beispiel einer abzulehnenden Alternative: „up the“ für „Zoe carries the food ___ the stairs“ ergibt „Zoe carries the food up the the stairs“.
+- **Übernahme**: Bestätigte Kandidaten werden über `form_norm` normalisiert und als `card_sentences.valid_alternatives` gespeichert (`docs/content-schema.md`). `accepted[]` enthält weiterhin ausschließlich die Zielform. Kein globales Wörterbuch-Synonym wird übernommen. `sentences-v5` verlangt die Zielform als natürlichste Antwort und keine unnatürliche Formulierung, nur um echte Synonyme auszuschließen.
+- **Protokoll**: Jeder Versuch speichert `blind_answer`, `blind_alternatives` (Modellbefund), `alternative_candidates`, `alternative_check` (Kandidat, eingesetzter Satz, `confirmed`/`rejected`/`invalid`, Grund) und `valid_alternatives`; `qa_report.blind_attempts` bewahrt dies auch für ersetzte Versuche. `review.csv` hat dafür die Spalten „Alternativkandidaten“, „Alternativprüfung“ und „Gültige Alternativen“. Der Bericht zählt Blindtest-Ergebnisse je Art, geprüfte, bestätigte und abgelehnte Kandidaten, Prüfaufrufe, übernommene Alternativen, fehlende Karten und Pack-Anteil; die Kosten je gepackter Karte beziehen sich auf die tatsächlich gepackten Karten („nicht berechenbar“ bei null).
+- **Stand 04.10.2026:** Pipeline, Pack, `schema.py`, Migration `20261004000001_card_sentence_alternatives.sql` (nur erstellt, nicht angewendet) und SQLite-Export sind umgesetzt und offline getestet. Ausstehend: Anwenden der Migration, App-Anbindung (Hinweis, `hint_used`, Box-1-Regel) und Live-Validierung. Die Alternativensuche ist eine **Heuristik, keine Vollständigkeits- oder Eindeutigkeitsgarantie**; nicht gefundene Alternativen gelten in der App als Fehler. Offline-Tests mit simulierten Modellantworten belegen Verarbeitung, Retry-Grenzen und Speicherung, nicht die Urteilsqualität. Live-Smoke bleibt ausstehend und wird von Arda gestartet.
+- Historisch (Inkrement 2, bis 04.10.2026): Jede Alternative galt als **Mehrdeutige Lücke** und nutzte den Blindtest-Retry; ältere Berichte und Packs enthalten diese Werte sowie `blind = ambiguous`.
+- **Feste Prüfsammlung**: `pipeline/tests/fixtures/qa_language_cases.json` enthält die Smoke-v6-Befunde und eindeutige Gegenbeispiele mit Erwartungen (nur Prüfdaten, nie in Packs). `pipeline/scripts/check_qa_cases.py --out <neuer Ordner> --max-usd 0.25` ruft die echten `meaning_check`- und `alternative_check`-Funktionen einmal je Fall auf, ohne Erwartungen ans Modell zu senden, und schreibt `ledger.csv` und `results.json` in den neuen Ordner. Exitcodes: 0 bestanden, 1 Abweichungen, 2 Argumentfehler (z. B. Ordner existiert), 3 technischer oder Budget-Abbruch (Teilergebnisse bleiben erhalten). Im normalen Modus nutzt `meaning_check` dieselbe Konfiguration wie die Pipeline (`meaning_check_model`/`meaning_check_thinking`). `--compare-models` führt nur die Originalsatz-Fälle mit dem konfigurierten `meaning_check`-Modell und dem Generierungsmodell aus und zeigt die tatsächlich verwendeten Modelle und Thinking-Werte; derzeit sind beide `gemini-3.8-flash` mit `LOW`. `--only alternative_check` führt alle Alternativ-Fälle und keinen `meaning_check`-Fall aus (gleiche Konfiguration wie die Pipeline, ein Budget, neuer Ordner); jede Ergebniszeile nennt Modell, Urteil und Erwartung, die Ledger-Zeilen eines gemeinsamen Aufrufs stehen beim ersten Kandidaten des Falls. Nicht mit `--compare-models` kombinierbar.
+- **Smoke v8** (vollständig): 15 Karten, 45 Sätze, 153 Aufrufe, 0,170135 USD (Ledger); Alternativprüfung mit `gemini-2.5-flash`. Klare Fehlurteile: s34 „Nina walks for about thirty minutes …“ bestätigt `nearly` als Alternative für `about` (fast ≠ ungefähr); s36 „David waited about ten minutes …“ verwirft `for about` und `for around` als ungrammatisch. Beide Fälle und die Zeitform-Gegenprobe „The milk went sour yesterday.“ (`turned` gültig, `had gone` ungültig) stehen in der festen Prüfsammlung. Die neue Konfiguration ist live noch ungeprüft.
+- **Inhaltsprüfungen (`meaning-check-v6`, `alternative-check-v3`)**: `language_ok` bewertet den ganzen Satz einschließlich natürlicher Wortverbindungen und sinnvoller Zuordnung von Eigenschaften; eine korrekte Zielwortverwendung allein genügt nicht, ungewöhnliche, aber plausible Situationen bleiben zulässig. Die Alternativprüfung vergleicht Original- und eingesetzten Satz direkt; die deutsche Übersetzung ist eine zusätzliche Bedingung und rechtfertigt keine Verschiebung (Zeitbezug, Richtung, Mengen, Negation, Modalität, Beteiligte). Anlass Pilot 60 v1: s126 „… read quiet library books“ (Eigenschaft unsinnig zugeordnet) wurde angenommen; s399 „at bedtime“ → „before bedtime“ wurde bestätigt, weil die Übersetzung „vor dem Schlafengehen“ zu beiden passte. Feste Fälle mit Gegenproben: `pilot60_s126_quiet_library_books` / `library_books_quietly`, `pilot60_s399_at_bedtime` / `before_bedtime_prior_to` (Sense `before#vor_zeitlich` nur als lokale Fixture-Definition, kein Inventareintrag). Live noch ungeprüft.
+- **Gezielter Live-Lauf be/are/was/which** (nach POS-Korrektur, laut Arda): 10/10 Karten, 30 Sätze, 0,108147 USD, keine Wortart-Verwerfungen.
+- **Stichprobe**: 5 % der Sätze je Lauf werden von Hand geprüft.
+
+## Kosten
+
+- Jeder Lauf protokolliert Modell, Token (Eingabe, Ausgabe, Denken) und Kosten je Schritt in einer Lauf-Datei.
+- **Kostenobergrenze pro Lauf ist ein Pflicht-Parameter** (`--max-usd`). Der Lauf bricht ab, bevor die Grenze überschritten wird.
+- **Batch-Modus** nur nach Prüfung gegen die offizielle Doku und Eintrag hier. Bis dahin: normale Anfragen.
+- Testguthaben endet ca. 22.11.2026: EN-Hauptlauf und Audio vorher.
+
+## TTS
+
+- Cloud Text-to-Speech API, Modell Gemini 2.5 Flash TTS, Login per ADC.
+- TTS-Pilot: zusätzlich `gemini-3.8-flash-lite-tts` vergleichen (Preis und Qualität noch ungeprüft).
+
+## Hinweise zu Frequenzlisten
+
+- Einträge in BNC/COCA sind Wortfamilien, je 1.000er-Liste alphabetisch sortiert, nicht nach Rang. Kopfwort-Zuordnung erhalten.
+- Die Werte `"null"`, `"true"`, `"false"` kommen als Wörter vor. Beim Einlesen (CSV, YAML, JSON, Excel) explizit als Text behandeln.
+
+## Gezielte Alltag-Auswahl v1 (04.10.2026)
+
+`data/selection/everyday_v1.json` enthält 100 redaktionell ausgewählte neue
+Lemmas (60 NOUN, 25 lexikalische VERB, 15 ADJ), je eine Grundform und eine
+konkrete Zielbedeutung. table/Tisch, speaker/Lautsprecher und bandage/Verband
+fehlen als Lernkarten im aktuellen Pack und sind enthalten. Worthäufigkeit aus
+wordfreq 3.1.1 ist Relevanzhilfe, keine Häufigkeit der einzelnen Bedeutung.
+75 vorhandene Pack-Sense-Keys werden wiederverwendet, 25 sind neue Vorschläge.
+Alle 100 Definitionen sind explizite redaktionelle Ziele, noch nicht satzgeprüft;
+keiner der 100 Einträge wird als bereits geprüftes kanonisches Inventar ausgegeben.
+
+Der optionale CLI-Modus `generate --selection` liest das vorhandene SQLite-Pack
+schreibgeschützt. Identische aktive Form/Lemma/POS/Sense-Karten werden als REUSE
+übersprungen. Fehlende Definitionen werden vor jeglicher Generierung ausgewiesen;
+doppelte Lemmas/Oberflächen und als bestehend behauptete unbekannte Schlüssel
+werden abgewiesen. Er erzeugt nur die ausgewählten Zielbedeutungen und verwendet
+unverändert `_process_card`, QA, Annotation, stabile IDs und Llm-Budgetreservierung.
+Das Bedeutungsinventar wird nicht erweitert; `--forms` behält seinen bisherigen Weg.
+Satzannotation anderer Wörter bleibt notwendig, erzeugt aber keine zusätzlichen
+Lernkarten. Das Ausgabe-Pack ist ein separates Los, keine automatische Installation
+oder Zusammenführung. Bereits vorhandene Karten verbleiben im bestehenden Pack.
+
+Tatsächlich ausgeführter Offline-Dry-Run, Windows PowerShell ab `pipeline`:
+
+```powershell
+.\.venv\Scripts\python.exe -m sprachpipe.cli generate --selection data\selection\everyday_v1.json --existing-pack ..\assets\content\en\content.sqlite --run-dir out\everyday_v1_20261004 --out out\everyday_v1_20261004\pack.json --max-usd 3.00 --dry-run
+```
+
+Gleicher Offline-Befehl, macOS Terminal ab `pipeline`:
+
+```sh
+.venv/bin/python -m sprachpipe.cli generate --selection data/selection/everyday_v1.json --existing-pack ../assets/content/en/content.sqlite --run-dir out/everyday_v1_20261004 --out out/everyday_v1_20261004/pack.json --max-usd 3.00 --dry-run
+```
+
+Tatsächlicher Output (vollständig lokal in `build/everyday_dry_run.txt`):
+
+```text
+Selection: 100 distinct lemmas; POS {'NOUN': 60, 'VERB': 25, 'ADJ': 15}
+Cards planned: 100; existing reused: 0
+Lemmas without any existing learning card: 100
+Existing sense keys: 75; new proposed keys: 25
+Canonical inventory definitions: 0; explicit editorial targets: 100; missing definitions: 0
+Planning estimate: 3.073 USD; retry scenario (2.5x): 7.681 USD
+```
+
+Preisstand aus bestehender config.yaml: 03.10.2026, nicht neu abgerufen.
+Modelle: gemini-3.8-flash/LOW für Generierung, Bedeutungs-/Alternativenprüfung
+und Annotation; gemini-2.5-flash/thinking_budget=0 für Blindtest.
+Annahme je Karte: ein Batch mit fünf Kandidaten, drei akzeptierten Sätzen,
+fünf Blindtests, fünf Bedeutungsprüfungen, zwei Alternativenprüfungen und eine
+Annotation. Tokenansätze (Input/Output/Thinking je Aufruf): 2500/800/400 für
+Sätze, 500/70/0 Blindtest, 900/120/200 Bedeutungsprüfung, 900/150/200 Alternativen,
+2500/1600/400 Annotation. Keine Garantie; Nachgenerierungen oder mehr Thinking
+können teurer sein. Bereits das Basisszenario liegt knapp über dem Laufbudget;
+Teilabschluss ist möglich. Budget bleibt unverändert maximal 3,00 USD.
+
+Manueller Cloud-Start, **nicht ausgeführt**, Windows PowerShell ab `pipeline`:
+
+```powershell
+.\.venv\Scripts\python.exe -m sprachpipe.cli generate --selection data\selection\everyday_v1.json --existing-pack ..\assets\content\en\content.sqlite --run-dir out\everyday_v1_20261004 --out out\everyday_v1_20261004\pack.json --max-usd 3.00
+```
+
+macOS Terminal, ebenfalls **nicht ausgeführt**:
+
+```sh
+.venv/bin/python -m sprachpipe.cli generate --selection data/selection/everyday_v1.json --existing-pack ../assets/content/en/content.sqlite --run-dir out/everyday_v1_20261004 --out out/everyday_v1_20261004/pack.json --max-usd 3.00
+```
+
+Der Ausgabeordner muss neu sein, `--out` darin liegen. Dry-Run legt nichts an.
+Die 100 neuen Vokabeln sind vorbereitet, weder generiert noch geprüft/installiert.
+
+## Alltag-v1-Nachhol-Lauf: vorbereitet, nicht gestartet (04.10.2026)
+
+Beleg aus dem vorhandenen run_report.md: meaning_check, Limit 1024,
+output_tokens=29, thinking_tokens=981, finish_reason=MAX_TOKENS, ungültiges JSON.
+Nur max_output_tokens.meaning_check ist jetzt 4096 statt 1024. Modell bleibt
+gemini-3.8-flash, Thinking LOW. Alle anderen Limits bleiben unverändert.
+Das ist eine begründete Gegenmaßnahme ohne Live-Nachweis. Der frühere ungeklärte
+v7-Abbruch wird dadurch weder erklärt noch derselben Ursache zugeordnet.
+Keine JSON-Reparatur, stillen Ersatzwerte, neuen Retries oder Budgeterhöhungen.
+
+`selection.partition_selection(entries, pack)` vergleicht normalisierte Form,
+normalisiertes Lemma, POS und stabilen Sense-Key (Zielbedeutung); nur cards zählen,
+nicht Wörterbuchannotation, Ledger-Aufrufe oder der redaktionelle Kartenstatus.
+Die versionierte `data/selection/everyday_v1_missing.json` enthält 13 unveränderte
+Originaleinträge: sit, wet, soft, hard, cheap, expensive, young, old, strong, ready,
+quiet, safe, heavy. 87 vorhandene + 13 fehlende = ursprüngliche 100, Schnittmenge 0.
+Auch die fünf K- und fünf U-Karten sind unter den 87 ausgeschlossen. Quellpfade und
+SHA-256 stehen im provenance-Feld. Originaldefinitionen/Metadaten bleiben erhalten.
+Die CLI benötigt keine Ergänzung: derselbe --selection-Weg und neues --run-dir.
+
+Reproduzierbarer Vergleich (Python, auf beiden Systemen aus Repository-Root;
+Interpreter Windows: pipeline/.venv/Scripts/python.exe, macOS: pipeline/.venv/bin/python):
+
+```python
+import json, sys
+from pathlib import Path
+sys.path.insert(0, str(Path('pipeline/src').resolve()))
+from sprachpipe.selection import partition_selection
+source = json.loads(Path('pipeline/data/selection/everyday_v1.json').read_text(encoding='utf-8'))
+pack = json.loads(Path('pipeline/out/everyday_v1_20261004/pack.json').read_text(encoding='utf-8'))
+present, missing = partition_selection(source['entries'], pack)
+saved = json.loads(Path('pipeline/data/selection/everyday_v1_missing.json').read_text(encoding='utf-8'))
+assert saved['entries'] == missing
+assert len(present) == len(pack['cards']) == 87 and len(missing) == 13
+assert len(present) + len(missing) == len(source['entries'])
+print(len(present), len(missing))  # tatsächliches Ergebnis: 87 13
+```
+
+Tatsächlich ausgeführter Dry-Run, Windows PowerShell ab pipeline:
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 -m sprachpipe.cli generate --selection data\selection\everyday_v1_missing.json --existing-pack ..\assets\content\en\content.sqlite --run-dir out\everyday_v1_missing_20261004 --out out\everyday_v1_missing_20261004\pack.json --max-usd 1.00 --dry-run
+```
+
+macOS Terminal (nicht ausgeführt), ab pipeline:
+
+```sh
+.venv/bin/python -X utf8 -m sprachpipe.cli generate --selection data/selection/everyday_v1_missing.json --existing-pack ../assets/content/en/content.sqlite --run-dir out/everyday_v1_missing_20261004 --out out/everyday_v1_missing_20261004/pack.json --max-usd 1.00 --dry-run
+```
+
+Tatsächlicher Output, Kernwerte:
+
+```text
+Selection: 13 distinct lemmas; POS {'VERB': 1, 'ADJ': 12}
+Cards planned: 13; existing reused: 0
+Lemmas without any existing learning card: 13
+Existing sense keys: 11; new proposed keys: 2
+Canonical inventory definitions: 0; explicit editorial targets: 13; missing definitions: 0
+Planning estimate: 0.399 USD; retry scenario (2.5x): 0.999 USD
+Configured-limit scenario: 1.559 USD
+BUDGET RISK: configured-limit scenario exceeds the run budget; partial completion possible.
+```
+
+Modelle und Reservierungsansätze je Aufruf aus dem Dry-Run:
+
+| Schritt | Modell / Thinking | konfiguriertes Outputlimit | Reservierung USD |
+|---|---|---:|---:|
+| sentences | gemini-3.8-flash / LOW | 2048 | 0.009555 |
+| blindtest | gemini-2.5-flash / Budget 0 | 256 | 0.000790 |
+| meaning_check | gemini-3.8-flash / LOW | 4096 | 0.016035 |
+| alternative_check | gemini-3.8-flash / LOW | 1024 | 0.004515 |
+| annotate | gemini-3.8-flash / LOW | 4096 | 0.017235 |
+
+Die normalen Verbrauchsannahmen bleiben explizite Szenarien (siehe oben).
+Zusätzlich rechnet der Dry-Run mit voller Ausschöpfung sämtlicher tatsächlich
+konfigurierten Ausgabelimits bei denselben Input-/Aufrufannahmen. Lauf und Dry-Run
+verwenden dieselbe reservation_usd-Formel: geschätzte Inputtokens aus Promptlänge
+plus volles konfiguriertes Outputlimit, kein doppeltes Addieren von Thinking.
+Für meaning_check nimmt das Szenario 900 Inputtokens an; im echten Lauf wird die
+jeweilige Promptlänge verwendet. Die Reservierung wird vor jedem Aufruf geprüft
+und danach gegen tatsächlichen Verbrauch abgerechnet. 1.559 USD ist weder eine
+Vorabreservierung für den ganzen Lauf noch eine garantierte Gesamtkostengrenze.
+Das Limit 1.00 USD kann zu erneutem Teilabschluss führen; keine automatische Erhöhung.
+Dry-Run hat keine LLM-Instanz und keinen Ausgabeordner angelegt.
+
+Vollständiger manueller Startbefehl, NICHT ausgeführt, PowerShell ab pipeline:
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 -m sprachpipe.cli generate --selection data\selection\everyday_v1_missing.json --existing-pack ..\assets\content\en\content.sqlite --run-dir out\everyday_v1_missing_20261004 --out out\everyday_v1_missing_20261004\pack.json --max-usd 1.00
+```
+
+macOS Terminal, ebenfalls NICHT ausgeführt:
+
+```sh
+.venv/bin/python -X utf8 -m sprachpipe.cli generate --selection data/selection/everyday_v1_missing.json --existing-pack ../assets/content/en/content.sqlite --run-dir out/everyday_v1_missing_20261004 --out out/everyday_v1_missing_20261004/pack.json --max-usd 1.00
+```
+
+Bestehende Ausgabeordner werden weiterhin abgewiesen. Nachhol-Ergebnis und offene
+Inhaltsentscheidungen sind später gemeinsam auszuwerten. Die fünf Alternativbefunde,
+Bus-Glosse und fünf U-Karten in docs/everyday-v1-review.md wurden nicht verändert.
+Keine Aussage einer vollständigen oder öffentlichen Inhaltsfreigabe.
+
+
+## Interner Alltag-Merge (04.10.2026)
+
+`data/curation/everyday_merge_v1.json` entscheidet die drei unveränderten Quellen
+(curated_test_v1, everyday_v1_20261004, everyday_v1_missing_20261004).
+Die SHA-256-Vorbedingungen schützen die Quellpacks; Metadatenentscheidungen
+prüfen vollständige Originalzeilen, Wörterbuchentscheidungen alle Varianten.
+`curate` erlaubt für diesen Weg nur explizit aufgelöste Sense-Glossenkonflikte;
+abweichende andere Entitätsfelder und unbekannte Konflikte brechen ab.
+`editorial_translation` hält Text, ID, Tokens und historische QA fest und
+protokolliert eine redaktionelle Prüfung ohne neue Modellprüfung.
+`derive_dictionary` erhält Quellen aller Formglossen; ausdrücklich begründete
+redaktionelle Formkorrekturen dürfen einen neuen Glosswert verwenden.
+
+Der schmale Einstieg verwendet `curate`, `finalize_state`, `check_pack`,
+`export_sqlite` und `check_sqlite`; keine Cloud-Aufrufe. Ausgabeordner müssen
+neu sein. Der vorhandene Ordner unten wird bei erneutem Aufruf verweigert.
+
+Windows PowerShell, Repository-Root:
+```powershell
+pipeline/.venv/Scripts/python.exe -X utf8 pipeline/scripts/merge_everyday.py --out pipeline/out/curated_everyday_v1
+```
+macOS Terminal, Repository-Root:
+```bash
+pipeline/.venv/bin/python -X utf8 pipeline/scripts/merge_everyday.py --out pipeline/out/curated_everyday_v1
+```
+Beide Systeme, nach Sicherung der bisherigen Assets und Schließen der Repositories:
+```text
+dart run tool/stage_content_pack.dart --from pipeline/out/curated_everyday_v1
+flutter analyze
+flutter test
+```
+
+Ergebnis dieses Laufs: 264 Karten, 792 Sätze/Zuordnungen, 8.520 Tokens,
+2.378 Wörterbuchschlüssel. Jede exportierte Tabelle wurde erneut gelesen und
+mit `build_rows` verglichen. Quellen/Entscheidungen/Herkunft und neun offene
+Alt-Pilot-Fallgruppen stehen in `finalization_report.json`. Vollständige
+Nachhol-Inhaltsprüfung und 100er-Statusliste: `docs/everyday-v1-review.md`.
+Die regulären neuen Tests arbeiten mit synthetischen Fixtures; der bestehende
+optionale Asset-Test liest den tatsächlich gestagten Bestand ohne out-Abhängigkeit.
+Keine öffentliche Inhaltsfreigabe und keine Änderung der SRS-/Auswahlregeln.
+
+## Offline-Story-Zulieferung story_learning_v1 (04.10.2026)
+Quelle: `pipeline/data/curation/story_learning_seed_v1.json`; gebundene Registry: `pipeline/data/words/en.story_learning_v1.json`. Der vorhandene `import_editorial_patch.py`-Create-Weg ergänzt eine Story mit sechs vollständig annotierten Sätzen, sechs Lemmas, acht Senses und acht Formglossen. Keine zusätzlichen kuratierten Karten oder Eigentümerplätze. Der Adapter validiert optionale `learning_contexts` gegen die konkrete Tokenstelle und die bestehende Satzprüfung; ungültige/duplizierte Freigaben brechen vor Export ab.
+Ergebnis im frischen `pipeline/out/story_learning_v1/`: `pack.json`, `content.sqlite`, `finalization_report.json`. Vollständiger Readback aller 18 Tabellen und Abgleich mit Paket A erhalten alle alten Karten, Satzlinks, Sätze, Token, Senses und Wörterbuchzeilen. Keine alten out-Artefakte überschrieben. Modellaufrufe 0, Kosten 0 USD. `editorial_reviewed` benennt die Chat-Redaktion und behauptet keine externe Prüfung.
+# Offline-Authoring auf Content-Schema 3
+
+`export_authoring_context.py` übernimmt das Reisen-Kontextformat für neue Auswahlen.
+Es ermittelt die Quelle aus `assets/content/en/content.manifest.json`, bindet die
+Reservierungen an diesen Pack und prüft Auswahl, Wortbesitz und Lerngruppen mit den
+vorhandenen Validatoren. `--verify-zip` liest die ZIP unabhängig erneut, prüft alle
+Dateihashes, Definitionen, Referenzen, Anzeigezuordnungen und den SQLite-Inhalt.
+
+Der bestehende `import_editorial_patch.py --create` akzeptiert Content-Schema 2 und 3
+und erhält die Version der Basis. Das Austauschformat bleibt `editorial-content`
+Version 2. Bei Schema 3 muss jede neue Karte vollständige `learning`-Metadaten mit
+auflösbarem Gruppenkopf tragen; es gibt keinen automatischen Rückfall auf Schema 2.
+`valid_alternatives` bleiben einzeln geprüfte Satzalternativen, unabhängig von
+Wortbesitz-Aliasen und Lerngruppen. Originalposition, Authoring-Gruppe und dynamische
+Lernreihenfolge sind getrennt. Es entsteht kein weiterer Importweg.

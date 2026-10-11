@@ -1,0 +1,14 @@
+[
+  {
+    "form": "eat humble pie",
+    "level": "warn",
+    "rule": "i+1",
+    "message": "'unfairly'/'unfairly' Zipf 3.36 below 3.5"
+  },
+  {
+    "form": "I wouldn't say that",
+    "level": "warn",
+    "rule": "i+1",
+    "message": "'unfriendly'/'unfriendly' Zipf 3.10 below 3.5"
+  }
+]

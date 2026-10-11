@@ -1,0 +1,31 @@
+ARBEIT & BILDUNG – BATCH 3 (ABSCHLUSS)
+
+81 direkt von ChatGPT geschriebene Satzpaare, vollständig mit Zieldefinition, deutscher Übersetzung und 915 Tokenpositionen gegengelesen. Keine externen Modellaufrufe; keine unabhängige menschliche Zertifizierung.
+
+Exakt die letzten 81 reservierten Ziele; die ersten 164 und sämtliche alten Inhalte bleiben erhalten. Zielidentitäten, Zielübersetzungen, Lerngruppen und Auswahlpositionen bleiben unverändert. Neue Mitgliedschaften zunächst 165–245; separater hashgebundener Display-Patch auf 1–245. Nur die zwei Positionsfelder innerhalb dieses Stapels ändern sich. Die front-Korrektur aus Batch 1 bleibt erhalten.
+
+Bedeutungsentscheidungen:
+- minutes ist das Sitzungsprotokoll, agreement die Einigkeit, training die berufliche Schulung. simple beschreibt einen einfachen Aufbau der Maschine.
+- key ist im keyboard-Satz die Tastaturtaste; marks sind Bleistiftspuren, keine Schulnoten. glasses sind Schutzbrillen, glass in glass bottles ist der Werkstoff.
+- total als Summe und total als Adjektiv wurden getrennt. take priority, take on responsibility und lead to a qualification benötigen kontextuell passende Begleitwortbedeutungen.
+- her als Possessivwort und als Objekt wurden getrennt. has ist in Perfektkonstruktionen AUX, bei Besitz und Verpflichtung VERB gemäß bestehendem Vertrag. no longer verwendet no als ADV.
+- pay bezeichnet die Bezahlung, working die Arbeitszeiten. left im Protokollsatz bedeutet gegangen, nicht links/übrig.
+- covers bei Einkommen und Stipendium meint Kostendeckung. rent ist die Miete. lessons sind Unterrichtsstunden, keine Erkenntnisse aus Erfahrungen.
+- design ist ein Nomen. moving in moving parts bezeichnet bewegliche Teile; living costs den Lebensunterhalt, kein Wohnzimmer.
+- been in There has been a clear improvement ist der vorhandenen existenziellen VERB-Bedeutung be#gibt zugeordnet; ein automatisches POS-Etikett AUX ersetzt diese Projektkonvention nicht.
+- Präpositionen und Konjunktionen wurden je Satz gelesen, insbesondere to (Infinitiv/Präposition), before (Konjunktion/Präposition), zeitliches at/on/in/by, from bei Abwesenheit und against beim Regelverbot.
+- Neue Formglossen wurden einzeln gelesen. Historische Glossen bleiben unangetastet; keine pauschale Wörterbuchbereinigung.
+
+Vier Alternativen, vollständig in den Satz eingesetzt und gelesen:
+1. vacancy → job opening: The company has a job opening for an experienced accountant. Gleiche freie Stelle.
+2. eraser → rubber: Use the rubber to remove the pencil marks from the page. Britische Bezeichnung, Radierkontext eindeutig.
+3. practise → practice: We practice speaking English in pairs at the start of each lesson. Orthografische Variante.
+4. academic → scholarly: The library provides access to scholarly journals for research projects. Gleiche wissenschaftliche Fachzeitschriften.
+accepted enthält nur die Zielform. Keine automatische Freigabe aus Gruppen/Aliassen; Alternativen sind nicht vollständig. Der Synonymhinweis bleibt lernstandsneutral.
+
+Neue Sätze: Stufe mittel, Zipf-Grenze 3,5, keine formelle CEFR-Bewertung. Linter: 0 Fehler, 2 Häufigkeitshinweise (confidently 3,41; learners/learner 3,48).
+
+Unveränderte mitgelieferte Schema-, Kontext-, Registry-, Gruppen-, Token-, Reviewhash-, Import-, Display- und SQLite-Prüfungen. Der Verifier legt nur den lokalen spaCy-Modellpfad fest. Tatsächliche Ausgaben in validation.txt und local_export_report.json.
+Erwartet: 1250 Karten; 1135 Lernziele (160/489/241/245); 1784 Satztexte, 1778 Verknüpfungen einschließlich Historie. Kein Restbatch.
+Keine App-Installation, Flutter-/Geräteprüfung, user.db-Zugriffe oder öffentliche Freigabe hier.
+reference/content.sqlite ist die ALTE Quelle arbeit_bildung_batch_2_v1, kein neues App-Asset.

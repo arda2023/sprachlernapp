@@ -132,15 +132,14 @@ class DeckSessionController extends Notifier<DeckSessionState> {
             throw _resolver.contentError ?? StateError('Inhaltspaket fehlt');
           }
           ids.addAll(
-            _resolver.eligiblePrimaries(
-              await _resolver.content!.deckCardIds(args.deckId),
-            ),
+            await _resolver.deckPracticeIds(args.deckId),
           );
         }
         final states = await _user.allCardStates();
         final cards = _resolver.cards;
         _queue = args.kind == DeckSessionKind.mixed
             ? buildMixedQueue(
+                targetsResolved: true,
                 activeDeckCardIds: ids,
                 storyAdditions: _resolver.additions,
                 cards: cards,
@@ -149,6 +148,7 @@ class DeckSessionController extends Notifier<DeckSessionState> {
                 size: args.size,
               )
             : buildDeckQueue(
+                targetsResolved: true,
                 deckCardIds: ids,
                 states: states,
                 cards: cards,

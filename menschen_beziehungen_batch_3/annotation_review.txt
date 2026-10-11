@@ -1,0 +1,1072 @@
+communicate | We need to communicate clearly about our plans for the weekend. | Wir müssen uns klar über unsere Pläne für das Wochenende austauschen.
+We => we/PRON|we#wir
+need => need/VERB|need#brauchen
+to => to/PART|to#infinitivpartikel
+communicate => communicate/VERB|communicate#kommunizieren
+clearly => clearly/ADV|clearly#deutlich
+about => about/ADP|about#ueber_thema
+our => our/DET|our#unser-unsere
+plans => plan/NOUN|plan#vorhaben
+for => for/ADP|for#fuer_zweck_empfaenger
+the => the/DET|the#bestimmter_artikel
+weekend => weekend/NOUN|weekend#wochenende
+
+love | I love my brother, even when we disagree about almost everything. | Ich liebe meinen Bruder, auch wenn wir uns über fast nichts einig sind.
+I => I/PRON|i#ich
+love => love/VERB|love#liebt
+my => my/DET|my#mein
+brother => brother/NOUN|brother#bruder
+even => even/ADV|even#sogar
+when => when/SCONJ|when#wenn
+we => we/PRON|we#wir
+disagree => disagree/VERB|disagree#nicht-uebereinstimmt
+about => about/ADP|about#ueber_thema
+almost => almost/ADV|almost#fast
+everything => everything/PRON|everything#alles
+
+acquaintance | He is an acquaintance from my evening class, not a close friend. | Er ist ein Bekannter aus meinem Abendkurs, kein enger Freund.
+He => he/PRON|he#er
+is => be/AUX|be#sein_vollverb
+an => a/DET|a#ein
+acquaintance => acquaintance/NOUN|acquaintance#bekannter
+from => from/ADP|from#von_ausgangspunkt
+my => my/DET|my#mein
+evening => evening/NOUN|evening#abend
+class => class/NOUN|class#unterricht
+not => not/PART|not#nicht
+a => a/DET|a#ein
+close => close/ADJ|close#engen-nahen
+friend => friend/NOUN|friend#freund
+
+mood | A walk with my sister always puts me in a better mood. | Ein Spaziergang mit meiner Schwester hebt immer meine Stimmung.
+A => a/DET|a#ein
+walk => walk/NOUN|walk#spaziergang
+with => with/ADP|with#mit
+my => my/DET|my#mein
+sister => sister/NOUN|sister#schwester
+always => always/ADV|always#immer
+puts => put/VERB|put#in-zustand-versetzen
+me => I/PRON|i#mir
+in => in/ADP|in#zustand
+a => a/DET|a#ein
+better => good/ADJ|good#gut
+mood => mood/NOUN|mood#stimmung
+
+generous | It was generous of you to give us so much of your time. | Es war großzügig von dir, uns so viel von deiner Zeit zu schenken.
+It => it/PRON|it#es_ding
+was => be/AUX|be#sein_vollverb
+generous => generous/ADJ|generous#grozugig
+of => of/ADP|of#von
+you => you/PRON|you#du_sie_ihr
+to => to/PART|to#infinitivpartikel
+give => give/VERB|give#geben
+us => we/PRON|we#uns
+so => so/ADV|so#so_sehr
+much => much/DET|much#viel_menge
+of => of/ADP|of#teil_menge
+your => your/DET|your#dein-deine
+time => time/NOUN|time#zeit
+
+care | I want to care for my father at home as he grows older. | Ich möchte mich zu Hause um meinen Vater kümmern, während er älter wird.
+I => I/PRON|i#ich
+want => want/VERB|want#wollen
+to => to/PART|to#infinitivpartikel
+care => care/VERB|care#sich-kummern
+for => for/ADP|for#fuer_zweck_empfaenger
+my => my/DET|my#mein
+father => father/NOUN|father#vater
+at => at/ADP|at#ort
+home => home/NOUN|home#hause
+as => as/SCONJ|as#waehrend_zeit
+he => he/PRON|he#er
+grows => grow/VERB|grow#werden
+older => old/ADJ|old#alt
+
+toddler | The toddler held her father's hand while taking a few careful steps. | Das Kleinkind hielt die Hand seines Vaters, während es ein paar vorsichtige Schritte machte.
+The => the/DET|the#bestimmter_artikel
+toddler => toddler/NOUN|toddler#kleinkind
+held => hold/VERB|hold#haelt
+her => her/DET|her#ihr_possessiv
+father => father/NOUN|father#vater
+'s => 's/PART|s#genitiv-endung
+hand => hand/NOUN|hand#hand
+while => while/SCONJ|while#waehrend
+taking => take/VERB|take#schritte-machen
+a => a/DET|a#ein
+few => few/ADJ|few#wenigen
+careful => careful/ADJ|careful#vorsichtig
+steps => step/NOUN|step#schritt
+
+relationship | Their relationship grew stronger after they learned to discuss problems honestly. | Ihre Beziehung wurde stärker, nachdem sie gelernt hatten, Probleme ehrlich zu besprechen.
+Their => they/PRON|they#ihr_plural
+relationship => relationship/NOUN|relationship#beziehung
+grew => grow/VERB|grow#werden
+stronger => strong/ADJ|strong#stabil-verbunden
+after => after/SCONJ|after#nachdem
+they => they/PRON|they#sie_plural
+learned => learn/VERB|learn#lernen
+to => to/PART|to#infinitivpartikel
+discuss => discuss/VERB|discuss#besprechen
+problems => problem/NOUN|problem#problem
+honestly => honestly/ADV|honestly#ehrlich
+
+insult | Calling her stupid was an insult, not a harmless joke. | Sie als dumm zu bezeichnen war eine Beleidigung, kein harmloser Witz.
+Calling => call/VERB|call#bezeichnen
+her => her/PRON|her#sie_objekt
+stupid => stupid/ADJ|stupid#dumm
+was => be/AUX|be#sein_vollverb
+an => a/DET|a#ein
+insult => insult/NOUN|insult#beleidigung
+not => not/PART|not#nicht
+a => a/DET|a#ein
+harmless => harmless/ADJ|harmless#harmlos
+joke => joke/NOUN|joke#witz
+
+host | Our host welcomed us at the door and offered us tea. | Unser Gastgeber begrüßte uns an der Tür und bot uns Tee an.
+Our => our/DET|our#unser-unsere
+host => host/NOUN|host#gastgeber
+welcomed => welcome/VERB|welcome#begruessen
+us => we/PRON|we#uns
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+door => door/NOUN|door#tuer
+and => and/CCONJ|and#und
+offered => offer/VERB|offer#anbot
+us => we/PRON|we#uns
+tea => tea/NOUN|tea#tee
+
+angry | I was angry with Ben for reading my private messages. | Ich war wütend auf Ben, weil er meine privaten Nachrichten gelesen hatte.
+I => I/PRON|i#ich
+was => be/AUX|be#sein_vollverb
+angry => angry/ADJ|angry#wuetend
+with => with/ADP|with#mit
+Ben => Ben/PROPN|ben#ben
+for => for/ADP|for#anlass
+reading => read/VERB|read#lesen
+my => my/DET|my#mein
+private => private/ADJ|private#privat
+messages => message/NOUN|message#nachricht
+
+outgoing | My outgoing sister starts conversations with strangers wherever she goes. | Meine kontaktfreudige Schwester kommt überall mit fremden Menschen ins Gespräch.
+My => my/DET|my#mein
+outgoing => outgoing/ADJ|outgoing#kontaktfreudig
+sister => sister/NOUN|sister#schwester
+starts => start/VERB|start#beginnt
+conversations => conversation/NOUN|conversation#gesprach
+with => with/ADP|with#mit
+strangers => stranger/NOUN|stranger#fremder
+wherever => wherever/SCONJ|wherever#wo-auch-immer
+she => she/PRON|she#sie
+goes => go/VERB|go#gehen
+
+imply | Your comments imply that I cannot make my own decisions. | Deine Bemerkungen deuten an, dass ich meine eigenen Entscheidungen nicht treffen kann.
+Your => your/DET|your#dein-deine
+comments => comment/NOUN|comment#bemerkung
+imply => imply/VERB|imply#andeuten
+that => that/SCONJ|that#dass
+I => I/PRON|i#ich
+can => can/AUX|can#koennen
+not => not/PART|not#nicht
+make => make/VERB|make#traf-in-made-a-decision
+my => my/DET|my#mein
+own => own/ADJ|own#eigen
+decisions => decision/NOUN|decision#entscheidung
+
+reassure | Please reassure Mia that she has done nothing wrong. | Bitte versichere Mia, dass sie nichts falsch gemacht hat.
+Please => please/INTJ|please#bitte
+reassure => reassure/VERB|reassure#beruhigen
+Mia => Mia/PROPN|mia#mia
+that => that/SCONJ|that#dass
+she => she/PRON|she#sie
+has => have/AUX|have#hilfsverb
+done => do/VERB|do#tun
+nothing => nothing/PRON|nothing#nichts
+wrong => wrong/ADJ|wrong#falsch
+
+man | The man sitting beside my aunt is her new partner. | Der Mann neben meiner Tante ist ihr neuer Partner.
+The => the/DET|the#bestimmter_artikel
+man => man/NOUN|man#mann
+sitting => sit/VERB|sit#sitzen
+beside => beside/ADP|beside#neben
+my => my/DET|my#mein
+aunt => aunt/NOUN|aunt#tante
+is => be/AUX|be#sein_vollverb
+her => her/DET|her#ihr_possessiv
+new => new/ADJ|new#neu
+partner => partner/NOUN|partner#partner
+
+boundary | Reading my private messages crosses a boundary in our friendship. | Meine privaten Nachrichten zu lesen überschreitet eine Grenze in unserer Freundschaft.
+Reading => read/VERB|read#lesen
+my => my/DET|my#mein
+private => private/ADJ|private#privat
+messages => message/NOUN|message#nachricht
+crosses => cross/VERB|cross#grenze-uberschreiten
+a => a/DET|a#ein
+boundary => boundary/NOUN|boundary#grenze
+in => in/ADP|in#bereich
+our => our/DET|our#unser-unsere
+friendship => friendship/NOUN|friendship#freundschaft
+
+calm | She remained calm while everyone around her was arguing. | Sie blieb ruhig, während alle um sie herum stritten.
+She => she/PRON|she#sie
+remained => remain/VERB|remain#bleiben
+calm => calm/ADJ|calm#ruhiger
+while => while/SCONJ|while#waehrend
+everyone => everyone/PRON|everyone#alle
+around => around/ADP|around#um_herum
+her => her/PRON|her#sie_objekt
+was => be/AUX|be#hilfsverb
+arguing => argue/VERB|argue#streiten
+
+stubborn | He is too stubborn to admit his mistake, even after seeing the evidence. | Er ist zu stur, seinen Fehler zuzugeben, selbst nachdem er die Beweise gesehen hat.
+He => he/PRON|he#er
+is => be/AUX|be#sein_vollverb
+too => too/ADV|too#zu
+stubborn => stubborn/ADJ|stubborn#stur
+to => to/PART|to#infinitivpartikel
+admit => admit/VERB|admit#zugeben
+his => his/DET|his#sein
+mistake => mistake/NOUN|mistake#versehen
+even => even/ADV|even#sogar
+after => after/SCONJ|after#nach-hier-vor-einer-ing-form
+seeing => see/VERB|see#sehen
+the => the/DET|the#bestimmter_artikel
+evidence => evidence/NOUN|evidence#belegmaterial
+
+gesture | She made a small gesture with her hand to invite me closer. | Mit einer kleinen Handbewegung gab sie mir zu verstehen, dass ich näher kommen sollte.
+She => she/PRON|she#sie
+made => make/VERB|make#macht
+a => a/DET|a#ein
+small => small/ADJ|small#klein
+gesture => gesture/NOUN|gesture#geste
+with => with/ADP|with#mit
+her => her/DET|her#ihr_possessiv
+hand => hand/NOUN|hand#hand
+to => to/PART|to#infinitivpartikel
+invite => invite/VERB|invite#einladen
+me => I/PRON|i#mir
+closer => close/ADV|close#nah
+
+depend | My plans for tonight depend on whether my sister can watch the children. | Meine Pläne für heute Abend hängen davon ab, ob meine Schwester auf die Kinder aufpassen kann.
+My => my/DET|my#mein
+plans => plan/NOUN|plan#vorhaben
+for => for/ADP|for#fuer_zweck_empfaenger
+tonight => tonight/NOUN|tonight#heute-nacht
+depend => depend/VERB|depend#abhaengen
+on => on/ADP|on#abhaengigkeit
+whether => whether/SCONJ|whether#ob
+my => my/DET|my#mein
+sister => sister/NOUN|sister#schwester
+can => can/AUX|can#koennen
+watch => watch/VERB|watch#aufpassen
+the => the/DET|the#bestimmter_artikel
+children => child/NOUN|child#kinder
+
+social | Regular social contact is important to my grandfather. | Regelmäßiger Kontakt mit anderen Menschen ist meinem Großvater wichtig.
+Regular => regular/ADJ|regular#regelmaessig
+social => social/ADJ|social#gesellschaftlich
+contact => contact/NOUN|contact#kontakt
+is => be/AUX|be#sein_vollverb
+important => important/ADJ|important#wichtige
+to => to/ADP|to#bezug
+my => my/DET|my#mein
+grandfather => grandfather/NOUN|grandfather#grossvater
+
+generation | Each generation in our family has its own stories to tell. | Jede Generation in unserer Familie hat ihre eigenen Geschichten zu erzählen.
+Each => each/DET|each#jede
+generation => generation/NOUN|generation#generation
+in => in/ADP|in#bereich
+our => our/DET|our#unser-unsere
+family => family/NOUN|family#familie
+has => have/VERB|have#besitzen
+its => its/DET|its#sein_ihr
+own => own/ADJ|own#eigen
+stories => story/NOUN|story#geschichte
+to => to/PART|to#infinitivpartikel
+tell => tell/VERB|tell#sagen
+
+marry | They plan to marry next spring and have a small celebration. | Sie wollen nächstes Frühjahr heiraten und ein kleines Fest feiern.
+They => they/PRON|they#sie_plural
+plan => plan/VERB|plan#planen
+to => to/PART|to#infinitivpartikel
+marry => marry/VERB|marry#heiraten
+next => next/ADJ|next#naechsten
+spring => spring/NOUN|spring#fruehling
+and => and/CCONJ|and#und
+have => have/VERB|have#einnehmen
+a => a/DET|a#ein
+small => small/ADJ|small#klein
+celebration => celebration/NOUN|celebration#feier
+
+ignore | Please do not ignore me when I am trying to explain my feelings. | Bitte ignorier mich nicht, wenn ich versuche, meine Gefühle zu erklären.
+Please => please/INTJ|please#bitte
+do => do/AUX|do#hilfsverb
+not => not/PART|not#nicht
+ignore => ignore/VERB|ignore#missachten
+me => I/PRON|i#mir
+when => when/SCONJ|when#wenn
+I => I/PRON|i#ich
+am => be/AUX|be#hilfsverb
+trying => try/VERB|try#versuchen
+to => to/PART|to#infinitivpartikel
+explain => explain/VERB|explain#erklaere
+my => my/DET|my#mein
+feelings => feeling/NOUN|feeling#gefuehl
+
+sensitive | Leo is sensitive and often feels hurt by careless remarks. | Leo ist empfindsam und fühlt sich durch unbedachte Bemerkungen oft verletzt.
+Leo => Leo/PROPN|leo#leo
+is => be/AUX|be#sein_vollverb
+sensitive => sensitive/ADJ|sensitive#empfindsam
+and => and/CCONJ|and#und
+often => often/ADV|often#oft
+feels => feel/VERB|feel#fuehlt-sich
+hurt => hurt/ADJ|hurt#verletzt
+by => by/ADP|by#von_urheber
+careless => careless/ADJ|careless#unbedacht
+remarks => remark/NOUN|remark#bemerkung
+
+whisper | We had to whisper because the baby was asleep beside us. | Wir mussten flüstern, weil das Baby neben uns schlief.
+We => we/PRON|we#wir
+had => have/VERB|have#muessen
+to => to/PART|to#infinitivpartikel
+whisper => whisper/VERB|whisper#flustern
+because => because/SCONJ|because#weil
+the => the/DET|the#bestimmter_artikel
+baby => baby/NOUN|baby#baby
+was => be/AUX|be#sein_vollverb
+asleep => asleep/ADJ|asleep#schlafend
+beside => beside/ADP|beside#neben
+us => we/PRON|we#uns
+
+donation | Her donation helped the charity buy warm clothes for local families. | Ihre Spende half der Hilfsorganisation, warme Kleidung für Familien aus der Gegend zu kaufen.
+Her => her/DET|her#ihr_possessiv
+donation => donation/NOUN|donation#spende
+helped => help/VERB|help#helfen
+the => the/DET|the#bestimmter_artikel
+charity => charity/NOUN|charity#hilfsorganisation
+buy => buy/VERB|buy#kaufen
+warm => warm/ADJ|warm#warm
+clothes => clothes/NOUN|clothes#kleidung
+for => for/ADP|for#fuer_zweck_empfaenger
+local => local/ADJ|local#oertlichen
+families => family/NOUN|family#familie
+
+member | Every member of our walking club can suggest a route. | Jedes Mitglied unseres Wandervereins kann eine Route vorschlagen.
+Every => every/DET|every#jede
+member => member/NOUN|member#mitglied
+of => of/ADP|of#genitiv_besitz
+our => our/DET|our#unser-unsere
+walking => walk/NOUN|walk#gehen
+club => club/NOUN|club#verein
+can => can/AUX|can#koennen
+suggest => suggest/VERB|suggest#vorschlagen
+a => a/DET|a#ein
+route => route/NOUN|route#route
+
+homesick | I felt homesick during my first week away from my family. | In meiner ersten Woche fern von meiner Familie hatte ich Heimweh.
+I => I/PRON|i#ich
+felt => feel/VERB|feel#fuehlen
+homesick => homesick/ADJ|homesick#von-heimweh-geplagt
+during => during/ADP|during#waehrend
+my => my/DET|my#mein
+first => first/ADJ|first#ersten
+week => week/NOUN|week#woche
+away => away/ADV|away#weg
+from => from/ADP|from#von_ausgangspunkt
+my => my/DET|my#mein
+family => family/NOUN|family#familie
+
+parenthood | They talked honestly about the joys and challenges of parenthood. | Sie sprachen ehrlich über die Freuden und Herausforderungen der Elternschaft.
+They => they/PRON|they#sie_plural
+talked => talk/VERB|talk#sprechend-redet
+honestly => honestly/ADV|honestly#ehrlich
+about => about/ADP|about#ueber_thema
+the => the/DET|the#bestimmter_artikel
+joys => joy/NOUN|joy#freude
+and => and/CCONJ|and#und
+challenges => challenge/NOUN|challenge#herausforderung
+of => of/ADP|of#genitiv_besitz
+parenthood => parenthood/NOUN|parenthood#elternschaft
+
+abuse | Years of emotional abuse had left her afraid to express her own opinions. | Nach jahrelanger seelischer Misshandlung hatte sie Angst, ihre eigene Meinung zu äußern.
+Years => year/NOUN|year#jahr
+of => of/ADP|of#genitiv_besitz
+emotional => emotional/ADJ|emotional#seelisch
+abuse => abuse/NOUN|abuse#misshandlung
+had => have/AUX|have#hilfsverb
+left => leave/VERB|leave#in-zustand-hinterlassen
+her => her/PRON|her#sie_objekt
+afraid => afraid/ADJ|afraid#aengstlich-angst
+to => to/PART|to#infinitivpartikel
+express => express/VERB|express#ausdrucken
+her => her/DET|her#ihr_possessiv
+own => own/ADJ|own#eigen
+opinions => opinion/NOUN|opinion#meinung
+
+impatient | He became impatient after waiting an hour for his friend. | Nachdem er eine Stunde auf seinen Freund gewartet hatte, wurde er ungeduldig.
+He => he/PRON|he#er
+became => become/VERB|become#wurde
+impatient => impatient/ADJ|impatient#ungeduldig
+after => after/SCONJ|after#nach-hier-vor-einer-ing-form
+waiting => wait/VERB|wait#warten
+an => a/DET|a#ein
+hour => hour/NOUN|hour#stunde
+for => for/ADP|for#auf
+his => his/DET|his#sein
+friend => friend/NOUN|friend#freund
+
+tease | We sometimes tease our grandfather about his enormous collection of hats. | Manchmal ziehen wir unseren Großvater wegen seiner riesigen Hutsammlung auf.
+We => we/PRON|we#wir
+sometimes => sometimes/ADV|sometimes#manchmal
+tease => tease/VERB|tease#necken
+our => our/DET|our#unser-unsere
+grandfather => grandfather/NOUN|grandfather#grossvater
+about => about/ADP|about#ueber_thema
+his => his/DET|his#sein
+enormous => enormous/ADJ|enormous#riesig
+collection => collection/NOUN|collection#sammlung
+of => of/ADP|of#teil_menge
+hats => hat/NOUN|hat#hut
+
+relieved | I was relieved to hear that both children were safe. | Ich war erleichtert zu hören, dass beide Kinder in Sicherheit waren.
+I => I/PRON|i#ich
+was => be/AUX|be#sein_vollverb
+relieved => relieved/ADJ|relieved#erleichtert
+to => to/PART|to#infinitivpartikel
+hear => hear/VERB|hear#hoeren
+that => that/SCONJ|that#dass
+both => both/DET|both#beide
+children => child/NOUN|child#kinder
+were => be/AUX|be#sein_vergangenheit
+safe => safe/ADJ|safe#sicher
+
+bride | The bride chose to walk into the ceremony with both her parents. | Die Braut entschied sich, mit beiden Eltern zur Trauung einzuziehen.
+The => the/DET|the#bestimmter_artikel
+bride => bride/NOUN|bride#braut
+chose => choose/VERB|choose#waehlt-aus
+to => to/PART|to#infinitivpartikel
+walk => walk/VERB|walk#geht-zu-fuss
+into => into/ADP|into#in
+the => the/DET|the#bestimmter_artikel
+ceremony => ceremony/NOUN|ceremony#zeremonie
+with => with/ADP|with#mit
+both => both/DET|both#beide
+her => her/DET|her#ihr_possessiv
+parents => parent/NOUN|parent#eltern
+
+recover | She needs time to recover from the stress of the last few months. | Sie braucht Zeit, um sich vom Stress der letzten Monate zu erholen.
+She => she/PRON|she#sie
+needs => need/VERB|need#brauchen
+time => time/NOUN|time#zeit
+to => to/PART|to#infinitivpartikel
+recover => recover/VERB|recover#sich-erholen
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+stress => stress/NOUN|stress#stress
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+last => last/ADJ|last#letzter
+few => few/ADJ|few#wenigen
+months => month/NOUN|month#monat
+
+stepfather | My stepfather married my mother when I was six years old. | Mein Stiefvater heiratete meine Mutter, als ich sechs Jahre alt war.
+My => my/DET|my#mein
+stepfather => stepfather/NOUN|stepfather#stiefvater
+married => marry/VERB|marry#heiraten
+my => my/DET|my#mein
+mother => mother/NOUN|mother#mutter
+when => when/SCONJ|when#als_wenn
+I => I/PRON|i#ich
+was => be/AUX|be#sein_vollverb
+six => six/NUM|six#sechs
+years => year/NOUN|year#jahr
+old => old/ADJ|old#alt
+
+barbecue | We invited our neighbours to a barbecue in the garden on Sunday. | Wir haben unsere Nachbarn am Sonntag zu einem Grillfest im Garten eingeladen.
+We => we/PRON|we#wir
+invited => invite/VERB|invite#einladen
+our => our/DET|our#unser-unsere
+neighbours => neighbour/NOUN|neighbour#nachbar
+to => to/ADP|to#bezug
+a => a/DET|a#ein
+barbecue => barbecue/NOUN|barbecue#grillfest
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+garden => garden/NOUN|garden#garten
+on => on/ADP|on#an_zeitlich
+Sunday => Sunday/PROPN|sunday#sonntag
+
+manipulate | Do not manipulate your friends by making them feel guilty for saying no. | Manipuliere deine Freunde nicht, indem du ihnen Schuldgefühle machst, wenn sie Nein sagen.
+Do => do/AUX|do#hilfsverb
+not => not/PART|not#nicht
+manipulate => manipulate/VERB|manipulate#manipulieren
+your => your/DET|your#dein-deine
+friends => friend/NOUN|friend#freund
+by => by/ADP|by#mit_mittel
+making => make/VERB|make#veranlassen
+them => they/PRON|they#sie_plural
+feel => feel/VERB|feel#fuehlen
+guilty => guilty/ADJ|guilty#schuldbewusst
+for => for/ADP|for#anlass
+saying => say/VERB|say#sagen
+no => no/INTJ|no#nein
+
+embarrassed | I felt embarrassed after calling our new neighbour by the wrong name. | Es war mir peinlich, unseren neuen Nachbarn mit dem falschen Namen angesprochen zu haben.
+I => I/PRON|i#ich
+felt => feel/VERB|feel#fuehlen
+embarrassed => embarrassed/ADJ|embarrassed#verlegen
+after => after/SCONJ|after#nach-hier-vor-einer-ing-form
+calling => call/VERB|call#bezeichnen
+our => our/DET|our#unser-unsere
+new => new/ADJ|new#neu
+neighbour => neighbour/NOUN|neighbour#nachbar
+by => by/ADP|by#mit_mittel
+the => the/DET|the#bestimmter_artikel
+wrong => wrong/ADJ|wrong#falsch
+name => name/NOUN|name#namen
+
+mature | Her mature response to the criticism surprised everyone in the room. | Ihr reifer Umgang mit der Kritik überraschte alle im Raum.
+Her => her/DET|her#ihr_possessiv
+mature => mature/ADJ|mature#reif
+response => response/NOUN|response#reaktion
+to => to/ADP|to#bezug
+the => the/DET|the#bestimmter_artikel
+criticism => criticism/NOUN|criticism#kritik
+surprised => surprise/VERB|surprise#ueberraschte
+everyone => everyone/PRON|everyone#alle
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+room => room/NOUN|room#zimmer
+
+commitment | Their commitment to each other helped them through a difficult year. | Ihr fester Wille, füreinander einzustehen, half ihnen durch ein schwieriges Jahr.
+Their => they/PRON|they#ihr_plural
+commitment => commitment/NOUN|commitment#verbindlichkeit
+to => to/ADP|to#bezug
+each => each/PRON|each#einander_teil
+other => other/ADJ|other#anderen
+helped => help/VERB|help#helfen
+them => they/PRON|they#sie_plural
+through => through/ADP|through#durch
+a => a/DET|a#ein
+difficult => difficult/ADJ|difficult#schwierig
+year => year/NOUN|year#jahr
+
+household | Everyone in our household helps with the cooking and cleaning. | Alle in unserem Haushalt helfen beim Kochen und Putzen.
+Everyone => everyone/PRON|everyone#alle
+in => in/ADP|in#in_raeumlich
+our => our/DET|our#unser-unsere
+household => household/NOUN|household#haushalt
+helps => help/VERB|help#helfen
+with => with/ADP|with#mit
+the => the/DET|the#bestimmter_artikel
+cooking => cooking/NOUN|cooking#kochen
+and => and/CCONJ|and#und
+cleaning => cleaning/NOUN|cleaning#putzen
+
+father-in-law | My father-in-law and his daughter are planning a surprise for my birthday. | Mein Schwiegervater und seine Tochter planen eine Überraschung zu meinem Geburtstag.
+My => my/DET|my#mein
+father-in-law => father-in-law/NOUN|father-in-law#schwiegervater
+and => and/CCONJ|and#und
+his => his/DET|his#sein
+daughter => daughter/NOUN|daughter#tochter
+are => be/AUX|be#hilfsverb
+planning => plan/VERB|plan#planen
+a => a/DET|a#ein
+surprise => surprise/NOUN|surprise#uberraschung
+for => for/ADP|for#fuer_zweck_empfaenger
+my => my/DET|my#mein
+birthday => birthday/NOUN|birthday#geburtstag
+
+admit | I must admit that I was wrong about your friend. | Ich muss zugeben, dass ich mich in Bezug auf deinen Freund geirrt habe.
+I => I/PRON|i#ich
+must => must/AUX|must#muessen
+admit => admit/VERB|admit#zugeben
+that => that/SCONJ|that#dass
+I => I/PRON|i#ich
+was => be/AUX|be#sein_vollverb
+wrong => wrong/ADJ|wrong#falsch
+about => about/ADP|about#ueber_thema
+your => your/DET|your#dein-deine
+friend => friend/NOUN|friend#freund
+
+betray | I would never betray your trust by sharing your private messages. | Ich würde dein Vertrauen niemals missbrauchen, indem ich deine privaten Nachrichten weitergebe.
+I => I/PRON|i#ich
+would => would/AUX|would#wuerde
+never => never/ADV|never#nie
+betray => betray/VERB|betray#verraten
+your => your/DET|your#dein-deine
+trust => trust/NOUN|trust#vertrauen
+by => by/ADP|by#mit_mittel
+sharing => share/VERB|share#teilt
+your => your/DET|your#dein-deine
+private => private/ADJ|private#privat
+messages => message/NOUN|message#nachricht
+
+interact | The children learn to interact with each other through simple games. | Die Kinder lernen durch einfache Spiele, miteinander umzugehen.
+The => the/DET|the#bestimmter_artikel
+children => child/NOUN|child#kinder
+learn => learn/VERB|learn#lernen
+to => to/PART|to#infinitivpartikel
+interact => interact/VERB|interact#miteinander-umgehen
+with => with/ADP|with#mit
+each => each/PRON|each#einander_teil
+other => other/ADJ|other#anderen
+through => through/ADP|through#durch
+simple => simple/ADJ|simple#einfache
+games => game/NOUN|game#spiel
+
+impulsive | His impulsive decision to move in with her surprised his friends. | Seine impulsive Entscheidung, bei ihr einzuziehen, überraschte seine Freunde.
+His => his/DET|his#sein
+impulsive => impulsive/ADJ|impulsive#impulsiv
+decision => decision/NOUN|decision#entscheidung
+to => to/PART|to#infinitivpartikel
+move => move/VERB|move#umziehen
+in => in/ADV|in#herein_drinnen
+with => with/ADP|with#mit
+her => her/PRON|her#sie_objekt
+surprised => surprise/VERB|surprise#ueberraschte
+his => his/DET|his#sein
+friends => friend/NOUN|friend#freund
+
+mutual | Their friendship is based on mutual respect and honest conversation. | Ihre Freundschaft beruht auf gegenseitigem Respekt und ehrlichen Gesprächen.
+Their => they/PRON|they#ihr_plural
+friendship => friendship/NOUN|friendship#freundschaft
+is => be/AUX|be#hilfsverb
+based => base/VERB|base#beruhen
+on => on/ADP|on#auf
+mutual => mutual/ADJ|mutual#gegenseitig
+respect => respect/NOUN|respect#respekt
+and => and/CCONJ|and#und
+honest => honest/ADJ|honest#ehrlich
+conversation => conversation/NOUN|conversation#gesprach
+
+contribute | We each contribute a little money towards our neighbours' leaving present. | Wir steuern alle etwas Geld zum Abschiedsgeschenk für unsere Nachbarn bei.
+We => we/PRON|we#wir
+each => each/PRON|each#jeder
+contribute => contribute/VERB|contribute#beitragen
+a => a/DET|a#ein
+little => little/DET|little#wenig
+money => money/NOUN|money#geld
+towards => towards/ADP|towards#beitrag-fuer
+our => our/DET|our#unser-unsere
+neighbours => neighbour/NOUN|neighbour#nachbar
+leaving => leave/VERB|leave#gehen
+present => present/NOUN|present#geschenk
+
+daughter-in-law | Our daughter-in-law and our son have just moved into a new home. | Unsere Schwiegertochter und unser Sohn sind gerade in ein neues Zuhause gezogen.
+Our => our/DET|our#unser-unsere
+daughter-in-law => daughter-in-law/NOUN|daughter-in-law#schwiegertochter
+and => and/CCONJ|and#und
+our => our/DET|our#unser-unsere
+son => son/NOUN|son#sohn
+have => have/AUX|have#hilfsverb
+just => just/ADV|just#gerade_eben
+moved => move/VERB|move#umziehen
+into => into/ADP|into#in
+a => a/DET|a#ein
+new => new/ADJ|new#neu
+home => home/NOUN|home#hause
+
+frustrated | I felt frustrated because we kept arguing without solving anything. | Ich war frustriert, weil wir immer weiter stritten, ohne etwas zu klären.
+I => I/PRON|i#ich
+felt => feel/VERB|feel#fuehlen
+frustrated => frustrated/ADJ|frustrated#frustriert
+because => because/SCONJ|because#weil
+we => we/PRON|we#wir
+kept => keep/VERB|keep#fortsetzen
+arguing => argue/VERB|argue#streiten
+without => without/ADP|without#ohne
+solving => solve/VERB|solve#geloest
+anything => anything/PRON|anything#irgendetwas
+
+detail | I remember every detail of our first meeting, including the colour of your coat. | Ich erinnere mich an jede Einzelheit unserer ersten Begegnung, sogar an die Farbe deines Mantels.
+I => I/PRON|i#ich
+remember => remember/VERB|remember#erinnern-dich-an
+every => every/DET|every#jede
+detail => detail/NOUN|detail#einzelheit
+of => of/ADP|of#genitiv_besitz
+our => our/DET|our#unser-unsere
+first => first/ADJ|first#ersten
+meeting => meeting/NOUN|meeting#treffen
+including => including/ADP|including#einschliesslich
+the => the/DET|the#bestimmter_artikel
+colour => colour/NOUN|colour#farbe
+of => of/ADP|of#genitiv_besitz
+your => your/DET|your#dein-deine
+coat => coat/NOUN|coat#mantel
+
+tension | There was tension between the sisters after their argument about money. | Nach ihrem Streit über Geld herrschte zwischen den Schwestern eine angespannte Stimmung.
+There => there/PRON|there#es_gibt
+was => be/VERB|be#gibt
+tension => tension/NOUN|tension#spannung
+between => between/ADP|between#zwischen
+the => the/DET|the#bestimmter_artikel
+sisters => sister/NOUN|sister#schwestern
+after => after/ADP|after#nach
+their => they/PRON|they#ihr_plural
+argument => argument/NOUN|argument#streit
+about => about/ADP|about#ueber_thema
+money => money/NOUN|money#geld
+
+newcomer | As a newcomer to the group, I was grateful for their warm welcome. | Als Neuling in der Gruppe war ich dankbar für ihren herzlichen Empfang.
+As => as/ADP|as#als_funktion
+a => a/DET|a#ein
+newcomer => newcomer/NOUN|newcomer#neuling
+to => to/ADP|to#bezug
+the => the/DET|the#bestimmter_artikel
+group => group/NOUN|group#gruppe
+I => I/PRON|i#ich
+was => be/AUX|be#sein_vollverb
+grateful => grateful/ADJ|grateful#dankbar
+for => for/ADP|for#fuer_zweck_empfaenger
+their => they/PRON|they#ihr_plural
+warm => warm/ADJ|warm#herzlich
+welcome => welcome/NOUN|welcome#empfang
+
+optimistic | I am optimistic that we can find a solution together. | Ich bin optimistisch, dass wir gemeinsam eine Lösung finden können.
+I => I/PRON|i#ich
+am => be/AUX|be#sein_vollverb
+optimistic => optimistic/ADJ|optimistic#optimistisch
+that => that/SCONJ|that#dass
+we => we/PRON|we#wir
+can => can/AUX|can#koennen
+find => find/VERB|find#finden
+a => a/DET|a#ein
+solution => solution/NOUN|solution#losung
+together => together/ADV|together#zusammen
+
+meaningful | That small gift was meaningful to me because my daughter had made it herself. | Dieses kleine Geschenk bedeutete mir viel, weil meine Tochter es selbst gemacht hatte.
+That => that/DET|that#jener
+small => small/ADJ|small#klein
+gift => gift/NOUN|gift#geschenk
+was => be/AUX|be#sein_vollverb
+meaningful => meaningful/ADJ|meaningful#bedeutungsvoll
+to => to/ADP|to#bezug
+me => I/PRON|i#mir
+because => because/SCONJ|because#weil
+my => my/DET|my#mein
+daughter => daughter/NOUN|daughter#tochter
+had => have/AUX|have#hilfsverb
+made => make/VERB|make#herstellen
+it => it/PRON|it#es_ding
+herself => herself/PRON|herself#selbst
+
+diversity | The diversity of our neighbourhood brings together many languages and traditions. | Die Vielfalt unserer Nachbarschaft vereint viele Sprachen und Traditionen.
+The => the/DET|the#bestimmter_artikel
+diversity => diversity/NOUN|diversity#vielfalt
+of => of/ADP|of#genitiv_besitz
+our => our/DET|our#unser-unsere
+neighbourhood => neighbourhood/NOUN|neighbourhood#stadtteil
+brings => bring/VERB|bring#zusammenfuehren
+together => together/ADV|together#zusammen
+many => many/ADJ|many#viele
+languages => language/NOUN|language#sprachen
+and => and/CCONJ|and#und
+traditions => tradition/NOUN|tradition#tradition
+
+orphan | He became an orphan at six and went to live with his grandmother. | Er wurde mit sechs Jahren Waise und zog zu seiner Großmutter.
+He => he/PRON|he#er
+became => become/VERB|become#wurde
+an => a/DET|a#ein
+orphan => orphan/NOUN|orphan#waise
+at => at/ADP|at#zeit
+six => six/NUM|six#sechs
+and => and/CCONJ|and#und
+went => go/VERB|go#gehen
+to => to/PART|to#infinitivpartikel
+live => live/VERB|live#wohnen
+with => with/ADP|with#mit
+his => his/DET|his#sein
+grandmother => grandmother/NOUN|grandmother#grossmutter
+
+guilt | I felt guilt for lying to my sister about the broken vase. | Ich hatte Schuldgefühle, weil ich meine Schwester wegen der zerbrochenen Vase angelogen hatte.
+I => I/PRON|i#ich
+felt => feel/VERB|feel#fuehlen
+guilt => guilt/NOUN|guilt#schuldgefuhl
+for => for/ADP|for#anlass
+lying => lie/VERB|lie#lugen
+to => to/ADP|to#fuer_empfaenger
+my => my/DET|my#mein
+sister => sister/NOUN|sister#schwester
+about => about/ADP|about#ueber_thema
+the => the/DET|the#bestimmter_artikel
+broken => broken/ADJ|broken#kaputte
+vase => vase/NOUN|vase#vase
+
+perspective | From her perspective, the decision seemed fair to everyone. | Aus ihrer Sicht erschien die Entscheidung allen gegenüber fair.
+From => from/ADP|from#von_ausgangspunkt
+her => her/DET|her#ihr_possessiv
+perspective => perspective/NOUN|perspective#sichtweise
+the => the/DET|the#bestimmter_artikel
+decision => decision/NOUN|decision#entscheidung
+seemed => seem/VERB|seem#scheinen
+fair => fair/ADJ|fair#fair-angemessen
+to => to/ADP|to#gegenueber-dativ
+everyone => everyone/PRON|everyone#alle
+
+personality | Her cheerful personality puts new people at ease. | Mit ihrer fröhlichen Persönlichkeit sorgt sie dafür, dass sich neue Bekanntschaften wohlfühlen.
+Her => her/DET|her#ihr_possessiv
+cheerful => cheerful/ADJ|cheerful#frohlich
+personality => personality/NOUN|personality#personlichkeit
+puts => put/VERB|put#in-zustand-versetzen
+new => new/ADJ|new#neu
+people => people/NOUN|people#leute
+at => at/ADP|at#zustand
+ease => ease/NOUN|ease#wohlbefinden
+
+resilient | The children proved resilient and gradually felt at home after the difficult move. | Die Kinder erwiesen sich als widerstandsfähig und fühlten sich nach dem schwierigen Umzug allmählich zu Hause.
+The => the/DET|the#bestimmter_artikel
+children => child/NOUN|child#kinder
+proved => prove/VERB|prove#sich-erweisen
+resilient => resilient/ADJ|resilient#widerstandsfahig
+and => and/CCONJ|and#und
+gradually => gradually/ADV|gradually#allmahlich
+felt => feel/VERB|feel#fuehlen
+at => at/ADP|at#ort
+home => home/NOUN|home#hause
+after => after/ADP|after#nach
+the => the/DET|the#bestimmter_artikel
+difficult => difficult/ADJ|difficult#schwierig
+move => move/NOUN|move#umzug
+
+disgust | She turned away in disgust when she saw the rotten food. | Als sie das verdorbene Essen sah, wandte sie sich voller Ekel ab.
+She => she/PRON|she#sie
+turned => turn/VERB|turn#sich_abwenden
+away => away/ADV|away#weg
+in => in/ADP|in#zustand
+disgust => disgust/NOUN|disgust#ekel
+when => when/SCONJ|when#als_wenn
+she => she/PRON|she#sie
+saw => see/VERB|see#sehen
+the => the/DET|the#bestimmter_artikel
+rotten => rotten/ADJ|rotten#verdorben
+food => food/NOUN|food#essen
+
+truth | Please tell me the truth about why you missed our meeting. | Bitte sag mir die Wahrheit darüber, warum du nicht zu unserem Treffen gekommen bist.
+Please => please/INTJ|please#bitte
+tell => tell/VERB|tell#sagen
+me => I/PRON|i#mir
+the => the/DET|the#bestimmter_artikel
+truth => truth/NOUN|truth#wahrheit
+about => about/ADP|about#ueber_thema
+why => why/SCONJ|why#warum
+you => you/PRON|you#du_sie_ihr
+missed => miss/VERB|miss#verpassen
+our => our/DET|our#unser-unsere
+meeting => meeting/NOUN|meeting#treffen
+
+intention | My intention was to help, not to make the decision for you. | Meine Absicht war, dir zu helfen und dir nicht die Entscheidung abzunehmen.
+My => my/DET|my#mein
+intention => intention/NOUN|intention#absicht
+was => be/AUX|be#sein_vollverb
+to => to/PART|to#infinitivpartikel
+help => help/VERB|help#helfen
+not => not/PART|not#nicht
+to => to/PART|to#infinitivpartikel
+make => make/VERB|make#traf-in-made-a-decision
+the => the/DET|the#bestimmter_artikel
+decision => decision/NOUN|decision#entscheidung
+for => for/ADP|for#fuer_zweck_empfaenger
+you => you/PRON|you#du_sie_ihr
+
+propose | He plans to propose to his partner during their holiday by the sea. | Er will seiner Partnerin während ihres Urlaubs am Meer einen Heiratsantrag machen.
+He => he/PRON|he#er
+plans => plan/VERB|plan#planen
+to => to/PART|to#infinitivpartikel
+propose => propose/VERB|propose#einen-heiratsantrag-machen
+to => to/ADP|to#fuer_empfaenger
+his => his/DET|his#sein
+partner => partner/NOUN|partner#partner
+during => during/ADP|during#waehrend
+their => they/PRON|they#ihr_plural
+holiday => holiday/NOUN|holiday#urlaub
+by => by/ADP|by#neben_ort
+the => the/DET|the#bestimmter_artikel
+sea => sea/NOUN|sea#meer
+
+event | The village organised an event to welcome its new residents. | Das Dorf organisierte eine Veranstaltung, um seine neuen Bewohner willkommen zu heißen.
+The => the/DET|the#bestimmter_artikel
+village => village/NOUN|village#dorf
+organised => organise/VERB|organise#organisieren
+an => a/DET|a#ein
+event => event/NOUN|event#veranstaltung
+to => to/PART|to#infinitivpartikel
+welcome => welcome/VERB|welcome#begruessen
+its => its/DET|its#sein_ihr
+new => new/ADJ|new#neu
+residents => resident/NOUN|resident#bewohner
+
+relax | I can relax completely in the company of close friends. | In Gesellschaft enger Freunde kann ich mich völlig entspannen.
+I => I/PRON|i#ich
+can => can/AUX|can#koennen
+relax => relax/VERB|relax#sich-entspannen
+completely => completely/ADV|completely#voellig
+in => in/ADP|in#zustand
+the => the/DET|the#bestimmter_artikel
+company => company/NOUN|company#gesellschaft
+of => of/ADP|of#genitiv_besitz
+close => close/ADJ|close#engen-nahen
+friends => friend/NOUN|friend#freund
+
+punish | It would be unfair to punish both children for one child's mistake. | Es wäre unfair, beide Kinder für den Fehler eines Kindes zu bestrafen.
+It => it/PRON|it#es_ding
+would => would/AUX|would#wuerde
+be => be/AUX|be#sein_vollverb
+unfair => unfair/ADJ|unfair#ungerecht
+to => to/PART|to#infinitivpartikel
+punish => punish/VERB|punish#bestrafen
+both => both/DET|both#beide
+children => child/NOUN|child#kinder
+for => for/ADP|for#anlass
+one => one/NUM|one#ein
+child => child/NOUN|child#kind
+'s => 's/PART|s#genitiv-endung
+mistake => mistake/NOUN|mistake#versehen
+
+age | Children of the same age can have very different interests. | Gleichaltrige Kinder können sehr unterschiedliche Interessen haben.
+Children => child/NOUN|child#kinder
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+same => same/ADJ|same#gleichen-selben
+age => age/NOUN|age#alter
+can => can/AUX|can#koennen
+have => have/VERB|have#besitzen
+very => very/ADV|very#sehr
+different => different/ADJ|different#anders
+interests => interest/NOUN|interest#interesse
+
+ex | My ex and I still get along well and share responsibility for our dog. | Mein Expartner und ich verstehen uns noch gut und kümmern uns gemeinsam um unseren Hund.
+My => my/DET|my#mein
+ex => ex/NOUN|ex#expartner
+and => and/CCONJ|and#und
+I => I/PRON|i#ich
+still => still/ADV|still#immer-noch
+get => get/VERB|get#sich-verstehen
+along => along/ADV|along#get-along
+well => well/ADV|well#gut
+and => and/CCONJ|and#und
+share => share/VERB|share#teilt
+responsibility => responsibility/NOUN|responsibility#verantwortung
+for => for/ADP|for#fuer_zweck_empfaenger
+our => our/DET|our#unser-unsere
+dog => dog/NOUN|dog#hund
+
+reputation | She has a reputation for listening carefully and keeping other people's secrets. | Sie hat den Ruf, aufmerksam zuzuhören und die Geheimnisse anderer Menschen für sich zu behalten.
+She => she/PRON|she#sie
+has => have/VERB|have#besitzen
+a => a/DET|a#ein
+reputation => reputation/NOUN|reputation#ruf
+for => for/ADP|for#anlass
+listening => listen/VERB|listen#zuhoert
+carefully => carefully/ADV|carefully#aufmerksam
+and => and/CCONJ|and#und
+keeping => keep/VERB|keep#geheim_halten
+other => other/ADJ|other#anderen
+people => people/NOUN|people#leute
+'s => 's/PART|s#genitiv-endung
+secrets => secret/NOUN|secret#geheimnis
+
+formal | His formal greeting made the family dinner feel like a business meeting. | Seine förmliche Begrüßung ließ das Familienessen wie eine Geschäftsbesprechung wirken.
+His => his/DET|his#sein
+formal => formal/ADJ|formal#formlich
+greeting => greeting/NOUN|greeting#begruung
+made => make/VERB|make#veranlassen
+the => the/DET|the#bestimmter_artikel
+family => family/NOUN|family#familie
+dinner => dinner/NOUN|dinner#abendessen
+feel => feel/VERB|feel#fuehlen
+like => like/ADP|like#wie
+a => a/DET|a#ein
+business => business/NOUN|business#betrieb
+meeting => meeting/NOUN|meeting#besprechung
+
+cheat | It is unfair to cheat at cards by looking at another player's hand. | Es ist unfair, beim Kartenspielen zu schummeln, indem man in die Karten eines anderen schaut.
+It => it/PRON|it#es_ding
+is => be/AUX|be#sein_vollverb
+unfair => unfair/ADJ|unfair#ungerecht
+to => to/PART|to#infinitivpartikel
+cheat => cheat/VERB|cheat#betrugen
+at => at/ADP|at#zustand
+cards => card/NOUN|card#spielkarte
+by => by/ADP|by#mit_mittel
+looking => look/VERB|look#schauen
+at => at/ADP|at#richtung
+another => another/DET|another#eine-weitere
+player => player/NOUN|player#spieler
+'s => 's/PART|s#genitiv-endung
+hand => hand/NOUN|hand#kartenblatt
+
+owe | I still owe my sister the money she lent me last month. | Ich schulde meiner Schwester noch das Geld, das sie mir letzten Monat geliehen hat.
+I => I/PRON|i#ich
+still => still/ADV|still#immer-noch
+owe => owe/VERB|owe#schulden
+my => my/DET|my#mein
+sister => sister/NOUN|sister#schwester
+the => the/DET|the#bestimmter_artikel
+money => money/NOUN|money#geld
+she => she/PRON|she#sie
+lent => lend/VERB|lend#leihen
+me => I/PRON|i#mir
+last => last/ADJ|last#letzter
+month => month/NOUN|month#monat
+
+death | His father's death brought the whole family together again. | Der Tod seines Vaters brachte die ganze Familie wieder zusammen.
+His => his/DET|his#sein
+father => father/NOUN|father#vater
+'s => 's/PART|s#genitiv-endung
+death => death/NOUN|death#tod
+brought => bring/VERB|bring#zusammenfuehren
+the => the/DET|the#bestimmter_artikel
+whole => whole/ADJ|whole#ganz
+family => family/NOUN|family#familie
+together => together/ADV|together#zusammen
+again => again/ADV|again#noch-einmal
+
+stress | Sharing the housework has reduced the stress in our relationship. | Seit wir uns die Hausarbeit teilen, ist unsere Beziehung weniger belastet.
+Sharing => share/VERB|share#teilt
+the => the/DET|the#bestimmter_artikel
+housework => housework/NOUN|housework#hausarbeit
+has => have/AUX|have#hilfsverb
+reduced => reduce/VERB|reduce#verringern
+the => the/DET|the#bestimmter_artikel
+stress => stress/NOUN|stress#stress
+in => in/ADP|in#bereich
+our => our/DET|our#unser-unsere
+relationship => relationship/NOUN|relationship#beziehung
+
+clever | That was a clever way to solve the problem without upsetting anyone. | Das war eine kluge Art, das Problem zu lösen, ohne jemanden zu verärgern.
+That => that/PRON|that#das
+was => be/AUX|be#sein_vollverb
+a => a/DET|a#ein
+clever => clever/ADJ|clever#klug
+way => way/NOUN|way#methode
+to => to/PART|to#infinitivpartikel
+solve => solve/VERB|solve#geloest
+the => the/DET|the#bestimmter_artikel
+problem => problem/NOUN|problem#problem
+without => without/ADP|without#ohne
+upsetting => upset/VERB|upset#verargern
+anyone => anyone/PRON|anyone#jemand
+
+aware | I was not aware of the tension between them until yesterday. | Bis gestern wusste ich nichts von den Spannungen zwischen ihnen.
+I => I/PRON|i#ich
+was => be/AUX|be#sein_vollverb
+not => not/PART|not#nicht
+aware => aware/ADJ|aware#sich-bewusst
+of => of/ADP|of#ueber_bezug
+the => the/DET|the#bestimmter_artikel
+tension => tension/NOUN|tension#spannung
+between => between/ADP|between#zwischen
+them => they/PRON|they#sie_plural
+until => until/ADP|until#bis
+yesterday => yesterday/NOUN|yesterday#gestern
+
+appreciate | I appreciate your patience during our difficult conversations. | Ich weiß deine Geduld bei unseren schwierigen Gesprächen zu schätzen.
+I => I/PRON|i#ich
+appreciate => appreciate/VERB|appreciate#wertschatzen
+your => your/DET|your#dein-deine
+patience => patience/NOUN|patience#geduld
+during => during/ADP|during#waehrend
+our => our/DET|our#unser-unsere
+difficult => difficult/ADJ|difficult#schwierig
+conversations => conversation/NOUN|conversation#gesprach

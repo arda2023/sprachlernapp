@@ -1,0 +1,13 @@
+{
+  "format": "chat-editorial-delivery-manifest",
+  "batch": 3,
+  "files": {
+    "IMPORT_PROMPT.txt": "2b95b543e8cecf181e6ab72544905dd03a1a503f4617216ae6acc1120589205e",
+    "README.txt": "9ad064692442ec39f61b20f5cc6c5f94489bb83cc8d26820c08ca1318caa8ed1",
+    "editorial_content_v3.json": "1ceff314d963391fa2183b76058f130de5d40961e2796e53e90eb656d37d78b6",
+    "inherited_gloss_comparison.json": "47b5b3cc87df826096bc8cbc394018a27a40dcb4c7ebab43c7cc442bd21cc97c",
+    "satzuebersicht.html": "dc826036c08ff5987ef36f73a0dde2ffd98fb3b0ffbd54e83d31a061055b08ae",
+    "token_review.json": "6f53d9c8515c603c3f6bb52a5025f38176480bc06d6c7df1f5018b3f955e1679",
+    "validation_report.json": "2c5fced4ab8b31d01bde6cfe1634f93f337e73232d490114e90a90bd442637d1"
+  }
+}

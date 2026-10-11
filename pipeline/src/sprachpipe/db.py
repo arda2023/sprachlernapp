@@ -65,13 +65,13 @@ def _upsert_sql(table: str, columns: list[str]):
 def upsert_pack(conn, pack: dict, *, publish: bool = False) -> dict[str, int]:
     """Row counts per table. Writes only with publish=True."""
     rows = build_rows(pack)
-    counts = {t: len(rows[t]) for t in TABLE_ORDER if rows[t]}
+    counts = {t: len(rows[t]) for t in rows if rows[t]}
     if not publish:
         return counts
     try:
         with conn.transaction():
             with conn.cursor() as cur:
-                for table in TABLE_ORDER:
+                for table in rows:
                     for row in rows[table]:
                         cur.execute(_upsert_sql(table, list(row)), _adapt(table, row))
     except Exception as e:  # noqa: BLE001 – re-raised without the URL

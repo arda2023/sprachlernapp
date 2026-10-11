@@ -1,0 +1,6626 @@
+[
+  {
+    "n": 1,
+    "idx": 0,
+    "surface": "Please",
+    "sense": "please/INTJ|please#bitte",
+    "definition": "",
+    "gloss": "bitte",
+    "target": false
+  },
+  {
+    "n": 1,
+    "idx": 1,
+    "surface": "slide",
+    "sense": "slide/VERB|slide#schieben",
+    "definition": "Etwas gleitend entlang einer Fläche oder Führung bewegen.",
+    "gloss": "schieben",
+    "target": true
+  },
+  {
+    "n": 1,
+    "idx": 2,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 1,
+    "idx": 3,
+    "surface": "tray",
+    "sense": "tray/NOUN|tray#tablett",
+    "definition": "Eine flache Unterlage mit Rand zum Tragen oder Ablegen von Gegenständen.",
+    "gloss": "Tablett",
+    "target": false
+  },
+  {
+    "n": 1,
+    "idx": 4,
+    "surface": "along",
+    "sense": "along/ADP|along#entlang",
+    "definition": "Dem Verlauf eines länglichen Ortes oder Wegs folgend.",
+    "gloss": "entlang",
+    "target": false
+  },
+  {
+    "n": 1,
+    "idx": 5,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 1,
+    "idx": 6,
+    "surface": "counter",
+    "sense": "counter/NOUN|counter#arbeitsplatte",
+    "definition": "",
+    "gloss": "Arbeitsplatte",
+    "target": false
+  },
+  {
+    "n": 1,
+    "idx": 7,
+    "surface": "towards",
+    "sense": "towards/ADP|towards#in_richtung",
+    "definition": "Eine räumliche Bewegungsrichtung auf ein Ziel zu.",
+    "gloss": "in Richtung",
+    "target": false
+  },
+  {
+    "n": 1,
+    "idx": 8,
+    "surface": "me",
+    "sense": "I/PRON|i#mir",
+    "definition": "",
+    "gloss": "mir",
+    "target": false
+  },
+  {
+    "n": 2,
+    "idx": 0,
+    "surface": "Mia",
+    "sense": "Mia/PROPN|mia#mia",
+    "definition": "",
+    "gloss": "Mia",
+    "target": false
+  },
+  {
+    "n": 2,
+    "idx": 1,
+    "surface": "slid",
+    "sense": "slide/VERB|slide#schieben",
+    "definition": "Etwas gleitend entlang einer Fläche oder Führung bewegen.",
+    "gloss": "schob",
+    "target": true
+  },
+  {
+    "n": 2,
+    "idx": 2,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 2,
+    "idx": 3,
+    "surface": "letter",
+    "sense": "letter/NOUN|letter#brief",
+    "definition": "",
+    "gloss": "Brief",
+    "target": false
+  },
+  {
+    "n": 2,
+    "idx": 4,
+    "surface": "under",
+    "sense": "under/ADP|under#unter",
+    "definition": "",
+    "gloss": "unter",
+    "target": false
+  },
+  {
+    "n": 2,
+    "idx": 5,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 2,
+    "idx": 6,
+    "surface": "door",
+    "sense": "door/NOUN|door#tuer",
+    "definition": "",
+    "gloss": "Tür",
+    "target": false
+  },
+  {
+    "n": 2,
+    "idx": 7,
+    "surface": "yesterday",
+    "sense": "yesterday/NOUN|yesterday#gestern",
+    "definition": "",
+    "gloss": "gestern",
+    "target": false
+  },
+  {
+    "n": 3,
+    "idx": 0,
+    "surface": "Someone",
+    "sense": "someone/PRON|someone#jemand",
+    "definition": "",
+    "gloss": "jemand",
+    "target": false
+  },
+  {
+    "n": 3,
+    "idx": 1,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 3,
+    "idx": 2,
+    "surface": "slid",
+    "sense": "slide/VERB|slide#schieben",
+    "definition": "Etwas gleitend entlang einer Fläche oder Führung bewegen.",
+    "gloss": "schob",
+    "target": true
+  },
+  {
+    "n": 3,
+    "idx": 3,
+    "surface": "a",
+    "sense": "a/DET|a#ein-eine-unbestimmter-artikel",
+    "definition": "",
+    "gloss": "ein/eine (unbestimmter Artikel)",
+    "target": false
+  },
+  {
+    "n": 3,
+    "idx": 4,
+    "surface": "note",
+    "sense": "note/NOUN|note#notiz",
+    "definition": "Eine kurze schriftliche Aufzeichnung, auch Unterrichtsmitschrift.",
+    "gloss": "Notiz",
+    "target": false
+  },
+  {
+    "n": 3,
+    "idx": 5,
+    "surface": "under",
+    "sense": "under/ADP|under#unter",
+    "definition": "",
+    "gloss": "unter",
+    "target": false
+  },
+  {
+    "n": 3,
+    "idx": 6,
+    "surface": "my",
+    "sense": "my/PRON|my#mein",
+    "definition": "",
+    "gloss": "mein",
+    "target": false
+  },
+  {
+    "n": 3,
+    "idx": 7,
+    "surface": "door",
+    "sense": "door/NOUN|door#tuer",
+    "definition": "",
+    "gloss": "Tür",
+    "target": false
+  },
+  {
+    "n": 4,
+    "idx": 0,
+    "surface": "Omar",
+    "sense": "Omar/PROPN|omar#omar",
+    "definition": "",
+    "gloss": "Omar",
+    "target": false
+  },
+  {
+    "n": 4,
+    "idx": 1,
+    "surface": "smelt",
+    "sense": "smell/VERB|smell#riechen",
+    "definition": "Einen Geruch mit der Nase wahrnehmen.",
+    "gloss": "roch; gerochen",
+    "target": true
+  },
+  {
+    "n": 4,
+    "idx": 2,
+    "surface": "fresh",
+    "sense": "fresh/ADJ|fresh#frische",
+    "definition": "",
+    "gloss": "frische",
+    "target": false
+  },
+  {
+    "n": 4,
+    "idx": 3,
+    "surface": "bread",
+    "sense": "bread/NOUN|bread#brot",
+    "definition": "",
+    "gloss": "Brot",
+    "target": false
+  },
+  {
+    "n": 4,
+    "idx": 4,
+    "surface": "as",
+    "sense": "as/SCONJ|as#als",
+    "definition": "",
+    "gloss": "als",
+    "target": false
+  },
+  {
+    "n": 4,
+    "idx": 5,
+    "surface": "he",
+    "sense": "he/PRON|he#er",
+    "definition": "",
+    "gloss": "er",
+    "target": false
+  },
+  {
+    "n": 4,
+    "idx": 6,
+    "surface": "walked",
+    "sense": "walk/VERB|walk#gehen",
+    "definition": "",
+    "gloss": "gehen",
+    "target": false
+  },
+  {
+    "n": 4,
+    "idx": 7,
+    "surface": "past",
+    "sense": "past/ADP|past#vorbei_an",
+    "definition": "Bewegung an einer Person oder einem Ort vorbei bezeichnen.",
+    "gloss": "an ... vorbei",
+    "target": false
+  },
+  {
+    "n": 4,
+    "idx": 8,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 4,
+    "idx": 9,
+    "surface": "bakery",
+    "sense": "bakery/NOUN|bakery#backerei",
+    "definition": "Ein Geschäft, das Brot und andere Backwaren verkauft.",
+    "gloss": "Bäckerei",
+    "target": false
+  },
+  {
+    "n": 5,
+    "idx": 0,
+    "surface": "I",
+    "sense": "I/PRON|i#ich",
+    "definition": "",
+    "gloss": "ich",
+    "target": false
+  },
+  {
+    "n": 5,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 5,
+    "idx": 2,
+    "surface": "smelt",
+    "sense": "smell/VERB|smell#riechen",
+    "definition": "Einen Geruch mit der Nase wahrnehmen.",
+    "gloss": "roch; gerochen",
+    "target": true
+  },
+  {
+    "n": 5,
+    "idx": 3,
+    "surface": "smoke",
+    "sense": "smoke/NOUN|smoke#rauch",
+    "definition": "Sichtbares Gemisch aus Gasen und feinen Teilchen, etwa über einem Vulkan.",
+    "gloss": "Rauch",
+    "target": false
+  },
+  {
+    "n": 5,
+    "idx": 4,
+    "surface": "in",
+    "sense": "in/ADP|in#in_raeumlich",
+    "definition": "",
+    "gloss": "in (räumlich: innerhalb eines Ortes oder Raumes)",
+    "target": false
+  },
+  {
+    "n": 5,
+    "idx": 5,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 5,
+    "idx": 6,
+    "surface": "hallway",
+    "sense": "hallway/NOUN|hallway#flur",
+    "definition": "Verbindender Gang im Inneren eines Gebäudes.",
+    "gloss": "Flur",
+    "target": false
+  },
+  {
+    "n": 5,
+    "idx": 7,
+    "surface": "twice",
+    "sense": "twice/ADV|twice#zweimal",
+    "definition": "Bei genau zwei Gelegenheiten.",
+    "gloss": "zweimal",
+    "target": false
+  },
+  {
+    "n": 5,
+    "idx": 8,
+    "surface": "today",
+    "sense": "today/NOUN|today#heute",
+    "definition": "",
+    "gloss": "heute",
+    "target": false
+  },
+  {
+    "n": 6,
+    "idx": 0,
+    "surface": "Rosa",
+    "sense": "Rosa/PROPN|rosa#rosa",
+    "definition": "",
+    "gloss": "Rosa",
+    "target": false
+  },
+  {
+    "n": 6,
+    "idx": 1,
+    "surface": "sowed",
+    "sense": "sow/VERB|sow#saen",
+    "definition": "Samen zum Keimen auf oder in den Boden bringen.",
+    "gloss": "säte; gesät",
+    "target": true
+  },
+  {
+    "n": 6,
+    "idx": 2,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 6,
+    "idx": 3,
+    "surface": "carrot",
+    "sense": "carrot/NOUN|carrot#karotte",
+    "definition": "Längliches, meist orangefarbenes Wurzelgemüse.",
+    "gloss": "Karotte",
+    "target": false
+  },
+  {
+    "n": 6,
+    "idx": 4,
+    "surface": "seeds",
+    "sense": "seed/NOUN|seed#samen",
+    "definition": "Kleiner Pflanzenteil, aus dem eine neue Pflanze wachsen kann.",
+    "gloss": "Samen",
+    "target": false
+  },
+  {
+    "n": 6,
+    "idx": 5,
+    "surface": "in",
+    "sense": "in/ADP|in#in",
+    "definition": "",
+    "gloss": "in",
+    "target": false
+  },
+  {
+    "n": 6,
+    "idx": 6,
+    "surface": "straight",
+    "sense": "straight/ADJ|straight#gerade",
+    "definition": "Ohne Biegung oder Krümmung.",
+    "gloss": "gerade",
+    "target": false
+  },
+  {
+    "n": 6,
+    "idx": 7,
+    "surface": "rows",
+    "sense": "row/NOUN|row#reihe",
+    "definition": "Mehrere nebeneinander oder hintereinander angeordnete Dinge.",
+    "gloss": "Reihen",
+    "target": false
+  },
+  {
+    "n": 6,
+    "idx": 8,
+    "surface": "last",
+    "sense": "last/ADJ|last#letzter",
+    "definition": "Am Ende einer räumlichen oder zeitlichen Reihe stehend.",
+    "gloss": "letzte",
+    "target": false
+  },
+  {
+    "n": 6,
+    "idx": 9,
+    "surface": "spring",
+    "sense": "spring/NOUN|spring#fruehling",
+    "definition": "Jahreszeit zwischen Winter und Sommer.",
+    "gloss": "Frühling",
+    "target": false
+  },
+  {
+    "n": 7,
+    "idx": 0,
+    "surface": "We",
+    "sense": "we/PRON|we#wir",
+    "definition": "",
+    "gloss": "wir",
+    "target": false
+  },
+  {
+    "n": 7,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 7,
+    "idx": 2,
+    "surface": "sown",
+    "sense": "sow/VERB|sow#saen",
+    "definition": "Samen zum Keimen auf oder in den Boden bringen.",
+    "gloss": "gesät",
+    "target": true
+  },
+  {
+    "n": 7,
+    "idx": 3,
+    "surface": "grass",
+    "sense": "grass/NOUN|grass#gras",
+    "definition": "",
+    "gloss": "Gras",
+    "target": false
+  },
+  {
+    "n": 7,
+    "idx": 4,
+    "surface": "seeds",
+    "sense": "seed/NOUN|seed#samen",
+    "definition": "Kleiner Pflanzenteil, aus dem eine neue Pflanze wachsen kann.",
+    "gloss": "Samen",
+    "target": false
+  },
+  {
+    "n": 7,
+    "idx": 5,
+    "surface": "in",
+    "sense": "in/ADP|in#in_raeumlich",
+    "definition": "",
+    "gloss": "in (räumlich: innerhalb eines Ortes oder Raumes)",
+    "target": false
+  },
+  {
+    "n": 7,
+    "idx": 6,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 7,
+    "idx": 7,
+    "surface": "bare",
+    "sense": "bare/ADJ|bare#kahl",
+    "definition": "Nicht von Pflanzen oder anderem üblichen Bewuchs bedeckt.",
+    "gloss": "kahl",
+    "target": false
+  },
+  {
+    "n": 7,
+    "idx": 8,
+    "surface": "patch",
+    "sense": "patch/NOUN|patch#fleck",
+    "definition": "Ein kleiner Bereich, der sich optisch von seiner Umgebung unterscheidet.",
+    "gloss": "Fleck",
+    "target": false
+  },
+  {
+    "n": 7,
+    "idx": 9,
+    "surface": "by",
+    "sense": "by/ADP|by#neben_ort",
+    "definition": "",
+    "gloss": "neben, bei (örtliche Nähe)",
+    "target": false
+  },
+  {
+    "n": 7,
+    "idx": 10,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 7,
+    "idx": 11,
+    "surface": "gate",
+    "sense": "gate/NOUN|gate#tor",
+    "definition": "",
+    "gloss": "Tor",
+    "target": false
+  },
+  {
+    "n": 8,
+    "idx": 0,
+    "surface": "Ben",
+    "sense": "Ben/PROPN|ben#ben",
+    "definition": "",
+    "gloss": "Ben",
+    "target": false
+  },
+  {
+    "n": 8,
+    "idx": 1,
+    "surface": "spoke",
+    "sense": "speak/VERB|speak#sprechen",
+    "definition": "",
+    "gloss": "sprach; sprachen",
+    "target": true
+  },
+  {
+    "n": 8,
+    "idx": 2,
+    "surface": "to",
+    "sense": "to/ADP|to#fuer_empfaenger",
+    "definition": "",
+    "gloss": "Angabe des Empfängers oder Adressaten (z. B. 'give it to me')",
+    "target": false
+  },
+  {
+    "n": 8,
+    "idx": 3,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 8,
+    "idx": 4,
+    "surface": "manager",
+    "sense": "manager/NOUN|manager#geschaeftsfuehrer",
+    "definition": "",
+    "gloss": "Geschäftsführer",
+    "target": false
+  },
+  {
+    "n": 8,
+    "idx": 5,
+    "surface": "about",
+    "sense": "about/ADP|about#ueber_thema",
+    "definition": "",
+    "gloss": "über (ein Thema oder einen Gegenstand betreffend)",
+    "target": false
+  },
+  {
+    "n": 8,
+    "idx": 6,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 8,
+    "idx": 7,
+    "surface": "broken",
+    "sense": "broken/ADJ|broken#kaputte",
+    "definition": "",
+    "gloss": "kaputte",
+    "target": false
+  },
+  {
+    "n": 8,
+    "idx": 8,
+    "surface": "lift",
+    "sense": "lift/NOUN|lift#aufzug",
+    "definition": "Anlage mit beweglicher Kabine zur Beförderung zwischen Stockwerken; britischer Gebrauch.",
+    "gloss": "Aufzug",
+    "target": false
+  },
+  {
+    "n": 8,
+    "idx": 9,
+    "surface": "yesterday",
+    "sense": "yesterday/NOUN|yesterday#gestern",
+    "definition": "",
+    "gloss": "gestern",
+    "target": false
+  },
+  {
+    "n": 9,
+    "idx": 0,
+    "surface": "I",
+    "sense": "I/PRON|i#ich",
+    "definition": "",
+    "gloss": "ich",
+    "target": false
+  },
+  {
+    "n": 9,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 9,
+    "idx": 2,
+    "surface": "spoken",
+    "sense": "speak/VERB|speak#sprechen",
+    "definition": "",
+    "gloss": "gesprochen",
+    "target": true
+  },
+  {
+    "n": 9,
+    "idx": 3,
+    "surface": "to",
+    "sense": "to/ADP|to#fuer_empfaenger",
+    "definition": "",
+    "gloss": "Angabe des Empfängers oder Adressaten (z. B. 'give it to me')",
+    "target": false
+  },
+  {
+    "n": 9,
+    "idx": 4,
+    "surface": "your",
+    "sense": "your/PRON|your#dein",
+    "definition": "",
+    "gloss": "dein",
+    "target": false
+  },
+  {
+    "n": 9,
+    "idx": 5,
+    "surface": "teacher",
+    "sense": "teacher/NOUN|teacher#lehrkraft",
+    "definition": "",
+    "gloss": "Lehrkraft",
+    "target": false
+  },
+  {
+    "n": 9,
+    "idx": 6,
+    "surface": "about",
+    "sense": "about/ADP|about#ueber_thema",
+    "definition": "",
+    "gloss": "über (ein Thema oder einen Gegenstand betreffend)",
+    "target": false
+  },
+  {
+    "n": 9,
+    "idx": 7,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 9,
+    "idx": 8,
+    "surface": "school",
+    "sense": "school/NOUN|school#schule-hier-schul",
+    "definition": "",
+    "gloss": "Schule (hier: Schul-)",
+    "target": false
+  },
+  {
+    "n": 9,
+    "idx": 9,
+    "surface": "trip",
+    "sense": "trip/NOUN|trip#reise",
+    "definition": "",
+    "gloss": "Reise",
+    "target": false
+  },
+  {
+    "n": 10,
+    "idx": 0,
+    "surface": "Lina",
+    "sense": "Lina/PROPN|lina#lina",
+    "definition": "",
+    "gloss": "Lina",
+    "target": false
+  },
+  {
+    "n": 10,
+    "idx": 1,
+    "surface": "spelt",
+    "sense": "spell/VERB|spell#buchstabieren",
+    "definition": "Die Buchstaben eines Wortes der Reihe nach nennen.",
+    "gloss": "buchstabierte; buchstabiert",
+    "target": true
+  },
+  {
+    "n": 10,
+    "idx": 2,
+    "surface": "her",
+    "sense": "her/PRON|her#ihr-possessivpronomen",
+    "definition": "",
+    "gloss": "ihr (Possessivpronomen)",
+    "target": false
+  },
+  {
+    "n": 10,
+    "idx": 3,
+    "surface": "surname",
+    "sense": "surname/NOUN|surname#nachname",
+    "definition": "Familienname einer Person.",
+    "gloss": "Nachname",
+    "target": false
+  },
+  {
+    "n": 10,
+    "idx": 4,
+    "surface": "slowly",
+    "sense": "slowly/ADV|slowly#langsam",
+    "definition": "Mit geringer Geschwindigkeit.",
+    "gloss": "langsam",
+    "target": false
+  },
+  {
+    "n": 10,
+    "idx": 5,
+    "surface": "over",
+    "sense": "over/ADP|over#kommunikationsmittel",
+    "definition": "Das Medium einer Kommunikation angeben, etwa over the phone.",
+    "gloss": "über; am",
+    "target": false
+  },
+  {
+    "n": 10,
+    "idx": 6,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 10,
+    "idx": 7,
+    "surface": "phone",
+    "sense": "phone/NOUN|phone#telefon",
+    "definition": "",
+    "gloss": "Telefon",
+    "target": false
+  },
+  {
+    "n": 10,
+    "idx": 8,
+    "surface": "yesterday",
+    "sense": "yesterday/NOUN|yesterday#gestern",
+    "definition": "",
+    "gloss": "gestern",
+    "target": false
+  },
+  {
+    "n": 11,
+    "idx": 0,
+    "surface": "I",
+    "sense": "I/PRON|i#ich",
+    "definition": "",
+    "gloss": "ich",
+    "target": false
+  },
+  {
+    "n": 11,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 11,
+    "idx": 2,
+    "surface": "spelt",
+    "sense": "spell/VERB|spell#buchstabieren",
+    "definition": "Die Buchstaben eines Wortes der Reihe nach nennen.",
+    "gloss": "buchstabierte; buchstabiert",
+    "target": true
+  },
+  {
+    "n": 11,
+    "idx": 3,
+    "surface": "my",
+    "sense": "my/PRON|my#mein",
+    "definition": "",
+    "gloss": "mein",
+    "target": false
+  },
+  {
+    "n": 11,
+    "idx": 4,
+    "surface": "name",
+    "sense": "name/NOUN|name#namen",
+    "definition": "",
+    "gloss": "Namen",
+    "target": false
+  },
+  {
+    "n": 11,
+    "idx": 5,
+    "surface": "aloud",
+    "sense": "aloud/ADV|aloud#laut",
+    "definition": "Mit hörbarer Stimme, nicht nur im Stillen.",
+    "gloss": "laut",
+    "target": false
+  },
+  {
+    "n": 11,
+    "idx": 7,
+    "surface": "but",
+    "sense": "but/CCONJ|but#aber",
+    "definition": "",
+    "gloss": "aber",
+    "target": false
+  },
+  {
+    "n": 11,
+    "idx": 8,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 11,
+    "idx": 9,
+    "surface": "receptionist",
+    "sense": "receptionist/NOUN|receptionist#empfangsmitarbeiter",
+    "definition": "Person, die an einer Rezeption Gäste empfängt und betreut.",
+    "gloss": "Empfangsmitarbeiter, Empfangsmitarbeiterin",
+    "target": false
+  },
+  {
+    "n": 11,
+    "idx": 10,
+    "surface": "still",
+    "sense": "still/ADV|still#immer-noch",
+    "definition": "",
+    "gloss": "immer noch",
+    "target": false
+  },
+  {
+    "n": 11,
+    "idx": 11,
+    "surface": "looks",
+    "sense": "look/VERB|look#sieht-aus",
+    "definition": "",
+    "gloss": "sieht aus",
+    "target": false
+  },
+  {
+    "n": 11,
+    "idx": 12,
+    "surface": "confused",
+    "sense": "confused/ADJ|confused#verwirrt",
+    "definition": "Nicht sicher verstehend, was geschieht oder gemeint ist.",
+    "gloss": "verwirrt",
+    "target": false
+  },
+  {
+    "n": 12,
+    "idx": 0,
+    "surface": "We",
+    "sense": "we/PRON|we#wir",
+    "definition": "",
+    "gloss": "wir",
+    "target": false
+  },
+  {
+    "n": 12,
+    "idx": 1,
+    "surface": "usually",
+    "sense": "usually/ADV|usually#normalerweise",
+    "definition": "",
+    "gloss": "normalerweise",
+    "target": false
+  },
+  {
+    "n": 12,
+    "idx": 2,
+    "surface": "spend",
+    "sense": "spend/VERB|spend#zeit_verbringen",
+    "definition": "Eine Zeitspanne an einem Ort oder mit einer Tätigkeit verbringen.",
+    "gloss": "verbringen",
+    "target": true
+  },
+  {
+    "n": 12,
+    "idx": 3,
+    "surface": "our",
+    "sense": "our/PRON|our#unser",
+    "definition": "",
+    "gloss": "unser",
+    "target": false
+  },
+  {
+    "n": 12,
+    "idx": 4,
+    "surface": "weekends",
+    "sense": "weekend/NOUN|weekend#wochenende",
+    "definition": "",
+    "gloss": "Wochenenden",
+    "target": false
+  },
+  {
+    "n": 12,
+    "idx": 5,
+    "surface": "by",
+    "sense": "by/ADP|by#neben_ort",
+    "definition": "",
+    "gloss": "neben, bei (örtliche Nähe)",
+    "target": false
+  },
+  {
+    "n": 12,
+    "idx": 6,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 12,
+    "idx": 7,
+    "surface": "sea",
+    "sense": "sea/NOUN|sea#meer",
+    "definition": "",
+    "gloss": "Meer",
+    "target": false
+  },
+  {
+    "n": 13,
+    "idx": 0,
+    "surface": "Ali",
+    "sense": "Ali/PROPN|ali#ali",
+    "definition": "",
+    "gloss": "Ali",
+    "target": false
+  },
+  {
+    "n": 13,
+    "idx": 1,
+    "surface": "spent",
+    "sense": "spend/VERB|spend#zeit_verbringen",
+    "definition": "Eine Zeitspanne an einem Ort oder mit einer Tätigkeit verbringen.",
+    "gloss": "verbrachten",
+    "target": true
+  },
+  {
+    "n": 13,
+    "idx": 2,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 13,
+    "idx": 3,
+    "surface": "afternoon",
+    "sense": "afternoon/NOUN|afternoon#nachmittag",
+    "definition": "",
+    "gloss": "Nachmittag",
+    "target": false
+  },
+  {
+    "n": 13,
+    "idx": 4,
+    "surface": "repairing",
+    "sense": "repair/VERB|repair#repariert",
+    "definition": "",
+    "gloss": "reparieren; reparierend",
+    "target": false
+  },
+  {
+    "n": 13,
+    "idx": 5,
+    "surface": "his",
+    "sense": "his/PRON|his#sein",
+    "definition": "",
+    "gloss": "sein",
+    "target": false
+  },
+  {
+    "n": 13,
+    "idx": 6,
+    "surface": "bicycle",
+    "sense": "bicycle/NOUN|bicycle#fahrrad",
+    "definition": "",
+    "gloss": "Fahrrad",
+    "target": false
+  },
+  {
+    "n": 14,
+    "idx": 0,
+    "surface": "We",
+    "sense": "we/PRON|we#wir",
+    "definition": "",
+    "gloss": "wir",
+    "target": false
+  },
+  {
+    "n": 14,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 14,
+    "idx": 2,
+    "surface": "spent",
+    "sense": "spend/VERB|spend#zeit_verbringen",
+    "definition": "Eine Zeitspanne an einem Ort oder mit einer Tätigkeit verbringen.",
+    "gloss": "verbrachten",
+    "target": true
+  },
+  {
+    "n": 14,
+    "idx": 3,
+    "surface": "three",
+    "sense": "three/NUM|three#drei",
+    "definition": "",
+    "gloss": "drei",
+    "target": false
+  },
+  {
+    "n": 14,
+    "idx": 4,
+    "surface": "days",
+    "sense": "day/NOUN|day#tag",
+    "definition": "",
+    "gloss": "Tage",
+    "target": false
+  },
+  {
+    "n": 14,
+    "idx": 5,
+    "surface": "exploring",
+    "sense": "explore/VERB|explore#erkunden",
+    "definition": "Sich in einem Gebiet umsehen, um es näher kennenzulernen.",
+    "gloss": "erkunden",
+    "target": false
+  },
+  {
+    "n": 14,
+    "idx": 6,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 14,
+    "idx": 7,
+    "surface": "old",
+    "sense": "old/ADJ|old#alten",
+    "definition": "",
+    "gloss": "alten",
+    "target": false
+  },
+  {
+    "n": 14,
+    "idx": 8,
+    "surface": "town",
+    "sense": "town/NOUN|town#die-stadt",
+    "definition": "",
+    "gloss": "die Stadt",
+    "target": false
+  },
+  {
+    "n": 15,
+    "idx": 0,
+    "surface": "Emma",
+    "sense": "Emma/PROPN|emma#emma",
+    "definition": "",
+    "gloss": "Emma",
+    "target": false
+  },
+  {
+    "n": 15,
+    "idx": 1,
+    "surface": "spilt",
+    "sense": "spill/VERB|spill#verschutten",
+    "definition": "Flüssigkeit unbeabsichtigt aus einem Gefäß herausgelangen lassen.",
+    "gloss": "verschüttete; verschüttet",
+    "target": true
+  },
+  {
+    "n": 15,
+    "idx": 2,
+    "surface": "her",
+    "sense": "her/PRON|her#ihr-possessivpronomen",
+    "definition": "",
+    "gloss": "ihr (Possessivpronomen)",
+    "target": false
+  },
+  {
+    "n": 15,
+    "idx": 3,
+    "surface": "tea",
+    "sense": "tea/NOUN|tea#tee",
+    "definition": "",
+    "gloss": "Tee",
+    "target": false
+  },
+  {
+    "n": 15,
+    "idx": 4,
+    "surface": "on",
+    "sense": "on/ADP|on#auf",
+    "definition": "",
+    "gloss": "auf",
+    "target": false
+  },
+  {
+    "n": 15,
+    "idx": 5,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 15,
+    "idx": 6,
+    "surface": "newspaper",
+    "sense": "newspaper/NOUN|newspaper#zeitung",
+    "definition": "Eine regelmäßig erscheinende Publikation mit aktuellen Nachrichten.",
+    "gloss": "Zeitung",
+    "target": false
+  },
+  {
+    "n": 15,
+    "idx": 7,
+    "surface": "this",
+    "sense": "this/DET|this#dieser_begleitend",
+    "definition": "",
+    "gloss": "dieser/diese/dieses (begleitend vor einem Nomen, weist auf Nahes hin)",
+    "target": false
+  },
+  {
+    "n": 15,
+    "idx": 8,
+    "surface": "morning",
+    "sense": "morning/NOUN|morning#morgen",
+    "definition": "",
+    "gloss": "Morgen",
+    "target": false
+  },
+  {
+    "n": 16,
+    "idx": 0,
+    "surface": "Someone",
+    "sense": "someone/PRON|someone#jemand",
+    "definition": "",
+    "gloss": "jemand",
+    "target": false
+  },
+  {
+    "n": 16,
+    "idx": 1,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 16,
+    "idx": 2,
+    "surface": "spilt",
+    "sense": "spill/VERB|spill#verschutten",
+    "definition": "Flüssigkeit unbeabsichtigt aus einem Gefäß herausgelangen lassen.",
+    "gloss": "verschüttete; verschüttet",
+    "target": true
+  },
+  {
+    "n": 16,
+    "idx": 3,
+    "surface": "milk",
+    "sense": "milk/NOUN|milk#milch",
+    "definition": "",
+    "gloss": "Milch",
+    "target": false
+  },
+  {
+    "n": 16,
+    "idx": 4,
+    "surface": "on",
+    "sense": "on/ADP|on#auf",
+    "definition": "",
+    "gloss": "auf",
+    "target": false
+  },
+  {
+    "n": 16,
+    "idx": 5,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 16,
+    "idx": 6,
+    "surface": "kitchen",
+    "sense": "kitchen/NOUN|kitchen#kueche",
+    "definition": "",
+    "gloss": "Küche",
+    "target": false
+  },
+  {
+    "n": 16,
+    "idx": 7,
+    "surface": "floor",
+    "sense": "floor/NOUN|floor#boden",
+    "definition": "",
+    "gloss": "Boden",
+    "target": false
+  },
+  {
+    "n": 17,
+    "idx": 0,
+    "surface": "These",
+    "sense": "these/DET|these#diese",
+    "definition": "",
+    "gloss": "diese",
+    "target": false
+  },
+  {
+    "n": 17,
+    "idx": 1,
+    "surface": "wheels",
+    "sense": "wheel/NOUN|wheel#rad",
+    "definition": "Runder um eine Achse drehbarer Bestandteil eines Fahrzeugs oder einer Maschine.",
+    "gloss": "Räder",
+    "target": false
+  },
+  {
+    "n": 17,
+    "idx": 2,
+    "surface": "spin",
+    "sense": "spin/VERB|spin#sich_drehen",
+    "definition": "Sich schnell um die eigene Achse bewegen.",
+    "gloss": "sich drehen",
+    "target": true
+  },
+  {
+    "n": 17,
+    "idx": 3,
+    "surface": "freely",
+    "sense": "freely/ADV|freely#ungezwungen",
+    "definition": "Ohne Hemmung oder Einschränkung.",
+    "gloss": "ungezwungen",
+    "target": false
+  },
+  {
+    "n": 17,
+    "idx": 4,
+    "surface": "when",
+    "sense": "when/SCONJ|when#als_wenn",
+    "definition": "",
+    "gloss": "als, wenn (zeitliche Unterordnung)",
+    "target": false
+  },
+  {
+    "n": 17,
+    "idx": 5,
+    "surface": "you",
+    "sense": "you/PRON|you#du_sie_ihr",
+    "definition": "",
+    "gloss": "Personalpronomen der 2. Person (Singular oder Plural, vertraulich oder höflich)",
+    "target": false
+  },
+  {
+    "n": 17,
+    "idx": 6,
+    "surface": "lift",
+    "sense": "lift/VERB|lift#heben",
+    "definition": "",
+    "gloss": "heben",
+    "target": false
+  },
+  {
+    "n": 17,
+    "idx": 7,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 17,
+    "idx": 8,
+    "surface": "bicycle",
+    "sense": "bicycle/NOUN|bicycle#fahrrad",
+    "definition": "",
+    "gloss": "Fahrrad",
+    "target": false
+  },
+  {
+    "n": 18,
+    "idx": 0,
+    "surface": "The",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 18,
+    "idx": 1,
+    "surface": "coin",
+    "sense": "coin/NOUN|coin#muenzen",
+    "definition": "",
+    "gloss": "Münze",
+    "target": false
+  },
+  {
+    "n": 18,
+    "idx": 2,
+    "surface": "spun",
+    "sense": "spin/VERB|spin#sich_drehen",
+    "definition": "Sich schnell um die eigene Achse bewegen.",
+    "gloss": "drehte sich; sich gedreht",
+    "target": true
+  },
+  {
+    "n": 18,
+    "idx": 3,
+    "surface": "on",
+    "sense": "on/ADP|on#auf",
+    "definition": "",
+    "gloss": "auf",
+    "target": false
+  },
+  {
+    "n": 18,
+    "idx": 4,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 18,
+    "idx": 5,
+    "surface": "table",
+    "sense": "table/NOUN|table#tisch",
+    "definition": "",
+    "gloss": "Tisch",
+    "target": false
+  },
+  {
+    "n": 18,
+    "idx": 6,
+    "surface": "before",
+    "sense": "before/ADP|before#vor",
+    "definition": "",
+    "gloss": "vor",
+    "target": false
+  },
+  {
+    "n": 18,
+    "idx": 7,
+    "surface": "falling",
+    "sense": "fall/VERB|fall#fallen",
+    "definition": "Sich durch die Schwerkraft nach unten bewegen.",
+    "gloss": "fallen / fallend",
+    "target": false
+  },
+  {
+    "n": 18,
+    "idx": 8,
+    "surface": "flat",
+    "sense": "flat/ADJ|flat#flach",
+    "definition": "",
+    "gloss": "flach",
+    "target": false
+  },
+  {
+    "n": 19,
+    "idx": 0,
+    "surface": "This",
+    "sense": "this/DET|this#dieser_begleitend",
+    "definition": "",
+    "gloss": "dieser/diese/dieses (begleitend vor einem Nomen, weist auf Nahes hin)",
+    "target": false
+  },
+  {
+    "n": 19,
+    "idx": 1,
+    "surface": "wheel",
+    "sense": "wheel/NOUN|wheel#rad",
+    "definition": "Runder um eine Achse drehbarer Bestandteil eines Fahrzeugs oder einer Maschine.",
+    "gloss": "Rad",
+    "target": false
+  },
+  {
+    "n": 19,
+    "idx": 2,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 19,
+    "idx": 3,
+    "surface": "spun",
+    "sense": "spin/VERB|spin#sich_drehen",
+    "definition": "Sich schnell um die eigene Achse bewegen.",
+    "gloss": "drehte sich; sich gedreht",
+    "target": true
+  },
+  {
+    "n": 19,
+    "idx": 4,
+    "surface": "for",
+    "sense": "for/ADP|for#seit_lang_dauer",
+    "definition": "",
+    "gloss": "seit / lang (Angabe einer Zeitspanne oder Dauer)",
+    "target": false
+  },
+  {
+    "n": 19,
+    "idx": 5,
+    "surface": "a",
+    "sense": "a/DET|a#ein-eine-unbestimmter-artikel",
+    "definition": "",
+    "gloss": "ein/eine (unbestimmter Artikel)",
+    "target": false
+  },
+  {
+    "n": 19,
+    "idx": 6,
+    "surface": "full",
+    "sense": "full/ADJ|full#vollstaendig",
+    "definition": "Den gesamten Umfang oder Betrag einschließend.",
+    "gloss": "vollständig",
+    "target": false
+  },
+  {
+    "n": 19,
+    "idx": 7,
+    "surface": "minute",
+    "sense": "minute/NOUN|minute#minuten",
+    "definition": "",
+    "gloss": "Minute",
+    "target": false
+  },
+  {
+    "n": 19,
+    "idx": 8,
+    "surface": "without",
+    "sense": "without/ADP|without#ohne",
+    "definition": "",
+    "gloss": "ohne",
+    "target": false
+  },
+  {
+    "n": 19,
+    "idx": 9,
+    "surface": "stopping",
+    "sense": "stop/VERB|stop#aufhoeren",
+    "definition": "",
+    "gloss": "aufhören; anhalten",
+    "target": false
+  },
+  {
+    "n": 20,
+    "idx": 0,
+    "surface": "David",
+    "sense": "David/PROPN|david#david",
+    "definition": "",
+    "gloss": "David",
+    "target": false
+  },
+  {
+    "n": 20,
+    "idx": 1,
+    "surface": "spat",
+    "sense": "spit/VERB|spit#spucken",
+    "definition": "Speichel oder etwas anderes aus dem Mund ausstoßen.",
+    "gloss": "spuckte; gespuckt",
+    "target": true
+  },
+  {
+    "n": 20,
+    "idx": 2,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 20,
+    "idx": 3,
+    "surface": "bitter",
+    "sense": "bitter/ADJ|bitter#bittere",
+    "definition": "",
+    "gloss": "bittere",
+    "target": false
+  },
+  {
+    "n": 20,
+    "idx": 4,
+    "surface": "medicine",
+    "sense": "medicine/NOUN|medicine#medizin",
+    "definition": "",
+    "gloss": "Medizin",
+    "target": false
+  },
+  {
+    "n": 20,
+    "idx": 5,
+    "surface": "into",
+    "sense": "into/ADP|into#in",
+    "definition": "",
+    "gloss": "in",
+    "target": false
+  },
+  {
+    "n": 20,
+    "idx": 6,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 20,
+    "idx": 7,
+    "surface": "sink",
+    "sense": "sink/NOUN|sink#waschbecken",
+    "definition": "Becken mit Wasserhahn und Abfluss zum Waschen, etwa im Bad.",
+    "gloss": "Waschbecken",
+    "target": false
+  },
+  {
+    "n": 21,
+    "idx": 0,
+    "surface": "The",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 21,
+    "idx": 1,
+    "surface": "child",
+    "sense": "child/NOUN|child#kind",
+    "definition": "",
+    "gloss": "Kind",
+    "target": false
+  },
+  {
+    "n": 21,
+    "idx": 2,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 21,
+    "idx": 3,
+    "surface": "spat",
+    "sense": "spit/VERB|spit#spucken",
+    "definition": "Speichel oder etwas anderes aus dem Mund ausstoßen.",
+    "gloss": "spuckte; gespuckt",
+    "target": true
+  },
+  {
+    "n": 21,
+    "idx": 4,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 21,
+    "idx": 5,
+    "surface": "toothpaste",
+    "sense": "toothpaste/NOUN|toothpaste#zahnpasta",
+    "definition": "Reinigungsmittel in Pastenform zum Zähneputzen.",
+    "gloss": "Zahnpasta",
+    "target": false
+  },
+  {
+    "n": 21,
+    "idx": 6,
+    "surface": "into",
+    "sense": "into/ADP|into#in",
+    "definition": "",
+    "gloss": "in",
+    "target": false
+  },
+  {
+    "n": 21,
+    "idx": 7,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 21,
+    "idx": 8,
+    "surface": "sink",
+    "sense": "sink/NOUN|sink#waschbecken",
+    "definition": "Becken mit Wasserhahn und Abfluss zum Waschen, etwa im Bad.",
+    "gloss": "Waschbecken",
+    "target": false
+  },
+  {
+    "n": 22,
+    "idx": 0,
+    "surface": "Use",
+    "sense": "use/VERB|use#benutzen",
+    "definition": "",
+    "gloss": "benutzen",
+    "target": false
+  },
+  {
+    "n": 22,
+    "idx": 1,
+    "surface": "this",
+    "sense": "this/DET|this#dieser_begleitend",
+    "definition": "",
+    "gloss": "dieser/diese/dieses (begleitend vor einem Nomen, weist auf Nahes hin)",
+    "target": false
+  },
+  {
+    "n": 22,
+    "idx": 2,
+    "surface": "axe",
+    "sense": "axe/NOUN|axe#axt",
+    "definition": "Werkzeug mit schwerem scharfem Blatt und Stiel zum Spalten oder Fällen von Holz.",
+    "gloss": "Axt",
+    "target": false
+  },
+  {
+    "n": 22,
+    "idx": 3,
+    "surface": "to",
+    "sense": "to/PART|to#infinitivpartikel",
+    "definition": "",
+    "gloss": "Partikel vor einem Infinitiv (z. B. 'to go')",
+    "target": false
+  },
+  {
+    "n": 22,
+    "idx": 4,
+    "surface": "split",
+    "sense": "split/VERB|split#spalten",
+    "definition": "Etwas der Länge nach in Teile trennen.",
+    "gloss": "spalten; spaltete; gespalten",
+    "target": true
+  },
+  {
+    "n": 22,
+    "idx": 5,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 22,
+    "idx": 6,
+    "surface": "logs",
+    "sense": "log/NOUN|log#holzscheit",
+    "definition": "Abgesägtes Stück eines Baumstamms oder dicken Astes, etwa als Brennholz.",
+    "gloss": "Holzscheite",
+    "target": false
+  },
+  {
+    "n": 22,
+    "idx": 7,
+    "surface": "along",
+    "sense": "along/ADP|along#entlang",
+    "definition": "Dem Verlauf eines länglichen Ortes oder Wegs folgend.",
+    "gloss": "entlang",
+    "target": false
+  },
+  {
+    "n": 22,
+    "idx": 8,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 22,
+    "idx": 9,
+    "surface": "grain",
+    "sense": "grain/NOUN|grain#holzmaserung",
+    "definition": "Verlauf der Fasern in Holz, nicht Getreide oder ein einzelnes Korn.",
+    "gloss": "Maserung",
+    "target": false
+  },
+  {
+    "n": 23,
+    "idx": 0,
+    "surface": "Luis",
+    "sense": "Luis/PROPN|luis#luis",
+    "definition": "",
+    "gloss": "Luis",
+    "target": false
+  },
+  {
+    "n": 23,
+    "idx": 1,
+    "surface": "split",
+    "sense": "split/VERB|split#spalten",
+    "definition": "Etwas der Länge nach in Teile trennen.",
+    "gloss": "spalten; spaltete; gespalten",
+    "target": true
+  },
+  {
+    "n": 23,
+    "idx": 2,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 23,
+    "idx": 3,
+    "surface": "thick",
+    "sense": "thick/ADJ|thick#dick",
+    "definition": "Mit großem Abstand zwischen gegenüberliegenden Oberflächen.",
+    "gloss": "dick",
+    "target": false
+  },
+  {
+    "n": 23,
+    "idx": 4,
+    "surface": "log",
+    "sense": "log/NOUN|log#holzscheit",
+    "definition": "Abgesägtes Stück eines Baumstamms oder dicken Astes, etwa als Brennholz.",
+    "gloss": "Holzscheit",
+    "target": false
+  },
+  {
+    "n": 23,
+    "idx": 5,
+    "surface": "with",
+    "sense": "with/ADP|with#mittels",
+    "definition": "",
+    "gloss": "mittels oder unter Verwendung eines Werkzeugs/Mittels",
+    "target": false
+  },
+  {
+    "n": 23,
+    "idx": 6,
+    "surface": "an",
+    "sense": "an/DET|an#ein",
+    "definition": "",
+    "gloss": "ein",
+    "target": false
+  },
+  {
+    "n": 23,
+    "idx": 7,
+    "surface": "axe",
+    "sense": "axe/NOUN|axe#axt",
+    "definition": "Werkzeug mit schwerem scharfem Blatt und Stiel zum Spalten oder Fällen von Holz.",
+    "gloss": "Axt",
+    "target": false
+  },
+  {
+    "n": 23,
+    "idx": 8,
+    "surface": "yesterday",
+    "sense": "yesterday/NOUN|yesterday#gestern",
+    "definition": "",
+    "gloss": "gestern",
+    "target": false
+  },
+  {
+    "n": 24,
+    "idx": 0,
+    "surface": "Rosa",
+    "sense": "Rosa/PROPN|rosa#rosa",
+    "definition": "",
+    "gloss": "Rosa",
+    "target": false
+  },
+  {
+    "n": 24,
+    "idx": 1,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 24,
+    "idx": 2,
+    "surface": "split",
+    "sense": "split/VERB|split#spalten",
+    "definition": "Etwas der Länge nach in Teile trennen.",
+    "gloss": "spalten; spaltete; gespalten",
+    "target": true
+  },
+  {
+    "n": 24,
+    "idx": 3,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 24,
+    "idx": 4,
+    "surface": "logs",
+    "sense": "log/NOUN|log#holzscheit",
+    "definition": "Abgesägtes Stück eines Baumstamms oder dicken Astes, etwa als Brennholz.",
+    "gloss": "Holzscheite",
+    "target": false
+  },
+  {
+    "n": 24,
+    "idx": 5,
+    "surface": "into",
+    "sense": "into/ADP|into#anordnung",
+    "definition": "Die durch eine Veränderung entstehende Form oder Anordnung angeben.",
+    "gloss": "zu; in",
+    "target": false
+  },
+  {
+    "n": 24,
+    "idx": 6,
+    "surface": "thin",
+    "sense": "thin/ADJ|thin#duenn",
+    "definition": "Von geringer Dichte oder Dicke.",
+    "gloss": "dünn; leicht",
+    "target": false
+  },
+  {
+    "n": 24,
+    "idx": 7,
+    "surface": "pieces",
+    "sense": "piece/NOUN|piece#stueck",
+    "definition": "",
+    "gloss": "Stücke",
+    "target": false
+  },
+  {
+    "n": 24,
+    "idx": 8,
+    "surface": "for",
+    "sense": "for/ADP|for#fuer_zweck_empfaenger",
+    "definition": "",
+    "gloss": "für (bestimmt für, zugunsten von oder zu einem Zweck)",
+    "target": false
+  },
+  {
+    "n": 24,
+    "idx": 9,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 24,
+    "idx": 10,
+    "surface": "fire",
+    "sense": "fire/NOUN|fire#feuer",
+    "definition": "Brennendes Material mit Wärme- und Lichtentwicklung, auch absichtlich entzündet.",
+    "gloss": "Feuer",
+    "target": false
+  },
+  {
+    "n": 25,
+    "idx": 0,
+    "surface": "Do",
+    "sense": "do/AUX|do#hilfsverb-zur-verneinung",
+    "definition": "",
+    "gloss": "Hilfsverb zur Verneinung",
+    "target": false
+  },
+  {
+    "n": 25,
+    "idx": 1,
+    "surface": "not",
+    "sense": "not/PART|not#nicht",
+    "definition": "",
+    "gloss": "nicht (drückt Verneinung von Verben, Adjektiven oder Aussagen aus)",
+    "target": false
+  },
+  {
+    "n": 25,
+    "idx": 2,
+    "surface": "spoil",
+    "sense": "spoil/VERB|spoil#verderben",
+    "definition": "Etwas Angenehmes beeinträchtigen oder zunichtemachen.",
+    "gloss": "verderben",
+    "target": true
+  },
+  {
+    "n": 25,
+    "idx": 3,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 25,
+    "idx": 4,
+    "surface": "surprise",
+    "sense": "surprise/NOUN|surprise#geplantes_ereignis",
+    "definition": "Eine absichtlich geheim gehaltene Sache oder Veranstaltung, mit der jemand überrascht werden soll.",
+    "gloss": "Überraschung",
+    "target": false
+  },
+  {
+    "n": 25,
+    "idx": 5,
+    "surface": "by",
+    "sense": "by/ADP|by#mit_mittel",
+    "definition": "",
+    "gloss": "mit, per (Mittel, Methode oder Verkehrsmittel)",
+    "target": false
+  },
+  {
+    "n": 25,
+    "idx": 6,
+    "surface": "telling",
+    "sense": "tell/VERB|tell#sagen",
+    "definition": "",
+    "gloss": "verraten; erzählen",
+    "target": false
+  },
+  {
+    "n": 25,
+    "idx": 7,
+    "surface": "Mia",
+    "sense": "Mia/PROPN|mia#mia",
+    "definition": "",
+    "gloss": "Mia",
+    "target": false
+  },
+  {
+    "n": 25,
+    "idx": 8,
+    "surface": "about",
+    "sense": "about/ADP|about#ueber_thema",
+    "definition": "",
+    "gloss": "über (ein Thema oder einen Gegenstand betreffend)",
+    "target": false
+  },
+  {
+    "n": 25,
+    "idx": 9,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 25,
+    "idx": 10,
+    "surface": "party",
+    "sense": "party/NOUN|party#feier",
+    "definition": "",
+    "gloss": "Feier",
+    "target": false
+  },
+  {
+    "n": 26,
+    "idx": 0,
+    "surface": "The",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 26,
+    "idx": 1,
+    "surface": "loud",
+    "sense": "loud/ADJ|loud#lauten",
+    "definition": "",
+    "gloss": "lauten",
+    "target": false
+  },
+  {
+    "n": 26,
+    "idx": 2,
+    "surface": "music",
+    "sense": "music/NOUN|music#musik",
+    "definition": "",
+    "gloss": "Musik",
+    "target": false
+  },
+  {
+    "n": 26,
+    "idx": 3,
+    "surface": "spoilt",
+    "sense": "spoil/VERB|spoil#verderben",
+    "definition": "Etwas Angenehmes beeinträchtigen oder zunichtemachen.",
+    "gloss": "verdarb; verdorben",
+    "target": true
+  },
+  {
+    "n": 26,
+    "idx": 4,
+    "surface": "our",
+    "sense": "our/PRON|our#unser",
+    "definition": "",
+    "gloss": "unser",
+    "target": false
+  },
+  {
+    "n": 26,
+    "idx": 5,
+    "surface": "quiet",
+    "sense": "quiet/ADJ|quiet#ruhig",
+    "definition": "",
+    "gloss": "ruhig",
+    "target": false
+  },
+  {
+    "n": 26,
+    "idx": 6,
+    "surface": "evening",
+    "sense": "evening/NOUN|evening#abend",
+    "definition": "",
+    "gloss": "Abend",
+    "target": false
+  },
+  {
+    "n": 26,
+    "idx": 7,
+    "surface": "in",
+    "sense": "in/ADP|in#in_raeumlich",
+    "definition": "",
+    "gloss": "in (räumlich: innerhalb eines Ortes oder Raumes)",
+    "target": false
+  },
+  {
+    "n": 26,
+    "idx": 8,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 26,
+    "idx": 9,
+    "surface": "garden",
+    "sense": "garden/NOUN|garden#garten",
+    "definition": "",
+    "gloss": "Garten",
+    "target": false
+  },
+  {
+    "n": 27,
+    "idx": 0,
+    "surface": "The",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 27,
+    "idx": 1,
+    "surface": "heavy",
+    "sense": "heavy/ADJ|heavy#stark",
+    "definition": "",
+    "gloss": "stark",
+    "target": false
+  },
+  {
+    "n": 27,
+    "idx": 2,
+    "surface": "rain",
+    "sense": "rain/NOUN|rain#regen",
+    "definition": "",
+    "gloss": "Regen",
+    "target": false
+  },
+  {
+    "n": 27,
+    "idx": 3,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 27,
+    "idx": 4,
+    "surface": "spoilt",
+    "sense": "spoil/VERB|spoil#verderben",
+    "definition": "Etwas Angenehmes beeinträchtigen oder zunichtemachen.",
+    "gloss": "verdarb; verdorben",
+    "target": true
+  },
+  {
+    "n": 27,
+    "idx": 5,
+    "surface": "our",
+    "sense": "our/PRON|our#unser",
+    "definition": "",
+    "gloss": "unser",
+    "target": false
+  },
+  {
+    "n": 27,
+    "idx": 6,
+    "surface": "picnic",
+    "sense": "picnic/NOUN|picnic#picknick",
+    "definition": "",
+    "gloss": "Picknick",
+    "target": false
+  },
+  {
+    "n": 28,
+    "idx": 0,
+    "surface": "Sara",
+    "sense": "Sara/PROPN|sara#sara",
+    "definition": "",
+    "gloss": "Sara",
+    "target": false
+  },
+  {
+    "n": 28,
+    "idx": 1,
+    "surface": "spread",
+    "sense": "spread/VERB|spread#breitet-aus",
+    "definition": "",
+    "gloss": "breiten aus",
+    "target": true
+  },
+  {
+    "n": 28,
+    "idx": 2,
+    "surface": "butter",
+    "sense": "butter/NOUN|butter#butter",
+    "definition": "",
+    "gloss": "Butter",
+    "target": false
+  },
+  {
+    "n": 28,
+    "idx": 3,
+    "surface": "on",
+    "sense": "on/ADP|on#auf",
+    "definition": "",
+    "gloss": "auf",
+    "target": false
+  },
+  {
+    "n": 28,
+    "idx": 4,
+    "surface": "her",
+    "sense": "her/PRON|her#ihr-possessivpronomen",
+    "definition": "",
+    "gloss": "ihr (Possessivpronomen)",
+    "target": false
+  },
+  {
+    "n": 28,
+    "idx": 5,
+    "surface": "toast",
+    "sense": "toast/NOUN|toast#toastbrot",
+    "definition": "Geröstetes Brot.",
+    "gloss": "Toast",
+    "target": false
+  },
+  {
+    "n": 28,
+    "idx": 6,
+    "surface": "before",
+    "sense": "before/ADP|before#vor",
+    "definition": "",
+    "gloss": "vor",
+    "target": false
+  },
+  {
+    "n": 28,
+    "idx": 7,
+    "surface": "adding",
+    "sense": "add/VERB|add#hinzufuegen",
+    "definition": "Eine weitere Zutat oder Sache zu etwas geben.",
+    "gloss": "hinzufügen",
+    "target": false
+  },
+  {
+    "n": 28,
+    "idx": 8,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 28,
+    "idx": 9,
+    "surface": "jam",
+    "sense": "jam/NOUN|jam#konfiture",
+    "definition": "Ein süßer Brotaufstrich aus eingekochten Früchten, nicht ein Verkehrsstau.",
+    "gloss": "Konfitüre",
+    "target": false
+  },
+  {
+    "n": 29,
+    "idx": 0,
+    "surface": "I",
+    "sense": "I/PRON|i#ich",
+    "definition": "",
+    "gloss": "ich",
+    "target": false
+  },
+  {
+    "n": 29,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 29,
+    "idx": 2,
+    "surface": "spread",
+    "sense": "spread/VERB|spread#breitet-aus",
+    "definition": "",
+    "gloss": "breiten aus",
+    "target": true
+  },
+  {
+    "n": 29,
+    "idx": 3,
+    "surface": "a",
+    "sense": "a/DET|a#ein-eine-unbestimmter-artikel",
+    "definition": "",
+    "gloss": "ein/eine (unbestimmter Artikel)",
+    "target": false
+  },
+  {
+    "n": 29,
+    "idx": 4,
+    "surface": "thin",
+    "sense": "thin/ADJ|thin#duenn",
+    "definition": "Von geringer Dichte oder Dicke.",
+    "gloss": "dünn; leicht",
+    "target": false
+  },
+  {
+    "n": 29,
+    "idx": 5,
+    "surface": "layer",
+    "sense": "layer/NOUN|layer#schicht",
+    "definition": "Eine zusammenhängende Lage eines Materials auf einer Oberfläche.",
+    "gloss": "Schicht",
+    "target": false
+  },
+  {
+    "n": 29,
+    "idx": 6,
+    "surface": "of",
+    "sense": "of/ADP|of#teil_menge",
+    "definition": "",
+    "gloss": "Teil einer Menge, Inhalt oder Quantität (z. B. 'a cup of tea', 'one of them')",
+    "target": false
+  },
+  {
+    "n": 29,
+    "idx": 7,
+    "surface": "butter",
+    "sense": "butter/NOUN|butter#butter",
+    "definition": "",
+    "gloss": "Butter",
+    "target": false
+  },
+  {
+    "n": 29,
+    "idx": 8,
+    "surface": "on",
+    "sense": "on/ADP|on#auf",
+    "definition": "",
+    "gloss": "auf",
+    "target": false
+  },
+  {
+    "n": 29,
+    "idx": 9,
+    "surface": "each",
+    "sense": "each/DET|each#jede",
+    "definition": "",
+    "gloss": "jede",
+    "target": false
+  },
+  {
+    "n": 29,
+    "idx": 10,
+    "surface": "slice",
+    "sense": "slice/NOUN|slice#scheiben",
+    "definition": "",
+    "gloss": "Scheibe",
+    "target": false
+  },
+  {
+    "n": 30,
+    "idx": 0,
+    "surface": "Omar",
+    "sense": "Omar/PROPN|omar#omar",
+    "definition": "",
+    "gloss": "Omar",
+    "target": false
+  },
+  {
+    "n": 30,
+    "idx": 1,
+    "surface": "stood",
+    "sense": "stand/VERB|stand#stehen",
+    "definition": "",
+    "gloss": "stand",
+    "target": true
+  },
+  {
+    "n": 30,
+    "idx": 2,
+    "surface": "beside",
+    "sense": "beside/ADP|beside#neben",
+    "definition": "Unmittelbar an der Seite von etwas.",
+    "gloss": "neben",
+    "target": false
+  },
+  {
+    "n": 30,
+    "idx": 3,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 30,
+    "idx": 4,
+    "surface": "door",
+    "sense": "door/NOUN|door#tuer",
+    "definition": "",
+    "gloss": "Tür",
+    "target": false
+  },
+  {
+    "n": 30,
+    "idx": 5,
+    "surface": "while",
+    "sense": "while/SCONJ|while#waehrend",
+    "definition": "",
+    "gloss": "während",
+    "target": false
+  },
+  {
+    "n": 30,
+    "idx": 6,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 30,
+    "idx": 7,
+    "surface": "others",
+    "sense": "other/PRON|other#anderen",
+    "definition": "",
+    "gloss": "anderen",
+    "target": false
+  },
+  {
+    "n": 30,
+    "idx": 8,
+    "surface": "found",
+    "sense": "find/VERB|find#finden",
+    "definition": "",
+    "gloss": "gefunden",
+    "target": false
+  },
+  {
+    "n": 30,
+    "idx": 9,
+    "surface": "their",
+    "sense": "their/PRON|their#ihr",
+    "definition": "",
+    "gloss": "ihr",
+    "target": false
+  },
+  {
+    "n": 30,
+    "idx": 10,
+    "surface": "seats",
+    "sense": "seat/NOUN|seat#sitzplatz",
+    "definition": "",
+    "gloss": "Sitzplätze",
+    "target": false
+  },
+  {
+    "n": 31,
+    "idx": 0,
+    "surface": "We",
+    "sense": "we/PRON|we#wir",
+    "definition": "",
+    "gloss": "wir",
+    "target": false
+  },
+  {
+    "n": 31,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 31,
+    "idx": 2,
+    "surface": "stood",
+    "sense": "stand/VERB|stand#stehen",
+    "definition": "",
+    "gloss": "stand",
+    "target": true
+  },
+  {
+    "n": 31,
+    "idx": 3,
+    "surface": "outside",
+    "sense": "outside/ADV|outside#draussen",
+    "definition": "",
+    "gloss": "draußen",
+    "target": false
+  },
+  {
+    "n": 31,
+    "idx": 4,
+    "surface": "for",
+    "sense": "for/ADP|for#seit_lang_dauer",
+    "definition": "",
+    "gloss": "seit / lang (Angabe einer Zeitspanne oder Dauer)",
+    "target": false
+  },
+  {
+    "n": 31,
+    "idx": 5,
+    "surface": "an",
+    "sense": "an/DET|an#ein",
+    "definition": "",
+    "gloss": "ein",
+    "target": false
+  },
+  {
+    "n": 31,
+    "idx": 6,
+    "surface": "hour",
+    "sense": "hour/NOUN|hour#stunde",
+    "definition": "",
+    "gloss": "Stunde",
+    "target": false
+  },
+  {
+    "n": 31,
+    "idx": 7,
+    "surface": "without",
+    "sense": "without/ADP|without#ohne",
+    "definition": "",
+    "gloss": "ohne",
+    "target": false
+  },
+  {
+    "n": 31,
+    "idx": 8,
+    "surface": "seeing",
+    "sense": "see/VERB|see#sehen",
+    "definition": "",
+    "gloss": "sehen",
+    "target": false
+  },
+  {
+    "n": 31,
+    "idx": 9,
+    "surface": "anyone",
+    "sense": "anyone/PRON|anyone#jemand",
+    "definition": "",
+    "gloss": "jemand",
+    "target": false
+  },
+  {
+    "n": 32,
+    "idx": 0,
+    "surface": "Someone",
+    "sense": "someone/PRON|someone#jemand",
+    "definition": "",
+    "gloss": "jemand",
+    "target": false
+  },
+  {
+    "n": 32,
+    "idx": 1,
+    "surface": "could",
+    "sense": "could/AUX|could#koennte",
+    "definition": "",
+    "gloss": "könnte",
+    "target": false
+  },
+  {
+    "n": 32,
+    "idx": 2,
+    "surface": "steal",
+    "sense": "steal/VERB|steal#stehlen",
+    "definition": "Fremdes Eigentum ohne Erlaubnis wegnehmen.",
+    "gloss": "stehlen",
+    "target": true
+  },
+  {
+    "n": 32,
+    "idx": 3,
+    "surface": "your",
+    "sense": "your/PRON|your#dein",
+    "definition": "",
+    "gloss": "dein",
+    "target": false
+  },
+  {
+    "n": 32,
+    "idx": 4,
+    "surface": "bag",
+    "sense": "bag/NOUN|bag#tasche",
+    "definition": "",
+    "gloss": "Tasche",
+    "target": false
+  },
+  {
+    "n": 32,
+    "idx": 5,
+    "surface": "if",
+    "sense": "if/SCONJ|if#wenn",
+    "definition": "",
+    "gloss": "wenn / falls (Konditionalsatz, Bedingung)",
+    "target": false
+  },
+  {
+    "n": 32,
+    "idx": 6,
+    "surface": "you",
+    "sense": "you/PRON|you#du_sie_ihr",
+    "definition": "",
+    "gloss": "Personalpronomen der 2. Person (Singular oder Plural, vertraulich oder höflich)",
+    "target": false
+  },
+  {
+    "n": 32,
+    "idx": 7,
+    "surface": "leave",
+    "sense": "leave/VERB|leave#belassen",
+    "definition": "Etwas in einem bestimmten Zustand belassen.",
+    "gloss": "lassen",
+    "target": false
+  },
+  {
+    "n": 32,
+    "idx": 8,
+    "surface": "it",
+    "sense": "it/PRON|it#es_ding",
+    "definition": "",
+    "gloss": "Personalpronomen der 3. Person Singular für sächliche Dinge oder Tiere",
+    "target": false
+  },
+  {
+    "n": 32,
+    "idx": 9,
+    "surface": "here",
+    "sense": "here/ADV|here#hier",
+    "definition": "",
+    "gloss": "hier",
+    "target": false
+  },
+  {
+    "n": 33,
+    "idx": 0,
+    "surface": "A",
+    "sense": "a/DET|a#ein-eine-unbestimmter-artikel",
+    "definition": "",
+    "gloss": "ein/eine (unbestimmter Artikel)",
+    "target": false
+  },
+  {
+    "n": 33,
+    "idx": 1,
+    "surface": "thief",
+    "sense": "thief/NOUN|thief#dieb",
+    "definition": "Person, die fremdes Eigentum stiehlt.",
+    "gloss": "Dieb, Diebin",
+    "target": false
+  },
+  {
+    "n": 33,
+    "idx": 2,
+    "surface": "stole",
+    "sense": "steal/VERB|steal#stehlen",
+    "definition": "Fremdes Eigentum ohne Erlaubnis wegnehmen.",
+    "gloss": "stahl",
+    "target": true
+  },
+  {
+    "n": 33,
+    "idx": 3,
+    "surface": "my",
+    "sense": "my/PRON|my#mein",
+    "definition": "",
+    "gloss": "mein",
+    "target": false
+  },
+  {
+    "n": 33,
+    "idx": 4,
+    "surface": "bicycle",
+    "sense": "bicycle/NOUN|bicycle#fahrrad",
+    "definition": "",
+    "gloss": "Fahrrad",
+    "target": false
+  },
+  {
+    "n": 33,
+    "idx": 5,
+    "surface": "from",
+    "sense": "from/ADP|from#von_ausgangspunkt",
+    "definition": "",
+    "gloss": "von, aus (räumlicher, zeitlicher oder persönlicher Ausgangspunkt)",
+    "target": false
+  },
+  {
+    "n": 33,
+    "idx": 6,
+    "surface": "outside",
+    "sense": "outside/ADP|outside#vor-ausserhalb",
+    "definition": "",
+    "gloss": "vor / außerhalb",
+    "target": false
+  },
+  {
+    "n": 33,
+    "idx": 7,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 33,
+    "idx": 8,
+    "surface": "library",
+    "sense": "library/NOUN|library#bibliothek",
+    "definition": "",
+    "gloss": "Bibliothek",
+    "target": false
+  },
+  {
+    "n": 33,
+    "idx": 9,
+    "surface": "yesterday",
+    "sense": "yesterday/NOUN|yesterday#gestern",
+    "definition": "",
+    "gloss": "gestern",
+    "target": false
+  },
+  {
+    "n": 34,
+    "idx": 0,
+    "surface": "Someone",
+    "sense": "someone/PRON|someone#jemand",
+    "definition": "",
+    "gloss": "jemand",
+    "target": false
+  },
+  {
+    "n": 34,
+    "idx": 1,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 34,
+    "idx": 2,
+    "surface": "stolen",
+    "sense": "steal/VERB|steal#stehlen",
+    "definition": "Fremdes Eigentum ohne Erlaubnis wegnehmen.",
+    "gloss": "gestohlen",
+    "target": true
+  },
+  {
+    "n": 34,
+    "idx": 3,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 34,
+    "idx": 4,
+    "surface": "money",
+    "sense": "money/NOUN|money#geld",
+    "definition": "",
+    "gloss": "Zahlungsmittel für Einkäufe",
+    "target": false
+  },
+  {
+    "n": 34,
+    "idx": 5,
+    "surface": "from",
+    "sense": "from/ADP|from#von_ausgangspunkt",
+    "definition": "",
+    "gloss": "von, aus (räumlicher, zeitlicher oder persönlicher Ausgangspunkt)",
+    "target": false
+  },
+  {
+    "n": 34,
+    "idx": 6,
+    "surface": "my",
+    "sense": "my/PRON|my#mein",
+    "definition": "",
+    "gloss": "mein",
+    "target": false
+  },
+  {
+    "n": 34,
+    "idx": 7,
+    "surface": "wallet",
+    "sense": "wallet/NOUN|wallet#geldboerse",
+    "definition": "",
+    "gloss": "Geldbörse",
+    "target": false
+  },
+  {
+    "n": 35,
+    "idx": 0,
+    "surface": "These",
+    "sense": "these/DET|these#diese",
+    "definition": "",
+    "gloss": "diese",
+    "target": false
+  },
+  {
+    "n": 35,
+    "idx": 1,
+    "surface": "labels",
+    "sense": "label/NOUN|label#aufkleber",
+    "definition": "",
+    "gloss": "Etiketten",
+    "target": false
+  },
+  {
+    "n": 35,
+    "idx": 2,
+    "surface": "stick",
+    "sense": "stick/VERB|stick#anhaften",
+    "definition": "An einer Oberfläche haften bleiben.",
+    "gloss": "haften",
+    "target": true
+  },
+  {
+    "n": 35,
+    "idx": 3,
+    "surface": "well",
+    "sense": "well/ADV|well#gut",
+    "definition": "",
+    "gloss": "gut",
+    "target": false
+  },
+  {
+    "n": 35,
+    "idx": 4,
+    "surface": "to",
+    "sense": "to/ADP|to#haftflaeche",
+    "definition": "Die Oberfläche nennen, an der etwas klebt oder haftet.",
+    "gloss": "an; auf",
+    "target": false
+  },
+  {
+    "n": 35,
+    "idx": 5,
+    "surface": "clean",
+    "sense": "clean/ADJ|clean#sauber",
+    "definition": "",
+    "gloss": "sauber",
+    "target": false
+  },
+  {
+    "n": 35,
+    "idx": 6,
+    "surface": "glass",
+    "sense": "glass/NOUN|glass#werkstoff",
+    "definition": "Der harte, meist durchsichtige Werkstoff für Flaschen oder Fensterscheiben.",
+    "gloss": "Glas",
+    "target": false
+  },
+  {
+    "n": 36,
+    "idx": 0,
+    "surface": "The",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 36,
+    "idx": 1,
+    "surface": "wet",
+    "sense": "wet/ADJ|wet#nass",
+    "definition": "",
+    "gloss": "nass",
+    "target": false
+  },
+  {
+    "n": 36,
+    "idx": 2,
+    "surface": "leaf",
+    "sense": "leaf/NOUN|leaf#blatt",
+    "definition": "Ein flaches Pflanzenorgan an einem Zweig oder Stängel.",
+    "gloss": "Blatt",
+    "target": false
+  },
+  {
+    "n": 36,
+    "idx": 3,
+    "surface": "stuck",
+    "sense": "stick/VERB|stick#anhaften",
+    "definition": "An einer Oberfläche haften bleiben.",
+    "gloss": "haftete; gehaftet",
+    "target": true
+  },
+  {
+    "n": 36,
+    "idx": 4,
+    "surface": "to",
+    "sense": "to/ADP|to#haftflaeche",
+    "definition": "Die Oberfläche nennen, an der etwas klebt oder haftet.",
+    "gloss": "an; auf",
+    "target": false
+  },
+  {
+    "n": 36,
+    "idx": 5,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 36,
+    "idx": 6,
+    "surface": "bottom",
+    "sense": "bottom/NOUN|bottom#unteres_ende",
+    "definition": "Unterster Bereich einer Seite oder eines Gegenstands.",
+    "gloss": "unteres Ende",
+    "target": false
+  },
+  {
+    "n": 36,
+    "idx": 7,
+    "surface": "of",
+    "sense": "of/ADP|of#genitiv_besitz",
+    "definition": "",
+    "gloss": "Zugehörigkeit oder Besitz (oft dem deutschen Genitiv entsprechend)",
+    "target": false
+  },
+  {
+    "n": 36,
+    "idx": 8,
+    "surface": "my",
+    "sense": "my/PRON|my#mein",
+    "definition": "",
+    "gloss": "mein",
+    "target": false
+  },
+  {
+    "n": 36,
+    "idx": 9,
+    "surface": "shoe",
+    "sense": "shoe/NOUN|shoe#schuhe",
+    "definition": "",
+    "gloss": "Kleidungsstück für einen Fuß",
+    "target": false
+  },
+  {
+    "n": 37,
+    "idx": 0,
+    "surface": "A",
+    "sense": "a/DET|a#ein-eine-unbestimmter-artikel",
+    "definition": "",
+    "gloss": "ein/eine (unbestimmter Artikel)",
+    "target": false
+  },
+  {
+    "n": 37,
+    "idx": 1,
+    "surface": "piece",
+    "sense": "piece/NOUN|piece#stueck",
+    "definition": "",
+    "gloss": "Stück",
+    "target": false
+  },
+  {
+    "n": 37,
+    "idx": 2,
+    "surface": "of",
+    "sense": "of/ADP|of#teil_menge",
+    "definition": "",
+    "gloss": "Teil einer Menge, Inhalt oder Quantität (z. B. 'a cup of tea', 'one of them')",
+    "target": false
+  },
+  {
+    "n": 37,
+    "idx": 3,
+    "surface": "paper",
+    "sense": "paper/NOUN|paper#papier",
+    "definition": "",
+    "gloss": "Papier",
+    "target": false
+  },
+  {
+    "n": 37,
+    "idx": 4,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 37,
+    "idx": 5,
+    "surface": "stuck",
+    "sense": "stick/VERB|stick#anhaften",
+    "definition": "An einer Oberfläche haften bleiben.",
+    "gloss": "haftete; gehaftet",
+    "target": true
+  },
+  {
+    "n": 37,
+    "idx": 6,
+    "surface": "to",
+    "sense": "to/ADP|to#haftflaeche",
+    "definition": "Die Oberfläche nennen, an der etwas klebt oder haftet.",
+    "gloss": "an; auf",
+    "target": false
+  },
+  {
+    "n": 37,
+    "idx": 7,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 37,
+    "idx": 8,
+    "surface": "wet",
+    "sense": "wet/ADJ|wet#nass",
+    "definition": "",
+    "gloss": "nass",
+    "target": false
+  },
+  {
+    "n": 37,
+    "idx": 9,
+    "surface": "paint",
+    "sense": "paint/NOUN|paint#anstrichfarbe",
+    "definition": "Ein flüssiger Stoff, der auf Oberflächen aufgetragen wird und dort einen farbigen Anstrich bildet.",
+    "gloss": "Farbe",
+    "target": false
+  },
+  {
+    "n": 38,
+    "idx": 0,
+    "surface": "A",
+    "sense": "a/DET|a#ein-eine-unbestimmter-artikel",
+    "definition": "",
+    "gloss": "ein/eine (unbestimmter Artikel)",
+    "target": false
+  },
+  {
+    "n": 38,
+    "idx": 1,
+    "surface": "wasp",
+    "sense": "wasp/NOUN|wasp#wespe",
+    "definition": "Meist gelb-schwarz gezeichnetes fliegendes Insekt mit Stachel.",
+    "gloss": "Wespe",
+    "target": false
+  },
+  {
+    "n": 38,
+    "idx": 2,
+    "surface": "stung",
+    "sense": "sting/VERB|sting#stechen-von-insekten",
+    "definition": "Mit einem Stachel Gift in die Haut bringen.",
+    "gloss": "stach; gestochen",
+    "target": true
+  },
+  {
+    "n": 38,
+    "idx": 3,
+    "surface": "Ben",
+    "sense": "Ben/PROPN|ben#ben",
+    "definition": "",
+    "gloss": "Ben",
+    "target": false
+  },
+  {
+    "n": 38,
+    "idx": 4,
+    "surface": "on",
+    "sense": "on/ADP|on#auf",
+    "definition": "",
+    "gloss": "auf",
+    "target": false
+  },
+  {
+    "n": 38,
+    "idx": 5,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 38,
+    "idx": 6,
+    "surface": "arm",
+    "sense": "arm/NOUN|arm#arm",
+    "definition": "",
+    "gloss": "Körperglied zwischen Schulter und Hand",
+    "target": false
+  },
+  {
+    "n": 38,
+    "idx": 7,
+    "surface": "yesterday",
+    "sense": "yesterday/NOUN|yesterday#gestern",
+    "definition": "",
+    "gloss": "gestern",
+    "target": false
+  },
+  {
+    "n": 39,
+    "idx": 0,
+    "surface": "A",
+    "sense": "a/DET|a#ein-eine-unbestimmter-artikel",
+    "definition": "",
+    "gloss": "ein/eine (unbestimmter Artikel)",
+    "target": false
+  },
+  {
+    "n": 39,
+    "idx": 1,
+    "surface": "bee",
+    "sense": "bee/NOUN|bee#biene",
+    "definition": "Ein fliegendes Insekt, das Blüten besucht und einen Stachel haben kann.",
+    "gloss": "Biene",
+    "target": false
+  },
+  {
+    "n": 39,
+    "idx": 2,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 39,
+    "idx": 3,
+    "surface": "stung",
+    "sense": "sting/VERB|sting#stechen-von-insekten",
+    "definition": "Mit einem Stachel Gift in die Haut bringen.",
+    "gloss": "stach; gestochen",
+    "target": true
+  },
+  {
+    "n": 39,
+    "idx": 4,
+    "surface": "my",
+    "sense": "my/PRON|my#mein",
+    "definition": "",
+    "gloss": "mein",
+    "target": false
+  },
+  {
+    "n": 39,
+    "idx": 5,
+    "surface": "finger",
+    "sense": "finger/NOUN|finger#finger",
+    "definition": "Einer der länglichen beweglichen Teile der Hand außer dem Daumen.",
+    "gloss": "Finger",
+    "target": false
+  },
+  {
+    "n": 39,
+    "idx": 7,
+    "surface": "and",
+    "sense": "and/CCONJ|and#und",
+    "definition": "",
+    "gloss": "und",
+    "target": false
+  },
+  {
+    "n": 39,
+    "idx": 8,
+    "surface": "it",
+    "sense": "it/PRON|it#es_ding",
+    "definition": "",
+    "gloss": "Personalpronomen der 3. Person Singular für sächliche Dinge oder Tiere",
+    "target": false
+  },
+  {
+    "n": 39,
+    "idx": 9,
+    "surface": "hurts",
+    "sense": "hurt/VERB|hurt#wehtun",
+    "definition": "",
+    "gloss": "tut weh",
+    "target": false
+  },
+  {
+    "n": 40,
+    "idx": 0,
+    "surface": "Please",
+    "sense": "please/INTJ|please#bitte",
+    "definition": "",
+    "gloss": "bitte",
+    "target": false
+  },
+  {
+    "n": 40,
+    "idx": 1,
+    "surface": "strike",
+    "sense": "strike/VERB|strike#schlaegt-an",
+    "definition": "",
+    "gloss": "anschlagen",
+    "target": true
+  },
+  {
+    "n": 40,
+    "idx": 2,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 40,
+    "idx": 3,
+    "surface": "bell",
+    "sense": "bell/NOUN|bell#glocke",
+    "definition": "",
+    "gloss": "Glocke",
+    "target": false
+  },
+  {
+    "n": 40,
+    "idx": 4,
+    "surface": "once",
+    "sense": "once/ADV|once#einmal",
+    "definition": "",
+    "gloss": "einmal",
+    "target": false
+  },
+  {
+    "n": 40,
+    "idx": 5,
+    "surface": "with",
+    "sense": "with/ADP|with#mittels",
+    "definition": "",
+    "gloss": "mittels oder unter Verwendung eines Werkzeugs/Mittels",
+    "target": false
+  },
+  {
+    "n": 40,
+    "idx": 6,
+    "surface": "this",
+    "sense": "this/DET|this#dieser_begleitend",
+    "definition": "",
+    "gloss": "dieser/diese/dieses (begleitend vor einem Nomen, weist auf Nahes hin)",
+    "target": false
+  },
+  {
+    "n": 40,
+    "idx": 7,
+    "surface": "wooden",
+    "sense": "wooden/ADJ|wooden#hoelzern",
+    "definition": "",
+    "gloss": "hölzern",
+    "target": false
+  },
+  {
+    "n": 40,
+    "idx": 8,
+    "surface": "hammer",
+    "sense": "hammer/NOUN|hammer#hammer",
+    "definition": "Werkzeug mit schwerem Kopf und Griff zum Schlagen, etwa auf Nägel.",
+    "gloss": "Hammer",
+    "target": false
+  },
+  {
+    "n": 41,
+    "idx": 0,
+    "surface": "Mia",
+    "sense": "Mia/PROPN|mia#mia",
+    "definition": "",
+    "gloss": "Mia",
+    "target": false
+  },
+  {
+    "n": 41,
+    "idx": 1,
+    "surface": "struck",
+    "sense": "strike/VERB|strike#schlaegt-an",
+    "definition": "",
+    "gloss": "schlug an; angeschlagen",
+    "target": true
+  },
+  {
+    "n": 41,
+    "idx": 2,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 41,
+    "idx": 3,
+    "surface": "bell",
+    "sense": "bell/NOUN|bell#glocke",
+    "definition": "",
+    "gloss": "Glocke",
+    "target": false
+  },
+  {
+    "n": 41,
+    "idx": 4,
+    "surface": "three",
+    "sense": "three/NUM|three#drei",
+    "definition": "",
+    "gloss": "drei",
+    "target": false
+  },
+  {
+    "n": 41,
+    "idx": 5,
+    "surface": "times",
+    "sense": "time/NOUN|time#mal",
+    "definition": "",
+    "gloss": "Mal",
+    "target": false
+  },
+  {
+    "n": 41,
+    "idx": 6,
+    "surface": "to",
+    "sense": "to/PART|to#infinitivpartikel",
+    "definition": "",
+    "gloss": "Partikel vor einem Infinitiv (z. B. 'to go')",
+    "target": false
+  },
+  {
+    "n": 41,
+    "idx": 7,
+    "surface": "call",
+    "sense": "call/VERB|call#rufen",
+    "definition": "",
+    "gloss": "rufen",
+    "target": false
+  },
+  {
+    "n": 41,
+    "idx": 8,
+    "surface": "everyone",
+    "sense": "everyone/PRON|everyone#alle",
+    "definition": "",
+    "gloss": "alle",
+    "target": false
+  },
+  {
+    "n": 41,
+    "idx": 9,
+    "surface": "inside",
+    "sense": "inside/ADV|inside#hinein",
+    "definition": "",
+    "gloss": "hinein",
+    "target": false
+  },
+  {
+    "n": 42,
+    "idx": 0,
+    "surface": "Someone",
+    "sense": "someone/PRON|someone#jemand",
+    "definition": "",
+    "gloss": "jemand",
+    "target": false
+  },
+  {
+    "n": 42,
+    "idx": 1,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 42,
+    "idx": 2,
+    "surface": "struck",
+    "sense": "strike/VERB|strike#schlaegt-an",
+    "definition": "",
+    "gloss": "schlug an; angeschlagen",
+    "target": true
+  },
+  {
+    "n": 42,
+    "idx": 3,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 42,
+    "idx": 4,
+    "surface": "bell",
+    "sense": "bell/NOUN|bell#glocke",
+    "definition": "",
+    "gloss": "Glocke",
+    "target": false
+  },
+  {
+    "n": 42,
+    "idx": 5,
+    "surface": "to",
+    "sense": "to/PART|to#infinitivpartikel",
+    "definition": "",
+    "gloss": "Partikel vor einem Infinitiv (z. B. 'to go')",
+    "target": false
+  },
+  {
+    "n": 42,
+    "idx": 6,
+    "surface": "announce",
+    "sense": "announce/VERB|announce#ankuendigen",
+    "definition": "Das bevorstehende Eintreten eines Ereignisses mitteilen.",
+    "gloss": "ankündigen",
+    "target": false
+  },
+  {
+    "n": 42,
+    "idx": 7,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 42,
+    "idx": 8,
+    "surface": "opening",
+    "sense": "opening/NOUN|opening#oeffnung",
+    "definition": "Beginn oder Zustand des Geöffnetseins; in opening times: Öffnungszeiten.",
+    "gloss": "Öffnungs- (in opening times)",
+    "target": false
+  },
+  {
+    "n": 43,
+    "idx": 0,
+    "surface": "I",
+    "sense": "I/PRON|i#ich",
+    "definition": "",
+    "gloss": "ich",
+    "target": false
+  },
+  {
+    "n": 43,
+    "idx": 1,
+    "surface": "swear",
+    "sense": "swear/VERB|swear#schwoeren",
+    "definition": "Etwas mit einem feierlichen Versprechen zusichern.",
+    "gloss": "schwören",
+    "target": true
+  },
+  {
+    "n": 43,
+    "idx": 2,
+    "surface": "to",
+    "sense": "to/PART|to#infinitivpartikel",
+    "definition": "",
+    "gloss": "Partikel vor einem Infinitiv (z. B. 'to go')",
+    "target": false
+  },
+  {
+    "n": 43,
+    "idx": 3,
+    "surface": "keep",
+    "sense": "keep/VERB|keep#geheim_halten",
+    "definition": "Eine vertrauliche Information nicht weitererzählen.",
+    "gloss": "für sich behalten",
+    "target": false
+  },
+  {
+    "n": 43,
+    "idx": 4,
+    "surface": "your",
+    "sense": "your/PRON|your#dein",
+    "definition": "",
+    "gloss": "dein",
+    "target": false
+  },
+  {
+    "n": 43,
+    "idx": 5,
+    "surface": "secret",
+    "sense": "secret/NOUN|secret#geheimnis",
+    "definition": "Eine Information, die vor bestimmten oder den meisten anderen Menschen verborgen gehalten wird.",
+    "gloss": "Geheimnis",
+    "target": false
+  },
+  {
+    "n": 44,
+    "idx": 0,
+    "surface": "Ali",
+    "sense": "Ali/PROPN|ali#ali",
+    "definition": "",
+    "gloss": "Ali",
+    "target": false
+  },
+  {
+    "n": 44,
+    "idx": 1,
+    "surface": "swore",
+    "sense": "swear/VERB|swear#schwoeren",
+    "definition": "Etwas mit einem feierlichen Versprechen zusichern.",
+    "gloss": "schwor",
+    "target": true
+  },
+  {
+    "n": 44,
+    "idx": 2,
+    "surface": "that",
+    "sense": "that/SCONJ|that#dass",
+    "definition": "",
+    "gloss": "dass",
+    "target": false
+  },
+  {
+    "n": 44,
+    "idx": 3,
+    "surface": "he",
+    "sense": "he/PRON|he#er",
+    "definition": "",
+    "gloss": "er",
+    "target": false
+  },
+  {
+    "n": 44,
+    "idx": 4,
+    "surface": "would",
+    "sense": "would/AUX|would#wuerde",
+    "definition": "",
+    "gloss": "würde",
+    "target": false
+  },
+  {
+    "n": 44,
+    "idx": 5,
+    "surface": "never",
+    "sense": "never/ADV|never#nie",
+    "definition": "",
+    "gloss": "nie",
+    "target": false
+  },
+  {
+    "n": 44,
+    "idx": 6,
+    "surface": "tell",
+    "sense": "tell/VERB|tell#sagen",
+    "definition": "",
+    "gloss": "sagen",
+    "target": false
+  },
+  {
+    "n": 44,
+    "idx": 7,
+    "surface": "anyone",
+    "sense": "anyone/PRON|anyone#jemand",
+    "definition": "",
+    "gloss": "jemand",
+    "target": false
+  },
+  {
+    "n": 44,
+    "idx": 8,
+    "surface": "our",
+    "sense": "our/PRON|our#unser",
+    "definition": "",
+    "gloss": "unser",
+    "target": false
+  },
+  {
+    "n": 44,
+    "idx": 9,
+    "surface": "secret",
+    "sense": "secret/NOUN|secret#geheimnis",
+    "definition": "Eine Information, die vor bestimmten oder den meisten anderen Menschen verborgen gehalten wird.",
+    "gloss": "Geheimnis",
+    "target": false
+  },
+  {
+    "n": 45,
+    "idx": 0,
+    "surface": "We",
+    "sense": "we/PRON|we#wir",
+    "definition": "",
+    "gloss": "wir",
+    "target": false
+  },
+  {
+    "n": 45,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 45,
+    "idx": 2,
+    "surface": "sworn",
+    "sense": "swear/VERB|swear#schwoeren",
+    "definition": "Etwas mit einem feierlichen Versprechen zusichern.",
+    "gloss": "geschworen",
+    "target": true
+  },
+  {
+    "n": 45,
+    "idx": 3,
+    "surface": "to",
+    "sense": "to/PART|to#infinitivpartikel",
+    "definition": "",
+    "gloss": "Partikel vor einem Infinitiv (z. B. 'to go')",
+    "target": false
+  },
+  {
+    "n": 45,
+    "idx": 4,
+    "surface": "protect",
+    "sense": "protect/VERB|protect#schuetzen",
+    "definition": "",
+    "gloss": "schützen",
+    "target": false
+  },
+  {
+    "n": 45,
+    "idx": 5,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 45,
+    "idx": 6,
+    "surface": "children",
+    "sense": "child/NOUN|child#kind",
+    "definition": "",
+    "gloss": "Kinder",
+    "target": false
+  },
+  {
+    "n": 46,
+    "idx": 0,
+    "surface": "Emma",
+    "sense": "Emma/PROPN|emma#emma",
+    "definition": "",
+    "gloss": "Emma",
+    "target": false
+  },
+  {
+    "n": 46,
+    "idx": 1,
+    "surface": "swept",
+    "sense": "sweep/VERB|sweep#fegen",
+    "definition": "Loser Schmutz wird mit einem Besen vom Boden entfernt.",
+    "gloss": "fegte",
+    "target": true
+  },
+  {
+    "n": 46,
+    "idx": 2,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 46,
+    "idx": 3,
+    "surface": "kitchen",
+    "sense": "kitchen/NOUN|kitchen#kueche",
+    "definition": "",
+    "gloss": "Küche",
+    "target": false
+  },
+  {
+    "n": 46,
+    "idx": 4,
+    "surface": "floor",
+    "sense": "floor/NOUN|floor#boden",
+    "definition": "",
+    "gloss": "Boden",
+    "target": false
+  },
+  {
+    "n": 46,
+    "idx": 5,
+    "surface": "after",
+    "sense": "after/ADP|after#nach",
+    "definition": "",
+    "gloss": "nach",
+    "target": false
+  },
+  {
+    "n": 46,
+    "idx": 6,
+    "surface": "breakfast",
+    "sense": "breakfast/NOUN|breakfast#fruehstueck",
+    "definition": "",
+    "gloss": "Frühstück",
+    "target": false
+  },
+  {
+    "n": 47,
+    "idx": 0,
+    "surface": "I",
+    "sense": "I/PRON|i#ich",
+    "definition": "",
+    "gloss": "ich",
+    "target": false
+  },
+  {
+    "n": 47,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 47,
+    "idx": 2,
+    "surface": "swept",
+    "sense": "sweep/VERB|sweep#fegen",
+    "definition": "Loser Schmutz wird mit einem Besen vom Boden entfernt.",
+    "gloss": "fegte",
+    "target": true
+  },
+  {
+    "n": 47,
+    "idx": 3,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 47,
+    "idx": 4,
+    "surface": "dust",
+    "sense": "dust/NOUN|dust#staub",
+    "definition": "",
+    "gloss": "Staub",
+    "target": false
+  },
+  {
+    "n": 47,
+    "idx": 5,
+    "surface": "into",
+    "sense": "into/ADP|into#anordnung",
+    "definition": "Die durch eine Veränderung entstehende Form oder Anordnung angeben.",
+    "gloss": "zu; in",
+    "target": false
+  },
+  {
+    "n": 47,
+    "idx": 6,
+    "surface": "a",
+    "sense": "a/DET|a#ein-eine-unbestimmter-artikel",
+    "definition": "",
+    "gloss": "ein/eine (unbestimmter Artikel)",
+    "target": false
+  },
+  {
+    "n": 47,
+    "idx": 7,
+    "surface": "pile",
+    "sense": "pile/NOUN|pile#haufen",
+    "definition": "Menge von Dingen oder losem Material, die an einer Stelle aufeinanderliegen.",
+    "gloss": "Haufen",
+    "target": false
+  },
+  {
+    "n": 47,
+    "idx": 8,
+    "surface": "by",
+    "sense": "by/ADP|by#neben_ort",
+    "definition": "",
+    "gloss": "neben, bei (örtliche Nähe)",
+    "target": false
+  },
+  {
+    "n": 47,
+    "idx": 9,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 47,
+    "idx": 10,
+    "surface": "door",
+    "sense": "door/NOUN|door#tuer",
+    "definition": "",
+    "gloss": "Tür",
+    "target": false
+  },
+  {
+    "n": 48,
+    "idx": 0,
+    "surface": "Luis",
+    "sense": "Luis/PROPN|luis#luis",
+    "definition": "",
+    "gloss": "Luis",
+    "target": false
+  },
+  {
+    "n": 48,
+    "idx": 1,
+    "surface": "swam",
+    "sense": "swim/VERB|swim#schwimmen",
+    "definition": "Sich mit Körperbewegungen durch Wasser bewegen.",
+    "gloss": "schwamm",
+    "target": true
+  },
+  {
+    "n": 48,
+    "idx": 2,
+    "surface": "across",
+    "sense": "across/ADP|across#ueber",
+    "definition": "",
+    "gloss": "über",
+    "target": false
+  },
+  {
+    "n": 48,
+    "idx": 3,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 48,
+    "idx": 4,
+    "surface": "lake",
+    "sense": "lake/NOUN|lake#see",
+    "definition": "",
+    "gloss": "See",
+    "target": false
+  },
+  {
+    "n": 48,
+    "idx": 5,
+    "surface": "yesterday",
+    "sense": "yesterday/NOUN|yesterday#gestern",
+    "definition": "",
+    "gloss": "gestern",
+    "target": false
+  },
+  {
+    "n": 48,
+    "idx": 6,
+    "surface": "morning",
+    "sense": "morning/NOUN|morning#morgen",
+    "definition": "",
+    "gloss": "Morgen",
+    "target": false
+  },
+  {
+    "n": 49,
+    "idx": 0,
+    "surface": "We",
+    "sense": "we/PRON|we#wir",
+    "definition": "",
+    "gloss": "wir",
+    "target": false
+  },
+  {
+    "n": 49,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 49,
+    "idx": 2,
+    "surface": "swum",
+    "sense": "swim/VERB|swim#schwimmen",
+    "definition": "Sich mit Körperbewegungen durch Wasser bewegen.",
+    "gloss": "geschwommen",
+    "target": true
+  },
+  {
+    "n": 49,
+    "idx": 3,
+    "surface": "in",
+    "sense": "in/ADP|in#in_raeumlich",
+    "definition": "",
+    "gloss": "in (räumlich: innerhalb eines Ortes oder Raumes)",
+    "target": false
+  },
+  {
+    "n": 49,
+    "idx": 4,
+    "surface": "this",
+    "sense": "this/DET|this#dieser_begleitend",
+    "definition": "",
+    "gloss": "dieser/diese/dieses (begleitend vor einem Nomen, weist auf Nahes hin)",
+    "target": false
+  },
+  {
+    "n": 49,
+    "idx": 5,
+    "surface": "pool",
+    "sense": "pool/NOUN|pool#schwimmbecken",
+    "definition": "Künstlich angelegtes Becken zum Schwimmen.",
+    "gloss": "Schwimmbecken",
+    "target": false
+  },
+  {
+    "n": 49,
+    "idx": 6,
+    "surface": "every",
+    "sense": "every/DET|every#jeder",
+    "definition": "",
+    "gloss": "Jeder",
+    "target": false
+  },
+  {
+    "n": 49,
+    "idx": 7,
+    "surface": "day",
+    "sense": "day/NOUN|day#tag",
+    "definition": "",
+    "gloss": "Tag",
+    "target": false
+  },
+  {
+    "n": 49,
+    "idx": 8,
+    "surface": "this",
+    "sense": "this/DET|this#dieser_begleitend",
+    "definition": "",
+    "gloss": "dieser/diese/dieses (begleitend vor einem Nomen, weist auf Nahes hin)",
+    "target": false
+  },
+  {
+    "n": 49,
+    "idx": 9,
+    "surface": "week",
+    "sense": "week/NOUN|week#woche",
+    "definition": "",
+    "gloss": "Woche",
+    "target": false
+  },
+  {
+    "n": 50,
+    "idx": 0,
+    "surface": "The",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 50,
+    "idx": 1,
+    "surface": "branches",
+    "sense": "branch/NOUN|branch#ast",
+    "definition": "Verholzter Seitenteil eines Baums, der vom Stamm abzweigt.",
+    "gloss": "Äste",
+    "target": false
+  },
+  {
+    "n": 50,
+    "idx": 2,
+    "surface": "swing",
+    "sense": "swing/VERB|swing#schwingen",
+    "definition": "Sich pendelnd hin und her bewegen.",
+    "gloss": "schwingen",
+    "target": true
+  },
+  {
+    "n": 50,
+    "idx": 3,
+    "surface": "gently",
+    "sense": "gently/ADV|gently#behutsam",
+    "definition": "Mit geringer Kraft und ohne heftige Bewegungen.",
+    "gloss": "behutsam; vorsichtig",
+    "target": false
+  },
+  {
+    "n": 50,
+    "idx": 4,
+    "surface": "in",
+    "sense": "in/ADP|in#in_raeumlich",
+    "definition": "",
+    "gloss": "in (räumlich: innerhalb eines Ortes oder Raumes)",
+    "target": false
+  },
+  {
+    "n": 50,
+    "idx": 5,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 50,
+    "idx": 6,
+    "surface": "wind",
+    "sense": "wind/NOUN|wind#wind",
+    "definition": "",
+    "gloss": "Wind",
+    "target": false
+  },
+  {
+    "n": 51,
+    "idx": 0,
+    "surface": "The",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 51,
+    "idx": 1,
+    "surface": "empty",
+    "sense": "empty/ADJ|empty#leer",
+    "definition": "",
+    "gloss": "leer",
+    "target": false
+  },
+  {
+    "n": 51,
+    "idx": 2,
+    "surface": "basket",
+    "sense": "basket/NOUN|basket#korb",
+    "definition": "",
+    "gloss": "Korb",
+    "target": false
+  },
+  {
+    "n": 51,
+    "idx": 3,
+    "surface": "swung",
+    "sense": "swing/VERB|swing#schwingen",
+    "definition": "Sich pendelnd hin und her bewegen.",
+    "gloss": "schwang; geschwungen",
+    "target": true
+  },
+  {
+    "n": 51,
+    "idx": 4,
+    "surface": "from",
+    "sense": "from/ADP|from#von_ausgangspunkt",
+    "definition": "",
+    "gloss": "von, aus (räumlicher, zeitlicher oder persönlicher Ausgangspunkt)",
+    "target": false
+  },
+  {
+    "n": 51,
+    "idx": 5,
+    "surface": "side",
+    "sense": "side/NOUN|side#seite",
+    "definition": "",
+    "gloss": "Seite",
+    "target": false
+  },
+  {
+    "n": 51,
+    "idx": 6,
+    "surface": "to",
+    "sense": "to/ADP|to#nach_richtung",
+    "definition": "",
+    "gloss": "Richtung oder Zielort (z. B. 'go to London')",
+    "target": false
+  },
+  {
+    "n": 51,
+    "idx": 7,
+    "surface": "side",
+    "sense": "side/NOUN|side#seite",
+    "definition": "",
+    "gloss": "Seite",
+    "target": false
+  },
+  {
+    "n": 51,
+    "idx": 8,
+    "surface": "under",
+    "sense": "under/ADP|under#unter",
+    "definition": "",
+    "gloss": "unter",
+    "target": false
+  },
+  {
+    "n": 51,
+    "idx": 9,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 51,
+    "idx": 10,
+    "surface": "branch",
+    "sense": "branch/NOUN|branch#ast",
+    "definition": "Verholzter Seitenteil eines Baums, der vom Stamm abzweigt.",
+    "gloss": "Ast",
+    "target": false
+  },
+  {
+    "n": 52,
+    "idx": 0,
+    "surface": "The",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 52,
+    "idx": 1,
+    "surface": "lamp",
+    "sense": "lamp/NOUN|lamp#lampen",
+    "definition": "",
+    "gloss": "Gerät zur Beleuchtung eines Raums",
+    "target": false
+  },
+  {
+    "n": 52,
+    "idx": 2,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 52,
+    "idx": 3,
+    "surface": "swung",
+    "sense": "swing/VERB|swing#schwingen",
+    "definition": "Sich pendelnd hin und her bewegen.",
+    "gloss": "schwang; geschwungen",
+    "target": true
+  },
+  {
+    "n": 52,
+    "idx": 4,
+    "surface": "back",
+    "sense": "back/ADV|back#zurueck",
+    "definition": "",
+    "gloss": "zurück",
+    "target": false
+  },
+  {
+    "n": 52,
+    "idx": 5,
+    "surface": "and",
+    "sense": "and/CCONJ|and#und",
+    "definition": "",
+    "gloss": "und",
+    "target": false
+  },
+  {
+    "n": 52,
+    "idx": 6,
+    "surface": "forth",
+    "sense": "forth/ADV|forth#hin",
+    "definition": "Richtungsadverb; in back and forth Teil der wiederholten Bewegung hin und her.",
+    "gloss": "vorwärts; hin",
+    "target": false
+  },
+  {
+    "n": 52,
+    "idx": 7,
+    "surface": "since",
+    "sense": "since/SCONJ|since#seit",
+    "definition": "",
+    "gloss": "seit",
+    "target": false
+  },
+  {
+    "n": 52,
+    "idx": 8,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 52,
+    "idx": 9,
+    "surface": "window",
+    "sense": "window/NOUN|window#fenster",
+    "definition": "",
+    "gloss": "Fenster",
+    "target": false
+  },
+  {
+    "n": 52,
+    "idx": 10,
+    "surface": "opened",
+    "sense": "open/VERB|open#oeffnen",
+    "definition": "",
+    "gloss": "öffnen",
+    "target": false
+  },
+  {
+    "n": 53,
+    "idx": 0,
+    "surface": "Please",
+    "sense": "please/INTJ|please#bitte",
+    "definition": "",
+    "gloss": "bitte",
+    "target": false
+  },
+  {
+    "n": 53,
+    "idx": 1,
+    "surface": "take",
+    "sense": "take/VERB|take#nehmen",
+    "definition": "",
+    "gloss": "nehmen",
+    "target": true
+  },
+  {
+    "n": 53,
+    "idx": 2,
+    "surface": "one",
+    "sense": "one/NUM|one#ein",
+    "definition": "",
+    "gloss": "ein",
+    "target": false
+  },
+  {
+    "n": 53,
+    "idx": 3,
+    "surface": "biscuit",
+    "sense": "biscuit/NOUN|biscuit#keks",
+    "definition": "Ein kleines flaches, meist knuspriges süßes Gebäck.",
+    "gloss": "Keks",
+    "target": false
+  },
+  {
+    "n": 53,
+    "idx": 4,
+    "surface": "from",
+    "sense": "from/ADP|from#von_ausgangspunkt",
+    "definition": "",
+    "gloss": "von, aus (räumlicher, zeitlicher oder persönlicher Ausgangspunkt)",
+    "target": false
+  },
+  {
+    "n": 53,
+    "idx": 5,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 53,
+    "idx": 6,
+    "surface": "plate",
+    "sense": "plate/NOUN|plate#teller",
+    "definition": "",
+    "gloss": "Teller",
+    "target": false
+  },
+  {
+    "n": 54,
+    "idx": 0,
+    "surface": "Lina",
+    "sense": "Lina/PROPN|lina#lina",
+    "definition": "",
+    "gloss": "Lina",
+    "target": false
+  },
+  {
+    "n": 54,
+    "idx": 1,
+    "surface": "took",
+    "sense": "take/VERB|take#nehmen",
+    "definition": "",
+    "gloss": "nahm",
+    "target": true
+  },
+  {
+    "n": 54,
+    "idx": 2,
+    "surface": "a",
+    "sense": "a/DET|a#ein-eine-unbestimmter-artikel",
+    "definition": "",
+    "gloss": "ein/eine (unbestimmter Artikel)",
+    "target": false
+  },
+  {
+    "n": 54,
+    "idx": 3,
+    "surface": "clean",
+    "sense": "clean/ADJ|clean#sauber",
+    "definition": "",
+    "gloss": "sauber",
+    "target": false
+  },
+  {
+    "n": 54,
+    "idx": 4,
+    "surface": "towel",
+    "sense": "towel/NOUN|towel#handtuch",
+    "definition": "",
+    "gloss": "Handtuch",
+    "target": false
+  },
+  {
+    "n": 54,
+    "idx": 5,
+    "surface": "from",
+    "sense": "from/ADP|from#von_ausgangspunkt",
+    "definition": "",
+    "gloss": "von, aus (räumlicher, zeitlicher oder persönlicher Ausgangspunkt)",
+    "target": false
+  },
+  {
+    "n": 54,
+    "idx": 6,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 54,
+    "idx": 7,
+    "surface": "shelf",
+    "sense": "shelf/NOUN|shelf#regal",
+    "definition": "",
+    "gloss": "Regal",
+    "target": false
+  },
+  {
+    "n": 54,
+    "idx": 8,
+    "surface": "yesterday",
+    "sense": "yesterday/NOUN|yesterday#gestern",
+    "definition": "",
+    "gloss": "gestern",
+    "target": false
+  },
+  {
+    "n": 55,
+    "idx": 0,
+    "surface": "Someone",
+    "sense": "someone/PRON|someone#jemand",
+    "definition": "",
+    "gloss": "jemand",
+    "target": false
+  },
+  {
+    "n": 55,
+    "idx": 1,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 55,
+    "idx": 2,
+    "surface": "taken",
+    "sense": "take/VERB|take#nehmen",
+    "definition": "",
+    "gloss": "genommen",
+    "target": true
+  },
+  {
+    "n": 55,
+    "idx": 3,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 55,
+    "idx": 4,
+    "surface": "last",
+    "sense": "last/ADJ|last#letzter",
+    "definition": "Am Ende einer räumlichen oder zeitlichen Reihe stehend.",
+    "gloss": "letzte",
+    "target": false
+  },
+  {
+    "n": 55,
+    "idx": 5,
+    "surface": "biscuit",
+    "sense": "biscuit/NOUN|biscuit#keks",
+    "definition": "Ein kleines flaches, meist knuspriges süßes Gebäck.",
+    "gloss": "Keks",
+    "target": false
+  },
+  {
+    "n": 55,
+    "idx": 6,
+    "surface": "from",
+    "sense": "from/ADP|from#von_ausgangspunkt",
+    "definition": "",
+    "gloss": "von, aus (räumlicher, zeitlicher oder persönlicher Ausgangspunkt)",
+    "target": false
+  },
+  {
+    "n": 55,
+    "idx": 7,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 55,
+    "idx": 8,
+    "surface": "plate",
+    "sense": "plate/NOUN|plate#teller",
+    "definition": "",
+    "gloss": "Teller",
+    "target": false
+  },
+  {
+    "n": 56,
+    "idx": 0,
+    "surface": "Ben",
+    "sense": "Ben/PROPN|ben#ben",
+    "definition": "",
+    "gloss": "Ben",
+    "target": false
+  },
+  {
+    "n": 56,
+    "idx": 1,
+    "surface": "taught",
+    "sense": "teach/VERB|teach#unterrichtet",
+    "definition": "",
+    "gloss": "brachte bei",
+    "target": true
+  },
+  {
+    "n": 56,
+    "idx": 2,
+    "surface": "history",
+    "sense": "history/NOUN|history#geschichts",
+    "definition": "",
+    "gloss": "Geschichts-",
+    "target": false
+  },
+  {
+    "n": 56,
+    "idx": 3,
+    "surface": "at",
+    "sense": "at/ADP|at#ort",
+    "definition": "",
+    "gloss": "räumlich (an einem bestimmten Ort oder Punkt)",
+    "target": false
+  },
+  {
+    "n": 56,
+    "idx": 4,
+    "surface": "this",
+    "sense": "this/DET|this#dieser_begleitend",
+    "definition": "",
+    "gloss": "dieser/diese/dieses (begleitend vor einem Nomen, weist auf Nahes hin)",
+    "target": false
+  },
+  {
+    "n": 56,
+    "idx": 5,
+    "surface": "school",
+    "sense": "school/NOUN|school#schule-hier-schul",
+    "definition": "",
+    "gloss": "Schule (hier: Schul-)",
+    "target": false
+  },
+  {
+    "n": 56,
+    "idx": 6,
+    "surface": "for",
+    "sense": "for/ADP|for#seit_lang_dauer",
+    "definition": "",
+    "gloss": "seit / lang (Angabe einer Zeitspanne oder Dauer)",
+    "target": false
+  },
+  {
+    "n": 56,
+    "idx": 7,
+    "surface": "ten",
+    "sense": "ten/NUM|ten#zehn",
+    "definition": "",
+    "gloss": "zehn",
+    "target": false
+  },
+  {
+    "n": 56,
+    "idx": 8,
+    "surface": "years",
+    "sense": "year/NOUN|year#jahr",
+    "definition": "",
+    "gloss": "Jahre",
+    "target": false
+  },
+  {
+    "n": 57,
+    "idx": 0,
+    "surface": "Maya",
+    "sense": "Maya/PROPN|maya#maya",
+    "definition": "",
+    "gloss": "Maya",
+    "target": false
+  },
+  {
+    "n": 57,
+    "idx": 1,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 57,
+    "idx": 2,
+    "surface": "taught",
+    "sense": "teach/VERB|teach#unterrichtet",
+    "definition": "",
+    "gloss": "brachte bei",
+    "target": true
+  },
+  {
+    "n": 57,
+    "idx": 3,
+    "surface": "English",
+    "sense": "English/PROPN|english#englisch",
+    "definition": "",
+    "gloss": "Englisch-",
+    "target": false
+  },
+  {
+    "n": 57,
+    "idx": 4,
+    "surface": "at",
+    "sense": "at/ADP|at#ort",
+    "definition": "",
+    "gloss": "räumlich (an einem bestimmten Ort oder Punkt)",
+    "target": false
+  },
+  {
+    "n": 57,
+    "idx": 5,
+    "surface": "our",
+    "sense": "our/PRON|our#unser",
+    "definition": "",
+    "gloss": "unser",
+    "target": false
+  },
+  {
+    "n": 57,
+    "idx": 6,
+    "surface": "school",
+    "sense": "school/NOUN|school#schule-hier-schul",
+    "definition": "",
+    "gloss": "Schule (hier: Schul-)",
+    "target": false
+  },
+  {
+    "n": 57,
+    "idx": 7,
+    "surface": "since",
+    "sense": "since/ADP|since#seit_zeitpunkt",
+    "definition": "Vom genannten Zeitpunkt bis zum Bezugszeitpunkt.",
+    "gloss": "seit",
+    "target": false
+  },
+  {
+    "n": 57,
+    "idx": 8,
+    "surface": "September",
+    "sense": "September/PROPN|september#september",
+    "definition": "Der neunte Monat des Jahres.",
+    "gloss": "September",
+    "target": false
+  },
+  {
+    "n": 58,
+    "idx": 0,
+    "surface": "Do",
+    "sense": "do/AUX|do#hilfsverb-zur-verneinung",
+    "definition": "",
+    "gloss": "Hilfsverb zur Verneinung",
+    "target": false
+  },
+  {
+    "n": 58,
+    "idx": 1,
+    "surface": "not",
+    "sense": "not/PART|not#nicht",
+    "definition": "",
+    "gloss": "nicht (drückt Verneinung von Verben, Adjektiven oder Aussagen aus)",
+    "target": false
+  },
+  {
+    "n": 58,
+    "idx": 2,
+    "surface": "tear",
+    "sense": "tear/VERB|tear#zerreien",
+    "definition": "Durch Auseinanderziehen in kleinere Stücke teilen.",
+    "gloss": "zerreißen",
+    "target": true
+  },
+  {
+    "n": 58,
+    "idx": 3,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 58,
+    "idx": 4,
+    "surface": "letter",
+    "sense": "letter/NOUN|letter#brief",
+    "definition": "",
+    "gloss": "Brief",
+    "target": false
+  },
+  {
+    "n": 58,
+    "idx": 5,
+    "surface": "before",
+    "sense": "before/SCONJ|before#bevor",
+    "definition": "",
+    "gloss": "bevor",
+    "target": false
+  },
+  {
+    "n": 58,
+    "idx": 6,
+    "surface": "I",
+    "sense": "I/PRON|i#ich",
+    "definition": "",
+    "gloss": "ich",
+    "target": false
+  },
+  {
+    "n": 58,
+    "idx": 7,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 58,
+    "idx": 8,
+    "surface": "read",
+    "sense": "read/VERB|read#lesen",
+    "definition": "",
+    "gloss": "lesen",
+    "target": false
+  },
+  {
+    "n": 58,
+    "idx": 9,
+    "surface": "it",
+    "sense": "it/PRON|it#es_ding",
+    "definition": "",
+    "gloss": "Personalpronomen der 3. Person Singular für sächliche Dinge oder Tiere",
+    "target": false
+  },
+  {
+    "n": 59,
+    "idx": 0,
+    "surface": "David",
+    "sense": "David/PROPN|david#david",
+    "definition": "",
+    "gloss": "David",
+    "target": false
+  },
+  {
+    "n": 59,
+    "idx": 1,
+    "surface": "tore",
+    "sense": "tear/VERB|tear#zerreien",
+    "definition": "Durch Auseinanderziehen in kleinere Stücke teilen.",
+    "gloss": "zerriss; zupfte auseinander",
+    "target": true
+  },
+  {
+    "n": 59,
+    "idx": 2,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 59,
+    "idx": 3,
+    "surface": "old",
+    "sense": "old/ADJ|old#von-fruher",
+    "definition": "Aus einer früheren Lebensphase bekannt, unabhängig vom Lebensalter.",
+    "gloss": "alt; von früher",
+    "target": false
+  },
+  {
+    "n": 59,
+    "idx": 4,
+    "surface": "letter",
+    "sense": "letter/NOUN|letter#brief",
+    "definition": "",
+    "gloss": "Brief",
+    "target": false
+  },
+  {
+    "n": 59,
+    "idx": 5,
+    "surface": "into",
+    "sense": "into/ADP|into#anordnung",
+    "definition": "Die durch eine Veränderung entstehende Form oder Anordnung angeben.",
+    "gloss": "zu; in",
+    "target": false
+  },
+  {
+    "n": 59,
+    "idx": 6,
+    "surface": "tiny",
+    "sense": "tiny/ADJ|tiny#winzig",
+    "definition": "Sehr klein.",
+    "gloss": "winzig",
+    "target": false
+  },
+  {
+    "n": 59,
+    "idx": 7,
+    "surface": "pieces",
+    "sense": "piece/NOUN|piece#stueck",
+    "definition": "",
+    "gloss": "Stücke",
+    "target": false
+  },
+  {
+    "n": 60,
+    "idx": 0,
+    "surface": "Someone",
+    "sense": "someone/PRON|someone#jemand",
+    "definition": "",
+    "gloss": "jemand",
+    "target": false
+  },
+  {
+    "n": 60,
+    "idx": 1,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 60,
+    "idx": 2,
+    "surface": "torn",
+    "sense": "tear/VERB|tear#zerreien",
+    "definition": "Durch Auseinanderziehen in kleinere Stücke teilen.",
+    "gloss": "zerrissen",
+    "target": true
+  },
+  {
+    "n": 60,
+    "idx": 3,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 60,
+    "idx": 4,
+    "surface": "map",
+    "sense": "map/NOUN|map#karte",
+    "definition": "",
+    "gloss": "Karte",
+    "target": false
+  },
+  {
+    "n": 60,
+    "idx": 5,
+    "surface": "into",
+    "sense": "into/ADP|into#anordnung",
+    "definition": "Die durch eine Veränderung entstehende Form oder Anordnung angeben.",
+    "gloss": "zu; in",
+    "target": false
+  },
+  {
+    "n": 60,
+    "idx": 6,
+    "surface": "two",
+    "sense": "two/NUM|two#zwei",
+    "definition": "",
+    "gloss": "zwei",
+    "target": false
+  },
+  {
+    "n": 60,
+    "idx": 7,
+    "surface": "pieces",
+    "sense": "piece/NOUN|piece#stueck",
+    "definition": "",
+    "gloss": "Stücke",
+    "target": false
+  },
+  {
+    "n": 61,
+    "idx": 0,
+    "surface": "Sara",
+    "sense": "Sara/PROPN|sara#sara",
+    "definition": "",
+    "gloss": "Sara",
+    "target": false
+  },
+  {
+    "n": 61,
+    "idx": 1,
+    "surface": "told",
+    "sense": "tell/VERB|tell#sagen",
+    "definition": "",
+    "gloss": "sagte",
+    "target": true
+  },
+  {
+    "n": 61,
+    "idx": 2,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 61,
+    "idx": 3,
+    "surface": "driver",
+    "sense": "driver/NOUN|driver#fahrer",
+    "definition": "",
+    "gloss": "Fahrer",
+    "target": false
+  },
+  {
+    "n": 61,
+    "idx": 4,
+    "surface": "her",
+    "sense": "her/PRON|her#ihr-possessivpronomen",
+    "definition": "",
+    "gloss": "ihr (Possessivpronomen)",
+    "target": false
+  },
+  {
+    "n": 61,
+    "idx": 5,
+    "surface": "address",
+    "sense": "address/NOUN|address#adresse",
+    "definition": "",
+    "gloss": "Adresse",
+    "target": false
+  },
+  {
+    "n": 61,
+    "idx": 6,
+    "surface": "before",
+    "sense": "before/ADP|before#vor",
+    "definition": "",
+    "gloss": "vor",
+    "target": false
+  },
+  {
+    "n": 61,
+    "idx": 7,
+    "surface": "getting",
+    "sense": "get/VERB|get#gelangen",
+    "definition": "",
+    "gloss": "an einen Ort gelangen oder ankommen",
+    "target": false
+  },
+  {
+    "n": 61,
+    "idx": 8,
+    "surface": "into",
+    "sense": "into/ADP|into#in",
+    "definition": "",
+    "gloss": "in",
+    "target": false
+  },
+  {
+    "n": 61,
+    "idx": 9,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 61,
+    "idx": 10,
+    "surface": "taxi",
+    "sense": "taxi/NOUN|taxi#taxi",
+    "definition": "",
+    "gloss": "Taxi",
+    "target": false
+  },
+  {
+    "n": 62,
+    "idx": 0,
+    "surface": "I",
+    "sense": "I/PRON|i#ich",
+    "definition": "",
+    "gloss": "ich",
+    "target": false
+  },
+  {
+    "n": 62,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 62,
+    "idx": 2,
+    "surface": "told",
+    "sense": "tell/VERB|tell#sagen",
+    "definition": "",
+    "gloss": "sagte",
+    "target": true
+  },
+  {
+    "n": 62,
+    "idx": 3,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 62,
+    "idx": 4,
+    "surface": "receptionist",
+    "sense": "receptionist/NOUN|receptionist#empfangsmitarbeiter",
+    "definition": "Person, die an einer Rezeption Gäste empfängt und betreut.",
+    "gloss": "Empfangsmitarbeiter, Empfangsmitarbeiterin",
+    "target": false
+  },
+  {
+    "n": 62,
+    "idx": 5,
+    "surface": "about",
+    "sense": "about/ADP|about#ueber_thema",
+    "definition": "",
+    "gloss": "über (ein Thema oder einen Gegenstand betreffend)",
+    "target": false
+  },
+  {
+    "n": 62,
+    "idx": 6,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 62,
+    "idx": 7,
+    "surface": "broken",
+    "sense": "broken/ADJ|broken#kaputte",
+    "definition": "",
+    "gloss": "kaputte",
+    "target": false
+  },
+  {
+    "n": 62,
+    "idx": 8,
+    "surface": "shower",
+    "sense": "shower/NOUN|shower#dusche",
+    "definition": "Vorrichtung zum Waschen des Körpers mit herabfließendem Wasser.",
+    "gloss": "Dusche",
+    "target": false
+  },
+  {
+    "n": 63,
+    "idx": 0,
+    "surface": "I",
+    "sense": "I/PRON|i#ich",
+    "definition": "",
+    "gloss": "ich",
+    "target": false
+  },
+  {
+    "n": 63,
+    "idx": 1,
+    "surface": "think",
+    "sense": "think/VERB|think#findet-meint",
+    "definition": "",
+    "gloss": "denken; meinen",
+    "target": true
+  },
+  {
+    "n": 63,
+    "idx": 2,
+    "surface": "this",
+    "sense": "this/DET|this#dieser_begleitend",
+    "definition": "",
+    "gloss": "dieser/diese/dieses (begleitend vor einem Nomen, weist auf Nahes hin)",
+    "target": false
+  },
+  {
+    "n": 63,
+    "idx": 3,
+    "surface": "coat",
+    "sense": "coat/NOUN|coat#mantel",
+    "definition": "",
+    "gloss": "Mantel",
+    "target": false
+  },
+  {
+    "n": 63,
+    "idx": 4,
+    "surface": "is",
+    "sense": "be/AUX|be#sein_vollverb",
+    "definition": "",
+    "gloss": "sein (als Vollverb oder Kopula zur Angabe von Zustand, Identität oder Eigenschaft)",
+    "target": false
+  },
+  {
+    "n": 63,
+    "idx": 5,
+    "surface": "too",
+    "sense": "too/ADV|too#zu",
+    "definition": "",
+    "gloss": "zu",
+    "target": false
+  },
+  {
+    "n": 63,
+    "idx": 6,
+    "surface": "expensive",
+    "sense": "expensive/ADJ|expensive#teuer",
+    "definition": "",
+    "gloss": "teuer",
+    "target": false
+  },
+  {
+    "n": 64,
+    "idx": 0,
+    "surface": "Omar",
+    "sense": "Omar/PROPN|omar#omar",
+    "definition": "",
+    "gloss": "Omar",
+    "target": false
+  },
+  {
+    "n": 64,
+    "idx": 1,
+    "surface": "thought",
+    "sense": "think/VERB|think#findet-meint",
+    "definition": "",
+    "gloss": "dachte; gedacht",
+    "target": true
+  },
+  {
+    "n": 64,
+    "idx": 2,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 64,
+    "idx": 3,
+    "surface": "museum",
+    "sense": "museum/NOUN|museum#museum",
+    "definition": "",
+    "gloss": "Museum",
+    "target": false
+  },
+  {
+    "n": 64,
+    "idx": 4,
+    "surface": "was",
+    "sense": "be/AUX|be#sein_vollverb",
+    "definition": "",
+    "gloss": "sein (Zustand, Eigenschaft oder Identität in der Vergangenheit)",
+    "target": false
+  },
+  {
+    "n": 64,
+    "idx": 5,
+    "surface": "closed",
+    "sense": "closed/ADJ|closed#geschlossen",
+    "definition": "Nicht offen; hier zugezogene Vorhänge.",
+    "gloss": "geschlossen",
+    "target": false
+  },
+  {
+    "n": 64,
+    "idx": 6,
+    "surface": "on",
+    "sense": "on/ADP|on#an_zeitlich",
+    "definition": "",
+    "gloss": "an (zeitlich: an bestimmten Tagen oder Daten)",
+    "target": false
+  },
+  {
+    "n": 64,
+    "idx": 7,
+    "surface": "Mondays",
+    "sense": "Monday/PROPN|monday#montag",
+    "definition": "",
+    "gloss": "montags",
+    "target": false
+  },
+  {
+    "n": 65,
+    "idx": 0,
+    "surface": "I",
+    "sense": "I/PRON|i#ich",
+    "definition": "",
+    "gloss": "ich",
+    "target": false
+  },
+  {
+    "n": 65,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 65,
+    "idx": 2,
+    "surface": "always",
+    "sense": "always/ADV|always#immer",
+    "definition": "",
+    "gloss": "immer",
+    "target": false
+  },
+  {
+    "n": 65,
+    "idx": 3,
+    "surface": "thought",
+    "sense": "think/VERB|think#findet-meint",
+    "definition": "",
+    "gloss": "dachte; gedacht",
+    "target": true
+  },
+  {
+    "n": 65,
+    "idx": 4,
+    "surface": "this",
+    "sense": "this/DET|this#dieser_begleitend",
+    "definition": "",
+    "gloss": "dieser/diese/dieses (begleitend vor einem Nomen, weist auf Nahes hin)",
+    "target": false
+  },
+  {
+    "n": 65,
+    "idx": 5,
+    "surface": "park",
+    "sense": "park/NOUN|park#park",
+    "definition": "",
+    "gloss": "Park",
+    "target": false
+  },
+  {
+    "n": 65,
+    "idx": 6,
+    "surface": "was",
+    "sense": "be/AUX|be#sein_vollverb",
+    "definition": "",
+    "gloss": "sein (Zustand, Eigenschaft oder Identität in der Vergangenheit)",
+    "target": false
+  },
+  {
+    "n": 65,
+    "idx": 7,
+    "surface": "a",
+    "sense": "a/DET|a#ein-eine-unbestimmter-artikel",
+    "definition": "",
+    "gloss": "ein/eine (unbestimmter Artikel)",
+    "target": false
+  },
+  {
+    "n": 65,
+    "idx": 8,
+    "surface": "lovely",
+    "sense": "lovely/ADJ|lovely#schoene",
+    "definition": "",
+    "gloss": "schöne",
+    "target": false
+  },
+  {
+    "n": 65,
+    "idx": 9,
+    "surface": "place",
+    "sense": "place/NOUN|place#ort",
+    "definition": "",
+    "gloss": "Ort",
+    "target": false
+  },
+  {
+    "n": 66,
+    "idx": 0,
+    "surface": "Emma",
+    "sense": "Emma/PROPN|emma#emma",
+    "definition": "",
+    "gloss": "Emma",
+    "target": false
+  },
+  {
+    "n": 66,
+    "idx": 1,
+    "surface": "threw",
+    "sense": "throw/VERB|throw#wirft",
+    "definition": "",
+    "gloss": "warf",
+    "target": true
+  },
+  {
+    "n": 66,
+    "idx": 2,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 66,
+    "idx": 3,
+    "surface": "ball",
+    "sense": "ball/NOUN|ball#ball",
+    "definition": "",
+    "gloss": "Ball",
+    "target": false
+  },
+  {
+    "n": 66,
+    "idx": 4,
+    "surface": "over",
+    "sense": "over/ADP|over#ueber",
+    "definition": "",
+    "gloss": "über",
+    "target": false
+  },
+  {
+    "n": 66,
+    "idx": 5,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 66,
+    "idx": 6,
+    "surface": "fence",
+    "sense": "fence/NOUN|fence#zaun",
+    "definition": "",
+    "gloss": "Zaun",
+    "target": false
+  },
+  {
+    "n": 66,
+    "idx": 7,
+    "surface": "yesterday",
+    "sense": "yesterday/NOUN|yesterday#gestern",
+    "definition": "",
+    "gloss": "gestern",
+    "target": false
+  },
+  {
+    "n": 67,
+    "idx": 0,
+    "surface": "Someone",
+    "sense": "someone/PRON|someone#jemand",
+    "definition": "",
+    "gloss": "jemand",
+    "target": false
+  },
+  {
+    "n": 67,
+    "idx": 1,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 67,
+    "idx": 2,
+    "surface": "thrown",
+    "sense": "throw/VERB|throw#wirft",
+    "definition": "",
+    "gloss": "geworfen",
+    "target": true
+  },
+  {
+    "n": 67,
+    "idx": 3,
+    "surface": "a",
+    "sense": "a/DET|a#ein-eine-unbestimmter-artikel",
+    "definition": "",
+    "gloss": "ein/eine (unbestimmter Artikel)",
+    "target": false
+  },
+  {
+    "n": 67,
+    "idx": 4,
+    "surface": "stone",
+    "sense": "stone/NOUN|stone#stein",
+    "definition": "",
+    "gloss": "Stein",
+    "target": false
+  },
+  {
+    "n": 67,
+    "idx": 5,
+    "surface": "through",
+    "sense": "through/ADP|through#durch",
+    "definition": "",
+    "gloss": "durch",
+    "target": false
+  },
+  {
+    "n": 67,
+    "idx": 6,
+    "surface": "our",
+    "sense": "our/PRON|our#unser",
+    "definition": "",
+    "gloss": "unser",
+    "target": false
+  },
+  {
+    "n": 67,
+    "idx": 7,
+    "surface": "window",
+    "sense": "window/NOUN|window#fenster",
+    "definition": "",
+    "gloss": "Fenster",
+    "target": false
+  },
+  {
+    "n": 68,
+    "idx": 0,
+    "surface": "Ali",
+    "sense": "Ali/PROPN|ali#ali",
+    "definition": "",
+    "gloss": "Ali",
+    "target": false
+  },
+  {
+    "n": 68,
+    "idx": 1,
+    "surface": "understood",
+    "sense": "understand/VERB|understand#verstehen",
+    "definition": "",
+    "gloss": "verstand; verstanden",
+    "target": true
+  },
+  {
+    "n": 68,
+    "idx": 2,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 68,
+    "idx": 3,
+    "surface": "instructions",
+    "sense": "instruction/NOUN|instruction#anweisung",
+    "definition": "Eine konkrete Aufforderung oder Erklärung, wie etwas auszuführen ist.",
+    "gloss": "Anleitung; Anweisungen",
+    "target": false
+  },
+  {
+    "n": 68,
+    "idx": 4,
+    "surface": "after",
+    "sense": "after/ADP|after#nach",
+    "definition": "",
+    "gloss": "nach",
+    "target": false
+  },
+  {
+    "n": 68,
+    "idx": 5,
+    "surface": "reading",
+    "sense": "read/VERB|read#lesen",
+    "definition": "",
+    "gloss": "lesen; Lesen",
+    "target": false
+  },
+  {
+    "n": 68,
+    "idx": 6,
+    "surface": "them",
+    "sense": "they/PRON|they#sie_plural",
+    "definition": "",
+    "gloss": "sie / ihnen",
+    "target": false
+  },
+  {
+    "n": 68,
+    "idx": 7,
+    "surface": "twice",
+    "sense": "twice/ADV|twice#zweimal",
+    "definition": "Bei genau zwei Gelegenheiten.",
+    "gloss": "zweimal",
+    "target": false
+  },
+  {
+    "n": 69,
+    "idx": 0,
+    "surface": "I",
+    "sense": "I/PRON|i#ich",
+    "definition": "",
+    "gloss": "ich",
+    "target": false
+  },
+  {
+    "n": 69,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 69,
+    "idx": 2,
+    "surface": "understood",
+    "sense": "understand/VERB|understand#verstehen",
+    "definition": "",
+    "gloss": "verstand; verstanden",
+    "target": true
+  },
+  {
+    "n": 69,
+    "idx": 3,
+    "surface": "your",
+    "sense": "your/PRON|your#dein",
+    "definition": "",
+    "gloss": "dein",
+    "target": false
+  },
+  {
+    "n": 69,
+    "idx": 4,
+    "surface": "question",
+    "sense": "question/NOUN|question#frage",
+    "definition": "",
+    "gloss": "Frage",
+    "target": false
+  },
+  {
+    "n": 69,
+    "idx": 6,
+    "surface": "but",
+    "sense": "but/CCONJ|but#aber",
+    "definition": "",
+    "gloss": "aber",
+    "target": false
+  },
+  {
+    "n": 69,
+    "idx": 7,
+    "surface": "I",
+    "sense": "I/PRON|i#ich",
+    "definition": "",
+    "gloss": "ich",
+    "target": false
+  },
+  {
+    "n": 69,
+    "idx": 8,
+    "surface": "need",
+    "sense": "need/VERB|need#brauchen",
+    "definition": "",
+    "gloss": "brauchen",
+    "target": false
+  },
+  {
+    "n": 69,
+    "idx": 9,
+    "surface": "time",
+    "sense": "time/NOUN|time#zeit",
+    "definition": "",
+    "gloss": "Zeit (fortlaufende Dauer, Zeitpunkt oder Uhrzeit)",
+    "target": false
+  },
+  {
+    "n": 69,
+    "idx": 10,
+    "surface": "to",
+    "sense": "to/PART|to#infinitivpartikel",
+    "definition": "",
+    "gloss": "Partikel vor einem Infinitiv (z. B. 'to go')",
+    "target": false
+  },
+  {
+    "n": 69,
+    "idx": 11,
+    "surface": "answer",
+    "sense": "answer/VERB|answer#antworten",
+    "definition": "Auf eine Frage oder Äußerung mit einer sprachlichen Mitteilung reagieren; nicht einen Telefonanruf annehmen.",
+    "gloss": "antworten",
+    "target": false
+  },
+  {
+    "n": 70,
+    "idx": 0,
+    "surface": "The",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 70,
+    "idx": 1,
+    "surface": "loud",
+    "sense": "loud/ADJ|loud#lauten",
+    "definition": "",
+    "gloss": "lauten",
+    "target": false
+  },
+  {
+    "n": 70,
+    "idx": 2,
+    "surface": "thunder",
+    "sense": "thunder/NOUN|thunder#donner",
+    "definition": "Lautes Geräusch, das durch einen Blitz bei einem Gewitter entsteht.",
+    "gloss": "Donner",
+    "target": false
+  },
+  {
+    "n": 70,
+    "idx": 3,
+    "surface": "woke",
+    "sense": "wake/VERB|wake#wecken",
+    "definition": "Bewirken, dass eine Person nicht mehr schläft.",
+    "gloss": "weckte",
+    "target": true
+  },
+  {
+    "n": 70,
+    "idx": 4,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 70,
+    "idx": 5,
+    "surface": "baby",
+    "sense": "baby/NOUN|baby#baby",
+    "definition": "",
+    "gloss": "Baby",
+    "target": false
+  },
+  {
+    "n": 70,
+    "idx": 6,
+    "surface": "last",
+    "sense": "last/ADJ|last#letzter",
+    "definition": "Am Ende einer räumlichen oder zeitlichen Reihe stehend.",
+    "gloss": "letzte",
+    "target": false
+  },
+  {
+    "n": 70,
+    "idx": 7,
+    "surface": "night",
+    "sense": "night/NOUN|night#nacht",
+    "definition": "",
+    "gloss": "Nacht",
+    "target": false
+  },
+  {
+    "n": 71,
+    "idx": 0,
+    "surface": "The",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 71,
+    "idx": 1,
+    "surface": "doorbell",
+    "sense": "doorbell/NOUN|doorbell#turklingel",
+    "definition": "Eine Vorrichtung, mit der Besucher sich an der Tür bemerkbar machen.",
+    "gloss": "Türklingel",
+    "target": false
+  },
+  {
+    "n": 71,
+    "idx": 2,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 71,
+    "idx": 3,
+    "surface": "woken",
+    "sense": "wake/VERB|wake#wecken",
+    "definition": "Bewirken, dass eine Person nicht mehr schläft.",
+    "gloss": "geweckt",
+    "target": true
+  },
+  {
+    "n": 71,
+    "idx": 4,
+    "surface": "everyone",
+    "sense": "everyone/PRON|everyone#alle",
+    "definition": "",
+    "gloss": "alle",
+    "target": false
+  },
+  {
+    "n": 71,
+    "idx": 5,
+    "surface": "in",
+    "sense": "in/ADP|in#in_raeumlich",
+    "definition": "",
+    "gloss": "in (räumlich: innerhalb eines Ortes oder Raumes)",
+    "target": false
+  },
+  {
+    "n": 71,
+    "idx": 6,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 71,
+    "idx": 7,
+    "surface": "house",
+    "sense": "house/NOUN|house#haus-hauses",
+    "definition": "",
+    "gloss": "Haus / Hauses",
+    "target": false
+  },
+  {
+    "n": 72,
+    "idx": 0,
+    "surface": "Rosa",
+    "sense": "Rosa/PROPN|rosa#rosa",
+    "definition": "",
+    "gloss": "Rosa",
+    "target": false
+  },
+  {
+    "n": 72,
+    "idx": 1,
+    "surface": "wore",
+    "sense": "wear/VERB|wear#tragen",
+    "definition": "",
+    "gloss": "trug",
+    "target": true
+  },
+  {
+    "n": 72,
+    "idx": 2,
+    "surface": "her",
+    "sense": "her/PRON|her#ihr-possessivpronomen",
+    "definition": "",
+    "gloss": "ihr (Possessivpronomen)",
+    "target": false
+  },
+  {
+    "n": 72,
+    "idx": 3,
+    "surface": "blue",
+    "sense": "blue/ADJ|blue#blau",
+    "definition": "",
+    "gloss": "blau",
+    "target": false
+  },
+  {
+    "n": 72,
+    "idx": 4,
+    "surface": "coat",
+    "sense": "coat/NOUN|coat#mantel",
+    "definition": "",
+    "gloss": "Mantel",
+    "target": false
+  },
+  {
+    "n": 72,
+    "idx": 5,
+    "surface": "at",
+    "sense": "at/ADP|at#ort",
+    "definition": "",
+    "gloss": "räumlich (an einem bestimmten Ort oder Punkt)",
+    "target": false
+  },
+  {
+    "n": 72,
+    "idx": 6,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 72,
+    "idx": 7,
+    "surface": "concert",
+    "sense": "concert/NOUN|concert#konzert",
+    "definition": "",
+    "gloss": "Konzert-",
+    "target": false
+  },
+  {
+    "n": 72,
+    "idx": 8,
+    "surface": "yesterday",
+    "sense": "yesterday/NOUN|yesterday#gestern",
+    "definition": "",
+    "gloss": "gestern",
+    "target": false
+  },
+  {
+    "n": 73,
+    "idx": 0,
+    "surface": "I",
+    "sense": "I/PRON|i#ich",
+    "definition": "",
+    "gloss": "ich",
+    "target": false
+  },
+  {
+    "n": 73,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 73,
+    "idx": 2,
+    "surface": "worn",
+    "sense": "wear/VERB|wear#tragen",
+    "definition": "",
+    "gloss": "getragen",
+    "target": true
+  },
+  {
+    "n": 73,
+    "idx": 3,
+    "surface": "these",
+    "sense": "these/DET|these#diese",
+    "definition": "",
+    "gloss": "diese",
+    "target": false
+  },
+  {
+    "n": 73,
+    "idx": 4,
+    "surface": "boots",
+    "sense": "boot/NOUN|boot#stiefel",
+    "definition": "",
+    "gloss": "Stiefel",
+    "target": false
+  },
+  {
+    "n": 73,
+    "idx": 5,
+    "surface": "every",
+    "sense": "every/DET|every#jeder",
+    "definition": "",
+    "gloss": "Jeder",
+    "target": false
+  },
+  {
+    "n": 73,
+    "idx": 6,
+    "surface": "winter",
+    "sense": "winter/NOUN|winter#winter",
+    "definition": "",
+    "gloss": "Winter",
+    "target": false
+  },
+  {
+    "n": 73,
+    "idx": 7,
+    "surface": "for",
+    "sense": "for/ADP|for#seit_lang_dauer",
+    "definition": "",
+    "gloss": "seit / lang (Angabe einer Zeitspanne oder Dauer)",
+    "target": false
+  },
+  {
+    "n": 73,
+    "idx": 8,
+    "surface": "five",
+    "sense": "five/NUM|five#fuenf",
+    "definition": "",
+    "gloss": "fünf",
+    "target": false
+  },
+  {
+    "n": 73,
+    "idx": 9,
+    "surface": "years",
+    "sense": "year/NOUN|year#jahr",
+    "definition": "",
+    "gloss": "Jahre",
+    "target": false
+  },
+  {
+    "n": 74,
+    "idx": 0,
+    "surface": "Our",
+    "sense": "our/PRON|our#unser",
+    "definition": "",
+    "gloss": "unser",
+    "target": false
+  },
+  {
+    "n": 74,
+    "idx": 1,
+    "surface": "team",
+    "sense": "team/NOUN|team#team-mannschaft",
+    "definition": "",
+    "gloss": "Team / Mannschaft",
+    "target": false
+  },
+  {
+    "n": 74,
+    "idx": 2,
+    "surface": "can",
+    "sense": "can/AUX|can#koennen",
+    "definition": "",
+    "gloss": "können",
+    "target": false
+  },
+  {
+    "n": 74,
+    "idx": 3,
+    "surface": "win",
+    "sense": "win/VERB|win#gewinnt",
+    "definition": "",
+    "gloss": "gewinnen",
+    "target": true
+  },
+  {
+    "n": 74,
+    "idx": 4,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 74,
+    "idx": 5,
+    "surface": "match",
+    "sense": "match/NOUN|match#spiel",
+    "definition": "",
+    "gloss": "Spiel",
+    "target": false
+  },
+  {
+    "n": 74,
+    "idx": 6,
+    "surface": "if",
+    "sense": "if/SCONJ|if#wenn",
+    "definition": "",
+    "gloss": "wenn / falls (Konditionalsatz, Bedingung)",
+    "target": false
+  },
+  {
+    "n": 74,
+    "idx": 7,
+    "surface": "everyone",
+    "sense": "everyone/PRON|everyone#alle",
+    "definition": "",
+    "gloss": "alle",
+    "target": false
+  },
+  {
+    "n": 74,
+    "idx": 8,
+    "surface": "plays",
+    "sense": "play/VERB|play#spielen",
+    "definition": "",
+    "gloss": "spielt",
+    "target": false
+  },
+  {
+    "n": 74,
+    "idx": 9,
+    "surface": "well",
+    "sense": "well/ADV|well#gut",
+    "definition": "",
+    "gloss": "gut",
+    "target": false
+  },
+  {
+    "n": 75,
+    "idx": 0,
+    "surface": "Lina",
+    "sense": "Lina/PROPN|lina#lina",
+    "definition": "",
+    "gloss": "Lina",
+    "target": false
+  },
+  {
+    "n": 75,
+    "idx": 1,
+    "surface": "won",
+    "sense": "win/VERB|win#gewinnt",
+    "definition": "",
+    "gloss": "gewann; gewonnen",
+    "target": true
+  },
+  {
+    "n": 75,
+    "idx": 2,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 75,
+    "idx": 3,
+    "surface": "swimming",
+    "sense": "swimming/NOUN|swimming#schwimmen",
+    "definition": "Fortbewegung im Wasser; in swimming pool als Bestimmung des Zwecks.",
+    "gloss": "Schwimmen; Schwimm-",
+    "target": false
+  },
+  {
+    "n": 75,
+    "idx": 4,
+    "surface": "race",
+    "sense": "race/NOUN|race#rennen",
+    "definition": "",
+    "gloss": "Rennen",
+    "target": false
+  },
+  {
+    "n": 75,
+    "idx": 5,
+    "surface": "last",
+    "sense": "last/ADJ|last#letzter",
+    "definition": "Am Ende einer räumlichen oder zeitlichen Reihe stehend.",
+    "gloss": "letzte",
+    "target": false
+  },
+  {
+    "n": 75,
+    "idx": 6,
+    "surface": "Saturday",
+    "sense": "Saturday/PROPN|saturday#samstag",
+    "definition": "",
+    "gloss": "Samstag",
+    "target": false
+  },
+  {
+    "n": 76,
+    "idx": 0,
+    "surface": "Our",
+    "sense": "our/PRON|our#unser",
+    "definition": "",
+    "gloss": "unser",
+    "target": false
+  },
+  {
+    "n": 76,
+    "idx": 1,
+    "surface": "team",
+    "sense": "team/NOUN|team#team-mannschaft",
+    "definition": "",
+    "gloss": "Team / Mannschaft",
+    "target": false
+  },
+  {
+    "n": 76,
+    "idx": 2,
+    "surface": "has",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung des Present Perfect (3. Person Singular)",
+    "target": false
+  },
+  {
+    "n": 76,
+    "idx": 3,
+    "surface": "won",
+    "sense": "win/VERB|win#gewinnt",
+    "definition": "",
+    "gloss": "gewann; gewonnen",
+    "target": true
+  },
+  {
+    "n": 76,
+    "idx": 4,
+    "surface": "three",
+    "sense": "three/NUM|three#drei",
+    "definition": "",
+    "gloss": "drei",
+    "target": false
+  },
+  {
+    "n": 76,
+    "idx": 5,
+    "surface": "matches",
+    "sense": "match/NOUN|match#spiel",
+    "definition": "",
+    "gloss": "Spiele",
+    "target": false
+  },
+  {
+    "n": 76,
+    "idx": 6,
+    "surface": "this",
+    "sense": "this/DET|this#dieser_begleitend",
+    "definition": "",
+    "gloss": "dieser/diese/dieses (begleitend vor einem Nomen, weist auf Nahes hin)",
+    "target": false
+  },
+  {
+    "n": 76,
+    "idx": 7,
+    "surface": "month",
+    "sense": "month/NOUN|month#monat",
+    "definition": "",
+    "gloss": "Monat",
+    "target": false
+  },
+  {
+    "n": 77,
+    "idx": 0,
+    "surface": "You",
+    "sense": "you/PRON|you#du_sie_ihr",
+    "definition": "",
+    "gloss": "Personalpronomen der 2. Person (Singular oder Plural, vertraulich oder höflich)",
+    "target": false
+  },
+  {
+    "n": 77,
+    "idx": 1,
+    "surface": "can",
+    "sense": "can/AUX|can#koennen",
+    "definition": "",
+    "gloss": "können",
+    "target": false
+  },
+  {
+    "n": 77,
+    "idx": 2,
+    "surface": "withdraw",
+    "sense": "withdraw/VERB|withdraw#geld_abheben",
+    "definition": "Geld von einem Konto entnehmen.",
+    "gloss": "abheben",
+    "target": true
+  },
+  {
+    "n": 77,
+    "idx": 3,
+    "surface": "cash",
+    "sense": "cash/NOUN|cash#bargeld",
+    "definition": "",
+    "gloss": "Bargeld",
+    "target": false
+  },
+  {
+    "n": 77,
+    "idx": 4,
+    "surface": "from",
+    "sense": "from/ADP|from#von_ausgangspunkt",
+    "definition": "",
+    "gloss": "von, aus (räumlicher, zeitlicher oder persönlicher Ausgangspunkt)",
+    "target": false
+  },
+  {
+    "n": 77,
+    "idx": 5,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 77,
+    "idx": 6,
+    "surface": "machine",
+    "sense": "machine/NOUN|machine#automat",
+    "definition": "",
+    "gloss": "Automat",
+    "target": false
+  },
+  {
+    "n": 77,
+    "idx": 7,
+    "surface": "outside",
+    "sense": "outside/ADP|outside#vor-ausserhalb",
+    "definition": "",
+    "gloss": "vor / außerhalb",
+    "target": false
+  },
+  {
+    "n": 77,
+    "idx": 8,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 77,
+    "idx": 9,
+    "surface": "bank",
+    "sense": "bank/NOUN|bank#geldinstitut",
+    "definition": "Geldinstitut, das finanzielle Dienstleistungen anbietet.",
+    "gloss": "Bank",
+    "target": false
+  },
+  {
+    "n": 78,
+    "idx": 0,
+    "surface": "Omar",
+    "sense": "Omar/PROPN|omar#omar",
+    "definition": "",
+    "gloss": "Omar",
+    "target": false
+  },
+  {
+    "n": 78,
+    "idx": 1,
+    "surface": "withdrew",
+    "sense": "withdraw/VERB|withdraw#geld_abheben",
+    "definition": "Geld von einem Konto entnehmen.",
+    "gloss": "hob ab",
+    "target": true
+  },
+  {
+    "n": 78,
+    "idx": 2,
+    "surface": "fifty",
+    "sense": "fifty/NUM|fifty#fuenfzig",
+    "definition": "Die Zahl 50.",
+    "gloss": "fünfzig",
+    "target": false
+  },
+  {
+    "n": 78,
+    "idx": 3,
+    "surface": "pounds",
+    "sense": "pound/NOUN|pound#waehrung",
+    "definition": "Geldeinheiten der Pfundwährung, im Reisekontext britische Pfund.",
+    "gloss": "Pfund",
+    "target": false
+  },
+  {
+    "n": 78,
+    "idx": 4,
+    "surface": "from",
+    "sense": "from/ADP|from#von_ausgangspunkt",
+    "definition": "",
+    "gloss": "von, aus (räumlicher, zeitlicher oder persönlicher Ausgangspunkt)",
+    "target": false
+  },
+  {
+    "n": 78,
+    "idx": 5,
+    "surface": "his",
+    "sense": "his/PRON|his#sein",
+    "definition": "",
+    "gloss": "sein",
+    "target": false
+  },
+  {
+    "n": 78,
+    "idx": 6,
+    "surface": "account",
+    "sense": "account/NOUN|account#bankkonto",
+    "definition": "Bei einem Geldinstitut geführtes Konto zum Aufbewahren und Bewegen von Geld.",
+    "gloss": "Bankkonto",
+    "target": false
+  },
+  {
+    "n": 78,
+    "idx": 7,
+    "surface": "yesterday",
+    "sense": "yesterday/NOUN|yesterday#gestern",
+    "definition": "",
+    "gloss": "gestern",
+    "target": false
+  },
+  {
+    "n": 79,
+    "idx": 0,
+    "surface": "I",
+    "sense": "I/PRON|i#ich",
+    "definition": "",
+    "gloss": "ich",
+    "target": false
+  },
+  {
+    "n": 79,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 79,
+    "idx": 2,
+    "surface": "withdrawn",
+    "sense": "withdraw/VERB|withdraw#geld_abheben",
+    "definition": "Geld von einem Konto entnehmen.",
+    "gloss": "abgehoben",
+    "target": true
+  },
+  {
+    "n": 79,
+    "idx": 3,
+    "surface": "enough",
+    "sense": "enough/ADJ|enough#genug",
+    "definition": "",
+    "gloss": "genug",
+    "target": false
+  },
+  {
+    "n": 79,
+    "idx": 4,
+    "surface": "cash",
+    "sense": "cash/NOUN|cash#bargeld",
+    "definition": "",
+    "gloss": "Bargeld",
+    "target": false
+  },
+  {
+    "n": 79,
+    "idx": 5,
+    "surface": "for",
+    "sense": "for/ADP|for#fuer_zweck_empfaenger",
+    "definition": "",
+    "gloss": "für (bestimmt für, zugunsten von oder zu einem Zweck)",
+    "target": false
+  },
+  {
+    "n": 79,
+    "idx": 6,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 79,
+    "idx": 7,
+    "surface": "whole",
+    "sense": "whole/ADJ|whole#ganz",
+    "definition": "Vollständig, ohne dass ein Teil fehlt.",
+    "gloss": "ganz",
+    "target": false
+  },
+  {
+    "n": 79,
+    "idx": 8,
+    "surface": "weekend",
+    "sense": "weekend/NOUN|weekend#wochenende",
+    "definition": "",
+    "gloss": "Wochenende",
+    "target": false
+  },
+  {
+    "n": 80,
+    "idx": 0,
+    "surface": "Mia",
+    "sense": "Mia/PROPN|mia#mia",
+    "definition": "",
+    "gloss": "Mia",
+    "target": false
+  },
+  {
+    "n": 80,
+    "idx": 1,
+    "surface": "wrote",
+    "sense": "write/VERB|write#schreiben",
+    "definition": "",
+    "gloss": "schrieb",
+    "target": true
+  },
+  {
+    "n": 80,
+    "idx": 2,
+    "surface": "a",
+    "sense": "a/DET|a#ein-eine-unbestimmter-artikel",
+    "definition": "",
+    "gloss": "ein/eine (unbestimmter Artikel)",
+    "target": false
+  },
+  {
+    "n": 80,
+    "idx": 3,
+    "surface": "letter",
+    "sense": "letter/NOUN|letter#brief",
+    "definition": "",
+    "gloss": "Brief",
+    "target": false
+  },
+  {
+    "n": 80,
+    "idx": 4,
+    "surface": "to",
+    "sense": "to/ADP|to#fuer_empfaenger",
+    "definition": "",
+    "gloss": "Angabe des Empfängers oder Adressaten (z. B. 'give it to me')",
+    "target": false
+  },
+  {
+    "n": 80,
+    "idx": 5,
+    "surface": "her",
+    "sense": "her/PRON|her#ihr-possessivpronomen",
+    "definition": "",
+    "gloss": "ihr (Possessivpronomen)",
+    "target": false
+  },
+  {
+    "n": 80,
+    "idx": 6,
+    "surface": "grandmother",
+    "sense": "grandmother/NOUN|grandmother#grossmutter",
+    "definition": "",
+    "gloss": "Großmutter",
+    "target": false
+  },
+  {
+    "n": 80,
+    "idx": 7,
+    "surface": "last",
+    "sense": "last/ADJ|last#letzter",
+    "definition": "Am Ende einer räumlichen oder zeitlichen Reihe stehend.",
+    "gloss": "letzte",
+    "target": false
+  },
+  {
+    "n": 80,
+    "idx": 8,
+    "surface": "Sunday",
+    "sense": "Sunday/PROPN|sunday#sonntag",
+    "definition": "",
+    "gloss": "Sonntag",
+    "target": false
+  },
+  {
+    "n": 81,
+    "idx": 0,
+    "surface": "We",
+    "sense": "we/PRON|we#wir",
+    "definition": "",
+    "gloss": "wir",
+    "target": false
+  },
+  {
+    "n": 81,
+    "idx": 1,
+    "surface": "have",
+    "sense": "have/AUX|have#hilfsverb",
+    "definition": "",
+    "gloss": "Hilfsverb zur Bildung von Perfekt- und Vorvergangenheitsformen (Perfect-Tenses)",
+    "target": false
+  },
+  {
+    "n": 81,
+    "idx": 2,
+    "surface": "written",
+    "sense": "write/VERB|write#schreiben",
+    "definition": "",
+    "gloss": "geschrieben",
+    "target": true
+  },
+  {
+    "n": 81,
+    "idx": 3,
+    "surface": "our",
+    "sense": "our/PRON|our#unser",
+    "definition": "",
+    "gloss": "unser",
+    "target": false
+  },
+  {
+    "n": 81,
+    "idx": 4,
+    "surface": "names",
+    "sense": "name/NOUN|name#namen",
+    "definition": "",
+    "gloss": "Namen",
+    "target": false
+  },
+  {
+    "n": 81,
+    "idx": 5,
+    "surface": "on",
+    "sense": "on/ADP|on#auf",
+    "definition": "",
+    "gloss": "auf",
+    "target": false
+  },
+  {
+    "n": 81,
+    "idx": 6,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 81,
+    "idx": 7,
+    "surface": "back",
+    "sense": "back/NOUN|back#rueckseite",
+    "definition": "Die hintere oder rückwärtige Seite eines Gegenstands.",
+    "gloss": "Rückseite",
+    "target": false
+  },
+  {
+    "n": 81,
+    "idx": 8,
+    "surface": "of",
+    "sense": "of/ADP|of#genitiv_besitz",
+    "definition": "",
+    "gloss": "Zugehörigkeit oder Besitz (oft dem deutschen Genitiv entsprechend)",
+    "target": false
+  },
+  {
+    "n": 81,
+    "idx": 9,
+    "surface": "the",
+    "sense": "the/DET|the#bestimmter_artikel",
+    "definition": "",
+    "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+    "target": false
+  },
+  {
+    "n": 81,
+    "idx": 10,
+    "surface": "photograph",
+    "sense": "photograph/NOUN|photograph#foto",
+    "definition": "Mit einer Kamera aufgenommenes Bild.",
+    "gloss": "Foto",
+    "target": false
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "errors": [],
+  "warnings": [
+    [
+      "flock",
+      "i+1",
+      "'geese'/'geese' Zipf 3.35 below 3.5"
+    ],
+    [
+      "avalanche",
+      "i+1",
+      "'snowfall'/'snowfall' Zipf 3.22 below 3.5"
+    ],
+    [
+      "meadow",
+      "i+1",
+      "'graze'/'grazing' Zipf 3.49 below 3.5"
+    ],
+    [
+      "dolphin",
+      "i+1",
+      "'swam'/'swam' Zipf 3.34 below 3.5"
+    ]
+  ]
+}

@@ -1,0 +1,3494 @@
+{
+  "1": [
+    {
+      "card_ref": "bend|bend/VERB|bend#beugen",
+      "form_norm": "bend",
+      "original_position": 3,
+      "display_position": 1,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "hearing|hearing/NOUN|hearing#gehor",
+      "form_norm": "hearing",
+      "original_position": 26,
+      "display_position": 2,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "kneel|kneel/VERB|kneel#knien",
+      "form_norm": "kneel",
+      "original_position": 27,
+      "display_position": 3,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "diabetes|diabetes/NOUN|diabetes#diabetes",
+      "form_norm": "diabetes",
+      "original_position": 36,
+      "display_position": 4,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "diagnosis|diagnosis/NOUN|diagnosis#diagnose",
+      "form_norm": "diagnosis",
+      "original_position": 37,
+      "display_position": 5,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "wake|wake/VERB|wake#wecken",
+      "form_norm": "wake",
+      "original_position": 55,
+      "display_position": 6,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "numb|numb/ADJ|numb#taub",
+      "form_norm": "numb",
+      "original_position": 58,
+      "display_position": 7,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "lean|lean/VERB|lean#lehnte-sich",
+      "form_norm": "lean",
+      "original_position": 59,
+      "display_position": 8,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "migraine|migraine/NOUN|migraine#migrane",
+      "form_norm": "migraine",
+      "original_position": 60,
+      "display_position": 9,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sprain|sprain/NOUN|sprain#verstauchung",
+      "form_norm": "sprain",
+      "original_position": 64,
+      "display_position": 10,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "nose|nose/NOUN|nose#nase",
+      "form_norm": "nose",
+      "original_position": 65,
+      "display_position": 11,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "scan|scan/NOUN|scan#medizinische-aufnahme",
+      "form_norm": "scan",
+      "original_position": 69,
+      "display_position": 12,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "dose|dose/NOUN|dose#einzeldosis",
+      "form_norm": "dose",
+      "original_position": 70,
+      "display_position": 13,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "nightmare|nightmare/NOUN|nightmare#albtraum",
+      "form_norm": "nightmare",
+      "original_position": 79,
+      "display_position": 14,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "tickle|tickle/VERB|tickle#kitzeln",
+      "form_norm": "tickle",
+      "original_position": 82,
+      "display_position": 15,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "diarrhoea|diarrhoea/NOUN|diarrhoea#durchfall",
+      "form_norm": "diarrhoea",
+      "original_position": 84,
+      "display_position": 16,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "lip|lip/NOUN|lip#lippe",
+      "form_norm": "lip",
+      "original_position": 89,
+      "display_position": 17,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sample|sample/NOUN|sample#probe",
+      "form_norm": "sample",
+      "original_position": 93,
+      "display_position": 18,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "scrape|scrape/NOUN|scrape#schurfwunde",
+      "form_norm": "scrape",
+      "original_position": 96,
+      "display_position": 19,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "ointment|ointment/NOUN|ointment#salbe",
+      "form_norm": "ointment",
+      "original_position": 102,
+      "display_position": 20,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sweat|sweat/VERB|sweat#schwitzen",
+      "form_norm": "sweat",
+      "original_position": 106,
+      "display_position": 21,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "shake|shake/VERB|shake#schuettelt",
+      "form_norm": "shake",
+      "original_position": 107,
+      "display_position": 22,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "swelling|swelling/NOUN|swelling#schwellung",
+      "form_norm": "swelling",
+      "original_position": 108,
+      "display_position": 23,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "restless|restless/ADJ|restless#ruhelos",
+      "form_norm": "restless",
+      "original_position": 111,
+      "display_position": 24,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "neck|neck/NOUN|neck#hals",
+      "form_norm": "neck",
+      "original_position": 113,
+      "display_position": 25,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "thermometer|thermometer/NOUN|thermometer#thermometer",
+      "form_norm": "thermometer",
+      "original_position": 133,
+      "display_position": 26,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "drown|drown/VERB|drown#ertrinken",
+      "form_norm": "drown",
+      "original_position": 136,
+      "display_position": 27,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "back|back/NOUN|back#ruecken",
+      "form_norm": "back",
+      "original_position": 137,
+      "display_position": 28,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "exhale|exhale/VERB|exhale#ausatmen",
+      "form_norm": "exhale",
+      "original_position": 138,
+      "display_position": 29,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "vaccine|vaccine/NOUN|vaccine#impfstoff",
+      "form_norm": "vaccine",
+      "original_position": 142,
+      "display_position": 30,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "jog|jog/VERB|jog#joggen",
+      "form_norm": "jog",
+      "original_position": 147,
+      "display_position": 31,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "unconscious|unconscious/ADJ|unconscious#bewusstlos",
+      "form_norm": "unconscious",
+      "original_position": 160,
+      "display_position": 32,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "lung|lung/NOUN|lung#lunge",
+      "form_norm": "lung",
+      "original_position": 161,
+      "display_position": 33,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "yawn|yawn/VERB|yawn#gahnen",
+      "form_norm": "yawn",
+      "original_position": 162,
+      "display_position": 34,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "contagious|contagious/ADJ|contagious#ansteckend",
+      "form_norm": "contagious",
+      "original_position": 164,
+      "display_position": 35,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "cycle|cycle/VERB|cycle#rad-fahren",
+      "form_norm": "cycle",
+      "original_position": 171,
+      "display_position": 36,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "kidney|kidney/NOUN|kidney#niere",
+      "form_norm": "kidney",
+      "original_position": 185,
+      "display_position": 37,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "chew|chew/VERB|chew#kauen",
+      "form_norm": "chew",
+      "original_position": 186,
+      "display_position": 38,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "mild|mild/ADJ|mild#leichte",
+      "form_norm": "mild",
+      "original_position": 188,
+      "display_position": 39,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "referral|referral/NOUN|referral#arztliche-uberweisung",
+      "form_norm": "referral",
+      "original_position": 189,
+      "display_position": 40,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sterile|sterile/ADJ|sterile#sterilen",
+      "form_norm": "sterile",
+      "original_position": 190,
+      "display_position": 41,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "routine|routine/NOUN|routine#routine",
+      "form_norm": "routine",
+      "original_position": 199,
+      "display_position": 42,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "joint|joint/NOUN|joint#gelenk",
+      "form_norm": "joint",
+      "original_position": 209,
+      "display_position": 43,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "squeeze|squeeze/VERB|squeeze#zusammendrucken",
+      "form_norm": "squeeze",
+      "original_position": 211,
+      "display_position": 44,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "physiotherapist|physiotherapist/NOUN|physiotherapist#physiotherapeut",
+      "form_norm": "physiotherapist",
+      "original_position": 213,
+      "display_position": 45,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sting|sting/VERB|sting#stechen-von-insekten",
+      "form_norm": "sting",
+      "original_position": 216,
+      "display_position": 46,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "snore|snore/VERB|snore#schnarchen",
+      "form_norm": "snore",
+      "original_position": 218,
+      "display_position": 47,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "compress|compress/NOUN|compress#kompresse",
+      "form_norm": "compress",
+      "original_position": 230,
+      "display_position": 48,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "finger|finger/NOUN|finger#finger",
+      "form_norm": "finger",
+      "original_position": 233,
+      "display_position": 49,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "runny|runny/ADJ|runny#laufend-von-der-nase",
+      "form_norm": "runny",
+      "original_position": 236,
+      "display_position": 50,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "paramedic|paramedic/NOUN|paramedic#rettungsfachkraft",
+      "form_norm": "paramedic",
+      "original_position": 237,
+      "display_position": 51,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "posture|posture/NOUN|posture#korperhaltung",
+      "form_norm": "posture",
+      "original_position": 243,
+      "display_position": 52,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "nutrient|nutrient/NOUN|nutrient#nahrstoff",
+      "form_norm": "nutrient",
+      "original_position": 247,
+      "display_position": 53,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "ankle|ankle/NOUN|ankle#knoechel",
+      "form_norm": "ankle",
+      "original_position": 257,
+      "display_position": 54,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "heartburn|heartburn/NOUN|heartburn#sodbrennen",
+      "form_norm": "heartburn",
+      "original_position": 260,
+      "display_position": 55,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "splint|splint/NOUN|splint#schiene",
+      "form_norm": "splint",
+      "original_position": 262,
+      "display_position": 56,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sling|sling/NOUN|sling#armschlinge",
+      "form_norm": "sling",
+      "original_position": 264,
+      "display_position": 57,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "carbohydrate|carbohydrate/NOUN|carbohydrate#kohlenhydrat",
+      "form_norm": "carbohydrate",
+      "original_position": 271,
+      "display_position": 58,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "dental|dental/ADJ|dental#zahnmedizinisch",
+      "form_norm": "dental",
+      "original_position": 277,
+      "display_position": 59,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "forehead|forehead/NOUN|forehead#stirn",
+      "form_norm": "forehead",
+      "original_position": 281,
+      "display_position": 60,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "obesity|obesity/NOUN|obesity#adipositas",
+      "form_norm": "obesity",
+      "original_position": 284,
+      "display_position": 61,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "walker|walker/NOUN|walker#gehgestell",
+      "form_norm": "walker",
+      "original_position": 288,
+      "display_position": 62,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "appetite|appetite/NOUN|appetite#appetit",
+      "form_norm": "appetite",
+      "original_position": 295,
+      "display_position": 63,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "stiff|stiff/ADJ|stiff#steif",
+      "form_norm": "stiff",
+      "original_position": 299,
+      "display_position": 64,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "jaw|jaw/NOUN|jaw#kiefer",
+      "form_norm": "jaw",
+      "original_position": 305,
+      "display_position": 65,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "rehabilitation|rehabilitation/NOUN|rehabilitation#rehabilitation",
+      "form_norm": "rehabilitation",
+      "original_position": 309,
+      "display_position": 66,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sweet|sweet/ADJ|sweet#suess",
+      "form_norm": "sweet",
+      "original_position": 321,
+      "display_position": 67,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "negative|negative/ADJ|negative#negativ-getestet",
+      "form_norm": "negative",
+      "original_position": 324,
+      "display_position": 68,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "spine|spine/NOUN|spine#wirbelsaule",
+      "form_norm": "spine",
+      "original_position": 328,
+      "display_position": 69,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "clumsy|clumsy/ADJ|clumsy#ungeschickt",
+      "form_norm": "clumsy",
+      "original_position": 330,
+      "display_position": 70,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "rough|rough/ADJ|rough#rauen",
+      "form_norm": "rough",
+      "original_position": 343,
+      "display_position": 71,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "supplement|supplement/NOUN|supplement#nahrungserganzung",
+      "form_norm": "supplement",
+      "original_position": 347,
+      "display_position": 72,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "blood|blood/NOUN|blood#blut",
+      "form_norm": "blood",
+      "original_position": 350,
+      "display_position": 73,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "healthy|healthy/ADJ|healthy#gesund",
+      "form_norm": "healthy",
+      "original_position": 368,
+      "display_position": 74,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "meditate|meditate/VERB|meditate#meditieren",
+      "form_norm": "meditate",
+      "original_position": 371,
+      "display_position": 75,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "nerve|nerve/NOUN|nerve#nerv",
+      "form_norm": "nerve",
+      "original_position": 373,
+      "display_position": 76,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "consult|consult/VERB|consult#arztlichen-rat-einholen",
+      "form_norm": "consult",
+      "original_position": 377,
+      "display_position": 77,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "isolation|isolation/NOUN|isolation#medizinische-absonderung",
+      "form_norm": "isolation",
+      "original_position": 392,
+      "display_position": 78,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "eyelash|eyelash/NOUN|eyelash#wimper",
+      "form_norm": "eyelash",
+      "original_position": 395,
+      "display_position": 79,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "fall|fall/VERB|fall#fallen",
+      "form_norm": "fall",
+      "original_position": 397,
+      "display_position": 80,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "scalp|scalp/NOUN|scalp#kopfhaut",
+      "form_norm": "scalp",
+      "original_position": 411,
+      "display_position": 81,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "tweezers|tweezers/NOUN|tweezers#pinzette",
+      "form_norm": "tweezers",
+      "original_position": 415,
+      "display_position": 82,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "breast|breast/NOUN|breast#brust",
+      "form_norm": "breast",
+      "original_position": 423,
+      "display_position": 83,
+      "authoring_batch": 1
+    }
+  ],
+  "2": [
+    {
+      "card_ref": "bend|bend/VERB|bend#beugen",
+      "form_norm": "bend",
+      "original_position": 3,
+      "display_position": 1,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "illness|illness/NOUN|illness#krankheit",
+      "form_norm": "illness",
+      "original_position": 4,
+      "display_position": 2,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "treatment|treatment/NOUN|treatment#behandlung",
+      "form_norm": "treatment",
+      "original_position": 6,
+      "display_position": 3,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "tired|tired/ADJ|tired#muede",
+      "form_norm": "tired",
+      "original_position": 10,
+      "display_position": 4,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "stretch|stretch/VERB|stretch#dehnt",
+      "form_norm": "stretch",
+      "original_position": 11,
+      "display_position": 5,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "nap|nap/NOUN|nap#nickerchen",
+      "form_norm": "nap",
+      "original_position": 23,
+      "display_position": 6,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "hearing|hearing/NOUN|hearing#gehor",
+      "form_norm": "hearing",
+      "original_position": 26,
+      "display_position": 7,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "kneel|kneel/VERB|kneel#knien",
+      "form_norm": "kneel",
+      "original_position": 27,
+      "display_position": 8,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "diabetes|diabetes/NOUN|diabetes#diabetes",
+      "form_norm": "diabetes",
+      "original_position": 36,
+      "display_position": 9,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "diagnosis|diagnosis/NOUN|diagnosis#diagnose",
+      "form_norm": "diagnosis",
+      "original_position": 37,
+      "display_position": 10,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "blind|blind/ADJ|blind#blind",
+      "form_norm": "blind",
+      "original_position": 42,
+      "display_position": 11,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "crawl|crawl/VERB|crawl#krabbeln",
+      "form_norm": "crawl",
+      "original_position": 43,
+      "display_position": 12,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "cancer|cancer/NOUN|cancer#krebs",
+      "form_norm": "cancer",
+      "original_position": 44,
+      "display_position": 13,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "examine|examine/VERB|examine#untersucht",
+      "form_norm": "examine",
+      "original_position": 53,
+      "display_position": 14,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "wake|wake/VERB|wake#wecken",
+      "form_norm": "wake",
+      "original_position": 55,
+      "display_position": 15,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "numb|numb/ADJ|numb#taub",
+      "form_norm": "numb",
+      "original_position": 58,
+      "display_position": 16,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "lean|lean/VERB|lean#lehnte-sich",
+      "form_norm": "lean",
+      "original_position": 59,
+      "display_position": 17,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "migraine|migraine/NOUN|migraine#migrane",
+      "form_norm": "migraine",
+      "original_position": 60,
+      "display_position": 18,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "bedtime|bedtime/NOUN|bedtime#dem-schlafengehen",
+      "form_norm": "bedtime",
+      "original_position": 63,
+      "display_position": 19,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "sprain|sprain/NOUN|sprain#verstauchung",
+      "form_norm": "sprain",
+      "original_position": 64,
+      "display_position": 20,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "nose|nose/NOUN|nose#nase",
+      "form_norm": "nose",
+      "original_position": 65,
+      "display_position": 21,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "dizzy|dizzy/ADJ|dizzy#schwindelig",
+      "form_norm": "dizzy",
+      "original_position": 66,
+      "display_position": 22,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "nausea|nausea/NOUN|nausea#ubelkeit",
+      "form_norm": "nausea",
+      "original_position": 68,
+      "display_position": 23,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "scan|scan/NOUN|scan#medizinische-aufnahme",
+      "form_norm": "scan",
+      "original_position": 69,
+      "display_position": 24,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "dose|dose/NOUN|dose#einzeldosis",
+      "form_norm": "dose",
+      "original_position": 70,
+      "display_position": 25,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "strain|strain/NOUN|strain#zerrung",
+      "form_norm": "strain",
+      "original_position": 72,
+      "display_position": 26,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "ear|ear/NOUN|ear#ohren",
+      "form_norm": "ear",
+      "original_position": 73,
+      "display_position": 27,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "x-ray|x-ray/NOUN|x-ray#rontgenaufnahme",
+      "form_norm": "x-ray",
+      "original_position": 77,
+      "display_position": 28,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "nightmare|nightmare/NOUN|nightmare#albtraum",
+      "form_norm": "nightmare",
+      "original_position": 79,
+      "display_position": 29,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "tickle|tickle/VERB|tickle#kitzeln",
+      "form_norm": "tickle",
+      "original_position": 82,
+      "display_position": 30,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "lower|lower/VERB|lower#hinunterlassen",
+      "form_norm": "lower",
+      "original_position": 83,
+      "display_position": 31,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "diarrhoea|diarrhoea/NOUN|diarrhoea#durchfall",
+      "form_norm": "diarrhoea",
+      "original_position": 84,
+      "display_position": 32,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "antibiotic|antibiotic/NOUN|antibiotic#antibiotikum",
+      "form_norm": "antibiotic",
+      "original_position": 86,
+      "display_position": 33,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "sleepwalking|sleepwalking/NOUN|sleepwalking#schlafwandeln",
+      "form_norm": "sleepwalking",
+      "original_position": 87,
+      "display_position": 34,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "lip|lip/NOUN|lip#lippe",
+      "form_norm": "lip",
+      "original_position": 89,
+      "display_position": 35,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "tingle|tingle/VERB|tingle#kribbeln",
+      "form_norm": "tingle",
+      "original_position": 90,
+      "display_position": 36,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "constipation|constipation/NOUN|constipation#verstopfung",
+      "form_norm": "constipation",
+      "original_position": 92,
+      "display_position": 37,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "sample|sample/NOUN|sample#probe",
+      "form_norm": "sample",
+      "original_position": 93,
+      "display_position": 38,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "scrape|scrape/NOUN|scrape#schurfwunde",
+      "form_norm": "scrape",
+      "original_position": 96,
+      "display_position": 39,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "tongue|tongue/NOUN|tongue#zunge",
+      "form_norm": "tongue",
+      "original_position": 97,
+      "display_position": 40,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "ointment|ointment/NOUN|ointment#salbe",
+      "form_norm": "ointment",
+      "original_position": 102,
+      "display_position": 41,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sweat|sweat/VERB|sweat#schwitzen",
+      "form_norm": "sweat",
+      "original_position": 106,
+      "display_position": 42,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "shake|shake/VERB|shake#schuettelt",
+      "form_norm": "shake",
+      "original_position": 107,
+      "display_position": 43,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "swelling|swelling/NOUN|swelling#schwellung",
+      "form_norm": "swelling",
+      "original_position": 108,
+      "display_position": 44,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "urine|urine/NOUN|urine#urin",
+      "form_norm": "urine",
+      "original_position": 109,
+      "display_position": 45,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "restless|restless/ADJ|restless#ruhelos",
+      "form_norm": "restless",
+      "original_position": 111,
+      "display_position": 46,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "bleed|bleed/VERB|bleed#bluten",
+      "form_norm": "bleed",
+      "original_position": 112,
+      "display_position": 47,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "neck|neck/NOUN|neck#hals",
+      "form_norm": "neck",
+      "original_position": 113,
+      "display_position": 48,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "breathe|breathe/VERB|breathe#atmen",
+      "form_norm": "breathe",
+      "original_position": 114,
+      "display_position": 49,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "inflammation|inflammation/NOUN|inflammation#entzundung",
+      "form_norm": "inflammation",
+      "original_position": 116,
+      "display_position": 50,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "capsule|capsule/NOUN|capsule#kapsel",
+      "form_norm": "capsule",
+      "original_position": 118,
+      "display_position": 51,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "shoulder|shoulder/NOUN|shoulder#schulter",
+      "form_norm": "shoulder",
+      "original_position": 121,
+      "display_position": 52,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "jump|jump/VERB|jump#springen",
+      "form_norm": "jump",
+      "original_position": 123,
+      "display_position": 53,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "thermometer|thermometer/NOUN|thermometer#thermometer",
+      "form_norm": "thermometer",
+      "original_position": 133,
+      "display_position": 54,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "energy|energy/NOUN|energy#energie",
+      "form_norm": "energy",
+      "original_position": 135,
+      "display_position": 55,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "drown|drown/VERB|drown#ertrinken",
+      "form_norm": "drown",
+      "original_position": 136,
+      "display_position": 56,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "back|back/NOUN|back#ruecken",
+      "form_norm": "back",
+      "original_position": 137,
+      "display_position": 57,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "exhale|exhale/VERB|exhale#ausatmen",
+      "form_norm": "exhale",
+      "original_position": 138,
+      "display_position": 58,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "vaccine|vaccine/NOUN|vaccine#impfstoff",
+      "form_norm": "vaccine",
+      "original_position": 142,
+      "display_position": 59,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "rescue|rescue/VERB|rescue#retten",
+      "form_norm": "rescue",
+      "original_position": 144,
+      "display_position": 60,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "stomach|stomach/NOUN|stomach#magen",
+      "form_norm": "stomach",
+      "original_position": 145,
+      "display_position": 61,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "sniff|sniff/VERB|sniff#schniefen",
+      "form_norm": "sniff",
+      "original_position": 146,
+      "display_position": 62,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "jog|jog/VERB|jog#joggen",
+      "form_norm": "jog",
+      "original_position": 147,
+      "display_position": 63,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "height|height/NOUN|height#korpergroe",
+      "form_norm": "height",
+      "original_position": 149,
+      "display_position": 64,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "sprint|sprint/VERB|sprint#sprinten",
+      "form_norm": "sprint",
+      "original_position": 155,
+      "display_position": 65,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "vaccinate|vaccinate/VERB|vaccinate#impfen",
+      "form_norm": "vaccinate",
+      "original_position": 158,
+      "display_position": 66,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "unconscious|unconscious/ADJ|unconscious#bewusstlos",
+      "form_norm": "unconscious",
+      "original_position": 160,
+      "display_position": 67,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "lung|lung/NOUN|lung#lunge",
+      "form_norm": "lung",
+      "original_position": 161,
+      "display_position": 68,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "yawn|yawn/VERB|yawn#gahnen",
+      "form_norm": "yawn",
+      "original_position": 162,
+      "display_position": 69,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "contagious|contagious/ADJ|contagious#ansteckend",
+      "form_norm": "contagious",
+      "original_position": 164,
+      "display_position": 70,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "brain|brain/NOUN|brain#gehirn",
+      "form_norm": "brain",
+      "original_position": 169,
+      "display_position": 71,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "blink|blink/VERB|blink#blinzeln",
+      "form_norm": "blink",
+      "original_position": 170,
+      "display_position": 72,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "cycle|cycle/VERB|cycle#rad-fahren",
+      "form_norm": "cycle",
+      "original_position": 171,
+      "display_position": 73,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "chronic|chronic/ADJ|chronic#chronisch",
+      "form_norm": "chronic",
+      "original_position": 172,
+      "display_position": 74,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "kick|kick/VERB|kick#treten",
+      "form_norm": "kick",
+      "original_position": 179,
+      "display_position": 75,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "collapse|collapse/VERB|collapse#zusammenbrechen",
+      "form_norm": "collapse",
+      "original_position": 184,
+      "display_position": 76,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "kidney|kidney/NOUN|kidney#niere",
+      "form_norm": "kidney",
+      "original_position": 185,
+      "display_position": 77,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "chew|chew/VERB|chew#kauen",
+      "form_norm": "chew",
+      "original_position": 186,
+      "display_position": 78,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "mild|mild/ADJ|mild#leichte",
+      "form_norm": "mild",
+      "original_position": 188,
+      "display_position": 79,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "referral|referral/NOUN|referral#arztliche-uberweisung",
+      "form_norm": "referral",
+      "original_position": 189,
+      "display_position": 80,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sterile|sterile/ADJ|sterile#sterilen",
+      "form_norm": "sterile",
+      "original_position": 190,
+      "display_position": 81,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "bone|bone/NOUN|bone#knochen",
+      "form_norm": "bone",
+      "original_position": 193,
+      "display_position": 82,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "spit|spit/VERB|spit#spucken",
+      "form_norm": "spit",
+      "original_position": 194,
+      "display_position": 83,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "severe|severe/ADJ|severe#starken",
+      "form_norm": "severe",
+      "original_position": 196,
+      "display_position": 84,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "specialist|specialist/NOUN|specialist#facharzt",
+      "form_norm": "specialist",
+      "original_position": 197,
+      "display_position": 85,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "routine|routine/NOUN|routine#routine",
+      "form_norm": "routine",
+      "original_position": 199,
+      "display_position": 86,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "rinse|rinse/VERB|rinse#abspulen",
+      "form_norm": "rinse",
+      "original_position": 206,
+      "display_position": 87,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "rhythm|rhythm/NOUN|rhythm#rhythmus",
+      "form_norm": "rhythm",
+      "original_position": 207,
+      "display_position": 88,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "joint|joint/NOUN|joint#gelenk",
+      "form_norm": "joint",
+      "original_position": 209,
+      "display_position": 89,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "squeeze|squeeze/VERB|squeeze#zusammendrucken",
+      "form_norm": "squeeze",
+      "original_position": 211,
+      "display_position": 90,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "physiotherapist|physiotherapist/NOUN|physiotherapist#physiotherapeut",
+      "form_norm": "physiotherapist",
+      "original_position": 213,
+      "display_position": 91,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sting|sting/VERB|sting#stechen-von-insekten",
+      "form_norm": "sting",
+      "original_position": 216,
+      "display_position": 92,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "elbow|elbow/NOUN|elbow#ellenbogen",
+      "form_norm": "elbow",
+      "original_position": 217,
+      "display_position": 93,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "snore|snore/VERB|snore#schnarchen",
+      "form_norm": "snore",
+      "original_position": 218,
+      "display_position": 94,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "drag|drag/VERB|drag#schleifen",
+      "form_norm": "drag",
+      "original_position": 219,
+      "display_position": 95,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "optician|optician/NOUN|optician#optiker",
+      "form_norm": "optician",
+      "original_position": 221,
+      "display_position": 96,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "bite|bite/VERB|bite#beissen",
+      "form_norm": "bite",
+      "original_position": 224,
+      "display_position": 97,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "compress|compress/NOUN|compress#kompresse",
+      "form_norm": "compress",
+      "original_position": 230,
+      "display_position": 98,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "finger|finger/NOUN|finger#finger",
+      "form_norm": "finger",
+      "original_position": 233,
+      "display_position": 99,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "runny|runny/ADJ|runny#laufend-von-der-nase",
+      "form_norm": "runny",
+      "original_position": 236,
+      "display_position": 100,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "paramedic|paramedic/NOUN|paramedic#rettungsfachkraft",
+      "form_norm": "paramedic",
+      "original_position": 237,
+      "display_position": 101,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "stitch|stitch/NOUN|stitch#wundnahtstich",
+      "form_norm": "stitch",
+      "original_position": 238,
+      "display_position": 102,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "thumb|thumb/NOUN|thumb#daumen",
+      "form_norm": "thumb",
+      "original_position": 241,
+      "display_position": 103,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "posture|posture/NOUN|posture#korperhaltung",
+      "form_norm": "posture",
+      "original_position": 243,
+      "display_position": 104,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "dehydration|dehydration/NOUN|dehydration#flussigkeitsmangel",
+      "form_norm": "dehydration",
+      "original_position": 244,
+      "display_position": 105,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "nutrient|nutrient/NOUN|nutrient#nahrstoff",
+      "form_norm": "nutrient",
+      "original_position": 247,
+      "display_position": 106,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "mobility|mobility/NOUN|mobility#mobilitaet",
+      "form_norm": "mobility",
+      "original_position": 251,
+      "display_position": 107,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "ward|ward/NOUN|ward#krankenstation",
+      "form_norm": "ward",
+      "original_position": 253,
+      "display_position": 108,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "protein|protein/NOUN|protein#eiwei",
+      "form_norm": "protein",
+      "original_position": 255,
+      "display_position": 109,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "ankle|ankle/NOUN|ankle#knoechel",
+      "form_norm": "ankle",
+      "original_position": 257,
+      "display_position": 110,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "heartburn|heartburn/NOUN|heartburn#sodbrennen",
+      "form_norm": "heartburn",
+      "original_position": 260,
+      "display_position": 111,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "splint|splint/NOUN|splint#schiene",
+      "form_norm": "splint",
+      "original_position": 262,
+      "display_position": 112,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sling|sling/NOUN|sling#armschlinge",
+      "form_norm": "sling",
+      "original_position": 264,
+      "display_position": 113,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "toe|toe/NOUN|toe#zeh",
+      "form_norm": "toe",
+      "original_position": 265,
+      "display_position": 114,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "flu|flu/NOUN|flu#grippe",
+      "form_norm": "flu",
+      "original_position": 268,
+      "display_position": 115,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "operation|operation/NOUN|operation#operation",
+      "form_norm": "operation",
+      "original_position": 270,
+      "display_position": 116,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "carbohydrate|carbohydrate/NOUN|carbohydrate#kohlenhydrat",
+      "form_norm": "carbohydrate",
+      "original_position": 271,
+      "display_position": 117,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "crutch|crutch/NOUN|crutch#krucke",
+      "form_norm": "crutch",
+      "original_position": 272,
+      "display_position": 118,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "dental|dental/ADJ|dental#zahnmedizinisch",
+      "form_norm": "dental",
+      "original_position": 277,
+      "display_position": 119,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "vitamin|vitamin/NOUN|vitamin#vitamin",
+      "form_norm": "vitamin",
+      "original_position": 279,
+      "display_position": 120,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "forehead|forehead/NOUN|forehead#stirn",
+      "form_norm": "forehead",
+      "original_position": 281,
+      "display_position": 121,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "obesity|obesity/NOUN|obesity#adipositas",
+      "form_norm": "obesity",
+      "original_position": 284,
+      "display_position": 122,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "oral|oral/ADJ|oral#uber-den-mund",
+      "form_norm": "oral",
+      "original_position": 285,
+      "display_position": 123,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "walker|walker/NOUN|walker#gehgestell",
+      "form_norm": "walker",
+      "original_position": 288,
+      "display_position": 124,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "cheek|cheek/NOUN|cheek#wange",
+      "form_norm": "cheek",
+      "original_position": 289,
+      "display_position": 125,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "appetite|appetite/NOUN|appetite#appetit",
+      "form_norm": "appetite",
+      "original_position": 295,
+      "display_position": 126,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "stretcher|stretcher/NOUN|stretcher#krankentrage",
+      "form_norm": "stretcher",
+      "original_position": 296,
+      "display_position": 127,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "stiff|stiff/ADJ|stiff#steif",
+      "form_norm": "stiff",
+      "original_position": 299,
+      "display_position": 128,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "underweight|underweight/ADJ|underweight#untergewichtig",
+      "form_norm": "underweight",
+      "original_position": 300,
+      "display_position": 129,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "jaw|jaw/NOUN|jaw#kiefer",
+      "form_norm": "jaw",
+      "original_position": 305,
+      "display_position": 130,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "bitter|bitter/ADJ|bitter#bittere",
+      "form_norm": "bitter",
+      "original_position": 306,
+      "display_position": 131,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "agile|agile/ADJ|agile#wendig",
+      "form_norm": "agile",
+      "original_position": 307,
+      "display_position": 132,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "rehabilitation|rehabilitation/NOUN|rehabilitation#rehabilitation",
+      "form_norm": "rehabilitation",
+      "original_position": 309,
+      "display_position": 133,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "hip|hip/NOUN|hip#hufte",
+      "form_norm": "hip",
+      "original_position": 312,
+      "display_position": 134,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "hydration|hydration/NOUN|hydration#flussigkeitsversorgung",
+      "form_norm": "hydration",
+      "original_position": 318,
+      "display_position": 135,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "sweet|sweet/ADJ|sweet#suess",
+      "form_norm": "sweet",
+      "original_position": 321,
+      "display_position": 136,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "negative|negative/ADJ|negative#negativ-getestet",
+      "form_norm": "negative",
+      "original_position": 324,
+      "display_position": 137,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "spine|spine/NOUN|spine#wirbelsaule",
+      "form_norm": "spine",
+      "original_position": 328,
+      "display_position": 138,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "salty|salty/ADJ|salty#salzig",
+      "form_norm": "salty",
+      "original_position": 329,
+      "display_position": 139,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "clumsy|clumsy/ADJ|clumsy#ungeschickt",
+      "form_norm": "clumsy",
+      "original_position": 330,
+      "display_position": 140,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "normal|normal/ADJ|normal#im-normalbereich",
+      "form_norm": "normal",
+      "original_position": 331,
+      "display_position": 141,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "prescribe|prescribe/VERB|prescribe#verschreiben",
+      "form_norm": "prescribe",
+      "original_position": 332,
+      "display_position": 142,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "rib|rib/NOUN|rib#rippe",
+      "form_norm": "rib",
+      "original_position": 334,
+      "display_position": 143,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "upright|upright/ADJ|upright#aufrecht",
+      "form_norm": "upright",
+      "original_position": 336,
+      "display_position": 144,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "rough|rough/ADJ|rough#rauen",
+      "form_norm": "rough",
+      "original_position": 343,
+      "display_position": 145,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "supplement|supplement/NOUN|supplement#nahrungserganzung",
+      "form_norm": "supplement",
+      "original_position": 347,
+      "display_position": 146,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "blood|blood/NOUN|blood#blut",
+      "form_norm": "blood",
+      "original_position": 350,
+      "display_position": 147,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sharp|sharp/ADJ|sharp#scharfen",
+      "form_norm": "sharp",
+      "original_position": 351,
+      "display_position": 148,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "vein|vein/NOUN|vein#vene",
+      "form_norm": "vein",
+      "original_position": 357,
+      "display_position": 149,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "prevent|prevent/VERB|prevent#hindern",
+      "form_norm": "prevent",
+      "original_position": 362,
+      "display_position": 150,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "healthy|healthy/ADJ|healthy#gesund",
+      "form_norm": "healthy",
+      "original_position": 368,
+      "display_position": 151,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "meditate|meditate/VERB|meditate#meditieren",
+      "form_norm": "meditate",
+      "original_position": 371,
+      "display_position": 152,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "nerve|nerve/NOUN|nerve#nerv",
+      "form_norm": "nerve",
+      "original_position": 373,
+      "display_position": 153,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "consult|consult/VERB|consult#arztlichen-rat-einholen",
+      "form_norm": "consult",
+      "original_position": 377,
+      "display_position": 154,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "palm|palm/NOUN|palm#handflache",
+      "form_norm": "palm",
+      "original_position": 381,
+      "display_position": 155,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "insomnia|insomnia/NOUN|insomnia#schlaflosigkeit",
+      "form_norm": "insomnia",
+      "original_position": 384,
+      "display_position": 156,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "isolation|isolation/NOUN|isolation#medizinische-absonderung",
+      "form_norm": "isolation",
+      "original_position": 392,
+      "display_position": 157,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "eyelash|eyelash/NOUN|eyelash#wimper",
+      "form_norm": "eyelash",
+      "original_position": 395,
+      "display_position": 158,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "fall|fall/VERB|fall#fallen",
+      "form_norm": "fall",
+      "original_position": 397,
+      "display_position": 159,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sauna|sauna/NOUN|sauna#sauna",
+      "form_norm": "sauna",
+      "original_position": 399,
+      "display_position": 160,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "eyebrow|eyebrow/NOUN|eyebrow#augenbraue",
+      "form_norm": "eyebrow",
+      "original_position": 401,
+      "display_position": 161,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "scalp|scalp/NOUN|scalp#kopfhaut",
+      "form_norm": "scalp",
+      "original_position": 411,
+      "display_position": 162,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "tweezers|tweezers/NOUN|tweezers#pinzette",
+      "form_norm": "tweezers",
+      "original_position": 415,
+      "display_position": 163,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "intestine|intestine/NOUN|intestine#darm",
+      "form_norm": "intestine",
+      "original_position": 416,
+      "display_position": 164,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "splinter|splinter/NOUN|splinter#splitter",
+      "form_norm": "splinter",
+      "original_position": 422,
+      "display_position": 165,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "breast|breast/NOUN|breast#brust",
+      "form_norm": "breast",
+      "original_position": 423,
+      "display_position": 166,
+      "authoring_batch": 1
+    }
+  ],
+  "3": [
+    {
+      "card_ref": "bend|bend/VERB|bend#beugen",
+      "form_norm": "bend",
+      "original_position": 3,
+      "display_position": 1,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "illness|illness/NOUN|illness#krankheit",
+      "form_norm": "illness",
+      "original_position": 4,
+      "display_position": 2,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "treatment|treatment/NOUN|treatment#behandlung",
+      "form_norm": "treatment",
+      "original_position": 6,
+      "display_position": 3,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "tired|tired/ADJ|tired#muede",
+      "form_norm": "tired",
+      "original_position": 10,
+      "display_position": 4,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "stretch|stretch/VERB|stretch#dehnt",
+      "form_norm": "stretch",
+      "original_position": 11,
+      "display_position": 5,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "sight|sight/NOUN|sight#sehvermogen",
+      "form_norm": "sight",
+      "original_position": 18,
+      "display_position": 6,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "twist|twist/VERB|twist#verdrehen",
+      "form_norm": "twist",
+      "original_position": 19,
+      "display_position": 7,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "checkup|checkup/NOUN|checkup#kontrolluntersuchung",
+      "form_norm": "checkup",
+      "original_position": 21,
+      "display_position": 8,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "heal|heal/VERB|heal#heilen-von-gewebe",
+      "form_norm": "heal",
+      "original_position": 22,
+      "display_position": 9,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "nap|nap/NOUN|nap#nickerchen",
+      "form_norm": "nap",
+      "original_position": 23,
+      "display_position": 10,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "hearing|hearing/NOUN|hearing#gehor",
+      "form_norm": "hearing",
+      "original_position": 26,
+      "display_position": 11,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "kneel|kneel/VERB|kneel#knien",
+      "form_norm": "kneel",
+      "original_position": 27,
+      "display_position": 12,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "asthma|asthma/NOUN|asthma#asthma",
+      "form_norm": "asthma",
+      "original_position": 28,
+      "display_position": 13,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "diabetes|diabetes/NOUN|diabetes#diabetes",
+      "form_norm": "diabetes",
+      "original_position": 36,
+      "display_position": 14,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "diagnosis|diagnosis/NOUN|diagnosis#diagnose",
+      "form_norm": "diagnosis",
+      "original_position": 37,
+      "display_position": 15,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "asleep|asleep/ADJ|asleep#schlafend",
+      "form_norm": "asleep",
+      "original_position": 39,
+      "display_position": 16,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "blind|blind/ADJ|blind#blind",
+      "form_norm": "blind",
+      "original_position": 42,
+      "display_position": 17,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "crawl|crawl/VERB|crawl#krabbeln",
+      "form_norm": "crawl",
+      "original_position": 43,
+      "display_position": 18,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "cancer|cancer/NOUN|cancer#krebs",
+      "form_norm": "cancer",
+      "original_position": 44,
+      "display_position": 19,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "deaf|deaf/ADJ|deaf#gehorlos",
+      "form_norm": "deaf",
+      "original_position": 50,
+      "display_position": 20,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "limp|limp/VERB|limp#hinken",
+      "form_norm": "limp",
+      "original_position": 51,
+      "display_position": 21,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "arthritis|arthritis/NOUN|arthritis#arthritis",
+      "form_norm": "arthritis",
+      "original_position": 52,
+      "display_position": 22,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "examine|examine/VERB|examine#untersucht",
+      "form_norm": "examine",
+      "original_position": 53,
+      "display_position": 23,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "wake|wake/VERB|wake#wecken",
+      "form_norm": "wake",
+      "original_position": 55,
+      "display_position": 24,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "fracture|fracture/NOUN|fracture#knochenbruch",
+      "form_norm": "fracture",
+      "original_position": 56,
+      "display_position": 25,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "numb|numb/ADJ|numb#taub",
+      "form_norm": "numb",
+      "original_position": 58,
+      "display_position": 26,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "lean|lean/VERB|lean#lehnte-sich",
+      "form_norm": "lean",
+      "original_position": 59,
+      "display_position": 27,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "migraine|migraine/NOUN|migraine#migrane",
+      "form_norm": "migraine",
+      "original_position": 60,
+      "display_position": 28,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "test|test/NOUN|test#test",
+      "form_norm": "test",
+      "original_position": 61,
+      "display_position": 29,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "bedtime|bedtime/NOUN|bedtime#dem-schlafengehen",
+      "form_norm": "bedtime",
+      "original_position": 63,
+      "display_position": 30,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "sprain|sprain/NOUN|sprain#verstauchung",
+      "form_norm": "sprain",
+      "original_position": 64,
+      "display_position": 31,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "nose|nose/NOUN|nose#nase",
+      "form_norm": "nose",
+      "original_position": 65,
+      "display_position": 32,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "dizzy|dizzy/ADJ|dizzy#schwindelig",
+      "form_norm": "dizzy",
+      "original_position": 66,
+      "display_position": 33,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "nausea|nausea/NOUN|nausea#ubelkeit",
+      "form_norm": "nausea",
+      "original_position": 68,
+      "display_position": 34,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "scan|scan/NOUN|scan#medizinische-aufnahme",
+      "form_norm": "scan",
+      "original_position": 69,
+      "display_position": 35,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "dose|dose/NOUN|dose#einzeldosis",
+      "form_norm": "dose",
+      "original_position": 70,
+      "display_position": 36,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "dream|dream/NOUN|dream#traum",
+      "form_norm": "dream",
+      "original_position": 71,
+      "display_position": 37,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "strain|strain/NOUN|strain#zerrung",
+      "form_norm": "strain",
+      "original_position": 72,
+      "display_position": 38,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "ear|ear/NOUN|ear#ohren",
+      "form_norm": "ear",
+      "original_position": 73,
+      "display_position": 39,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "itch|itch/VERB|itch#jucken",
+      "form_norm": "itch",
+      "original_position": 74,
+      "display_position": 40,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "vomit|vomit/VERB|vomit#sich-ubergeben",
+      "form_norm": "vomit",
+      "original_position": 76,
+      "display_position": 41,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "x-ray|x-ray/NOUN|x-ray#rontgenaufnahme",
+      "form_norm": "x-ray",
+      "original_position": 77,
+      "display_position": 42,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "nightmare|nightmare/NOUN|nightmare#albtraum",
+      "form_norm": "nightmare",
+      "original_position": 79,
+      "display_position": 43,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "concussion|concussion/NOUN|concussion#gehirnerschutterung",
+      "form_norm": "concussion",
+      "original_position": 80,
+      "display_position": 44,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "mouth|mouth/NOUN|mouth#mund",
+      "form_norm": "mouth",
+      "original_position": 81,
+      "display_position": 45,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "tickle|tickle/VERB|tickle#kitzeln",
+      "form_norm": "tickle",
+      "original_position": 82,
+      "display_position": 46,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "lower|lower/VERB|lower#hinunterlassen",
+      "form_norm": "lower",
+      "original_position": 83,
+      "display_position": 47,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "diarrhoea|diarrhoea/NOUN|diarrhoea#durchfall",
+      "form_norm": "diarrhoea",
+      "original_position": 84,
+      "display_position": 48,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "ultrasound|ultrasound/NOUN|ultrasound#ultraschalluntersuchung",
+      "form_norm": "ultrasound",
+      "original_position": 85,
+      "display_position": 49,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "antibiotic|antibiotic/NOUN|antibiotic#antibiotikum",
+      "form_norm": "antibiotic",
+      "original_position": 86,
+      "display_position": 50,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "sleepwalking|sleepwalking/NOUN|sleepwalking#schlafwandeln",
+      "form_norm": "sleepwalking",
+      "original_position": 87,
+      "display_position": 51,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "lip|lip/NOUN|lip#lippe",
+      "form_norm": "lip",
+      "original_position": 89,
+      "display_position": 52,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "tingle|tingle/VERB|tingle#kribbeln",
+      "form_norm": "tingle",
+      "original_position": 90,
+      "display_position": 53,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "constipation|constipation/NOUN|constipation#verstopfung",
+      "form_norm": "constipation",
+      "original_position": 92,
+      "display_position": 54,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "sample|sample/NOUN|sample#probe",
+      "form_norm": "sample",
+      "original_position": 93,
+      "display_position": 55,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "painkiller|painkiller/NOUN|painkiller#schmerzmittel",
+      "form_norm": "painkiller",
+      "original_position": 94,
+      "display_position": 56,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "scrape|scrape/NOUN|scrape#schurfwunde",
+      "form_norm": "scrape",
+      "original_position": 96,
+      "display_position": 57,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "tongue|tongue/NOUN|tongue#zunge",
+      "form_norm": "tongue",
+      "original_position": 97,
+      "display_position": 58,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "shiver|shiver/VERB|shiver#zitternd",
+      "form_norm": "shiver",
+      "original_position": 98,
+      "display_position": 59,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "roll|roll/VERB|roll#rollen",
+      "form_norm": "roll",
+      "original_position": 99,
+      "display_position": 60,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "rash|rash/NOUN|rash#hautausschlag",
+      "form_norm": "rash",
+      "original_position": 100,
+      "display_position": 61,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "ointment|ointment/NOUN|ointment#salbe",
+      "form_norm": "ointment",
+      "original_position": 102,
+      "display_position": 62,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "drowsy|drowsy/ADJ|drowsy#schlafrig",
+      "form_norm": "drowsy",
+      "original_position": 103,
+      "display_position": 63,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "throat|throat/NOUN|throat#hals",
+      "form_norm": "throat",
+      "original_position": 105,
+      "display_position": 64,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "sweat|sweat/VERB|sweat#schwitzen",
+      "form_norm": "sweat",
+      "original_position": 106,
+      "display_position": 65,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "shake|shake/VERB|shake#schuettelt",
+      "form_norm": "shake",
+      "original_position": 107,
+      "display_position": 66,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "swelling|swelling/NOUN|swelling#schwellung",
+      "form_norm": "swelling",
+      "original_position": 108,
+      "display_position": 67,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "urine|urine/NOUN|urine#urin",
+      "form_norm": "urine",
+      "original_position": 109,
+      "display_position": 68,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "restless|restless/ADJ|restless#ruhelos",
+      "form_norm": "restless",
+      "original_position": 111,
+      "display_position": 69,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "bleed|bleed/VERB|bleed#bluten",
+      "form_norm": "bleed",
+      "original_position": 112,
+      "display_position": 70,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "neck|neck/NOUN|neck#hals",
+      "form_norm": "neck",
+      "original_position": 113,
+      "display_position": 71,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "breathe|breathe/VERB|breathe#atmen",
+      "form_norm": "breathe",
+      "original_position": 114,
+      "display_position": 72,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "inflammation|inflammation/NOUN|inflammation#entzundung",
+      "form_norm": "inflammation",
+      "original_position": 116,
+      "display_position": 73,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "stool|stool/NOUN|stool#stuhlgang-ausscheidung",
+      "form_norm": "stool",
+      "original_position": 117,
+      "display_position": 74,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "capsule|capsule/NOUN|capsule#kapsel",
+      "form_norm": "capsule",
+      "original_position": 118,
+      "display_position": 75,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "shoulder|shoulder/NOUN|shoulder#schulter",
+      "form_norm": "shoulder",
+      "original_position": 121,
+      "display_position": 76,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "jump|jump/VERB|jump#springen",
+      "form_norm": "jump",
+      "original_position": 123,
+      "display_position": 77,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "cramp|cramp/NOUN|cramp#muskelkrampf",
+      "form_norm": "cramp",
+      "original_position": 124,
+      "display_position": 78,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "choke|choke/VERB|choke#keine-luft-bekommen",
+      "form_norm": "choke",
+      "original_position": 128,
+      "display_position": 79,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "chest|chest/NOUN|chest#brustkorb",
+      "form_norm": "chest",
+      "original_position": 129,
+      "display_position": 80,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "inhale|inhale/VERB|inhale#einatmen",
+      "form_norm": "inhale",
+      "original_position": 130,
+      "display_position": 81,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "hop|hop/VERB|hop#auf-einem-bein-hupfen",
+      "form_norm": "hop",
+      "original_position": 131,
+      "display_position": 82,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "thermometer|thermometer/NOUN|thermometer#thermometer",
+      "form_norm": "thermometer",
+      "original_position": 133,
+      "display_position": 83,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "inhaler|inhaler/NOUN|inhaler#inhalator",
+      "form_norm": "inhaler",
+      "original_position": 134,
+      "display_position": 84,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "energy|energy/NOUN|energy#energie",
+      "form_norm": "energy",
+      "original_position": 135,
+      "display_position": 85,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "drown|drown/VERB|drown#ertrinken",
+      "form_norm": "drown",
+      "original_position": 136,
+      "display_position": 86,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "back|back/NOUN|back#ruecken",
+      "form_norm": "back",
+      "original_position": 137,
+      "display_position": 87,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "exhale|exhale/VERB|exhale#ausatmen",
+      "form_norm": "exhale",
+      "original_position": 138,
+      "display_position": 88,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "vaccine|vaccine/NOUN|vaccine#impfstoff",
+      "form_norm": "vaccine",
+      "original_position": 142,
+      "display_position": 89,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "alert|alert/ADJ|alert#wachsam",
+      "form_norm": "alert",
+      "original_position": 143,
+      "display_position": 90,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "rescue|rescue/VERB|rescue#retten",
+      "form_norm": "rescue",
+      "original_position": 144,
+      "display_position": 91,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "stomach|stomach/NOUN|stomach#magen",
+      "form_norm": "stomach",
+      "original_position": 145,
+      "display_position": 92,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "sniff|sniff/VERB|sniff#schniefen",
+      "form_norm": "sniff",
+      "original_position": 146,
+      "display_position": 93,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "jog|jog/VERB|jog#joggen",
+      "form_norm": "jog",
+      "original_position": 147,
+      "display_position": 94,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "height|height/NOUN|height#korpergroe",
+      "form_norm": "height",
+      "original_position": 149,
+      "display_position": 95,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "resuscitate|resuscitate/VERB|resuscitate#wiederbeleben",
+      "form_norm": "resuscitate",
+      "original_position": 152,
+      "display_position": 96,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "heart|heart/NOUN|heart#herz",
+      "form_norm": "heart",
+      "original_position": 153,
+      "display_position": 97,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "sneeze|sneeze/VERB|sneeze#niesen",
+      "form_norm": "sneeze",
+      "original_position": 154,
+      "display_position": 98,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "sprint|sprint/VERB|sprint#sprinten",
+      "form_norm": "sprint",
+      "original_position": 155,
+      "display_position": 99,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "vaccinate|vaccinate/VERB|vaccinate#impfen",
+      "form_norm": "vaccinate",
+      "original_position": 158,
+      "display_position": 100,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "unconscious|unconscious/ADJ|unconscious#bewusstlos",
+      "form_norm": "unconscious",
+      "original_position": 160,
+      "display_position": 101,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "lung|lung/NOUN|lung#lunge",
+      "form_norm": "lung",
+      "original_position": 161,
+      "display_position": 102,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "yawn|yawn/VERB|yawn#gahnen",
+      "form_norm": "yawn",
+      "original_position": 162,
+      "display_position": 103,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "climb|climb/VERB|climb#klettern",
+      "form_norm": "climb",
+      "original_position": 163,
+      "display_position": 104,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "contagious|contagious/ADJ|contagious#ansteckend",
+      "form_norm": "contagious",
+      "original_position": 164,
+      "display_position": 105,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "stethoscope|stethoscope/NOUN|stethoscope#stethoskop",
+      "form_norm": "stethoscope",
+      "original_position": 165,
+      "display_position": 106,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "disinfect|disinfect/VERB|disinfect#desinfizieren",
+      "form_norm": "disinfect",
+      "original_position": 166,
+      "display_position": 107,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "brain|brain/NOUN|brain#gehirn",
+      "form_norm": "brain",
+      "original_position": 169,
+      "display_position": 108,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "blink|blink/VERB|blink#blinzeln",
+      "form_norm": "blink",
+      "original_position": 170,
+      "display_position": 109,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "cycle|cycle/VERB|cycle#rad-fahren",
+      "form_norm": "cycle",
+      "original_position": 171,
+      "display_position": 110,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "chronic|chronic/ADJ|chronic#chronisch",
+      "form_norm": "chronic",
+      "original_position": 172,
+      "display_position": 111,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "liver|liver/NOUN|liver#leber",
+      "form_norm": "liver",
+      "original_position": 177,
+      "display_position": 112,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "swallow|swallow/VERB|swallow#schlucken",
+      "form_norm": "swallow",
+      "original_position": 178,
+      "display_position": 113,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "kick|kick/VERB|kick#treten",
+      "form_norm": "kick",
+      "original_position": 179,
+      "display_position": 114,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "acute|acute/ADJ|acute#akut",
+      "form_norm": "acute",
+      "original_position": 180,
+      "display_position": 115,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "collapse|collapse/VERB|collapse#zusammenbrechen",
+      "form_norm": "collapse",
+      "original_position": 184,
+      "display_position": 116,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "kidney|kidney/NOUN|kidney#niere",
+      "form_norm": "kidney",
+      "original_position": 185,
+      "display_position": 117,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "chew|chew/VERB|chew#kauen",
+      "form_norm": "chew",
+      "original_position": 186,
+      "display_position": 118,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "punch|punch/VERB|punch#mit-faust-schlagen",
+      "form_norm": "punch",
+      "original_position": 187,
+      "display_position": 119,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "mild|mild/ADJ|mild#leichte",
+      "form_norm": "mild",
+      "original_position": 188,
+      "display_position": 120,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "referral|referral/NOUN|referral#arztliche-uberweisung",
+      "form_norm": "referral",
+      "original_position": 189,
+      "display_position": 121,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sterile|sterile/ADJ|sterile#sterilen",
+      "form_norm": "sterile",
+      "original_position": 190,
+      "display_position": 122,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "bone|bone/NOUN|bone#knochen",
+      "form_norm": "bone",
+      "original_position": 193,
+      "display_position": 123,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "spit|spit/VERB|spit#spucken",
+      "form_norm": "spit",
+      "original_position": 194,
+      "display_position": 124,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "severe|severe/ADJ|severe#starken",
+      "form_norm": "severe",
+      "original_position": 196,
+      "display_position": 125,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "specialist|specialist/NOUN|specialist#facharzt",
+      "form_norm": "specialist",
+      "original_position": 197,
+      "display_position": 126,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "routine|routine/NOUN|routine#routine",
+      "form_norm": "routine",
+      "original_position": 199,
+      "display_position": 127,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "poison|poison/NOUN|poison#gift",
+      "form_norm": "poison",
+      "original_position": 200,
+      "display_position": 128,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "muscle|muscle/NOUN|muscle#muskel",
+      "form_norm": "muscle",
+      "original_position": 201,
+      "display_position": 129,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "surgeon|surgeon/NOUN|surgeon#chirurg",
+      "form_norm": "surgeon",
+      "original_position": 205,
+      "display_position": 130,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "rinse|rinse/VERB|rinse#abspulen",
+      "form_norm": "rinse",
+      "original_position": 206,
+      "display_position": 131,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "rhythm|rhythm/NOUN|rhythm#rhythmus",
+      "form_norm": "rhythm",
+      "original_position": 207,
+      "display_position": 132,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "joint|joint/NOUN|joint#gelenk",
+      "form_norm": "joint",
+      "original_position": 209,
+      "display_position": 133,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "hiccup|hiccup/NOUN|hiccup#schluckauf",
+      "form_norm": "hiccup",
+      "original_position": 210,
+      "display_position": 134,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "squeeze|squeeze/VERB|squeeze#zusammendrucken",
+      "form_norm": "squeeze",
+      "original_position": 211,
+      "display_position": 135,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "physiotherapist|physiotherapist/NOUN|physiotherapist#physiotherapeut",
+      "form_norm": "physiotherapist",
+      "original_position": 213,
+      "display_position": 136,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "gargle|gargle/VERB|gargle#gurgeln",
+      "form_norm": "gargle",
+      "original_position": 214,
+      "display_position": 137,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "sting|sting/VERB|sting#stechen-von-insekten",
+      "form_norm": "sting",
+      "original_position": 216,
+      "display_position": 138,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "elbow|elbow/NOUN|elbow#ellenbogen",
+      "form_norm": "elbow",
+      "original_position": 217,
+      "display_position": 139,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "snore|snore/VERB|snore#schnarchen",
+      "form_norm": "snore",
+      "original_position": 218,
+      "display_position": 140,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "drag|drag/VERB|drag#schleifen",
+      "form_norm": "drag",
+      "original_position": 219,
+      "display_position": 141,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "hoarse|hoarse/ADJ|hoarse#heiser",
+      "form_norm": "hoarse",
+      "original_position": 220,
+      "display_position": 142,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "optician|optician/NOUN|optician#optiker",
+      "form_norm": "optician",
+      "original_position": 221,
+      "display_position": 143,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "bite|bite/VERB|bite#beissen",
+      "form_norm": "bite",
+      "original_position": 224,
+      "display_position": 144,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "wrist|wrist/NOUN|wrist#handgelenk",
+      "form_norm": "wrist",
+      "original_position": 225,
+      "display_position": 145,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "midwife|midwife/NOUN|midwife#hebamme",
+      "form_norm": "midwife",
+      "original_position": 229,
+      "display_position": 146,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "compress|compress/NOUN|compress#kompresse",
+      "form_norm": "compress",
+      "original_position": 230,
+      "display_position": 147,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "accident|accident/NOUN|accident#unfall",
+      "form_norm": "accident",
+      "original_position": 232,
+      "display_position": 148,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "finger|finger/NOUN|finger#finger",
+      "form_norm": "finger",
+      "original_position": 233,
+      "display_position": 149,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "coordination|coordination/NOUN|coordination#bewegungskoordination",
+      "form_norm": "coordination",
+      "original_position": 235,
+      "display_position": 150,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "runny|runny/ADJ|runny#laufend-von-der-nase",
+      "form_norm": "runny",
+      "original_position": 236,
+      "display_position": 151,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "paramedic|paramedic/NOUN|paramedic#rettungsfachkraft",
+      "form_norm": "paramedic",
+      "original_position": 237,
+      "display_position": 152,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "stitch|stitch/NOUN|stitch#wundnahtstich",
+      "form_norm": "stitch",
+      "original_position": 238,
+      "display_position": 153,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "nutrition|nutrition/NOUN|nutrition#ernahrung",
+      "form_norm": "nutrition",
+      "original_position": 239,
+      "display_position": 154,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "thumb|thumb/NOUN|thumb#daumen",
+      "form_norm": "thumb",
+      "original_position": 241,
+      "display_position": 155,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "posture|posture/NOUN|posture#korperhaltung",
+      "form_norm": "posture",
+      "original_position": 243,
+      "display_position": 156,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "dehydration|dehydration/NOUN|dehydration#flussigkeitsmangel",
+      "form_norm": "dehydration",
+      "original_position": 244,
+      "display_position": 157,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "nutrient|nutrient/NOUN|nutrient#nahrstoff",
+      "form_norm": "nutrient",
+      "original_position": 247,
+      "display_position": 158,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "knee|knee/NOUN|knee#knie",
+      "form_norm": "knee",
+      "original_position": 249,
+      "display_position": 159,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "mobility|mobility/NOUN|mobility#mobilitaet",
+      "form_norm": "mobility",
+      "original_position": 251,
+      "display_position": 160,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "indigestion|indigestion/NOUN|indigestion#verdauungsbeschwerden",
+      "form_norm": "indigestion",
+      "original_position": 252,
+      "display_position": 161,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "ward|ward/NOUN|ward#krankenstation",
+      "form_norm": "ward",
+      "original_position": 253,
+      "display_position": 162,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "cast|cast/NOUN|cast#gipsverband",
+      "form_norm": "cast",
+      "original_position": 254,
+      "display_position": 163,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "protein|protein/NOUN|protein#eiwei",
+      "form_norm": "protein",
+      "original_position": 255,
+      "display_position": 164,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "ankle|ankle/NOUN|ankle#knoechel",
+      "form_norm": "ankle",
+      "original_position": 257,
+      "display_position": 165,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "heartburn|heartburn/NOUN|heartburn#sodbrennen",
+      "form_norm": "heartburn",
+      "original_position": 260,
+      "display_position": 166,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "splint|splint/NOUN|splint#schiene",
+      "form_norm": "splint",
+      "original_position": 262,
+      "display_position": 167,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "fibre|fibre/NOUN|fibre#ballaststoffe",
+      "form_norm": "fibre",
+      "original_position": 263,
+      "display_position": 168,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "sling|sling/NOUN|sling#armschlinge",
+      "form_norm": "sling",
+      "original_position": 264,
+      "display_position": 169,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "toe|toe/NOUN|toe#zeh",
+      "form_norm": "toe",
+      "original_position": 265,
+      "display_position": 170,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "stamina|stamina/NOUN|stamina#ausdauer",
+      "form_norm": "stamina",
+      "original_position": 267,
+      "display_position": 171,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "flu|flu/NOUN|flu#grippe",
+      "form_norm": "flu",
+      "original_position": 268,
+      "display_position": 172,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "medical|medical/ADJ|medical#medizinisch",
+      "form_norm": "medical",
+      "original_position": 269,
+      "display_position": 173,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "operation|operation/NOUN|operation#operation",
+      "form_norm": "operation",
+      "original_position": 270,
+      "display_position": 174,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "carbohydrate|carbohydrate/NOUN|carbohydrate#kohlenhydrat",
+      "form_norm": "carbohydrate",
+      "original_position": 271,
+      "display_position": 175,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "crutch|crutch/NOUN|crutch#krucke",
+      "form_norm": "crutch",
+      "original_position": 272,
+      "display_position": 176,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "heel|heel/NOUN|heel#ferse",
+      "form_norm": "heel",
+      "original_position": 273,
+      "display_position": 177,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "dental|dental/ADJ|dental#zahnmedizinisch",
+      "form_norm": "dental",
+      "original_position": 277,
+      "display_position": 178,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "vitamin|vitamin/NOUN|vitamin#vitamin",
+      "form_norm": "vitamin",
+      "original_position": 279,
+      "display_position": 179,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "wheelchair|wheelchair/NOUN|wheelchair#rollstuhl",
+      "form_norm": "wheelchair",
+      "original_position": 280,
+      "display_position": 180,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "forehead|forehead/NOUN|forehead#stirn",
+      "form_norm": "forehead",
+      "original_position": 281,
+      "display_position": 181,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "faint|faint/VERB|faint#ohnmachtig-werden",
+      "form_norm": "faint",
+      "original_position": 282,
+      "display_position": 182,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "obesity|obesity/NOUN|obesity#adipositas",
+      "form_norm": "obesity",
+      "original_position": 284,
+      "display_position": 183,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "oral|oral/ADJ|oral#uber-den-mund",
+      "form_norm": "oral",
+      "original_position": 285,
+      "display_position": 184,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "anaesthetic|anaesthetic/NOUN|anaesthetic#betaubungsmittel",
+      "form_norm": "anaesthetic",
+      "original_position": 286,
+      "display_position": 185,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "mineral|mineral/NOUN|mineral#mineralstoff",
+      "form_norm": "mineral",
+      "original_position": 287,
+      "display_position": 186,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "walker|walker/NOUN|walker#gehgestell",
+      "form_norm": "walker",
+      "original_position": 288,
+      "display_position": 187,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "cheek|cheek/NOUN|cheek#wange",
+      "form_norm": "cheek",
+      "original_position": 289,
+      "display_position": 188,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "appetite|appetite/NOUN|appetite#appetit",
+      "form_norm": "appetite",
+      "original_position": 295,
+      "display_position": 189,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "stretcher|stretcher/NOUN|stretcher#krankentrage",
+      "form_norm": "stretcher",
+      "original_position": 296,
+      "display_position": 190,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "chin|chin/NOUN|chin#kinn",
+      "form_norm": "chin",
+      "original_position": 297,
+      "display_position": 191,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "stiff|stiff/ADJ|stiff#steif",
+      "form_norm": "stiff",
+      "original_position": 299,
+      "display_position": 192,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "underweight|underweight/ADJ|underweight#untergewichtig",
+      "form_norm": "underweight",
+      "original_position": 300,
+      "display_position": 193,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "jaw|jaw/NOUN|jaw#kiefer",
+      "form_norm": "jaw",
+      "original_position": 305,
+      "display_position": 194,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "bitter|bitter/ADJ|bitter#bittere",
+      "form_norm": "bitter",
+      "original_position": 306,
+      "display_position": 195,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "agile|agile/ADJ|agile#wendig",
+      "form_norm": "agile",
+      "original_position": 307,
+      "display_position": 196,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "rehabilitation|rehabilitation/NOUN|rehabilitation#rehabilitation",
+      "form_norm": "rehabilitation",
+      "original_position": 309,
+      "display_position": 197,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "plaster|plaster/NOUN|plaster#wundpflaster",
+      "form_norm": "plaster",
+      "original_position": 311,
+      "display_position": 198,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "hip|hip/NOUN|hip#hufte",
+      "form_norm": "hip",
+      "original_position": 312,
+      "display_position": 199,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "sour|sour/ADJ|sour#sauer",
+      "form_norm": "sour",
+      "original_position": 313,
+      "display_position": 200,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "positive|positive/ADJ|positive#positiv-getestet",
+      "form_norm": "positive",
+      "original_position": 316,
+      "display_position": 201,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "hydration|hydration/NOUN|hydration#flussigkeitsversorgung",
+      "form_norm": "hydration",
+      "original_position": 318,
+      "display_position": 202,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "waist|waist/NOUN|waist#taille",
+      "form_norm": "waist",
+      "original_position": 320,
+      "display_position": 203,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "sweet|sweet/ADJ|sweet#suess",
+      "form_norm": "sweet",
+      "original_position": 321,
+      "display_position": 204,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "steady|steady/ADJ|steady#sicher-und-ruhig",
+      "form_norm": "steady",
+      "original_position": 322,
+      "display_position": 205,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "negative|negative/ADJ|negative#negativ-getestet",
+      "form_norm": "negative",
+      "original_position": 324,
+      "display_position": 206,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "diet|diet/NOUN|diet#kost",
+      "form_norm": "diet",
+      "original_position": 326,
+      "display_position": 207,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "spine|spine/NOUN|spine#wirbelsaule",
+      "form_norm": "spine",
+      "original_position": 328,
+      "display_position": 208,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "salty|salty/ADJ|salty#salzig",
+      "form_norm": "salty",
+      "original_position": 329,
+      "display_position": 209,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "clumsy|clumsy/ADJ|clumsy#ungeschickt",
+      "form_norm": "clumsy",
+      "original_position": 330,
+      "display_position": 210,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "normal|normal/ADJ|normal#im-normalbereich",
+      "form_norm": "normal",
+      "original_position": 331,
+      "display_position": 211,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "prescribe|prescribe/VERB|prescribe#verschreiben",
+      "form_norm": "prescribe",
+      "original_position": 332,
+      "display_position": 212,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "rib|rib/NOUN|rib#rippe",
+      "form_norm": "rib",
+      "original_position": 334,
+      "display_position": 213,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "smooth|smooth/ADJ|smooth#glatt",
+      "form_norm": "smooth",
+      "original_position": 335,
+      "display_position": 214,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "upright|upright/ADJ|upright#aufrecht",
+      "form_norm": "upright",
+      "original_position": 336,
+      "display_position": 215,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "sedative|sedative/NOUN|sedative#beruhigungsmittel",
+      "form_norm": "sedative",
+      "original_position": 339,
+      "display_position": 216,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "skull|skull/NOUN|skull#schadel",
+      "form_norm": "skull",
+      "original_position": 342,
+      "display_position": 217,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "rough|rough/ADJ|rough#rauen",
+      "form_norm": "rough",
+      "original_position": 343,
+      "display_position": 218,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "breathless|breathless/ADJ|breathless#auer-atem",
+      "form_norm": "breathless",
+      "original_position": 345,
+      "display_position": 219,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "monitor|monitor/VERB|monitor#uberwachen",
+      "form_norm": "monitor",
+      "original_position": 346,
+      "display_position": 220,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "supplement|supplement/NOUN|supplement#nahrungserganzung",
+      "form_norm": "supplement",
+      "original_position": 347,
+      "display_position": 221,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "blood|blood/NOUN|blood#blut",
+      "form_norm": "blood",
+      "original_position": 350,
+      "display_position": 222,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sharp|sharp/ADJ|sharp#scharfen",
+      "form_norm": "sharp",
+      "original_position": 351,
+      "display_position": 223,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "squat|squat/VERB|squat#in-die-hocke-gehen",
+      "form_norm": "squat",
+      "original_position": 352,
+      "display_position": 224,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "vein|vein/NOUN|vein#vene",
+      "form_norm": "vein",
+      "original_position": 357,
+      "display_position": 225,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "prevent|prevent/VERB|prevent#hindern",
+      "form_norm": "prevent",
+      "original_position": 362,
+      "display_position": 226,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "artery|artery/NOUN|artery#arterie",
+      "form_norm": "artery",
+      "original_position": 365,
+      "display_position": 227,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "healthy|healthy/ADJ|healthy#gesund",
+      "form_norm": "healthy",
+      "original_position": 368,
+      "display_position": 228,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "hygiene|hygiene/NOUN|hygiene#hygiene",
+      "form_norm": "hygiene",
+      "original_position": 370,
+      "display_position": 229,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "meditate|meditate/VERB|meditate#meditieren",
+      "form_norm": "meditate",
+      "original_position": 371,
+      "display_position": 230,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "nerve|nerve/NOUN|nerve#nerv",
+      "form_norm": "nerve",
+      "original_position": 373,
+      "display_position": 231,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "consult|consult/VERB|consult#arztlichen-rat-einholen",
+      "form_norm": "consult",
+      "original_position": 377,
+      "display_position": 232,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "palm|palm/NOUN|palm#handflache",
+      "form_norm": "palm",
+      "original_position": 381,
+      "display_position": 233,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "insomnia|insomnia/NOUN|insomnia#schlaflosigkeit",
+      "form_norm": "insomnia",
+      "original_position": 384,
+      "display_position": 234,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "nail|nail/NOUN|nail#nagel",
+      "form_norm": "nail",
+      "original_position": 388,
+      "display_position": 235,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "reflex|reflex/NOUN|reflex#reflex",
+      "form_norm": "reflex",
+      "original_position": 389,
+      "display_position": 236,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "isolation|isolation/NOUN|isolation#medizinische-absonderung",
+      "form_norm": "isolation",
+      "original_position": 392,
+      "display_position": 237,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "eyelash|eyelash/NOUN|eyelash#wimper",
+      "form_norm": "eyelash",
+      "original_position": 395,
+      "display_position": 238,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "fall|fall/VERB|fall#fallen",
+      "form_norm": "fall",
+      "original_position": 397,
+      "display_position": 239,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "sauna|sauna/NOUN|sauna#sauna",
+      "form_norm": "sauna",
+      "original_position": 399,
+      "display_position": 240,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "eyebrow|eyebrow/NOUN|eyebrow#augenbraue",
+      "form_norm": "eyebrow",
+      "original_position": 401,
+      "display_position": 241,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "nostril|nostril/NOUN|nostril#nasenloch",
+      "form_norm": "nostril",
+      "original_position": 406,
+      "display_position": 242,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "scalp|scalp/NOUN|scalp#kopfhaut",
+      "form_norm": "scalp",
+      "original_position": 411,
+      "display_position": 243,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "tweezers|tweezers/NOUN|tweezers#pinzette",
+      "form_norm": "tweezers",
+      "original_position": 415,
+      "display_position": 244,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "intestine|intestine/NOUN|intestine#darm",
+      "form_norm": "intestine",
+      "original_position": 416,
+      "display_position": 245,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "bladder|bladder/NOUN|bladder#harnblase",
+      "form_norm": "bladder",
+      "original_position": 420,
+      "display_position": 246,
+      "authoring_batch": 3
+    },
+    {
+      "card_ref": "splinter|splinter/NOUN|splinter#splitter",
+      "form_norm": "splinter",
+      "original_position": 422,
+      "display_position": 247,
+      "authoring_batch": 2
+    },
+    {
+      "card_ref": "breast|breast/NOUN|breast#brust",
+      "form_norm": "breast",
+      "original_position": 423,
+      "display_position": 248,
+      "authoring_batch": 1
+    },
+    {
+      "card_ref": "scar|scar/NOUN|scar#narbe",
+      "form_norm": "scar",
+      "original_position": 425,
+      "display_position": 249,
+      "authoring_batch": 3
+    }
+  ]
+}

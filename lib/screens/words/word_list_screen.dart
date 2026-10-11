@@ -103,7 +103,7 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
       count == 0
           ? 'Deine Playlist ist noch leer'
           : 'Playlist-Modus folgt bald ($count '
-                '${count == 1 ? 'Wort' : 'Wörter'})',
+                '${count == 1 ? 'Übung' : 'Übungen'})',
     );
   }
 
@@ -171,7 +171,7 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
               Padding(
                 padding: _gutter,
                 child: Text(
-                  '${all.length} Wörter · $playlistCount in der Playlist',
+                  '${all.map((w) => w.lexicalKey ?? w.id).toSet().length} Wörter · ${all.length} Übungen · $playlistCount in der Playlist',
                   style: AppType.meta(color: context.appColors.textMuted),
                 ),
               ),
@@ -301,7 +301,7 @@ class _PlaylistButton extends StatelessWidget {
         padding: EdgeInsets.zero,
         minimumSize: const Size(size, size),
         child: Semantics(
-          label: 'Playlist, $count ${count == 1 ? 'Wort' : 'Wörter'}',
+          label: 'Playlist, $count ${count == 1 ? 'Übung' : 'Übungen'}',
           excludeSemantics: true,
           child: Container(
             width: size,

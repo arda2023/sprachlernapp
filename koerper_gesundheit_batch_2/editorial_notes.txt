@@ -1,0 +1,25 @@
+Körper & Gesundheit – Batch 2, Redaktion vom 10.10.2026
+83 aktuelle Ziele, jeweils ein EN/DE-Satz, insgesamt 996 Tokenpositionen. Vollständige Annotation in annotation_review.txt. Erstellt und redaktionell gegengelesen durch ChatGPT; keine unabhängige menschliche oder öffentliche Freigabe behauptet.
+
+Basis ist ausschließlich die hochgeladene Batch-2-Referenz mit den vom Nutzer berichteten Batch-1-Korrekturen. Historische Inhalte bleiben unverändert. Keine Änderungen an mitgelieferten Pipelinequellen.
+
+Bedeutungsgrenzen: stretch dehnt Muskeln; strain ist Zerrung; oral bezeichnet die Verabreichung über den Mund; sharp beschreibt eine Klinge; prevent hindert Personen an einer Handlung. Medizinische Begriffe erscheinen in fiktiven Alltagssituationen, ohne Dosierungen, Diagnoseregeln oder Behandlungsempfehlungen.
+
+Freigegebene Alternativen:
+- nap → snooze: Maya took a short snooze on the sofa after lunch. Umgangssprachlich derselbe kurze Tagschlaf; Übersetzung unverändert.
+- intestine → bowel: The doctor showed Lina a model of the small bowel. Small bowel bezeichnet hier denselben Dünndarm; Übersetzung unverändert.
+Für die übrigen 81 Lücken ist keine Alternative freigegeben. Dies ist keine Behauptung, dass es keine weiteren passenden Antworten gibt. Keine allgemeinen Wörterbuchsynonyme in valid_alternatives übernehmen.
+
+Tokenentscheidungen: last/dauern gegenüber last/letzter; long in how long als Adverb; before Präposition/Konjunktion; her possessiv gegenüber Objektform; left als links; holding beim Behälter = enthalten; found bei Geschmacksurteilen = empfinden; letter als Buchstabe oder Brief; sleep/finish/use als Nomen; carefully = vorsichtig; down vor Wange als Präposition; from nach prevent als verhinderte Handlung. x-ray bleibt dank des bestehenden lexical_spans-Vertrags ein Token; ear-Lücke umfasst nur das eigenständige Wort ear, nicht einen Teil von earring.
+
+Ergänzte Begleitwort-Senses enthalten explizite Definitionen. Passende vorhandene bzw. reservierte Identitäten werden wiederverwendet; zu Begleitwörtern entstehen keine zusätzlichen Lernkarten. Beispiel: muscle und wrist nutzen schon die reservierten Zielidentitäten. Die separaten historischen ward#krankenhausstation und protein#eiweiss werden nicht umgeschrieben; die aktuellen Zielkarten behalten ihre verbindlich reservierten Keys ward#krankenstation und protein#eiwei.
+
+Neue flektierte Formglossen separat gegengelesen, etwa brushed=putzten, raised=hob, toes=Zehen, fitted=passten, told=sagte. Vorhandene Wörterbuchglossen bleiben erhalten; aus deren unverändertem Fortbestand folgt keine erneute Freigabe sämtlicher Altglossen. Karte und Übersetzung sind unterschiedliche Felder: stitch wird im Satz idiomatisch als Faden der Wundnaht übersetzt; die reservierte Kartendefinition bleibt gleich.
+
+Anzeigen: 83 neue Mitgliedschaften werden zunächst 84–166 angehängt. Ein separat hashgebundener Display-Patch bildet bestehende und neue Körper-Mitgliedschaften auf die bereitgestellten Positionen 1–166 ab. Originalauswahl/Registrypositionen ändern sich nicht. Andere Stapel bleiben unberührt.
+
+Linter: 0 neue Fehler, 9 Häufigkeitshinweise. Betroffen sind earring, pharmacist (drei Sätze), cot, puddle, runny, yoghurt und sleepless. Die Hinweise betreffen Begleitwörter; keine Grammatikfehler. Sie sind für die jeweilige Szene sinnvoll, alle sind annotiert.
+
+Offline-Vertragsprüfung und vollständiger SQLite-Export/-Rückvergleich: siehe validation_output.txt und local_export_report.json. Verwendet wurden unveränderte mitgelieferte Quellen und das mitgelieferte spaCy-Modell. Kein App-Staging hier, keine Flutter-/Geräteprüfung, keine user.db-Zugriffe und keine zusätzlichen Cloud-/Modellaufrufe.
+
+Erwarteter Stand nach Import: 1661 Karten; 1546 primäre Ziele (160/489/241/245/245/166); 2195 Satztexte, 2189 Satzverknüpfungen einschließlich Historie. 83 Körper-Ziele bleiben für Batch 3 übrig.

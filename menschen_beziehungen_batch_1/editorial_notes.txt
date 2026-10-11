@@ -1,0 +1,24 @@
+Menschen & Beziehungen – Batch 1 · 10.10.2026
+
+82 aktuelle Lernziele, je ein fester englischer Satz mit deutscher Übersetzung. Alle acht Themen enthalten. Zieldefinitionen, IDs, Zielglossen, Lernbindungen und Originalpositionen stammen unverändert aus dem geprüften Authoring-Kontext. Die ersten 82 Pack-Anzeigepositionen sind lückenlos; Originalpositionen dürfen nicht umnummeriert werden.
+
+Redaktion: ChatGPT hat alle Satzpaare, Wortbindungen, Formübersetzungen und vier Schreibvarianten gegengelesen. Keine unabhängige menschliche Freigabe, keine Garantie vollständiger Synonymerkennung. Keine Gemini-/Vertex-Aufrufe. Häufigkeitswarnung: grieving/grieve (3,45 unter 3,5) im empathy-Satz, bewusst erhalten.
+
+Schreibvarianten, jeweils wörtlich in die Lücke eingesetzt:
+- favour → favor: Could you do me a favor and feed my cat tonight?
+- wellbeing → well-being: Regular contact with friends is important for my well-being.
+- breakup → break-up: After the break-up, they returned each other's things and stopped living together.
+- neighbourhood → neighborhood: People in our neighborhood often stop to talk in the street.
+accepted enthält nur die Zielform. Die Alternativen bewirken nach bestehender Produktregel einen neutralen Hinweis ohne Lernstandsabzug. Andere mögliche Synonyme sind damit nicht pauschal ausgeschlossen oder automatisch zugelassen.
+
+Kontextprüfung: company = Gesellschaft, nicht Firma; lives = Leben (Nomen); visit = besuchen (Verb); hug = Umarmung; shared = gemeinsam; experience = Erfahrung eines Verlusts; standing up for = für jemanden eintreten; control = beherrschen; means/meant kontextabhängig Absicht oder Folge. Wortart-/Bedeutungsbindungen wurden pro Vorkommen geprüft. Bestehende Sense-Glossen wurden nicht global bereinigt.
+
+Notwendige, explizite Importkorrektur:
+Der mitgelieferte Original-Tokenizer zerlegt sister-in-law, son-in-law und open-minded. Der bestehende Packvertrag verlangt für die Karte dagegen einen Token genau über der ganzen Zielwortlücke. compatibility/compound_target_spans.patch ergänzt optionale, explizite lexical_spans in tokenize und übergibt nur diese Kartenlücken aus create_content. Alte/default Tokenisierung bleibt identisch. Der Validator wird nicht gelockert. Drei ganze Zielwörter ersetzen zusammen zehn Fragmentpositionen: endgültig 1024 statt zunächst 1034 Tokenpositionen. Verifier und Reviewhashes beziehen sich ausschließlich auf die endgültige Lieferung.
+14 gezielte Prüfungen für zusammengesetzte Wörter, Offsets, Default-Kompatibilität und ungültige Spannen bestanden. Der vollständige Import/Export wurde mit einer isolierten Kopie der gelieferten Quellen plus diesem Patch geprüft; Originalreferenzen blieben unverändert. Die Projekttests muss Codex nach Übernahme noch ausführen.
+
+Offline-Ergebnis: create_content, build_rows und tatsächlicher SQLite-Export einschließlich zeilenweisem Rückvergleich aller 18 Tabellen bestanden. 1332 Karten, 1866 Satztexte, 1860 Verknüpfungen, 1228 Wortbesitzzeilen; 1217 primäre Lernziele (160/489/241/245/82). Alle 1250 alten Karten und historischen Inhaltszeilen unverändert. Keine späteren Lernziele vorzeitig importiert.
+
+reference/content.sqlite und reference/pack.json sind ausschließlich die ALTE Importbasis arbeit_bildung_batch_3_v1; niemals als neue Ausgabe stagen. Der lokale Prüfausgang ist nicht zusätzlich als installierbare Datenbank beigepackt. Codex erstellt den neuen Export im Projekt und sichert dann die App-Assets vor internem Staging. Diese Lieferung hat hier keine App installiert, keine Flutter-/Gerätetests und keinen Zugriff auf Lernstände durchgeführt.
+
+Import-Prompt: PROMPT_CODEX.txt. Lesbare Übersicht: menschen_beziehungen_batch_1.html. Alle Wortbindungen: annotation_review.txt. Tatsächliche Prüfausgaben: validation_output.txt und tokenizer_checks.txt.

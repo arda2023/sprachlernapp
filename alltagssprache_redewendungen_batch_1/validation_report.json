@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "input_hashed_files": 81,
+  "source_sqlite_tables_compared": 22,
+  "source_comparison_exception": "content_releases.created_at is export-generated; presence checked, omitted from value comparison",
+  "new_cards": 89,
+  "new_sentences": 89,
+  "token_positions": 870,
+  "word_tokens": 719,
+  "alternatives": 8,
+  "new_senses": 117,
+  "new_dictionary_forms": 127,
+  "linter_errors": 0,
+  "linter_warnings": [
+    {
+      "form": "in other words",
+      "level": "warn",
+      "rule": "i+1",
+      "message": "'reopen'/'reopen' Zipf 3.42 below 3.5"
+    }
+  ],
+  "in_memory_build_rows": "PASS",
+  "source_rows_preserved": "PASS",
+  "schema4_form_tables_unchanged": "PASS",
+  "result_table_counts": {
+    "languages": 1,
+    "lemmas": 3663,
+    "senses": 5185,
+    "cards": 2656,
+    "dictionary_forms": 6225,
+    "decks": 12,
+    "deck_cards": 2549,
+    "deck_words": 2445,
+    "word_aliases": 37,
+    "sentences": 3190,
+    "sentence_tokens": 35088,
+    "card_sentences": 3184,
+    "stories": 1,
+    "story_sentences": 6,
+    "exercises": 0,
+    "grammar_rules": 0,
+    "audio_assets": 0,
+    "content_releases": 1,
+    "lexical_targets": 134,
+    "card_lexical_targets": 406,
+    "form_targets": 402,
+    "deck_practice_targets": 402
+  },
+  "production_import_executed": false,
+  "staging_executed": false,
+  "flutter_tests_executed": false,
+  "device_test_executed": false,
+  "cloud_model_calls": 0,
+  "limitations": [
+    "No independent human language review.",
+    "Full repository import/export and device acceptance remain local tasks."
+  ]
+}

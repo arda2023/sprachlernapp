@@ -1,0 +1,35 @@
+{
+  "errors": [],
+  "warnings": [
+    [
+      "itch",
+      "i+1",
+      "'woollen'/'woollen' Zipf 2.74 below 3.5"
+    ],
+    [
+      "painkiller",
+      "i+1",
+      "'pharmacist'/'pharmacist' Zipf 3.34 below 3.5"
+    ],
+    [
+      "drowsy",
+      "i+1",
+      "'sleepless'/'sleepless' Zipf 3.18 below 3.5"
+    ],
+    [
+      "heart",
+      "i+1",
+      "'stethoscope'/'stethoscope' Zipf 2.66 below 3.5"
+    ],
+    [
+      "wrist",
+      "i+1",
+      "'fasten'/'fastened' Zipf 3.02 below 3.5"
+    ],
+    [
+      "stamina",
+      "i+1",
+      "'uphill'/'uphill' Zipf 3.38 below 3.5"
+    ]
+  ]
+}

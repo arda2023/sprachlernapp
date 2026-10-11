@@ -8,12 +8,13 @@ String learningHash(List<Object?> values) =>
     sha256.convert(utf8.encode(jsonEncode(values))).toString();
 
 class LearningIdentity {
-  const LearningIdentity(this.lang, this.formNorm, this.semanticAnchor);
+  const LearningIdentity(this.lang, this.formNorm, this.semanticAnchor, {this.function});
+  final String? function;
   final String lang, formNorm, semanticAnchor;
   String get key =>
-      learningHash(['learning-identity-v1', lang, formNorm, semanticAnchor]);
+      learningHash(function == null ? ['learning-identity-v1', lang, formNorm, semanticAnchor] : ['form-learning-identity-v1', lang, formNorm, semanticAnchor, function]);
   String get localId =>
-      'u:${learningHash(['local-card-v1', lang, formNorm, semanticAnchor])}';
+      'u:${learningHash(function == null ? ['local-card-v1', lang, formNorm, semanticAnchor] : ['local-form-card-v1', lang, formNorm, semanticAnchor, function])}';
 }
 
 class StorySummary {
@@ -55,6 +56,9 @@ class StoryToken {
     required this.end,
     required this.surface,
     this.cardId,
+    this.formTarget,
+    this.formFunction,
+    this.lexicalTargetId,
     this.lemmaId,
     this.lemma,
     this.pos,
@@ -65,6 +69,10 @@ class StoryToken {
     this.contextApproved = false,
   });
   final int index, start, end;
+  final FormTarget? formTarget;
+  final String? formFunction, lexicalTargetId;
+  String? get function => formTarget?.function ?? formFunction;
+  String? get lexicalId => formTarget?.lexicalTargetId ?? lexicalTargetId;
   final String surface;
   final String? cardId,
       lemmaId,
@@ -111,6 +119,7 @@ class StoryLearningCandidate {
     lang,
     contentFormNorm(token.surface),
     token.senseId ?? '',
+    function: token.function,
   );
   String get sourceFingerprint => learningHash([
     storyId,
@@ -136,6 +145,19 @@ class StoryLearningCandidate {
         sentence.text.substring(token.start, token.end) != token.surface) {
       return 'Die Wortstelle passt nicht zum gespeicherten Satz.';
     }
+    if (token.function != null &&
+        (!{'base', 'past', 'past_participle'}.contains(token.function) ||
+         !{'VERB', 'AUX'}.contains(token.pos) ||
+         token.lexicalId == null || token.lexicalId!.trim().isEmpty)) {
+      return 'Form und Bedeutung sind nicht vollständig belegt.';
+    }
+    final form = token.formTarget;
+    if (form != null && (form.cardId != token.cardId || form.senseId != token.senseId || contentFormNorm(form.form) != identity.formNorm)) {
+      return 'Die Formreferenz passt nicht zum angetippten Wort.';
+    }
+    if (card != null && token.function != null && (card!.formFunction != token.function || card!.lexicalTargetId != token.lexicalId)) {
+      return 'Die Lernkarte gehört zu einer anderen Form.';
+    }
     if (card != null &&
         (card!.lang != lang ||
             card!.formNorm != identity.formNorm ||
@@ -148,6 +170,23 @@ class StoryLearningCandidate {
             sentence.translation.trim().isEmpty ||
             sentence.tokens.where((t) => t.lemmaId != null).length > 20)) {
       return 'Für diese Bedeutung fehlt ein geprüfter Übungskontext.';
+    }
+    if (needsContext && card == null && token.function != null) {
+      var cursor = 0;
+      final ordered = [...sentence.tokens]..sort((a,b) => a.start.compareTo(b.start));
+      for (var i = 0; i < ordered.length; i++) {
+        final t = ordered[i];
+        if (t.index != i || t.start < cursor || t.end <= t.start || t.end > sentence.text.length ||
+            sentence.text.substring(cursor,t.start).trim().isNotEmpty ||
+            sentence.text.substring(t.start,t.end) != t.surface ||
+            (RegExp(r'[a-zA-Z]').hasMatch(t.surface) && !t.annotated)) {
+          return 'Für diese Form fehlt eine vollständige Satzannotation.';
+        }
+        cursor = t.end;
+      }
+      if (sentence.text.substring(cursor).trim().isNotEmpty || !ordered.contains(token)) {
+        return 'Für diese Form fehlt eine vollständige Satzannotation.';
+      }
     }
     return null;
   }

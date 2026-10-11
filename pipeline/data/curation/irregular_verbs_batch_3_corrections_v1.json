@@ -1,0 +1,118 @@
+{
+  "original_sha256": "1ceff314d963391fa2183b76058f130de5d40961e2796e53e90eb656d37d78b6",
+  "import_sha256": "5ccf7a2ee86eecdfaeacd0e6d7c852c37694333bd2810427cca389d23f7b6139",
+  "corrections": [
+    {
+      "sentence": "irregular-v1-b3-s004",
+      "token_index": 7,
+      "before": {
+        "sentence": "irregular-v1-b3-s004",
+        "idx": 7,
+        "surface": "to",
+        "start_pos": 31,
+        "end_pos": 33,
+        "lemma": "to/ADP",
+        "sense": "to/ADP|to#bedeutung_fuer_person"
+      },
+      "after": {
+        "sentence": "irregular-v1-b3-s004",
+        "idx": 7,
+        "surface": "to",
+        "start_pos": 31,
+        "end_pos": 33,
+        "lemma": "to/ADP",
+        "sense": "to/ADP|to#nach_richtung"
+      },
+      "reason": "to bezeichnet hier den Zielort einer Bewegung, nicht die Bedeutung für eine Person; vorhandene Richtungs-Sense wiederverwendet.",
+      "updated_review": {
+        "sentence": "irregular-v1-b3-s004",
+        "decision": "approved",
+        "reason": "ChatGPT-Redaktion: vollständiger Satz und deutsche Übersetzung gegengelesen; past von lost in der vorgegebenen Bedeutung. Wortbindungen kontextbezogen geprüft. Keine unabhängige menschliche Freigabe. Lokale Importkorrektur: to bezeichnet hier den Zielort einer Bewegung, nicht die Bedeutung für eine Person; vorhandene Richtungs-Sense wiederverwendet.",
+        "checked": {
+          "text": "Mia lost her gloves on the way to school yesterday.",
+          "translation_de": "Mia verlor gestern auf dem Weg zur Schule ihre Handschuhe.",
+          "tokens_sha256": "306a239fdf961f63caa03f87aa3f4c8101f36baab83342d120a7e9fca24467f8",
+          "links_sha256": "21a1155081036bd8e3d210ce3c8cd178eeda6d812fa579cd30020ca4d6dc3ce0"
+        },
+        "alternatives_checked": []
+      }
+    },
+    {
+      "sentence": "irregular-v1-b3-s037",
+      "token_index": 8,
+      "before": {
+        "sentence": "irregular-v1-b3-s037",
+        "idx": 8,
+        "surface": "to",
+        "start_pos": 30,
+        "end_pos": 32,
+        "lemma": "to/ADP",
+        "sense": "to/ADP|to#bedeutung_fuer_person"
+      },
+      "after": {
+        "sentence": "irregular-v1-b3-s037",
+        "idx": 8,
+        "surface": "to",
+        "start_pos": 30,
+        "end_pos": 32,
+        "lemma": "to/ADP",
+        "sense": "to/ADP|to#nach_richtung"
+      },
+      "reason": "to bezeichnet hier den Zielort einer Bewegung, nicht die Bedeutung für eine Person; vorhandene Richtungs-Sense wiederverwendet.",
+      "updated_review": {
+        "sentence": "irregular-v1-b3-s037",
+        "decision": "approved",
+        "reason": "ChatGPT-Redaktion: vollständiger Satz und deutsche Übersetzung gegengelesen; past von rode in der vorgegebenen Bedeutung. Wortbindungen kontextbezogen geprüft. Keine unabhängige menschliche Freigabe. Lokale Importkorrektur: to bezeichnet hier den Zielort einer Bewegung, nicht die Bedeutung für eine Person; vorhandene Richtungs-Sense wiederverwendet.",
+        "checked": {
+          "text": "As a child, Omar rode the bus to school every morning.",
+          "translation_de": "Als Kind fuhr Omar jeden Morgen mit dem Bus zur Schule.",
+          "tokens_sha256": "35889a561835b6cfcbed7209f97bf12e5a3ca4701ad4ff47295e905ecc679a83",
+          "links_sha256": "ef5438ae41c332d6ce8015602df7ff09a0c5cd855d6b69323a3c6f44832416ad"
+        },
+        "alternatives_checked": []
+      }
+    },
+    {
+      "sentence": "irregular-v1-b3-s080",
+      "token_index": 4,
+      "before": {
+        "sentence": "irregular-v1-b3-s080",
+        "idx": 4,
+        "surface": "to",
+        "start_pos": 18,
+        "end_pos": 20,
+        "lemma": "to/ADP",
+        "sense": "to/ADP|to#bedeutung_fuer_person"
+      },
+      "after": {
+        "sentence": "irregular-v1-b3-s080",
+        "idx": 4,
+        "surface": "to",
+        "start_pos": 18,
+        "end_pos": 20,
+        "lemma": "to/ADP",
+        "sense": "to/ADP|to#nach_richtung"
+      },
+      "reason": "to bezeichnet hier den Zielort einer Bewegung, nicht die Bedeutung für eine Person; vorhandene Richtungs-Sense wiederverwendet.",
+      "updated_review": {
+        "sentence": "irregular-v1-b3-s080",
+        "decision": "approved",
+        "reason": "ChatGPT-Redaktion: vollständiger Satz und deutsche Übersetzung gegengelesen; past_participle von sunk in der vorgegebenen Bedeutung. Wortbindungen kontextbezogen geprüft. Keine unabhängige menschliche Freigabe. Lokale Importkorrektur: to bezeichnet hier den Zielort einer Bewegung, nicht die Bedeutung für eine Person; vorhandene Richtungs-Sense wiederverwendet.",
+        "checked": {
+          "text": "My keys have sunk to the bottom of the pond.",
+          "translation_de": "Meine Schlüssel sind auf den Grund des Teiches gesunken.",
+          "tokens_sha256": "9213c573ba7d322c5c20fa8f3f72ab8523aa60300c4953ec87a58c00e253d9f0",
+          "links_sha256": "4a220fddd321abf2a1423df50e9d00332524f9d3b271e374770c329140131a9e"
+        },
+        "alternatives_checked": []
+      }
+    }
+  ],
+  "changed_tokens": 3,
+  "new_senses": 0,
+  "new_dictionary_forms": 0,
+  "changed_sentence_texts": 0,
+  "changed_translations": 0,
+  "changed_cards": 0,
+  "changed_owners": 0
+}

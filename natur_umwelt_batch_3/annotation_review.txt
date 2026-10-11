@@ -1,0 +1,958 @@
+species | This rare species of frog lives only on one small island. | Diese seltene Froschart lebt nur auf einer kleinen Insel.
+This => this/DET|this#dieser_begleitend
+rare => rare/ADJ|rare#selten
+species => species/NOUN|species#art
+of => of/ADP|of#teil_menge
+frog => frog/NOUN|frog#frosch
+lives => live/VERB|live#leben
+only => only/ADV|only#nur
+on => on/ADP|on#auf
+one => one/NUM|one#ein
+small => small/ADJ|small#klein
+island => island/NOUN|island#insel
+
+livestock | The farmer moved the livestock into a barn before the storm. | Der Landwirt brachte das Nutzvieh vor dem Sturm in eine Scheune.
+The => the/DET|the#bestimmter_artikel
+farmer => farmer/NOUN|farmer#landwirt
+moved => move/VERB|move#bewegen
+the => the/DET|the#bestimmter_artikel
+livestock => livestock/NOUN|livestock#nutzvieh
+into => into/ADP|into#in
+a => a/DET|a#ein
+barn => barn/NOUN|barn#scheune
+before => before/ADP|before#vor
+the => the/DET|the#bestimmter_artikel
+storm => storm/NOUN|storm#sturms
+
+insect | A small green insect was crawling across the kitchen table. | Ein kleines grünes Insekt krabbelte über den Küchentisch.
+A => a/DET|a#ein
+small => small/ADJ|small#klein
+green => green/ADJ|green#gruen
+insect => insect/NOUN|insect#insekt
+was => be/AUX|be#hilfsverb
+crawling => crawl/VERB|crawl#kriechen
+across => across/ADP|across#ueber
+the => the/DET|the#bestimmter_artikel
+kitchen => kitchen/NOUN|kitchen#kueche
+table => table/NOUN|table#tisch
+
+tree | We planted a tree beside the house to provide shade. | Wir pflanzten einen Baum neben dem Haus, um Schatten zu spenden.
+We => we/PRON|we#wir
+planted => plant/VERB|plant#pflanzen
+a => a/DET|a#ein
+tree => tree/NOUN|tree#baum
+beside => beside/ADP|beside#neben
+the => the/DET|the#bestimmter_artikel
+house => house/NOUN|house#haus
+to => to/PART|to#infinitivpartikel
+provide => provide/VERB|provide#bereitstellen
+shade => shade/NOUN|shade#schatten
+
+swarm | A swarm of bees gathered around a branch above the path. | Ein Bienenschwarm sammelte sich um einen Ast über dem Weg.
+A => a/DET|a#ein
+swarm => swarm/NOUN|swarm#insektenschwarm
+of => of/ADP|of#teil_menge
+bees => bee/NOUN|bee#biene
+gathered => gather/VERB|gather#sich-sammeln
+around => around/ADP|around#um_herum
+a => a/DET|a#ein
+branch => branch/NOUN|branch#ast
+above => above/ADP|above#ueber
+the => the/DET|the#bestimmter_artikel
+path => path/NOUN|path#fussweg
+
+renewable | The school gets its electricity from renewable sources such as wind and sunlight. | Die Schule bezieht ihren Strom aus erneuerbaren Quellen wie Wind und Sonnenlicht.
+The => the/DET|the#bestimmter_artikel
+school => school/NOUN|school#schule-hier-schul
+gets => get/VERB|get#bekommen
+its => its/DET|its#sein_ihr
+electricity => electricity/NOUN|electricity#elektrischer-strom
+from => from/ADP|from#von_ausgangspunkt
+renewable => renewable/ADJ|renewable#erneuerbar
+sources => source/NOUN|source#energiequelle
+such => such/DET|such#solch
+as => as/ADP|as#beispiel
+wind => wind/NOUN|wind#wind
+and => and/CCONJ|and#und
+sunlight => sunlight/NOUN|sunlight#sonnenlicht
+
+flower | A bee landed on the flower and disappeared between its petals. | Eine Biene landete auf der Blüte und verschwand zwischen ihren Blütenblättern.
+A => a/DET|a#ein
+bee => bee/NOUN|bee#biene
+landed => land/VERB|land#aufkommen
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+flower => flower/NOUN|flower#blumen
+and => and/CCONJ|and#und
+disappeared => disappear/VERB|disappear#verschwunden
+between => between/ADP|between#zwischen
+its => its/DET|its#sein_ihr
+petals => petal/NOUN|petal#blutenblatt
+
+hive | The bees returned to their hive as the evening grew cooler. | Die Bienen kehrten zu ihrem Bienenstock zurück, als der Abend kühler wurde.
+The => the/DET|the#bestimmter_artikel
+bees => bee/NOUN|bee#biene
+returned => return/VERB|return#zurueckkehren
+to => to/ADP|to#nach_richtung
+their => they/PRON|they#ihr_plural
+hive => hive/NOUN|hive#bienenstock
+as => as/SCONJ|as#waehrend_zeit
+the => the/DET|the#bestimmter_artikel
+evening => evening/NOUN|evening#abend
+grew => grow/VERB|grow#werden
+cooler => cool/ADJ|cool#kuehl
+
+carbon | Plants take in carbon from the air as they grow. | Pflanzen nehmen beim Wachsen Kohlenstoff aus der Luft auf.
+Plants => plant/NOUN|plant#pflanzen
+take => take/VERB|take#aufnehmen
+in => in/PART|in#aufnehmen-partikel
+carbon => carbon/NOUN|carbon#kohlenstoff
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+air => air/NOUN|air#luft
+as => as/SCONJ|as#waehrend_zeit
+they => they/PRON|they#sie_plural
+grow => grow/VERB|grow#wachsen
+
+coal | The old power station burned coal to generate electricity. | Das alte Kraftwerk verbrannte Kohle, um Strom zu erzeugen.
+The => the/DET|the#bestimmter_artikel
+old => old/ADJ|old#alten
+power => power/NOUN|power#energie
+station => station/NOUN|station#kraftwerk-bestandteil
+burned => burn/VERB|burn#verbrennen-brennstoff
+coal => coal/NOUN|coal#kohle
+to => to/PART|to#infinitivpartikel
+generate => generate/VERB|generate#erzeugen
+electricity => electricity/NOUN|electricity#elektrischer-strom
+
+seed | Sara pushed a seed into the soil and watered it. | Sara drückte einen Samen in die Erde und goss ihn.
+Sara => Sara/PROPN|sara#sara
+pushed => push/VERB|push#druecken
+a => a/DET|a#ein
+seed => seed/NOUN|seed#samen
+into => into/ADP|into#in
+the => the/DET|the#bestimmter_artikel
+soil => soil/NOUN|soil#boden
+and => and/CCONJ|and#und
+watered => water/VERB|water#giessen
+it => it/PRON|it#es_ding
+
+fur | The rabbit's thick fur felt soft beneath my fingers. | Das dichte Fell des Kaninchens fühlte sich unter meinen Fingern weich an.
+The => the/DET|the#bestimmter_artikel
+rabbit => rabbit/NOUN|rabbit#kaninchen
+'s => 's/PART|s#genitiv-endung
+thick => thick/ADJ|thick#dick
+fur => fur/NOUN|fur#fell
+felt => feel/VERB|feel#anfuehlte
+soft => soft/ADJ|soft#weiche
+beneath => beneath/ADP|beneath#unter
+my => my/DET|my#mein
+fingers => finger/NOUN|finger#finger
+
+environment | The factory must reduce its impact on the local environment. | Die Fabrik muss ihre Auswirkungen auf die örtliche Umwelt verringern.
+The => the/DET|the#bestimmter_artikel
+factory => factory/NOUN|factory#fabrik
+must => must/AUX|must#muessen
+reduce => reduce/VERB|reduce#verringern
+its => its/DET|its#sein_ihr
+impact => impact/NOUN|impact#auswirkung
+on => on/ADP|on#auswirkungsziel
+the => the/DET|the#bestimmter_artikel
+local => local/ADJ|local#oertlichen
+environment => environment/NOUN|environment#umwelt
+
+sustainable | The village needs a sustainable supply of clean drinking water. | Das Dorf braucht eine nachhaltige Versorgung mit sauberem Trinkwasser.
+The => the/DET|the#bestimmter_artikel
+village => village/NOUN|village#dorf
+needs => need/VERB|need#brauchen
+a => a/DET|a#ein
+sustainable => sustainable/ADJ|sustainable#nachhaltig
+supply => supply/NOUN|supply#versorgung
+of => of/ADP|of#teil_menge
+clean => clean/ADJ|clean#sauber
+drinking => drinking/NOUN|drinking#trinken
+water => water/NOUN|water#wasser
+
+charcoal | Ben cooked vegetables over hot charcoal in the garden. | Ben grillte im Garten Gemüse über heißer Holzkohle.
+Ben => Ben/PROPN|ben#ben
+cooked => cook/VERB|cook#kocht
+vegetables => vegetable/NOUN|vegetable#gemuese
+over => over/ADP|over#ueber
+hot => hot/ADJ|hot#heiss
+charcoal => charcoal/NOUN|charcoal#holzkohle
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+garden => garden/NOUN|garden#garten
+
+bark | The rough bark protected the tree from damage. | Die raue Rinde schützte den Baum vor Schäden.
+The => the/DET|the#bestimmter_artikel
+rough => rough/ADJ|rough#raue
+bark => bark/NOUN|bark#baumrinde
+protected => protect/VERB|protect#schuetzen
+the => the/DET|the#bestimmter_artikel
+tree => tree/NOUN|tree#baum
+from => from/ADP|from#schutz_vor
+damage => damage/NOUN|damage#schaden
+
+hoof | The horse lifted one hoof while Lina cleaned it. | Das Pferd hob einen Huf, während Lina ihn reinigte.
+The => the/DET|the#bestimmter_artikel
+horse => horse/NOUN|horse#pferd
+lifted => lift/VERB|lift#heben
+one => one/NUM|one#ein
+hoof => hoof/NOUN|hoof#huf
+while => while/SCONJ|while#waehrend
+Lina => Lina/PROPN|lina#lina
+cleaned => clean/VERB|clean#putzte
+it => it/PRON|it#es_ding
+
+landfill | The town wants to send less rubbish to landfill. | Die Stadt will weniger Müll auf Deponien entsorgen.
+The => the/DET|the#bestimmter_artikel
+town => town/NOUN|town#die-stadt
+wants => want/VERB|want#wollen
+to => to/PART|to#infinitivpartikel
+send => send/VERB|send#verschicken
+less => less/DET|less#weniger-menge
+rubbish => rubbish/NOUN|rubbish#mull
+to => to/ADP|to#nach_richtung
+landfill => landfill/NOUN|landfill#mulldeponie
+
+turbine | The wind made the blades of the turbine turn slowly. | Der Wind ließ die Rotorblätter der Turbine langsam rotieren.
+The => the/DET|the#bestimmter_artikel
+wind => wind/NOUN|wind#wind
+made => make/VERB|make#bewegung-bewirken
+the => the/DET|the#bestimmter_artikel
+blades => blade/NOUN|blade#rotorblatt
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+turbine => turbine/NOUN|turbine#turbine
+turn => turn/VERB|turn#drehen
+slowly => slowly/ADV|slowly#langsam
+
+limestone | The old church was built from pale limestone. | Die alte Kirche wurde aus hellem Kalkstein gebaut.
+The => the/DET|the#bestimmter_artikel
+old => old/ADJ|old#alten
+church => church/NOUN|church#kirche
+was => be/AUX|be#hilfsverb
+built => build/VERB|build#erstellen
+from => from/ADP|from#von_ausgangspunkt
+pale => pale/ADJ|pale#hell
+limestone => limestone/NOUN|limestone#kalkstein
+
+autumn | We often walk through the colourful woods in autumn. | Wir gehen im Herbst oft durch den bunten Wald spazieren.
+We => we/PRON|we#wir
+often => often/ADV|often#oft
+walk => walk/VERB|walk#geht-zu-fuss
+through => through/ADP|through#durch
+the => the/DET|the#bestimmter_artikel
+colourful => colourful/ADJ|colourful#bunt
+woods => wood/NOUN|wood#wald
+in => in/ADP|in#in_zeitlich
+autumn => autumn/NOUN|autumn#herbst
+
+rainforest | Heavy rain fell as we followed the path through the rainforest. | Es regnete stark, als wir dem Weg durch den Regenwald folgten.
+Heavy => heavy/ADJ|heavy#stark
+rain => rain/NOUN|rain#regen
+fell => fall/VERB|fall#fallen
+as => as/SCONJ|as#waehrend_zeit
+we => we/PRON|we#wir
+followed => follow/VERB|follow#folgen-sie
+the => the/DET|the#bestimmter_artikel
+path => path/NOUN|path#fussweg
+through => through/ADP|through#durch
+the => the/DET|the#bestimmter_artikel
+rainforest => rainforest/NOUN|rainforest#regenwald
+
+needle | A dry pine needle fell from the branch onto my sleeve. | Eine trockene Kiefernnadel fiel vom Ast auf meinen Ärmel.
+A => a/DET|a#ein
+dry => dry/ADJ|dry#trocken
+pine => pine/NOUN|pine#kiefer
+needle => needle/NOUN|needle#nadel
+fell => fall/VERB|fall#fallen
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+branch => branch/NOUN|branch#ast
+onto => onto/ADP|onto#auf
+my => my/DET|my#mein
+sleeve => sleeve/NOUN|sleeve#aermeln
+
+tail | The dog wagged its tail when Omar opened the door. | Der Hund wedelte mit dem Schwanz, als Omar die Tür öffnete.
+The => the/DET|the#bestimmter_artikel
+dog => dog/NOUN|dog#hund
+wagged => wag/VERB|wag#wedeln
+its => its/DET|its#sein_ihr
+tail => tail/NOUN|tail#schwanz
+when => when/SCONJ|when#als_wenn
+Omar => Omar/PROPN|omar#omar
+opened => open/VERB|open#oeffnete
+the => the/DET|the#bestimmter_artikel
+door => door/NOUN|door#tuer
+
+packaging | Please remove all the packaging before using the new lamp. | Entferne bitte die gesamte Verpackung, bevor du die neue Lampe benutzt.
+Please => please/INTJ|please#bitte
+remove => remove/VERB|remove#entfernt
+all => all/DET|all#alle_det
+the => the/DET|the#bestimmter_artikel
+packaging => packaging/NOUN|packaging#verpackung
+before => before/SCONJ|before#bevor
+using => use/VERB|use#benutzen
+the => the/DET|the#bestimmter_artikel
+new => new/ADJ|new#neu
+lamp => lamp/NOUN|lamp#lampen
+
+consumption | Better insulation can lower a building's energy consumption. | Eine bessere Dämmung kann den Energieverbrauch eines Gebäudes senken.
+Better => good/ADJ|good#gut
+insulation => insulation/NOUN|insulation#dammung
+can => can/AUX|can#koennen
+lower => lower/VERB|lower#verringern
+a => a/DET|a#ein
+building => building/NOUN|building#gebaeude
+'s => 's/PART|s#genitiv-endung
+energy => energy/NOUN|energy#physikalische-energie
+consumption => consumption/NOUN|consumption#verbrauch
+
+copper | The cable contains copper because the metal conducts electricity well. | Das Kabel enthält Kupfer, weil das Metall Strom gut leitet.
+The => the/DET|the#bestimmter_artikel
+cable => cable/NOUN|cable#kabel
+contains => contain/VERB|contain#enthalten
+copper => copper/NOUN|copper#kupfer
+because => because/SCONJ|because#weil
+the => the/DET|the#bestimmter_artikel
+metal => metal/NOUN|metal#metall
+conducts => conduct/VERB|conduct#leiten
+electricity => electricity/NOUN|electricity#elektrischer-strom
+well => well/ADV|well#gut
+
+dusk | At dusk, the bats began flying above the garden. | In der Abenddämmerung begannen die Fledermäuse, über dem Garten zu fliegen.
+At => at/ADP|at#zeit
+dusk => dusk/NOUN|dusk#abenddammerung
+the => the/DET|the#bestimmter_artikel
+bats => bat/NOUN|bat#fledermaus
+began => begin/VERB|begin#beginnt
+flying => fly/VERB|fly#fliegt
+above => above/ADP|above#ueber
+the => the/DET|the#bestimmter_artikel
+garden => garden/NOUN|garden#garten
+
+gravel | The car tyres made a loud noise on the gravel. | Die Autoreifen machten auf dem Kies ein lautes Geräusch.
+The => the/DET|the#bestimmter_artikel
+car => car/NOUN|car#auto
+tyres => tyre/NOUN|tyre#reifen
+made => make/VERB|make#geraeusch-erzeugen
+a => a/DET|a#ein
+loud => loud/ADJ|loud#lauten
+noise => noise/NOUN|noise#laerm
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+gravel => gravel/NOUN|gravel#kies
+
+fern | A large fern was growing in the shade beneath the trees. | Ein großer Farn wuchs im Schatten unter den Bäumen.
+A => a/DET|a#ein
+large => large/ADJ|large#gross
+fern => fern/NOUN|fern#farn
+was => be/AUX|be#hilfsverb
+growing => grow/VERB|grow#wachsen
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+shade => shade/NOUN|shade#schatten
+beneath => beneath/ADP|beneath#unter
+the => the/DET|the#bestimmter_artikel
+trees => tree/NOUN|tree#baum
+
+caterpillar | The green caterpillar had eaten several holes in the leaf. | Die grüne Raupe hatte mehrere Löcher in das Blatt gefressen.
+The => the/DET|the#bestimmter_artikel
+green => green/ADJ|green#gruen
+caterpillar => caterpillar/NOUN|caterpillar#raupe
+had => have/AUX|have#hilfsverb
+eaten => eat/VERB|eat#essen
+several => several/DET|several#mehrere
+holes => hole/NOUN|hole#loch
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+leaf => leaf/NOUN|leaf#blatt
+
+disposable | The café replaced disposable cups with ones customers could use again. | Das Café ersetzte Einwegbecher durch Becher, die Kunden wiederverwenden konnten.
+The => the/DET|the#bestimmter_artikel
+café => café/NOUN|café#cafe
+replaced => replace/VERB|replace#ersetzen
+disposable => disposable/ADJ|disposable#zum-wegwerfen
+cups => cup/NOUN|cup#tassen
+with => with/ADP|with#mit
+ones => one/PRON|one#stellvertreter
+customers => customer/NOUN|customer#kunde-kundin
+could => could/AUX|could#konnten
+use => use/VERB|use#benutzen
+again => again/ADV|again#noch-einmal
+
+aluminium | The lightweight frame is made of aluminium rather than steel. | Der leichte Rahmen ist aus Aluminium statt aus Stahl.
+The => the/DET|the#bestimmter_artikel
+lightweight => lightweight/ADJ|lightweight#leicht
+frame => frame/NOUN|frame#geruest
+is => be/AUX|be#hilfsverb
+made => make/VERB|make#herstellen
+of => of/ADP|of#material_herkunft
+aluminium => aluminium/NOUN|aluminium#aluminium
+rather => rather/ADV|rather#rather-than-statt
+than => than/ADP|than#alternative-eigenschaft
+steel => steel/NOUN|steel#stahl
+
+nuclear | The country produces some of its electricity using nuclear power. | Das Land erzeugt einen Teil seines Stroms mit Kernenergie.
+The => the/DET|the#bestimmter_artikel
+country => country/NOUN|country#land_staat
+produces => produce/VERB|produce#herstellen
+some => some/PRON|some#etwas
+of => of/ADP|of#teil_menge
+its => its/DET|its#sein_ihr
+electricity => electricity/NOUN|electricity#elektrischer-strom
+using => use/VERB|use#benutzen
+nuclear => nuclear/ADJ|nuclear#nuklear
+power => power/NOUN|power#energie
+
+erosion | The roots help prevent erosion by holding the soil in place. | Die Wurzeln helfen, Erosion zu verhindern, indem sie den Boden festhalten.
+The => the/DET|the#bestimmter_artikel
+roots => root/NOUN|root#wurzel
+help => help/VERB|help#helfen
+prevent => prevent/VERB|prevent#hindern
+erosion => erosion/NOUN|erosion#erosion
+by => by/ADP|by#mit_mittel
+holding => hold/VERB|hold#haelt
+the => the/DET|the#bestimmter_artikel
+soil => soil/NOUN|soil#boden
+in => in/ADP|in#in_raeumlich
+place => place/NOUN|place#ort
+
+pond | Several frogs jumped into the pond as we approached. | Mehrere Frösche sprangen in den Teich, als wir näher kamen.
+Several => several/DET|several#mehrere
+frogs => frog/NOUN|frog#frosch
+jumped => jump/VERB|jump#springen
+into => into/ADP|into#in
+the => the/DET|the#bestimmter_artikel
+pond => pond/NOUN|pond#teich
+as => as/SCONJ|as#waehrend_zeit
+we => we/PRON|we#wir
+approached => approach/VERB|approach#sich-naehern
+
+thorn | A sharp thorn caught my sleeve as I passed the bush. | Ein spitzer Dorn blieb an meinem Ärmel hängen, als ich am Busch vorbeiging.
+A => a/DET|a#ein
+sharp => sharp/ADJ|sharp#scharfen
+thorn => thorn/NOUN|thorn#dorn
+caught => catch/VERB|catch#sich-verhaken
+my => my/DET|my#mein
+sleeve => sleeve/NOUN|sleeve#aermeln
+as => as/SCONJ|as#waehrend_zeit
+I => I/PRON|i#ich
+passed => pass/VERB|pass#vorbeigehen
+the => the/DET|the#bestimmter_artikel
+bush => bush/NOUN|bush#strauch
+
+beetle | A shiny black beetle crawled out from under the stone. | Ein glänzender schwarzer Käfer kroch unter dem Stein hervor.
+A => a/DET|a#ein
+shiny => shiny/ADJ|shiny#glaenzend
+black => black/ADJ|black#schwarz
+beetle => beetle/NOUN|beetle#kafer
+crawled => crawl/VERB|crawl#kriechen
+out => out/ADV|out#heraus
+from => from/ADP|from#von_ausgangspunkt
+under => under/ADP|under#unter
+the => the/DET|the#bestimmter_artikel
+stone => stone/NOUN|stone#stein
+
+drought | The long drought left the fields dry and the wells empty. | Die lange Dürre ließ die Felder austrocknen und die Brunnen versiegen.
+The => the/DET|the#bestimmter_artikel
+long => long/ADJ|long#lange
+drought => drought/NOUN|drought#durre
+left => leave/VERB|leave#in-zustand-hinterlassen
+the => the/DET|the#bestimmter_artikel
+fields => field/NOUN|field#feld
+dry => dry/ADJ|dry#trocken
+and => and/CCONJ|and#und
+the => the/DET|the#bestimmter_artikel
+wells => well/NOUN|well#brunnen
+empty => empty/ADJ|empty#leer
+
+harmful | The new filters remove harmful substances from the wastewater. | Die neuen Filter entfernen schädliche Stoffe aus dem Abwasser.
+The => the/DET|the#bestimmter_artikel
+new => new/ADJ|new#neu
+filters => filter/NOUN|filter#filter
+remove => remove/VERB|remove#entfernt
+harmful => harmful/ADJ|harmful#schadlich
+substances => substance/NOUN|substance#stoff
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+wastewater => wastewater/NOUN|wastewater#gebrauchtes-wasser
+
+atmosphere | The balloon rose high into the Earth's atmosphere. | Der Ballon stieg hoch in die Erdatmosphäre auf.
+The => the/DET|the#bestimmter_artikel
+balloon => balloon/NOUN|balloon#ballons
+rose => rise/VERB|rise#aufsteigen
+high => high/ADV|high#hoch
+into => into/ADP|into#in
+the => the/DET|the#bestimmter_artikel
+Earth => Earth/PROPN|earth#planet-erde
+'s => 's/PART|s#genitiv-endung
+atmosphere => atmosphere/NOUN|atmosphere#atmosphare
+
+cardboard | Mia cut a piece of cardboard to protect the photograph. | Mia schnitt ein Stück Pappe zurecht, um das Foto zu schützen.
+Mia => Mia/PROPN|mia#mia
+cut => cut/VERB|cut#schneidet
+a => a/DET|a#ein
+piece => piece/NOUN|piece#stueck
+of => of/ADP|of#teil_menge
+cardboard => cardboard/NOUN|cardboard#pappe
+to => to/PART|to#infinitivpartikel
+protect => protect/VERB|protect#schuetzen
+the => the/DET|the#bestimmter_artikel
+photograph => photograph/NOUN|photograph#foto
+
+landslide | A landslide covered the mountain road with earth and rocks. | Ein Erdrutsch bedeckte die Bergstraße mit Erde und Felsbrocken.
+A => a/DET|a#ein
+landslide => landslide/NOUN|landslide#erdrutsch
+covered => cover/VERB|cover#bedecken
+the => the/DET|the#bestimmter_artikel
+mountain => mountain/NOUN|mountain#berg
+road => road/NOUN|road#strasse
+with => with/ADP|with#mit
+earth => earth/NOUN|earth#bodenmaterial
+and => and/CCONJ|and#und
+rocks => rock/NOUN|rock#felsen
+
+pebble | I picked up a smooth pebble from the river bank. | Ich hob einen glatten Kieselstein vom Flussufer auf.
+I => I/PRON|i#ich
+picked => pick/VERB|pick#hob-in-picked-up
+up => up/ADP|up#auf-partikel-in-picked-up
+a => a/DET|a#ein
+smooth => smooth/ADJ|smooth#glatt
+pebble => pebble/NOUN|pebble#kieselstein
+from => from/ADP|from#von_ausgangspunkt
+the => the/DET|the#bestimmter_artikel
+river => river/NOUN|river#fluss
+bank => bank/NOUN|bank#ufer
+
+snail | A snail left a shiny trail across the wet leaf. | Eine Schnecke hinterließ eine glänzende Spur auf dem nassen Blatt.
+A => a/DET|a#ein
+snail => snail/NOUN|snail#schnecke
+left => leave/VERB|leave#hinterliess
+a => a/DET|a#ein
+shiny => shiny/ADJ|shiny#glaenzend
+trail => trail/NOUN|trail#spur
+across => across/ADP|across#ueber
+the => the/DET|the#bestimmter_artikel
+wet => wet/ADJ|wet#nass
+leaf => leaf/NOUN|leaf#blatt
+
+snowflake | A snowflake landed on my glove and quickly melted. | Eine Schneeflocke landete auf meinem Handschuh und schmolz schnell.
+A => a/DET|a#ein
+snowflake => snowflake/NOUN|snowflake#schneeflocke
+landed => land/VERB|land#aufkommen
+on => on/ADP|on#auf
+my => my/DET|my#mein
+glove => glove/NOUN|glove#handschuhe
+and => and/CCONJ|and#und
+quickly => quickly/ADV|quickly#schnell
+melted => melt/VERB|melt#schmelzen
+
+sort | We need to sort the bottles by colour before recycling them. | Wir müssen die Flaschen vor dem Recycling nach Farben sortieren.
+We => we/PRON|we#wir
+need => need/VERB|need#brauchen
+to => to/PART|to#infinitivpartikel
+sort => sort/VERB|sort#sortieren
+the => the/DET|the#bestimmter_artikel
+bottles => bottle/NOUN|bottle#flasche
+by => by/ADP|by#ordnungskriterium
+colour => colour/NOUN|colour#farbe
+before => before/SCONJ|before#bevor
+recycling => recycle/VERB|recycle#recyceln
+them => they/PRON|they#sie_plural
+
+soil | The soil was too dry, so we watered the plants. | Die Erde war zu trocken, deshalb gossen wir die Pflanzen.
+The => the/DET|the#bestimmter_artikel
+soil => soil/NOUN|soil#boden
+was => be/AUX|be#sein_vollverb
+too => too/ADV|too#zu
+dry => dry/ADJ|dry#trocken
+so => so/CCONJ|so#deshalb
+we => we/PRON|we#wir
+watered => water/VERB|water#giessen
+the => the/DET|the#bestimmter_artikel
+plants => plant/NOUN|plant#pflanzen
+
+ecosystem | Removing one species can affect the whole ecosystem. | Das Entfernen einer Art kann das gesamte Ökosystem beeinflussen.
+Removing => remove/VERB|remove#entfernt
+one => one/NUM|one#ein
+species => species/NOUN|species#art
+can => can/AUX|can#koennen
+affect => affect/VERB|affect#beeinflussen
+the => the/DET|the#bestimmter_artikel
+whole => whole/ADJ|whole#ganz
+ecosystem => ecosystem/NOUN|ecosystem#okosystem
+
+soot | Black soot had collected on the glass above the fire. | Über dem Feuer hatte sich schwarzer Ruß auf dem Glas abgelagert.
+Black => black/ADJ|black#schwarz
+soot => soot/NOUN|soot#ru
+had => have/AUX|have#hilfsverb
+collected => collect/VERB|collect#sich-ablagern
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+glass => glass/NOUN|glass#glas
+above => above/ADP|above#ueber
+the => the/DET|the#bestimmter_artikel
+fire => fire/NOUN|fire#feuer
+
+lava | Hot lava flowed slowly down the side of the volcano. | Heiße Lava floss langsam den Hang des Vulkans hinunter.
+Hot => hot/ADJ|hot#heiss
+lava => lava/NOUN|lava#lava
+flowed => flow/VERB|flow#fliessen
+slowly => slowly/ADV|slowly#langsam
+down => down/ADP|down#hinunter-entlang
+the => the/DET|the#bestimmter_artikel
+side => side/NOUN|side#seite
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+volcano => volcano/NOUN|volcano#vulkan
+
+wetland | The wetland provides a home for many birds and frogs. | Das Feuchtgebiet bietet vielen Vögeln und Fröschen einen Lebensraum.
+The => the/DET|the#bestimmter_artikel
+wetland => wetland/NOUN|wetland#feuchtgebiet
+provides => provide/VERB|provide#bereitstellen
+a => a/DET|a#ein
+home => home/NOUN|home#heim-zu-hause
+for => for/ADP|for#fuer_zweck_empfaenger
+many => many/ADJ|many#viele
+birds => bird/NOUN|bird#vogel
+and => and/CCONJ|and#und
+frogs => frog/NOUN|frog#frosch
+
+poisonous | The guide warned us about the poisonous berries beside the path. | Der Führer warnte uns vor den giftigen Beeren neben dem Weg.
+The => the/DET|the#bestimmter_artikel
+guide => guide/NOUN|guide#reisefuehrer
+warned => warn/VERB|warn#warnen
+us => we/PRON|we#uns
+about => about/ADP|about#ueber_thema
+the => the/DET|the#bestimmter_artikel
+poisonous => poisonous/ADJ|poisonous#giftig
+berries => berry/NOUN|berry#beeren
+beside => beside/ADP|beside#neben
+the => the/DET|the#bestimmter_artikel
+path => path/NOUN|path#fussweg
+
+squirrel | A squirrel carried a nut up the tree. | Ein Eichhörnchen trug eine Nuss den Baum hinauf.
+A => a/DET|a#ein
+squirrel => squirrel/NOUN|squirrel#eichhornchen
+carried => carry/VERB|carry#tragen
+a => a/DET|a#ein
+nut => nut/NOUN|nut#nuss
+up => up/ADP|up#entlang
+the => the/DET|the#bestimmter_artikel
+tree => tree/NOUN|tree#baum
+
+freeze | The water in the shallow pond may freeze overnight. | Das Wasser in dem flachen Teich könnte über Nacht gefrieren.
+The => the/DET|the#bestimmter_artikel
+water => water/NOUN|water#wasser
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+shallow => shallow/ADJ|shallow#flach
+pond => pond/NOUN|pond#teich
+may => may/AUX|may#vielleicht-moeglichkeit
+freeze => freeze/VERB|freeze#gefrieren
+overnight => overnight/ADV|overnight#uber-nacht
+
+smog | Thick smog hid the hills beyond the city. | Dichter Smog verdeckte die Hügel jenseits der Stadt.
+Thick => thick/ADJ|thick#dick
+smog => smog/NOUN|smog#smog
+hid => hide/VERB|hide#verstecken
+the => the/DET|the#bestimmter_artikel
+hills => hill/NOUN|hill#huegel
+beyond => beyond/ADP|beyond#jenseits
+the => the/DET|the#bestimmter_artikel
+city => city/NOUN|city#stadt
+
+ranger | The ranger reminded visitors to stay on the marked paths. | Der Parkwächter erinnerte die Besucher daran, auf den markierten Wegen zu bleiben.
+The => the/DET|the#bestimmter_artikel
+ranger => ranger/NOUN|ranger#parkwachter
+reminded => remind/VERB|remind#erinnert
+visitors => visitor/NOUN|visitor#besucher
+to => to/PART|to#infinitivpartikel
+stay => stay/VERB|stay#bleiben
+on => on/ADP|on#auf
+the => the/DET|the#bestimmter_artikel
+marked => marked/ADJ|marked#gekennzeichnet
+paths => path/NOUN|path#fussweg
+
+liquid | The liquid slowly turned into ice inside the freezer. | Die Flüssigkeit verwandelte sich im Gefrierschrank langsam in Eis.
+The => the/DET|the#bestimmter_artikel
+liquid => liquid/NOUN|liquid#flussigkeit
+slowly => slowly/ADV|slowly#langsam
+turned => turn/VERB|turn#sich-verwandeln
+into => into/ADP|into#anordnung
+ice => ice/NOUN|ice#eis
+inside => inside/ADP|inside#in-im
+the => the/DET|the#bestimmter_artikel
+freezer => freezer/NOUN|freezer#gefrierschrank
+
+wildfire | Strong winds carried the wildfire towards the village. | Starke Winde trieben den Vegetationsbrand auf das Dorf zu.
+Strong => strong/ADJ|strong#kraeftige_stroemung
+winds => wind/NOUN|wind#wind
+carried => carry/VERB|carry#tragen
+the => the/DET|the#bestimmter_artikel
+wildfire => wildfire/NOUN|wildfire#vegetationsbrand
+towards => towards/ADP|towards#in_richtung
+the => the/DET|the#bestimmter_artikel
+village => village/NOUN|village#dorf
+
+estuary | We watched birds feeding in the wide estuary at low tide. | Wir beobachteten bei Ebbe Vögel bei der Nahrungssuche in der breiten Flussmündung.
+We => we/PRON|we#wir
+watched => watch/VERB|watch#beobachtet
+birds => bird/NOUN|bird#vogel
+feeding => feed/VERB|feed#nahrung-aufnehmen
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+wide => wide/ADJ|wide#breit
+estuary => estuary/NOUN|estuary#flussmundung
+at => at/ADP|at#zeit
+low => low/ADJ|low#niedrigen
+tide => tide/NOUN|tide#gezeitenstand
+
+sow | The farmer will sow wheat in this field next month. | Der Landwirt wird nächsten Monat auf diesem Feld Weizen säen.
+The => the/DET|the#bestimmter_artikel
+farmer => farmer/NOUN|farmer#landwirt
+will => will/AUX|will#zukunft
+sow => sow/VERB|sow#saen
+wheat => wheat/NOUN|wheat#weizen
+in => in/ADP|in#in_raeumlich
+this => this/DET|this#dieser_begleitend
+field => field/NOUN|field#feld
+next => next/ADJ|next#naechsten
+month => month/NOUN|month#monat
+
+deer | A deer with large antlers stood at the edge of the forest. | Ein Hirsch mit einem großen Geweih stand am Waldrand.
+A => a/DET|a#ein
+deer => deer/NOUN|deer#hirsch
+with => with/ADP|with#mit
+large => large/ADJ|large#gross
+antlers => antler/NOUN|antler#geweihstange
+stood => stand/VERB|stand#stehen
+at => at/ADP|at#ort
+the => the/DET|the#bestimmter_artikel
+edge => edge/NOUN|edge#rand
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+forest => forest/NOUN|forest#wald
+
+tornado | The tornado destroyed several barns and knocked down trees. | Der Tornado zerstörte mehrere Scheunen und riss Bäume um.
+The => the/DET|the#bestimmter_artikel
+tornado => tornado/NOUN|tornado#tornado
+destroyed => destroy/VERB|destroy#zerstoeren
+several => several/DET|several#mehrere
+barns => barn/NOUN|barn#scheune
+and => and/CCONJ|and#und
+knocked => knock/VERB|knock#umstossen
+down => down/PART|down#umwerfen
+trees => tree/NOUN|tree#baum
+
+leak | This old water tank may leak if we fill it completely. | Dieser alte Wassertank könnte auslaufen, wenn wir ihn ganz füllen.
+This => this/DET|this#dieser_begleitend
+old => old/ADJ|old#alten
+water => water/NOUN|water#wasser
+tank => tank/NOUN|tank#fluessigkeitsbehaelter
+may => may/AUX|may#vielleicht-moeglichkeit
+leak => leak/VERB|leak#undicht-sein
+if => if/SCONJ|if#wenn
+we => we/PRON|we#wir
+fill => fill/VERB|fill#fuellen
+it => it/PRON|it#es_ding
+completely => completely/ADV|completely#voellig
+
+survive | These plants can survive for weeks without any rain. | Diese Pflanzen können wochenlang ohne Regen überleben.
+These => these/DET|these#diese
+plants => plant/NOUN|plant#pflanzen
+can => can/AUX|can#koennen
+survive => survive/VERB|survive#uberleben
+for => for/ADP|for#seit_lang_dauer
+weeks => week/NOUN|week#woche
+without => without/ADP|without#ohne
+any => any/DET|any#irgendeine
+rain => rain/NOUN|rain#regen
+
+absorb | The dry soil could not absorb all the rainwater at once. | Der trockene Boden konnte nicht das ganze Regenwasser auf einmal aufnehmen.
+The => the/DET|the#bestimmter_artikel
+dry => dry/ADJ|dry#trocken
+soil => soil/NOUN|soil#boden
+could => could/AUX|could#konnten
+not => not/PART|not#nicht
+absorb => absorb/VERB|absorb#aufsaugen
+all => all/DET|all#alle_det
+the => the/DET|the#bestimmter_artikel
+rainwater => rainwater/NOUN|rainwater#regenwasser
+at => at/ADP|at#at_once
+once => once/ADV|once#gleichzeitig
+
+splash | Please walk slowly so the muddy water does not splash onto my clothes. | Geh bitte langsam, damit das schlammige Wasser nicht auf meine Kleidung spritzt.
+Please => please/INTJ|please#bitte
+walk => walk/VERB|walk#geht-zu-fuss
+slowly => slowly/ADV|slowly#langsam
+so => so/SCONJ|so#damit
+the => the/DET|the#bestimmter_artikel
+muddy => muddy/ADJ|muddy#schlammig
+water => water/NOUN|water#wasser
+does => do/AUX|do#hilfsverb
+not => not/PART|not#nicht
+splash => splash/VERB|splash#spritzen
+onto => onto/ADP|onto#auf
+my => my/DET|my#mein
+clothes => clothes/NOUN|clothes#kleidung
+
+canyon | A narrow river winds through the bottom of the canyon. | Ein schmaler Fluss schlängelt sich durch den Grund der Schlucht.
+A => a/DET|a#ein
+narrow => narrow/ADJ|narrow#schmal
+river => river/NOUN|river#fluss
+winds => wind/VERB|wind#sich-schlaengeln
+through => through/ADP|through#durch
+the => the/DET|the#bestimmter_artikel
+bottom => bottom/NOUN|bottom#unteres_ende
+of => of/ADP|of#genitiv_besitz
+the => the/DET|the#bestimmter_artikel
+canyon => canyon/NOUN|canyon#schlucht
+
+pesticide | The farmer used a pesticide to protect the young plants from insects. | Der Landwirt setzte ein Pflanzenschutzmittel ein, um die jungen Pflanzen vor Insekten zu schützen.
+The => the/DET|the#bestimmter_artikel
+farmer => farmer/NOUN|farmer#landwirt
+used => use/VERB|use#benutzen
+a => a/DET|a#ein
+pesticide => pesticide/NOUN|pesticide#pflanzenschutzmittel
+to => to/PART|to#infinitivpartikel
+protect => protect/VERB|protect#schuetzen
+the => the/DET|the#bestimmter_artikel
+young => young/ADJ|young#jung
+plants => plant/NOUN|plant#pflanzen
+from => from/ADP|from#schutz_vor
+insects => insect/NOUN|insect#insekt
+
+crop | Rice is the main crop grown in this region. | Reis ist die wichtigste Nutzpflanze, die in dieser Region angebaut wird.
+Rice => rice/NOUN|rice#reis
+is => be/AUX|be#sein_vollverb
+the => the/DET|the#bestimmter_artikel
+main => main/ADJ|main#haupt
+crop => crop/NOUN|crop#nutzpflanze
+grown => grow/VERB|grow#anbauen
+in => in/ADP|in#in_raeumlich
+this => this/DET|this#dieser_begleitend
+region => region/NOUN|region#gebiet
+
+owl | We heard an owl calling from a tree after dark. | Wir hörten nach Einbruch der Dunkelheit eine Eule aus einem Baum rufen.
+We => we/PRON|we#wir
+heard => hear/VERB|hear#hoeren
+an => a/DET|a#ein
+owl => owl/NOUN|owl#eule
+calling => call/VERB|call#rufen
+from => from/ADP|from#von_ausgangspunkt
+a => a/DET|a#ein
+tree => tree/NOUN|tree#baum
+after => after/ADP|after#nach
+dark => dark/NOUN|dark#dunkelheit
+
+overcast | The sky remained overcast throughout our walk along the coast. | Der Himmel blieb während unseres gesamten Spaziergangs an der Küste bedeckt.
+The => the/DET|the#bestimmter_artikel
+sky => sky/NOUN|sky#himmel
+remained => remain/VERB|remain#bleiben
+overcast => overcast/ADJ|overcast#bedeckt
+throughout => throughout/ADP|throughout#waehrend_gesamter
+our => our/DET|our#unser-unsere
+walk => walk/NOUN|walk#spaziergang
+along => along/ADP|along#entlang
+the => the/DET|the#bestimmter_artikel
+coast => coast/NOUN|coast#kueste
+
+refine | The plant uses heat to refine crude oil. | Die Anlage nutzt Wärme, um Rohöl zu raffinieren.
+The => the/DET|the#bestimmter_artikel
+plant => plant/NOUN|plant#industrieanlage
+uses => use/VERB|use#benutzen
+heat => heat/NOUN|heat#waermeenergie
+to => to/PART|to#infinitivpartikel
+refine => refine/VERB|refine#raffinieren
+crude => crude/ADJ|crude#unraffiniert
+oil => oil/NOUN|oil#erdoel
+
+awareness | The school campaign raised awareness of plastic pollution in the oceans. | Die Schulaktion schärfte das Bewusstsein für die Plastikverschmutzung der Meere.
+The => the/DET|the#bestimmter_artikel
+school => school/NOUN|school#schule-hier-schul
+campaign => campaign/NOUN|campaign#aktion
+raised => raise/VERB|raise#bewusstsein-schaerfen
+awareness => awareness/NOUN|awareness#bewusstsein
+of => of/ADP|of#ueber_bezug
+plastic => plastic/NOUN|plastic#plastik
+pollution => pollution/NOUN|pollution#umweltverschmutzung
+in => in/ADP|in#in_raeumlich
+the => the/DET|the#bestimmter_artikel
+oceans => ocean/NOUN|ocean#ozean
+
+pollinate | Bees pollinate many of the fruit trees in our garden. | Bienen bestäuben viele der Obstbäume in unserem Garten.
+Bees => bee/NOUN|bee#biene
+pollinate => pollinate/VERB|pollinate#bestauben
+many => many/PRON|many#viele-stellvertretend
+of => of/ADP|of#teil_menge
+the => the/DET|the#bestimmter_artikel
+fruit => fruit/NOUN|fruit#obst
+trees => tree/NOUN|tree#baum
+in => in/ADP|in#in_raeumlich
+our => our/DET|our#unser-unsere
+garden => garden/NOUN|garden#garten
+
+bud | The branch had a small green bud at its tip. | An der Spitze des Astes saß eine kleine grüne Knospe.
+The => the/DET|the#bestimmter_artikel
+branch => branch/NOUN|branch#ast
+had => have/VERB|have#besitzen_past
+a => a/DET|a#ein
+small => small/ADJ|small#klein
+green => green/ADJ|green#gruen
+bud => bud/NOUN|bud#knospe
+at => at/ADP|at#ort
+its => its/DET|its#sein_ihr
+tip => tip/NOUN|tip#spitze
+
+puddle | Ben stepped over a puddle on his way to school. | Ben stieg auf dem Schulweg über eine Pfütze.
+Ben => Ben/PROPN|ben#ben
+stepped => step/VERB|step#treten
+over => over/ADP|over#ueber
+a => a/DET|a#ein
+puddle => puddle/NOUN|puddle#pfuetze
+on => on/ADP|on#unterwegs
+his => his/DET|his#sein
+way => way/NOUN|way#weg
+to => to/ADP|to#nach_richtung
+school => school/NOUN|school#schule-hier-schul
+
+migrate | These birds migrate south when the weather turns cold. | Diese Vögel ziehen nach Süden, wenn es kalt wird.
+These => these/DET|these#diese
+birds => bird/NOUN|bird#vogel
+migrate => migrate/VERB|migrate#wandern
+south => south/ADV|south#nach-sueden
+when => when/SCONJ|when#als_wenn
+the => the/DET|the#bestimmter_artikel
+weather => weather/NOUN|weather#wetter
+turns => turn/VERB|turn#werden
+cold => cold/ADJ|cold#kalt
+
+heatwave | During the heatwave, we kept the curtains closed all afternoon. | Während der Hitzewelle ließen wir die Vorhänge den ganzen Nachmittag über zu.
+During => during/ADP|during#waehrend
+the => the/DET|the#bestimmter_artikel
+heatwave => heatwave/NOUN|heatwave#hitzewelle
+we => we/PRON|we#wir
+kept => keep/VERB|keep#halten
+the => the/DET|the#bestimmter_artikel
+curtains => curtain/NOUN|curtain#vorhang
+closed => closed/ADJ|closed#geschlossen
+all => all/DET|all#alle_det
+afternoon => afternoon/NOUN|afternoon#nachmittag
+
+footprint | Sharing a car can reduce the environmental footprint of our daily travel. | Ein gemeinsam genutztes Auto kann die Umweltbelastung unserer täglichen Fahrten verringern.
+Sharing => share/VERB|share#teilt
+a => a/DET|a#ein
+car => car/NOUN|car#auto
+can => can/AUX|can#koennen
+reduce => reduce/VERB|reduce#verringern
+the => the/DET|the#bestimmter_artikel
+environmental => environmental/ADJ|environmental#umweltbezogen
+footprint => footprint/NOUN|footprint#umweltbelastung
+of => of/ADP|of#genitiv_besitz
+our => our/DET|our#unser-unsere
+daily => daily/ADJ|daily#taglich
+travel => travel/NOUN|travel#reise

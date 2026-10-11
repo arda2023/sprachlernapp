@@ -1,0 +1,13 @@
+{
+  "format": "sprachapp.chat-delivery-manifest",
+  "format_version": 1,
+  "delivery": "irregular_verbs_batch_1_lieferung",
+  "files": {
+    "IMPORT_PROMPT.txt": "a9673df68901a63fcf1480c068f8b9c6dfc7a4519a6bfc507dc08a4da74dbed0",
+    "README.md": "6ed72aa08156cc4d48579f852d95fad610b9adc7878f9e1d76512ec4b60ee01c",
+    "editorial_content_v3.json": "63be2ee6cf881973d93d4c8f957a6d4acb49b6811a1dc25b19bec87e631eb9c7",
+    "satzuebersicht.html": "0ddce6d945ef30a15468f8526a084cde6199eadd557860330548bee714c7b6b3",
+    "token_review.json": "a3ac73571e1a5f028dfae02b8cb56244a80dcfb9b0f657e4f43630ad7e8c2785",
+    "validation_report.json": "ca407acfbc84962c10c0a7ec51c652e951e78f651977bd93c55119eb70c2dcab"
+  }
+}

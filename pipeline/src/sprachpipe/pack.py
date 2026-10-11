@@ -12,7 +12,7 @@ from collections import Counter
 from pathlib import Path
 
 from .ids import form_norm, stable_id
-from .schema import COLUMNS
+from .schema import COLUMNS, columns_for
 from .content_contract import validate_rows, sentence_count, validate_registry
 
 
@@ -62,12 +62,12 @@ def _tombstones(row):
     return {k: row[k] for k in ("removed_in", "replaced_by") if k in row}
 
 
-def build_rows(pack: dict) -> dict[str, list[dict]]:
+def _build_rows(pack: dict) -> dict[str, list[dict]]:
     if (pack.get("curation") or {}).get("pending"):
         raise ValueError("curated working state has pending annotation/QA steps; "
                          "it is not a final pack")
     lang = pack["lang"]
-    rows: dict[str, list[dict]] = {t: [] for t in COLUMNS}
+    rows: dict[str, list[dict]] = {t: [] for t in columns_for(pack["release"]["schema_version"])}
     lemma_ids: dict[str, str] = {}
     lemma_pos: dict[str, str] = {}
     sense_ids: dict[str, str] = {}
@@ -104,7 +104,8 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
 
     for ca in pack.get("cards", []):
         sid = _lookup(sense_ids, "sense", ca["sense"])
-        cid = stable_id("cards", lang=lang, form=ca["form"], sense_id=sid)
+        from .form_targets import card_id
+        cid = card_id(lang, ca, sid)
         card_ids[ca["ref"]] = cid
         card_forms[ca["ref"]] = ca["form"]
         lid = sense_lemma[sid]
@@ -215,6 +216,17 @@ def build_rows(pack: dict) -> dict[str, list[dict]]:
             "schema_version": release["schema_version"], "notes": release.get("notes"),
         }))
 
+    if pack["release"]["schema_version"] == 4:
+        from .form_targets import extend_rows
+        extend_rows(pack, rows, card_ids, sense_ids, deck_ids)
+    else:
+        from .form_targets import reject_legacy_extensions
+        reject_legacy_extensions(pack)
+    return rows
+
+
+def build_rows(pack: dict) -> dict[str, list[dict]]:
+    rows = _build_rows(pack)
     sentence_count(pack)
     validate_rows(rows, pack["release"]["schema_version"])
     if pack["release"]["schema_version"] >= 2:

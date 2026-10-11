@@ -180,7 +180,7 @@ class PracticeButton extends StatelessWidget {
       size: ringSize,
       child: MergeSemantics(
         child: Semantics(
-          label: 'Lernen, Tagesziel ${goal.done} von ${goal.target} Wörtern',
+          label: 'Lernen, Tagesziel ${goal.done} von ${goal.target} Übungen',
           child: FloatingActionButton(
             onPressed: onPressed,
             heroTag: null,

@@ -21,7 +21,9 @@ def require(condition, message):
 
 def validate_context(pack, selection, registry, groups, *, source_bytes):
     """Check all reservations, not only the first authoring batch."""
-    require(pack['release']['schema_version'] == 3, 'schema 3 required')
+    require(pack['release']['schema_version'] in (3, 4), 'normal authoring requires schema 3 or 4')
+    if 'schema_version' in selection.get('source_pack', {}):
+        require(selection['source_pack']['schema_version'] == pack['release']['schema_version'], 'source schema version mismatch')
     require(hashlib.sha256(source_bytes).hexdigest() == selection['source_pack']['sha256'], 'source bytes hash')
     require(digest(pack) == selection['source_pack']['canonical_sha256'], 'source canonical hash')
     require(digest(registry) == selection['registry_sha256'], 'registry hash')
@@ -48,7 +50,7 @@ def validate_context(pack, selection, registry, groups, *, source_bytes):
         require(registry['words'] == parent['words'], 'continuation must not append reservations')
     else:
         require(len(registry['words']) == len(parent['words'])+len(entries), 'reservation delta')
-    require(0 < len(entries) <= 300, 'selection size')
+    require(0 < len(entries) <= 450, 'normal authoring selection size must be 1..450')
     require(digest(groups['existing']) == groups['parent_sha256'], 'group parent')
     index = index_registry(registry)
     validate_selection(entries, parent, lang=pack['lang'], owner=selection['owner_deck_ref'], allow_reserved=bool(continuation))
@@ -237,7 +239,7 @@ def prepare_continuation(pack, original, previous_groups, *, source_bytes, sourc
             'previous_snapshot_sha256':digest(previous_groups),'partitions':parts,
             'reserved_cards':[dict(card_ref=e['card_ref'],card_id=e['card_id'],primary_card_ref=e['card_ref'],**e['learning']) for e in entries if e['authoring_batch']>=batch]}
     selection=copy.deepcopy(original)
-    selection.update(source_pack={'path':source_path,'version':pack['release']['version'],'schema_version':3,
+    selection.update(source_pack={'path':source_path,'version':pack['release']['version'],'schema_version':pack['release']['schema_version'],
                      'sha256':hashlib.sha256(source_bytes).hexdigest(),'canonical_sha256':digest(pack)},
                      registry_path=registry_path,registry_sha256=digest(registry),learning_groups_path=groups_path,learning_groups_sha256=digest(groups))
     selection['continuation']={'format_version':1,'authoring_batch':batch,'original_selection_path':original_path,
@@ -247,3 +249,32 @@ def prepare_continuation(pack, original, previous_groups, *, source_bytes, sourc
         'display_plan':display_plan(pack,entries,batch,original['owner_deck_ref'])}
     validate_context(pack,selection,registry,groups,source_bytes=source_bytes)
     return selection,registry,groups
+
+
+def form_context(pack, selection, registry, *, source_bytes):
+    """Portable, immutable form handoff; ownership and practice order separate."""
+    from .form_targets import validate_form_selection, form_partitions
+    counts = validate_form_selection(pack, selection, registry, source_hash=hashlib.sha256(source_bytes).hexdigest())
+    return {'format':'sprachapp.authoring-context', 'format_version':3,
+            'content_schema_version':4, 'source_schema_version':pack['release']['schema_version'],
+            'source_sha256':hashlib.sha256(source_bytes).hexdigest(),
+            'registry_sha256':digest(registry), 'selection_sha256':digest(selection),
+            'authoring_batch':selection['authoring_batch'], 'partitions':form_partitions(selection),
+            'current_metadata':selection['batches'][str(selection['authoring_batch'])],
+            'import_contract':{'format':'sprachapp.editorial-content','format_version':3,
+                               'schema':'pipeline/data/curation/editorial_content_v3.schema.json',
+                               'importer':'pipeline/scripts/import_editorial_patch.py',
+                               'sentences':'one fixed sentence per new card; preserve reused sentences',
+                               'acceptance':'only exact target; alternatives need sentence-bound review'},
+            'counts':counts}
+
+
+def prepare_form_continuation(pack, selection, registry, *, source_bytes, source_path, sqlite_path, sqlite_sha256, batch):
+    """Rebind immutable entries/catalogue to a verified partial import."""
+    require(batch == selection['authoring_batch']+1, 'form continuation must advance one batch')
+    result=copy.deepcopy(selection); bound=copy.deepcopy(registry)
+    bound['parent_sha256']=pack['word_registry']['sha256']
+    result.update(authoring_batch=batch, source_sha256=hashlib.sha256(source_bytes).hexdigest(),
+                  registry_sha256=digest(bound), source_pack={'path':str(source_path),'sqlite_path':str(sqlite_path),'sqlite_sha256':sqlite_sha256})
+    form_context(pack,result,bound,source_bytes=source_bytes)
+    return result,bound

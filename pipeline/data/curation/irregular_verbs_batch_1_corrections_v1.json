@@ -1,0 +1,42 @@
+{
+  "original_sha256": "63be2ee6cf881973d93d4c8f957a6d4acb49b6811a1dc25b19bec87e631eb9c7",
+  "import_sha256": "7881572df443885a07a13e227b0693dccbd1442669031d51bde87d9924c28b66",
+  "sentence": "irregular-v1-b1-s060",
+  "token_index": 4,
+  "before": {
+    "sentence": "irregular-v1-b1-s060",
+    "idx": 4,
+    "surface": "see",
+    "start_pos": 19,
+    "end_pos": 22,
+    "lemma": "see/VERB",
+    "sense": "see/VERB|see#sehen"
+  },
+  "after": {
+    "sentence": "irregular-v1-b1-s060",
+    "idx": 4,
+    "surface": "see",
+    "start_pos": 19,
+    "end_pos": 22,
+    "lemma": "see/VERB",
+    "sense": "see/VERB|see#besuchen"
+  },
+  "reason": "come to see me = mich besuchen; eigenes belegtes Besuchskonzept, alte visuelle Sense bleibt unverändert",
+  "new_senses": 1,
+  "new_dictionary_forms": 1,
+  "changed_sentence_texts": 0,
+  "changed_cards": 0,
+  "changed_owners": 0,
+  "updated_review": {
+    "sentence": "irregular-v1-b1-s060",
+    "decision": "approved",
+    "reason": "ChatGPT-Redaktion: vollständiger Satz und deutsche Übersetzung gegengelesen; past von came in der vorgegebenen Bedeutung. Wortbindungen kontextbezogen geprüft. Keine unabhängige menschliche Freigabe. Lokale Importprüfung: see me bezeichnet einen Besuch; neue Begleitwortbedeutung besuchen statt visueller Wahrnehmung, keine neue Karte oder Tempus-Sense.",
+    "checked": {
+      "text": "My brother came to see me last weekend.",
+      "translation_de": "Mein Bruder kam mich letztes Wochenende besuchen.",
+      "tokens_sha256": "549e6a5fa55ea86cfe12b8b50f394a71d7fb2afe4bc092d70c2676c9f7511d8f",
+      "links_sha256": "8e546da7a8ffedfb359a0c3edfa96419418d846fb35380a8cb012200cabe1e29"
+    },
+    "alternatives_checked": []
+  }
+}

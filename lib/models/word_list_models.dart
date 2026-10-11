@@ -17,6 +17,8 @@ class VocabWord {
     this.isFavorite = false,
     this.inPlaylist = false,
     this.note = '',
+    this.dueAt,
+    this.lexicalKey,
   }) : assert(box >= 0 && box <= leitnerBoxCount),
        assert(reviewCount >= 0);
 
@@ -40,6 +42,8 @@ class VocabWord {
   final bool isFavorite;
   final bool inPlaylist;
   final String note;
+  final DateTime? dueAt;
+  final String? lexicalKey;
 
   Duration get reviewInterval =>
       box == 0 ? Duration.zero : leitnerInterval(box);
@@ -64,6 +68,8 @@ class VocabWord {
     isFavorite: isFavorite ?? this.isFavorite,
     inPlaylist: inPlaylist ?? this.inPlaylist,
     note: note ?? this.note,
+    dueAt: dueAt,
+    lexicalKey: lexicalKey,
   );
 }
 

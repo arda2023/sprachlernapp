@@ -258,7 +258,7 @@ class _ProgressLegend extends StatelessWidget {
 
     return Semantics(
       container: true,
-      label: '$seen von $total neuen Wörtern gesehen, $mastered Wörter gelernt',
+      label: '$seen von $total Übungen gesehen, $mastered Übungen gemeistert',
       excludeSemantics: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -268,7 +268,7 @@ class _ProgressLegend extends StatelessWidget {
               style: AppType.chrome(color: context.appColors.textMuted),
               children: [
                 count(seen, context.appColors.active),
-                TextSpan(text: ' von $total neuen Wörtern'),
+                TextSpan(text: ' von $total Übungen'),
               ],
             ),
           ),
@@ -278,7 +278,7 @@ class _ProgressLegend extends StatelessWidget {
               style: AppType.chrome(color: context.appColors.textMuted),
               children: [
                 count(mastered, context.appColors.mastered),
-                const TextSpan(text: ' Wörter gelernt'),
+                const TextSpan(text: ' Übungen gemeistert'),
               ],
             ),
           ),
@@ -383,8 +383,8 @@ class _RecentWordsState extends State<_RecentWords> {
   Widget build(BuildContext context) {
     final words = widget.words;
     final title = words.isEmpty
-        ? 'Deine zuletzt gesehenen Wörter'
-        : 'Deine letzten ${words.length} gesehenen Wörter';
+        ? 'Deine zuletzt geübten Formen'
+        : 'Deine letzten ${words.length} geübten Formen';
 
     return Container(
       decoration: BoxDecoration(
@@ -448,7 +448,7 @@ class _RecentWordsState extends State<_RecentWords> {
                           Padding(
                             padding: const EdgeInsets.only(bottom: 8),
                             child: Text(
-                              'Noch keine Wörter aus diesem Stapel gesehen.',
+                              'Noch keine Übungen aus diesem Stapel gemacht.',
                               style: AppType.chrome(
                                 color: context.appColors.textMuted,
                               ),

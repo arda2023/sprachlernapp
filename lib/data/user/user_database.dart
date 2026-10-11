@@ -11,6 +11,9 @@ part 'user_database.g.dart';
 /// creation + `review_log`. Curated content is referenced; local cards own metadata.
 @DataClassName('UserCardRow')
 class UserCards extends Table {
+  TextColumn get formFunction => text().nullable().check(const CustomExpression("form_function IS NULL OR form_function IN ('base','past','past_participle')"))();
+  // Local form concepts remain countable when the content pack is unavailable.
+  TextColumn get lexicalTargetId => text().nullable()();
   TextColumn get form => text().nullable()();
   TextColumn get formNorm => text().nullable()();
   TextColumn get glossDe => text().nullable()();
@@ -175,7 +178,21 @@ class LearningIdentityBindings extends Table {
   ];
 }
 
-/// Learner database (schema v4). Content stays in read-only content.sqlite;
+@DataClassName('FormBindingRow')
+class FormIdentityBindings extends Table {
+  TextColumn get identityKey => text()();
+  TextColumn get lang => text()();
+  TextColumn get formNorm => text()();
+  TextColumn get semanticAnchor => text()();
+  TextColumn get function => text().check(const CustomExpression("function IN ('base','past','past_participle')"))();
+  TextColumn get cardId => text().references(UserCards, #cardId)();
+  @override
+  Set<Column> get primaryKey => {identityKey};
+  @override
+  List<Set<Column>> get uniqueKeys => [{lang, formNorm, semanticAnchor, function}];
+}
+
+/// Learner database (schema v5). Content stays in read-only content.sqlite;
 /// both databases are joined only by stable ids.
 @DriftDatabase(
   tables: [
@@ -188,6 +205,7 @@ class LearningIdentityBindings extends Table {
     StoryLearningAdditions,
     StoryWordSources,
     LearningIdentityBindings,
+    FormIdentityBindings,
   ],
 )
 class UserDatabase extends _$UserDatabase {
@@ -213,11 +231,16 @@ class UserDatabase extends _$UserDatabase {
   }
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onUpgrade: (m, from, to) async {
+      if (from < 5) {
+        await m.addColumn(userCards, userCards.formFunction);
+        await m.addColumn(userCards, userCards.lexicalTargetId);
+        await m.createTable(formIdentityBindings);
+      }
       if (from < 4) {
         for (final column in [
           userCards.form,

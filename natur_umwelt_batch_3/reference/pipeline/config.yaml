@@ -1,0 +1,98 @@
+# Pipeline configuration (no secrets; credentials only via pipeline/.env).
+
+out_dir: out
+
+lemmas:
+  lang: en
+  top_n: 5000            # wordfreq top_n_list
+  pos_allowed: [NOUN, VERB, ADJ, ADV]   # pilot; function words stay out (open decision)
+  max_rank: 60           # pilot: ranks 1–60
+  spacy_model: en_core_web_sm
+
+linter:
+  max_words: 14
+  max_subclauses: 1
+  min_zipf: {anfaenger: 4.0, mittel: 3.5, fortgeschritten: 3.0}
+
+# Price table for the cost ledger (USD per 1M tokens). Checked against the
+# official Vertex AI price list: Global endpoint, Standard (no Priority,
+# Flex or Batch), <= 200K input tokens. Thinking tokens are billed as output
+# ("Text output (response and reasoning)").
+prices:
+  status: geprüft
+  as_of: "2026-10-03"    # date the prices were read
+  source: https://cloud.google.com/vertex-ai/generative-ai/pricing   # redirects to https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing
+  models:
+    gemini-3.8-flash:
+      input_per_mtok_usd: 0.75
+      output_per_mtok_usd: 3.75
+      thinking_per_mtok_usd: 3.75
+      intro_until: "2026-12-31"   # introductory price, ends 2026-12-31
+      after_intro: {input_per_mtok_usd: 1.50, output_per_mtok_usd: 7.50, thinking_per_mtok_usd: 7.50}   # from 2027-01-01
+    gemini-2.5-flash:
+      input_per_mtok_usd: 0.30
+      output_per_mtok_usd: 2.50
+      thinking_per_mtok_usd: 2.50
+
+# AI access: Vertex AI only, Application Default Credentials (no key).
+# Thinking parameters checked 2026-10-03 against
+# https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking and
+# https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/guides/gemini-3-8-flash
+# (both "Last updated 2026-10-02"): Gemini 3 models use thinking_level
+# (3.8 Flash: LOW, MEDIUM default, HIGH; MINIMAL returns an error);
+# Gemini 2.5 models use thinking_budget (0 turns thinking off).
+llm:
+  project: sprachlernapp-510508
+  location: global
+  generate_model: gemini-3.8-flash
+  generate_thinking: {thinking_level: LOW}
+  blindtest_model: gemini-2.5-flash    # cheaper; availability checked 2026-10-03 with a mini call
+  blindtest_thinking: {thinking_budget: 0}
+  meaning_check_model: gemini-3.8-flash   # live QA v2 (2026-10-04): 8/8 vs. 1/8 with blindtest_model
+  meaning_check_thinking: {thinking_level: LOW}
+  alternative_check_model: gemini-3.8-flash   # smoke v8: blindtest_model confirmed nearly for about
+  alternative_check_thinking: {thinking_level: LOW}
+  timeout_s: 90
+  max_output_tokens: {meanings: 2048, sentences: 2048, annotate: 4096, blindtest: 256, meaning_check: 4096, classify_usage: 1024, alternative_check: 1024}   # alternative_check: up to 4 candidates per call
+
+generate:
+  concurrency: 8
+  lang: en
+  gloss_lang: de
+  top_n: 5000            # wordfreq ranks for candidate forms
+  lint_retries: 2        # regenerate a sentence with a linter error at most 2x
+  blind_retries: 1       # regenerate a sentence that fails the blind test 1x
+  situations:
+    - Arbeit
+    - Küche
+    - Reise
+    - Schule
+    - Wetter
+    - Einkaufen
+    - Familie
+    - Gesundheit
+    - Sport
+    - Wohnen
+    - Technik
+    - Freizeit
+    - Nachbarschaft
+    - Restaurant
+    - Bahnhof
+    - Busfahrt
+    - Garten
+    - Bibliothek
+    - Arztbesuch
+    - Geburtstag
+    - Urlaub
+    - Haustiere
+    - Kleidung
+    - Musik
+    - Haushalt
+    - Büro
+    - Park
+    - Post
+    - Freundschaft
+    - Stadtleben
+  names: [Mia, Leo, Sara, Amir, Emma, Luca, Sofia, Noah, Maya, Elias, Lina, Omar, Eva, Ben, Nina, Ali, Rosa, Luis, Zoe, David]
+
+smoke_forms: [went, left, about, up, light]
