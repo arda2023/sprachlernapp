@@ -50,7 +50,7 @@ def validate_context(pack, selection, registry, groups, *, source_bytes):
         require(registry['words'] == parent['words'], 'continuation must not append reservations')
     else:
         require(len(registry['words']) == len(parent['words'])+len(entries), 'reservation delta')
-    require(0 < len(entries) <= 450, 'normal authoring selection size must be 1..450')
+    require(0 < len(entries) <= 1500, 'normal authoring selection size must be 1..1500')
     require(digest(groups['existing']) == groups['parent_sha256'], 'group parent')
     index = index_registry(registry)
     validate_selection(entries, parent, lang=pack['lang'], owner=selection['owner_deck_ref'], allow_reserved=bool(continuation))

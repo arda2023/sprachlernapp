@@ -128,3 +128,14 @@ Exit 0
 ```
 
 Vollständiges Ergebnis: `build/normal_authoring_schema4_checks/final-check.json`. Alle sonstigen vorbestehenden Dateien, insbesondere Produktions-/Asset-/Manifestdateien, historische Packs, ZIPs, Auswahlen/Registrys und App-/Dartdateien, sind hashgleich. Der Index bleibt unverändert leer; ausschließlich der dokumentierte eigene Arbeitsbaumumfang ist uncommittet.
+
+
+## Additive Vertragsergänzung 13.10.2026: Business-Pakete A+B
+
+Die historischen 300-/450er-Befunde oben bleiben historische Prüfergebnisse. Der normale Gesamtkatalog unterstützt jetzt **1..1500 Ziele**; `validate_context` ändert ausschließlich Grenze und Fehlermeldung. Gemischte Batches bleiben bei höchstens 100. Quellen-/Schema-/ID-/Besitz-/Alias-/Bedeutungs-/Gruppen-/Alternativ-/Fortsetzungsprüfungen unverändert; kein Force-, V3- oder Importer-Sonderweg.
+
+Bestehende Tests erweitert: 450 erhalten, 451/1500 gültig, 1501 ungültig; gemischte Batchgröße 100 gültig/101 ungültig. Ungerade Kataloge werden ausgewogen verteilt. Auf nichtleerer Formbasis: 1500er-ZIP geschlossen/erneut geprüft, 22 Tabellen und Partition 0/100/1400; kleiner tatsächlicher V2-Fixtureimport mit großem Zukunftskatalog und normaler CLI-Fortsetzung 2/100/1398. Alte JSON-/SQL-Werte und vier Formtabellen exakt erhalten. Kleine 6er-Fortsetzung weiterhin geprüft.
+
+Technisches Gate: vier beauftragte Module, **77 passed in 5.36s, Exit 0**. Synthetische ZIP 1500: 909162 komprimierte /9216847 unkomprimierte Bytes, 0.359s innerhalb des Tests; 450: 374083/2872635 Bytes, 0.230s. Diese Fixtures enthalten kleine Modellplatzhalter, keine realistische Prognose der produktiven Modellgröße. Bestehende Negativparametrisierung zusätzlich für aktive und retirierte bestätigte Alternativen erweitert: final **8 passed, 14 deselected in 1.78s, Exit 0**. Zwei anfängliche Fehler betrafen ausschließlich die neue historische Fixture (fehlender aktiver Satz; doppelte textbasierte Satz-ID), keine Produktionsänderung erforderlich.
+
+Nach vollständiger Auswahl 28 Auswahl-/Registry-/Gruppentests bestanden. Aktuelle Übergabe: 579 vorbereitete Ziele, davon 43 E-Mail, Batches 97/97/97/96/96/96. Ausschließlich die korrigierte Batch-1-Version `build/business_email_authoring_batch_1_v2.zip` verwenden; die erste unveröffentlichte v1 bleibt als Zwischenbeleg erhalten. [Vollständige Auswahl, Versionskorrektur und tatsächliche Befehle](business-email-authoring.md). Keine Produktionsimporte oder öffentliche Sprachfreigabe.

@@ -3,6 +3,7 @@ import copy
 import hashlib
 import json
 import sys
+import time
 import zipfile
 from pathlib import Path
 from types import SimpleNamespace
@@ -38,15 +39,21 @@ def form_base():
     return source
 
 
-def normal_context(size, batch_size=90):
+def normal_context(size, batch_size=90, *, first_two=False):
     source = form_base()
     raw = encode(source)
+    # Balance odd catalogues without a one-goal, necessarily unmixed tail.
+    remaining = size - 2 if first_two else size
+    count = (remaining + batch_size - 1) // batch_size
+    widths = ([2] if first_two else []) + [remaining // count + (b < remaining % count)
+                                           for b in range(count)]
+    batch_numbers = [b for b, width in enumerate(widths, 1) for _ in range(width)]
     entries = []
     for i in range(size):
         form, lemma = ('cats', 'cat') if i == 0 else ('rest', 'rest') if i == 1 else (f'syntheticgoal{i}', f'syntheticgoal{i}')
         e = entry(form, lemma, 'NOUN' if i != 1 else 'VERB', lemma + '#fixture',
                   'Synthetic definition.', 'topic-a' if i % 2 == 0 else 'topic-b',
-                  i // batch_size + 1, i + 1)
+                  batch_numbers[i], i + 1)
         entries.append(e)
     registry = copy.deepcopy(source['word_registry']['snapshot'])
     registry.update(parent_sha256=digest(registry), source_pack_sha256=hashlib.sha256(raw).hexdigest())
@@ -106,16 +113,18 @@ def normal_delivery(source, raw, selection, registry):
         registry_sha256=digest(registry), reviewer='Synthetic regression, not production', add=add, reviews=[review])
 
 
-@pytest.mark.parametrize('size', [300, 301, 450, 451])
-def test_normal_catalogue_boundaries_use_real_metadata_validator(size):
-    source, raw, selection, registry, groups = normal_context(size)
-    if size == 451:
-        with pytest.raises(ValueError, match='1..450'):
+@pytest.mark.parametrize('size,batch_size', [(300,90), (301,90), (450,90), (451,90),
+    (1500,100), (1501,100), (100,100), (101,101)])
+def test_normal_catalogue_boundaries_use_real_metadata_validator(size, batch_size):
+    source, raw, selection, registry, groups = normal_context(size, batch_size)
+    if size == 1501 or batch_size == 101:
+        message = '1..1500' if size == 1501 else 'unmixed/oversize batch'
+        with pytest.raises(ValueError, match=message):
             validate_context(source, selection, registry, groups, source_bytes=raw)
     else:
         result = validate_context(source, selection, registry, groups, source_bytes=raw)
         assert result['selected'] == size and result['existing_cards'] == 9
-        assert all(len([e for e in selection['entries'] if e['authoring_batch'] == b]) <= 90
+        assert all(len([e for e in selection['entries'] if e['authoring_batch'] == b]) <= batch_size
                    for b in {e['authoring_batch'] for e in selection['entries']})
 
 
@@ -190,31 +199,37 @@ def setup_zip_root(tmp_path, monkeypatch, source, raw, selection, registry, grou
     monkeypatch.setattr(exporter, 'ROOT', tmp_path)
 
 
-def test_450_goal_normal_zip_carries_22_tables_and_only_90_current_tasks(tmp_path, monkeypatch):
-    source, raw, selection, registry, groups = normal_context(450)
+@pytest.mark.parametrize('size,current', [(450,90), (1500,100)])
+def test_450_goal_normal_zip_carries_22_tables_and_only_90_current_tasks(tmp_path, monkeypatch, size, current):
+    started = time.perf_counter()
+    source, raw, selection, registry, groups = normal_context(size, current)
     setup_zip_root(tmp_path, monkeypatch, source, raw, selection, registry, groups)
-    archive = tmp_path / 'normal-450.zip'
+    archive = tmp_path / f'normal-{size}.zip'
     export(tmp_path / 'selection.json', archive, 1)
     result = verify_zip(archive)
-    assert result['sqlite_tables'] == 22 and result['selected'] == 450
+    assert result['sqlite_tables'] == 22 and result['selected'] == size
     with zipfile.ZipFile(archive) as z:
         assert z.testzip() is None
-        context = json.loads(z.read('normal-450/authoring_context.json'))
+        context = json.loads(z.read(f'normal-{size}/authoring_context.json'))
         assert context['format_version'] == 2
         assert context['import_contract']['format_version'] == 2
         assert context['import_contract']['content_schema_version'] == 4
-        assert {k: len(v) for k, v in context['partitions'].items()} == {'imported': 0, 'current': 90, 'future': 360}
-        assert len(context['entries']) == 90
-        assert len(json.loads(z.read('normal-450/all_selection_identities.json'))) == 450
-        assert z.read('normal-450/pack.json') == raw
-        assert 'Schema 4' in z.read('normal-450/README.txt').decode()
+        assert {k: len(v) for k, v in context['partitions'].items()} == {'imported': 0, 'current': current, 'future': size-current}
+        assert len(context['entries']) == current
+        assert len(json.loads(z.read(f'normal-{size}/all_selection_identities.json'))) == size
+        assert z.read(f'normal-{size}/pack.json') == raw
+        assert 'Schema 4' in z.read(f'normal-{size}/README.txt').decode()
         data = {n: z.read(n) for n in z.namelist()}
+        print(f'SYNTHETIC ZIP goals={size} current={current} compressed={archive.stat().st_size} '
+              f'uncompressed={sum(i.file_size for i in z.infolist())} seconds={time.perf_counter()-started:.3f}')
+    with pytest.raises(ValueError, match='output already exists'):
+        export(tmp_path / 'selection.json', archive, 1)
     # A false downgrade, even with recomputed file hashes, must fail semantically.
     context['import_contract']['content_schema_version'] = 3
-    data['normal-450/authoring_context.json'] = encode(context)
-    manifest = json.loads(data['normal-450/manifest.json'])
-    manifest['files']['authoring_context.json'] = hashlib.sha256(data['normal-450/authoring_context.json']).hexdigest()
-    data['normal-450/manifest.json'] = encode(manifest)
+    data[f'normal-{size}/authoring_context.json'] = encode(context)
+    manifest = json.loads(data[f'normal-{size}/manifest.json'])
+    manifest['files']['authoring_context.json'] = hashlib.sha256(data[f'normal-{size}/authoring_context.json']).hexdigest()
+    data[f'normal-{size}/manifest.json'] = encode(manifest)
     bad = tmp_path / 'false-schema.zip'
     with zipfile.ZipFile(bad, 'w') as z:
         for name, payload in data.items():
@@ -223,10 +238,20 @@ def test_450_goal_normal_zip_carries_22_tables_and_only_90_current_tasks(tmp_pat
         verify_zip(bad)
 
 
-def test_normal_cli_continuation_exports_verified_schema4_context(tmp_path, monkeypatch):
-    source, raw, selection, registry, groups = normal_context(6, batch_size=2)
+@pytest.mark.parametrize('size', [6, 1500])
+def test_normal_cli_continuation_exports_verified_schema4_context(tmp_path, monkeypatch, size):
+    source, raw, selection, registry, groups = normal_context(size, batch_size=2 if size == 6 else 100, first_two=True)
     final = create_content(source, normal_delivery(source, raw, selection, registry),
                            registry, source_hash=hashlib.sha256(raw).hexdigest())
+    for table in TABLES:
+        assert final[table] == source[table]
+    before, after = build_rows(source), build_rows(final)
+    for table, old_rows in before.items():
+        if table != 'content_releases':
+            assert all(row in after[table] for row in old_rows)
+    for table, values in source.items():
+        if isinstance(values, list):
+            assert final[table][:len(values)] == values
     # The actual CLI reads the new synthetic staged source, not the old base.
     setup_zip_root(tmp_path, monkeypatch, final, encode(final), selection, registry, groups)
     for folder in ('selection', 'words', 'learning_groups'):
@@ -242,7 +267,9 @@ def test_normal_cli_continuation_exports_verified_schema4_context(tmp_path, monk
     export(path, archive, 2)
     result = verify_zip(archive)
     assert result['sqlite_tables'] == 22
-    assert result['partition_counts'] == {'imported': 2, 'current': 2, 'future': 2}
+    current = sum(e['authoring_batch'] == 2 for e in selection['entries'])
+    assert result['partition_counts'] == {'imported': 2, 'current': current, 'future': size-2-current}
+    print(f'CONTINUATION goals={size} partitions={result["partition_counts"]} tables=22; old values/form tables unchanged')
     with zipfile.ZipFile(archive) as z:
         context = json.loads(z.read('normal-batch2/authoring_context.json'))
         assert context['new_deck'] is None and context['existing_deck'] == 'animals'
@@ -250,7 +277,8 @@ def test_normal_cli_continuation_exports_verified_schema4_context(tmp_path, monk
         assert context['import_contract']['content_schema_version'] == 4
 
 
-@pytest.mark.parametrize('failure', ['source', 'reference', 'owner', 'schema', 'source_schema', 'oversize_batch'])
+@pytest.mark.parametrize('failure', ['source', 'reference', 'owner', 'schema', 'source_schema', 'oversize_batch',
+                                     'alternative', 'retired_alternative'])
 def test_normal_schema4_still_rejects_invalid_contexts(failure):
     source, raw, selection, registry, groups = normal_context(6, batch_size=2)
     if failure == 'source': raw += b' '
@@ -260,6 +288,30 @@ def test_normal_schema4_still_rejects_invalid_contexts(failure):
     if failure == 'source_schema': selection['source_pack']['schema_version'] = 3
     if failure == 'oversize_batch':
         source, raw, selection, registry, groups = normal_context(102, batch_size=102)
+    if failure in ('alternative', 'retired_alternative'):
+        link = source['card_sentences'][0]
+        if failure == 'retired_alternative':
+            # Preserve the required active sentence while adding historical evidence.
+            old_ref = link['sentence']
+            historical = copy.deepcopy(next(s for s in source['sentences'] if s['ref'] == old_ref))
+            historical['ref'] = old_ref + '-historical'
+            historical['text'] = historical['text'][:-1] + '!'
+            source['sentences'].append(historical)
+            source['sentence_tokens'] += [dict(t, sentence=historical['ref'],
+                                               surface='!' if t['surface'] == '.' else t['surface'])
+                                          for t in source['sentence_tokens'] if t['sentence'] == old_ref]
+            link = dict(link, sentence=historical['ref'])
+            link['removed_in'] = source['release']['version']
+            source['card_sentences'].append(link)
+        link['valid_alternatives'] = [selection['entries'][-1]['form']]
+        raw = encode(source)
+        selection['source_pack'].update(sha256=hashlib.sha256(raw).hexdigest(), canonical_sha256=digest(source))
+        registry['source_pack_sha256'] = groups['source_pack_sha256'] = selection['source_pack']['sha256']
+        selection['registry_sha256'] = digest(registry)
+        selection['learning_groups_sha256'] = digest(groups)
+        with pytest.raises(ValueError, match='already offered word'):
+            validate_context(source, selection, registry, groups, source_bytes=raw)
+        return
     if failure == 'reference': selection['learning_groups_sha256'] = digest(groups); groups['parent_sha256'] = digest(groups['existing']); selection['learning_groups_sha256'] = digest(groups)
     selection['registry_sha256'] = digest(registry)
     with pytest.raises((ValueError, KeyError)):
