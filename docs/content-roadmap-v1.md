@@ -1,6 +1,6 @@
 # Verbindlicher Inhaltsabschlussplan v1
 
-Stand: 10.10.2026. Verbindlicher Umfang: genau 14 Stapel. Elf Stapel sind technisch intern abgeschlossen, einschließlich der drei Verbenansichten mit je 134 Übungen. Nächster Inhaltsschritt: Alltagssprache & Redewendungen (ca. 450 nach Dublettenprüfung), danach Verbalphrasen, zuletzt Business & E-Mail. Öffentliche Inhaltsfreigabe bleibt getrennt; keine zusätzlichen Kategorien vorbereiten.
+Stand: 13.10.2026. Verbindlicher Umfang: genau 14 Stapel. Zwölf Stapel sind technisch intern abgeschlossen, einschließlich Alltagssprache & Redewendungen mit exakt 441 Zielen und der drei Verbenansichten mit je 134 Übungen. Nächste Aufgabe: **Verbalphrasen, ca. 200 nach Dublettenprüfung; danach Business & E-Mail**. Öffentliche Sprachfreigabe und geerbte Inhaltsbefunde bleiben offen; keine zusätzlichen Kategorien vorbereiten.
 
 ## Geprüfter Stand und verbindliche Reihenfolge
 
@@ -17,13 +17,15 @@ Stand: 10.10.2026. Verbindlicher Umfang: genau 14 Stapel. Elf Stapel sind techni
 | 9 | Unregelmäßige Verben – Infinitiv/Präsens | 134 | Technisch intern abgeschlossen; 402/402 Formziele gemeinsam importiert |
 | 10 | Unregelmäßige Verben – Präteritum | 134 | Technisch intern abgeschlossen; 402/402 Formziele gemeinsam importiert |
 | 11 | Unregelmäßige Verben – Partizip Perfekt | 134 | Technisch intern abgeschlossen; 402/402 Formziele gemeinsam importiert |
-| 12 | Alltagssprache & Redewendungen | ca. 450 | Nächster Inhaltsschritt; thematisch gemischt, nach Dublettenprüfung |
-| 13 | Verbalphrasen | ca. 200 | Danach |
+| 12 | Alltagssprache & Redewendungen | 441 | Technisch intern abgeschlossen; 441/441 importiert, kein Restbatch |
+| 13 | Verbalphrasen | ca. 200 | Nächste Aufgabe, nach Dublettenprüfung |
 | 14 | Business & E-Mail | ca. 1500 | Zuletzt; darin etwa 70 Ziele zum E-Mail-Verkehr |
 
-Danach ist der geplante Inhaltsumfang von v1 mit 14 Stapeln abgeschlossen. Die Mengen der drei noch offenen Stapel sind Richtwerte nach Dublettenprüfung, keine Auffüllpflicht. Die etwa 70 E-Mail-Ziele sind Teil der etwa 1500 Business-Ziele und kein zusätzlicher Stapel. Für die drei noch offenen Stapel werden in diesem Abschlussauftrag weder Auswahl noch Reservierungen oder Sätze angelegt.
+Danach ist der geplante Inhaltsumfang von v1 mit 14 Stapeln abgeschlossen. Die Mengen der zwei noch offenen Stapel sind Richtwerte nach Dublettenprüfung, keine Auffüllpflicht. Die etwa 70 E-Mail-Ziele sind Teil der etwa 1500 Business-Ziele und kein zusätzlicher Stapel. Für die zwei noch offenen Stapel werden in diesem Abschlussauftrag weder Auswahl noch Reservierungen oder Sätze angelegt.
 
-Aktuell intern gestagt: `irregular_verbs_batch_4_v1`, Schema 4, elf Ansichten, 2567 Karten und 2356 Oberflächenbesitzer. Die acht normalen Ansichten behalten ihre 2121 bisherigen primären Lernziele; die gemeinsame App-Projektion über alle Ansichten ergibt **2453 Übungen / 2182 lexikalische Wörter**. Die drei Verbenansichten bilden **134 Verbidentitäten / 402 Formziele**, davon 331 neue Satzpaare und 71 Wiederverwendungen. Alle 402 Ziele sind importiert; kein Restbatch. Die 242 Natur-Ziele bleiben vollständig erhalten. Nachweis: [Verben-Gesamtabschluss](irregular-verbs-batch-4-import.md).
+Aktuell intern gestagt: `alltagssprache_redewendungen_batch_5_v1`, Schema 4, zwölf Ansichten, 3008 Karten und 2797 aktive Oberflächenbesitzer. Die acht bisherigen normalen Ansichten behalten ihre 2121 Lernziele; Alltagssprache ergänzt 441 primäre Ziele. Die tatsächliche gemeinsame App-Projektion ergibt **2894 Übungen / 2623 lexikalische Wörter**. Die drei Verbenansichten behalten **134 Verbidentitäten / 402 Formziele**, davon 331 neue Satzpaare und 71 Wiederverwendungen. Alle 441 Alltagssprache-Zielidentitäten, Definitionen, Lern-/Besitzbindungen und festen Sätze sind nachgewiesen: **441 importiert / 0 aktuell / 0 später**. Die versionierte Auswahlkorrektur bleibt erhalten: in my opinion ist bestätigte neutrale Alternative von to my mind, kein zusätzliches eigenes Lernziel. Die historische ungenutzte Reservierung ist kein offener Satzauftrag. Keine Batch-6-ZIP oder neue Auswahl angelegt. Nachweise: [Alltagssprache-Abschluss](alltagssprache-redewendungen-batch-5-import.md), [Auswahl v2](alltagssprache-redewendungen-selection-v2.md), [Verben-Gesamtabschluss](irregular-verbs-batch-4-import.md).
+
+Technische interne Abnahme und öffentliche Inhalts-/Sprachfreigabe bleiben getrennt. Neue Häufigkeitshinweise und die geerbten Formglossen-Vergleichsbefunde einschließlich früherer Listen bleiben eigenständige offene Aufgaben; keine globale Reparatur oder unabhängige Sprach-/Geräteabnahme behauptet.
 
 ## Maßgebliche Regeln
 
@@ -60,7 +62,7 @@ Vollständiger lokaler ZIP-Pfad:
 
 `/Users/ardasayar/Documents/FlutterProjekte/sprachapp/build/natur_umwelt_authoring_batch_1.zip`
 
-Nächste Aktion: **Alltagssprache & Redewendungen vorbereiten**, Richtwert ca. 450 nach Prüfung des vollständigen aktuellen Bestands auf Dubletten und Wortbesitz. Danach Verbalphrasen, zuletzt Business & E-Mail. In diesem Auftrag keine entsprechende Auswahl oder Reservierung angelegt.
+Nächste Aufgabe: **Verbalphrasen, ca. 200 nach Dublettenprüfung; danach Business & E-Mail**. In diesem Abschlussauftrag keine entsprechende Auswahl, Reservierung oder Satzlieferung vorbereitet.
 
 ## Historischer Prüfstand der ursprünglichen Roadmap-Dokumentation
 
