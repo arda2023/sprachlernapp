@@ -74,6 +74,8 @@ class HomeScreen extends ConsumerWidget {
                 : ref
                       .watch(learningProgressProvider)
                       .when(
+                skipLoadingOnReload: true,
+                skipError: true,
                         data: (p) => WeeklyGoalCard(
                           week: p.week,
                           goal: p.goal,
@@ -93,6 +95,8 @@ class HomeScreen extends ConsumerWidget {
             child: ref
                 .watch(vocabBreakdownProvider)
                 .when(
+                skipLoadingOnReload: true,
+                skipError: true,
                   loading: () => const CupertinoActivityIndicator(),
                   error: (error, _) => ContentUnavailableView(
                     error: error,
@@ -120,6 +124,8 @@ class HomeScreen extends ConsumerWidget {
           ...ref
               .watch(decksProvider)
               .when(
+                skipLoadingOnReload: true,
+                skipError: true,
                 loading: () => [const CupertinoActivityIndicator()],
                 error: (error, _) => [
                   ContentUnavailableView(
@@ -167,6 +173,8 @@ class HomeScreen extends ConsumerWidget {
           ref
               .watch(libraryStoriesProvider)
               .when(
+                skipLoadingOnReload: true,
+                skipError: true,
                 data: (stories) => stories.isEmpty
                     ? const Padding(
                         padding: _gutter,

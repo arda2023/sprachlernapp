@@ -12,19 +12,27 @@ class PracticeSessionBar extends StatelessWidget {
     super.key,
     required this.done,
     required this.total,
+    this.loading = false,
+    this.goalReached = false,
+    this.repeating = false,
     required this.onHome,
     required this.onMenu,
   });
 
   final int done;
   final int total;
+  final bool loading, goalReached, repeating;
   final VoidCallback onHome;
   final VoidCallback? onMenu;
 
   @override
   Widget build(BuildContext context) {
     final left = total - done;
-    final label = left == 0
+    final label = loading ? 'Übungen werden geladen …'
+        : goalReached && total == 0 ? 'Tagesziel erreicht'
+        : total == 0 ? 'Keine passenden Übungen'
+        : repeating ? 'Fehlerwiederholung'
+        : left == 0
         ? 'Alle Übungen geübt'
         : 'Noch $left ${left == 1 ? 'Übung' : 'Übungen'}';
     return Padding(
@@ -38,9 +46,7 @@ class PracticeSessionBar extends StatelessWidget {
           ),
           Expanded(
             child: Semantics(
-              label: left == 0
-                  ? 'Alle $total Übungen geübt'
-                  : 'Noch $left von $total Übungen',
+              label: label,
               excludeSemantics: true,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -326,17 +332,9 @@ class PracticeAnswerToolbar extends StatelessWidget {
                         ? onNext
                         : hasInput
                         ? onSubmit
-                        : revealed
-                        ? null
                         : onReveal;
                     var slotHeight = 48.0;
-                    for (final text in const [
-                      'Wort erfahren',
-                      'Eingeben',
-                      'Weiter',
-                      'Wird gespeichert …',
-                      'Speichern wiederholen',
-                    ]) {
+                    for (final text in [label]) {
                       final painter = TextPainter(
                         text: TextSpan(
                           text: text,
@@ -345,7 +343,7 @@ class PracticeAnswerToolbar extends StatelessWidget {
                         textDirection: TextDirection.ltr,
                         textScaler: MediaQuery.textScalerOf(context),
                       )..layout(maxWidth: math.max(1, slotWidth - 76));
-                      slotHeight = math.max(slotHeight, painter.height + 20);
+                      slotHeight = math.max(slotHeight, painter.height + 12);
                       painter.dispose();
                     }
                     return Row(
@@ -404,7 +402,7 @@ class PracticeAnswerToolbar extends StatelessWidget {
                                               decoration: BoxDecoration(
                                                 color: context
                                                     .appColors
-                                                    .memoryLevel2,
+                                                    .success,
                                                 shape: BoxShape.circle,
                                               ),
                                               child: Icon(
@@ -472,7 +470,7 @@ class _ToolbarButton extends StatelessWidget {
           excludeSemantics: true,
           child: Container(
             constraints: const BoxConstraints(minHeight: 48),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             decoration: BoxDecoration(
               color: primary
                   ? context.appColors.textPrimary

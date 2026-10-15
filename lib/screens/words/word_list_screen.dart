@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show ScaffoldMessenger, SnackBar;
+import 'package:flutter/material.dart' show Scaffold, ScaffoldMessenger, SnackBar;
 
 import '../../models/speech_playback.dart';
 import '../../models/word_list_models.dart';
@@ -10,6 +10,7 @@ import '../../presentation/providers/learning_providers.dart';
 import '../../presentation/providers/database_providers.dart';
 import '../../presentation/content_unavailable_view.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/back_bar.dart';
 import 'widgets/memory_level_legend_sheet.dart';
 import 'widgets/playback_highlight.dart';
 import 'widgets/word_details_sheet.dart';
@@ -18,7 +19,16 @@ import 'widgets/word_list_item.dart';
 /// The Wortliste tab: every word the learner has seen, most recent first,
 /// with search and a playlist entry point.
 class WordListScreen extends ConsumerStatefulWidget {
-  const WordListScreen({super.key, this.clock = DateTime.now});
+  const WordListScreen({super.key, this.clock = DateTime.now, this.targetCardId});
+  final String? targetCardId;
+
+  static Future<void> openTarget(BuildContext context, String cardId) =>
+      Navigator.of(context).push(CupertinoPageRoute<void>(builder: (context) =>
+        Scaffold(body: SafeArea(child: Column(children: [
+          BackBar(onBack: () => Navigator.of(context).maybePop()),
+          Expanded(child: WordListScreen(targetCardId: cardId)),
+        ]))),
+      ));
 
   /// Injected so "Zuletzt gesehen" is testable.
   final DateTime Function() clock;
@@ -117,7 +127,7 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
   @override
   Widget build(BuildContext context) {
     final result = ref.watch(wordListProvider);
-    if (result.hasError) {
+    if (result.hasError && !result.hasValue) {
       return SafeArea(
         child: ContentUnavailableView(
           error: result.error!,
@@ -131,7 +141,7 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
     if (!result.hasValue) {
       return const SafeArea(child: Center(child: CupertinoActivityIndicator()));
     }
-    final all = result.requireValue;
+    final all = result.requireValue.where((w) => widget.targetCardId == null || w.id == widget.targetCardId).toList();
     return SafeArea(
       bottom: false,
       child: ListenableBuilder(

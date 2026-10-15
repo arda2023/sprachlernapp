@@ -49,6 +49,8 @@ class DeckDetailsScreen extends ConsumerWidget {
           child: ref
               .watch(decksProvider)
               .when(
+                skipLoadingOnReload: true,
+                skipError: true,
                 loading: () =>
                     const Center(child: CupertinoActivityIndicator()),
                 error: (error, _) => Column(
@@ -95,16 +97,14 @@ class DeckDetailsScreen extends ConsumerWidget {
                             const SizedBox(height: 28),
                             _ToggleRow(
                               label: 'Stapel lernen',
-                              value: deck.isActive,
-                              onChanged: activation.isLoading
-                                  ? null
-                                  : (v) => ref
+                              value: activation.values[deck.id] ?? deck.isActive,
+                              onChanged: (v) => ref
                                         .read(
                                           deckActiveControllerProvider.notifier,
                                         )
                                         .setActive(deck.id, v),
                             ),
-                            if (activation.hasError)
+                            if (activation.errors.containsKey(deck.id))
                               CupertinoButton(
                                 onPressed: () => ref
                                     .read(deckActiveControllerProvider.notifier)

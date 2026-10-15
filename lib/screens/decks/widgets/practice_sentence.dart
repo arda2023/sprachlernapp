@@ -42,7 +42,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
   final _words = <int, ({GlobalKey key, String? translation})>{};
   final _field = GlobalKey();
   final _solution = TextEditingController();
-  double? _editingWidth;
+  double? _editingWidth, _editingScale, _editingAvailableWidth;
   @override
   void dispose() {
     _solution.dispose();
@@ -155,6 +155,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
                               ? 1
                               : .5,
                         ),
+                        backgroundColor: widget.selectedStart == offset ? colors.hairline : null,
                         decoration: TextDecoration.underline,
                         decorationStyle: TextDecorationStyle.dotted,
                         decorationColor: colors.textMuted.withValues(
@@ -193,14 +194,20 @@ class PracticeSentenceState extends State<PracticeSentence> {
             textDirection: TextDirection.ltr,
             textScaler: MediaQuery.textScalerOf(context),
           )..layout();
+          final scale = MediaQuery.textScalerOf(context).scale(style.fontSize!);
           final width = math.min(
             math.max(1.0, constraints.maxWidth - punctuationWidth),
-            widget.solved && _editingWidth != null
+            widget.solved && _editingWidth != null &&
+                _editingScale == scale && _editingAvailableWidth == constraints.maxWidth
                 ? _editingWidth!
                 : math.max(64.0, painter.width + 22),
           );
           painter.dispose();
-          if (!widget.solved) _editingWidth = width;
+          if (!widget.solved) {
+            _editingWidth = width;
+            _editingScale = scale;
+            _editingAvailableWidth = constraints.maxWidth;
+          }
           children.add(
             WidgetSpan(
               alignment: PlaceholderAlignment.baseline,
@@ -226,7 +233,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
                         autofocus: !widget.solved,
                         maxLines: null,
                         keyboardType: TextInputType.text,
-                        style: style,
+                        style: widget.solved ? style.copyWith(color: colors.success) : style,
                         cursorColor: colors.memoryLevel2,
                         autocorrect: false,
                         enableSuggestions: false,
@@ -240,7 +247,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
                             vertical: 0,
                           ),
                           filled: true,
-                          fillColor: colors.memoryLevel2.withValues(alpha: .12),
+                          fillColor: widget.solved ? colors.successTint : colors.memoryLevel2.withValues(alpha: .12),
                           hintText: widget.solved || input.hint.isEmpty
                               ? null
                               : input.hint,

@@ -74,7 +74,7 @@ void main() {
         const StoryAddResult(StoryAddState.added, cardId: 'saved'),
       );
       await tester.pumpAndSettle();
-      expect(find.text('Bereits hinzugefügt'), findsOneWidget);
+      expect(find.text('Zum Lernen hinzugefügt'), findsOneWidget);
     },
   );
   test('missing pack keeps a complete local card in list, counters and real mixed controller', () async {
@@ -221,7 +221,7 @@ void main() {
         await tester.pump();
       }
       await tester.pumpAndSettle();
-      expect(find.text('Bereits hinzugefügt'), findsOneWidget);
+      expect(find.text('Zum Lernen hinzugefügt'), findsOneWidget);
       Navigator.of(tester.element(find.byType(WordLookupSheet))).pop();
       await tester.pumpAndSettle();
       await tap('backpack');
@@ -234,7 +234,7 @@ void main() {
         await tester.pump();
       }
       await tester.pumpAndSettle();
-      expect(find.text('Bereits hinzugefügt'), findsOneWidget);
+      expect(find.text('Zum Lernen hinzugefügt'), findsOneWidget);
       final local = (await user.localPracticeItems()).single;
       expect(local.card.form, 'backpack');
       expect(local.practiceSentence.text, s.text);

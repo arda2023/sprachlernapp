@@ -7,6 +7,7 @@ import '../../models/home_models.dart';
 import '../../models/word_list_models.dart';
 import '../../models/story_models.dart';
 import '../../domain/srs_state.dart';
+import '../../domain/review_activity.dart';
 import '../../domain/learning_groups.dart';
 import 'database_providers.dart';
 import 'story_learning_providers.dart';
@@ -43,13 +44,10 @@ final learningProgressProvider =
       final now = ref.watch(learningNowProvider);
       final user = await ref.watch(userRepositoryProvider.future);
       final prefs = await user.preferences();
-      final days = <DateTime, Set<String>>{};
-      for (final id in (await user.allCardStates()).keys) {
-        for (final review in await user.reviewsFor(id)) {
-          final at = review.createdAt.toLocal();
-          (days[DateTime(at.year, at.month, at.day)] ??= {}).add(id);
-        }
-      }
+      final days = completedTargetsByDay(await user.activityBetween(
+        DateTime(now.year, now.month, now.day - now.weekday + 1),
+        DateTime(now.year, now.month, now.day + 1),
+      ));
       final today = DateTime(now.year, now.month, now.day);
       final monday = DateTime(now.year, now.month, now.day - now.weekday + 1);
       return (
@@ -168,8 +166,5 @@ class WordActions {
       inPlaylist: inPlaylist,
       note: note,
     );
-    ref.invalidate(wordListProvider);
-    ref.invalidate(vocabBreakdownProvider);
-    ref.invalidate(decksProvider);
   }
 }

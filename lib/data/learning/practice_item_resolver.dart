@@ -15,8 +15,10 @@ class PracticeItemResolver {
     this.bindings,
     this.states,
     this.contentError,
+    this.catalog,
   );
   final ContentRepository? content;
+  final PracticeCatalog? catalog;
   final UserRepository user;
   final Map<String, ContentCard> cards;
   final Map<String, PracticeItem> locals;
@@ -28,6 +30,7 @@ class PracticeItemResolver {
     UserRepository user,
     ContentRepository? content, {
     Object? contentError,
+    PracticeCatalog? catalog,
   }) async {
     final story = user is StoryLearningRepository
         ? user as StoryLearningRepository
@@ -39,7 +42,7 @@ class PracticeItemResolver {
     final cards = attachLocalLearning(
       content == null
           ? <ContentCard>[]
-          : await content.selectionCards(await content.allCardIds()),
+          : catalog?.cards ?? await content.selectionCards(await content.allCardIds()),
       locals.values.map((i) => i.card),
     );
     return PracticeItemResolver._(
@@ -51,6 +54,7 @@ class PracticeItemResolver {
       await story?.identityBindings() ?? {},
       await user.allCardStates(),
       contentError,
+      catalog,
     );
   }
 
@@ -119,15 +123,15 @@ class PracticeItemResolver {
   }
 
   Future<List<String>> deckPracticeIds(String deckId) async =>
-      resolveTargets(await content!.deckPracticeTargets(deckId));
+      resolveTargets(catalog?.targets[deckId] ?? await content!.deckPracticeTargets(deckId));
 
   Future<List<String>> activePrimaryIds() async {
     if (content == null) return [];
-    final decks = await content!.decks();
+    final decks = catalog?.decks ?? await content!.decks();
     final active = await user.activeDeckIds(decks.map((d) => d.id));
     return resolveTargets([
       for (final d in decks)
-        if (active.contains(d.id)) ...await content!.deckPracticeTargets(d.id),
+        if (active.contains(d.id)) ...(catalog?.targets[d.id] ?? await content!.deckPracticeTargets(d.id)),
     ]);
   }
 
@@ -163,5 +167,20 @@ class PracticeItemResolver {
       if (local != null) return local;
     }
     return content?.historicalSentence(cardId, sentenceId);
+  }
+}
+
+/// Immutable pack metadata, scoped to the content repository, never user state.
+class PracticeCatalog {
+  PracticeCatalog(this.cards, this.decks, this.targets);
+  final List<ContentCard> cards;
+  final List<DeckSummary> decks;
+  final Map<String, List<DeckPracticeTarget>> targets;
+  static Future<PracticeCatalog> load(ContentRepository content) async {
+    final decks = await content.decks();
+    final cards = await content.selectionCards(await content.allCardIds());
+    return PracticeCatalog(cards, decks, {
+      for (final d in decks) d.id: await content.deckPracticeTargets(d.id),
+    });
   }
 }

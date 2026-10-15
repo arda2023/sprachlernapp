@@ -201,7 +201,7 @@ void main() {
       expect(field.controller!.text, 'walks');
       expect(
         field.decoration!.fillColor,
-        AppColors.memoryLevel2.withValues(alpha: .12),
+        AppColors.successTint,
       );
       expect(t.getRect(find.byType(TextField)), before);
       expect(find.byKey(const ValueKey('practice-success')), findsNothing);

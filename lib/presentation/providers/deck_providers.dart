@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/srs_state.dart';
+import '../../domain/review_activity.dart';
 import '../../models/home_models.dart';
 import 'database_providers.dart';
 import 'learning_providers.dart';
@@ -19,15 +20,15 @@ final userChangesProvider = StreamProvider<int>((ref) async* {
 
 final decksProvider = FutureProvider<List<Deck>>((ref) async {
   ref.watch(userChangesProvider);
-  final content = await ref.watch(contentRepositoryProvider.future);
   final user = await ref.watch(userRepositoryProvider.future);
-  final summaries = await content.decks();
+  final summaries = (await ref.watch(practiceCatalogProvider.future)).decks;
   final resolver = await ref.watch(practiceResolverProvider.future);
   final active = await user.activeDeckIds(summaries.map((d) => d.id));
+  final lastReviews = await user.lastReviewTimes();
   final result = <Deck>[];
   for (final deck in summaries) {
     final ids = await resolver.deckPracticeIds(deck.id);
-    final states = await user.cardStates(ids);
+    final states = {for (final id in ids) if (resolver.states.containsKey(id)) id: resolver.states[id]!};
     final viaStory = states.values
         .where(
           (s) =>
@@ -41,10 +42,8 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
     final seen = states.values.where((s) => s.isActive && s.box >= 1);
     final recent = <(String, DateTime)>[];
     for (final state in seen) {
-      final reviews = await user.reviewsFor(state.cardId);
-      if (reviews.isNotEmpty) {
-        recent.add((state.cardId, reviews.last.createdAt));
-      }
+      final at = lastReviews[state.cardId];
+      if (at != null) recent.add((state.cardId, at));
     }
     recent.sort((a, b) => b.$2.compareTo(a.$2));
     final words = await resolver.practiceItems(
@@ -106,20 +105,42 @@ final lexicalBreakdownProvider = FutureProvider<LexicalBreakdown>((ref) async {
 }, retry: (_, _) => null);
 
 final deckActiveControllerProvider =
-    AsyncNotifierProvider<DeckActiveController, void>(DeckActiveController.new);
+    NotifierProvider<DeckActiveController, DeckActivationState>(DeckActiveController.new);
 
-class DeckActiveController extends AsyncNotifier<void> {
+class DeckActivationState {
+  const DeckActivationState({this.values = const {}, this.errors = const {}});
+  final Map<String, bool> values;
+  final Map<String, Object> errors;
+}
+
+class DeckActiveController extends Notifier<DeckActivationState> {
+  final _tails = <String, Future<void>>{};
+  final _versions = <String, int>{};
+  final _persisted = <String, bool>{};
   @override
-  void build() {}
+  DeckActivationState build() => const DeckActivationState();
 
-  Future<void> setActive(String id, bool active) async {
-    if (state.isLoading) return;
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(() async {
-      final user = await ref.read(userRepositoryProvider.future);
-      await user.setDeckActive(id, active, now: ref.read(clockProvider)());
-      ref.invalidate(decksProvider);
-      ref.invalidate(vocabBreakdownProvider);
+  Future<void> setActive(String id, bool active) {
+    final version = (_versions[id] ?? 0) + 1;
+    _versions[id] = version;
+    state = DeckActivationState(values: {...state.values, id: active},
+      errors: {...state.errors}..remove(id));
+    final previous = _tails[id] ?? Future<void>.value();
+    final operation = previous.then((_) async {
+      try {
+        final user = await ref.read(userRepositoryProvider.future);
+        _persisted[id] ??= (await user.activeDeckIds([id])).contains(id);
+        await user.setDeckActive(id, active, now: ref.read(clockProvider)());
+        _persisted[id] = active;
+      } catch (error) {
+        if (ref.mounted && _versions[id] == version) {
+          final values = {...state.values}..remove(id);
+          if (_persisted.containsKey(id)) values[id] = _persisted[id]!;
+          state = DeckActivationState(values: values, errors: {...state.errors, id: error});
+        }
+      }
     });
+    _tails[id] = operation;
+    return operation;
   }
 }

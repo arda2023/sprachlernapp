@@ -11,11 +11,12 @@ import 'package:characters/characters.dart';
 import '../../domain/preferences.dart';
 
 import '../../domain/repositories.dart';
+import '../../domain/review_activity.dart';
 import '../../domain/srs_state.dart';
 import 'user_database.dart';
 
 /// [UserRepository] on the Drift user.db of one language.
-class DriftUserRepository implements UserRepository, StoryLearningRepository {
+class DriftUserRepository implements UserRepository, StoryLearningRepository, ReviewActivityRepository {
   DriftUserRepository(this._db, {required this.lang});
 
   final UserDatabase _db;
@@ -195,6 +196,31 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
           deviceId: r.deviceId,
         ),
     ];
+  }
+
+  @override
+  Future<List<ReviewActivity>> reviewActivity(DateTime from, DateTime until) async {
+    final r = _db.reviewLog;
+    final c = _db.userCards;
+    final query = _db.select(r).join([innerJoin(c, c.cardId.equalsExp(r.cardId))])
+      ..where(c.lang.equals(lang) & r.createdAt.isBiggerOrEqualValue(from.toUtc()) &
+          r.createdAt.isSmallerThanValue(until.toUtc()));
+    return [for (final row in await query.get())
+      ReviewActivity(row.readTable(r).cardId, row.readTable(r).createdAt,
+          ReviewMode.fromCode(row.readTable(r).mode))];
+  }
+
+  @override
+  Future<Map<String, DateTime>> latestReviewTimes() async {
+    final r = _db.reviewLog;
+    final c = _db.userCards;
+    final latest = r.createdAt.max();
+    final query = _db.selectOnly(r)
+      ..join([innerJoin(c, c.cardId.equalsExp(r.cardId))])
+      ..addColumns([r.cardId, latest])
+      ..where(c.lang.equals(lang))
+      ..groupBy([r.cardId]);
+    return {for (final row in await query.get()) row.read(r.cardId)!: row.read(latest)!};
   }
 
   @override

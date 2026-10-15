@@ -79,7 +79,7 @@ Nie gespeichert. Mit `A` = aktive Stapel, `C` = Karten mit `disabled = false` un
 
 Zuordnung in dieser Reihenfolge, damit die Zähler disjunkt sind. **Invariante:** Summe der vier = gelernte auflösbare Karten in `C` + zulässige Box-0-Karten + unbekannte Primärkarten aus `A`. Retired Karten zählen wie deaktivierte nirgends mit.
 
-**Tagesziel** = Anzahl verschiedener `card_id` mit einer `review_log`-Zeile am heutigen lokalen Kalendertag. Der Streak entsteht ebenfalls aus `review_log`.
+**Tagesziel** = Anzahl verschiedener `card_id` mit einem abgeschlossenen, gespeicherten Durchgang in `review_log` am heutigen lokalen Kalendertag, ohne `mode = revue`. Formziele zählen getrennt; Doppelabgaben und In-Session-Wiederholungen zählen nicht zusätzlich. Der Streak entsteht aus derselben regulären Tagesauswertung. Neue reguläre Sitzungen verwenden `max(0, dailyGoal − heute erledigte Ziele)`; aktive Sitzungen bleiben bei Einstellungs- oder Tageswechsel erhalten. Bei Rest 0 steht „Tagesziel erreicht“ mit explizitem Weiterlernen; Revue bleibt verfügbar.
 
 ## review_log (nur anhängen)
 
@@ -108,7 +108,7 @@ Eine Zeile je Karte und Session, geschrieben nach dem ersten Durchgang der Karte
 ## Bestätigte Regeln (früher Annahmen)
 
 - Karte in Box 0 (aus Story, noch nie beantwortet) zählt als "Noch nicht geübt". ✔
-- Tagesziel = verschiedene Karten mit `review_log`-Zeile heute. ✔
+- Tagesziel = verschiedene Ziele mit regulärer `review_log`-Zeile heute, ohne Revue. ✔
 - `mode = early` kennzeichnet Vorab-Üben innerhalb von Gemischt (Box-Regel wie Revue). ✔
 - Eine `review_log`-Zeile je Karte und Session; die In-Session-Wiederholung wird nicht geloggt. ✔
 - Geprüfte Alternative → neutraler erneuter Versuch; sauberer Erstkontakt nach Zielform Box 3, echte Fehler/Aufdecken bleiben wirksam (06.10.2026). ✔

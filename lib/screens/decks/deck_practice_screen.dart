@@ -3,7 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show Scaffold, Material, ScaffoldMessenger, SnackBar;
+    show Scaffold, ScaffoldMessenger, SnackBar;
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,6 +17,7 @@ import '../../presentation/providers/preferences_provider.dart';
 import '../../presentation/content_unavailable_view.dart';
 import '../../theme/app_theme.dart';
 import 'widgets/practice_chrome.dart';
+import 'widgets/translation_bubble.dart';
 export 'widgets/practice_chrome.dart' show SessionTrack;
 import '../../widgets/success_feedback_card.dart';
 import '../words/widgets/memory_level_indicator.dart';
@@ -35,7 +36,7 @@ class DeckPracticeScreen extends ConsumerStatefulWidget {
     super.key,
     required this.deckId,
     this.mode = DeckPracticeMode.learn,
-    this.sessionSize = 5,
+    this.sessionSize = 0,
   });
   final String deckId;
   final DeckPracticeMode mode;
@@ -90,6 +91,11 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     _foreground = state == AppLifecycleState.resumed;
     _autoTimer?.cancel();
     if (_foreground) _schedule();
+  }
+
+  @override
+  void didChangeMetrics() {
+    if (mounted && _word != null) setState(() => _word = null);
   }
 
   @override
@@ -338,6 +344,9 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                         ? state.total
                         : state.index + (state.saved ? 1 : 0),
                     total: state.total,
+                    loading: state.loading,
+                    goalReached: state.goalReached,
+                    repeating: state.pass?.logged == false,
                     onHome: () {
                       _autoTimer?.cancel();
                       if (state.canLeave) Navigator.of(context).maybePop();
@@ -377,6 +386,16 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                         child: ListView(
                           padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
                           children: [
+                            if (state.goalReached && state.total == 0 && !state.loading)
+                              CupertinoButton(
+                                onPressed: () => Navigator.of(context).pushReplacement(
+                                  CupertinoPageRoute<void>(builder: (_) => DeckPracticeScreen(
+                                    deckId: widget.deckId, mode: widget.mode,
+                                    sessionSize: -1,
+                                  )),
+                                ),
+                                child: const Text('Weiterlernen'),
+                              ),
                             Center(
                               child: ConstrainedBox(
                                 constraints: const BoxConstraints(
@@ -395,7 +414,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                     : !canShow
                                     ? state.total == 0
                                           ? Text(
-                                              'Gerade gibt es keine Übungen.',
+                                              state.goalReached ? 'Tagesziel erreicht' : 'Gerade gibt es keine Übungen.',
                                               style: AppType.chrome(
                                                 color: context
                                                     .appColors
@@ -561,7 +580,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                   'Tippe das Wort ab, um weiterzumachen.'
                           ? null
                           : state.message,
-                      hasInput: _input.text.isNotEmpty,
+                      hasInput: _input.text.trim().isNotEmpty,
                       saved: state.saved,
                       solved: solved,
                       revealed: pass!.revealed,
@@ -587,6 +606,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
               Positioned.fill(
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
+                  onPanStart: (_) => setState(() => _word = null),
                   onTapDown: (e) {
                     if (!(_sentenceKey.currentState?.selectAt(
                           e.globalPosition,
@@ -611,35 +631,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final rect = box == null
         ? word.rect
         : word.rect.shift(-box.localToGlobal(Offset.zero));
-    final width = math.min(260.0, MediaQuery.sizeOf(context).width - 32);
-    return Positioned(
-      left: (rect.center.dx - width / 2).clamp(
-        16.0,
-        MediaQuery.sizeOf(context).width - width - 16,
-      ),
-      top: rect.top < 110 ? rect.bottom + 8 : null,
-      bottom: rect.top < 110
-          ? null
-          : (box?.size.height ?? MediaQuery.sizeOf(context).height) -
-                rect.top +
-                8,
-      width: width,
-      child: Material(
-        color: context.appColors.nightPage,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: context.appColors.hairline),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Text(
-            word.translation,
-            textAlign: TextAlign.center,
-            style: AppType.chrome(color: context.appColors.textPrimary),
-          ),
-        ),
-      ),
-    );
+    return TranslationBubble(anchor: rect, text: word.translation);
   }
 
   Widget _summary(DeckSessionState state) {

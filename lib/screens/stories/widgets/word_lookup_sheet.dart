@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../../domain/story_learning.dart';
+import '../../words/word_list_screen.dart';
 
 import 'package:flutter/material.dart' show showModalBottomSheet;
 
@@ -66,6 +67,7 @@ class _WordLookupSheetState extends State<WordLookupSheet> {
   late StoryAddResult _status =
       widget.status ?? const StoryAddResult(StoryAddState.unavailable);
   bool _saving = false;
+  bool _addedNow = false;
   String? _error;
   Future<void> _add({bool reactivate = false}) async {
     if (_saving) return;
@@ -80,6 +82,7 @@ class _WordLookupSheetState extends State<WordLookupSheet> {
       if (mounted) {
         setState(() {
           _status = result;
+          _addedNow = result.state == StoryAddState.added;
           if (result.state == StoryAddState.added) _mark = WordMark.active;
         });
       }
@@ -180,13 +183,18 @@ class _WordLookupSheetState extends State<WordLookupSheet> {
               liveRegion: true,
               child: AddToLearningButton(
                 mark: _mark,
-                label: _saving ? 'Wird hinzugefügt …' : _status.label,
+                label: _saving ? 'Wird hinzugefügt …' : _addedNow ? 'Zum Lernen hinzugefügt' : _status.label,
                 onPressed:
                     widget.learningAvailable && _status.canAdd && !_saving
                     ? () => _add()
                     : null,
               ),
             ),
+            if (_status.state == StoryAddState.added && _status.cardId != null)
+              CupertinoButton(
+                onPressed: () => WordListScreen.openTarget(context, _status.cardId!),
+                child: const Text('In Wortliste ansehen'),
+              ),
             if (_status.state == StoryAddState.disabled &&
                 widget.onReactivate != null)
               CupertinoButton(
