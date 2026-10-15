@@ -1,0 +1,44 @@
+{
+  "status": "blocked_not_applied",
+  "searched_active_links": 3768,
+  "editorially_read_active_pairs": 111,
+  "source_sha256": "48f8c3037e37cf8aaa83188c868af6706fd7f749592785433ee30b74070800d4",
+  "unchanged_asset_sha256": "4861110b1e0ab90b2487db79e47afbe9581f54b6cab3987c1a6d9e9fdd7e64b6",
+  "source_table_counts": {
+    "languages": 1,
+    "lemmas": 5007,
+    "senses": 6759,
+    "cards": 3768,
+    "dictionary_forms": 8089,
+    "decks": 14,
+    "deck_cards": 3661,
+    "deck_words": 3557,
+    "word_aliases": 37,
+    "sentences": 4302,
+    "sentence_tokens": 47082,
+    "card_sentences": 4296,
+    "stories": 1,
+    "story_sentences": 6,
+    "exercises": 0,
+    "grammar_rules": 0,
+    "audio_assets": 0,
+    "content_releases": 1,
+    "lexical_targets": 134,
+    "card_lexical_targets": 406,
+    "form_targets": 402,
+    "deck_practice_targets": 402
+  },
+  "performance_indexes": {
+    "idx_sentence_tokens_active_sentence_idx": "CREATE INDEX idx_sentence_tokens_active_sentence_idx ON sentence_tokens(sentence_id,idx) WHERE removed_in IS NULL",
+    "idx_dictionary_forms_active_lookup": "CREATE INDEX idx_dictionary_forms_active_lookup ON dictionary_forms(sense_id,form_norm,rank,id) WHERE removed_in IS NULL"
+  },
+  "blockers": {
+    "exchange_scope": "corpus does not cover every sentence link",
+    "single_card_tombstone": "learning: missing/retired/foreign primary",
+    "legacy_make_plan": "'irregular:beat:past'"
+  },
+  "proposed_sentence_lint": [],
+  "exported": false,
+  "staged": false,
+  "cloud_calls": 0
+}
