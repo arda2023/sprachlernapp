@@ -89,6 +89,18 @@ void validateFormContent(Database db) {
   bool live(Map<String, Object?> r) => r['removed_in'] == null;
   Iterable<Map<String, Object?>> active(String t) =>
       tables[t]!.values.where(live);
+  // Per-validation indexes retain every active row, including duplicates.
+  final tokensBySentence = <Object?, List<Map<String, Object?>>>{};
+  for (final token in active('sentence_tokens')) {
+    (tokensBySentence[token['sentence_id']] ??= []).add(token);
+  }
+  final dictionaryByForm =
+      <(Object?, Object?, Object?), List<Map<String, Object?>>>{};
+  for (final form in active('dictionary_forms')) {
+    (dictionaryByForm[(form['lang'], form['sense_id'], form['form_norm'])] ??=
+            [])
+        .add(form);
+  }
   Map<String, Object?> get(String t, Object? id, [Object? lang]) {
     final r = tables[t]![id];
     if (r == null || !live(r) || (lang != null && r['lang'] != lang)) {
@@ -346,9 +358,8 @@ void validateFormContent(Database db) {
           alternatives.toSet().length == alternatives.length,
       'Alternativen',
     );
-    final targets = active('sentence_tokens').where(
+    final targets = (tokensBySentence[link['sentence_id']] ?? const []).where(
       (t) =>
-          t['sentence_id'] == link['sentence_id'] &&
           t['start_pos'] == start &&
           t['end_pos'] == end &&
           t['card_id'] == c['id'],
@@ -364,9 +375,7 @@ void validateFormContent(Database db) {
   for (final sentence in active('sentences')) {
     require(text(sentence['translation_de']), 'Satzübersetzung fehlt');
     final tokens =
-        active('sentence_tokens')
-            .where((t) => t['sentence_id'] == sentence['id'])
-            .toList()
+        (tokensBySentence[sentence['id']] ?? []).toList()
           ..sort((a, b) => (a['idx'] as int).compareTo(b['idx'] as int));
     final points = (sentence['text'] as String).runes.toList();
     var previous = 0;
@@ -392,14 +401,11 @@ void validateFormContent(Database db) {
               (sense['definition_de'] == null || text(sense['definition_de'])),
           'Bedeutung/Definition fehlt',
         );
+        final tokenForm = contentFormNorm(t['surface'] as String);
         require(
-          active('dictionary_forms').any(
-            (d) =>
-                d['lang'] == sentence['lang'] &&
-                d['sense_id'] == t['sense_id'] &&
-                d['form_norm'] == contentFormNorm(t['surface'] as String) &&
-                text(d['gloss_de']),
-          ),
+          (dictionaryByForm[(sentence['lang'], t['sense_id'], tokenForm)] ??
+                  const [])
+              .any((d) => text(d['gloss_de'])),
           'Token-Wörterbuchbindung fehlt',
         );
       }
