@@ -1,0 +1,326 @@
+{
+  "runtime_image": "public.ecr.aws/supabase/edge-runtime:v1.77.1",
+  "deno_version": "2.1.4",
+  "local_only": true,
+  "synthetic_auth_storage_database": true,
+  "existing_bundle_unchanged": true,
+  "memory_limit_mib": 256,
+  "cpu_soft_limit_ms": 2000,
+  "cpu_hard_limit_ms": 2000,
+  "wall_limit_ms": 150000,
+  "sampled_memory_is_not_absolute_peak": true,
+  "runs": {
+    "before": {
+      "calls": [
+        {
+          "call": 1,
+          "http_status": 200,
+          "wall_ms": 1016.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 2,
+          "http_status": 200,
+          "wall_ms": 422.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 3,
+          "http_status": 200,
+          "wall_ms": 62.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 4,
+          "http_status": 200,
+          "wall_ms": 125.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 5,
+          "http_status": 200,
+          "wall_ms": 63.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 6,
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 7,
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 8,
+          "http_status": 200,
+          "wall_ms": 62.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 9,
+          "http_status": 200,
+          "wall_ms": 125.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 10,
+          "http_status": 546,
+          "wall_ms": 656.0,
+          "state": null,
+          "error": "WorkerRequestCancelled: request has been cancelled by supervisor"
+        }
+      ],
+      "last_shutdown": {
+        "reason": "Memory",
+        "cpu_time_used": 383,
+        "memory_used": {
+          "total": 268563353,
+          "heap": 27242656,
+          "external": 241320697
+        }
+      },
+      "largest_phase_sample_bytes": 99539369,
+      "last_phase_reads": [
+        {
+          "metric": "read:content.manifest.json",
+          "elapsed_ms": 2.9864950000000015,
+          "memory": {
+            "rss": 0,
+            "heapTotal": 9871360,
+            "heapUsed": 8195912,
+            "external": 3238424
+          }
+        },
+        {
+          "metric": "read:reader_report.json",
+          "elapsed_ms": 79.414984,
+          "memory": {
+            "rss": 0,
+            "heapTotal": 11444224,
+            "heapUsed": 8462072,
+            "external": 8012537
+          }
+        },
+        {
+          "metric": "read:content.manifest.json",
+          "elapsed_ms": 2.9095960000000005,
+          "memory": {
+            "rss": 0,
+            "heapTotal": 9871360,
+            "heapUsed": 8179896,
+            "external": 3236741
+          }
+        },
+        {
+          "metric": "read:finalization_report.json",
+          "elapsed_ms": 2.477122999999999,
+          "memory": {
+            "rss": 0,
+            "heapTotal": 9871360,
+            "heapUsed": 8275680,
+            "external": 3369800
+          }
+        },
+        {
+          "metric": "read:editorial_reviews.json",
+          "elapsed_ms": 2.3528990000000007,
+          "memory": {
+            "rss": 0,
+            "heapTotal": 9871360,
+            "heapUsed": 8381944,
+            "external": 3501025
+          }
+        },
+        {
+          "metric": "read:history_inventory.json",
+          "elapsed_ms": 138.668854,
+          "memory": {
+            "rss": 0,
+            "heapTotal": 38035456,
+            "heapUsed": 35154288,
+            "external": 64385081
+          }
+        },
+        {
+          "metric": "read:registry.json",
+          "elapsed_ms": 14.515073999999998,
+          "memory": {
+            "rss": 0,
+            "heapTotal": 29978624,
+            "heapUsed": 27190072,
+            "external": 9731085
+          }
+        }
+      ]
+    },
+    "after": {
+      "calls": [
+        {
+          "call": 1,
+          "http_status": 200,
+          "wall_ms": 812.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 2,
+          "http_status": 200,
+          "wall_ms": 422.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 3,
+          "http_status": 200,
+          "wall_ms": 62.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 4,
+          "http_status": 200,
+          "wall_ms": 125.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 5,
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 6,
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 7,
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 8,
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 9,
+          "http_status": 200,
+          "wall_ms": 125.0,
+          "state": "verifying",
+          "error": null
+        },
+        {
+          "call": 10,
+          "http_status": 200,
+          "wall_ms": 1375.0,
+          "state": "ready",
+          "error": null
+        }
+      ],
+      "last_shutdown": {
+        "reason": "EarlyDrop",
+        "cpu_time_used": 1086,
+        "memory_used": {
+          "total": 78485951,
+          "heap": 75447848,
+          "external": 3038103
+        }
+      },
+      "largest_phase_sample_bytes": 178106849,
+      "last_phase_reads": [
+        {
+          "metric": "read:content.manifest.json",
+          "elapsed_ms": 3.705565,
+          "memory": {
+            "rss": 0,
+            "heapTotal": 9871360,
+            "heapUsed": 8181920,
+            "external": 3235686
+          }
+        },
+        {
+          "metric": "read:finalization_report.json",
+          "elapsed_ms": 2.4918820000000004,
+          "memory": {
+            "rss": 0,
+            "heapTotal": 9871360,
+            "heapUsed": 8278592,
+            "external": 3366896
+          }
+        },
+        {
+          "metric": "read:editorial_reviews.json",
+          "elapsed_ms": 2.4654120000000006,
+          "memory": {
+            "rss": 0,
+            "heapTotal": 9871360,
+            "heapUsed": 8385120,
+            "external": 3498119
+          }
+        },
+        {
+          "metric": "read:history_inventory.json",
+          "elapsed_ms": 116.32710300000001,
+          "memory": {
+            "rss": 0,
+            "heapTotal": 46686208,
+            "heapUsed": 44550520,
+            "external": 3293945
+          }
+        },
+        {
+          "metric": "read:registry.json",
+          "elapsed_ms": 12.625293,
+          "memory": {
+            "rss": 0,
+            "heapTotal": 38367232,
+            "heapUsed": 27828640,
+            "external": 3163024
+          }
+        },
+        {
+          "metric": "read:pack.json",
+          "elapsed_ms": 530.880445,
+          "memory": {
+            "rss": 0,
+            "heapTotal": 177451008,
+            "heapUsed": 175009512,
+            "external": 3097337
+          }
+        },
+        {
+          "metric": "read:provenance.json",
+          "elapsed_ms": 3.5464050000000498,
+          "memory": {
+            "rss": 0,
+            "heapTotal": 77524992,
+            "heapUsed": 75141560,
+            "external": 3163005
+          }
+        }
+      ]
+    }
+  }
+}

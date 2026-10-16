@@ -3,13 +3,26 @@ import hashlib
 import json
 import sqlite3
 import uuid
+import time
 from pathlib import Path
 
 import pytest
-from test_editor_service import setup,wait
+from test_editor_service import setup
 from sprachpipe.editor.publisher import Publisher,inspect_bundle
 from sprachpipe.authoring_service import AuthoringError,draft_content_hash
 from sprachpipe.word_registry import digest
+
+
+def wait(service,job):
+    # Windows does not allow replacement while an ordinary Python reader holds
+    # the destination open. Coordinate fixture polling with the existing writer
+    # mutex; keep the original 90-second deadline and terminal-state assertions.
+    deadline=time.monotonic()+90
+    while time.monotonic()<deadline:
+        with service.store.mutex:current=service.store.get('jobs',job['job_id'])
+        if current['state'] not in ('queued','running'):return current
+        time.sleep(.02)
+    raise AssertionError('job did not finish')
 
 
 def test_finalize_wire_body_is_json_object_and_get_body_stays_empty(monkeypatch):
@@ -210,7 +223,8 @@ def test_changed_bytes_and_unapproved_export_are_rejected(setup):
     with pytest.raises(AuthoringError,match='bestätigt'):inspect_bundle(directory,record,draft)
 
 
-def test_finalize_diagnostic_persists_and_retry_keeps_existing_upload(setup,monkeypatch):
+@pytest.mark.parametrize('http_status',[400,546])
+def test_finalize_diagnostic_persists_and_retry_keeps_existing_upload(setup,monkeypatch,http_status):
     import io
     import urllib.error
     import urllib.request
@@ -227,7 +241,7 @@ def test_finalize_diagnostic_persists_and_retry_keeps_existing_upload(setup,monk
         def open(self,request,timeout):
             attempts.append(request)
             if fail:
-                raise urllib.error.HTTPError('https://synthetic.invalid',400,'redacted',{},
+                raise urllib.error.HTTPError('https://synthetic.invalid',http_status,'redacted',{},
                     io.BytesIO(b'{"code":"REQUEST_FAILED","details":"secret-token"}'))
             return Response()
     monkeypatch.setattr(urllib.request,'build_opener',lambda *args:Opener())
@@ -236,6 +250,9 @@ def test_finalize_diagnostic_persists_and_retry_keeps_existing_upload(setup,monk
     failed=wait(service,service.publish_release(record['release_id'],'finalize'))
     assert failed['state']=='failed' and failed['result'] is None and failed['processed']==0
     assert failed['error']['diagnostic']['server_code']=='REQUEST_FAILED'
+    assert failed['error']['diagnostic']['http_status']==http_status
+    assert len(attempts)==1  # No automatic retry, including on resource abort.
+    if http_status==546:assert 'Ressourcenlimit' in failed['error']['message']
     current=service.store.get('releases',record['release_id'])
     assert current['publication']['status']=='uploaded'
     assert current['publication']['upload_id']==before['publication']['upload_id']==remote.upload_id

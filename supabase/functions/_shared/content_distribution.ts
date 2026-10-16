@@ -21,7 +21,25 @@ export function canonical(value: unknown): string {
   if (Array.isArray(value)) return '['+value.map(canonical).join(',')+']';
   return '{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical((value as Record<string,unknown>)[k])).join(',')+'}';
 }
-export function digest(value: unknown): string { return createHash('sha256').update(canonical(value)).digest('hex'); }
+export function digest(value: unknown): string {
+  // Same canonical byte sequence, bounded temporary strings. Building the full
+  // recursive canonical string repeatedly exceeds Edge memory on real packs.
+  const hash=createHash('sha256');let parts:string[]=[],length=0;
+  const flush=()=>{if(parts.length){hash.update(parts.join(''));parts=[];length=0;}};
+  const write=(text:string)=>{parts.push(text);length+=text.length;if(length>=16384)flush();};
+  const visit=(item:unknown)=>{
+    if(item===null||typeof item!=='object'){write(String(JSON.stringify(item)));return;}
+    if(Array.isArray(item)){
+      write('[');for(let i=0;i<item.length;i++){if(i)write(',');if(item[i]!==undefined)visit(item[i]);}write(']');return;
+    }
+    write('{');let first=true;
+    for(const key of Object.keys(item).sort()){
+      if(!first)write(',');first=false;write(JSON.stringify(key));write(':');visit((item as Json)[key]);
+    }
+    write('}');
+  };
+  visit(value);flush();return hash.digest('hex');
+}
 export type Json = Record<string, any>;
 export type Descriptor = {sha256:string;size_bytes:number};
 export function validateStart(data: Json) {
@@ -87,14 +105,17 @@ export class DistributionBackend {
     requireThat(UUID.test(id)&&FILES.includes(name),'OBJECT_KEY');
     const response=await this.request(`/storage/v1/object/authenticated/content-private/${id}/${name}`);
     requireThat(response.ok&&response.body,'OBJECT_MISSING',409);
-    const hash=createHash('sha256'), chunks:Uint8Array[]=[];let size=0;
+    const hash=createHash('sha256'), decoder=read?new TextDecoder('utf-8',{fatal:true}):null;
+    let size=0,text='';
     for await(const chunk of response.body){
       size+=chunk.byteLength;requireThat(size<=descriptor.size_bytes&&size<=MAX_PACK,'OBJECT_SIZE');hash.update(chunk);
-      if(read){requireThat(size<=64*1024*1024,'JSON_LIMIT');chunks.push(chunk);}
+      if(decoder){
+        requireThat(size<=64*1024*1024,'JSON_LIMIT');
+        try{text+=decoder.decode(chunk,{stream:true});}catch{throw new DistributionError('OBJECT_JSON');}
+      }
     }
     requireThat(size===descriptor.size_bytes&&hash.digest('hex')===descriptor.sha256,'OBJECT_HASH');
-    if(read){const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length;}
-      try{return JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes));}catch{throw new DistributionError('OBJECT_JSON');}}
+    if(decoder){try{text+=decoder.decode();return JSON.parse(text);}catch{throw new DistributionError('OBJECT_JSON');}}
   }
 }
 
@@ -133,7 +154,8 @@ export async function verifyBundle(backend:DistributionBackend,u:Json):Promise<J
     requireThat(digest(receipt)===m.adoption_sha256&&m.adoption_sha256===report.adoption_sha256&&
       v.content_sha256===baseline.converted_content_sha256&&v.base_sha256===baseline.source.pack_canonical_sha256&&
       canonical(v.findings)==='[]'&&canonical(report.sqlite_counts)===canonical(baseline.counts),'ADOPTION_INVALID');
-    const content=structuredClone(pack);delete content.release.created_at;
+    // Only one small metadata object differs; every content row stays bound.
+    const content={...pack,release:{...pack.release}};delete content.release.created_at;
     requireThat(digest(content)===baseline.converted_content_sha256&&
       pack.release.created_at===baseline.converted_created_at&&m.sha256===baseline.converted_sqlite_sha256&&
       m.size_bytes===baseline.converted_sqlite_size,'ADOPTION_CONTENT_CHANGED');

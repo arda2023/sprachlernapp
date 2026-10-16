@@ -1,6 +1,7 @@
 // Explicit local integration check: first run the real isolated build documented
 // in docs/content-editor-initial-release.md. Never reads an editor user workspace.
 import {DistributionBackend,DistributionError,verifyBundle,FILES,canonical} from './content_distribution.ts';
+import {createHash} from 'node:crypto';
 
 let result:any;
 try{result=JSON.parse(Deno.readTextFileSync(new URL('../../../build/baseline_adoption/real-result.json',import.meta.url)));}
@@ -26,6 +27,7 @@ async function rejects(action:()=>unknown,code:string){
 integration('real source adoption verifies without a draft review; no network',async()=>{
   const final=await verifyBundle(new Local(),upload());
   assert(final.generation===1&&final.parent_release_id===null&&final.publication_kind==='internal-baseline-adoption-v1');
+  assert(final.pack_canonical_sha256===createHash('sha256').update(canonical(files['pack.json'])).digest('hex'));
   assert(files['editorial_reviews.json'].length===0);
   assert(Object.keys(files['finalization_report.json'].sqlite_counts).length===23);
 });

@@ -32,6 +32,8 @@ SERVER_REASONS={
     'OBJECT_JSON':'Eine hochgeladene JSON-Datei ist nicht lesbar.',
     'BACKEND_UNAVAILABLE':'Function konnte ihren Backendzugriff nicht abschließen.',
     'CONFLICT':'Serverstand hat sich geändert.',
+    'WORKER_LIMIT':'Serverworker hat sein Ressourcenlimit überschritten.',
+    'WORKER_RESOURCE_LIMIT':'Serverworker hat sein Ressourcenlimit überschritten.',
 }
 SERVER_CODES=frozenset(SERVER_REASONS)|frozenset('''REQUEST_ID SCOPE_UNSUPPORTED GENERATION_INVALID
     PARENT_INVALID PUBLICATION_KIND ADOPTION_FIRST_ONLY MANIFEST_INCOMPATIBLE VERSION_INVALID
@@ -72,6 +74,8 @@ def http_failure(error,path,*,file=None):
                 if value.get('message')=='Invalid JWT':reason='Gateway hat die Anmeldung abgelehnt (Invalid JWT).'
                 elif value.get('message')=='Missing authorization header':reason='Gateway meldet einen fehlenden Authorization-Header.'
     except (ValueError,UnicodeError,OSError,RecursionError):pass
+    if error.code==546:
+        reason='Serverprüfung wegen eines Worker-Ressourcenlimits abgebrochen (CPU, Speicher oder Laufzeit). Konkretes Limit anhand der Servermetriken prüfen; nicht automatisch wiederholen.'
     if reason is None:
         reason=('Anmeldung/Berechtigung prüfen.' if error.code in (401,403) else
                 'Serverstand geändert oder Datei bereits hochgeladen.' if error.code==409 else

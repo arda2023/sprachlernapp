@@ -1,5 +1,199 @@
 # Erste private Cloudversion aus dem internen App-Bestand
 
+## HTTP 546: Speicherverbrauch lokal belegt und reduziert · 16.10.2026
+
+**Aktueller Stand:** Der echte Bestand wurde in einer isolierten Supabase Edge
+Runtime vollständig geprüft. Vorher bricht der zehnte Finalize-Aufruf am
+Speicherlimit ab; mit der begrenzten Optimierung erreicht er `ready`.
+**Keine Cloudprüfung, kein Deployment und keine Veröffentlichung durchgeführt.**
+Der vorhandene lokale Beleg bleibt mit derselben Upload-ID auf `verifying`.
+Der konkrete Shutdown-Grund der gemeldeten Cloudinvocation ist weiterhin
+unbekannt; der Speicherengpass ist lokal reproduziert, CPU als Cloudursache nicht
+behauptet.
+
+### Ablauf, Daten und Ursache
+
+Der aktuelle lokale 546-Job steht bei **processed=9 / total=10**. Die erste
+Finalize-Stufe streamt bereits je Aufruf genau eine der neun Dateien und prüft
+Bytes, Größe und Hash. Erst der zehnte Aufruf führt `verifyBundle` aus.
+Die Bestandsübernahme hat keinen Parent, deshalb werden hier keine früheren
+Registry-/Inventardateien nachgeladen. Normale Folge-Releases behalten ihre
+zusätzlichen Parent-/Registry-/Historienvergleiche.
+
+| Datei | Bytes | Verarbeitung in der abschließenden Prüfung |
+|---|---:|---|
+| `pack.json` | 50.083.067 | UTF-8/JSON, Scope/Registrybindung, kompletter normalisierter Inhaltshash und abschließender Packhash |
+| `content.sqlite` | 43.085.824 | Bytes vorher separat gestreamt/gehasht; abschließend gebundener SQLitehash/Größe geprüft, kein SQLite-JSON-Parse |
+| `history_inventory.json` | 10.169.664 | JSON/kanonischer Sidecarhash, Sprache/Format/Tabellen, gegebenenfalls Parentvergleich |
+| `reader_report.json` | 9.808.519 | Byte-/Größen-/Hashprüfung als eine der neun Dateien; kein zusätzlicher JSON-Parse in `verifyBundle` |
+| `registry.json` | 1.063.044 | JSON/kanonischer Sidecarhash, Packbindung, gegebenenfalls bisherige Wörter |
+| Manifest / Report / Reviews / Provenienz | 1.055 / 1.839 / 3 / 2.575 | JSON, Manifestgleichheit, technische Zulassung, Review- oder Übernahmevertrag, Beleg-/Quellenbindung |
+
+Bisher sammelte `DistributionBackend.object(read=true)` alle rohen Streamchunks
+in einer Liste, kopierte sie in einen zweiten Gesamtpuffer und dekodierte diesen
+zu einem Gesamtstring vor dem Parse. Das hält zusätzlich die Backingbuffer der
+Chunkansichten fest. Inventar, Registry und weitere bereits geparste Dateien
+bleiben währenddessen erreichbar. Im isolierten Packtest wurden bereits
+253.903.605 externe Bytes gemeldet und `Array buffer allocation failed`
+ausgelöst. Die komplette Prüfung überschreitet anschließend das lokale
+256-MiB-Limit. Dies ist ein gemessener Speicherabbruch, kein Zeitlimitnachweis.
+
+Weitere unnötige Allokationen im selben Pfad waren die rekursive Bildung eines
+großen kanonischen Gesamtstrings je Hash sowie `structuredClone(pack)` nur zum
+Weglassen von `release.created_at`. Der Inhalt wird für zwei verschiedene
+Prüfzwecke gehasht; beide Bindungen bleiben erhalten.
+
+### Begrenzter Fix und unveränderte Integrität
+
+- Rohbytes werden weiterhin vollständig gehasht und gezählt. JSON wird mit
+  einem strikten, zustandsbehafteten UTF-8-Decoder während des Streams dekodiert.
+  Es gibt keine Liste festgehaltener Rohchunks und keinen zweiten Gesamtbuffer.
+  Parse/Annahme erfolgen nach korrekter Größe und korrektem Bytehash. Das
+  bisherige 64-MiB-JSON-Limit bleibt bestehen.
+- `digest` produziert dieselbe kanonische Bytefolge mit sortierten Schlüsseln,
+  sammelt kleine Schreibteile und übergibt sie in etwa 16-KiB-Blöcken an SHA-256.
+  Die großen rekursiven Gesamtstrings entfallen. Einzelne skalare JSON-Werte
+  werden weiterhin regulär serialisiert; es wird kein neuer Hashvertrag erfunden.
+- Für den normalisierten Packhash werden nur der äußere Container und das
+  kleine `release`-Objekt kopiert. Alle Inhaltsdaten bleiben in einer einzigen
+  geparsten Struktur; der ursprüngliche Zeitstempel wird separat geprüft und
+  bleibt im abschließenden kanonischen Packhash enthalten.
+- Alle neun Dateiprüfungen, Übernahme-/Quellen-/Inhalts-/SQLitepins, Registry,
+  Reviews, Rechte, Parent-/Generationprüfung und atomarer Commit bleiben erhalten.
+  `internal_baseline_source.json` wurde **nicht geändert**. Kein lokaler Bericht
+  ersetzt die Serverprüfung. Kein neuer Status und keine verteilte Prüfung nötig.
+- HTTP 546 wird im Editor jetzt als Ressourcenabbruch mit offenem konkreten
+  Limit erklärt. Bekannte `WORKER_LIMIT`-/`WORKER_RESOURCE_LIMIT`-Codes sind sicher
+  lesbar. Ein Abbruch stoppt den Job; der Regressionstest belegt genau einen
+  Versuch und Fortsetzbarkeit derselben Upload-ID, keine automatische Wiederholung.
+
+### Reproduzierbare lokale Edge-Messung
+
+Versionierter Helfer: `pipeline/tests/check_content_edge_resources.py`.
+Er verwendet das bereits installierte Image
+`public.ecr.aws/supabase/edge-runtime:v1.77.1` (Deno 2.1.4), zieht kein Image nach,
+kopiert die neun Eingabedateien unverändert in ein eigenes Testverzeichnis und
+vergleicht den Gitstand `0670076` mit dem aktuellen Prüfmodul. Gemessen wird der
+**tatsächliche `publish`-/Finalize-Pfad**, einschließlich der vollständigen
+Byteprüfungen und abschließenden Bundleprüfung, über zehn getrennte Aufrufe.
+
+Userworker-Limits in beiden Läufen identisch: **256 MiB Speicher**, **2.000 ms
+CPU soft/hard**, **150.000 ms Wandzeit**, `oneshot`/frischer Worker pro Aufruf.
+Keine Limits oder Timeouts wurden zur Abnahme erhöht. Nur isolierte lokale
+Auth-/Storage-/DB-Adapter sind synthetisch; die Prüfimplementierung ist echt.
+Der Test erzeugt keine Veröffentlichung und ruft kein Cloudprojekt auf.
+
+| Reproduzierter voller Ablauf | Vorher (`0670076`) | Nachher |
+|---|---:|---:|
+| Aufrufe 1–9, Byte-/Hashprüfung | jeweils HTTP 200 / `verifying` | jeweils HTTP 200 / `verifying` |
+| Aufruf 10, Gesamtprüfung | HTTP 546 / Supervisorabbruch | HTTP 200 / `ready` |
+| Wandzeit Aufruf 10 | 656.0 ms bis Abbruch | 1375.0 ms vollständig |
+| CPU laut Shutdown-Event | 383 ms bis Abbruch | 1.086 ms vollständig |
+| Shutdown-Grund | `Memory`, `exceeded=true` | `EarlyDrop`, `exceeded=false` |
+| Speicher laut Shutdown | 268.563.353 Bytes, davon 241.320.697 extern | 78.485.951 Bytes, davon 3.038.103 extern |
+| Größter erfasster Heap+External-Phasensnapshot | 99.539.369 Bytes **vor** dem fatalen Packladen | 178.106.849 Bytes nach Packparse |
+
+Die Snapshots sind **kein absoluter Peakwert**. Vorher zeigt erst das
+Supervisorereignis die Überschreitung; der kleinere vorherige Snapshot wäre kein
+Beleg geringeren Verbrauchs. Die CPUwerte sind ebenfalls nicht als Beschleunigung
+vergleichbar: vorher wurde früh abgebrochen, nachher vollständig geprüft.
+Die `node:process.cpuUsage()`-Stubwerte der ersten Erkundung wurden verworfen;
+maßgeblich sind die echten Runtime-Shutdown-Events. Die Daten liegen kompakt in
+[resources-546.json](evidence/content-editor-initial-release/resources-546.json).
+Die finale Messung benötigt nach Inventar-/Registryparse etwa 528 ms für
+Packladen/Decode/Parse; die verbleibende Gesamtprüfung führt die gebundenen
+kanonischen Vergleiche vollständig aus. Rohlogs enthalten die Phasensnapshots.
+
+Lokale Grenzen gegenüber der Cloud: andere Hardware/Runtimeversion möglich,
+Loopback-I/O, synthetische Auth-/Storage-/DB-Antworten, frische Testworker statt
+eines möglicherweise wiederverwendeten Cloudpools. Reale JWT-/RLS-/TLS- und
+Cloudlatenzen sind damit nicht abgenommen. Cloud-HTTP-546 allein unterscheidet
+CPU/Speicher/Wandzeit nicht; dessen Shutdownmetadaten wurden nicht abgefragt.
+Referenz: [Supabase-Limits](https://supabase.com/docs/guides/functions/limits),
+[546-Diagnose](https://supabase.com/docs/guides/troubleshooting/edge-function-546-error-response),
+[Shutdown-Metriken](https://supabase.com/docs/guides/troubleshooting/edge-function-shutdown-reasons-explained).
+
+Tatsächlich ausgeführt, Windows (PowerShell), aus dem Repository:
+```powershell
+pipeline\.venv\Scripts\python.exe -X utf8 pipeline/tests/check_content_edge_resources.py --bundle "$env:LOCALAPPDATA\SprachappContentEditor\bundles\088f5eab-7347-406f-b9e6-cf5dbb985990"
+```
+macOS (Terminal), mit dem dort tatsächlich vorhandenen Bundleverzeichnis:
+```sh
+pipeline/.venv-macos/bin/python -X utf8 pipeline/tests/check_content_edge_resources.py --bundle '/absoluter/Pfad/zum/bestehenden/Bundle'
+```
+Output: `before ... call 10 ... http_status: 546`; `after ... call 10 ...
+http_status: 200, state: ready`; `Real bundle preserved; local verification passed
+at 256 MiB / 2000ms CPU.` **Exit 0.** Messartefakte unter
+`build/content_edge_resources/f9098493c2c94587beea72560b6e26a2/`, erste isolierte
+Phasenmessungen unter `build/finalize_546/`. Testcontainer wurden entfernt.
+Der Helfer bindet nur sein Testverzeichnis read-only und lauscht nur auf
+`127.0.0.1:54999`; der echte Editor wird nicht gestartet oder umkonfiguriert.
+
+### Regressionen und geklärte Testfehler
+
+- `deno test --allow-read supabase/functions/_shared/content_distribution_test.ts supabase/functions/_shared/content_baseline_adoption_test.ts`:
+  **12 passed / 0 failed (7s), Exit 0**. Kanonische Gleichheit gegen den bisherigen
+  Algorithmus inklusive Unicode/großer Felder, split UTF-8, Hash/Größe, beide
+  Releasearten und vorhandene Negativprüfungen; echter Packhash unabhängig gegen
+  die bisherige kanonische Darstellung verglichen.
+- `pipeline/.venv/Scripts/python.exe -X utf8 -m pytest pipeline/tests/test_editor_publisher.py -q --tb=short`:
+  **21 passed in 4.98s, Exit 0**. Sichere 546-Meldung, kein automatischer Retry,
+  persistierter Fehler und Fortsetzung derselben Upload-ID.
+- Die ersten beiden Pythonläufe waren nicht erfolgreich: einmal Jobtesttimeout,
+  einmal `PermissionError` beim Jobpolling. Gezielte Reproduktion belegt unter
+  Windows: offener Python-Leser blockiert `atomic_json`/`os.replace` mit WinError 5.
+  Der Publisher-Testleser nutzt jetzt denselben bereits vorhandenen Schreibmutex;
+  die ursprüngliche 90-Sekunden-Grenze bleibt unverändert. Keine produktive
+  Store-/Jobimplementierung wurde hierfür geändert. Der grüne Lauf wird deshalb
+  nicht als bloße unerklärte Wiederholung gewertet.
+- Im ersten Messaufbau verlor eine künstlich neu erzeugte Requestinstanz das
+  Runtime-Tag (`streamRid`). Vor der gültigen Messreihe wurde die eingehende
+  Requestinstanz direkt weitergeleitet. Dieser Harnessfehler ist kein Bundlefehler.
+
+Pythonpfad für macOS bei gleichem Testbefehl durch
+`pipeline/.venv-macos/bin/python` ersetzen; Deno-Befehl identisch.
+
+### Schutz- und Änderungsprüfung
+
+30 vorab gehashte Produktions-/Editor-Dateien einschließlich bestehendem Bundle,
+Uploadbeleg und Jobs sowie die Editor-Dateiliste sind unverändert. Der
+Bestandsanker ist bytegleich zur zu Beginn angelegten Kopie; der Gitvergleich
+bestätigt unveränderten Inhalt (Arbeitsbaum-CRLF separat berücksichtigt).
+Neun eigene Dateien werden isoliert committed; fremde Diffabschnitte bleiben
+bytegleich und ungestagt. `NEXTSTEPS.md` hat im Arbeitsbaum und Index 25 Zeilen;
+nur der eigene Folgestatus wird dem Index hinzugefügt. Eigene und gestagte
+`git diff --check` ohne Ausgabe, jeweils Exit 0.
+
+GitNexus für `sprachlernapp` / `C:\Users\ardas\Music\sprachapp`, Basis `0670076`,
+aktualisiert: 19.168 Knoten, 41.393 Kanten, 374 erfasste Flows. Datei-Impacts des
+Verteilungsvertrags und Publishers LOW; direkte Function-/Testimporte bzw.
+Service-/Editorstart betroffen. Die Konzeptabfrage lieferte keinen brauchbaren
+Finalize-Flow; direkte Quellen ergänzen diese Graphgrenze. Testdatei-Impact
+UNKNOWN wurde über die tatsächlichen pytest-Aufrufe und Testimporte ergänzt.
+`detect_changes(scope=all)` vor Commit: 25 Dateien/22 Symbole/303 Prozesszuordnungen;
+`scope=staged`: neun eigene Dateien/12 Symbole/303 Zuordnungen. Beide **CRITICAL**,
+ohne `error`, `partial` oder `truncated`. Risiko ausdrücklich gemeldet; keine
+vollständige statische Ablaufabdeckung oder Cloudfreigabe daraus abgeleitet.
+
+### Jetzt genau fortsetzen
+
+1. Nach gesonderter Deploymentfreigabe ausschließlich **content-publish** neu
+   bereitstellen (identisch in PowerShell und macOS-Terminal):
+   `supabase functions deploy content-publish --project-ref yevntxclpchapacqdizm`.
+   JWT-Verifikation bleibt aktiv. `content-release` verwendet den geänderten
+   Hash-/Bundlepfad im Lesehandler nicht; dessen Deployment ist hier nicht nötig.
+2. Editor im Startterminal mit **Ctrl+C** beenden und mit aktualisiertem Code,
+   derselben Datenablage und bisherigen Authumgebung neu starten. Bei Bedarf
+   erneut anmelden. Der Neustart lädt auch die verständliche 546-Meldung.
+3. Unter **Versionen** beim bestehenden `story_single_sentence_v1-internal-baseline`
+   genau einmal **2 · Serverprüfung** klicken. **Keine neue Bestandsübernahme**,
+   **kein erneuter Upload**, **keine Veröffentlichung**.
+4. Erst ein tatsächliches `ready` zeigt **Servergeprüft · Veröffentlichung
+   ausstehend**. Bei erneutem 546 stoppen und die passenden Shutdownfelder
+   `reason`, `cpu_time_used`, `memory_used` einschließlich Ausführungszeitpunkt
+   ermitteln; keine Wiederholungsschleife und keine weiteren hypothetischen Fixes.
+
+
 ## HTTP 400 bei „2 · Serverprüfung“ · 16.10.2026
 
 **Ein reproduzierbarer Requestfehler ist lokal behoben; eine erneute Cloudprüfung

@@ -1,9 +1,32 @@
 import {DistributionBackend,DistributionError,handler,validateStart,verifyBundle,digest,FILES,ADOPTION} from './content_distribution.ts';
+import {createHash} from 'node:crypto';
 function assert(value:unknown,message='assertion failed'):asserts value{if(!value)throw new Error(message);}
 async function rejects(action:()=>unknown,code:string){try{await action();}catch(e){assert(e instanceof DistributionError&&e.code===code,`expected ${code}, got ${e}`);return;}throw new Error('expected rejection '+code);}
 const id='11111111-1111-4111-8111-111111111111';
 const actor='22222222-2222-4222-8222-222222222222';
 const fixture=()=>Object.fromEntries(FILES.filter(n=>n.endsWith('.json')).map(name=>[name,JSON.parse(Deno.readTextFileSync(new URL('../../../test/fixtures/private_release/'+name,import.meta.url)))]));
+Deno.test('bounded canonical hashing preserves canonical bytes including Unicode and large fields',()=>{
+  // Independent old canonical implementation remains the compatibility oracle.
+  const old=(value:any):string=>value===null||typeof value!=='object'?JSON.stringify(value):
+    Array.isArray(value)?'['+value.map(old).join(',')+']':
+    '{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+old(value[k])).join(',')+'}';
+  for(const value of [null,true,123,-0,1.25,{},[],{z:'ä → 𐐀 😀 \\ \n',a:[1,null,false]},
+    {payload:'😀x'.repeat(12000),nested:Array.from({length:1000},(_,i)=>({z:i,a:'é'}))}]){
+    assert(digest(value)===createHash('sha256').update(old(value)).digest('hex'));
+  }
+});
+Deno.test('streamed JSON validates split UTF-8, size and byte hash before accepting content',async()=>{
+  const bytes=new TextEncoder().encode('{"text":"ä → 😀"}');
+  const descriptor={sha256:createHash('sha256').update(bytes).digest('hex'),size_bytes:bytes.length};
+  const backend=new DistributionBackend('https://synthetic.invalid','unused',async()=>new Response(new ReadableStream({
+    start(controller){for(const byte of bytes)controller.enqueue(Uint8Array.of(byte));controller.close();}
+  })));
+  assert((await backend.object(id,'pack.json',descriptor,true)).text==='ä → 😀');
+  await rejects(()=>backend.object(id,'pack.json',{...descriptor,sha256:'0'.repeat(64)},true),'OBJECT_HASH');
+  await rejects(()=>backend.object(id,'pack.json',{...descriptor,size_bytes:1},true),'OBJECT_SIZE');
+  const invalid=new DistributionBackend('https://synthetic.invalid','unused',async()=>new Response(Uint8Array.of(255)));
+  await rejects(()=>invalid.object(id,'pack.json',{sha256:'0'.repeat(64),size_bytes:1},true),'OBJECT_JSON');
+});
 Deno.test('finalize requires JSON object before accessing an existing normal or adoption upload',async()=>{
   for(const kind of [undefined,'internal-baseline-adoption-v1']){
     let uploadReads=0,checked=0;
