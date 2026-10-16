@@ -1,0 +1,352 @@
+[
+  {
+    "index": 1,
+    "surface": "arrives",
+    "id": "u:7062147f1e080898d7aefe5cbd545c0d9e974a1b8c412cc82b47aea7579d9b7b",
+    "kind": "reviewed-local",
+    "exercise": "Maya arrives at the station early."
+  },
+  {
+    "index": 2,
+    "surface": "at",
+    "id": "eaf00558ad72608f9a7d1ad7f1899b79",
+    "kind": "existing",
+    "exercise": "Luis sits at his desk and reads a report."
+  },
+  {
+    "index": 3,
+    "surface": "the",
+    "id": "d0980b611fd3e292e0dcdedf7c3d58b1",
+    "kind": "existing",
+    "exercise": "Sofia blows out the candles on her birthday cake."
+  },
+  {
+    "index": 4,
+    "surface": "station",
+    "id": "f44ab874cc11564009cc1a2f754ae7a3",
+    "kind": "existing",
+    "exercise": "Leo mails a letter at the post office near the train station."
+  },
+  {
+    "index": 5,
+    "surface": "early",
+    "id": "u:d9e229d4a9a3068092def7f260283cc3a51976b5f01dc086a821cef1d9dfc0f7",
+    "kind": "reviewed-local",
+    "exercise": "Maya arrives at the station early."
+  },
+  {
+    "index": 0,
+    "surface": "She",
+    "id": "u:1c25c21def311322138a905f76dd46ddb7c3e83fd2f050aa6721e900ffac7d40",
+    "kind": "reviewed-local",
+    "exercise": "Maya arrives at the station early. She puts her backpack on a table in the café."
+  },
+  {
+    "index": 1,
+    "surface": "puts",
+    "id": "u:3041e797ba0395f6ae306a4a3860d9d519e52732739d05c11843019b89925f61",
+    "kind": "reviewed-local",
+    "exercise": "She puts her backpack on a table in the café."
+  },
+  {
+    "index": 2,
+    "surface": "her",
+    "id": "c6f0a7e222aa7477f368428545fc5b4d",
+    "kind": "existing",
+    "exercise": "Eva reads her favourite book quietly at the desk."
+  },
+  {
+    "index": 3,
+    "surface": "backpack",
+    "id": "2a057122daf0d91c2335296703b66f6e",
+    "kind": "existing",
+    "exercise": "My backpack has enough space for lunch and a bottle of water."
+  },
+  {
+    "index": 4,
+    "surface": "on",
+    "id": "352639235c92764f49c19d0fe464ba7e",
+    "kind": "existing",
+    "exercise": "Leo sits on the grass and plays his guitar."
+  },
+  {
+    "index": 5,
+    "surface": "a",
+    "id": "c5f36879ac1d89d23113aec9f32f32ba",
+    "kind": "existing",
+    "exercise": "Noah needs a doctor because his leg hurts."
+  },
+  {
+    "index": 6,
+    "surface": "table",
+    "id": "253982ff9b64b28ab49f9ef47e56b2ff",
+    "kind": "existing",
+    "exercise": "Zoe puts fresh flowers on the garden table."
+  },
+  {
+    "index": 7,
+    "surface": "in",
+    "id": "c02007a451a1b5e2f3bed287c846c212",
+    "kind": "existing",
+    "exercise": "Rosa cooks fresh soup in the kitchen."
+  },
+  {
+    "index": 8,
+    "surface": "the",
+    "id": "d0980b611fd3e292e0dcdedf7c3d58b1",
+    "kind": "existing",
+    "exercise": "Sofia blows out the candles on her birthday cake."
+  },
+  {
+    "index": 9,
+    "surface": "café",
+    "id": "bf5445fbc08c6041c650166f24f5a6f4",
+    "kind": "existing",
+    "exercise": "We sit in a café and watch people cross the square."
+  },
+  {
+    "index": 0,
+    "surface": "A",
+    "id": "c5f36879ac1d89d23113aec9f32f32ba",
+    "kind": "existing",
+    "exercise": "Noah needs a doctor because his leg hurts."
+  },
+  {
+    "index": 1,
+    "surface": "man",
+    "id": "07bf7cd843f5305d4b9326e97ba8606f",
+    "kind": "existing",
+    "exercise": "The man sitting beside my aunt is her new partner."
+  },
+  {
+    "index": 2,
+    "surface": "points",
+    "id": "u:8d7383e34c7baaf5ae35996bb3159fa783af33832609f40695bc8ae9b49d6c8f",
+    "kind": "reviewed-local",
+    "exercise": "A man points to the open pocket of her backpack."
+  },
+  {
+    "index": 3,
+    "surface": "to",
+    "id": "u:83c9c5ece8e577fed792cd8b8a5fe0cdc64ac6f50dca3bd92f45395e5b27fa10",
+    "kind": "reviewed-local",
+    "exercise": "A man points to the open pocket of her backpack."
+  },
+  {
+    "index": 4,
+    "surface": "the",
+    "id": "d0980b611fd3e292e0dcdedf7c3d58b1",
+    "kind": "existing",
+    "exercise": "Sofia blows out the candles on her birthday cake."
+  },
+  {
+    "index": 5,
+    "surface": "open",
+    "id": "u:723ffeeed10da28eb0589bd1505589684affa15d36f0a8041c7e708f53161488",
+    "kind": "reviewed-local",
+    "exercise": "A man points to the open pocket of her backpack."
+  },
+  {
+    "index": 6,
+    "surface": "pocket",
+    "id": "7ebfa05c68973870d6f285bafcbe85f3",
+    "kind": "existing",
+    "exercise": "My phone keeps falling out of this shallow pocket in my trousers."
+  },
+  {
+    "index": 7,
+    "surface": "of",
+    "id": "e9633db20e856c02c7a48c74746cdb31",
+    "kind": "existing",
+    "exercise": "Do you know the name of this song?"
+  },
+  {
+    "index": 8,
+    "surface": "her",
+    "id": "c6f0a7e222aa7477f368428545fc5b4d",
+    "kind": "existing",
+    "exercise": "Eva reads her favourite book quietly at the desk."
+  },
+  {
+    "index": 9,
+    "surface": "backpack",
+    "id": "2a057122daf0d91c2335296703b66f6e",
+    "kind": "existing",
+    "exercise": "My backpack has enough space for lunch and a bottle of water."
+  },
+  {
+    "index": 0,
+    "surface": "Her",
+    "id": "c6f0a7e222aa7477f368428545fc5b4d",
+    "kind": "existing",
+    "exercise": "Eva reads her favourite book quietly at the desk."
+  },
+  {
+    "index": 1,
+    "surface": "train",
+    "id": "d0a8d9bc00ccffed5f69d58553dbba65",
+    "kind": "existing",
+    "exercise": "Noah takes the train to his football match."
+  },
+  {
+    "index": 2,
+    "surface": "ticket",
+    "id": "e4b05d00f7a0804f7f5e700cb1aea1cc",
+    "kind": "existing",
+    "exercise": "Mia buys her train ticket at the station."
+  },
+  {
+    "index": 3,
+    "surface": "is",
+    "id": "b325798ce493fd8ad1968460d3a038ab",
+    "kind": "existing",
+    "exercise": "The grass in the garden is very dry today."
+  },
+  {
+    "index": 4,
+    "surface": "about",
+    "id": "4c1df047bfec531ec0211aa23731d2da",
+    "kind": "existing",
+    "exercise": "Zoe was about to hand in her English test when the bell rang."
+  },
+  {
+    "index": 5,
+    "surface": "to",
+    "id": "8c4ff8b225bdf270519c5e557737aa74",
+    "kind": "existing",
+    "exercise": "Omar wants to bake a cake for the party."
+  },
+  {
+    "index": 6,
+    "surface": "fall",
+    "id": "f20a0dbef7e41dcd9ba4e01c7a78e941",
+    "kind": "existing",
+    "exercise": "I saw him fall from the ladder and land on the grass."
+  },
+  {
+    "index": 7,
+    "surface": "out",
+    "id": "afbfe3a49f3493c1d30311e4718c872b",
+    "kind": "existing",
+    "exercise": "Ben carries the full trash bag out to the street."
+  },
+  {
+    "index": 1,
+    "surface": "puts",
+    "id": "u:0323d02152ed4eb68612b27c9bb97d23913ad3ad1a7b0a1970fd5fe2f9f38ec1",
+    "kind": "reviewed-local",
+    "exercise": "Her train ticket is about to fall out. Maya puts it safely inside and thanks the man."
+  },
+  {
+    "index": 2,
+    "surface": "it",
+    "id": "083366a1da956c4c859d9474f969dc55",
+    "kind": "existing",
+    "exercise": "Mia plays with the puzzle because it is fun."
+  },
+  {
+    "index": 3,
+    "surface": "safely",
+    "id": "u:b81b1a4e453a9a79cbaf14f76fa48c0cf37eac4074633ebe0f1d515efadec965",
+    "kind": "reviewed-local",
+    "exercise": "Her train ticket is about to fall out. Maya puts it safely inside and thanks the man."
+  },
+  {
+    "index": 4,
+    "surface": "inside",
+    "id": "u:b46a276a5bed651ded889039229b9b56911e82125ecb9e4eb30e6ac06048a7db",
+    "kind": "reviewed-local",
+    "exercise": "Her train ticket is about to fall out. Maya puts it safely inside and thanks the man."
+  },
+  {
+    "index": 5,
+    "surface": "and",
+    "id": "a20802b54e4c3489e763f4f701b144f2",
+    "kind": "existing",
+    "exercise": "Rosa packed her passport and her train ticket."
+  },
+  {
+    "index": 6,
+    "surface": "thanks",
+    "id": "u:ad43a9539d4795852a9dbc476eee603df0aa8cd16976ad3fd16c629901d84f79",
+    "kind": "reviewed-local",
+    "exercise": "Maya thanks the man."
+  },
+  {
+    "index": 7,
+    "surface": "the",
+    "id": "d0980b611fd3e292e0dcdedf7c3d58b1",
+    "kind": "existing",
+    "exercise": "Sofia blows out the candles on her birthday cake."
+  },
+  {
+    "index": 8,
+    "surface": "man",
+    "id": "07bf7cd843f5305d4b9326e97ba8606f",
+    "kind": "existing",
+    "exercise": "The man sitting beside my aunt is her new partner."
+  },
+  {
+    "index": 0,
+    "surface": "Then",
+    "id": "u:c1e7026f019a0780aa048e18a82d2fd844cd98925787943010032452d670f16e",
+    "kind": "reviewed-local",
+    "exercise": "Maya arrives at the station. Then she walks to the platform."
+  },
+  {
+    "index": 1,
+    "surface": "she",
+    "id": "u:1c25c21def311322138a905f76dd46ddb7c3e83fd2f050aa6721e900ffac7d40",
+    "kind": "reviewed-local",
+    "exercise": "Maya arrives at the station. Then she walks to the platform."
+  },
+  {
+    "index": 2,
+    "surface": "walks",
+    "id": "u:d86194454a063cf3ee32a3b94e8283b1130cc654909bbf33ea05635ec7d5d924",
+    "kind": "reviewed-local",
+    "exercise": "Maya arrives at the station. Then she walks to the platform."
+  },
+  {
+    "index": 3,
+    "surface": "to",
+    "id": "9cbf63e6494fa806cd7c5d6a8c1ad60c",
+    "kind": "existing",
+    "exercise": "Sara drives to the supermarket every Saturday morning."
+  },
+  {
+    "index": 4,
+    "surface": "the",
+    "id": "d0980b611fd3e292e0dcdedf7c3d58b1",
+    "kind": "existing",
+    "exercise": "Sofia blows out the candles on her birthday cake."
+  },
+  {
+    "index": 5,
+    "surface": "platform",
+    "id": "50319e70ff0290edc98958a74c2c38d9",
+    "kind": "existing",
+    "exercise": "Our train is waiting at the platform opposite the ticket office."
+  },
+  {
+    "index": 6,
+    "surface": "for",
+    "id": "7834d8713b083f5b479d37fbbca21ae3",
+    "kind": "existing",
+    "exercise": "Nina wrote this nice song for her mother."
+  },
+  {
+    "index": 7,
+    "surface": "her",
+    "id": "c6f0a7e222aa7477f368428545fc5b4d",
+    "kind": "existing",
+    "exercise": "Eva reads her favourite book quietly at the desk."
+  },
+  {
+    "index": 8,
+    "surface": "train",
+    "id": "d0a8d9bc00ccffed5f69d58553dbba65",
+    "kind": "existing",
+    "exercise": "Noah takes the train to his football match."
+  }
+]

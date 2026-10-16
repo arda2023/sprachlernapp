@@ -1,0 +1,108 @@
+{
+  "stage-verify": {
+    "command": [
+      "dart",
+      "run",
+      "tool/stage_content_pack.dart",
+      "--verify"
+    ],
+    "exitcode": 0,
+    "seconds": 6.03
+  },
+  "audit-final": {
+    "command": [
+      "pipeline/.venv-macos/bin/python",
+      "docs/evidence/story-practice-context-completion/audit.py"
+    ],
+    "exitcode": 0,
+    "seconds": 4.11
+  },
+  "flutter-all": {
+    "command": [
+      "flutter",
+      "test",
+      "--no-pub"
+    ],
+    "exitcode": 0,
+    "seconds": 99.7
+  },
+  "real-pack": {
+    "command": [
+      "flutter",
+      "test",
+      "--no-pub",
+      "test/data/real_pack_test.dart"
+    ],
+    "exitcode": 0,
+    "seconds": 13.46
+  },
+  "graph-final": {
+    "command": [
+      "node",
+      ".gitnexus/run.cjs",
+      "analyze",
+      "--index-only",
+      "--pdg",
+      "--force"
+    ],
+    "exitcode": 0,
+    "seconds": 38.31
+  },
+  "stage": {
+    "command": [
+      "dart",
+      "run",
+      "tool/stage_content_pack.dart",
+      "--from",
+      "pipeline/out/story_contexts_v1"
+    ],
+    "exitcode": 0,
+    "seconds": 15.81
+  },
+  "graph-index": {
+    "command": [
+      "node",
+      ".gitnexus/run.cjs",
+      "analyze",
+      "--index-only",
+      "--pdg",
+      "--force"
+    ],
+    "exitcode": 0,
+    "seconds": 65.26
+  },
+  "focused-final": {
+    "command": [
+      "flutter",
+      "test",
+      "--no-pub",
+      "test/story_learning_flow_test.dart",
+      "test/story_target_navigation_test.dart",
+      "test/data/targeted_curation_test.dart",
+      "test/story_context_completion_test.dart",
+      "test/story_context_synthetic_test.dart"
+    ],
+    "exitcode": 0,
+    "seconds": 44.54
+  },
+  "python-final": {
+    "command": [
+      "pipeline/.venv-macos/bin/python",
+      "-m",
+      "pytest",
+      "pipeline/tests",
+      "-q"
+    ],
+    "exitcode": 0,
+    "seconds": 90.0
+  },
+  "analyze": {
+    "command": [
+      "flutter",
+      "analyze",
+      "--no-pub"
+    ],
+    "exitcode": 0,
+    "seconds": 5.35
+  }
+}

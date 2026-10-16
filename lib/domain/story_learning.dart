@@ -109,9 +109,13 @@ class StoryLearningCandidate {
     this.card,
     this.retired = false,
     this.problem,
+    this.practiceContext,
     this.otherForms = const {},
     this.groupMembers = const [],
   });
+  final StoryPracticeContext? practiceContext;
+  StorySentence get practiceSentence => practiceContext?.sentence ?? sentence;
+  StoryToken get practiceToken => practiceContext?.token ?? token;
   final String storyId, revision, lang;
   final StorySentence sentence;
   final StoryToken token;
@@ -136,11 +140,15 @@ class StoryLearningCandidate {
     token.start,
     token.end,
     identity.key,
+    if (practiceContext != null) practiceContext!.fingerprint,
   ]);
   String? get unavailableReason => validationProblem();
   String? validationProblem({bool needsContext = true}) {
     if (problem != null) return problem;
     if (retired) return 'Diese Bedeutung ist nicht mehr zum Lernen verfügbar.';
+    if (card == null && token.pos == 'PROPN') {
+      return 'Eigennamen sind hier keine Lernziele.';
+    }
     if (!token.annotated) {
       return 'Bedeutung oder Übersetzung ist nicht eindeutig belegt.';
     }
@@ -168,6 +176,9 @@ class StoryLearningCandidate {
             card!.formNorm != identity.formNorm ||
             card!.senseId != identity.semanticAnchor)) {
       return 'Die Lernkarte passt nicht zur belegten Bedeutung.';
+    }
+    if (needsContext && card == null && practiceContext != null) {
+      return practiceContext!.validationProblem(token);
     }
     if (needsContext &&
         card == null &&
@@ -250,4 +261,41 @@ abstract interface class StoryLearningRepository {
     String cardId,
     String contextId,
   );
+}
+
+/// A reviewed exercise snapshot; original story/token provenance stays on the candidate.
+class StoryPracticeContext {
+  const StoryPracticeContext(this.sentence, this.token);
+  final StorySentence sentence;
+  final StoryToken token;
+  String get fingerprint => learningHash([
+    sentence.id, sentence.text, sentence.translation, token.index,
+    for (final t in sentence.tokens)
+      [t.start, t.end, t.surface, t.lemmaId, t.senseId, t.gloss, t.function],
+  ]);
+
+  String? validationProblem(StoryToken source) {
+    const invalid = 'Der geprüfte Storykontext ist unvollständig oder passt nicht zur Wortstelle.';
+    if (!source.annotated || !token.annotated ||
+        token.surface != source.surface || token.senseId != source.senseId ||
+        token.lemmaId != source.lemmaId || token.function != source.function ||
+        token.lexicalId != source.lexicalId || sentence.translation.trim().isEmpty ||
+        sentence.tokens.where((t) => t.lemmaId != null).length > 20 ||
+        !sentence.tokens.contains(token)) {
+      return invalid;
+    }
+    var cursor = 0;
+    for (var i = 0; i < sentence.tokens.length; i++) {
+      final t = sentence.tokens[i];
+      if (t.index != i || t.start < cursor || t.end <= t.start ||
+          t.end > sentence.text.length ||
+          sentence.text.substring(cursor, t.start).trim().isNotEmpty ||
+          sentence.text.substring(t.start, t.end) != t.surface ||
+          (RegExp(r'[\p{L}]', unicode: true).hasMatch(t.surface) && !t.annotated)) {
+        return invalid;
+      }
+      cursor = t.end;
+    }
+    return sentence.text.substring(cursor).trim().isEmpty ? null : invalid;
+  }
 }

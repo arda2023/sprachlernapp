@@ -511,6 +511,45 @@ class DriftContentRepository
         problem = 'Die Form ist im Satz nicht eindeutig belegt. Die Übersetzung bleibt verfügbar.';
       }
     }
+    StoryPracticeContext? practiceContext;
+    final sourceRows = await _select('SELECT qa_report FROM sentences WHERE id=?', [sentenceId]);
+    final qa = jsonDecode(sourceRows.single.readNullable<String>('qa_report') ?? '{}') as Map<String, dynamic>;
+    final review = qa['story_practice_contexts'] as Map<String, dynamic>?;
+    if (review != null) {
+      final bindings = (review['bindings'] as List).where((b) => b['token_index'] == tokenIndex).toList();
+      if (bindings.isNotEmpty) {
+        final b = bindings.single;
+        if (review['format_version'] != 1 || (review['reviewer'] as String? ?? '').isEmpty ||
+            b['surface'] != token.surface || b['sense_id'] != token.senseId ||
+            _utf16Offset(sentence.text, b['source_start'] as int) != token.start ||
+            _utf16Offset(sentence.text, b['source_end'] as int) != token.end) {
+          problem = 'Die geprüfte Kontextbindung passt nicht zur Story-Wortstelle.';
+        } else {
+          final context = b['context'];
+          final text = context['text'] as String;
+          final targetIndex = context['target_index'] as int;
+          final tokens = <StoryToken>[
+            for (final t in context['tokens'])
+              StoryToken(index: t['idx'] as int,
+                start: _utf16Offset(text, t['start_pos'] as int),
+                end: _utf16Offset(text, t['end_pos'] as int), surface: t['surface'] as String,
+                lemmaId: t['lemma_id'] as String?, lemma: t['lemma'] as String?,
+                pos: t['pos'] as String?, senseId: t['sense_id'] as String?,
+                senseKey: t['sense_key'] as String?, gloss: t['gloss'] as String?,
+                definition: t['definition'] as String?,
+                formFunction: t['idx'] == targetIndex ? token.function : null,
+                lexicalTargetId: t['idx'] == targetIndex ? token.lexicalId : null),
+          ];
+          if (targetIndex < 0 || targetIndex >= tokens.length) {
+            problem = 'Die geprüfte Kontextbindung enthält keine eindeutige Ziellücke.';
+          } else {
+            practiceContext = StoryPracticeContext(StorySentence(
+              id: context['id'] as String, text: text,
+              translation: context['translation'] as String, paragraph: 0, tokens: tokens), tokens[targetIndex]);
+          }
+        }
+      }
+    }
     final forms = token.lemmaId == null
         ? <String>{}
         : (await _lemmaForms({token.lemmaId!}))[token.lemmaId!] ?? <String>{};
@@ -523,6 +562,7 @@ class DriftContentRepository
       card: card,
       retired: retired,
       problem: problem,
+      practiceContext: practiceContext,
       otherForms: {...forms}..remove(contentFormNorm(token.surface)),
       groupMembers: card?.learning == null
           ? const []

@@ -652,6 +652,8 @@ def export_offline(final, out):
         report['sqlite_counts'] = check_sqlite(out/'content.sqlite', rows)
         require(counts == report['sqlite_counts'], 'SQLite readback mismatch')
         report['sha256'] = hashlib.sha256((out/'content.sqlite').read_bytes()).hexdigest()
+        from sprachpipe.curate import story_authoring_gaps
+        report['story_authoring_gaps'] = story_authoring_gaps(final)
         report['status'] = 'ok'
     finally:
         save(out/'finalization_report.json', report)

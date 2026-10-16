@@ -519,10 +519,13 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
     )..where((t) => t.cardId.equals(id))).getSingleOrNull();
     final local = id.startsWith('u:');
     if (existing == null && local) {
-      if (!c.token.contextApproved) {
+      if (c.validationProblem() != null ||
+          (!c.token.contextApproved && c.practiceContext == null)) {
         throw StateError('Kein geprüfter lokaler Kontext');
       }
-      final contextId = randomUuidV4();
+      final contextId = c.practiceContext == null
+          ? randomUuidV4()
+          : learningHash(['story-practice-context-v1', id, c.practiceContext!.fingerprint]);
       await _db
           .into(_db.userCards)
           .insert(
@@ -553,10 +556,10 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
             CardContextsCompanion.insert(
               id: contextId,
               cardId: id,
-              textValue: c.sentence.text,
-              translationDe: c.sentence.translation,
-              gapStart: c.token.start,
-              gapEnd: c.token.end,
+              textValue: c.practiceSentence.text,
+              translationDe: c.practiceSentence.translation,
+              gapStart: c.practiceToken.start,
+              gapEnd: c.practiceToken.end,
               sourceRef: c.storyId,
               sentenceRef: c.sentence.id,
               tokenIndex: c.token.index,
@@ -566,7 +569,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
               provenance: 'editorial_chat_reviewed',
               createdAt: now.toUtc(),
               tokensJson: jsonEncode([
-                for (final t in c.sentence.tokens)
+                for (final t in c.practiceSentence.tokens)
                   {
                     'start': t.start,
                     'end': t.end,
