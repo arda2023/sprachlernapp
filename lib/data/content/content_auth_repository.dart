@@ -81,6 +81,27 @@ class ContentAuthRepository {
     await _persist();
   }
 
+  Future<void> signInWithPassword(String email, String password) async {
+    await initialize();
+    if (_client == null) {
+      throw StateError('Privater Inhaltsserver noch nicht eingerichtet.');
+    }
+    if (!email.contains('@') || password.isEmpty) {
+      throw const AuthException(
+        'E-Mail-Adresse und Passwort angeben.',
+        code: 'credentials_required',
+      );
+    }
+    final response = await _client!.auth.signInWithPassword(
+      email: email.trim(),
+      password: password,
+    );
+    if (response.session == null || response.user == null) {
+      throw const AuthException('Anmeldung nicht bestätigt.');
+    }
+    await _persist();
+  }
+
   Future<void> _persist() async {
     final session = _client?.auth.currentSession;
     if (session == null) {

@@ -13,10 +13,13 @@ class ContentUpdatesScreen extends ConsumerStatefulWidget {
 
 class _ContentUpdatesScreenState extends ConsumerState<ContentUpdatesScreen> {
   final _email = TextEditingController(), _code = TextEditingController();
+  final _password = TextEditingController();
+  bool _useCode = false;
   @override
   void dispose() {
     _email.dispose();
     _code.dispose();
+    _password.dispose();
     super.dispose();
   }
 
@@ -26,6 +29,7 @@ class _ContentUpdatesScreenState extends ConsumerState<ContentUpdatesScreen> {
         controller = ref.read(contentUpdateProvider.notifier);
     final info = ref.watch(contentInfoProvider).value;
     final busy = {
+      'signing_in',
       'checking',
       'downloading',
       'verifying',
@@ -60,31 +64,77 @@ class _ContentUpdatesScreenState extends ConsumerState<ContentUpdatesScreen> {
               controller: _email,
               keyboardType: TextInputType.emailAddress,
               autofillHints: const [AutofillHints.email],
+              enabled: !busy,
               decoration: const InputDecoration(
                 labelText: 'Eingeladene E-Mail-Adresse',
               ),
             ),
-            TextButton(
-              onPressed: busy
-                  ? null
-                  : () => controller.requestCode(_email.text),
-              child: const Text('Anmeldecode senden'),
-            ),
-            TextField(
-              controller: _code,
-              keyboardType: TextInputType.number,
-              autofillHints: const [AutofillHints.oneTimeCode],
-              decoration: const InputDecoration(labelText: 'E-Mail-Code'),
-            ),
-            FilledButton(
-              onPressed: busy
-                  ? null
-                  : () async {
-                      await controller.verifyCode(_email.text, _code.text);
-                      _code.clear();
-                    },
-              child: const Text('Anmelden'),
-            ),
+            if (!_useCode) ...[
+              TextField(
+                controller: _password,
+                enabled: !busy,
+                obscureText: true,
+                autocorrect: false,
+                enableSuggestions: false,
+                autofillHints: const [AutofillHints.password],
+                decoration: const InputDecoration(labelText: 'Passwort'),
+              ),
+              FilledButton(
+                onPressed: busy
+                    ? null
+                    : () async {
+                        final success = await controller.signInWithPassword(
+                          _email.text,
+                          _password.text,
+                        );
+                        if (mounted && success) _password.clear();
+                      },
+                child: const Text('Mit Passwort anmelden'),
+              ),
+              TextButton(
+                onPressed: busy
+                    ? null
+                    : () => setState(() {
+                        _password.clear();
+                        _useCode = true;
+                      }),
+                child: const Text('Alternativ mit E-Mail-Code'),
+              ),
+            ] else ...[
+              const Text(
+                'Nur verwenden, wenn E-Mail-Zustellung und Codevorlage eingerichtet und geprüft sind.',
+              ),
+              TextButton(
+                onPressed: busy
+                    ? null
+                    : () => controller.requestCode(_email.text),
+                child: const Text('Anmeldecode senden'),
+              ),
+              TextField(
+                controller: _code,
+                keyboardType: TextInputType.number,
+                autofillHints: const [AutofillHints.oneTimeCode],
+                decoration: const InputDecoration(labelText: 'E-Mail-Code'),
+              ),
+              FilledButton(
+                onPressed: busy
+                    ? null
+                    : () async {
+                        await controller.verifyCode(_email.text, _code.text);
+                        _code.clear();
+                      },
+                child: const Text('Mit Code anmelden'),
+              ),
+              TextButton(
+                onPressed: busy
+                    ? null
+                    : () => setState(() {
+                        _code.clear();
+                        _useCode = false;
+                      }),
+                child: const Text('Zur Passwortanmeldung'),
+              ),
+            ],
           ] else
             TextButton(
               onPressed: busy ? null : controller.signOut,

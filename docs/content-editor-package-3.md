@@ -1,5 +1,11 @@
 # Inhaltsupdates – Paket 3
 
+Nachtrag 16.10.2026: E-Mail/Passwort für bestehende Identitäten ergänzt; die unten
+beschriebene OTP-Anmeldung ist eine ausdrücklich gewählte Alternative.
+[Einrichtung, Windows-Start, Mac/iPhone-Update und aktuelle Prüfnachweise](content-password-login.md).
+Der Cloudzustand laut Auftrag (zehn angewendete Migrationen, beide Functions ACTIVE)
+wurde in diesem Folgeauftrag nicht verändert; Deployment/Einladung unten nicht erneut ausführen.
+
 Lokale Implementierung abgeschlossen; finale Prüfergebnisse unten. Reale Cloud-, Windows- und Geräteabnahme offen. Ausgangspunkt `17b9236`, Branch `codex/content-editor-package-3`. Arbeitsbaum/Index und geschützte Hashes sind unter `/tmp/sprachapp-editor-package3/` gesichert. Produktionsbasis: `story_single_sentence_v1`, Schema 4, Asset-SHA256 `b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb`.
 
 ## Implementierungsfolge und Dateigrenze
@@ -86,7 +92,7 @@ supabase functions deploy content-publish
 supabase functions deploy content-release
 ```
 
-JWT-Prüfung bleibt aktiviert. Supabase stellt `SUPABASE_URL` und den serverseitigen Service-Schlüssel in der Function-Umgebung bereit. Keine Service-Schlüssel an Editor oder App geben. In Auth öffentliche Registrierung deaktivieren, gewünschte Nutzer administrativ einladen und die E-Mail-Vorlage für Anmeldung auf `{{ .Token }}` einstellen, damit der eingegebene E-Mail-Code tatsächlich zugestellt wird. SMTP/Zustellung prüfen. Danach mit den tatsächlichen `auth.users.id` die minimalen Rollen zuweisen (SQL-Editor, keine geratenen UUIDs):
+JWT-Prüfung bleibt aktiviert. Supabase stellt `SUPABASE_URL` und den serverseitigen Service-Schlüssel in der Function-Umgebung bereit. Keine Service-Schlüssel an Editor oder App geben. Bestehende Nutzer verwenden nun bevorzugt E-Mail/Passwort gemäß [Passwortanleitung](content-password-login.md), ohne neue Einladung, Registrierung, OTP-Mail oder Custom SMTP. Nur für die ausdrücklich gewählte OTP-Alternative muss eine Tokenvorlage mit `{{ .Token }}` und die tatsächliche Zustellung eingerichtet und geprüft sein. Die folgenden Rollenbeispiele gehören zur ursprünglichen Ersteinrichtung; vorhandene UID und Allowlist im Folgeauftrag erhalten:
 
 ```sql
 insert into public.content_publishers(user_id)
@@ -101,14 +107,14 @@ macOS (Terminal):
 ```sh
 export SPRACHAPP_SUPABASE_URL="$SUPABASE_URL"
 export SPRACHAPP_SUPABASE_ANON_KEY="$SUPABASE_ANON_KEY"
-pipeline/.venv-macos/bin/python -m sprachpipe.editor
+pipeline/.venv-macos/bin/python -X utf8 -m sprachpipe.editor
 ```
 
 Windows (PowerShell; vorhandene Pipeline-venv):
 ```powershell
 $env:SPRACHAPP_SUPABASE_URL = $env:SUPABASE_URL
 $env:SPRACHAPP_SUPABASE_ANON_KEY = $env:SUPABASE_ANON_KEY
-pipeline\.venv\Scripts\python.exe -m sprachpipe.editor
+pipeline\.venv\Scripts\python.exe -X utf8 -m sprachpipe.editor
 ```
 
 Für iOS einmalig einen neuen App-Build mit dieser Implementierung und den beiden öffentlichen Defines erstellen (macOS):

@@ -23,3 +23,8 @@ Stand: 11.10.2026 – Alltagssprache Batch 2 intern gestagt; Batch-3-ZIP geprüf
 - Sechs geerbte Formglossen sowie frühere Listen offen; Original-Lieferung erhalten.
 - Nächste Aktion: geprüfte ZIP hochladen und 88 Batch-3-Ziele im Chat redigieren.
 - Kein Commit: uncommittete Schema-4-/450-/V3-Abhängigkeiten und gemischte Hunks; Index leer.
+
+## Passwortlogin für private Inhalte · 16.10.2026
+- Editor und Flutter: Mit Passwort anmelden, OTP ausdrücklich alternativ; bestehende Session-/Refresh-/Logoutpfade und Allowlisten erhalten; Anleitung docs/content-password-login.md.
+- Nachweise: Python 20 inkl. echtem lokalen Supabase-Auth/403/Refresh/Logout, Flutter 11, JS 2 bestanden; flutter analyze ohne Befund, Exitcodes 0; mobile/Desktop-Browser synthetisch geprüft. Einmaliger Upload-Testtimeout im Einzel- und gemeinsamen Kontrolllauf nicht wiederholt.
+- Offen: Nutzer setzt Passwort ausschließlich für bestehende Cloud-UID mit getrenntem interaktivem Adminhelfer; tatsächlicher Cloudlogin und einmaliges iPhone-Appupdate am Mac samt Geräteabnahme. Kein Cloudpasswort-/Rollenwechsel, keine Inhalte veröffentlicht, kein Push.

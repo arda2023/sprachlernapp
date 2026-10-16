@@ -60,6 +60,17 @@ class Publisher:
                 return json.loads(raw) if raw else {}
         except urllib.error.HTTPError as e:
             # Never include URL, signed token, raw headers or remote response in logs.
+            if path=='/auth/v1/token?grant_type=password':
+                try:code=json.loads(e.read(16384)).get('error_code')
+                except (ValueError,UnicodeError,AttributeError):code=None
+                messages={
+                    'invalid_credentials':'E-Mail-Adresse oder Passwort ist falsch.',
+                    'email_not_confirmed':'E-Mail-Adresse noch nicht bestätigt. Kontostatus administrativ prüfen.',
+                    'user_banned':'Dieses Konto ist gesperrt. Kontostatus administrativ prüfen.',
+                }
+                raise AuthoringError('PASSWORD_LOGIN_FAILED',messages.get(code,
+                    'Anmeldung fehlgeschlagen. Zugangsdaten, Kontostatus und Verbindung prüfen.'),
+                    status=401 if e.code in (400,401,403,422) else 502) from None
             raise AuthoringError('PUBLISH_HTTP_'+str(e.code),
                 'Anmeldung/Berechtigung prüfen.' if e.code in (401,403) else
                 'Serverstand geändert oder Datei bereits hochgeladen.' if e.code==409 else
@@ -82,9 +93,26 @@ class Publisher:
         with self._lock:self._remember_session(session)
         return self.status()
 
+    def sign_in_with_password(self,email,password):
+        self._configured()
+        require(isinstance(email,str) and '@' in email and len(email)<=254,
+                'EMAIL_INVALID','Gültige E-Mail-Adresse angeben.')
+        require(isinstance(password,str) and 0<len(password)<=4096,
+                'PASSWORD_INVALID','Passwort angeben (höchstens 4096 Zeichen).')
+        with self._lock:
+            session=self._transport('POST','/auth/v1/token?grant_type=password',
+                                    {'email':email.strip(),'password':password})
+            self._remember_session(session)
+        return self.status()
+
     def _remember_session(self,session):
-        require(bool(session.get('access_token')) and bool(session.get('refresh_token')),'AUTH_REQUIRED','Anmeldung nicht bestätigt.',status=401)
-        self._session={**session,'expires_at':session.get('expires_at',time.time()+session.get('expires_in',3600))}
+        require(isinstance(session,dict) and isinstance(session.get('user'),dict)
+                and bool(session['user'].get('id')) and bool(session.get('access_token'))
+                and bool(session.get('refresh_token')),'AUTH_REQUIRED','Anmeldung nicht bestätigt.',status=401)
+        # Retain only session fields from the successful Auth response, never input credentials.
+        self._session={'access_token':session['access_token'],'refresh_token':session['refresh_token'],
+                       'user_id':session['user']['id'],
+                       'expires_at':session.get('expires_at',time.time()+session.get('expires_in',3600))}
 
     def sign_out(self):
         # Local logout always succeeds offline and removes both tokens from memory.

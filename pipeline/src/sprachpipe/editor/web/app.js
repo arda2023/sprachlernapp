@@ -179,12 +179,23 @@ $('story-contexts').addEventListener('click',act(async()=>{
 }));
 
 async function publisherControls(parent){
-  const status=await api('/publisher'),box=el('section',null,{class:'release-card'});
+  const status=await api('/publisher'),box=el('section',null,{class:'release-card publisher-auth'});
   box.append(el('h2','Private Veröffentlichung'));
   if(!status.configured){box.append(el('p','Privater Inhaltsserver noch nicht eingerichtet. Lokale Prüfung und Export bleiben verfügbar.'));}
   else if(status.signed_in){box.append(el('p','Angemeldet · Publisherrecht wird bei jedem Schritt serverseitig geprüft.'),button('Abmelden',async()=>{await post('/publisher/logout');await releases();}));}
-  else{box.append(el('p','Mit der eingeladenen E-Mail-Adresse anmelden.'));
-    const email=field(box,'E-Mail-Adresse','','email');const code=field(box,'E-Mail-Code','','text');code.autocomplete='one-time-code';
-    box.append(button('Code senden',async()=>{await post('/publisher/otp',{email:email.value});error(new Error('Anmeldecode angefordert. Bitte E-Mail prüfen.'));}),button('Anmelden',async()=>{await post('/publisher/verify',{email:email.value,code:code.value});code.value='';await releases();}));}
+  else{box.append(el('p','Mit der bestehenden E-Mail-Adresse und dem einmalig eingerichteten Passwort anmelden.'));
+    const form=el('form',null,{method:'post'});
+    const email=field(form,'E-Mail-Adresse','','email');email.autocomplete='username';email.required=true;
+    const password=field(form,'Passwort','','password');password.autocomplete='current-password';password.required=true;password.maxLength=4096;
+    const login=el('button','Mit Passwort anmelden',{type:'submit',class:'primary'});form.append(login);box.append(form);
+    const alternative=el('details');alternative.append(el('summary','Alternativ mit E-Mail-Code'),el('p','Nur verwenden, wenn E-Mail-Zustellung und Codevorlage eingerichtet und geprüft sind.'));
+    const code=field(alternative,'E-Mail-Code','','text');code.autocomplete='one-time-code';
+    let busy=false;
+    async function authenticate(action){if(busy)return;busy=true;login.disabled=true;send.disabled=true;verify.disabled=true;
+      try{await action();}finally{busy=false;login.disabled=false;send.disabled=false;verify.disabled=false;}}
+    const send=button('Code senden',()=>authenticate(async()=>{await post('/publisher/otp',{email:email.value});error(new Error('Anmeldecode angefordert. Bitte E-Mail prüfen.'));}));
+    const verify=button('Mit Code anmelden',()=>authenticate(async()=>{await post('/publisher/verify',{email:email.value,code:code.value});code.value='';password.value='';$('notice').hidden=true;await releases();}));
+    alternative.append(send,verify);box.append(alternative);
+    form.addEventListener('submit',act(async event=>{event.preventDefault();await authenticate(async()=>{await post('/publisher/password',{email:email.value,password:password.value});password.value='';$('notice').hidden=true;await releases();});}));}
   parent.append(box);
 }

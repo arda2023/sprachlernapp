@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../data/content/content_auth_repository.dart';
 import '../../data/content/content_install_journal.dart';
@@ -158,6 +159,34 @@ class ContentUpdateController extends Notifier<ContentUpdateState> {
     await ref.read(contentAuthProvider).verifyCode(email, code);
     await check();
   });
+  Future<bool> signInWithPassword(String email, String password) async {
+    _notice('signing_in', 'Anmeldung wird geprüft …');
+    try {
+      await ref.read(contentAuthProvider).signInWithPassword(email, password);
+      _notice(
+        'idle',
+        'Angemeldet. Nach Updates suchen, um die Lesefreigabe zu prüfen.',
+      );
+      return true;
+    } on AuthException catch (e) {
+      final message = switch (e.code) {
+        'credentials_required' => 'E-Mail-Adresse und Passwort angeben.',
+        'invalid_credentials' => 'E-Mail-Adresse oder Passwort ist falsch.',
+        'email_not_confirmed' => 'E-Mail-Adresse noch nicht bestätigt. Kontostatus administrativ prüfen.',
+        'user_banned' =>
+          'Dieses Konto ist gesperrt. Kontostatus administrativ prüfen.',
+        _ => 'Anmeldung fehlgeschlagen. Zugangsdaten und Kontostatus prüfen.',
+      };
+      _notice('error', message);
+    } catch (_) {
+      _notice(
+        'error',
+        'Anmeldung nicht abgeschlossen. Einrichtung und Verbindung prüfen.',
+      );
+    }
+    return false;
+  }
+
   Future<void> signOut() => _run(() async {
     await ref.read(contentAuthProvider).signOut();
     _notice(

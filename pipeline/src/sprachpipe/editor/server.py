@@ -122,6 +122,12 @@ class Handler(BaseHTTPRequestHandler):
                 key=self.headers.get('Idempotency-Key')
                 require(key is not None and 8<=len(key)<=100,'REQUEST_KEY_REQUIRED','Anfragereferenz fehlt.',status=400)
                 data=self.body()
+                if path.startswith('/api/v1/publisher/'):
+                    # Auth actions must not retain credentials or password-derived hashes
+                    # in the generic idempotency cache (nor replay a stale login/logout).
+                    require(not url.query,'FIELD_INVALID','Anmeldedaten nur im Anfrageinhalt angeben.',status=400)
+                    result,status,headers=self.route(path,query,data)
+                    return self.respond(status,result,headers=headers)
                 request_hash=hashlib.sha256(repr((path,data)).encode()).hexdigest();cache_key=session['csrf'],key
                 with self.server.service.store.mutex:
                     cached=self.server.requests.get(cache_key)
@@ -147,6 +153,7 @@ class Handler(BaseHTTPRequestHandler):
         def draft_response(draft):return draft,200,{'ETag':store.etag(draft)}
         if parts==['publisher'] and get:return service.publisher.status(),200,{}
         if len(parts)==2 and parts[0]=='publisher' and not get:
+            if parts[1]=='password':return service.publisher.sign_in_with_password(data.get('email'),data.get('password')),200,{}
             if parts[1]=='otp':return service.publisher.request_otp(data['email']),200,{}
             if parts[1]=='verify':return service.publisher.verify_otp(data['email'],data['code']),200,{}
             if parts[1]=='logout':return service.publisher.sign_out(),200,{}
