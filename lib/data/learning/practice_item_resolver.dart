@@ -39,6 +39,18 @@ class PracticeItemResolver {
       for (final i in await story?.localPracticeItems() ?? <PracticeItem>[])
         i.card.id: i,
     };
+    final retired = catalog?.retired ?? (content is RetiredLearningContentRepository
+        ? await (content as RetiredLearningContentRepository).retiredLearningIdentities()
+        : <String, LearningIdentity>{});
+    final bindings = await story?.identityBindings() ?? <String, String>{};
+    final retiredKeys = retired.values.map((i) => i.key).toSet();
+    final blocked = <String>{...retired.keys,
+      ...retired.values.map((i) => i.localId),
+      for (final e in bindings.entries) if (retiredKeys.contains(e.key)) e.value};
+    locals.removeWhere((id, item) => blocked.contains(id) ||
+      (item.card.senseId != null && retiredKeys.contains(LearningIdentity(
+        item.card.lang, item.card.formNorm, item.card.senseId!,
+        function: item.card.formFunction).key)));
     final cards = attachLocalLearning(
       content == null
           ? <ContentCard>[]
@@ -51,7 +63,7 @@ class PracticeItemResolver {
       cards,
       locals,
       await story?.explicitStoryAdditions() ?? {},
-      await story?.identityBindings() ?? {},
+      {for (final e in bindings.entries) if (!blocked.contains(e.value)) e.key: e.value},
       await user.allCardStates(),
       contentError,
       catalog,
@@ -172,7 +184,8 @@ class PracticeItemResolver {
 
 /// Immutable pack metadata, scoped to the content repository, never user state.
 class PracticeCatalog {
-  PracticeCatalog(this.cards, this.decks, this.targets);
+  PracticeCatalog(this.cards, this.decks, this.targets, {this.retired = const {}});
+  final Map<String, LearningIdentity> retired;
   final List<ContentCard> cards;
   final List<DeckSummary> decks;
   final Map<String, List<DeckPracticeTarget>> targets;
@@ -181,6 +194,8 @@ class PracticeCatalog {
     final cards = await content.selectionCards(await content.allCardIds());
     return PracticeCatalog(cards, decks, {
       for (final d in decks) d.id: await content.deckPracticeTargets(d.id),
-    });
+    }, retired: content is RetiredLearningContentRepository
+        ? await (content as RetiredLearningContentRepository).retiredLearningIdentities()
+        : const {});
   }
 }

@@ -271,7 +271,7 @@ List<SessionEntry> buildDeckQueue({
   for (final id in targetsResolved ? deckCardIds : LearningGroups(cards, states).project(deckCardIds, exactForms: true)) {
     order.putIfAbsent(id, () => order.length);
   }
-  final ids = order.keys.where((id) => states[id]?.isActive ?? true).toList();
+  final ids = order.keys.where((id) => cards.containsKey(id) && (states[id]?.isActive ?? true)).toList();
   int byDue(String a, String b) {
     final da = states[a]!.dueAt, db = states[b]!.dueAt;
     final c = (da == null || db == null)
@@ -348,7 +348,7 @@ List<SessionEntry> buildMixedQueue({
     priorityIds: storyNew.map((s) => s.cardId).toSet(),
     candidates: [
       for (final id in freshIds)
-        if ((states[id]?.isActive ?? true) && (states[id]?.box ?? 0) == 0)
+        if (cards.containsKey(id) && (states[id]?.isActive ?? true) && (states[id]?.box ?? 0) == 0)
           cards[id]!,
     ],
     knownLemmas: {

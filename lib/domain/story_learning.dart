@@ -17,6 +17,11 @@ class LearningIdentity {
       'u:${learningHash(function == null ? ['local-card-v1', lang, formNorm, semanticAnchor] : ['local-form-card-v1', lang, formNorm, semanticAnchor, function])}';
 }
 
+/// Optional content capability. Read-only exclusions, never learner mutations.
+abstract interface class RetiredLearningContentRepository {
+  Future<Map<String, LearningIdentity>> retiredLearningIdentities();
+}
+
 class StorySummary {
   const StorySummary({
     required this.id,

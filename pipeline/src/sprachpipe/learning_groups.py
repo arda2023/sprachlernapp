@@ -15,7 +15,9 @@ def validate_learning(cards):
         if not isinstance(m['related'], list) or any(not isinstance(x, str) or not x for x in m['related']) or len(set(m['related'])) != len(m['related']):
             raise ValueError('learning: invalid related tags')
         head = by_id.get(m['primary_card_id'])
-        if not head or head.get('removed_in') or head['lang'] != c['lang']:
+        historical_singleton = (head is c and isinstance(c.get('removed_in'), str) and bool(c['removed_in']) and c.get('replaced_by') is None
+            and sum(x.get('learning', {}).get('group_id') == m['group_id'] for x in cards) == 1)
+        if not head or (head.get('removed_in') and not historical_singleton) or head['lang'] != c['lang']:
             raise ValueError('learning: missing/retired/foreign primary')
         hm = head.get('learning') or {}
         if hm.get('group_id') != m['group_id'] or hm.get('primary_card_id') != head['id']:

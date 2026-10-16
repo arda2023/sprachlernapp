@@ -12,7 +12,7 @@ import 'content_database.dart';
 /// unchanged. Content that breaks the data contract (wrong active sentence count,
 /// gap not on the form, malformed alternatives) is [ContentUnavailable].
 class DriftContentRepository
-    implements ContentRepository, StoryContentRepository {
+    implements ContentRepository, StoryContentRepository, RetiredLearningContentRepository {
   DriftContentRepository(this._db);
 
   final ContentDatabase _db;
@@ -245,16 +245,17 @@ class DriftContentRepository
     return List.unmodifiable(value.cast<String>());
   }
 
-  Future<List<SentenceToken>> _tokens(String id, String text) async {
+  Future<List<SentenceToken>> _tokens(String id, String text, {bool historical = false}) async {
+    String active(String alias) => historical ? '' : 'AND $alias.removed_in IS NULL';
     final rows = await _select(
       'SELECT t.start_pos, t.end_pos, t.surface, '
       'COALESCE(c.translation_de, (SELECT df.gloss_de FROM dictionary_forms df '
       'WHERE df.sense_id = t.sense_id AND df.form_norm = lower(t.surface) '
-      'AND s.id IS NOT NULL AND df.removed_in IS NULL ORDER BY df.rank, df.id LIMIT 1), s.gloss_de) AS gloss '
+      'AND s.id IS NOT NULL ${active('df')} ORDER BY df.rank, df.id LIMIT 1), s.gloss_de) AS gloss '
       'FROM sentence_tokens t '
-      'LEFT JOIN senses s ON s.id = t.sense_id AND s.removed_in IS NULL '
-      'LEFT JOIN cards c ON c.id = t.card_id AND c.sense_id = s.id AND c.form_norm = lower(t.surface) AND c.removed_in IS NULL '
-      'WHERE t.sentence_id = ? AND t.removed_in IS NULL ORDER BY t.idx',
+      'LEFT JOIN senses s ON s.id = t.sense_id ${active('s')} '
+      'LEFT JOIN cards c ON c.id = t.card_id AND c.sense_id = s.id AND c.form_norm = lower(t.surface) ${active('c')} '
+      'WHERE t.sentence_id = ? ${active('t')} ORDER BY t.idx',
       [id],
     );
     final result = <SentenceToken>[];
@@ -366,9 +367,20 @@ class DriftContentRepository
         r.readNullable<String>('valid_alternatives'),
         cardId,
       ),
-      tokens: await _tokens(sentenceId, text),
+      tokens: await _tokens(sentenceId, text, historical: true),
     );
   }
+
+  @override
+  Future<Map<String, LearningIdentity>> retiredLearningIdentities() async => {
+    for (final r in await _select(
+      'SELECT id, lang, form_norm, sense_id, '
+      '${_db.info.schemaVersion >= 4 ? 'identity_function' : 'NULL'} AS function '
+      'FROM cards WHERE removed_in IS NOT NULL AND lang = ?', [_lang]))
+      r.read<String>('id'): LearningIdentity(r.read<String>('lang'),
+        r.read<String>('form_norm'), r.read<String>('sense_id'),
+        function: r.readNullable<String>('function')),
+  };
 
   @override
   Future<void> close() => _db.close();

@@ -171,7 +171,7 @@ void validateLearningGroups(Database db) {
   }
   final rows = {
     for (final r in db.select(
-      'SELECT id, lang, removed_in, learning FROM cards',
+      'SELECT id, lang, removed_in, replaced_by, learning FROM cards',
     ))
       r['id'] as String: r,
   };
@@ -194,12 +194,19 @@ void validateLearningGroups(Database db) {
       }
       metadata[r['id'] as String] = m;
     }
+    final groupHeads = <String, String>{};
     for (final r in rows.values) {
       final m = metadata[r['id']]!;
+      final previousHead = groupHeads.putIfAbsent(m['group_id'] as String, () => m['primary_card_id'] as String);
+      if (previousHead != m['primary_card_id']) reject();
       final head = rows[m['primary_card_id']];
       final hm = metadata[m['primary_card_id']];
+      final historicalSingleton = head?['id'] == r['id'] &&
+          r['removed_in'] is String && (r['removed_in'] as String).isNotEmpty &&
+          r['replaced_by'] == null &&
+          metadata.values.where((v) => v['group_id'] == m['group_id']).length == 1;
       if (head == null ||
-          head['removed_in'] != null ||
+          (head['removed_in'] != null && !historicalSingleton) ||
           head['lang'] != r['lang'] ||
           hm?['group_id'] != m['group_id'] ||
           hm?['primary_card_id'] != head['id']) {

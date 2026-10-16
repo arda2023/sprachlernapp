@@ -551,3 +551,119 @@ def card_meta_from_inventory(packs: dict[str, dict], inventory) -> dict[str, dic
             meta[card["ref"]] = {"rank": card.get("freq_rank"), "usage": m.get("usage"),
                                  "sense_index": i}
     return meta
+
+
+def apply_targeted_patch(raw: bytes, patch: dict) -> dict:
+    """Strict Schema-4 delta on the existing offline curation path.
+
+    Source rows are preconditions, never inferred approvals. Historical rows
+    stay in the pack; only explicitly owned relationships may be tombstoned.
+    """
+    import hashlib
+    import json
+    from .annotate import tokenize
+    from .pack import build_rows
+
+    def require(ok, message):
+        if not ok:
+            raise CurationError('targeted: ' + message)
+
+    def keys(value, required, optional=()):
+        require(isinstance(value, dict) and set(required) <= set(value)
+                and set(value) <= set(required) | set(optional), 'unknown/missing fields')
+
+    def text(value):
+        return isinstance(value, str) and bool(value.strip())
+
+    keys(patch, ('format', 'format_version', 'source_sha256', 'version', 'reviewer', 'operations'))
+    require(patch['format'] == 'sprachapp.targeted-curation' and type(patch['format_version']) is int
+            and patch['format_version'] == 1, 'unsupported format')
+    require(hashlib.sha256(raw).hexdigest() == patch['source_sha256'], 'source hash mismatch')
+    source = json.loads(raw)
+    require(source['release']['schema_version'] == 4, 'Schema 4 required')
+    require(text(patch['version']) and patch['version'] != source['release']['version']
+            and text(patch['reviewer']), 'new version/reviewer required')
+    before = build_rows(source)
+    work = copy.deepcopy(source)
+    cards = {r['id']: c for r, c in zip(before['cards'], work['cards'])}
+    sentences = {r['id']: s for r, s in zip(before['sentences'], work['sentences'])}
+    require(isinstance(patch['operations'], list) and bool(patch['operations']), 'operations required')
+    seen = set()
+    version = patch['version']
+    for op in patch['operations']:
+        require(isinstance(op, dict), 'operation object required')
+        kind = op.get('op')
+        extra = {'card_gloss': ('translation_de',),
+                 'replace_sentence': ('sentence_id', 'expect_sentence', 'expect_link', 'sentence', 'tokens', 'link', 'alternatives_checked'),
+                 'retire_card': ()}
+        require(isinstance(kind, str) and kind in extra, 'unsupported operation')
+        keys(op, ('op', 'card_id', 'expect_card', 'reason', *extra[kind]))
+        cid = op['card_id']
+        require(isinstance(cid, str) and cid in cards and cid not in seen, 'missing/duplicate/conflicting card target')
+        seen.add(cid)
+        card = cards[cid]
+        require(not card.get('removed_in') and card == op['expect_card'] and text(op['reason']), 'card precondition')
+        if kind == 'card_gloss':
+            require(text(op['translation_de']) and op['translation_de'] != card.get('translation_de'), 'changed gloss required')
+            card['translation_de'] = op['translation_de']
+            continue
+        links = [l for l in work['card_sentences'] if l['card'] == card['ref'] and not l.get('removed_in')]
+        require(len(links) == 1, 'one active link required')
+        old = links[0]
+        if kind == 'replace_sentence':
+            require(isinstance(op['sentence_id'], str), 'sentence identity required')
+            sn = sentences.get(op['sentence_id'])
+            require(sn is not None and sn['ref'] == old['sentence'] and sn == op['expect_sentence']
+                    and old == op['expect_link'], 'sentence/link precondition')
+            new, ts, link = copy.deepcopy((op['sentence'], op['tokens'], op['link']))
+            keys(new, ('ref', 'text', 'translation_de'))
+            require(all(text(new[k]) for k in new), 'sentence text/reference required')
+            require(_whole_token_count(new['text'], card['form']) == 1, 'target must occur exactly once')
+            sid = sentence_id(work['lang'], new['text'])
+            require(sid not in sentences and all(s['ref'] != new['ref'] for s in work['sentences']), 'sentence identity already exists')
+            keys(link, ('card', 'sentence', 'position', 'gap_start', 'gap_end', 'accepted', 'valid_alternatives'))
+            require(isinstance(link['valid_alternatives'], list) and all(isinstance(a, str) for a in link['valid_alternatives']), 'alternatives must be strings')
+            require(type(link['gap_start']) is int and type(link['gap_end']) is int, 'integer gap required')
+            require(link['card'] == card['ref'] and link['sentence'] == new['ref'] and type(link['position']) is int
+                    and link['position'] == 1 and (link['gap_start'], link['gap_end']) == gap_offsets(new['text'], card['form']), 'new link/gap')
+            require(isinstance(ts, list), 'tokens required')
+            for t in ts:
+                keys(t, ('sentence', 'idx', 'surface', 'start_pos', 'end_pos'), ('lemma', 'sense', 'card', 'form_target'))
+                require(t['sentence'] == new['ref'] and all(type(t[k]) is int for k in ('idx', 'start_pos', 'end_pos')), 'token sentence/offset types')
+            expected = tokenize(new['text'], lexical_spans=[(link['gap_start'], link['gap_end'])])
+            fields = ('idx', 'surface', 'start_pos', 'end_pos')
+            require([{k:t[k] for k in fields} for t in ts] == [{k:t[k] for k in fields} for t in expected], 'incomplete token annotation')
+            require(op['alternatives_checked'] == [{'card': card['ref'], 'alternative': a,
+                    'text': new['text'][:link['gap_start']] + a + new['text'][link['gap_end']:]} for a in link['valid_alternatives']], 'alternative review')
+            new.update(origins=['deck'], model=None, qa_status='editorial_reviewed',
+                       qa_report={'targeted_curation': {'reviewer': patch['reviewer'], 'reason': op['reason'], 'source_sha256': patch['source_sha256']}})
+            old.update(removed_in=version, replaced_by=stable_id('card_sentences', card_id=cid, sentence_id=sid))
+            work['sentences'].append(new)
+            sentences[sid] = new
+            work['sentence_tokens'].extend(ts)
+            work['card_sentences'].append(link)
+        else:
+            learning = card['learning']
+            members = [c for c in work['cards'] if c['learning']['group_id'] == learning['group_id']]
+            require(len(members) == 1 and learning['primary_card_id'] == cid and not card.get('replaced_by'), 'retirement requires singleton without replacement')
+            for table, field in (('deck_words', 'primary_card'), ('deck_cards', 'card'), ('form_targets', 'card'), ('card_lexical_targets', 'card')):
+                require(not any(r.get(field) == card['ref'] and not r.get('removed_in') for r in work.get(table, [])), 'retirement has active ownership/form membership')
+            # Every sentence carrying this card must be exclusively historical or
+            # its own current exercise. Shared contexts cannot be changed here.
+            refs = {t['sentence'] for t in work['sentence_tokens'] if t.get('card') == card['ref']}
+            refs.add(old['sentence'])
+            for ref in refs:
+                require(not any(l['sentence'] == ref and l['card'] != card['ref'] and not l.get('removed_in') for l in work['card_sentences'])
+                        and not any(l['sentence'] == ref and not l.get('removed_in') for l in work.get('story_sentences', [])), 'retirement has shared active context')
+            card['removed_in'] = version
+            old['removed_in'] = version
+            for s in work['sentences']:
+                if s['ref'] in refs and not s.get('removed_in'): s['removed_in'] = version
+            for t in work['sentence_tokens']:
+                if t['sentence'] in refs and not t.get('removed_in'): t['removed_in'] = version
+            for d in work['dictionary_forms']:
+                if d.get('card') == card['ref'] and not d.get('removed_in'): d['removed_in'] = version
+    work['release'] = {'version': version, 'schema_version': 4,
+                       'notes': 'INTERNES TEST-PACK: targeted offline curation; unchanged rows not newly reviewed; no AI QA.'}
+    build_rows(work)
+    return work

@@ -92,7 +92,11 @@ class StoryLearningService {
   }
 
   Future<StoryAddResult> reactivate(StoryLearningCandidate c) async {
-    final current = await status(c);
+    final fresh = await candidate(c.storyId, c.sentence.id, c.token.index);
+    if (fresh.sourceFingerprint != c.sourceFingerprint) {
+      throw StateError('Der Story-Inhalt hat sich geändert. Bitte das Wort erneut öffnen.');
+    }
+    final current = await status(fresh);
     if (current.state != StoryAddState.disabled) return current;
     final user = await ref.read(userRepositoryProvider.future);
     await user.setCardFlags(current.cardId!, disabled: false);
