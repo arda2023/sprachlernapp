@@ -1,16 +1,9 @@
 # NEXTSTEPS
 Stand: 11.10.2026 – Alltagssprache Batch 2 intern gestagt; Batch-3-ZIP geprüft. Paket 2 lokal implementiert: docs/content-editor-package-2.md; Python 542+19, Flutter 330, Browser-250/ZIP/XLSX/Story/Tempstage geprüft; Produktionsasset und fremde UI unverändert; Windows-Geräteabnahme offen. Paket 3 lokal implementiert: docs/content-editor-package-3.md; Python 547+19, Flutter 346, echte Browser-Reload/Neustart/Token/CAS-Prüfung; private Veröffentlichung, Recovery und User-DB6 lokal geprüft. Cloud-/Windows-/Geräteabnahme sowie abhängige Gruppenrückstellung offen; Produktionsinhalt und fremde UI unverändert.
 ## Erledigt
-- 89 Batch-2-Ziele importiert: 89 Satzpaare, 889 Tokens (742 Wörter/Ausdrücke), zwei Alternativen.
-- Alltagssprache: 178 Ziele, Anzeigen 1–178; Original-/Besitzpositionen unverändert.
-- Pack: pipeline/out/alltagssprache_redewendungen_batch_2_v1/, Schema 4, zwölf Stapel, 2745 Karten.
-- Produktive Projektion: 2631 Übungen / 2360 Wörter; 402 Formen/je 134 Verbenübungen erhalten.
-- Assets/Manifest vor Staging unter build/alltagssprache_batch_2_checks/backup/ bytegleich gesichert.
-- Intern gestagt; Asset-Verifier und echter Zwölfstapel-Lesetest PASS, Exit 0.
-- Auswahl v2: 441 Ziele; Batch-3-Partition 178 importiert / 88 aktuell / 175 später.
+- 89 Batch-2-Ziele importiert: 89 Satzpaare, 889 Tokens (742 Wörter/Ausdrücke), zwei Alternativen. Alltagssprache: 178 Ziele, Anzeigen 1–178; Original-/Besitzpositionen unverändert. Pack: pipeline/out/alltagssprache_redewendungen_batch_2_v1/, Schema 4, zwölf Stapel, 2745 Karten. Produktive Projektion: 2631 Übungen / 2360 Wörter; 402 Formen/je 134 Verbenübungen erhalten. Assets/Manifest vor Staging unter build/alltagssprache_batch_2_checks/backup/ bytegleich gesichert. Intern gestagt; Asset-Verifier und echter Zwölfstapel-Lesetest PASS, Exit 0. Auswahl v2: 441 Ziele; Batch-3-Partition 178 importiert / 88 aktuell / 175 später.
 ## Dateien und Prüfungen
-- Bericht: docs/alltagssprache-redewendungen-batch-2-import.md; NEXTSTEPS aktualisiert.
-- test/data/real_pack_test.dart um diese Version und 178 Ziele erweitert.
+- Bericht: docs/alltagssprache-redewendungen-batch-2-import.md; NEXTSTEPS aktualisiert. test/data/real_pack_test.dart um diese Version und 178 Ziele erweitert.
 - Batch-3-Kontexte: selection/words/learning_groups, *_batch_3_context_v2.json.
 - ZIP: build/alltagssprache_redewendungen_authoring_batch_3.zip; checks im Batch-2-Ordner.
 - 447 Pipeline-Tests plus 19 Subtests PASS; Flutter-Analyse ohne Befund; Exit 0.
@@ -23,8 +16,10 @@ Stand: 11.10.2026 – Alltagssprache Batch 2 intern gestagt; Batch-3-ZIP geprüf
 - Sechs geerbte Formglossen sowie frühere Listen offen; Original-Lieferung erhalten.
 - Nächste Aktion: geprüfte ZIP hochladen und 88 Batch-3-Ziele im Chat redigieren.
 - Kein Commit: uncommittete Schema-4-/450-/V3-Abhängigkeiten und gemischte Hunks; Index leer.
-
 ## Passwortlogin für private Inhalte · 16.10.2026
 - Editor und Flutter: Mit Passwort anmelden, OTP ausdrücklich alternativ; bestehende Session-/Refresh-/Logoutpfade und Allowlisten erhalten; Anleitung docs/content-password-login.md.
 - Nachweise: Python 20 inkl. echtem lokalen Supabase-Auth/403/Refresh/Logout, Flutter 11, JS 2 bestanden; flutter analyze ohne Befund, Exitcodes 0; mobile/Desktop-Browser synthetisch geprüft. Einmaliger Upload-Testtimeout im Einzel- und gemeinsamen Kontrolllauf nicht wiederholt.
 - Offen: Nutzer setzt Passwort ausschließlich für bestehende Cloud-UID mit getrenntem interaktivem Adminhelfer; tatsächlicher Cloudlogin und einmaliges iPhone-Appupdate am Mac samt Geräteabnahme. Kein Cloudpasswort-/Rollenwechsel, keine Inhalte veröffentlicht, kein Push.
+## Erste private Bestandsversion · 16.10.2026
+- Read-only belegt: Entwurf 2139ad7f-d6f1-4787-9fff-146cf050c509/R2 = 181 aktive Allgemeine-Sprache-Ziele; 0 Operationen/Ergänzungen/Reviews, Inhalt wie R1/Basis. Reviewpflicht folgt pauschalem Kopierumfang, nicht 181 neuen Fehlern; docs/content-editor-initial-release.md mit vollständigem Nachweis.
+- Interne Erstübernahme internal-baseline-adoption-v1 lokal implementiert: Versionen → Vorhandenes App-Pack als erste interne Version übernehmen; Vorschau ausdrücklich bestätigen, keine neue Sprachprüfung. Quellen-/SQLite-/Inhaltspins, 23 Tabellen, Reader/Historie/CAS geprüft; Python 24+1, Deno 9, Flutter-Packtest/Assetverify bestanden (Exit 0). Nur synthetische Testversion, echte Drafts/Assets erhalten; zuerst gesondert content-publish deployen, danach Upload/Serverprüfung/Veröffentlichung. Anleitung docs/content-editor-initial-release.md; kein Cloudzugriff/Push.

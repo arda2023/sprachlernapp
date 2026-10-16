@@ -153,10 +153,20 @@ def inspect_bundle(directory,record,draft):
     report=json.loads((directory/'finalization_report.json').read_text());reviews=json.loads((directory/'editorial_reviews.json').read_text())
     from ..authoring_service import draft_content_hash
     validation=report.get('validation',{})
-    require(draft.get('state')!='discarded' and validation.get('technical')=='valid' and validation.get('editorial')=='approved'
-            and validation.get('content_sha256')==draft_content_hash(draft),'REVIEW_STALE','Entwurf seit dem geprüften Export geändert oder nicht bestätigt. Neu prüfen und exportieren.',status=409)
-    require(any(r.get('decision')=='approved' and r.get('payload_sha256')==validation['content_sha256'] for r in reviews)
-            and digest(reviews)==manifest['editorial_reviews_sha256'],'REVIEW_STALE','Exportfreigabe fehlt oder wurde verändert.',status=409)
+    from ..baseline_adoption import KIND,verify_receipt
+    require(record.get('publication_kind')==manifest.get('publication_kind') and
+            manifest.get('publication_kind') in (None,KIND),'ADOPTION_INVALID','Unbekannte oder abweichende Veröffentlichungsart.')
+    if manifest.get('publication_kind')==KIND:
+        provenance=json.loads((directory/'provenance.json').read_text(encoding='utf-8'))
+        require(isinstance(provenance,list) and len(provenance)==1,'ADOPTION_INVALID','Übernahmebeleg fehlt.')
+        pack=json.loads((directory/'pack.json').read_text(encoding='utf-8'))
+        verify_receipt(provenance[0],manifest,report,reviews,pack)
+        require(digest(reviews)==manifest['editorial_reviews_sha256'],'ADOPTION_INVALID','Reviews verändert.')
+    else:
+        require(draft is not None and draft.get('state')!='discarded' and validation.get('technical')=='valid' and validation.get('editorial')=='approved'
+                and validation.get('content_sha256')==draft_content_hash(draft),'REVIEW_STALE','Entwurf seit dem geprüften Export geändert oder nicht bestätigt. Neu prüfen und exportieren.',status=409)
+        require(any(r.get('decision')=='approved' and r.get('payload_sha256')==validation['content_sha256'] for r in reviews)
+                and digest(reviews)==manifest['editorial_reviews_sha256'],'REVIEW_STALE','Exportfreigabe fehlt oder wurde verändert.',status=409)
     objects={}
     for name in FILES:
         path=directory/name;require(path.is_file() and not path.is_symlink(),'BUNDLE_CHANGED','Bundledatei fehlt.',status=409)

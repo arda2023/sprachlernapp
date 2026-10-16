@@ -424,3 +424,19 @@ Nachweise, Bedienung und Grenzen: [Abschlussbericht](content-editor-package-2.md
 - Der Revisionshash verwendet kanonisches JSON nach `word_registry.digest`, auch `sentence_text_sha256` hasht den JSON-String. Das tatsächliche `context_payload` umfasst die sortierten Token und Linkliste. Legacy-IDs werden nicht neu berechnet. Vollständige reale Readerinventare sind Autorität für eingefrorene Anzeigen; neu angelegte Kontexte dürfen keine Legacy-Lückenmarkierung einschleusen.
 - Registryformat 1 bleibt unverändert. Paket 2 reserviert neue Identitäten und erlaubt geprüfte ungeteilte Singleton-Rückstellung. Gruppen-/Owner-/Form-/fremde Kontextbindungen liefern konkrete erforderliche Folgeentscheidungen und blockieren ohne konsistente Lösung. Die skizzierte generelle Registryformat-2-Neuzuordnung ist nicht implementiert; es gibt keine automatische Ersatz-Ownerwahl.
 - Releasebuild erzeugt ein unveränderliches geprüftes Bundle und ersetzt keine Assets. Erst die getrennte Aktion nach Auswirkungsprüfung sichert Asset/Manifest, ruft das bestehende Stagingwerkzeug auf und verifiziert. Paket-2-Abnahme verwendet ausschließlich temporäre Testassets. Paket 3 und Cloudveröffentlichung bleiben unimplementiert.
+
+
+## Interne Erstübernahme · 16.10.2026
+
+Der lokale Weg `internal-baseline-adoption-v1` ist ergänzend implementiert:
+**Versionen → Vorhandenes App-Pack als erste interne Version übernehmen**.
+Vorschau und ausdrückliche Bestätigung übernehmen den bereits intern verwendeten
+Bestand; sie behaupten keine neue sprachliche Gesamtprüfung. Quelle und gesamtes
+konvertiertes Bundle sind eng hashgebunden. Eigener Releaseeintrag ohne Draft-ID,
+leere neue Reviewliste, `editorial=existing-evidence-only`; normale Releases
+benötigen weiterhin ihre gebundene redaktionelle Freigabe. Nur Englisch/internal,
+Generation 0/null-Parents; tatsächlicher Kanalzustand und CAS bleiben serverseitig.
+Lokale Vorbereitung schaltet weder Produktionsasset noch Editorhead um.
+Umsetzung, Grenzen, echte Testoutputs und exakte spätere Deployment-/Klickfolge:
+[Erste private Bestandsversion](content-editor-initial-release.md).
+Clouddeployment und echte Veröffentlichung sind in diesem Auftrag nicht erfolgt.

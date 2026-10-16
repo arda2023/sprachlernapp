@@ -423,12 +423,58 @@ class EditorService:
                 if temporary.exists():shutil.rmtree(temporary)
         return self.jobs.submit('release',run)
 
+    def adoption_preview(self):
+        from ..baseline_adoption import preview
+        return preview(self.asset_directory)
+
+    def adopt_baseline(self,data):
+        from ..baseline_adoption import confirmation,build,KIND
+        receipt=confirmation(self.asset_directory,data)
+        def run(job):
+            # Repeated confirmation of the same pinned baseline reuses its
+            # verified local record; interrupted builds leave no valid record.
+            for existing in self.store.list('releases'):
+                if existing.get('publication_kind')==KIND:
+                    inspect_bundle(self.store.root/existing['path'],existing,None)
+                    return existing
+            identifier=str(uuid.uuid4())
+            temporary=self.store.root/'staging'/identifier
+            destination=self.store.root/'bundles'/identifier
+            temporary.mkdir(parents=True)
+            registered=False
+            try:
+                bundle=build(self.asset_directory,temporary,receipt,job)
+                # Detect source replacement during conversion before registration.
+                author.require(self.adoption_preview()['sha256']==receipt['sha256'],
+                               'ADOPTION_SOURCE_CHANGED','Quelle während der Vorbereitung geändert.')
+                with self.store.mutex:
+                    job.check_cancelled()
+                    destination.parent.mkdir(exist_ok=True)
+                    os.replace(temporary,destination)
+                    record={'release_id':identifier,'publication_kind':KIND,'lang':'en',
+                            'version':bundle['manifest']['version'],'manifest':bundle['manifest'],
+                            'path':str(destination.relative_to(self.store.root)),
+                            'created_at':utc_now(),'status':'verified'}
+                    inspect_bundle(destination,record,None)
+                    self.store.put('releases',identifier,record)
+                    registered=True
+                return record
+            finally:
+                if temporary.exists():shutil.rmtree(temporary)
+                if not registered and destination.exists():shutil.rmtree(destination)
+        return self.jobs.submit('baseline-adoption',run)
+
     def publish_release(self,identifier,phase):
         author.require(phase in ('upload','finalize','commit'),'PUBLISH_PHASE','Unbekannter Veröffentlichungsschritt.')
         record=self.store.get('releases',identifier)
         def inspect():
-            draft=self.store.load_draft(record['draft_id'])
-            author.require(not record.get('draft_etag') or self.store.etag(draft)==record['draft_etag'],'REVIEW_STALE','Exportierte Entwurfsrevision wurde geändert. Erneut prüfen und exportieren.',status=409)
+            from ..baseline_adoption import KIND
+            if record.get('publication_kind')==KIND:
+                draft=None
+            else:
+                author.require('publication_kind' not in record,'ADOPTION_INVALID','Unbekannte Veröffentlichungsart.')
+                draft=self.store.load_draft(record['draft_id'])
+                author.require(not record.get('draft_etag') or self.store.etag(draft)==record['draft_etag'],'REVIEW_STALE','Exportierte Entwurfsrevision wurde geändert. Erneut prüfen und exportieren.',status=409)
             manifest,objects=inspect_bundle(self.store.root/record['path'],record,draft)
             return draft,manifest,objects
         inspect()
@@ -443,8 +489,9 @@ class EditorService:
                 receipt=read_json(receipt_path) if receipt_path.exists() else None
                 if receipt is None:
                     author.require(phase=='upload','PUBLISH_ORDER','Zuerst hochladen.')
-                    channel=self.publisher.channel(draft['lang'])
-                    author.require(channel['generation']==0 or (channel['manifest']['version']==draft['base']['version'] and channel['manifest'].get('pack_canonical_sha256')==draft['base']['pack_canonical_sha256']),
+                    channel=self.publisher.channel(record['lang'])
+                    author.require((channel['generation']==0 and channel['release_id'] is None and channel['manifest_sha256'] is None) if draft is None else
+                        (channel['generation']==0 or (channel['manifest']['version']==draft['base']['version'] and channel['manifest'].get('pack_canonical_sha256')==draft['base']['pack_canonical_sha256'])),
                         'PUBLISH_BASE_CHANGED','Private Kanalbasis weicht ab. Aktuelle Version übernehmen und Entwurf neu abgleichen.',status=409)
                     receipt={'request_id':str(uuid.uuid4()),'commit_request_id':str(uuid.uuid4()),
                         'expected_generation':channel['generation'],'parent_release_id':channel['release_id'],
@@ -453,7 +500,7 @@ class EditorService:
             if phase=='upload':
                 job.progress('Unveränderliche private Dateien hochladen …')
                 result=self.publisher.call('start',{**{k:receipt[k] for k in ('request_id','expected_generation','parent_release_id','parent_manifest_sha256')},
-                    'lang':draft['lang'],'channel':'internal','manifest':manifest,'objects':objects})
+                    'lang':record['lang'],'channel':'internal','manifest':manifest,'objects':objects})
                 receipt.update(upload_id=result['upload_id'],status=result['status']);save(receipt)
                 for index,(name,url) in enumerate(result['uploads'].items()):
                     job.progress('Datei hochladen: '+name,index,len(FILES));inspect()

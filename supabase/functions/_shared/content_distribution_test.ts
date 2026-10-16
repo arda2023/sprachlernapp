@@ -1,4 +1,4 @@
-import {DistributionBackend,DistributionError,handler,validateStart,verifyBundle,digest,FILES} from './content_distribution.ts';
+import {DistributionBackend,DistributionError,handler,validateStart,verifyBundle,digest,FILES,ADOPTION} from './content_distribution.ts';
 function assert(value:unknown,message='assertion failed'):asserts value{if(!value)throw new Error(message);}
 async function rejects(action:()=>unknown,code:string){try{await action();}catch(e){assert(e instanceof DistributionError&&e.code===code,`expected ${code}, got ${e}`);return;}throw new Error('expected rejection '+code);}
 const id='11111111-1111-4111-8111-111111111111';
@@ -48,4 +48,26 @@ Deno.test('manifest scope, parent CAS and immutable complete object set are mand
   await rejects(()=>validateStart({...valid,manifest:{...m,profile_id:'unknown'}}),'MANIFEST_INCOMPATIBLE');
   await rejects(()=>validateStart({...valid,objects:{...objects,'unexpected.json':objects['pack.json']}}),'OBJECT_SET_INVALID');
   assert(digest({b:2,a:1})===digest({a:1,b:2}));
+});
+
+Deno.test('baseline adoption only admits English internal generation zero and known kind',async()=>{
+  const m={...fixture()['content.manifest.json'],publication_kind:ADOPTION,parent_release_id:null};
+  const objects=Object.fromEntries(FILES.map(name=>[name,{sha256:'0'.repeat(64),size_bytes:1}]));
+  objects['content.sqlite']={sha256:m.sha256,size_bytes:m.size_bytes};objects['pack.json']={sha256:m.pack_json_sha256,size_bytes:1};
+  const valid={request_id:id,lang:'en',channel:'internal',expected_generation:0,parent_release_id:null,parent_manifest_sha256:null,manifest:m,objects};
+  validateStart(valid);
+  await rejects(()=>validateStart({...valid,expected_generation:1,parent_release_id:actor,parent_manifest_sha256:'0'.repeat(64)}),'ADOPTION_FIRST_ONLY');
+  await rejects(()=>validateStart({...valid,parent_release_id:actor}),'PARENT_INVALID');
+  await rejects(()=>validateStart({...valid,manifest:{...m,publication_kind:'skip-review'}}),'PUBLICATION_KIND');
+  await rejects(()=>validateStart({...valid,lang:'de'}),'SCOPE_UNSUPPORTED');
+  await rejects(()=>validateStart({...valid,channel:'public'}),'SCOPE_UNSUPPORTED');
+  await rejects(()=>validateStart({...valid,manifest:{...m,internal_test_pack:false}}),'MANIFEST_INCOMPATIBLE');
+  class Occupied extends DistributionBackend {
+    override async actor(){return actor;}
+    override async publisher(){}
+    override async json(path:string){assert(path.includes('content_channels'));return [{generation:1,release_id:actor,manifest_sha256:'0'.repeat(64)}];}
+  }
+  const response=await handler('publish',new Occupied('https://synthetic.invalid','test'))(new Request(
+    'https://synthetic.invalid/content-publish/start',{method:'POST',body:JSON.stringify(valid)}));
+  assert(response.status===409&&(await response.json()).code==='ADOPTION_CHANNEL_OCCUPIED');
 });

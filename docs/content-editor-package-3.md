@@ -197,3 +197,19 @@ Diffchecks verwenden `git -c core.whitespace=cr-at-eol diff --check -- <eigene D
 GitNexus vor Commit: vollständiger Reindex mit `node .gitnexus/run.cjs analyze --index-only --pdg --force` (Exit 0; 90.351 Knoten, 276.288 Kanten, 949 Cluster, 381 erfasste Flows). Danach strukturierte `detect_changes`-Abfragen über den lokalen Backend-Adapter: `scope=all` meldet 474 Symbole/84 Dateien/16 Prozesse, `scope=staged` ausschließlich eigene 446 Symbole/77 Dateien/16 Prozesse. Beide Ergebnisobjekte ohne `error`, `partial` oder `truncated`; Risikostufe **CRITICAL**, ausdrücklich nicht als Low umgedeutet. Betroffen sind insbesondere Publish/Release→Auth/Fetcher, Activate→Journal sowie Build→Prüfung/Owner-Pause/Close. Vor einzelnen Implementierungsänderungen lagen die dokumentierten Impact-Ergebnisse bei LOW/MEDIUM bzw. UNKNOWN; UNKNOWN-Aufrufe wurden durch tatsächliche Controller-/Handler-/Testaufrufe ergänzt.
 
 Die vollständige Änderungsabfrage bedeutet keine vollständige statische Programmanalyse: der Index warnt vor begrenzter dynamischer/cross-language Feldauflösung und ausgelassenen Flow-Kandidaten. Diese Abdeckungsgrenzen bleiben bestehen; Quellprüfung und tatsächliche Browser-/Deno-/PostgreSQL-/Python-/Dart-/Widgettests ergänzen sie. Das CRITICAL-Integrationsrisiko wird nicht durch die grünen Tests wegdefiniert; reale Supabase-/Windows-/Geräteabnahmen bleiben Voraussetzung der jeweiligen Betriebsfreigabe.
+
+
+## Interne Erstübernahme · 16.10.2026
+
+Der lokale Weg `internal-baseline-adoption-v1` ist ergänzend implementiert:
+**Versionen → Vorhandenes App-Pack als erste interne Version übernehmen**.
+Vorschau und ausdrückliche Bestätigung übernehmen den bereits intern verwendeten
+Bestand; sie behaupten keine neue sprachliche Gesamtprüfung. Quelle und gesamtes
+konvertiertes Bundle sind eng hashgebunden. Eigener Releaseeintrag ohne Draft-ID,
+leere neue Reviewliste, `editorial=existing-evidence-only`; normale Releases
+benötigen weiterhin ihre gebundene redaktionelle Freigabe. Nur Englisch/internal,
+Generation 0/null-Parents; tatsächlicher Kanalzustand und CAS bleiben serverseitig.
+Lokale Vorbereitung schaltet weder Produktionsasset noch Editorhead um.
+Umsetzung, Grenzen, echte Testoutputs und exakte spätere Deployment-/Klickfolge:
+[Erste private Bestandsversion](content-editor-initial-release.md).
+Clouddeployment und echte Veröffentlichung sind in diesem Auftrag nicht erfolgt.

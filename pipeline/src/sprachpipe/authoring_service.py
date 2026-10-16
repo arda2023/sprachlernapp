@@ -529,11 +529,6 @@ def sqlite_readback(path,rows):
 
 def build_release(draft,base,directory,*,version,expected_validation,progress):
     """Validate, export and inspect an entire immutable release; no asset writes."""
-    from .pack import build_rows
-    from .export import export_sqlite
-    from .context_revisions import history_inventory,seed_story_history,migrate_schema5
-    from .editor.store import atomic_json,read_json,utc_now
-    directory=Path(directory)
     progress.progress('Entwurf und lokale Freigabe erneut prüfen …')
     validation=validate_draft(draft,base)
     # Saving the validation/review increments the draft revision, not its content.
@@ -542,6 +537,16 @@ def build_release(draft,base,directory,*,version,expected_validation,progress):
     require(validation['technical']=='valid' and validation['editorial']=='approved',
             'RELEASE_BLOCKED','Technische Prüfung und lokale redaktionelle Freigabe sind erforderlich.')
     require(prior.get('content_sha256')==validation['content_sha256'],'REVIEW_STALE','Entwurfsinhalt hat sich geändert.',status=409)
+    return _build_verified_bundle(draft,base,directory,version=version,validation=validation,progress=progress)
+
+
+def _build_verified_bundle(draft,base,directory,*,version,validation,progress,adoption=None):
+    """Shared mechanics; callers must enforce their distinct admission contract."""
+    from .pack import build_rows
+    from .export import export_sqlite
+    from .context_revisions import history_inventory
+    from .editor.store import atomic_json,read_json,utc_now
+    directory=Path(directory)
     # Materialize the exact old reader first. This is the authority for legacy
     # correction edges, not a delivery's self-reported history.
     progress.progress('Bisherige Readeransichten und Storyherkünfte erfassen …')
@@ -558,8 +563,12 @@ def build_release(draft,base,directory,*,version,expected_validation,progress):
         originals={digest(r) for r in base.get(table,[])}
         for row in work.get(table,[]):
             if row.get('removed_in')==old_version and digest(row) not in originals:row['removed_in']=version
-    work['release']['notes']='INTERNES TEST-PACK · Lokaler redaktioneller Export'
+    work['release']['notes']=('INTERNES TEST-PACK · Bestandsübernahme ohne neue Sprachprüfung'
+                            if adoption else 'INTERNES TEST-PACK · Lokaler redaktioneller Export')
     work['release']['created_at']=utc_now()
+    if adoption:
+        from .baseline_adoption import anchor
+        work['release']['created_at']=anchor()['converted_created_at']
     before=build_rows(base);rows=build_rows(work);assert_history_preserved(before,rows)
     progress.progress('Alle 23 Tabellen exportieren und vollständig zurücklesen …')
     export_sqlite(work,directory/'content.sqlite')
@@ -572,11 +581,17 @@ def build_release(draft,base,directory,*,version,expected_validation,progress):
     new_contexts={(r['card_id'],r['sentence_id']):r for r in reader['historical']}
     require(all(new_contexts.get(key)==value for key,value in old_contexts.items()),'HISTORY_LOSS','Historische Dart-Readeranzeige wurde verändert.')
     require(reader['story_display']==baseline_reader['story_display'],'HISTORY_LOSS','Bisherige Storyanzeige wurde verändert.')
+    if adoption:
+        require(reader['current']==baseline_reader['current'],'ADOPTION_READER_CHANGED',
+                'Aktive Readeransichten weichen vom übernommenen Bestand ab.')
     # Source snapshots are version-specific and append-only, even if texts match.
     history=work.setdefault('editor_history',{'story_source_snapshots':[],'baseline_gaps':[]})
     known={r['source_fingerprint'] for r in history['story_source_snapshots']}
     for source in reader['story_source_snapshots']:
         if source['source_fingerprint'] not in known:history['story_source_snapshots'].append(source);known.add(source['source_fingerprint'])
+    if adoption:
+        from .baseline_adoption import verify_converted
+        verify_converted(work)
     inventory=history_inventory(rows,work)
     (directory/'baseline.sqlite').unlink();(directory/'baseline-reader.json').unlink()
     atomic_json(directory/'pack.json',work);atomic_json(directory/'registry.json',work['word_registry']['snapshot'])
@@ -592,10 +607,13 @@ def build_release(draft,base,directory,*,version,expected_validation,progress):
         'editorial_reviews_sha256':digest(draft['reviews']),'internal_test_pack':True,
         'parent_release_id':draft['base']['release_id'],'required_features':['immutable-contexts-v1'],
         'min_reader_version':5,'local_only':True}
+    if adoption:
+        manifest.update(publication_kind=adoption['kind'],adoption_sha256=digest(adoption),parent_release_id=None)
     atomic_json(directory/'content.manifest.json',manifest)
     atomic_json(directory/'finalization_report.json',{'status':'ok','internal_test_pack':True,
         'sqlite_counts':counts,'validation':validation,'reader_output':output.strip(),
-        'history_superset':True,'baseline_gaps':history['baseline_gaps']})
+        'history_superset':True,'baseline_gaps':history['baseline_gaps'],
+        **({'adoption_sha256':digest(adoption)} if adoption else {})})
     progress.check_cancelled()
     return {'pack':work,'manifest':manifest,'counts':counts}
 

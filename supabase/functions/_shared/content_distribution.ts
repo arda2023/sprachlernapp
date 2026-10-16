@@ -1,4 +1,8 @@
 import { createHash } from 'node:crypto';
+import baseline from './internal_baseline_source.json' with {type:'json'};
+
+export const ADOPTION = 'internal-baseline-adoption-v1';
+const ADOPTION_NOTICE = 'Übernimmt den bereits verwendeten internen Bestand. Damit bestätigst du keine neue sprachliche Gesamtprüfung.';
 
 export const MAX_PACK = 256 * 1024 * 1024;
 export const FILES = ['content.sqlite','pack.json','registry.json','history_inventory.json',
@@ -27,6 +31,9 @@ export function validateStart(data: Json) {
   requireThat(data.expected_generation===0 ? data.parent_manifest_sha256===null&&data.parent_release_id===null :
     SHA.test(data.parent_manifest_sha256)&&UUID.test(data.parent_release_id),'PARENT_INVALID');
   const m=data.manifest;
+  requireThat(m?.publication_kind===undefined||m.publication_kind===ADOPTION,'PUBLICATION_KIND');
+  if(m?.publication_kind===ADOPTION)requireThat(data.expected_generation===0&&
+    data.parent_release_id===null&&data.parent_manifest_sha256===null&&m.parent_release_id===null,'ADOPTION_FIRST_ONLY');
   requireThat(m?.format===2&&m.lang===data.lang&&m.schema_version===5&&m.translation_lang==='de'&&
     m.profile_id==='en-legacy-v1'&&m.profile_sha256===PROFILE_SHA&&m.internal_test_pack===true&&
     m.min_reader_version===5&&canonical(m.required_features)===canonical(['immutable-contexts-v1']), 'MANIFEST_INCOMPATIBLE');
@@ -97,14 +104,41 @@ export async function verifyBundle(backend:DistributionBackend,u:Json):Promise<J
   const report=await read('finalization_report.json'), reviews=await read('editorial_reviews.json');
   const inventory=await read('history_inventory.json'), registry=await read('registry.json');
   const v=report.validation;
+  requireThat(m.publication_kind===undefined||m.publication_kind===ADOPTION,'PUBLICATION_KIND');
+  const adoption=m.publication_kind===ADOPTION;
   requireThat(report.status==='ok'&&report.history_superset===true&&report.internal_test_pack===true&&
-    v?.technical==='valid'&&v.editorial==='approved'&&SHA.test(v.content_sha256)&&
+    v?.technical==='valid'&&v.editorial===(adoption?'existing-evidence-only':'approved')&&SHA.test(v.content_sha256)&&
     Array.isArray(v.findings)&&!v.findings.some((f:Json)=>f.severity==='error'),'ATTESTATION_INVALID');
   const unsigned={...v};delete unsigned.sha256;requireThat(digest(unsigned)===v.sha256,'VALIDATION_HASH');
-  requireThat(Array.isArray(reviews)&&reviews.some((r:Json)=>r.decision==='approved'&&r.payload_sha256===v.content_sha256),'REVIEW_UNBOUND');
+  requireThat(Array.isArray(reviews)&&(adoption?reviews.length===0:reviews.some((r:Json)=>r.decision==='approved'&&r.payload_sha256===v.content_sha256)),'REVIEW_UNBOUND');
   requireThat(digest(reviews)===m.editorial_reviews_sha256&&digest(inventory)===m.history_inventory_sha256&&digest(registry)===m.registry_sha256,'SIDECAR_HASH');
   requireThat(inventory.lang===u.lang&&inventory.format_version===1&&inventory.tables,'HISTORY_INVALID');
   const pack=await read('pack.json');
+  if(adoption){
+    requireThat(u.lang==='en'&&u.channel==='internal'&&u.expected_generation===0&&
+      u.parent_release_id===null&&u.parent_manifest_sha256===null&&m.parent_release_id===null&&
+      m.internal_test_pack===true,'ADOPTION_FIRST_ONLY');
+    const provenance=await read('provenance.json');
+    requireThat(Array.isArray(provenance)&&provenance.length===1,'ADOPTION_INVALID');
+    const receipt=provenance[0], expected:Json={kind:ADOPTION,source:baseline.source,version:baseline.version,
+      counts:baseline.counts,existing_evidence:baseline.existing_evidence,open_findings:baseline.open_findings,
+      notice:ADOPTION_NOTICE,cloud_state:'not_checked'};
+    expected.sha256=digest(expected);
+    const unsignedReceipt={...receipt};delete unsignedReceipt.confirmation;
+    requireThat(canonical(unsignedReceipt)===canonical(expected),'ADOPTION_INVALID');
+    const c=receipt.confirmation;
+    requireThat(c&&canonical(Object.keys(c).sort())===canonical(['accepted','at','scope'])&&
+      c.accepted===true&&c.scope===ADOPTION&&typeof c.at==='string'&&
+      /(?:Z|[+-]\d{2}:\d{2})$/.test(c.at)&&Number.isFinite(Date.parse(c.at)),'ADOPTION_CONFIRMATION');
+    requireThat(digest(receipt)===m.adoption_sha256&&m.adoption_sha256===report.adoption_sha256&&
+      v.content_sha256===baseline.converted_content_sha256&&v.base_sha256===baseline.source.pack_canonical_sha256&&
+      canonical(v.findings)==='[]'&&canonical(report.sqlite_counts)===canonical(baseline.counts),'ADOPTION_INVALID');
+    const content=structuredClone(pack);delete content.release.created_at;
+    requireThat(digest(content)===baseline.converted_content_sha256&&
+      pack.release.created_at===baseline.converted_created_at&&m.sha256===baseline.converted_sqlite_sha256&&
+      m.size_bytes===baseline.converted_sqlite_size,'ADOPTION_CONTENT_CHANGED');
+    await requireEmptyBaselineChannel(backend);
+  }
   requireThat(pack.lang===u.lang&&pack.release?.version===m.version&&pack.release?.schema_version===m.schema_version&&
     pack.word_registry?.sha256===m.registry_sha256,'PACK_SCOPE');
   if(v.coverage?.expected!==undefined)requireThat(v.coverage.expected===v.coverage.processed&&!v.coverage.conflicting_refs?.length,'INCOMPLETE_DELIVERY');
@@ -135,6 +169,12 @@ export async function verifyBundle(backend:DistributionBackend,u:Json):Promise<J
   delete final.local_only;return final;
 }
 
+async function requireEmptyBaselineChannel(backend:DistributionBackend){
+  const rows=await backend.json('/rest/v1/content_channels?lang=eq.en&channel=eq.internal');
+  requireThat(rows.length===0||(rows.length===1&&rows[0].generation===0&&
+    rows[0].release_id===null&&rows[0].manifest_sha256===null),'ADOPTION_CHANNEL_OCCUPIED',409);
+}
+
 export async function publish(backend:DistributionBackend,request:Request):Promise<Json>{
   const actor=await backend.actor(request);await backend.publisher(actor);
   const parts=new URL(request.url).pathname.split('/');const index=parts.indexOf('content-publish');const tail=parts.slice(index+1);
@@ -154,6 +194,7 @@ export async function publish(backend:DistributionBackend,request:Request):Promi
   requireThat(data!==null&&typeof data==='object'&&!Array.isArray(data),'REQUEST_OBJECT');
   if(tail[0]==='start'){
     validateStart(data);
+    if(data.manifest.publication_kind===ADOPTION)await requireEmptyBaselineChannel(backend);
     let rows=await backend.json(`/rest/v1/content_release_uploads?owner_id=eq.${actor}&request_id=eq.${data.request_id}`);
     let u=rows[0];
     if(!u){
@@ -195,6 +236,13 @@ export async function publish(backend:DistributionBackend,request:Request):Promi
   }
   if(tail[1]==='commit'){
     requireThat(UUID.test(data.request_id),'REQUEST_ID');
+    if(u.draft_manifest?.publication_kind===ADOPTION){
+      requireThat(u.expected_generation===0&&u.parent_release_id===null&&u.parent_manifest_sha256===null&&
+        data.expected_generation===0&&data.expected_manifest_sha256===null,'ADOPTION_FIRST_ONLY');
+      // A completed retry is resolved by the existing audit request ID in SQL.
+      // The SQL transaction locks the channel and checks generation AND parents.
+      if(u.status!=='published')await requireEmptyBaselineChannel(backend);
+    }
     return await backend.json('/rest/v1/rpc/publish_content_release','POST',{upload_id:u.id,
       expected_generation:data.expected_generation,expected_manifest_sha256:data.expected_manifest_sha256,
       request_id:data.request_id,verified_actor_id:actor});

@@ -1,0 +1,55 @@
+{
+  "kind": "internal-baseline-adoption-v1",
+  "version": "story_single_sentence_v1-internal-baseline",
+  "source": {
+    "version": "story_single_sentence_v1",
+    "manifest_sha256": "74a0bce4d16bb3084f762dd6afc69accc44c80db545dba9871b21d0b8c7adbfe",
+    "sqlite_sha256": "b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb",
+    "asset_sha256": "b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb",
+    "pack_bytes_sha256": "313ea762423478c932cb3c92a512ffd07281afed9028a17b9f6ec3a00b7a9aa5",
+    "pack_canonical_sha256": "fd3ce96b3472d083ca07d7adbcfed5ec82975db1a451a967073510e9a01932fb",
+    "registry_sha256": "4736bf4819a17cdabd5f57a60f08f53760ade24ef45e87464e1fcbeaa39dc97e",
+    "finalization_sha256": "60edcf988fb98200dbec1a49e8268e28a0b38b870deecf3ae0e037f786b420ae",
+    "qa_payloads_sha256": "45e22d1a69f296cbd23b61b888bd713644774b56bc07fb4be7dd9c29d7c9cc07"
+  },
+  "converted_content_sha256": "aa2eaf04dceed03c3941dfefc18f09dbc0d5318fd53958a024636e6ac6295a23",
+  "counts": {
+    "languages": 1,
+    "lemmas": 5007,
+    "senses": 6759,
+    "cards": 3768,
+    "dictionary_forms": 8089,
+    "decks": 14,
+    "deck_cards": 3661,
+    "deck_words": 3557,
+    "word_aliases": 37,
+    "sentences": 4303,
+    "sentence_tokens": 47089,
+    "card_sentences": 4297,
+    "stories": 1,
+    "story_sentences": 6,
+    "exercises": 0,
+    "grammar_rules": 0,
+    "audio_assets": 0,
+    "content_releases": 1,
+    "lexical_targets": 134,
+    "card_lexical_targets": 406,
+    "form_targets": 402,
+    "deck_practice_targets": 402,
+    "story_context_corrections": 8
+  },
+  "existing_evidence": {
+    "source_notes": "INTERNES TEST-PACK: targeted offline curation; unchanged rows not newly reviewed; no AI QA.",
+    "qa_scope": "Historische Satznachweise unverändert; keine neue sprachliche Gesamtprüfung.",
+    "technical_report_status": "ok"
+  },
+  "open_findings": [
+    "506 bestehende i+1-Warnungen; keine neue sprachliche Bewertung.",
+    "137 bereits fehlende Provenienz-Satz-IDs bleiben offen.",
+    "Zwei Maya-Eigennamenstellen bleiben von der Lernaufnahme ausgenommen.",
+    "Historische Sprach- und Glossengrenzfälle bleiben offen."
+  ],
+  "converted_created_at": "2026-10-16T00:00:00Z",
+  "converted_sqlite_sha256": "ac87b43105b9305579a7fff38de0343f874cbb19e533e1bebbed8942d975acdd",
+  "converted_sqlite_size": 43085824
+}
