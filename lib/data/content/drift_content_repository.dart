@@ -6,6 +6,7 @@ import '../../domain/content.dart';
 import '../../domain/story_learning.dart';
 import '../../domain/repositories.dart';
 import 'content_database.dart';
+import 'context_revision_validation.dart';
 
 /// [ContentRepository] on the read-only [ContentDatabase]. Rows with
 /// `removed_in` (tombstones) are never returned; ids are passed through
@@ -249,6 +250,7 @@ class DriftContentRepository
     String active(String alias) => historical ? '' : 'AND $alias.removed_in IS NULL';
     final rows = await _select(
       'SELECT t.start_pos, t.end_pos, t.surface, '
+      '${info.schemaVersion >= 5 ? 't.context_gloss_de, t.context_snapshot,' : ''} '
       'COALESCE(c.translation_de, (SELECT df.gloss_de FROM dictionary_forms df '
       'WHERE df.sense_id = t.sense_id AND df.form_norm = lower(t.surface) '
       'AND s.id IS NOT NULL ${active('df')} ORDER BY df.rank, df.id LIMIT 1), s.gloss_de) AS gloss '
@@ -278,12 +280,21 @@ class DriftContentRepository
           start: start,
           end: end,
           surface: surface,
-          translation: r.readNullable<String>('gloss'),
+          translation: info.schemaVersion >= 5
+              ? _contextGloss(r, historical: historical)
+              : r.readNullable<String>('gloss'),
         ),
       );
       lastEnd = end;
     }
     return List.unmodifiable(result);
+  }
+
+  String? _contextGloss(QueryRow row, {required bool historical}) {
+    final snapshot = jsonDecode(row.read<String>('context_snapshot')) as Map<String, dynamic>;
+    return snapshot['legacy'] == true
+        ? snapshot[historical ? 'legacy_historical_gloss' : 'legacy_active_gloss'] as String?
+        : row.readNullable<String>('context_gloss_de');
   }
 
   int _utf16Offset(String text, int point) => point < 0
@@ -440,6 +451,9 @@ class DriftContentRepository
           'SELECT gloss_de FROM dictionary_forms WHERE lang=? AND form_norm=? AND sense_id=? AND removed_in IS NULL',
           [_lang, contentFormNorm(surface), sense],
         );
+        final snapshot = info.schemaVersion >= 5
+            ? jsonDecode(t.read<String>('context_snapshot')) as Map<String, dynamic>
+            : null;
         tokens.add(
           StoryToken(
             index: t.read<int>('idx'),
@@ -450,14 +464,16 @@ class DriftContentRepository
             formTarget: info.schemaVersion >= 4 && t.readNullable<String>('form_target_id') != null
                 ? await _formTarget(t.read<String>('card_id')) : null,
             lemmaId: t.readNullable<String>('lemma_id'),
-            lemma: t.readNullable<String>('lemma'),
-            pos: t.readNullable<String>('pos'),
+            lemma: snapshot != null ? snapshot['lemma'] as String? : t.readNullable<String>('lemma'),
+            pos: snapshot != null ? snapshot['pos'] as String? : t.readNullable<String>('pos'),
             senseId: sense,
-            senseKey: t.readNullable<String>('sense_key'),
-            gloss: gloss.length == 1
+            senseKey: snapshot != null ? snapshot['sense_key'] as String? : t.readNullable<String>('sense_key'),
+            gloss: snapshot != null
+                ? snapshot['legacy'] == true ? snapshot['story_gloss'] as String? : t.readNullable<String>('context_gloss_de')
+                : gloss.length == 1
                 ? gloss.single.read<String>('gloss_de')
                 : null,
-            definition:
+            definition: snapshot != null ? snapshot['definition_de'] as String? :
                 t.readNullable<String>('definition_de') ??
                 t.readNullable<String>('sense_gloss'),
             contextApproved: approved.contains(t.read<int>('idx')),
@@ -541,6 +557,22 @@ class DriftContentRepository
         }
       }
     }
+    if (info.schemaVersion >= 5 && card == null && !retired && problem == null) {
+      final identity = LearningIdentity(_lang, contentFormNorm(token.surface), token.senseId ?? '', function: token.function);
+      final sourceKey = learningHash([storyId, sentenceId, tokenIndex, identity.key]);
+      final edges = await _select('SELECT previous_fingerprint,next_fingerprint,next_context FROM story_context_corrections WHERE source_key=?', [sourceKey]);
+      final predecessors = edges.map((e) => e.read<String>('previous_fingerprint')).toSet();
+      final terminals = edges.where((e) => !predecessors.contains(e.read<String>('next_fingerprint')));
+      StoryLearningCandidate? latest;
+      for (final edge in terminals) {
+        final candidate = decodeStoryCandidate(jsonDecode(edge.read<String>('next_context')) as Map<String,dynamic>);
+        if (latest != null && latest.practiceContext?.fingerprint != candidate.practiceContext?.fingerprint) {
+          throw _broken('Storykorrekturen haben widersprüchliche Endkontexte.');
+        }
+        latest = candidate;
+      }
+      if (latest != null) practiceContext = latest.practiceContext;
+    }
     final forms = token.lemmaId == null
         ? <String>{}
         : (await _lemmaForms({token.lemmaId!}))[token.lemmaId!] ?? <String>{};
@@ -594,6 +626,24 @@ class DriftContentRepository
 
   Future<List<StoryContextCorrection>> _loadStoryContextCorrections() async {
     final result = <StoryContextCorrection>[];
+    final coveredSources = <String>{};
+    if (info.schemaVersion >= 5) {
+      final edges = await _select('SELECT * FROM story_context_corrections ORDER BY id', []);
+      final pending = <StoryContextCorrection>[];
+      for (final e in edges) {
+        coveredSources.add(e.read<String>('source_key'));
+        pending.add(StoryContextCorrection(e.read<String>('introduced_in'),
+          decodeStoryCandidate(jsonDecode(e.read<String>('previous_context')) as Map<String,dynamic>),
+          decodeStoryCandidate(jsonDecode(e.read<String>('next_context')) as Map<String,dynamic>)));
+      }
+      // Predecessor edges must be applied before their successors, including
+      // branches from identical contexts created in different release versions.
+      while (pending.isNotEmpty) {
+        final next = pending.where((c) => !pending.any((p) => p.current.sourceFingerprint == c.previous.sourceFingerprint)).toList();
+        if (next.isEmpty) throw _broken('Zyklische Storykorrektur.');
+        result.addAll(next);pending.removeWhere(next.contains);
+      }
+    }
     final rows = await _select(
       'SELECT ss.story_id, s.id, s.qa_report FROM story_sentences ss '
       'JOIN sentences s ON s.id=ss.sentence_id JOIN stories st ON st.id=ss.story_id '
@@ -609,6 +659,7 @@ class DriftContentRepository
           row.read<String>('id'), b['token_index'] as int);
         // A correction never converts a global or retired target into a local one.
         if (current.card != null || current.validationProblem() != null) continue;
+        if (coveredSources.contains(encodeStoryCandidate(current)['source_key'])) continue;
         if ((correction['version'] as String).isEmpty ||
             (correction['revision'] as String).isEmpty) {
           throw _broken('Ungültige Storykontext-Korrekturversion.');

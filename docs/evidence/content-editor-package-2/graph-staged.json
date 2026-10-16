@@ -1,0 +1,4216 @@
+{
+  "summary": {
+    "changed_count": 336,
+    "affected_count": 89,
+    "changed_files": 57,
+    "risk_level": "critical"
+  },
+  "changed_symbols": [
+    {
+      "id": "Section:NEXTSTEPS.md:L1:NEXTSTEPS",
+      "name": "NEXTSTEPS",
+      "type": "Section",
+      "filePath": "NEXTSTEPS.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/content-editor-and-updates-plan.md:L1:Lokaler Inhaltseditor und sichere Inhaltsupdates",
+      "name": "Lokaler Inhaltseditor und sichere Inhaltsupdates",
+      "type": "Section",
+      "filePath": "docs/content-editor-and-updates-plan.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/content-editor-and-updates-plan.md:L296:12. Abnahme und offene Entscheidungen",
+      "name": "12. Abnahme und offene Entscheidungen",
+      "type": "Section",
+      "filePath": "docs/content-editor-and-updates-plan.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/content-editor-and-updates-plan.md:L302:Abschlussnachweis dieses Planauftrags",
+      "name": "Abschlussnachweis dieses Planauftrags",
+      "type": "Section",
+      "filePath": "docs/content-editor-and-updates-plan.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/content-editor-contract.md:L1:Vertrag für Inhaltseditor, Austausch und Updates",
+      "name": "Vertrag für Inhaltseditor, Austausch und Updates",
+      "type": "Section",
+      "filePath": "docs/content-editor-contract.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/content-editor-contract.md:L120:5. Token, Lücke, Unicode und Alternativen",
+      "name": "5. Token, Lücke, Unicode und Alternativen",
+      "type": "Section",
+      "filePath": "docs/content-editor-contract.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/content-editor-contract.md:L397:14. Umsetzungseigentum und Abnahme",
+      "name": "14. Umsetzungseigentum und Abnahme",
+      "type": "Section",
+      "filePath": "docs/content-editor-contract.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/content-editor-package-2.md:L1:Inhaltseditor – Paket 2",
+      "name": "Inhaltseditor – Paket 2",
+      "type": "Section",
+      "filePath": "docs/content-editor-package-2.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:lib/data/content/content_database.dart:supportedContentSchemaVersion",
+      "name": "supportedContentSchemaVersion",
+      "type": "Variable",
+      "filePath": "lib/data/content/content_database.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:lib/data/content/content_database.dart:supportedContentSchemaVersions",
+      "name": "supportedContentSchemaVersions",
+      "type": "Variable",
+      "filePath": "lib/data/content/content_database.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:lib/data/content/context_revision_validation.dart:_sorted",
+      "name": "_sorted",
+      "type": "Function",
+      "filePath": "lib/data/content/context_revision_validation.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:lib/data/content/context_revision_validation.dart:contextCanonicalHash",
+      "name": "contextCanonicalHash",
+      "type": "Function",
+      "filePath": "lib/data/content/context_revision_validation.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:lib/data/content/context_revision_validation.dart:_stableId",
+      "name": "_stableId",
+      "type": "Function",
+      "filePath": "lib/data/content/context_revision_validation.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:lib/data/content/context_revision_validation.dart:encodeStoryCandidate",
+      "name": "encodeStoryCandidate",
+      "type": "Function",
+      "filePath": "lib/data/content/context_revision_validation.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:lib/data/content/context_revision_validation.dart:decodeStoryCandidate",
+      "name": "decodeStoryCandidate",
+      "type": "Function",
+      "filePath": "lib/data/content/context_revision_validation.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:lib/data/content/context_revision_validation.dart:validateContextRevisions",
+      "name": "validateContextRevisions",
+      "type": "Function",
+      "filePath": "lib/data/content/context_revision_validation.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/data/content/drift_content_repository.dart:DriftContentRepository",
+      "name": "DriftContentRepository",
+      "type": "Class",
+      "filePath": "lib/data/content/drift_content_repository.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:lib/data/content/drift_content_repository.dart:DriftContentRepository._contextGloss#2",
+      "name": "_contextGloss",
+      "type": "Method",
+      "filePath": "lib/data/content/drift_content_repository.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/domain/language_profile.dart:ContentLanguageProfile",
+      "name": "ContentLanguageProfile",
+      "type": "Class",
+      "filePath": "lib/domain/language_profile.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/domain/language_profile.dart:ContentLanguageProfile.id",
+      "name": "id",
+      "type": "Property",
+      "filePath": "lib/domain/language_profile.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/domain/language_profile.dart:ContentLanguageProfile.lang",
+      "name": "lang",
+      "type": "Property",
+      "filePath": "lib/domain/language_profile.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/domain/language_profile.dart:ContentLanguageProfile.sha256",
+      "name": "sha256",
+      "type": "Property",
+      "filePath": "lib/domain/language_profile.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/domain/language_profile.dart:ContentLanguageProfile.english",
+      "name": "english",
+      "type": "Property",
+      "filePath": "lib/domain/language_profile.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:lib/domain/language_profile.dart:ContentLanguageProfile.forLanguage#1",
+      "name": "forLanguage",
+      "type": "Method",
+      "filePath": "lib/domain/language_profile.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/authoring_service.py:ROOT",
+      "name": "ROOT",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/authoring_service.py:TABLES",
+      "name": "TABLES",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:pipeline/src/sprachpipe/authoring_service.py:AuthoringError",
+      "name": "AuthoringError",
+      "type": "Class",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/authoring_service.py:AuthoringError.__init__#5",
+      "name": "__init__",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/authoring_service.py:AuthoringError.finding#0",
+      "name": "finding",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:require",
+      "name": "require",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:empty_pack",
+      "name": "empty_pack",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:base_fingerprint",
+      "name": "base_fingerprint",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:normalize_delivery",
+      "name": "normalize_delivery",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:normalize_delivery.pairs@62:8",
+      "name": "pairs",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:merge_additions",
+      "name": "merge_additions",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:target_identity",
+      "name": "target_identity",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:target_view",
+      "name": "target_view",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:preview_import",
+      "name": "preview_import",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:target_findings",
+      "name": "target_findings",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:target_findings.fail@211:4",
+      "name": "fail",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:clean_tokens",
+      "name": "clean_tokens",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:apply_operations",
+      "name": "apply_operations",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:_create_target",
+      "name": "_create_target",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:freeze_new_context",
+      "name": "freeze_new_context",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:materialize_draft",
+      "name": "materialize_draft",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:shared_gloss_impact",
+      "name": "shared_gloss_impact",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:_shared_gloss",
+      "name": "_shared_gloss",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:retirement_impact",
+      "name": "retirement_impact",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:_retire_target",
+      "name": "_retire_target",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:validate_draft",
+      "name": "validate_draft",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:draft_content_hash",
+      "name": "draft_content_hash",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:run_dart",
+      "name": "run_dart",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:sqlite_readback",
+      "name": "sqlite_readback",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:build_release",
+      "name": "build_release",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:roundtrip_records",
+      "name": "roundtrip_records",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:resolve_roundtrip",
+      "name": "resolve_roundtrip",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/authoring_service.py:resolve_roundtrip.put@657:4",
+      "name": "put",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/authoring_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/content_contract.py:sentence_count",
+      "name": "sentence_count",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/content_contract.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/content_contract.py:validate_rows",
+      "name": "validate_rows",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/content_contract.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/context_revisions.py:CONTEXT_FIELDS",
+      "name": "CONTEXT_FIELDS",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:sentence_identity",
+      "name": "sentence_identity",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:legacy_displays",
+      "name": "legacy_displays",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:legacy_displays.active@47:12",
+      "name": "active",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:migrate_schema5",
+      "name": "migrate_schema5",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:extend_context_rows",
+      "name": "extend_context_rows",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:context_payload",
+      "name": "context_payload",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:validate_context_rows",
+      "name": "validate_context_rows",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:assert_history_preserved",
+      "name": "assert_history_preserved",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:history_inventory",
+      "name": "history_inventory",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:history_inventory.immutable@192:4",
+      "name": "immutable",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:revise_context",
+      "name": "revise_context",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:learning_hash",
+      "name": "learning_hash",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:story_fingerprints",
+      "name": "story_fingerprints",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:validate_story_snapshot",
+      "name": "validate_story_snapshot",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:correction_edge",
+      "name": "correction_edge",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:add_correction",
+      "name": "add_correction",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:seed_story_history",
+      "name": "seed_story_history",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:revise_story_context",
+      "name": "revise_story_context",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/context_revisions.py:revise_story_context.utf16@336:4",
+      "name": "utf16",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/__main__.py:main",
+      "name": "main",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/__main__.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/editor/exchange.py:JSON_LIMIT",
+      "name": "JSON_LIMIT",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/editor/exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/editor/exchange.py:ARCHIVE_LIMIT",
+      "name": "ARCHIVE_LIMIT",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/editor/exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/editor/exchange.py:EXPANDED_LIMIT",
+      "name": "EXPANDED_LIMIT",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/editor/exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/editor/exchange.py:FORMAT",
+      "name": "FORMAT",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/editor/exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/exchange.py:json_bytes",
+      "name": "json_bytes",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/exchange.py:archive_entries",
+      "name": "archive_entries",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/exchange.py:read_delivery",
+      "name": "read_delivery",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/exchange.py:authoring_context",
+      "name": "authoring_context",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/exchange.py:delivery_for_draft",
+      "name": "delivery_for_draft",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/exchange.py:delivery_for_draft.strip_suggestions@133:4",
+      "name": "strip_suggestions",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/exchange.py:write_zip",
+      "name": "write_zip",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/exchange.py:template_delivery",
+      "name": "template_delivery",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:pipeline/src/sprachpipe/editor/jobs.py:JobCancelled",
+      "name": "JobCancelled",
+      "type": "Class",
+      "filePath": "pipeline/src/sprachpipe/editor/jobs.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:pipeline/src/sprachpipe/editor/jobs.py:JobContext",
+      "name": "JobContext",
+      "type": "Class",
+      "filePath": "pipeline/src/sprachpipe/editor/jobs.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/jobs.py:JobContext.__init__#3",
+      "name": "__init__",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/jobs.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/jobs.py:JobContext.check_cancelled#0",
+      "name": "check_cancelled",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/jobs.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/jobs.py:JobContext.progress#3",
+      "name": "progress",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/jobs.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:pipeline/src/sprachpipe/editor/jobs.py:Jobs",
+      "name": "Jobs",
+      "type": "Class",
+      "filePath": "pipeline/src/sprachpipe/editor/jobs.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/jobs.py:Jobs.__init__#1",
+      "name": "__init__",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/jobs.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/jobs.py:Jobs.submit#2",
+      "name": "submit",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/jobs.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/jobs.py:Jobs.submit.run@35:8#0",
+      "name": "run",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/jobs.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/jobs.py:Jobs.cancel#1",
+      "name": "cancel",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/jobs.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/jobs.py:Jobs.close#0",
+      "name": "close",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/jobs.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:pipeline/src/sprachpipe/editor/server.py:EditorHTTPServer",
+      "name": "EditorHTTPServer",
+      "type": "Class",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/editor/server.py:daemon_threads",
+      "name": "daemon_threads",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/server.py:EditorHTTPServer.__init__#1",
+      "name": "__init__",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/server.py:EditorHTTPServer.browser_url#0",
+      "name": "browser_url",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:pipeline/src/sprachpipe/editor/server.py:Handler",
+      "name": "Handler",
+      "type": "Class",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/editor/server.py:protocol_version",
+      "name": "protocol_version",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/editor/server.py:server_version",
+      "name": "server_version",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/server.py:Handler.log_message",
+      "name": "log_message",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/server.py:Handler.setup#0",
+      "name": "setup",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/server.py:Handler.respond#4",
+      "name": "respond",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/server.py:Handler.guard#0",
+      "name": "guard",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/server.py:Handler.session#0",
+      "name": "session",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/server.py:Handler.body#0",
+      "name": "body",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/server.py:Handler.body.pairs@85:8#1",
+      "name": "pairs",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/server.py:Handler.do_GET#0",
+      "name": "do_GET",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/server.py:Handler.do_POST#0",
+      "name": "do_POST",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/server.py:Handler.dispatch#0",
+      "name": "dispatch",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/server.py:Handler.route#3",
+      "name": "route",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/server.py:Handler.route.draft_response@146:8#1",
+      "name": "draft_response",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/server.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:pipeline/src/sprachpipe/editor/service.py:EditorService",
+      "name": "EditorService",
+      "type": "Class",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.__init__#3",
+      "name": "__init__",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.close#0",
+      "name": "close",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.install_base#2",
+      "name": "install_base",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.base#2",
+      "name": "base",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.languages#0",
+      "name": "languages",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.create_language#1",
+      "name": "create_language",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.new_draft#2",
+      "name": "new_draft",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.checked#2",
+      "name": "checked",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.projection#1",
+      "name": "projection",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService._project_context#3",
+      "name": "_project_context",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.catalog#7",
+      "name": "catalog",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.target#2",
+      "name": "target",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.save_operations#3",
+      "name": "save_operations",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.update_target#4",
+      "name": "update_target",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.vocabulary#2",
+      "name": "vocabulary",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.tokenize#3",
+      "name": "tokenize",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.preview_upload#4",
+      "name": "preview_upload",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/service.py:EditorService.preview_upload.run@269:8#1",
+      "name": "run",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.accept_import#4",
+      "name": "accept_import",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService._recover_receipts#0",
+      "name": "_recover_receipts",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.validate#2",
+      "name": "validate",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/service.py:EditorService.validate.run@327:8#1",
+      "name": "run",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.review#3",
+      "name": "review",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.exchange#3",
+      "name": "exchange",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.template#3",
+      "name": "template",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.discard#2",
+      "name": "discard",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.release#3",
+      "name": "release",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/service.py:EditorService.release.run@365:8#1",
+      "name": "run",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.staging_impact#1",
+      "name": "staging_impact",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.stage#2",
+      "name": "stage",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/service.py:EditorService.stage.run@413:8#1",
+      "name": "run",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.prepare_story_history#2",
+      "name": "prepare_story_history",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/service.py:EditorService.prepare_story_history.run@442:8#1",
+      "name": "run",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.story_contexts#1",
+      "name": "story_contexts",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.story_target#2",
+      "name": "story_target",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/editor/service.py:EditorService.story_target.source@468:8",
+      "name": "source",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/service.py:EditorService.rebase#2",
+      "name": "rebase",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/store.py:utc_now",
+      "name": "utc_now",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/store.py:default_directory",
+      "name": "default_directory",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/store.py:atomic_json",
+      "name": "atomic_json",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/store.py:read_json",
+      "name": "read_json",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:pipeline/src/sprachpipe/editor/store.py:EditorStore",
+      "name": "EditorStore",
+      "type": "Class",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/store.py:EditorStore.__init__#1",
+      "name": "__init__",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/store.py:EditorStore.close#0",
+      "name": "close",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/store.py:EditorStore.identifier#1",
+      "name": "identifier",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/store.py:EditorStore.path#2",
+      "name": "path",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/store.py:EditorStore.put#3",
+      "name": "put",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/store.py:EditorStore.get#2",
+      "name": "get",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/store.py:EditorStore.list#1",
+      "name": "list",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/store.py:EditorStore.etag#1",
+      "name": "etag",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/store.py:EditorStore.load_draft#1",
+      "name": "load_draft",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/store.py:EditorStore.save_draft#2",
+      "name": "save_draft",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/store.py:EditorStore.drafts#0",
+      "name": "drafts",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/store.py:EditorStore.artifact#3",
+      "name": "artifact",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/store.py:EditorStore.artifact_path#1",
+      "name": "artifact_path",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/editor/store.py:EditorStore._recover_jobs#0",
+      "name": "_recover_jobs",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/editor/store.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:$",
+      "name": "$",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:state",
+      "name": "state",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:state.cursor",
+      "name": "cursor",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:state.deck",
+      "name": "deck",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:state.detail",
+      "name": "detail",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:state.dirty",
+      "name": "dirty",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:state.draft",
+      "name": "draft",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:state.etag",
+      "name": "etag",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:state.job",
+      "name": "job",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:state.lang",
+      "name": "lang",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:state.languages",
+      "name": "languages",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:state.page",
+      "name": "page",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:state.total",
+      "name": "total",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:labels",
+      "name": "labels",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:labels.approved",
+      "name": "approved",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:labels.base",
+      "name": "base",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:labels.invalid",
+      "name": "invalid",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:labels.open",
+      "name": "open",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:labels.unsupported",
+      "name": "unsupported",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/editor/web/app.js:labels.valid",
+      "name": "valid",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:el",
+      "name": "el",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:button",
+      "name": "button",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:clear",
+      "name": "clear",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:error",
+      "name": "error",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:act",
+      "name": "act",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:api",
+      "name": "api",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:post",
+      "name": "post",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:field",
+      "name": "field",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:option",
+      "name": "option",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:modal",
+      "name": "modal",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:saved",
+      "name": "saved",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:refreshLanguages",
+      "name": "refreshLanguages",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:refreshDrafts",
+      "name": "refreshDrafts",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:loadDraft",
+      "name": "loadDraft",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:ensureDraft",
+      "name": "ensureDraft",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:catalog",
+      "name": "catalog",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:catalog.b@49:23",
+      "name": "b",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:saveTarget",
+      "name": "saveTarget",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:openTarget",
+      "name": "openTarget",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:markDirty",
+      "name": "markDirty",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:renderDetail",
+      "name": "renderDetail",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:renderDetail.c@58:2",
+      "name": "c",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:renderTokens",
+      "name": "renderTokens",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:editToken",
+      "name": "editToken",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:editToken.describe@90:2",
+      "name": "describe",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:newMeaning",
+      "name": "newMeaning",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:newMeaning.fn@96:63.pos@100:4",
+      "name": "pos",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:newMeaning.fn@96:63.formGloss@101:4",
+      "name": "formGloss",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:newMeaning.fn@96:63.gloss@101:4",
+      "name": "gloss",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:newMeaning.lemmaRef@105:2",
+      "name": "lemmaRef",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:newMeaning.senseRef@105:2",
+      "name": "senseRef",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:sharedGloss",
+      "name": "sharedGloss",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:renderPreview.c@109:86",
+      "name": "c",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:renderPreview.end@109:86",
+      "name": "end",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:renderPreview.points@109:86",
+      "name": "points",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:renderPreview.start@109:86",
+      "name": "start",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:renderPreview",
+      "name": "renderPreview",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:renderAlternatives.p@110:94",
+      "name": "p",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:renderAlternatives",
+      "name": "renderAlternatives",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:retireTarget",
+      "name": "retireTarget",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:renderValidation.body@112:475",
+      "name": "body",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:renderValidation",
+      "name": "renderValidation",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:watchJob",
+      "name": "watchJob",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:validate",
+      "name": "validate",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:review.fn@115:218.reason@115:543",
+      "name": "reason",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:review",
+      "name": "review",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:download",
+      "name": "download",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:exportDraft",
+      "name": "exportDraft",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:showPage",
+      "name": "showPage",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:releases.actions@119:143",
+      "name": "actions",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:releases.text@119:143",
+      "name": "text",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:releases",
+      "name": "releases",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:importFile",
+      "name": "importFile",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:renderImport.stats@121:164",
+      "name": "stats",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:renderImport",
+      "name": "renderImport",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:newDeck.fn@122:91.description@122:97",
+      "name": "description",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:newDeck",
+      "name": "newDeck",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:newTarget.fn@123:150.deck@123:156",
+      "name": "deck",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:newTarget.fn@123:150.hint@123:156",
+      "name": "hint",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:newTarget",
+      "name": "newTarget",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:startup",
+      "name": "startup",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:fn@133:47.fn@133:104.code@133:110",
+      "name": "code",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:fn@133:47.fn@133:104.native@133:110",
+      "name": "native",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:searchTimer",
+      "name": "searchTimer",
+      "type": "Const",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/editor/xlsx.py:SHEETS",
+      "name": "SHEETS",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/editor/xlsx.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/editor/xlsx.py:VISIBLE",
+      "name": "VISIBLE",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/editor/xlsx.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/xlsx.py:_cell",
+      "name": "_cell",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/xlsx.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/xlsx.py:_write_rows",
+      "name": "_write_rows",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/xlsx.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/xlsx.py:write_workbook",
+      "name": "write_workbook",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/xlsx.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/xlsx.py:_rows",
+      "name": "_rows",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/xlsx.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/xlsx.py:read_workbook",
+      "name": "read_workbook",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/xlsx.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/xlsx.py:_simple",
+      "name": "_simple",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/editor/xlsx.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/ids.py:KEY_FIELDS",
+      "name": "KEY_FIELDS",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/ids.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:pipeline/src/sprachpipe/language_profiles.py:UnsupportedLanguage",
+      "name": "UnsupportedLanguage",
+      "type": "Class",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/language_profiles.py:code",
+      "name": "code",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/language_profiles.py:canonical_language",
+      "name": "canonical_language",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/language_profiles.py:canonical_text",
+      "name": "canonical_text",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/language_profiles.py:utf16_to_codepoint",
+      "name": "utf16_to_codepoint",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:pipeline/src/sprachpipe/language_profiles.py:LanguageProfile",
+      "name": "LanguageProfile",
+      "type": "Class",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/language_profiles.py:LanguageProfile.lang",
+      "name": "lang",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/language_profiles.py:LanguageProfile.id",
+      "name": "id",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/language_profiles.py:LanguageProfile.model",
+      "name": "model",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/language_profiles.py:LanguageProfile.model_version",
+      "name": "model_version",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:pipeline/src/sprachpipe/language_profiles.py:LanguageProfile.translation_lang",
+      "name": "translation_lang",
+      "type": "Property",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/language_profiles.py:LanguageProfile.manifest#0",
+      "name": "manifest",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/language_profiles.py:LanguageProfile.sha256#0",
+      "name": "sha256",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/language_profiles.py:LanguageProfile.tokenize#2",
+      "name": "tokenize",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/language_profiles.py:LanguageProfile.validate_sentence#5",
+      "name": "validate_sentence",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/src/sprachpipe/language_profiles.py:LanguageProfile.gap#4",
+      "name": "gap",
+      "type": "Method",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/language_profiles.py:PROFILES",
+      "name": "PROFILES",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/language_profiles.py:get_profile",
+      "name": "get_profile",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/pack.py:_build_rows",
+      "name": "_build_rows",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/pack.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:pipeline/src/sprachpipe/schema.py:SCHEMA4_COLUMNS",
+      "name": "SCHEMA4_COLUMNS",
+      "type": "Variable",
+      "filePath": "pipeline/src/sprachpipe/schema.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/schema.py:columns_for",
+      "name": "columns_for",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/schema.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_context_revisions.py:base",
+      "name": "base",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_context_revisions.py:test_schema5_preserves_old_ids_and_exact_reader_glosses",
+      "name": "test_schema5_preserves_old_ids_and_exact_reader_glosses",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_context_revisions.py:test_translation_and_context_gloss_are_new_context_not_new_learning",
+      "name": "test_translation_and_context_gloss_are_new_context_not_new_learning",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_context_revisions.py:test_legacy_export_shape_is_unchanged",
+      "name": "test_legacy_export_shape_is_unchanged",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_context_revisions.py:test_cumulative_origins_and_skipped_release_preserve_edges",
+      "name": "test_cumulative_origins_and_skipped_release_preserve_edges",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_context_revisions.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_exchange.py:test_template_has_all_250_targets_and_no_invented_content",
+      "name": "test_template_has_all_250_targets_and_no_invented_content",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_exchange.py:test_zip_rejects_paths_and_executables",
+      "name": "test_zip_rejects_paths_and_executables",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_exchange.py:test_duplicate_keys_language_and_hash_tampering",
+      "name": "test_duplicate_keys_language_and_hash_tampering",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_exchange.py:test_existing_roundtrip_cells_become_guarded_revision",
+      "name": "test_existing_roundtrip_cells_become_guarded_revision",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_exchange.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_http.py:server",
+      "name": "server",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_http.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_http.py:request",
+      "name": "request",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_http.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_http.py:bootstrap",
+      "name": "bootstrap",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_http.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_http.py:test_loopback_origin_cookie_csrf_and_bootstrap_once",
+      "name": "test_loopback_origin_cookie_csrf_and_bootstrap_once",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_http.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_http.py:test_missing_and_stale_etag_do_not_mutate",
+      "name": "test_missing_and_stale_etag_do_not_mutate",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_http.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_service.py:delivery_250",
+      "name": "delivery_250",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_service.py:wait",
+      "name": "wait",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_service.py:setup",
+      "name": "setup",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_service.py:test_draft_etag_isolation_and_restart",
+      "name": "test_draft_etag_isolation_and_restart",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_service.py:test_250_import_is_complete_idempotent_and_preserves_local_edits",
+      "name": "test_250_import_is_complete_idempotent_and_preserves_local_edits",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_service.py:test_supported_validation_and_unsupported_language_draft",
+      "name": "test_supported_validation_and_unsupported_language_draft",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_service.py:test_imported_250_targets_validate_as_one_transaction",
+      "name": "test_imported_250_targets_validate_as_one_transaction",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_service.py:test_saved_base_tampering_rejected_even_after_cached_read",
+      "name": "test_saved_base_tampering_rejected_even_after_cached_read",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_service.py:test_roundtrip_created_target_counts_towards_full_batch",
+      "name": "test_roundtrip_created_target_counts_towards_full_batch",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_service.py:test_rebase_preserves_changes_but_reopens_review",
+      "name": "test_rebase_preserves_changes_but_reopens_review",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_service.py:test_new_meaning_and_previously_created_target_are_one_transaction",
+      "name": "test_new_meaning_and_previously_created_target_are_one_transaction",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_service.py:test_incomplete_spreadsheet_row_can_be_completed_without_json",
+      "name": "test_incomplete_spreadsheet_row_can_be_completed_without_json",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_service.py:test_operation_identity_is_idempotent_and_rejects_changed_payload",
+      "name": "test_operation_identity_is_idempotent_and_rejects_changed_payload",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_service.py:test_staging_rejects_bundle_changes_before_touching_assets",
+      "name": "test_staging_rejects_bundle_changes_before_touching_assets",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_service.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_xlsx.py:test_full_roundtrip_nested_bindings_and_formula_like_strings",
+      "name": "test_full_roundtrip_nested_bindings_and_formula_like_strings",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_xlsx.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_xlsx.py:test_formula_and_overlap_are_rejected",
+      "name": "test_formula_and_overlap_are_rejected",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_xlsx.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_xlsx.py:test_simple_workbook_keeps_missing_annotations",
+      "name": "test_simple_workbook_keeps_missing_annotations",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_xlsx.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_editor_xlsx.py:test_long_cell_is_never_silently_truncated",
+      "name": "test_long_cell_is_never_silently_truncated",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_editor_xlsx.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_language_profiles.py:test_unknown_language_does_not_use_english",
+      "name": "test_unknown_language_does_not_use_english",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_language_profiles.py:test_unicode_and_gaps",
+      "name": "test_unicode_and_gaps",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_language_profiles.py:test_explicit_test_only_adapter_exports_separate_language",
+      "name": "test_explicit_test_only_adapter_exports_separate_language",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:pipeline/tests/test_language_profiles.py:SyntheticProfile",
+      "name": "SyntheticProfile",
+      "type": "Class",
+      "filePath": "pipeline/tests/test_language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/tests/test_language_profiles.py:SyntheticProfile.gap#4",
+      "name": "gap",
+      "type": "Method",
+      "filePath": "pipeline/tests/test_language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:pipeline/tests/test_language_profiles.py:SyntheticProfile.validate_sentence",
+      "name": "validate_sentence",
+      "type": "Method",
+      "filePath": "pipeline/tests/test_language_profiles.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:test/data/content_context_revisions_test.dart:main",
+      "name": "main",
+      "type": "Function",
+      "filePath": "test/data/content_context_revisions_test.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:test/data/editor_stage_test.dart:main",
+      "name": "main",
+      "type": "Function",
+      "filePath": "test/data/editor_stage_test.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:tool/editor_content_pack.dart:_sentence",
+      "name": "_sentence",
+      "type": "Function",
+      "filePath": "tool/editor_content_pack.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:tool/editor_content_pack.dart:inspectEditorPack",
+      "name": "inspectEditorPack",
+      "type": "Function",
+      "filePath": "tool/editor_content_pack.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:tool/editor_content_pack.dart:main",
+      "name": "main",
+      "type": "Function",
+      "filePath": "tool/editor_content_pack.dart",
+      "change_type": "touched"
+    }
+  ],
+  "affected_processes": [
+    {
+      "id": "proc_369_accept_import",
+      "name": "Accept_import → Identifier",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "accept_import",
+          "step": 1
+        },
+        {
+          "symbol": "path",
+          "step": 3
+        },
+        {
+          "symbol": "identifier",
+          "step": 4
+        },
+        {
+          "symbol": "get",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_371_accept_import",
+      "name": "Accept_import → Read_json",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "accept_import",
+          "step": 1
+        },
+        {
+          "symbol": "read_json",
+          "step": 3
+        },
+        {
+          "symbol": "get",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_71_newtarget",
+      "name": "NewTarget → $",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "$",
+          "step": 4
+        },
+        {
+          "symbol": "refreshDrafts",
+          "step": 3
+        },
+        {
+          "symbol": "ensureDraft",
+          "step": 2
+        },
+        {
+          "symbol": "newTarget",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_3_newtarget",
+      "name": "NewTarget → El",
+      "process_type": "intra_community",
+      "step_count": 8,
+      "changed_steps": [
+        {
+          "symbol": "el",
+          "step": 8
+        },
+        {
+          "symbol": "button",
+          "step": 5
+        },
+        {
+          "symbol": "error",
+          "step": 7
+        },
+        {
+          "symbol": "act",
+          "step": 6
+        },
+        {
+          "symbol": "saved",
+          "step": 3
+        },
+        {
+          "symbol": "ensureDraft",
+          "step": 2
+        },
+        {
+          "symbol": "renderValidation",
+          "step": 4
+        },
+        {
+          "symbol": "newTarget",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_0_newtarget",
+      "name": "NewTarget → Api",
+      "process_type": "intra_community",
+      "step_count": 10,
+      "changed_steps": [
+        {
+          "symbol": "button",
+          "step": 5
+        },
+        {
+          "symbol": "error",
+          "step": 7
+        },
+        {
+          "symbol": "act",
+          "step": 6
+        },
+        {
+          "symbol": "api",
+          "step": 10
+        },
+        {
+          "symbol": "saved",
+          "step": 3
+        },
+        {
+          "symbol": "refreshDrafts",
+          "step": 9
+        },
+        {
+          "symbol": "ensureDraft",
+          "step": 2
+        },
+        {
+          "symbol": "renderValidation",
+          "step": 4
+        },
+        {
+          "symbol": "newTarget",
+          "step": 1
+        },
+        {
+          "symbol": "loadDraft",
+          "step": 8
+        }
+      ]
+    },
+    {
+      "id": "proc_1_newtarget",
+      "name": "NewTarget → Clear",
+      "process_type": "intra_community",
+      "step_count": 10,
+      "changed_steps": [
+        {
+          "symbol": "button",
+          "step": 5
+        },
+        {
+          "symbol": "clear",
+          "step": 10
+        },
+        {
+          "symbol": "error",
+          "step": 7
+        },
+        {
+          "symbol": "act",
+          "step": 6
+        },
+        {
+          "symbol": "saved",
+          "step": 3
+        },
+        {
+          "symbol": "refreshDrafts",
+          "step": 9
+        },
+        {
+          "symbol": "ensureDraft",
+          "step": 2
+        },
+        {
+          "symbol": "renderValidation",
+          "step": 4
+        },
+        {
+          "symbol": "newTarget",
+          "step": 1
+        },
+        {
+          "symbol": "loadDraft",
+          "step": 8
+        }
+      ]
+    },
+    {
+      "id": "proc_75_create_language",
+      "name": "Create_language → Canonical_language",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "canonical_language",
+          "step": 4
+        },
+        {
+          "symbol": "get_profile",
+          "step": 3
+        },
+        {
+          "symbol": "languages",
+          "step": 2
+        },
+        {
+          "symbol": "create_language",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_31_apply_operations",
+      "name": "Apply_operations → Columns_for",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "columns_for",
+          "step": 5
+        },
+        {
+          "symbol": "apply_operations",
+          "step": 1
+        },
+        {
+          "symbol": "_build_rows",
+          "step": 4
+        },
+        {
+          "symbol": "migrate_schema5",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_260_build_release",
+      "name": "Build_release → Columns_for",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "columns_for",
+          "step": 5
+        },
+        {
+          "symbol": "build_release",
+          "step": 1
+        },
+        {
+          "symbol": "_build_rows",
+          "step": 4
+        }
+      ]
+    },
+    {
+      "id": "proc_311_prepare_continuation",
+      "name": "Prepare_continuation → Columns_for",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "columns_for",
+          "step": 4
+        },
+        {
+          "symbol": "_build_rows",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_325_apply_targeted_patch",
+      "name": "Apply_targeted_patch → Columns_for",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "columns_for",
+          "step": 4
+        },
+        {
+          "symbol": "_build_rows",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_70_apply_operations",
+      "name": "Apply_operations → Sentence_count",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "sentence_count",
+          "step": 4
+        },
+        {
+          "symbol": "apply_operations",
+          "step": 1
+        },
+        {
+          "symbol": "migrate_schema5",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_285_build_release",
+      "name": "Build_release → Sentence_count",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "sentence_count",
+          "step": 4
+        },
+        {
+          "symbol": "build_release",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_313_prepare_continuation",
+      "name": "Prepare_continuation → Sentence_count",
+      "process_type": "cross_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "sentence_count",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_327_apply_targeted_patch",
+      "name": "Apply_targeted_patch → Sentence_count",
+      "process_type": "cross_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "sentence_count",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_26_apply_operations",
+      "name": "Apply_operations → Live",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "validate_rows",
+          "step": 4
+        },
+        {
+          "symbol": "apply_operations",
+          "step": 1
+        },
+        {
+          "symbol": "migrate_schema5",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_27_apply_operations",
+      "name": "Apply_operations → Ref",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "validate_rows",
+          "step": 4
+        },
+        {
+          "symbol": "apply_operations",
+          "step": 1
+        },
+        {
+          "symbol": "migrate_schema5",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_28_apply_operations",
+      "name": "Apply_operations → Validate_learning",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "validate_rows",
+          "step": 4
+        },
+        {
+          "symbol": "apply_operations",
+          "step": 1
+        },
+        {
+          "symbol": "migrate_schema5",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_255_prepare_continuation",
+      "name": "Prepare_continuation → Live",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "validate_rows",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_256_build_release",
+      "name": "Build_release → Ref",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "validate_rows",
+          "step": 4
+        },
+        {
+          "symbol": "build_release",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_257_build_release",
+      "name": "Build_release → Validate_learning",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "validate_rows",
+          "step": 4
+        },
+        {
+          "symbol": "build_release",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_303_build_release",
+      "name": "Build_release → Form_norm",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "validate_rows",
+          "step": 4
+        },
+        {
+          "symbol": "build_release",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_306_apply_targeted_patch",
+      "name": "Apply_targeted_patch → Live",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "validate_rows",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_307_prepare_continuation",
+      "name": "Prepare_continuation → Ref",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "validate_rows",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_308_prepare_continuation",
+      "name": "Prepare_continuation → Validate_learning",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "validate_rows",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_321_apply_targeted_patch",
+      "name": "Apply_targeted_patch → Ref",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "validate_rows",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_322_apply_targeted_patch",
+      "name": "Apply_targeted_patch → Validate_learning",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "validate_rows",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_2_run",
+      "name": "Run → _canonical_value",
+      "process_type": "cross_community",
+      "step_count": 8,
+      "changed_steps": [
+        {
+          "symbol": "target_identity",
+          "step": 4
+        },
+        {
+          "symbol": "target_view",
+          "step": 3
+        },
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "resolve_roundtrip",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_331_run",
+      "name": "Run → Form_norm",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "target_view",
+          "step": 3
+        },
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "resolve_roundtrip",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_338_update_target",
+      "name": "Update_target → Form_norm",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "target_view",
+          "step": 2
+        },
+        {
+          "symbol": "update_target",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_23_apply_operations",
+      "name": "Apply_operations → Form_norm",
+      "process_type": "cross_community",
+      "step_count": 6,
+      "changed_steps": [
+        {
+          "symbol": "apply_operations",
+          "step": 1
+        },
+        {
+          "symbol": "migrate_schema5",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_25_apply_operations",
+      "name": "Apply_operations → Digest",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "apply_operations",
+          "step": 1
+        },
+        {
+          "symbol": "migrate_schema5",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_29_apply_operations",
+      "name": "Apply_operations → _complete",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "apply_operations",
+          "step": 1
+        },
+        {
+          "symbol": "_build_rows",
+          "step": 4
+        },
+        {
+          "symbol": "migrate_schema5",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_30_apply_operations",
+      "name": "Apply_operations → _tombstones",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "apply_operations",
+          "step": 1
+        },
+        {
+          "symbol": "_build_rows",
+          "step": 4
+        },
+        {
+          "symbol": "migrate_schema5",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_233_apply_operations",
+      "name": "Apply_operations → _canonical_value",
+      "process_type": "cross_community",
+      "step_count": 7,
+      "changed_steps": [
+        {
+          "symbol": "apply_operations",
+          "step": 1
+        },
+        {
+          "symbol": "_build_rows",
+          "step": 4
+        },
+        {
+          "symbol": "migrate_schema5",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_169_build_release",
+      "name": "Build_release → Finding",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "validate_draft",
+          "step": 2
+        },
+        {
+          "symbol": "build_release",
+          "step": 1
+        },
+        {
+          "symbol": "finding",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_289_build_release",
+      "name": "Build_release → Require",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "validate_draft",
+          "step": 2
+        },
+        {
+          "symbol": "build_release",
+          "step": 1
+        },
+        {
+          "symbol": "require",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_290_run",
+      "name": "Run → Finding",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "validate_draft",
+          "step": 2
+        },
+        {
+          "symbol": "finding",
+          "step": 3
+        },
+        {
+          "symbol": "run",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_347_run",
+      "name": "Run → Require",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "validate_draft",
+          "step": 2
+        },
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "require",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_314_run",
+      "name": "Run → Require",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "run_dart",
+          "step": 2
+        },
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "require",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_342_run",
+      "name": "Run → Require",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "run_dart",
+          "step": 2
+        },
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "require",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_258_build_release",
+      "name": "Build_release → _complete",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "build_release",
+          "step": 1
+        },
+        {
+          "symbol": "_build_rows",
+          "step": 4
+        }
+      ]
+    },
+    {
+      "id": "proc_259_build_release",
+      "name": "Build_release → _tombstones",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "build_release",
+          "step": 1
+        },
+        {
+          "symbol": "_build_rows",
+          "step": 4
+        }
+      ]
+    },
+    {
+      "id": "proc_295_build_release",
+      "name": "Build_release → _canonical_value",
+      "process_type": "cross_community",
+      "step_count": 7,
+      "changed_steps": [
+        {
+          "symbol": "build_release",
+          "step": 1
+        },
+        {
+          "symbol": "_build_rows",
+          "step": 4
+        }
+      ]
+    },
+    {
+      "id": "proc_333_run",
+      "name": "Run → Digest",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "put",
+          "step": 3
+        },
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "resolve_roundtrip",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_309_prepare_continuation",
+      "name": "Prepare_continuation → _complete",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "_build_rows",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_310_prepare_continuation",
+      "name": "Prepare_continuation → _tombstones",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "_build_rows",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_317_prepare_continuation",
+      "name": "Prepare_continuation → _canonical_value",
+      "process_type": "cross_community",
+      "step_count": 6,
+      "changed_steps": [
+        {
+          "symbol": "_build_rows",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_323_apply_targeted_patch",
+      "name": "Apply_targeted_patch → _complete",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "_build_rows",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_324_apply_targeted_patch",
+      "name": "Apply_targeted_patch → _tombstones",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "_build_rows",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_330_apply_targeted_patch",
+      "name": "Apply_targeted_patch → _canonical_value",
+      "process_type": "cross_community",
+      "step_count": 6,
+      "changed_steps": [
+        {
+          "symbol": "_build_rows",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_304_run",
+      "name": "Run → Identifier",
+      "process_type": "intra_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "path",
+          "step": 4
+        },
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "identifier",
+          "step": 5
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_312_run",
+      "name": "Run → Read_json",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "read_json",
+          "step": 4
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_328_run",
+      "name": "Run → Require",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "resolve_roundtrip",
+          "step": 2
+        },
+        {
+          "symbol": "require",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_319_run",
+      "name": "Run → Identifier",
+      "process_type": "intra_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "path",
+          "step": 4
+        },
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "identifier",
+          "step": 5
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_326_run",
+      "name": "Run → Read_json",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "read_json",
+          "step": 4
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_335_run",
+      "name": "Run → Require",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "require",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_365_run",
+      "name": "Run → Digest",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "base",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_332_run",
+      "name": "Run → Identifier",
+      "process_type": "intra_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "path",
+          "step": 4
+        },
+        {
+          "symbol": "staging_impact",
+          "step": 2
+        },
+        {
+          "symbol": "identifier",
+          "step": 5
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_334_run",
+      "name": "Run → Read_json",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "staging_impact",
+          "step": 2
+        },
+        {
+          "symbol": "read_json",
+          "step": 4
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_24_tokenize",
+      "name": "Tokenize → Identifier",
+      "process_type": "intra_community",
+      "step_count": 6,
+      "changed_steps": [
+        {
+          "symbol": "path",
+          "step": 5
+        },
+        {
+          "symbol": "base",
+          "step": 3
+        },
+        {
+          "symbol": "identifier",
+          "step": 6
+        },
+        {
+          "symbol": "get",
+          "step": 4
+        },
+        {
+          "symbol": "projection",
+          "step": 2
+        },
+        {
+          "symbol": "tokenize",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_253_run",
+      "name": "Run → Identifier",
+      "process_type": "intra_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "path",
+          "step": 4
+        },
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "identifier",
+          "step": 5
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_339_run",
+      "name": "Run → Identifier",
+      "process_type": "intra_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "path",
+          "step": 4
+        },
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "identifier",
+          "step": 5
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_344_create_language",
+      "name": "Create_language → Identifier",
+      "process_type": "intra_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "path",
+          "step": 4
+        },
+        {
+          "symbol": "identifier",
+          "step": 5
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        },
+        {
+          "symbol": "languages",
+          "step": 2
+        },
+        {
+          "symbol": "create_language",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_349_exchange",
+      "name": "Exchange → Identifier",
+      "process_type": "intra_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "path",
+          "step": 4
+        },
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "identifier",
+          "step": 5
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        },
+        {
+          "symbol": "exchange",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_354_rebase",
+      "name": "Rebase → Identifier",
+      "process_type": "intra_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "path",
+          "step": 4
+        },
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "identifier",
+          "step": 5
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        },
+        {
+          "symbol": "rebase",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_359_review",
+      "name": "Review → Identifier",
+      "process_type": "intra_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "path",
+          "step": 4
+        },
+        {
+          "symbol": "load_draft",
+          "step": 3
+        },
+        {
+          "symbol": "checked",
+          "step": 2
+        },
+        {
+          "symbol": "review",
+          "step": 1
+        },
+        {
+          "symbol": "identifier",
+          "step": 5
+        }
+      ]
+    },
+    {
+      "id": "proc_364_update_target",
+      "name": "Update_target → Identifier",
+      "process_type": "intra_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "path",
+          "step": 4
+        },
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "update_target",
+          "step": 1
+        },
+        {
+          "symbol": "identifier",
+          "step": 5
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_320_run",
+      "name": "Run → Digest",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "etag",
+          "step": 3
+        },
+        {
+          "symbol": "checked",
+          "step": 2
+        },
+        {
+          "symbol": "run",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_340_exchange",
+      "name": "Exchange → Digest",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "etag",
+          "step": 3
+        },
+        {
+          "symbol": "checked",
+          "step": 2
+        },
+        {
+          "symbol": "exchange",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_345_rebase",
+      "name": "Rebase → Digest",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "etag",
+          "step": 3
+        },
+        {
+          "symbol": "checked",
+          "step": 2
+        },
+        {
+          "symbol": "rebase",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_350_review",
+      "name": "Review → Digest",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "etag",
+          "step": 3
+        },
+        {
+          "symbol": "checked",
+          "step": 2
+        },
+        {
+          "symbol": "review",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_355_tokenize",
+      "name": "Tokenize → Digest",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "etag",
+          "step": 3
+        },
+        {
+          "symbol": "checked",
+          "step": 2
+        },
+        {
+          "symbol": "tokenize",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_360_update_target",
+      "name": "Update_target → Digest",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "etag",
+          "step": 3
+        },
+        {
+          "symbol": "checked",
+          "step": 2
+        },
+        {
+          "symbol": "update_target",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_361_review",
+      "name": "Review → Read_json",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "load_draft",
+          "step": 3
+        },
+        {
+          "symbol": "checked",
+          "step": 2
+        },
+        {
+          "symbol": "review",
+          "step": 1
+        },
+        {
+          "symbol": "read_json",
+          "step": 4
+        }
+      ]
+    },
+    {
+      "id": "proc_37_tokenize",
+      "name": "Tokenize → Read_json",
+      "process_type": "intra_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "base",
+          "step": 3
+        },
+        {
+          "symbol": "read_json",
+          "step": 5
+        },
+        {
+          "symbol": "get",
+          "step": 4
+        },
+        {
+          "symbol": "projection",
+          "step": 2
+        },
+        {
+          "symbol": "tokenize",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_76_tokenize",
+      "name": "Tokenize → Require",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "base",
+          "step": 3
+        },
+        {
+          "symbol": "projection",
+          "step": 2
+        },
+        {
+          "symbol": "tokenize",
+          "step": 1
+        },
+        {
+          "symbol": "require",
+          "step": 4
+        }
+      ]
+    },
+    {
+      "id": "proc_263_run",
+      "name": "Run → Read_json",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "read_json",
+          "step": 4
+        },
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_341_run",
+      "name": "Run → Read_json",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "read_json",
+          "step": 4
+        },
+        {
+          "symbol": "run",
+          "step": 1
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_351_exchange",
+      "name": "Exchange → Read_json",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "read_json",
+          "step": 4
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        },
+        {
+          "symbol": "exchange",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_352_exchange",
+      "name": "Exchange → Require",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "exchange",
+          "step": 1
+        },
+        {
+          "symbol": "require",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_356_rebase",
+      "name": "Rebase → Read_json",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "read_json",
+          "step": 4
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        },
+        {
+          "symbol": "rebase",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_357_rebase",
+      "name": "Rebase → Require",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "rebase",
+          "step": 1
+        },
+        {
+          "symbol": "require",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_366_update_target",
+      "name": "Update_target → Read_json",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "update_target",
+          "step": 1
+        },
+        {
+          "symbol": "read_json",
+          "step": 4
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_367_update_target",
+      "name": "Update_target → Require",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "update_target",
+          "step": 1
+        },
+        {
+          "symbol": "require",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_370_run",
+      "name": "Run → Digest",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "base",
+          "step": 2
+        },
+        {
+          "symbol": "run",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_362_review",
+      "name": "Review → Require",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "checked",
+          "step": 2
+        },
+        {
+          "symbol": "review",
+          "step": 1
+        },
+        {
+          "symbol": "require",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_346_create_language",
+      "name": "Create_language → Read_json",
+      "process_type": "intra_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "read_json",
+          "step": 4
+        },
+        {
+          "symbol": "get",
+          "step": 3
+        },
+        {
+          "symbol": "languages",
+          "step": 2
+        },
+        {
+          "symbol": "create_language",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_232_tokenize",
+      "name": "Tokenize → _project_context",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "projection",
+          "step": 2
+        },
+        {
+          "symbol": "_project_context",
+          "step": 3
+        },
+        {
+          "symbol": "tokenize",
+          "step": 1
+        }
+      ]
+    }
+  ]
+}

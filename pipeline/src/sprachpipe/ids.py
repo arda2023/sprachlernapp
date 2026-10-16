@@ -39,6 +39,8 @@ KEY_FIELDS: dict[str, tuple[str, ...]] = {
     "deck_words": ("lang", "form_norm"),
     "word_aliases": ("lang", "form_norm"),
     "sentences": ("lang", "text"),
+    "sentence_revisions": ("lang", "root_sentence_id", "revision_sha256"),
+    "story_context_corrections": ("lang", "source_key", "previous_fingerprint", "next_fingerprint"),
     "sentence_tokens": ("sentence_id", "idx"),
     "card_sentences": ("card_id", "sentence_id"),
     "stories": ("lang", "slug"),

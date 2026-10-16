@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Inhaltsatelier · Sprachapp</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body>
+<a class="skip" href="#main">Zum Inhalt</a>
+<aside class="sidebar">
+  <a class="brand" href="/" aria-label="Inhaltsatelier Start"><span class="brand-mark">a.</span><span>Sprachapp<small>INHALTSATELIER</small></span></a>
+  <div class="local-note"><span class="dot"></span> Lokal auf diesem Computer</div>
+  <label for="language">Lernsprache</label><select id="language"></select>
+  <button id="new-language" class="quiet">＋ Sprachentwurf</button>
+  <nav aria-label="Arbeitsbereiche"><button class="nav active" data-page="content">Inhalte <span>01</span></button><button class="nav" data-page="imports">Lieferungen <span>02</span></button><button class="nav" data-page="releases">Versionen <span>03</span></button></nav>
+  <div class="sidebar-heading"><span>STAPEL</span><button id="new-deck" class="icon" aria-label="Neuen Stapel anlegen">＋</button></div>
+  <div id="decks" class="deck-list"></div>
+  <div class="sidebar-foot">Vom Wort zum guten Satz.<br><span>Cloud-Veröffentlichung folgt in Paket 3.</span></div>
+</aside>
+<main id="main" tabindex="-1">
+  <header class="topbar"><div id="breadcrumb">Redaktion / Inhalte</div><div id="connection">Lokaler Arbeitsbereich</div></header>
+  <div id="notice" role="alert" hidden></div>
+  <section id="content-page" class="page">
+    <div class="page-heading"><div><p class="eyebrow">INHALTE PFLEGEN</p><h1 id="page-title">Alle Lernziele</h1><p id="catalog-summary" class="subtle">Bestand wird geladen …</p></div><button id="new-target" class="primary">＋ Neue Aufgabe</button></div>
+    <div class="mobile-decks"><label for="mobile-deck">Stapel</label><select id="mobile-deck"></select><button id="mobile-new-deck">Neuer Stapel</button></div>
+    <div class="draft-bar"><div><label for="draft-select">Arbeitsstand</label><select id="draft-select"><option value="">Bestand · schreibgeschützt</option></select></div><button id="new-draft">Kopie bearbeiten</button><button id="rebase">Basis abgleichen</button><span id="draft-state" role="status">Original bleibt erhalten</span><button id="discard" class="quiet" hidden>Verwerfen</button></div>
+    <div id="profile-warning" class="warning" hidden></div>
+    <div class="toolbar"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Wort, Hinweis oder Satz suchen" aria-label="Inhalte durchsuchen"></label><select id="status-filter" aria-label="Verfügbarkeit"><option value="active">Aktive Lernziele</option><option value="retired">Zurückgestellt</option><option value="all">Alle</option></select><span class="toolbar-spacer"></span><button id="story-contexts">Storykontexte</button><button id="validate">Technisch prüfen</button><button id="review">Redaktionell bestätigen</button><button id="export">Exportieren</button></div>
+    <div class="table-wrap"><table><thead><tr><th scope="col">Lernziel</th><th scope="col">Lösungshinweis <small>DE</small></th><th scope="col">Übungssatz</th><th scope="col">Satzübersetzung <small>DE</small></th><th scope="col">Prüfstand</th><th scope="col"><span class="sr-only">Bearbeiten</span></th></tr></thead><tbody id="targets"></tbody></table></div>
+    <div class="pagination"><span id="range"></span><div><button id="previous" aria-label="Vorherige Seite">←</button><button id="next" aria-label="Nächste Seite">→</button></div></div>
+    <section id="validation-panel" hidden><div class="section-heading"><h2>Prüfbericht</h2><span id="validation-status"></span></div><div id="findings"></div></section>
+  </section>
+  <section id="imports-page" class="page" hidden>
+    <p class="eyebrow">EXTERN VORBEREITEN, LOKAL PRÜFEN</p><h1>Lieferungen</h1><p class="lede">Ganze Stapel übernehmen. Jede Zeile bleibt sichtbar – auch wenn noch Angaben fehlen.</p>
+    <div class="import-grid"><section class="panel"><span class="step">01 / VORBEREITEN</span><h2>Vorlage mit Kontext</h2><p>Leere Zielzeilen, bestehende Bedeutungen und reservierte Wörter der gewählten Sprache.</p><label for="template-count">Anzahl Lernziele</label><input id="template-count" type="number" min="1" max="1500" value="100"><label for="template-topic">Thema oder Arbeitsnotiz</label><input id="template-topic" placeholder="z. B. gewählter Stapel"><button id="template" class="primary">ZIP-Vorlage herunterladen</button></section>
+    <section class="panel upload"><span class="step">02 / IMPORTIEREN</span><h2>Lieferung prüfen</h2><p>JSON, ZIP oder XLSX. Bis 1.500 Ziele, intern in Blöcken von höchstens 100. Unvollständige Angaben bleiben Entwurf.</p><label for="upload-file">Datei auswählen</label><input id="upload-file" type="file" accept=".json,.zip,.xlsx"><label for="import-source">Bei abweichendem JSON und XLSX im ZIP</label><select id="import-source"><option value="">Konflikt zuerst anzeigen</option><option value="json">Ausdrücklich JSON verwenden</option><option value="xlsx">Ausdrücklich XLSX verwenden</option></select><button id="upload" class="primary">Importvorschau erstellen</button></section></div>
+    <section id="import-preview" class="panel" hidden></section>
+  </section>
+  <section id="releases-page" class="page" hidden><p class="eyebrow">GEPRÜFTE LOKALE STÄNDE</p><h1>Versionen</h1><p class="lede">Ein Export erzeugt ein eigenes Bundle. Die Übernahme als Entwicklungsasset ist eine separate, ausdrückliche Aktion.</p><div id="release-list"></div></section>
+</main>
+<section id="detail" class="detail" aria-label="Aufgabe bearbeiten" hidden><header><div><span class="eyebrow">AUFGABENDETAIL</span><h2 id="detail-title"></h2></div><button id="close-detail" class="icon" aria-label="Detail schließen">×</button></header><div id="detail-body" class="detail-body"></div><footer><span id="detail-state">Änderungen noch nicht gespeichert</span><button id="save-detail" class="primary">Entwurf speichern</button></footer></section>
+<dialog id="modal"><form method="dialog" id="modal-form"><header><h2 id="modal-title"></h2><button value="cancel" class="icon" aria-label="Dialog schließen">×</button></header><div id="modal-body"></div><footer><button value="cancel">Abbrechen</button><button id="modal-submit" value="ok" class="primary">Übernehmen</button></footer></form></dialog>
+<div id="job-bar" class="job-bar" role="status" hidden><span class="spinner" aria-hidden="true"></span><span id="job-message"></span><button id="cancel-job">Abbrechen</button></div>
+</body></html>

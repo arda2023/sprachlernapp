@@ -1,5 +1,5 @@
 # NEXTSTEPS
-Stand: 11.10.2026 – Alltagssprache Batch 2 intern gestagt; Batch-3-ZIP geprüft.
+Stand: 11.10.2026 – Alltagssprache Batch 2 intern gestagt; Batch-3-ZIP geprüft. Paket 2 lokal implementiert: docs/content-editor-package-2.md; Python 542+19, Flutter 330, Browser-250/ZIP/XLSX/Story/Tempstage geprüft; Produktionsasset und fremde UI unverändert; Windows-Geräteabnahme offen, Paket 3 nicht begonnen.
 ## Erledigt
 - 89 Batch-2-Ziele importiert: 89 Satzpaare, 889 Tokens (742 Wörter/Ausdrücke), zwei Alternativen.
 - Alltagssprache: 178 Ziele, Anzeigen 1–178; Original-/Besitzpositionen unverändert.

@@ -1,0 +1,22 @@
+{
+  "current": {
+    "count": 3767,
+    "identical": true
+  },
+  "historical": {
+    "count": 4297,
+    "identical": true
+  },
+  "story_display": {
+    "count": 6,
+    "identical": true
+  },
+  "story_source_snapshots": {
+    "count": 14,
+    "identical": true
+  },
+  "story_corrections": {
+    "count": 8,
+    "identical_unordered": true
+  }
+}

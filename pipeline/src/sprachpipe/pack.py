@@ -150,7 +150,8 @@ def _build_rows(pack: dict) -> dict[str, list[dict]]:
         }))
 
     for sn in pack.get("sentences", []):
-        snid = stable_id("sentences", lang=lang, text=sn["text"])
+        from .context_revisions import sentence_identity
+        snid = sentence_identity(lang, sn) if pack["release"]["schema_version"] == 5 else stable_id("sentences", lang=lang, text=sn["text"])
         sentence_ids[sn["ref"]] = snid
         rows["sentences"].append(_complete("sentences", {
             **_tombstones(sn),
@@ -214,14 +215,18 @@ def _build_rows(pack: dict) -> dict[str, list[dict]]:
             "id": stable_id("content_releases", lang=lang, version=release["version"]),
             "lang": lang, "version": release["version"],
             "schema_version": release["schema_version"], "notes": release.get("notes"),
+            **({"created_at": release["created_at"]} if "created_at" in release else {}),
         }))
 
-    if pack["release"]["schema_version"] == 4:
+    if pack["release"]["schema_version"] >= 4:
         from .form_targets import extend_rows
         extend_rows(pack, rows, card_ids, sense_ids, deck_ids)
     else:
         from .form_targets import reject_legacy_extensions
         reject_legacy_extensions(pack)
+    if pack["release"]["schema_version"] == 5:
+        from .context_revisions import extend_context_rows
+        extend_context_rows(pack, rows)
     return rows
 
 

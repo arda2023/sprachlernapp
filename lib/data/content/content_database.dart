@@ -8,14 +8,15 @@ import 'package:sqlite3/sqlite3.dart';
 import '../../domain/content.dart';
 
 import 'form_content_validation.dart';
+import 'context_revision_validation.dart';
 
 part 'content_database.g.dart';
 
 // No Flutter imports: tool/stage_content_pack.dart shares the checks below.
 
 /// The content schema version this app reads (docs/content-schema.md).
-const supportedContentSchemaVersion = 4;
-const supportedContentSchemaVersions = {1, 2, 3, 4};
+const supportedContentSchemaVersion = 5;
+const supportedContentSchemaVersions = {1, 2, 3, 4, 5};
 
 /// Tables and columns the app reads; anything missing is incompatible.
 const requiredContentColumns = <String, List<String>>{
@@ -123,11 +124,12 @@ ContentInfo validateContentSchema(Database db, {required String lang}) {
       validateSingleSentenceContent(db, schemaVersion: release['schema_version'] as int);
     }
     if ((release['schema_version'] as int) >= 3) validateLearningGroups(db);
-    if (release['schema_version'] == 4) {
+    if ((release['schema_version'] as int) >= 4) {
       try { validateFormContent(db); } on ContentUnavailable { rethrow; } catch (e) {
         throw ContentUnavailable(ContentUnavailableReason.incompatible, 'Schema 4: ungültige Formmetadaten ($e)');
       }
     }
+    if (release['schema_version'] == 5) validateContextRevisions(db, lang: lang);
     final languages = db.select('SELECT code FROM languages WHERE code = ?', [
       lang,
     ]);
@@ -295,7 +297,7 @@ void validateSingleSentenceContent(Database db, {int schemaVersion = 2}) {
         (c['form'] as String).trim() != c['form']) {
       reject('ungültige Wortnormalisierung');
     }
-    if (!keys.contains('${c['lang']}/${c['form_norm']}') && !(schemaVersion == 4 && c['introduction_scope'] == 'form_only' && aliasKeys.contains('${c['lang']}/${c['form_norm']}'))) {
+    if (!keys.contains('${c['lang']}/${c['form_norm']}') && !(schemaVersion >= 4 && c['introduction_scope'] == 'form_only' && aliasKeys.contains('${c['lang']}/${c['form_norm']}'))) {
       reject('Wort ohne Eigentümer ${c['form']}');
     }
     final links = db.select(

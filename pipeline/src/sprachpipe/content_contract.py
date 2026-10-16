@@ -6,7 +6,7 @@ from .ids import form_norm
 
 def sentence_count(pack):
     version = pack.get('release', {}).get('schema_version')
-    if version not in (1, 2, 3, 4):
+    if version not in (1, 2, 3, 4, 5):
         raise ValueError(f'unsupported content schema {version!r}; supported: 1 (legacy), 2, 3')
     return 3 if version == 1 else 1
 
@@ -79,7 +79,7 @@ def validate_registry(pack, rows):
 
 
 def validate_rows(rows, version):
-    if version not in (1, 2, 3, 4):
+    if version not in (1, 2, 3, 4, 5):
         raise ValueError(f'unsupported content schema {version}')
     if version == 1:
         return  # Explicit legacy release: old artifacts remain inspectable.
@@ -146,7 +146,7 @@ def validate_rows(rows, version):
             raise ValueError(f'alias {key}: duplicate or invalid owner {w["deck_id"]}')
         aliases.add(key)
     for c in cards.values():
-        if live(c) and (c['lang'], c['form_norm']) not in owners and not (version == 4 and c.get('introduction_scope') == 'form_only' and (c['lang'], c['form_norm']) in aliases):
+        if live(c) and (c['lang'], c['form_norm']) not in owners and not (version >= 4 and c.get('introduction_scope') == 'form_only' and (c['lang'], c['form_norm']) in aliases):
             raise ValueError(f'word {c["form"]}: missing owner')
     actual = []
     for dc in rows['deck_cards']:
@@ -215,6 +215,10 @@ def validate_rows(rows, version):
             pos = sorted(story_positions[story['id']])
             if not pos or pos != list(range(len(pos))): raise ValueError(f'{story["id"]}: story sentence order')
 
-    if version == 4:
+    if version >= 4:
         from .form_targets import validate_form_rows
         validate_form_rows(rows)
+
+    if version == 5:
+        from .context_revisions import validate_context_rows
+        validate_context_rows(rows)
