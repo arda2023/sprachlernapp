@@ -239,7 +239,7 @@ void main() {
     expect((await resolver.practiceItems([item.card.id])).single.practiceSentence.sentenceId, isNot(review.sentenceId));
   });
 
-  test('read-only production: 402 memberships, 528 historical links and pre-existing provenance gaps', () async {
+  test('read-only production: 402 memberships, 530 historical links and pre-existing provenance gaps', () async {
     final file = File('assets/content/en/content.sqlite');
     final hash = sha256Of(file);
     final raw = sqlite3.open(file.path, mode: OpenMode.readOnly);
@@ -257,7 +257,7 @@ void main() {
       expect(count, 402);
       final tokenCounts = {for (final r in raw.select('SELECT sentence_id, count(*) n FROM sentence_tokens GROUP BY sentence_id')) r['sentence_id']: r['n']};
       final links = raw.select('SELECT cs.card_id,cs.sentence_id,s.text FROM card_sentences cs JOIN sentences s ON s.id=cs.sentence_id WHERE cs.removed_in IS NOT NULL');
-      expect(links, hasLength(528));
+      expect(links, hasLength(530));
       for (final link in links) {
         final h = await repo.historicalSentence(link['card_id'] as String, link['sentence_id'] as String);
         expect(h, isNotNull);
@@ -276,7 +276,7 @@ void main() {
       expect(gaps, 137);
       // Explicitly report existing gaps, not a claim that all past releases exist.
       // ignore: avoid_print
-      print('READ-ONLY: 402 form memberships; 528 historical readers OK; 137 pre-existing provenance gaps');
+      print('READ-ONLY: 402 form memberships; 530 historical readers OK; 137 pre-existing provenance gaps');
     } finally {
       await repo.close(); raw.close();
     }

@@ -1,0 +1,21 @@
+{
+  "before": {
+    "pipeline/out/business_email_batch_6_perf_v1/pack.json": "48f8c3037e37cf8aaa83188c868af6706fd7f749592785433ee30b74070800d4",
+    "assets/content/en/content.sqlite": "4861110b1e0ab90b2487db79e47afbe9581f54b6cab3987c1a6d9e9fdd7e64b6",
+    "assets/content/en/content.manifest.json": "7070f43a6fb04c377703488590a6054fcf28a7fdb79bf644bc9f5ba70027bcdd",
+    "pipeline/data/curation/context_quality_v1.json": "ba6226567b49b914e51fd8f38211f3d975ff9d7753929b7ddee950f9b818b3c4",
+    "docs/evidence/context-quality-v1/review.json": "6470ef180b597a672ec855733564809caba524ccc1861a8b27a37e60ad620f74",
+    "test/data/real_pack_test.dart": "1e26c91844fcc7692f08c279b085dc4a66aeb11b4014ce841377ea2ce1358551"
+  },
+  "after": {
+    "pipeline/out/business_email_batch_6_perf_v1/pack.json": "48f8c3037e37cf8aaa83188c868af6706fd7f749592785433ee30b74070800d4",
+    "assets/content/en/content.sqlite": "0352850bd9352dc876b0ae560da81d1f35f701c91180cd0f08015e042ddcf191",
+    "assets/content/en/content.manifest.json": "d99fca40c08e399f6b0b2917f5411dc2a461785e0ae146c976b5a3ec72fd1815",
+    "pipeline/data/curation/context_quality_v1.json": "ba6226567b49b914e51fd8f38211f3d975ff9d7753929b7ddee950f9b818b3c4",
+    "docs/evidence/context-quality-v1/review.json": "6470ef180b597a672ec855733564809caba524ccc1861a8b27a37e60ad620f74",
+    "test/data/real_pack_test.dart": "1e26c91844fcc7692f08c279b085dc4a66aeb11b4014ce841377ea2ce1358551"
+  },
+  "backup": "build/context_quality_applied_v1/prestage-backup",
+  "output_pack": "b48c224ef0b2538d2b97f77130742b1a0f23df6215e8feb12bec785d8f98560c",
+  "application_patch": "9c715434c40fd5b657c0f4e88f5d2b66447d5d2c16c1d8422b2e790d131a20bf"
+}

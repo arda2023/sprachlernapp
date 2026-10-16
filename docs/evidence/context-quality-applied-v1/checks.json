@@ -1,0 +1,196 @@
+[
+  {
+    "name": "analyze-final.command",
+    "command": [
+      "flutter",
+      "analyze",
+      "--no-pub"
+    ],
+    "exitcode": 0,
+    "seconds": 3.83
+  },
+  {
+    "name": "analyze.command",
+    "command": [
+      "flutter",
+      "analyze",
+      "--no-pub"
+    ],
+    "exitcode": 1,
+    "seconds": 5.49
+  },
+  {
+    "name": "applied-tests-final.command",
+    "command": [
+      "flutter",
+      "test",
+      "--no-pub",
+      "test/data/context_quality_applied_test.dart"
+    ],
+    "exitcode": 1,
+    "seconds": 11.61
+  },
+  {
+    "name": "applied-tests-fixed.command",
+    "command": [
+      "flutter",
+      "test",
+      "--no-pub",
+      "test/data/context_quality_applied_test.dart"
+    ],
+    "exitcode": 1,
+    "seconds": 16.06
+  },
+  {
+    "name": "applied-tests-pass.command",
+    "command": [
+      "flutter",
+      "test",
+      "--no-pub",
+      "test/data/context_quality_applied_test.dart"
+    ],
+    "exitcode": 0,
+    "seconds": 14.25
+  },
+  {
+    "name": "applied-tests-verified.command",
+    "command": [
+      "flutter",
+      "test",
+      "--no-pub",
+      "test/data/context_quality_applied_test.dart"
+    ],
+    "exitcode": 1,
+    "seconds": 39.46
+  },
+  {
+    "name": "applied-tests.command",
+    "command": [
+      "flutter",
+      "test",
+      "--no-pub",
+      "test/data/context_quality_applied_test.dart"
+    ],
+    "exitcode": 1,
+    "seconds": 6.85
+  },
+  {
+    "name": "diff-check.command",
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "pipeline/data/curation/context_quality_apply_v1.json",
+      "docs/context-quality-applied-v1.md",
+      "docs/evidence/context-quality-applied-v1",
+      "test/data/context_quality_applied_test.dart",
+      "test/data/targeted_curation_test.dart",
+      "NEXTSTEPS.md"
+    ],
+    "exitcode": 0,
+    "seconds": 0.02
+  },
+  {
+    "name": "flutter-all.command",
+    "command": [
+      "flutter",
+      "test",
+      "--no-pub"
+    ],
+    "exitcode": 0,
+    "seconds": 37.68
+  },
+  {
+    "name": "graph-index.command",
+    "command": [
+      "node",
+      ".gitnexus/run.cjs",
+      "analyze",
+      "--index-only",
+      "--pdg",
+      "--force"
+    ],
+    "exitcode": 0,
+    "seconds": 37.6
+  },
+  {
+    "name": "projection-before.command",
+    "command": [
+      "dart",
+      "run",
+      "tool/report_learning_groups.dart",
+      "assets/content/en/content.sqlite"
+    ],
+    "exitcode": 0,
+    "seconds": 5.95
+  },
+  {
+    "name": "projection-output.command",
+    "command": [
+      "dart",
+      "run",
+      "tool/report_learning_groups.dart",
+      "pipeline/out/context_quality_applied_v1/content.sqlite"
+    ],
+    "exitcode": 0,
+    "seconds": 6.53
+  },
+  {
+    "name": "projection-staged.command",
+    "command": [
+      "dart",
+      "run",
+      "tool/report_learning_groups.dart",
+      "assets/content/en/content.sqlite"
+    ],
+    "exitcode": 0,
+    "seconds": 12.44
+  },
+  {
+    "name": "python-all.command",
+    "command": [
+      "pipeline/.venv-macos/bin/python",
+      "-m",
+      "pytest",
+      "pipeline/tests",
+      "-q"
+    ],
+    "exitcode": 0,
+    "seconds": 32.37
+  },
+  {
+    "name": "real-pack.command",
+    "command": [
+      "flutter",
+      "test",
+      "--no-pub",
+      "test/data/real_pack_test.dart"
+    ],
+    "exitcode": 0,
+    "seconds": 13.92
+  },
+  {
+    "name": "stage.command",
+    "command": [
+      "dart",
+      "run",
+      "tool/stage_content_pack.dart",
+      "--from",
+      "pipeline/out/context_quality_applied_v1"
+    ],
+    "exitcode": 0,
+    "seconds": 7.37
+  },
+  {
+    "name": "verify.command",
+    "command": [
+      "dart",
+      "run",
+      "tool/stage_content_pack.dart",
+      "--verify"
+    ],
+    "exitcode": 0,
+    "seconds": 11.29
+  }
+]
