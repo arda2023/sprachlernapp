@@ -1,5 +1,122 @@
 # Erste private Cloudversion aus dem internen App-Bestand
 
+## HTTP 400 bei „2 · Serverprüfung“ · 16.10.2026
+
+**Ein reproduzierbarer Requestfehler ist lokal behoben; eine erneute Cloudprüfung
+wurde nicht ausgeführt.** Der vorhandene Upload bleibt fortsetzbar. Für diesen
+Fix ist **kein Function-Deployment erforderlich**: Es ändern sich ausschließlich
+der Python-Publisher, Tests und Dokumentation. Der vom Nutzer gemeldete erfolgreiche
+Deploy von `content-publish` gehört zum Zustand nach dem vorigen Auftrag.
+
+### Befund und konkrete Ursache
+
+Lesend gefunden: lokales Release `088f5eab-7347-406f-b9e6-cf5dbb985990`, Version
+`story_single_sentence_v1-internal-baseline`, Publicationstatus `uploaded`, Upload
+`dc4eb268-b9d1-4278-839d-0176d0db2f40`, erwartete Generation 0 und beide Parents null.
+Drei vorhandene `private-finalize`-Jobs sind mit `PUBLISH_HTTP_400`, `result=null`,
+`processed=0`, `total=10` gescheitert. Das bestehende Neun-Dateien-Bundle besteht
+auch jetzt `inspect_bundle` einschließlich Quellen-/Inhaltspins. Keine neue
+Bestandsübernahme, kein Umschreiben der tatsächlichen Statusdaten.
+
+Der konkrete Aufrufpfad ist:
+`EditorService.publish_release(..., 'finalize')` →
+`Publisher.call(upload_id + '/finalize')` → `Publisher._http` →
+`content-publish/index.ts` → `handler('publish', ...)` → `publish()`.
+Bisher blieb `body=None`; urllib erzeugte somit einen POST ohne JSON-Body.
+`publish()` authentisiert zunächst JWT/Publisher und parst danach **für jeden
+POST** den Body mit `JSON.parse`. Ein leerer Body löst einen Syntaxfehler aus;
+`handler` antwortet darauf mit HTTP 400 / `{"code":"REQUEST_FAILED"}`.
+Dieser Fehler liegt vor `backend.upload()` und vor jeder Datei-/Hashprüfung.
+
+Die lokale Reproduktion mit demselben Handler zeigt für normalen Release und
+Bestandsübernahme: leerer POST → **400 / REQUEST_FAILED**, null Upload-/Dateizugriffe;
+POST mit `{}` → **200 / verifying**, genau die erste Dateiprüfung. `null` und `[]`
+bleiben als unerlaubte Anfrageobjekte gesperrt. Der Vertrag wird nicht gelockert.
+Die echte Wire-Serialisierung ist zusätzlich in Python geprüft (`data == b'{}'`,
+`Content-Type: application/json`). GET bleibt ohne Body; Start-/Commitdaten werden
+unverändert übertragen.
+
+Damit ist ein stets fehlschlagender Request im lokalen Code belegt und behoben.
+Die **historische Cloudantwort** lässt sich aus den vorhandenen Belegen nicht
+rekonstruieren: `_http` hatte ihren Body verworfen, und `handler` übermittelt bei
+unbekannten Fehlern ohnehin nur `REQUEST_FAILED`. Ob beim damaligen Cloudaufruf
+zusätzlich ein Gateway-/Backendproblem bestand, ist damit nicht behauptet.
+Leere Invocations oder Boot-/Shutdownlogs beweisen keine bestimmte Fehlerursache.
+
+### Sichere Diagnose
+
+`PublicationHTTPError.finding()` enthält jetzt zusätzlich `diagnostic` mit
+`step`, `http_status`, `server_code` und `reason`. Diese Struktur erreicht über den
+bestehenden Servicepfad sowohl den fehlgeschlagenen Job als auch `last_error` am
+Publicationbeleg. Der sichtbare Meldungstext enthält dieselben sicheren Angaben,
+beispielsweise `Serverprüfung: HTTP 400 · REQUEST_FAILED. Server konnte die
+Anfrage nicht verarbeiten.` Der Releasezustand wird dadurch nicht aufgewertet.
+
+Es werden höchstens **16.385 Bytes** gelesen, höchstens **16.384 Bytes** als JSON
+akzeptiert. Nur fest freigegebene Vertragscodes oder numerische Fehlercodes
+400–599 werden übernommen. Begründungen sind lokale Texte; zwei bekannte
+Gatewaymeldungen werden ebenfalls auf lokale Texte abgebildet. Unbekannter
+Freitext, fremde Codezeichenfolgen, HTML, fehlerhaftes UTF-8, übergroße Antworten,
+Header, Cookies, JWTs, Schlüssel, Pfade und signierte URLs werden nicht reflektiert.
+Die vorhandene UI verwendet Textdarstellung, keinen HTML-Import. Die separate
+Passwortfehlerbehandlung bleibt erhalten. Fehler bleiben Fehler; eine Testantwort
+`ready` wird nicht als erfolgreiche Cloudprüfung ausgegeben.
+
+### Jetzt genau einmal fortsetzen
+
+1. Alten Editor im Startterminal mit **Ctrl+C** beenden. Mit demselben
+   Arbeitsverzeichnis und der bisherigen Umgebung neu starten; keinen zweiten
+   Editor auf derselben Datenablage öffnen.
+2. Windows (PowerShell): `pipeline\.venv\Scripts\python.exe -X utf8 -m sprachpipe.editor`.
+   macOS (Terminal): `pipeline/.venv-macos/bin/python -X utf8 -m sprachpipe.editor`.
+   Bisherige `--data-dir`-Argumente gegebenenfalls beibehalten.
+3. Unter **Versionen** gegebenenfalls erneut mit Passwort anmelden, dann beim
+   **bestehenden** `story_single_sentence_v1-internal-baseline` genau einmal
+   **2 · Serverprüfung** klicken. Weder erneut übernehmen noch **1 · Privat
+   hochladen** oder **3 · Veröffentlichen** anklicken.
+4. Bei Erfolg steht **Servergeprüft · Veröffentlichung ausstehend**. Dieser
+   Zustand ist hier noch nicht für die Cloud nachgewiesen.
+5. Falls es erneut scheitert, den vollständigen **neuen sichtbaren Fehlertext**
+   bzw. nur `error.code` und `error.diagnostic` des neuen Jobs mitteilen.
+   Benötigt werden Schritt, HTTP-Status, vorhandener sicherer Servercode und
+   Begründung. Keine Authdaten oder vollständigen Cloudantworten senden.
+   Bei weiterhin bloßem `REQUEST_FAILED` fehlt die interne Exception-Kategorie
+   der passenden Invocation; dieser Clientfix allein kann sie nicht ermitteln.
+   Das wäre ein neuer, gezielter Diagnoseauftrag, kein Anlass für weitere
+   hypothetische Änderungen oder erneute Uploads.
+
+### Tatsächliche lokale Prüfungen dieses Fixes
+
+| Befehl / Prüfung | Relevanter Output | Exit |
+|---|---|---|
+| `pipeline/.venv/Scripts/python.exe -X utf8 -m pytest pipeline/tests/test_editor_publisher.py -q --tb=short` | `20 passed in 4.38s`; echte urllib-Serialisierung, begrenzte sichere Diagnose, Job-/Belegfortsetzung mit derselben Upload-ID, normale Review-/Bundleprüfungen | 0 |
+| `deno test --allow-read supabase/functions/_shared/content_distribution_test.ts supabase/functions/_shared/content_baseline_adoption_test.ts` | `10 passed`, `0 failed (7s)`; leerer Body reproduziert 400, `{}` erreicht Prüfung für beide Arten; Rechte-/Hash-/Review-/Quellen-/Generationtests erhalten | 0 |
+| Bestehendes lokales Bundle `inspect_bundle` ausschließlich lesend | `9 files; source/content pins accepted`, weiterhin `uploaded`, ursprüngliche Upload-ID | 0 |
+
+Pythonpfade oben sind Windows-spezifisch; auf macOS
+`pipeline/.venv-macos/bin/python` mit denselben Argumenten verwenden.
+Rohlogs und Schutzsnapshot liegen unter `build/finalize_http400/`.
+Keine Cloudanfrage, Statusmutation, Veröffentlichung, SQL-Änderung oder Deployment
+für diese Diagnose ausgeführt; kein Push.
+
+
+Abschlusskontrolle dieses Fixes: **29** vorab gehashte Produktions-/Editor-Dateien
+(einschließlich vorhandenem Bundle, Uploadbeleg und Jobs) unverändert. Die
+Editor-Dateiliste wurde nicht erweitert. `git diff --check` für eigene Dateien
+und `git diff --cached --check` jeweils ohne Befund, Exit 0; NEXTSTEPS im
+Arbeitsbaum und Index jeweils 25 Zeilen. Fünf eigene Dateien isoliert gestagt;
+fremde Diffabschnitte unverändert und ungestagt.
+
+GitNexus ist an `sprachlernapp`, `C:\Users\ardas\Music\sprachapp`, Basis `5ec01f8`
+gebunden und wurde aktualisiert. Die Konzeptabfrage löste den konkreten Finalize-
+Aufruf nicht vollständig auf; direkte Quellen ergänzen diese bekannte Graphgrenze.
+Datei-Impact Publisher: LOW, direkter Serviceimport und indirekter Editorstart.
+Strukturierte Änderungsprüfung vor Commit: `scope=all` 21 Dateien/24 Symbole/303
+Prozesszuordnungen, `scope=staged` fünf eigene Dateien/12 Symbole/243 Zuordnungen,
+beide **CRITICAL**, ohne `error`, `partial` oder `truncated`. Die Risikomeldung
+wurde ausdrücklich gemeldet und nicht als Low umgedeutet. Keine vollständige
+statische Ablaufabdeckung oder erfolgreiche Cloudprüfung daraus abgeleitet.
+
 ## Implementiert und lokal geprüft · 16.10.2026
 
 Der genehmigte Erstübernahmeweg `internal-baseline-adoption-v1` ist implementiert.

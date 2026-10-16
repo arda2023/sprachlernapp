@@ -16,6 +16,69 @@ from ..word_registry import digest
 FILES=('content.sqlite','pack.json','registry.json','history_inventory.json','editorial_reviews.json',
        'provenance.json','finalization_report.json','content.manifest.json','reader_report.json')
 
+# Never reflect arbitrary remote text or even arbitrary remote "code" strings:
+# either field could contain credentials, signed URLs or content. Known protocol
+# codes are useful diagnostics; explanations are authored locally.
+SERVER_REASONS={
+    'REQUEST_FAILED':'Server konnte die Anfrage nicht verarbeiten.',
+    'REQUEST_OBJECT':'Server erwartet ein JSON-Objekt im Anfrageinhalt.',
+    'AUTH_REQUIRED':'Anmeldung ist serverseitig nicht gültig.',
+    'PUBLISHER_REQUIRED':'Publisherrecht fehlt.',
+    'UPLOAD_FORBIDDEN':'Upload gehört nicht zum angemeldeten Konto.',
+    'UPLOAD_EXPIRED':'Upload ist abgelaufen oder bereits als fehlgeschlagen markiert.',
+    'OBJECT_MISSING':'Eine hochgeladene Datei fehlt.',
+    'OBJECT_HASH':'Prüfsumme einer hochgeladenen Datei stimmt nicht.',
+    'OBJECT_SIZE':'Größe einer hochgeladenen Datei stimmt nicht.',
+    'OBJECT_JSON':'Eine hochgeladene JSON-Datei ist nicht lesbar.',
+    'BACKEND_UNAVAILABLE':'Function konnte ihren Backendzugriff nicht abschließen.',
+    'CONFLICT':'Serverstand hat sich geändert.',
+}
+SERVER_CODES=frozenset(SERVER_REASONS)|frozenset('''REQUEST_ID SCOPE_UNSUPPORTED GENERATION_INVALID
+    PARENT_INVALID PUBLICATION_KIND ADOPTION_FIRST_ONLY MANIFEST_INCOMPATIBLE VERSION_INVALID
+    OBJECT_SET_INVALID OBJECT_LIMIT MANIFEST_HASH_MISMATCH SERVER_CONFIG SCOPE_INVALID READER_REQUIRED
+    UPLOAD_ID OBJECT_KEY JSON_LIMIT MANIFEST_CHANGED ATTESTATION_INVALID VALIDATION_HASH REVIEW_UNBOUND
+    SIDECAR_HASH HISTORY_INVALID PACK_SCOPE INCOMPLETE_DELIVERY PARENT_CHANGED REGISTRY_INVALID
+    REGISTRY_HISTORY_LOSS HISTORY_LOSS CONTEXT_HISTORY_LOSS STORY_HISTORY_LOSS ADOPTION_INVALID
+    ADOPTION_CONFIRMATION ADOPTION_CONTENT_CHANGED ADOPTION_CHANNEL_OCCUPIED CATALOG_INVALID
+    METHOD REQUEST_LIMIT REQUEST_CONFLICT NOT_FOUND'''.split())
+
+
+class PublicationHTTPError(AuthoringError):
+    def __init__(self,status,step,server_code,reason):
+        self.diagnostic={'step':step,'http_status':status,'server_code':server_code,'reason':reason}
+        message=f'{step}: HTTP {status}'+(f' · {server_code}' if server_code else '')+f'. {reason}'
+        super().__init__('PUBLISH_HTTP_'+str(status),message,status=status if status in (401,403,409) else 502)
+
+    def finding(self):
+        return {**super().finding(),'diagnostic':self.diagnostic}
+
+
+def http_failure(error,path,*,file=None):
+    step='Dateiupload' if file else 'Veröffentlichung'
+    if path.startswith('/functions/v1/content-publish/'):
+        action=path.split('?',1)[0].rsplit('/',1)[-1]
+        step={'start':'Upload vorbereiten','channel':'Kanalbasis prüfen',
+              'finalize':'Serverprüfung','commit':'Veröffentlichen'}.get(action,step)
+    code=None;reason=None
+    try:
+        raw=error.read(16385)
+        value=json.loads(raw) if len(raw)<=16384 else None
+        if isinstance(value,dict):
+            candidate=value.get('code')
+            if isinstance(candidate,str) and candidate in SERVER_CODES:
+                code=candidate;reason=SERVER_REASONS.get(code,'Server hat eine Vertrags- oder Inhaltsprüfung abgelehnt.')
+            else:
+                if type(candidate) is int and 400<=candidate<=599:code=candidate
+                if value.get('message')=='Invalid JWT':reason='Gateway hat die Anmeldung abgelehnt (Invalid JWT).'
+                elif value.get('message')=='Missing authorization header':reason='Gateway meldet einen fehlenden Authorization-Header.'
+    except (ValueError,UnicodeError,OSError,RecursionError):pass
+    if reason is None:
+        reason=('Anmeldung/Berechtigung prüfen.' if error.code in (401,403) else
+                'Serverstand geändert oder Datei bereits hochgeladen.' if error.code==409 else
+                'Server meldet einen numerischen Fehlercode; freier Antworttext wurde nicht übernommen.' if code is not None else
+                'Kein freigegebener Serverfehlercode lesbar; Antwortdetails aus Sicherheitsgründen nicht übernommen.')
+    return PublicationHTTPError(error.code,step,code,reason)
+
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self,req,fp,code,msg,headers,newurl):
@@ -71,10 +134,7 @@ class Publisher:
                 raise AuthoringError('PASSWORD_LOGIN_FAILED',messages.get(code,
                     'Anmeldung fehlgeschlagen. Zugangsdaten, Kontostatus und Verbindung prüfen.'),
                     status=401 if e.code in (400,401,403,422) else 502) from None
-            raise AuthoringError('PUBLISH_HTTP_'+str(e.code),
-                'Anmeldung/Berechtigung prüfen.' if e.code in (401,403) else
-                'Serverstand geändert oder Datei bereits hochgeladen.' if e.code==409 else
-                'Veröffentlichungsanfrage fehlgeschlagen; lokalen Stand behalten und erneut prüfen.',status=e.code if e.code in (401,403,409) else 502) from None
+            raise http_failure(e,path,file=file) from None
         except (urllib.error.URLError,TimeoutError,OSError):
             raise AuthoringError('PUBLISH_NETWORK','Privater Server nicht erreichbar. Lokale Inhalte bleiben erhalten.',status=502) from None
         finally:
@@ -129,6 +189,8 @@ class Publisher:
             return self._session['access_token']
 
     def call(self,path,body=None,method='POST'):
+        # The function requires a JSON object for every POST, including finalize.
+        if method=='POST' and body is None:body={}
         return self._transport(method,'/functions/v1/content-publish/'+path,body,token=self._token())
 
     def channel(self,lang):

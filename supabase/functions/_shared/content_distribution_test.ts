@@ -4,6 +4,34 @@ async function rejects(action:()=>unknown,code:string){try{await action();}catch
 const id='11111111-1111-4111-8111-111111111111';
 const actor='22222222-2222-4222-8222-222222222222';
 const fixture=()=>Object.fromEntries(FILES.filter(n=>n.endsWith('.json')).map(name=>[name,JSON.parse(Deno.readTextFileSync(new URL('../../../test/fixtures/private_release/'+name,import.meta.url)))]));
+Deno.test('finalize requires JSON object before accessing an existing normal or adoption upload',async()=>{
+  for(const kind of [undefined,'internal-baseline-adoption-v1']){
+    let uploadReads=0,checked=0;
+    class ExistingUpload extends DistributionBackend {
+      override async actor(){return actor;}
+      override async publisher(){}
+      override async upload(uploadId:string,owner:string){
+        assert(uploadId===id&&owner===actor);uploadReads++;
+        return {id,owner_id:actor,status:'uploading',expires_at:'2099-01-01T00:00:00Z',
+          draft_manifest:{publication_kind:kind},verified_objects:{},objects:{'content.sqlite':{sha256:'0'.repeat(64),size_bytes:1}}};
+      }
+      override async patch(){return [];}
+      override async object(_id:string,name:string){assert(name==='content.sqlite');checked++;}
+    }
+    const backend=new ExistingUpload('https://synthetic.invalid','unused',()=>{throw new Error('Network forbidden');});
+    const handle=handler('publish',backend),url='https://synthetic.invalid/content-publish/'+id+'/finalize';
+    const empty=await handle(new Request(url,{method:'POST'}));
+    assert(empty.status===400&&(await empty.json()).code==='REQUEST_FAILED');
+    assert(uploadReads===0&&checked===0);
+    for(const body of ['null','[]']){
+      const invalid=await handle(new Request(url,{method:'POST',body}));
+      assert(invalid.status===422&&(await invalid.json()).code==='REQUEST_OBJECT');
+    }
+    const valid=await handle(new Request(url,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'}));
+    const result=await valid.json();assert(valid.status===200&&result.status==='verifying');
+    assert(Number(uploadReads)===1&&Number(checked)===1&&result.verified[0]==='content.sqlite');
+  }
+});
 Deno.test('no JWT, invalid JWT and absent publisher are rejected before publication',async()=>{
   let reads=0;
   const backend=new DistributionBackend('https://synthetic.invalid','server-only',async(url)=>{reads++;return String(url).endsWith('/auth/v1/user')?Response.json({id:actor}):Response.json([]);});

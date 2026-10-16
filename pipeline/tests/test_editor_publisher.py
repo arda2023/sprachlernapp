@@ -12,6 +12,64 @@ from sprachpipe.authoring_service import AuthoringError,draft_content_hash
 from sprachpipe.word_registry import digest
 
 
+def test_finalize_wire_body_is_json_object_and_get_body_stays_empty(monkeypatch):
+    """Exercise the real urllib serialization, not only a transport stub."""
+    import urllib.request
+    requests=[]
+    class Response:
+        def __enter__(self):return self
+        def __exit__(self,*args):pass
+        def read(self,limit):return b'{"status":"verifying"}'
+    class Opener:
+        def open(self,request,timeout):requests.append(request);return Response()
+    monkeypatch.setattr(urllib.request,'build_opener',lambda *args:Opener())
+    publisher=Publisher('https://synthetic.invalid','public-test')
+    monkeypatch.setattr(publisher,'_token',lambda:'synthetic-access')
+    publisher.call('11111111-1111-4111-8111-111111111111/finalize')
+    publisher.channel('en')
+    publisher.call('start',{'request_id':'synthetic'})
+    assert requests[0].data==b'{}' and requests[0].method=='POST'
+    assert requests[0].get_header('Content-type')=='application/json'
+    assert requests[1].data is None and requests[1].method=='GET'
+    assert json.loads(requests[2].data)=={'request_id':'synthetic'}
+
+
+@pytest.mark.parametrize('raw,code,reason',[
+    (b'{"code":"REQUEST_FAILED","message":"secret-token <script> https://signed.invalid/?token=secret"}',
+     'REQUEST_FAILED','Server konnte die Anfrage nicht verarbeiten.'),
+    (b'{"code":"OBJECT_HASH"}','OBJECT_HASH','Prüfsumme'),
+    (b'{"message":"Invalid JWT"}',None,'Invalid JWT'),
+    (b'{"code":401,"message":"Invalid JWT"}',401,'Invalid JWT'),
+    (b'{"code":"secret-token","message":"secret-token"}',None,'Kein freigegebener'),
+    (b'<html>secret-token</html>',None,'Kein freigegebener'),
+    (b'\xffsecret-token',None,'Kein freigegebener'),
+    (b'[]',None,'Kein freigegebener'),
+    (b'{"code":"REQUEST_FAILED","padding":"'+b'x'*16384+b'"}',None,'Kein freigegebener'),
+])
+def test_http_diagnostic_is_bounded_structured_and_never_reflects_remote_text(monkeypatch,raw,code,reason):
+    import io
+    import urllib.error
+    import urllib.request
+    reads=[]
+    class Body(io.BytesIO):
+        def read(self,size=-1):reads.append(size);return super().read(size)
+    class Opener:
+        def open(self,*args,**kwargs):
+            raise urllib.error.HTTPError('https://signed.invalid/?token=secret-token',400,
+                'secret-token',{'Set-Cookie':'secret-token'},Body(raw))
+    monkeypatch.setattr(urllib.request,'build_opener',lambda *args:Opener())
+    publisher=Publisher('https://synthetic.invalid','public-test')
+    with pytest.raises(AuthoringError) as error:
+        publisher._http('POST','/functions/v1/content-publish/11111111-1111-4111-8111-111111111111/finalize',{},token='secret-token')
+    finding=error.value.finding()
+    assert finding['code']=='PUBLISH_HTTP_400' and finding['retryable'] is False
+    assert finding['diagnostic']['step']=='Serverprüfung'
+    assert finding['diagnostic']['http_status']==400 and finding['diagnostic']['server_code']==code
+    assert reason in finding['diagnostic']['reason'] and 'HTTP 400' in finding['message']
+    assert all(value not in json.dumps(finding) for value in ('secret-token','<script>','<html>','signed.invalid','Set-Cookie'))
+    assert reads==[16385]
+
+
 def test_auth_is_private_refreshes_and_never_returns_tokens():
     calls=[]
     def transport(method,path,body=None,**kwargs):
@@ -150,3 +208,42 @@ def test_changed_bytes_and_unapproved_export_are_rejected(setup):
     report=json.loads((directory/'finalization_report.json').read_text());report['validation']['editorial']='open'
     (directory/'finalization_report.json').write_text(json.dumps(report))
     with pytest.raises(AuthoringError,match='bestätigt'):inspect_bundle(directory,record,draft)
+
+
+def test_finalize_diagnostic_persists_and_retry_keeps_existing_upload(setup,monkeypatch):
+    import io
+    import urllib.error
+    import urllib.request
+    service,_=setup;_,record,_=bundle(service)
+    remote=Remote();remote.fail_upload=False;service.publisher=remote
+    assert wait(service,service.publish_release(record['release_id'],'upload'))['state']=='succeeded'
+    before=service.store.get('releases',record['release_id'])
+    attempts=[];fail=True
+    class Response:
+        def __enter__(self):return self
+        def __exit__(self,*args):pass
+        def read(self,limit):return b'{"status":"ready"}'
+    class Opener:
+        def open(self,request,timeout):
+            attempts.append(request)
+            if fail:
+                raise urllib.error.HTTPError('https://synthetic.invalid',400,'redacted',{},
+                    io.BytesIO(b'{"code":"REQUEST_FAILED","details":"secret-token"}'))
+            return Response()
+    monkeypatch.setattr(urllib.request,'build_opener',lambda *args:Opener())
+    publisher=Publisher('https://synthetic.invalid','public-test')
+    monkeypatch.setattr(publisher,'_token',lambda:'synthetic-access');service.publisher=publisher
+    failed=wait(service,service.publish_release(record['release_id'],'finalize'))
+    assert failed['state']=='failed' and failed['result'] is None and failed['processed']==0
+    assert failed['error']['diagnostic']['server_code']=='REQUEST_FAILED'
+    current=service.store.get('releases',record['release_id'])
+    assert current['publication']['status']=='uploaded'
+    assert current['publication']['upload_id']==before['publication']['upload_id']==remote.upload_id
+    assert current['publication']['last_error']==failed['error']
+    assert 'secret-token' not in json.dumps(failed)
+    fail=False
+    retried=wait(service,service.publish_release(record['release_id'],'finalize'))
+    assert retried['state']=='succeeded' and retried['result']['status']=='ready'
+    assert 'last_error' not in retried['result']
+    assert retried['result']['upload_id']==remote.upload_id
+    assert len(attempts)==2 and all(r.data==b'{}' and r.full_url.endswith('/'+remote.upload_id+'/finalize') for r in attempts)
