@@ -45,6 +45,8 @@ dependencies:
   share_plus: ^13.3.1
   unorm_dart: ^0.3.2
   characters: ^1.4.1
+  supabase_flutter: ^2.18.3
+  flutter_secure_storage: ^11.2.0
 
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'domain/preferences.dart';
+import 'presentation/providers/content_update_provider.dart';
 import 'presentation/providers/preferences_provider.dart';
 import 'screens/app_shell.dart';
 import 'theme/app_theme.dart';
@@ -15,6 +16,7 @@ class SprachApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(contentUpdateProvider);
     final motif =
         ref.watch(preferencesProvider).value?.motif ?? AppMotif.automatic;
     return MaterialApp(

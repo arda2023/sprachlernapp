@@ -11,7 +11,7 @@ import '../fixtures/story_learning.dart';
 void main() {
   for (final version in [2, 3, 4]) {
     test(
-      'v$version to v5 preserves all prior column values and append-only triggers',
+      'v$version to v6 preserves all prior column values and append-only triggers',
       () async {
         final dir = Directory.systemTemp.createTempSync('story-migrate-');
         addTearDown(() => dir.deleteSync(recursive: true));
@@ -92,7 +92,7 @@ void main() {
         await repo.close();
         final migrated = sqlite3.open(file.path);
         addTearDown(migrated.close);
-        expect(migrated.select('PRAGMA user_version').single.values.first, 5);
+        expect(migrated.select('PRAGMA user_version').single.values.first, 6);
         for (final table in columns.keys) {
           final where = table == 'user_cards' && version < 4
               ? " WHERE card_id='existing'"

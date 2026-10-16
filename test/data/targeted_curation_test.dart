@@ -200,7 +200,9 @@ void main() {
     final raw = sqlite3.open(afterFile.path);
     raw.execute("UPDATE cards SET replaced_by='invalid' WHERE removed_in IS NOT NULL");
     raw.close();
-    await expectLater(installerFor(support, db: afterFile.readAsBytesSync(), manifest: manifest()).install(), throwsA(isA<ContentUnavailable>()));
+    final pinned = await installerFor(support, db: afterFile.readAsBytesSync(), manifest: manifest()).install();
+    expect(pinned.file.path, installed.file.path);
+    await expectLater(installerFor(Directory('${dir.path}/invalid-fresh'), db: afterFile.readAsBytesSync(), manifest: manifest()).install(), throwsA(isA<ContentUnavailable>()));
     expect(sha256Of(installed.file), hash);
   });
 

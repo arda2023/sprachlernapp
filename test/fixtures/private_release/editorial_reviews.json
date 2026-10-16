@@ -1,0 +1,12 @@
+[
+  {
+    "decision": "approved",
+    "origin": "local-editor",
+    "payload_sha256": "4ca063661a97bb7fe113b3dad8c7a6d3a779a886eb1f4b7283393ba7cd1ef0b0",
+    "reason": "Nur die synthetische deutsche Kontextübersetzung geändert; Herkunft und Lernidentität geprüft.",
+    "record_refs": [],
+    "reviewed_at": "2026-10-16T13:30:03.696893+00:00",
+    "reviewer": "Synthetische Storyabnahme",
+    "scope": "draft"
+  }
+]

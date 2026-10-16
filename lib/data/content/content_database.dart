@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
+import 'package:drift/isolate.dart';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
@@ -406,7 +408,9 @@ class ContentDatabase extends _$ContentDatabase {
     : _raw = raw,
       super(NativeDatabase.opened(raw, enableMigrations: false));
 
-  final Database _raw;
+  ContentDatabase._remote(super.executor, this.info) : _raw = null;
+
+  final Database? _raw;
   final ContentInfo info;
 
   /// Drift closes the connection only if it ever opened it; the raw handle
@@ -414,7 +418,7 @@ class ContentDatabase extends _$ContentDatabase {
   @override
   Future<void> close() async {
     await super.close();
-    _raw.close();
+    _raw?.close();
   }
 
   @override
@@ -427,6 +431,32 @@ class ContentDatabase extends _$ContentDatabase {
     onUpgrade: (_, _, _) async =>
         throw StateError('content.sqlite is never migrated by the app'),
   );
+
+  /// App connections validate and execute queries off the UI isolate. Tools
+  /// retain the synchronous read-only opener below.
+  static Future<ContentDatabase> openInBackground(File file, {required String lang}) async {
+    final path=file.path;
+    final info=await Isolate.run(() {
+      final raw=sqlite3.open(path,mode:OpenMode.readOnly);
+      try {raw.execute('PRAGMA query_only=ON');return validateContentSchema(raw,lang:lang);}
+      finally {raw.close();}
+    });
+    final isolate=await DriftIsolate.spawn(()=>DatabaseConnection(LazyDatabase(() async {
+      final raw=sqlite3.open(path,mode:OpenMode.readOnly);
+      try {
+        raw.execute('PRAGMA query_only=ON');
+        final checked=validateContentSchema(raw,lang:lang);
+        if(checked.version!=info.version||checked.schemaVersion!=info.schemaVersion)throw StateError('Inhalt während Öffnung geändert.');
+        return NativeDatabase.opened(raw,enableMigrations:false);
+      }catch(_){raw.close();rethrow;}
+    })));
+    try {
+      final connection=await isolate.connect(singleClientMode:true);
+      final database=ContentDatabase._remote(connection.executor,info);
+      await database.customSelect('SELECT 1').getSingle();
+      return database;
+    }catch(_){await isolate.shutdownAll();rethrow;}
+  }
 
   /// Opens [file] read-only and validates it ([validateContentSchema]).
   static ContentDatabase open(File file, {required String lang}) {

@@ -17,10 +17,35 @@ import 'user_database.dart';
 
 /// [UserRepository] on the Drift user.db of one language.
 class DriftUserRepository implements UserRepository, StoryLearningRepository, ReviewActivityRepository, StoryContextCorrectionStore {
-  DriftUserRepository(this._db, {required this.lang});
+  DriftUserRepository(this._db, {required this.lang, this.ownsDatabase = true, this.contentIds});
+  final bool ownsDatabase;
+  final Future<Set<String>> Function(String kind)? contentIds;
 
   final UserDatabase _db;
   final String lang;
+
+  Future<void> _guardCards(Iterable<String> ids, {bool requireExisting = false}) async {
+    final requested = ids.toSet();
+    final found = <String>{};
+    for (final chunk in _chunks(requested)) {
+      final rows = await (_db.select(_db.userCards)..where((t) => t.cardId.isIn(chunk))).get();
+      for (final row in rows) {
+        if (row.lang != lang) throw StateError('Karte gehört zu einer anderen Sprache.');
+        found.add(row.cardId);
+      }
+    }
+    final missing = requested.difference(found);
+    if (requireExisting && missing.isNotEmpty) throw StateError('Karte nicht vorhanden.');
+    if (contentIds != null && missing.isNotEmpty && !(await contentIds!('cards')).containsAll(missing)) {
+      throw StateError('Karte gehört nicht zum gewählten Inhaltsbestand.');
+    }
+  }
+
+  Future<void> _guardDecks(Iterable<String> ids) async {
+    if (contentIds != null && !(await contentIds!('decks')).containsAll(ids)) {
+      throw StateError('Stapel gehört nicht zur gewählten Sprache.');
+    }
+  }
 
   static const _chunk = 500;
 
@@ -52,6 +77,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
   Future<Map<String, UserCardState>> cardStates(
     Iterable<String> cardIds,
   ) async {
+    await _guardCards(cardIds);
     final out = <String, UserCardState>{};
     for (final chunk in _chunks(cardIds)) {
       final rows = await (_db.select(
@@ -77,7 +103,8 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
     Iterable<String> cardIds, {
     required DateTime now,
     required CardOrigin origin,
-  }) async {
+  }) => _db.transaction(() async {
+    await _guardCards(cardIds);
     final at = now.toUtc();
     await _db.batch((b) {
       for (final id in cardIds.toSet()) {
@@ -95,14 +122,19 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
         );
       }
     });
-  }
+  });
 
   @override
   Future<bool> recordReview(ReviewRecord r) => _db.transaction(() async {
+    await _guardCards([r.cardId], requireExisting: true);
     final existing = await (_db.select(
       _db.reviewLog,
     )..where((t) => t.id.equals(r.id))).getSingleOrNull();
-    if (existing != null) return false;
+    if (existing != null) {
+      await _guardCards([existing.cardId], requireExisting: true);
+      if (existing.cardId != r.cardId) throw StateError('Review-ID bereits anders gebunden.');
+      return false;
+    }
     // The primary key on review_log.id guards duplicates at database level;
     // the check above turns a repeated call into a quiet no-op.
     await _db
@@ -155,6 +187,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
 
   @override
   Future<Map<String, int>> reviewCounts(Iterable<String> cardIds) async {
+    await _guardCards(cardIds);
     final out = <String, int>{};
     final count = _db.reviewLog.id.count();
     for (final chunk in _chunks(cardIds)) {
@@ -171,6 +204,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
 
   @override
   Future<List<ReviewRecord>> reviewsFor(String cardId) async {
+    await _guardCards([cardId]);
     final rows =
         await (_db.select(_db.reviewLog)
               ..where((t) => t.cardId.equals(cardId))
@@ -225,6 +259,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
 
   @override
   Future<Set<String>> activeDeckIds(Iterable<String> deckIds) async {
+    await _guardDecks(deckIds);
     final ids = deckIds.toSet();
     final off = await (_db.select(
       _db.deckSettings,
@@ -237,8 +272,9 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
     String deckId,
     bool active, {
     required DateTime now,
-  }) => _db
-      .into(_db.deckSettings)
+  }) async {
+    await _guardDecks([deckId]);
+    await _db.into(_db.deckSettings)
       .insertOnConflictUpdate(
         DeckSettingsCompanion.insert(
           deckId: deckId,
@@ -246,6 +282,8 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
           updatedAt: now.toUtc(),
         ),
       );
+
+  }
 
   @override
   Future<String> deviceId() => _db.transaction(() async {
@@ -275,6 +313,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
           _db.reviewLog,
           _db.deckSettings,
           _db.settings,
+          _db.languageLearningPreferences,
           _db.cardContexts,
           _db.storyLearningAdditions,
           _db.storyWordSources,
@@ -285,34 +324,36 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
       .map((_) {});
 
   @override
-  Future<void> close() => _db.close();
+  Future<void> close() async { if (ownsDatabase) await _db.close(); }
 
   @override
   Future<PracticePreferences> preferences() async {
     await deviceId();
     final r = await _db.select(_db.settings).getSingle();
+    final local = await (_db.select(_db.languageLearningPreferences)..where((t) => t.lang.equals(lang))).getSingleOrNull();
     return PracticePreferences(
       motif: AppMotif.values.byName(r.motif),
-      dailyGoal: r.dailyGoal,
-      includeDiacritics: r.includeDiacritics,
+      dailyGoal: local?.dailyGoal ?? 10,
+      includeDiacritics: local?.includeDiacritics ?? true,
       autoNext: r.autoNext,
-      showGrammar: r.showGrammar,
+      showGrammar: local?.showGrammar ?? false,
     );
   }
 
   @override
   Future<void> savePreferences(PracticePreferences value) async {
     await deviceId();
+    await _db.transaction(() async {
+    await _db.into(_db.languageLearningPreferences).insertOnConflictUpdate(LanguageLearningPreferencesCompanion.insert(
+      lang: lang, dailyGoal: Value(value.dailyGoal), includeDiacritics: Value(value.includeDiacritics), showGrammar: Value(value.showGrammar)));
     await (_db.update(_db.settings)..where((t) => t.id.equals(1))).write(
       SettingsCompanion(
         motif: Value(value.motif.name),
-        dailyGoal: Value(value.dailyGoal),
-        includeDiacritics: Value(value.includeDiacritics),
         autoNext: Value(value.autoNext),
-        showGrammar: Value(value.showGrammar),
         updatedAt: Value(DateTime.now().toUtc()),
       ),
     );
+    });
   }
 
   @override
@@ -323,6 +364,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
     bool? inPlaylist,
     String? note,
   }) async {
+    await _guardCards([cardId], requireExisting: true);
     final changed =
         await (_db.update(
           _db.userCards,
@@ -342,6 +384,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
 
   @override
   Future<void> saveSubmission(LocalSubmission s) async {
+    if (s.cardId != null) await _guardCards([s.cardId!]);
     if (s.text.characters.length > 2000 ||
         (s.rating != null && (s.rating! < 1 || s.rating! > 5)) ||
         (s.category == null && s.rating == null)) {
@@ -381,10 +424,11 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
       ),
   ];
   @override
-  Future<Map<String, DateTime>> explicitStoryAdditions() async => {
-    for (final row in await _db.select(_db.storyLearningAdditions).get())
-      row.cardId: row.addedAt.toLocal(),
-  };
+  Future<Map<String, DateTime>> explicitStoryAdditions() async {
+    final cards=await allCardStates();
+    return {for(final row in await _db.select(_db.storyLearningAdditions).get())
+      if(cards.containsKey(row.cardId)) row.cardId:row.addedAt.toLocal()};
+  }
   @override
   Future<Map<String, String>> identityBindings() async => {
     for (final row in await (_db.select(
@@ -514,6 +558,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
       return status;
     }
     final id = status.cardId!;
+    if (!id.startsWith('u:')) await _guardCards([id]);
     final existing = await (_db.select(
       _db.userCards,
     )..where((t) => t.cardId.equals(id))).getSingleOrNull();
@@ -797,7 +842,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
   ) async {
     final row =
         await (_db.select(_db.cardContexts)
-              ..where((t) => t.id.equals(contextId) & t.cardId.equals(cardId)))
+              ..where((t) => t.id.equals(contextId) & t.cardId.equals(cardId) & t.lang.equals(lang)))
             .getSingleOrNull();
     return row == null ? null : _context(row);
   }

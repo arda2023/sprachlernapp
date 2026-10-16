@@ -16,6 +16,7 @@ from ..language_profiles import canonical_language, get_profile, UnsupportedLang
 from ..word_registry import digest
 from .store import EditorStore, atomic_json, read_json, utc_now
 from .jobs import Jobs
+from .publisher import Publisher, inspect_bundle, FILES
 from .exchange import read_delivery, delivery_for_draft, authoring_context, template_delivery, write_zip, json_bytes
 from .xlsx import write_workbook
 
@@ -29,6 +30,7 @@ class EditorService:
             raw=self.source.read_bytes();base=json.loads(raw)
             self.install_base(base,raw)
         self._recover_receipts()
+        self.publisher=Publisher()
 
     def close(self):self.jobs.close();self.store.close()
 
@@ -57,6 +59,38 @@ class EditorService:
             except UnsupportedLanguage:state='draft';manifest=None
             result.append({**language,'state':state,'profile':manifest,'base':self.store.get('heads',language['lang'])})
         return result
+
+    def workspace_view(self, selection=None):
+        """Persist navigation only; never use it as a draft write/precondition."""
+        path=self.store.root/'workspace-view.json'
+        with self.store.mutex:
+            record=read_json(path) if path.exists() else {'workspace_id':str(uuid.uuid4()),'selection':{}}
+            chosen=copy.deepcopy(record['selection'] if selection is None else selection)
+            author.require(isinstance(chosen,dict) and set(chosen)<= {'lang','draft_id','deck','page'},
+                           'VIEW_INVALID','Ungültige Arbeitsansicht.')
+            languages={row['lang'] for row in self.languages()}
+            warning=None
+            lang=chosen.get('lang') or ('en' if 'en' in languages else sorted(languages)[0])
+            if lang not in languages:
+                lang='en' if 'en' in languages else sorted(languages)[0]
+                chosen={};warning='Die zuvor gewählte Sprache fehlt. Verfügbaren Bestand geöffnet.'
+            draft_id=chosen.get('draft_id');draft=None
+            if draft_id:
+                try:
+                    draft=self.store.load_draft(draft_id)
+                    if draft['lang']!=lang or draft.get('state')=='discarded':draft=None
+                except author.AuthoringError:draft=None
+                if draft is None:
+                    draft_id=None;warning='Der zuvor gewählte Entwurf ist nicht mehr verfügbar. Schreibgeschützten Bestand geöffnet.'
+            pack=self.projection(draft) if draft else self.base(lang)
+            deck=chosen.get('deck')
+            if deck and not any(d['ref']==deck and not d.get('removed_in') for d in pack['decks']):
+                deck=None;warning='Der zuvor gewählte Stapel fehlt. Alle Lernziele geöffnet.'
+            page=chosen.get('page','content')
+            if page not in ('content','imports','releases'):page='content'
+            record['selection']={'lang':lang,'draft_id':draft_id,'deck':deck,'page':page}
+            if selection is not None or not path.exists():atomic_json(path,record)
+            return {**record,'warning':warning}
 
     def create_language(self,data):
         lang=canonical_language(data['lang'])
@@ -378,7 +412,7 @@ class EditorService:
                     job.check_cancelled()
                     destination=self.store.root/'bundles'/release_id;destination.parent.mkdir(exist_ok=True);os.replace(temporary,destination)
                     record={'release_id':release_id,'lang':draft['lang'],'version':label,'path':str(destination.relative_to(self.store.root)),
-                        'draft_id':identifier,'created_at':utc_now(),'manifest':bundle['manifest'],'status':'verified'}
+                        'draft_id':identifier,'draft_etag':etag,'created_at':utc_now(),'manifest':bundle['manifest'],'status':'verified'}
                     self.store.put('releases',release_id,record)
                     self.install_base(bundle['pack'])
                 archive=shutil.make_archive(str(destination),'zip',destination)
@@ -388,6 +422,73 @@ class EditorService:
             finally:
                 if temporary.exists():shutil.rmtree(temporary)
         return self.jobs.submit('release',run)
+
+    def publish_release(self,identifier,phase):
+        author.require(phase in ('upload','finalize','commit'),'PUBLISH_PHASE','Unbekannter Veröffentlichungsschritt.')
+        record=self.store.get('releases',identifier)
+        def inspect():
+            draft=self.store.load_draft(record['draft_id'])
+            author.require(not record.get('draft_etag') or self.store.etag(draft)==record['draft_etag'],'REVIEW_STALE','Exportierte Entwurfsrevision wurde geändert. Erneut prüfen und exportieren.',status=409)
+            manifest,objects=inspect_bundle(self.store.root/record['path'],record,draft)
+            return draft,manifest,objects
+        inspect()
+        receipt_path=self.store.root/'publications'/(identifier+'.json')
+        def save(receipt):
+            receipt_path.parent.mkdir(exist_ok=True);atomic_json(receipt_path,receipt)
+            current=self.store.get('releases',identifier);current['publication']=receipt
+            self.store.put('releases',identifier,current)
+        def perform(job):
+            with self.store.mutex:
+                draft,manifest,objects=inspect()
+                receipt=read_json(receipt_path) if receipt_path.exists() else None
+                if receipt is None:
+                    author.require(phase=='upload','PUBLISH_ORDER','Zuerst hochladen.')
+                    channel=self.publisher.channel(draft['lang'])
+                    author.require(channel['generation']==0 or (channel['manifest']['version']==draft['base']['version'] and channel['manifest'].get('pack_canonical_sha256')==draft['base']['pack_canonical_sha256']),
+                        'PUBLISH_BASE_CHANGED','Private Kanalbasis weicht ab. Aktuelle Version übernehmen und Entwurf neu abgleichen.',status=409)
+                    receipt={'request_id':str(uuid.uuid4()),'commit_request_id':str(uuid.uuid4()),
+                        'expected_generation':channel['generation'],'parent_release_id':channel['release_id'],
+                        'parent_manifest_sha256':channel['manifest_sha256'],'status':'uploading'}
+                    save(receipt)
+            if phase=='upload':
+                job.progress('Unveränderliche private Dateien hochladen …')
+                result=self.publisher.call('start',{**{k:receipt[k] for k in ('request_id','expected_generation','parent_release_id','parent_manifest_sha256')},
+                    'lang':draft['lang'],'channel':'internal','manifest':manifest,'objects':objects})
+                receipt.update(upload_id=result['upload_id'],status=result['status']);save(receipt)
+                for index,(name,url) in enumerate(result['uploads'].items()):
+                    job.progress('Datei hochladen: '+name,index,len(FILES));inspect()
+                    self.publisher.upload(url,self.store.root/record['path']/name)
+                if receipt['status']=='uploading':receipt['status']='uploaded'
+                save(receipt)
+            elif phase=='finalize':
+                author.require(receipt.get('upload_id'),'PUBLISH_ORDER','Zuerst hochladen.')
+                for index in range(len(FILES)+1):
+                    job.progress('Server prüft Hashes und Freigabe …',index,len(FILES)+1);inspect()
+                    result=self.publisher.call(receipt['upload_id']+'/finalize')
+                    receipt['status']=result['status'];save(receipt)
+                    if result['status'] in ('ready','published'):break
+                author.require(receipt['status'] in ('ready','published'),'PUBLISH_PENDING','Prüfung noch nicht abgeschlossen. Erneut prüfen.',status=409)
+            else:
+                job.progress('Geprüfte Version atomar freigeben …')
+                # The draft lock covers the final revision check and CAS commit.
+                with self.store.mutex:
+                    inspect();job.check_cancelled()
+                    result=self.publisher.call(receipt['upload_id']+'/commit',{
+                        'expected_generation':receipt['expected_generation'],
+                        'expected_manifest_sha256':receipt['parent_manifest_sha256'],
+                        'request_id':receipt['commit_request_id']})
+                    receipt.update(status='published',result=result);save(receipt)
+            receipt.pop('last_error',None);save(receipt)
+            return receipt
+        def run(job):
+            try:return perform(job)
+            except Exception as error:
+                if receipt_path.exists():
+                    receipt=read_json(receipt_path)
+                    receipt['last_error']=error.finding() if isinstance(error,author.AuthoringError) else {'code':'PUBLISH_FAILED','message':'Veröffentlichung fehlgeschlagen. Lokale Version bleibt erhalten.'}
+                    save(receipt)
+                raise
+        return self.jobs.submit('private-'+phase,run)
 
     def staging_impact(self,identifier):
         release=self.store.get('releases',identifier);directory=self.store.root/release['path']

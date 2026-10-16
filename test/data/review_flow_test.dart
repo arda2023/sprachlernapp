@@ -180,8 +180,8 @@ void main() {
       expect(next.map((e) => e.cardId), ['card-goes']);
       expect(items['card-went']!.sentenceForPass(1).sentenceId, 's-went-1');
 
-      // A different asset version replaces only the closed content database.
-      // Real learner rows and append-only reviews survive the update byte-for-byte.
+      // A different bundled asset must not replace the pinned content generation.
+      // Real learner rows and append-only reviews survive the restart byte-for-byte.
       await user.close();
       final userFile = File('${support.path}/user.db');
       final savedUserBytes = userFile.readAsBytesSync();
@@ -201,7 +201,7 @@ void main() {
         db: updated,
         manifest: manifestFor(updated, version: 'mini-v2'),
       ).open();
-      expect(content.info.version, 'mini-v2');
+      expect(content.info.version, 'mini-v1');
       expect(userFile.readAsBytesSync(), savedUserBytes);
       user = openUser();
       expect((await user.cardStates(deckIds))['card-went']!.box, 3);

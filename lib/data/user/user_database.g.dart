@@ -18,7 +18,7 @@ class $UserCardsTable extends UserCards
     aliasedName,
     true,
     check: () => const CustomExpression(
-      "form_function IS NULL OR form_function IN ('base','past','past_participle')",
+      "form_function IS NULL OR length(trim(form_function)) > 0",
     ),
     type: DriftSqlType.string,
     requiredDuringInsert: false,
@@ -5592,8 +5592,7 @@ class $FormIdentityBindingsTable extends FormIdentityBindings
     'function',
     aliasedName,
     false,
-    check: () =>
-        const CustomExpression("function IN ('base','past','past_participle')"),
+    check: () => const CustomExpression("length(trim(function)) > 0"),
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
@@ -5972,6 +5971,339 @@ class FormIdentityBindingsCompanion extends UpdateCompanion<FormBindingRow> {
   }
 }
 
+class $LanguageLearningPreferencesTable extends LanguageLearningPreferences
+    with TableInfo<$LanguageLearningPreferencesTable, LanguagePreferenceRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LanguageLearningPreferencesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _langMeta = const VerificationMeta('lang');
+  @override
+  late final GeneratedColumn<String> lang = GeneratedColumn<String>(
+    'lang',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dailyGoalMeta = const VerificationMeta(
+    'dailyGoal',
+  );
+  @override
+  late final GeneratedColumn<int> dailyGoal = GeneratedColumn<int>(
+    'daily_goal',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(10),
+  );
+  static const VerificationMeta _includeDiacriticsMeta = const VerificationMeta(
+    'includeDiacritics',
+  );
+  @override
+  late final GeneratedColumn<bool> includeDiacritics = GeneratedColumn<bool>(
+    'include_diacritics',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("include_diacritics" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _showGrammarMeta = const VerificationMeta(
+    'showGrammar',
+  );
+  @override
+  late final GeneratedColumn<bool> showGrammar = GeneratedColumn<bool>(
+    'show_grammar',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("show_grammar" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    lang,
+    dailyGoal,
+    includeDiacritics,
+    showGrammar,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'language_learning_preferences';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<LanguagePreferenceRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('lang')) {
+      context.handle(
+        _langMeta,
+        lang.isAcceptableOrUnknown(data['lang']!, _langMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_langMeta);
+    }
+    if (data.containsKey('daily_goal')) {
+      context.handle(
+        _dailyGoalMeta,
+        dailyGoal.isAcceptableOrUnknown(data['daily_goal']!, _dailyGoalMeta),
+      );
+    }
+    if (data.containsKey('include_diacritics')) {
+      context.handle(
+        _includeDiacriticsMeta,
+        includeDiacritics.isAcceptableOrUnknown(
+          data['include_diacritics']!,
+          _includeDiacriticsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('show_grammar')) {
+      context.handle(
+        _showGrammarMeta,
+        showGrammar.isAcceptableOrUnknown(
+          data['show_grammar']!,
+          _showGrammarMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {lang};
+  @override
+  LanguagePreferenceRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LanguagePreferenceRow(
+      lang: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lang'],
+      )!,
+      dailyGoal: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}daily_goal'],
+      )!,
+      includeDiacritics: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}include_diacritics'],
+      )!,
+      showGrammar: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}show_grammar'],
+      )!,
+    );
+  }
+
+  @override
+  $LanguageLearningPreferencesTable createAlias(String alias) {
+    return $LanguageLearningPreferencesTable(attachedDatabase, alias);
+  }
+}
+
+class LanguagePreferenceRow extends DataClass
+    implements Insertable<LanguagePreferenceRow> {
+  final String lang;
+  final int dailyGoal;
+  final bool includeDiacritics;
+  final bool showGrammar;
+  const LanguagePreferenceRow({
+    required this.lang,
+    required this.dailyGoal,
+    required this.includeDiacritics,
+    required this.showGrammar,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['lang'] = Variable<String>(lang);
+    map['daily_goal'] = Variable<int>(dailyGoal);
+    map['include_diacritics'] = Variable<bool>(includeDiacritics);
+    map['show_grammar'] = Variable<bool>(showGrammar);
+    return map;
+  }
+
+  LanguageLearningPreferencesCompanion toCompanion(bool nullToAbsent) {
+    return LanguageLearningPreferencesCompanion(
+      lang: Value(lang),
+      dailyGoal: Value(dailyGoal),
+      includeDiacritics: Value(includeDiacritics),
+      showGrammar: Value(showGrammar),
+    );
+  }
+
+  factory LanguagePreferenceRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LanguagePreferenceRow(
+      lang: serializer.fromJson<String>(json['lang']),
+      dailyGoal: serializer.fromJson<int>(json['dailyGoal']),
+      includeDiacritics: serializer.fromJson<bool>(json['includeDiacritics']),
+      showGrammar: serializer.fromJson<bool>(json['showGrammar']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'lang': serializer.toJson<String>(lang),
+      'dailyGoal': serializer.toJson<int>(dailyGoal),
+      'includeDiacritics': serializer.toJson<bool>(includeDiacritics),
+      'showGrammar': serializer.toJson<bool>(showGrammar),
+    };
+  }
+
+  LanguagePreferenceRow copyWith({
+    String? lang,
+    int? dailyGoal,
+    bool? includeDiacritics,
+    bool? showGrammar,
+  }) => LanguagePreferenceRow(
+    lang: lang ?? this.lang,
+    dailyGoal: dailyGoal ?? this.dailyGoal,
+    includeDiacritics: includeDiacritics ?? this.includeDiacritics,
+    showGrammar: showGrammar ?? this.showGrammar,
+  );
+  LanguagePreferenceRow copyWithCompanion(
+    LanguageLearningPreferencesCompanion data,
+  ) {
+    return LanguagePreferenceRow(
+      lang: data.lang.present ? data.lang.value : this.lang,
+      dailyGoal: data.dailyGoal.present ? data.dailyGoal.value : this.dailyGoal,
+      includeDiacritics: data.includeDiacritics.present
+          ? data.includeDiacritics.value
+          : this.includeDiacritics,
+      showGrammar: data.showGrammar.present
+          ? data.showGrammar.value
+          : this.showGrammar,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LanguagePreferenceRow(')
+          ..write('lang: $lang, ')
+          ..write('dailyGoal: $dailyGoal, ')
+          ..write('includeDiacritics: $includeDiacritics, ')
+          ..write('showGrammar: $showGrammar')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(lang, dailyGoal, includeDiacritics, showGrammar);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LanguagePreferenceRow &&
+          other.lang == this.lang &&
+          other.dailyGoal == this.dailyGoal &&
+          other.includeDiacritics == this.includeDiacritics &&
+          other.showGrammar == this.showGrammar);
+}
+
+class LanguageLearningPreferencesCompanion
+    extends UpdateCompanion<LanguagePreferenceRow> {
+  final Value<String> lang;
+  final Value<int> dailyGoal;
+  final Value<bool> includeDiacritics;
+  final Value<bool> showGrammar;
+  final Value<int> rowid;
+  const LanguageLearningPreferencesCompanion({
+    this.lang = const Value.absent(),
+    this.dailyGoal = const Value.absent(),
+    this.includeDiacritics = const Value.absent(),
+    this.showGrammar = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LanguageLearningPreferencesCompanion.insert({
+    required String lang,
+    this.dailyGoal = const Value.absent(),
+    this.includeDiacritics = const Value.absent(),
+    this.showGrammar = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : lang = Value(lang);
+  static Insertable<LanguagePreferenceRow> custom({
+    Expression<String>? lang,
+    Expression<int>? dailyGoal,
+    Expression<bool>? includeDiacritics,
+    Expression<bool>? showGrammar,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (lang != null) 'lang': lang,
+      if (dailyGoal != null) 'daily_goal': dailyGoal,
+      if (includeDiacritics != null) 'include_diacritics': includeDiacritics,
+      if (showGrammar != null) 'show_grammar': showGrammar,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LanguageLearningPreferencesCompanion copyWith({
+    Value<String>? lang,
+    Value<int>? dailyGoal,
+    Value<bool>? includeDiacritics,
+    Value<bool>? showGrammar,
+    Value<int>? rowid,
+  }) {
+    return LanguageLearningPreferencesCompanion(
+      lang: lang ?? this.lang,
+      dailyGoal: dailyGoal ?? this.dailyGoal,
+      includeDiacritics: includeDiacritics ?? this.includeDiacritics,
+      showGrammar: showGrammar ?? this.showGrammar,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (lang.present) {
+      map['lang'] = Variable<String>(lang.value);
+    }
+    if (dailyGoal.present) {
+      map['daily_goal'] = Variable<int>(dailyGoal.value);
+    }
+    if (includeDiacritics.present) {
+      map['include_diacritics'] = Variable<bool>(includeDiacritics.value);
+    }
+    if (showGrammar.present) {
+      map['show_grammar'] = Variable<bool>(showGrammar.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LanguageLearningPreferencesCompanion(')
+          ..write('lang: $lang, ')
+          ..write('dailyGoal: $dailyGoal, ')
+          ..write('includeDiacritics: $includeDiacritics, ')
+          ..write('showGrammar: $showGrammar, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$UserDatabase extends GeneratedDatabase {
   _$UserDatabase(QueryExecutor e) : super(e);
   late final $UserCardsTable userCards = $UserCardsTable(this);
@@ -5991,6 +6323,8 @@ abstract class _$UserDatabase extends GeneratedDatabase {
       $LearningIdentityBindingsTable(this);
   late final $FormIdentityBindingsTable formIdentityBindings =
       $FormIdentityBindingsTable(this);
+  late final $LanguageLearningPreferencesTable languageLearningPreferences =
+      $LanguageLearningPreferencesTable(this);
   late final Index reviewLogCard = Index(
     'review_log_card',
     'CREATE INDEX review_log_card ON review_log (card_id)',
@@ -6010,6 +6344,7 @@ abstract class _$UserDatabase extends GeneratedDatabase {
     storyWordSources,
     learningIdentityBindings,
     formIdentityBindings,
+    languageLearningPreferences,
     reviewLogCard,
   ];
   @override

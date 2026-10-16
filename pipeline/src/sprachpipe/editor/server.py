@@ -145,6 +145,14 @@ class Handler(BaseHTTPRequestHandler):
         parts=[unquote(p) for p in path.removeprefix('/api/v1/').split('/')]
         require(path.startswith('/api/v1/'),'NOT_FOUND','Route nicht gefunden.',status=404)
         def draft_response(draft):return draft,200,{'ETag':store.etag(draft)}
+        if parts==['publisher'] and get:return service.publisher.status(),200,{}
+        if len(parts)==2 and parts[0]=='publisher' and not get:
+            if parts[1]=='otp':return service.publisher.request_otp(data['email']),200,{}
+            if parts[1]=='verify':return service.publisher.verify_otp(data['email'],data['code']),200,{}
+            if parts[1]=='logout':return service.publisher.sign_out(),200,{}
+        if len(parts)==4 and parts[0]=='releases' and parts[2]=='publish' and not get:
+            return service.publish_release(parts[1],parts[3]),202,{}
+        if parts==['workspace-view']:return service.workspace_view(None if get else data.get('selection',{})),200,{}
         if parts==['languages']:return (service.languages() if get else service.create_language(data)),200,{}
         if parts==['catalog'] and get:return service.catalog(query['lang'],draft_id=query.get('draft_id'),query=query.get('q',''),deck=query.get('deck'),cursor=query.get('cursor',0),limit=query.get('limit',50),status=query.get('status','active')),200,{}
         if parts==['drafts']:

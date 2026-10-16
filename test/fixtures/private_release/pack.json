@@ -1,0 +1,3046 @@
+{
+  "card_lexical_targets": [
+    {
+      "card": "go-base",
+      "lexical_target": "go",
+      "note": "synthetic"
+    },
+    {
+      "card": "cut-old",
+      "lexical_target": "cut",
+      "note": "synthetic"
+    },
+    {
+      "card": "run-base",
+      "lexical_target": "run",
+      "note": "synthetic"
+    },
+    {
+      "card": "go-past",
+      "lexical_target": "go",
+      "note": "synthetic"
+    },
+    {
+      "card": "cut-past",
+      "lexical_target": "cut",
+      "note": "synthetic"
+    },
+    {
+      "card": "run-past",
+      "lexical_target": "run",
+      "note": "synthetic"
+    },
+    {
+      "card": "go-past_participle",
+      "lexical_target": "go",
+      "note": "synthetic"
+    },
+    {
+      "card": "cut-past_participle",
+      "lexical_target": "cut",
+      "note": "synthetic"
+    },
+    {
+      "card": "run-past_participle",
+      "lexical_target": "run",
+      "note": "synthetic"
+    }
+  ],
+  "card_sentences": [
+    {
+      "accepted": [
+        "cut"
+      ],
+      "card": "cut-old",
+      "gap_end": 8,
+      "gap_start": 5,
+      "position": 1,
+      "sentence": "cut-old-sentence",
+      "valid_alternatives": []
+    },
+    {
+      "accepted": [
+        "go"
+      ],
+      "card": "go-base",
+      "gap_end": 7,
+      "gap_start": 5,
+      "position": 1,
+      "sentence": "go-base-sentence",
+      "valid_alternatives": []
+    },
+    {
+      "accepted": [
+        "run"
+      ],
+      "card": "run-base",
+      "gap_end": 8,
+      "gap_start": 5,
+      "position": 1,
+      "sentence": "run-base-sentence",
+      "valid_alternatives": []
+    },
+    {
+      "accepted": [
+        "went"
+      ],
+      "card": "go-past",
+      "gap_end": 9,
+      "gap_start": 5,
+      "position": 1,
+      "sentence": "go-past-sentence",
+      "valid_alternatives": []
+    },
+    {
+      "accepted": [
+        "cut"
+      ],
+      "card": "cut-past",
+      "gap_end": 18,
+      "gap_start": 15,
+      "position": 1,
+      "sentence": "cut-past-sentence",
+      "valid_alternatives": []
+    },
+    {
+      "accepted": [
+        "ran"
+      ],
+      "card": "run-past",
+      "gap_end": 8,
+      "gap_start": 5,
+      "position": 1,
+      "sentence": "run-past-sentence",
+      "valid_alternatives": []
+    },
+    {
+      "accepted": [
+        "gone"
+      ],
+      "card": "go-past_participle",
+      "gap_end": 14,
+      "gap_start": 10,
+      "position": 1,
+      "sentence": "go-past_participle-sentence",
+      "valid_alternatives": []
+    },
+    {
+      "accepted": [
+        "cut"
+      ],
+      "card": "cut-past_participle",
+      "gap_end": 13,
+      "gap_start": 10,
+      "position": 1,
+      "sentence": "cut-past_participle-sentence",
+      "valid_alternatives": []
+    },
+    {
+      "accepted": [
+        "run"
+      ],
+      "card": "run-past_participle",
+      "gap_end": 13,
+      "gap_start": 10,
+      "position": 1,
+      "sentence": "run-past_participle-sentence",
+      "valid_alternatives": []
+    },
+    {
+      "accepted": [
+        "they"
+      ],
+      "card": "they",
+      "gap_end": 4,
+      "gap_start": 0,
+      "position": 1,
+      "sentence": "cut-old-sentence",
+      "valid_alternatives": []
+    },
+    {
+      "accepted": [
+        "cut"
+      ],
+      "card": "cut-other",
+      "gap_end": 8,
+      "gap_start": 5,
+      "position": 1,
+      "sentence": "other-exercise",
+      "valid_alternatives": [
+        "run"
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "cefr_band": "anfaenger",
+      "form": "cut",
+      "form_kind": "base",
+      "form_label_de": "Verb, Grundform",
+      "learning": {
+        "group_id": "en:card:703a8ba5ce579c60afbcc4e87dc64e10",
+        "note": "synthetic",
+        "primary_card_id": "703a8ba5ce579c60afbcc4e87dc64e10",
+        "related": [
+          "family:cut"
+        ],
+        "topic": "test"
+      },
+      "ref": "cut-old",
+      "sense": "cut",
+      "translation_de": "Test"
+    },
+    {
+      "cefr_band": "anfaenger",
+      "form": "go",
+      "form_kind": "base",
+      "form_label_de": "Verb, base",
+      "identity_function": "base",
+      "introduction_scope": "form_only",
+      "learning": {
+        "group_id": "en:card:61ee58a531ddc9d1a0a7ff82ead3deaf",
+        "note": "synthetic",
+        "primary_card_id": "61ee58a531ddc9d1a0a7ff82ead3deaf",
+        "related": [
+          "family:go"
+        ],
+        "topic": "test"
+      },
+      "ref": "go-base",
+      "sense": "go",
+      "translation_de": "Test"
+    },
+    {
+      "cefr_band": "anfaenger",
+      "form": "run",
+      "form_kind": "base",
+      "form_label_de": "Verb, base",
+      "identity_function": "base",
+      "introduction_scope": "form_only",
+      "learning": {
+        "group_id": "en:card:cc6db1071bbeffac24a6c434d61a501e",
+        "note": "synthetic",
+        "primary_card_id": "cc6db1071bbeffac24a6c434d61a501e",
+        "related": [
+          "family:run"
+        ],
+        "topic": "test"
+      },
+      "ref": "run-base",
+      "sense": "run",
+      "translation_de": "Test"
+    },
+    {
+      "cefr_band": "anfaenger",
+      "form": "went",
+      "form_kind": "past",
+      "form_label_de": "Verb, past",
+      "identity_function": "past",
+      "introduction_scope": "form_only",
+      "learning": {
+        "group_id": "en:card:e575ccb506b4dd911cc4a9cc32e61ce8",
+        "note": "synthetic",
+        "primary_card_id": "e575ccb506b4dd911cc4a9cc32e61ce8",
+        "related": [
+          "family:go"
+        ],
+        "topic": "test"
+      },
+      "ref": "go-past",
+      "sense": "go",
+      "translation_de": "Test"
+    },
+    {
+      "cefr_band": "anfaenger",
+      "form": "cut",
+      "form_kind": "past",
+      "form_label_de": "Verb, past",
+      "identity_function": "past",
+      "introduction_scope": "form_only",
+      "learning": {
+        "group_id": "en:card:8e0c9de036c8be97761550af31d871e4",
+        "note": "synthetic",
+        "primary_card_id": "8e0c9de036c8be97761550af31d871e4",
+        "related": [
+          "family:cut"
+        ],
+        "topic": "test"
+      },
+      "ref": "cut-past",
+      "sense": "cut",
+      "translation_de": "Test"
+    },
+    {
+      "cefr_band": "anfaenger",
+      "form": "ran",
+      "form_kind": "past",
+      "form_label_de": "Verb, past",
+      "identity_function": "past",
+      "introduction_scope": "form_only",
+      "learning": {
+        "group_id": "en:card:cff0b7132e4e3128dfcc382e4d6606c3",
+        "note": "synthetic",
+        "primary_card_id": "cff0b7132e4e3128dfcc382e4d6606c3",
+        "related": [
+          "family:run"
+        ],
+        "topic": "test"
+      },
+      "ref": "run-past",
+      "sense": "run",
+      "translation_de": "Test"
+    },
+    {
+      "cefr_band": "anfaenger",
+      "form": "gone",
+      "form_kind": "past_participle",
+      "form_label_de": "Verb, past_participle",
+      "identity_function": "past_participle",
+      "introduction_scope": "form_only",
+      "learning": {
+        "group_id": "en:card:7a63350e83ee03d8cc7f10448e92e156",
+        "note": "synthetic",
+        "primary_card_id": "7a63350e83ee03d8cc7f10448e92e156",
+        "related": [
+          "family:go"
+        ],
+        "topic": "test"
+      },
+      "ref": "go-past_participle",
+      "sense": "go",
+      "translation_de": "Test"
+    },
+    {
+      "cefr_band": "anfaenger",
+      "form": "cut",
+      "form_kind": "past_participle",
+      "form_label_de": "Verb, past_participle",
+      "identity_function": "past_participle",
+      "introduction_scope": "form_only",
+      "learning": {
+        "group_id": "en:card:66d638c1f77b6047f2e1f7eaaf4871d8",
+        "note": "synthetic",
+        "primary_card_id": "66d638c1f77b6047f2e1f7eaaf4871d8",
+        "related": [
+          "family:cut"
+        ],
+        "topic": "test"
+      },
+      "ref": "cut-past_participle",
+      "sense": "cut",
+      "translation_de": "Test"
+    },
+    {
+      "cefr_band": "anfaenger",
+      "form": "run",
+      "form_kind": "past_participle",
+      "form_label_de": "Verb, past_participle",
+      "identity_function": "past_participle",
+      "introduction_scope": "form_only",
+      "learning": {
+        "group_id": "en:card:ffa614840e958a2e9cf2bca52a96345b",
+        "note": "synthetic",
+        "primary_card_id": "ffa614840e958a2e9cf2bca52a96345b",
+        "related": [
+          "family:run"
+        ],
+        "topic": "test"
+      },
+      "ref": "run-past_participle",
+      "sense": "run",
+      "translation_de": "Test"
+    },
+    {
+      "cefr_band": "anfaenger",
+      "form": "cut",
+      "learning": {
+        "group_id": "en:card:bb853638e2ff390b9781f49845556a61",
+        "note": "synthetic singleton",
+        "primary_card_id": "bb853638e2ff390b9781f49845556a61",
+        "related": [],
+        "topic": "test"
+      },
+      "ref": "cut-other",
+      "sense": "cut-other",
+      "translation_de": "kürzen"
+    },
+    {
+      "cefr_band": "anfaenger",
+      "form": "they",
+      "learning": {
+        "group_id": "en:card:8360507bbbd402a88b860d9f9d968050",
+        "note": "shared sentence",
+        "primary_card_id": "8360507bbbd402a88b860d9f9d968050",
+        "related": [],
+        "topic": "test"
+      },
+      "ref": "they",
+      "sense": "they",
+      "translation_de": "sie"
+    }
+  ],
+  "deck_cards": [
+    {
+      "card": "cut-old",
+      "deck": "owner",
+      "position": 1
+    },
+    {
+      "card": "go-base",
+      "deck": "owner",
+      "position": 2
+    },
+    {
+      "card": "run-base",
+      "deck": "owner",
+      "position": 3
+    },
+    {
+      "card": "go-past",
+      "deck": "owner",
+      "position": 4
+    },
+    {
+      "card": "run-past",
+      "deck": "owner",
+      "position": 5
+    },
+    {
+      "card": "go-past_participle",
+      "deck": "owner",
+      "position": 6
+    },
+    {
+      "card": "they",
+      "deck": "owner",
+      "position": 7
+    }
+  ],
+  "deck_practice_targets": [
+    {
+      "deck": "base",
+      "form_target": "go-base",
+      "position": 1
+    },
+    {
+      "deck": "base-again",
+      "form_target": "go-base",
+      "position": 1
+    },
+    {
+      "deck": "base",
+      "form_target": "cut-base",
+      "position": 2
+    },
+    {
+      "deck": "base-again",
+      "form_target": "cut-base",
+      "position": 2
+    },
+    {
+      "deck": "base",
+      "form_target": "run-base",
+      "position": 3
+    },
+    {
+      "deck": "base-again",
+      "form_target": "run-base",
+      "position": 3
+    },
+    {
+      "deck": "past",
+      "form_target": "go-past",
+      "position": 1
+    },
+    {
+      "deck": "past",
+      "form_target": "cut-past",
+      "position": 2
+    },
+    {
+      "deck": "past",
+      "form_target": "run-past",
+      "position": 3
+    },
+    {
+      "deck": "past_participle",
+      "form_target": "go-past_participle",
+      "position": 1
+    },
+    {
+      "deck": "past_participle",
+      "form_target": "cut-past_participle",
+      "position": 2
+    },
+    {
+      "deck": "past_participle",
+      "form_target": "run-past_participle",
+      "position": 3
+    }
+  ],
+  "deck_words": [
+    {
+      "deck": "owner",
+      "form_norm": "cut",
+      "position": 1,
+      "primary_card": "cut-old"
+    },
+    {
+      "deck": "owner",
+      "form_norm": "go",
+      "position": 2,
+      "primary_card": "go-base"
+    },
+    {
+      "deck": "owner",
+      "form_norm": "run",
+      "position": 3,
+      "primary_card": "run-base"
+    },
+    {
+      "deck": "owner",
+      "form_norm": "went",
+      "position": 4,
+      "primary_card": "go-past"
+    },
+    {
+      "deck": "owner",
+      "form_norm": "ran",
+      "position": 5,
+      "primary_card": "run-past"
+    },
+    {
+      "deck": "owner",
+      "form_norm": "gone",
+      "position": 6,
+      "primary_card": "go-past_participle"
+    },
+    {
+      "deck": "owner",
+      "form_norm": "they",
+      "position": 7,
+      "primary_card": "they"
+    }
+  ],
+  "decks": [
+    {
+      "ref": "owner",
+      "slug": "owner",
+      "sort": 1,
+      "title_de": "Synthetischer Besitzer"
+    },
+    {
+      "practice_kind": "verb_base",
+      "ref": "base",
+      "slug": "base",
+      "sort": 2,
+      "title_de": "Test base"
+    },
+    {
+      "practice_kind": "verb_past",
+      "ref": "past",
+      "slug": "past",
+      "sort": 3,
+      "title_de": "Test past"
+    },
+    {
+      "practice_kind": "verb_participle",
+      "ref": "past_participle",
+      "slug": "past_participle",
+      "sort": 4,
+      "title_de": "Test past_participle"
+    },
+    {
+      "practice_kind": "verb_base",
+      "ref": "base-again",
+      "slug": "base-again",
+      "sort": 5,
+      "title_de": "Same exercise again"
+    }
+  ],
+  "dictionary_forms": [
+    {
+      "form": "go",
+      "gloss_de": "Test",
+      "rank": 1,
+      "sense": "go"
+    },
+    {
+      "form": "went",
+      "gloss_de": "Test",
+      "rank": 1,
+      "sense": "go"
+    },
+    {
+      "form": "gone",
+      "gloss_de": "Test",
+      "rank": 1,
+      "sense": "go"
+    },
+    {
+      "form": "cut",
+      "gloss_de": "Test",
+      "rank": 1,
+      "sense": "cut"
+    },
+    {
+      "form": "run",
+      "gloss_de": "Test",
+      "rank": 1,
+      "sense": "run"
+    },
+    {
+      "form": "ran",
+      "gloss_de": "Test",
+      "rank": 1,
+      "sense": "run"
+    },
+    {
+      "form": "they",
+      "gloss_de": "Test",
+      "rank": 1,
+      "sense": "they"
+    },
+    {
+      "form": "paper",
+      "gloss_de": "Test",
+      "rank": 1,
+      "sense": "paper"
+    },
+    {
+      "form": "home",
+      "gloss_de": "Test",
+      "rank": 1,
+      "sense": "home"
+    },
+    {
+      "form": "yesterday",
+      "gloss_de": "Test",
+      "rank": 1,
+      "sense": "yesterday"
+    },
+    {
+      "form": "have",
+      "gloss_de": "Test",
+      "rank": 1,
+      "sense": "have"
+    },
+    {
+      "form": "daily",
+      "gloss_de": "Test",
+      "rank": 1,
+      "sense": "daily"
+    },
+    {
+      "form": "cut",
+      "gloss_de": "kürzen",
+      "rank": 1,
+      "sense": "cut-other"
+    }
+  ],
+  "editor_history": {
+    "baseline_gaps": [],
+    "story_source_snapshots": [
+      {
+        "identity_key": "96682cc310ce366c49b70e81a2367e0c164b6af35e77bdefaa3970e8711123bf",
+        "lang": "en",
+        "other_forms": [],
+        "practice_context": {
+          "sentence": {
+            "id": "synthetic-context-a",
+            "paragraph": 0,
+            "text": "They cut yesterday.",
+            "tokens": [
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": "Synthetische Testbedeutung",
+                "end": 4,
+                "function": null,
+                "gloss": "Test",
+                "index": 0,
+                "lemma": "they",
+                "lemma_id": "9bb3e7f2ae9199f68ace6fc19e638009",
+                "lexical_id": null,
+                "pos": "PRON",
+                "sense_id": "971afdfdbe108c5e5553ae22729d23a9",
+                "sense_key": "they#fixture",
+                "start": 0,
+                "surface": "They"
+              },
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": "Eine andere synthetische Bedeutung.",
+                "end": 8,
+                "function": null,
+                "gloss": "kürzen",
+                "index": 1,
+                "lemma": "cut",
+                "lemma_id": "ef1204e9b93c94a05fc15861e1017827",
+                "lexical_id": null,
+                "pos": "VERB",
+                "sense_id": "c9584b4104ea477abf383027415c5856",
+                "sense_key": "cut#other",
+                "start": 5,
+                "surface": "cut"
+              },
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": "Synthetische Testbedeutung",
+                "end": 18,
+                "function": null,
+                "gloss": "Test",
+                "index": 2,
+                "lemma": "yesterday",
+                "lemma_id": "f0c8fe04b854b3b86b727c81b46e94b3",
+                "lexical_id": null,
+                "pos": "ADV",
+                "sense_id": "a63e365108f3259703cd3f8938670020",
+                "sense_key": "yesterday#fixture",
+                "start": 9,
+                "surface": "yesterday"
+              },
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": null,
+                "end": 19,
+                "function": null,
+                "gloss": null,
+                "index": 3,
+                "lemma": null,
+                "lemma_id": null,
+                "lexical_id": null,
+                "pos": null,
+                "sense_id": null,
+                "sense_key": null,
+                "start": 18,
+                "surface": "."
+              }
+            ],
+            "translation": "Synthetischer Satz."
+          },
+          "token_index": 2
+        },
+        "revision": "synthetic-editor-a",
+        "sentence": {
+          "id": "28e49c6676ac5cb4fc0cc3e44e2b85c2",
+          "paragraph": 0,
+          "text": "They cut yesterday.",
+          "tokens": [
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": "Synthetische Testbedeutung",
+              "end": 4,
+              "function": null,
+              "gloss": "Test",
+              "index": 0,
+              "lemma": "they",
+              "lemma_id": "9bb3e7f2ae9199f68ace6fc19e638009",
+              "lexical_id": null,
+              "pos": "PRON",
+              "sense_id": "971afdfdbe108c5e5553ae22729d23a9",
+              "sense_key": "they#fixture",
+              "start": 0,
+              "surface": "They"
+            },
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": "Eine andere synthetische Bedeutung.",
+              "end": 8,
+              "function": null,
+              "gloss": "kürzen",
+              "index": 1,
+              "lemma": "cut",
+              "lemma_id": "ef1204e9b93c94a05fc15861e1017827",
+              "lexical_id": null,
+              "pos": "VERB",
+              "sense_id": "c9584b4104ea477abf383027415c5856",
+              "sense_key": "cut#other",
+              "start": 5,
+              "surface": "cut"
+            },
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": "Synthetische Testbedeutung",
+              "end": 18,
+              "function": null,
+              "gloss": "Test",
+              "index": 2,
+              "lemma": "yesterday",
+              "lemma_id": "f0c8fe04b854b3b86b727c81b46e94b3",
+              "lexical_id": null,
+              "pos": "ADV",
+              "sense_id": "a63e365108f3259703cd3f8938670020",
+              "sense_key": "yesterday#fixture",
+              "start": 9,
+              "surface": "yesterday"
+            },
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": null,
+              "end": 19,
+              "function": null,
+              "gloss": null,
+              "index": 3,
+              "lemma": null,
+              "lemma_id": null,
+              "lexical_id": null,
+              "pos": null,
+              "sense_id": null,
+              "sense_key": null,
+              "start": 18,
+              "surface": "."
+            }
+          ],
+          "translation": "Synthetischer Satz."
+        },
+        "source_fingerprint": "540d5b09c23dedb241be8bedf2e32ad6e8be65a0be2063174084c238b0bc3f8f",
+        "source_key": "4afe58e2317290a4b2390be602c4af7ffcbb6762a618e8a65f7004479e0d1182",
+        "story_id": "e1d54b8628ab3be13e50f24e1ca67e67",
+        "token_index": 2
+      },
+      {
+        "identity_key": "96682cc310ce366c49b70e81a2367e0c164b6af35e77bdefaa3970e8711123bf",
+        "lang": "en",
+        "other_forms": [],
+        "practice_context": {
+          "sentence": {
+            "id": "context:20678bd2be95949dc61846ee7c094bbec4693798aff58789770e9b5ea4576110",
+            "paragraph": 0,
+            "text": "They cut yesterday.",
+            "tokens": [
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": "Synthetische Testbedeutung",
+                "end": 4,
+                "function": null,
+                "gloss": "Test",
+                "index": 0,
+                "lemma": "they",
+                "lemma_id": "9bb3e7f2ae9199f68ace6fc19e638009",
+                "lexical_id": null,
+                "pos": "PRON",
+                "sense_id": "971afdfdbe108c5e5553ae22729d23a9",
+                "sense_key": "they#fixture",
+                "start": 0,
+                "surface": "They"
+              },
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": "Eine andere synthetische Bedeutung.",
+                "end": 8,
+                "function": null,
+                "gloss": "kürzen",
+                "index": 1,
+                "lemma": "cut",
+                "lemma_id": "ef1204e9b93c94a05fc15861e1017827",
+                "lexical_id": null,
+                "pos": "VERB",
+                "sense_id": "c9584b4104ea477abf383027415c5856",
+                "sense_key": "cut#other",
+                "start": 5,
+                "surface": "cut"
+              },
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": "Synthetische Testbedeutung",
+                "end": 18,
+                "function": null,
+                "gloss": "Test",
+                "index": 2,
+                "lemma": "yesterday",
+                "lemma_id": "f0c8fe04b854b3b86b727c81b46e94b3",
+                "lexical_id": null,
+                "pos": "ADV",
+                "sense_id": "a63e365108f3259703cd3f8938670020",
+                "sense_key": "yesterday#fixture",
+                "start": 9,
+                "surface": "yesterday"
+              },
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": null,
+                "end": 19,
+                "function": null,
+                "gloss": null,
+                "index": 3,
+                "lemma": null,
+                "lemma_id": null,
+                "lexical_id": null,
+                "pos": null,
+                "sense_id": null,
+                "sense_key": null,
+                "start": 18,
+                "surface": "."
+              }
+            ],
+            "translation": "Synthetische Storykorrektur im Browser."
+          },
+          "token_index": 2
+        },
+        "revision": "synthetic-story-browser-v1",
+        "sentence": {
+          "id": "28e49c6676ac5cb4fc0cc3e44e2b85c2",
+          "paragraph": 0,
+          "text": "They cut yesterday.",
+          "tokens": [
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": "Synthetische Testbedeutung",
+              "end": 4,
+              "function": null,
+              "gloss": "Test",
+              "index": 0,
+              "lemma": "they",
+              "lemma_id": "9bb3e7f2ae9199f68ace6fc19e638009",
+              "lexical_id": null,
+              "pos": "PRON",
+              "sense_id": "971afdfdbe108c5e5553ae22729d23a9",
+              "sense_key": "they#fixture",
+              "start": 0,
+              "surface": "They"
+            },
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": "Eine andere synthetische Bedeutung.",
+              "end": 8,
+              "function": null,
+              "gloss": "kürzen",
+              "index": 1,
+              "lemma": "cut",
+              "lemma_id": "ef1204e9b93c94a05fc15861e1017827",
+              "lexical_id": null,
+              "pos": "VERB",
+              "sense_id": "c9584b4104ea477abf383027415c5856",
+              "sense_key": "cut#other",
+              "start": 5,
+              "surface": "cut"
+            },
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": "Synthetische Testbedeutung",
+              "end": 18,
+              "function": null,
+              "gloss": "Test",
+              "index": 2,
+              "lemma": "yesterday",
+              "lemma_id": "f0c8fe04b854b3b86b727c81b46e94b3",
+              "lexical_id": null,
+              "pos": "ADV",
+              "sense_id": "a63e365108f3259703cd3f8938670020",
+              "sense_key": "yesterday#fixture",
+              "start": 9,
+              "surface": "yesterday"
+            },
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": null,
+              "end": 19,
+              "function": null,
+              "gloss": null,
+              "index": 3,
+              "lemma": null,
+              "lemma_id": null,
+              "lexical_id": null,
+              "pos": null,
+              "sense_id": null,
+              "sense_key": null,
+              "start": 18,
+              "surface": "."
+            }
+          ],
+          "translation": "Synthetischer Satz."
+        },
+        "source_fingerprint": "c68ae54502ed28fa02befa8cbfc2b3f56f0dca8a77f9aaad59fe839c623a910a",
+        "source_key": "4afe58e2317290a4b2390be602c4af7ffcbb6762a618e8a65f7004479e0d1182",
+        "story_id": "e1d54b8628ab3be13e50f24e1ca67e67",
+        "token_index": 2
+      }
+    ]
+  },
+  "form_targets": [
+    {
+      "card": "go-base",
+      "form": "go",
+      "function": "base",
+      "lexical_target": "go",
+      "note": "synthetic function",
+      "ref": "go-base",
+      "sense": "go"
+    },
+    {
+      "card": "cut-old",
+      "form": "cut",
+      "function": "base",
+      "lexical_target": "cut",
+      "note": "synthetic function",
+      "ref": "cut-base",
+      "sense": "cut"
+    },
+    {
+      "card": "run-base",
+      "form": "run",
+      "function": "base",
+      "lexical_target": "run",
+      "note": "synthetic function",
+      "ref": "run-base",
+      "sense": "run"
+    },
+    {
+      "card": "go-past",
+      "form": "went",
+      "function": "past",
+      "lexical_target": "go",
+      "note": "synthetic function",
+      "ref": "go-past",
+      "sense": "go"
+    },
+    {
+      "card": "cut-past",
+      "form": "cut",
+      "function": "past",
+      "lexical_target": "cut",
+      "note": "synthetic function",
+      "ref": "cut-past",
+      "sense": "cut"
+    },
+    {
+      "card": "run-past",
+      "form": "ran",
+      "function": "past",
+      "lexical_target": "run",
+      "note": "synthetic function",
+      "ref": "run-past",
+      "sense": "run"
+    },
+    {
+      "card": "go-past_participle",
+      "form": "gone",
+      "function": "past_participle",
+      "lexical_target": "go",
+      "note": "synthetic function",
+      "ref": "go-past_participle",
+      "sense": "go"
+    },
+    {
+      "card": "cut-past_participle",
+      "form": "cut",
+      "function": "past_participle",
+      "lexical_target": "cut",
+      "note": "synthetic function",
+      "ref": "cut-past_participle",
+      "sense": "cut"
+    },
+    {
+      "card": "run-past_participle",
+      "form": "run",
+      "function": "past_participle",
+      "lexical_target": "run",
+      "note": "synthetic function",
+      "ref": "run-past_participle",
+      "sense": "run"
+    }
+  ],
+  "lang": "en",
+  "languages": [
+    {
+      "code": "en",
+      "gloss_lang": "de",
+      "name_de": "Englisch",
+      "name_native": "English"
+    }
+  ],
+  "lemmas": [
+    {
+      "lemma": "cut",
+      "pos": "VERB",
+      "ref": "cut"
+    },
+    {
+      "lemma": "daily",
+      "pos": "ADV",
+      "ref": "daily"
+    },
+    {
+      "lemma": "go",
+      "pos": "VERB",
+      "ref": "go"
+    },
+    {
+      "lemma": "have",
+      "pos": "AUX",
+      "ref": "have"
+    },
+    {
+      "lemma": "home",
+      "pos": "NOUN",
+      "ref": "home"
+    },
+    {
+      "lemma": "paper",
+      "pos": "NOUN",
+      "ref": "paper"
+    },
+    {
+      "lemma": "run",
+      "pos": "VERB",
+      "ref": "run"
+    },
+    {
+      "lemma": "they",
+      "pos": "PRON",
+      "ref": "they"
+    },
+    {
+      "lemma": "yesterday",
+      "pos": "ADV",
+      "ref": "yesterday"
+    }
+  ],
+  "lexical_targets": [
+    {
+      "anchor_key": "fixture:go",
+      "note": "synthetic lexical identity",
+      "ref": "go"
+    },
+    {
+      "anchor_key": "fixture:cut",
+      "note": "synthetic lexical identity",
+      "ref": "cut"
+    },
+    {
+      "anchor_key": "fixture:run",
+      "note": "synthetic lexical identity",
+      "ref": "run"
+    }
+  ],
+  "release": {
+    "created_at": "2026-10-16T13:30:13.162082+00:00",
+    "notes": "INTERNES TEST-PACK · Lokaler redaktioneller Export",
+    "schema_version": 5,
+    "version": "synthetic-story-browser-v1"
+  },
+  "senses": [
+    {
+      "definition_de": "Synthetische Testbedeutung",
+      "gloss_de": "Test",
+      "lemma": "cut",
+      "ref": "cut",
+      "sense_key": "cut#fixture"
+    },
+    {
+      "definition_de": "Synthetische Testbedeutung",
+      "gloss_de": "Test",
+      "lemma": "daily",
+      "ref": "daily",
+      "sense_key": "daily#fixture"
+    },
+    {
+      "definition_de": "Synthetische Testbedeutung",
+      "gloss_de": "Test",
+      "lemma": "go",
+      "ref": "go",
+      "sense_key": "go#fixture"
+    },
+    {
+      "definition_de": "Synthetische Testbedeutung",
+      "gloss_de": "Test",
+      "lemma": "have",
+      "ref": "have",
+      "sense_key": "have#fixture"
+    },
+    {
+      "definition_de": "Synthetische Testbedeutung",
+      "gloss_de": "Test",
+      "lemma": "home",
+      "ref": "home",
+      "sense_key": "home#fixture"
+    },
+    {
+      "definition_de": "Synthetische Testbedeutung",
+      "gloss_de": "Test",
+      "lemma": "paper",
+      "ref": "paper",
+      "sense_key": "paper#fixture"
+    },
+    {
+      "definition_de": "Synthetische Testbedeutung",
+      "gloss_de": "Test",
+      "lemma": "run",
+      "ref": "run",
+      "sense_key": "run#fixture"
+    },
+    {
+      "definition_de": "Synthetische Testbedeutung",
+      "gloss_de": "Test",
+      "lemma": "they",
+      "ref": "they",
+      "sense_key": "they#fixture"
+    },
+    {
+      "definition_de": "Synthetische Testbedeutung",
+      "gloss_de": "Test",
+      "lemma": "yesterday",
+      "ref": "yesterday",
+      "sense_key": "yesterday#fixture"
+    },
+    {
+      "definition_de": "Eine andere synthetische Bedeutung.",
+      "gloss_de": "kürzen",
+      "lemma": "cut",
+      "ref": "cut-other",
+      "sense_key": "cut#other"
+    }
+  ],
+  "sentence_tokens": [
+    {
+      "card": "they",
+      "context_gloss_de": "sie",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "sie",
+        "legacy_historical_gloss": "sie",
+        "lemma": "they",
+        "pos": "PRON",
+        "sense_key": "they#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 4,
+      "idx": 0,
+      "lemma": "they",
+      "sense": "they",
+      "sentence": "cut-old-sentence",
+      "start_pos": 0,
+      "surface": "They"
+    },
+    {
+      "card": "cut-old",
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "cut",
+        "pos": "VERB",
+        "sense_key": "cut#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 8,
+      "idx": 1,
+      "lemma": "cut",
+      "sense": "cut",
+      "sentence": "cut-old-sentence",
+      "start_pos": 5,
+      "surface": "cut"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "paper",
+        "pos": "NOUN",
+        "sense_key": "paper#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 14,
+      "idx": 2,
+      "lemma": "paper",
+      "sense": "paper",
+      "sentence": "cut-old-sentence",
+      "start_pos": 9,
+      "surface": "paper"
+    },
+    {
+      "context_gloss_de": null,
+      "context_snapshot": {
+        "definition_de": null,
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": null,
+        "legacy_historical_gloss": null,
+        "lemma": null,
+        "pos": null,
+        "sense_key": null,
+        "story_gloss": null
+      },
+      "end_pos": 15,
+      "idx": 3,
+      "sentence": "cut-old-sentence",
+      "start_pos": 14,
+      "surface": "."
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "they",
+        "pos": "PRON",
+        "sense_key": "they#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 4,
+      "idx": 0,
+      "lemma": "they",
+      "sense": "they",
+      "sentence": "go-base-sentence",
+      "start_pos": 0,
+      "surface": "They"
+    },
+    {
+      "card": "go-base",
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "go",
+        "pos": "VERB",
+        "sense_key": "go#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 7,
+      "form_target": "go-base",
+      "idx": 1,
+      "lemma": "go",
+      "sense": "go",
+      "sentence": "go-base-sentence",
+      "start_pos": 5,
+      "surface": "go"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "home",
+        "pos": "NOUN",
+        "sense_key": "home#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 12,
+      "idx": 2,
+      "lemma": "home",
+      "sense": "home",
+      "sentence": "go-base-sentence",
+      "start_pos": 8,
+      "surface": "home"
+    },
+    {
+      "context_gloss_de": null,
+      "context_snapshot": {
+        "definition_de": null,
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": null,
+        "legacy_historical_gloss": null,
+        "lemma": null,
+        "pos": null,
+        "sense_key": null,
+        "story_gloss": null
+      },
+      "end_pos": 13,
+      "idx": 3,
+      "sentence": "go-base-sentence",
+      "start_pos": 12,
+      "surface": "."
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "they",
+        "pos": "PRON",
+        "sense_key": "they#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 4,
+      "idx": 0,
+      "lemma": "they",
+      "sense": "they",
+      "sentence": "run-base-sentence",
+      "start_pos": 0,
+      "surface": "They"
+    },
+    {
+      "card": "run-base",
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "run",
+        "pos": "VERB",
+        "sense_key": "run#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 8,
+      "form_target": "run-base",
+      "idx": 1,
+      "lemma": "run",
+      "sense": "run",
+      "sentence": "run-base-sentence",
+      "start_pos": 5,
+      "surface": "run"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "daily",
+        "pos": "ADV",
+        "sense_key": "daily#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 14,
+      "idx": 2,
+      "lemma": "daily",
+      "sense": "daily",
+      "sentence": "run-base-sentence",
+      "start_pos": 9,
+      "surface": "daily"
+    },
+    {
+      "context_gloss_de": null,
+      "context_snapshot": {
+        "definition_de": null,
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": null,
+        "legacy_historical_gloss": null,
+        "lemma": null,
+        "pos": null,
+        "sense_key": null,
+        "story_gloss": null
+      },
+      "end_pos": 15,
+      "idx": 3,
+      "sentence": "run-base-sentence",
+      "start_pos": 14,
+      "surface": "."
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "they",
+        "pos": "PRON",
+        "sense_key": "they#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 4,
+      "idx": 0,
+      "lemma": "they",
+      "sense": "they",
+      "sentence": "go-past-sentence",
+      "start_pos": 0,
+      "surface": "They"
+    },
+    {
+      "card": "go-past",
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "go",
+        "pos": "VERB",
+        "sense_key": "go#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 9,
+      "form_target": "go-past",
+      "idx": 1,
+      "lemma": "go",
+      "sense": "go",
+      "sentence": "go-past-sentence",
+      "start_pos": 5,
+      "surface": "went"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "home",
+        "pos": "NOUN",
+        "sense_key": "home#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 14,
+      "idx": 2,
+      "lemma": "home",
+      "sense": "home",
+      "sentence": "go-past-sentence",
+      "start_pos": 10,
+      "surface": "home"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "yesterday",
+        "pos": "ADV",
+        "sense_key": "yesterday#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 24,
+      "idx": 3,
+      "lemma": "yesterday",
+      "sense": "yesterday",
+      "sentence": "go-past-sentence",
+      "start_pos": 15,
+      "surface": "yesterday"
+    },
+    {
+      "context_gloss_de": null,
+      "context_snapshot": {
+        "definition_de": null,
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": null,
+        "legacy_historical_gloss": null,
+        "lemma": null,
+        "pos": null,
+        "sense_key": null,
+        "story_gloss": null
+      },
+      "end_pos": 25,
+      "idx": 4,
+      "sentence": "go-past-sentence",
+      "start_pos": 24,
+      "surface": "."
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "yesterday",
+        "pos": "ADV",
+        "sense_key": "yesterday#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 9,
+      "idx": 0,
+      "lemma": "yesterday",
+      "sense": "yesterday",
+      "sentence": "cut-past-sentence",
+      "start_pos": 0,
+      "surface": "Yesterday"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "they",
+        "pos": "PRON",
+        "sense_key": "they#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 14,
+      "idx": 1,
+      "lemma": "they",
+      "sense": "they",
+      "sentence": "cut-past-sentence",
+      "start_pos": 10,
+      "surface": "they"
+    },
+    {
+      "card": "cut-past",
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "cut",
+        "pos": "VERB",
+        "sense_key": "cut#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 18,
+      "form_target": "cut-past",
+      "idx": 2,
+      "lemma": "cut",
+      "sense": "cut",
+      "sentence": "cut-past-sentence",
+      "start_pos": 15,
+      "surface": "cut"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "paper",
+        "pos": "NOUN",
+        "sense_key": "paper#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 24,
+      "idx": 3,
+      "lemma": "paper",
+      "sense": "paper",
+      "sentence": "cut-past-sentence",
+      "start_pos": 19,
+      "surface": "paper"
+    },
+    {
+      "context_gloss_de": null,
+      "context_snapshot": {
+        "definition_de": null,
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": null,
+        "legacy_historical_gloss": null,
+        "lemma": null,
+        "pos": null,
+        "sense_key": null,
+        "story_gloss": null
+      },
+      "end_pos": 25,
+      "idx": 4,
+      "sentence": "cut-past-sentence",
+      "start_pos": 24,
+      "surface": "."
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "they",
+        "pos": "PRON",
+        "sense_key": "they#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 4,
+      "idx": 0,
+      "lemma": "they",
+      "sense": "they",
+      "sentence": "run-past-sentence",
+      "start_pos": 0,
+      "surface": "They"
+    },
+    {
+      "card": "run-past",
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "run",
+        "pos": "VERB",
+        "sense_key": "run#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 8,
+      "form_target": "run-past",
+      "idx": 1,
+      "lemma": "run",
+      "sense": "run",
+      "sentence": "run-past-sentence",
+      "start_pos": 5,
+      "surface": "ran"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "yesterday",
+        "pos": "ADV",
+        "sense_key": "yesterday#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 18,
+      "idx": 2,
+      "lemma": "yesterday",
+      "sense": "yesterday",
+      "sentence": "run-past-sentence",
+      "start_pos": 9,
+      "surface": "yesterday"
+    },
+    {
+      "context_gloss_de": null,
+      "context_snapshot": {
+        "definition_de": null,
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": null,
+        "legacy_historical_gloss": null,
+        "lemma": null,
+        "pos": null,
+        "sense_key": null,
+        "story_gloss": null
+      },
+      "end_pos": 19,
+      "idx": 3,
+      "sentence": "run-past-sentence",
+      "start_pos": 18,
+      "surface": "."
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "they",
+        "pos": "PRON",
+        "sense_key": "they#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 4,
+      "idx": 0,
+      "lemma": "they",
+      "sense": "they",
+      "sentence": "go-past_participle-sentence",
+      "start_pos": 0,
+      "surface": "They"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "have",
+        "pos": "AUX",
+        "sense_key": "have#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 9,
+      "idx": 1,
+      "lemma": "have",
+      "sense": "have",
+      "sentence": "go-past_participle-sentence",
+      "start_pos": 5,
+      "surface": "have"
+    },
+    {
+      "card": "go-past_participle",
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "go",
+        "pos": "VERB",
+        "sense_key": "go#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 14,
+      "form_target": "go-past_participle",
+      "idx": 2,
+      "lemma": "go",
+      "sense": "go",
+      "sentence": "go-past_participle-sentence",
+      "start_pos": 10,
+      "surface": "gone"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "home",
+        "pos": "NOUN",
+        "sense_key": "home#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 19,
+      "idx": 3,
+      "lemma": "home",
+      "sense": "home",
+      "sentence": "go-past_participle-sentence",
+      "start_pos": 15,
+      "surface": "home"
+    },
+    {
+      "context_gloss_de": null,
+      "context_snapshot": {
+        "definition_de": null,
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": null,
+        "legacy_historical_gloss": null,
+        "lemma": null,
+        "pos": null,
+        "sense_key": null,
+        "story_gloss": null
+      },
+      "end_pos": 20,
+      "idx": 4,
+      "sentence": "go-past_participle-sentence",
+      "start_pos": 19,
+      "surface": "."
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "they",
+        "pos": "PRON",
+        "sense_key": "they#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 4,
+      "idx": 0,
+      "lemma": "they",
+      "sense": "they",
+      "sentence": "cut-past_participle-sentence",
+      "start_pos": 0,
+      "surface": "They"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "have",
+        "pos": "AUX",
+        "sense_key": "have#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 9,
+      "idx": 1,
+      "lemma": "have",
+      "sense": "have",
+      "sentence": "cut-past_participle-sentence",
+      "start_pos": 5,
+      "surface": "have"
+    },
+    {
+      "card": "cut-past_participle",
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "cut",
+        "pos": "VERB",
+        "sense_key": "cut#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 13,
+      "form_target": "cut-past_participle",
+      "idx": 2,
+      "lemma": "cut",
+      "sense": "cut",
+      "sentence": "cut-past_participle-sentence",
+      "start_pos": 10,
+      "surface": "cut"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "paper",
+        "pos": "NOUN",
+        "sense_key": "paper#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 19,
+      "idx": 3,
+      "lemma": "paper",
+      "sense": "paper",
+      "sentence": "cut-past_participle-sentence",
+      "start_pos": 14,
+      "surface": "paper"
+    },
+    {
+      "context_gloss_de": null,
+      "context_snapshot": {
+        "definition_de": null,
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": null,
+        "legacy_historical_gloss": null,
+        "lemma": null,
+        "pos": null,
+        "sense_key": null,
+        "story_gloss": null
+      },
+      "end_pos": 20,
+      "idx": 4,
+      "sentence": "cut-past_participle-sentence",
+      "start_pos": 19,
+      "surface": "."
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "they",
+        "pos": "PRON",
+        "sense_key": "they#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 4,
+      "idx": 0,
+      "lemma": "they",
+      "sense": "they",
+      "sentence": "run-past_participle-sentence",
+      "start_pos": 0,
+      "surface": "They"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "have",
+        "pos": "AUX",
+        "sense_key": "have#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 9,
+      "idx": 1,
+      "lemma": "have",
+      "sense": "have",
+      "sentence": "run-past_participle-sentence",
+      "start_pos": 5,
+      "surface": "have"
+    },
+    {
+      "card": "run-past_participle",
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "run",
+        "pos": "VERB",
+        "sense_key": "run#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 13,
+      "form_target": "run-past_participle",
+      "idx": 2,
+      "lemma": "run",
+      "sense": "run",
+      "sentence": "run-past_participle-sentence",
+      "start_pos": 10,
+      "surface": "run"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "daily",
+        "pos": "ADV",
+        "sense_key": "daily#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 19,
+      "idx": 3,
+      "lemma": "daily",
+      "sense": "daily",
+      "sentence": "run-past_participle-sentence",
+      "start_pos": 14,
+      "surface": "daily"
+    },
+    {
+      "context_gloss_de": null,
+      "context_snapshot": {
+        "definition_de": null,
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": null,
+        "legacy_historical_gloss": null,
+        "lemma": null,
+        "pos": null,
+        "sense_key": null,
+        "story_gloss": null
+      },
+      "end_pos": 20,
+      "idx": 4,
+      "sentence": "run-past_participle-sentence",
+      "start_pos": 19,
+      "surface": "."
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "they",
+        "pos": "PRON",
+        "sense_key": "they#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 4,
+      "idx": 0,
+      "lemma": "they",
+      "sense": "they",
+      "sentence": "other-exercise",
+      "start_pos": 0,
+      "surface": "They"
+    },
+    {
+      "card": "cut-other",
+      "context_gloss_de": "kürzen",
+      "context_snapshot": {
+        "definition_de": "Eine andere synthetische Bedeutung.",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "kürzen",
+        "legacy_historical_gloss": "kürzen",
+        "lemma": "cut",
+        "pos": "VERB",
+        "sense_key": "cut#other",
+        "story_gloss": "kürzen"
+      },
+      "end_pos": 8,
+      "idx": 1,
+      "lemma": "cut",
+      "sense": "cut-other",
+      "sentence": "other-exercise",
+      "start_pos": 5,
+      "surface": "cut"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "daily",
+        "pos": "ADV",
+        "sense_key": "daily#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 14,
+      "idx": 2,
+      "lemma": "daily",
+      "sense": "daily",
+      "sentence": "other-exercise",
+      "start_pos": 9,
+      "surface": "daily"
+    },
+    {
+      "context_gloss_de": null,
+      "context_snapshot": {
+        "definition_de": null,
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": null,
+        "legacy_historical_gloss": null,
+        "lemma": null,
+        "pos": null,
+        "sense_key": null,
+        "story_gloss": null
+      },
+      "end_pos": 15,
+      "idx": 3,
+      "sentence": "other-exercise",
+      "start_pos": 14,
+      "surface": "."
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "they",
+        "pos": "PRON",
+        "sense_key": "they#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 4,
+      "idx": 0,
+      "lemma": "they",
+      "sense": "they",
+      "sentence": "other-story",
+      "start_pos": 0,
+      "surface": "They"
+    },
+    {
+      "context_gloss_de": "kürzen",
+      "context_snapshot": {
+        "definition_de": "Eine andere synthetische Bedeutung.",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "kürzen",
+        "legacy_historical_gloss": "kürzen",
+        "lemma": "cut",
+        "pos": "VERB",
+        "sense_key": "cut#other",
+        "story_gloss": "kürzen"
+      },
+      "end_pos": 8,
+      "idx": 1,
+      "lemma": "cut",
+      "sense": "cut-other",
+      "sentence": "other-story",
+      "start_pos": 5,
+      "surface": "cut"
+    },
+    {
+      "context_gloss_de": "Test",
+      "context_snapshot": {
+        "definition_de": "Synthetische Testbedeutung",
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": "Test",
+        "legacy_historical_gloss": "Test",
+        "lemma": "yesterday",
+        "pos": "ADV",
+        "sense_key": "yesterday#fixture",
+        "story_gloss": "Test"
+      },
+      "end_pos": 18,
+      "idx": 2,
+      "lemma": "yesterday",
+      "sense": "yesterday",
+      "sentence": "other-story",
+      "start_pos": 9,
+      "surface": "yesterday"
+    },
+    {
+      "context_gloss_de": null,
+      "context_snapshot": {
+        "definition_de": null,
+        "form_label_de": null,
+        "function": null,
+        "legacy": true,
+        "legacy_active_gloss": null,
+        "legacy_historical_gloss": null,
+        "lemma": null,
+        "pos": null,
+        "sense_key": null,
+        "story_gloss": null
+      },
+      "end_pos": 19,
+      "idx": 3,
+      "sentence": "other-story",
+      "start_pos": 18,
+      "surface": "."
+    }
+  ],
+  "sentences": [
+    {
+      "origins": [
+        "deck"
+      ],
+      "ref": "cut-old-sentence",
+      "text": "They cut paper.",
+      "translation_de": "Synthetischer Testsatz."
+    },
+    {
+      "model": null,
+      "origins": [
+        "deck"
+      ],
+      "qa_report": {
+        "editorial_create": {
+          "alternatives_checked": [],
+          "checked": {
+            "links_sha256": "ae4011e65b7fedca88f4787b0ac0bec45a2ff1102b937f25917e0fe4028e6b5d",
+            "text": "They go home.",
+            "tokens_sha256": "a7e6880bfe3aee64dd7c45c90ec389740380b9e182ff884d6dac0d2059729f3a",
+            "translation_de": "Synthetischer Testsatz."
+          },
+          "decision": "approved",
+          "operation_id": "synthetic-1",
+          "reason": "Synthetic test review, not production content",
+          "reviewer": "automated fixture, no production review",
+          "sentence": "go-base-sentence"
+        }
+      },
+      "qa_status": "editorial_reviewed",
+      "ref": "go-base-sentence",
+      "text": "They go home.",
+      "translation_de": "Synthetischer Testsatz."
+    },
+    {
+      "model": null,
+      "origins": [
+        "deck"
+      ],
+      "qa_report": {
+        "editorial_create": {
+          "alternatives_checked": [],
+          "checked": {
+            "links_sha256": "7b3e4aaeaa7a685c40b55f5a0399b572bff245c3390f123c6c3d779dffc250c3",
+            "text": "They run daily.",
+            "tokens_sha256": "7367f3a5e7646eb15977bf2aacf6278cf47df5beb80ea796bd6f9044b01dc6b4",
+            "translation_de": "Synthetischer Testsatz."
+          },
+          "decision": "approved",
+          "operation_id": "synthetic-1",
+          "reason": "Synthetic test review, not production content",
+          "reviewer": "automated fixture, no production review",
+          "sentence": "run-base-sentence"
+        }
+      },
+      "qa_status": "editorial_reviewed",
+      "ref": "run-base-sentence",
+      "text": "They run daily.",
+      "translation_de": "Synthetischer Testsatz."
+    },
+    {
+      "model": null,
+      "origins": [
+        "deck"
+      ],
+      "qa_report": {
+        "editorial_create": {
+          "alternatives_checked": [],
+          "checked": {
+            "links_sha256": "ba1566f0c3c828aaed4123f5977f707ff27377e2ecd9cc77493c4b3c81bd776e",
+            "text": "They went home yesterday.",
+            "tokens_sha256": "0e5c246677bd4e868f34715d5bf7e9efbc1751894a09caef67d105135ae7d7ba",
+            "translation_de": "Synthetischer Testsatz."
+          },
+          "decision": "approved",
+          "operation_id": "synthetic-2",
+          "reason": "Synthetic test review, not production content",
+          "reviewer": "automated fixture, no production review",
+          "sentence": "go-past-sentence"
+        }
+      },
+      "qa_status": "editorial_reviewed",
+      "ref": "go-past-sentence",
+      "text": "They went home yesterday.",
+      "translation_de": "Synthetischer Testsatz."
+    },
+    {
+      "model": null,
+      "origins": [
+        "deck"
+      ],
+      "qa_report": {
+        "editorial_create": {
+          "alternatives_checked": [],
+          "checked": {
+            "links_sha256": "fa0fc5555ea6dff3d7286dc230bb2f7ff12a69a784d3c34a58dbfe75c691d068",
+            "text": "Yesterday they cut paper.",
+            "tokens_sha256": "ee19e1e476bbd81d45e589561e2d5b952442001fa12016feeadfb14920ad2e0f",
+            "translation_de": "Synthetischer Testsatz."
+          },
+          "decision": "approved",
+          "operation_id": "synthetic-2",
+          "reason": "Synthetic test review, not production content",
+          "reviewer": "automated fixture, no production review",
+          "sentence": "cut-past-sentence"
+        }
+      },
+      "qa_status": "editorial_reviewed",
+      "ref": "cut-past-sentence",
+      "text": "Yesterday they cut paper.",
+      "translation_de": "Synthetischer Testsatz."
+    },
+    {
+      "model": null,
+      "origins": [
+        "deck"
+      ],
+      "qa_report": {
+        "editorial_create": {
+          "alternatives_checked": [],
+          "checked": {
+            "links_sha256": "38ee7ede6acc1424aaf03ac22634eaf4cc7e52eee2c5a6f89a04a301e5bf2dbb",
+            "text": "They ran yesterday.",
+            "tokens_sha256": "85de9a1b9f298aad1d36c4ab40e525831998819f441d458dabd8973aacadb63f",
+            "translation_de": "Synthetischer Testsatz."
+          },
+          "decision": "approved",
+          "operation_id": "synthetic-2",
+          "reason": "Synthetic test review, not production content",
+          "reviewer": "automated fixture, no production review",
+          "sentence": "run-past-sentence"
+        }
+      },
+      "qa_status": "editorial_reviewed",
+      "ref": "run-past-sentence",
+      "text": "They ran yesterday.",
+      "translation_de": "Synthetischer Testsatz."
+    },
+    {
+      "model": null,
+      "origins": [
+        "deck"
+      ],
+      "qa_report": {
+        "editorial_create": {
+          "alternatives_checked": [],
+          "checked": {
+            "links_sha256": "4cea7fd5f1a6646c6dc7ef3f60bccede356887d93d32005f9c0778bbda284c6d",
+            "text": "They have gone home.",
+            "tokens_sha256": "e89f53f56c271afb39a7b059e764327fd482280fc70ce19f25fede7c69b1b371",
+            "translation_de": "Synthetischer Testsatz."
+          },
+          "decision": "approved",
+          "operation_id": "synthetic-3",
+          "reason": "Synthetic test review, not production content",
+          "reviewer": "automated fixture, no production review",
+          "sentence": "go-past_participle-sentence"
+        }
+      },
+      "qa_status": "editorial_reviewed",
+      "ref": "go-past_participle-sentence",
+      "text": "They have gone home.",
+      "translation_de": "Synthetischer Testsatz."
+    },
+    {
+      "model": null,
+      "origins": [
+        "deck"
+      ],
+      "qa_report": {
+        "editorial_create": {
+          "alternatives_checked": [],
+          "checked": {
+            "links_sha256": "28a0affce22b12f35fae3c44839ffede9dbbfe6faa5103e3584418f37256099c",
+            "text": "They have cut paper.",
+            "tokens_sha256": "1d1f6d8c45f250691ece544712d837ff21918bcafb84bb17e7efb0d1ed4c52de",
+            "translation_de": "Synthetischer Testsatz."
+          },
+          "decision": "approved",
+          "operation_id": "synthetic-3",
+          "reason": "Synthetic test review, not production content",
+          "reviewer": "automated fixture, no production review",
+          "sentence": "cut-past_participle-sentence"
+        }
+      },
+      "qa_status": "editorial_reviewed",
+      "ref": "cut-past_participle-sentence",
+      "text": "They have cut paper.",
+      "translation_de": "Synthetischer Testsatz."
+    },
+    {
+      "model": null,
+      "origins": [
+        "deck"
+      ],
+      "qa_report": {
+        "editorial_create": {
+          "alternatives_checked": [],
+          "checked": {
+            "links_sha256": "a62307d1b6df7515144977a91cb638d05e273df37f9ae031d0ca090035941ab6",
+            "text": "They have run daily.",
+            "tokens_sha256": "411cfb7e1e0db319822e12c9f3807fd0d086ae9cb6888d4abbc151c7758be17c",
+            "translation_de": "Synthetischer Testsatz."
+          },
+          "decision": "approved",
+          "operation_id": "synthetic-3",
+          "reason": "Synthetic test review, not production content",
+          "reviewer": "automated fixture, no production review",
+          "sentence": "run-past_participle-sentence"
+        }
+      },
+      "qa_status": "editorial_reviewed",
+      "ref": "run-past_participle-sentence",
+      "text": "They have run daily.",
+      "translation_de": "Synthetischer Testsatz."
+    },
+    {
+      "origins": [
+        "deck"
+      ],
+      "ref": "other-exercise",
+      "text": "They cut daily.",
+      "translation_de": "Synthetischer Satz."
+    },
+    {
+      "origins": [
+        "story"
+      ],
+      "qa_report": {
+        "story_practice_contexts": {
+          "bindings": [
+            {
+              "context": {
+                "id": "synthetic-context-a",
+                "target_index": 2,
+                "text": "They cut yesterday.",
+                "tokens": [
+                  {
+                    "definition": "Synthetische Testbedeutung",
+                    "end_pos": 4,
+                    "gloss": "Test",
+                    "idx": 0,
+                    "lemma": "they",
+                    "lemma_id": "9bb3e7f2ae9199f68ace6fc19e638009",
+                    "pos": "PRON",
+                    "sense_id": "971afdfdbe108c5e5553ae22729d23a9",
+                    "sense_key": "they#fixture",
+                    "start_pos": 0,
+                    "surface": "They"
+                  },
+                  {
+                    "definition": "Eine andere synthetische Bedeutung.",
+                    "end_pos": 8,
+                    "gloss": "kürzen",
+                    "idx": 1,
+                    "lemma": "cut",
+                    "lemma_id": "ef1204e9b93c94a05fc15861e1017827",
+                    "pos": "VERB",
+                    "sense_id": "c9584b4104ea477abf383027415c5856",
+                    "sense_key": "cut#other",
+                    "start_pos": 5,
+                    "surface": "cut"
+                  },
+                  {
+                    "definition": "Synthetische Testbedeutung",
+                    "end_pos": 18,
+                    "gloss": "Test",
+                    "idx": 2,
+                    "lemma": "yesterday",
+                    "lemma_id": "f0c8fe04b854b3b86b727c81b46e94b3",
+                    "pos": "ADV",
+                    "sense_id": "a63e365108f3259703cd3f8938670020",
+                    "sense_key": "yesterday#fixture",
+                    "start_pos": 9,
+                    "surface": "yesterday"
+                  },
+                  {
+                    "definition": null,
+                    "end_pos": 19,
+                    "gloss": null,
+                    "idx": 3,
+                    "lemma": null,
+                    "lemma_id": null,
+                    "pos": null,
+                    "sense_id": null,
+                    "sense_key": null,
+                    "start_pos": 18,
+                    "surface": "."
+                  }
+                ],
+                "translation": "Synthetischer Satz."
+              },
+              "sense_id": "a63e365108f3259703cd3f8938670020",
+              "source_end": 18,
+              "source_start": 9,
+              "surface": "yesterday",
+              "token_index": 2
+            }
+          ],
+          "format_version": 1,
+          "reviewer": "synthetic test"
+        }
+      },
+      "ref": "other-story",
+      "text": "They cut yesterday.",
+      "translation_de": "Synthetischer Satz."
+    }
+  ],
+  "stories": [
+    {
+      "cefr_band": "anfaenger",
+      "kind": "story",
+      "minutes": 1,
+      "ref": "form-story",
+      "slug": "form-story",
+      "title": "Synthetic forms"
+    },
+    {
+      "cefr_band": "anfaenger",
+      "kind": "story",
+      "minutes": 1,
+      "ref": "retirement-story",
+      "slug": "retirement-story",
+      "title": "Retirement fixture"
+    }
+  ],
+  "story_context_corrections": [
+    {
+      "id": "f7d2b70b2ad547639a10aff67b91edb2",
+      "identity_key": "96682cc310ce366c49b70e81a2367e0c164b6af35e77bdefaa3970e8711123bf",
+      "introduced_in": "synthetic-story-browser-v1",
+      "lang": "en",
+      "next_context": {
+        "identity_key": "96682cc310ce366c49b70e81a2367e0c164b6af35e77bdefaa3970e8711123bf",
+        "lang": "en",
+        "other_forms": [],
+        "practice_context": {
+          "sentence": {
+            "id": "context:20678bd2be95949dc61846ee7c094bbec4693798aff58789770e9b5ea4576110",
+            "paragraph": 0,
+            "text": "They cut yesterday.",
+            "tokens": [
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": "Synthetische Testbedeutung",
+                "end": 4,
+                "function": null,
+                "gloss": "Test",
+                "index": 0,
+                "lemma": "they",
+                "lemma_id": "9bb3e7f2ae9199f68ace6fc19e638009",
+                "lexical_id": null,
+                "pos": "PRON",
+                "sense_id": "971afdfdbe108c5e5553ae22729d23a9",
+                "sense_key": "they#fixture",
+                "start": 0,
+                "surface": "They"
+              },
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": "Eine andere synthetische Bedeutung.",
+                "end": 8,
+                "function": null,
+                "gloss": "kürzen",
+                "index": 1,
+                "lemma": "cut",
+                "lemma_id": "ef1204e9b93c94a05fc15861e1017827",
+                "lexical_id": null,
+                "pos": "VERB",
+                "sense_id": "c9584b4104ea477abf383027415c5856",
+                "sense_key": "cut#other",
+                "start": 5,
+                "surface": "cut"
+              },
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": "Synthetische Testbedeutung",
+                "end": 18,
+                "function": null,
+                "gloss": "Test",
+                "index": 2,
+                "lemma": "yesterday",
+                "lemma_id": "f0c8fe04b854b3b86b727c81b46e94b3",
+                "lexical_id": null,
+                "pos": "ADV",
+                "sense_id": "a63e365108f3259703cd3f8938670020",
+                "sense_key": "yesterday#fixture",
+                "start": 9,
+                "surface": "yesterday"
+              },
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": null,
+                "end": 19,
+                "function": null,
+                "gloss": null,
+                "index": 3,
+                "lemma": null,
+                "lemma_id": null,
+                "lexical_id": null,
+                "pos": null,
+                "sense_id": null,
+                "sense_key": null,
+                "start": 18,
+                "surface": "."
+              }
+            ],
+            "translation": "Synthetische Storykorrektur im Browser."
+          },
+          "token_index": 2
+        },
+        "revision": "synthetic-story-browser-v1",
+        "sentence": {
+          "id": "28e49c6676ac5cb4fc0cc3e44e2b85c2",
+          "paragraph": 0,
+          "text": "They cut yesterday.",
+          "tokens": [
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": "Synthetische Testbedeutung",
+              "end": 4,
+              "function": null,
+              "gloss": "Test",
+              "index": 0,
+              "lemma": "they",
+              "lemma_id": "9bb3e7f2ae9199f68ace6fc19e638009",
+              "lexical_id": null,
+              "pos": "PRON",
+              "sense_id": "971afdfdbe108c5e5553ae22729d23a9",
+              "sense_key": "they#fixture",
+              "start": 0,
+              "surface": "They"
+            },
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": "Eine andere synthetische Bedeutung.",
+              "end": 8,
+              "function": null,
+              "gloss": "kürzen",
+              "index": 1,
+              "lemma": "cut",
+              "lemma_id": "ef1204e9b93c94a05fc15861e1017827",
+              "lexical_id": null,
+              "pos": "VERB",
+              "sense_id": "c9584b4104ea477abf383027415c5856",
+              "sense_key": "cut#other",
+              "start": 5,
+              "surface": "cut"
+            },
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": "Synthetische Testbedeutung",
+              "end": 18,
+              "function": null,
+              "gloss": "Test",
+              "index": 2,
+              "lemma": "yesterday",
+              "lemma_id": "f0c8fe04b854b3b86b727c81b46e94b3",
+              "lexical_id": null,
+              "pos": "ADV",
+              "sense_id": "a63e365108f3259703cd3f8938670020",
+              "sense_key": "yesterday#fixture",
+              "start": 9,
+              "surface": "yesterday"
+            },
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": null,
+              "end": 19,
+              "function": null,
+              "gloss": null,
+              "index": 3,
+              "lemma": null,
+              "lemma_id": null,
+              "lexical_id": null,
+              "pos": null,
+              "sense_id": null,
+              "sense_key": null,
+              "start": 18,
+              "surface": "."
+            }
+          ],
+          "translation": "Synthetischer Satz."
+        },
+        "source_fingerprint": "c68ae54502ed28fa02befa8cbfc2b3f56f0dca8a77f9aaad59fe839c623a910a",
+        "source_key": "4afe58e2317290a4b2390be602c4af7ffcbb6762a618e8a65f7004479e0d1182",
+        "story_id": "e1d54b8628ab3be13e50f24e1ca67e67",
+        "token_index": 2
+      },
+      "next_fingerprint": "c68ae54502ed28fa02befa8cbfc2b3f56f0dca8a77f9aaad59fe839c623a910a",
+      "next_revision": "synthetic-story-browser-v1",
+      "previous_context": {
+        "identity_key": "96682cc310ce366c49b70e81a2367e0c164b6af35e77bdefaa3970e8711123bf",
+        "lang": "en",
+        "other_forms": [],
+        "practice_context": {
+          "sentence": {
+            "id": "synthetic-context-a",
+            "paragraph": 0,
+            "text": "They cut yesterday.",
+            "tokens": [
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": "Synthetische Testbedeutung",
+                "end": 4,
+                "function": null,
+                "gloss": "Test",
+                "index": 0,
+                "lemma": "they",
+                "lemma_id": "9bb3e7f2ae9199f68ace6fc19e638009",
+                "lexical_id": null,
+                "pos": "PRON",
+                "sense_id": "971afdfdbe108c5e5553ae22729d23a9",
+                "sense_key": "they#fixture",
+                "start": 0,
+                "surface": "They"
+              },
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": "Eine andere synthetische Bedeutung.",
+                "end": 8,
+                "function": null,
+                "gloss": "kürzen",
+                "index": 1,
+                "lemma": "cut",
+                "lemma_id": "ef1204e9b93c94a05fc15861e1017827",
+                "lexical_id": null,
+                "pos": "VERB",
+                "sense_id": "c9584b4104ea477abf383027415c5856",
+                "sense_key": "cut#other",
+                "start": 5,
+                "surface": "cut"
+              },
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": "Synthetische Testbedeutung",
+                "end": 18,
+                "function": null,
+                "gloss": "Test",
+                "index": 2,
+                "lemma": "yesterday",
+                "lemma_id": "f0c8fe04b854b3b86b727c81b46e94b3",
+                "lexical_id": null,
+                "pos": "ADV",
+                "sense_id": "a63e365108f3259703cd3f8938670020",
+                "sense_key": "yesterday#fixture",
+                "start": 9,
+                "surface": "yesterday"
+              },
+              {
+                "card_id": null,
+                "context_approved": false,
+                "definition": null,
+                "end": 19,
+                "function": null,
+                "gloss": null,
+                "index": 3,
+                "lemma": null,
+                "lemma_id": null,
+                "lexical_id": null,
+                "pos": null,
+                "sense_id": null,
+                "sense_key": null,
+                "start": 18,
+                "surface": "."
+              }
+            ],
+            "translation": "Synthetischer Satz."
+          },
+          "token_index": 2
+        },
+        "revision": "synthetic-editor-a",
+        "sentence": {
+          "id": "28e49c6676ac5cb4fc0cc3e44e2b85c2",
+          "paragraph": 0,
+          "text": "They cut yesterday.",
+          "tokens": [
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": "Synthetische Testbedeutung",
+              "end": 4,
+              "function": null,
+              "gloss": "Test",
+              "index": 0,
+              "lemma": "they",
+              "lemma_id": "9bb3e7f2ae9199f68ace6fc19e638009",
+              "lexical_id": null,
+              "pos": "PRON",
+              "sense_id": "971afdfdbe108c5e5553ae22729d23a9",
+              "sense_key": "they#fixture",
+              "start": 0,
+              "surface": "They"
+            },
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": "Eine andere synthetische Bedeutung.",
+              "end": 8,
+              "function": null,
+              "gloss": "kürzen",
+              "index": 1,
+              "lemma": "cut",
+              "lemma_id": "ef1204e9b93c94a05fc15861e1017827",
+              "lexical_id": null,
+              "pos": "VERB",
+              "sense_id": "c9584b4104ea477abf383027415c5856",
+              "sense_key": "cut#other",
+              "start": 5,
+              "surface": "cut"
+            },
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": "Synthetische Testbedeutung",
+              "end": 18,
+              "function": null,
+              "gloss": "Test",
+              "index": 2,
+              "lemma": "yesterday",
+              "lemma_id": "f0c8fe04b854b3b86b727c81b46e94b3",
+              "lexical_id": null,
+              "pos": "ADV",
+              "sense_id": "a63e365108f3259703cd3f8938670020",
+              "sense_key": "yesterday#fixture",
+              "start": 9,
+              "surface": "yesterday"
+            },
+            {
+              "card_id": null,
+              "context_approved": false,
+              "definition": null,
+              "end": 19,
+              "function": null,
+              "gloss": null,
+              "index": 3,
+              "lemma": null,
+              "lemma_id": null,
+              "lexical_id": null,
+              "pos": null,
+              "sense_id": null,
+              "sense_key": null,
+              "start": 18,
+              "surface": "."
+            }
+          ],
+          "translation": "Synthetischer Satz."
+        },
+        "source_fingerprint": "540d5b09c23dedb241be8bedf2e32ad6e8be65a0be2063174084c238b0bc3f8f",
+        "source_key": "4afe58e2317290a4b2390be602c4af7ffcbb6762a618e8a65f7004479e0d1182",
+        "story_id": "e1d54b8628ab3be13e50f24e1ca67e67",
+        "token_index": 2
+      },
+      "previous_fingerprint": "540d5b09c23dedb241be8bedf2e32ad6e8be65a0be2063174084c238b0bc3f8f",
+      "previous_revision": "synthetic-editor-a",
+      "reason": "Redaktionelle Storykorrektur",
+      "source_key": "4afe58e2317290a4b2390be602c4af7ffcbb6762a618e8a65f7004479e0d1182"
+    }
+  ],
+  "story_sentences": [
+    {
+      "idx": 0,
+      "paragraph_idx": 0,
+      "sentence": "run-past_participle-sentence",
+      "story": "form-story"
+    },
+    {
+      "idx": 0,
+      "paragraph_idx": 0,
+      "sentence": "other-story",
+      "story": "retirement-story"
+    }
+  ],
+  "word_aliases": [],
+  "word_registry": {
+    "sha256": "f931ce49a02de2b95703225b84003292cf23689806dbff6d72d45da591c383cf",
+    "snapshot": {
+      "format_version": 1,
+      "normalization": "NFC-lower-apostrophe-v1",
+      "parent_sha256": "921eb52eafdad4f25c4b96202ac22ed51f627e14a78deede2492c2b022434470",
+      "words": [
+        {
+          "aliases": [],
+          "form_norm": "cut",
+          "lang": "en",
+          "owner_deck_ref": "owner",
+          "position": 1,
+          "primary_card_id": "703a8ba5ce579c60afbcc4e87dc64e10",
+          "primary_card_ref": "cut-old"
+        },
+        {
+          "aliases": [],
+          "form_norm": "go",
+          "lang": "en",
+          "owner_deck_ref": "owner",
+          "position": 2,
+          "primary_card_id": "61ee58a531ddc9d1a0a7ff82ead3deaf",
+          "primary_card_ref": "go-base"
+        },
+        {
+          "aliases": [],
+          "form_norm": "run",
+          "lang": "en",
+          "owner_deck_ref": "owner",
+          "position": 3,
+          "primary_card_id": "cc6db1071bbeffac24a6c434d61a501e",
+          "primary_card_ref": "run-base"
+        },
+        {
+          "aliases": [],
+          "form_norm": "went",
+          "lang": "en",
+          "owner_deck_ref": "owner",
+          "position": 4,
+          "primary_card_id": "e575ccb506b4dd911cc4a9cc32e61ce8",
+          "primary_card_ref": "go-past"
+        },
+        {
+          "aliases": [],
+          "form_norm": "ran",
+          "lang": "en",
+          "owner_deck_ref": "owner",
+          "position": 5,
+          "primary_card_id": "cff0b7132e4e3128dfcc382e4d6606c3",
+          "primary_card_ref": "run-past"
+        },
+        {
+          "aliases": [],
+          "form_norm": "gone",
+          "lang": "en",
+          "owner_deck_ref": "owner",
+          "position": 6,
+          "primary_card_id": "7a63350e83ee03d8cc7f10448e92e156",
+          "primary_card_ref": "go-past_participle"
+        },
+        {
+          "aliases": [],
+          "form_norm": "they",
+          "lang": "en",
+          "owner_deck_ref": "owner",
+          "position": 7,
+          "primary_card_id": "8360507bbbd402a88b860d9f9d968050",
+          "primary_card_ref": "they"
+        }
+      ]
+    }
+  }
+}

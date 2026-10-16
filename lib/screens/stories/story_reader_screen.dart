@@ -1,3 +1,4 @@
+import '../../presentation/providers/database_providers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -99,6 +100,7 @@ class _Sentence {
 }
 
 class _StoryReaderScreenState extends State<StoryReaderScreen> {
+  late final void Function() _releaseContent;
   static final _wordPattern = RegExp(r"[A-Za-z]+(?:['’][A-Za-z]+)*");
 
   final _words = <_Word>[];
@@ -118,6 +120,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   @override
   void initState() {
     super.initState();
+    _releaseContent=contentTransitionGate.acquire();
     _paragraphSentences = widget.document != null
         ? [
             for (final sentence in widget.document!.sentences)
@@ -211,6 +214,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
 
   @override
   void dispose() {
+    _releaseContent();
     _narration.dispose();
     for (final word in _words) {
       word.recognizer.dispose();

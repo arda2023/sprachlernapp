@@ -183,7 +183,7 @@ void main() {
     expect(repo.info.schemaVersion,4);
     expect(await repo.allCardIds(),hasLength(9));
     await repo.close();
-    final installed=File('${support.path}/content/en/content.sqlite');
+    final installed=File('${support.path}/content/en/generations/bootstrap-${staged['sha256']}/content.sqlite');
     final before=installed.readAsBytesSync();
     for(final bad in ['hash','version','content']) {
       final manifest=Map<String,dynamic>.from(staged);
@@ -196,7 +196,10 @@ void main() {
         badBytes=file.readAsBytesSync();
         manifest['sha256']=sha256Of(file);manifest['size_bytes']=badBytes.length;
       }
-      await expectLater(installerFor(support,db:badBytes,manifest:jsonEncode(manifest)).open(),throwsA(isA<ContentUnavailable>()));
+      final pinned=await installerFor(support,db:badBytes,manifest:jsonEncode(manifest)).open();
+      expect(await pinned.allCardIds(),hasLength(9));
+      await pinned.close();
+      await expectLater(installerFor(Directory('${tmp.path}/invalid-fresh-$bad'),db:badBytes,manifest:jsonEncode(manifest)).open(),throwsA(isA<ContentUnavailable>()));
       expect(installed.readAsBytesSync(),before);
     }
   });

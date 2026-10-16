@@ -1,3 +1,4 @@
+import '../../../presentation/providers/database_providers.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../domain/story_learning.dart';
@@ -62,6 +63,13 @@ class WordLookupSheet extends StatefulWidget {
 }
 
 class _WordLookupSheetState extends State<WordLookupSheet> {
+  @override
+  void initState(){super.initState();_releaseContent=contentTransitionGate.acquire();}
+
+  late final void Function() _releaseContent;
+  @override
+  void dispose(){_releaseContent();super.dispose();}
+
   late WordMark? _mark = widget.mark;
 
   late StoryAddResult _status =
@@ -71,6 +79,7 @@ class _WordLookupSheetState extends State<WordLookupSheet> {
   String? _error;
   Future<void> _add({bool reactivate = false}) async {
     if (_saving) return;
+    final releaseWrite=contentTransitionGate.acquire();
     setState(() {
       _saving = true;
       _error = null;
@@ -91,6 +100,7 @@ class _WordLookupSheetState extends State<WordLookupSheet> {
         setState(() => _error = 'Nicht gespeichert – erneut versuchen.');
       }
     } finally {
+      releaseWrite();
       if (mounted) setState(() => _saving = false);
     }
   }

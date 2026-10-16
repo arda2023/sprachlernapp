@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/preferences.dart';
+import 'content_updates_screen.dart';
 import '../../presentation/providers/preferences_provider.dart';
 import '../../theme/app_theme.dart';
 import '../decks/widgets/local_submission_sheet.dart';
@@ -95,6 +96,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               },
             ),
             const Divider(),
+            ListTile(title: const Text('Inhaltsupdates'), subtitle: const Text('Private Versionen und Anmeldung'),
+              trailing: const Icon(Icons.chevron_right), onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const ContentUpdatesScreen()))),
+
             for (final entry in const [
               ('Lern-Benachrichtigungen', 'Lernerinnerungen'),
               (

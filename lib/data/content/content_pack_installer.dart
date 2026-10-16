@@ -11,19 +11,16 @@ import 'package:path_provider/path_provider.dart';
 import '../../domain/content.dart';
 import 'content_database.dart';
 import 'drift_content_repository.dart';
+import 'content_install_journal.dart';
+import 'content_update_service.dart';
 
 /// Loads a bundled asset by key; null when the asset doesn't exist.
 typedef AssetLoader = Future<Uint8List?> Function(String key);
 
-/// Installs the bundled content pack (`assets/content/<lang>/content.sqlite`
-/// + `content.manifest.json`, staged by tool/stage_content_pack.dart) into
-/// `<support>/content/<lang>/content.sqlite` and opens it read-only.
-///
-/// The asset must match the manifest checksum. The installed copy is
-/// replaced only when its checksum differs (temporary file, then rename);
-/// nothing outside `<support>/content/<lang>/` is touched, so user.db
-/// survives every install. Close an opened repository before installing
-/// again: Windows can't replace a file that is still open.
+/// Pins the bundled asset as an immutable bootstrap generation on first use.
+/// Later starts prefer the journal's active generation; an app-bundled asset
+/// must never replace a newer installed release or its historical identities.
+/// All files stay under `<support>/content/<lang>/`; user.db is untouched.
 class ContentPackInstaller {
   ContentPackInstaller({
     required this.loadAsset,
@@ -62,6 +59,17 @@ class ContentPackInstaller {
 
   /// Installs (if needed) and returns the installed file and its manifest.
   Future<({File file, ContentManifest manifest})> install() async {
+    final journal = ContentInstallJournal(supportDirectory, lang);
+    final active = await recoverContentInstallation(journal);
+    if (active != null) {
+      return (file: File('${journal.generation(active.id).path}/content.sqlite'), manifest: active.contentManifest);
+    }
+    final pointer=await journal.read('active');
+    final pinned=pointer?['bootstrap']==true
+        ? ContentManifest.parse(jsonEncode(pointer!['manifest']),lang:lang) : null;
+    if(pinned!=null && await _matches(journal.bootstrapFile(pinned),pinned.sha256)) {
+      return (file:journal.bootstrapFile(pinned),manifest:pinned);
+    }
     final manifestBytes = await loadAsset(manifestAsset);
     if (manifestBytes == null) {
       throw ContentUnavailable(
@@ -93,13 +101,16 @@ class ContentPackInstaller {
         'Inhaltspaket passt nicht zur Prüfsumme im Manifest',
       );
     }
-    final target = installedFile;
+    if(pinned!=null && pinned.sha256!=manifest.sha256) {
+      throw const ContentUnavailable(ContentUnavailableReason.corrupt,'Bootstrap beschädigt; vorhandene Historie erfordert eine kompatible Reparatur.');
+    }
+    final target = journal.bootstrapFile(manifest);
     if (!await _matches(target, manifest.sha256)) {
       await target.parent.create(recursive: true);
       final tmp = File('${target.path}.tmp');
       await tmp.writeAsBytes(bytes, flush: true);
       // Validate the candidate before replacing a previously usable pack.
-      final candidate = ContentDatabase.open(tmp, lang: lang);
+      final candidate = await ContentDatabase.openInBackground(tmp, lang: lang);
       try {
         if (candidate.info.version != manifest.version ||
             candidate.info.schemaVersion != manifest.schemaVersion) {
@@ -113,6 +124,7 @@ class ContentPackInstaller {
       }
       await tmp.rename(target.path);
     }
+    await journal.write('active',{'bootstrap':true,'generation':0,'manifest':jsonDecode(manifest.toJson())});
     return (file: target, manifest: manifest);
   }
 
@@ -124,7 +136,7 @@ class ContentPackInstaller {
   /// manifest version.
   Future<DriftContentRepository> open() async {
     final installed = await install();
-    final db = ContentDatabase.open(installed.file, lang: lang);
+    final db = await ContentDatabase.openInBackground(installed.file, lang: lang);
     if (db.info.version != installed.manifest.version ||
         db.info.schemaVersion != installed.manifest.schemaVersion) {
       await db.close();
