@@ -35,6 +35,10 @@ class PracticeItemResolver {
     final story = user is StoryLearningRepository
         ? user as StoryLearningRepository
         : null;
+    if (user is StoryContextCorrectionStore && content is StoryContextCorrectionSource) {
+      await (user as StoryContextCorrectionStore).applyStoryContextCorrections(
+        await (content as StoryContextCorrectionSource).storyContextCorrections());
+    }
     final locals = {
       for (final i in await story?.localPracticeItems() ?? <PracticeItem>[])
         i.card.id: i,

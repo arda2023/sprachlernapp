@@ -299,3 +299,18 @@ class StoryPracticeContext {
     return sentence.text.substring(cursor).trim().isEmpty ? null : invalid;
   }
 }
+
+/// An exact, versioned transition between immutable local context snapshots.
+class StoryContextCorrection {
+  const StoryContextCorrection(this.version, this.previous, this.current);
+  final String version;
+  final StoryLearningCandidate previous, current;
+}
+
+abstract interface class StoryContextCorrectionSource {
+  Future<List<StoryContextCorrection>> storyContextCorrections();
+}
+
+abstract interface class StoryContextCorrectionStore {
+  Future<void> applyStoryContextCorrections(List<StoryContextCorrection> corrections);
+}

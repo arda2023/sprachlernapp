@@ -12,7 +12,7 @@ import 'content_database.dart';
 /// unchanged. Content that breaks the data contract (wrong active sentence count,
 /// gap not on the form, malformed alternatives) is [ContentUnavailable].
 class DriftContentRepository
-    implements ContentRepository, StoryContentRepository, RetiredLearningContentRepository {
+    implements ContentRepository, StoryContentRepository, RetiredLearningContentRepository, StoryContextCorrectionSource {
   DriftContentRepository(this._db);
 
   final ContentDatabase _db;
@@ -519,33 +519,24 @@ class DriftContentRepository
       final bindings = (review['bindings'] as List).where((b) => b['token_index'] == tokenIndex).toList();
       if (bindings.isNotEmpty) {
         final b = bindings.single;
-        if (review['format_version'] != 1 || (review['reviewer'] as String? ?? '').isEmpty ||
+        if (!{1, 2}.contains(review['format_version']) || (review['reviewer'] as String? ?? '').isEmpty ||
             b['surface'] != token.surface || b['sense_id'] != token.senseId ||
             _utf16Offset(sentence.text, b['source_start'] as int) != token.start ||
             _utf16Offset(sentence.text, b['source_end'] as int) != token.end) {
           problem = 'Die geprüfte Kontextbindung passt nicht zur Story-Wortstelle.';
         } else {
-          final context = b['context'];
-          final text = context['text'] as String;
-          final targetIndex = context['target_index'] as int;
-          final tokens = <StoryToken>[
-            for (final t in context['tokens'])
-              StoryToken(index: t['idx'] as int,
-                start: _utf16Offset(text, t['start_pos'] as int),
-                end: _utf16Offset(text, t['end_pos'] as int), surface: t['surface'] as String,
-                lemmaId: t['lemma_id'] as String?, lemma: t['lemma'] as String?,
-                pos: t['pos'] as String?, senseId: t['sense_id'] as String?,
-                senseKey: t['sense_key'] as String?, gloss: t['gloss'] as String?,
-                definition: t['definition'] as String?,
-                formFunction: t['idx'] == targetIndex ? token.function : null,
-                lexicalTargetId: t['idx'] == targetIndex ? token.lexicalId : null),
-          ];
-          if (targetIndex < 0 || targetIndex >= tokens.length) {
-            problem = 'Die geprüfte Kontextbindung enthält keine eindeutige Ziellücke.';
-          } else {
-            practiceContext = StoryPracticeContext(StorySentence(
-              id: context['id'] as String, text: text,
-              translation: context['translation'] as String, paragraph: 0, tokens: tokens), tokens[targetIndex]);
+          practiceContext = _readStoryContext(b['context'] as Map<String, dynamic>, token);
+          if (review['format_version'] == 2) {
+            final policy = b['sentence_policy'] as Map<String, dynamic>?;
+            if (policy == null || policy['sentence_count'] != 1 ||
+                (policy['exercise_word_count'] as int? ?? 0) < 3 ||
+                (policy['exercise_word_count'] as int? ?? 21) > 20 ||
+                ((policy['source_word_count'] as int? ?? 0) <= 2 && policy['replacement'] != true) ||
+                (policy['replacement'] != true &&
+                  (practiceContext.sentence.text != sentence.text ||
+                   practiceContext.sentence.translation != sentence.translation))) {
+              problem = 'Der geprüfte Kontext erfüllt den Ein-Satz-Vertrag nicht.';
+            }
           }
         }
       }
@@ -571,4 +562,69 @@ class DriftContentRepository
                 .toList(),
     );
   }
+
+  StoryPracticeContext _readStoryContext(Map<String, dynamic> context, StoryToken source) {
+    final text = context['text'] as String;
+    final targetIndex = context['target_index'] as int;
+    final tokens = <StoryToken>[
+      for (final t in context['tokens'])
+        StoryToken(index: t['idx'] as int,
+          start: _utf16Offset(text, t['start_pos'] as int),
+          end: _utf16Offset(text, t['end_pos'] as int), surface: t['surface'] as String,
+          lemmaId: t['lemma_id'] as String?, lemma: t['lemma'] as String?,
+          pos: t['pos'] as String?, senseId: t['sense_id'] as String?,
+          senseKey: t['sense_key'] as String?, gloss: t['gloss'] as String?,
+          definition: t['definition'] as String?,
+          formFunction: t['idx'] == targetIndex ? source.function : null,
+          lexicalTargetId: t['idx'] == targetIndex ? source.lexicalId : null),
+    ];
+    if (targetIndex < 0 || targetIndex >= tokens.length) {
+      throw _broken('Die geprüfte Kontextbindung enthält keine eindeutige Ziellücke.');
+    }
+    return StoryPracticeContext(StorySentence(id: context['id'] as String,
+      text: text, translation: context['translation'] as String,
+      paragraph: 0, tokens: tokens), tokens[targetIndex]);
+  }
+
+  Future<List<StoryContextCorrection>>? _corrections;
+
+  @override
+  Future<List<StoryContextCorrection>> storyContextCorrections() =>
+      _corrections ??= _loadStoryContextCorrections();
+
+  Future<List<StoryContextCorrection>> _loadStoryContextCorrections() async {
+    final result = <StoryContextCorrection>[];
+    final rows = await _select(
+      'SELECT ss.story_id, s.id, s.qa_report FROM story_sentences ss '
+      'JOIN sentences s ON s.id=ss.sentence_id JOIN stories st ON st.id=ss.story_id '
+      'WHERE s.removed_in IS NULL AND ss.removed_in IS NULL AND st.removed_in IS NULL', []);
+    for (final row in rows) {
+      final qa = jsonDecode(row.readNullable<String>('qa_report') ?? '{}');
+      final review = qa['story_practice_contexts'];
+      if (review == null || review['format_version'] != 2) continue;
+      for (final b in review['bindings']) {
+        final correction = b['correction'];
+        if (correction == null) continue;
+        final current = await resolveStoryWord(row.read<String>('story_id'),
+          row.read<String>('id'), b['token_index'] as int);
+        // A correction never converts a global or retired target into a local one.
+        if (current.card != null || current.validationProblem() != null) continue;
+        if ((correction['version'] as String).isEmpty ||
+            (correction['revision'] as String).isEmpty) {
+          throw _broken('Ungültige Storykontext-Korrekturversion.');
+        }
+        final previous = StoryLearningCandidate(storyId: current.storyId,
+          revision: correction['revision'] as String, lang: current.lang,
+          sentence: current.sentence, token: current.token,
+          practiceContext: _readStoryContext(correction['context'] as Map<String, dynamic>, current.token),
+          otherForms: current.otherForms);
+        if (previous.validationProblem() != null) {
+          throw _broken('Ungültiger historischer Storykontext.');
+        }
+        result.add(StoryContextCorrection(correction['version'] as String, previous, current));
+      }
+    }
+    return List.unmodifiable(result);
+  }
+
 }

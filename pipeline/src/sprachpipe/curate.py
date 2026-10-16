@@ -593,7 +593,7 @@ def apply_targeted_patch(raw: bytes, patch: dict) -> dict:
     for op in patch['operations']:
         require(isinstance(op, dict), 'operation object required')
         kind = op.get('op')
-        if kind == 'story_contexts':
+        if kind in ('story_contexts', 'story_single_sentence_contexts'):
             _apply_story_contexts(work, before, op, patch, seen)
             continue
         extra = {'card_gloss': ('translation_de',),
@@ -703,6 +703,8 @@ def _apply_story_contexts(work, rows, op, patch, seen):
     senses = {s['ref']: (r, s) for r, s in zip(rows['senses'], work['senses'])}
     dictionary = {(form_norm(d['form']), d['sense']): d for d in work['dictionary_forms'] if not d.get('removed_in')}
     cards = {c['ref']: c for c in work['cards']}
+    single_sentence = op['op'] == 'story_single_sentence_contexts'
+    previous = {b['token_index']: b for b in (source.get('qa_report') or {}).get('story_practice_contexts', {}).get('bindings', [])}
     bindings = []
     require(isinstance(op['contexts'], list) and op['contexts'], 'contexts required')
     for review in op['contexts']:
@@ -732,10 +734,12 @@ def _apply_story_contexts(work, rows, op, patch, seen):
                 offset += len(chunk['text']) + 1
         else:
             replacement = review['replacement']
-            require(set(replacement) == {'text', 'translation_de', 'tokens', 'target_index', 'reason'}, 'replacement fields')
+            require(set(replacement) == ({'text', 'translation_de', 'tokens', 'target_index', 'reason'} | ({'justification'} if single_sentence else set())), 'replacement fields')
             require(bool(replacement['reason'].strip()), 'replacement justification')
             text, translation, tokens, target_index = (replacement[k] for k in ('text', 'translation_de', 'tokens', 'target_index'))
             refs = []
+        if single_sentence:
+            _validate_story_single_sentence(source, review, text)
         require(isinstance(text, str) and isinstance(translation, str) and translation.strip(), 'translation required')
         require(type(target_index) is int and 0 <= target_index < len(tokens), 'context target index')
         selected = tokens[target_index]
@@ -763,8 +767,19 @@ def _apply_story_contexts(work, rows, op, patch, seen):
                          'reason':review['reason'], 'source_sentence_refs':refs,
                          'context':{'id':sentence_id(work['lang'],text), 'text':text, 'translation':translation,
                                     'target_index':target_index, 'tokens':snapshot}})
+        if single_sentence:
+            from .annotate import tokenize
+            bindings[-1]['sentence_policy'] = {'sentence_count': 1,
+                'source_word_count': sum(t['is_word'] for t in tokenize(source['text'])),
+                'exercise_word_count': sum(t['is_word'] for t in tokenize(text)),
+                'replacement': 'replacement' in review}
+        if single_sentence and idx in previous and previous[idx]['context'] != bindings[-1]['context']:
+            old = previous[idx]
+            require(all(old[k] == bindings[-1][k] for k in ('token_index', 'surface', 'sense_id', 'source_start', 'source_end')), 'correction changed origin')
+            bindings[-1]['correction'] = {'version': patch['version'],
+                'revision': work['release']['version'], 'context': copy.deepcopy(old['context'])}
     source.setdefault('qa_report', {})['story_practice_contexts'] = {
-        'format_version':1, 'reviewer':patch['reviewer'], 'source_sha256':patch['source_sha256'],
+        'format_version':2 if single_sentence else 1, 'reviewer':patch['reviewer'], 'source_sha256':patch['source_sha256'],
         'reason':op['reason'], 'bindings':bindings}
 
 
@@ -789,3 +804,27 @@ def story_authoring_gaps(pack):
                            'start_pos':t['start_pos'], 'end_pos':t['end_pos'],
                            'kind':'proper_name' if lemmas.get(t.get('lemma'), {}).get('pos') == 'PROPN' else 'editorial_context_missing'})
     return result
+
+
+def _validate_story_single_sentence(source, review, text):
+    """Version 2 authoring gate; legacy deliveries remain replayable."""
+    from .annotate import tokenize
+    from .linter import _nlp
+    def require(ok, message):
+        if not ok:
+            raise CurationError('story single sentence: ' + message)
+    words = sum(t['is_word'] for t in tokenize(source['text']))
+    require(words > 0, 'original has no words')
+    if 'sentence_refs' in review:
+        require(review['sentence_refs'] == [source['ref']], 'only the unchanged original is allowed')
+        require(words >= 3, 'one/two word original requires reviewed replacement')
+        require(text == source['text'], 'original text changed')
+    else:
+        replacement = review['replacement']
+        justification = replacement.get('justification')
+        require(isinstance(justification, dict) and set(justification) == {'kind', 'evidence'}, 'replacement justification contract')
+        require(justification['kind'] in ({'short_original'} if words <= 2 else {'target_meaning_unusable', 'not_sentence_exercise'}), 'replacement justification kind')
+        require(isinstance(justification['evidence'], str) and justification['evidence'].strip(), 'concrete replacement evidence required')
+        require(text != source['text'], 'replacement must replace unsuitable original')
+    require(isinstance(text, str) and len(list(_nlp()(text).sents)) == 1, 'exactly one sentence required')
+    require(3 <= sum(t['is_word'] for t in tokenize(text)) <= 20, 'exercise requires 3..20 unmerged words')

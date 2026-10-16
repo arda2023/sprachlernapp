@@ -16,7 +16,7 @@ import '../../domain/srs_state.dart';
 import 'user_database.dart';
 
 /// [UserRepository] on the Drift user.db of one language.
-class DriftUserRepository implements UserRepository, StoryLearningRepository, ReviewActivityRepository {
+class DriftUserRepository implements UserRepository, StoryLearningRepository, ReviewActivityRepository, StoryContextCorrectionStore {
   DriftUserRepository(this._db, {required this.lang});
 
   final UserDatabase _db;
@@ -640,6 +640,74 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
         );
     return StoryAddResult(StoryAddState.added, cardId: id);
   });
+
+  @override
+  Future<void> applyStoryContextCorrections(List<StoryContextCorrection> corrections) async {
+    if (corrections.isEmpty) return;
+    await _db.transaction(() async {
+      for (final correction in corrections) {
+        final old = correction.previous, next = correction.current;
+        if (correction.version.isEmpty || old.lang != lang ||
+            old.card != null || next.card != null ||
+            old.validationProblem() != null || next.validationProblem() != null ||
+            old.practiceContext == null || next.practiceContext == null ||
+            old.identity.key != next.identity.key || old.storyId != next.storyId ||
+            old.sentence.id != next.sentence.id || old.token.index != next.token.index) {
+          continue;
+        }
+        final id = old.identity.localId;
+        final oldId = learningHash(['story-practice-context-v1', id, old.practiceContext!.fingerprint]);
+        final newId = learningHash(['story-practice-context-v1', id, next.practiceContext!.fingerprint]);
+        if (oldId == newId) continue;
+        final card = await (_db.select(_db.userCards)..where((t) => t.cardId.equals(id))).getSingleOrNull();
+        if (card == null || !card.localOnly || card.lang != lang || card.retired ||
+            card.primaryContextId != oldId || card.formNorm != old.identity.formNorm ||
+            card.senseIdentity != old.identity.semanticAnchor || card.formFunction != old.token.function) {
+          continue;
+        }
+        final context = await (_db.select(_db.cardContexts)..where((t) => t.id.equals(oldId))).getSingleOrNull();
+        String tokens(StoryLearningCandidate c) => jsonEncode([
+          for (final t in c.practiceSentence.tokens)
+            {'start':t.start, 'end':t.end, 'surface':t.surface, 'translation':t.gloss},
+        ]);
+        if (context == null || context.cardId != id || context.lang != lang ||
+            context.sourceRef != old.storyId || context.sentenceRef != old.sentence.id ||
+            context.tokenIndex != old.token.index || context.revision != old.revision ||
+            context.fingerprint != old.sourceFingerprint ||
+            context.provenance != 'editorial_chat_reviewed' ||
+            context.textValue != old.practiceSentence.text ||
+            context.translationDe != old.practiceSentence.translation ||
+            context.gapStart != old.practiceToken.start || context.gapEnd != old.practiceToken.end ||
+            context.tokensJson != tokens(old)) {
+          continue;
+        }
+        final origin = await (_db.select(_db.storyWordSources)..where((t) =>
+          t.cardId.equals(id) & t.fingerprint.equals(old.sourceFingerprint))).getSingleOrNull();
+        if (origin == null || origin.sourceRef != old.storyId ||
+            origin.sentenceRef != old.sentence.id || origin.tokenIndex != old.token.index ||
+            origin.revision != old.revision) {
+          continue;
+        }
+        await _db.into(_db.cardContexts).insert(CardContextsCompanion.insert(
+          id: newId, cardId: id, textValue: next.practiceSentence.text,
+          translationDe: next.practiceSentence.translation,
+          gapStart: next.practiceToken.start, gapEnd: next.practiceToken.end,
+          sourceRef: next.storyId, sentenceRef: next.sentence.id, tokenIndex: next.token.index,
+          revision: next.revision, fingerprint: next.sourceFingerprint, lang: lang,
+          provenance: 'editorial_chat_reviewed', createdAt: DateTime.now().toUtc(),
+          tokensJson: tokens(next), otherFormsJson: context.otherFormsJson));
+        await _db.into(_db.storyWordSources).insert(StoryWordSourcesCompanion.insert(
+          cardId: id, fingerprint: next.sourceFingerprint, sourceRef: next.storyId,
+          sentenceRef: next.sentence.id, tokenIndex: next.token.index,
+          revision: next.revision, addedAt: DateTime.now().toUtc()),
+          mode: InsertMode.insertOrIgnore);
+        // Append-only history stays intact; no SRS/flag/note timestamp is changed.
+        await (_db.update(_db.userCards)..where((t) =>
+          t.cardId.equals(id) & t.primaryContextId.equals(oldId)))
+          .write(UserCardsCompanion(primaryContextId: Value(newId)));
+      }
+    });
+  }
 
   CardSentence _context(CardContextRow row) => CardSentence(
     cardId: row.cardId,

@@ -20,7 +20,7 @@ void main() {
   late StoryDocument doc;
   setUpAll(() async {
     content = DriftContentRepository(ContentDatabase.open(
-      File('pipeline/out/story_contexts_v1/content.sqlite'), lang: 'en'));
+      File('pipeline/out/story_single_sentence_v1/content.sqlite'), lang: 'en'));
     doc = await content.storyDocument((await content.storySummaries()).single.id);
   });
   tearDownAll(() => content.close());
@@ -50,7 +50,7 @@ void main() {
             'exercise':c.card != null ? (await content.practiceItems([added.cardId!])).single.practiceSentence.text : c.practiceSentence.text});
         }
       }
-      final out = File('build/story_contexts/add-s${sentenceIndex + 1}.json');
+      final out = File('build/story_single_sentence/add-s${sentenceIndex + 1}.json');
       out.writeAsStringSync(const JsonEncoder.withIndent('  ').convert(result));
     });
   }

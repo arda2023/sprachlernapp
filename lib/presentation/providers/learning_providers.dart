@@ -106,7 +106,7 @@ final wordListProvider = FutureProvider<List<VocabWord>>((ref) async {
     final state = states[item.card.id]!;
     final reviews = await user.reviewsFor(item.card.id);
     final sentence =
-        (reviews.isEmpty
+        (reviews.isEmpty || resolver.locals.containsKey(item.card.id)
             ? null
             : await resolver.historicalSentence(
                 item.card.id,

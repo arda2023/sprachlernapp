@@ -1,0 +1,91 @@
+[
+  {
+    "command": [
+      "pipeline/.venv-macos/bin/python",
+      "-m",
+      "pytest",
+      "pipeline/tests/test_story_contexts.py",
+      "-q"
+    ],
+    "exitcode": 0,
+    "seconds": 68.14,
+    "name": "python-focused",
+    "output_tail": "............................                                             [100%]\n28 passed in 67.64s (0:01:07)\n"
+  },
+  {
+    "command": [
+      "flutter",
+      "test",
+      "--no-pub",
+      "test/story_context_inventory_test.dart",
+      "test/story_context_completion_test.dart",
+      "test/story_context_synthetic_test.dart",
+      "test/story_learning_flow_test.dart",
+      "test/story_target_navigation_test.dart",
+      "test/data/targeted_curation_test.dart"
+    ],
+    "exitcode": 0,
+    "seconds": 41.62,
+    "name": "flutter-focused",
+    "output_tail": "rrent story token through the real resolver\n00:10 +15: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_inventory_test.dart: inventory every current story token through the real resolver\n00:12 +16: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_inventory_test.dart: inventory every current story token through the real resolver\n00:16 +17: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_inventory_test.dart: inventory every current story token through the real resolver\n00:18 +17: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/data/targeted_curation_test.dart: read-only production: 402 memberships, 530 historical links and pre-existing provenance gaps\nREAD-ONLY: 402 form memberships; 530 historical readers OK; 137 pre-existing provenance gaps\n00:18 +18: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_inventory_test.dart: inventory every current story token through the real resolver\n00:21 +19: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_inventory_test.dart: inventory every current story token through the real resolver\n00:22 +20: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_inventory_test.dart: inventory every current story token through the real resolver\nInventory: 58 tokens; 50 available\n00:27 +21: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: all real lookups in sentence 6: Add and repeat\n00:27 +22: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: station: isolated restart, exact list ID, mixed and one review\n00:30 +23: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: early: isolated restart, exact list ID, mixed and one review\n00:33 +24: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: safely: isolated restart, exact list ID, mixed and one review\n00:35 +25: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: Then: isolated restart, exact list ID, mixed and one review\n00:37 +26: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: same identity from two story sentences retains the first context\n00:37 +27: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: (tearDownAll)\n00:37 +27: All tests passed!\n"
+  },
+  {
+    "command": [
+      "pipeline/.venv-macos/bin/python",
+      "-m",
+      "pytest",
+      "pipeline/tests",
+      "-q"
+    ],
+    "exitcode": 0,
+    "seconds": 101.34,
+    "name": "python-full",
+    "output_tail": "........................................................................ [ 14%]\n........................................................................ [ 28%]\n..................................................... [ 38%]\n........................................................................ [ 52%]\n........................................................................ [ 66%]\n........................................................................ [ 80%]\n........................................................................ [ 95%]\n.........................                                                [100%]\n510 passed, 19 subtests passed in 100.76s (0:01:40)\n"
+  },
+  {
+    "command": [
+      "flutter",
+      "test",
+      "--no-pub"
+    ],
+    "exitcode": 0,
+    "seconds": 64.71,
+    "name": "flutter-full",
+    "output_tail": "mixed and one review\n00:58 +312: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: Then: isolated restart, exact list ID, mixed and one review\n00:59 +313: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: Then: isolated restart, exact list ID, mixed and one review\n00:59 +314: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: Then: isolated restart, exact list ID, mixed and one review\n00:59 +315: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: Then: isolated restart, exact list ID, mixed and one review\n00:59 +316: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: Then: isolated restart, exact list ID, mixed and one review\n00:59 +317: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: Then: isolated restart, exact list ID, mixed and one review\n00:59 +318: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: Then: isolated restart, exact list ID, mixed and one review\n00:59 +319: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: Then: isolated restart, exact list ID, mixed and one review\n00:59 +320: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: Then: isolated restart, exact list ID, mixed and one review\n00:59 +321: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: Then: isolated restart, exact list ID, mixed and one review\n00:59 +322: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: Then: isolated restart, exact list ID, mixed and one review\n00:59 +323: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: Then: isolated restart, exact list ID, mixed and one review\n00:59 +324: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: Then: isolated restart, exact list ID, mixed and one review\n00:59 +325: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: same identity from two story sentences retains the first context\n00:59 +326: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_context_completion_test.dart: (tearDownAll)\n00:59 +326: All tests passed!\n"
+  },
+  {
+    "command": [
+      "flutter",
+      "test",
+      "--no-pub",
+      "test/data/real_pack_test.dart"
+    ],
+    "exitcode": 0,
+    "seconds": 11.79,
+    "name": "real-pack",
+    "output_tail": "00:00 +0: loading /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/data/real_pack_test.dart\n00:00 +0: staged pack: all cards and sentence links readable, read-only\ndeck allgemeine-sprache: 160 learning targets, 181 ownership cards, 181 fixed sentence assignments verified\ndeck reisen: 489 learning targets, 519 ownership cards, 519 fixed sentence assignments verified\ndeck alltag-zuhause: 241 learning targets, 262 ownership cards, 262 fixed sentence assignments verified\ndeck arbeit-bildung: 245 learning targets, 252 ownership cards, 252 fixed sentence assignments verified\ndeck menschen-beziehungen: 245 learning targets, 251 ownership cards, 251 fixed sentence assignments verified\ndeck koerper-gesundheit: 249 learning targets, 264 ownership cards, 264 fixed sentence assignments verified\ndeck essen-trinken: 250 learning targets, 250 ownership cards, 250 fixed sentence assignments verified\ndeck natur-umwelt: 242 learning targets, 248 ownership cards, 248 fixed sentence assignments verified\ndeck irregular_verbs_base: 134 learning targets, 129 ownership cards, 129 fixed sentence assignments verified\ndeck irregular_verbs_past: 134 learning targets, 0 ownership cards, 0 fixed sentence assignments verified\ndeck irregular_verbs_participle: 134 learning targets, 0 ownership cards, 0 fixed sentence assignments verified\ndeck alltagssprache-redewendungen: 441 learning targets, 441 ownership cards, 441 fixed sentence assignments verified\ndeck verbalphrasen: 181 learning targets, 181 ownership cards, 181 fixed sentence assignments verified\ndeck business-email: 579 learning targets, 579 ownership cards, 579 fixed sentence assignments verified\npack story_single_sentence_v1 (schema 4, internal: true); 14 decks: 3557 cards, 3767 card sentences, 203 with valid_alternatives, 3767 cards in the pack\n00:08 +1: All tests passed!\n"
+  },
+  {
+    "command": [
+      "flutter",
+      "analyze",
+      "--no-pub"
+    ],
+    "exitcode": 0,
+    "seconds": 4.93,
+    "name": "analyze",
+    "output_tail": "Analyzing sprachapp...                                          \nNo issues found! (ran in 4.1s)\n"
+  },
+  {
+    "command": [
+      "dart",
+      "run",
+      "tool/stage_content_pack.dart",
+      "--verify"
+    ],
+    "exitcode": 0,
+    "seconds": 5.42,
+    "name": "verify",
+    "output_tail": "Running build hooks...Running build hooks...verified assets/content/en/content.sqlite\n  version story_single_sentence_v1, schema 4, 26198016 bytes\n  sha256 b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb\n  22 table counts match finalization_report.json\n  INTERNES TEST-PACK: own devices and selected testers only, no public content release\n"
+  }
+]
