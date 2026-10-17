@@ -464,8 +464,22 @@ class EditorService:
                 if not registered and destination.exists():shutil.rmtree(destination)
         return self.jobs.submit('baseline-adoption',run)
 
-    def publish_release(self,identifier,phase):
-        author.require(phase in ('upload','finalize','commit'),'PUBLISH_PHASE','Unbekannter Veröffentlichungsschritt.')
+    def publication_status(self,identifier):
+        record=self.store.get('releases',identifier)
+        receipt=record.get('publication')
+        author.require(receipt and receipt.get('upload_id'),'PUBLISH_ORDER','Zuerst hochladen.')
+        result=self.publisher.call(receipt['upload_id'],method='GET')
+        with self.store.mutex:
+            current=self.store.get('releases',identifier)
+            receipt={**current['publication'],**result}
+            atomic_json(self.store.root/'publications'/(identifier+'.json'),receipt)
+            current['publication']=receipt;self.store.put('releases',identifier,current)
+        return receipt
+
+    def publish_release(self,identifier,phase,confirmation=None):
+        author.require(phase in ('upload','finalize','resume','commit'),'PUBLISH_PHASE','Unbekannter Veröffentlichungsschritt.')
+        if phase=='resume':author.require(isinstance(confirmation,dict) and confirmation.get('accepted') is True,
+            'RESUME_CONFIRMATION','Wiederaufnahme ausdrücklich bestätigen.',status=409)
         record=self.store.get('releases',identifier)
         def inspect():
             from ..baseline_adoption import KIND
@@ -507,12 +521,19 @@ class EditorService:
                     self.publisher.upload(url,self.store.root/record['path']/name)
                 if receipt['status']=='uploading':receipt['status']='uploaded'
                 save(receipt)
-            elif phase=='finalize':
+            elif phase in ('finalize','resume'):
                 author.require(receipt.get('upload_id'),'PUBLISH_ORDER','Zuerst hochladen.')
-                for index in range(len(FILES)+1):
-                    job.progress('Server prüft Hashes und Freigabe …',index,len(FILES)+1);inspect()
+                if phase=='resume':
+                    receipt.setdefault('resume_request_id',str(uuid.uuid4()));save(receipt)
+                    result=self.publisher.call(receipt['upload_id']+'/resume',{'accepted':True,
+                        'scope':'resume-same-upload-native-v2','request_id':receipt['resume_request_id']})
+                    receipt.update(result);receipt.pop('resume_request_id',None);save(receipt)
+                for _ in range(16):
+                    job.check_cancelled();inspect()
                     result=self.publisher.call(receipt['upload_id']+'/finalize')
-                    receipt['status']=result['status'];save(receipt)
+                    receipt.update(result);save(receipt)
+                    job.progress('Serverprüfung: '+str(result.get('next_stage') or result['status']),
+                        result.get('processed',0),result.get('total',0))
                     if result['status'] in ('ready','published'):break
                 author.require(receipt['status'] in ('ready','published'),'PUBLISH_PENDING','Prüfung noch nicht abgeschlossen. Erneut prüfen.',status=409)
             else:

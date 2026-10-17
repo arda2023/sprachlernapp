@@ -158,7 +158,9 @@ class Handler(BaseHTTPRequestHandler):
             if parts[1]=='verify':return service.publisher.verify_otp(data['email'],data['code']),200,{}
             if parts[1]=='logout':return service.publisher.sign_out(),200,{}
         if len(parts)==4 and parts[0]=='releases' and parts[2]=='publish' and not get:
-            return service.publish_release(parts[1],parts[3]),202,{}
+            return service.publish_release(parts[1],parts[3],data),202,{}
+        if len(parts)==3 and parts[0]=='releases' and parts[2]=='publication' and get:
+            return service.publication_status(parts[1]),200,{}
         if parts==['workspace-view']:return service.workspace_view(None if get else data.get('selection',{})),200,{}
         if parts==['languages']:return (service.languages() if get else service.create_language(data)),200,{}
         if parts==['catalog'] and get:return service.catalog(query['lang'],draft_id=query.get('draft_id'),query=query.get('q',''),deck=query.get('deck'),cursor=query.get('cursor',0),limit=query.get('limit',50),status=query.get('status','active')),200,{}

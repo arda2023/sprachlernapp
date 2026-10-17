@@ -20,6 +20,9 @@ FILES=('content.sqlite','pack.json','registry.json','history_inventory.json','ed
 # either field could contain credentials, signed URLs or content. Known protocol
 # codes are useful diagnostics; explanations are authored locally.
 SERVER_REASONS={
+    'VERIFICATION_EXPIRED':'Prüflauf abgelaufen. Wiederaufnahme unter derselben Upload-ID ausdrücklich bestätigen.',
+    'VERIFICATION_CONFLICT':'Prüflauf ist belegt oder verändert. Serverstatus laden; nicht automatisch wiederholen.',
+    'RESUME_CONFIRMATION':'Wiederaufnahme muss ausdrücklich bestätigt werden.',
     'REQUEST_FAILED':'Server konnte die Anfrage nicht verarbeiten.',
     'REQUEST_OBJECT':'Server erwartet ein JSON-Objekt im Anfrageinhalt.',
     'AUTH_REQUIRED':'Anmeldung ist serverseitig nicht gültig.',
@@ -60,7 +63,7 @@ def http_failure(error,path,*,file=None):
     if path.startswith('/functions/v1/content-publish/'):
         action=path.split('?',1)[0].rsplit('/',1)[-1]
         step={'start':'Upload vorbereiten','channel':'Kanalbasis prüfen',
-              'finalize':'Serverprüfung','commit':'Veröffentlichen'}.get(action,step)
+              'finalize':'Serverprüfung','resume':'Prüfung wiederaufnehmen','commit':'Veröffentlichen'}.get(action,step)
     code=None;reason=None
     try:
         raw=error.read(16385)

@@ -1,0 +1,686 @@
+{
+  "local_only": true,
+  "cloud_pass": false,
+  "runtime": "supabase/edge-runtime:v1.77.1",
+  "limits": {
+    "memory_mib": 256,
+    "cpu_soft_ms": 1000,
+    "cpu_hard_ms": 2000,
+    "wall_ms": 150000
+  },
+  "reserve_targets": {
+    "cpu_ms": 500,
+    "memory_mib": 128
+  },
+  "measurement_notes": [
+    "Fresh-worker CPU from ordered Shutdown events (one per request).",
+    "Reused-worker per-stage CPU is whole-container delta, including gateway and measurement overhead; not isolate CPU.",
+    "Memory is maximum observed heapUsed + external at instrumentation points, not a peak guarantee.",
+    "worker_wall_ms excludes driver Docker measurement overhead; driver_wall_ms includes it.",
+    "Bytes include Auth/DB/Storage responses; calls are backend calls, excluding driver calls.",
+    "Normal followup is a locally generated fixture from the real bundle with synthetic test review and a genuinely published local parent."
+  ],
+  "original_hashes": {
+    "content.sqlite": "ac87b43105b9305579a7fff38de0343f874cbb19e533e1bebbed8942d975acdd",
+    "pack.json": "098f01abacb11ef2aa1601ff10f11d185f690cf688e515ae62343d344561d8c9",
+    "registry.json": "039cb691709f0463995a5ee4773a490290109445b686eb8d22ba117001d715ad",
+    "history_inventory.json": "d710fe23ba73ce153992e1a09e32ec227430760dcfd06b391d7b0f5dd5668ff2",
+    "editorial_reviews.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "provenance.json": "52334f02ea98ee31c7c0ddcfa6347edce8a19147117cc69bbb3bc58ef878fed5",
+    "finalization_report.json": "4462d22b9f2d013f623dcd65c9749b3a39d843666d81442555f9e4d57952c3b1",
+    "content.manifest.json": "88cd1f4178e87fbf6977ee604928710997bc417efe20812eda136a7d3c97cd86",
+    "reader_report.json": "7500df59ddf2cdd858a8fa0292841ad738b38b970db61b9355b2d1f3c622c608"
+  },
+  "flows": [
+    {
+      "policy": "oneshot",
+      "kind": "adoption",
+      "stage_count": 14,
+      "ready_and_published": true,
+      "old_new_manifest_equal": true,
+      "stages": [
+        {
+          "stage": "F0",
+          "isolate_cpu_ms": 67,
+          "container_cpu_ms": 219.1,
+          "observed_memory_bytes": 13628611,
+          "worker_wall_ms": 255.11,
+          "driver_wall_ms": 672.0,
+          "backend_bytes": 43096300,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F1",
+          "isolate_cpu_ms": 70,
+          "container_cpu_ms": 224.4,
+          "observed_memory_bytes": 14778332,
+          "worker_wall_ms": 264.27,
+          "driver_wall_ms": 656.0,
+          "backend_bytes": 50094020,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F2",
+          "isolate_cpu_ms": 17,
+          "container_cpu_ms": 79.5,
+          "observed_memory_bytes": 13280152,
+          "worker_wall_ms": 59.0,
+          "driver_wall_ms": 468.0,
+          "backend_bytes": 1074259,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F3",
+          "isolate_cpu_ms": 30,
+          "container_cpu_ms": 110.4,
+          "observed_memory_bytes": 14412428,
+          "worker_wall_ms": 97.4,
+          "driver_wall_ms": 500.0,
+          "backend_bytes": 10181171,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F4",
+          "isolate_cpu_ms": 15,
+          "container_cpu_ms": 79.0,
+          "observed_memory_bytes": 12500839,
+          "worker_wall_ms": 52.98,
+          "driver_wall_ms": 454.0,
+          "backend_bytes": 11793,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F5",
+          "isolate_cpu_ms": 15,
+          "container_cpu_ms": 82.2,
+          "observed_memory_bytes": 12507002,
+          "worker_wall_ms": 53.9,
+          "driver_wall_ms": 469.0,
+          "backend_bytes": 14625,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F6",
+          "isolate_cpu_ms": 17,
+          "container_cpu_ms": 78.7,
+          "observed_memory_bytes": 12502171,
+          "worker_wall_ms": 55.0,
+          "driver_wall_ms": 469.0,
+          "backend_bytes": 14169,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F7",
+          "isolate_cpu_ms": 18,
+          "container_cpu_ms": 87.3,
+          "observed_memory_bytes": 12502898,
+          "worker_wall_ms": 55.03,
+          "driver_wall_ms": 469.0,
+          "backend_bytes": 13672,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F8",
+          "isolate_cpu_ms": 36,
+          "container_cpu_ms": 134.0,
+          "observed_memory_bytes": 13041444,
+          "worker_wall_ms": 125.56,
+          "driver_wall_ms": 578.0,
+          "backend_bytes": 9821411,
+          "backend_requests": 6
+        },
+        {
+          "stage": "M",
+          "isolate_cpu_ms": 154,
+          "container_cpu_ms": 284.3,
+          "observed_memory_bytes": 48128591,
+          "worker_wall_ms": 239.27,
+          "driver_wall_ms": 656.0,
+          "backend_bytes": 11251290,
+          "backend_requests": 11
+        },
+        {
+          "stage": "P_full",
+          "isolate_cpu_ms": 656,
+          "container_cpu_ms": 928.0,
+          "observed_memory_bytes": 160291207,
+          "worker_wall_ms": 807.3,
+          "driver_wall_ms": 1234.0,
+          "backend_bytes": 50096388,
+          "backend_requests": 6
+        },
+        {
+          "stage": "P_content",
+          "isolate_cpu_ms": 549,
+          "container_cpu_ms": 799.9,
+          "observed_memory_bytes": 160294295,
+          "worker_wall_ms": 696.67,
+          "driver_wall_ms": 1109.0,
+          "backend_bytes": 50096467,
+          "backend_requests": 7
+        },
+        {
+          "stage": "H",
+          "isolate_cpu_ms": 88,
+          "container_cpu_ms": 194.8,
+          "observed_memory_bytes": 49453391,
+          "worker_wall_ms": 155.79,
+          "driver_wall_ms": 578.0,
+          "backend_bytes": 11246060,
+          "backend_requests": 7
+        },
+        {
+          "stage": "A",
+          "isolate_cpu_ms": 16,
+          "container_cpu_ms": 84.5,
+          "observed_memory_bytes": 11893886,
+          "worker_wall_ms": 50.92,
+          "driver_wall_ms": 484.0,
+          "backend_bytes": 16067,
+          "backend_requests": 6
+        }
+      ],
+      "total_worker_wall_ms": 2968.2,
+      "total_container_cpu_ms": 3386.1,
+      "total_backend_bytes": 237027692,
+      "total_backend_requests": 91,
+      "total_isolate_cpu_ms": 1748
+    },
+    {
+      "policy": "oneshot",
+      "kind": "normal",
+      "stage_count": 13,
+      "ready_and_published": true,
+      "old_new_manifest_equal": true,
+      "stages": [
+        {
+          "stage": "F0",
+          "isolate_cpu_ms": 69,
+          "container_cpu_ms": 215.9,
+          "observed_memory_bytes": 19610407,
+          "worker_wall_ms": 250.63,
+          "driver_wall_ms": 672.0,
+          "backend_bytes": 43096080,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F1",
+          "isolate_cpu_ms": 70,
+          "container_cpu_ms": 223.5,
+          "observed_memory_bytes": 19552399,
+          "worker_wall_ms": 233.47,
+          "driver_wall_ms": 640.0,
+          "backend_bytes": 36558371,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F2",
+          "isolate_cpu_ms": 23,
+          "container_cpu_ms": 104.2,
+          "observed_memory_bytes": 13134907,
+          "worker_wall_ms": 66.46,
+          "driver_wall_ms": 515.0,
+          "backend_bytes": 1074041,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F3",
+          "isolate_cpu_ms": 31,
+          "container_cpu_ms": 112.6,
+          "observed_memory_bytes": 13973927,
+          "worker_wall_ms": 101.9,
+          "driver_wall_ms": 515.0,
+          "backend_bytes": 10180952,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F4",
+          "isolate_cpu_ms": 17,
+          "container_cpu_ms": 81.7,
+          "observed_memory_bytes": 12500522,
+          "worker_wall_ms": 55.6,
+          "driver_wall_ms": 453.0,
+          "backend_bytes": 11745,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F5",
+          "isolate_cpu_ms": 16,
+          "container_cpu_ms": 79.2,
+          "observed_memory_bytes": 12501072,
+          "worker_wall_ms": 52.24,
+          "driver_wall_ms": 453.0,
+          "backend_bytes": 11833,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F6",
+          "isolate_cpu_ms": 15,
+          "container_cpu_ms": 79.8,
+          "observed_memory_bytes": 12506289,
+          "worker_wall_ms": 52.13,
+          "driver_wall_ms": 438.0,
+          "backend_bytes": 13455,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F7",
+          "isolate_cpu_ms": 16,
+          "container_cpu_ms": 79.6,
+          "observed_memory_bytes": 12506963,
+          "worker_wall_ms": 54.01,
+          "driver_wall_ms": 454.0,
+          "backend_bytes": 13239,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F8",
+          "isolate_cpu_ms": 31,
+          "container_cpu_ms": 119.8,
+          "observed_memory_bytes": 14344469,
+          "worker_wall_ms": 101.09,
+          "driver_wall_ms": 532.0,
+          "backend_bytes": 9821187,
+          "backend_requests": 6
+        },
+        {
+          "stage": "M",
+          "isolate_cpu_ms": 136,
+          "container_cpu_ms": 262.1,
+          "observed_memory_bytes": 48128711,
+          "worker_wall_ms": 222.07,
+          "driver_wall_ms": 641.0,
+          "backend_bytes": 11247960,
+          "backend_requests": 10
+        },
+        {
+          "stage": "P_full",
+          "isolate_cpu_ms": 590,
+          "container_cpu_ms": 831.4,
+          "observed_memory_bytes": 133761915,
+          "worker_wall_ms": 701.09,
+          "driver_wall_ms": 1109.0,
+          "backend_bytes": 36560738,
+          "backend_requests": 6
+        },
+        {
+          "stage": "H",
+          "isolate_cpu_ms": 219,
+          "container_cpu_ms": 423.1,
+          "observed_memory_bytes": 64097863,
+          "worker_wall_ms": 329.27,
+          "driver_wall_ms": 734.0,
+          "backend_bytes": 22481246,
+          "backend_requests": 10
+        },
+        {
+          "stage": "A",
+          "isolate_cpu_ms": 19,
+          "container_cpu_ms": 97.2,
+          "observed_memory_bytes": 11674830,
+          "worker_wall_ms": 58.32,
+          "driver_wall_ms": 484.0,
+          "backend_bytes": 15654,
+          "backend_requests": 5
+        }
+      ],
+      "total_worker_wall_ms": 2278.28,
+      "total_container_cpu_ms": 2710.1,
+      "total_backend_bytes": 171086501,
+      "total_backend_requests": 85,
+      "total_isolate_cpu_ms": 1252
+    },
+    {
+      "policy": "per_worker",
+      "kind": "adoption",
+      "stage_count": 14,
+      "ready_and_published": true,
+      "old_new_manifest_equal": true,
+      "stages": [
+        {
+          "stage": "F0",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 153.8,
+          "observed_memory_bytes": 18456887,
+          "worker_wall_ms": 223.77,
+          "driver_wall_ms": 578.0,
+          "backend_bytes": 43096302,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F1",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 152.4,
+          "observed_memory_bytes": 17771271,
+          "worker_wall_ms": 265.29,
+          "driver_wall_ms": 625.0,
+          "backend_bytes": 50094022,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F2",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 28.1,
+          "observed_memory_bytes": 15296146,
+          "worker_wall_ms": 52.7,
+          "driver_wall_ms": 422.0,
+          "backend_bytes": 1074262,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F3",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 63.6,
+          "observed_memory_bytes": 16192253,
+          "worker_wall_ms": 92.36,
+          "driver_wall_ms": 469.0,
+          "backend_bytes": 10181173,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F4",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 23.9,
+          "observed_memory_bytes": 16342316,
+          "worker_wall_ms": 44.65,
+          "driver_wall_ms": 391.0,
+          "backend_bytes": 11796,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F5",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 24.0,
+          "observed_memory_bytes": 13541446,
+          "worker_wall_ms": 43.6,
+          "driver_wall_ms": 406.0,
+          "backend_bytes": 14627,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F6",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 23.5,
+          "observed_memory_bytes": 13549110,
+          "worker_wall_ms": 43.01,
+          "driver_wall_ms": 406.0,
+          "backend_bytes": 14171,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F7",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 24.7,
+          "observed_memory_bytes": 13570695,
+          "worker_wall_ms": 47.15,
+          "driver_wall_ms": 406.0,
+          "backend_bytes": 13674,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F8",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 50.8,
+          "observed_memory_bytes": 14758999,
+          "worker_wall_ms": 87.33,
+          "driver_wall_ms": 437.0,
+          "backend_bytes": 9821413,
+          "backend_requests": 6
+        },
+        {
+          "stage": "M",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 174.7,
+          "observed_memory_bytes": 48903031,
+          "worker_wall_ms": 190.82,
+          "driver_wall_ms": 563.0,
+          "backend_bytes": 11251292,
+          "backend_requests": 11
+        },
+        {
+          "stage": "P_full",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 714.5,
+          "observed_memory_bytes": 160848023,
+          "worker_wall_ms": 676.55,
+          "driver_wall_ms": 1031.0,
+          "backend_bytes": 50096390,
+          "backend_requests": 6
+        },
+        {
+          "stage": "P_content",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 800.7,
+          "observed_memory_bytes": 160714015,
+          "worker_wall_ms": 684.49,
+          "driver_wall_ms": 1031.0,
+          "backend_bytes": 50096469,
+          "backend_requests": 7
+        },
+        {
+          "stage": "H",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 135.6,
+          "observed_memory_bytes": 49700447,
+          "worker_wall_ms": 141.22,
+          "driver_wall_ms": 500.0,
+          "backend_bytes": 11246062,
+          "backend_requests": 7
+        },
+        {
+          "stage": "A",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 24.4,
+          "observed_memory_bytes": 30588282,
+          "worker_wall_ms": 41.9,
+          "driver_wall_ms": 407.0,
+          "backend_bytes": 16069,
+          "backend_requests": 6
+        }
+      ],
+      "total_worker_wall_ms": 2634.84,
+      "total_container_cpu_ms": 2394.7,
+      "total_backend_bytes": 237027722,
+      "total_backend_requests": 91,
+      "total_isolate_cpu_ms": null
+    },
+    {
+      "policy": "per_worker",
+      "kind": "normal",
+      "stage_count": 13,
+      "ready_and_published": true,
+      "old_new_manifest_equal": true,
+      "stages": [
+        {
+          "stage": "F0",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 133.8,
+          "observed_memory_bytes": 15562013,
+          "worker_wall_ms": 242.78,
+          "driver_wall_ms": 609.0,
+          "backend_bytes": 43096081,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F1",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 114.1,
+          "observed_memory_bytes": 17526600,
+          "worker_wall_ms": 193.3,
+          "driver_wall_ms": 563.0,
+          "backend_bytes": 36558370,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F2",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 26.6,
+          "observed_memory_bytes": 15317942,
+          "worker_wall_ms": 48.19,
+          "driver_wall_ms": 406.0,
+          "backend_bytes": 1074041,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F3",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 76.5,
+          "observed_memory_bytes": 17774263,
+          "worker_wall_ms": 92.07,
+          "driver_wall_ms": 469.0,
+          "backend_bytes": 10180952,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F4",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 27.2,
+          "observed_memory_bytes": 12828028,
+          "worker_wall_ms": 48.36,
+          "driver_wall_ms": 406.0,
+          "backend_bytes": 11745,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F5",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 26.7,
+          "observed_memory_bytes": 13610152,
+          "worker_wall_ms": 44.13,
+          "driver_wall_ms": 406.0,
+          "backend_bytes": 11833,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F6",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 25.4,
+          "observed_memory_bytes": 13672352,
+          "worker_wall_ms": 48.59,
+          "driver_wall_ms": 422.0,
+          "backend_bytes": 13455,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F7",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 24.9,
+          "observed_memory_bytes": 13741614,
+          "worker_wall_ms": 46.13,
+          "driver_wall_ms": 406.0,
+          "backend_bytes": 13239,
+          "backend_requests": 6
+        },
+        {
+          "stage": "F8",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 52.5,
+          "observed_memory_bytes": 16632885,
+          "worker_wall_ms": 84.92,
+          "driver_wall_ms": 453.0,
+          "backend_bytes": 9821187,
+          "backend_requests": 6
+        },
+        {
+          "stage": "M",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 180.8,
+          "observed_memory_bytes": 48639431,
+          "worker_wall_ms": 196.04,
+          "driver_wall_ms": 578.0,
+          "backend_bytes": 11247960,
+          "backend_requests": 10
+        },
+        {
+          "stage": "P_full",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 696.0,
+          "observed_memory_bytes": 134340931,
+          "worker_wall_ms": 623.06,
+          "driver_wall_ms": 984.0,
+          "backend_bytes": 36560737,
+          "backend_requests": 6
+        },
+        {
+          "stage": "H",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 371.8,
+          "observed_memory_bytes": 64150191,
+          "worker_wall_ms": 320.22,
+          "driver_wall_ms": 687.0,
+          "backend_bytes": 22481246,
+          "backend_requests": 10
+        },
+        {
+          "stage": "A",
+          "isolate_cpu_ms": null,
+          "container_cpu_ms": 24.8,
+          "observed_memory_bytes": 52168069,
+          "worker_wall_ms": 40.01,
+          "driver_wall_ms": 390.0,
+          "backend_bytes": 15654,
+          "backend_requests": 5
+        }
+      ],
+      "total_worker_wall_ms": 2027.8,
+      "total_container_cpu_ms": 1781.1,
+      "total_backend_bytes": 171086500,
+      "total_backend_requests": 85,
+      "total_isolate_cpu_ms": null
+    }
+  ],
+  "negative_checks": [
+    "explicit audited same-upload resume; original expiry unchanged",
+    "no upload URLs for expired upload",
+    "client RPC and direct run writes denied",
+    "concurrent claims: one winner",
+    "stale lease and changed retry rejected",
+    "lost finish response idempotent",
+    "identity mutation rejected",
+    "rights revocation checked",
+    "actual CPU abort: HTTP546/no progress; real 90-second lease expiry recovery",
+    "old run finish rejected after resume",
+    "expired completed run cannot commit; explicit resume/reverify/publish succeeds",
+    "actual competing child loses generation/parent CAS",
+    "old/new manifests equal for adoption and real parent followup in both policies",
+    "explicit isolated publish and idempotent retry",
+    "wrong owner rejected",
+    "incomplete publish rejected",
+    "normal P_content explicitly not required"
+  ],
+  "full_run": {
+    "artifact": "518fb5923d7d48e79b65a1fa0de8de3c",
+    "elapsed_seconds": 179.62,
+    "driver_requests": 383
+  },
+  "final_flows_run": {
+    "artifact": "fba5aaed459e42ffa3573b9023c275bd",
+    "elapsed_seconds": 52.89,
+    "driver_requests": 219
+  },
+  "reused_worker_shutdown_cpu_ms": {
+    "oneshot": [],
+    "per_worker": [
+      1011,
+      1329,
+      1015,
+      671,
+      233
+    ]
+  },
+  "deliberate_abort_event": {
+    "timestamp": "2026-10-17T09:51:10.618Z",
+    "event_type": "UncaughtException",
+    "event": {
+      "exception": "event loop error: Uncaught null",
+      "cpu_time_used": 2015
+    },
+    "metadata": {
+      "service_path": "/work/probe",
+      "execution_id": "4fa8c009-e44b-4324-a4b6-a8eb301d382f",
+      "otel_attributes": {
+        "edge_runtime.worker.kind": "user"
+      }
+    }
+  }
+}

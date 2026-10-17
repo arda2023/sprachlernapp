@@ -1,5 +1,193 @@
 # Erste private Cloudversion aus dem internen App-Bestand
 
+## Native Stufenprüfung lokal implementiert · 17.10.2026
+
+Dieser Abschnitt ersetzt den unten historisch erhaltenen offenen Implementierungsauftrag.
+Die produktive Function verwendet jetzt dauerhafte native Stufen; der vollständige
+lokale Handler erreicht mit echten Auth-/DB-/Storage-Diensten `ready` und veröffentlicht
+isolierte Testversionen. **Keine Cloudmigration, kein Deployment und kein Cloud-Finalize
+wurden ausgeführt. Keine Cloudreserve oder Geräteabnahme ist damit belegt.**
+
+### Implementierung und Integrität
+
+- F0–F8 prüfen alle neun Dateien vollständig auf Größe und Bytehash. M prüft Manifest,
+  Sidecars, Reviewbindung beziehungsweise den unveränderten Bestandsbeleg. P_full prüft
+  Packscope und kanonischen Vollhash; P_content prüft nur bei Bestandsübernahme den
+  normalisierten Inhalt, Quellenzeitstempel und SQLitepin. H prüft Registry und echte
+  Parenthistorie. A liest keine Inhaltsdateien und übernimmt ausschließlich Metadaten.
+- `content_verification_steps.ts` enthält die extrahierte vorhandene Fachprüfung.
+  Der Referenzwrapper verwendet dieselben Funktionen; der Produktionsabschluss ruft
+  keinen vollständigen `verifyBundle` auf. Jeder spätere Dateiread prüft erneut Größe
+  und SHA. Es gibt weder Snapshotablage noch Streamingparser noch Inhaltscache.
+- Neue Migration `20261018000001_content_verification_runs.sql` (Name vorher frei):
+  Upload-/Owner-/Manifest-/Deskriptor-/Generation-/Parent-/Verifierbindung, ein aktiver
+  Run, 90-Sekunden-Lease, Revision und Ergebnisfingerprint. Claim/Finish sperren zuerst
+  den Upload. Gleiche Finish-Wiederholung ist idempotent; alte Leases/Runs werden
+  abgewiesen. A und `ready` werden atomar geschrieben. Commit verlangt den vollständigen
+  gültigen Run und erhält Generation-/Parent-CAS, Locks und Auditidempotenz.
+- Jeder Aufruf authentisiert erneut und prüft Publisher/Owner. RPC ist ausschließlich
+  für `service_role` ausführbar; selbst diese Rolle hat keine direkten Run-Schreibrechte.
+  SECURITY DEFINER verwendet einen leeren search_path. Der neue Uploadtrigger blockiert
+  auch alte Handler, die `ready` ohne vollständigen Run schreiben wollen.
+- Ausdrückliches Resume startet unter derselben Upload-ID einen neuen, 24 Stunden
+  gültigen Run. Actor, Zeitpunkt und Request-ID werden protokolliert, alte Ergebnisse
+  verworfen und alte Worker entwertet. Das originale Upload-`expires_at` bleibt gleich;
+  Finish und Commit verwenden die neue Runfrist. Abgelaufene Uploads erhalten keine
+  neuen Upload-URLs. Storage-/Downloadcode und administrative Vertrauensgrenze bleiben
+  wie unten beschrieben; privilegierte Inhaltsmutationen sind weiterhin ausgeschlossen.
+- Editor: `service.py`, `server.py` und `web/app.js` ergänzen GET des Serverfortschritts
+  und ausdrückliches Resume. Eine Aktion führt höchstens 16 sequenzielle Stufenaufrufe
+  aus, stoppt bei jedem Fehler/546 und veröffentlicht niemals automatisch. Neustart
+  liest den Serverstand. Veröffentlichen bleibt eine eigene bestätigte Aktion.
+
+### Vollständiger lokaler Nachweis und Ressourcen
+
+[Maschinenlesbare Messwerte pro Stufe](evidence/content-editor-initial-release/native-verification-v2.json).
+Edge Runtime `supabase/edge-runtime:v1.77.1`, 256 MiB, CPU soft 1000/hard 2000 ms,
+Wall 150000 ms; `oneshot` und `per_worker`, unveränderte Limits. Separater Stack
+`sprachapp_native_v2`, API 127.0.0.1:55421, DB-Container gleichen Projektnamens,
+Testgateway 127.0.0.1:54998. Der vorhandene Stack `sprachapp` wurde nicht zurückgesetzt.
+Die Konfiguration wurde aus `supabase init --workdir build/native_verification/stack`
+erzeugt (project_id geändert; Standardports 54320–54329 um 1100 erhöht; Inspector 8183),
+Repo-Migrationen kopiert, leeres Seed verwendet und mit `supabase start --workdir
+build/native_verification/stack` gestartet (Exit 0).
+
+Originalbundle: `088f5eab-7347-406f-b9e6-cf5dbb985990`, Pack 50.083.067 Byte,
+SQLite 43.085.824 Byte; vollständige Dateihashes stehen in der Evidenz. Der normale
+Folgerelease ist eine isolierte Testkopie mit neuer Version, kompakter JSON-Darstellung
+und **synthetischem Testreview**, keine behauptete menschliche Sprachfreigabe.
+Sein Parent ist die zuvor tatsächlich lokal veröffentlichte Bestandsversion.
+Beide Pfade wurden mit dem alten Validator aus `fe6e7ad` auf exakt gleiche Endmanifeste
+und Manifesthashes verglichen; dieselben Uploaddaten liefern identische IDs/Zeitwerte.
+Beide Workerpolitiken bestanden Übernahme → Publish → echter Parent-Folgerelease → Publish.
+
+| Lauf | Stufen | CPU frisch, Summe | Handler-Wall, Summe | Backendbytes / Aufrufe |
+| --- | ---: | ---: | ---: | ---: |
+| Übernahme frisch | 14 | 1748 ms | 2968 ms | 237.027.692 / 91 |
+| Normal frisch | 13 | 1252 ms | 2278 ms | 171.086.501 / 85 |
+| Übernahme wiederverwendet | 14 | nur Containerdelta: 2395 ms | 2635 ms | 237.027.722 / 91 |
+| Normal wiederverwendet | 13 | nur Containerdelta: 1781 ms | 2028 ms | 171.086.500 / 85 |
+
+Diese Summen verteilen sich auf getrennte Requests; sie sind kein Einzelrequestbudget.
+Frische Worker: Übernahme P_full **656 ms / 152,9 MiB**, P_content **549 ms / 152,9 MiB**;
+normal P_full **590 ms / 127,6 MiB**. Wiederverwendet: entsprechende Containerdeltas
+714,5 / 800,7 / 696,0 ms und beobachtete Speicherwerte 153,4 / 153,3 / 128,1 MiB.
+**Die Reserveziele 500 ms/128 MiB sind teilweise verfehlt.** A benötigt frisch nur
+16 ms (Übernahme) beziehungsweise 19 ms (normal), ohne Inhaltsread. Keine gesamte
+Packverarbeitung im Abschluss. Alle F-/M-/H-Stufen stehen einzeln in der Evidenz.
+
+Frische CPU-Werte stammen aus den geordneten Shutdown-Ereignissen (ein Worker pro
+Request). Bei Wiederverwendung sind pro Stufe nur Container-CPU-Deltas verfügbar,
+einschließlich Gateway/Messaufwand; Worker werden auch regulär recycelt. Speicher ist
+`heapUsed + external` an Messpunkten, **keine garantierte Spitze**. Handler-Wall schließt
+die Docker-Messkommandos des Treibers aus. Auth-/DB-/Storage-Bytes sind enthalten.
+Der instrumentierte Produktionshandler benutzt echte Dienste; das lokale Gateway
+ersetzt das Cloudgateway. Cloudhardware, Authlatenzen, Runtime 1.77.0 des früheren
+Cloudabbruchs und tatsächliche Cloudlimits sind hiermit nicht reproduziert.
+
+Der vollständige Negativlauf prüfte falschen Owner, unvollständigen Commit, Rechteentzug,
+RPC-/Tabellenschreibverbote, parallele Claims, alte Lease, verlorene Finish-Antwort,
+geänderte Wiederholung/Identität, Ablauf, explizites Resume und tatsächlichen Parent-/
+Generationkonflikt. Eine ausschließlich im Testworker eingebaute CPU-Schleife brach
+wirklich mit HTTP 546 ab: Event `UncaughtException`, `cpu_time_used=2015`, Zeitpunkt
+2026-10-17T09:51:10.618Z (kein erfundener CPUTime-Shutdown). Fortschritt blieb unverändert;
+nach Ablauf der echten 90-Sekunden-Lease gelang eine ausdrücklich ausgelöste Fortsetzung.
+Ein alter Finish wurde abgewiesen. Abgelaufenes `ready` konnte nicht veröffentlichen;
+Resume + vollständige Neuprüfung + isolierter Publish gelangen bei unverändertem
+ursprünglichem Uploadablauf. Der Editor prüft Abbruch ohne automatische Wiederholung.
+UI-Nachweis: echte JS-Funktion im DOM-Harness, keine reale Geräteabnahme.
+
+### Tatsächliche Befehle, Outputs und Exitcodes
+
+Aus dem Repository unter Windows PowerShell, ohne zusätzliche Geheimnisse auszugeben:
+
+```powershell
+deno test --allow-read supabase/functions/_shared/content_distribution_test.ts supabase/functions/_shared/content_baseline_adoption_test.ts supabase/functions/_shared/content_verification_steps_test.ts
+# 15 passed | 0 failed (9s), Exit 0
+pipeline\.venv\Scripts\python.exe -X utf8 -m pytest pipeline/tests/test_editor_publisher.py -q --tb=short
+# 23 passed in 8.13s, Exit 0
+pipeline\.venv\Scripts\python.exe -X utf8 -m pytest pipeline/tests/test_editor_publisher.py pipeline/tests/test_editor_http.py -q --tb=short
+# 26 passed in 11.38s, Exit 0
+node pipeline/tests/editor_verification_ui_test.cjs
+# PASS: server progress, restart status, explicit resume, separate publish, Exit 0
+node pipeline/tests/editor_password_ui_test.cjs
+# PASS: masked password / autocomplete / explicit OTP / safe retry / field clear / no storage, Exit 0
+node --check pipeline/src/sprachpipe/editor/web/app.js
+# keine Ausgabe, Exit 0
+pipeline\.venv\Scripts\python.exe -X utf8 pipeline/tests/verification_v2/native_integration.py --bundle "$env:LOCALAPPDATA/SprachappContentEditor/bundles/088f5eab-7347-406f-b9e6-cf5dbb985990"
+# 17 Nachweise, 383 Treiberrequests, 179.62 s, Exit 0; integration-3.log
+pipeline\.venv\Scripts\python.exe -X utf8 pipeline/tests/verification_v2/native_integration.py --flows-only --bundle "$env:LOCALAPPDATA/SprachappContentEditor/bundles/088f5eab-7347-406f-b9e6-cf5dbb985990"
+# beide vollständigen Flows/Workerpolitiken, 219 Requests, 52.89 s, Exit 0; final-flows.log
+pipeline\.venv\Scripts\python.exe -X utf8 pipeline/tests/verification_v2/migration_check.py
+# PASS: fresh migration; client RPC denied/server RPC allowed/direct run update denied; legacy ready and commit blocked. Exit 0
+```
+
+Logs unter `build/native_verification/`; persistente bereinigte Messwerte siehe Evidenz.
+Der Migrationscheck erzeugt und entfernt eine eigene temporäre Datenbank im dedizierten
+Testcontainer. Auf macOS dieselben Deno-/Node-/Supabase-Befehle; Python jeweils
+`pipeline/.venv-macos/bin/python -X utf8`, Bundle über `--bundle "/absoluter/Pfad/zum/Bundle"`.
+Historischer `local_probe.py` benötigt nun ausdrücklich `--legacy-reference`; er ist
+kein Abnahmenachweis des neuen Produktionsablaufs.
+
+Korrigierte Testaufbaufehler: alter Finalize-Mock erwartete PATCH statt Run-RPC;
+PostgREST liefert PV409 direkt als HTTP 400 (Function übersetzt 409); Neustarttest musste
+die erste Editorinstanz schließen; JS-Harness musste echte konstante Helper respektieren
+und den unbeteiligten Adoptionscallback bereitstellen. Der frische Migrationsharness
+benötigte zusätzlich `storage.buckets.file_size_limit`. Die jeweiligen ersten Läufe
+hatten Exit 1, die oben genannten korrigierten Läufe Exit 0; keine fachliche Assertion
+oder Ressourcengrenze wurde zur erfolgreichen Prüfung gelockert.
+
+### Änderungsprüfung und geschützter Bestand
+
+`git diff --cached --check`: keine Ausgabe, Exit 0. Python-Kompilierung der drei
+Mess-/Migrationsskripte: Exit 0. 37 gesicherte SHA-256-Werte unverändert (echte
+Editor-Daten, Bundle, Assets, Anker und alle alten Migrationen). Fremder Diff identisch;
+NEXTSTEPS bewahrt die fremden Anteile und hat 25 Zeilen. Der dedizierte Teststack wurde
+mit `supabase stop --workdir build/native_verification/stack` gestoppt (Exit 0,
+`project_id_filter=sprachapp_native_v2`, Backup erhalten); die zwölf vorhandenen
+`sprachapp`-Container laufen weiter.
+
+GitNexus vor Edit: Dateireferenzen Distribution → beide Function-Einstiege und Tests,
+Service → Server; symbolbezogene UNKNOWN-Ergebnisse wurden durch direkte Aufrufprüfung
+ergänzt. Abschließend `node .gitnexus/run.cjs analyze --index-only`: Exit 0, 19.425 Knoten,
+42.577 Kanten. `detect_changes(scope=all/staged, limit=10000)` über LocalBackend:
+Exit 0, jeweils partial=false/truncated=false; all 147 Symbole/36 Dateien, staged
+134 Symbole/20 Dateien, 302 betroffene Prozesse, **CRITICAL**. Diese Warnung wurde
+geprüft, nicht zu LOW umgedeutet. 879 gemeldete Prozessschritte tragen pauschal den
+Testvariablennamen `published`, zwei `json`; die Prozesszuordnung ist daher als
+Abhängigkeitsnachweis eingeschränkt. `context(publish_release)` erfasst den Service,
+aber nicht den dynamischen HTTP-Aufrufer. Direkte Prüfung bestätigt Serverroute →
+Service/Job → Publisher → Auth/Storage/Run-RPC; Produktions-finalize ruft nur eine
+verifyStage auf, verifyBundle bleibt Referenz-/Testpfad. SQL-, HTTP-, UI- und echte
+Parentintegration decken diese Grenzen gezielt ab. Graphlogs:
+`build/native_verification/graph-{all,staged}.json`; kein behaupteter risikofreier Graph.
+
+### Spätere Cloudumstellung und genaue Bedienung (hier nicht ausgeführt)
+
+1. Gesondert die neue Migration **und** das passende `content-publish` freigeben.
+   Keine Serverprüfung mit einer gemischten Version starten. Folgende CLI-Befehle sind
+   auf Windows und macOS gleich; Dry-run muss ausschließlich die erwartete neue Migration
+   `20261018000001_content_verification_runs.sql` zeigen, sonst anhalten:
+   `supabase db push --project-ref yevntxclpchapacqdizm --dry-run --skip-vault`.
+2. Erst danach `supabase db push --project-ref yevntxclpchapacqdizm --skip-vault`, dann
+   `supabase functions deploy content-publish --project-ref yevntxclpchapacqdizm`.
+   JWT-Prüfung beibehalten. `content-release`/Appdownloads benötigen kein Deployment.
+   Migration zuerst: alter Handler kann zwischenzeitlich kein neues ready/Commit ohne
+   Run erzeugen; bereits veröffentlichte Katalogdaten und Audit-Wiederholungen bleiben
+   kompatibel. Function zuerst würde an fehlenden RPCs scheitern. Wartungsfenster für
+   neue Prüfungen/Publikationen einhalten; ein Rückrollen nur der Function genügt nicht.
+3. Editor beenden und mit vorhandener Konfiguration neu starten: Windows
+   `pipeline\.venv\Scripts\python.exe -X utf8 -m sprachpipe.editor`; macOS
+   `pipeline/.venv-macos/bin/python -X utf8 -m sprachpipe.editor`.
+4. Anmelden → **Versionen** → vorhandene `story_single_sentence_v1-internal-baseline`.
+   Serverstatus wird gelesen. Bei gültigem Run **2 · Prüfung fortsetzen** (beziehungsweise
+   **2 · Serverprüfung**) einmal klicken. Bei `resume_required` **Prüfung ausdrücklich
+   wiederaufnehmen → Neuen Prüflauf bestätigen**. Dies prüft denselben Upload
+   `dc4eb268-b9d1-4278-839d-0176d0db2f40`; weder neue Übernahme noch **1 · Privat hochladen**.
+   Bei 546/Fehler stoppen und Diagnose auswerten. **3 · Veröffentlichen** bleibt gesondert
+   und wurde für die Cloud in diesem Auftrag nicht freigegeben.
+
+
 ## Präzisierte Entscheidung: bestehendes Storage, native Packschritte · 17.10.2026
 
 **Dieser Abschnitt ersetzt Entscheidung B und die Snapshot-Empfehlung des

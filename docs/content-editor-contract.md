@@ -440,3 +440,43 @@ Lokale Vorbereitung schaltet weder Produktionsasset noch Editorhead um.
 Umsetzung, Grenzen, echte Testoutputs und exakte spätere Deployment-/Klickfolge:
 [Erste private Bestandsversion](content-editor-initial-release.md).
 Clouddeployment und echte Veröffentlichung sind in diesem Auftrag nicht erfolgt.
+
+## Native serverseitige Stufenprüfung (native-v2, lokal implementiert)
+
+Die Migration `20261018000001_content_verification_runs.sql` und die aktualisierte
+Function `content-publish` bilden eine gemeinsame Protokollversion. Details und
+vollständige lokale Abnahme: [Erstveröffentlichungsbericht](content-editor-initial-release.md).
+
+- GET `content-publish/{upload_id}` liefert ausschließlich serverseitigen Status,
+  run_id/verifier, processed/total, next_stage, expires_at, resume_required und
+  not_required. Normale Releases kennzeichnen P_content als nicht erforderlich.
+- POST `{upload_id}/finalize` mit `{}` claimt und beendet höchstens eine Stufe:
+  F0–F8, M, P_full, bei Adoption P_content, H, A. Auth/Publisher/Owner werden bei
+  jedem Request neu geprüft. A liest keine großen Dateien und ruft keinen Vollvalidator.
+- Runidentität enthält unveränderliche Uploaddaten inklusive Owner, Manifest,
+  Dateigrößen/Hashes, Generation, Parents und ursprünglicher Frist; native-v2 und
+  Stufenliste werden zusätzlich gebunden. Jeder Dateiread validiert vollständige Bytes.
+  Keine neue Storage-Mutationsmöglichkeit, kein Pfadrecycling oder Snapshot.
+- Eine aktive Runzeile je Upload, Uploadlock vor Runlock, 90-Sekunden-Lease mit
+  Revision. Atomarer Finish bindet Run/Lease/Revision/Stufe/Ergebnisfingerprint;
+  identische verlorene Antwort darf wiederholt werden, abgelöste Worker nicht.
+  Ausschließlich der serverseitige RPC darf Runs schreiben; keine Client-Schreibrechte.
+- POST `{upload_id}/resume` verlangt accepted=true, scope=`resume-same-upload-native-v2`
+  und eine UUID request_id. Actor/Zeitpunkt/Request werden auditiert. Derselbe Request
+  ist idempotent; ein neuer ersetzt den alten Run und verwirft dessen Ergebnisse.
+  Neue Frist 24 Stunden; originale Uploadfrist/ID/Bytes bleiben unverändert. Neue
+  Signaturen sind bei abgelaufenem Upload ausgeschlossen. Finish/Commit verlangen die
+  gültige Runfrist. Fehlgeschlagene/abgelaufene Runs benötigen ausdrückliches Resume.
+- ready entsteht nur atomar nach allen Stufen. Der Uploadtrigger sperrt alte ready-
+  Schreiber; Commit verlangt passenden vollständigen Run sowie bisherige Rechte,
+  Generation-/Parent-CAS und Auditidempotenz. Bereits publizierte Daten bleiben lesbar.
+- Editor GET `/api/v1/releases/{release_id}/publication` liest Serverstatus auch nach
+  Neustart. POST `/api/v1/releases/{release_id}/publish/resume` benötigt accepted=true
+  und bestehenden CSRF-Schutz; Request-ID bleibt bei verlorener Antwort lokal erhalten.
+  Eine Aktion maximal 16 sequenzielle finalize-Aufrufe; jeder Fehler/546 beendet sie.
+  Kein automatischer Retry, kein automatischer Commit. Veröffentlichung separat.
+
+Auslieferungsreihenfolge: Migration, dann content-publish, dann Editorneustart und
+bestehenden Upload fortsetzen. Zwischenversionen blockieren neue Abschlüsse statt
+fachliche Prüfungen zu umgehen. 500 ms/128 MiB sind Reserveziele, keine Plattformlimits;
+Packstufen überschreiten sie teilweise. Lokale Abnahme ist kein Cloudnachweis.

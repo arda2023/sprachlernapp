@@ -1,4 +1,4 @@
-"""Opt-in local feasibility experiment. Never connects to a cloud endpoint.
+"""Historical feasibility experiment. Native production acceptance: native_integration.py.
 
 Requires the existing local Supabase stack and installed Edge Runtime image.
 Creates/removes only nonce-owned users, upload mirrors, objects, and SQL probes.
@@ -87,7 +87,10 @@ def main():
     parser.add_argument('--state-only', action='store_true', help='Only repeat changed state tests; no resource rerun')
     parser.add_argument('--storage-only', action='store_true', help='Only run Storage counterexamples')
     parser.add_argument('--streaming', action='store_true', help='Add established parser experiments to real-service run')
+    parser.add_argument('--legacy-reference', action='store_true', help='Explicitly benchmark fe6e7ad, never claim native-v2 acceptance')
     args = parser.parse_args()
+    if not args.storage_only and not args.legacy_reference:
+        parser.error('Native-v2 requires native_integration.py and its dedicated stack; historical benchmarks require --legacy-reference.')
     source = args.bundle.resolve()
     original = {n: hashlib.sha256((source/n).read_bytes()).hexdigest() for n in FILES}
     objects = {n: {'sha256': original[n], 'size_bytes': (source/n).stat().st_size} for n in FILES}
@@ -102,7 +105,9 @@ def main():
     for name in ['content-publish/index.ts', '_shared/content_distribution.ts', '_shared/internal_baseline_source.json']:
         dest = root/'functions'/name
         dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(ROOT/'supabase/functions'/name, dest)
+        if args.legacy_reference:
+            dest.write_bytes(subprocess.check_output(['git','show','fe6e7ad:supabase/functions/'+name],cwd=ROOT))
+        else:shutil.copyfile(ROOT/'supabase/functions'/name, dest)
     for name, code in [('main', (HERE/'main.ts').read_text()),
                        ('probe', (HERE/'worker.ts').read_text()), ('events', EVENTS)]:
         (root/name).mkdir()

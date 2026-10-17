@@ -1,8 +1,9 @@
+import {verificationStages,verifyStage,VERIFIER} from './content_verification_steps.ts';
 import { createHash } from 'node:crypto';
 import baseline from './internal_baseline_source.json' with {type:'json'};
 
 export const ADOPTION = 'internal-baseline-adoption-v1';
-const ADOPTION_NOTICE = 'Übernimmt den bereits verwendeten internen Bestand. Damit bestätigst du keine neue sprachliche Gesamtprüfung.';
+export const ADOPTION_NOTICE = 'Übernimmt den bereits verwendeten internen Bestand. Damit bestätigst du keine neue sprachliche Gesamtprüfung.';
 
 export const MAX_PACK = 256 * 1024 * 1024;
 export const FILES = ['content.sqlite','pack.json','registry.json','history_inventory.json',
@@ -79,6 +80,8 @@ export class DistributionBackend {
     const response=await this.request(path,method,body);
     if(!response.ok){
       let code='';try{code=(await response.json()).code;}catch{ /* redact remote detail */ }
+      const verificationCodes:Record<string,[string,number]>={PV403:['PUBLISHER_REQUIRED',403],PV409:['VERIFICATION_CONFLICT',409],PV410:['VERIFICATION_EXPIRED',409]};
+      if(verificationCodes[code])throw new DistributionError(...verificationCodes[code]);
       throw new DistributionError(['40001','23505'].includes(code)?'CONFLICT':'BACKEND_UNAVAILABLE',['40001','23505'].includes(code)?409:503);
     }
     return await response.json();
@@ -120,78 +123,13 @@ export class DistributionBackend {
 }
 
 export async function verifyBundle(backend:DistributionBackend,u:Json):Promise<Json>{
-  const read=(name:string)=>backend.object(u.id,name,u.objects[name],true);
-  const m=await read('content.manifest.json');requireThat(canonical(m)===canonical(u.draft_manifest),'MANIFEST_CHANGED');
-  const report=await read('finalization_report.json'), reviews=await read('editorial_reviews.json');
-  const inventory=await read('history_inventory.json'), registry=await read('registry.json');
-  const v=report.validation;
-  requireThat(m.publication_kind===undefined||m.publication_kind===ADOPTION,'PUBLICATION_KIND');
-  const adoption=m.publication_kind===ADOPTION;
-  requireThat(report.status==='ok'&&report.history_superset===true&&report.internal_test_pack===true&&
-    v?.technical==='valid'&&v.editorial===(adoption?'existing-evidence-only':'approved')&&SHA.test(v.content_sha256)&&
-    Array.isArray(v.findings)&&!v.findings.some((f:Json)=>f.severity==='error'),'ATTESTATION_INVALID');
-  const unsigned={...v};delete unsigned.sha256;requireThat(digest(unsigned)===v.sha256,'VALIDATION_HASH');
-  requireThat(Array.isArray(reviews)&&(adoption?reviews.length===0:reviews.some((r:Json)=>r.decision==='approved'&&r.payload_sha256===v.content_sha256)),'REVIEW_UNBOUND');
-  requireThat(digest(reviews)===m.editorial_reviews_sha256&&digest(inventory)===m.history_inventory_sha256&&digest(registry)===m.registry_sha256,'SIDECAR_HASH');
-  requireThat(inventory.lang===u.lang&&inventory.format_version===1&&inventory.tables,'HISTORY_INVALID');
-  const pack=await read('pack.json');
-  if(adoption){
-    requireThat(u.lang==='en'&&u.channel==='internal'&&u.expected_generation===0&&
-      u.parent_release_id===null&&u.parent_manifest_sha256===null&&m.parent_release_id===null&&
-      m.internal_test_pack===true,'ADOPTION_FIRST_ONLY');
-    const provenance=await read('provenance.json');
-    requireThat(Array.isArray(provenance)&&provenance.length===1,'ADOPTION_INVALID');
-    const receipt=provenance[0], expected:Json={kind:ADOPTION,source:baseline.source,version:baseline.version,
-      counts:baseline.counts,existing_evidence:baseline.existing_evidence,open_findings:baseline.open_findings,
-      notice:ADOPTION_NOTICE,cloud_state:'not_checked'};
-    expected.sha256=digest(expected);
-    const unsignedReceipt={...receipt};delete unsignedReceipt.confirmation;
-    requireThat(canonical(unsignedReceipt)===canonical(expected),'ADOPTION_INVALID');
-    const c=receipt.confirmation;
-    requireThat(c&&canonical(Object.keys(c).sort())===canonical(['accepted','at','scope'])&&
-      c.accepted===true&&c.scope===ADOPTION&&typeof c.at==='string'&&
-      /(?:Z|[+-]\d{2}:\d{2})$/.test(c.at)&&Number.isFinite(Date.parse(c.at)),'ADOPTION_CONFIRMATION');
-    requireThat(digest(receipt)===m.adoption_sha256&&m.adoption_sha256===report.adoption_sha256&&
-      v.content_sha256===baseline.converted_content_sha256&&v.base_sha256===baseline.source.pack_canonical_sha256&&
-      canonical(v.findings)==='[]'&&canonical(report.sqlite_counts)===canonical(baseline.counts),'ADOPTION_INVALID');
-    // Only one small metadata object differs; every content row stays bound.
-    const content={...pack,release:{...pack.release}};delete content.release.created_at;
-    requireThat(digest(content)===baseline.converted_content_sha256&&
-      pack.release.created_at===baseline.converted_created_at&&m.sha256===baseline.converted_sqlite_sha256&&
-      m.size_bytes===baseline.converted_sqlite_size,'ADOPTION_CONTENT_CHANGED');
-    await requireEmptyBaselineChannel(backend);
-  }
-  requireThat(pack.lang===u.lang&&pack.release?.version===m.version&&pack.release?.schema_version===m.schema_version&&
-    pack.word_registry?.sha256===m.registry_sha256,'PACK_SCOPE');
-  if(v.coverage?.expected!==undefined)requireThat(v.coverage.expected===v.coverage.processed&&!v.coverage.conflicting_refs?.length,'INCOMPLETE_DELIVERY');
-  if(u.parent_release_id){
-    const rows=await backend.json('/rest/v1/content_release_catalog?release_id=eq.'+u.parent_release_id);
-    requireThat(rows.length===1&&rows[0].lang===u.lang&&rows[0].channel===u.channel&&
-      rows[0].manifest_sha256===u.parent_manifest_sha256,'PARENT_CHANGED',409);
-    const parent=rows[0];
-    requireThat(v.base_sha256===parent.manifest.pack_canonical_sha256,'PARENT_CONTENT_CHANGED',409);
-    requireThat(pack.word_registry?.snapshot?.words,'REGISTRY_INVALID');
-    const oldRegistry=await backend.object(parent.release_id,'registry.json',parent.objects['registry.json'],true);
-    requireThat(Array.isArray(oldRegistry.words)&&Array.isArray(registry.words),'REGISTRY_INVALID');
-    const newWords=new Map(registry.words.map((w:Json)=>[w.lang+'|'+w.form_norm,w]));
-    requireThat(newWords.size===registry.words.length,'REGISTRY_INVALID');
-    for(const word of oldRegistry.words)requireThat(canonical(newWords.get(word.lang+'|'+word.form_norm))===canonical(word),'REGISTRY_HISTORY_LOSS');
-    const old=await backend.object(parent.release_id,'history_inventory.json',parent.objects['history_inventory.json'],true);
-    for(const [table,entries] of Object.entries(old.tables) as [string,Record<string,string>][]){
-      for(const [id,hash] of Object.entries(entries)){
-        requireThat(inventory.tables[table]?.[id],'HISTORY_LOSS');
-        if(['sentences','sentence_tokens','card_sentences','story_context_corrections'].includes(table))requireThat(inventory.tables[table][id]===hash,'CONTEXT_HISTORY_LOSS');
-      }
-    }
-    const snapshots=new Set((inventory.story_source_snapshots??[]).map(canonical));
-    for(const source of old.story_source_snapshots??[])requireThat(snapshots.has(canonical(source)),'STORY_HISTORY_LOSS');
-  }
-  const final={...m,local_only:undefined,pack_canonical_sha256:digest(pack),release_id:u.id,channel:u.channel,generation:u.expected_generation+1,
-    parent_release_id:u.parent_release_id,parent_manifest_sha256:u.parent_manifest_sha256,created_at:u.created_at};
-  delete final.local_only;return final;
+  // Reference entrypoint for contracts; production finalize executes exactly one stage.
+  const results:Json={};
+  for(const stage of verificationStages(u).filter(x=>!x.startsWith('F')))results[stage]=await verifyStage(backend,u,stage,results);
+  return results.A.manifest;
 }
 
-async function requireEmptyBaselineChannel(backend:DistributionBackend){
+export async function requireEmptyBaselineChannel(backend:DistributionBackend){
   const rows=await backend.json('/rest/v1/content_channels?lang=eq.en&channel=eq.internal');
   requireThat(rows.length===0||(rows.length===1&&rows[0].generation===0&&
     rows[0].release_id===null&&rows[0].manifest_sha256===null),'ADOPTION_CHANNEL_OCCUPIED',409);
@@ -207,7 +145,7 @@ export async function publish(backend:DistributionBackend,request:Request):Promi
     const catalog=await backend.json('/rest/v1/content_release_catalog?release_id=eq.'+rows[0].release_id);
     requireThat(catalog.length===1,'CATALOG_INVALID',503);return {...rows[0],manifest:catalog[0].manifest};
   }
-  if(request.method==='GET'&&tail.length===1){const u=await backend.upload(tail[0],actor);return {upload_id:u.id,status:u.status,failure_code:u.failure_code,verified:Object.keys(u.verified_objects??{})};}
+  if(request.method==='GET'&&tail.length===1){const u=await backend.upload(tail[0],actor);return verificationStatus(u,await verificationRpc(backend,actor,u.id,'status',{}));}
   requireThat(request.method==='POST','METHOD',405);
   const chunks:Uint8Array[]=[];let length=0;
   if(request.body)for await(const chunk of request.body){length+=chunk.length;requireThat(length<=1024*1024,'REQUEST_LIMIT',413);chunks.push(chunk);}
@@ -230,7 +168,7 @@ export async function publish(backend:DistributionBackend,request:Request):Promi
       u.expected_generation===data.expected_generation&&u.parent_manifest_sha256===data.parent_manifest_sha256&&
       u.parent_release_id===data.parent_release_id&&u.lang===data.lang&&u.channel===data.channel,'REQUEST_CONFLICT',409);
     const uploads:Json={};
-    if(['uploading','verifying'].includes(u.status))for(const name of FILES){
+    if(['uploading','verifying'].includes(u.status)&&Date.parse(u.expires_at)>Date.now())for(const name of FILES){
       if(u.verified_objects?.[name])continue;
       // upsert false is essential: outstanding upload tokens must never overwrite verified bytes.
       const signed=await backend.json(`/storage/v1/object/upload/sign/content-private/${u.id}/${name}`,'POST',{upsert:false});
@@ -239,22 +177,21 @@ export async function publish(backend:DistributionBackend,request:Request):Promi
     return {upload_id:u.id,status:u.status,uploads};
   }
   const u=await backend.upload(tail[0],actor);
+  if(tail[1]==='resume'){
+    requireThat(data.accepted===true&&data.scope==='resume-same-upload-native-v2'&&UUID.test(data.request_id),'RESUME_CONFIRMATION',409);
+    return verificationStatus(u,await verificationRpc(backend,actor,u.id,'resume',data));
+  }
   if(tail[1]==='finalize'){
-    if(['ready','published'].includes(u.status))return {upload_id:u.id,status:u.status};
-    requireThat(u.status!=='failed'&&Date.parse(u.expires_at)>Date.now(),'UPLOAD_EXPIRED',409);
-    // One object per call: verified progress survives function deadline/retry.
-    const verified={...(u.verified_objects??{})};const next=FILES.find(name=>!verified[name]);
-    if(next){
-      await backend.patch(u.id,{status:'verifying'});
-      await backend.object(u.id,next,u.objects[next]);verified[next]=u.objects[next];
-      await backend.patch(u.id,{verified_objects:verified});
-      return {upload_id:u.id,status:'verifying',verified:Object.keys(verified)};
-    }
+    if(u.status==='published')return {upload_id:u.id,status:'published'};
+    const run=await verificationRpc(backend,actor,u.id,'claim',data);
+    if(run.state==='complete')return verificationStatus(u,run);
+    requireThat(run.verifier===VERIFIER&&verificationStages(u).includes(run.stage),'VERIFICATION_IDENTITY',409);
+    const claim={run_id:run.id,lease:run.lease,revision:run.revision,stage:run.stage};
     try{
-      const manifest=await verifyBundle(backend,u);
-      await backend.patch(u.id,{status:'ready',manifest,manifest_sha256:digest(manifest)},'verifying');
-      return {upload_id:u.id,status:'ready'};
-    }catch(e){if(e instanceof DistributionError&&e.status===422)await backend.patch(u.id,{status:'failed',failure_code:e.code});throw e;}
+      const result=await verifyStage(backend,u,run.stage,run.results);
+      const finished=await verificationRpc(backend,actor,u.id,'finish',{...claim,result,result_sha256:digest(result)});
+      return verificationStatus(u,finished);
+    }catch(e){if(e instanceof DistributionError&&e.status===422)await verificationRpc(backend,actor,u.id,'fail',{...claim,code:e.code});throw e;}
   }
   if(tail[1]==='commit'){
     requireThat(UUID.test(data.request_id),'REQUEST_ID');
@@ -270,6 +207,20 @@ export async function publish(backend:DistributionBackend,request:Request):Promi
       request_id:data.request_id,verified_actor_id:actor});
   }
   throw new DistributionError('NOT_FOUND',404);
+}
+
+async function verificationRpc(backend:DistributionBackend,actor:string,id:string,op:string,input:Json){
+  return await backend.json('/rest/v1/rpc/content_verification_transition','POST',{p_actor:actor,p_upload:id,p_op:op,p_input:input});
+}
+export function verificationStatus(u:Json,run:Json):Json{
+  if(u.status==='published'||run.published)return {upload_id:u.id,status:'published'};
+  const stages=run.stages??verificationStages(u),results=run.results??{};
+  const expired=Date.parse(run.expires_at)<=Date.now();
+  const status=expired||run.failed||run.state==='failed'?'resume_required':run.state==='complete'?'ready':'verifying';
+  const completed=stages.filter((s:string)=>Object.hasOwn(results,s)).length;
+  return {upload_id:u.id,status,run_id:run.id??null,verifier:run.verifier??VERIFIER,processed:completed,total:stages.length,
+    next_stage:stages[completed]??null,expires_at:run.expires_at,resume_required:status==='resume_required',
+    not_required:u.draft_manifest.publication_kind===ADOPTION?[]:['P_content'],failure_code:run.failure_code??null};
 }
 
 export async function release(backend:DistributionBackend,request:Request):Promise<Json>{

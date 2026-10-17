@@ -52,3 +52,18 @@ def test_missing_and_stale_etag_do_not_mutate(server):
     assert request(server,path,'POST',{'operations':[]},headers)[0]==428
     assert request(server,path,'POST',{'operations':[]},{**headers,'If-Match':'"old"'})[0]==409
     assert request(server,path,'POST',{'operations':[]},{**headers,'If-Match':response['ETag']})[0]==200
+
+
+def test_verification_status_and_explicit_resume_routes(server,monkeypatch):
+    headers=bootstrap(server);calls=[]
+    monkeypatch.setattr(server.service,'publication_status',lambda identifier:{'upload_id':'same','processed':4,'total':14})
+    def resume(identifier,phase,confirmation):
+        calls.append((identifier,phase,confirmation));return {'job_id':'synthetic-job'}
+    monkeypatch.setattr(server.service,'publish_release',resume)
+    status,_,body=request(server,'/api/v1/releases/test/publication',headers=headers)
+    assert status==200 and body['processed']==4
+    path='/api/v1/releases/test/publish/resume'
+    assert request(server,path,'POST',{'accepted':True},{**headers,'X-CSRF-Token':'invalid'})[0]==403
+    assert not calls
+    assert request(server,path,'POST',{'accepted':True},headers)[0]==202
+    assert calls==[('test','resume',{'accepted':True})]

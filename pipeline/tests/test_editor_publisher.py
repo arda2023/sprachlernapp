@@ -264,3 +264,55 @@ def test_finalize_diagnostic_persists_and_retry_keeps_existing_upload(setup,monk
     assert 'last_error' not in retried['result']
     assert retried['result']['upload_id']==remote.upload_id
     assert len(attempts)==2 and all(r.data==b'{}' and r.full_url.endswith('/'+remote.upload_id+'/finalize') for r in attempts)
+
+
+def test_native_progress_resume_and_restart_use_same_upload(setup):
+    from sprachpipe.editor.service import EditorService
+    service,_=setup;_,record,_=bundle(service)
+    class Native(Remote):
+        count=0;expired=False;resume_calls=0
+        def call(self,path,body=None,method='POST'):
+            if method=='GET':return self.view()
+            if path.endswith('/resume'):
+                assert body['accepted'] is True and body['scope']=='resume-same-upload-native-v2'
+                self.resume_calls+=1;self.count=0;self.expired=False;return self.view()
+            if path.endswith('/finalize'):
+                if self.expired:raise AuthoringError('VERIFICATION_EXPIRED','expired',status=409)
+                self.count+=1;return self.view()
+            return super().call(path,body)
+        def view(self):
+            return {'upload_id':self.upload_id,'status':'resume_required' if self.expired else 'ready' if self.count==14 else 'verifying',
+                    'processed':self.count,'total':14,'next_stage':None if self.count==14 else 'server-stage','run_id':'server-run'}
+    remote=Native();remote.fail_upload=False;service.publisher=remote
+    assert wait(service,service.publish_release(record['release_id'],'upload'))['state']=='succeeded'
+    remote.count=4
+    assert service.publication_status(record['release_id'])['processed']==4
+    done=wait(service,service.publish_release(record['release_id'],'finalize'))
+    assert done['state']=='succeeded' and done['processed']==14 and done['total']==14
+    assert remote.count==14 and not any(p.endswith('/commit') for p,_ in remote.calls)
+    remote.expired=True
+    assert service.publication_status(record['release_id'])['status']=='resume_required'
+    with pytest.raises(AuthoringError,match='ausdrücklich'):service.publish_release(record['release_id'],'resume')
+    done=wait(service,service.publish_release(record['release_id'],'resume',{'accepted':True}))
+    assert done['state']=='succeeded' and done['result']['upload_id']==remote.upload_id and remote.resume_calls==1
+    service.close()
+    restarted=EditorService(service.store.root,source=service.source,asset_directory=service.asset_directory)
+    try:
+        restarted.publisher=remote
+        assert restarted.publication_status(record['release_id'])['status']=='ready'
+        assert sum(p=='start' for p,_ in remote.calls)==1
+    finally:restarted.close()
+
+
+def test_native_finalize_request_count_is_bounded(setup):
+    service,_=setup;_,record,_=bundle(service)
+    class Stalled(Remote):
+        steps=0
+        def call(self,path,body=None):
+            if path.endswith('/finalize'):
+                self.steps+=1;return {'status':'verifying','processed':0,'total':14}
+            return super().call(path,body)
+    remote=Stalled();remote.fail_upload=False;service.publisher=remote
+    assert wait(service,service.publish_release(record['release_id'],'upload'))['state']=='succeeded'
+    done=wait(service,service.publish_release(record['release_id'],'finalize'))
+    assert done['state']=='failed' and done['error']['code']=='PUBLISH_PENDING' and remote.steps==16

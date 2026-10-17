@@ -39,6 +39,13 @@ Deno.test('finalize requires JSON object before accessing an existing normal or 
           draft_manifest:{publication_kind:kind},verified_objects:{},objects:{'content.sqlite':{sha256:'0'.repeat(64),size_bytes:1}}};
       }
       override async patch(){return [];}
+      override async json(path:string,_method?:string,body?:any){
+        assert(path.endsWith('/content_verification_transition'));
+        const run={id,verifier:'native-v2',stage:'F0',revision:1,lease:actor,
+          expires_at:'2099-01-01T00:00:00Z',stages:['F0','M'],results:{},state:'verifying'};
+        if(body.p_op==='finish')run.results={F0:body.p_input.result};
+        return run;
+      }
       override async object(_id:string,name:string){assert(name==='content.sqlite');checked++;}
     }
     const backend=new ExistingUpload('https://synthetic.invalid','unused',()=>{throw new Error('Network forbidden');});
@@ -52,7 +59,7 @@ Deno.test('finalize requires JSON object before accessing an existing normal or 
     }
     const valid=await handle(new Request(url,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'}));
     const result=await valid.json();assert(valid.status===200&&result.status==='verifying');
-    assert(Number(uploadReads)===1&&Number(checked)===1&&result.verified[0]==='content.sqlite');
+    assert(Number(uploadReads)===1&&Number(checked)===1&&result.processed===1&&result.total===2);
   }
 });
 Deno.test('no JWT, invalid JWT and absent publisher are rejected before publication',async()=>{
