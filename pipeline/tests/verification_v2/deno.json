@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "stream-json/Parser": "npm:stream-json@1.9.1/Parser.js",
+    "stream-json/Assembler": "npm:stream-json@1.9.1/Assembler.js"
+  }
+}

@@ -1,5 +1,279 @@
 # Erste private Cloudversion aus dem internen App-Bestand
 
+## Präzisierte Entscheidung: bestehendes Storage, native Packschritte · 17.10.2026
+
+**Dieser Abschnitt ersetzt Entscheidung B und die Snapshot-Empfehlung des
+vorherigen Machbarkeitsberichts.** 500 ms CPU/128 MiB sind unsere Reserveziele,
+keine nachgewiesenen harten Cloudgrenzen. Ihre Verfehlung beweist nicht, dass
+eine fachliche Aufteilung unbrauchbar ist. Empfehlung: vorhandenes Storage und
+Appdownloads beibehalten; native Packhashes in getrennten, serverseitig
+fortsetzbaren Schritten prüfen. Den erprobten Streamingparser nicht übernehmen.
+Keine zweite Dateiablage, neue Downloadarchitektur oder Produktionsmigration
+wurde angelegt. Die Umsetzung des unten begrenzten Auftrags ist noch offen.
+
+### Tatsächliche Vertrauensgrenze
+
+| Akteur | Vorhandene Möglichkeiten / Nachweis |
+| --- | --- |
+| Normaler Nutzer | Keine Client-RLS-Policies für content-private; keine direkten Freigabe-/Uploadtabellenrechte. Keine erfolgreiche Änderung vorhandener Bytes nachgewiesen. |
+| Authentisierter Publisher | Darf über die Function einen eigenen Upload beginnen und prüfen. Keine zusätzlichen direkten Storage-UPDATE-/DELETE-Rechte. Lokale Updateprobe HTTP 400; DELETE HTTP 200 mit leerer Liste, danach unveränderte Bytes. |
+| Inhaber einer signierten Upload-URL | Darf den festgelegten Key initial befüllen. Vorhandener Key mit derselben URL HTTP 400, auch mit x-upsert:true. Lokaler Token hat 7200 s Laufzeit. |
+| Regulärer Servercode | Erzeugt zufällige Upload-UUIDs, feste Dateinamen, upsert:false. Kein Anwendungs-UPDATE/DELETE oder Pfadrecycling gefunden. Verifizierte Dateien werden beim Start nicht neu signiert; ready/published erhalten keine Upload-URLs. |
+| Inhaber des Service-Role-Schlüssels | Kann Storage umgehen/ändern/löschen; lokale Gegenprobe bestätigt das. Diese privilegierte Rolle kann außerdem Freigabetabellen schreiben. Sie gehört zur vertrauenswürdigen Serveradministration, nicht zum gewöhnlichen Publisher. |
+| Datenbank-/Projektadministrator | Kann Rechte, Code, Anker, Katalog oder Schlüssel ändern. Nicht durch diese Inhaltsprüfung gegen einen böswilligen Administrator absicherbar. |
+
+Die vorige Kombination „Service-Role löscht, alte URL legt neu an“ setzt zuerst
+einen **privilegierten Eingriff** voraus. Sie ist kein nachgewiesener normaler
+Nutzerangriff. Ein neuer Snapshot in derselben administrierten Datenbank würde
+diese umfassende Administrator-Vertrauensgrenze ebenfalls nicht beseitigen.
+Der Schutzvertrag lautet deshalb: keine administrativen Inhaltsmutationen an
+aktiven Upload-/Releasepfaden, keine Wiederverwendung dieser UUID-Pfade, keine
+neuen regulären Schreib-/Cleanupwege an versiegelten oder als Parent benötigten
+Objekten. Die serverseitigen Schlüssel bleiben ausschließlich im vertrauenswürdigen
+Backend. Diese Grenze muss bei künftigen Wartungsfunktionen erneut geprüft werden.
+
+Storage-URLs sind laut [Supabase für zwei Stunden gültig](https://supabase.com/docs/reference/javascript/storage-from-createsigneduploadurl).
+Die lokale Tokenlaufzeit wurde ohne Ausgabe des Tokens ausgewertet. Der Ablauf
+wurde nicht durch zweistündiges Warten getestet. Upsert-Verweigerung schützt
+bereits während dieser Zeit; Ablauf allein wäre kein Schutz vor anderen
+Schreibrechten. Der bestehende Start prüft vor dem erneuten Signieren noch
+nicht `expires_at`; das hebt weder das Überschreibverbot noch die spätere
+Finalize-Ablaufsperre auf. Der neue Ablauf soll für abgelaufene Uploads keine
+neuen Uploadrechte ausstellen und Resume ausdrücklich trennen.
+
+Prüfgrundlage: `20261017000002_content_distribution.sql` (Clientrechte,
+Storage ohne Clientpolicies, unveränderliche Uploadidentität und Katalog),
+`content_distribution.ts::publish/object/release` und Publishertransport.
+Die Suche nach `content-private`, `/storage/v1/object` und `storage.from`
+in Pipeline/Functions/App fand keine zusätzlichen Schreibpfade. Die bestehende
+Migration wurde gelesen und bleibt unverändert. Ein Hash oder ein hashhaltiger
+Dateiname allein wird ausdrücklich nicht als Schreibschutz bezeichnet.
+
+### Integrität, Veröffentlichung und Verfügbarkeit sind getrennt
+
+- **Zwischen Prüfschritten:** kein erfolgreicher Austausch durch einen
+  nicht privilegierten Akteur unter dem vorhandenen Schreibvertrag. Jeder
+  erneute Objektread kontrolliert außerdem die immutable Uploaddeskriptoren
+  (vollständige Größe/SHA). Ergebnisse binden Upload, Manifest, Deskriptoren,
+  Parent und Prüfer-Version. Parentdateien liegen unter eigenen Release-UUIDs
+  und werden ebenfalls vollständig gegen ihre Katalogdeskriptoren gelesen.
+- **Nach Prüfung:** normale Akteure können die Dateien nicht überschreiben.
+  Ein privilegierter Austausch bei unverändertem Katalog führt zu einem
+  Hashfehler bzw. fehlendem Download, nicht zu einer gültigen neuen Freigabe.
+- **Ungeprüfte Veröffentlichung:** darf nur der bestehende Commit-CAS nach
+  vollständigen serverseitigen Ergebnissen erlauben. Der neue Runabschluss
+  muss insbesondere ein leeres/teilweises Ergebnis und veraltete Leases sperren.
+  Keine lokale Prüfung ersetzt den Serverlauf.
+- **Appaktivierung:** `content_release_client.dart` bindet Manifesthash,
+  Scope/Schema/Profil/Generation und SQLitegröße/-SHA. `content_update_service.dart`
+  hasht den Downloadstream, begrenzt und vergleicht die Bytezahl, prüft anschließend
+  Inhalt/Historie und kontrolliert persistierte Dateien vor Nutzung erneut.
+  Abweichende Bytes werden nicht aktiviert. Das schützt Integrität, garantiert
+  aber keine Verfügbarkeit bei Löschung oder administrativer Beschädigung.
+
+Damit besteht **kein belegter Bedarf für eine zweite Byteablage** innerhalb
+dieser Vertrauensgrenze. Administrativ austauschbare Objekte werden nicht als
+physisch unveränderlich behauptet. Wenn künftig ein regulärer Delete/Upsert-
+oder Recyclingpfad eingeführt wird, ist diese Begründung neu zu führen.
+
+### Begrenzter Streamingversuch: Hashgleichheit, aber Vertragslücke und mehr CPU
+
+Neue isolierte Dateien: `pipeline/tests/verification_v2/stream_pack_probe.ts`,
+`stream_pack_probe_test.ts`, `deno.json`, `deno.lock`. Testabhängigkeit
+`stream-json@1.9.1`, transitiv `stream-chain@2.2.5`, beide **BSD-3-Clause**;
+Versionen/Integrität im Lockfile. Paketmetadaten und die mitgelieferte Lizenz
+wurden gelesen. Keine Produktionsabhängigkeit installiert. Der Testtreiber
+verwendet in der Edge-Runtime die expliziten npm-1.9.1-Importe; das lokale
+Deno-2.9.7-Lockformat 5 wird nicht als von Edge-Deno-2.1 unterstütztes Lockformat
+ausgegeben. Parser/Assembler selbst importieren kein stream-chain; ihr tatsächlich
+ausgeführter Code liegt in der exakt adressierten stream-json-Version.
+
+Der Versuch verwendet den vorhandenen Tokenparser und Assembler; keine eigene
+JSON-Grammatik, kanonische Neuimplementierung oder persistierbare SHA entwickelt.
+Die Hashes berechnet unverändert das bestehende `digest`. Ein kleiner Adapter
+definiert `__proto__` als eigene Datenproperty, bevor der Assembler zuweist;
+ohne das würde dessen normale Objektzuweisung von JSON.parse abweichen.
+19 Tests vergleichen vollständigen und normalisierten Hash: Schlüsselsortierung
+(einschließlich numerischer Keys/UTF-16), Arrayreihenfolge, doppelte Schlüssel
+mit letztem Wert, Exponenten/Rundung/-0/Overflow, Escapes, Unicode und Surrogates,
+gezieltes Entfernen nur von `release.created_at`, ungültiges JSON und striktes
+UTF-8 über Byte-Chunkgrenzen. Zwei zusätzliche Gegenproben zeigen allerdings
+eine Vertragslücke: NBSP vor `{}` und U+2028 vor einer Zahl werden akzeptiert,
+obwohl `JSON.parse` sie außerhalb von Strings ablehnt. `Parser.js` verwendet
+dort das breitere JavaScript-Whitespace-Muster `\s`. Die zwei Tests sind
+ausdrücklich Charakterisierung dieser **Blocker**, keine erfolgreiche
+Kompatibilitätsabnahme. Kein eigener Vorparser oder stilles Akzeptieren solcher
+Sonderfälle; die Übernahme endet hier. Gleichheit der echten Bundlehashes
+beweist nicht vollständige Gleichheit der akzeptierten Eingabesprache.
+
+Echte Bundlehashes stimmen in frischen und wiederverwendeten Edge-Workern:
+
+```text
+vollständig: 0bce823cbe7f6e1abeb114489a3536659b9bca6ed3ec451fa5692924465bda64
+ohne release.created_at: aa2eaf04dceed03c3941dfefc18f09dbc0d5318fd53958a024636e6ac6295a23
+```
+
+Der Assembler hält das vollständige Objekt. Das ist **keine allgemein
+speicherbegrenzte Kanonisierung**. Beliebig geordnete und doppelte Keys verbieten
+es, endgültige Hashbytes vorschnell beim ersten Token auszugeben. Alle Objekte
+als sortiert anzunehmen oder Duplikate abzulehnen würde den bisherigen Vertrag
+ändern. Ein neuer Sortier-/Checkpointmechanismus wird deshalb nicht begonnen.
+
+### Messung mit echtem Bundle und realem lokalem Backend
+
+Bereinigte Einzelwerte einschließlich beider Workerarten:
+[verification-streaming-evaluation.json](evidence/content-editor-initial-release/verification-streaming-evaluation.json).
+Abschlusslauf `eba7f36273224026980dbbd5d79f163a`, echte unveränderte Bundlebytes,
+GoTrue/PostgREST/Storage/Postgres; Runtime v1.77.1, 256 MiB, CPU soft/hard
+1000/2000 ms, Wall 150000 ms. Keine Limits erhöht. Frische Isolates bzw.
+Wiederverwendung über per_worker; Cloud-Hardware/Last/Gateway und v1.77.0
+bleiben verschieden. Lokales Windows-Deno 2.9.7 dient nur den Vertragstests.
+
+| Frischer Worker | Isolate-CPU ms | Beobachteter Speicher B | Bytes / Backendrequests | Wall ms |
+| --- | ---: | ---: | ---: | ---: |
+| Native Packparse | 310 | 160.187.317 | 50.089.185 / 4 | 515 |
+| Native Strukturprüfung inkl. Lesen/Parsen | 244 | 160.186.861 | 50.089.185 / 4 | 422 |
+| Vollständiger nativer Hash + Struktur | 526 | 160.188.869 | 50.089.185 / 4 | 703 |
+| Normalisierter nativer Hash + Struktur | 569 | 160.187.349 | 50.089.185 / 4 | 766 |
+| Beide nativen Hashes + Struktur | 828 | 160.187.037 | 50.089.185 / 4 | 1000 |
+| Streaming nur Tokens | 887 | 19.075.000 | 50.089.185 / 4 | 1078 |
+| Streaming plus Assembler | 1256 | 120.682.152 | 50.089.185 / 4 | 1422 |
+| Streaming plus beide Hashes | 1845 | 122.456.849 | 50.089.185 / 4 | 2032 |
+| Manifest/Sidecars | 137 | 48.026.077 | 11.244.298 / 9 | 250 |
+| Registry/Historie | 200 | 63.632.941 | 22.471.534 / 7 | 500 |
+
+CPU stammt aus Supervisor-Shutdown, Speicher aus expliziten Stichproben
+heapUsed+external, **nicht Peak**. Bytes enthalten Auth-/Uploadmetadaten.
+Reused: native Einzelhashes 719/750 ms Wall, 161.024.477/160.186.469 B beobachtet;
+Streaming beide Hashes 2094 ms Wall/128.221.353 B. Reused-CPU pro Request ist nur
+als Containerdifferenz messbar (805,2/774,1 bzw. 2883,6 ms), einschließlich
+Main-/Messaufwand; keinesfalls als Isolate-CPU oder Beweis eines Limitverstoßes
+ausgeben. Worker-Gesamtereignisse stehen separat im Evidenz-JSON.
+
+Vorheriger erfolgreicher Vergleichslauf `645e19a5cf2c4de290b4d10511b0d975`:
+native Einzelhashes 548/526 ms, Streaming beide 1948 ms Isolate-CPU. Der
+Abschlusslauf ergänzt die Strukturbedingungen auch in den nativen Hashschritten.
+Keine fehlgeschlagenen Optimierungsrunden. Schon Tokenisierung allein benötigt
+mehr CPU als ein vollständiger nativer Einzelhash. Deshalb endet der
+Streamingversuch hier trotz korrekter Bundlehashes und geringerem Speicher.
+Die zusätzlichen Whitespace-Gegenproben schließen eine unveränderte Übernahme
+auch unabhängig von der Laufzeit aus.
+
+Vollständiger **Originalhandler** mit allen bestehenden Checks: zweimal ready;
+letzter frischer Worker 979 ms CPU/1234 ms Wall, wiederverwendeter gesamter Worker
+1107 ms CPU (inklusive vorheriger Aufrufe)/letzter Request 1187 ms Wall. Kein
+Publish. Vorgeschlagene native Arbeitslastfolge F0–F8/M/P_full/P_content/H:
+3999 ms Wall frisch, 3409 ms reused, jeweils 248.164.854 gelesene Backendbytes
+und 60 Backendrequests. Darin ist bewusst erneutes Packlesen enthalten; nicht
+das ganze Bundle je Schritt. Der spätere kleine Metadatenabschluss ist noch
+nicht implementiert und nicht in dieser Summe. Die Sidecar-/Historienproben
+sind Arbeitslasten; Historie verwendet echte Daten auf beiden Vergleichsseiten.
+**Dies ist noch kein vollständiger neuer gestufter Validator oder normaler
+Parent-End-to-End-Lauf.** Die uneingeschränkte fachliche Prüfung dieses Bundles
+lief separat im unveränderten Originalhandler, nicht in einer vorgetäuschten
+neuen Ready-Freigabe. Diese Implementierungsgrenze bleibt Abnahmebedingung des
+konkreten Folgeauftrags.
+
+Gesamter Abschlussversuch inklusive Setup/Originalhandler/Arbeitslasten/17
+Zustandsnachweisen/Cleanup: 68,14 s, 180 direkte Treiber-HTTP-Requests; interne
+Backendrequests der Arbeitslasten werden zusätzlich separat ausgewiesen.
+Alle eigenen lokalen Testobjekte/-nutzer/-zeilen entfernt. 12 vorhandene lokale
+Supabase-Container plus jeweils ein Test-Edge-Container; keine Cloudoperation.
+
+Ausgeführt unter PowerShell, Repositorywurzel:
+
+```powershell
+npm view stream-json@1.9.1 version license dependencies --json
+npm view stream-chain@2.2.5 version license --json
+deno test --allow-read --config pipeline/tests/verification_v2/deno.json pipeline/tests/verification_v2/stream_pack_probe_test.ts
+pipeline/.venv/Scripts/python.exe -X utf8 pipeline/tests/verification_v2/local_probe.py --streaming --bundle "$env:LOCALAPPDATA/SprachappContentEditor/bundles/088f5eab-7347-406f-b9e6-cf5dbb985990"
+pipeline/.venv/Scripts/python.exe -X utf8 pipeline/tests/verification_v2/local_probe.py --storage-only --bundle "$env:LOCALAPPDATA/SprachappContentEditor/bundles/088f5eab-7347-406f-b9e6-cf5dbb985990"
+deno test --allow-read supabase/functions/_shared/content_distribution_test.ts supabase/functions/_shared/content_baseline_adoption_test.ts
+pipeline/.venv/Scripts/python.exe -X utf8 -m pytest pipeline/tests/test_editor_publisher.py -q --tb=short
+```
+
+Relevante Outputs: npm Version/Lizenz wie oben; zunächst Parser `19 passed | 0 failed
+(38ms)`, abschließend 21 bestandene Tests einschließlich zweier dokumentierter
+Kompatibilitätsblocker; Integration zweimal ready, sämtliche Streamingaufrufe HTTP 200,
+`State probes: 16 passed; no publication.` plus anschließender Original-Ablauftest
+= 17 Nachweise; `Own fixtures removed`. Storage meldet nicht privilegierten
+Austausch abgewiesen, privilegierten Austausch möglich. Deno `12 passed |
+0 failed (7s)`; Pytest `21 passed in 5.36s`. **Alle Exit 0**. Diagnose-Exit 0
+bedeutet weder erreichte Reserveziele noch Cloudfreigabe. Logs:
+`build/verification_stream/{parser-tests,parser-tests-final,final,storage,deno,pytest}.log`.
+macOS (nicht ausgeführt): `pipeline/.venv/bin/python -X utf8` und expliziter
+absoluter Bundlepfad statt `$env:LOCALAPPDATA/...`; npm/Deno identisch.
+
+Abschluss: `git diff --cached --check` und gezieltes `git diff --check` ohne
+Befund, Exit 0; 55 geschützte Dateien hashgleich, fremder Diff/Text erhalten,
+NEXTSTEPS 25 Zeilen. GitNexus-Dateiimpact: Bericht LOW/3 Bezüge;
+Testtreiber/Worker UNKNOWN, zusätzlich per Textprüfung keine Produktionsimporte.
+Graph nach Reindex (`analyze --index-only`, Exit 0): `detect_changes` all/staged
+ohne partial/truncated-Antwort, Exit 0, aber **CRITICAL**; staged neun Dateien,
+18 Symbole/303 gemeldete Prozesse. Alle betroffenen Prozessschritte heißen
+`tokens`, ein generischer Name des neuen lokalen Zählers. Diese breit
+zugeordneten Graphbezüge und die bekannten Index-Erfassungsgrenzen sind keine
+Produktionsrisikofreigabe. Die Abgrenzung beruht zusätzlich auf unveränderten
+Produktionshashes, fehlenden Produktionsimports und den lokalen Tests.
+
+### Konkreter nächster Implementierungsauftrag
+
+**Native fachliche Stufen mit bestehendem Storage implementieren.** Kein
+Streamingparser und keine Snapshotablage im Produktionspfad. Die vollständige
+Prüfzuordnung im vorigen Abschnitt bleibt verbindlich; keine fachliche Prüfung
+entfällt. Aus `verifyBundle` dieselben Bedingungen extrahieren, nicht eine
+zweite unabhängige Validierungslogik neben ihr pflegen.
+
+Dateien: `supabase/functions/_shared/content_verification_steps.ts` (neu),
+`supabase/functions/_shared/content_distribution.ts`, `content-publish/index.ts`,
+neue additive Migration `supabase/migrations/20261018000001_content_verification_runs.sql`,
+`pipeline/src/sprachpipe/editor/publisher.py`; gezielte Tests in
+`content_distribution_test.ts`, `content_baseline_adoption_test.ts`, neuer
+`content_verification_steps_test.ts` und `pipeline/tests/test_editor_publisher.py`.
+Appdownloadcode, Quellenanker, Bundleformat und bestehende Migration bleiben
+unverändert. Kein `content_verification_storage.ts` und keine Byte-Snapshottabelle.
+
+1. `pending → verifying`: autorisierter Start friert Runidentität ein:
+   Upload-ID/Owner/Manifesthash/Deskriptorhash/Generation/Parents/Prüferversion.
+   UUID-Pfade werden nicht recycelt. Bereits vorhandenes `verified_objects`
+   wird nur nach expliziter Bindungsprüfung übernommen; konservativ erneut
+   hashprüfen ist erlaubt, Neu-Upload nicht erforderlich.
+2. `F0…F8`: vorhandene begrenzte Datei-Hashprüfungen. Danach `M` für
+   Manifest/Sidecars/Review/Adoptionsbeleg; `P_full` für Packscope/Struktur und
+   vollständigen kanonischen Hash; `P_content` für den normalisierten
+   Adoptionshash samt exakt festem Zeitstempel/Quellenvergleich (bei normalen
+   Releases explizit nicht erforderlich); `H` für Registry/Parenthistorie.
+   P_full und P_content laden jeweils nur das Pack, nicht die Sidecars erneut.
+   Keine gleichzeitigen großen Reads. Normaler Parentpfad bleibt Pflichtabnahme.
+3. Jeder Aufruf authentisiert/autorisiert erneut, claimt genau einen Schritt
+   mit Revision/Lease und schließt ihn atomar mit Ergebnisfingerprint ab.
+   Workerabbruch lässt den Schritt offen. Wiederholung desselben Finish ist
+   idempotent; alte Lease oder anderes Ergebnis wird abgewiesen. Keine Rekursion
+   oder automatische 546-Wiederholung; UI führt kontrolliert fort.
+4. `verifying → ready`: kleiner Abschluss liest nur Metadaten und vollständig
+   gebundene Schrittresultate, erzeugt finales Manifest/Hash und setzt ready
+   atomar. Fehler → failed; Ablauf → ausdrücklicher Resume erforderlich.
+   Kein nochmaliges vollständiges `verifyBundle` in diesem Abschluss.
+5. Resume unter derselben Upload-ID: eigene autorisierte/auditierte Runfrist,
+   unverändertes ursprüngliches expires_at. Rechte, Identität und Verifier neu
+   prüfen; konservativ neuer Run ohne alte Teilresultate. Migration ergänzt
+   den Commitvertrag gezielt um gültige Resume-Autorisierung; niemals pauschal
+   Ablaufprüfungen entfernen. Ready allein reicht nicht ohne vollständigen Run.
+6. `ready → published`: bestehende Owner-/Publisher-/Generation-/Parent-CAS,
+   Kanal-/Uploadlocks, Auditidempotenz und Katalogschutz unverändert plus Bindung
+   an genau den vollständig abgeschlossenen, gültigen Prüflauf. Keine normale
+   SQL-Schreibmöglichkeit für Clients; nur eng begrenzte serverseitige RPCs.
+
+Abnahme dieses einen Auftrags: sämtliche bisherigen Vertrags-/Negativtests,
+native/gestufte identische Endmanifeste für Adoption **und echten normalen
+Parentlauf**, echte Bundlebytes mit realem lokalem Auth/DB/Storage, frische und
+wiederverwendete Worker, Crash/Parallelität/Lease/Antwortverlust/Rechteentzug,
+24-h-Resume und kein Commit mit unvollständigen Ergebnissen. Reserveziele weiter
+als Ziele messen und Abweichungen begründen; weder auf 500 ms als Plattformgrenze
+bestehen noch einen neuen Cloud-PASS behaupten. Die spätere Cloudabnahme bleibt
+ein gesondert autorisierter Vorgang. Vor ihrer erfolgreichen Durchführung gibt
+es keine belegte Cloudreserve.
+
 ## verification-v2: lokaler Machbarkeitsnachweis · 17.10.2026
 
 **Entscheidung B: Die fachliche Aufteilung allein reicht nicht.** Der echte

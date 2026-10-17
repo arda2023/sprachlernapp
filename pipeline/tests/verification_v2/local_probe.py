@@ -6,6 +6,7 @@ No publication, production migration, parser/hash implementation, or editor writ
 Exit 0 means experiments completed, not resource targets or immutability passed.
 """
 import argparse
+import base64
 import concurrent.futures
 import hashlib
 import json
@@ -85,6 +86,7 @@ def main():
     parser.add_argument('--bundle', type=Path, required=True)
     parser.add_argument('--state-only', action='store_true', help='Only repeat changed state tests; no resource rerun')
     parser.add_argument('--storage-only', action='store_true', help='Only run Storage counterexamples')
+    parser.add_argument('--streaming', action='store_true', help='Add established parser experiments to real-service run')
     args = parser.parse_args()
     source = args.bundle.resolve()
     original = {n: hashlib.sha256((source/n).read_bytes()).hexdigest() for n in FILES}
@@ -106,6 +108,10 @@ def main():
         (root/name).mkdir()
         (root/name/'index.ts').write_text(code, encoding='utf8')
     # probe imports ../functions, relative to /work/probe/index.ts.
+    stream_code = (HERE/'stream_pack_probe.ts').read_text(encoding='utf8')
+    stream_code = stream_code.replace("'stream-json/Parser'", "'npm:stream-json@1.9.1/Parser.js'")
+    stream_code = stream_code.replace("'stream-json/Assembler'", "'npm:stream-json@1.9.1/Assembler.js'")
+    (root/'probe/stream_pack_probe.ts').write_text(stream_code, encoding='utf8')
     users, uploads, stored_keys = [], [], []
     container = 'sprachapp-v2-'+nonce[:10]
     results = {'local_only': True, 'cloud_pass': False, 'image': IMAGE,
@@ -187,6 +193,10 @@ def main():
             status, signed = local.http('POST', '/storage/v1/object/upload/sign/content-private/'+key, {'upsert': False})
             expect(status, [200], 'sign local test object')
             signed_path = '/storage/v1'+signed['url']
+            encoded = urllib.parse.parse_qs(urllib.parse.urlsplit(signed_path).query)['token'][0].split('.')[1]
+            claims = json.loads(base64.urlsafe_b64decode(encoded+'='*((-len(encoded))%4)))
+            # Only the duration is retained; never the token, URL, or secret.
+            ttl = claims['exp']-claims['iat']
             status, _ = local.http('PUT', signed_path, b'original')
             expect(status, [200], 'signed initial insert'); stored_keys.append(key)
             dup = local.http('PUT', signed_path, b'old-token-overwrite')[0]
@@ -204,10 +214,11 @@ def main():
             recreated = local.http('PUT', signed_path, b'recreated')[0]
             assert dup >= 400 and upsert_attempt >= 400 and client_update >= 400 and deleted == 200 and recreated == 200
             results['storage'].append({'scope': scope, 'old_token_overwrite': dup, 'user_update': client_update,
+                                       'signed_upload_ttl_seconds':ttl,
                                        'old_token_upsert_header':upsert_attempt, 'user_delete_status':client_delete, 'user_delete_changed_bytes':False,
                                        'service_update': admin_update, 'service_delete': deleted, 'old_token_recreate': recreated,
                                        'immutability_proved': False})
-        print('Storage counterexample: service update/delete and old signed URL recreate succeed. Sealing BLOCKED.', flush=True)
+        print('Storage: nonprivileged replacement denied; privileged update/delete and old-token recreation succeed.', flush=True)
         if args.storage_only:
             assert original == {n: hashlib.sha256((source/n).read_bytes()).hexdigest() for n in FILES}
             results['bundle_unchanged'] = True
@@ -257,11 +268,16 @@ def main():
             calls = []
             try:
                 phases = [('file', n) for n in FILES] + [(n, None) for n in
-                    ['sidecars', 'pack_parse', 'pack_full_hash', 'pack_content_hash', 'pack_both_hashes', 'history']]
+                    ['sidecars', 'pack_parse', 'pack_full_hash', 'pack_content_hash', 'pack_structure', 'pack_both_hashes', 'history']]
+                if args.streaming:
+                    phases += [(n,None) for n in ['stream_tokens','stream_parse','stream_both_hashes']]
                 for phase, name in phases:
                     row, value = measured('/probe', {'upload_id': uid, 'phase': phase, 'name': name}, token, phase+(':'+name if name else ''))
                     calls.append(row)
                     if row['http_status'] != 200:
+                        if args.streaming and phase.startswith('stream_'):
+                            # Diagnostic failures are evidence, never a passed verification.
+                            continue
                         break
                     if 'full' in value:
                         assert value['full'] == '0bce823cbe7f6e1abeb114489a3536659b9bca6ed3ec451fa5692924465bda64'

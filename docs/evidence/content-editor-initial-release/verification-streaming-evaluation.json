@@ -1,0 +1,1257 @@
+{
+  "local_only": true,
+  "cloud_pass": false,
+  "image": "public.ecr.aws/supabase/edge-runtime:v1.77.1",
+  "limits": {
+    "memory_mib": 256,
+    "cpu_soft_ms": 1000,
+    "cpu_hard_ms": 2000,
+    "wall_ms": 150000
+  },
+  "original_hashes": {
+    "content.sqlite": "ac87b43105b9305579a7fff38de0343f874cbb19e533e1bebbed8942d975acdd",
+    "pack.json": "098f01abacb11ef2aa1601ff10f11d185f690cf688e515ae62343d344561d8c9",
+    "registry.json": "039cb691709f0463995a5ee4773a490290109445b686eb8d22ba117001d715ad",
+    "history_inventory.json": "d710fe23ba73ce153992e1a09e32ec227430760dcfd06b391d7b0f5dd5668ff2",
+    "editorial_reviews.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "provenance.json": "52334f02ea98ee31c7c0ddcfa6347edce8a19147117cc69bbb3bc58ef878fed5",
+    "finalization_report.json": "4462d22b9f2d013f623dcd65c9749b3a39d843666d81442555f9e4d57952c3b1",
+    "content.manifest.json": "88cd1f4178e87fbf6977ee604928710997bc417efe20812eda136a7d3c97cd86",
+    "reader_report.json": "7500df59ddf2cdd858a8fa0292841ad738b38b970db61b9355b2d1f3c622c608"
+  },
+  "storage": [
+    {
+      "scope": "upload",
+      "old_token_overwrite": 400,
+      "user_update": 400,
+      "signed_upload_ttl_seconds": 7200,
+      "old_token_upsert_header": 400,
+      "user_delete_status": 200,
+      "user_delete_changed_bytes": false,
+      "service_update": 200,
+      "service_delete": 200,
+      "old_token_recreate": 200,
+      "immutability_proved": false
+    },
+    {
+      "scope": "parent",
+      "old_token_overwrite": 400,
+      "user_update": 400,
+      "signed_upload_ttl_seconds": 7200,
+      "old_token_upsert_header": 400,
+      "user_delete_status": 200,
+      "user_delete_changed_bytes": false,
+      "service_update": 200,
+      "service_delete": 200,
+      "old_token_recreate": 200,
+      "immutability_proved": false
+    }
+  ],
+  "state": [
+    "invalid JWT rejected",
+    "wrong owner rejected",
+    "verifier mismatch rejected",
+    "two claims: one winner",
+    "no finish: zero progress",
+    "expired lease reclaimed",
+    "stale result rejected",
+    "lost response retry idempotent",
+    "changed retry rejected",
+    "actual CPU worker abort after durable claim: HTTP546, no extra progress, reclaim succeeds",
+    "right revocation rejected",
+    "unsealed completion rejected",
+    "expired run rejected",
+    "explicit audited resume: same upload, reset diagnostic progress, original expiry unchanged",
+    "expired upload: ordinary start denied, explicit resume_start idempotent, guarded expiry unchanged",
+    "catalog empty",
+    "original handler still rejects expired upload after diagnostic resume"
+  ],
+  "state_events": [
+    {
+      "timestamp": "2026-10-17T09:21:42.272Z",
+      "event_type": "Boot",
+      "event": {
+        "boot_time": 683
+      },
+      "metadata": {
+        "service_path": "/work/probe",
+        "execution_id": "7c20c813-c082-483e-8c01-527bb9b1b3c7",
+        "otel_attributes": {
+          "edge_runtime.worker.kind": "user"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-10-17T09:21:47.923Z",
+      "event_type": "Shutdown",
+      "event": {
+        "reason": "CPUTime",
+        "cpu_time_used": 3038,
+        "memory_used": {
+          "total": 11348597,
+          "heap": 8316800,
+          "external": 3031797,
+          "mem_check_captured": {
+            "current": {
+              "totalHeapSize": 10395648,
+              "totalHeapSizeExecutable": 524288,
+              "totalPhysicalSize": 9916416,
+              "totalAvailableSize": 260731816,
+              "totalGlobalHandlesSize": 24576,
+              "usedGlobalHandlesSize": 20736,
+              "usedHeapSize": 8318144,
+              "mallocedMemory": 278624,
+              "externalMemory": 3031797,
+              "peakMallocedMemory": 893320
+            },
+            "exceeded": false
+          }
+        }
+      },
+      "metadata": {
+        "service_path": "/work/probe",
+        "execution_id": "7c20c813-c082-483e-8c01-527bb9b1b3c7",
+        "otel_attributes": {
+          "edge_runtime.worker.kind": "user"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-10-17T09:21:47.983Z",
+      "event_type": "Boot",
+      "event": {
+        "boot_time": 40
+      },
+      "metadata": {
+        "service_path": "/work/probe",
+        "execution_id": "b6c51a91-c353-4b89-ba2c-2fc9b2449344",
+        "otel_attributes": {
+          "edge_runtime.worker.kind": "user"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-10-17T09:21:50.988Z",
+      "event_type": "Shutdown",
+      "event": {
+        "reason": "TerminationRequested",
+        "cpu_time_used": 44,
+        "memory_used": {
+          "total": 11337191,
+          "heap": 8305384,
+          "external": 3031807,
+          "mem_check_captured": {
+            "current": {
+              "totalHeapSize": 10133504,
+              "totalHeapSizeExecutable": 524288,
+              "totalPhysicalSize": 8740864,
+              "totalAvailableSize": 261035184,
+              "totalGlobalHandlesSize": 24576,
+              "usedGlobalHandlesSize": 20736,
+              "usedHeapSize": 8304960,
+              "mallocedMemory": 278624,
+              "externalMemory": 3031807,
+              "peakMallocedMemory": 782776
+            },
+            "exceeded": false
+          }
+        }
+      },
+      "metadata": {
+        "service_path": "/work/probe",
+        "execution_id": "b6c51a91-c353-4b89-ba2c-2fc9b2449344",
+        "otel_attributes": {
+          "edge_runtime.worker.kind": "user"
+        }
+      }
+    }
+  ],
+  "elapsed_seconds": 67.41,
+  "driver_http_requests": 153,
+  "bundle_unchanged": true,
+  "total_seconds_including_cleanup": 68.14,
+  "total_driver_http_requests_including_cleanup": 180,
+  "cleanup_complete": true,
+  "source_run": "eba7f36273224026980dbbd5d79f163a",
+  "resources": [
+    {
+      "mode": "original",
+      "policy": "oneshot",
+      "calls": [
+        {
+          "step": "original:oneshot:1",
+          "http_status": 200,
+          "wall_ms": 297.0,
+          "container_cpu_ms": 210.0,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:2",
+          "http_status": 200,
+          "wall_ms": 344.0,
+          "container_cpu_ms": 218.2,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:3",
+          "http_status": 200,
+          "wall_ms": 110.0,
+          "container_cpu_ms": 72.3,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:4",
+          "http_status": 200,
+          "wall_ms": 141.0,
+          "container_cpu_ms": 104.2,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:5",
+          "http_status": 200,
+          "wall_ms": 93.0,
+          "container_cpu_ms": 70.8,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:6",
+          "http_status": 200,
+          "wall_ms": 94.0,
+          "container_cpu_ms": 75.0,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:7",
+          "http_status": 200,
+          "wall_ms": 94.0,
+          "container_cpu_ms": 71.1,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:8",
+          "http_status": 200,
+          "wall_ms": 109.0,
+          "container_cpu_ms": 67.5,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:9",
+          "http_status": 200,
+          "wall_ms": 125.0,
+          "container_cpu_ms": 101.2,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:10",
+          "http_status": 200,
+          "wall_ms": 1234.0,
+          "container_cpu_ms": 1306.6,
+          "status": "ready",
+          "code": null
+        }
+      ],
+      "supervisor_shutdowns": [
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 14,
+          "shutdown_memory_bytes": 11789828
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 11,
+          "shutdown_memory_bytes": 11375974
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 60,
+          "shutdown_memory_bytes": 19857123
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 64,
+          "shutdown_memory_bytes": 14573144
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 12,
+          "shutdown_memory_bytes": 13014204
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 25,
+          "shutdown_memory_bytes": 19372954
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 11,
+          "shutdown_memory_bytes": 11575048
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 12,
+          "shutdown_memory_bytes": 11576999
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 12,
+          "shutdown_memory_bytes": 11578584
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 11,
+          "shutdown_memory_bytes": 11580693
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 24,
+          "shutdown_memory_bytes": 18958161
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 979,
+          "shutdown_memory_bytes": 78277117
+        }
+      ]
+    },
+    {
+      "mode": "original",
+      "policy": "per_worker",
+      "calls": [
+        {
+          "step": "original:per_worker:1",
+          "http_status": 200,
+          "wall_ms": 234.0,
+          "container_cpu_ms": 155.4,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:2",
+          "http_status": 200,
+          "wall_ms": 265.0,
+          "container_cpu_ms": 145.5,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:3",
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "container_cpu_ms": 25.4,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:4",
+          "http_status": 200,
+          "wall_ms": 109.0,
+          "container_cpu_ms": 49.5,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:5",
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "container_cpu_ms": 21.5,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:6",
+          "http_status": 200,
+          "wall_ms": 63.0,
+          "container_cpu_ms": 24.7,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:7",
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "container_cpu_ms": 22.9,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:8",
+          "http_status": 200,
+          "wall_ms": 63.0,
+          "container_cpu_ms": 20.9,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:9",
+          "http_status": 200,
+          "wall_ms": 93.0,
+          "container_cpu_ms": 46.5,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:10",
+          "http_status": 200,
+          "wall_ms": 1187.0,
+          "container_cpu_ms": 1285.1,
+          "status": "ready",
+          "code": null
+        }
+      ],
+      "supervisor_shutdowns": [
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 1107,
+          "shutdown_memory_bytes": 11286039
+        }
+      ]
+    },
+    {
+      "mode": "phase-probes",
+      "policy": "oneshot",
+      "calls": [
+        {
+          "step": "file:content.sqlite",
+          "http_status": 200,
+          "wall_ms": 703.0,
+          "container_cpu_ms": 280.4,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:pack.json",
+          "http_status": 200,
+          "wall_ms": 312.0,
+          "container_cpu_ms": 235.6,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:registry.json",
+          "http_status": 200,
+          "wall_ms": 109.0,
+          "container_cpu_ms": 87.8,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:history_inventory.json",
+          "http_status": 200,
+          "wall_ms": 156.0,
+          "container_cpu_ms": 108.7,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:editorial_reviews.json",
+          "http_status": 200,
+          "wall_ms": 109.0,
+          "container_cpu_ms": 76.0,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:provenance.json",
+          "http_status": 200,
+          "wall_ms": 78.0,
+          "container_cpu_ms": 78.0,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:finalization_report.json",
+          "http_status": 200,
+          "wall_ms": 109.0,
+          "container_cpu_ms": 77.0,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:content.manifest.json",
+          "http_status": 200,
+          "wall_ms": 79.0,
+          "container_cpu_ms": 76.0,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:reader_report.json",
+          "http_status": 200,
+          "wall_ms": 125.0,
+          "container_cpu_ms": 107.2,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "sidecars",
+          "http_status": 200,
+          "wall_ms": 250.0,
+          "container_cpu_ms": 251.1,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_parse",
+          "http_status": 200,
+          "wall_ms": 515.0,
+          "container_cpu_ms": 537.9,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_full_hash",
+          "http_status": 200,
+          "wall_ms": 703.0,
+          "container_cpu_ms": 762.3,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_content_hash",
+          "http_status": 200,
+          "wall_ms": 766.0,
+          "container_cpu_ms": 797.9,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_structure",
+          "http_status": 200,
+          "wall_ms": 422.0,
+          "container_cpu_ms": 457.7,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_both_hashes",
+          "http_status": 200,
+          "wall_ms": 1000.0,
+          "container_cpu_ms": 1067.7,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "history",
+          "http_status": 200,
+          "wall_ms": 500.0,
+          "container_cpu_ms": 397.7,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "stream_tokens",
+          "http_status": 200,
+          "wall_ms": 1078.0,
+          "container_cpu_ms": 1410.8,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "stream_parse",
+          "http_status": 200,
+          "wall_ms": 1422.0,
+          "container_cpu_ms": 2128.0,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "stream_both_hashes",
+          "http_status": 200,
+          "wall_ms": 2032.0,
+          "container_cpu_ms": 2749.0,
+          "status": null,
+          "code": null
+        }
+      ],
+      "supervisor_shutdowns": [
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 61,
+          "shutdown_memory_bytes": 12659691
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 76,
+          "shutdown_memory_bytes": 15596394
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 17,
+          "shutdown_memory_bytes": 11951114
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 27,
+          "shutdown_memory_bytes": 13002682
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 13,
+          "shutdown_memory_bytes": 12119924
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 13,
+          "shutdown_memory_bytes": 12111741
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 13,
+          "shutdown_memory_bytes": 12111766
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 13,
+          "shutdown_memory_bytes": 12111755
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 26,
+          "shutdown_memory_bytes": 12264305
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 137,
+          "shutdown_memory_bytes": 32952218
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 310,
+          "shutdown_memory_bytes": 60304942
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 526,
+          "shutdown_memory_bytes": 60599433
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 569,
+          "shutdown_memory_bytes": 60871036
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 244,
+          "shutdown_memory_bytes": 60304499
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 828,
+          "shutdown_memory_bytes": 60623739
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 200,
+          "shutdown_memory_bytes": 50564081
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 887,
+          "shutdown_memory_bytes": 19140608
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 1256,
+          "shutdown_memory_bytes": 120747756
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 1845,
+          "shutdown_memory_bytes": 122530094
+        }
+      ],
+      "steps": [
+        {
+          "phase": "file:content.sqlite",
+          "status": 200,
+          "wall_ms": 703.0,
+          "container_cpu_ms": 280.4,
+          "isolate_cpu_ms": 61,
+          "max_observed_heap_plus_external": 12629901,
+          "backend_bytes": 43091942,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:pack.json",
+          "status": 200,
+          "wall_ms": 312.0,
+          "container_cpu_ms": 235.6,
+          "isolate_cpu_ms": 76,
+          "max_observed_heap_plus_external": 15559517,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:registry.json",
+          "status": 200,
+          "wall_ms": 109.0,
+          "container_cpu_ms": 87.8,
+          "isolate_cpu_ms": 17,
+          "max_observed_heap_plus_external": 12293010,
+          "backend_bytes": 1069162,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:history_inventory.json",
+          "status": 200,
+          "wall_ms": 156.0,
+          "container_cpu_ms": 108.7,
+          "isolate_cpu_ms": 27,
+          "max_observed_heap_plus_external": 12965789,
+          "backend_bytes": 10175782,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:editorial_reviews.json",
+          "status": 200,
+          "wall_ms": 109.0,
+          "container_cpu_ms": 76.0,
+          "isolate_cpu_ms": 13,
+          "max_observed_heap_plus_external": 12074451,
+          "backend_bytes": 6121,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:provenance.json",
+          "status": 200,
+          "wall_ms": 78.0,
+          "container_cpu_ms": 78.0,
+          "isolate_cpu_ms": 13,
+          "max_observed_heap_plus_external": 12182580,
+          "backend_bytes": 8693,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:finalization_report.json",
+          "status": 200,
+          "wall_ms": 109.0,
+          "container_cpu_ms": 77.0,
+          "isolate_cpu_ms": 13,
+          "max_observed_heap_plus_external": 12293045,
+          "backend_bytes": 7957,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:content.manifest.json",
+          "status": 200,
+          "wall_ms": 79.0,
+          "container_cpu_ms": 76.0,
+          "isolate_cpu_ms": 13,
+          "max_observed_heap_plus_external": 12074218,
+          "backend_bytes": 7173,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:reader_report.json",
+          "status": 200,
+          "wall_ms": 125.0,
+          "container_cpu_ms": 107.2,
+          "isolate_cpu_ms": 26,
+          "max_observed_heap_plus_external": 12234517,
+          "backend_bytes": 9814637,
+          "backend_requests": 4
+        },
+        {
+          "phase": "sidecars",
+          "status": 200,
+          "wall_ms": 250.0,
+          "container_cpu_ms": 251.1,
+          "isolate_cpu_ms": 137,
+          "max_observed_heap_plus_external": 48026077,
+          "backend_bytes": 11244298,
+          "backend_requests": 9
+        },
+        {
+          "phase": "pack_parse",
+          "status": 200,
+          "wall_ms": 515.0,
+          "container_cpu_ms": 537.9,
+          "isolate_cpu_ms": 310,
+          "max_observed_heap_plus_external": 160187317,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "pack_full_hash",
+          "status": 200,
+          "wall_ms": 703.0,
+          "container_cpu_ms": 762.3,
+          "isolate_cpu_ms": 526,
+          "max_observed_heap_plus_external": 160188869,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "pack_content_hash",
+          "status": 200,
+          "wall_ms": 766.0,
+          "container_cpu_ms": 797.9,
+          "isolate_cpu_ms": 569,
+          "max_observed_heap_plus_external": 160187349,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "pack_structure",
+          "status": 200,
+          "wall_ms": 422.0,
+          "container_cpu_ms": 457.7,
+          "isolate_cpu_ms": 244,
+          "max_observed_heap_plus_external": 160186861,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "pack_both_hashes",
+          "status": 200,
+          "wall_ms": 1000.0,
+          "container_cpu_ms": 1067.7,
+          "isolate_cpu_ms": 828,
+          "max_observed_heap_plus_external": 160187037,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "history",
+          "status": 200,
+          "wall_ms": 500.0,
+          "container_cpu_ms": 397.7,
+          "isolate_cpu_ms": 200,
+          "max_observed_heap_plus_external": 63632941,
+          "backend_bytes": 22471534,
+          "backend_requests": 7
+        },
+        {
+          "phase": "stream_tokens",
+          "status": 200,
+          "wall_ms": 1078.0,
+          "container_cpu_ms": 1410.8,
+          "isolate_cpu_ms": 887,
+          "max_observed_heap_plus_external": 19075000,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "stream_parse",
+          "status": 200,
+          "wall_ms": 1422.0,
+          "container_cpu_ms": 2128.0,
+          "isolate_cpu_ms": 1256,
+          "max_observed_heap_plus_external": 120682152,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "stream_both_hashes",
+          "status": 200,
+          "wall_ms": 2032.0,
+          "container_cpu_ms": 2749.0,
+          "isolate_cpu_ms": 1845,
+          "max_observed_heap_plus_external": 122456849,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        }
+      ],
+      "proposed_workloads_only": {
+        "note": "Representative workloads, not a completed staged validator; original handler separately executes every existing check. Final metadata-only stage not implemented. History uses same real data as both sides.",
+        "wall_ms": 3999.0,
+        "backend_bytes": 248164854,
+        "backend_requests": 60
+      }
+    },
+    {
+      "mode": "phase-probes",
+      "policy": "per_worker",
+      "calls": [
+        {
+          "step": "file:content.sqlite",
+          "http_status": 200,
+          "wall_ms": 782.0,
+          "container_cpu_ms": 256.8,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:pack.json",
+          "http_status": 200,
+          "wall_ms": 266.0,
+          "container_cpu_ms": 149.2,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:registry.json",
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "container_cpu_ms": 27.1,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:history_inventory.json",
+          "http_status": 200,
+          "wall_ms": 94.0,
+          "container_cpu_ms": 55.8,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:editorial_reviews.json",
+          "http_status": 200,
+          "wall_ms": 32.0,
+          "container_cpu_ms": 24.3,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:provenance.json",
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "container_cpu_ms": 23.9,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:finalization_report.json",
+          "http_status": 200,
+          "wall_ms": 31.0,
+          "container_cpu_ms": 24.7,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:content.manifest.json",
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "container_cpu_ms": 23.4,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:reader_report.json",
+          "http_status": 200,
+          "wall_ms": 78.0,
+          "container_cpu_ms": 56.6,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "sidecars",
+          "http_status": 200,
+          "wall_ms": 203.0,
+          "container_cpu_ms": 182.6,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_parse",
+          "http_status": 200,
+          "wall_ms": 422.0,
+          "container_cpu_ms": 449.5,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_full_hash",
+          "http_status": 200,
+          "wall_ms": 719.0,
+          "container_cpu_ms": 805.2,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_content_hash",
+          "http_status": 200,
+          "wall_ms": 750.0,
+          "container_cpu_ms": 774.1,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_structure",
+          "http_status": 200,
+          "wall_ms": 406.0,
+          "container_cpu_ms": 415.5,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_both_hashes",
+          "http_status": 200,
+          "wall_ms": 969.0,
+          "container_cpu_ms": 1015.1,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "history",
+          "http_status": 200,
+          "wall_ms": 313.0,
+          "container_cpu_ms": 325.8,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "stream_tokens",
+          "http_status": 200,
+          "wall_ms": 1015.0,
+          "container_cpu_ms": 1340.3,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "stream_parse",
+          "http_status": 200,
+          "wall_ms": 1453.0,
+          "container_cpu_ms": 2185.8,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "stream_both_hashes",
+          "http_status": 200,
+          "wall_ms": 2094.0,
+          "container_cpu_ms": 2883.6,
+          "status": null,
+          "code": null
+        }
+      ],
+      "supervisor_shutdowns": [
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 1062,
+          "shutdown_memory_bytes": 60578741
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 782,
+          "shutdown_memory_bytes": 160223366
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 1834,
+          "shutdown_memory_bytes": 18195989
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 1263,
+          "shutdown_memory_bytes": 124914269
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_ms": 1878,
+          "shutdown_memory_bytes": 128315786
+        }
+      ],
+      "steps": [
+        {
+          "phase": "file:content.sqlite",
+          "status": 200,
+          "wall_ms": 782.0,
+          "container_cpu_ms": 256.8,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 19106789,
+          "backend_bytes": 43091942,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:pack.json",
+          "status": 200,
+          "wall_ms": 266.0,
+          "container_cpu_ms": 149.2,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 12951829,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:registry.json",
+          "status": 200,
+          "wall_ms": 47.0,
+          "container_cpu_ms": 27.1,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 14806560,
+          "backend_bytes": 1069162,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:history_inventory.json",
+          "status": 200,
+          "wall_ms": 94.0,
+          "container_cpu_ms": 55.8,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 18738189,
+          "backend_bytes": 10175782,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:editorial_reviews.json",
+          "status": 200,
+          "wall_ms": 32.0,
+          "container_cpu_ms": 24.3,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 12627420,
+          "backend_bytes": 6121,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:provenance.json",
+          "status": 200,
+          "wall_ms": 47.0,
+          "container_cpu_ms": 23.9,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 13486932,
+          "backend_bytes": 8693,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:finalization_report.json",
+          "status": 200,
+          "wall_ms": 31.0,
+          "container_cpu_ms": 24.7,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 14347366,
+          "backend_bytes": 7957,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:content.manifest.json",
+          "status": 200,
+          "wall_ms": 47.0,
+          "container_cpu_ms": 23.4,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 13086978,
+          "backend_bytes": 7173,
+          "backend_requests": 4
+        },
+        {
+          "phase": "file:reader_report.json",
+          "status": 200,
+          "wall_ms": 78.0,
+          "container_cpu_ms": 56.6,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 16038589,
+          "backend_bytes": 9814637,
+          "backend_requests": 4
+        },
+        {
+          "phase": "sidecars",
+          "status": 200,
+          "wall_ms": 203.0,
+          "container_cpu_ms": 182.6,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 48515741,
+          "backend_bytes": 11244298,
+          "backend_requests": 9
+        },
+        {
+          "phase": "pack_parse",
+          "status": 200,
+          "wall_ms": 422.0,
+          "container_cpu_ms": 449.5,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 160624517,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "pack_full_hash",
+          "status": 200,
+          "wall_ms": 719.0,
+          "container_cpu_ms": 805.2,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 161024477,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "pack_content_hash",
+          "status": 200,
+          "wall_ms": 750.0,
+          "container_cpu_ms": 774.1,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 160186469,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "pack_structure",
+          "status": 200,
+          "wall_ms": 406.0,
+          "container_cpu_ms": 415.5,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 160147957,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "pack_both_hashes",
+          "status": 200,
+          "wall_ms": 969.0,
+          "container_cpu_ms": 1015.1,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 160188605,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "history",
+          "status": 200,
+          "wall_ms": 313.0,
+          "container_cpu_ms": 325.8,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 64108981,
+          "backend_bytes": 22471534,
+          "backend_requests": 7
+        },
+        {
+          "phase": "stream_tokens",
+          "status": 200,
+          "wall_ms": 1015.0,
+          "container_cpu_ms": 1340.3,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 51298136,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "stream_parse",
+          "status": 200,
+          "wall_ms": 1453.0,
+          "container_cpu_ms": 2185.8,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 124819776,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        },
+        {
+          "phase": "stream_both_hashes",
+          "status": 200,
+          "wall_ms": 2094.0,
+          "container_cpu_ms": 2883.6,
+          "isolate_cpu_ms": null,
+          "max_observed_heap_plus_external": 128221353,
+          "backend_bytes": 50089185,
+          "backend_requests": 4
+        }
+      ],
+      "proposed_workloads_only": {
+        "note": "Representative workloads, not a completed staged validator; original handler separately executes every existing check. Final metadata-only stage not implemented. History uses same real data as both sides.",
+        "wall_ms": 3409.0,
+        "backend_bytes": 248164854,
+        "backend_requests": 60
+      }
+    }
+  ],
+  "decision": "Keep existing Storage and downloads; implement native stages; do not adopt parser or second byte store.",
+  "parser_contract_tests": "21 passed: 19 comparison/rejection tests and two characterization tests proving incompatible acceptance of NBSP/U+2028 whitespace. Real valid bundle full/normalized hashes match; complete compatibility NOT proven."
+}

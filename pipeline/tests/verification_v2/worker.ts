@@ -48,8 +48,34 @@ Deno.serve(async request => {
       const inv=await read('history_inventory.json'),reg=await read('registry.json');
       requireThat(digest(inv)===m.history_inventory_sha256&&digest(reg)===m.registry_sha256,'SIDECAR_HASH');
       await read('provenance.json');
-    } else if(['pack_parse','pack_full_hash','pack_content_hash','pack_both_hashes'].includes(phase)) {
+    } else if(phase.startsWith('stream_')) {
+      const {streamPack}=await import('./stream_pack_probe.ts');
+      const response=await fetch(base.url+'/storage/v1/object/authenticated/content-private/'+u.id+'/pack.json',{
+        headers:{Authorization:'Bearer '+Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!},redirect:'error',
+      });
+      requests++;
+      requireThat(response.ok&&response.body,'OBJECT_MISSING');
+      const {createHash}=await import('node:crypto');
+      const raw=createHash('sha256');let size=0;
+      const body=response.body.pipeThrough(new TransformStream({transform(chunk,c){
+        size+=chunk.byteLength;bytes+=chunk.byteLength;
+        requireThat(size<=u.objects['pack.json'].size_bytes,'OBJECT_SIZE');raw.update(chunk);c.enqueue(chunk);
+      }}));
+      const parsed=await streamPack(body,phase!=='stream_tokens',sample);
+      requireThat(size===u.objects['pack.json'].size_bytes&&raw.digest('hex')===u.objects['pack.json'].sha256,'OBJECT_HASH');
+      result={tokens:parsed.tokens};
+      if(phase==='stream_both_hashes'){
+        const full=digest(parsed.value), content={...parsed.value,release:{...parsed.value.release}};
+        delete content.release.created_at;result={full,content:digest(content),tokens:parsed.tokens};
+      }
+    } else if(['pack_parse','pack_full_hash','pack_content_hash','pack_both_hashes','pack_structure'].includes(phase)) {
       const pack=await read('pack.json');
+      if(phase!=='pack_parse') {
+        requireThat(pack.lang===u.lang&&pack.release?.version===u.draft_manifest.version&&
+          pack.release?.schema_version===u.draft_manifest.schema_version&&
+          pack.word_registry?.sha256===u.draft_manifest.registry_sha256,'PACK_SCOPE');
+        if(u.parent_release_id)requireThat(pack.word_registry?.snapshot?.words,'REGISTRY_INVALID');
+      }
       if(phase==='pack_full_hash'||phase==='pack_both_hashes') result={full:digest(pack)};
       if(phase==='pack_content_hash'||phase==='pack_both_hashes') {
         const content={...pack,release:{...pack.release}};delete content.release.created_at;
