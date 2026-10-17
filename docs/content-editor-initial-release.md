@@ -1,8 +1,288 @@
 # Erste private Cloudversion aus dem internen App-Bestand
 
-## HTTP 546: Speicherverbrauch lokal belegt und reduziert · 16.10.2026
+## Erneuter Cloudabbruch: CPUTime belegt; Architekturfreigabe erforderlich · 17.10.2026
 
-**Aktueller Stand:** Der echte Bestand wurde in einer isolierten Supabase Edge
+**Dieser Abschnitt ersetzt die frühere Handlungsempfehlung, erneut zu deployen
+und die Serverprüfung zu wiederholen.** Kein weiterer Finalize-Aufruf erfolgte.
+Der vorhandene Upload `dc4eb268-b9d1-4278-839d-0176d0db2f40` zur lokalen Version
+`088f5eab-7347-406f-b9e6-cf5dbb985990` bleibt erhalten. Der Laufzeitcode wurde in
+diesem Auftrag nicht verändert. Eine kleine Optimierung mit nachgewiesener
+Cloudreserve liegt nicht vor; der unten stehende Architekturwechsel ist **nur
+vorgeschlagen, nicht implementiert oder freigegeben**.
+
+### Tatsächliche Cloudbelege und Bereitstellung
+
+Ausschließlich lesende Management-API-Zugriffe mit bestehender CLI-Anmeldung:
+Functionliste, Download des bereitgestellten Quellcodes in `build/cloud_546_audit/download`
+und zwei eng begrenzte Logabfragen für **16.10.2026 18:57–19:03 UTC** (20:57–21:03
+Europe/Berlin). Das Browser-Dashboard verlangte Anmeldung und wurde nicht benutzt.
+Der CLI-Token blieb im Prozessspeicher; keine Secrets, Header, URLs mit Signaturen
+oder Inhaltszeilen wurden gespeichert. Selektierte strukturierte Felder stehen in
+[evidence/content-editor-initial-release/cloud-546-audit.json](evidence/content-editor-initial-release/cloud-546-audit.json).
+
+- Function `content-publish`, ID `1f2df8a3-bde4-47e2-b394-09b60cb839b5`, **Version 3**, ACTIVE,
+  `verify_jwt=true`, ESZIP-SHA256 `ac61671216c92fa18ff5fe2950aeaadead01f6226ddb6e3c1c76dbac9edc8237`.
+- Download enthält `digest` mit 16-KiB-Blöcken, strikten Streamingdecoder ohne
+  Rohchunkliste und kleine `release`-Kopie anstelle `structuredClone(pack)`.
+  Quellenanker ist nach Zeilenendennormalisierung identisch. Der Download ist
+  transpiliertes JavaScript in `.ts`-Dateien, daher kein behaupteter TypeScript-
+  Bytevergleich/Commitattest. Entry-Point und drei konkrete Optimierungen wurden
+  am gelieferten Code geprüft; der neue Lauf verwendet genau diese Dateien.
+- Boot **18:59:30.778 UTC**, HTTP-546-Ereignis **18:59:34.841 UTC**, Shutdown
+  **18:59:34.858 UTC**: alle haben Execution-ID
+  `a01dba54-62ef-45de-8602-1204d1548da3` und Deployment-ID
+  `yevntxclpchapacqdizm_1f2df8a3-bde4-47e2-b394-09b60cb839b5_3`.
+- **Shutdown reason `CPUTime`, cpu_time_used=2441 ms**; Speicher beim Shutdown
+  **79.508.379 Bytes** (Heap 76.409.720, extern 3.098.659), Invocationdauer 4572 ms.
+  Diese Speicherzahl ist kein Peak. Region `eu-central-1`,
+  `supabase-edge-runtime-1.77.0 (compatible with Deno v2.1.4)`.
+- Im Zeitfenster ist genau eine Invocation ausgewiesen. Lokaler Job begann
+  **18:59:31.212095 UTC**, fehlgeschlagen mit `PUBLISH_HTTP_546` und
+  `WORKER_RESOURCE_LIMIT`, processed=0/10. Das ist der Fortschritt dieses neuen
+  lokalen Jobs, kein Beweis, dass die früher geprüften neun Cloudobjekte verloren
+  sind. Die vorherige Ausführung stand bei 9/10. Die Zuordnung zum Nutzerfehler
+  beruht auf Zeit/Function/Status; `request.path` ist im Cloudlog leer.
+
+**Belegte Ursache dieses Cloudabbruches: CPU-Budget überschritten.** Eine weitere
+Speicherursache wird für diese Invocation nicht behauptet. Die 2441 ms sind ein
+Supervisorwert bei Abschaltung, kein zulässiges neues Limit. Warum dieselbe
+Arbeit auf dem lokalen Rechner schneller ist, lässt sich nicht quantitativ auf
+Hardware, Runtimepatch, Transport/GC oder andere Anteile verteilen. Es fehlen
+Cloud-Phasenprofile, nicht mehr der Shutdown-Grund. Kein Beleg für konkurrierende
+Aufrufe oder angesammelte CPU früherer Requests dieses Workers: der Boot gehört
+zum selben kurzen Zeitfenster.
+
+### Messlücke und vollständiger lokaler Anwendungshandler
+
+| Aspekt | Helfer aus e09f665 | Neuer lokaler Kontrolllauf | Cloudbeleg / verbleibende Grenze |
+|---|---|---|---|
+| Runtime | Image v1.77.1, Deno 2.1.4 | gleiches bereits installiertes Image | v1.77.0, Deno 2.1.4; Cloudimage lokal nicht vorhanden |
+| Pfad | instrumentierter Worker ruft `publish()` direkt auf | heruntergeladene `content-publish/index.ts` → `handler()` → `publish()` unverändert | gleiche drei Optimierungen im Download belegt |
+| Anfrage | Wrapper liest Upload-JSON und baut zweite Request | originaler POST-Pfad mit `{}` und Bearerheader | Gateway/JWT-Prüfung außerhalb des lokalen Workers fehlt |
+| Backend | lokale Auth-/DB-/Storage-HTTP-Fixtures | dieselben Fixtures, echte Backendmethoden/fetch/Parse/PATCH | kein echtes GoTrue, SQL/RLS, Storage-Service, TLS oder Cloudnetz |
+| Worker | `oneshot`, `forceCreate=true`, soft/hard 2000/2000 ms | `oneshot` sowie `per_worker`, soft/hard 1000/2000 ms | tatsächlich wirksame Soft-Konfiguration nicht im Log ausgewiesen |
+| Speicher / Wandzeit | 256 MiB / 150000 ms | unverändert 256 MiB / 150000 ms | Cloud-Hardwerte nicht aus Shutdownmetadaten ableitbar |
+| Wiederverwendung | zehn frische Worker | zehn frische bzw. ein wiederverwendeter Worker (Boot-/Shutdownereignisse) | Cloudlog zeigt einen Boot und eine Invocation |
+| Parallelität | sequenziell | sequenziell wie der Publisherjob | konkurrierende Clients nicht getestet; kein Parallelitätsnachweis |
+| Umfang | alle neun Bytehashes und abschließende Bestandsprüfung | dieselben neun Dateien plus vollständiger Anwendungshandler | normale Parent-Releases nur Regressionstests, keine Lastabnahme |
+
+Die früheren 1086 ms schlossen weder den äußeren Handler noch echte externe
+Dienste/Gateway ein. Andererseits gehörten Auth-/Rechte-/Storage-/DB-**Methoden**
+bereits dazu; sie waren nicht vollständig ausgelassen. Der alte Wrapper fügte
+selbst JSON- und Mess-HTTP-Arbeit hinzu. Der Unterschied ist deshalb kein
+pauschaler Beweis, dass allein der fehlende Handler den Cloudabbruch verursacht.
+Storagezugriffe sind sequenziell, doch geparste Registry/Inventar/Packstrukturen
+bleiben im letzten Aufruf gleichzeitig erreichbar. SQLite wird separat gestreamt;
+die zwei verschiedenen kanonischen Packhashes bleiben CPU-Arbeit im letzten Aufruf.
+
+| Lauf | Ergebnis | CPU laut Supervisor | Speicher beim Shutdown | Wandzeit letzter Request |
+|---|---|---:|---:|---:|
+| historischer lokaler Fixlauf | ready | 1086 ms | 78.485.951 B | 1375 ms |
+| alter Helfer erneut, optimiert | ready | 1090 ms | 78.685.000 B | 1344 ms |
+| heruntergeladener Handler, frisch | ready | 1083 ms (letzter Worker) | 78.518.173 B | 1375 ms |
+| heruntergeladener Handler, wiederverwendet | ready | 1326 ms (**ganzer Worker mit zehn Requests**) | 78.862.791 B | 1343 ms |
+| tatsächliche Cloudinvocation Version 3 | **546 / CPUTime** | **2441 ms** | **79.508.379 B** | **4572 ms** |
+
+Kein vollständiger Produktionsinfrastrukturtest: Die lokale Messung umfasst den
+vollständigen Anwendungshandler mit echten Bundlebytes, aber synthetische Dienste.
+Sie ist insbesondere **keine Cloudabnahme und kein Peak-Speicher-/Reservenachweis**.
+Der etwa 2,25-fache Unterschied der CPUwerte ist eine Beobachtung, kein allgemeiner
+Umrechnungsfaktor. Es gibt keinen gerechtfertigten kleinen Fix mit ausreichender
+Reserve. Daher keine weitere blinde Hashoptimierung, kein höheres Timeout.
+
+### Konkreter Vorschlag: `verification-v2`, serverseitig begrenzt und fortsetzbar
+
+**Freizugebender Umfang:** neue private Prüftabellen/RPCs, Storage-Versionsbindung,
+begrenzt fortsetzbarer Parser/Hasher, Änderungen in `content-publish` und Publisher-
+Fortschritt sowie zugehörige Tests. Bestehende Inhaltsbytes, Upload-ID und Quellenanker
+bleiben erhalten. Keine neue Infrastruktur, rekursive Function-Kette oder Hintergrundprüfung.
+Dies ist ein Architekturwechsel; vor dessen Umsetzung wird hier gestoppt.
+
+1. **Identität versiegeln:** ein autorisierter `prepare-verification`-Schritt liest
+   den bestehenden Upload und alle neun Storageobjekt-Identitäten. Er legt einen
+   Run mit `(upload_id, manifest_sha256, descriptor_set_sha256, verifier_version,
+   object_version_set_sha256, parent_release_id, parent_manifest_sha256)` an.
+   Manifesthash wird serverseitig berechnet, nicht vom Client als Wahrheit übernommen.
+   Für jedes Objekt werden Bucket/Key, Storage-ID und unveränderliche Versionskennung,
+   erwartete Größe und SHA gespeichert. Bestehende `verified_objects` allein sind
+   **kein v2-Nachweis**; sie haben noch keine solche Versionsbindung.
+2. **Unveränderlichkeit ist Voraussetzung, kein ETag-Versprechen:** vor Nutzung von
+   Teilresultaten muss ein nachgewiesener Storage-Vertrag Update/Delete/Recreate des
+   versiegelten Keys verhindern (auch über alte signierte URLs/alle Anwendungs-
+   Schreibpfade); `upsert:false` bleibt. Alternativ benötigt jeder Zugriff eine
+   tatsächlich adressierbare unveränderliche Objektversion. Bloße HEAD-Prüfung vor
+   und nach einem GET reicht wegen des Austauschrennens nicht. Versionwechsel,
+   fehlendes Objekt oder nicht durchsetzbare Unveränderlichkeit ⇒ Run `invalidated`,
+   kein ready/commit. Implementierung zuerst gegen lokalen Storage beweisen; wenn
+   dessen unterstützte API diese Garantie nicht erlaubt, Plan erneut vorlegen,
+   nicht improvisiert `storage.objects` verändern. Kein Neu-Upload als stiller Ausweg.
+3. **Zustand:** private Tabellen `content_verification_runs`, `..._steps` und
+   `..._checkpoints`. Runzustände `prepared → verifying → ready`, alternativ
+   `invalidated` oder `failed`; Schrittzustände `pending → running → passed`,
+   alternativ `failed`. `running` enthält Lease-ID, Ablauf, Attempt und Revision.
+   Ein Transport-/Workerabbruch lässt die Lease auslaufen; keine fachliche
+   Fehlerfreigabe und kein automatisches Umschalten auf Erfolg. Fachlicher 422
+   bleibt dauerhaft fehlgeschlagen. Prüferwechsel invalidiert alte Checkpoints.
+4. **Ein Aufruf, ein begrenzter Arbeitsschritt:** `advance-verification` prüft pro
+   Request Actor, Publisherrecht, Uploadowner, Scope, Laufzeit und Runidentität.
+   RPC beansprucht mit Zeilensperre/CAS genau einen nächsten Schritt. Konkurrenz
+   bekommt dessen Status/409 busy; keine doppelte Fortschrittsaddition. Abschluss
+   erfolgt nur bei passender Lease/Revision/Identität; verlorene Antworten sind
+   durch denselben Idempotenzschlüssel wiederholbar. Abgelaufene Worker dürfen
+   Ergebnisse einer neu vergebenen Lease nicht überschreiben.
+5. **Arbeitsbudget nicht durch vollständiges Neuladen verstecken:** zunächst
+   höchstens **256 KiB Eingangsdaten bzw. 128 vollständige Datensätze** pro Teilstück
+   (jeweils frühere Grenze), persistenter Offset/Parserstack/UTF-8-Rest und serverseitiger
+   Hashzustand. Größere Werte werden in Fragmenten fortgesetzt; kein stilles Auslassen.
+   Rangeantwort muss exakte Position/Länge und versiegelte Version liefern; ohne
+   funktionierenden Rangevertrag bleibt dieser Entwurf blockiert. Keine Wiederholung
+   des gesamten 50-MB-JSON pro Teilschritt, kein Hashen von Hashes als Ersatz für SHA256.
+6. **Serverseitiger Index und kanonischer Durchlauf:** begrenzter Streamingparser
+   indiziert JSON-Werte/Arrayordnungen/Objektschlüssel samt Bytebereichen in privaten
+   Prüftabellen. Große Strings/Arrays dürfen nicht vollständig materialisiert werden.
+   Ein zweiter begrenzter Durchlauf produziert exakt die bisherigen kanonischen
+   Bytes (UTF-16-Schlüsselsortierung wie JS, JSON.stringify-Zahlen/Escapes, identische
+   Arrayreihenfolge und JSON.parse-Semantik). Für Packinhalt entstehen zwei separat
+   gebundene SHA-Zustände: gesamtes Pack und normalisiertes Pack ohne
+   `release.created_at`; der Zeitstempel wird weiterhin eigenständig geprüft.
+   `node:crypto`-Hashobjekte sind kein portables DB-Checkpointformat: eine versionierte,
+   überprüfte SHA256-Zustandsimplementierung und Parserkonformität sind vorab zu
+   prototypisieren. Abbruch mitten im Token/UTF-8/SHA-Block muss exakt fortsetzbar sein.
+7. **Prüf-DAG:** neun vollständige Byte-/Größenhashes → Manifest-/Report-/Review-
+   Bindung und Sidecarhashes → Packscope/Registrybindung und kanonische Packhashes →
+   Bestandsbeleg/Quellen-/SQLitepins/keine neue Sprachfreigabe **oder** normaler Review-
+   und Parentpfad → begrenzte Registry-/Historien-/Story-Supersetvergleiche gegen
+   ebenfalls versionsgebundene Parentdaten → Abschluss. Jeder bisherige Fehlercode
+   wird einer Stufe zugeordnet; kein Review-, Rechte-, Quellen- oder Inhaltscheck
+   fällt weg. Readerreport bleibt wie bisher bytegebunden; SQLite ebenfalls vollständig
+   gehasht, bei Bestandsübernahme zusätzlich gegen den bestehenden Quellenanker.
+8. **Atomarer Abschluss/Commit:** ein RPC prüft vollständige verpflichtende Stufen,
+   gleiche Run-/Objektidentität und ausstehende Leases, berechnet/bindet den finalen
+   Manifesthash und setzt erst dann ready. `publish_content_release` muss zusätzlich
+   genau diesen vollständigen v2-Run prüfen. Die bestehende Transaktion mit Upload- und
+   Channelsperre, Publisherrecht/Owner, Generation **und** Parent-ID/-Hash sowie
+   idempotentem Publishrequest bleibt erhalten. Kein Endpoint darf vorzeitig
+   allein durch `status=ready` oder einen lokalen Bericht veröffentlichen.
+9. **Fortsetzen im Editor:** derselbe vorhandene Releaseeintrag; begrenzte Serie
+   expliziter authentisierter Requests mit serverseitig geliefertem Fortschritt.
+   Höchstens festgelegte Anzahl pro Nutzeraktion, danach „Prüfung fortsetzen“;
+   Fehler/546 stoppt sofort. Kein Autoretry, kein Selbstaufruf, kein Endlosloop.
+   Nach Prozessneustart wird nur der Serverzustand gelesen. Fehlende Rechte stoppen
+   auch eine bereits begonnene Prüfung. Der aktuelle 24h-Ablauf bleibt wirksam:
+   für später abgelaufene Uploads braucht die Umsetzung einen gesonderten auditierten
+   Owner-/Publisher-Resume-Vertrag mit erneuter Identitätsprüfung und neuem Run unter
+   derselben Upload-ID. Die heutige unveränderliche `expires_at` wird weder manuell
+   umgeschrieben noch ignoriert; erforderliche Guard-/RPC-Anpassung gehört zur Freigabe.
+
+**Abnahmeschranken vor einer späteren Freigabe:** exakter alter/neuer Hashvertrag
+für echtes Bundle sowie Unicode, Zahlen, Reihenfolge, große Werte und Tokenkanten;
+Ausfall vor/nach jedem Checkpoint; zwei parallele Clients, Leaseübernahme und verlorene
+Antwort; Austausch/Delete/Recreate zwischen Schritten und vor Commit; Rechteentzug,
+normaler Reviewpfad, Bestandsübernahme und Parent-/Generationkonflikt. Reale lokale
+Supabase-Dienste zusätzlich zu Fixtures, Originalhandler, frische und wiederverwendete
+Worker, echte Bundlebytes. Ziel: pro Schritt höchstens **500 ms CPU und 128 MiB
+beobachteter Speicher** in der repräsentativen Edgeprüfung, zusätzlich Test unter
+CPU-Drosselung und später echter Cloudmetrik; das sind vorgeschlagene Abnahmegrenzen,
+keine heute erfüllten Messwerte. Peaks/Überwachungslücken explizit berichten.
+Erst ein separat autorisierter Cloudlauf kann Cloudreserve belegen. Wenn Streaming-
+Parser/Range-/Speicherversiegelung diese Grenzen nicht erreichen, **stoppen und
+überarbeiteten Plan vorlegen**, keine neue Infrastruktur nebenbei einführen.
+
+### Befehle, Outputs und Exitcodes dieses Auftrags
+
+Windows PowerShell und macOS Terminal (identische Befehle):
+
+```text
+supabase functions list --project-ref yevntxclpchapacqdizm
+supabase functions download content-publish --project-ref yevntxclpchapacqdizm --workdir build/cloud_546_audit/download
+# ACTIVE, version 3, verify_jwt=true / Downloaded Edge Function source. Je Exit 0.
+deno test --allow-read supabase/functions/_shared/content_distribution_test.ts supabase/functions/_shared/content_baseline_adoption_test.ts
+# ok | 12 passed | 0 failed (9s). Exit 0.
+```
+
+Windows PowerShell, tatsächlich ausgeführt:
+
+```powershell
+pipeline/.venv/Scripts/python.exe -X utf8 -m pytest pipeline/tests/test_editor_publisher.py -q --tb=short
+# 21 passed in 6.18s. Exit 0.
+pipeline/.venv/Scripts/python.exe -X utf8 pipeline/tests/check_content_edge_resources.py --bundle "$env:LOCALAPPDATA/SprachappContentEditor/bundles/088f5eab-7347-406f-b9e6-cf5dbb985990"
+# before HTTP546/Memory; after call10 HTTP200/ready, CPU1090ms. Exit 0.
+pipeline/.venv/Scripts/python.exe -X utf8 pipeline/tests/check_content_edge_handler_resources.py --bundle "$env:LOCALAPPDATA/SprachappContentEditor/bundles/088f5eab-7347-406f-b9e6-cf5dbb985990" --functions build/cloud_546_audit/download/supabase/functions
+# oneshot und per_worker: 10x HTTP200, letzter Status ready. Bundle unchanged. Exit 0.
+```
+
+macOS Terminal, entsprechende Wiederholung (hier nicht ausgeführt):
+
+```sh
+pipeline/.venv-macos/bin/python -X utf8 -m pytest pipeline/tests/test_editor_publisher.py -q --tb=short
+pipeline/.venv-macos/bin/python -X utf8 pipeline/tests/check_content_edge_resources.py --bundle '/absoluter/Pfad/zum/bestehenden/Bundle'
+pipeline/.venv-macos/bin/python -X utf8 pipeline/tests/check_content_edge_handler_resources.py --bundle '/absoluter/Pfad/zum/bestehenden/Bundle' --functions build/cloud_546_audit/download/supabase/functions
+```
+
+Die beiden Logabfragen: GET `/v1/projects/yevntxclpchapacqdizm/analytics/endpoints/logs`,
+`iso_timestamp_start=2026-10-16T18:57:00Z`, `iso_timestamp_end=2026-10-16T19:03:00Z`,
+SQL `SELECT timestamp,source,log_attributes['<Feld>'] AS <Feld> FROM logs WHERE source
+IN ('function_logs','function_edge_logs') ORDER BY timestamp DESC LIMIT 100`;
+Felder sind genau die Schlüssel im versionierten bereinigten Beleg, keine Wildcard
+auf Inhalte/Header. Zweite Abfrage ergänzt nur request.method/path. Je **HTTP200,
+Exit0**, vier Ereignisse. Hilfsskript `build/cloud_546_audit/read_logs.py` nutzt den
+bestehenden CLI-Keyring nur im Speicher. Kein Finalize-/Testbutton in der Cloud.
+
+Lokale Rohmessungen: `build/content_edge_handler_resources/92322069d0c74b07957f6876f85edee9/`
+und `build/content_edge_resources/9560850d6e7f4f8fa05e08c3ef7cba83/`; Tests unter
+`build/cloud_546_audit/{deno,pytest,handler,previous-harness}.log`. Keine Secrets
+in den versionierten Messdaten. Der neue Helfer ist ein zusätzlicher Kontrolllauf,
+kein Ersatz des alten Vorher/Nachher-Tests. Er verändert nur isolierte Fixturezustände.
+
+### Änderungs- und Graphprüfung
+
+Repo/Worktree `C:/Users/ardas/Music/sprachapp`, GitNexus `sprachlernapp`, neu auf
+Basis `e09f665` indiziert: 19.189 Knoten, 41.423 Kanten, 374 erfasste Flows. Die
+Indexerwarnung über nicht vollständig erfasste dynamische Flows bleibt bestehen;
+`context(verifyBundle)` lieferte zudem unpassende Namenszuordnungen. Deshalb
+Quellpfad direkt nachgelesen. Impact des Berichts LOW (Contract/Paket 3 direkt,
+Plan indirekt); NEXTSTEPS und bisheriger Testhelfer UNKNOWN, per Textnachweisen
+als Statusdokument bzw. expliziter CLI-Test bestätigt, kein Produktionsaufrufer.
+
+`node build/cloud_546_audit/graph-check.mjs` ruft `detect_changes(scope=all)` und
+`scope=staged` mit explizitem Repo auf: **all 20 Dateien/30 Symbole/303 betroffene
+Prozesszuordnungen, CRITICAL; staged 4 Dateien/16 Symbole/0 Prozesse, LOW**.
+Je `partial=false`, `truncated=false`, kein Fehler, Exit0. Der Gesamtrisiko-
+Hinweis wurde ausdrücklich gemeldet; fremde UI-Änderungen bleiben unangetastet.
+Ein vorheriger Zugriff während der laufenden Neuindizierung scheiterte mit
+Dateisperre/Exit1; erst nach Indexabschluss wurde erfolgreich erneut geprüft.
+Die erste CLI-Flowquery mit Leerzeichen scheiterte an Argumentweitergabe/Exit1;
+Query mit einem Begriff sowie benannte Context-/File-Impact-Prüfungen folgten.
+
+`git diff --check -- docs/content-editor-initial-release.md NEXTSTEPS.md pipeline/tests/check_content_edge_handler_resources.py docs/evidence/content-editor-initial-release/cloud-546-audit.json`
+und `git diff --cached --check`: keine Befunde, Exit0. Nach den Messläufen vor der
+Dokumentationsänderung gesicherte 26 lokale Schutzdateien abschließend hashgleich;
+beide Bundlehelfer prüfen zusätzlich ihre Originalbytes vor/nach jedem Test.
+Fremder getrackter Diff identisch, NEXTSTEPS nur ergänzend/25 Zeilen, kein
+Produktionscode-/Quellenankerwechsel, keine Cloudschreibaktion und kein Push.
+Alle isolierten Testcontainer entfernt; vorhandener Supabase-Stack erhalten.
+
+### Vorgeschlagene AGENTS.md-Regel und nächste Aktion
+
+Als Regel **vorgeschlagen**, AGENTS.md selbst nicht geändert:
+
+> WENN ein Release in einer ressourcenbegrenzten Edge-Runtime geprüft wird → NIE
+> erfolgreiche Unit-Tests oder einen Teilpfad als Nachweis für den vollständigen
+> Cloudablauf ausgeben.
+
+**Nächste Aktion: den oben abgegrenzten `verification-v2`-Architekturplan zur lokalen
+Implementierung freigeben.** Jetzt kein erneuter Klick auf „2 · Serverprüfung“,
+kein Deployment und kein Neu-Upload. Nach Implementierung und lokaler Abnahme
+müssten die ausdrücklich geprüfte Migration und `content-publish` gesondert zum
+Deployment freigegeben werden; erst danach derselbe Releaseeintrag fortgesetzt
+werden. Die vorhandenen Logs reichen für die CPU-Diagnose, ein weiterer
+Cloudversuch zur bloßen Bestätigung ist nicht erforderlich.
+
+---
+
+## Historischer Stand: HTTP 546 lokal reduziert · 16.10.2026
+
+**Damals gemessener lokaler Stand (Folgebefund oben beachten):** Der echte Bestand wurde in einer isolierten Supabase Edge
 Runtime vollständig geprüft. Vorher bricht der zehnte Finalize-Aufruf am
 Speicherlimit ab; mit der begrenzten Optimierung erreicht er `ready`.
 **Keine Cloudprüfung, kein Deployment und keine Veröffentlichung durchgeführt.**
