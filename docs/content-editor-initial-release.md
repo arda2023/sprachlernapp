@@ -1,5 +1,294 @@
 # Erste private Cloudversion aus dem internen App-Bestand
 
+## verification-v2: lokaler Machbarkeitsnachweis · 17.10.2026
+
+**Entscheidung B: Die fachliche Aufteilung allein reicht nicht.** Der echte
+Pack benötigt schon beim vollständigen JSON-Parsen rund 153 MiB beobachteten
+Speicher. Die getrennten Packhash-Schritte benötigen einschließlich Laden und
+Parsen 543 bzw. 519 ms CPU; beide zusammen 820 ms. Damit sind die Zielwerte
+500 ms/128 MiB nicht eingehalten. Das beweist keine isolierte SHA-Überlastung.
+Zusätzlich fehlt eine dauerhafte Bindung an unveränderliche Storage-Bytes.
+Kein Produktionscode, bestehendes Bundle, echter Upload oder Cloudzustand wurde
+geändert. Der folgende Prototyp ist keine neue Veröffentlichungsarchitektur.
+
+### Ausführbare, ausschließlich lokale Erprobung
+
+Die vor dem Edit festgelegten Dateien sind:
+
+- `pipeline/tests/verification_v2/local_probe.py`: lokaler Testtreiber und Cleanup.
+- `pipeline/tests/verification_v2/main.ts`: Edge-Supervisor für Originalhandler/Proben.
+- `pipeline/tests/verification_v2/worker.ts`: getrennte Arbeitslasten und Zustandsproben.
+- `pipeline/tests/verification_v2/state.sql`: temporäres Schema und namensisolierte RPC.
+
+Messdaten ohne Zugangsdaten: [verification-v2-feasibility.json](evidence/content-editor-initial-release/verification-v2-feasibility.json).
+Der Treiber erzwingt `http://127.0.0.1:54321`; keine Cloud-Ausweichadresse.
+Er verwendet tatsächliches lokales GoTrue, PostgREST, PostgreSQL und Storage,
+Testnutzer mit echten JWTs sowie zufällige lokale Uploadspiegel. Nur diese eigenen
+Nutzer, Objekte, Uploadzeilen und das Testschema werden anschließend entfernt.
+Es werden keine `storage.objects`-Zeilen direkt geändert. Die bestehenden
+Migrationen bleiben unverändert; das SQL ist ausdrücklich keine Migration.
+Die unveränderten Originaldateien `content-publish/index.ts`,
+`_shared/content_distribution.ts` und `_shared/internal_baseline_source.json`
+werden für den vollständigen Handlerlauf in ein lokales Scratch-Verzeichnis kopiert.
+
+Konfiguration: `public.ecr.aws/supabase/edge-runtime:v1.77.1`, 256 MiB,
+CPU soft/hard 1000/2000 ms, Wall-Limit 150000 ms; Docker-Netz
+`supabase_network_sprachapp`, Kong intern `http://kong:8000`, Testgateway
+`127.0.0.1:54999`. `oneshot` erzwingt frische Worker, `per_worker` erlaubt
+Wiederverwendung. Secrets bleiben im Prozessumfeld, nicht in Dateien/Logs.
+Die Cloud lief mit Runtime 1.77.0; Hardware, Last, Netzwerk, Gateway, Workerpool
+und Scheduling sind nicht identisch. Die Prüfungen hier ersetzen keinen Cloudnachweis.
+
+### Messungen: echtes Bundle, unveränderter vollständiger Handler
+
+Bundle: `088f5eab-7347-406f-b9e6-cf5dbb985990`, 9 Dateien,
+114.215.590 Bytes; Pack 50.083.067 Bytes, SQLite 43.085.824 Bytes.
+Originalhashes stehen im Evidenz-JSON. Beide vollständigen Durchläufe haben
+Start, abgewiesenen vorzeitigen Commit, neun lokale Dateiübertragungen und zehn
+Finalize-Aufrufe; beide endeten in `ready`, ohne Veröffentlichung.
+
+| Originalhandler | Summe Finalize-Wall | Letzter Finalize-Wall | Supervisor-CPU | Speicher beim Shutdown |
+| --- | ---: | ---: | ---: | ---: |
+| Frischer Worker je Aufruf | 2565 ms | 1203 ms | 950 ms letzter Worker | 78.449.789 B |
+| Wiederverwendeter Worker | 2234 ms | 1250 ms | 1114 ms gesamter Worker | 11.275.099 B |
+
+Der wiederverwendete Workerwert umfasst auch Start/vorzeitigen Commit; er ist
+kein isolierter CPU-Wert des letzten Finalize. Shutdown-Speicher ist **kein Peak**.
+Der Originalhandler liest zunächst alle Dateibytes für Einzelhashes und im
+abschließenden `verifyBundle` erneut 61.321.247 JSON-Bytes; SQLite und Readerreport
+werden dabei nicht erneut geladen. Im Produktionscode wurde nichts instrumentiert.
+
+Für jede getrennte Arbeitslast wurden echter JWT/Publisher/Owner und reale
+Storage-Lesezugriffe verwendet. Die CPU-Spalte ist der Supervisorwert eines
+frischen Workers. Speicher ist das Maximum der expliziten Stichproben
+`heapUsed + external` (vor/nach Reads bzw. Ende), **kein absoluter Peak**.
+Bytes enthalten auch Auth-/Uploadmetadaten; Requests zählen die Backendaufrufe
+der Arbeitslast. Detaillierte Werte für wiederverwendete Worker stehen im JSON.
+
+| Arbeitsschritt | CPU ms | Beobachteter Speicher B | Gelesene Bytes | Requests |
+| --- | ---: | ---: | ---: | ---: |
+| Datei SQLite | 62 | 18.061.837 | 43.091.940 | 4 |
+| Datei Pack | 69 | 13.734.325 | 50.089.183 | 4 |
+| Datei Registry | 16 | 11.841.432 | 1.069.160 | 4 |
+| Datei Historie | 29 | 12.179.505 | 10.175.780 | 4 |
+| Datei Reviews | 14 | 12.069.801 | 6.119 | 4 |
+| Datei Provenienz | 13 | 12.288.458 | 8.691 | 4 |
+| Datei Prüfbericht | 13 | 12.179.515 | 7.955 | 4 |
+| Datei Manifest | 13 | 12.179.504 | 7.171 | 4 |
+| Datei Readerreport | 28 | 19.116.125 | 9.814.635 | 4 |
+| Manifest/Sidecars | 132 | 47.898.445 | 11.244.296 | 9 |
+| Pack nur parsen | 288 | 160.182.893 | 50.089.183 | 4 |
+| Pack vollständiger kanonischer Hash | 543 | 160.183.885 | 50.089.183 | 4 |
+| Pack normalisierter Inhaltshash | 519 | 160.182.149 | 50.089.183 | 4 |
+| Pack beide Hashes | 820 | 160.183.917 | 50.089.183 | 4 |
+| Registry/Historie | 201 | 62.673.037 | 22.471.532 | 7 |
+
+Die Packproben laden nur das Pack, nicht jedes Mal das gesamte Bundle. Der
+Historientest verwendet echte Registry/Inventar zweimal als Alt-/Neudaten;
+das ist kein vollständiger normaler Release mit echtem veröffentlichtem Parent.
+Sidecar-/Historienproben messen repräsentative Arbeit, nicht bereits sämtliche
+zukünftigen Stage-Verträge. Sämtliche bisherigen Prüfungen laufen dagegen im
+unveränderten Originalhandler und in den bestehenden Vertragstests.
+Reused: größter beobachteter Speicher 161.022.781 B; Supervisor-CPU der drei
+Arbeitslast-Worker 1029/1295/204 ms. Per-Request-CPU dort nur als Container-
+cgroup-Differenz verfügbar, einschließlich Main-/Messaufwand, nicht Isolate-CPU.
+
+Gesamtlauf: 53,91 s, mit Cleanup 54,61 s; 143 direkte Treiber-HTTP-Requests,
+mit Cleanup 170. Dazu 68 Backendrequests je Arbeitslastserie (136 insgesamt).
+Dies sind getrennte Zähler, keine vollständige Zählung aller dienstinternen
+Netzwerkrequests. Zwei lokale Bundleübertragungen à 114.215.590 Bytes;
+12 bereits laufende Supabase-Container plus zeitweise ein Test-Edge-Container.
+
+### Vollständige Zuordnung bestehender Prüfungen zum Zielablauf
+
+Diese Tabelle ist der Umsetzungsvertrag, keine Behauptung, dass der Probe-Worker
+bereits alle Prüfungen implementiert. F = Datei, M = Manifest/Sidecars,
+P = Pack, H = Historie, A = Abschluss. Alle Ergebnisse müssen später dieselbe
+versiegelte Snapshotidentität und Prüfer-Version tragen.
+
+| Bestehender Vertrag | Zielschritt, unverändert zu erhalten |
+| --- | --- |
+| Backend-URL HTTPS bzw. explizit lokal; keine Redirects; Bearer/GoTrue, gültige Actor-UUID, Publisherrecht, Upload-UUID/eindeutiger Eigentümer | Jeder Aufruf, auch Fortschritt/Resume/Commit |
+| HTTP-Methode/Route; Body höchstens 1 MiB, striktes UTF-8 und JSON-Objekt | Jeder entsprechender Aufruf |
+| Request-UUID, en/internal, ganzzahlige Generation >= 0, Parent-UUID/SHA oder null, bekannte Publikationsart; Adoption nur Generation 0 ohne Parent | Start und Identitätsbindung |
+| Manifestformat 2, en/de, Schema 5, Profil-ID/-Hash, internal_test, min_reader 5, erforderliche immutable-contexts-Features, Versionssyntax | Start/M |
+| Genau neun Deskriptoren, SHA, positive ganzzahlige Größe, SQLite <= 256 MiB, JSON <= 64 MiB; SQLite-/Packdeskriptoren stimmen mit Manifest überein | Start/F/M |
+| Idempotenter Start bindet Objekte, Manifest, Generation, Parent und Scope; Adoption erfordert leeren Kanal; signiert nur fehlende Dateien ohne Upsert | Start |
+| Jeder Dateiname/Objektpfad vorhanden, vollständige Bytezahl und SHA stimmen; Größenlimit, JSON strikt UTF-8/parst innerhalb Limit | F0–F8; spätere Leser müssen exakt diese Bytes verwenden |
+| Manifest entspricht Uploadentwurf; Report ok/history_superset/internal_test_pack und validation.technical = valid; normal editorial approved, Adoption existing-evidence-only; gültiger Contenthash; findings Array ohne error; Hash der unsignierten validation | M |
+| Normal: freigegebene, an Contenthash gebundene Reviews; Adoption: leere neue Reviews; kanonische Review-/Inventar-/Registryhashes; Inventarformat 1/lang/tables | M |
+| Adoption-Provenienzformat 1, vollständige erwartete Quelle/Version/Counts/existing_evidence/open_findings/notice/cloud_state/Hash; bestätigter Scope/accepted/Zeitstempel; Adoptionhash in Manifest/Report; Content-/Basishash und SQLitecounts am Quellenanker, findings leer | M-Adoption |
+| Packlang, Releaseversion, Schema, Registryhash, Coverage erwartet/verarbeitet und keine widersprüchlichen Referenzen | P |
+| Adoption: normalisierter vollständiger Packhash ohne release.created_at am festen Anker; created_at exakt gleich baseline.converted_created_at; SQLite-SHA/-Größe am Anker; Generation 0, en/internal, kein Parent/leerer Kanal | P-Adoption/A |
+| Genau ein Parentkatalogeintrag passenden Scopes und Manifesthashes; validation.base_sha256 entspricht kanonischem Parent-Pack | H mit genauso versiegelten Parentbytes |
+| pack.word_registry.snapshot.words vorhanden; Alt-/Neuwörter Arrays, neue lang/form_norm eindeutig, jedes alte Wort kanonisch unverändert | P/H |
+| Alle alten Inventar-IDs erhalten; vier immutable Tabellen exakt gleiche Rowhashes; Storysnapshots kanonische Obermenge | H |
+| Vollständiger kanonischer Packhash einschließlich created_at; endgültiges Manifest entfernt lokale Felder, setzt Release-ID/Kanal/Generation/Parents/created_at und erhält finalen Hash | P → A |
+| Alle Prüfungen bestanden, Ablauf/failed-Sperre; vollständiger versionsgebundener Lauf, atomarer Abschluss mit geprüftem Updateergebnis; Adoptionkanal nochmals leer | A |
+| Commit: aktuelle Publisher-/Ownerrechte, ready/nicht abgelaufen/verified_objects = objects; idempotente Auditrequest an Actor/Upload; erwartete Generation/Parenthash; Upload-/Kanallocks, aktuelle Generation/Hash/Parent-ID; Manifest-Scope/-ID/-Generation/-Parents stimmen; atomare Katalog/Kanal/Audit/published-Änderung und Unveränderlichkeitsschutz | Bestehender Commit-CAS, erweitert um vollständig versiegelten Prüflauf |
+| Reader- und Downloadberechtigungen | Erhalten; Downloads müssen später dieselben unveränderlichen geprüften Bytes liefern |
+
+### Storage: Gegenprobe widerlegt die benötigte Garantie
+
+Für getrennte Upload- und Parent-artige Testobjekte im echten lokalen
+`content-private`-Bucket: alter Signed-Upload auf vorhandenen Key HTTP 400,
+auch mit `x-upsert:true`; normales Nutzerupdate HTTP 400. Nutzer-DELETE liefert
+HTTP 200 mit leerer Ergebnisliste, verändert aber nachweislich keine Bytes.
+Das ist **kein erfolgreicher Delete**. Dagegen: Service-Role-Update HTTP 200
+und veränderte Bytes; Service-Role-Delete HTTP 200; anschließend erzeugt die
+alte signierte Upload-URL unter demselben Key neue Bytes (HTTP 200).
+Parent-artig bedeutet hier gleicher Bucket/Schreibschutz, kein neu publizierter
+Parentkatalogeintrag. Der Storagezugriff prüft den Katalogstatus nicht.
+
+Anwendungsschreibpfade wurden auf `content-private`, `/storage/v1/object` und
+`storage.from` in `pipeline/src`, `supabase/functions`, `lib` geprüft: der
+Publisher benutzt den festen Uploadpräfix ohne Upsert; die Function signiert
+fehlende Uploads, liest Dateien und signiert Downloads; Flutter liest Downloads.
+Kein weiterer Anwendungs-UPDATE/DELETE gefunden. Die privilegierte tatsächliche
+Schreibfähigkeit bleibt trotzdem vorhanden. HEAD/ETag/erneutes Hashen vor einem
+späteren Read beseitigt diese Austauschlücke nicht.
+Das entspricht dem dokumentierten [Service-Key-Bypass von Storage-RLS](https://supabase.com/docs/guides/storage/security/access-control).
+[S3-Bucketversionierung ist bei Supabase nicht verfügbar](https://supabase.com/docs/guides/storage/s3/compatibility).
+**Dieser Teil stoppt am nachgewiesenen Blocker; keine Storage-Umgehung implementiert.**
+
+### Minimaler Zustand: bewiesen und ausdrücklich nicht bewiesen
+
+Die temporäre RPC bindet Upload, vollständiges Manifest/Deskriptoren,
+Generation/Parents und `probe-v1`. Rowlocks, Revision und 2-s-Lease erlauben
+genau einen konkurrierenden Claim. Finish akzeptiert nur passende aktive
+Lease/Revision; identische Wiederholung nach verlorener Antwort ist idempotent,
+veränderte Wiederholung und veraltetes Ergebnis werden abgelehnt. Rechte werden
+bei jedem HTTP-/SQL-Aufruf neu geprüft. Ungültiger JWT/falscher Owner/falsche
+Prüferversion, Rechteentzug und unversiegelter Abschluss sind negative Tests.
+
+Ein tatsächlicher CPU-Workerabbruch nach dauerhaftem Claim ergab HTTP 546,
+ohne weiteren Fortschritt. Nach Leaseablauf war erneuter Claim möglich.
+Supervisor meldete CPUTime 3043 ms beim Shutdown; das ist die beobachtete
+Durchsetzungslatenz, keine Erhöhung des konfigurierten 2000-ms-Limits.
+Vorzeitiger Commit erzeugte keinen Katalogeintrag. Insgesamt 17 benannte
+Zustandsnachweise im Evidenz-JSON, zusätzlich Finish-ohne-Lease abgeprüft.
+
+Der **diagnostische** Finish übernimmt Testresultate; er stellt keine
+serverseitig versiegelte Inhaltsfreigabe aus. Completion bleibt absichtlich
+gesperrt, weil die Storagegarantie fehlt. Dies ist kein produktiver Ersatz-CAS.
+
+24-h-Ablauf: normaler Start mit abgelaufenem Testupload wird abgelehnt.
+Explizites `resume_start` benötigt Zustimmung/Scope/eindeutige Request-ID,
+protokolliert Actor/Zeit/Anfrage und erzeugt unter derselben Upload-ID einen
+neuen diagnostischen Lauf mit eigener einstündiger Testfrist. Wiederholung ist
+idempotent. Resume setzt diagnostische Ergebnisse/Leases zurück; ursprüngliches
+`upload.expires_at` bleibt unverändert. Auch nach diagnostischem Resume lehnt
+der Originalhandler das abgelaufene Uploadobjekt weiterhin ab. Ein produktiver
+Resume-Vertrag samt Commitintegration ist somit noch umzusetzen, nicht umgangen.
+
+### Kleinster begrenzter Folgeauftrag, noch nicht implementiert
+
+Zwei voneinander getrennte lokale Proben sind zuerst nötig:
+
+1. **Unveränderliche Bytequelle:** als konkrete Alternative zum nicht
+   versionierbaren Storage eine private PostgreSQL-Snapshotablage mit begrenzten
+   Bytechunks erproben. Bestehender Upload/Keys bleiben erhalten. Ein Snapshot
+   wird erst nach vollständigem rohem Dateihash versiegelt; Update/Delete der
+   versiegelten Chunks auch für Anwendung-Service-Rollen durch Rechte/Trigger
+   verweigern, nur eng begrenzte Owner-RPCs. Prüfergebnisse und Parentdaten
+   binden Snapshot-ID, Dateihash, Manifesthash und Prüfer-Version. Auch spätere
+   Downloads müssen aus genau dieser Bytequelle kommen; mutable Storage-URLs
+   daneben weiterzuverwenden wäre unzureichend. DBA/Superuser bleiben außerhalb
+   dieser Anwendungsintegritätsgrenze. Kosten: weitere 114 MB je Bundle plus
+   WAL/Backups und neue Downloadintegration; deshalb erst Gegenproben/Messung,
+   keine Produktionsentscheidung. Dateien: `pipeline/tests/verification_v2/immutable_snapshot.sql`
+   und `pipeline/tests/verification_v2/immutable_snapshot_test.py`.
+2. **Begrenztes Packlesen:** vorhandenen Tokenparser
+   [stream-json](https://github.com/uhop/stream-json) mit Runtime-Hash zunächst
+   in einem einzelnen begrenzten Schritt testen, nicht einen eigenen Parser
+   oder persistierbaren SHA-Zustand bauen. Dateien:
+   `pipeline/tests/verification_v2/stream_pack_probe.ts` und
+   `pipeline/tests/verification_v2/stream_pack_probe_test.ts`. Zwei Hashes aus
+   einem Tokenstrom, nur `release.created_at` für den Quellenhash auslassen;
+   UTF-8, Escape-/Zahlendarstellung, UTF-16-Keysortierung, doppelte Schlüssel,
+   ungültige Werte und alle referenzierten Teilstrukturen gegen den bisherigen
+   Vertrag testen. [Parser-Tokens](https://github.com/uhop/stream-json/wiki/Parser)
+   sind keine fertige kanonische Serialisierung; Bibliotheksausgabe nicht blind
+   als unseren Hashvertrag übernehmen. Das echte Pack hat 158.348 Objekte,
+   keinen unsortierten/nicht-ASCII-Key, maximal 23 Keys, keine Floats und
+   Arrays bis 47.089 Einträge. Das erleichtert den Versuch, ersetzt aber keine
+   allgemeine Vertragsprüfung oder Behandlung anders geordneter gültiger JSONs.
+
+Keine dieser vier Folgedateien ist in diesem Auftrag angelegt. Eine eigene
+Checkpoint-JSON-/SHA-Implementierung bleibt gesondert freigabepflichtig.
+[hash-wasm bietet gespeicherte Hashzustände](https://github.com/Daninet/hash-wasm#resumable-hashing),
+aber Format-/Versionsbindung und sensible Klartextreste im Zustand erfordern
+einen eigenen Vertrag; keine Library wurde hier installiert oder als kompatibel
+nachgewiesen. Erst bei gemessenem Scheitern des begrenzten Einzelschritts darüber
+entscheiden. Keine Unicode-Normalisierung gegenüber dem bestehenden Hashvertrag.
+
+Erst nach erfolgreichen Gegenproben und <= 500 ms CPU/128 MiB beobachtetem
+Speicher pro Schritt kann ein Produktionsauftrag abgegrenzt werden:
+`_shared/content_verification_steps.ts`, `_shared/content_verification_storage.ts`,
+neue Migration `supabase/migrations/20261018000001_content_verification_runs.sql`
+(nur vorgeschlagener Name), Dispatch in `content-publish`, Publisher-Fortschritt
+und passende Reader-/Downloadintegration. Schnittstelle: autorisierte
+start/progress/claim/step/resume/complete-Aufrufe mit Upload-/Run-ID,
+Prüferversion und Revision; Ergebnis ausschließlich serverseitig aus versiegelten
+Bytes. Keine rekursive Function-Kette; jeder Aufruf begrenzt, idempotent und
+unterbrechbar, Generation-/Parent-CAS weiterhin am endgültigen Commit.
+
+### Ausgeführte Befehle, Outputs und Grenzen
+
+PowerShell, Repositorywurzel (lokaler Stack/Docker bereits vorhanden):
+
+```powershell
+pipeline/.venv/Scripts/python.exe -X utf8 pipeline/tests/verification_v2/local_probe.py --bundle "$env:LOCALAPPDATA/SprachappContentEditor/bundles/088f5eab-7347-406f-b9e6-cf5dbb985990"
+pipeline/.venv/Scripts/python.exe -X utf8 pipeline/tests/verification_v2/local_probe.py --storage-only --bundle "$env:LOCALAPPDATA/SprachappContentEditor/bundles/088f5eab-7347-406f-b9e6-cf5dbb985990"
+deno test --allow-read supabase/functions/_shared/content_distribution_test.ts supabase/functions/_shared/content_baseline_adoption_test.ts
+pipeline/.venv/Scripts/python.exe -X utf8 -m pytest pipeline/tests/test_editor_publisher.py -q --tb=short
+```
+
+Outputs: vollständiger Lauf zweimal `ready`, `State probes: 16 passed; no publication.`
+(anschließend zusätzlicher Originalhandler-Ablauftest = 17 Nachweise), Cleanup
+erfolgreich, Exit 0. Storage-Nachprobe: die oben genannten Gegenbeispiele, Exit 0.
+**Probe-Exit 0 bedeutet ausgeführte Diagnose, nicht erreichte Ressourcenziele
+oder bewiesene Unveränderlichkeit.** Deno: `12 passed | 0 failed (8s)`, Exit 0.
+Pytest: `21 passed in 7.44s`, Exit 0. Lokale Logs:
+`build/verification_v2/{final,storage-final,deno,pytest}.log`; Messlauf
+`8621ef09a1c6494592d7920b821e900f`, Storage-Nachprobe
+`f62cdf7970c04f4bb5855c5f06437d3d`. Persistente bereinigte Ergebnisse im Evidenz-JSON.
+
+macOS-Entsprechung (nicht ausgeführt): `pipeline/.venv/bin/python -X utf8`
+statt Windows-Python, `--bundle /absoluter/pfad/zum/bestehenden/bundle` statt
+`$env:LOCALAPPDATA/...`; Deno-Befehl identisch. Lokales Docker-Netz/Stack müssen
+dieselben Testendpunkte bereitstellen; keine automatischen Cloudzugriffe.
+
+Zwei frühere Proben endeten mit Exit 1: zuerst erwartete der Test bei einer
+SQL-Rechteverweigerung HTTP 403, der bestehende Backendadapter liefert 503;
+anschließend scheiterte explizites Resume. Nach zwei Fehlschlägen wurde gezielt
+SQL-Namensauflösung geprüft: `upload_id` war im ON-CONFLICT-Ziel mehrdeutig
+(isolierter Transaktionsrepro Exit 1). Nur das Test-SQL wurde auf benannten
+Constraint umgestellt. Danach Zustandsproben und vollständiger Lauf Exit 0.
+Kein weiterer Cloud-Finalize und keine blinden Optimierungsrunden.
+
+Abschlusskontrolle: `git diff --cached --check` und gezieltes `git diff --check`
+ohne Befund, Exit 0. Hashvergleich aller 55 geschützten Dateien unverändert;
+fremder getrackter Diff unverändert, NEXTSTEPS behält dessen Text und 25 Zeilen.
+GitNexus `analyze --index-only`, danach `detect_changes` für `all` und `staged`
+(lokaler Backendaufruf mit `limit:10000`): Exit 0, keine partial/truncated-
+Antwort. **Risiko CRITICAL**, auch für die sieben eigenen Dateien: 31 Symbole,
+250 betroffene Prozesse. Alle gemeldeten Prozessschritte heißen `ok`; Context
+verknüpft die neue lokale Literal-Property `{ok:true}` mit vielen fremden
+`main`-Zugriffen. Textprüfung findet keine Produktionsimporte des Prototyps;
+der Testtreiber ist nur explizit per CLI aufrufbar. Datei-Impact ist UNKNOWN,
+nicht niedrig. Der Index warnt zusätzlich vor begrenzter Prozesserfassung.
+Diese Graphgrenzen werden nicht als saubere Risikofreigabe ausgegeben;
+die Abgrenzung stützt sich auf Imports, unveränderte Produktionshashes und
+die tatsächlich ausgeführten isolierten Tests. Keine Produktionsänderung folgt
+aus der Graphprüfung. Logs liegen unter `build/verification_v2/graph-*.json`.
+
+**Nächste Aktion:** die beiden begrenzten Folgeproben für unveränderliche
+Snapshots und vorhandenen Streamingparser freigeben. Jetzt weder neu deployen
+noch „2 · Serverprüfung“ wiederholen. Der bestehende echte Upload bleibt
+erhalten; produktive Wiederaufnahme ist mit diesem Diagnoseprototyp noch nicht
+möglich. Die unten dokumentierte AGENTS-Regel bleibt ein Vorschlag.
+
 ## Erneuter Cloudabbruch: CPUTime belegt; Architekturfreigabe erforderlich · 17.10.2026
 
 **Dieser Abschnitt ersetzt die frühere Handlungsempfehlung, erneut zu deployen
