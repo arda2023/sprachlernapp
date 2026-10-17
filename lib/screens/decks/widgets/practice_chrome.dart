@@ -28,10 +28,14 @@ class PracticeSessionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final left = total - done;
-    final label = loading ? 'Übungen werden geladen …'
-        : goalReached && total == 0 ? 'Tagesziel erreicht'
-        : total == 0 ? 'Keine passenden Übungen'
-        : repeating ? 'Fehlerwiederholung'
+    final label = loading
+        ? 'Übungen werden geladen …'
+        : goalReached && total == 0
+        ? 'Tagesziel erreicht'
+        : total == 0
+        ? 'Keine passenden Übungen'
+        : repeating
+        ? 'Fehlerwiederholung'
         : left == 0
         ? 'Alle Übungen geübt'
         : 'Noch $left ${left == 1 ? 'Übung' : 'Übungen'}';
@@ -263,10 +267,14 @@ class PracticeAnswerToolbar extends StatelessWidget {
     required this.onSubmit,
     required this.onNext,
     required this.nextLabel,
+    this.error = false,
+    this.errorOffset = 0,
   });
   final bool speakerEnabled, playing, solved, revealed, saved, hasInput;
   final String? message;
   final String nextLabel;
+  final bool error;
+  final double errorOffset;
   final VoidCallback onSpeak, onReveal, onSubmit;
   final VoidCallback? onNext;
   @override
@@ -323,7 +331,7 @@ class PracticeAnswerToolbar extends StatelessWidget {
                       264.0,
                       math.max(1.0, constraints.maxWidth),
                     );
-                    final label = solved
+                    final label = error ? 'Eingeben' : solved
                         ? nextLabel
                         : hasInput
                         ? 'Eingeben'
@@ -333,7 +341,7 @@ class PracticeAnswerToolbar extends StatelessWidget {
                         : hasInput
                         ? onSubmit
                         : onReveal;
-                    var slotHeight = 48.0;
+                    var slotHeight = 40.0;
                     for (final text in [label]) {
                       final painter = TextPainter(
                         text: TextSpan(
@@ -352,36 +360,9 @@ class PracticeAnswerToolbar extends StatelessWidget {
                         SizedBox(
                           width: slotWidth,
                           height: slotHeight,
-                          child: ClipRect(
-                            child: AnimatedSwitcher(
-                              duration: MediaQuery.disableAnimationsOf(context)
-                                  ? Duration.zero
-                                  : const Duration(milliseconds: 140),
-                              switchInCurve: Curves.easeOutCubic,
-                              switchOutCurve: Curves.easeInCubic,
-                              layoutBuilder: (current, previous) => Stack(
-                                alignment: Alignment.centerRight,
-                                children: [
-                                  for (final child in previous)
-                                    ExcludeSemantics(
-                                      child: IgnorePointer(child: child),
-                                    ),
-                                  ?current,
-                                ],
-                              ),
-                              transitionBuilder: (child, animation) =>
-                                  SlideTransition(
-                                    position: Tween<Offset>(
-                                      begin: const Offset(1, 0),
-                                      end: Offset.zero,
-                                    ).animate(animation),
-                                    child: FadeTransition(
-                                      opacity: animation,
-                                      child: child,
-                                    ),
-                                  ),
-                              child: Row(
-                                key: ValueKey(label),
+                          child: Row(
+                                key: const ValueKey('practice-action'),
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   SizedBox(
@@ -400,9 +381,8 @@ class PracticeAnswerToolbar extends StatelessWidget {
                                                     horizontal: 8,
                                                   ),
                                               decoration: BoxDecoration(
-                                                color: context
-                                                    .appColors
-                                                    .success,
+                                                color:
+                                                    context.appColors.success,
                                                 shape: BoxShape.circle,
                                               ),
                                               child: Icon(
@@ -416,15 +396,18 @@ class PracticeAnswerToolbar extends StatelessWidget {
                                         : null,
                                   ),
                                   Flexible(
-                                    child: _ToolbarButton(
+                                    child: Transform.translate(
+                                      key: const ValueKey('practice-button-shake'),
+                                      offset: Offset(errorOffset, 0),
+                                      child: _ToolbarButton(
+                                      error: error,
                                       label: label,
-                                      primary: solved || hasInput,
+                                      primary: solved || hasInput || error,
                                       onPressed: action,
+                                    ),
                                     ),
                                   ),
                                 ],
-                              ),
-                            ),
                           ),
                         ),
                       ],
@@ -447,32 +430,34 @@ class _ToolbarButton extends StatelessWidget {
     required this.label,
     required this.onPressed,
     this.primary = false,
+    this.error = false,
   });
 
   final String label;
-  final bool primary;
+  final bool primary, error;
   final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
     final enabled = onPressed != null;
-    final foreground = primary
+    final foreground = error ? context.appColors.error : primary
         ? context.appColors.nightPage
         : (enabled ? context.appColors.textPrimary : context.appColors.iconOff);
     return MergeSemantics(
       child: CupertinoButton(
         onPressed: onPressed,
+        pressedOpacity: error ? 1 : .4,
         padding: EdgeInsets.zero,
         minimumSize: const Size(48, 48),
         child: Semantics(
-          label: label,
+          label: error ? 'Falsch' : label,
           enabled: enabled,
           excludeSemantics: true,
           child: Container(
-            constraints: const BoxConstraints(minHeight: 48),
+            constraints: const BoxConstraints(minHeight: 30),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             decoration: BoxDecoration(
-              color: primary
+              color: error ? context.appColors.errorTint : primary
                   ? context.appColors.textPrimary
                   : context.appColors.hairline,
               border: primary
@@ -484,7 +469,10 @@ class _ToolbarButton extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Flexible(
-                  child: Text(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                    Opacity(opacity: error ? 0 : 1, child: Text(
                     label,
                     maxLines: null,
                     textAlign: TextAlign.center,
@@ -492,6 +480,10 @@ class _ToolbarButton extends StatelessWidget {
                       weight: FontWeight.w600,
                       color: foreground,
                     ),
+                  )),
+                  if (error) Text('Falsch', textAlign: TextAlign.center,
+                    style: AppType.chrome(weight: FontWeight.w600, color: foreground)),
+                  ],
                   ),
                 ),
               ],

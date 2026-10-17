@@ -345,7 +345,7 @@ void main() {
       expect(field.decoration!.fillColor, colors.successTint);
       expect(find.byKey(const ValueKey('practice-success')), findsOneWidget);
       final action = find.bySemanticsLabel('Weiter');
-      expect(tester.getSize(action).height, 48);
+      expect(tester.getSize(action).height, 40); // User-adjusted action slot.
       await screenshot(tester, boundary, 'success-compact');
       tester.view.viewInsets = const FakeViewPadding(bottom: 300);
       tester.platformDispatcher.textScaleFactorTestValue = 2;

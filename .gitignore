@@ -56,3 +56,10 @@ supabase/.branches/
 /assets/content/*/content.sqlite
 /assets/content/*/content.sqlite.tmp
 /assets/content/*/content.manifest.json
+
+# Editorial content batches (local working material, not versioned)
+/*_batch_*/
+/*_lieferung/
+/reisen_500_v1/
+/verbalphrasen_batch_*/
+/editorial_review/

@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show Scaffold, ScaffoldMessenger, SnackBar;
 import 'package:flutter/semantics.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/answer_check.dart';
@@ -56,12 +55,59 @@ class DeckPracticeScreen extends ConsumerStatefulWidget {
 }
 
 class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
-    with WidgetsBindingObserver {
+    with WidgetsBindingObserver, SingleTickerProviderStateMixin {
   final _input = PracticeInputController();
   final _focus = FocusNode();
   final _sentenceKey = GlobalKey<PracticeSentenceState>();
   final _rootKey = GlobalKey();
-  Timer? _autoTimer;
+  Timer? _autoTimer, _errorTimer;
+  late final AnimationController _errorShake;
+  bool _buttonError = false, _fieldError = false;
+  int _errorGeneration = 0, _textRevision = 0;
+  double get _errorOffset {
+    if (MediaQuery.disableAnimationsOf(context)) return 0;
+    final t = _errorShake.value;
+    return t == 0 || t == 1 ? 0 : 5 * math.sin(t * math.pi * 6) * (1 - t);
+  }
+
+  void _clearError({bool clearField = true}) {
+    _errorTimer?.cancel();
+    _errorGeneration++;
+    _errorShake.stop();
+    _errorShake.value = 0;
+    if (mounted) {
+      setState(() {
+        _buttonError = false;
+        if (clearField) _fieldError = false;
+      });
+    }
+  }
+
+  void _showError() {
+    _clearError();
+    final generation = _errorGeneration;
+    final passId = ref.read(deckSessionControllerProvider(_args)).pass?.id;
+    setState(() {
+      _buttonError = true;
+      _fieldError = true;
+    });
+    if (!MediaQuery.disableAnimationsOf(context)) {
+      _errorShake.forward(from: 0);
+    }
+    _errorTimer = Timer(const Duration(milliseconds: 1500), () {
+      if (!mounted || generation != _errorGeneration ||
+          ref.read(deckSessionControllerProvider(_args)).pass?.id != passId) {
+        return;
+      }
+      setState(() => _buttonError = false);
+    });
+  }
+
+  void _inputEdited() {
+    if (_textRevision == _input.textRevision) return;
+    _textRevision = _input.textRevision;
+    _clearError();
+  }
   bool _translationOpen = true,
       _overlay = false,
       _inputGesture = false,
@@ -84,12 +130,18 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _errorShake = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 350),
+    )..addListener(() { if (mounted) setState(() {}); });
+    _input.addListener(_inputEdited);
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     _foreground = state == AppLifecycleState.resumed;
     _autoTimer?.cancel();
+    if (!_foreground) _clearError(clearField: false);
     if (_foreground) _schedule();
   }
 
@@ -102,6 +154,9 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _autoTimer?.cancel();
+    _errorTimer?.cancel();
+    _errorShake.dispose();
+    _input.removeListener(_inputEdited);
     _input.dispose();
     _focus.dispose();
     super.dispose();
@@ -115,27 +170,29 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
   void _submit() {
     if (_historyIndex != null ||
         _overlay ||
-        _word != null ||
-        _input.feedback != InputFeedback.typing) {
+        _word != null) {
       return;
     }
     final attempt = _input.text;
     final result = _controller.submit(attempt);
     if (result == null) return;
+    _clearError();
     if (result.verdict == AnswerVerdict.target) {
       _focus.unfocus();
       _announce('Richtig');
     } else if (result.verdict == AnswerVerdict.wrong) {
       final pass = ref.read(deckSessionControllerProvider(_args)).pass!;
       _input.showWrong(attempt, pass.item.card.form);
-      HapticFeedback.lightImpact();
+      _showError();
       _announce('Falsch');
     } else {
+      if (result.verdict == AnswerVerdict.wrongForm) _showError();
       _announce(result.message ?? 'Fast richtig – prüf die Schreibweise.');
     }
   }
 
   void _reveal() {
+    _clearError();
     _controller.reveal();
     final pass = ref.read(deckSessionControllerProvider(_args)).pass!;
     _input.showReveal(pass.item.card.form);
@@ -148,6 +205,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final s = ref.read(deckSessionControllerProvider(_args));
     if (!s.saved || s.committing) return;
     _autoTimer?.cancel();
+    _clearError();
     _input.reset();
     await _controller.next();
     if (mounted && !ref.read(deckSessionControllerProvider(_args)).finished) {
@@ -184,6 +242,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
 
   Future<void> _withOverlay(Future<void> Function() action) async {
     _autoTimer?.cancel();
+    _clearError(clearField: false);
     final hadFocus = _focus.hasFocus;
     setState(() {
       _overlay = true;
@@ -216,6 +275,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final index = _historyIndex ?? past.length;
     final next = (index + direction).clamp(0, past.length);
     if (next == index) return;
+    _clearError();
     _autoTimer?.cancel();
     _focus.unfocus();
     setState(() => _historyIndex = next == past.length ? null : next);
@@ -310,6 +370,9 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final state = ref.watch(provider);
     ref.watch(preferencesProvider);
     ref.listen(provider, (previous, next) {
+      if (previous?.pass?.id != next.pass?.id || next.pass?.solved == true || next.finished) {
+        _clearError();
+      }
       if (next.saved && previous?.saved != true) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) _schedule();
@@ -349,6 +412,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                     repeating: state.pass?.logged == false,
                     onHome: () {
                       _autoTimer?.cancel();
+                      _clearError();
                       if (state.canLeave) Navigator.of(context).maybePop();
                     },
                     onMenu: canShow ? _menu : null,
@@ -501,6 +565,8 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                                   input: _input,
                                                   focus: _focus,
                                                   solved: solved,
+                                                  error: snapshot == null && _fieldError,
+                                                  errorOffset: snapshot == null ? _errorOffset : 0,
                                                   selectedStart: _word?.start,
                                                   onSubmit: _submit,
                                                   onChanged: _controller
@@ -571,11 +637,13 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                   ListenableBuilder(
                     listenable: _input,
                     builder: (context, _) => PracticeAnswerToolbar(
+                      error: _buttonError,
+                      errorOffset: _errorOffset,
                       speakerEnabled: false,
                       playing: false,
                       onSpeak: () {},
                       message:
-                          state.saved ||
+                          state.saved || state.message == 'Falsch' ||
                               state.message ==
                                   'Tippe das Wort ab, um weiterzumachen.'
                           ? null

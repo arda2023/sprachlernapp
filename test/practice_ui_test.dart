@@ -10,7 +10,6 @@ import 'package:sprachapp/screens/settings/settings_screen.dart';
 import 'package:sprachapp/main.dart';
 import 'package:sprachapp/screens/decks/deck_practice_screen.dart';
 import 'package:sprachapp/screens/decks/widgets/practice_input.dart';
-import 'package:sprachapp/screens/decks/widgets/practice_chrome.dart';
 import 'package:sprachapp/screens/decks/widgets/form_info_sheet.dart';
 import 'package:sprachapp/theme/app_theme.dart';
 
@@ -157,7 +156,11 @@ void main() {
       final u = TestUser()
         ..writeGate = Completer<void>()
         ..failures = 1;
-      addTearDown(u.close);
+      addTearDown(() async {
+        if (!u.writeGate!.isCompleted) u.writeGate!.complete();
+        await t.pumpWidget(const SizedBox());
+        await u.close();
+      });
       await open(t, u);
       void right(String label) => expect(
         t.getTopRight(find.bySemanticsLabel(label)).dx,
@@ -168,13 +171,8 @@ void main() {
       await t.enterText(find.byType(TextField), 'x');
       await t.pump();
       await t.pump(const Duration(milliseconds: 60));
-      expect(
-        find.ancestor(
-          of: find.text('Wort erfahren'),
-          matching: find.byType(IgnorePointer),
-        ),
-        findsWidgets,
-      );
+      // The action updates in place; no stale outgoing label after an edit.
+      expect(find.text('Wort erfahren'), findsNothing);
       await t.pumpAndSettle();
       right('Eingeben');
       expect(find.text('Wort erfahren'), findsNothing);
@@ -239,14 +237,7 @@ void main() {
     addTearDown(t.platformDispatcher.clearAccessibilityFeaturesTestValue);
     await open(t, u);
     await t.enterText(find.byType(TextField), 'x');
-    await t.pumpAndSettle();
-    final switcher = t.widget<AnimatedSwitcher>(
-      find.descendant(
-        of: find.byType(PracticeAnswerToolbar),
-        matching: find.byType(AnimatedSwitcher),
-      ),
-    );
-    expect(switcher.duration, Duration.zero);
+    await t.pump();
     expect(find.text('Wort erfahren'), findsNothing);
     expect(find.text('Eingeben'), findsOneWidget);
   });

@@ -20,6 +20,7 @@ class PracticeInputController extends TextEditingController {
   InputFeedback feedback = InputFeedback.typing;
   String lastChecked = '', hint = '', target = '';
   int ordinaryErrors = 0;
+  int textRevision = 0;
   Color blue = const Color(0xFF7DB2E0),
       red = const Color(0xFFD9726B),
       neutral = const Color(0xFF8E95A5);
@@ -59,6 +60,8 @@ class PracticeInputController extends TextEditingController {
   @override
   set value(TextEditingValue next) {
     final previous = super.value;
+    final edited = next.text != previous.text;
+    if (edited) textRevision++;
     if (feedback != InputFeedback.typing && next.text != previous.text) {
       if (feedback == InputFeedback.firstWrong) {
         var start = 0;
@@ -98,6 +101,8 @@ class PracticeInputController extends TextEditingController {
       hint = '';
     }
     super.value = next;
+    // An IME edit can normalize back to the same text; it is still an edit.
+    if (edited && next == previous) notifyListeners();
   }
 
   TextEditingValue _replacement(TextEditingValue next, int start, int end) {

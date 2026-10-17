@@ -136,7 +136,7 @@ void main() {
       expect(gap(tester).hintText, isNull);
       expect(
         gap(tester).fillColor,
-        AppColors.memoryLevel2.withValues(alpha: .12),
+        AppColors.errorTint,
       );
       expect(gap(tester).filled, isTrue);
       expect(

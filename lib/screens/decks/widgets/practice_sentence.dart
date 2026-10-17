@@ -26,6 +26,8 @@ class PracticeSentence extends StatefulWidget {
     required this.onChanged,
     required this.onWord,
     this.selectedStart,
+    this.error = false,
+    this.errorOffset = 0,
   });
   final CardSentence sentence;
   final PracticeInputController input;
@@ -34,6 +36,8 @@ class PracticeSentence extends StatefulWidget {
   final VoidCallback onSubmit, onChanged;
   final ValueChanged<WordAnchor> onWord;
   final int? selectedStart;
+  final bool error;
+  final double errorOffset;
   @override
   State<PracticeSentence> createState() => PracticeSentenceState();
 }
@@ -197,7 +201,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
           final scale = MediaQuery.textScalerOf(context).scale(style.fontSize!);
           final width = math.min(
             math.max(1.0, constraints.maxWidth - punctuationWidth),
-            widget.solved && _editingWidth != null &&
+            (widget.solved || widget.error) && _editingWidth != null &&
                 _editingScale == scale && _editingAvailableWidth == constraints.maxWidth
                 ? _editingWidth!
                 : math.max(64.0, painter.width + 22),
@@ -222,7 +226,10 @@ class PracticeSentenceState extends State<PracticeSentence> {
                     SizedBox(
                       key: _field,
                       width: width,
-                      child: TextField(
+                      child: Transform.translate(
+                        key: const ValueKey('practice-field-shake'),
+                        offset: Offset(widget.errorOffset, 0),
+                        child: TextField(
                         key: const ValueKey('practice-input'),
                         controller: widget.solved ? _solution : input,
                         focusNode: widget.solved ? null : widget.focus,
@@ -247,7 +254,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
                             vertical: 0,
                           ),
                           filled: true,
-                          fillColor: widget.solved ? colors.successTint : colors.memoryLevel2.withValues(alpha: .12),
+                          fillColor: widget.solved ? colors.successTint : widget.error ? colors.errorTint : colors.memoryLevel2.withValues(alpha: .12),
                           hintText: widget.solved || input.hint.isEmpty
                               ? null
                               : input.hint,
@@ -260,6 +267,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
                           ),
                         ),
                       ),
+                    ),
                     ),
                     if (punctuation.isNotEmpty) Text(punctuation, style: style),
                   ],
