@@ -350,7 +350,17 @@ void main() {
       await t.pumpWidget(host(const SettingsScreen()));
       await t.pumpAndSettle();
       expect(t.takeException(), isNull);
-      await t.tap(find.byType(DropdownButton<AppMotif>));
+      final motif = find.byType(DropdownButton<AppMotif>);
+      await t.scrollUntilVisible(
+        motif,
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await t.pumpAndSettle();
+      expect(motif.hitTestable(), findsOneWidget);
+      expect(t.getRect(motif).top, greaterThanOrEqualTo(0));
+      expect(t.getRect(motif).bottom, lessThanOrEqualTo(760));
+      await t.tap(motif);
       await t.pumpAndSettle();
       await t.tap(find.text('Dunkel').last);
       await t.pumpAndSettle();

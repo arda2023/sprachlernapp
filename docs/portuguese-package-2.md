@@ -1,12 +1,137 @@
 # Portugiesisch · Paket 2 · 18.10.2026
 
-**Zwischenstand, nicht abgenommen.** Ausgang `67386c7`, Arbeitsbranch
-`codex/portuguese-package-2`. Persistenz, Sprachfassaden, Updates und
-Antwortprüfung sind implementiert und unten lokal geprüft. Der neue vollständige
-UI-Test ist noch rot. Nach fünf UI-Versuchen wurde gestoppt. Der Nutzer erlaubte
-danach genau einen gezielten Korrekturlauf; dieser ist ausgeführt und wegen des
-verbleibenden Rückwechsel-Timeouts beendet. Keine weitere Korrekturschleife. Kein iPhone-,
-Simulator-, Cloud- oder Veröffentlichungs-PASS. Kein Push.
+**Die zwei UI-Regressionen sind lokal behoben und vollständig geprüft.**
+Der begrenzte Diagnoseauftrag setzt auf Zwischenstandscommit `8b43a69` auf dem
+Branch `codex/portuguese-package-2` auf. Geändert werden ausschließlich die beiden
+UI-Tests, dieser Bericht und NEXTSTEPS.md. Produktionscode einschließlich
+Sprachwechsel, Gate, Reader, Header und Buttonhöhen bleibt bytegleich.
+
+Aktueller Abschluss: **380 Fluttertests bestanden, dieselben fünf übersprungen,
+keine Fehler**. Analyse ausschließlich bekannter `avoid_print`-Befund. Die früheren
+roten Ergebnisse bleiben unten als ausdrücklich historische Zwischenstände
+nachvollziehbar. Kein Geräte-/Simulator-/Cloud-PASS; keine Betriebsaktion.
+
+## Diagnoseabschluss der beiden UI-Fehler nach 8b43a69
+
+### Rückwechsel: gemessener Future und kleinste Korrektur
+
+Der unveränderte Ablauf wurde zuerst isoliert mit vorübergehenden Test-/
+Await-Messungen reproduziert. Beim ursprünglichen Timeout: Wechsel-Future nicht
+abgeschlossen, `switching=true`, Gate blockiert wegen des laufenden Übergangs,
+SQLite weiterhin `pt-BR`. Die Lernprovider hatten stabile AsyncData, keine
+beobachtete Neubauschleife; ein legitimer CircularProgressIndicator war aktiv.
+Die Await-Messung blieb vor Readerbarriere und Speicherung beim Öffnen des
+en-Zielpacks stehen. Der zuvor geöffnete pt-BR-Reader wurde noch nicht invalidiert.
+
+Ursache ist die Koordination im Widgettest: Der Aufruf lief in der FakeAsync-Zone.
+`settleIo` gab echter IO nur 20 Zeitfenster à 25 ms und wechselte anschließend zu
+`pumpAndSettle`. Dieses pumpt virtuelle Frames, wartet jedoch nicht auf die noch
+laufenden Datei-/Isolateoperationen. Der sichtbare Wechselindikator hält weitere
+Frames an, solange der Sprachwechsel-Future nicht abschließt.
+
+Die getrennte Probe mit ausschließlich `runAsync` ließ Packöffnung und -schließung,
+Readerbarriere und Speichern bis `en` durchlaufen. Danach blieb sie am neuen
+`contentRepositoryProvider.future` stehen: Riverpod 3.4.3 führt Flutter-gebundene
+Provideraktualisierungen über die Vsync-/Frameplanung aus. Ausschließlich echte IO
+ohne Renderframes reicht bei gemountetem ProviderScope ebenfalls nicht aus.
+
+Kleinste Korrektur ausschließlich in `test/language_selection_ui_test.dart`:
+Sprachwechsel und benötigte en-Provider-Futures in `runAsync` ausführen. Während
+**dieser konkrete Bereitschafts-Future** offen ist, Frames mit `pump(Duration.zero)`
+abarbeiten und an echte Datei-/Isolateereignisse abgeben. Erst nach dessen Abschluss
+erfolgt `pumpAndSettle` für die fertige Ansicht. Keine längeren Timeouts, keine
+zusätzliche pauschale Wartezeit, keine entfernten Assertions. Das bisherige
+Zeitfenster-Hilfsmittel wird für den Rückwechsel nicht mehr verwendet.
+
+Der Test prüft jetzt tatsächlich die sichtbare englische Überschrift, persistente
+Auswahl, Reader `en / mini-v1`, freie Transition und nicht mehr wechselnden
+Controller. Portugiesischer Teststapel und portugiesischer Header dürfen auch
+in inaktiven Ansichten nicht zurückbleiben. In einer temporären user.sqlite werden
+vorher englische Karte, Review, Fälligkeit, Favorit, Notiz, Playlist, Stapelauswahl
+und Lernpräferenzen gesetzt. Vorher-/Nachhervergleich aller tatsächlichen Tabellen
+(sprachgebundene Präferenzzeilen auf en begrenzt), außerdem exakte User-/Wortlisten-
+IDs und Notiz nach Rückkehr. Keine Schreibzugriffe auf echte Lernstände.
+
+### Motivwähler: gemessene Scrollposition und Bedienung
+
+Am Start der 320-pt-/2×-Ansicht: null gebaute Dropdown-Widgets, Scrolloffset 0,
+Viewporthöhe 704 pt und maximaler Scrolloffset 3720,4 pt. Der Motivwähler liegt
+hinter den neuen Sprachzeilen im lazily aufgebauten ListView. Er fehlt nicht aus
+dem Layout. Die erste Messung direkt nach `scrollUntilVisible` fand bereits das
+Widget, aber noch alte Layoutkoordinaten `y=978…1026` vor dem folgenden Frame.
+
+Korrektur ausschließlich in `test/practice_ui_test.dart`: wie ein Nutzer zum
+Dropdown scrollen, den Layoutframe abarbeiten und erst dann prüfen/öffnen.
+Danach Offset 1122 pt, tatsächliche Bildschirmgrenzen **x=20…300, y=56…104**.
+Der Test verlangt zusätzlich `hitTestable`, Grenzen innerhalb des Fensters,
+öffnet den Wähler, wählt „Dunkel“ und prüft die gespeicherte Einstellung. Die
+320-pt-Breite und doppelte Textgröße bleiben erhalten; keine Layout-/Höhenänderung.
+
+### Abschlussbefehle, Output und Exitcodes
+
+Aus Repository-Root auf macOS ausgeführt; die Befehle sind auf Windows
+(PowerShell) identisch. Logs lokal unter `build/portuguese_package_2/`.
+
+| Befehl | Tatsächlicher Output | Exit | Log |
+|---|---|---|---|
+| `flutter test --no-pub test/language_selection_ui_test.dart` | `00:06 +2: All tests passed!` | 0 | ui-return-final.log |
+| `flutter test --no-pub test/practice_ui_test.dart` | `00:03 +13: All tests passed!` | 0 | ui-motif-final.log |
+| `flutter test --no-pub test/language_selection_test.dart test/data/portuguese_installation_test.dart test/language_update_lifecycle_test.dart` | `00:01 +14: All tests passed!` | 0 | ui-fix-data-regressions.log |
+| `flutter test --no-pub` | `01:02 +380 ~5: All tests passed!` | 0 | ui-fix-full.log |
+| `flutter test --no-pub test/data/real_pack_test.dart` | `00:12 +1: All tests passed!` | 0 | ui-fix-real-pack.log |
+| `flutter analyze --no-pub` | `1 issue found`, ausschließlich `avoid_print` in test/data/baseline_adoption_pack_test.dart:43:7 | 1 | ui-fix-analyze.log |
+| `dart run tool/stage_content_pack.dart --verify` | en-Asset verifiziert; 22 Tabellen, SHA b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb | 0 | ui-fix-stage.log |
+| Eigener CRLF-Diffcheck (Befehl unten) | kein Output | 0 | — |
+
+Eigener Diffcheck, Windows (PowerShell) und macOS (Terminal) identisch:
+
+```text
+git -c core.whitespace=cr-at-eol diff --check -- test/language_selection_ui_test.dart test/practice_ui_test.dart docs/portuguese-package-2.md NEXTSTEPS.md
+```
+
+Originale CRLF der beiden betroffenen Bestandsdateien (`practice_ui_test.dart`,
+NEXTSTEPS.md) zusätzlich byteweise auf erhaltene Zeilenenden geprüft. `git diff`
+über `lib/` und `test/data/real_pack_test.dart` ist leer. GitNexus war auf
+`sprachlernapp`/`8b43a69` aktualisiert; die Test-Einstiegspunkte haben UNKNOWN
+(keine aufgelösten Aufrufer/Prozesse), ergänzt durch Test-/Quellreferenzen. Der
+vorübergehend instrumentierte LanguageSelectionController hatte LOW, zwei direkte
+Dateiabhängigkeiten und keine aufgelösten Prozesse; er wurde nicht geändert
+zurückgeliefert. Vor dem isolierten Commit werden vollständige all-/staged-
+`detect_changes`-Ergebnisse aus demselben aktuellen CLI-Backend geprüft; markierte
+partial-/truncated-Ergebnisse werden nicht akzeptiert.
+
+Alle fünf vorhandenen Skips aus dem vollständigen Lauf einzeln:
+
+1. `baseline_adoption_pack_test.dart`: „real baseline offer and downloaded bundle
+   preserve schema-4 history“ — `build/baseline_adoption/real-result.json` fehlt;
+   vorhandene Meldung „Run check_baseline_adoption_real.py first.“
+2. `content_active_context_test.dart`, Gruppe „published packs“: „blocked and
+   unauthorized activation preserve current reader“ — opt-in Variablen fehlen.
+3. Dieselbe Gruppe: „failed opening rolls back; restart keeps old context“ —
+   dieselben opt-in Variablen fehlen.
+4. Dieselbe Gruppe: „activation agrees with current learned word details“ —
+   dieselben opt-in Variablen fehlen.
+5. Dieselbe Gruppe: „full restart keeps active context without asset fallback“ —
+   dieselben opt-in Variablen fehlen.
+
+Die drei nicht gesetzten Variablen sind `ACTIVE_CONTEXT_OLD_BUNDLE`,
+`ACTIVE_CONTEXT_NEW_BUNDLE`, `ACTIVE_CONTEXT_PUBLICATION`. Keine Skipbedingung
+geändert, kein neuer Skip hinzugefügt; tatsächliche Skipmeldungen im Full-Log.
+Das originale 30-s-Packtestbudget und der Packtest selbst bleiben unverändert.
+
+Schleifenbremse eingehalten: zwei unveränderte Diagnosereproduktionen (Exit 1),
+Variante nur mit realer IO nach gemessenem Stillstand am neuen Reader beendet
+(Exit 130), Frame-/IO-Koordination danach grün. Motivdiagnose vor dem Layoutframe
+meldete die neue Sichtbarkeitsassertion rot (Exit 1); nach gemessenem Renderframe
+ist sie grün. Vier erfolglose Diagnose-/Zwischenläufe insgesamt, unter der Grenze
+von fünf; keine automatische Verlängerung. Diagnoseausgaben vollständig entfernt,
+vorübergehend instrumentierter Sprachcontroller bytegleich zu 8b43a69 restauriert.
+
+Weiterhin bekannte Grenzen: Font-/Icon-Testglyphen und Google-Fonts-Warnungen
+sind keine visuelle Abnahme. Drift meldet die bekannten Debugwarnungen für
+getrennte ContentDatabase-Testinstanzen. Kein neuer Analysebefund, kein Geräte-
+oder Cloudnachweis. Der bekannte JS-Altfehler aus dem Zwischenstandsbericht wurde
+in diesem eng begrenzten Auftrag weder verändert noch erneut geprüft.
 
 ## Umsetzung und Datenvertrag
 
@@ -69,7 +194,7 @@ von BR-Gebrauch, Grammatik, Niveau, Übersetzungen und Bindungen. Das ist keine
 Transport-/Inhaltsfehlermeldung. Keine echte Bestätigung und kein Release erzeugt.
 Receipt/Validation: `build/portuguese_package_2/delivery-result.json`.
 
-## Tatsächliche lokale Prüfungen
+## Historische lokale Prüfungen bis Zwischenstandscommit 8b43a69
 
 Logs unter `build/portuguese_package_2/` bleiben lokal. Flutter auf macOS,
 headless Widget-/Darttests mit temporären Datenbanken. Synthetische BR-Fixture
@@ -108,7 +233,7 @@ benötigen opt-in Umgebungsvariablen; synthetische Historienregression läuft.
 Bekannte Drift-Debugwarnungen bei getrennten ContentDatabase-Testinstanzen;
 keine durch diese Warnung ausgelösten fehlgeschlagenen Assertions.
 
-### Einmalig erlaubte UI-Korrektur und verbleibender Fehler
+### Historie: einmalig erlaubte UI-Korrektur und damaliger Restfehler
 
 Die ersten fünf Versuche korrigierten Testsynchronisation (echte SQLite-/
 Isolatearbeit gegen Fake-Widget-Timer), eine außerhalb des sichtbaren
@@ -155,7 +280,7 @@ text size“. Der bestehende Test tippt direkt nach Öffnen der Einstellungen oh
 Scrollen auf den Motivwähler; vor diesem stehen jetzt die Sprachzeilen. Die genaue
 Korrektur bleibt offen und wurde nach dem Stopp nicht versucht. Kein Gesamt-PASS.
 
-Restarbeit für einen gesonderten Folgeauftrag: Rückwechsel-Timeout mit aktiven
+Damals offener Folgeauftrag (mit dem oben dokumentierten Diagnoseabschluss erledigt): Rückwechsel-Timeout mit aktiven
 Widget-Abonnenten lokalisieren und die sichtbare Erreichbarkeit des Motivwählers
 bei großer Schrift korrekt prüfen; danach vollständigen UI-Rückwechsel sowie
 Gesamtsuite abnehmen. Keine Erhöhung des Packtestbudgets und keine Lockerung von Assertions.
@@ -182,7 +307,7 @@ dart run tool/stage_content_pack.dart --verify
 node pipeline/tests/editor_verification_ui_test.cjs
 ```
 
-Für den gesonderten Folgeauftrag; hier keine weitere Korrekturschleife:
+Damals vorbereitete Folgeprüfungen (inzwischen oben erfolgreich ausgeführt):
 
 ```text
 flutter test --no-pub test/language_selection_ui_test.dart
@@ -204,7 +329,7 @@ Das originale 30-s-Budget des Realpacktests ist unverändert.
 
 ## Nachfolgende Betriebsaktionen — nur vorbereitet, nicht ausgeführt
 
-Erst den offenen UI-Rückwechsel und lesbare Darstellung abnehmen, dann getrennte Geräte-/Cloudabnahme.
+Der UI-Rückwechsel ist lokal getestet. Lesbare Darstellung und getrennte Geräte-/Cloudabnahme bleiben Betriebsabnahmen.
 Projekt **yevntxclpchapacqdizm**. Keine Cloudverbindung in diesem Auftrag.
 
 **Deployment:** Dieses Inkrement ändert keine Edge-Function. Der noch nicht
@@ -289,7 +414,7 @@ Build ausführen. Anschließend echte Abläufe en → pt-BR vor Installation →
 → Installation/Updates → leerer Storybereich/Teststapel → en und persönliche
 Daten abnehmen. Bisherige Daten nicht durch Testreviews verändern.
 
-## Graph-, Diff- und Sicherungsnachweis
+## Historischer Graph-, Diff- und Sicherungsnachweis zu 8b43a69
 
 Vor Symboländerungen wurden GitNexus-Impacts ausgeführt; HIGH bei gemeinsamem
 Reader-/Installations-/Review-/Updatepfad und CRITICAL am HomeHeader wurden

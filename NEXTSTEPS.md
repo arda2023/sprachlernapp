@@ -1,5 +1,10 @@
 # NEXTSTEPS
-## Portugiesisch · Paket 2 · 18.10.2026 (UI-Abnahme offen)
+## Portugiesisch · Paket 2 · UI-Diagnoseabschluss · 18.10.2026
+- Beide UI-Ursachen belegt und ausschließlich in Tests korrigiert: echte Pack-IO plus Flutter-/Riverpod-Frames bis zum abgeschlossenen Rückwechsel-Future; Motivwähler nach Scrollen/Renderframe bei 320pt/2× öffnen und speichern.
+- Sichtbare englische Rückkehr, aktiver en-Reader, freies Gate, keine pt-BR-Restansicht und kompletter temporärer persönlicher Bestand geprüft. Produktionscode, Header/44pt-Buttons und echte Lernstände unverändert.
+- Abschluss: UI 2 + 13, Sprach-/Installationstests 14, Gesamtsuite 380 PASS/5 bestehende Skips, Realpack 1 (12s) und Stage PASS/Exit 0; Analyse Exit 1 nur Alt-avoid_print. Jeder Skip und alle Outputs in docs/portuguese-package-2.md.
+- Keine Cloudaktion, Rechteänderung, Geräteinstallation oder Push. Testglyphbilder weiter keine visuelle Abnahme; Geräte-/Cloudbetrieb bleibt gesondert. Historische Zwischenstände unten erhalten.
+## Portugiesisch · Paket 2 · 18.10.2026 · Zwischenstand 8b43a69 (historisch)
 - Persistente en/pt-BR-Sprachwahl, Gate-/Rollback, getrennte Updateclients/-fristen und profilgebundene Akzentpflicht implementiert; gemeinsame user.db unverändert.
 - Neue isolierte Daten-/Installationstests, Altregressionen, Realpack und Stage geprüft; Original-20-Ziele-ZIP technisch gültig, manuelle BR-Prüfung weiter offen. Bericht: docs/portuguese-package-2.md.
 - Einmalig erlaubte UI-Korrektur: Headerbreite/Flaggenassertion/Inset behoben, 320pt/2× mit unveränderten 44pt-Buttons bestanden. Rückwechsel-UI bleibt bei pumpAndSettle hängen (Testzeile 224); weitere Korrektur gestoppt. Gesamtsuite 378 PASS/5 Skip/2 Fail (Rückwechsel-Timeout und Motiv-Dropdown-Finder bei 320pt/2×); Analyse nur Alt-avoid_print. Testglyphbilder keine visuelle Abnahme.

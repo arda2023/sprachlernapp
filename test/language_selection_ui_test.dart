@@ -9,6 +9,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sprachapp/screens/app_shell.dart';
+import 'package:sprachapp/domain/preferences.dart';
+import 'package:sprachapp/domain/srs_state.dart';
 import 'package:sprachapp/screens/settings/settings_screen.dart';
 import 'package:sprachapp/presentation/providers/database_providers.dart';
 import 'package:sprachapp/presentation/providers/learning_providers.dart';
@@ -83,9 +85,58 @@ void main() {
         Directory.systemTemp.createTempSync('language-ui-'),
       );
       var c = h.scope();
-      await t.runAsync(() async {
-        await c.read(userRepositoryProvider.future);
-        await c.read(contentRepositoryProvider.future);
+      Future<Map<String, Object?>> englishSnapshot() async => {
+        for (final table in h.db.allTables)
+          table.actualTableName:
+              (await h.db
+                      .customSelect(
+                        'SELECT * FROM "${table.actualTableName}" '
+                        '${table.actualTableName == 'language_learning_preferences' ? "WHERE lang = 'en'" : ''} ORDER BY rowid',
+                      )
+                      .get())
+                  .map((row) => row.data)
+                  .toList(),
+      };
+      final before = await t.runAsync(() async {
+        final user = await c.read(userRepositoryProvider.future);
+        final content = await c.read(contentRepositoryProvider.future);
+        final item = (await content.practiceItems(['card-went'])).single;
+        final now = DateTime(2026, 10, 18);
+        await user.ensureCards(
+          ['card-went'],
+          now: now,
+          origin: CardOrigin.deck,
+        );
+        await user.setCardFlags(
+          'card-went',
+          favorite: true,
+          inPlaylist: true,
+          note: 'Persönliche englische Notiz',
+        );
+        await user.setDeckActive('deck-allg', true, now: now);
+        await user.savePreferences(
+          const PracticePreferences(dailyGoal: 17, includeDiacritics: false),
+        );
+        await user.recordReview(
+          ReviewRecord(
+            id: 'ui-en-review',
+            cardId: 'card-went',
+            createdAt: now,
+            mode: ReviewMode.deck,
+            sentenceId: item.practiceSentence.sentenceId,
+            firstAttemptCorrect: true,
+            errorCount: 0,
+            revealed: false,
+            hintUsed: false,
+            boxBefore: 0,
+            boxAfter: 3,
+            dueAtAfter: now.add(const Duration(days: 7)),
+            responseMs: 12,
+            appVersion: 'synthetic',
+            deviceId: await user.deviceId(),
+          ),
+        );
+        return englishSnapshot();
       });
       final boundary = GlobalKey();
       Future<void> settleIo() async {
@@ -218,13 +269,69 @@ void main() {
         findsWidgets,
       );
       await capture('empty-stories');
-      final returning = c
-          .read(languageSelectionProvider.notifier)
-          .selectLanguage('en');
-      await settleIo();
-      expect(await returning, true);
+      await t.runAsync(() async {
+        // Pack IO runs in the real event loop. Riverpod's Flutter vsync still
+        // needs test frames while the command awaits rebuilt repositories.
+        final ready = () async {
+          expect(
+            await c
+                .read(languageSelectionProvider.notifier)
+                .selectLanguage('en'),
+            true,
+          );
+          await Future.wait([
+            c.read(contentInfoProvider.future),
+            c.read(learningProgressProvider.future),
+            c.read(decksProvider.future),
+            c.read(wordListProvider.future),
+            c.read(vocabBreakdownProvider.future),
+            c.read(storySummariesProvider.future),
+          ]);
+        }();
+        var completed = false;
+        Object? failure;
+        StackTrace? failureStack;
+        ready.then<void>(
+          (_) => completed = true,
+          onError: (Object error, StackTrace stack) {
+            failure = error;
+            failureStack = stack;
+            completed = true;
+          },
+        );
+        while (!completed) {
+          await t.pump(Duration.zero);
+          await Future<void>(() {}); // Yield to real file/isolate events.
+        }
+        if (failure != null) Error.throwWithStackTrace(failure!, failureStack!);
+      });
+      await t.pumpAndSettle();
       expect(find.bySemanticsLabel('Zielsprache: Englisch'), findsOneWidget);
-      expect(find.text('SYNTHETISCH – NICHT VERÖFFENTLICHEN'), findsNothing);
+      expect(
+        find.text('SYNTHETISCH – NICHT VERÖFFENTLICHEN', skipOffstage: false),
+        findsNothing,
+      );
+      expect(
+        find.text('🇧🇷  Portugiesisch (Brasilien)', skipOffstage: false),
+        findsNothing,
+      );
+      expect(c.read(languageSelectionProvider).switching, false);
+      expect(contentTransitionGate.busy, false);
+      await t.runAsync(() async {
+        expect(await c.read(selectedContentLanguageProvider.future), 'en');
+        final reader = await c.read(contentRepositoryProvider.future);
+        expect(reader.info.lang, 'en');
+        expect(reader.info.version, 'mini-v1');
+        expect(await reader.allCardIds(), contains('card-went'));
+        expect(await englishSnapshot(), before);
+        final states = await (await c.read(userRepositoryProvider.future))
+            .allCardStates();
+        expect(states.keys, ['card-went']);
+        expect(states['card-went']!.note, 'Persönliche englische Notiz');
+        expect((await c.read(wordListProvider.future)).map((word) => word.id), [
+          'card-went',
+        ]);
+      });
       await capture('returned-english');
       expect(t.takeException(), isNull);
       await t.pumpWidget(const SizedBox());
