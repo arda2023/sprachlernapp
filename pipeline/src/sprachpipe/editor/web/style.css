@@ -2,3 +2,5 @@
 
 .mobile-decks{display:none}@media(max-width:720px){.mobile-decks{display:flex;align-items:center;gap:8px;margin-bottom:14px}.mobile-decks select{min-width:0;flex:1}}
 .publisher-auth{display:block}.publisher-auth form,.publisher-auth details{max-width:28rem}.publisher-auth input{max-width:100%;font-size:16px}.publisher-auth summary{cursor:pointer;min-height:44px;padding-top:16px}.publisher-auth details button{margin:0 8px 8px 0}.publisher-auth button{min-height:44px}
+.finding-group{font-size:12px;margin:16px 0 0;color:var(--ink)}
+.finding.warn .severity{background:#c39a3c}

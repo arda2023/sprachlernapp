@@ -169,6 +169,12 @@ class EditorService:
         links={l['card']:l for l in work['card_sentences'] if not l.get('removed_in')}
         owners={w['form_norm']:w['deck'] for w in work['deck_words'] if not w.get('removed_in')}
         entries=[];q=query.casefold()
+        validation=draft.get('validation') if draft else None
+        changed=set(author.changed_refs(draft)) if draft else set()
+        own={}
+        for finding in (validation or {}).get('findings',[]):
+            ref=(finding.get('location') or {}).get('record_ref')
+            if ref:own.setdefault(ref,[]).append(finding['severity'])
         for card in work['cards']:
             if status=='active' and card.get('removed_in'):continue
             if status=='retired' and not card.get('removed_in'):continue
@@ -177,13 +183,16 @@ class EditorService:
             if deck and owner!=deck and not any(r.get('deck')==deck and r.get('card')==card['ref'] for r in work['deck_cards']):continue
             link=links.get(card['ref'],{});sentence=sentences.get(link.get('sentence'),{})
             if q and q not in ' '.join(str(x or '') for x in (card.get('form'),card.get('translation_de'),sentence.get('text'),sentence.get('translation_de'))).casefold():continue
-            edited=draft and (card['ref'] in draft.get('target_refs',[]))
-            validation=draft.get('validation') if draft else None
+            # A task's status comes from its own findings only; draft-wide
+            # blockers stay in the report. Unchanged tasks keep their base approval.
+            edited=card['ref'] in changed;mine=own.get(card['ref'],[])
+            technical=('invalid' if 'error' in mine else 'open' if not validation else
+                       'valid' if edited else 'base') if edited or mine else 'base'
             entries.append({'ref':card['ref'],'form':card.get('form'),'translation_de':card.get('translation_de'),
                 'text':sentence.get('text'),'sentence_translation_de':sentence.get('translation_de'),
                 'owner_deck':owner,'retired':bool(card.get('removed_in')),
-                'technical':validation['technical'] if edited and validation else 'open' if edited else 'base',
-                'editorial':validation['editorial'] if edited and validation else 'open' if edited else 'base'})
+                'edited':edited,'warnings':mine.count('warn'),'technical':technical,
+                'editorial':(validation['editorial'] if validation else 'open') if edited else 'base'})
         entries.sort(key=lambda r:((r['form'] or '').casefold(),r['ref']))
         return {'items':entries[cursor:cursor+limit],'total':len(entries),'cursor':cursor,'limit':limit,
                 'decks':work['decks'],'base':draft['base'] if draft else self.store.get('heads',lang)}
@@ -374,7 +383,9 @@ class EditorService:
             author.require(data.get('payload_sha256')==sha,'REVIEW_STALE','Prüfung bezieht sich auf einen anderen Entwurfsinhalt.',status=409)
             author.require(bool(data.get('reviewer','').strip()) and bool(data.get('reason','').strip()),'FIELD_REQUIRED','Prüfperson und Prüfnotiz angeben.')
             author.require((draft.get('validation') or {}).get('technical')=='valid','CONTENT_INVALID','Zuerst technische Blocker lösen.')
-            draft['reviews'].append({'scope':'draft','record_refs':draft['target_refs'],'payload_sha256':sha,
+            # Only actually edited records are newly approved; unchanged
+            # targets in the selected scope keep their base provenance.
+            draft['reviews'].append({'scope':'draft','record_refs':author.changed_refs(draft),'payload_sha256':sha,
                 'decision':'approved','reviewer':data['reviewer'],'reason':data['reason'],'reviewed_at':utc_now(),'origin':'local-editor'})
             draft['validation']=author.validate_draft(draft,self.base(draft['lang'],draft['base']))
             return self.store.save_draft(draft,etag)

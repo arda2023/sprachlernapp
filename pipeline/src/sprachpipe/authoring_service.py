@@ -228,7 +228,7 @@ def target_findings(pack, view, *, linguistic=True):
             profile=get_profile(pack['lang'])
             if not errors:
                 profile.gap(context['text'],gap['start_pos'],gap['end_pos'],card['form'])
-                for f in profile.validate_sentence(context['text'],card['form'],gap['start_pos'],gap['end_pos'],card.get('cefr_band','anfaenger')):
+                for f in profile.validate_sentence(context['text'],card['form'],gap['start_pos'],gap['end_pos'],card.get('cefr_band','anfaenger'),single_sentence=False):
                     errors.append({'code':f.rule,'message':f.message,'severity':f.level,'location':{'record_ref':ref,'field':'context.text'}})
         except UnsupportedLanguage as e:fail(e.code,str(e),'lang')
         except ValueError as e:fail('CONTEXT_INVALID',str(e),'context.gap')
@@ -488,9 +488,17 @@ def validate_draft(draft, base, profile=None):
             'technical':'unsupported' if any(f['code']=='PROFILE_UNSUPPORTED' for f in findings) else
                         'invalid' if any(f['severity']=='error' for f in findings) else 'valid',
             'editorial':'approved' if approved else 'open','findings':findings,'coverage':coverage,
-            'content_sha256':review_hash}
+            'content_sha256':review_hash,'changed_refs':changed_refs(draft)}
     result['sha256']=digest(result)
     return result
+
+
+def changed_refs(draft):
+    """Records this draft actually edits or adds; the remaining target_refs are
+    only the selected scope and keep their base provenance and approvals."""
+    refs=[op.get('target_ref') for op in draft.get('operations',[])]
+    refs+=[c.get('ref') for c in draft.get('add',{}).get('cards',[])]
+    return sorted({r for r in refs if isinstance(r,str) and r})
 
 
 def draft_content_hash(draft):

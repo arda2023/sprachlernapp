@@ -66,14 +66,18 @@ class LanguageProfile:
             raise UnsupportedLanguage('Das installierte Sprachmodell passt nicht zum geprüften Profil.')
         return tokenize(text, nlp, lexical_spans=[gap] if gap else None)
 
-    def validate_sentence(self, text, form, start, end, cefr_band='anfaenger'):
+    def validate_sentence(self, text, form, start, end, cefr_band='anfaenger', *, single_sentence=True):
+        """single_sentence: story policy v2 (exactly one grammatical sentence).
+        Deck targets pass False: their contract is exactly one active fixed
+        context per card (content_contract.sentence_count), which may be a
+        short two-part dialogue; length/subclause/ending/gap rules still apply."""
         from .linter import lint_sentence, _nlp
         from .config import load_config
         cfg = load_config(); lc = cfg['linter']
         result = list(lint_sentence(text,form,start,end,lc['min_zipf'][cefr_band],
             lang=self.lang,names=cfg['generate']['names'],max_words=lc['max_words'],
             max_subclauses=lc['max_subclauses'],nlp=_nlp(self.model)))
-        if len(list(_nlp(self.model)(text).sents)) != 1:
+        if single_sentence and len(list(_nlp(self.model)(text).sents)) != 1:
             from .linter import Finding
             result.append(Finding('error','sentence_count','Genau ein Übungssatz ist erforderlich.'))
         return result
