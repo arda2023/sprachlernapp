@@ -1,18 +1,29 @@
-# Brasilianisches Portugiesisch · Authoring-Vertrag v1 (PLANENTWURF)
+# Brasilianisches Portugiesisch · Authoring-Vertrag v1
 
-Status: vorhandener Austausch **v4**, als unvollständiger Entwurf transportvalidiert.
-Kein portugiesischer Release, kein freigegebenes Sprachprofil, keine reservierten Wörter.
-Die ZIP-Hauptlieferung enthält 20 leere Refslots. Nicht als fertige Inhalte importieren.
-Vor einer späteren echten Lieferung zuerst Sprachprofil implementieren/abnehmen und
-im Editor einen neuen pt-BR-Sprachentwurf erzeugen; Vorlage aus dessen exakter Basis
-neu exportieren. Die hier verwendete leere synthetische Basis ist kein Produktionshead.
+Gültiger Authoring-Vertrag für den bestehenden Austausch **v4**. Die frische
+`build/portuguese_authoring_batch_1.zip` wird aus dem tatsächlichen pt-BR-Editorseed
+exportiert und enthält 20 leere Zielrefs. Sie ist **keine Satzlieferung und kein
+veröffentlichbares Lernpack**. Keine Wörter, Sätze oder Reviews sind freigegeben.
+Der alte Planexport `portuguese_authoring_contract_v1.zip`, seine JSON-Beispiele
+und `build_and_verify.py` gehören zum historischen Planstand a1f6e29; nicht als
+Basis verwenden oder mit aktuellem Code neu bauen. Aktueller Export/Verifier:
+`export_batch.py`. Neue Sprache ausschließlich über den vorhandenen Service
+anlegen, danach exportieren und importieren; kein Ein-Datei-Bootstrap.
+
+Die spätere vollständige Lieferung als **neuen Entwurf** importieren. Der im
+Kontext genannte Vorbereitungentwurf enthält nur die leere Stapeloperation;
+nicht an ihn anhängen (sonst würde create_deck doppelt vorliegen). Bestehende
+Entwürfe bleiben unangetastet. Alle Zielrefs aus dieser Vorlage erhalten.
 
 ## Kennungen und Rahmen
 
 - `lang`: exakt `pt-BR`; `translation_lang`: `de`.
 - Sprachname: `Portugiesisch (Brasilien)`; Eigenname: `Português do Brasil`.
-- Vorgeschlagenes Profil: `pt-BR-editorial-v1`; Hash noch NICHT definiert.
-  Er entsteht erst aus implementiertem Profilmanifest und bestandenen Fähigkeitsprüfungen.
+- Profil: `pt-BR-editorial-v1`; SHA256
+  `7c59364c0d1ef562ee5a6a679b7d895e0ebec6bf2ad47d8eae56afdcba87fe32`.
+  spaCy 3.8.16, expliziter `spacy.blank('pt')`-Tokenizer; keine Modelle/Cloudaufrufe.
+  Grammatik, BR-Gebrauch, Niveau/Frequenz, genau ein Satz und höchstens ein
+  Nebensatz werden ausschließlich redaktionell bestätigt, niemals automatisch.
 - Stapel: `Allgemeine Sprache`; Slug `allgemeine-sprache`, Art `ordinary`,
   `cefr_band=anfaenger`, Sortierung 1. 20 echte, redaktionell erstellte Ziele;
   später ungefähr 160, keine Auffüllpflicht. Keine Stories/Formstapel voraussetzen.
@@ -52,8 +63,7 @@ strengeren Lieferregeln und `authoring_contract` im Kontext schließen diese Lü
 
 Ein Profilobjekt, Sprachname oder `language_definition` ist **heute kein erlaubtes
 Top-Level-Lieferfeld**. Profil/Sprachmetadaten stehen im hashgebundenen Kontext und
-im separat angelegten Sprachseed. Der vorgeschlagene Ein-Datei-Bootstrap im Kontext
-ist ein zukünftiger Vertrag, kein heute importierbares Feld.
+im separat angelegten Sprachseed. Ein-Datei-Bootstrap ist nicht abgenommen und nicht implementiert.
 
 ## Neue Semantik ohne erratene Wörterbuch-IDs
 
@@ -133,9 +143,31 @@ sense,gap_start,gap_end; nicht die geplanten Spaltennamen sentence_text verwende
 
 ## Dateien im Kontext
 
-`authoring_contract`: maschinenlesbarer Planstatus/Feldvertrag und präzise künftige
-Bootstrap-Erweiterung. `synthetic_example_delivery`: separat durch den aktuellen
-JSON-/XLSX-Reader geprüfte reine Strukturprobe mit erfundenem Marker, keine
-portugiesischen Lernziele. Keine zweite Autorität neben delivery.json.
-`profile.supported=false` bleibt ehrlich. Der vorhandene validate_draft meldet
-für pt-BR `technical=unsupported`, `PROFILE_UNSUPPORTED`, `editorial=open`.
+`profile`: tatsächlich unterstütztes vollständiges Profilmanifest; dessen Hash
+steht im Basisfingerprint. `source_pack`: unveränderte leere tatsächliche Basis;
+`language`: Anzeigenamen und de; `ownership`, Refs und Wörterbuchquellen stammen
+aus dem Editor. `authoring_contract`: maschinenlesbare Lieferregeln.
+`preparation_draft_id`: nur Nachweis des leeren Vorbereitungentwurfs.
+Kein synthetisches Beispiel ist Bestandteil der echten Batchvorlage.
+Die leeren Slots sind transportgültig; technische Inhaltsprüfung bleibt wegen
+fehlender Texte/Bindungen ungültig und die Redaktion offen.
+
+## Deterministische Vorbereitung der späteren Lieferung
+
+Erst `canonical_text(text)` anwenden (NFC/LF), **danach** die eindeutige vollständige
+Zielform im Text bestimmen. `get_profile('pt-BR').gap(text,start,end,form)` prüft
+Eindeutigkeit und Grenzen. `get_profile('pt-BR').tokenize(text,(start,end))` erzeugt
+alle Tokens inklusive Satzzeichen und verschmilzt ausschließlich die Ziellücke.
+Offsets sind Python-Unicode-Codepoints; für Browserauswahl erst die normalisierte
+Zeichenfolge verwenden und `utf16_to_codepoint` benutzen. Niemals Offsets eines
+NFD-Ausgangstextes auf den normalisierten Text übertragen. Jede Oberfläche muss
+`text[start_pos:end_pos]` entsprechen; die Profilprüfung vergleicht die gesamte
+Tokenliste. Das Modell soll diese Zahlen nicht schätzen.
+Danach nur die redaktionell gewählten Lemma-/Sense-Refs und deutschen Glossen
+ergänzen, Worttokens ausdrücklich `binding_status=confirmed`; keine automatische
+Sensewahl. Vorschläge des Editors sind unverbindlich und reichen nicht zur Freigabe.
+JSON und XLSX über vorhandene Adapter gemeinsam neu erzeugen; anschließend den
+vorhandenen `read_delivery` mit `source="json"` nur verwenden, wenn bewusst JSON
+als Quelle gewählt wird, sonst Konflikte zwischen beiden Quellen auflösen.
+Die technische Prüfung und der ausdrückliche manuelle Review im Editor bleiben
+getrennte Schritte. Review bindet Payloadhash, Profilhash und BR-Prüfpolicy.

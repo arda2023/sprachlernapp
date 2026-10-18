@@ -49,3 +49,80 @@ def test_explicit_test_only_adapter_exports_separate_language(tmp_path,monkeypat
         assert db.execute('SELECT lang FROM cards').fetchall()==[('qaa',)]
         assert db.execute('SELECT code FROM languages').fetchall()==[('qaa',)]
     assert digest(english)==before and author.target_identity(work,work['cards'][0])!=author.target_identity({**work,'lang':'en'},work['cards'][0])
+
+
+def test_portuguese_profile_golden_and_english_pin():
+    import unicodedata
+    from sprachpipe.ids import form_norm
+    p=get_profile('pt-BR')
+    assert get_profile('en').sha256=='59eec37d0a4f322d666701e00bc1bf4cfb44d19b183b1742d16b443989a505cf'
+    assert p.sha256=='7c59364c0d1ef562ee5a6a679b7d895e0ebec6bf2ad47d8eae56afdcba87fe32'
+    for lang in ('pt','pt-PT'):
+        with pytest.raises(UnsupportedLanguage):get_profile(lang)
+    text='😀 Na ação do teste: ã, õ, ç!'
+    assert [t['surface'] for t in p.tokenize(text)]==['😀','Na','ação','do','teste',':','ã',',','õ',',','ç','!']
+    assert canonical_text(unicodedata.normalize('NFD',text))==text
+    assert form_norm('AÇÃO')==form_norm('AC\u0327A\u0303O')=='ação'
+    assert form_norm('ação')!=form_norm('acao')
+    assert p.gap(text,5,9,'ação')['surface']=='ação'
+    assert utf16_to_codepoint(text,6)==5
+    assert p.tokenize(text,(5,12))[2]['surface']=='ação do'
+    for span in [(6,9),(5,8)]:
+        with pytest.raises(ValueError):p.tokenize(text,span)
+    with pytest.raises(ValueError):p.gap('ação ação.',0,4,'ação')
+    findings=p.validate_sentence('Na ação do teste.', 'ação',3,7)
+    assert [f.rule for f in findings]==['manual-pt-BR-editorial-v1']
+    assert not p.manifest['automatic_grammar'] and not p.manifest['automatic_frequency']
+
+
+def test_portuguese_bindings_and_review_are_explicit():
+    import copy
+    from portuguese_fixture import draft
+    from sprachpipe import authoring_service as a
+    base=a.empty_pack('pt-BR','Portugiesisch (Brasilien)');d=draft(base)
+    v=a.validate_draft(d,base)
+    assert v['technical']=='valid',v
+    assert v['editorial']=='open'
+    d['reviews']=[{'decision':'approved','payload_sha256':a.draft_content_hash(d)}]
+    assert a.validate_draft(d,base)['editorial']=='open'
+    broken=copy.deepcopy(d);broken['operations'][1]['payload']['context']['tokens'].pop(0)
+    assert a.validate_draft(broken,base)['technical']=='invalid'
+    broken=copy.deepcopy(d);broken['operations'][1]['payload']['context']['tokens'][2].pop('sense')
+    assert a.validate_draft(broken,base)['technical']=='invalid'
+    assert a.release_parent_id(base) is None
+    assert a.release_parent_id(a.empty_pack('en','English'))=='empty-en'
+    changed=copy.deepcopy(base);changed['release']['notes']='not an empty seed'
+    assert a.release_parent_id(changed)=='empty-pt-BR'
+
+
+def test_portuguese_requires_confirmed_bindings_and_ordinary_decks():
+    from portuguese_fixture import draft
+    from sprachpipe import authoring_service as a
+    base=a.empty_pack('pt-BR','Portugiesisch (Brasilien)')
+    d=draft(base);d['operations'][1]['payload']['context']['tokens'][2].pop('binding_status')
+    assert a.validate_draft(d,base)['technical']=='invalid'
+    d=draft(base);d['operations'][0]['payload']['practice_kind']='verb_past'
+    assert a.validate_draft(d,base)['technical']=='invalid'
+
+
+def test_portuguese_word_flag_cannot_bypass_manual_binding():
+    from portuguese_fixture import draft
+    from sprachpipe import authoring_service as a
+    base=a.empty_pack('pt-BR','Portugiesisch (Brasilien)');d=draft(base)
+    token=d['operations'][1]['payload']['context']['tokens'][2]
+    token['is_word']=False;token['binding_status']='suggested'
+    assert a.validate_draft(d,base)['technical']=='invalid'
+
+
+def test_portuguese_raw_table_import_cannot_infer_binding_confirmation():
+    import copy
+    from portuguese_fixture import draft
+    from sprachpipe import authoring_service as a
+    base=a.empty_pack('pt-BR','Portugiesisch (Brasilien)');d=draft(base)
+    work=a.materialize_draft(d,base)
+    d['operations']=[];d['add']={t:copy.deepcopy(work[t]) for t in a.TABLES if work.get(t)}
+    for token in d['add']['sentence_tokens']:
+        if any(c.isalpha() for c in token['surface']):token['binding_status']='confirmed'
+    assert a.validate_draft(d,base)['technical']=='valid'
+    d['add']['sentence_tokens'][2].pop('binding_status')
+    assert a.validate_draft(d,base)['technical']=='invalid'

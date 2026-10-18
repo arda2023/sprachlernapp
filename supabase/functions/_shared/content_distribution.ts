@@ -10,7 +10,10 @@ export const FILES = ['content.sqlite','pack.json','registry.json','history_inve
   'editorial_reviews.json','provenance.json','finalization_report.json','content.manifest.json','reader_report.json'];
 const SHA = /^[0-9a-f]{64}$/;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
-const PROFILE_SHA = '59eec37d0a4f322d666701e00bc1bf4cfb44d19b183b1742d16b443989a505cf';
+export const PROFILES: Readonly<Record<string, {id:string;sha256:string}>> = {
+  en: {id:'en-legacy-v1',sha256:'59eec37d0a4f322d666701e00bc1bf4cfb44d19b183b1742d16b443989a505cf'},
+  'pt-BR': {id:'pt-BR-editorial-v1',sha256:'7c59364c0d1ef562ee5a6a679b7d895e0ebec6bf2ad47d8eae56afdcba87fe32'},
+};
 export class DistributionError extends Error {
   constructor(public code: string, public status = 422) { super(code); }
 }
@@ -45,16 +48,17 @@ export type Json = Record<string, any>;
 export type Descriptor = {sha256:string;size_bytes:number};
 export function validateStart(data: Json) {
   requireThat(UUID.test(data.request_id),'REQUEST_ID');
-  requireThat(data.lang==='en' && data.channel==='internal','SCOPE_UNSUPPORTED');
+  requireThat(Object.hasOwn(PROFILES,data.lang) && data.channel==='internal','SCOPE_UNSUPPORTED');
   requireThat(Number.isSafeInteger(data.expected_generation)&&data.expected_generation>=0,'GENERATION_INVALID');
   requireThat(data.expected_generation===0 ? data.parent_manifest_sha256===null&&data.parent_release_id===null :
     SHA.test(data.parent_manifest_sha256)&&UUID.test(data.parent_release_id),'PARENT_INVALID');
   const m=data.manifest;
+  if(data.lang==='pt-BR'&&data.expected_generation===0)requireThat(m?.parent_release_id===null,'PARENT_INVALID');
   requireThat(m?.publication_kind===undefined||m.publication_kind===ADOPTION,'PUBLICATION_KIND');
-  if(m?.publication_kind===ADOPTION)requireThat(data.expected_generation===0&&
+  if(m?.publication_kind===ADOPTION)requireThat(data.lang==='en'&&data.expected_generation===0&&
     data.parent_release_id===null&&data.parent_manifest_sha256===null&&m.parent_release_id===null,'ADOPTION_FIRST_ONLY');
   requireThat(m?.format===2&&m.lang===data.lang&&m.schema_version===5&&m.translation_lang==='de'&&
-    m.profile_id==='en-legacy-v1'&&m.profile_sha256===PROFILE_SHA&&m.internal_test_pack===true&&
+    m.profile_id===PROFILES[data.lang].id&&m.profile_sha256===PROFILES[data.lang].sha256&&m.internal_test_pack===true&&
     m.min_reader_version===5&&canonical(m.required_features)===canonical(['immutable-contexts-v1']), 'MANIFEST_INCOMPATIBLE');
   requireThat(typeof m.version==='string'&&/^[A-Za-z0-9._-]{1,100}$/.test(m.version),'VERSION_INVALID');
   requireThat(data.objects&&canonical(Object.keys(data.objects).sort())===canonical([...FILES].sort()),'OBJECT_SET_INVALID');
@@ -139,8 +143,8 @@ export async function publish(backend:DistributionBackend,request:Request):Promi
   const actor=await backend.actor(request);await backend.publisher(actor);
   const parts=new URL(request.url).pathname.split('/');const index=parts.indexOf('content-publish');const tail=parts.slice(index+1);
   if(request.method==='GET'&&tail[0]==='channel'){
-    const lang=new URL(request.url).searchParams.get('lang');requireThat(lang==='en','PROFILE_UNSUPPORTED');
-    const rows=await backend.json('/rest/v1/content_channels?lang=eq.en&channel=eq.internal');
+    const lang=new URL(request.url).searchParams.get('lang');requireThat(lang!==null&&Object.hasOwn(PROFILES,lang),'PROFILE_UNSUPPORTED');
+    const rows=await backend.json('/rest/v1/content_channels?lang=eq.'+encodeURIComponent(lang)+'&channel=eq.internal');
     if(!rows.length||!rows[0].release_id)return {generation:0,release_id:null,manifest_sha256:null,manifest:null};
     const catalog=await backend.json('/rest/v1/content_release_catalog?release_id=eq.'+rows[0].release_id);
     requireThat(catalog.length===1,'CATALOG_INVALID',503);return {...rows[0],manifest:catalog[0].manifest};

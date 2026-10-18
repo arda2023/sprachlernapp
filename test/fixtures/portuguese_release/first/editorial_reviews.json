@@ -1,0 +1,17 @@
+[
+  {
+    "decision": "approved",
+    "editorial_policy": "manual-pt-BR-editorial-v1",
+    "origin": "local-editor",
+    "payload_sha256": "bf3f7a2541c70558e2700785d1de78ca536608af2c77757f8b27dc5dbcacc872",
+    "profile_sha256": "7c59364c0d1ef562ee5a6a679b7d895e0ebec6bf2ad47d8eae56afdcba87fe32",
+    "reason": "Technical fixture only; no linguistic approval or publication.",
+    "record_refs": [
+      "synthetic",
+      "synthetic-acao"
+    ],
+    "reviewed_at": "2026-10-18T11:39:22.185149+00:00",
+    "reviewer": "SYNTHETIC TEST ONLY",
+    "scope": "draft"
+  }
+]

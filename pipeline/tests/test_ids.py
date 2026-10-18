@@ -75,3 +75,10 @@ def test_canonical_string_order():
 def test_form_norm():
     assert form_norm("Don’t") == "don't"
     assert form_norm("Café") == "café"
+
+
+def test_portuguese_identity_is_distinct_from_english_and_portuguese_variants():
+    from sprachpipe.ids import stable_id
+    values=[stable_id('lemmas',lang=lang,lemma='ação',pos='NOUN') for lang in ('en','pt-BR','pt','pt-PT')]
+    assert len(set(values))==4
+    assert stable_id('lemmas',lang='pt-BR',lemma='ac\u0327a\u0303o',pos='NOUN')==values[1]

@@ -95,7 +95,64 @@ class LanguageProfile:
                 'sentence_text_sha256':digest(text)}
 
 
-PROFILES = {'en': LanguageProfile()}
+@dataclass(frozen=True)
+class PortugueseEditorialProfile(LanguageProfile):
+    """Technical checks only. Every linguistic claim requires a human review."""
+    lang: str = 'pt-BR'
+    id: str = 'pt-BR-editorial-v1'
+    model: str = 'spacy.blank.pt'
+    model_version: str = '3.8.16'
+
+    @property
+    def manifest(self):
+        return {'id': self.id, 'lang': self.lang, 'translation_lang': 'de',
+                'model': self.model, 'model_version': self.model_version,
+                'tokenizer_sha256': 'b528e0528ca541b2815e374dbec35bdbc4574141e7683b23b85384423e782317',
+                'normalization': 'NFC-lower-apostrophe-v1',
+                'answer_policy': 'strict-accents-target-alternative-form-typo-wrong-v1',
+                'allowed_functions': [], 'practice_kinds': ['ordinary'],
+                'editorial_policy': 'manual-pt-BR-editorial-v1',
+                'frequency_policy': 'manual-editorial-no-zipf-v1',
+                'automatic_grammar': False, 'automatic_frequency': False,
+                'max_words': 14, 'max_subclauses_editorial': 1,
+                'sentence_policy': 'one-editorially-confirmed-sentence-v1'}
+
+    def tokenize(self, text, gap=None):
+        from .annotate import tokenize
+        return tokenize(text, _portuguese_tokenizer(), lexical_spans=[gap] if gap else None)
+
+    def validate_sentence(self, text, form, start, end, cefr_band='anfaenger', *, single_sentence=True):
+        from .linter import Finding
+        result = []
+        if text != canonical_text(text):
+            result.append(Finding('error', 'normalization', 'Text zuerst nach NFC normalisieren, dann Offsets bestimmen.'))
+        self.gap(text, start, end, form)
+        if sum(t['is_word'] for t in self.tokenize(text)) > 14:
+            result.append(Finding('error', 'length', 'Maximal 14 orthografische Wörter.'))
+        if not re.search(r'[.?!]["”’\x27)\]]*\s*$', text):
+            result.append(Finding('error', 'ending', 'Satz muss mit . ? oder ! enden.'))
+        result.append(Finding('warn', 'manual-pt-BR-editorial-v1',
+            'Keine automatische Grammatik-/Frequenzprüfung: brasilianischen Gebrauch, genau einen Satz, '
+            'höchstens einen Nebensatz, Niveau, Übersetzungen und alle Bindungen redaktionell prüfen.'))
+        return result
+
+
+from functools import lru_cache
+
+
+@lru_cache(maxsize=1)
+def _portuguese_tokenizer():
+    import hashlib
+    import spacy
+    profile = PortugueseEditorialProfile()
+    nlp = spacy.blank('pt')
+    if (spacy.__version__ != profile.model_version or
+            hashlib.sha256(nlp.tokenizer.to_bytes()).hexdigest() != profile.manifest['tokenizer_sha256']):
+        raise UnsupportedLanguage('Portugiesischer Tokenizer stimmt nicht mit dem geprüften Profil überein.')
+    return nlp
+
+
+PROFILES = {'en': LanguageProfile(), 'pt-BR': PortugueseEditorialProfile()}
 
 
 def get_profile(lang, profile_id=None):

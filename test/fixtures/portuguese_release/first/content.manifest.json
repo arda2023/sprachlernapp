@@ -1,0 +1,22 @@
+{
+  "editorial_reviews_sha256": "54a853985f0f9f59239663aebf0746a978f8045fd9e81684af177d32ad014275",
+  "format": 2,
+  "history_inventory_sha256": "7d981b59018a56af96c125078de1c230d52859c7267d57743be931a3e64da9e5",
+  "internal_test_pack": true,
+  "lang": "pt-BR",
+  "local_only": true,
+  "min_reader_version": 5,
+  "pack_json_sha256": "a51d5a8f09109a509c6abf6245ee84a255a0b161f97728481eac0340d64b425f",
+  "parent_release_id": null,
+  "profile_id": "pt-BR-editorial-v1",
+  "profile_sha256": "7c59364c0d1ef562ee5a6a679b7d895e0ebec6bf2ad47d8eae56afdcba87fe32",
+  "registry_sha256": "2bb86885a1434c92e9f916cd44a3429b5e6565809e64f188187efb264687e2d1",
+  "required_features": [
+    "immutable-contexts-v1"
+  ],
+  "schema_version": 5,
+  "sha256": "0af20d8a1245cc8ab0aee4b6483e7009f7850c77f985e57db7388f985d6826a5",
+  "size_bytes": 208896,
+  "translation_lang": "de",
+  "version": "synthetic_ptbr_1"
+}

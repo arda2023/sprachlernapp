@@ -1,4 +1,10 @@
 # NEXTSTEPS
+## Portugiesisch · Paket 1 · 18.10.2026
+- pt-BR-editorial-v1 in Python/Dart/Server implementiert; en-Manifest/Hash unverändert. Modellfreier Tokenizer, explizite manuelle BR-Prüfung, regulärer erster eigener Kanal ohne englischen Parent; kein language_definition-Bootstrap.
+- Technisch: Pipeline 596 PASS/1 Skip/19 Subtests, Deno 15 PASS, Flutter BR 3/Historie 3/Pack 1 PASS (15s), Stage-Verifier PASS; Exit 0. Analyse Exit 1 nur bekannter avoid_print; zusätzlicher JS-Altfehler auch auf HEAD belegt. Bericht: docs/portuguese-package-1.md.
+- Nach konsistenter Sicherung echter pt-BR-Seed und leerer Allgemeine-Sprache-Entwurf angelegt; 64 Altdateien bytegleich. build/portuguese_authoring_batch_1.zip: 20 basisgebundene leere Zielrefs, Verifier PASS; keine Wörter/Reviews/Sprachfreigabe.
+- Nächster Schritt: 20 echte Ziele anhand docs/portuguese-authoring-contract-v1/FORMAT.md redigieren; vollständige Lieferung als neuen Entwurf importieren. Alte Planvorlage nicht verwenden. Inkrement 2 (mobile Sprachwahl/Antwortpolicy/Geräteprüfung) offen.
+- Kein Deployment, Upload, Cloudzugriff oder Push; echte user.db, englische Packs/Assets und bestehende Editorentwürfe erhalten. Sicherungs-/Vorlagenhash und genaue Befehle im Paketbericht.
 ## Portugiesisch-Plan · 18.10.2026
 - Geprüfter Plan: docs/portuguese-language-rollout-plan.md; durchgängig pt-BR/de, eigener erster Kanal ohne englischen Vorgänger, genau zwei Implementierungsinkremente. Englisch und Nutzerdaten bleiben erhalten.
 - Authoring-Quellen: docs/portuguese-authoring-contract-v1/; Artefakt build/portuguese_authoring_contract_v1.zip mit 20 leeren Slots und synthetischer Strukturprobe. Aktuelles ZIP/JSON/XLSX transportvalidiert, ausdrücklich nicht releasefähig (PROFILE_UNSUPPORTED).

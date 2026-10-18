@@ -129,3 +129,58 @@ Deno.test('baseline adoption only admits English internal generation zero and kn
     'https://synthetic.invalid/content-publish/start',{method:'POST',body:JSON.stringify(valid)}));
   assert(response.status===409&&(await response.json()).code==='ADOPTION_CHANNEL_OCCUPIED');
 });
+
+Deno.test('BR allowlist and publisher channel are exact and independent; reader grant is separate',async()=>{
+  const m=JSON.parse(Deno.readTextFileSync(new URL('../../../test/fixtures/portuguese_release/first/content.manifest.json',import.meta.url)));
+  const objects=Object.fromEntries(FILES.map(name=>[name,{sha256:'0'.repeat(64),size_bytes:1}]));
+  objects['content.sqlite']={sha256:m.sha256,size_bytes:m.size_bytes};objects['pack.json']={sha256:m.pack_json_sha256,size_bytes:1};
+  const valid={request_id:id,lang:'pt-BR',channel:'internal',expected_generation:0,parent_release_id:null,parent_manifest_sha256:null,manifest:m,objects};
+  validateStart(valid);
+  for(const lang of ['pt','pt-PT','pt-br','constructor'])await rejects(()=>validateStart({...valid,lang}),'SCOPE_UNSUPPORTED');
+  await rejects(()=>validateStart({...valid,manifest:{...m,profile_id:'en-legacy-v1'}}),'MANIFEST_INCOMPATIBLE');
+  await rejects(()=>validateStart({...valid,manifest:{...m,profile_sha256:'0'.repeat(64)}}),'MANIFEST_INCOMPATIBLE');
+  await rejects(()=>validateStart({...valid,manifest:{...m,publication_kind:ADOPTION}}),'ADOPTION_FIRST_ONLY');
+  const paths:string[]=[];
+  class Channels extends DistributionBackend {
+    override async actor(){return actor;}
+    override async publisher(){}
+    override async json(path:string){paths.push(path);return [];}
+  }
+  const b=new Channels('https://synthetic.invalid','unused',()=>{throw Error('network forbidden');});
+  const result=await handler('publish',b)(new Request('https://synthetic.invalid/content-publish/channel?lang=pt-BR'));
+  assert(result.status===200&&(await result.json()).generation===0);
+  assert(paths[0].includes('lang=eq.pt-BR')&&!paths[0].includes('lang=eq.en'));
+  const reader=await handler('release',b)(new Request('https://synthetic.invalid/content-release?lang=pt-BR&channel=internal'));
+  assert(reader.status===403&&(await reader.json()).code==='READER_REQUIRED');
+});
+
+Deno.test('BR publication retains explicit resume, run lease and commit CAS forwarding',async()=>{
+  const calls:any[]=[];let conflict=false;
+  class Guarded extends DistributionBackend {
+    override async actor(){return actor;}
+    override async publisher(){}
+    override async upload(){return {id,lang:'pt-BR',channel:'internal',status:'verifying',expected_generation:1,
+      parent_release_id:actor,parent_manifest_sha256:'a'.repeat(64),draft_manifest:{},objects:{}};}
+    override async json(path:string,_method?:string,body?:any){
+      calls.push({path,body});
+      if(path.endsWith('/publish_content_release')){
+        assert(body.upload_id===id&&body.verified_actor_id===actor&&body.expected_generation===1&&body.expected_manifest_sha256==='a'.repeat(64));
+        if(conflict)throw new DistributionError('CONFLICT',409);
+        return {generation:2};
+      }
+      assert(path.endsWith('/content_verification_transition')&&body.p_actor===actor&&body.p_upload===id);
+      const run={id:actor,verifier:'native-v2',stage:'F0',revision:7,lease:id,state:'verifying',results:{},expires_at:'2099-01-01T00:00:00Z'};
+      if(body.p_op==='finish')assert(body.p_input.run_id===actor&&body.p_input.lease===id&&body.p_input.revision===7&&body.p_input.stage==='F0');
+      return run;
+    }
+    override async object(){}
+  }
+  const b=new Guarded('https://synthetic.invalid','unused',()=>{throw Error('network forbidden');});
+  const call=(action:string,data:any)=>handler('publish',b)(new Request('https://synthetic.invalid/content-publish/'+id+'/'+action,{method:'POST',body:JSON.stringify(data)}));
+  assert((await call('resume',{})).status===409&&calls.length===0);
+  assert((await call('resume',{accepted:true,scope:'resume-same-upload-native-v2',request_id:id})).status===200);
+  assert((await call('finalize',{})).status===200);
+  const data={expected_generation:1,expected_manifest_sha256:'a'.repeat(64),request_id:id};
+  assert((await call('commit',data)).status===200);conflict=true;
+  assert((await call('commit',data)).status===409);
+});

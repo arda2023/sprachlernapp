@@ -386,7 +386,9 @@ class EditorService:
             # Only actually edited records are newly approved; unchanged
             # targets in the selected scope keep their base provenance.
             draft['reviews'].append({'scope':'draft','record_refs':author.changed_refs(draft),'payload_sha256':sha,
-                'decision':'approved','reviewer':data['reviewer'],'reason':data['reason'],'reviewed_at':utc_now(),'origin':'local-editor'})
+                'decision':'approved','reviewer':data['reviewer'],'reason':data['reason'],'reviewed_at':utc_now(),'origin':'local-editor',
+                **({'profile_sha256':get_profile('pt-BR').sha256,
+                    'editorial_policy':get_profile('pt-BR').manifest['editorial_policy']} if draft['lang']=='pt-BR' else {})})
             draft['validation']=author.validate_draft(draft,self.base(draft['lang'],draft['base']))
             return self.store.save_draft(draft,etag)
 
@@ -576,6 +578,14 @@ class EditorService:
                 if receipt is None:
                     author.require(phase=='upload','PUBLISH_ORDER','Zuerst hochladen.')
                     channel=self.publisher.channel(record['lang'])
+                    if record['lang']=='pt-BR':
+                        current=channel.get('manifest') or {}
+                        author.require((channel['generation']==0 and channel['release_id'] is None and
+                            channel['manifest_sha256'] is None and manifest['parent_release_id'] is None) or
+                            (channel['generation']>0 and current.get('lang')=='pt-BR' and
+                             current.get('profile_id')==get_profile('pt-BR').id and
+                             current.get('profile_sha256')==get_profile('pt-BR').sha256),
+                            'PUBLISH_BASE_CHANGED','Portugiesischer Kanal benötigt eine passende eigene Basis.',status=409)
                     author.require((channel['generation']==0 and channel['release_id'] is None and channel['manifest_sha256'] is None) if draft is None else
                         (channel['generation']==0 or (channel['manifest']['version']==draft['base']['version'] and channel['manifest'].get('pack_canonical_sha256')==draft['base']['pack_canonical_sha256'])),
                         'PUBLISH_BASE_CHANGED','Private Kanalbasis weicht ab. Aktuelle Version übernehmen und Entwurf neu abgleichen.',status=409)

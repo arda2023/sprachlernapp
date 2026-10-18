@@ -1,11 +1,13 @@
 {
+  "automatic_frequency": false,
+  "automatic_grammar": false,
   "blockers": [
-    "PROFILE_UNSUPPORTED",
-    "publisher English-only gate",
-    "mobile language switch absent",
-    "no atomic language creation from current delivery alone"
+    "empty target slots are not content",
+    "manual linguistic review required",
+    "mobile language switch deferred to increment 2"
   ],
   "contract_id": "portuguese-authoring-contract-v1",
+  "editorial_policy": "manual-pt-BR-editorial-v1",
   "enums": {
     "alternatives_pilot": [],
     "binding_status_complete": [
@@ -34,38 +36,6 @@
       "manual"
     ]
   },
-  "future_bootstrap_extension": {
-    "additional_properties": false,
-    "commit": "explicit accepted preview hash; atomically persist language seed and import receipt under store mutex",
-    "current_failure_code": "FORMAT_UNSUPPORTED",
-    "failure": "no partially created language/head; conflicts never overwrite metadata",
-    "format_version_proposal": 4,
-    "optional_top_level_field": "language_definition",
-    "preconditions": [
-      "registered exact profile/hash",
-      "language absent OR exact metadata match",
-      "no English parent",
-      "preview on ephemeral deterministic empty seed"
-    ],
-    "purpose": "new_deck",
-    "required_fields": [
-      "lang",
-      "display_name",
-      "name_native",
-      "translation_lang",
-      "profile_id",
-      "profile_sha256"
-    ],
-    "status": "NOT_ACCEPTED_BY_CURRENT_IMPORTER",
-    "value": {
-      "display_name": "Portugiesisch (Brasilien)",
-      "lang": "pt-BR",
-      "name_native": "Português do Brasil",
-      "profile_id": "pt-BR-editorial-v1",
-      "profile_sha256": null,
-      "translation_lang": "de"
-    }
-  },
   "generated_by_import_materialization": [
     "content IDs",
     "singleton learning group",
@@ -80,6 +50,14 @@
     "lang": "pt-BR",
     "name_native": "Português do Brasil",
     "translation_lang": "de"
+  },
+  "language_creation": {
+    "language_definition_field_supported": false,
+    "workflow": [
+      "create_language",
+      "export_template",
+      "import_as_new_draft"
+    ]
   },
   "never_guess": [
     "existing IDs",
@@ -97,10 +75,10 @@
     "target_occurrences": 1,
     "unit": "Unicode code points"
   },
-  "proposed_profile": {
+  "profile": {
     "id": "pt-BR-editorial-v1",
-    "implemented": false,
-    "sha256": null
+    "implemented": true,
+    "sha256": "7c59364c0d1ef562ee5a6a679b7d895e0ebec6bf2ad47d8eae56afdcba87fe32"
   },
   "required_fields": {
     "card": [
@@ -166,12 +144,13 @@
     "practice_kind": "ordinary",
     "stories_required": false
   },
-  "status": "PLAN_DRAFT_NOT_RELEASE_READY",
+  "status": "AUTHORING_CONTRACT_IMPLEMENTED_CONTENT_REVIEW_OPEN",
   "transport": {
     "current_reader_accepts_draft": true,
-    "current_release_supported": false,
+    "current_release_supported": true,
     "format": "sprachapp.editorial-content",
-    "format_version": 4
+    "format_version": 4,
+    "release_requires_complete_content_and_local_review": true
   },
   "xlsx": {
     "meta_columns": [

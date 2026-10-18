@@ -9,6 +9,15 @@ class ContentLanguageProfile {
     '59eec37d0a4f322d666701e00bc1bf4cfb44d19b183b1742d16b443989a505cf',
   );
 
-  static ContentLanguageProfile? forLanguage(String lang) =>
-      lang == 'en' ? english : null;
+  static const portugueseBrazil = ContentLanguageProfile(
+    'pt-BR',
+    'pt-BR-editorial-v1',
+    '7c59364c0d1ef562ee5a6a679b7d895e0ebec6bf2ad47d8eae56afdcba87fe32',
+  );
+
+  static ContentLanguageProfile? forLanguage(String lang) => switch (lang) {
+    'en' => english,
+    'pt-BR' => portugueseBrazil,
+    _ => null,
+  };
 }

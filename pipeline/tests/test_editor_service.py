@@ -200,3 +200,48 @@ def test_staging_rejects_bundle_changes_before_touching_assets(setup):
     (directory/'content.sqlite').write_bytes(b'tampered')
     with pytest.raises(AuthoringError,match='nachträglich verändert'):service.staging_impact('synthetic')
     assert not service.asset_directory.exists()
+
+
+def test_portuguese_first_and_followup_bundle_use_real_reader(tmp_path):
+    from portuguese_fixture import delivery
+    from sprachpipe import authoring_service as author
+    from sprachpipe.editor.exchange import authoring_context,write_zip,read_delivery
+    from sprachpipe.editor.xlsx import write_workbook,read_workbook
+    source=tmp_path/'en.json';source.write_text(json.dumps(author.empty_pack('en','English')))
+    service=EditorService(tmp_path/'editor',source=source,asset_directory=tmp_path/'assets')
+    try:
+        english=digest(service.base('en'))
+        lang=service.create_language({'lang':'pt-BR','display_name':'Portugiesisch (Brasilien)','name_native':'Português do Brasil','translation_lang':'de'})
+        assert lang['state']=='ready'
+        base=service.base('pt-BR');d=delivery(base)
+        assert read_workbook(write_workbook(d),'pt-BR')==d
+        raw=write_zip(d,authoring_context(base))
+        assert read_delivery(raw,'synthetic.zip','pt-BR')==d
+        preview=wait(service,service.preview_upload(raw,'synthetic.zip','pt-BR'))
+        assert preview['state']=='succeeded',preview
+        p=preview['result'];receipt=service.accept_import(p['import_id'],p['preview_sha256'])
+        draft=service.store.load_draft(receipt['draft_id'])
+        def approve_and_build(draft,label):
+            job=wait(service,service.validate(draft['draft_id'],service.store.etag(draft)))
+            assert job['state']=='succeeded',job
+            draft=job['result']['draft'];assert draft['validation']['technical']=='valid',draft['validation']
+            assert draft['validation']['editorial']=='open'
+            draft=service.review(draft['draft_id'],{'payload_sha256':author.draft_content_hash(draft),
+                'reviewer':'SYNTHETIC TEST ONLY','reason':'Technical fixture only; no linguistic approval or publication.'},service.store.etag(draft))
+            assert draft['validation']['editorial']=='approved'
+            job=wait(service,service.release(draft['draft_id'],{'version':label,'validation_sha256':draft['validation']['sha256']},service.store.etag(draft)))
+            assert job['state']=='succeeded',job
+            return job['result']
+        first=approve_and_build(draft,'synthetic_ptbr_1')
+        assert first['manifest']['parent_release_id'] is None
+        first_pack=service.base('pt-BR');view=author.target_view(first_pack,'synthetic-acao')
+        second=service.new_draft('pt-BR')
+        context=copy.deepcopy(view['context']);context['translation_de']='Zweite synthetische Testrevision.'
+        second=service.update_target(second['draft_id'],'synthetic-acao',{'context':context,'translation_de':view['card']['translation_de']},service.store.etag(second))
+        follow=approve_and_build(second,'synthetic_ptbr_2')
+        assert follow['manifest']['parent_release_id']=='synthetic_ptbr_1'
+        report=json.loads((service.store.root/follow['path']/'reader_report.json').read_text())
+        assert len(report['current'])==1 and len(report['historical'])==2
+        assert digest(service.base('en'))==english
+        assert service.base('pt-BR')['word_registry']['snapshot']==first_pack['word_registry']['snapshot']
+    finally:service.close()

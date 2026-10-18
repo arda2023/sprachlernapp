@@ -49,11 +49,23 @@ def empty_pack(lang, display_name):
 
 
 def base_fingerprint(pack, raw=None, sqlite_sha256=None):
+    try: profile_sha256=get_profile(pack['lang']).sha256
+    except UnsupportedLanguage: profile_sha256=None
     return {'release_id':pack['release']['version'],'version':pack['release']['version'],
             'pack_bytes_sha256':hashlib.sha256(raw).hexdigest() if raw is not None else digest(pack),
             'pack_canonical_sha256':digest(pack),'sqlite_sha256':sqlite_sha256,
             'registry_sha256':pack['word_registry']['sha256'],
-            'profile_sha256':get_profile(pack['lang']).sha256 if pack['lang']=='en' else None}
+            'profile_sha256':profile_sha256}
+
+
+def release_parent_id(base):
+    # Only the exact empty BR seed is a local anchor, never a published parent.
+    # Do not infer this from a version prefix or alter legacy English semantics.
+    if base['lang']=='pt-BR':
+        seed=empty_pack('pt-BR',base['languages'][0]['name_de'])
+        seed['languages']=base['languages']
+        if base==seed:return None
+    return base['release']['version']
 
 
 def normalize_delivery(raw, format='json', language=None):
@@ -218,14 +230,23 @@ def target_findings(pack, view, *, linguistic=True):
     gap=context.get('gap') or {}
     if any(type(gap.get(k)) is not int for k in ('start_pos','end_pos')):fail('GAP_MISSING','Ziellücke auswählen.','context.gap')
     for token in context.get('tokens',[]):
-        if token.get('is_word',any(c.isalpha() for c in token.get('surface',''))):
+        if (any(c.isalpha() for c in token.get('surface','')) if pack['lang']=='pt-BR' else
+                token.get('is_word',any(c.isalpha() for c in token.get('surface','')))):
             if not token.get('sense'):fail('AMBIGUOUS_SENSE','Bedeutung für „'+token.get('surface','')+'“ auswählen.','tokens.'+str(token.get('idx'))+'.sense')
             if not token.get('context_gloss_de'):fail('TOKEN_GLOSS_MISSING','Kontextübersetzung für „'+token.get('surface','')+'“ fehlt.','tokens.'+str(token.get('idx'))+'.context_gloss_de')
-            if token.get('binding_status') not in (None,'confirmed'):fail('TOKEN_REVIEW_OPEN','Wortbindung ausdrücklich bestätigen.','tokens.'+str(token.get('idx')))
+            if token.get('binding_status') not in (('confirmed',) if pack['lang']=='pt-BR' else (None,'confirmed')):fail('TOKEN_REVIEW_OPEN','Wortbindung ausdrücklich bestätigen.','tokens.'+str(token.get('idx')))
     if context.get('text') and not context.get('tokens'):fail('TOKENS_MISSING','Tokenannotation fehlt.','context.tokens')
     if linguistic:
         try:
             profile=get_profile(pack['lang'])
+            if pack['lang']=='pt-BR':
+                if card.get('identity_function') or card.get('introduction_scope','ordinary')!='ordinary':
+                    fail('PROFILE_FUNCTION_UNSUPPORTED','Dieses Profil unterstützt nur gewöhnliche Lernziele.','card')
+                if not errors:
+                    expected=profile.tokenize(context['text'],(gap['start_pos'],gap['end_pos']))
+                    fields=('idx','surface','start_pos','end_pos')
+                    if [{k:t.get(k) for k in fields} for t in context['tokens']] != [{k:t[k] for k in fields} for t in expected]:
+                        fail('TOKENIZATION_MISMATCH','Tokenliste muss exakt dem Profil und der Ziellücke entsprechen.','context.tokens')
             if not errors:
                 profile.gap(context['text'],gap['start_pos'],gap['end_pos'],card['form'])
                 for f in profile.validate_sentence(context['text'],card['form'],gap['start_pos'],gap['end_pos'],card.get('cefr_band','anfaenger'),single_sentence=False):
@@ -388,6 +409,8 @@ def materialize_draft(draft,base,profile=None,*,release_version=None):
         tokens=[t for t in work['sentence_tokens'] if t['sentence']==sentence['ref']]
         for token in tokens:
             require(not (token.get('context_snapshot') or {}).get('legacy'),'HISTORY_FORGED','Neue Kontexte dürfen sich nicht als Altdaten ausgeben.')
+            if work['lang']=='pt-BR' and any(c.isalpha() for c in token['surface']):
+                require(token.get('binding_status')=='confirmed','TOKEN_REVIEW_OPEN','Importierte BR-Wortbindung ausdrücklich bestätigen.')
             require(token.get('binding_status') not in ('unresolved','suggested'),'TOKEN_REVIEW_OPEN','Importierte Wortbindung noch nicht bestätigt.')
         cleaned=clean_tokens(work,{'tokens':tokens})
         for token,new in zip(tokens,cleaned):token.update(new)
@@ -468,6 +491,10 @@ def validate_draft(draft, base, profile=None):
     try:
         profile=profile or get_profile(draft['lang'])
         working=materialize_draft(draft,base,profile)
+        if draft['lang']=='pt-BR':
+            require(all(d.get('practice_kind','ordinary')=='ordinary' for d in working['decks']) and
+                    not working.get('form_targets') and not working.get('deck_practice_targets'),
+                    'PROFILE_FUNCTION_UNSUPPORTED','Das BR-Pilotprofil unterstützt ausschließlich ordinary-Stapel.')
         for card in working['cards']:
             if not card.get('removed_in'):
                 view=target_view(working,card['ref'])
@@ -483,7 +510,9 @@ def validate_draft(draft, base, profile=None):
     if coverage and (coverage.get('processed')!=coverage.get('expected') or coverage.get('conflicting_refs')):
         findings.append(AuthoringError('INCOMPLETE_BATCH','Die Lieferung ist noch nicht vollständig und konfliktfrei verarbeitet.').finding())
     review_hash=draft_content_hash(draft)
-    approved=any(r.get('payload_sha256')==review_hash and r.get('decision')=='approved' for r in draft.get('reviews',[]))
+    approved=any(r.get('payload_sha256')==review_hash and r.get('decision')=='approved' and
+        (draft['lang']!='pt-BR' or (r.get('profile_sha256')==get_profile('pt-BR').sha256 and
+         r.get('editorial_policy')==get_profile('pt-BR').manifest['editorial_policy'])) for r in draft.get('reviews',[]))
     result={'draft_revision':draft['revision'],'base_sha256':digest(base),'validator_version':'editor-1',
             'technical':'unsupported' if any(f['code']=='PROFILE_UNSUPPORTED' for f in findings) else
                         'invalid' if any(f['severity']=='error' for f in findings) else 'valid',
@@ -613,7 +642,7 @@ def _build_verified_bundle(draft,base,directory,*,version,validation,progress,ad
         'pack_json_sha256':hashlib.sha256((directory/'pack.json').read_bytes()).hexdigest(),
         'registry_sha256':work['word_registry']['sha256'],'history_inventory_sha256':digest(inventory),
         'editorial_reviews_sha256':digest(draft['reviews']),'internal_test_pack':True,
-        'parent_release_id':draft['base']['release_id'],'required_features':['immutable-contexts-v1'],
+        'parent_release_id':release_parent_id(base),'required_features':['immutable-contexts-v1'],
         'min_reader_version':5,'local_only':True}
     if adoption:
         manifest.update(publication_kind=adoption['kind'],adoption_sha256=digest(adoption),parent_release_id=None)

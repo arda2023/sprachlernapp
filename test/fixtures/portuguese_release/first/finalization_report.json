@@ -1,0 +1,78 @@
+{
+  "baseline_gaps": [],
+  "history_superset": true,
+  "internal_test_pack": true,
+  "reader_output": "Reader: ok; schema 5; 1 active targets; 1 historical contexts",
+  "sqlite_counts": {
+    "audio_assets": 0,
+    "card_lexical_targets": 0,
+    "card_sentences": 1,
+    "cards": 1,
+    "content_releases": 1,
+    "deck_cards": 1,
+    "deck_practice_targets": 0,
+    "deck_words": 1,
+    "decks": 1,
+    "dictionary_forms": 4,
+    "exercises": 0,
+    "form_targets": 0,
+    "grammar_rules": 0,
+    "languages": 1,
+    "lemmas": 4,
+    "lexical_targets": 0,
+    "senses": 4,
+    "sentence_tokens": 6,
+    "sentences": 1,
+    "stories": 0,
+    "story_context_corrections": 0,
+    "story_sentences": 0,
+    "word_aliases": 0
+  },
+  "status": "ok",
+  "validation": {
+    "base_sha256": "5fe98c7c183552e5e6ae708bbb765f75dcef21be41f71d094fac806c25d8f554",
+    "changed_refs": [
+      "synthetic",
+      "synthetic-acao"
+    ],
+    "content_sha256": "bf3f7a2541c70558e2700785d1de78ca536608af2c77757f8b27dc5dbcacc872",
+    "coverage": {
+      "chunks": [
+        {
+          "expected_refs": [
+            "synthetic-acao"
+          ],
+          "number": 1,
+          "report_sha256": "5de9237696c15afb278c796f4e096bff483dda1a0b0498bdddbb97633c6c163c",
+          "state": "parsed"
+        }
+      ],
+      "conflicting_refs": [],
+      "existing_refs": [],
+      "expected": 1,
+      "incomplete_refs": [],
+      "new_refs": [
+        "synthetic-acao"
+      ],
+      "parsed": 1,
+      "processed": 1,
+      "unresolved": 0
+    },
+    "draft_revision": 4,
+    "editorial": "approved",
+    "findings": [
+      {
+        "code": "manual-pt-BR-editorial-v1",
+        "location": {
+          "field": "context.text",
+          "record_ref": "synthetic-acao"
+        },
+        "message": "Keine automatische Grammatik-/Frequenzprüfung: brasilianischen Gebrauch, genau einen Satz, höchstens einen Nebensatz, Niveau, Übersetzungen und alle Bindungen redaktionell prüfen.",
+        "severity": "warn"
+      }
+    ],
+    "sha256": "5942603ca81390404fd6f20b034ffc3c7483e420a100ed59411c18c4760a2fb0",
+    "technical": "valid",
+    "validator_version": "editor-1"
+  }
+}
