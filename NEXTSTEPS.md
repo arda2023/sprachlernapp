@@ -1,4 +1,9 @@
 # NEXTSTEPS
+## Portugiesisch-Plan · 18.10.2026
+- Geprüfter Plan: docs/portuguese-language-rollout-plan.md; durchgängig pt-BR/de, eigener erster Kanal ohne englischen Vorgänger, genau zwei Implementierungsinkremente. Englisch und Nutzerdaten bleiben erhalten.
+- Authoring-Quellen: docs/portuguese-authoring-contract-v1/; Artefakt build/portuguese_authoring_contract_v1.zip mit 20 leeren Slots und synthetischer Strukturprobe. Aktuelles ZIP/JSON/XLSX transportvalidiert, ausdrücklich nicht releasefähig (PROFILE_UNSUPPORTED).
+- Lokale Prüfungen: Python 64 PASS, Flutter gezielt 31 PASS, Artefaktverifier PASS (Exit 0). Deno fehlt (Exit 127); Serverfixtureabnahme offen. Keine vollständige Flutter-Suite für den Plan.
+- Zur Planabnahme: modellfreies redaktionelles BR-Profil und bestehender zweistufiger Sprachseed-/Importweg empfohlen. Mobile Sprachwahl, Profil/Serverfreigabe und Geräteabnahme noch nicht implementiert; kein Download, Cloudzugriff, Release oder Push.
 ## Aktive Inhaltskontexte · 18.10.2026
 - chitchat-Fehler mit echten veröffentlichten Packbytes und synthetischem Altbestand reproduziert: Wortdetails bevorzugten den letzten historischen Review-Satz trotz korrekt aktivem Reader. Minimalfix in learning_providers.dart; keine Datenmigration.
 - Neuer Test content_active_context_test.dart: Altcode rot, Fix mit echten Bundles 5 PASS/Exit 0; Fehleraktivierung/Rollback, Neustart, aktuelle Pässe und unveränderte SRS-/Reviewzeilen geprüft. Historische/laufende Kontexte erhalten.

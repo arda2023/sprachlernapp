@@ -1,0 +1,232 @@
+{
+  "blockers": [
+    "PROFILE_UNSUPPORTED",
+    "publisher English-only gate",
+    "mobile language switch absent",
+    "no atomic language creation from current delivery alone"
+  ],
+  "contract_id": "portuguese-authoring-contract-v1",
+  "enums": {
+    "alternatives_pilot": [],
+    "binding_status_complete": [
+      "confirmed"
+    ],
+    "cefr_band_pilot": [
+      "anfaenger"
+    ],
+    "pos": [
+      "ADJ",
+      "ADP",
+      "ADV",
+      "AUX",
+      "CCONJ",
+      "DET",
+      "INTJ",
+      "NOUN",
+      "NUM",
+      "PART",
+      "PRON",
+      "PROPN",
+      "SCONJ",
+      "VERB"
+    ],
+    "provenance_kind_pilot": [
+      "manual"
+    ]
+  },
+  "future_bootstrap_extension": {
+    "additional_properties": false,
+    "commit": "explicit accepted preview hash; atomically persist language seed and import receipt under store mutex",
+    "current_failure_code": "FORMAT_UNSUPPORTED",
+    "failure": "no partially created language/head; conflicts never overwrite metadata",
+    "format_version_proposal": 4,
+    "optional_top_level_field": "language_definition",
+    "preconditions": [
+      "registered exact profile/hash",
+      "language absent OR exact metadata match",
+      "no English parent",
+      "preview on ephemeral deterministic empty seed"
+    ],
+    "purpose": "new_deck",
+    "required_fields": [
+      "lang",
+      "display_name",
+      "name_native",
+      "translation_lang",
+      "profile_id",
+      "profile_sha256"
+    ],
+    "status": "NOT_ACCEPTED_BY_CURRENT_IMPORTER",
+    "value": {
+      "display_name": "Portugiesisch (Brasilien)",
+      "lang": "pt-BR",
+      "name_native": "Português do Brasil",
+      "profile_id": "pt-BR-editorial-v1",
+      "profile_sha256": null,
+      "translation_lang": "de"
+    }
+  },
+  "generated_by_import_materialization": [
+    "content IDs",
+    "singleton learning group",
+    "owner bindings",
+    "positions",
+    "sentence refs",
+    "accepted=[form]",
+    "context snapshots"
+  ],
+  "language": {
+    "display_name": "Portugiesisch (Brasilien)",
+    "lang": "pt-BR",
+    "name_native": "Português do Brasil",
+    "translation_lang": "de"
+  },
+  "never_guess": [
+    "existing IDs",
+    "existing sense bindings",
+    "base hashes",
+    "profile hash",
+    "editorial approval"
+  ],
+  "offsets": {
+    "contiguous": true,
+    "current_importer_fills_missing_offsets": false,
+    "interval": "[start_pos,end_pos)",
+    "line_endings": "LF",
+    "normalization": "NFC",
+    "target_occurrences": 1,
+    "unit": "Unicode code points"
+  },
+  "proposed_profile": {
+    "id": "pt-BR-editorial-v1",
+    "implemented": false,
+    "sha256": null
+  },
+  "required_fields": {
+    "card": [
+      "form",
+      "sense",
+      "translation_de",
+      "cefr_band",
+      "introduction_scope"
+    ],
+    "context": [
+      "text",
+      "translation_de",
+      "gap",
+      "tokens",
+      "valid_alternatives",
+      "reason"
+    ],
+    "dictionary_form": [
+      "form",
+      "sense",
+      "gloss_de",
+      "rank"
+    ],
+    "lemma": [
+      "ref",
+      "lemma",
+      "pos"
+    ],
+    "operation": [
+      "op_id",
+      "kind",
+      "lang",
+      "target_ref",
+      "expect",
+      "payload",
+      "reason"
+    ],
+    "sense": [
+      "ref",
+      "lemma",
+      "sense_key",
+      "gloss_de",
+      "definition_de"
+    ],
+    "token": [
+      "idx",
+      "surface",
+      "start_pos",
+      "end_pos"
+    ],
+    "word_token_additionally": [
+      "lemma",
+      "sense",
+      "context_gloss_de",
+      "binding_status"
+    ]
+  },
+  "scope": {
+    "fill_required": false,
+    "identity_function": null,
+    "later_approximate_targets": 160,
+    "pilot_targets": 20,
+    "practice_kind": "ordinary",
+    "stories_required": false
+  },
+  "status": "PLAN_DRAFT_NOT_RELEASE_READY",
+  "transport": {
+    "current_reader_accepts_draft": true,
+    "current_release_supported": false,
+    "format": "sprachapp.editorial-content",
+    "format_version": 4
+  },
+  "xlsx": {
+    "meta_columns": [
+      "key",
+      "value_json"
+    ],
+    "mode": "full",
+    "payload_shape": {
+      "fields": {},
+      "present": []
+    },
+    "record_columns": [
+      "_table",
+      "_index",
+      "payload_json"
+    ],
+    "table_sheets": {
+      "card_sentences": "Luecken",
+      "cards": "Ziele",
+      "decks": "Stapel",
+      "dictionary_forms": "Formglossen",
+      "lemmas": "Lemmas",
+      "operations": "Operationen",
+      "provenance": "Herkunft",
+      "senses": "Bedeutungen",
+      "sentence_tokens": "Tokens",
+      "sentences": "Saetze"
+    },
+    "version": 1,
+    "visible_columns": [
+      "ref",
+      "card",
+      "sentence",
+      "deck",
+      "form",
+      "translation_de",
+      "text",
+      "sense",
+      "lemma",
+      "sense_key",
+      "definition_de",
+      "gloss_de",
+      "pos",
+      "idx",
+      "surface",
+      "start_pos",
+      "end_pos",
+      "gap_start",
+      "gap_end",
+      "context_gloss_de",
+      "title_de",
+      "slug",
+      "op_id",
+      "kind",
+      "target_ref"
+    ]
+  }
+}
