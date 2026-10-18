@@ -475,6 +475,67 @@ class EditorService:
                 if not registered and destination.exists():shutil.rmtree(destination)
         return self.jobs.submit('baseline-adoption',run)
 
+    def published_base_preview(self,lang):
+        """Read-only: published channel plus its copied original bundle, fully verified."""
+        from . import published_base as published
+        def run(job):
+            job.progress('Veröffentlichten Kanal lesend abfragen …')
+            channel=self.publisher.channel(lang);binding=published.channel_binding(channel,lang)
+            job.progress('Originalbundle gegen das veröffentlichte Manifest prüfen …')
+            directory,pack,raw,files=published.locate(self.store.root,channel['manifest'],lang)
+            job.check_cancelled()
+            fingerprint=author.base_fingerprint(pack,raw,channel['manifest']['sha256'])
+            head=self.store.get('heads',lang)
+            drafts=[{'draft_id':d['draft_id'],'revision':d['revision'],'deck_ref':d.get('deck_ref'),
+                     'operations':len(d.get('operations',[])),'base_version':d['base']['version']}
+                    for d in self.store.drafts() if d['lang']==lang and d.get('state')!='discarded' and d['base']!=fingerprint]
+            preview={'lang':lang,'channel':binding,'manifest':channel['manifest'],'bundle':directory.name,'files':files,
+                     'fingerprint':fingerprint,'current_head':head,'already_head':head==fingerprint,'drafts_to_rebase':drafts,
+                     'counts':{t:len(pack.get(t,[])) for t in ('cards','sentences','decks')}}
+            preview['sha256']=digest(preview)
+            atomic_json(self.store.root/'published-bases'/(preview['sha256']+'.json'),
+                        {**preview,'path':str(directory.relative_to(self.store.root))})
+            return preview
+        return self.jobs.submit('published-base-preview',run)
+
+    def adopt_published_base(self,data):
+        """Explicit switch of the local editing base; drafts are never rewritten."""
+        from . import published_base as published
+        author.require(isinstance(data,dict) and set(data)=={'preview_sha256','accepted'} and data['accepted'] is True
+                       and published.SHA.fullmatch(str(data['preview_sha256'])),
+                       'PUBLISHED_BASE_CONFIRMATION','Übernahme der veröffentlichten Version ausdrücklich bestätigen.')
+        path=self.store.root/'published-bases'/(data['preview_sha256']+'.json')
+        author.require(path.is_file(),'PUBLISHED_PREVIEW_STALE','Vorschau nicht gefunden. Vorschau erneut öffnen.',status=409)
+        record=read_json(path)
+        author.require(digest({k:v for k,v in record.items() if k not in ('sha256','path')})==data['preview_sha256'],
+                       'PUBLISHED_PREVIEW_STALE','Vorschau wurde verändert. Vorschau erneut öffnen.',status=409)
+        def run(job):
+            lang=record['lang']
+            job.progress('Originalbundle erneut vollständig prüfen …')
+            pack,raw,files=published.verify_bundle(self.store.root/record['path'],record['manifest'],lang)
+            fingerprint=author.base_fingerprint(pack,raw,record['manifest']['sha256'])
+            author.require(files==record['files'] and fingerprint==record['fingerprint'],
+                           'PUBLISHED_BUNDLE_CHANGED','Bundle wurde seit der Vorschau verändert. Vorschau erneut öffnen.',status=409)
+            job.progress('Kanalzustand unmittelbar vor der Übernahme erneut prüfen …')
+            channel=self.publisher.channel(lang)
+            author.require(published.channel_binding(channel,lang)==record['channel'] and channel['manifest']==record['manifest'],
+                           'PUBLISHED_CHANNEL_CHANGED','Privater Kanal hat sich seit der Vorschau geändert. Vorschau erneut öffnen.',status=409)
+            job.check_cancelled()
+            with self.store.mutex:
+                head=self.store.get('heads',lang)
+                if head==fingerprint:return {'status':'already_head','base':head}
+                author.require(head==record['current_head'],'BASE_CHANGED','Lokale Bearbeitungsbasis wurde seit der Vorschau geändert. Vorschau erneut öffnen.',status=409)
+                key=fingerprint['pack_canonical_sha256']
+                # Content-addressed base first; the head pointer is the single atomic commit.
+                self.store.put('bases',key,pack)
+                author.require(digest(self.store.get('bases',key))==key,'STORAGE_FAILURE','Basis konnte nicht unverändert gespeichert werden.',status=503)
+                self.store.put('heads',lang,fingerprint)
+                self._bases[key]=pack
+            atomic_json(self.store.root/'published-bases'/('adopted-'+key+'.json'),
+                        {'channel':record['channel'],'fingerprint':fingerprint,'previous_head':head,'preview_sha256':data['preview_sha256'],'adopted_at':utc_now()})
+            return {'status':'adopted','base':fingerprint,'previous_head':head,'drafts_to_rebase':record['drafts_to_rebase']}
+        return self.jobs.submit('published-base-adoption',run)
+
     def publication_status(self,identifier):
         record=self.store.get('releases',identifier)
         receipt=record.get('publication')

@@ -93,6 +93,8 @@ Laufenden Editordienst vorher mit Ctrl+C beenden. Danach erscheint unter „Vers
 
 ## Fehlende Voraussetzung und nächste Schritte
 
+> Nachtrag: Schritt 2 ist umgesetzt, siehe [Veröffentlichte Version als Bearbeitungsbasis](content-published-base-adoption.md).
+
 1. **Bundle der veröffentlichten Erstübernahme bereitstellen**, und zwar genau die veröffentlichten Bytes.
    - Herkunft: der Editorstore, in dem „Vorhandenes App-Pack … übernehmen“ und der Upload ausgeführt wurden, z. B. Windows `%LOCALAPPDATA%\SprachappContentEditor\` (`releases\<id>.json` und `bundles\<id>\`).
    - Kein neuer Erstübernahme-Klick.

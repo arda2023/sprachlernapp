@@ -167,6 +167,8 @@ class Handler(BaseHTTPRequestHandler):
         if parts==['drafts']:
             return (store.drafts(),200,{}) if get else draft_response(service.new_draft(data['lang'],data.get('deck_ref')))
         if parts==['releases'] and get:return store.list('releases'),200,{}
+        if parts==['published-base','preview'] and not get:return service.published_base_preview(data.get('lang')),202,{}
+        if parts==['published-base','adopt'] and not get:return service.adopt_published_base(data),202,{}
         if parts==['baseline-adoption']:
             return (service.adoption_preview(),200,{}) if get else (service.adopt_baseline(data),202,{})
         if parts==['authoring-contexts'] and not get:return service.template(data['lang'],data['requested_count'],data.get('topic','')),200,{}
