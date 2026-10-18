@@ -1,0 +1,14 @@
+Release b472c4ce-d678-44f7-8641-7fcf31465407 verified Entwurf-Rev 8 ETag passt True
+inspect_bundle OK: Dateien 9 sqlite a92c11db0cbe95a8 43089920
+Manifest: version chitchat_de_korrektur_v1 parent_release_id story_single_sentence_v1 local_only True schema 5
+Report ok history_superset True technical valid editorial approved base_sha256 fd3ce96b3472 errors 0 warns 9
+editorial_reviews [(['chitchat|chitchat/NOUN|chitchat#geplauder'], 'Arda', True)]
+Kopie-Head nach Build: chitchat_de_korrektur_v1 30c8233807a2
+  card_sentences: +1 -0 ~1 {'3e809f93a53931bdc50e1ccf86b71f89': ['removed_in', 'replaced_by']}
+  content_releases: +1 -1 ~0 {}
+  sentence_tokens: +12 -0 ~0 {}
+  sentences: +1 -0 ~0 {}
+  story_context_corrections: +8 -0 ~0 {}
+  neuer Satz: We enjoyed some friendly chitchat while we waited for the bus. | Wir unterhielten uns nett, während wir auf den Bus warteten. | root 43d1a0bb3a30
+Upload-Vorprüfung gegen veröffentlichte Erstversion: failed {'code': 'PUBLISH_BASE_CHANGED', 'location': {'field': None, 'record_ref': None}, 'message': 'Private Kanalbasis weicht ab. Aktuelle Version übernehmen und Entwurf neu abgleichen.', 'retryable': False, 'severity': 'error'}
+Receipt angelegt: False
