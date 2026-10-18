@@ -15,14 +15,19 @@ linter:
   min_zipf: {anfaenger: 4.0, mittel: 3.5, fortgeschritten: 3.0}
 
 # Price table for the cost ledger (USD per 1M tokens). Checked against the
-# official Vertex AI price list: Global endpoint, Standard (no Priority,
+# official Vertex AI price list: Haiku EU multi-region, historical Gemini Global, Standard (no Priority,
 # Flex or Batch), <= 200K input tokens. Thinking tokens are billed as output
 # ("Text output (response and reasoning)").
 prices:
   status: geprüft
-  as_of: "2026-10-03"    # date the prices were read
+  as_of: "2026-10-18"    # date the prices were read
   source: https://cloud.google.com/vertex-ai/generative-ai/pricing   # redirects to https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing
   models:
+    claude-haiku-5-5:
+      input_per_mtok_usd: 0.11
+      output_per_mtok_usd: 0.55
+      thinking_per_mtok_usd: 0.55
+      # EU multi-region, standard, input safely below 100K; output includes thinking.
     gemini-3.8-flash:
       input_per_mtok_usd: 0.75
       output_per_mtok_usd: 3.75
@@ -34,26 +39,24 @@ prices:
       output_per_mtok_usd: 2.50
       thinking_per_mtok_usd: 2.50
 
-# AI access: Vertex AI only, Application Default Credentials (no key).
-# Thinking parameters checked 2026-10-03 against
-# https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking and
-# https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/guides/gemini-3-8-flash
-# (both "Last updated 2026-10-02"): Gemini 3 models use thinking_level
-# (3.8 Flash: LOW, MEDIUM default, HIGH; MINIMAL returns an error);
-# Gemini 2.5 models use thinking_budget (0 turns thinking off).
+# Current text transport: Haiku through EU Vertex/ADC. Historical Gemini prices
+# above remain for old ledgers. No fallback; no production generation requested.
 llm:
   project: sprachlernapp-510508
-  location: global
-  generate_model: gemini-3.8-flash
-  generate_thinking: {thinking_level: LOW}
-  blindtest_model: gemini-2.5-flash    # cheaper; availability checked 2026-10-03 with a mini call
-  blindtest_thinking: {thinking_budget: 0}
-  meaning_check_model: gemini-3.8-flash   # live QA v2 (2026-10-04): 8/8 vs. 1/8 with blindtest_model
-  meaning_check_thinking: {thinking_level: LOW}
-  alternative_check_model: gemini-3.8-flash   # smoke v8: blindtest_model confirmed nearly for about
-  alternative_check_thinking: {thinking_level: LOW}
-  timeout_s: 90
-  max_output_tokens: {meanings: 2048, sentences: 2048, annotate: 4096, blindtest: 256, meaning_check: 4096, classify_usage: 1024, alternative_check: 1024}   # alternative_check: up to 4 candidates per call
+  location: eu
+  generate_model: claude-haiku-5-5
+  generate_thinking: {type: disabled}
+  blindtest_model: claude-haiku-5-5
+  blindtest_thinking: {type: disabled}
+  meaning_check_model: claude-haiku-5-5
+  meaning_check_thinking: {type: disabled}
+  alternative_check_model: claude-haiku-5-5
+  alternative_check_thinking: {type: disabled}
+  effort: low
+  timeout_s: 30
+  total_timeout_s: 95
+  max_attempts: 3
+  max_output_tokens: {meanings: 2048, sentences: 2048, annotate: 4096, blindtest: 256, meaning_check: 4096, classify_usage: 1024, alternative_check: 1024}
 
 generate:
   concurrency: 8

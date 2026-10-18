@@ -47,18 +47,16 @@ supabase db push
 supabase functions deploy health
 ```
 
-## KI-Zugang: Vertex AI
+## KI-Zugang: vorhandene Pipeline und geplanter Laufzeitbetrieb
 
-- Projekt `sprachlernapp-510508`, Region `global`.
-- Modell `gemini-3.8-flash` (getestet am 2026-10-03, Antwort erfolgreich).
-- Kein API-Key-Zugang.
-- Edge Functions nutzen ein Dienstkonto mit der Rolle "Vertex AI User".
-- Der Dienstkonto-Schlüssel liegt als Supabase-Secret `GCP_SA_KEY`, nie im Repo und nie in der App.
+- Lokal implementierter Python-Textanschluss: `claude-haiku-5-5`, EU-Multiregion `eu`, Projekt `sprachlernapp-510508`, ADC; SDK `anthropic[vertex]==1.15.0`. Kein API-Key und kein Fallback. Siehe [Umsetzung Paket A](haiku-migration-implementation.md).
+- Die nachfolgenden KI-Edge-Functions sind weiterhin **nicht implementierte Entwürfe**. Vorhanden sind nur Health und Inhaltsverteilung/-veröffentlichung; Paket A ändert keine Supabase-Funktion oder Cloudkonfiguration.
+- Für späteren Laufzeitbetrieb vorgesehen: dasselbe EU-Vertex-Routing, Dienstkonto mit Prediction-Berechtigung; dokumentierter Secretname `GCP_SA_KEY`, niemals Repo/App. Weder tatsächliche Secret-Einrichtung noch Modellfreischaltung wurde hier geprüft.
+- Historisch nutzte der Pipelineanschluss `gemini-3.8-flash` auf `global`; sein erfolgreicher Mini-Aufruf vom 03.10.2026 ist kein Haiku-/EU-Zugangsbeleg.
 
-## Denk-Token
+## Thinking und Antworten
 
-Denk-Token zählen als Ausgabe. Jede Anfrage bekommt ein Denk-Budget.
-Der Parameter-Name für Gemini 3.8 Flash ist vor der Nutzung gegen die offizielle Dokumentation zu prüfen, nicht zu raten.
+Haiku-Konfiguration des vorhandenen Wrappers: Thinking aus, Effort low. Bei gemeldetem Verbrauch enthält `output_tokens` bereits Thinking; nicht doppelt zählen. Vollständiges Originalschema lokal prüfen, reduzierte Schemakopie über `output_config.format`; Refusal, Truncation, ungültiges JSON und ungewisse Nutzung kontrolliert ablehnen. Laufzeitlimits/Caches/Usage-Inkremente unten beschreiben einen zukünftigen Vertrag, keine bereits wirksamen Cloudschutzmaßnahmen.
 
 ## Laufzeit-KI (nur über Edge Functions)
 

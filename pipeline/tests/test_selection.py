@@ -146,11 +146,11 @@ def test_dry_run_reports_actual_limit_reservations(inputs, tmp_path, capsys):
     cfg = load_config()
     print_plan(plan, cfg, 1)
     current = capsys.readouterr().out
-    assert 'configured max_output_tokens=4096; reservation/call=0.016035 USD' in current
+    assert 'configured max_output_tokens=4096; reservation/call=0.002901 USD' in current
     cfg['llm']['max_output_tokens']['meaning_check'] = 1024
     print_plan(plan, cfg, 1)
     old = capsys.readouterr().out
-    assert 'configured max_output_tokens=1024; reservation/call=0.004515 USD' in old
+    assert 'configured max_output_tokens=1024; reservation/call=0.001212 USD' in old
 
 
 def test_selection_refuses_existing_output_directory(inputs, tmp_path, monkeypatch):

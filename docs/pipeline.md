@@ -2,6 +2,20 @@
 
 Offline-Werkzeug in Python, läuft nie in der App (siehe `PRODUCT.md`, Abschnitt Runtime AI Boundary).
 
+## Aktueller Textanschluss (18.10.2026)
+
+Die Stapelphase ist beendet. Der optionale Pythonanschluss nutzt jetzt ausschließlich `claude-haiku-5-5` über EU-Vertex/ADC im Projekt `sprachlernapp-510508`. SDK `anthropic[vertex]==1.15.0`, Region `eu`, fester Host `aiplatform.eu.rep.googleapis.com`; keine direkte Anthropic-API, kein globaler/Gemini-Fallback. Der synchrone `Llm.generate_json`-Vertrag und seine fachlichen Aufrufer bleiben erhalten; innen läuft ein pro Anfrage geschlossener asynchroner SDK-Client für den abbrechbaren HTTP-Transport.
+
+Thinking `{type: disabled}`, Effort `low`; keine Gemini- oder Samplingparameter. Nur eine reduzierte Schemakopie geht über das Netz, die vollständige ursprüngliche Schema- und Fachvalidierung bleibt lokal verbindlich. Outputlimits unverändert 256–4096 je Schritt. Maximal drei Versuche ausschließlich für HTTP 429/500/502/503/504, SDK-Retries aus, 30 s je Versuch und 95 s insgesamt einschließlich Budgetwarten/Backoff. Timeout/Netzwerkabbruch mit ungewisser Nutzung stoppt den Lauf. Ein abgebrochenes ADC-Warten kann lokal noch auslaufen, seine abgebrochene Coroutine sendet keinen späteren Modellrequest.
+
+EU-Listenpreis für kurze Haiku-Anfragen: 0,11 USD Input / 0,55 USD Output je Mio. Tokens (Thinking bereits enthalten), Snapshot 18.10.2026. Historische Gemini-Preiszeilen bleiben zum Lesen alter Ledgers. Keine gemessene Einsparung oder Cloudfreischaltung. Keine Promptcacheanforderung; unerwartete nichtleere Cacheusage gilt als unbekannt, bis ihre Abrechnung unterstützt ist.
+
+Budgetregel: serialisierte UTF-8-Requestlänge plus 4096 lokale Overheadtokens und volles Outputlimit vor jedem Versuch reservieren; lokale Grenze deutlich unter 100K. Dies ist eine konservative lokale Politik, **keine garantierte Obergrenze der Anbieterrechnung**. Gemeldeter Verbrauch ersetzt die Reservierung; Überschreitung stoppt weitere Anfragen. Unbekannte Nutzung wird mit leeren Tokencells und konservativem USD-Reservierungswert erfasst, nicht als null. Transiente HTTP-Fehler verbrauchen ihre Reservierung; vor einem Retry wird neu geprüft. Bei unklarem Abbruch werden wartende Anfragen gestoppt; bereits laufende Antworten werden weiterhin abgerechnet.
+
+Das historische 7-Spalten-Ledger bleibt lesbar; `<ledger>.attempts.csv` kennzeichnet jeden Versuch, EU-Region, sichere Fehler-/Stopkategorie, Laufzeit, HTTP-Code und Reservierungs-/Abrechnungswert. USD-Werte werden lokal auf neun Nachkommastellen aufgerundet. Keine Prompts, Antworten, Tokenschlüssel oder rohen Serverfehler in Diagnose/Sidecar; SDK-Requestdebug und Inhaltstelemetrie aus. Redaktionelle Pack-/Reviewartefakte des bestehenden Generators sind weiterhin Inhaltsdateien, kein persönliches Runtime-Telemetriesystem; hier wurden keine erzeugt.
+
+Blindtest und Generierung sind getrennte Prompts auf demselben Haiku-Modell, keine unabhängige Zweitmodellprüfung. en-only Generator und redaktionelles pt-BR-Profil bleiben unverändert. Die folgenden 3a–3d-Abschnitte, Gemini-Smokes und alten Einrichtungsbeispiele sind historische Nachweise. Aktuelle Einrichtung: [Setup](setup.md); Implementierung/Offline-Prüfungen und spätere Cloudzugangsprüfung: [Bericht](haiku-migration-implementation.md). Kein neuer Generierungsauftrag.
+
 ## Aktueller Vertrag: Paket A (04.10.2026)
 
 Neue Produktion und Offline-Create exportieren **Schema 2: genau einen aktiven Satz je Karte**. Kandidaten-Batches (5/3/3), Retrygrenzen, Linter und Alternativenregeln bleiben eigenständige Regeln. Schema 1 wird ausdrücklich als Legacy gelesen/geprüft; `sprachpipe export … --legacy` und historische Patch-/Finish-/Merge-Skripte mit `--legacy` erlauben die Reproduktion alter Artefakte. `complete_curation`/`finalize_curation` übernehmen das ausdrücklich im gespeicherten Arbeitsstand angegebene Schema; sie erzeugen keine neue Auswahl. Die folgenden 3a–3d-Abschnitte und Laufzahlen dokumentieren historische Stände, nicht den neuen Satzvertrag.

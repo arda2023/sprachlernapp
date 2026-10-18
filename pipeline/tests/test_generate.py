@@ -19,7 +19,7 @@ from sprachpipe.review import REVIEW_COLUMNS
 WENT = {"pos": "VERB", "lemma": "go", "sense_key": "go#gehen",
         "gloss_de": "gehen (sich fortbewegen)", "form_kind": "past",
         "form_label_de": "Verb, Vergangenheit", "cefr_band": "anfaenger",
-        "translation_de": "ging"}
+        "translation_de": "ging", "usage": "haupt"}
 SENTENCES = ["She went home after work.", "We went to the beach on Sunday.",
              "They went to school by bus yesterday.", "I went downtown on Monday.",
              "The children went outside before dinner.",
@@ -170,11 +170,11 @@ def test_blind_mismatch_feedback_in_generation(cfg, tmp_path):
 
 
 def test_budget_abort_keeps_results(cfg, tmp_path):
-    llm = FakeVertex(cfg, tmp_path / "ledger.csv", 0.01, usage=(1000, 1000, 0))
+    llm = FakeVertex(cfg, tmp_path / "ledger.csv", 0.002, usage=(1000, 1000, 0))
     aborted, pack = run(cfg, tmp_path, llm)
     assert aborted.startswith("BudgetExceeded")
     assert llm.calls == ["meanings"]
-    assert total_usd(tmp_path / "ledger.csv") <= 0.01
+    assert total_usd(tmp_path / "ledger.csv") <= 0.002
     assert (tmp_path / "review.csv").exists()
     assert "Abgebrochen" in (tmp_path / "run_report.md").read_text(encoding="utf-8")
     assert pack["cards"] == []
@@ -188,27 +188,30 @@ def test_no_call_without_check_budget(cfg, tmp_path, monkeypatch):
     llm = FakeVertex(cfg, tmp_path / "ledger.csv", 1.0)
     orig = llm._call
     llm._call = lambda *a: (order.append("call"), orig(*a))[1]
-    llm.generate_json("p", {"properties": {"answer": {}}}, model="gemini-2.5-flash",
-                      thinking={}, step="blindtest", max_output_tokens=10)
+    llm.generate_json("p", {"properties": {"answer": {}}}, model="claude-haiku-5-5",
+                      thinking={"type": "disabled"}, step="blindtest", max_output_tokens=10)
     assert order == ["check", "call"]
     order.clear()
     llm.max_usd = 0.0
     with pytest.raises(BudgetExceeded):
-        llm.generate_json("p", {"properties": {"answer": {}}}, model="gemini-2.5-flash",
-                          thinking={}, step="blindtest", max_output_tokens=10)
+        llm.generate_json("p", {"properties": {"answer": {}}}, model="claude-haiku-5-5",
+                          thinking={"type": "disabled"}, step="blindtest", max_output_tokens=10)
     assert order == ["check"]
 
 
 def test_ledger_records_vertex_thoughts_metadata(cfg, tmp_path):
-    metadata = SimpleNamespace(prompt_token_count=1_000_000, candidates_token_count=0,
-                               thoughts_token_count=1_000_000, total_token_count=2_000_000)
-    assert llm_mod.usage_counts(metadata) == (1_000_000, 0, 1_000_000)
+    metadata = SimpleNamespace(input_tokens=100, output_tokens=20)
+    assert llm_mod.usage_counts(metadata) == (100, 20, 0)
     llm = FakeVertex(cfg, tmp_path / "ledger.csv", 1.0, usage=llm_mod.usage_counts(metadata))
-    llm.generate_json("p", {"properties": {"answer": {}}}, model="gemini-2.5-flash",
-                      thinking={}, step="blindtest", max_output_tokens=10)
+    llm.generate_json("p", {"properties": {"answer": {}}}, model="claude-haiku-5-5",
+                      thinking={"type": "disabled"}, step="blindtest", max_output_tokens=100)
     row = next(csv.DictReader(open(tmp_path / "ledger.csv", encoding="utf-8")))
-    assert row["thinking_tokens"] == "1000000"
-    assert float(row["usd"]) == pytest.approx(0.30 + 2.50)
+    assert row["thinking_tokens"] == "0" and row["output_tokens"] == "20"
+    assert float(row["usd"]) == pytest.approx((100 * .11 + 20 * .55) / 1e6)
+    # Historical Gemini split accounting remains readable and numerically unchanged.
+    assert llm_mod.cost_usd(llm_mod.model_price(cfg["prices"], "gemini-2.5-flash"),
+                            1_000_000, 0, 1_000_000) == pytest.approx(.30 + 2.50)
+
 
 
 def test_blind_mismatch_regenerates_once_with_answer(cfg):

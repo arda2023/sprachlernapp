@@ -1,4 +1,5 @@
--e git+https://github.com/arda2023/sprachlernapp.git@fd942fe2c45998b40edbbdc62c254a07842afc5b#egg=sprachpipe&subdirectory=pipeline
+# Install from repository root; local editable project matches this lock.
+-e ./pipeline
 annotated-doc==0.0.5
 annotated-types==0.8.0
 anyio==4.15.1
@@ -77,3 +78,10 @@ wordfreq==3.1.1
 wrapt==2.5.0
 openpyxl==3.1.5
 et_xmlfile==2.0.0
+anthropic[vertex]==1.15.0
+docstring-parser==0.18.0
+httpx2==2.13.1
+httpcore2==2.13.1
+jiter==0.17.0
+opentelemetry-api==1.45.1
+truststore==0.10.5
