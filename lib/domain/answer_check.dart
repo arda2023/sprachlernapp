@@ -1,5 +1,7 @@
 // Pure Dart: no Flutter imports (see CLAUDE.md, domain layer).
 
+import 'language_profile.dart';
+
 import 'package:unorm_dart/unorm_dart.dart' as unicode;
 
 enum AnswerResult { correct, almost, wrong }
@@ -108,9 +110,10 @@ AnswerVerdict evaluateAnswer(
   Iterable<String> alternatives = const [],
   Iterable<String> otherFormsOfLemma = const [],
   bool includeDiacritics = true,
+  ContentLanguageProfile profile = ContentLanguageProfile.english,
 }) {
   String normalize(String value) =>
-      normalizeAnswer(value, includeDiacritics: includeDiacritics);
+      normalizeAnswer(value, includeDiacritics: profile.requiresDiacritics || includeDiacritics);
   final given = normalize(input);
   final goal = normalize(target);
   if (given == goal) return AnswerVerdict.target;

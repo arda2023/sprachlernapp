@@ -20,8 +20,12 @@ class HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _LanguageChip(flag: flag, name: languageName),
-        const Spacer(),
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: _LanguageChip(flag: flag, name: languageName),
+          ),
+        ),
         _HeaderIcon(
           icon: CupertinoIcons.person_crop_circle,
           label: 'Profil',

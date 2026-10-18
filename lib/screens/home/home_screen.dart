@@ -4,6 +4,7 @@ import '../../presentation/providers/deck_providers.dart';
 import '../../presentation/providers/learning_providers.dart';
 import '../../presentation/providers/story_learning_providers.dart';
 import '../../presentation/providers/database_providers.dart';
+import '../../domain/language_profile.dart';
 import '../../presentation/content_unavailable_view.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -45,6 +46,8 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final lang = ref.watch(selectedContentLanguageProvider).asData?.value ?? 'en';
+    final profile = ContentLanguageProfile.forLanguage(lang)!;
     return SafeArea(
       bottom: false,
       child: ListView(
@@ -56,8 +59,8 @@ class HomeScreen extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 8),
             child: HomeHeader(
-              flag: '🇬🇧',
-              languageName: 'Englisch',
+              flag: lang == 'pt-BR' ? '🇧🇷' : '🇬🇧',
+              languageName: profile.displayName,
               onProfile: onProfile,
               onSettings: onSettings,
             ),
@@ -74,8 +77,9 @@ class HomeScreen extends ConsumerWidget {
                 : ref
                       .watch(learningProgressProvider)
                       .when(
-                skipLoadingOnReload: true,
-                skipError: true,
+                skipLoadingOnReload: false,
+                skipLoadingOnRefresh: false,
+                skipError: false,
                         data: (p) => WeeklyGoalCard(
                           week: p.week,
                           goal: p.goal,
@@ -95,8 +99,9 @@ class HomeScreen extends ConsumerWidget {
             child: ref
                 .watch(vocabBreakdownProvider)
                 .when(
-                skipLoadingOnReload: true,
-                skipError: true,
+                skipLoadingOnReload: false,
+                skipLoadingOnRefresh: false,
+                skipError: false,
                   loading: () => const CupertinoActivityIndicator(),
                   error: (error, _) => ContentUnavailableView(
                     error: error,
@@ -124,8 +129,9 @@ class HomeScreen extends ConsumerWidget {
           ...ref
               .watch(decksProvider)
               .when(
-                skipLoadingOnReload: true,
-                skipError: true,
+                skipLoadingOnReload: false,
+                skipLoadingOnRefresh: false,
+                skipError: false,
                 loading: () => [const CupertinoActivityIndicator()],
                 error: (error, _) => [
                   ContentUnavailableView(
@@ -173,12 +179,13 @@ class HomeScreen extends ConsumerWidget {
           ref
               .watch(libraryStoriesProvider)
               .when(
-                skipLoadingOnReload: true,
-                skipError: true,
+                skipLoadingOnReload: false,
+                skipLoadingOnRefresh: false,
+                skipError: false,
                 data: (stories) => stories.isEmpty
-                    ? const Padding(
+                    ? Padding(
                         padding: _gutter,
-                        child: Text('Noch keine Stories im Inhaltspaket.'),
+                        child: Text('Für ${profile.displayName} sind noch keine Stories verfügbar.'),
                       )
                     : StoryCarousel(
                         stories: stories.take(5).toList(),

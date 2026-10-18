@@ -1,4 +1,9 @@
 # NEXTSTEPS
+## Portugiesisch · Paket 2 · 18.10.2026 (UI-Abnahme offen)
+- Persistente en/pt-BR-Sprachwahl, Gate-/Rollback, getrennte Updateclients/-fristen und profilgebundene Akzentpflicht implementiert; gemeinsame user.db unverändert.
+- Neue isolierte Daten-/Installationstests, Altregressionen, Realpack und Stage geprüft; Original-20-Ziele-ZIP technisch gültig, manuelle BR-Prüfung weiter offen. Bericht: docs/portuguese-package-2.md.
+- Einmalig erlaubte UI-Korrektur: Headerbreite/Flaggenassertion/Inset behoben, 320pt/2× mit unveränderten 44pt-Buttons bestanden. Rückwechsel-UI bleibt bei pumpAndSettle hängen (Testzeile 224); weitere Korrektur gestoppt. Gesamtsuite 378 PASS/5 Skip/2 Fail (Rückwechsel-Timeout und Motiv-Dropdown-Finder bei 320pt/2×); Analyse nur Alt-avoid_print. Testglyphbilder keine visuelle Abnahme.
+- Kein Deployment/Leserrecht/Release/iPhone-Build/Push. Betriebsanleitung für content-publish + content-release, kontogeprüfte pt-BR-Leserfreigabe und ersten regulären Release im Bericht; noch nicht ausführen.
 ## Portugiesisch · Paket 1 · 18.10.2026
 - pt-BR-editorial-v1 in Python/Dart/Server implementiert; en-Manifest/Hash unverändert. Modellfreier Tokenizer, explizite manuelle BR-Prüfung, regulärer erster eigener Kanal ohne englischen Parent; kein language_definition-Bootstrap.
 - Technisch: Pipeline 596 PASS/1 Skip/19 Subtests, Deno 15 PASS, Flutter BR 3/Historie 3/Pack 1 PASS (15s), Stage-Verifier PASS; Exit 0. Analyse Exit 1 nur bekannter avoid_print; zusätzlicher JS-Altfehler auch auf HEAD belegt. Bericht: docs/portuguese-package-1.md.

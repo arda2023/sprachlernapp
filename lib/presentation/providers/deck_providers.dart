@@ -118,9 +118,14 @@ class DeckActiveController extends Notifier<DeckActivationState> {
   final _versions = <String, int>{};
   final _persisted = <String, bool>{};
   @override
-  DeckActivationState build() => const DeckActivationState();
+  DeckActivationState build() {
+    ref.watch(selectedContentLanguageProvider);
+    _tails.clear(); _versions.clear(); _persisted.clear();
+    return const DeckActivationState();
+  }
 
   Future<void> setActive(String id, bool active) {
+    final release = contentTransitionGate.acquire();
     final version = (_versions[id] ?? 0) + 1;
     _versions[id] = version;
     state = DeckActivationState(values: {...state.values, id: active},
@@ -140,7 +145,8 @@ class DeckActiveController extends Notifier<DeckActivationState> {
         }
       }
     });
-    _tails[id] = operation;
-    return operation;
+    final guarded = operation.whenComplete(release);
+    _tails[id] = guarded;
+    return guarded;
   }
 }

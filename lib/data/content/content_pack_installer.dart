@@ -71,6 +71,10 @@ class ContentPackInstaller {
       return (file:journal.bootstrapFile(pinned),manifest:pinned);
     }
     final manifestBytes = await loadAsset(manifestAsset);
+    if (manifestBytes == null && pointer != null) {
+      throw const ContentUnavailable(ContentUnavailableReason.corrupt,
+        'Installierter Inhaltsbestand beschädigt. Reparatur erforderlich.');
+    }
     if (manifestBytes == null) {
       throw ContentUnavailable(
         ContentUnavailableReason.missing,

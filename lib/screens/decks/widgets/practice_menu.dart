@@ -136,7 +136,7 @@ Future<void> showKeyboardHelp(BuildContext context) =>
                 ),
               ),
               Text(
-                'Tastatur einrichten',
+                'Tastatur und Akzente',
                 style: AppType.chrome(
                   color: context.appColors.textPrimary,
                   size: 22,
@@ -144,9 +144,9 @@ Future<void> showKeyboardHelp(BuildContext context) =>
               ),
               const SizedBox(height: 16),
               const Text(
-                'Tippe in die Lücke, um die Tastatur zu öffnen. Mit „Fertig“ oder „Eingeben“ prüfst du deine Antwort.\n\n'
-                'Englisch hinzufügen: Unter iOS in Einstellungen → Allgemein → Tastatur → Tastaturen. Unter Android in den Einstellungen deiner Tastatur → Sprachen. Die Bezeichnungen können je nach Gerät abweichen.\n\n'
-                'Halte einen Buchstaben gedrückt, um Akzente auszuwählen. Die Einstellung „Diakritische Zeichen einbeziehen“ legt fest, ob Akzente geprüft werden.\n\n'
+                'Für Portugiesisch sind Akzente erforderlich: Halte einen Buchstaben gedrückt, um etwa ã, õ oder ç zu wählen. Tippe in die Lücke, um die Tastatur zu öffnen. Mit „Fertig“ oder „Eingeben“ prüfst du deine Antwort.\n\n'
+                'Englisch oder Portugiesisch hinzufügen: Unter iOS in Einstellungen → Allgemein → Tastatur → Tastaturen. Unter Android in den Einstellungen deiner Tastatur → Sprachen. Die Bezeichnungen können je nach Gerät abweichen.\n\n'
+                'Halte einen Buchstaben gedrückt, um Akzente auszuwählen. Für Englisch legt die Einstellung „Diakritische Zeichen einbeziehen“ fest, ob Akzente geprüft werden. Für Portugiesisch bleiben sie immer erforderlich.\n\n'
                 'Text auswählen oder einfügen: Halte die Eingabe gedrückt. Wische außerhalb des Eingabefelds nach rechts, um bearbeitete Karten anzusehen.',
               ),
             ],

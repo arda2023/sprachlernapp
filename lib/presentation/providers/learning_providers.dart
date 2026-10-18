@@ -153,6 +153,8 @@ class WordActions {
     bool? inPlaylist,
     String? note,
   }) async {
+    final release = contentTransitionGate.acquire();
+    try {
     final user = await ref.read(userRepositoryProvider.future);
     await user.setCardFlags(
       id,
@@ -161,5 +163,6 @@ class WordActions {
       inPlaylist: inPlaylist,
       note: note,
     );
+    } finally { release(); }
   }
 }

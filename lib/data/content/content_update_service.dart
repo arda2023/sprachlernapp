@@ -15,28 +15,33 @@ typedef UpdateNotice = void Function(String phase, String message);
 
 /// Session/write leases block activation, including an unfinished review retry.
 class ContentTransitionGate {
-  int _leases = 0;
+  final _leases = <String>[];
   bool _switching = false;
-  bool get busy => _switching || _leases > 0;
-  void Function() acquire() {
+  bool get busy => _switching || _leases.isNotEmpty;
+  String get blockingMessage => _switching
+      ? 'Ein Inhalts- oder Sprachwechsel läuft. Bitte erneut versuchen.'
+      : _leases.contains('update')
+      ? 'Bitte die laufende Inhaltsupdateaktion zuerst abschließen.'
+      : _leases.contains('practice')
+      ? 'Bitte die laufende Übung zuerst verlassen.'
+      : 'Bitte offene Wortdetails, Reader oder Inhaltsansichten zuerst schließen.';
+  void Function() acquire({String reason = 'content'}) {
     if (_switching) {
       throw StateError('Inhaltswechsel läuft. Bitte erneut öffnen.');
     }
-    _leases++;
+    _leases.add(reason);
     var released = false;
     return () {
       if (!released) {
         released = true;
-        _leases--;
+        _leases.remove(reason);
       }
     };
   }
 
   Future<T> transition<T>(Future<T> Function() action) async {
     if (busy) {
-      throw StateError(
-        'Bitte laufende Übung und offene Inhaltsansichten zuerst schließen.',
-      );
+      throw StateError(blockingMessage);
     }
     _switching = true;
     try {
@@ -121,7 +126,7 @@ class ContentUpdateService {
     notice?.call(
       available == null ? 'active' : 'available',
       available == null
-          ? 'Inhalt ist aktuell.'
+          ? (await currentFile() == null ? 'Für diese Lernsprache ist noch keine veröffentlichte Version verfügbar.' : 'Inhalt ist aktuell.')
           : 'Neue geprüfte Version verfügbar.',
     );
   });

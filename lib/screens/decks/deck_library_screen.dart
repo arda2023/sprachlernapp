@@ -48,8 +48,9 @@ class DeckLibraryScreen extends ConsumerWidget {
       child: ref
           .watch(decksProvider)
           .when(
-                skipLoadingOnReload: true,
-                skipError: true,
+                skipLoadingOnReload: false,
+                skipLoadingOnRefresh: false,
+                skipError: false,
             loading: () => const Center(child: CupertinoActivityIndicator()),
             error: (error, _) => ContentUnavailableView(
               error: error,

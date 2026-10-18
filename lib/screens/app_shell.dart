@@ -1,3 +1,8 @@
+import '../domain/language_profile.dart';
+import '../presentation/providers/database_providers.dart';
+import '../presentation/providers/language_selection_provider.dart';
+import '../presentation/content_unavailable_view.dart';
+import 'settings/content_updates_screen.dart';
 import 'settings/settings_screen.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -136,14 +141,25 @@ class _AppShellState extends ConsumerState<AppShell> {
 
   // Profile remains outside this integration.
   void _notYetRouted() {}
-  void _startMixed() => DeckPracticeScreen.open(
-    context,
-    deckId: '',
-    mode: DeckPracticeMode.mixed,
-  );
+  Future<void> _startMixed() async {
+    if (ref.read(languageSelectionProvider).switching) return;
+    final lang = ref.read(selectedContentLanguageProvider);
+    if (lang.isLoading && lang.hasValue) return;
+    if (lang.asData?.value == 'pt-BR') {
+      final content = ref.read(contentInfoProvider);
+      if (content.isLoading || content.hasError) return;
+    }
+    DeckPracticeScreen.open(context, deckId: '', mode: DeckPracticeMode.mixed);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final selected = ref.watch(selectedContentLanguageProvider);
+    final lang = selected.asData?.value ?? 'en';
+    final portuguese = lang == 'pt-BR';
+    final switching = ref.watch(languageSelectionProvider).switching || selected.isLoading && selected.hasValue;
+    final info = portuguese ? ref.watch(contentInfoProvider) : null;
+    final unavailable = portuguese && (info!.isLoading || info.hasError);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value:
           (context.appColors.light
@@ -155,7 +171,17 @@ class _AppShellState extends ConsumerState<AppShell> {
                 systemNavigationBarIconBrightness: Brightness.light,
               ),
       child: Scaffold(
-        body: IndexedStack(
+        body: switching ? const Center(child: CircularProgressIndicator())
+          : unavailable ? SafeArea(child: ListView(children: [
+              Padding(padding: const EdgeInsets.fromLTRB(20, 20, 20, 0), child: Text(ContentLanguageProfile.portugueseBrazil.displayName, style: Theme.of(context).textTheme.titleLarge)),
+              TextButton(onPressed: () => SettingsScreen.open(context), child: const Text('Lernsprache ändern')),
+              if (info.isLoading) const Center(child: CircularProgressIndicator())
+              else ...[
+                ContentUnavailableView(error: info.error!, onRetry: () => ref.invalidate(contentRepositoryProvider)),
+                TextButton(onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const ContentUpdatesScreen())), child: const Text('Zu Inhaltsupdates')),
+              ],
+            ]))
+          : IndexedStack(
           index: _tabs.indexOf(_tab),
           children: [
             HomeScreen(
@@ -170,13 +196,14 @@ class _AppShellState extends ConsumerState<AppShell> {
               onSettings: () => SettingsScreen.open(context),
             ),
             StoryLibraryScreen(
-              stories: ref.watch(libraryStoriesProvider).value ?? [],
+              stories: ref.watch(libraryStoriesProvider).isLoading ? [] : ref.watch(libraryStoriesProvider).asData?.value ?? [],
 
               status: ref
                   .watch(libraryStoriesProvider)
                   .when(
+                    skipLoadingOnReload: false, skipLoadingOnRefresh: false,
                     data: (stories) => stories.isEmpty
-                        ? const Text('Noch keine Stories im Inhaltspaket.')
+                        ? Text('Für ${ContentLanguageProfile.forLanguage(lang)!.displayName} sind noch keine Stories verfügbar.')
                         : const SizedBox.shrink(),
                     loading: () => const CupertinoActivityIndicator(),
                     error: (_, _) => CupertinoButton(
@@ -187,15 +214,15 @@ class _AppShellState extends ConsumerState<AppShell> {
                     ),
                   ),
               onOpenStory: _openStory,
-              news: sampleNews,
+              news: portuguese ? [] : sampleNews,
               onOpenNews: (article) =>
                   StoryReaderScreen.openNews(context, article),
             ),
             const WordListScreen(),
-            ContentDashboardScreen(categories: _categories),
+            portuguese ? const Center(child: Text('Für Portugiesisch (Brasilien) sind noch keine weiteren Inhalte verfügbar.')) : ContentDashboardScreen(categories: _categories),
           ],
         ),
-        floatingActionButton: ref
+        floatingActionButton: switching || unavailable ? null : ref
             .watch(learningProgressProvider)
             .when(
               data: (p) => PracticeButton(goal: p.goal, onPressed: _startMixed),

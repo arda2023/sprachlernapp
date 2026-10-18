@@ -3,6 +3,9 @@ import 'word_form.dart';
 
 typedef GrammarHint = ({String explanation, List<String> examples});
 GrammarHint grammarHint(ContentCard card, {required bool solved}) {
+  if (card.lang != 'en') {
+    return (explanation: 'Setze die gesuchte Wortform in die Lücke ein. Akzente sind für Portugiesisch erforderlich.', examples: const []);
+  }
   final kind = switch (card.formKind) {
     'base' => FormKind.base,
     'plural' => FormKind.plural,

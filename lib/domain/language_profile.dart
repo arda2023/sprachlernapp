@@ -1,7 +1,10 @@
-/// Reader capability declaration. It does not change answer classification.
+/// Immutable reader and answer capabilities for a content language.
 class ContentLanguageProfile {
   const ContentLanguageProfile(this.lang, this.id, this.sha256);
   final String lang, id, sha256;
+
+  String get displayName => lang == 'pt-BR' ? 'Portugiesisch (Brasilien)' : 'Englisch';
+  bool get requiresDiacritics => lang == 'pt-BR';
 
   static const english = ContentLanguageProfile(
     'en',

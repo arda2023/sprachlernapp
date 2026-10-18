@@ -89,7 +89,7 @@ class DeckSessionController extends Notifier<DeckSessionState> {
 
   @override
   DeckSessionState build() {
-    final releaseContentLease = contentTransitionGate.acquire();
+    final releaseContentLease = contentTransitionGate.acquire(reason: 'practice');
     ref.onDispose(releaseContentLease);
     _clock = ref.read(clockProvider);
     Future.microtask(start);

@@ -67,11 +67,15 @@ class RepositoryOwner<T> {
   }
 }
 
+final contentInstallerProvider = FutureProvider.family<ContentPackInstaller, String>(
+  (ref, lang) => ContentPackInstaller.forApp(lang: lang), retry: (_, _) => null);
+
 final contentTransitionGate = ContentTransitionGate();
 typedef ContentRepositoryKey = ({String lang, int generation});
 final _contentOwners = <ContentRepositoryKey,RepositoryOwner<ContentRepository>>{};
 RepositoryOwner<ContentRepository> contentOwnerFor(ContentRepositoryKey key) => _contentOwners.putIfAbsent(key,()=>RepositoryOwner(
   () async => (await ContentPackInstaller.forApp(lang:key.lang)).open(), (repository)=>repository.close()));
+final contentOwnerProvider = Provider.family<RepositoryOwner<ContentRepository>, ContentRepositoryKey>((ref, key) => contentOwnerFor(key));
 final _userDatabaseOwner = RepositoryOwner<UserDatabase>(UserDatabase.openForApp, (db)=>db.close());
 final userDatabaseProvider = FutureProvider<UserDatabase>(_userDatabaseOwner.acquire,retry:(_,_)=>null);
 final selectedContentLanguageProvider=FutureProvider<String>((ref) async {
@@ -89,13 +93,15 @@ final activeContentKeyProvider=FutureProvider<ContentRepositoryKey>((ref) async 
 final contentRepositoryProvider = FutureProvider<ContentRepository>((ref) async {
   final key=await ref.watch(activeContentKeyProvider.future);
   if(!ref.mounted)throw StateError('Inhaltsansicht bereits geschlossen.');
-  return contentOwnerFor(key).acquire(ref);
+  return ref.watch(contentOwnerProvider(key)).acquire(ref);
 },retry:(_,_)=>null);
 final userRepositoryProvider = FutureProvider<UserRepository>((ref) async {
   final db=await ref.watch(userDatabaseProvider.future);
   final lang=await ref.watch(selectedContentLanguageProvider.future);
   final repository=DriftUserRepository(db,lang:lang,ownsDatabase:false,contentIds:(kind) async {
+    if (!ref.mounted) throw StateError('Sprachansicht wurde geschlossen.');
     final content=await ref.read(contentRepositoryProvider.future);
+    if (content.info.lang != lang) throw StateError('Sprachansicht hat sich geändert.');
     return kind=='cards'?content.allCardIds():{for(final deck in await content.decks())deck.id};
   });
   await repository.deviceId();return repository;
