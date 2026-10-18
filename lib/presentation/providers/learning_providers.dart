@@ -105,14 +105,9 @@ final wordListProvider = FutureProvider<List<VocabWord>>((ref) async {
   for (final item in items) {
     final state = states[item.card.id]!;
     final reviews = await user.reviewsFor(item.card.id);
-    final sentence =
-        (reviews.isEmpty || resolver.locals.containsKey(item.card.id)
-            ? null
-            : await resolver.historicalSentence(
-                item.card.id,
-                reviews.last.sentenceId,
-              )) ??
-        item.practiceSentence;
+    // Current details follow the active context; review sentence IDs belong
+    // to historical review displays, not this projection.
+    final sentence = item.practiceSentence;
     final seen = reviews.isEmpty
         ? state.createdAt
         : reviews.last.createdAt.toLocal();
