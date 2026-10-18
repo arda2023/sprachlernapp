@@ -53,6 +53,14 @@ class _ContentUpdatesScreenState extends ConsumerState<ContentUpdatesScreen> {
           ),
           const SizedBox(height: 20),
           Semantics(liveRegion: true, child: Text(status.message)),
+          if (status.phase == 'error' && status.diagnosis != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: SelectableText(
+                'Diagnose · ${status.diagnosis}',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
           if (busy)
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 12),

@@ -6,6 +6,7 @@ import 'dart:isolate';
 import 'package:crypto/crypto.dart';
 
 import 'content_install_journal.dart';
+import 'content_update_diagnosis.dart';
 import 'content_release_client.dart';
 import 'content_update_validation.dart';
 import 'context_revision_validation.dart';
@@ -64,11 +65,22 @@ class ContentUpdateService {
   final UpdateNotice? notice;
   ReleaseOffer? available, ready;
   bool _working = false;
+
+  /// Step of the last failed action and the exact error object it belongs to.
+  /// The thrown error itself is rethrown unchanged.
+  ContentUpdateDiagnosis? lastDiagnosis;
+  Object? lastError;
+  String _step = 'start';
   Future<T> _exclusive<T>(Future<T> Function() action) async {
     if (_working) throw StateError('Inhaltsprüfung läuft bereits.');
     _working = true;
+    _step = 'start';
     try {
       return await action();
+    } catch (e) {
+      lastError = e;
+      lastDiagnosis = ContentUpdateDiagnosis.from(_step, e);
+      rethrow;
     } finally {
       _working = false;
     }
@@ -76,7 +88,9 @@ class ContentUpdateService {
 
   Future<void> check() => _exclusive(() async {
     notice?.call('checking', 'Private Version prüfen …');
+    _step = 'local_state';
     final active = await journal.active();
+    _step = 'release_check';
     final offer = await transport.latest(journal.lang, active?.generation ?? 0);
     if (offer != null) {
       if (offer.generation < (active?.generation ?? 0) ||
@@ -90,9 +104,11 @@ class ContentUpdateService {
     } else {
       available = null;
     }
+    _step = 'local_state';
     final pending = await journal.read('pending');
     if (available != null &&
         pending?['manifest_sha256'] == available!.manifestHash) {
+      _step = 'verify_pending';
       await verifyGeneration(
         journal,
         available!,
@@ -112,8 +128,10 @@ class ContentUpdateService {
   Future<void> download() => _exclusive(() async {
     final offer = available;
     if (offer == null) throw StateError('Zuerst nach einer Version suchen.');
+    _step = 'local_state';
     final destination = journal.generation(offer.id);
     if (await destination.exists()) {
+      _step = 'verify_existing';
       final stored = jsonDecode(
         await File('${destination.path}/release.json').readAsString(),
       );
@@ -129,6 +147,7 @@ class ContentUpdateService {
     if (await temporary.exists()) await temporary.delete(recursive: true);
     await temporary.create(recursive: true);
     try {
+      _step = 'download_link';
       final urls = await transport.downloads(offer);
       notice?.call('downloading', 'Private Version wird heruntergeladen …');
       for (final name in ['content.sqlite', 'history_inventory.json']) {
@@ -137,6 +156,7 @@ class ContentUpdateService {
             .open(mode: FileMode.write);
         // Reserve candidate bytes while the active and recovery generations
         // remain intact. A disk-full error occurs before any pointer write.
+        _step = 'download_reserve';
         try {
           var remaining = descriptor['size_bytes'] as int;
           final reservation = List<int>.filled(1024 * 1024, 0);
@@ -151,6 +171,7 @@ class ContentUpdateService {
           await output.close();
           rethrow;
         }
+        _step = 'download_transfer';
         final digestSink = _DigestSink();
         final hash = sha256.startChunkedConversion(digestSink);
         var size = 0;
@@ -182,10 +203,14 @@ class ContentUpdateService {
         'verifying',
         'Inhalte und vollständige Historie werden geprüft …',
       );
-      final path = '${temporary.path}/content.sqlite',
-          old = (await currentFile())?.path,
-          data = offer.toJson();
-      await Isolate.run(() => validateDownloadedContent(path, data, old));
+      _step = 'verify';
+      final data = offer.toJson();
+      await _validateInIsolate(
+        '${temporary.path}/content.sqlite',
+        data,
+        (await currentFile())?.path,
+      );
+      _step = 'install';
       await File('${temporary.path}/release.json')
           .writeAsString(jsonEncode(data), flush: true);
       await temporary.rename(destination.path);
@@ -199,6 +224,7 @@ class ContentUpdateService {
   });
   Future<void> activate() => _exclusive(
     () => gate.transition(() async {
+      _step = 'local_state';
       var offer = ready;
       final pending = await journal.read('pending');
       offer ??= pending == null
@@ -210,6 +236,7 @@ class ContentUpdateService {
       // Reauthorize immediately before activation; expired authorization is never
       // silently treated as permission. Already installed content remains offline.
       final active = await journal.active();
+      _step = 'reauthorize';
       final authorized = await transport.latest(
         journal.lang,
         active?.generation ?? 0,
@@ -220,10 +247,13 @@ class ContentUpdateService {
         throw StateError('Versionsfreigabe geändert. Bitte neu prüfen.');
       }
       final next = offer;
+      _step = 'verify';
       await verifyGeneration(journal, next, previous: await currentFile());
       notice?.call('quiescing', 'Inhaltsverbindungen werden geschlossen …');
+      _step = 'close_readers';
       await closeReaders(); // A failed close leaves the old pointer untouched.
       Map<String, dynamic>? prepared;
+      _step = 'activate';
       try {
         await journal.prepare(next);
         prepared = (await journal.read('install-journal'))!;
@@ -274,11 +304,21 @@ Future<void> verifyGeneration(
       );
     }
   }
-  final path = '${directory.path}/content.sqlite',
-      data = offer.toJson(),
-      old = previous?.path;
-  await Isolate.run(() => validateDownloadedContent(path, data, old));
+  await _validateInIsolate(
+    '${directory.path}/content.sqlite',
+    offer.toJson(),
+    previous?.path,
+  );
 }
+
+/// Top-level on purpose: a closure created inside an instance method can carry
+/// that method's context (`this`, HTTP client, provider callbacks) into the
+/// isolate message, which the VM rejects as unsendable.
+Future<void> _validateInIsolate(
+  String path,
+  Map<String, dynamic> data,
+  String? old,
+) => Isolate.run(() => validateDownloadedContent(path, data, old));
 
 /// Called before returning any repository to app code. Committed generations
 /// never fall back to the asset: newer learner references may already exist.

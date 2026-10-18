@@ -4,6 +4,7 @@ import 'dart:io';
 import '../../domain/language_profile.dart';
 import 'context_revision_validation.dart';
 import 'content_database.dart';
+import 'content_update_diagnosis.dart';
 
 const maxContentDownloadBytes = 256 * 1024 * 1024;
 
@@ -155,7 +156,12 @@ class ContentReleaseClient implements ContentReleaseTransport {
   final Future<String> Function() accessToken;
   final HttpClient _client;
   Future<Map<String, dynamic>> _json(String path, {bool post = false}) async {
-    final token = await accessToken();
+    final String token;
+    try {
+      token = await accessToken();
+    } catch (_) {
+      throw ContentAuthSessionException();
+    }
     final request = await _client.openUrl(
       post ? 'POST' : 'GET',
       projectUri.resolve(path),
@@ -169,11 +175,12 @@ class ContentReleaseClient implements ContentReleaseTransport {
     }
     final response = await request.close().timeout(const Duration(seconds: 30));
     if (response.statusCode != 200) {
-      await response.drain<void>();
-      throw StateError(
+      throw ContentHttpException(
         response.statusCode == 401 || response.statusCode == 403
             ? 'Anmeldung oder Freigabe erforderlich.'
             : 'Inhaltsserver nicht verfügbar.',
+        response.statusCode,
+        await _errorCode(response),
       );
     }
     final chunks = <int>[];
@@ -230,10 +237,30 @@ class ContentReleaseClient implements ContentReleaseTransport {
     request.followRedirects = false;
     final response = await request.close().timeout(const Duration(seconds: 30));
     if (response.statusCode != 200) {
-      await response.drain<void>();
-      throw StateError('Download abgebrochen oder Berechtigung abgelaufen.');
+      throw ContentHttpException(
+        'Download abgebrochen oder Berechtigung abgelaufen.',
+        response.statusCode,
+        await _errorCode(response),
+      );
     }
     yield* response.timeout(const Duration(seconds: 30));
+  }
+
+  /// Reads at most 4 KiB of an error body and keeps only its `code`/`error`
+  /// identifier; the caller maps it against [allowedServerCodes].
+  static Future<String?> _errorCode(HttpClientResponse response) async {
+    final chunks = <int>[];
+    try {
+      await for (final chunk in response.timeout(const Duration(seconds: 5))) {
+        if (chunks.length + chunk.length > 4096) return null;
+        chunks.addAll(chunk);
+      }
+      final body = jsonDecode(utf8.decode(chunks));
+      final code = body is Map ? body['code'] ?? body['error'] : null;
+      return code is String ? code : null;
+    } catch (_) {
+      return null;
+    }
   }
 
   void close() => _client.close(force: true);

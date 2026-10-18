@@ -8,6 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../data/content/content_auth_repository.dart';
 import '../../data/content/content_install_journal.dart';
 import '../../data/content/content_release_client.dart';
+import '../../data/content/content_update_diagnosis.dart';
 import '../../data/content/content_update_service.dart';
 import 'database_providers.dart';
 
@@ -21,9 +22,17 @@ final contentAuthProvider = Provider<ContentAuthRepository>((ref) {
 });
 
 class ContentUpdateState {
-  const ContentUpdateState(this.phase, this.message, {this.signedIn = false});
+  const ContentUpdateState(
+    this.phase,
+    this.message, {
+    this.signedIn = false,
+    this.diagnosis,
+  });
   final String phase, message;
   final bool signedIn;
+
+  /// Safe step/status/code line of the last failure; never secrets or bodies.
+  final String? diagnosis;
 }
 
 final contentUpdateProvider =
@@ -47,12 +56,13 @@ class ContentUpdateController extends Notifier<ContentUpdateState> {
     return const ContentUpdateState('idle', 'Offline-Inhalt bleibt verfügbar.');
   }
 
-  void _notice(String phase, String message) {
+  void _notice(String phase, String message, {String? diagnosis}) {
     if (ref.mounted) {
       state = ContentUpdateState(
         phase,
         message,
         signedIn: ref.read(contentAuthProvider).signedIn,
+        diagnosis: diagnosis,
       );
     }
   }
@@ -108,10 +118,18 @@ class ContentUpdateController extends Notifier<ContentUpdateState> {
   Future<void> _run(Future<void> Function() action) async {
     try {
       await action();
-    } catch (_) {
+    } catch (e) {
+      final service = _service;
+      final diagnosis =
+          service != null && identical(service.lastError, e)
+          ? service.lastDiagnosis!
+          : ContentUpdateDiagnosis.from('setup', e);
+      final line = diagnosis.describe();
+      debugPrint('Inhaltsupdate fehlgeschlagen: $line');
       _notice(
         'error',
         'Inhaltsaktion nicht abgeschlossen. Anmeldung, Freigabe und Verbindung prüfen. Bisheriger Inhalt bleibt erhalten.',
+        diagnosis: line,
       );
     }
   }
