@@ -5,7 +5,7 @@
 - KI-Ist: optionaler Python-Wrapper mit Haiku, Thinking aus/Effort low; App liest lokale Übersetzungen. Drei Laufzeit-KI-Functions weiter Entwurf; kein Fallback.
 - Offline geprüft: Haiku-Vertrag 42, gezielt 156, Pipeline 638 PASS/1 bestehender Skip/19 Subtests, pip check Exit 0; EU-Pfad per echtem SDK, keine Cloudfreischaltung belegt.
 - Kosten: keine gemessene Einsparung/Modellqualität. Unbekannte Nutzung konservativ erfasst; lokale Reservierung ist keine garantierte Anbieterrechnungsgrenze.
-- Haiku-Livesetup nicht abgeschlossen: Modellkarte aktiviert, EU-Familienquoten weiter 0; Mac ohne gcloud/ADC. Nächster Schritt: offizielle ARM64-CLI installieren. 42 Vertragstests PASS, 0 Liveanfragen; docs/haiku-live-setup.md. Qualitätsvergleich später separat max. 48 Versuche/0,50 USD; keine Inhalts-/Deploymentfreigabe.
+- Haiku-Livesetup nicht abgeschlossen: CLI 589.0.0/ADC-Refresh/Quotenprojekt sprachlernapp-510508 belegt; EU-Haiku-Familienquoten weiter 0, positive Zuteilung nötig. 42 Vertragstests PASS, 0 Liveanfragen; docs/haiku-live-setup.md. Qualitätsvergleich später max. 48 Versuche/0,50 USD; keine Inhalts-/Deploymentfreigabe.
 ## Portugiesisch und aktive Inhalte · relevante Vorbefunde
 - Paket 2 lokal abgeschlossen: Sprachwahl en/pt-BR, Gate/Rollback, getrennte Updatefristen und Akzentpolicy; Lernstände erhalten. docs/portuguese-package-2.md.
 - Übernommene Prüfung Paket 2: UI 2+13, Sprache/Installation 14, Gesamt 380 PASS/5 bestehende Skips, Realpack 1/12s, Stage Exit 0; Analyse Exit 1 nur Alt-avoid_print.
