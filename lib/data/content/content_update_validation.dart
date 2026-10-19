@@ -5,6 +5,7 @@ import 'package:sqlite3/sqlite3.dart';
 import 'package:crypto/crypto.dart';
 
 import 'content_database.dart';
+import '../../domain/content.dart';
 import 'content_release_client.dart';
 import 'context_revision_validation.dart';
 
@@ -93,12 +94,32 @@ void validateDownloadedContent(
   final inventory = jsonDecode(
     File('${File(path).parent.path}/history_inventory.json').readAsStringSync(),
   ) as Map<String, dynamic>;
+  final db = sqlite3.open(path, mode: OpenMode.readOnly);
+  try {
+    validateDownloadedDatabase(
+      db,
+      offer,
+      inventory,
+      previousPath: previousPath,
+    );
+  } finally {
+    db.close();
+  }
+}
+
+/// Full validator on a caller-owned handle; never closes [db].
+/// History checks and the legacy file wrapper retain their existing contract.
+ContentInfo validateDownloadedDatabase(
+  Database db,
+  ReleaseOffer offer,
+  Map<String, dynamic> inventory, {
+  String? previousPath,
+}) {
   if (contextCanonicalHash(inventory) !=
           offer.manifest['history_inventory_sha256'] ||
       inventory['lang'] != offer.lang) {
     throw const FormatException('Historieninventar passt nicht.');
   }
-  final db = sqlite3.open(path, mode: OpenMode.readOnly);
   Database? old;
   try {
     db.execute('PRAGMA query_only=ON');
@@ -129,7 +150,8 @@ void validateDownloadedContent(
     }
     final tables = inventory['tables'] as Map<String, dynamic>;
     final expected = names.difference({'content_releases'});
-    if (tables.length != expected.length || !expected.containsAll(tables.keys)) {
+    if (tables.length != expected.length ||
+        !expected.containsAll(tables.keys)) {
       throw const FormatException('Inventartabellen weichen ab.');
     }
     for (final table in expected) {
@@ -145,7 +167,7 @@ void validateDownloadedContent(
         }
       }
     }
-    if (previousPath == null) return;
+    if (previousPath == null) return info;
     final priorInventory = File(
       '${File(previousPath).parent.path}/history_inventory.json',
     );
@@ -205,7 +227,7 @@ void validateDownloadedContent(
     } catch (_) {
       // A forward repair can use the previously authenticated full inventory
       // when the old SQLite itself is unreadable. Never use an unbound sidecar.
-      if (prior != null) return;
+      if (prior != null) return info;
       rethrow;
     }
     for (final tableRow in old.select(
@@ -255,8 +277,8 @@ void validateDownloadedContent(
         }
       }
     }
+    return info;
   } finally {
     old?.close();
-    db.close();
   }
 }

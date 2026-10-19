@@ -1,4 +1,7 @@
+import 'dart:async';
+import 'dart:typed_data';
 import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'dart:io';
 import 'dart:isolate';
 import 'package:drift/isolate.dart';
@@ -12,7 +15,11 @@ import '../../domain/content.dart';
 import 'form_content_validation.dart';
 import 'context_revision_validation.dart';
 
+import 'content_release_client.dart';
+import 'content_update_validation.dart';
+
 part 'content_database.g.dart';
+part 'content_validation_session.dart';
 
 // No Flutter imports: tool/stage_content_pack.dart shares the checks below.
 
@@ -431,6 +438,11 @@ class ContentDatabase extends _$ContentDatabase {
   /// Isolated test executors only; production must use the validated openers.
   ContentDatabase.forTesting(super.executor, this.info) : _raw = null;
 
+  /// Only a successfully handshaken session can construct a BoundReader.
+  static ContentDatabase fromBoundReader(BoundReader reader) => reader._take();
+
+  Future<void> Function()? _boundCleanup;
+  Future<void>? _boundClose;
   final Database? _raw;
   final ContentInfo info;
 
@@ -438,8 +450,16 @@ class ContentDatabase extends _$ContentDatabase {
   /// is closed here in any case (idempotent), so no file stays locked.
   @override
   Future<void> close() async {
+    if (_boundCleanup != null) {
+      return _boundClose ??= _closeBound();
+    }
     await super.close();
     _raw?.close();
+  }
+
+  Future<void> _closeBound() async {
+    await super.close();
+    await _boundCleanup!();
   }
 
   @override
