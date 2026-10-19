@@ -46,9 +46,9 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
       if (at != null) recent.add((state.cardId, at));
     }
     recent.sort((a, b) => b.$2.compareTo(a.$2));
-    final words = await resolver.practiceItems(
-      recent.take(5).map((r) => r.$1).toList(),
-    );
+    // Home only displays card metadata already resolved for this language/pack.
+    // Session start still loads and validates its full sentences and tokens.
+    final words = [for (final r in recent.take(5)) resolver.cards[r.$1]!];
     result.add(
       Deck(
         id: deck.id,
@@ -70,8 +70,8 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
         recentWords: [
           for (final item in words)
             SeenWord(
-              word: item.card.form,
-              translation: item.card.translationDe ?? '',
+              word: item.form,
+              translation: item.translationDe ?? '',
             ),
         ],
       ),

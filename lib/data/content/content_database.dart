@@ -410,6 +410,9 @@ class ContentDatabase extends _$ContentDatabase {
 
   ContentDatabase._remote(super.executor, this.info) : _raw = null;
 
+  /// Isolated test executors only; production must use the validated openers.
+  ContentDatabase.forTesting(super.executor, this.info) : _raw = null;
+
   final Database? _raw;
   final ContentInfo info;
 

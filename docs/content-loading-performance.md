@@ -120,3 +120,90 @@ GitNexus: Impact vor Änderungen – **HIGH** für `RepositoryOwner` (24/20 dire
 - `content_update_provider` `openReaders` ruft `resume()` vor dem Rebuild auf den neuen Key; dieselbe verspätete Wiederöffnung der alten Generation ist dort möglich (durch die neue Abbruchprüfung nur teilweise abgedeckt), nicht geändert.
 - `wordListProvider` liest `reviewsFor` je Wort (N+1), nicht gemessen.
 - Gerätewerte fehlen vollständig; Ziele bleiben offen bis zum manuellen Profile-Lauf.
+
+
+## Nachtrag 19.10.2026: gebündelte Repository-Abfragen und echte iPhone-Messung
+
+Dieser Nachtrag ersetzt die oben offenen Gerätebefunde. Basis: `0d5dee9`, isolierter Worktree `batch-content-queries/sprachapp`; fremde Änderungen im ursprünglichen Checkout bleiben erhalten. Vor Änderungen abgegrenzte Dateien: `lib/data/content/content_database.dart`, `lib/data/content/drift_content_repository.dart`, `lib/presentation/providers/deck_providers.dart`, neue Tests `test/data/content_batch_test.dart`, `test/home_metadata_projection_test.dart`, dieser Bericht und `NEXTSTEPS.md`. Temporäre Messsonden gehören nicht zum Commit.
+
+### Ursache, Plan und Vertragsprüfung
+
+`selectionCards` fragte bisher für jede Karte (auch ohne Formziel) einzeln `form_targets` ab; der Katalog wiederholte dies für Stapel. `practiceItems` lud Tokens einzeln je Satz. Home lud für die letzten fünf Wörter je Stapel komplette Übungsobjekte, obwohl nur Form und Übersetzung angezeigt werden. Die 402 dokumentierten Formmitgliedschaften waren deshalb nicht die tatsächliche SQL-Aufrufzahl.
+
+Umgesetzt: parametrisierte IN-Abfragen in maximal 400er-Batches für Formziele und Tokens; Gruppierung nach Karten-/Satz-ID und anschließende Rekonstruktion der ursprünglichen Reihenfolge. Die zweiarmige Lemma-UNION bindet damit maximal 800 statt 1000 Parameter (auch unter SQLite-Limit 999). Aktive Filter, Mehrdeutigkeitsfehler, historische Lesefilter, UTF-16-Prüfung, Kontext-Snapshots und Formidentitäten bleiben erhalten. Home nimmt seine Wortmetadaten aus dem bereits sprach-/packgebundenen Resolver; Übungsstart lädt weiterhin vollständig geprüfte Sätze. Kein zusätzlicher Cache, keine ausgelassene Packvalidierung, keine geänderte Verbindungseigentümerschaft und keine zusätzliche Änderungsmeldung durch `ensureCards`.
+
+`ContentDatabase.forTesting` erlaubt einen isolierten, gezählten Executor; Produktionsöffner bleiben unverändert. Tests arbeiten auf temporären Kopien bzw. synthetischen Daten. Neue Tests prüfen 805 Ziele in en und pt-BR über drei Batchgrenzen, Reihenfolge, doppelte/fehlende IDs, Form- und Tokenfelder und höchstens 999 Bindungen. Home-Metadaten stimmen mit vollständigen Übungsobjekten überein, bei null vollständigen Übungsabrufen. Bestehende Tests decken Tagesrest, Fälligkeit, Formübungen, aktive Revisionen, Historie sowie schnelle Sprachwechsel und Owner-Lifecycle ab. Keine fragilen Zeitgrenzen hinzugefügt; Realpack-Budget weiterhin 30 Sekunden.
+
+### SQL-Zählung und Ergebnisgleichheit (Host)
+
+Gleicher Test, gleiche unveränderte en-Packkopie: 3 767 Karten, 14 Stapel, 3 767 aktive Übungsobjekte und 4 297 historische Referenzen. QueryInterceptor zählt tatsächliche SELECT-Aufrufe, nicht geschätzte Schleifendurchläufe. Zeiten sind einzelne Hostläufe; parallele Xcode-Arbeit kann die Dauer beeinflussen. Abfragezahlen und Inhaltsvergleich sind davon unabhängig.
+
+| Pfad | Form-SELECT vorher → nachher | Satz-/Token-SELECT vorher → nachher | Dauer vorher → nachher |
+|---|---:|---:|---:|
+| Alle selectionCards | 3 767 → 10 | 0 / 0 → 0 / 0 | 1 051 → 148 ms |
+| PracticeCatalog mit Stapeln | 11 427 → 44 | 0 / 0 → 0 / 0 | 1 979 → 603 ms |
+| Alle practiceItems | 3 767 → 10 | 8 / 3 767 → 10 / 10 | 1 292 → 547 ms |
+| Alle historischen Einzelreferenzen | 0 → 0 | 4 297 / 4 297 unverändert | 32 492 → 32 884 ms |
+
+Gemessene SQL-Zeit bei `all-practice`: Formen 340 743 → 4 848 µs, Satzlesen 25 009 → 29 280 µs, Tokens 431 959 → 155 362 µs. Satzlesen war bereits gebündelt; zwei zusätzliche Abfragen entstehen durch das kleinere sichere Batchlimit. Die Zahl wächst nun je begrenztem Batch statt je Formziel/Satz. Historische Einzelabrufe behalten ihren Vertrag und sind kein Home-Pfad.
+
+SHA-256 über vollständig serialisierte Ergebnisse vor/nachher identisch (nicht nur Anzahl):
+- Karten: `3d97e3407ab6d2eded25d2dbd771533ffd445112b69b45cba53e789ee0925e05`
+- Stapel: `cf9a79b00a538bff698eaaf28cf4b956ebc51236313238e274718797d2f7dd3d`
+- Geordnete Formziele: `674e728b54426a26c1710f6a5707c4fb5facaee5227a818e3561381b76531e39`
+- Aktive Übungen inkl. Tokens/Glossen/Offsets: `4df3a14ecda894d15741648766771b1de81b9475949e7826f9f965ff371b9531`
+- Historische Sätze: `edddd6e34ed119489f0e1841212acec7c4147d49c22c294a1f21b89b66e0c6eb`
+
+Host-Home-Sonde (synthetischer Lernstand, kein echtes user.db): erster pt-BR→en insgesamt 6 873 → 7 488 ms, wiederholt 7 136 → 4 270 ms; dabei Packöffnung 1 962 → 4 088 bzw. 2 608 → 2 199 ms. Diese Streuung unter paralleler Buildlast erlaubt keine belastbare pauschale Host-Prozentverbesserung. Erste Übung 28 → 28 ms, wiederholt 21 → 31 ms; keine Verlagerung derselben Sekundenwartezeit auf den Übungsstart beobachtet.
+
+### iPhone: nutzbare Home-Daten statt nur Sprachüberschrift
+
+Echtes iPhone 14 Plus, iOS 18.7.2, ID `00008110-001651611E01401E`; Profile-Modus, bestehende Installation und Lernstände, gleiche Bundle-ID `com.example.sprachapp` und Signierung `W27Z6DNPT3`. Vorher und nachher derselbe manuelle Ablauf: Home vollständig laden, en→pt-BR→en, zu Home zurück, eine Übung nur öffnen. Nutzer hat keine automatisierten Reviews erhalten; keine direkte Bearbeitung oder Kopie der echten user.db. Je Variante ein gültiger Lauf, keine statistische Messreihe.
+
+| Gerätephase | Vorher | Nachher |
+|---|---:|---:|
+| Kaltstart bis Home-Stapeldaten bereit | 10 502 ms | 8 330 ms |
+| en→pt-BR: selectLanguage | 94 ms | 93 ms |
+| pt-BR→en: selectLanguage / Zielpack bereit | 6 862 ms | 6 899 ms |
+| Home-Projektion ab Rückkehr bis Stapel **und** Vokabeldaten bereit | 3 314 ms | 1 275 ms |
+| darin PracticeCatalog | 1 603 ms | 571 ms |
+| darin Vokabeldaten bereit (ab Home-Start) | 3 224 ms | 1 236 ms |
+| Erste Übung bis Session bereit | 65 ms | 66 ms |
+
+ProviderObserver misst die tatsächlich benötigten Daten, FrameTiming ergänzt die Darstellung. Kein bloßes Timing des Sprachlabels, aber auch kein automatisierter Pixel-Nachweis des ersten vollständig gezeichneten Frames. Der Nutzer bestätigte beide Abläufe und meldet nachher **„kaum Unterschied“**. Das passt zur unveränderten Packwartezeit. Zwischen Wechselende und manueller Home-Rückkehr lagen 957 bzw. 5 068 ms; diese Bedienpausen dürfen nicht als Code-Laufzeit verrechnet werden. Daher keine irreführende Gesamtdauer aus beiden Zeitstempeln.
+
+**Ziel unter einer Sekunde nicht erreicht.** Die Home-Projektion spart im beobachteten Lauf rund zwei Sekunden, aber die belegten Einzelabfragen erklären nicht die sieben Sekunden bis zum Ende von `selectLanguage`. Der nächste begrenzte Schritt ist eine getrennte Geräteinstrumentierung innerhalb des Zielpack-Öffnens (`openInBackground`: Validierungs-/Leseschritte und Übergabe), ohne Prüfungen zu entfernen oder echte Lernstände anzutasten. Der genaue Anteil einzelner Validatoren ist noch nicht gemessen. Schnelle Wechsel sind durch automatisierte Lifecycle-Tests gedeckt; eine schnelle Geräte-Wechselfolge und wiederholte Geräte-Zeitreihe stehen noch aus.
+
+### Reproduzierbare Befehle und lokale Belege
+
+Flutter-/Dart-Testbefehle identisch unter macOS Terminal und Windows PowerShell; iPhone-Build nur macOS. SQL-Sonde:
+```
+flutter test --no-pub --dart-define=BATCH_MEASURE=true test/data/content_batch_test.dart --plain-name "real pack query measurement"
+```
+Tatsächlich zusätzlich `--dart-define=BATCH_OUTPUT=/private/tmp/batch-before-fingerprints.json` bzw. `.../batch-after-fingerprints.json` verwendet; beide Exit 0. Dieser ausdrücklich aktivierte Vollvergleich hat ein eigenes 3-Minuten-Budget und verändert nicht den normalen 30-s-Packtest. Ohne Define wird nur die optionale Messung übersprungen.
+
+Gerät vor/nachher: `flutter run --no-pub --profile -d 00008110-001651611E01401E -t lib/perf_measurement.dart` mit den vom Nutzer angegebenen öffentlichen `SUPABASE_URL`-/`SUPABASE_ANON_KEY`-Dart-Defines. Temporärer Einstieg initialisiert WidgetsBinding und ProviderObserver/FrameTiming vor SprachApp; keine Inhalts- oder Lernstandausgabe. Vorheriger Sondenstart ohne Binding scheiterte, nach gezielter Korrektur gültige Messung. Messsonden danach entfernt; normaler Einstieg `lib/main.dart` mit denselben Defines wieder gebaut.
+
+Lokale Rohlogs (außerhalb Git): `/private/tmp/batch-before-queries.log`, `batch-after-queries.log`, `batch-before-home.log`, `batch-after-home.log`, `batch-device-before2.log`, `batch-device-after.log`. Die Tabellen enthalten die entscheidenden Ergebnisse dauerhaft; temporäre Logs können später verschwinden.
+
+GitNexus vor Änderungen: HIGH für `selectionCards` (6 direkte Aufrufer, 3 Prozesse) und `_formTarget` (3 direkte Aufrufer, 3 Prozesse), insbesondere Katalog/Tools/Editorpfade; Warnung vor Bearbeitung ausgegeben. LOW für `deckPracticeTargets`, `practiceItems`, `_tokens`, `_lemmaForms`; ContentDatabase MEDIUM. `decksProvider` und Dokumentdateien UNKNOWN: durch direkte Aufrufer-/Verweissuche ergänzt, nicht als Entwarnung behandelt. Methodenauflösung des Dart-Index ist unvollständig; Ergebnisvergleich und direkte Tests ergänzen den Graphen.
+
+
+Abschließende Prüfungen (tatsächliche Ausgaben, Logs `/private/tmp/batch-*-final.log` bzw. `batch-full-pass.log`):
+
+| Befehl | Gekürzter Output | Exit |
+|---|---|---:|
+| `flutter test --no-pub test/data/content_batch_test.dart test/home_metadata_projection_test.dart test/content_loading_performance_test.dart test/data/form_content_test.dart test/data/content_active_context_test.dart test/data/content_context_revisions_test.dart test/form_learning_flow_test.dart test/language_selection_ui_test.dart test/language_update_lifecycle_test.dart test/data/content_owner_barrier_test.dart test/data/portuguese_installation_test.dart test/deck_flow_test.dart` | `00:11 +69 ~5: All tests passed!` | 0 |
+| `flutter test --no-pub` | `01:01 +405 ~6: All tests passed!` (5 bestehende Skips + optionale SQL-Messung) | 0 |
+| `flutter test --no-pub test/data/real_pack_test.dart` | `00:07 +1: All tests passed!` | 0 |
+| `flutter analyze --no-pub` | `1 issue found`, ausschließlich alter `avoid_print`, `test/data/baseline_adoption_pack_test.dart:43:7` | 1 |
+| `dart run tool/stage_content_pack.dart --verify` | `22 table counts match`, SHA-256 `b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb` | 0 |
+| `git -c core.whitespace=cr-at-eol diff --cached --check` (genau sieben eigene Dateien) | kein Output | 0 |
+| `node .gitnexus/run.cjs analyze --index-only` | `Repository indexed successfully`, 8 281 nodes, 19 288 edges | 0 |
+| `node .gitnexus/run.cjs detect-changes --scope all --repo . --limit 5000` plus vollständiger LocalBackend-JSON-Aufruf derselben Operation | 7 Dateien, 35 Symbole, 9 Prozesse, Risiko HIGH; alle 35 Symbole vorhanden, kein `partial:true`/`truncated:true` | 0 |
+
+HIGH bleibt als Warnung bestehen: insbesondere Editor-Inspektion und Toolpfade erreichen `_formTargets`. Ganze Ergebnismengen, Form-/Historientests und vollständige Suite wurden dagegen geprüft; der Editorbestand selbst wurde nicht verändert. Nach dem abschließenden Prüfprotokoll folgt nochmals die Graphanalyse vor Commit.
+
+Fehlversuche transparent: erster gezielter Testlauf Exit 1 wegen fehlendem Extension-Import im neuen Home-Test (behoben); erster Gesamtlauf Exit 1 wegen dieses Imports und fehlender ignorierter historischer Packdateien im frischen Worktree. Die vorhandenen Dateien wurden unverändert kopiert. Zweiter Gesamtlauf Exit 1 wegen sechs Schreibfehlern in den bestehenden Storytests (`build/story_single_sentence` fehlte); Ausgabeordner angelegt, danach vollständiger Lauf grün. Erster Analyselauf Exit 1 mit drei neuen Klammerhinweisen; behoben, keine Unterdrückung. Bestehende Google-Fonts-/Drift-Testwarnungen unverändert sichtbar. Kein Test entfernt, keine Prüfung abgeschwächt.
+
+Normaler Profile-Build ohne Messsonde erfolgreich installiert und gestartet, danach Flutter mit `q` beendet (Exit 0); App bleibt installiert und ist normal startbar. Keine Deinstallation, kein Deployment von Cloudfunktionen, keine Modellanfrage, kein Push.

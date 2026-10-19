@@ -18,7 +18,8 @@ class DriftContentRepository
 
   final ContentDatabase _db;
 
-  static const _chunk = 500;
+  // At most 800 bindings in the two-arm lemma UNION (SQLite limit 999).
+  static const _chunk = 400;
 
   @override
   ContentInfo get info => _db.info;
@@ -82,14 +83,28 @@ class DriftContentRepository
     ];
   }
 
-  Future<FormTarget?> _formTarget(String cardId) async {
-    if (info.schemaVersion < 4) return null;
-    final rows = await _select('SELECT * FROM form_targets WHERE card_id=? AND removed_in IS NULL', [cardId]);
-    if (rows.isEmpty) return null;
-    if (rows.length != 1) throw _broken('Mehrdeutige Formkarte');
-    final r = rows.single;
-    return FormTarget(id:r.read<String>('id'),cardId:cardId,senseId:r.read<String>('sense_id'),
-      form:r.read<String>('form'),function:r.read<String>('function'),lexicalTargetId:r.read<String>('lexical_target_id'));
+  Future<FormTarget?> _formTarget(String cardId) async =>
+      (await _formTargets([cardId]))[cardId];
+
+  Future<Map<String, FormTarget>> _formTargets(Iterable<String> cardIds) async {
+    final result = <String, FormTarget>{};
+    if (info.schemaVersion < 4) return result;
+    final ids = cardIds.toSet().toList();
+    for (var i = 0; i < ids.length; i += _chunk) {
+      final batch = ids.sublist(i, (i + _chunk).clamp(0, ids.length));
+      final rows = await _select(
+        'SELECT * FROM form_targets WHERE card_id IN (${_marks(batch.length)}) '
+        'AND removed_in IS NULL', batch);
+      for (final r in rows) {
+        final id = r.read<String>('card_id');
+        if (result.containsKey(id)) throw _broken('Mehrdeutige Formkarte');
+        result[id] = FormTarget(id:r.read<String>('id'), cardId:id,
+          senseId:r.read<String>('sense_id'), form:r.read<String>('form'),
+          function:r.read<String>('function'),
+          lexicalTargetId:r.read<String>('lexical_target_id'));
+      }
+    }
+    return result;
   }
 
   @override
@@ -98,7 +113,8 @@ class DriftContentRepository
       final decks = await _select('SELECT practice_kind FROM decks WHERE id=? AND removed_in IS NULL', [deckId]);
       if (decks.isNotEmpty && decks.single.read<String>('practice_kind') != 'ordinary') {
         final rows=await _select('SELECT f.card_id FROM deck_practice_targets d JOIN form_targets f ON f.id=d.form_target_id WHERE d.deck_id=? AND d.removed_in IS NULL AND f.removed_in IS NULL ORDER BY d.position', [deckId]);
-        return [for (final r in rows) DeckPracticeTarget(cardId:r.read<String>('card_id'),formTarget:await _formTarget(r.read<String>('card_id')))];
+        final targets = await _formTargets(rows.map((r) => r.read<String>('card_id')));
+        return [for (final r in rows) DeckPracticeTarget(cardId:r.read<String>('card_id'),formTarget:targets[r.read<String>('card_id')])];
       }
     }
     final cards = await selectionCards(await deckCardIds(deckId));
@@ -121,7 +137,7 @@ class DriftContentRepository
     for (var i = 0; i < ids.length; i += _chunk) {
       final chunk = ids.sublist(i, (i + _chunk).clamp(0, ids.length));
       final marks = _marks(chunk.length);
-      for (final r in await _select(
+      final rows = await _select(
         'SELECT c.id, c.lang, c.form, c.form_norm, c.lemma_id, l.lemma, c.pos, '
         'c.form_kind, c.form_label_de, c.translation_de, c.cefr_band, c.sense_id, s.sense_key, '
         '${info.schemaVersion >= 3 ? 'c.learning' : 'NULL'} AS learning, '
@@ -132,9 +148,11 @@ class DriftContentRepository
         'JOIN senses s ON s.id = c.sense_id '
         'WHERE c.id IN ($marks) AND c.lang = ? AND c.removed_in IS NULL',
         [...chunk, _lang],
-      )) {
+      );
+      final targets = await _formTargets(rows.map((r) => r.read<String>('id')));
+      for (final r in rows) {
         final card = ContentCard(
-          formTarget: await _formTarget(r.read<String>('id')),
+          formTarget: targets[r.read<String>('id')],
           identityFunction: r.readNullable<String>('identity_function'),
           introductionScope: r.read<String>('introduction_scope'),
           lexicalTargetId: r.readNullable<String>('lexical_target_id'),
@@ -174,14 +192,18 @@ class DriftContentRepository
     final sentences = <String, List<CardSentence>>{};
     for (var i = 0; i < ids.length; i += _chunk) {
       final chunk = ids.sublist(i, (i + _chunk).clamp(0, ids.length));
-      for (final r in await _select(
+      final rows = await _select(
         'SELECT cs.card_id, cs.sentence_id, cs.position, cs.gap_start, '
         'cs.gap_end, cs.valid_alternatives, s.text, s.translation_de '
         'FROM card_sentences cs JOIN sentences s ON s.id = cs.sentence_id '
         'WHERE cs.card_id IN (${_marks(chunk.length)}) AND cs.removed_in IS NULL '
         'AND s.removed_in IS NULL ORDER BY cs.card_id, cs.position',
         chunk,
-      )) {
+      );
+      final tokens = await _tokensFor({
+        for (final r in rows) r.read<String>('sentence_id'): r.read<String>('text'),
+      });
+      for (final r in rows) {
         final cardId = r.read<String>('card_id');
         sentences
             .putIfAbsent(cardId, () => [])
@@ -191,10 +213,7 @@ class DriftContentRepository
                 sentenceId: r.read<String>('sentence_id'),
                 position: r.read<int>('position'),
                 text: r.read<String>('text'),
-                tokens: await _tokens(
-                  r.read<String>('sentence_id'),
-                  r.read<String>('text'),
-                ),
+                tokens: tokens[r.read<String>('sentence_id')] ?? const [],
                 translationDe: r.readNullable<String>('translation_de'),
                 gapStart: _utf16Offset(
                   r.read<String>('text'),
@@ -246,20 +265,40 @@ class DriftContentRepository
     return List.unmodifiable(value.cast<String>());
   }
 
-  Future<List<SentenceToken>> _tokens(String id, String text, {bool historical = false}) async {
-    String active(String alias) => historical ? '' : 'AND $alias.removed_in IS NULL';
-    final rows = await _select(
-      'SELECT t.start_pos, t.end_pos, t.surface, '
-      '${info.schemaVersion >= 5 ? 't.context_gloss_de, t.context_snapshot,' : ''} '
-      'COALESCE(c.translation_de, (SELECT df.gloss_de FROM dictionary_forms df '
-      'WHERE df.sense_id = t.sense_id AND df.form_norm = lower(t.surface) '
-      'AND s.id IS NOT NULL ${active('df')} ORDER BY df.rank, df.id LIMIT 1), s.gloss_de) AS gloss '
-      'FROM sentence_tokens t '
-      'LEFT JOIN senses s ON s.id = t.sense_id ${active('s')} '
-      'LEFT JOIN cards c ON c.id = t.card_id AND c.sense_id = s.id AND c.form_norm = lower(t.surface) ${active('c')} '
-      'WHERE t.sentence_id = ? ${active('t')} ORDER BY t.idx',
-      [id],
-    );
+  Future<List<SentenceToken>> _tokens(String id, String text, {bool historical = false}) async =>
+      (await _tokensFor({id: text}, historical: historical))[id] ?? const [];
+
+  Future<Map<String, List<SentenceToken>>> _tokensFor(Map<String, String> texts,
+      {bool historical = false}) async {
+    final result = <String, List<SentenceToken>>{};
+    final ids = texts.keys.toList();
+    for (var i = 0; i < ids.length; i += _chunk) {
+      final batch = ids.sublist(i, (i + _chunk).clamp(0, ids.length));
+      String active(String alias) => historical ? '' : 'AND $alias.removed_in IS NULL';
+      final rows = await _select(
+        'SELECT t.sentence_id, t.start_pos, t.end_pos, t.surface, '
+        '${info.schemaVersion >= 5 ? 't.context_gloss_de, t.context_snapshot,' : ''} '
+        'COALESCE(c.translation_de, (SELECT df.gloss_de FROM dictionary_forms df '
+        'WHERE df.sense_id = t.sense_id AND df.form_norm = lower(t.surface) '
+        'AND s.id IS NOT NULL ${active('df')} ORDER BY df.rank, df.id LIMIT 1), s.gloss_de) AS gloss '
+        'FROM sentence_tokens t '
+        'LEFT JOIN senses s ON s.id = t.sense_id ${active('s')} '
+        'LEFT JOIN cards c ON c.id = t.card_id AND c.sense_id = s.id AND c.form_norm = lower(t.surface) ${active('c')} '
+        'WHERE t.sentence_id IN (${_marks(batch.length)}) ${active('t')} ORDER BY t.sentence_id, t.idx',
+        batch,
+      );
+      final grouped = <String, List<QueryRow>>{};
+      for (final row in rows) {
+        grouped.putIfAbsent(row.read<String>('sentence_id'), () => []).add(row);
+      }
+      for (final id in batch) {
+        result[id] = _readTokens(grouped[id] ?? const [], texts[id]!, historical: historical);
+      }
+    }
+    return result;
+  }
+
+  List<SentenceToken> _readTokens(List<QueryRow> rows, String text, {required bool historical}) {
     final result = <SentenceToken>[];
     var lastEnd = 0;
     for (final r in rows) {
