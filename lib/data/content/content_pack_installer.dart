@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
@@ -132,9 +133,15 @@ class ContentPackInstaller {
     return (file: target, manifest: manifest);
   }
 
-  static Future<bool> _matches(File file, String sha) async =>
-      await file.exists() &&
-      sha256.convert(await file.readAsBytes()).toString() == sha;
+  /// Hashes off the UI isolate: the pack is tens of megabytes.
+  static Future<bool> _matches(File file, String sha) async {
+    if (!await file.exists()) return false;
+    final path = file.path;
+    return await Isolate.run(
+          () async => (await sha256.bind(File(path).openRead()).first).toString(),
+        ) ==
+        sha;
+  }
 
   /// Installs and opens the pack read-only. The release row must name the
   /// manifest version.

@@ -24,7 +24,8 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
   final UserDatabase _db;
   final String lang;
 
-  Future<void> _guardCards(Iterable<String> ids, {bool requireExisting = false}) async {
+  /// Returns the requested IDs without a row yet.
+  Future<Set<String>> _guardCards(Iterable<String> ids, {bool requireExisting = false}) async {
     final requested = ids.toSet();
     final found = <String>{};
     for (final chunk in _chunks(requested)) {
@@ -39,6 +40,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
     if (contentIds != null && missing.isNotEmpty && !(await contentIds!('cards')).containsAll(missing)) {
       throw StateError('Karte gehört nicht zum gewählten Inhaltsbestand.');
     }
+    return missing;
   }
 
   Future<void> _guardDecks(Iterable<String> ids) async {
@@ -104,10 +106,13 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
     required DateTime now,
     required CardOrigin origin,
   }) => _db.transaction(() async {
-    await _guardCards(cardIds);
+    // Existing rows stay untouched. Skipping the no-op insert also avoids a
+    // change event that would re-project every derived view.
+    final missing = await _guardCards(cardIds);
+    if (missing.isEmpty) return;
     final at = now.toUtc();
     await _db.batch((b) {
-      for (final id in cardIds.toSet()) {
+      for (final id in missing) {
         b.insert(
           _db.userCards,
           UserCardsCompanion.insert(

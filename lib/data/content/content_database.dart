@@ -445,8 +445,12 @@ class ContentDatabase extends _$ContentDatabase {
       final raw=sqlite3.open(path,mode:OpenMode.readOnly);
       try {
         raw.execute('PRAGMA query_only=ON');
-        final checked=validateContentSchema(raw,lang:lang);
-        if(checked.version!=info.version||checked.schemaVersion!=info.schemaVersion)throw StateError('Inhalt während Öffnung geändert.');
+        // The full validation above ran on these hash-checked, content-addressed
+        // bytes; this connection re-checks integrity and release identity only.
+        final check=raw.select('PRAGMA quick_check');
+        final release=raw.select('SELECT lang, version, schema_version FROM content_releases');
+        if(check.length!=1||check.first.values.first!='ok'||release.length!=1||release.first['lang']!=lang
+            ||release.first['version']!=info.version||release.first['schema_version']!=info.schemaVersion){throw StateError('Inhalt während Öffnung geändert.');}
         return NativeDatabase.opened(raw,enableMigrations:false);
       }catch(_){raw.close();rethrow;}
     })));

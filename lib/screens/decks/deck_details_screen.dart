@@ -46,8 +46,7 @@ class DeckDetailsScreen extends ConsumerWidget {
       child: Scaffold(
         body: SafeArea(
           bottom: false,
-          child: ref
-              .watch(decksProvider)
+          child: watchContentStable(ref, decksProvider)
               .when(
                 skipLoadingOnReload: false,
                 skipLoadingOnRefresh: false,

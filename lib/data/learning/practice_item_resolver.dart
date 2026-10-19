@@ -26,6 +26,7 @@ class PracticeItemResolver {
   final Map<String, String> bindings;
   final Map<String, UserCardState> states;
   final Object? contentError;
+  late final _groups = LearningGroups(cards, states);
   static Future<PracticeItemResolver> load(
     UserRepository user,
     ContentRepository? content, {
@@ -99,7 +100,7 @@ class PracticeItemResolver {
       : bindings[LearningIdentity(card.lang, card.formNorm, card.senseId!,
           function: (form ?? card.formFunction != null) ? card.formFunction : null).key];
   List<String> eligiblePrimaries(Iterable<String> ids) =>
-      LearningGroups(cards, states).project([
+      _groups.project([
         for (final id in ids)
           if (cards.containsKey(id)) states.containsKey(id) ? id : bindingFor(cards[id]!, form: false) ?? bindingFor(cards[id]!, form: true) ?? id,
       ]);
@@ -115,7 +116,7 @@ class PracticeItemResolver {
   }
 
   List<String> projectExisting(Iterable<String> ids) =>
-      LearningGroups(cards, states).project(ids, exactForms: true);
+      _groups.project(ids, exactForms: true);
 
   List<String> resolveTargets(Iterable<DeckPracticeTarget> targets) {
     final result = <String>[];

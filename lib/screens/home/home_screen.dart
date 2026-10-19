@@ -74,8 +74,7 @@ class HomeScreen extends ConsumerWidget {
                     goal: goal!,
                     onEditGoal: onEditGoal,
                   )
-                : ref
-                      .watch(learningProgressProvider)
+                : watchContentStable(ref, learningProgressProvider)
                       .when(
                 skipLoadingOnReload: false,
                 skipLoadingOnRefresh: false,
@@ -96,8 +95,7 @@ class HomeScreen extends ConsumerWidget {
           const SizedBox(height: 28),
           Padding(
             padding: _gutter,
-            child: ref
-                .watch(vocabBreakdownProvider)
+            child: watchContentStable(ref, vocabBreakdownProvider)
                 .when(
                 skipLoadingOnReload: false,
                 skipLoadingOnRefresh: false,
@@ -126,8 +124,7 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 14),
-          ...ref
-              .watch(decksProvider)
+          ...watchContentStable(ref, decksProvider)
               .when(
                 skipLoadingOnReload: false,
                 skipLoadingOnRefresh: false,

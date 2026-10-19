@@ -4,6 +4,7 @@ import '../../data/content/content_install_journal.dart';
 import '../../domain/language_profile.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show ProviderListenable;
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../data/content/content_pack_installer.dart';
@@ -35,17 +36,34 @@ class RepositoryOwner<T> {
   }
 
   Future<T> acquire(Ref ref) {
+    final lease = this.lease();
+    ref.onDispose(lease.release);
+    return lease.future;
+  }
+
+  /// A lease outside a provider scope, e.g. validating a language switch
+  /// target that the next provider scope then shares instead of reopening.
+  ({Future<T> future, void Function() release}) lease() {
     _leases++;
-    final future = _current ??= _closing.then((_) async {
+    late final Future<T> opening;
+    final future = _current ??= opening = _closing.then((_) async {
       await _paused?.future;
       if (_closeFailed) {
         throw StateError(
           'Die Datenverbindung wurde nicht geschlossen. Bitte die App neu starten.',
         );
       }
+      // All leases ended while waiting for close/resume: a reader of an
+      // outdated scope must not reopen the pack only to close it again.
+      if (!identical(_current, opening)) {
+        throw StateError('Inhaltsansicht wurde vor dem Öffnen geschlossen.');
+      }
       return open();
     });
-    ref.onDispose(() {
+    var released = false;
+    void release() {
+      if (released) return;
+      released = true;
       if (--_leases != 0) return;
       _current = null;
       if (_closeFailed) return;
@@ -62,8 +80,8 @@ class RepositoryOwner<T> {
       unawaited(
         _closing.then<void>((_) {}, onError: (Object _, StackTrace _) {}),
       );
-    });
-    return future;
+    }
+    return (future: future, release: release);
   }
 }
 
@@ -90,6 +108,31 @@ final activeContentKeyProvider=FutureProvider<ContentRepositoryKey>((ref) async 
   final journal=ContentInstallJournal(await getApplicationSupportDirectory(),lang);
   return (lang:lang,generation:(await journal.active())?.generation??0);
 },retry:(_,_)=>null);
+/// Owner key of [installer]'s active generation, read like [activeContentKeyProvider].
+Future<ContentRepositoryKey> contentKeyFor(ContentPackInstaller installer) async => (
+  lang: installer.lang,
+  generation: (await ContentInstallJournal(installer.supportDirectory, installer.lang).active())?.generation ?? 0,
+);
+final _settledViews = Provider<Map<Object, ({ContentRepositoryKey key, Object? value})>>((ref) => {});
+
+/// Keeps the value a view already showed while the same language and pack
+/// generation recomputes (review, resume). Another identity, or a previous
+/// value this view never showed, keeps the loading state.
+AsyncValue<T> watchContentStable<T>(WidgetRef ref, ProviderListenable<AsyncValue<T>> provider) {
+  final key = ref.watch(activeContentKeyProvider);
+  final value = ref.watch(provider);
+  final current = key is AsyncData<ContentRepositoryKey> ? key.value : null;
+  final settled = ref.read(_settledViews);
+  if (current != null && value is AsyncData<T>) {
+    settled[provider] = (key: current, value: value.value);
+  } else if (current != null && value.isLoading && value.hasValue) {
+    final last = settled[provider];
+    if (last != null && last.key == current && last.value == value.value) {
+      return AsyncData<T>(value.requireValue);
+    }
+  }
+  return value;
+}
 final contentRepositoryProvider = FutureProvider<ContentRepository>((ref) async {
   final key=await ref.watch(activeContentKeyProvider.future);
   if(!ref.mounted)throw StateError('Inhaltsansicht bereits geschlossen.');

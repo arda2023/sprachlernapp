@@ -8,14 +8,21 @@ class LearningGroups {
   final Map<String, ContentCard> cards;
   final Map<String, UserCardState> states;
 
-  List<String> project(Iterable<String> ids, {bool exactForms = false}) {
-    final groups = <String>{};
-    final result = <String>[];
+  /// Members per group, built once: callers never change the inputs after
+  /// construction, and a projection per target must not rescan all states.
+  late final Map<String, List<String>> _members = () {
     final members = <String, List<String>>{};
     for (final id in states.keys) {
       final c = cards[id];
       if (c != null) (members[c.learningGroup] ??= []).add(id);
     }
+    return members;
+  }();
+
+  List<String> project(Iterable<String> ids, {bool exactForms = false}) {
+    final groups = <String>{};
+    final result = <String>[];
+    final members = _members;
     for (final id in ids) {
       final c = cards[id];
       if (c == null) continue;
