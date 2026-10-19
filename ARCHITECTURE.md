@@ -34,10 +34,10 @@ docs/               Detaildokus (siehe unten)
 
 ### supabase/
 - EU Frankfurt. Schema `content` (öffentlich lesbar), Schema `app` (RLS, nur eigene Zeilen), Buckets `audio`, `packs`, `imports`.
-- Edge Functions rufen Vertex AI auf (`docs/backend.md`). Die App enthält keinen KI-Schlüssel.
+- Übersetzungs-Edge-Functions rufen die direkte Anthropic-API mit `claude-haiku-5-5` auf (`docs/backend.md`). Die App enthält keinen KI-Schlüssel.
 
 ### pipeline/
-- Python-Textanschluss mit vorhandenem `anthropic[vertex]==1.15.0` hinter synchronem `Llm.generate_json`: explizit `llm.provider: anthropic` (AsyncAnthropic, ANTHROPIC_API_KEY nur im lokalen Prozess) oder `vertex` (AsyncAnthropicVertex, EU/ADC). Kein Fallback. Direkte API ausschließlich für lokale Redaktion, ohne EU-only-Zusage und ohne echte Nutzerdaten; Nutzerentscheidung vom 19.10.2026. Andere Dienste einschließlich TTS und geplanter Runtime-KI behalten ihre Regeln. `google-genai` bleibt für vorhandene Werkzeuge installiert. [Einrichtung und Grenzen](docs/haiku-direct-api-setup.md).
+- Python-Textanschluss mit vorhandenem `anthropic[vertex]==1.15.0` hinter synchronem `Llm.generate_json`: explizit `llm.provider: anthropic` (AsyncAnthropic, ANTHROPIC_API_KEY nur im lokalen Prozess) oder `vertex` (AsyncAnthropicVertex, EU/ADC). Kein Fallback. Direkte API ausschließlich für lokale Redaktion, ohne EU-only-Zusage und ohne echte Nutzerdaten; Nutzerentscheidung vom 19.10.2026. TTS behält seine Regeln; die separate Laufzeitübersetzung ist unten beschrieben. `google-genai` bleibt für vorhandene Werkzeuge installiert. [Einrichtung und Grenzen](docs/haiku-direct-api-setup.md).
 - Läuft nur auf dem Entwicklungsrechner, nie in der App und nie in einer Edge Function.
 
 ## Datenfluss
@@ -53,7 +53,7 @@ Audio:  pipeline/ → Cloud Text-to-Speech → Bucket audio → App streamt/cach
 Der Client lädt `content.sqlite` einer Sprache (versioniert über `content_releases`) und spielt Updates ohne Änderung an `user.db` ein. Audio-Basis-URL kommt aus der Konfiguration, nicht aus dem Code.
 
 ## Laufzeit-KI
-Noch nicht implementierter Entwurf: nur für nutzergenerierte Inhalte, nur über Edge Functions: `lookup-word`, `translate-sentence`, `sentence-check`. Tageslimits in Tabelle `usage`. Kuratierte Inhalte sind vor dem Release fertig.
+Lokal implementiert, noch nicht deployed: fehlende Wort-/Satzübersetzung → ausdrückliche Nutzeraktion → `RuntimeTranslationClient` mit bestehendem Supabase-Login → `lookup-word`/`translate-sentence` → Auth-Prüfung und atomare Reservierung in `app.usage` → direkte Anthropic-API (`claude-haiku-5-5`). en/pt-BR → de, nur ein Satz und optional die Wortform. Vorhandene Packübersetzungen bleiben offline. Kein Fallback, keine EU-only-Zusage; serverseitiges Secret. `sentence-check` bleibt Entwurf. Nachweise und Abnahme: [Haiku-Laufzeitübersetzungen](docs/haiku-runtime-translations.md).
 
 ## Regeln
 1. Keine Schlüssel in Repo oder App.

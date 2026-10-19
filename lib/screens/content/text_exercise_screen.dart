@@ -1,3 +1,5 @@
+import '../../data/runtime_translation_client.dart';
+import '../../widgets/runtime_translation_sheet.dart';
 import 'dart:async';
 import 'dart:math' as math;
 
@@ -29,9 +31,11 @@ class TextExerciseScreen extends StatefulWidget {
     required this.mode,
     this.translate = sampleTranslateSentence,
     this.chipSeed = 7,
+    this.sourceLanguage = 'en',
   });
 
   final ExerciseText text;
+  final String sourceLanguage;
   final ExerciseMode mode;
   final String Function(String sentence) translate;
 
@@ -351,11 +355,16 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
         p is _Gap ? (p.solved ? p.gap.answer : '…') : p as String,
     ].join();
     setState(() => _selectedSentence = index);
-    await SentenceTranslationSheet.show(
-      context,
-      original: original,
-      translation: widget.translate(key),
-    );
+    final translation = widget.translate(key);
+    if (hasStoredTranslation(translation)) {
+      await SentenceTranslationSheet.show(
+        context, original: original, translation: translation,
+      );
+    } else {
+      await RuntimeTranslationSheet.show(
+        context, lang: widget.sourceLanguage, text: key, displayText: original,
+      );
+    }
     if (mounted) setState(() => _selectedSentence = null);
   }
 

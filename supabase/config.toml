@@ -424,3 +424,9 @@ verify_jwt = true
 
 [functions.content-release]
 verify_jwt = true
+
+[functions.lookup-word]
+verify_jwt = true
+
+[functions.translate-sentence]
+verify_jwt = true

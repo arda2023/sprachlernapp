@@ -47,56 +47,43 @@ supabase db push
 supabase functions deploy health
 ```
 
-## KI-Zugang: vorhandene Pipeline und geplanter Laufzeitbetrieb
+## KI-Zugang und Laufzeitübersetzungen (19.10.2026)
 
-- Lokal implementierter Python-Textanschluss: `claude-haiku-5-5`, EU-Multiregion `eu`, Projekt `sprachlernapp-510508`, ADC; SDK `anthropic[vertex]==1.15.0`. Kein API-Key und kein Fallback. Siehe [Umsetzung Paket A](haiku-migration-implementation.md).
-- Die nachfolgenden KI-Edge-Functions sind weiterhin **nicht implementierte Entwürfe**. Vorhanden sind nur Health und Inhaltsverteilung/-veröffentlichung; Paket A ändert keine Supabase-Funktion oder Cloudkonfiguration.
-- Für späteren Laufzeitbetrieb vorgesehen: dasselbe EU-Vertex-Routing, Dienstkonto mit Prediction-Berechtigung; dokumentierter Secretname `GCP_SA_KEY`, niemals Repo/App. Weder tatsächliche Secret-Einrichtung noch Modellfreischaltung wurde hier geprüft.
-- Historisch nutzte der Pipelineanschluss `gemini-3.8-flash` auf `global`; sein erfolgreicher Mini-Aufruf vom 03.10.2026 ist kein Haiku-/EU-Zugangsbeleg.
+Die Python-Pipeline unterstützt explizit direkte Anthropic-API oder Vertex EU/ADC; siehe [Direktzugang](haiku-direct-api-setup.md). Historischer Gemini-Code ist kein aktueller App-Modellpfad. TTS bleibt unverändert.
 
-## Thinking und Antworten
+`lookup-word` und `translate-sentence` sind jetzt lokal implementiert, noch nicht deployed. Flutter nutzt vorhandene Pack-/Beispielübersetzungen offline. Nur wenn sie fehlen, bietet der Reader bzw. die Textübung „Mit KI übersetzen“ an. Bestehender Supabase-Login und Sprachfreigabe in `content_readers` sind erforderlich. Die Functions rufen ausschließlich `https://api.anthropic.com/v1/messages` mit `claude-haiku-5-5` auf; Thinking aus, Effort low. Kein Gemini-/Vertex-Fallback und keine EU-only-Verarbeitungsgarantie. `ANTHROPIC_API_KEY` ausschließlich als serverseitiges Secret; weder Flutter noch Browser erhalten es.
 
-Haiku-Konfiguration des vorhandenen Wrappers: Thinking aus, Effort low. Bei gemeldetem Verbrauch enthält `output_tokens` bereits Thinking; nicht doppelt zählen. Vollständiges Originalschema lokal prüfen, reduzierte Schemakopie über `output_config.format`; Refusal, Truncation, ungültiges JSON und ungewisse Nutzung kontrolliert ablehnen. Laufzeitlimits/Caches/Usage-Inkremente unten beschreiben einen zukünftigen Vertrag, keine bereits wirksamen Cloudschutzmaßnahmen.
+## Übersetzungsverträge
 
-## Laufzeit-KI (nur über Edge Functions)
+Beide: `POST`, JSON, `Authorization: Bearer <Nutzer-JWT>`; Flutter sendet zusätzlich den vorhandenen öffentlichen `apikey`. `verify_jwt=true` bleibt aktiv, zusätzlich prüft die Function den Nutzer bei Auth. Anonyme Nutzer sind ausgeschlossen. `lang` ist `en` oder `pt-BR`, `target_lang` ist zwingend `de`. Die bisherigen Antwortfelder bleiben erhalten; Metadaten `provider`, `model`, `request_id`, `usage` kommen hinzu. Kein persistenter KI-Cache, `cached=false`.
 
-Der Client ruft nie einen KI-Anbieter direkt auf. Edge Functions rufen Vertex AI nur für nutzergenerierte Inhalte auf:
-
-- Wörterbuch-Nachschlagen bei Treffer-Fehlschlag (dictionary miss lookup)
-- Satzübersetzung per Tipp in importierten Texten
-- Satzprüfung bzw. Umschreiben für Story-Wörter
-
-Kuratierte Inhalte werden vor dem Release erzeugt (`docs/pipeline.md`). Jede Funktion verlangt ein gültiges Nutzer-Token und zählt in `usage`.
-
-## Edge Functions (Entwurf)
-
-Alle: `POST`, JSON, Header `Authorization: Bearer <Nutzer-JWT>`. Fehler: `{ "error": "<code>", "message": "..." }` mit `401` (kein Token), `429` (Tageslimit), `422` (ungültige Eingabe), `502` (KI-Fehler).
-
-**`lookup-word`** (Wörterbuch-Treffer fehlt)
+**`lookup-word`**:
 ```json
-// Request
-{ "lang": "en", "form": "knelt", "sentence": "She knelt down.", "sentence_id": null }
-// Response
-{ "form": "knelt", "senses": [ { "pos": "verb", "form_label": "Vergangenheit", "gloss_de": "kniete", "lemma": "kneel" } ], "cached": false }
+{"lang":"pt-BR","target_lang":"de","form":"banco","sentence":"Ela sentou no banco."}
 ```
-
-**`translate-sentence`** (Satz in importiertem Text)
+Antwortvertrag (Illustration, kein Liveergebnis):
 ```json
-// Request
-{ "lang": "en", "text": "She knelt down.", "import_id": "7f3a..." }
-// Response
-{ "translation_de": "Sie kniete sich hin.", "cached": false }
+{"form":"banco","senses":[{"pos":"substantivo","form_label":"Substantiv","gloss_de":"Bank zum Sitzen","lemma":"banco"}],"cached":false}
 ```
+Genau eine kontextbezogene Bedeutung; alle vier Sinnfelder werden serverseitig validiert. Optionales altes `sentence_id` wird ignoriert und nicht an Anthropic übertragen.
 
-**`sentence-check`** (Story-Wort: verständlich ohne Kontext?)
+**`translate-sentence`**:
 ```json
-// Request
-{ "lang": "en", "sentence": "He knelt.", "form": "knelt", "sense_gloss_de": "kniete" }
-// Response
-{ "understandable": false, "rewrite": { "text": "The child knelt to tie her shoe.", "gap_start": 10, "gap_end": 15, "translation_de": "Das Kind kniete sich hin, um den Schuh zu binden." } }
+{"lang":"en","target_lang":"de","text":"She knelt down."}
 ```
-`rewrite` fehlt, wenn `understandable` wahr ist. Neuer Satz enthält dieselbe Form und Bedeutung.
+Antwortkern: `{"translation_de":"Sie kniete sich hin.","cached":false}`. Optionales altes `import_id` wird ignoriert. Keine Profile, Lernstände oder ganzen Packs im Modellrequest.
 
-## Tageslimits: Tabelle `usage`
+Fehler: JSON mit festem `error`, sicherer `message`, `request_id`; `401` Anmeldung, `403` fehlende Sprachfreigabe, `405` Methode, `413` Bodylimit, `422` Eingabe, `429` eigenes oder Anbieterlimit, `502` ungültige/fehlgeschlagene Modellantwort, `503` Konfiguration/Infrastruktur, `504` Deadline. Keine rohen Anbieter-/Authfehler im Client. Antworten `Cache-Control: no-store`.
 
-`usage(user_id uuid, day date, kind text, units int, primary key (user_id, day, kind))` (siehe `docs/user-schema.md`). Jede Funktion erhöht `units` atomar und liefert `429`, wenn das Limit der Funktion erreicht ist. Limits stehen in der Konfiguration. Ob kostenlos oder Premium, ist offen (`PRODUCT.md`).
+## Begrenzung und Schlüsselhaltung
+
+- Body ≤4096 Byte, Satz ≤600 Zeichen, Wortform ≤80 Zeichen; nur erlaubte Felder und explizite Sprachrichtungen. Die Wortform muss im Kontext stehen. Modellantwort ≤16384 Byte, deutsche Satzantwort ≤1200 Zeichen; Wortantwort genau ein Sinn mit vier Feldern ≤200 Zeichen.
+- Höchstens 384 Outputtokens, insgesamt 25 Sekunden Function-Deadline einschließlich Auth/Limitcheck; Flutter maximal 30 Sekunden für HTTP, separat maximal 30 Sekunden für vorhandene Tokenbeschaffung. Null automatische Wiederholungen. Erneutes Öffnen plus ausdrücklicher Bestätigung ist eine neue, erneut gezählte Anfrage.
+- Migration `20261019000001_runtime_translation_limits.sql`: service-only `reserve_runtime_translation`, bestehende `content_readers` und `app.usage`. Gemeinsame Limits beider Functions und Sprachen: 5 Anfragen je UTC-Minute/Nutzer, 20 je UTC-Tag/Nutzer, 1000 je UTC-Tag insgesamt. Transaktions-Advisory-Lock schützt die Reservierung; Fehler nach Reservierung zählen mit. Keine Textspeicherung, keine Lernstandsänderung.
+- Diese Anfrage-/Ausgabelimits sind keine garantierte Dollar-Rechnungsgrenze. Inputtokens enthalten auch Prompt und Schema; nicht aus Zeichenlimits eine Tokenobergrenze ableiten. Anbieterlimits separat verwalten.
+- Erfolgslogs enthalten nur Anfrage-ID, Provider, Modell und Tokenzahlen; keine Texte, Nutzer-IDs, Schlüssel oder Tokens. Die Antwortmodell-ID wird vor Erfolg exakt geprüft.
+- Lokale SQL-/Deno-/Flutter-Nachweise und genaue manuelle Einrichtung: [Laufzeitbericht](haiku-runtime-translations.md). Cloud-Gateway, echte Parallelität mehrerer DB-Sitzungen, Abrechnung und iPhone bleiben gesonderte Abnahme.
+
+## Weiterhin Entwurf: `sentence-check`
+
+Story-Satzprüfung/Umschreiben ist nicht implementiert und wird durch diesen Auftrag nicht aktiviert. SRS, Antwortbewertung, Produktionspacks, redaktionelle Übersetzungen und bestehende Lernstände bleiben unverändert.

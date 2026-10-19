@@ -58,6 +58,7 @@ import 'package:sprachapp/widgets/difficulty_bolts.dart';
 import 'package:sprachapp/widgets/progress_ring.dart';
 import 'package:sprachapp/widgets/reading_toolbar.dart';
 import 'package:sprachapp/widgets/sentence_translation_sheet.dart';
+import 'package:sprachapp/widgets/runtime_translation_sheet.dart';
 import 'package:sprachapp/widgets/section_heading.dart';
 
 void main() {
@@ -2120,9 +2121,11 @@ void main() {
 
   Widget newsReader() {
     final article = sampleNews.first;
-    return MaterialApp(
-      theme: buildAppTheme(),
-      home: StoryReaderScreen(story: article.asStory, text: article.text),
+    return ProviderScope(
+      child: MaterialApp(
+        theme: buildAppTheme(),
+        home: StoryReaderScreen(story: article.asStory, text: article.text),
+      ),
     );
   }
 
@@ -2138,10 +2141,12 @@ void main() {
       isSemantics(isHeader: true, label: 'Who pays for it?'),
     );
 
-    // Word lookup.
+    // Missing word opens explicit AI opt-in; no request on tap.
     await tapWord(tester, 'council');
-    expect(find.byType(WordLookupSheet), findsOneWidget);
-    Navigator.of(tester.element(find.byType(WordLookupSheet))).pop();
+    expect(find.byType(RuntimeTranslationSheet), findsOneWidget);
+    expect(find.text('Mit KI übersetzen'), findsOneWidget);
+    expect(find.textContaining('KI ·'), findsNothing);
+    Navigator.of(tester.element(find.byType(RuntimeTranslationSheet))).pop();
     await tester.pumpAndSettle();
 
     // Sentence translation.

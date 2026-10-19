@@ -1,3 +1,5 @@
+import '../../data/runtime_translation_client.dart';
+import '../../widgets/runtime_translation_sheet.dart';
 import '../../presentation/providers/database_providers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,12 +38,14 @@ class StoryReaderScreen extends StatefulWidget {
     required this.story,
     required this.text,
     this.document,
+    this.sourceLanguage = 'en',
     this.lookup = sampleLookup,
     this.initialMarks = sampleWordMarks,
     this.translate = sampleTranslateSentence,
   });
 
   final Story story;
+  final String sourceLanguage;
   final StoryDocument? document;
   final StoryText text;
   final WordEntry Function(String surface) lookup;
@@ -101,7 +105,9 @@ class _Sentence {
 
 class _StoryReaderScreenState extends State<StoryReaderScreen> {
   late final void Function() _releaseContent;
-  static final _wordPattern = RegExp(r"[A-Za-z]+(?:['’][A-Za-z]+)*");
+  static final _wordPattern = RegExp(
+    r"[\p{L}\p{M}]+(?:['’][\p{L}\p{M}]+)*", unicode: true,
+  );
 
   final _words = <_Word>[];
 
@@ -253,13 +259,17 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   Future<void> _translate(int index) async {
     final sentence = _sentences[index].text;
     setState(() => _selectedSentence = index);
-    await SentenceTranslationSheet.show(
-      context,
-      original: sentence,
-      translation:
-          widget.document?.sentences[index].translation ??
-          widget.translate(sentence),
-    );
+    final translation = widget.document?.sentences[index].translation ??
+        widget.translate(sentence);
+    if (hasStoredTranslation(translation)) {
+      await SentenceTranslationSheet.show(
+        context, original: sentence, translation: translation,
+      );
+    } else {
+      await RuntimeTranslationSheet.show(
+        context, lang: widget.sourceLanguage, text: sentence,
+      );
+    }
     if (mounted) setState(() => _selectedSentence = null);
   }
 
@@ -298,6 +308,13 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
 
   Future<void> _lookUp(int index) async {
     final word = _words[index];
+    if (!hasStoredTranslation(word.entry.translation)) {
+      final sentence = _sentences.firstWhere((s) => s.tokens.contains(index)).text;
+      await RuntimeTranslationSheet.show(
+        context, lang: widget.sourceLanguage, text: sentence, form: word.text,
+      );
+      return;
+    }
     final headword = word.entry.headword;
     setState(() => _selected = index);
     if (widget.document != null && word.sentenceId != null) {
@@ -533,6 +550,7 @@ class _StoredStoryReader extends ConsumerWidget {
         data: (doc) => StoryReaderScreen(
           story: story,
           document: doc,
+          sourceLanguage: ref.watch(contentRepositoryProvider).requireValue.info.lang,
           text: StoryText(
             storyId: story.id,
             paragraphs: doc.sentences.map((s) => s.text).toList(),

@@ -2,10 +2,10 @@
 ## Stand 19.10.2026 · nächste Produktphase
 - Stapelphase beendet; nächste Arbeit: UI, Lernalgorithmus und Funktionen. Keine neuen Stapel, Reservierungen oder Sätze aus dem Haiku-Auftrag.
 - Haiku-Direktzugang lokal ergänzt: provider anthropic, claude-haiku-5-5, vorhandenes SDK 1.15.0, gleiche generate_json-Aufrufer; Vertex explizite Alternative, kein Fallback. Nur Redaktion ohne echte Nutzerdaten, keine EU-only-Zusage.
-- KI-Ist: optionaler Python-Wrapper mit Haiku, Thinking aus/Effort low; App liest lokale Übersetzungen. Drei Laufzeit-KI-Functions weiter Entwurf; kein Fallback.
+- KI-Ist: fehlende App-Wort-/Satzübersetzungen lokal über authentifizierte Supabase Functions → Anthropic claude-haiku-5-5 implementiert; explizite Bestätigung, Packübersetzungen offline, keine EU-only-Zusage/kein Fallback. sentence-check bleibt Entwurf.
 - Offline: Pipeline 668 PASS/1 bestehender Skip/19 Subtests, pip check Exit 0; echte SDK-Requests lokal gemockt, bestehende Vertex-Verträge erhalten. Code/Config/Preisaufrufer/Tests und gezielte Regeln/Doku geändert; docs/haiku-direct-api-setup.md.
 - Kosten: keine gemessene Einsparung/Modellqualität. Unbekannte Nutzung konservativ erfasst; lokale Reservierung ist keine garantierte Anbieterrechnungsgrenze.
-- Direkt-API-Einrichtung: verdeckte manuelle Schlüsseleingabe und Einzeltest vorbereitet, 0 Liveanfragen. Nutzer meldet abgelehnte Vertex-EU-Quote. Nächster Schritt: Terminalanleitung in docs/haiku-direct-api-setup.md; 128 Output, Input-Vorabzählung mit Abstand zu 500 (keine harte API-Inputgarantie). Frühere ADC-Nachweise: docs/haiku-live-setup.md.
+- Python-Live: Nutzer meldet 205 Input/8 Output erfolgreich; kein eigener App-Nachweis. Runtime lokal: Deno 32 PASS, Flutter-Gruppe 82 PASS + erweiterte neue Tests 14 PASS, SQL/PGlite PASS; Analyse nur alter avoid_print. Details/Abnahme: docs/haiku-runtime-translations.md; frühere ADC-Nachweise: docs/haiku-live-setup.md.
 ## Portugiesisch und aktive Inhalte · relevante Vorbefunde
 - Paket 2 lokal abgeschlossen: Sprachwahl en/pt-BR, Gate/Rollback, getrennte Updatefristen und Akzentpolicy; Lernstände erhalten. docs/portuguese-package-2.md.
 - Übernommene Prüfung Paket 2: UI 2+13, Sprache/Installation 14, Gesamt 380 PASS/5 bestehende Skips, Realpack 1/12s, Stage Exit 0; Analyse Exit 1 nur Alt-avoid_print.
@@ -21,4 +21,4 @@
 - UI-Werte 40/30 px, Padding 16/6, Fehlerfeedback und Nutzeränderungen erhalten; frühere Nachweise/Commitgrenzen: docs/practice-error-feedback.md.
 - Passwortlogin laut vorherigem Nutzerbericht funktionsfähig; keine Auth-/Rollenänderung. docs/content-password-login.md.
 - Vollständiger vorheriger NEXTSTEPS-Text: Gitstand 6deba380042578a5cee96af24988db9d713e02ba; relevante Altverweise zusätzlich im Haiku-Plan.
-- Paket A ändert nur Pythonanschluss, Konfiguration, Abhängigkeiten, Offline-Tests und Doku; Packs, Editor, user.db, Flutter/SRS, Cloud und Freigaben unberührt. Kein Push.
+- Historisch Paket A: Pythonanschluss, Konfiguration, Abhängigkeiten, Offline-Tests/Doku. Jetzt zusätzlich begrenzte Runtime-Übersetzung; kein Deployment/Push. Nächste Nutzeraktion: ANTHROPIC_API_KEY als Supabase-Secret, danach geprüfte Migration, zwei Functions und iPhone-Update gemäß Runtime-Bericht; echte App-Abnahme offen.
