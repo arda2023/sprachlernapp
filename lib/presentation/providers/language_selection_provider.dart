@@ -11,23 +11,12 @@ final languageInstallationProvider = FutureProvider.family<String, String>((
   lang,
 ) async {
   try {
-    // The active language reports its shared reader; another language opens
-    // through its owner, never as a second unowned connection.
-    final selected = await ref
-        .read(selectedContentLanguageProvider.future)
-        .then<String?>((value) => value, onError: (Object _) => null);
-    if (selected == lang) {
-      return 'Installiert · ${(await ref.read(contentInfoProvider.future)).version}';
-    }
     final installer = await ref.watch(contentInstallerProvider(lang).future);
-    final lease = ref
-        .read(contentOwnerProvider(await contentKeyFor(installer)))
-        .lease();
-    try {
-      return 'Installiert · ${(await lease.future).info.version}';
-    } finally {
-      lease.release();
-    }
+    final metadata = await installer.readInstallationMetadata();
+    if (!metadata.startsWith('Installiert')) return metadata;
+    final key = await contentKeyFor(installer);
+    final current = peekContentOwner(key);
+    return current == null ? metadata : 'Installiert · ${current.info.version}';
   } on ContentUnavailable catch (e) {
     return switch (e.reason) {
       ContentUnavailableReason.missing => 'Noch nicht installiert',
@@ -79,24 +68,16 @@ class LanguageSelectionController extends Notifier<LanguageSelectionState> {
         // reader. A never-installed language is a valid explicit empty state.
         // The lease keeps the validated reader open for the new scope.
         var installed = true;
-        final target = ref
-            .read(
-              contentOwnerProvider(
-                await contentKeyFor(
-                  await ref.read(contentInstallerProvider(lang).future),
-                ),
-              ),
-            )
-            .lease();
+        void Function() releaseTarget = () {};
         try {
-          await target.future;
+          final target = await acquireInstalledContent(
+            ref,
+            await ref.read(contentInstallerProvider(lang).future),
+          );
+          releaseTarget = target.release;
         } on ContentUnavailable catch (e) {
-          target.release();
           if (e.reason != ContentUnavailableReason.missing) rethrow;
           installed = false;
-        } catch (_) {
-          target.release();
-          rethrow;
         }
         try {
           final key = await ref.read(activeContentKeyProvider.future);
@@ -139,7 +120,7 @@ class LanguageSelectionController extends Notifier<LanguageSelectionState> {
             owner.resume();
           }
         } finally {
-          target.release();
+          releaseTarget();
         }
       });
     } catch (_) {

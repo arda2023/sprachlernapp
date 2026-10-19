@@ -6,6 +6,7 @@ import 'dart:isolate';
 import 'package:crypto/crypto.dart';
 
 import 'content_install_journal.dart';
+import 'content_database.dart';
 import 'content_update_diagnosis.dart';
 import 'content_release_client.dart';
 import 'content_update_validation.dart';
@@ -61,6 +62,7 @@ class ContentUpdateService {
     required this.closeReaders,
     required this.openReaders,
     this.notice,
+    this.invalidateReadProofs,
   });
   final ContentInstallJournal journal;
   final ContentReleaseTransport transport;
@@ -68,6 +70,7 @@ class ContentUpdateService {
   final ContentTransitionGate gate;
   final Future<void> Function() closeReaders, openReaders;
   final UpdateNotice? notice;
+  final void Function()? invalidateReadProofs;
   ReleaseOffer? available, ready;
   bool _working = false;
 
@@ -126,7 +129,9 @@ class ContentUpdateService {
     notice?.call(
       available == null ? 'active' : 'available',
       available == null
-          ? (await currentFile() == null ? 'Für diese Lernsprache ist noch keine veröffentlichte Version verfügbar.' : 'Inhalt ist aktuell.')
+          ? (await currentFile() == null
+                ? 'Für diese Lernsprache ist noch keine veröffentlichte Version verfügbar.'
+                : 'Inhalt ist aktuell.')
           : 'Neue geprüfte Version verfügbar.',
     );
   });
@@ -260,14 +265,24 @@ class ContentUpdateService {
       Map<String, dynamic>? prepared;
       _step = 'activate';
       try {
+        invalidateReadProofs?.call();
         await journal.prepare(next);
         prepared = (await journal.read('install-journal'))!;
         notice?.call('activating', 'Geprüfte Version wird aktiviert …');
         await journal.write('active', next.toJson());
         await openReaders();
+        // Recovery may have made the previous generation usable again. That
+        // is not a successful activation of next and must never commit it.
+        if (contextCanonicalHash(await journal.read('active')) !=
+            contextCanonicalHash(next.toJson())) {
+          throw StateError('Aktivierung wurde auf den Vorgänger zurückgesetzt.');
+        }
         await journal.commit(next);
       } catch (_) {
-        if (prepared != null) await journal.restorePrepared(prepared);
+        if (prepared != null) {
+          invalidateReadProofs?.call();
+          await journal.restorePrepared(prepared);
+        }
         await openReaders();
         rethrow;
       }
@@ -362,4 +377,118 @@ Future<ReleaseOffer?> recoverContentInstallation(
     await verifyGeneration(journal, active);
   }
   return active;
+}
+
+/// Metadata only. A consistent journal is not proof that its files are usable.
+class InstalledContentState {
+  InstalledContentState(this.pointer, this.log, this.offer)
+    : stamp = contextCanonicalHash({'active': pointer, 'journal': log});
+  final Map<String, dynamic>? pointer, log;
+  final ReleaseOffer? offer;
+  final String stamp;
+  bool get prepared => log?['state'] == 'prepared';
+  bool get preparedNext =>
+      prepared &&
+      offer != null &&
+      contextCanonicalHash(pointer) == contextCanonicalHash(log?['next']);
+  String? get fingerprint => offer != null
+      ? GenerationIdentity.fromOffer(offer!).fingerprint
+      : pointer == null
+      ? null
+      : contextCanonicalHash(pointer!['manifest']);
+}
+
+class RecoveredGenerationChanged implements Exception {
+  const RecoveredGenerationChanged();
+}
+
+Future<InstalledContentState> resolveInstalledState(
+  ContentInstallJournal journal,
+) async {
+  final log = await journal.read('install-journal');
+  final pointer = await journal.read('active');
+  final offer = pointer == null || pointer['bootstrap'] == true
+      ? null
+      : ReleaseOffer.parse(pointer, journal.lang);
+  if (log?['state'] == 'committed' &&
+      (offer == null ||
+          contextCanonicalHash(pointer) !=
+              contextCanonicalHash(log?['next']))) {
+    throw const FormatException(
+      'Aktiver Zeiger widerspricht der aktivierten Generation.',
+    );
+  }
+  if (log?['state'] == 'prepared' &&
+      contextCanonicalHash(pointer) != contextCanonicalHash(log?['previous']) &&
+      contextCanonicalHash(pointer) != contextCanonicalHash(log?['next'])) {
+    throw const FormatException(
+      'Installationsjournal und Versionszeiger widersprechen sich.',
+    );
+  }
+  return InstalledContentState(pointer, log, offer);
+}
+
+/// Normal installed reads use the process proof. Recovery always validates in
+/// full, then commits the exact reader; no second path-only reopen follows.
+Future<BoundReader?> openRecoveredContent(
+  ContentInstallJournal journal,
+  ProcessValidationRegistry registry, {
+  required String? expectedFingerprint,
+  required ReadCancellation cancellation,
+  required bool Function() isCurrent,
+}) async {
+  final initial = await resolveInstalledState(journal);
+  final offer = initial.offer;
+  if (offer == null) return null;
+  final identity = GenerationIdentity.fromOffer(offer);
+  if (expectedFingerprint != null &&
+      identity.fingerprint != expectedFingerprint) {
+    throw const RecoveredGenerationChanged();
+  }
+  if (initial.prepared) registry.invalidateLanguage(journal.lang);
+  bool valid() => !cancellation.isCancelled && isCurrent();
+  try {
+    return await registry.openBoundReader(
+      InstalledReadRequest(
+        identity: identity,
+        contentFile: File(
+          '${journal.generation(offer.id).path}/content.sqlite',
+        ),
+        inventoryFile: File(
+          '${journal.generation(offer.id).path}/history_inventory.json',
+        ),
+        mode: initial.prepared
+            ? InstalledReadMode.recoveryFull
+            : InstalledReadMode.normalInstalled,
+        cancellation: cancellation,
+        confirmCurrent: (_) async {
+          if (!valid() ||
+              (await resolveInstalledState(journal)).stamp != initial.stamp) {
+            return false;
+          }
+          if (!valid()) return false;
+          if (initial.preparedNext) {
+            await journal.commit(offer);
+            final committed = await resolveInstalledState(journal);
+            return valid() &&
+                committed.fingerprint == identity.fingerprint &&
+                committed.log?['state'] == 'committed';
+          }
+          return valid();
+        },
+      ),
+    );
+  } catch (_) {
+    // A cancelled/stale owner must never roll back another transition.
+    if (initial.preparedNext &&
+        valid() &&
+        (await resolveInstalledState(journal)).stamp == initial.stamp) {
+      registry.invalidateLanguage(journal.lang);
+      await journal.restorePrepared(initial.log!);
+      // Caller re-resolves once under the restored key; invalidation forces
+      // its full validation before it can return a repository.
+      throw const RecoveredGenerationChanged();
+    }
+    rethrow;
+  }
 }

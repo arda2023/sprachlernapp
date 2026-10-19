@@ -441,6 +441,12 @@ class ContentDatabase extends _$ContentDatabase {
   /// Only a successfully handshaken session can construct a BoundReader.
   static ContentDatabase fromBoundReader(BoundReader reader) => reader._take();
 
+  /// Count legacy/bootstrap readers without granting validation authority.
+  void bindExternalReservation(ReaderReservation reservation) {
+    if (_boundCleanup != null) throw StateError('Reader bereits gebunden.');
+    _boundCleanup = () => reservation.closeAfter(() async {});
+  }
+
   Future<void> Function()? _boundCleanup;
   Future<void>? _boundClose;
   final Database? _raw;

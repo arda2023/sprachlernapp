@@ -21,12 +21,17 @@ final contentAuthProvider = Provider<ContentAuthRepository>((ref) {
 });
 
 // Each language owns its HTTP client; authentication is shared deliberately.
-final contentReleaseTransportProvider = Provider.family<ContentReleaseTransport, String>((ref, lang) {
-  final auth = ref.read(contentAuthProvider);
-  final client = ContentReleaseClient(Uri.parse(auth.url), auth.publicKey, auth.accessToken);
-  ref.onDispose(client.close);
-  return client;
-});
+final contentReleaseTransportProvider =
+    Provider.family<ContentReleaseTransport, String>((ref, lang) {
+      final auth = ref.read(contentAuthProvider);
+      final client = ContentReleaseClient(
+        Uri.parse(auth.url),
+        auth.publicKey,
+        auth.accessToken,
+      );
+      ref.onDispose(client.close);
+      return client;
+    });
 
 class ContentUpdateState {
   const ContentUpdateState(
@@ -64,9 +69,15 @@ class ContentUpdateController extends Notifier<ContentUpdateState> {
       WidgetsBinding.instance.removeObserver(observer);
     });
     if (_language != null) {
-      Future.microtask(() { if (ref.mounted && epoch == _epoch) unawaited(check(automatic: true)); });
+      Future.microtask(() {
+        if (ref.mounted && epoch == _epoch) unawaited(check(automatic: true));
+      });
     }
-    return ContentUpdateState('idle', 'Installierter Inhalt bleibt offline verfügbar.', signedIn: ref.read(contentAuthProvider).signedIn);
+    return ContentUpdateState(
+      'idle',
+      'Installierter Inhalt bleibt offline verfügbar.',
+      signedIn: ref.read(contentAuthProvider).signedIn,
+    );
   }
 
   void _notice(String phase, String message, {String? diagnosis}) {
@@ -89,15 +100,20 @@ class ContentUpdateController extends Notifier<ContentUpdateState> {
     if (!auth.configured) {
       throw StateError('Private Inhaltsupdates sind noch nicht eingerichtet.');
     }
-    final support = (await ref.read(contentInstallerProvider(lang).future)).supportDirectory;
+    final installer = await ref.read(contentInstallerProvider(lang).future);
+    final support = installer.supportDirectory;
     final key = await ref.read(activeContentKeyProvider.future);
-    if (!ref.mounted || epoch != _epoch || key.lang != lang) throw StateError('Sprachauswahl hat sich geändert.');
+    if (!ref.mounted || epoch != _epoch || key.lang != lang) {
+      throw StateError('Sprachauswahl hat sich geändert.');
+    }
     var owner = ref.read(contentOwnerProvider(key));
     final journal = ContentInstallJournal(support, key.lang);
     return _service = ContentUpdateService(
       journal,
       ref.read(contentReleaseTransportProvider(lang)),
       gate: contentTransitionGate,
+      invalidateReadProofs: () =>
+          installer.validationRegistry?.invalidateLanguage(lang),
       notice: (phase, message) {
         if (ref.mounted && epoch == _epoch) _notice(phase, message);
       },
@@ -106,9 +122,13 @@ class ContentUpdateController extends Notifier<ContentUpdateState> {
         return file != null && await file.exists() ? file : null;
       },
       closeReaders: () async {
-        if (!ref.mounted || epoch != _epoch) throw StateError('Sprachauswahl hat sich geändert.');
+        if (!ref.mounted || epoch != _epoch) {
+          throw StateError('Sprachauswahl hat sich geändert.');
+        }
         final activeKey = await ref.read(activeContentKeyProvider.future);
-        if (activeKey.lang != lang) throw StateError('Sprachauswahl hat sich geändert.');
+        if (activeKey.lang != lang) {
+          throw StateError('Sprachauswahl hat sich geändert.');
+        }
         owner = ref.read(contentOwnerProvider(activeKey));
         owner.pause();
         ref.invalidate(contentRepositoryProvider);
@@ -121,11 +141,19 @@ class ContentUpdateController extends Notifier<ContentUpdateState> {
         }
       },
       openReaders: () async {
-        owner.resume();
-        if (!ref.mounted || epoch != _epoch) return;
-        ref.invalidate(activeContentKeyProvider);
-        ref.invalidate(contentRepositoryProvider);
-        await ref.read(contentRepositoryProvider.future);
+        try {
+          if (!ref.mounted || epoch != _epoch) {
+            throw StateError('Sprachansicht veraltet.');
+          }
+          ref.invalidate(activeContentKeyProvider);
+          ref.invalidate(contentRepositoryProvider);
+          // Construct the new scope/key before releasing the old owner barrier.
+          final opening = ref.read(contentRepositoryProvider.future);
+          owner.resume();
+          await opening;
+        } finally {
+          owner.resume();
+        }
       },
     );
   }
@@ -139,22 +167,17 @@ class ContentUpdateController extends Notifier<ContentUpdateState> {
     } catch (e) {
       if (!ref.mounted || epoch != _epoch) return;
       final service = _service;
-      final diagnosis =
-          service != null && identical(service.lastError, e)
+      final diagnosis = service != null && identical(service.lastError, e)
           ? service.lastDiagnosis!
           : ContentUpdateDiagnosis.from('setup', e);
       final line = diagnosis.describe();
       debugPrint('Inhaltsupdate fehlgeschlagen: $line');
-      _notice(
-        'error',
-        switch (diagnosis.code) {
-          'READER_REQUIRED' => 'Für diese Lernsprache fehlt die Leserfreigabe. Freigabe für diese Sprache anfordern.',
-          'NETWORK' || 'TIMEOUT' || 'TLS' => 'Inhaltsserver nicht erreichbar. Verbindung prüfen und erneut versuchen.',
-          'FORMAT_INVALID' => 'Inhaltsprüfung fehlgeschlagen. Installation oder Download beschädigt; erneut prüfen.',
-          _ => 'Inhaltsaktion nicht abgeschlossen. Anmeldung, Freigabe und Verbindung prüfen. Bisheriger Inhalt bleibt erhalten.',
-        },
-        diagnosis: line,
-      );
+      _notice('error', switch (diagnosis.code) {
+        'READER_REQUIRED' => 'Für diese Lernsprache fehlt die Leserfreigabe. Freigabe für diese Sprache anfordern.',
+        'NETWORK' || 'TIMEOUT' || 'TLS' => 'Inhaltsserver nicht erreichbar. Verbindung prüfen und erneut versuchen.',
+        'FORMAT_INVALID' => 'Inhaltsprüfung fehlgeschlagen. Installation oder Download beschädigt; erneut prüfen.',
+        _ => 'Inhaltsaktion nicht abgeschlossen. Anmeldung, Freigabe und Verbindung prüfen. Bisheriger Inhalt bleibt erhalten.',
+      }, diagnosis: line);
     } finally {
       release?.call();
     }
@@ -163,13 +186,22 @@ class ContentUpdateController extends Notifier<ContentUpdateState> {
   Future<void> check({bool automatic = false}) async {
     final auth = ref.read(contentAuthProvider);
     if (!auth.configured) {
-      if (!automatic) _notice('unconfigured', 'Privater Inhaltsserver noch nicht eingerichtet.');
+      if (!automatic) {
+        _notice(
+          'unconfigured',
+          'Privater Inhaltsserver noch nicht eingerichtet.',
+        );
+      }
       return;
     }
     final lang = _language;
     if (lang == null) return;
     final lastCheck = _lastChecks[lang];
-    if (automatic && lastCheck != null && DateTime.now().difference(lastCheck) < const Duration(hours: 1)) return;
+    if (automatic &&
+        lastCheck != null &&
+        DateTime.now().difference(lastCheck) < const Duration(hours: 1)) {
+      return;
+    }
     _lastChecks[lang] = DateTime.now();
     await _run(() async {
       await auth.initialize();
@@ -181,17 +213,18 @@ class ContentUpdateController extends Notifier<ContentUpdateState> {
   Future<void> download() => _run(() async => (await _getService()).download());
   Future<void> activate() => _run(() async {
     if (contentTransitionGate.busy) {
-      _notice(
-        'ready_waiting',
-        contentTransitionGate.blockingMessage,
-      );
+      _notice('ready_waiting', contentTransitionGate.blockingMessage);
       return;
     }
     // Protect async setup, then hand over synchronously to the service's
     // transition lock. Activation must not hold its own blocking lease.
     final release = contentTransitionGate.acquire(reason: 'update');
     late ContentUpdateService service;
-    try { service = await _getService(); } finally { release(); }
+    try {
+      service = await _getService();
+    } finally {
+      release();
+    }
     await service.activate();
   }, lease: false);
   Future<void> requestCode(String email) => _run(() async {

@@ -192,10 +192,7 @@ void main() {
     await service.check();
     await service.download();
     await service.activate();
-    h.owners[(
-      lang: 'pt-BR',
-      generation: 1,
-    )] = RepositoryOwner<ContentRepository>(
+    h.owners[await contentKeyFor(h.portuguese!)] = RepositoryOwner<ContentRepository>(
       () async => throw StateError('synthetic target reader failure'),
       (r) => r.close(),
     );

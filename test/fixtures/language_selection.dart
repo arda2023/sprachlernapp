@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sprachapp/data/content/content_pack_installer.dart';
-import 'package:sprachapp/data/content/content_install_journal.dart';
 import 'package:sprachapp/data/content/content_auth_repository.dart';
 import 'package:sprachapp/data/content/content_release_client.dart';
 import 'package:sprachapp/presentation/providers/content_update_provider.dart';
@@ -40,25 +39,14 @@ class LanguageHarness {
         (ref, lang) async => installer(lang),
       ),
       activeContentKeyProvider.overrideWith(
-        (ref) async => (
-          lang: await ref.watch(selectedContentLanguageProvider.future),
-          generation:
-              (await ContentInstallJournal(
-                installer(
-                  await ref.watch(selectedContentLanguageProvider.future),
-                ).supportDirectory,
-                await ref.watch(selectedContentLanguageProvider.future),
-              ).active())?.generation ??
-              0,
+        (ref) async => contentKeyFor(
+          installer(await ref.watch(selectedContentLanguageProvider.future)),
         ),
       ),
       contentOwnerProvider.overrideWith(
         (ref, key) => owners.putIfAbsent(
           key,
-          () => RepositoryOwner(
-            () => installer(key.lang).open(),
-            (r) => r.close(),
-          ),
+          () => createContentOwner(key, () async => installer(key.lang)),
         ),
       ),
       appInfoProvider.overrideWith((ref) async => 'synthetic'),

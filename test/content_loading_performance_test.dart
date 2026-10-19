@@ -12,6 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sprachapp/data/content/content_install_journal.dart';
 import 'package:sprachapp/data/content/content_pack_installer.dart';
+import 'package:sprachapp/data/content/content_database.dart';
 import 'package:sprachapp/data/content/content_update_service.dart';
 import 'package:sprachapp/data/content/drift_content_repository.dart';
 import 'package:sprachapp/data/user/drift_user_repository.dart';
@@ -38,9 +39,9 @@ class CountingInstaller extends ContentPackInstaller {
       );
   int opens = 0;
   @override
-  Future<DriftContentRepository> open() {
+  Future<DriftContentRepository> open({String? expectedFingerprint, ReadCancellation? cancellation, bool Function()? isCurrent}) {
     opens++;
-    return super.open();
+    return super.open(expectedFingerprint: expectedFingerprint, cancellation: cancellation, isCurrent: isCurrent);
   }
 }
 
@@ -162,15 +163,15 @@ void main() {
     }
 
     test(
-      'each switch opens only its target pack once; statuses reuse readers',
+      'each switch opens only its target pack once; statuses never open readers',
       () async {
         c.listen(decksProvider, (_, _) {});
         await c.read(decksProvider.future);
         await settings();
         expect(
           (en.opens, pt.opens),
-          (1, 1),
-          reason: 'active en shared, pt via its owner',
+          (1, 0),
+          reason: 'status opens neither language',
         );
         expect(
           await c
@@ -184,7 +185,7 @@ void main() {
         );
         expect(
           (en.opens, pt.opens),
-          (1, 2),
+          (1, 1),
           reason: 'no candidate reopen, no old-pack reopen',
         );
         final ptDecks = {
@@ -206,7 +207,7 @@ void main() {
           await c.read(languageInstallationProvider('en').future),
           startsWith('Installiert'),
         );
-        expect((en.opens, pt.opens), (2, 2));
+        expect((en.opens, pt.opens), (2, 1));
         expect(
           (await c.read(decksProvider.future)).map((d) => d.id),
           contains('deck-allg'),
@@ -382,6 +383,7 @@ void main() {
             (ref) async => (
               lang: await ref.watch(selectedContentLanguageProvider.future),
               generation: 0,
+              fingerprint: 'synthetic',
             ),
           ),
           decksProvider.overrideWith((ref) async {

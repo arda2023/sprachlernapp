@@ -42,6 +42,7 @@ final class GenerationIdentity {
   final String _key;
   final String lang;
   final int contractVersion;
+  String get fingerprint => _key;
   ReleaseOffer get offer =>
       ReleaseOffer.parse(jsonDecode(_offerJson) as Map<String, dynamic>, lang);
   @override
@@ -63,6 +64,7 @@ Object? _sortedJson(Object? value) {
 /// The owner cancels only after its last interested lease has ended.
 final class ReadCancellation {
   bool _cancelled = false;
+  bool get isCancelled => _cancelled;
   void cancel() => _cancelled = true;
   void _check() {
     if (_cancelled) throw StateError('Inhaltsöffnung abgebrochen.');
@@ -122,17 +124,89 @@ final class BoundReader {
 final class ProcessValidationRegistry {
   ProcessValidationRegistry(this.temporaryRoot, {this.onStage});
   final Directory temporaryRoot;
+  RandomAccessFile? _processLock;
+  static Future<ProcessValidationRegistry>? _appRegistry;
+  static String? _appSupport;
+  static final _liveDirectories = <String>{};
+
+  /// One process lifetime service, independent of Riverpod scopes/languages.
+  static Future<ProcessValidationRegistry> forAppSupport(Directory support) {
+    if (_appSupport != null && _appSupport != support.absolute.path) {
+      throw StateError('App-Inhaltsverzeichnis wurde verändert.');
+    }
+    _appSupport = support.absolute.path;
+    return _appRegistry ??= createProcess(
+      Directory('${support.path}/content-readers'),
+    );
+  }
+
+  /// A private process directory, with an OS lock (not a validation receipt).
+  /// Symlinks, unknown names and directories of live processes are untouched.
+  static Future<ProcessValidationRegistry> createProcess(Directory root) async {
+    await root.create(recursive: true);
+    final own = await root.createTemp('process-');
+    _liveDirectories.add(own.path);
+    final lock = await File('${own.path}/owner.lock')
+        .open(mode: FileMode.append);
+    await lock.lock(FileLock.exclusive);
+    final registry = ProcessValidationRegistry(own).._processLock = lock;
+    await for (final entity in root.list(followLinks: false)) {
+      if (entity is! Directory ||
+          _liveDirectories.contains(entity.path) ||
+          !entity.path
+              .split(Platform.pathSeparator)
+              .last
+              .startsWith('process-')) {
+        continue;
+      }
+      final marker = File('${entity.path}/owner.lock');
+      if (await FileSystemEntity.type(marker.path, followLinks: false) !=
+          FileSystemEntityType.file) {
+        continue;
+      }
+      RandomAccessFile? stale;
+      try {
+        stale = await marker.open(mode: FileMode.append);
+        await stale.lock(
+          FileLock.exclusive,
+        ); // non-blocking: another process owns it
+      } on FileSystemException {
+        await stale?.close();
+        continue;
+      }
+      await stale.unlock();
+      await stale.close();
+      // Process directories are never reused; an unlocked old owner is gone.
+      await entity.delete(recursive: true);
+    }
+    return registry;
+  }
+
+  /// Test/process teardown only; never called on provider invalidation.
+  Future<void> closeProcess() async {
+    if (_reservations != 0) throw StateError('Inhaltsreader sind noch belegt.');
+    final lock = _processLock;
+    if (lock == null) return;
+    await lock.unlock();
+    await lock.close();
+    _processLock = null;
+    _liveDirectories.remove(temporaryRoot.path);
+    await temporaryRoot.delete(recursive: true);
+  }
 
   /// Observation/fault seam, never a source of proofs. Errors fail closed.
   final Future<void> Function(ValidationStage stage)? onStage;
   // Keep only a fixed-size fingerprint, not the request manifest/JSON.
   final _proofs = <String, _InstalledReadProof>{};
   int _reservations = 0;
+  final _epochs = <String, int>{};
   int get proofCount => _proofs.length;
   int get readerReservations => _reservations;
 
-  void invalidateLanguage(String lang) =>
-      _proofs.removeWhere((_, proof) => proof.info.lang == lang);
+  void invalidateLanguage(String lang) {
+    _epochs[lang] = (_epochs[lang] ?? 0) + 1;
+    _proofs.removeWhere((_, proof) => proof.info.lang == lang);
+  }
 
   /// For later Bootstrap integration. No validation authority is conferred.
   ReaderReservation reserveExternalReader() => _reserve();
@@ -146,6 +220,7 @@ final class ProcessValidationRegistry {
   Future<BoundReader> openBoundReader(InstalledReadRequest request) async {
     request.cancellation._check();
     final identity = request.identity;
+    final epoch = _epochs[identity.lang] ?? 0;
     if (identity.contractVersion != validationContractVersion) {
       throw StateError('Unpassender Validierungsvertrag.');
     }
@@ -198,6 +273,9 @@ final class ProcessValidationRegistry {
         throw StateError('Journal oder Reader-Epoch während Öffnung geändert.');
       }
       request.cancellation._check();
+      if ((_epochs[identity.lang] ?? 0) != epoch) {
+        throw StateError('Inhaltsnachweise während Öffnung invalidiert.');
+      }
       final info = validatedInfo;
       if (info == null || (cached == null && !fullSucceeded)) {
         throw StateError('Vollständiges Prüfergebnis fehlt.');

@@ -14,6 +14,7 @@ import 'content_database.dart';
 import 'drift_content_repository.dart';
 import 'content_install_journal.dart';
 import 'content_update_service.dart';
+import 'context_revision_validation.dart';
 
 /// Loads a bundled asset by key; null when the asset doesn't exist.
 typedef AssetLoader = Future<Uint8List?> Function(String key);
@@ -27,11 +28,13 @@ class ContentPackInstaller {
     required this.loadAsset,
     required this.supportDirectory,
     this.lang = 'en',
+    this.validationRegistry,
   });
 
   final AssetLoader loadAsset;
   final Directory supportDirectory;
   final String lang;
+  final ProcessValidationRegistry? validationRegistry;
 
   String get assetDirectory => 'assets/content/$lang';
   String get manifestAsset => '$assetDirectory/content.manifest.json';
@@ -42,12 +45,46 @@ class ContentPackInstaller {
 
   /// The installer of the running app: assets from the bundle, files under
   /// the application support directory.
-  static Future<ContentPackInstaller> forApp({String lang = 'en'}) async =>
-      ContentPackInstaller(
-        loadAsset: _loadBundled,
-        supportDirectory: await getApplicationSupportDirectory(),
-        lang: lang,
-      );
+  static Future<ContentPackInstaller> forApp({String lang = 'en'}) async {
+    final support = await getApplicationSupportDirectory();
+    return ContentPackInstaller(
+      loadAsset: _loadBundled, supportDirectory: support, lang: lang,
+      validationRegistry: await ProcessValidationRegistry.forAppSupport(support),
+    );
+  }
+
+  /// Complete routing identity without opening any database. An uninstalled
+  /// bundled pack uses its manifest identity so its first install keeps the key.
+  Future<({int generation, String fingerprint})> routingIdentity() async {
+    final state = await resolveInstalledState(ContentInstallJournal(supportDirectory, lang));
+    if (state.offer != null) return (generation: state.offer!.generation, fingerprint: state.fingerprint!);
+    final String? text;
+    if (state.pointer != null) {
+      text = jsonEncode(state.pointer!['manifest']);
+    } else {
+      final bytes = await loadAsset(manifestAsset);
+      text = bytes == null ? null : utf8.decode(bytes);
+    }
+    if (text == null) return (generation: 0, fingerprint: 'missing:$lang');
+    final manifest = ContentManifest.parse(text, lang: lang);
+    return (generation: 0, fingerprint: contextCanonicalHash(jsonDecode(manifest.toJson())));
+  }
+
+  /// Metadata only: never install, hash, recover or open a content reader here.
+  Future<String> readInstallationMetadata() async {
+    final journal = ContentInstallJournal(supportDirectory, lang);
+    final state = await resolveInstalledState(journal);
+    if (state.prepared) return 'Wiederherstellung beim Öffnen erforderlich';
+    if (state.pointer == null) return 'Noch nicht installiert';
+    final file = await journal.currentFile();
+    if (file == null || !await file.exists()) return 'Installation beschädigt';
+    if (state.offer != null && !await File('${journal.generation(state.offer!.id).path}/history_inventory.json').exists()) {
+      return 'Installation beschädigt';
+    }
+    final version = state.offer?.manifest['version'] ??
+      ContentManifest.parse(jsonEncode(state.pointer!['manifest']), lang: lang).version;
+    return 'Installiert · $version · Prüfung beim Öffnen';
+  }
 
   static Future<Uint8List?> _loadBundled(String key) async {
     try {
@@ -145,9 +182,50 @@ class ContentPackInstaller {
 
   /// Installs and opens the pack read-only. The release row must name the
   /// manifest version.
-  Future<DriftContentRepository> open() async {
+  Future<DriftContentRepository> open({
+    String? expectedFingerprint,
+    ReadCancellation? cancellation,
+    bool Function()? isCurrent,
+  }) async {
+    final registry = validationRegistry;
+    if (registry == null) return DriftContentRepository(await _openLegacyDatabase());
+    final cancel = cancellation ?? ReadCancellation();
+    final current = isCurrent ?? () => true;
+    for (var attempt = 0; attempt < 2; attempt++) {
+      try {
+        final bound = await openRecoveredContent(
+          ContentInstallJournal(supportDirectory, lang), registry,
+          expectedFingerprint: expectedFingerprint,
+          cancellation: cancel, isCurrent: current,
+        );
+        if (bound != null) return DriftContentRepository(ContentDatabase.fromBoundReader(bound));
+        final reservation = registry.reserveExternalReader();
+        ContentDatabase? db;
+        try {
+          db = await _openLegacyDatabase(reservation: reservation);
+          if (cancel.isCancelled || !current()) throw StateError('Inhaltsöffnung abgebrochen.');
+          if (expectedFingerprint != null && (await routingIdentity()).fingerprint != expectedFingerprint) {
+            throw const RecoveredGenerationChanged();
+          }
+          if (cancel.isCancelled || !current()) throw StateError('Inhaltsöffnung abgebrochen.');
+          return DriftContentRepository(db);
+        } catch (_) {
+          await db?.close();
+          await reservation.closeAfter(() async {});
+          rethrow;
+        }
+      } on RecoveredGenerationChanged {
+        // Product owners must re-resolve their key outside this installer.
+        if (expectedFingerprint != null || attempt == 1 || cancel.isCancelled || !current()) rethrow;
+      }
+    }
+    throw StateError('Inhaltsgeneration wiederholt geändert.');
+  }
+
+  Future<ContentDatabase> _openLegacyDatabase({ReaderReservation? reservation}) async {
     final installed = await install();
     final db = await ContentDatabase.openInBackground(installed.file, lang: lang);
+    if (reservation != null) db.bindExternalReservation(reservation);
     if (db.info.version != installed.manifest.version ||
         db.info.schemaVersion != installed.manifest.schemaVersion) {
       await db.close();
@@ -157,6 +235,6 @@ class ContentPackInstaller {
         'im Manifest',
       );
     }
-    return DriftContentRepository(db);
+    return db;
   }
 }
