@@ -6,7 +6,7 @@
 - Offline: Pipeline 668 PASS/1 bestehender Skip/19 Subtests, pip check Exit 0; echte SDK-Requests lokal gemockt, bestehende Vertex-Verträge erhalten. Code/Config/Preisaufrufer/Tests und gezielte Regeln/Doku geändert; docs/haiku-direct-api-setup.md.
 - Kosten: keine gemessene Einsparung/Modellqualität. Unbekannte Nutzung konservativ erfasst; lokale Reservierung ist keine garantierte Anbieterrechnungsgrenze.
 - Python-Live: Nutzer meldet 205 Input/8 Output erfolgreich; kein eigener App-Nachweis. Runtime lokal: Deno 32 PASS, Flutter-Gruppe 82 PASS + erweiterte neue Tests 14 PASS, SQL/PGlite PASS; Analyse nur alter avoid_print. Details/Abnahme: docs/haiku-runtime-translations.md; frühere ADC-Nachweise: docs/haiku-live-setup.md.
-- Inhaltsladen: Fixes 0d5dee9/1145937 erhalten; Satzvalidator jetzt 8 statt 10 887 SELECTs je Vollprüfung. iPhone 3× Profile: pt-BR→en Median 7,02→4,99 s; Home danach 1,29 s, Übung 62 ms. <1-s-Ziel offen; Rest: Inventarabgleich und doppelte Form-/Kontextprüfung. docs/content-loading-performance.md.
+- Inhaltsladen: 0e2f890, iPhone-Median 4,99 s; Home 1,29 s, Übung 62 ms; <1-s-Ziel offen. Plan zur Abnahme: nur A, einmalige Vollprüfung je Open mit gebundenem Reader; keine Implementierung/Cachefreigabe. docs/content-validation-lifecycle-plan.md; Messungen: docs/content-loading-performance.md.
 ## Portugiesisch und aktive Inhalte · relevante Vorbefunde
 - Paket 2 lokal abgeschlossen: Sprachwahl en/pt-BR, Gate/Rollback, getrennte Updatefristen und Akzentpolicy; Lernstände erhalten. docs/portuguese-package-2.md.
 - Übernommene Prüfung Paket 2: UI 2+13, Sprache/Installation 14, Gesamt 380 PASS/5 bestehende Skips, Realpack 1/12s, Stage Exit 0; Analyse Exit 1 nur Alt-avoid_print.
