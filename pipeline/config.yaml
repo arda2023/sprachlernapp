@@ -1,4 +1,4 @@
-# Pipeline configuration (no secrets; credentials only via pipeline/.env).
+# No secrets: Anthropic key only in process environment; Vertex uses ADC.
 
 out_dir: out
 
@@ -15,19 +15,24 @@ linter:
   min_zipf: {anfaenger: 4.0, mittel: 3.5, fortgeschritten: 3.0}
 
 # Price table for the cost ledger (USD per 1M tokens). Checked against the
-# official Vertex AI price list: Haiku EU multi-region, historical Gemini Global, Standard (no Priority,
-# Flex or Batch), <= 200K input tokens. Thinking tokens are billed as output
-# ("Text output (response and reasoning)").
+# Anthropic direct short-context price (2026-10-19); retained Vertex EU and
+# historical Gemini snapshot (2026-10-18). Standard, no Priority/Flex/Batch.
+# Haiku output already includes thinking; local requests stay below 100K.
 prices:
   status: geprüft
-  as_of: "2026-10-18"    # date the prices were read
+  as_of: "2026-10-19"    # date the prices were read
   source: https://cloud.google.com/vertex-ai/generative-ai/pricing   # redirects to https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing
   models:
     claude-haiku-5-5:
-      input_per_mtok_usd: 0.11
-      output_per_mtok_usd: 0.55
-      thinking_per_mtok_usd: 0.55
-      # EU multi-region, standard, input safely below 100K; output includes thinking.
+      # Direct API, standard short context; output includes thinking.
+      source: https://platform.claude.com/docs/en/models/haiku-5-5/overview
+      input_per_mtok_usd: 0.10
+      output_per_mtok_usd: 0.50
+      thinking_per_mtok_usd: 0.50
+      vertex_eu:
+        input_per_mtok_usd: 0.11
+        output_per_mtok_usd: 0.55
+        thinking_per_mtok_usd: 0.55
     gemini-3.8-flash:
       input_per_mtok_usd: 0.75
       output_per_mtok_usd: 3.75
@@ -39,9 +44,11 @@ prices:
       output_per_mtok_usd: 2.50
       thinking_per_mtok_usd: 2.50
 
-# Current text transport: Haiku through EU Vertex/ADC. Historical Gemini prices
-# above remain for old ledgers. No fallback; no production generation requested.
+# Local editorial pipeline: direct Anthropic, no EU-only guarantee.
+# Vertex remains an explicit alternative; no fallback or production run.
 llm:
+  provider: anthropic    # anthropic | vertex; key only via ANTHROPIC_API_KEY
+  # Used only with provider: vertex:
   project: sprachlernapp-510508
   location: eu
   generate_model: claude-haiku-5-5

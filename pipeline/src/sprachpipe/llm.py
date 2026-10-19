@@ -1,4 +1,4 @@
-"""Bounded Haiku text requests through EU Vertex/ADC; no provider fallback.
+"""Bounded Haiku requests through explicit Anthropic or EU Vertex; no fallback.
 
 The ledger is a local budget policy, not a guarantee of the provider's invoice.
 Unknown attempts consume their reservation and are identified in a sidecar CSV.
@@ -8,6 +8,7 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
+import os
 import random
 import time
 from datetime import date
@@ -20,6 +21,7 @@ from .cost import BudgetExceeded, append_attempt, append_entry, check_budget
 
 MODEL = "claude-haiku-5-5"
 PROJECT = "sprachlernapp-510508"
+DIRECT_BASE_URL = "https://api.anthropic.com"
 BASE_URL = "https://aiplatform.eu.rep.googleapis.com/v1"
 MODEL_PATH = f"/v1/projects/{PROJECT}/locations/eu/publishers/anthropic/models/{MODEL}:rawPredict"
 TRANSIENT_CODES = {429, 500, 502, 503, 504}
@@ -41,9 +43,12 @@ class RetryableError(LlmError):
     """Only explicitly selected HTTP statuses may be retried."""
 
 
-def model_price(prices: dict, model: str, today: date | None = None) -> dict:
+def model_price(prices: dict, model: str, today: date | None = None,
+                *, provider: str = "anthropic") -> dict:
     try:
         p = prices["models"][model]
+        if model == MODEL and provider == "vertex":
+            p = p["vertex_eu"]
     except KeyError:
         raise LlmError("model has no checked price") from None
     until = p.get("intro_until")
@@ -135,9 +140,35 @@ async def verify_route(request):
         raise LlmError("EU Vertex route rejected")
 
 
+def direct_client(timeout: float, *, count_only: bool = False):
+    """Explicit static key and fixed endpoint; never consult SDK login profiles."""
+    from anthropic import AsyncAnthropic
+    from httpx2 import AsyncClient
+
+    key = os.environ.get("ANTHROPIC_API_KEY", "")
+    if not key.strip():
+        raise LlmError("ANTHROPIC_API_KEY fehlt; im selben Terminal verdeckt eingeben")
+    path = "/v1/messages/count_tokens" if count_only else "/v1/messages"
+
+    async def route(request):
+        if (str(request.url) != DIRECT_BASE_URL + path or request.method != "POST"):
+            raise LlmError("direct Anthropic route rejected")
+
+    logging.getLogger("anthropic._base_client").disabled = True
+    return AsyncAnthropic(
+        api_key=key, base_url=DIRECT_BASE_URL, max_retries=0,
+        timeout=min(30.0, timeout), open_telemetry=False,
+        http_client=AsyncClient(follow_redirects=False, trust_env=False,
+                               event_hooks={"request": [route]}),
+    )
+
+
 class Llm:
     def __init__(self, cfg: dict, ledger: str | Path, max_usd: float):
         self.cfg = cfg["llm"]
+        self.provider = self.cfg.get("provider")
+        if self.provider not in {"anthropic", "vertex"}:
+            raise LlmError("llm.provider must explicitly be anthropic or vertex")
         self.prices = cfg["prices"]
         self.ledger = Path(ledger)
         self.max_usd = max_usd
@@ -179,7 +210,8 @@ class Llm:
 
     def generate_json(self, prompt: str, schema: dict, *, model: str, thinking: dict,
                       step: str, max_output_tokens: int):
-        if (model != MODEL or self.cfg["project"] != PROJECT or self.cfg["location"] != "eu"
+        if (model != MODEL or (self.provider == "vertex" and
+                (self.cfg.get("project") != PROJECT or self.cfg.get("location") != "eu"))
                 or thinking != {"type": "disabled"} or self.cfg.get("effort") != "low"
                 or step not in STEPS or type(max_output_tokens) is not int
                 or not 0 < max_output_tokens <= 4096):
@@ -188,7 +220,7 @@ class Llm:
             Draft202012Validator.check_schema(schema)
         except SchemaError:
             raise LlmError("invalid local schema") from None
-        price = model_price(self.prices, model)
+        price = model_price(self.prices, model, provider=self.provider)
         size = len(json.dumps(request_body(prompt, schema, max_output_tokens),
                               ensure_ascii=True).encode("utf-8"))
         # Keep well clear of the long-context boundary, including schema overhead.
@@ -202,7 +234,7 @@ class Llm:
             with self._budget:
                 while True:
                     if self._fatal_auth.is_set():
-                        raise AuthError("Vertex authentication failed in this run")
+                        raise AuthError("Haiku authentication failed in this run")
                     if self._uncertain.is_set():
                         raise LlmError("run stopped: uncertain usage or accounting")
                     remaining = deadline - time.monotonic()
@@ -233,6 +265,8 @@ class Llm:
                 if usd > estimate:
                     self._uncertain.set()
                     raise LlmError("reported cost exceeded local reservation; run stopped")
+                if meta.get("model_matches", True) is not True:
+                    raise LlmError("unexpected response model; no fallback")
                 context = parse_context(model, max_output_tokens, usage, meta)
                 if meta.get("finish_reason") != "end_turn":
                     raise LlmError("incomplete or refused response (" + context + ")")
@@ -256,7 +290,7 @@ class Llm:
                 http_status = error.status_code
                 status = "auth_error_reserved"
                 self._fatal_auth.set()
-                raise AuthError(f"{step}: Vertex authentication failed") from None
+                raise AuthError(f"{step}: Haiku authentication failed") from None
             except LlmError as error:
                 http_status = error.status_code
                 if usage is not None:
@@ -264,7 +298,7 @@ class Llm:
                 if usage is None and status == "unknown_reserved":
                     self._uncertain.set()
                 # Only our fixed diagnostics are emitted; no provider exception chain.
-                raise LlmError(f"{step}: {error}") from None
+                raise LlmError(f"{step}: {error}", status_code=http_status) from None
             except Exception:
                 self._uncertain.set()
                 raise LlmError(f"{step}: request failed; usage unknown") from None
@@ -278,7 +312,8 @@ class Llm:
                         append_attempt(self.ledger, step=step, model=model, attempt=attempt,
                                        status=status, reserved_usd=estimate, accounted_usd=usd,
                                        elapsed_s=time.monotonic() - started, http_status=http_status,
-                                       finish_reason=meta.get("finish_reason"))
+                                       finish_reason=meta.get("finish_reason"),
+                                       region="eu" if self.provider == "vertex" else "not-eu-bound")
                         self._spent += usd
                         self._calls += 1
                         if self._calls % 25 == 0:
@@ -298,7 +333,10 @@ class Llm:
     def _call(self, prompt, schema, model, thinking, max_output_tokens):
         """Run a cancellable async SDK request behind the existing sync seam."""
         import anthropic
-        from google.auth.exceptions import GoogleAuthError
+        auth_errors = (anthropic.AuthenticationError, anthropic.PermissionDeniedError)
+        if self.provider == "vertex":
+            from google.auth.exceptions import GoogleAuthError
+            auth_errors += (GoogleAuthError,)
 
         async def request():
             async with self.client as client:
@@ -311,16 +349,16 @@ class Llm:
             response = loop.run_until_complete(asyncio.wait_for(request(), timeout=timeout))
         except (TimeoutError, anthropic.APITimeoutError):
             raise LlmError("request timeout; usage unknown") from None
-        except (GoogleAuthError, anthropic.AuthenticationError, anthropic.PermissionDeniedError) as error:
-            raise AuthError("Vertex authentication failed", status_code=getattr(error, "status_code", None)) from None
+        except auth_errors as error:
+            raise AuthError("Haiku authentication failed", status_code=getattr(error, "status_code", None)) from None
         except anthropic.APIStatusError as error:
             code = error.status_code
             kind = RetryableError if code in TRANSIENT_CODES else LlmError
-            raise kind(f"Vertex HTTP {code}", status_code=code) from None
+            raise kind(f"Haiku HTTP {code}", status_code=code) from None
         except LlmError:
             raise
         except Exception:
-            raise LlmError("Vertex transport failed; usage unknown") from None
+            raise LlmError("Haiku transport failed; usage unknown") from None
         finally:
             # Cancels the HTTP request, not a detached model-request thread. ADC
             # refresh may finish in an executor after cancellation; its awaiting
@@ -329,12 +367,15 @@ class Llm:
         usage = usage_counts(response.usage)
         finish = response.stop_reason
         text = "".join(block.text for block in response.content if block.type == "text")
-        return text, usage, {"finish_reason": finish, "usage_known": usage is not None}
+        return text, usage, {"finish_reason": finish, "usage_known": usage is not None,
+                             "model_matches": response.model == model}
 
     @property
     def client(self):
         # One scoped async client per call: no connection pool shared between
         # the independent event loops of concurrent synchronous callers.
+        if self.provider == "anthropic":
+            return direct_client(min(30.0, self.cfg["timeout_s"]))
         from anthropic import AsyncAnthropicVertex
         from httpx2 import AsyncClient
 

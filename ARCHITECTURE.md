@@ -37,7 +37,7 @@ docs/               Detaildokus (siehe unten)
 - Edge Functions rufen Vertex AI auf (`docs/backend.md`). Die App enthält keinen KI-Schlüssel.
 
 ### pipeline/
-- Python-Textanschluss mit `anthropic[vertex]==1.15.0` (AsyncAnthropicVertex hinter synchronem `Llm.generate_json`), ausschließlich EU-Vertex (`eu`), Login per ADC. `google-genai` bleibt für vorhandene Werkzeug-/Snapshot-Abhängigkeiten installiert. Erzeugt Karten, Sätze, Annotation, Wörterbuch, Audio (`docs/pipeline.md`).
+- Python-Textanschluss mit vorhandenem `anthropic[vertex]==1.15.0` hinter synchronem `Llm.generate_json`: explizit `llm.provider: anthropic` (AsyncAnthropic, ANTHROPIC_API_KEY nur im lokalen Prozess) oder `vertex` (AsyncAnthropicVertex, EU/ADC). Kein Fallback. Direkte API ausschließlich für lokale Redaktion, ohne EU-only-Zusage und ohne echte Nutzerdaten; Nutzerentscheidung vom 19.10.2026. Andere Dienste einschließlich TTS und geplanter Runtime-KI behalten ihre Regeln. `google-genai` bleibt für vorhandene Werkzeuge installiert. [Einrichtung und Grenzen](docs/haiku-direct-api-setup.md).
 - Läuft nur auf dem Entwicklungsrechner, nie in der App und nie in einer Edge Function.
 
 ## Datenfluss
@@ -75,5 +75,5 @@ Content-Schema 3 ergänzt `cards.learning`; Schema 1/2 bleibt lesbar. `LearningG
 ## Verben-Paket B (10.10.2026)
 Content-Schema 4 und user.db v5 bleiben getrennt. `PracticeItemResolver` verbindet typed Deckziele, exakte lokale Formbindungen und bestehende Zustände; Controller, Provider, Wortliste und Story nutzen diesen Pfad. Domain bleibt Flutter-frei. Übungs- und Wortzahlen werden aus demselben berechtigten Inventar abgeleitet; es gibt keine Counterspalten und keinen zweiten Review-Schreibweg. Nullable lokale Form-/Lexikalmetadaten erhalten die Übbarkeit bei Content-Rückfall. Installationsvalidierung bleibt vor Dateiaustausch. Siehe `docs/irregular-verbs-package-b.md`.
 
-## Textanschluss Paket A (18.10.2026)
+## Textanschluss Paket A (historischer Stand 18.10.2026)
 Der bestehende Offline-Wrapper nutzt `claude-haiku-5-5`, Projekt `sprachlernapp-510508`, EU-Multiregion `eu`, Thinking aus und Effort low. Kein Fallback. SDK-Retries aus; maximal drei kontrollierte Versuche, feste Request-/Gesamtdeadline, vollständige ursprüngliche JSON-Schema-Prüfung lokal. Keine neue Runtime-KI oder Appänderung. Cloudfreischaltung und Modellqualität bleiben ungeprüft; Offline-Nachweise: [Umsetzung](docs/haiku-migration-implementation.md). Die Stapelphase ist beendet; keine neuen Produktionsläufe aus dieser Änderung.

@@ -62,7 +62,8 @@ def check_budget(max_usd: float, ledger: str | Path, *, next_usd: float = 0.0) -
 
 def append_attempt(ledger: str | Path, *, step: str, model: str, attempt: int,
                    status: str, reserved_usd: float, accounted_usd: float,
-                   elapsed_s: float, http_status: int | None, finish_reason: str | None) -> None:
+                   elapsed_s: float, http_status: int | None, finish_reason: str | None,
+                   region: str = "eu") -> None:
     """Safe metadata beside the unchanged historical seven-column ledger.
 
     For unknown usage, ledger.usd is a local conservative reservation, not a
@@ -78,7 +79,7 @@ def append_attempt(ledger: str | Path, *, step: str, model: str, attempt: int,
         writer = csv.DictWriter(stream, fieldnames=fields)
         if new:
             writer.writeheader()
-        writer.writerow(dict(step=step, model=model, region="eu", attempt=attempt,
+        writer.writerow(dict(step=step, model=model, region=region, attempt=attempt,
                              status=status, reserved_usd=f"{reserved_usd:.9f}",
                              accounted_usd=f"{accounted_usd:.9f}", elapsed_s=f"{elapsed_s:.3f}",
                              http_status=http_status, finish_reason=finish_reason))

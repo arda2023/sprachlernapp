@@ -51,7 +51,9 @@ def offline(monkeypatch, tmp_path):
         return client
 
     monkeypatch.setattr(anthropic, "AsyncAnthropicVertex", sdk)
-    llm = Llm(load_config(), tmp_path / "ledger.csv", 1.0)
+    cfg = load_config()
+    cfg["llm"]["provider"] = "vertex"
+    llm = Llm(cfg, tmp_path / "ledger.csv", 1.0)
     return llm, calls, clients, state
 
 
@@ -217,7 +219,7 @@ def test_each_retry_must_fit_remaining_budget(offline, monkeypatch):
     llm, calls, _, state = offline
     monkeypatch.setattr("sprachpipe.llm.time.sleep", lambda _: None)
     size = len(json.dumps(request_body("synthetic", SCHEMA, 256), ensure_ascii=True).encode())
-    reserve = reservation_usd(model_price(llm.prices, MODEL), size, 256)
+    reserve = reservation_usd(model_price(llm.prices, MODEL, provider="vertex"), size, 256)
     llm.max_usd = reserve * 1.5
     state["handler"] = lambda request: httpx2.Response(503, json={"error": "synthetic"})
     with pytest.raises(BudgetExceeded):

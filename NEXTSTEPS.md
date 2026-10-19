@@ -1,11 +1,11 @@
 # NEXTSTEPS
-## Stand 18.10.2026 · nächste Produktphase
+## Stand 19.10.2026 · nächste Produktphase
 - Stapelphase beendet; nächste Arbeit: UI, Lernalgorithmus und Funktionen. Keine neuen Stapel, Reservierungen oder Sätze aus dem Haiku-Auftrag.
-- Haiku Paket A lokal implementiert: EU-Vertex/ADC, claude-haiku-5-5, SDK 1.15.0, gleiche generate_json-Aufrufer; Nachweise/Grenzen: docs/haiku-migration-implementation.md.
+- Haiku-Direktzugang lokal ergänzt: provider anthropic, claude-haiku-5-5, vorhandenes SDK 1.15.0, gleiche generate_json-Aufrufer; Vertex explizite Alternative, kein Fallback. Nur Redaktion ohne echte Nutzerdaten, keine EU-only-Zusage.
 - KI-Ist: optionaler Python-Wrapper mit Haiku, Thinking aus/Effort low; App liest lokale Übersetzungen. Drei Laufzeit-KI-Functions weiter Entwurf; kein Fallback.
-- Offline geprüft: Haiku-Vertrag 42, gezielt 156, Pipeline 638 PASS/1 bestehender Skip/19 Subtests, pip check Exit 0; EU-Pfad per echtem SDK, keine Cloudfreischaltung belegt.
+- Offline: Pipeline 668 PASS/1 bestehender Skip/19 Subtests, pip check Exit 0; echte SDK-Requests lokal gemockt, bestehende Vertex-Verträge erhalten. Code/Config/Preisaufrufer/Tests und gezielte Regeln/Doku geändert; docs/haiku-direct-api-setup.md.
 - Kosten: keine gemessene Einsparung/Modellqualität. Unbekannte Nutzung konservativ erfasst; lokale Reservierung ist keine garantierte Anbieterrechnungsgrenze.
-- Haiku-Livesetup nicht abgeschlossen: CLI 589.0.0/ADC-Refresh/Quotenprojekt sprachlernapp-510508 belegt; EU-Haiku-Familienquoten weiter 0, positive Zuteilung nötig. 42 Vertragstests PASS, 0 Liveanfragen; docs/haiku-live-setup.md. Qualitätsvergleich später max. 48 Versuche/0,50 USD; keine Inhalts-/Deploymentfreigabe.
+- Direkt-API-Einrichtung: verdeckte manuelle Schlüsseleingabe und Einzeltest vorbereitet, 0 Liveanfragen. Nutzer meldet abgelehnte Vertex-EU-Quote. Nächster Schritt: Terminalanleitung in docs/haiku-direct-api-setup.md; 128 Output, Input-Vorabzählung mit Abstand zu 500 (keine harte API-Inputgarantie). Frühere ADC-Nachweise: docs/haiku-live-setup.md.
 ## Portugiesisch und aktive Inhalte · relevante Vorbefunde
 - Paket 2 lokal abgeschlossen: Sprachwahl en/pt-BR, Gate/Rollback, getrennte Updatefristen und Akzentpolicy; Lernstände erhalten. docs/portuguese-package-2.md.
 - Übernommene Prüfung Paket 2: UI 2+13, Sprache/Installation 14, Gesamt 380 PASS/5 bestehende Skips, Realpack 1/12s, Stage Exit 0; Analyse Exit 1 nur Alt-avoid_print.

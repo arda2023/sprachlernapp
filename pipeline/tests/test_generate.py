@@ -86,7 +86,9 @@ class FakeVertex(llm_mod.Llm):
 
 @pytest.fixture
 def cfg():
-    return load_config()
+    config = load_config()
+    config["llm"]["provider"] = "vertex"
+    return config
 
 
 def run(cfg, tmp_path, llm):

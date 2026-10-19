@@ -10,6 +10,8 @@
 
 ## Anmeldung
 
+Die folgenden Google-Anmeldungen gelten für Vertex und andere Google-Dienste. Die direkte redaktionelle Anthropic-Pipeline benötigt weder gcloud noch ADC; ihre verdeckte, temporäre Schlüsseleingabe steht in [Direkt-API-Setup](haiku-direct-api-setup.md).
+
 Gleich auf Windows (PowerShell) und macOS (Terminal):
 
 ```
@@ -29,10 +31,11 @@ macOS: `gcloud auth application-default print-access-token >/dev/null && echo ok
 - Dienstkonto-Schlüssel (Supabase-Secret `GCP_SA_KEY`)
 - Supabase-Zugangsdaten und Service-Role-Key
 - Dateien der ADC-Anmeldung (liegen im Nutzerverzeichnis von gcloud)
+- `ANTHROPIC_API_KEY`: nur temporär im lokalen Prozess, nicht in `.env`, `.zshrc`, synchronisierten Projektdateien oder Chat speichern
 
 Nicht geheim: Projekt-ID, Region, Modellname.
 
-## Lokaler Pipeline-Textanschluss (Paket A, 18.10.2026)
+## Lokaler Pipeline-Textanschluss (19.10.2026)
 
 Vorhandene Umgebung aktualisieren, ab Repository-Root (kein Modellaufruf):
 
@@ -54,6 +57,6 @@ pipeline/.venv-macos/bin/python -m pip check
 
 `pipeline/requirements.lock` enthält den lokalen editierbaren Projekteinstieg relativ zum Repository-Root sowie exakte Abhängigkeitspins; Installation mit `-r pipeline/requirements.lock` nur vom Root aus. Die aktuelle macOS-Umgebung bestand bereits vor diesem Auftrag und hat bei einigen Alttransitiven neuere Versionen als der historische Lock. Die neu hinzugefügte SDK-Kette wurde exakt installiert; keine pauschale Aktualisierung aller Alttransitiven.
 
-`pipeline/config.yaml`: Projekt `sprachlernapp-510508`, Region `eu`, Modell `claude-haiku-5-5`, Thinking aus, Effort low. Bestehendes ADC verwenden; kein neuer Secretname, kein `ANTHROPIC_API_KEY` erforderlich. Umgebungswerte für andere Projekte/Endpunkte überschreiben das feste Routing nicht. Diese Offline-Tests lesen keine ADC-Dateien und ersetzen den Transport durch lokale Fakes.
+`pipeline/config.yaml`: `provider: anthropic`, Modell `claude-haiku-5-5`, Thinking aus, Effort low. Der direkte Provider verwendet ausschließlich den lokal eingegebenen `ANTHROPIC_API_KEY`, keine ADC und keine Google-Projektkonfiguration. Keine EU-only-Zusage für diesen vom Nutzer erlaubten redaktionellen Weg, keine echten Nutzerdaten. Explizite Alternative `provider: vertex` behält Projekt `sprachlernapp-510508`, Region `eu` und ADC. Kein automatischer Fallback; Umgebungs-URLs überschreiben das feste Routing nicht. Das vorhandene SDK enthält beide Clients; keine Neuinstallation für den direkten Zugang nötig. Offline-Tests verwenden lokale HTTP-Mocks. Manueller Einzeltest und sichere Schlüsseleingabe: [Abschlussbericht](haiku-direct-api-setup.md). Ein schon laufendes Codex erbt keine Variablen aus einem anderen Terminal.
 
-Vor einer späteren, gesondert beauftragten Liveprüfung: Administrator prüft Haiku-5.5-Freischaltung/Bedingungen, Billing/Organisationspolicy, `aiplatform.endpoints.predict` und EU-Quote im bestehenden Projekt. Freischaltrolle: `roles/consumerprocurement.entitlementManager`; Inferenz z. B. `roles/aiplatform.user`. Keine Frankfurt-Einzelregionszusage, keine Freischaltung durch Paket A. Konkreter nächster Schritt: read-only Prüfung der Projekt-/Modellkarte und vorhandener Rechte, noch kein Testprompt. Siehe [Umsetzungsbericht](haiku-migration-implementation.md).
+Nur für die ausdrücklich gewählte Vertex-Alternative gilt weiterhin: Administrator prüft Haiku-5.5-Freischaltung/Bedingungen, Billing/Organisationspolicy, `aiplatform.endpoints.predict` und EU-Quote im bestehenden Projekt. Freischaltrolle: `roles/consumerprocurement.entitlementManager`; Inferenz z. B. `roles/aiplatform.user`. Keine Frankfurt-Einzelregionszusage, keine Freischaltung durch Paket A. Konkreter nächster Schritt: read-only Prüfung der Projekt-/Modellkarte und vorhandener Rechte, noch kein Testprompt. Siehe [Umsetzungsbericht](haiku-migration-implementation.md).

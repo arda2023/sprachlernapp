@@ -140,17 +140,20 @@ def test_partition_uses_form_lemma_pos_and_sense_not_surface():
     assert partition_selection(entries, pack) == ([], entries)
 
 
-def test_dry_run_reports_actual_limit_reservations(inputs, tmp_path, capsys):
+@pytest.mark.parametrize("provider,current_usd,old_usd", [("vertex", "0.002901", "0.001212"),
+                                                        ("anthropic", "0.002637", "0.001101")])
+def test_dry_run_reports_actual_limit_reservations(inputs, tmp_path, capsys, provider, current_usd, old_usd):
     path, db, _ = inputs
     plan = plan_selection(path, db)
     cfg = load_config()
+    cfg['llm']['provider'] = provider
     print_plan(plan, cfg, 1)
     current = capsys.readouterr().out
-    assert 'configured max_output_tokens=4096; reservation/call=0.002901 USD' in current
+    assert f'configured max_output_tokens=4096; reservation/call={current_usd} USD' in current
     cfg['llm']['max_output_tokens']['meaning_check'] = 1024
     print_plan(plan, cfg, 1)
     old = capsys.readouterr().out
-    assert 'configured max_output_tokens=1024; reservation/call=0.001212 USD' in old
+    assert f'configured max_output_tokens=1024; reservation/call={old_usd} USD' in old
 
 
 def test_selection_refuses_existing_output_directory(inputs, tmp_path, monkeypatch):

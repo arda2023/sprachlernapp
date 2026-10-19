@@ -44,7 +44,7 @@ Tool setup and logins: `docs/setup.md`.
 
 1. **No keys**: Never commit API keys or secrets to the repository or embed them in the app. Pipeline and tools read credentials from local login (ADC) or environment variables.
 2. **No direct AI calls from the client**: The client never calls an AI provider directly. Runtime AI only via Supabase Edge Functions that call Vertex AI, for user-generated content (see `PRODUCT.md`).
-3. **AI access: Vertex AI only** (project `sprachlernapp-510508`, see `docs/pipeline.md`, `docs/backend.md`).
+3. **AI access**: Runtime AI remains Vertex AI only (project `sprachlernapp-510508`). Explicit exception (19.10.2026): the local editorial Python pipeline may use the direct Anthropic API, without an EU-only processing guarantee and without real user data. Its key comes only from `ANTHROPIC_API_KEY` in the local process environment; never store it in the app or repository. Vertex remains an explicit alternative, never an automatic fallback. See `docs/haiku-direct-api-setup.md`, `docs/pipeline.md`, `docs/backend.md`.
 4. **Derived counters**: The four vocabulary counts (*Verfügbare Wiederholungen*, *Wörter im Aufbau*, *Wörter gemeistert*, *Noch nicht angezeigt*) are always derived from card state and due dates, never stored as columns (`docs/srs.md`).
 5. **Source of truth**: Product logic is governed by `PRODUCT.md`, visuals and accessibility by `DESIGN.md`. If code contradicts them, the documentation wins; do not edit the documentation to match a code regression, record the discrepancy and align the code.
 6. **Shell**: WENN ein Befehl Shell-spezifisch ist → NIE nur Bash angeben; Windows (PowerShell) und macOS getrennt nennen. Entwicklung läuft auf Windows und macOS.
