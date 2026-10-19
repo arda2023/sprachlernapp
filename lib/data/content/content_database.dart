@@ -240,6 +240,34 @@ void validateSingleSentenceContent(Database db, {int schemaVersion = 2}) {
   final aliases = db.select(
     'SELECT id, lang, form_norm, word_id, removed_in FROM word_aliases',
   );
+  // Keep duplicate matches: the validator must still reject ambiguous links.
+  // These indexes live only for this validation of this open database.
+  final cards = db.select('SELECT * FROM cards WHERE removed_in IS NULL');
+  final cardsById = <Object?, List<Row>>{};
+  for (final card in cards) {
+    if (card['id'] != null) (cardsById[card['id']] ??= []).add(card);
+  }
+  final deckCounts = <(Object?, Object?), int>{};
+  for (final deck in db.select(
+    'SELECT id, lang FROM decks WHERE removed_in IS NULL',
+  )) {
+    if (deck['id'] == null || deck['lang'] == null) continue;
+    final key = (deck['id'], deck['lang']);
+    deckCounts.update(key, (count) => count + 1, ifAbsent: () => 1);
+  }
+  final linksByCard = <Object?, List<Row>>{};
+  for (final link in db.select(
+    'SELECT cs.card_id, cs.position, s.removed_in '
+    'FROM card_sentences cs JOIN sentences s ON s.id=cs.sentence_id '
+    'WHERE cs.removed_in IS NULL',
+  )) {
+    if (link['card_id'] != null) {
+      (linksByCard[link['card_id']] ??= []).add(link);
+    }
+  }
+  final wordIdentities = {
+    for (final word in words) (word['id'], word['lang']),
+  };
   final keys = <String>{};
   final primaries = <String>{};
   final positions = <String, List<int>>{};
@@ -250,20 +278,13 @@ void validateSingleSentenceContent(Database db, {int schemaVersion = 2}) {
     if (!keys.add('${w['lang']}/${w['form_norm']}')) {
       reject('doppelter Wortbesitz ${w['form_norm']}');
     }
-    final card = db.select(
-      'SELECT * FROM cards WHERE id=? AND removed_in IS NULL',
-      [w['primary_card_id']],
-    );
+    final card = cardsById[w['primary_card_id']] ?? const <Row>[];
     if (card.length != 1 ||
         card.single['lang'] != w['lang'] ||
         card.single['form_norm'] != w['form_norm']) {
       reject('ungültige Primärkarte ${w['primary_card_id']}');
     }
-    if (db.select(
-          'SELECT id FROM decks WHERE id=? AND lang=? AND removed_in IS NULL',
-          [w['deck_id'], w['lang']],
-        ).length !=
-        1) {
+    if (deckCounts[(w['deck_id'], w['lang'])] != 1) {
       reject('Eigentümerstapel fehlt');
     }
     primaries.add('${w['deck_id']}/${w['primary_card_id']}/${w['position']}');
@@ -279,7 +300,7 @@ void validateSingleSentenceContent(Database db, {int schemaVersion = 2}) {
   for (final a in aliases.where((r) => r['removed_in'] == null)) {
     if (contentFormNorm(a['form_norm'] as String) != a['form_norm'] ||
         !aliasKeys.add('${a['lang']}/${a['form_norm']}') ||
-        !words.any((w) => w['id'] == a['word_id'] && w['lang'] == a['lang'])) {
+        !wordIdentities.contains((a['word_id'], a['lang']))) {
       reject('Alias ohne eindeutigen Wortbesitz ${a['form_norm']}');
     }
   }
@@ -294,7 +315,7 @@ void validateSingleSentenceContent(Database db, {int schemaVersion = 2}) {
       )) {
     reject('Stapelzuordnung entspricht nicht Primärwörtern');
   }
-  for (final c in db.select('SELECT * FROM cards WHERE removed_in IS NULL')) {
+  for (final c in cards) {
     if (contentFormNorm(c['form'] as String) != c['form_norm'] ||
         (c['form'] as String).trim() != c['form']) {
       reject('ungültige Wortnormalisierung');
@@ -302,10 +323,7 @@ void validateSingleSentenceContent(Database db, {int schemaVersion = 2}) {
     if (!keys.contains('${c['lang']}/${c['form_norm']}') && !(schemaVersion >= 4 && c['introduction_scope'] == 'form_only' && aliasKeys.contains('${c['lang']}/${c['form_norm']}'))) {
       reject('Wort ohne Eigentümer ${c['form']}');
     }
-    final links = db.select(
-      'SELECT cs.position, s.removed_in FROM card_sentences cs JOIN sentences s ON s.id=cs.sentence_id WHERE cs.card_id=? AND cs.removed_in IS NULL',
-      [c['id']],
-    );
+    final links = linksByCard[c['id']] ?? const <Row>[];
     if (links.length != 1 ||
         links.single['position'] != 1 ||
         links.single['removed_in'] != null) {
