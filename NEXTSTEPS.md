@@ -1,5 +1,4 @@
-# NEXTSTEPS
-## Stand 19.10.2026 · nächste Produktphase
+# NEXTSTEPS · Stand 20.10.2026 · nächste Produktphase
 - Stapelphase beendet; nächste Arbeit: UI, Lernalgorithmus und Funktionen. Keine neuen Stapel, Reservierungen oder Sätze aus dem Haiku-Auftrag.
 - Haiku-Direktzugang lokal ergänzt: provider anthropic, claude-haiku-5-5, vorhandenes SDK 1.15.0, gleiche generate_json-Aufrufer; Vertex explizite Alternative, kein Fallback. Nur Redaktion ohne echte Nutzerdaten, keine EU-only-Zusage.
 - KI-Ist: fehlende App-Wort-/Satzübersetzungen lokal über authentifizierte Supabase Functions → Anthropic claude-haiku-5-5 implementiert; explizite Bestätigung, Packübersetzungen offline, keine EU-only-Zusage/kein Fallback. sentence-check bleibt Entwurf.
@@ -7,6 +6,7 @@
 - Kosten: keine gemessene Einsparung/Modellqualität. Unbekannte Nutzung konservativ erfasst; lokale Reservierung ist keine garantierte Anbieterrechnungsgrenze.
 - Python-Live: Nutzer meldet 205 Input/8 Output erfolgreich; kein eigener App-Nachweis. Runtime lokal: Deno 32 PASS, Flutter-Gruppe 82 PASS + erweiterte neue Tests 14 PASS, SQL/PGlite PASS; Analyse nur alter avoid_print. Details/Abnahme: docs/haiku-runtime-translations.md; frühere ADC-Nachweise: docs/haiku-live-setup.md.
 - Inhaltsladen: Variante B Paket 2 produktiv, 2 Prozessnachweise/3 Readerplätze, Status ohne Open; iPhone warm en Median 812 ms (8 Läufe), Home zusätzlich 1 350 ms, Übung 60 ms (je 3). Kalter Prozess Home 5 508 ms; Home-Restkosten offen. 479 PASS/6 Skips, Realpack/Stage PASS, Analyse nur Alt-avoid_print. Normaler Profile-Build ohne Sonde; docs/content-validation-package-2.md und docs/content-validation-lifecycle-plan.md.
+- Redesign-Geräteabnahme b5a6bd3: iPhone Profile, 3 Kaltstarts Home Median 5 547 ms, warm en 848 ms + gemessene Home-Arbeit, Übung 63 ms; Nutzer ohne Auffälligkeiten. Offen: 2 zusätzliche pt-Vollprüfungen und einzelne Frame-Spitzen; keine Produktkorrektur. Sonde bytegenau entfernt, normale App installiert/geöffnet. Dateien: docs/redesign-device-performance.md, NEXTSTEPS.md; Realpack 1 PASS/3s im 30s-Budget, gezielt 66 PASS, Stage/Whitespace Exit 0, Analyse Exit 1 nur Alt-avoid_print; Details und Grenzen im Bericht.
 ## Portugiesisch und aktive Inhalte · relevante Vorbefunde
 - Paket 2 lokal abgeschlossen: Sprachwahl en/pt-BR, Gate/Rollback, getrennte Updatefristen und Akzentpolicy; Lernstände erhalten. docs/portuguese-package-2.md.
 - Übernommene Prüfung Paket 2: UI 2+13, Sprache/Installation 14, Gesamt 380 PASS/5 bestehende Skips, Realpack 1/12s, Stage Exit 0; Analyse Exit 1 nur Alt-avoid_print.
