@@ -1,3 +1,5 @@
+> Historische Designkritik und Recherche vom 18.10.2026; der folgende Inhalt bleibt als damaliger Befund erhalten. Aktuelle Anforderungen stehen ausschließlich in [DESIGN.md](DESIGN.md) und den dort verlinkten Bildschirmregeln. Alte Bildschirmbeschreibungen und Vorschläge dieses Berichts sind keine Rückbauanweisung.
+
 # Ich habe CHATGPT Reddit Posts und Youtube-Transkripte auswerten lassen. Du musst sie nicht blind befolgen, es dient nur als Inspiration.
 
 # Bericht zu meiner aktuellen UI

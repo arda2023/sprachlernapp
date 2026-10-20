@@ -2,7 +2,7 @@
 
 Zielarchitektur. Produktregeln: `PRODUCT.md`, Optik: `DESIGN.md`.
 
-> **Stand:** `lib/models/` und `lib/screens/` sind der aktuelle Stand (In-Memory-Stores, Platzhalterinhalte). Sie werden später auf die Schichten unten migriert. `lib/domain/` ist bereits reines Dart.
+> **Stand 20.10.2026:** Das integrierte Redesign in `lib/screens/`, `lib/widgets/` und `lib/theme/` nutzt die bestehenden Provider/Repositories, echte Inhaltspakete und persistente Lernstände. Einzelne Beispielbereiche und simulierte Audiozustände bleiben Platzhalter. Die Schichten unten beschreiben die Zielordnung; dies ist kein Auftrag zum Verschieben vorhandener Screens. `lib/domain/` bleibt reines Dart. Aktuelle visuelle Regeln: `DESIGN.md` und `docs/redesign/design-system.md`; Übernahme: `docs/redesign/uebernahme.md`.
 
 ## Schichten
 

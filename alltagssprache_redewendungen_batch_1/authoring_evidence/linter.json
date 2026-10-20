@@ -1,8 +1,0 @@
-[
-  {
-    "form": "in other words",
-    "level": "warn",
-    "rule": "i+1",
-    "message": "'reopen'/'reopen' Zipf 3.42 below 3.5"
-  }
-]

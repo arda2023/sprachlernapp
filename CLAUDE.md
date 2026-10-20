@@ -6,7 +6,7 @@ Guidance for Claude Code and other agentic assistants in this repository.
 
 Sprachapp is an editorial, reading-first language learning app for iOS and Android (Flutter, Dart `^3.13.2`). v1: adult German speakers learning English through stories and spaced-repetition sentence decks.
 
-Implemented today (placeholder data, in-memory stores): home dashboard, notched bottom bar, deck library/details/practice session, "Inhalte" tab (gap texts, listening and grammar exercises, grammar rules), story library and reader with word lookup, sentence translation and simulated narration, "Wortliste" tab, and pure-Dart domain code in `lib/domain/`. Widget and accessibility tests live in `test/widget_test.dart`.
+The integrated redesign uses real installed English/Portuguese content packs, persistent learning data and language-scoped local reading/import state. Home, deck practice, stories/reader and the word list use the existing providers and repositories; some "Inhalte" examples and simulated audio remain placeholders. Current visuals: `DESIGN.md` → `docs/redesign/design-system.md`; transferred scope: `docs/redesign/uebernahme.md`. Historical reviews must not restore the previous UI. Widget and accessibility tests live in `test/`.
 
 `lib/models/` and `lib/screens/` are the current state and will be migrated to the target layers (`ARCHITECTURE.md`). Platform folders (`android/`, `ios/`, `macos/`, `linux/`, `windows/`) are generated; do not hand-edit them.
 
@@ -46,7 +46,7 @@ Tool setup and logins: `docs/setup.md`.
 2. **No direct AI calls from the client**: The client never calls an AI provider directly. Missing runtime translations use authenticated Supabase Edge Functions; existing pack translations stay offline (see `PRODUCT.md`).
 3. **AI access**: Explicit user decision (19.10.2026): missing word/sentence translations use direct Anthropic `claude-haiku-5-5` only through authenticated Supabase Edge Functions, with `ANTHROPIC_API_KEY` held exclusively as a server Secret. No Gemini/Vertex fallback and no EU-only guarantee. Local editorial Python may also use direct Anthropic with its key only in the process environment, without real user data; Vertex (`sprachlernapp-510508`, EU/ADC) remains an explicit pipeline alternative. Other services retain their rules; no runtime AI for SRS, grading or generation. See `docs/haiku-runtime-translations.md`, `docs/haiku-direct-api-setup.md`.
 4. **Derived counters**: The four vocabulary counts (*Verfügbare Wiederholungen*, *Wörter im Aufbau*, *Wörter gemeistert*, *Noch nicht angezeigt*) are always derived from card state and due dates, never stored as columns (`docs/srs.md`).
-5. **Source of truth**: Product logic is governed by `PRODUCT.md`, visuals and accessibility by `DESIGN.md`. If code contradicts them, the documentation wins; do not edit the documentation to match a code regression, record the discrepancy and align the code.
+5. **Source of truth**: Product logic is governed by `PRODUCT.md`, visuals and accessibility by `DESIGN.md` and its linked current screen rules (`docs/redesign/design-system.md`). Historical design reports and archived design rules are not additional requirements. If code contradicts them, the documentation wins; do not edit the documentation to match a code regression, record the discrepancy and align the code.
 6. **Shell**: WENN ein Befehl Shell-spezifisch ist → NIE nur Bash angeben; Windows (PowerShell) und macOS getrennt nennen. Entwicklung läuft auf Windows und macOS.
 7. **Verification**: Nie "fertig" ohne gezeigten Output (Test, Analyse, Befehlsausgabe).
 8. **Domain purity**: `lib/domain/` has no Flutter imports (`dart:ui`, `package:flutter/...`).
@@ -64,6 +64,7 @@ Tool setup and logins: `docs/setup.md`.
 | Content pipeline, QA, costs, TTS | `docs/pipeline.md` |
 | Tools, logins, secrets | `docs/setup.md` |
 | Current status, open points | `NEXTSTEPS.md` |
+| Historical delivery archive and restoration (never a runtime dependency) | `docs/repository-cleanup.md` |
 
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence
