@@ -1,0 +1,137 @@
+{
+  "format": "sprachapp.editorial-patch",
+  "format_version": 1,
+  "patch_id": "context-quality-v1",
+  "purpose": "Gebundene, NICHT ANGEWENDETE Reviewentscheidungen. Schema-4-Änderungs-/Rückstellungsvertrag fehlt; kein exportierbares Pack.",
+  "reviewer": "Codex, lokale redaktionelle Modellprüfung; keine menschliche Gesamtfreigabe, keine Cloudaufrufe.",
+  "source": {
+    "file_name": "pipeline/out/business_email_batch_6_perf_v1/pack.json",
+    "sha256": "48f8c3037e37cf8aaa83188c868af6706fd7f749592785433ee30b74070800d4",
+    "canonical_json_sha256": "466517f6277e20eb7a2c560183c13328dcfe3bc3e8cb68d1c17129c156117525",
+    "release": {
+      "version": "business_email_batch_6_v1",
+      "schema_version": 4,
+      "notes": "INTERNES TEST-PACK: offline editorial create; no Vertex QA."
+    },
+    "lang": "en",
+    "counts": {
+      "languages": 1,
+      "lemmas": 5007,
+      "senses": 6759,
+      "cards": 3768,
+      "decks": 14,
+      "deck_cards": 3661,
+      "dictionary_forms": 8089,
+      "sentences": 4302,
+      "sentence_tokens": 47082,
+      "card_sentences": 4296,
+      "deck_words": 3557,
+      "word_aliases": 37,
+      "stories": 1,
+      "story_sentences": 6,
+      "lexical_targets": 134,
+      "card_lexical_targets": 406,
+      "form_targets": 402,
+      "deck_practice_targets": 402
+    }
+  },
+  "review_scope": {
+    "included": [
+      "111 aktive Paare einzeln gelesen; Suchlauf über alle 3768 aktiven Karten-Satz-Links. Keine vollständige Sprachfreigabe. Historische so-Sätze separat im Bericht."
+    ],
+    "not_fully_audited": [
+      "Übrige aktive Sätze, sämtliche historischen Sätze, gesamtes Wörterbuch, Geräteverhalten"
+    ],
+    "grammar_linter_status": "Neuer Satzvorschlag separat zu prüfen; nicht importiert.",
+    "acceptance_policy": "Keine neue Alternative; keine neue Zielform oder Sense."
+  },
+  "sentence_operations": [
+    {
+      "op_id": "context-12",
+      "kind": "replace_sentence_editorially",
+      "card_ref": "let's keep it that way|let's keep it that way/INTJ|let-s-keep-it-that-way#belassen-wir-es-dabei",
+      "card_id": "ca8c7f9b1f100ebc671639b0d71fdf64",
+      "sense_id": "40e488b9e6d21ea6caf6d6c79e7bdadc",
+      "lemma_id": "09c962a601467e8b2059668448ecae35",
+      "sentence_ref": "alltagssprache-v1-0176-s1",
+      "sentence_position": 1,
+      "old_sentence_id": "dd8ab9cfb2023421fe9e62249c9e509a",
+      "new_sentence_id": "ffc8ac9d8c30d444dc471a2c1425bbf4",
+      "new_card_sentence_id": "4d42271ef9265b522be3945a192f5316",
+      "expect": {
+        "text": "Let's keep it that way for the rest of the week.",
+        "translation_de": "Lassen wir es für den Rest der Woche so.",
+        "gap_start": 0,
+        "gap_end": 22,
+        "accepted": [
+          "let's keep it that way"
+        ],
+        "valid_alternatives": []
+      },
+      "new": {
+        "text": "The kitchen is clean. Let's keep it that way.",
+        "translation_de": "Die Küche ist sauber. Sorgen wir dafür, dass sie so bleibt.",
+        "gap_start": 22,
+        "gap_end": 44,
+        "accepted": [
+          "let's keep it that way"
+        ],
+        "valid_alternatives": []
+      },
+      "expect_sentence_row_sha256": "87c8bcf3f3b784f3feb1ffb5e5f0754d2f210da4e714ba207a1a924f8f3c5a20",
+      "expect_link_row_sha256": "0d6b4cbbfb1320a238872944dd2c93bfa8bca30cddd1baff862f4c586a4c5373",
+      "changed_fields": [
+        "text",
+        "translation_de",
+        "gap_start",
+        "gap_end"
+      ],
+      "reason": "That way verweist auf einen unbenannten Zustand. Die neue Fassung nennt die saubere Küche vor der unveränderten zusammenhängenden Zielform."
+    }
+  ],
+  "metadata_operations": [
+    {
+      "table": "cards",
+      "ref": "like|like/ADV|like#fuellwort",
+      "field": "translation_de",
+      "expect": "quasi / sozusagen",
+      "new": "so (umgangssprachlich als Zitateinleitung)",
+      "affected_card_refs": [
+        "like|like/ADV|like#fuellwort"
+      ],
+      "reason": "Natürliches quotatives was like; DE meinte ... so passt. Kartenglosse quasi/sozusagen ist dafür irreführend; Sense nennt Zitateinleiter ausdrücklich. Nur Kartenglosse präzisieren, keine Rückstellung."
+    }
+  ],
+  "card_recommendations": [
+    {
+      "card_ref": "so|so/ADV|so#auf_diese_weise",
+      "card_id": "1bbe26267773ad288ddd7bf7063c4437",
+      "sense_id": "bda23837a15322457cb8b35042563e1a",
+      "lemma_id": "c4ac4a6a23d97edc0d68d69086bb2dc0",
+      "recommendation": "exclude_from_beginner_practice_selection",
+      "status": "recommendation_not_applied",
+      "reason": "Demonstratives so benötigt hier eine Vorführung. Nachgestellte Schnitte und Luis retten die isolierte Übung nicht; thus ist formeller, keine Kontextheilung. Rückstellung fachlich nötig, technisch blockiert.",
+      "preserve": "all card and sentence records, user state and append-only review history",
+      "not_a_drop_in_operation": "Kein vorhandener Schema-4-Rückstellungsimport. Einfacher Karten-Tombstone scheitert an der aktiven Lerngruppen-Kopfregel; --create kann keine Zeilen zurückstellen. Keine user.db ändern."
+    }
+  ],
+  "stats": {
+    "cards_read": 111,
+    "sentence_pairs_read": 111,
+    "original_alternative_entries_read": 11,
+    "sentence_records_changed": 1,
+    "english_replacements": 1,
+    "translation_only_or_translation_and_alternatives": 0,
+    "alternatives_only": 0,
+    "metadata_changes": 1,
+    "cards_recommended_for_hold": 1,
+    "unchanged_sentence_records": 109,
+    "held_sentence_records": 1,
+    "cards_needing_annotation_if_applied": 1,
+    "proposed_alternatives_in_kept_cards": 10
+  },
+  "import_contract": {
+    "status": "blocked_not_applied",
+    "reason": "Bestehendes Austauschformat beibehalten. verify_exchange verlangt Vollkorpus, make_plan setzt deck_cards je Karte voraus, alter EN-Patch hält Geschichte nur im Log; --create hat keine Updates/Rückstellung. Keine erfundene Rückstellungsoperation."
+  }
+}

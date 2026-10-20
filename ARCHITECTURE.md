@@ -34,10 +34,10 @@ docs/               Detaildokus (siehe unten)
 
 ### supabase/
 - EU Frankfurt. Schema `content` (öffentlich lesbar), Schema `app` (RLS, nur eigene Zeilen), Buckets `audio`, `packs`, `imports`.
-- Edge Functions rufen Vertex AI auf (`docs/backend.md`). Die App enthält keinen KI-Schlüssel.
+- Übersetzungs-Edge-Functions rufen die direkte Anthropic-API mit `claude-haiku-5-5` auf (`docs/backend.md`). Die App enthält keinen KI-Schlüssel.
 
 ### pipeline/
-- Python mit `google-genai` (Vertex AI), Login per ADC. Erzeugt Karten, Sätze, Annotation, Wörterbuch, Audio (`docs/pipeline.md`).
+- Python-Textanschluss mit vorhandenem `anthropic[vertex]==1.15.0` hinter synchronem `Llm.generate_json`: explizit `llm.provider: anthropic` (AsyncAnthropic, ANTHROPIC_API_KEY nur im lokalen Prozess) oder `vertex` (AsyncAnthropicVertex, EU/ADC). Kein Fallback. Direkte API ausschließlich für lokale Redaktion, ohne EU-only-Zusage und ohne echte Nutzerdaten; Nutzerentscheidung vom 19.10.2026. TTS behält seine Regeln; die separate Laufzeitübersetzung ist unten beschrieben. `google-genai` bleibt für vorhandene Werkzeuge installiert. [Einrichtung und Grenzen](docs/haiku-direct-api-setup.md).
 - Läuft nur auf dem Entwicklungsrechner, nie in der App und nie in einer Edge Function.
 
 ## Datenfluss
@@ -53,7 +53,7 @@ Audio:  pipeline/ → Cloud Text-to-Speech → Bucket audio → App streamt/cach
 Der Client lädt `content.sqlite` einer Sprache (versioniert über `content_releases`) und spielt Updates ohne Änderung an `user.db` ein. Audio-Basis-URL kommt aus der Konfiguration, nicht aus dem Code.
 
 ## Laufzeit-KI
-Nur für nutzergenerierte Inhalte, nur über Edge Functions: `lookup-word`, `translate-sentence`, `sentence-check`. Tageslimits in Tabelle `usage`. Kuratierte Inhalte sind vor dem Release fertig.
+Lokal implementiert, noch nicht deployed: fehlende Wort-/Satzübersetzung → ausdrückliche Nutzeraktion → `RuntimeTranslationClient` mit bestehendem Supabase-Login → `lookup-word`/`translate-sentence` → Auth-Prüfung und atomare Reservierung in `app.usage` → direkte Anthropic-API (`claude-haiku-5-5`). en/pt-BR → de, nur ein Satz und optional die Wortform. Vorhandene Packübersetzungen bleiben offline. Kein Fallback, keine EU-only-Zusage; serverseitiges Secret. `sentence-check` bleibt Entwurf. Nachweise und Abnahme: [Haiku-Laufzeitübersetzungen](docs/haiku-runtime-translations.md).
 
 ## Regeln
 1. Keine Schlüssel in Repo oder App.
@@ -74,3 +74,6 @@ Content-Schema 3 ergänzt `cards.learning`; Schema 1/2 bleibt lesbar. `LearningG
 
 ## Verben-Paket B (10.10.2026)
 Content-Schema 4 und user.db v5 bleiben getrennt. `PracticeItemResolver` verbindet typed Deckziele, exakte lokale Formbindungen und bestehende Zustände; Controller, Provider, Wortliste und Story nutzen diesen Pfad. Domain bleibt Flutter-frei. Übungs- und Wortzahlen werden aus demselben berechtigten Inventar abgeleitet; es gibt keine Counterspalten und keinen zweiten Review-Schreibweg. Nullable lokale Form-/Lexikalmetadaten erhalten die Übbarkeit bei Content-Rückfall. Installationsvalidierung bleibt vor Dateiaustausch. Siehe `docs/irregular-verbs-package-b.md`.
+
+## Textanschluss Paket A (historischer Stand 18.10.2026)
+Der bestehende Offline-Wrapper nutzt `claude-haiku-5-5`, Projekt `sprachlernapp-510508`, EU-Multiregion `eu`, Thinking aus und Effort low. Kein Fallback. SDK-Retries aus; maximal drei kontrollierte Versuche, feste Request-/Gesamtdeadline, vollständige ursprüngliche JSON-Schema-Prüfung lokal. Keine neue Runtime-KI oder Appänderung. Cloudfreischaltung und Modellqualität bleiben ungeprüft; Offline-Nachweise: [Umsetzung](docs/haiku-migration-implementation.md). Die Stapelphase ist beendet; keine neuen Produktionsläufe aus dieser Änderung.

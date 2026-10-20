@@ -1,0 +1,22 @@
+{
+  "editorial_reviews_sha256": "7fb272bd6aa4d70bc532626c237b62eb9ca08db2f1d38aec82d2d3d85a5fc8d6",
+  "format": 2,
+  "history_inventory_sha256": "224b74a2569d575493e0e22b7589d6b7ac7e3bcae0f5f7e8698344b40d98ce09",
+  "internal_test_pack": true,
+  "lang": "en",
+  "local_only": true,
+  "min_reader_version": 5,
+  "pack_json_sha256": "3558b719e5e5919bc891d5a4e5154248ee9f7ae4ca877ad39d3fba60e06e5df8",
+  "parent_release_id": "synthetic-editor-a",
+  "profile_id": "en-legacy-v1",
+  "profile_sha256": "59eec37d0a4f322d666701e00bc1bf4cfb44d19b183b1742d16b443989a505cf",
+  "registry_sha256": "f931ce49a02de2b95703225b84003292cf23689806dbff6d72d45da591c383cf",
+  "required_features": [
+    "immutable-contexts-v1"
+  ],
+  "schema_version": 5,
+  "sha256": "b9ab0147eec6ba39f522b96096019a23a6e9916be0ac2015e9aee86cf3c655a6",
+  "size_bytes": 241664,
+  "translation_lang": "de",
+  "version": "synthetic-story-browser-v1"
+}

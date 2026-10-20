@@ -1,0 +1,740 @@
+{
+  "add": {
+    "dictionary_forms": [],
+    "lemmas": [],
+    "senses": []
+  },
+  "base": {
+    "pack_bytes_sha256": "5fe98c7c183552e5e6ae708bbb765f75dcef21be41f71d094fac806c25d8f554",
+    "pack_canonical_sha256": "5fe98c7c183552e5e6ae708bbb765f75dcef21be41f71d094fac806c25d8f554",
+    "profile_sha256": null,
+    "registry_sha256": "629c6f805448faa443955b6fa87880cdc21347d5663e630d9a5ab6cf32063347",
+    "release_id": "empty-pt-BR",
+    "sqlite_sha256": null,
+    "version": "empty-pt-BR"
+  },
+  "completeness": "draft",
+  "context_sha256": "90c0c4fbd0882aa6d8ce2bf7a4f9c4cd79a27d3ae288c443f379e492cf0e0816",
+  "delivery_id": "90c80649-d2f1-4ec4-ae0c-9f99b1bc21c2",
+  "expected_target_refs": [
+    "ptbr-pilot-slot-01",
+    "ptbr-pilot-slot-02",
+    "ptbr-pilot-slot-03",
+    "ptbr-pilot-slot-04",
+    "ptbr-pilot-slot-05",
+    "ptbr-pilot-slot-06",
+    "ptbr-pilot-slot-07",
+    "ptbr-pilot-slot-08",
+    "ptbr-pilot-slot-09",
+    "ptbr-pilot-slot-10",
+    "ptbr-pilot-slot-11",
+    "ptbr-pilot-slot-12",
+    "ptbr-pilot-slot-13",
+    "ptbr-pilot-slot-14",
+    "ptbr-pilot-slot-15",
+    "ptbr-pilot-slot-16",
+    "ptbr-pilot-slot-17",
+    "ptbr-pilot-slot-18",
+    "ptbr-pilot-slot-19",
+    "ptbr-pilot-slot-20"
+  ],
+  "extensions": {},
+  "format": "sprachapp.editorial-content",
+  "format_version": 4,
+  "lang": "pt-BR",
+  "operations": [
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_deck",
+      "lang": "pt-BR",
+      "op_id": "pilot-deck",
+      "payload": {
+        "cefr_band": "anfaenger",
+        "description_de": "Redaktioneller 20-Ziele-Pilot für Brasilianisches Portugiesisch.",
+        "practice_kind": "ordinary",
+        "ref": "ptbr-allgemeine-sprache",
+        "slug": "allgemeine-sprache",
+        "sort": 1,
+        "title_de": "Allgemeine Sprache"
+      },
+      "reason": "PLANENTWURF: leerer vertikaler Testlauf, keine Freigabe.",
+      "target_ref": "ptbr-allgemeine-sprache"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-01",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-01"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-02",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-02"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-03",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-03"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-04",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-04"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-05",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-05"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-06",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-06"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-07",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-07"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-08",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-08"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-09",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-09"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-10",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-10"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-11",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-11"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-12",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-12"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-13",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-13"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-14",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-14"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-15",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-15"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-16",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-16"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-17",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-17"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-18",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-18"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-19",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-19"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-ptbr-pilot-slot-20",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": null,
+          "introduction_scope": "ordinary",
+          "sense": null,
+          "translation_de": null
+        },
+        "context": {
+          "gap": {
+            "end_pos": null,
+            "start_pos": null
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": null,
+          "tokens": [],
+          "translation_de": null,
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "ptbr-pilot-slot-20"
+    }
+  ],
+  "provenance": [],
+  "purpose": "new_deck",
+  "selection": {
+    "batches": [
+      {
+        "number": 1,
+        "target_refs": [
+          "ptbr-pilot-slot-01",
+          "ptbr-pilot-slot-02",
+          "ptbr-pilot-slot-03",
+          "ptbr-pilot-slot-04",
+          "ptbr-pilot-slot-05",
+          "ptbr-pilot-slot-06",
+          "ptbr-pilot-slot-07",
+          "ptbr-pilot-slot-08",
+          "ptbr-pilot-slot-09",
+          "ptbr-pilot-slot-10",
+          "ptbr-pilot-slot-11",
+          "ptbr-pilot-slot-12",
+          "ptbr-pilot-slot-13",
+          "ptbr-pilot-slot-14",
+          "ptbr-pilot-slot-15",
+          "ptbr-pilot-slot-16",
+          "ptbr-pilot-slot-17",
+          "ptbr-pilot-slot-18",
+          "ptbr-pilot-slot-19",
+          "ptbr-pilot-slot-20"
+        ]
+      }
+    ],
+    "policy": "editor-deck-v1"
+  },
+  "submitted_reviews": [],
+  "translation_lang": "de"
+}

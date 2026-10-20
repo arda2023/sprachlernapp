@@ -1,0 +1,32 @@
+{
+  "before": {
+    "NEXTSTEPS.md": "83fc365289c4471e2ba7cf85e14312ae9fccfa6a4e9a551d0bf73ef9fb30ec3f",
+    "lib/screens/decks/deck_practice_screen.dart": "6d80a8be603146a275bf7dfbd0178077c29892ed2b637c7da75415d31282d148",
+    "lib/screens/decks/widgets/practice_chrome.dart": "408389703d75a4d398a427dbcab641aede77560eca77527f2c7f3868944c158e",
+    "lib/screens/decks/widgets/practice_input.dart": "770c169e510fa5c0933b7d3bc3b38dab4d56b6c0dee18679a19cf4136270f08a",
+    "lib/screens/decks/widgets/practice_sentence.dart": "a48c4ad7518a37fe3618658bc0f299c04b32b5dca522c11a8820fa94408097bd",
+    "test/deck_flow_test.dart": "4e42988857f32463f0ec9b3d885c9c315872277c10c01d045db70de137173bae",
+    "test/learning_ui_device_fixes_test.dart": "9857746c05a590e1625162aa666e8951a5eaf437dfee156dd8ef7b954429d40e",
+    "test/practice_ui_test.dart": "ab48c04303f9bf39c836864c83487ee224862657d5cef2f858ca7d12fefa2855",
+    "assets/content/en/content.sqlite": "0352850bd9352dc876b0ae560da81d1f35f701c91180cd0f08015e042ddcf191",
+    "assets/content/en/content.manifest.json": "d99fca40c08e399f6b0b2917f5411dc2a461785e0ae146c976b5a3ec72fd1815",
+    "pipeline/out/context_quality_applied_v1/pack.json": "b48c224ef0b2538d2b97f77130742b1a0f23df6215e8feb12bec785d8f98560c",
+    "devtools_options.yaml": "e8ba6877169885107d577db47d3e9eb10b32b7aded5959dfc52cae8022a5de84",
+    "test/data/real_pack_test.dart": "1e26c91844fcc7692f08c279b085dc4a66aeb11b4014ce841377ea2ce1358551"
+  },
+  "after": {
+    "NEXTSTEPS.md": "83fc365289c4471e2ba7cf85e14312ae9fccfa6a4e9a551d0bf73ef9fb30ec3f",
+    "lib/screens/decks/deck_practice_screen.dart": "6d80a8be603146a275bf7dfbd0178077c29892ed2b637c7da75415d31282d148",
+    "lib/screens/decks/widgets/practice_chrome.dart": "408389703d75a4d398a427dbcab641aede77560eca77527f2c7f3868944c158e",
+    "lib/screens/decks/widgets/practice_input.dart": "770c169e510fa5c0933b7d3bc3b38dab4d56b6c0dee18679a19cf4136270f08a",
+    "lib/screens/decks/widgets/practice_sentence.dart": "a48c4ad7518a37fe3618658bc0f299c04b32b5dca522c11a8820fa94408097bd",
+    "test/deck_flow_test.dart": "4e42988857f32463f0ec9b3d885c9c315872277c10c01d045db70de137173bae",
+    "test/learning_ui_device_fixes_test.dart": "9857746c05a590e1625162aa666e8951a5eaf437dfee156dd8ef7b954429d40e",
+    "test/practice_ui_test.dart": "ab48c04303f9bf39c836864c83487ee224862657d5cef2f858ca7d12fefa2855",
+    "assets/content/en/content.sqlite": "ebe0063895e7d4dd7c6d0f93855102741fc95eef37485d0aeb76153420229351",
+    "assets/content/en/content.manifest.json": "8794ffa867f689c4b7e1f035d1c04c7a6c1a29e8acceb15ed6cdfe6fcebcc29a",
+    "pipeline/out/context_quality_applied_v1/pack.json": "b48c224ef0b2538d2b97f77130742b1a0f23df6215e8feb12bec785d8f98560c",
+    "devtools_options.yaml": "e8ba6877169885107d577db47d3e9eb10b32b7aded5959dfc52cae8022a5de84",
+    "test/data/real_pack_test.dart": "1e26c91844fcc7692f08c279b085dc4a66aeb11b4014ce841377ea2ce1358551"
+  }
+}

@@ -652,6 +652,8 @@ def export_offline(final, out):
         report['sqlite_counts'] = check_sqlite(out/'content.sqlite', rows)
         require(counts == report['sqlite_counts'], 'SQLite readback mismatch')
         report['sha256'] = hashlib.sha256((out/'content.sqlite').read_bytes()).hexdigest()
+        from sprachpipe.curate import story_authoring_gaps
+        report['story_authoring_gaps'] = story_authoring_gaps(final)
         report['status'] = 'ok'
     finally:
         save(out/'finalization_report.json', report)
@@ -671,10 +673,16 @@ def main(argv=None):
     p.add_argument('--registry', type=Path, default=ROOT/'pipeline/data/words/en.v1.json')
     p.add_argument('--legacy', action='store_true', help='explicit replay of schema-1 editorial artifacts')
     p.add_argument('--finish', type=Path, help='versioned, hash-bound offline completion supplement')
+    p.add_argument('--targeted', type=Path, help='version-1 targeted Schema-4 curation patch')
     a = p.parse_args(argv)
     if a.display_patch and not a.create:
         p.error('--display-patch requires --create')
     try:
+        if a.targeted:
+            require(not (a.single_sentence or a.create or a.legacy or a.finish or a.display_patch), 'targeted mode cannot be combined')
+            from sprachpipe.curate import apply_targeted_patch
+            export_offline(apply_targeted_patch(a.source.read_bytes(), read(a.targeted)), a.out)
+            return 0
         if a.single_sentence or a.create:
             require(not (a.single_sentence and a.create), 'choose transition or create')
             require(not a.out.exists(), 'output directory already exists')

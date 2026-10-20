@@ -7,6 +7,7 @@ import '../../models/home_models.dart';
 import '../../models/word_list_models.dart';
 import '../../models/story_models.dart';
 import '../../domain/srs_state.dart';
+import '../../domain/review_activity.dart';
 import '../../domain/learning_groups.dart';
 import 'database_providers.dart';
 import 'story_learning_providers.dart';
@@ -43,13 +44,10 @@ final learningProgressProvider =
       final now = ref.watch(learningNowProvider);
       final user = await ref.watch(userRepositoryProvider.future);
       final prefs = await user.preferences();
-      final days = <DateTime, Set<String>>{};
-      for (final id in (await user.allCardStates()).keys) {
-        for (final review in await user.reviewsFor(id)) {
-          final at = review.createdAt.toLocal();
-          (days[DateTime(at.year, at.month, at.day)] ??= {}).add(id);
-        }
-      }
+      final days = completedTargetsByDay(await user.activityBetween(
+        DateTime(now.year, now.month, now.day - now.weekday + 1),
+        DateTime(now.year, now.month, now.day + 1),
+      ));
       final today = DateTime(now.year, now.month, now.day);
       final monday = DateTime(now.year, now.month, now.day - now.weekday + 1);
       return (
@@ -107,14 +105,9 @@ final wordListProvider = FutureProvider<List<VocabWord>>((ref) async {
   for (final item in items) {
     final state = states[item.card.id]!;
     final reviews = await user.reviewsFor(item.card.id);
-    final sentence =
-        (reviews.isEmpty
-            ? null
-            : await resolver.historicalSentence(
-                item.card.id,
-                reviews.last.sentenceId,
-              )) ??
-        item.practiceSentence;
+    // Current details follow the active context; review sentence IDs belong
+    // to historical review displays, not this projection.
+    final sentence = item.practiceSentence;
     final seen = reviews.isEmpty
         ? state.createdAt
         : reviews.last.createdAt.toLocal();
@@ -160,6 +153,8 @@ class WordActions {
     bool? inPlaylist,
     String? note,
   }) async {
+    final release = contentTransitionGate.acquire();
+    try {
     final user = await ref.read(userRepositoryProvider.future);
     await user.setCardFlags(
       id,
@@ -168,8 +163,6 @@ class WordActions {
       inPlaylist: inPlaylist,
       note: note,
     );
-    ref.invalidate(wordListProvider);
-    ref.invalidate(vocabBreakdownProvider);
-    ref.invalidate(decksProvider);
+    } finally { release(); }
   }
 }

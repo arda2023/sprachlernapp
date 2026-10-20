@@ -14,6 +14,8 @@ class ProgressRing extends StatelessWidget {
     required this.size,
     this.color,
     this.strokeWidth = 3,
+    this.gapDegrees = 0,
+    this.trackColor,
     this.child,
   });
 
@@ -21,6 +23,13 @@ class ProgressRing extends StatelessWidget {
   final double size;
   final Color? color;
   final double strokeWidth;
+
+  /// Opening at the bottom (0 = full circle). With a gap the ring becomes a
+  /// gauge that fills clockwise from the lower left.
+  final double gapDegrees;
+
+  /// Defaults to Hairline; on coloured cards a translucent white.
+  final Color? trackColor;
   final Widget? child;
 
   @override
@@ -31,8 +40,9 @@ class ProgressRing extends StatelessWidget {
         painter: _RingPainter(
           fraction: fraction.clamp(0.0, 1.0),
           color: color ?? context.appColors.textMuted,
-          trackColor: context.appColors.hairline,
+          trackColor: trackColor ?? context.appColors.hairline,
           strokeWidth: strokeWidth,
+          gap: gapDegrees * math.pi / 180,
         ),
         child: Center(child: child),
       ),
@@ -46,11 +56,13 @@ class _RingPainter extends CustomPainter {
     required this.color,
     required this.trackColor,
     required this.strokeWidth,
+    this.gap = 0,
   });
 
   final double fraction;
   final Color color, trackColor;
   final double strokeWidth;
+  final double gap;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -58,6 +70,23 @@ class _RingPainter extends CustomPainter {
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth;
+    if (gap > 0) {
+      // Gauge: from the lower left over the top to the lower right.
+      final start = math.pi / 2 + gap / 2;
+      final sweep = 2 * math.pi - gap;
+      paint.strokeCap = StrokeCap.round;
+      canvas.drawArc(rect, start, sweep, false, paint..color = trackColor);
+      if (fraction > 0) {
+        canvas.drawArc(
+          rect,
+          start,
+          sweep * fraction,
+          false,
+          paint..color = color,
+        );
+      }
+      return;
+    }
     canvas.drawOval(rect, paint..color = trackColor);
     if (fraction > 0) {
       canvas.drawArc(
@@ -74,6 +103,7 @@ class _RingPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_RingPainter old) =>
+      old.gap != gap ||
       old.fraction != fraction ||
       old.color != color ||
       old.trackColor != trackColor ||

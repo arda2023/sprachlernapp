@@ -303,8 +303,7 @@ class _ClipPlayer extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(12, 20, 12, 8),
         decoration: BoxDecoration(
           color: context.appColors.raisedInk,
-          border: Border.all(color: context.appColors.hairline),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           children: [
@@ -400,7 +399,8 @@ class _OptionCard extends StatelessWidget {
     final (fill, edge, text) = switch (state) {
       _OptionState.idle => (
         context.appColors.raisedInk,
-        context.appColors.hairline,
+        // No outline at rest; only right/wrong get an edge.
+        const Color(0x00000000),
         context.appColors.textPrimary,
       ),
       _OptionState.wrong => (

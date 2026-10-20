@@ -1,0 +1,856 @@
+{
+  "date": "2026-10-17",
+  "project_ref": "yevntxclpchapacqdizm",
+  "cloud_actions": "GET logs/list/download only; no finalize",
+  "deployment": {
+    "id": "1f2df8a3-bde4-47e2-b394-09b60cb839b5",
+    "slug": "content-publish",
+    "version": 3,
+    "status": "ACTIVE",
+    "updated_at": 1792177138067,
+    "verify_jwt": true,
+    "ezbr_sha256": "ac61671216c92fa18ff5fe2950aeaadead01f6226ddb6e3c1c76dbac9edc8237"
+  },
+  "source_files": {
+    "content-publish/index.ts": "31c7d0864115fc4d25a5467ab57a8fdd4b912db2e7d6de082c0dde00616271a0",
+    "_shared/content_distribution.ts": "76caee400d58cddc9d289e2edb214471443841b3187259c2a070b9f7d62dbc81",
+    "_shared/internal_baseline_source.json": "30deb085837505d963c1721e5e36f5acb964702dba43158dd7b3b9628346ec73"
+  },
+  "cloud_logs": [
+    {
+      "cpu_time_used": "2441",
+      "deployment_id": "yevntxclpchapacqdizm_1f2df8a3-bde4-47e2-b394-09b60cb839b5_3",
+      "event_type": "Log",
+      "execution_id": "a01dba54-62ef-45de-8602-1204d1548da3",
+      "execution_time_ms": "",
+      "function_id": "1f2df8a3-bde4-47e2-b394-09b60cb839b5",
+      "memory_used": "",
+      "memory_used.external": "3098659",
+      "memory_used.heap": "76409720",
+      "memory_used.total": "79508379",
+      "reason": "",
+      "region": "eu-central-1",
+      "request.method": "",
+      "request.path": "",
+      "response.status_code": "",
+      "served_by": "supabase-edge-runtime-1.77.0 (compatible with Deno v2.1.4)",
+      "source": "function_logs",
+      "timestamp": "2026-10-16T18:59:34.858000",
+      "version": "3"
+    },
+    {
+      "cpu_time_used": "2441",
+      "deployment_id": "yevntxclpchapacqdizm_1f2df8a3-bde4-47e2-b394-09b60cb839b5_3",
+      "event_type": "Shutdown",
+      "execution_id": "a01dba54-62ef-45de-8602-1204d1548da3",
+      "execution_time_ms": "",
+      "function_id": "1f2df8a3-bde4-47e2-b394-09b60cb839b5",
+      "memory_used": "",
+      "memory_used.external": "3098659",
+      "memory_used.heap": "76409720",
+      "memory_used.total": "79508379",
+      "reason": "CPUTime",
+      "region": "eu-central-1",
+      "request.method": "",
+      "request.path": "",
+      "response.status_code": "",
+      "served_by": "supabase-edge-runtime-1.77.0 (compatible with Deno v2.1.4)",
+      "source": "function_logs",
+      "timestamp": "2026-10-16T18:59:34.858000",
+      "version": "3"
+    },
+    {
+      "cpu_time_used": "",
+      "deployment_id": "yevntxclpchapacqdizm_1f2df8a3-bde4-47e2-b394-09b60cb839b5_3",
+      "event_type": "",
+      "execution_id": "a01dba54-62ef-45de-8602-1204d1548da3",
+      "execution_time_ms": "4572",
+      "function_id": "1f2df8a3-bde4-47e2-b394-09b60cb839b5",
+      "memory_used": "",
+      "memory_used.external": "",
+      "memory_used.heap": "",
+      "memory_used.total": "",
+      "reason": "",
+      "region": "",
+      "request.method": "POST",
+      "request.path": "",
+      "response.status_code": "546",
+      "served_by": "",
+      "source": "function_edge_logs",
+      "timestamp": "2026-10-16T18:59:34.841000",
+      "version": "3"
+    },
+    {
+      "cpu_time_used": "",
+      "deployment_id": "yevntxclpchapacqdizm_1f2df8a3-bde4-47e2-b394-09b60cb839b5_3",
+      "event_type": "Boot",
+      "execution_id": "a01dba54-62ef-45de-8602-1204d1548da3",
+      "execution_time_ms": "",
+      "function_id": "1f2df8a3-bde4-47e2-b394-09b60cb839b5",
+      "memory_used": "",
+      "memory_used.external": "",
+      "memory_used.heap": "",
+      "memory_used.total": "",
+      "reason": "",
+      "region": "eu-central-1",
+      "request.method": "",
+      "request.path": "",
+      "response.status_code": "",
+      "served_by": "supabase-edge-runtime-1.77.0 (compatible with Deno v2.1.4)",
+      "source": "function_logs",
+      "timestamp": "2026-10-16T18:59:30.778000",
+      "version": "3"
+    }
+  ],
+  "local_full_handler": {
+    "image": "public.ecr.aws/supabase/edge-runtime:v1.77.1",
+    "limits": {
+      "memory_mib": 256,
+      "cpu_soft_ms": 1000,
+      "cpu_hard_ms": 2000,
+      "wall_ms": 150000
+    },
+    "synthetic_backends": true,
+    "cloud_pass": false,
+    "bundle_hashes": {
+      "content.sqlite": "ac87b43105b9305579a7fff38de0343f874cbb19e533e1bebbed8942d975acdd",
+      "pack.json": "098f01abacb11ef2aa1601ff10f11d185f690cf688e515ae62343d344561d8c9",
+      "registry.json": "039cb691709f0463995a5ee4773a490290109445b686eb8d22ba117001d715ad",
+      "history_inventory.json": "d710fe23ba73ce153992e1a09e32ec227430760dcfd06b391d7b0f5dd5668ff2",
+      "editorial_reviews.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "provenance.json": "52334f02ea98ee31c7c0ddcfa6347edce8a19147117cc69bbb3bc58ef878fed5",
+      "finalization_report.json": "4462d22b9f2d013f623dcd65c9749b3a39d843666d81442555f9e4d57952c3b1",
+      "content.manifest.json": "88cd1f4178e87fbf6977ee604928710997bc417efe20812eda136a7d3c97cd86",
+      "reader_report.json": "7500df59ddf2cdd858a8fa0292841ad738b38b970db61b9355b2d1f3c622c608"
+    },
+    "runs": {
+      "oneshot": {
+        "calls": [
+          {
+            "call": 1,
+            "http_status": 200,
+            "wall_ms": 985.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 2,
+            "http_status": 200,
+            "wall_ms": 437.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 3,
+            "http_status": 200,
+            "wall_ms": 63.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 4,
+            "http_status": 200,
+            "wall_ms": 156.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 5,
+            "http_status": 200,
+            "wall_ms": 63.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 6,
+            "http_status": 200,
+            "wall_ms": 62.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 7,
+            "http_status": 200,
+            "wall_ms": 63.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 8,
+            "http_status": 200,
+            "wall_ms": 78.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 9,
+            "http_status": 200,
+            "wall_ms": 125.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 10,
+            "http_status": 200,
+            "wall_ms": 1375.0,
+            "state": "ready",
+            "code": null
+          }
+        ],
+        "events": [
+          {
+            "timestamp": "2026-10-17T08:22:54.107Z",
+            "event_type": "Boot",
+            "event": {
+              "boot_time": 626
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "611e4d7b-2bf2-4b60-8454-1575f56d400b",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:54.452Z",
+            "event_type": "Shutdown",
+            "event": {
+              "reason": "EarlyDrop",
+              "cpu_time_used": 110,
+              "memory_used": {
+                "total": 20476645,
+                "heap": 8660384,
+                "external": 11816261,
+                "mem_check_captured": {
+                  "current": {
+                    "totalHeapSize": 11444224,
+                    "totalHeapSizeExecutable": 524288,
+                    "totalPhysicalSize": 11313152,
+                    "totalAvailableSize": 259766264,
+                    "totalGlobalHandlesSize": 24576,
+                    "usedGlobalHandlesSize": 20736,
+                    "usedHeapSize": 8660384,
+                    "mallocedMemory": 295032,
+                    "externalMemory": 11816261,
+                    "peakMallocedMemory": 4351200
+                  },
+                  "exceeded": false
+                }
+              }
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "611e4d7b-2bf2-4b60-8454-1575f56d400b",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:54.495Z",
+            "event_type": "Boot",
+            "event": {
+              "boot_time": 43
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "deec540d-95fb-4d39-b846-d98f02437143",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:54.874Z",
+            "event_type": "Shutdown",
+            "event": {
+              "reason": "EarlyDrop",
+              "cpu_time_used": 105,
+              "memory_used": {
+                "total": 22817133,
+                "heap": 8772424,
+                "external": 14044709,
+                "mem_check_captured": {
+                  "current": {
+                    "totalHeapSize": 11182080,
+                    "totalHeapSizeExecutable": 524288,
+                    "totalPhysicalSize": 11051008,
+                    "totalAvailableSize": 259654232,
+                    "totalGlobalHandlesSize": 24576,
+                    "usedGlobalHandlesSize": 20736,
+                    "usedHeapSize": 8772424,
+                    "mallocedMemory": 295032,
+                    "externalMemory": 14044709,
+                    "peakMallocedMemory": 4560216
+                  },
+                  "exceeded": false
+                }
+              }
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "deec540d-95fb-4d39-b846-d98f02437143",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:54.910Z",
+            "event_type": "Boot",
+            "event": {
+              "boot_time": 35
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "99edbe22-af86-4eb8-bba2-dd30669586ab",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:54.938Z",
+            "event_type": "Shutdown",
+            "event": {
+              "reason": "EarlyDrop",
+              "cpu_time_used": 16,
+              "memory_used": {
+                "total": 11429499,
+                "heap": 8066928,
+                "external": 3362571,
+                "mem_check_captured": {
+                  "current": {
+                    "totalHeapSize": 11182080,
+                    "totalHeapSizeExecutable": 524288,
+                    "totalPhysicalSize": 10534912,
+                    "totalAvailableSize": 260359736,
+                    "totalGlobalHandlesSize": 24576,
+                    "usedGlobalHandlesSize": 20736,
+                    "usedHeapSize": 8066928,
+                    "mallocedMemory": 295032,
+                    "externalMemory": 3362571,
+                    "peakMallocedMemory": 270432
+                  },
+                  "exceeded": false
+                }
+              }
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "99edbe22-af86-4eb8-bba2-dd30669586ab",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:54.997Z",
+            "event_type": "Boot",
+            "event": {
+              "boot_time": 44
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "1d8de501-a585-4b8c-aa1e-a744675d8dd7",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:55.095Z",
+            "event_type": "Shutdown",
+            "event": {
+              "reason": "EarlyDrop",
+              "cpu_time_used": 41,
+              "memory_used": {
+                "total": 17921053,
+                "heap": 8528920,
+                "external": 9392133,
+                "mem_check_captured": {
+                  "current": {
+                    "totalHeapSize": 11444224,
+                    "totalHeapSizeExecutable": 524288,
+                    "totalPhysicalSize": 11313152,
+                    "totalAvailableSize": 259897728,
+                    "totalGlobalHandlesSize": 24576,
+                    "usedGlobalHandlesSize": 20736,
+                    "usedHeapSize": 8528920,
+                    "mallocedMemory": 295032,
+                    "externalMemory": 9392133,
+                    "peakMallocedMemory": 4560216
+                  },
+                  "exceeded": false
+                }
+              }
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "1d8de501-a585-4b8c-aa1e-a744675d8dd7",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:55.135Z",
+            "event_type": "Boot",
+            "event": {
+              "boot_time": 40
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "43aed2d8-256e-4bb1-814f-0ed8786fc5f2",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:55.154Z",
+            "event_type": "Shutdown",
+            "event": {
+              "reason": "EarlyDrop",
+              "cpu_time_used": 11,
+              "memory_used": {
+                "total": 11547822,
+                "heap": 8178944,
+                "external": 3368878,
+                "mem_check_captured": {
+                  "current": {
+                    "totalHeapSize": 9609216,
+                    "totalHeapSizeExecutable": 262144,
+                    "totalPhysicalSize": 9220096,
+                    "totalAvailableSize": 261296344,
+                    "totalGlobalHandlesSize": 24576,
+                    "usedGlobalHandlesSize": 20736,
+                    "usedHeapSize": 8178944,
+                    "mallocedMemory": 295032,
+                    "externalMemory": 3368878,
+                    "peakMallocedMemory": 246024
+                  },
+                  "exceeded": false
+                }
+              }
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "43aed2d8-256e-4bb1-814f-0ed8786fc5f2",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:55.203Z",
+            "event_type": "Boot",
+            "event": {
+              "boot_time": 40
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "0b03ddca-9294-4f58-b230-0504d434afe4",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:55.222Z",
+            "event_type": "Shutdown",
+            "event": {
+              "reason": "EarlyDrop",
+              "cpu_time_used": 11,
+              "memory_used": {
+                "total": 11549598,
+                "heap": 8180256,
+                "external": 3369342,
+                "mem_check_captured": {
+                  "current": {
+                    "totalHeapSize": 9609216,
+                    "totalHeapSizeExecutable": 262144,
+                    "totalPhysicalSize": 9220096,
+                    "totalAvailableSize": 261295032,
+                    "totalGlobalHandlesSize": 24576,
+                    "usedGlobalHandlesSize": 20736,
+                    "usedHeapSize": 8180256,
+                    "mallocedMemory": 295032,
+                    "externalMemory": 3369342,
+                    "peakMallocedMemory": 246024
+                  },
+                  "exceeded": false
+                }
+              }
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "0b03ddca-9294-4f58-b230-0504d434afe4",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:55.263Z",
+            "event_type": "Boot",
+            "event": {
+              "boot_time": 41
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "78f67acb-41e4-45ae-b33f-2228cd599832",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:55.281Z",
+            "event_type": "Shutdown",
+            "event": {
+              "reason": "EarlyDrop",
+              "cpu_time_used": 10,
+              "memory_used": {
+                "total": 11551552,
+                "heap": 8181736,
+                "external": 3369816,
+                "mem_check_captured": {
+                  "current": {
+                    "totalHeapSize": 9609216,
+                    "totalHeapSizeExecutable": 262144,
+                    "totalPhysicalSize": 9220096,
+                    "totalAvailableSize": 261293552,
+                    "totalGlobalHandlesSize": 24576,
+                    "usedGlobalHandlesSize": 20736,
+                    "usedHeapSize": 8181736,
+                    "mallocedMemory": 295032,
+                    "externalMemory": 3369816,
+                    "peakMallocedMemory": 246024
+                  },
+                  "exceeded": false
+                }
+              }
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "78f67acb-41e4-45ae-b33f-2228cd599832",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:55.344Z",
+            "event_type": "Boot",
+            "event": {
+              "boot_time": 42
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "ff2ebafa-f431-4569-aade-51e935779a47",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:55.362Z",
+            "event_type": "Shutdown",
+            "event": {
+              "reason": "EarlyDrop",
+              "cpu_time_used": 11,
+              "memory_used": {
+                "total": 11553286,
+                "heap": 8182984,
+                "external": 3370302,
+                "mem_check_captured": {
+                  "current": {
+                    "totalHeapSize": 9609216,
+                    "totalHeapSizeExecutable": 262144,
+                    "totalPhysicalSize": 9220096,
+                    "totalAvailableSize": 261292304,
+                    "totalGlobalHandlesSize": 24576,
+                    "usedGlobalHandlesSize": 20736,
+                    "usedHeapSize": 8182984,
+                    "mallocedMemory": 295032,
+                    "externalMemory": 3370302,
+                    "peakMallocedMemory": 246024
+                  },
+                  "exceeded": false
+                }
+              }
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "ff2ebafa-f431-4569-aade-51e935779a47",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:55.405Z",
+            "event_type": "Boot",
+            "event": {
+              "boot_time": 42
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "18cb318e-bf06-45b9-8f22-0007811a6d0e",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:55.495Z",
+            "event_type": "Shutdown",
+            "event": {
+              "reason": "EarlyDrop",
+              "cpu_time_used": 36,
+              "memory_used": {
+                "total": 15835163,
+                "heap": 8407920,
+                "external": 7427243,
+                "mem_check_captured": {
+                  "current": {
+                    "totalHeapSize": 11182080,
+                    "totalHeapSizeExecutable": 524288,
+                    "totalPhysicalSize": 11051008,
+                    "totalAvailableSize": 260018728,
+                    "totalGlobalHandlesSize": 24576,
+                    "usedGlobalHandlesSize": 20736,
+                    "usedHeapSize": 8407920,
+                    "mallocedMemory": 295032,
+                    "externalMemory": 7427243,
+                    "peakMallocedMemory": 4527440
+                  },
+                  "exceeded": false
+                }
+              }
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "18cb318e-bf06-45b9-8f22-0007811a6d0e",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:55.535Z",
+            "event_type": "Boot",
+            "event": {
+              "boot_time": 39
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "090a31e2-86dc-4384-aac2-a67b8c65f434",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:22:56.872Z",
+            "event_type": "Shutdown",
+            "event": {
+              "reason": "EarlyDrop",
+              "cpu_time_used": 1083,
+              "memory_used": {
+                "total": 78518173,
+                "heap": 75414800,
+                "external": 3103373,
+                "mem_check_captured": {
+                  "current": {
+                    "totalHeapSize": 78573568,
+                    "totalHeapSizeExecutable": 524288,
+                    "totalPhysicalSize": 78442496,
+                    "totalAvailableSize": 291834608,
+                    "totalGlobalHandlesSize": 24576,
+                    "usedGlobalHandlesSize": 20736,
+                    "usedHeapSize": 75414800,
+                    "mallocedMemory": 2113632,
+                    "externalMemory": 3103373,
+                    "peakMallocedMemory": 4765072
+                  },
+                  "exceeded": false
+                }
+              }
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "090a31e2-86dc-4384-aac2-a67b8c65f434",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          }
+        ]
+      },
+      "per_worker": {
+        "calls": [
+          {
+            "call": 1,
+            "http_status": 200,
+            "wall_ms": 953.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 2,
+            "http_status": 200,
+            "wall_ms": 359.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 3,
+            "http_status": 200,
+            "wall_ms": 47.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 4,
+            "http_status": 200,
+            "wall_ms": 78.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 5,
+            "http_status": 200,
+            "wall_ms": 0.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 6,
+            "http_status": 200,
+            "wall_ms": 32.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 7,
+            "http_status": 200,
+            "wall_ms": 31.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 8,
+            "http_status": 200,
+            "wall_ms": 16.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 9,
+            "http_status": 200,
+            "wall_ms": 78.0,
+            "state": "verifying",
+            "code": null
+          },
+          {
+            "call": 10,
+            "http_status": 200,
+            "wall_ms": 1343.0,
+            "state": "ready",
+            "code": null
+          }
+        ],
+        "events": [
+          {
+            "timestamp": "2026-10-17T08:22:59.765Z",
+            "event_type": "Boot",
+            "event": {
+              "boot_time": 618
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "31027545-8286-429e-9b19-e56f3a433060",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          },
+          {
+            "timestamp": "2026-10-17T08:23:02.076Z",
+            "event_type": "Shutdown",
+            "event": {
+              "reason": "EarlyDrop",
+              "cpu_time_used": 1326,
+              "memory_used": {
+                "total": 78862791,
+                "heap": 75759408,
+                "external": 3103383,
+                "mem_check_captured": {
+                  "current": {
+                    "totalHeapSize": 78049280,
+                    "totalHeapSizeExecutable": 524288,
+                    "totalPhysicalSize": 77815808,
+                    "totalAvailableSize": 192606104,
+                    "totalGlobalHandlesSize": 24576,
+                    "usedGlobalHandlesSize": 20736,
+                    "usedHeapSize": 75766248,
+                    "mallocedMemory": 2113632,
+                    "externalMemory": 3103383,
+                    "peakMallocedMemory": 4556056
+                  },
+                  "exceeded": false
+                }
+              }
+            },
+            "metadata": {
+              "service_path": "/work/functions/content-publish",
+              "execution_id": "31027545-8286-429e-9b19-e56f3a433060",
+              "otel_attributes": {
+                "edge_runtime.worker.kind": "user"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "old_harness_repeat": {
+    "last_call": {
+      "call": 10,
+      "http_status": 200,
+      "wall_ms": 1344.0,
+      "state": "ready",
+      "error": null
+    },
+    "last_shutdown": {
+      "reason": "EarlyDrop",
+      "cpu_time_used": 1090,
+      "memory_used": {
+        "total": 78685000,
+        "heap": 75646904,
+        "external": 3038096,
+        "mem_check_captured": {
+          "current": {
+            "totalHeapSize": 78573568,
+            "totalHeapSizeExecutable": 524288,
+            "totalPhysicalSize": 78442496,
+            "totalAvailableSize": 291602160,
+            "totalGlobalHandlesSize": 24576,
+            "usedGlobalHandlesSize": 20736,
+            "usedHeapSize": 75646904,
+            "mallocedMemory": 2113632,
+            "externalMemory": 3038096,
+            "peakMallocedMemory": 4732296
+          },
+          "exceeded": false
+        }
+      }
+    }
+  },
+  "cloud_pass": false,
+  "cloud_reason": "CPUTime",
+  "runtime_code_changed": false
+}

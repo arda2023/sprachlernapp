@@ -117,7 +117,19 @@ COLUMNS['form_targets'] = [('id', 'text'), ('lang', 'text'), ('sense_id', 'text'
 COLUMNS['deck_practice_targets'] = [('id', 'text'), ('deck_id', 'text'), ('form_target_id', 'text'), ('position', 'integer'), ('removed_in', 'text'), ('replaced_by', 'text')]
 TABLE_ORDER = list(COLUMNS)
 
+SCHEMA4_COLUMNS = {t: list(c) for t, c in COLUMNS.items()}
+COLUMNS['sentences'].extend([('root_sentence_id', 'text'), ('revision_sha256', 'text')])
+COLUMNS['sentence_tokens'].extend([('context_gloss_de', 'text'), ('context_snapshot', 'jsonb')])
+COLUMNS['story_context_corrections'] = [
+    ('id','text'), ('lang','text'), ('identity_key','text'), ('source_key','text'),
+    ('previous_fingerprint','text'), ('next_fingerprint','text'),
+    ('previous_revision','text'), ('next_revision','text'),
+    ('previous_context','jsonb'), ('next_context','jsonb'),
+    ('introduced_in','text'), ('reason','text')]
+TABLE_ORDER = list(COLUMNS)
+
+
 def columns_for(version):
-    if version not in (1, 2, 3, 4):
+    if version not in (1, 2, 3, 4, 5):
         raise ValueError(f"unsupported content schema {version}")
-    return COLUMNS if version == 4 else LEGACY_COLUMNS
+    return COLUMNS if version == 5 else SCHEMA4_COLUMNS if version == 4 else LEGACY_COLUMNS

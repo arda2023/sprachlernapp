@@ -1,0 +1,21 @@
+{
+  "id": "pt-BR-editorial-v1",
+  "lang": "pt-BR",
+  "translation_lang": "de",
+  "model": "spacy.blank.pt",
+  "model_version": "3.8.16",
+  "tokenizer_sha256": "b528e0528ca541b2815e374dbec35bdbc4574141e7683b23b85384423e782317",
+  "normalization": "NFC-lower-apostrophe-v1",
+  "answer_policy": "strict-accents-target-alternative-form-typo-wrong-v1",
+  "allowed_functions": [],
+  "practice_kinds": [
+    "ordinary"
+  ],
+  "editorial_policy": "manual-pt-BR-editorial-v1",
+  "frequency_policy": "manual-editorial-no-zipf-v1",
+  "automatic_grammar": false,
+  "automatic_frequency": false,
+  "max_words": 14,
+  "max_subclauses_editorial": 1,
+  "sentence_policy": "one-editorially-confirmed-sentence-v1"
+}

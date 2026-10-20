@@ -2,12 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'domain/preferences.dart';
+import 'presentation/providers/database_providers.dart';
+import 'presentation/providers/content_update_provider.dart';
 import 'presentation/providers/preferences_provider.dart';
+import 'presentation/providers/reading_providers.dart';
+import 'presentation/providers/streak_providers.dart';
 import 'screens/app_shell.dart';
 import 'theme/app_theme.dart';
 
 void main() {
-  runApp(const ProviderScope(child: SprachApp()));
+  runApp(
+    ProviderScope(
+      overrides: [
+        celebrationMarksProvider.overrideWith(
+          (ref) => FileCelebrationMarks(
+            ref.watch(selectedContentLanguageProvider).asData?.value ?? 'en',
+          ),
+        ),
+        readingStoreProvider.overrideWith(
+          (ref) => FileJsonStore(
+            'reading_progress_${ref.watch(selectedContentLanguageProvider).asData?.value ?? 'en'}',
+          ),
+        ),
+        importStoreProvider.overrideWith(
+          (ref) => FileJsonStore(
+            'imported_texts_${ref.watch(selectedContentLanguageProvider).asData?.value ?? 'en'}',
+          ),
+        ),
+      ],
+      child: const SprachApp(),
+    ),
+  );
 }
 
 class SprachApp extends ConsumerWidget {
@@ -15,6 +40,7 @@ class SprachApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(contentUpdateProvider);
     final motif =
         ref.watch(preferencesProvider).value?.motif ?? AppMotif.automatic;
     return MaterialApp(

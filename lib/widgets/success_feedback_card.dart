@@ -31,8 +31,7 @@ class SuccessFeedbackCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: context.appColors.raisedInk,
-        border: Border.all(color: context.appColors.hairline),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

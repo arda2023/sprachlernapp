@@ -104,7 +104,7 @@ def check_preconditions(work: dict, curation: dict, inventory, cfg: dict) -> dic
     c = cfg["llm"]
     for model_key, _ in CALLS.values():
         try:
-            model_price(cfg["prices"], c[model_key])
+            model_price(cfg["prices"], c[model_key], provider=c["provider"])
         except LlmError as e:
             raise PreconditionError(str(e)) from None
     tokenize("Local spaCy check.")
@@ -131,7 +131,7 @@ def cost_upper_bound(cfg: dict, work: dict) -> dict:
     out = {}
     for kind, n in sorted(calls.items()):
         model_key, tokens_key = CALLS[kind]
-        each = cost_usd(model_price(cfg["prices"], c[model_key]),
+        each = cost_usd(model_price(cfg["prices"], c[model_key], provider=c["provider"]),
                         prompt_chars.get(kind, 8000) // 2 + 1,
                         c["max_output_tokens"][tokens_key], 0)
         out[kind] = {"calls": n, "max_usd_each": round(each, 6), "max_usd": round(n * each, 6)}

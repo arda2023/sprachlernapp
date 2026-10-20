@@ -103,12 +103,8 @@ class NewsCard extends StatelessWidget {
               '${article.readingMinutes} Minuten Lesezeit, '
               'Niveau ${article.level}',
           excludeSemantics: true,
-          child: Container(
+          child: SizedBox(
             height: height,
-            foregroundDecoration: BoxDecoration(
-              border: Border.all(color: context.appColors.hairline),
-              borderRadius: radius,
-            ),
             child: ClipRRect(
               borderRadius: radius,
               child: Column(
@@ -125,7 +121,6 @@ class NewsCard extends StatelessWidget {
                       ),
                     },
                   ),
-                  Container(height: 1, color: context.appColors.hairline),
                   Expanded(
                     child: ColoredBox(
                       color: context.appColors.raisedInk,

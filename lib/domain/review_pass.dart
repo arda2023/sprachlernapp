@@ -3,6 +3,7 @@
 import 'answer_check.dart';
 import 'content.dart';
 import 'leitner.dart';
+import 'language_profile.dart';
 import 'srs_state.dart';
 
 /// What one checked input did. [message] is the content-specific hint text
@@ -34,7 +35,9 @@ class ReviewPass {
     required this.mode,
     required this.startedAt,
     this.logged = true,
-  }) : boxBefore = state?.box ?? 0,
+  }) : profile = ContentLanguageProfile.forLanguage(item.card.lang) ??
+           (throw ArgumentError('Nicht unterstützte Lernsprache: ${item.card.lang}')),
+       boxBefore = state?.box ?? 0,
        dueAtBefore = state?.dueAt {
     if (sentence.cardId != item.card.id) {
       throw ArgumentError(
@@ -49,6 +52,7 @@ class ReviewPass {
 
   /// Pass id, stored as `review_log.id`; storing it twice is a no-op.
   final String id;
+  final ContentLanguageProfile profile;
   final PracticeItem item;
   final CardSentence sentence;
   final ReviewMode mode;
@@ -93,6 +97,7 @@ class ReviewPass {
     final verdict = evaluateAnswer(
       input,
       target: card.form,
+      profile: profile,
       alternatives: sentence.validAlternatives,
       otherFormsOfLemma: item.otherFormsOfLemma,
       includeDiacritics: includeDiacritics,

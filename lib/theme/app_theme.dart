@@ -39,6 +39,19 @@ class AppPalette {
   Color get playback => light ? const Color(0xFFE6EFF8) : AppColors.playback;
   Color get newsKicker =>
       light ? const Color(0xFF78653F) : AppColors.newsKicker;
+
+  // Redesign (20.10.2026): Home progress tiles, one colour per measure.
+  Color get progressBuilding =>
+      light ? const Color(0xFF2F7FE8) : const Color(0xFF5AA2FF);
+  Color get progressMastered =>
+      light ? const Color(0xFF8A4FE0) : const Color(0xFFA77BFF);
+
+  /// Also the daily-goal target once the goal is reached.
+  Color get progressWords =>
+      light ? const Color(0xFF1FA463) : const Color(0xFF34C77B);
+
+  /// Highlighted tile and its popover; deep enough for white text.
+  Color get popover => const Color(0xFFE26C00);
 }
 
 abstract final class AppColors {
@@ -185,10 +198,11 @@ ThemeData buildAppTheme({Brightness brightness = Brightness.dark}) {
       elevation: 0,
       modalElevation: 0,
       modalBarrierColor: colors.nightPage.withValues(alpha: 0.7),
-      dragHandleColor: colors.iconOff,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: colors.hairline),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+      // Redesign: no visible grabber line; the space stays as top padding.
+      dragHandleColor: Colors.transparent,
+      // Redesign: no outlines; sheets separate by tone.
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
     ),
     snackBarTheme: SnackBarThemeData(
@@ -196,10 +210,7 @@ ThemeData buildAppTheme({Brightness brightness = Brightness.dark}) {
       contentTextStyle: AppType.chrome(),
       behavior: SnackBarBehavior.floating,
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: colors.hairline),
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     ),
     splashFactory: NoSplash.splashFactory,
     highlightColor: Colors.transparent,

@@ -1,0 +1,6 @@
+# Historical authoring deliveries contain duplicate source trees, not runtime code.
+/*_batch_*/
+/irregular_verbs_*_lieferung/
+/editorial_review/
+/published-baseline-transfer/
+/docs/evidence/

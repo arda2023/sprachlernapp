@@ -87,7 +87,7 @@ void main() {
       find.bySemanticsLabel('0 von 5 Übungen gesehen, 0 Übungen gemeistert'),
       findsOneWidget,
     );
-    await tester.tap(find.text('Lerne mit diesem Stapel'));
+    await tester.tap(find.text('Mit diesem Stapel üben'));
     await tester.pumpAndSettle();
     expect(find.text('Mia geht nach Hause.'), findsOneWidget);
     expect(find.text('Verb, 3. Person Singular'), findsOneWidget);
@@ -134,10 +134,7 @@ void main() {
         findsOneWidget,
       );
       expect(gap(tester).hintText, isNull);
-      expect(
-        gap(tester).fillColor,
-        AppColors.memoryLevel2.withValues(alpha: .12),
-      );
+      expect(gap(tester).fillColor, AppColors.errorTint);
       expect(gap(tester).filled, isTrue);
       expect(
         tester.widget<TextField>(find.byType(TextField)).controller!.text,
@@ -426,7 +423,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Lerne mit diesem Stapel'));
+      await tester.tap(find.text('Mit diesem Stapel üben'));
       await tester.pumpAndSettle();
       await answer(tester, 'walks');
       await next(tester);
@@ -438,7 +435,7 @@ void main() {
       expect(find.byType(DeckDetailsScreen), findsOneWidget);
       expect(user.records, hasLength(2));
       expect(user.states['deck-0/3']!.box, 0);
-      await tester.tap(find.text('Lerne mit diesem Stapel'));
+      await tester.tap(find.text('Mit diesem Stapel üben'));
       await tester.pumpAndSettle();
       expect(find.text('Verb, Vergangenheit'), findsOneWidget);
       expect(find.textContaining('passt hier auch'), findsNothing);

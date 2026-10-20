@@ -1,0 +1,200 @@
+{
+  "summary": {
+    "changed_count": 27,
+    "affected_count": 0,
+    "changed_files": 11,
+    "risk_level": "low"
+  },
+  "changed_symbols": [
+    {
+      "id": "Section:NEXTSTEPS.md:L1:NEXTSTEPS",
+      "name": "NEXTSTEPS",
+      "type": "Section",
+      "filePath": "NEXTSTEPS.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:NEXTSTEPS.md:L3:Erledigt",
+      "name": "Erledigt",
+      "type": "Section",
+      "filePath": "NEXTSTEPS.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:NEXTSTEPS.md:L10:Dateien und Tests",
+      "name": "Dateien und Tests",
+      "type": "Section",
+      "filePath": "NEXTSTEPS.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:NEXTSTEPS.md:L19:Abweichungen und offen",
+      "name": "Abweichungen und offen",
+      "type": "Section",
+      "filePath": "NEXTSTEPS.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:ROOT",
+      "name": "ROOT",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:source_path",
+      "name": "source_path",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:out",
+      "name": "out",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:patch",
+      "name": "patch",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:source",
+      "name": "source",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:after",
+      "name": "after",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:counts",
+      "name": "counts",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:version",
+      "name": "version",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:old_sid",
+      "name": "old_sid",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:new_sid",
+      "name": "new_sid",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:contexts",
+      "name": "contexts",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:changes",
+      "name": "changes",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:old_gaps",
+      "name": "old_gaps",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:new_gaps",
+      "name": "new_gaps",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:conn",
+      "name": "conn",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:indexes",
+      "name": "indexes",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:finalization",
+      "name": "finalization",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/context-quality-applied-v1/audit.py:result",
+      "name": "result",
+      "type": "Variable",
+      "filePath": "docs/evidence/context-quality-applied-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:test/data/context_quality_applied_test.dart:retired",
+      "name": "retired",
+      "type": "Variable",
+      "filePath": "test/data/context_quality_applied_test.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:test/data/context_quality_applied_test.dart:keep",
+      "name": "keep",
+      "type": "Variable",
+      "filePath": "test/data/context_quality_applied_test.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:test/data/context_quality_applied_test.dart:like",
+      "name": "like",
+      "type": "Variable",
+      "filePath": "test/data/context_quality_applied_test.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:test/data/context_quality_applied_test.dart:output",
+      "name": "output",
+      "type": "Variable",
+      "filePath": "test/data/context_quality_applied_test.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:test/data/context_quality_applied_test.dart:main",
+      "name": "main",
+      "type": "Function",
+      "filePath": "test/data/context_quality_applied_test.dart",
+      "change_type": "touched"
+    }
+  ],
+  "affected_processes": []
+}

@@ -1,0 +1,211 @@
+{
+  "automatic_frequency": false,
+  "automatic_grammar": false,
+  "blockers": [
+    "empty target slots are not content",
+    "manual linguistic review required",
+    "mobile language switch deferred to increment 2"
+  ],
+  "contract_id": "portuguese-authoring-contract-v1",
+  "editorial_policy": "manual-pt-BR-editorial-v1",
+  "enums": {
+    "alternatives_pilot": [],
+    "binding_status_complete": [
+      "confirmed"
+    ],
+    "cefr_band_pilot": [
+      "anfaenger"
+    ],
+    "pos": [
+      "ADJ",
+      "ADP",
+      "ADV",
+      "AUX",
+      "CCONJ",
+      "DET",
+      "INTJ",
+      "NOUN",
+      "NUM",
+      "PART",
+      "PRON",
+      "PROPN",
+      "SCONJ",
+      "VERB"
+    ],
+    "provenance_kind_pilot": [
+      "manual"
+    ]
+  },
+  "generated_by_import_materialization": [
+    "content IDs",
+    "singleton learning group",
+    "owner bindings",
+    "positions",
+    "sentence refs",
+    "accepted=[form]",
+    "context snapshots"
+  ],
+  "language": {
+    "display_name": "Portugiesisch (Brasilien)",
+    "lang": "pt-BR",
+    "name_native": "Português do Brasil",
+    "translation_lang": "de"
+  },
+  "language_creation": {
+    "language_definition_field_supported": false,
+    "workflow": [
+      "create_language",
+      "export_template",
+      "import_as_new_draft"
+    ]
+  },
+  "never_guess": [
+    "existing IDs",
+    "existing sense bindings",
+    "base hashes",
+    "profile hash",
+    "editorial approval"
+  ],
+  "offsets": {
+    "contiguous": true,
+    "current_importer_fills_missing_offsets": false,
+    "interval": "[start_pos,end_pos)",
+    "line_endings": "LF",
+    "normalization": "NFC",
+    "target_occurrences": 1,
+    "unit": "Unicode code points"
+  },
+  "profile": {
+    "id": "pt-BR-editorial-v1",
+    "implemented": true,
+    "sha256": "7c59364c0d1ef562ee5a6a679b7d895e0ebec6bf2ad47d8eae56afdcba87fe32"
+  },
+  "required_fields": {
+    "card": [
+      "form",
+      "sense",
+      "translation_de",
+      "cefr_band",
+      "introduction_scope"
+    ],
+    "context": [
+      "text",
+      "translation_de",
+      "gap",
+      "tokens",
+      "valid_alternatives",
+      "reason"
+    ],
+    "dictionary_form": [
+      "form",
+      "sense",
+      "gloss_de",
+      "rank"
+    ],
+    "lemma": [
+      "ref",
+      "lemma",
+      "pos"
+    ],
+    "operation": [
+      "op_id",
+      "kind",
+      "lang",
+      "target_ref",
+      "expect",
+      "payload",
+      "reason"
+    ],
+    "sense": [
+      "ref",
+      "lemma",
+      "sense_key",
+      "gloss_de",
+      "definition_de"
+    ],
+    "token": [
+      "idx",
+      "surface",
+      "start_pos",
+      "end_pos"
+    ],
+    "word_token_additionally": [
+      "lemma",
+      "sense",
+      "context_gloss_de",
+      "binding_status"
+    ]
+  },
+  "scope": {
+    "fill_required": false,
+    "identity_function": null,
+    "later_approximate_targets": 160,
+    "pilot_targets": 20,
+    "practice_kind": "ordinary",
+    "stories_required": false
+  },
+  "status": "AUTHORING_CONTRACT_IMPLEMENTED_CONTENT_REVIEW_OPEN",
+  "transport": {
+    "current_reader_accepts_draft": true,
+    "current_release_supported": true,
+    "format": "sprachapp.editorial-content",
+    "format_version": 4,
+    "release_requires_complete_content_and_local_review": true
+  },
+  "xlsx": {
+    "meta_columns": [
+      "key",
+      "value_json"
+    ],
+    "mode": "full",
+    "payload_shape": {
+      "fields": {},
+      "present": []
+    },
+    "record_columns": [
+      "_table",
+      "_index",
+      "payload_json"
+    ],
+    "table_sheets": {
+      "card_sentences": "Luecken",
+      "cards": "Ziele",
+      "decks": "Stapel",
+      "dictionary_forms": "Formglossen",
+      "lemmas": "Lemmas",
+      "operations": "Operationen",
+      "provenance": "Herkunft",
+      "senses": "Bedeutungen",
+      "sentence_tokens": "Tokens",
+      "sentences": "Saetze"
+    },
+    "version": 1,
+    "visible_columns": [
+      "ref",
+      "card",
+      "sentence",
+      "deck",
+      "form",
+      "translation_de",
+      "text",
+      "sense",
+      "lemma",
+      "sense_key",
+      "definition_de",
+      "gloss_de",
+      "pos",
+      "idx",
+      "surface",
+      "start_pos",
+      "end_pos",
+      "gap_start",
+      "gap_end",
+      "context_gloss_de",
+      "title_de",
+      "slug",
+      "op_id",
+      "kind",
+      "target_ref"
+    ]
+  }
+}

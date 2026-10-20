@@ -1,0 +1,1099 @@
+{
+  "local_only": true,
+  "cloud_pass": false,
+  "image": "public.ecr.aws/supabase/edge-runtime:v1.77.1",
+  "limits": {
+    "memory_mib": 256,
+    "cpu_soft_ms": 1000,
+    "cpu_hard_ms": 2000,
+    "wall_ms": 150000
+  },
+  "original_hashes": {
+    "content.sqlite": "ac87b43105b9305579a7fff38de0343f874cbb19e533e1bebbed8942d975acdd",
+    "pack.json": "098f01abacb11ef2aa1601ff10f11d185f690cf688e515ae62343d344561d8c9",
+    "registry.json": "039cb691709f0463995a5ee4773a490290109445b686eb8d22ba117001d715ad",
+    "history_inventory.json": "d710fe23ba73ce153992e1a09e32ec227430760dcfd06b391d7b0f5dd5668ff2",
+    "editorial_reviews.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "provenance.json": "52334f02ea98ee31c7c0ddcfa6347edce8a19147117cc69bbb3bc58ef878fed5",
+    "finalization_report.json": "4462d22b9f2d013f623dcd65c9749b3a39d843666d81442555f9e4d57952c3b1",
+    "content.manifest.json": "88cd1f4178e87fbf6977ee604928710997bc417efe20812eda136a7d3c97cd86",
+    "reader_report.json": "7500df59ddf2cdd858a8fa0292841ad738b38b970db61b9355b2d1f3c622c608"
+  },
+  "state": [
+    "invalid JWT rejected",
+    "wrong owner rejected",
+    "verifier mismatch rejected",
+    "two claims: one winner",
+    "no finish: zero progress",
+    "expired lease reclaimed",
+    "stale result rejected",
+    "lost response retry idempotent",
+    "changed retry rejected",
+    "actual CPU worker abort after durable claim: HTTP546, no extra progress, reclaim succeeds",
+    "right revocation rejected",
+    "unsealed completion rejected",
+    "expired run rejected",
+    "explicit audited resume: same upload, reset diagnostic progress, original expiry unchanged",
+    "expired upload: ordinary start denied, explicit resume_start idempotent, guarded expiry unchanged",
+    "catalog empty",
+    "original handler still rejects expired upload after diagnostic resume"
+  ],
+  "elapsed_seconds": 53.91,
+  "driver_http_requests": 143,
+  "total_seconds_including_cleanup": 54.61,
+  "total_driver_http_requests_including_cleanup": 170,
+  "bundle_unchanged": true,
+  "cleanup_complete": true,
+  "decision": "B",
+  "storage_immutability": "BLOCKED",
+  "storage_counterexamples": [
+    {
+      "scope": "upload",
+      "old_token_overwrite": 400,
+      "user_update": 400,
+      "old_token_upsert_header": 400,
+      "user_delete_status": 200,
+      "user_delete_changed_bytes": false,
+      "service_update": 200,
+      "service_delete": 200,
+      "old_token_recreate": 200,
+      "immutability_proved": false
+    },
+    {
+      "scope": "parent",
+      "old_token_overwrite": 400,
+      "user_update": 400,
+      "old_token_upsert_header": 400,
+      "user_delete_status": 200,
+      "user_delete_changed_bytes": false,
+      "service_update": 200,
+      "service_delete": 200,
+      "old_token_recreate": 200,
+      "immutability_proved": false
+    }
+  ],
+  "pack_structure": {
+    "objects": 158348,
+    "unsorted_objects": 0,
+    "non_ascii_keys": 0,
+    "max_object_keys": 23,
+    "max_array_items": 47089,
+    "floats": 0
+  },
+  "runs": [
+    {
+      "mode": "original",
+      "policy": "oneshot",
+      "calls": [
+        {
+          "step": "original:oneshot:1",
+          "http_status": 200,
+          "wall_ms": 297.0,
+          "container_cpu_ms": 190.6,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:2",
+          "http_status": 200,
+          "wall_ms": 328.0,
+          "container_cpu_ms": 210.8,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:3",
+          "http_status": 200,
+          "wall_ms": 94.0,
+          "container_cpu_ms": 69.6,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:4",
+          "http_status": 200,
+          "wall_ms": 141.0,
+          "container_cpu_ms": 102.4,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:5",
+          "http_status": 200,
+          "wall_ms": 110.0,
+          "container_cpu_ms": 66.1,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:6",
+          "http_status": 200,
+          "wall_ms": 79.0,
+          "container_cpu_ms": 67.0,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:7",
+          "http_status": 200,
+          "wall_ms": 94.0,
+          "container_cpu_ms": 66.6,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:8",
+          "http_status": 200,
+          "wall_ms": 94.0,
+          "container_cpu_ms": 70.6,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:9",
+          "http_status": 200,
+          "wall_ms": 125.0,
+          "container_cpu_ms": 95.4,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:oneshot:10",
+          "http_status": 200,
+          "wall_ms": 1203.0,
+          "container_cpu_ms": 1286.0,
+          "status": "ready",
+          "code": null
+        }
+      ],
+      "shutdowns": [
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 16,
+          "memory_used": {
+            "total": 11789642,
+            "heap": 8546992,
+            "external": 3242650
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 11,
+          "memory_used": {
+            "total": 11386396,
+            "heap": 8153880,
+            "external": 3232516
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 55,
+          "memory_used": {
+            "total": 20337979,
+            "heap": 8652568,
+            "external": 11685411
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 61,
+          "memory_used": {
+            "total": 14712272,
+            "heap": 8400584,
+            "external": 6311688
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 12,
+          "memory_used": {
+            "total": 13013658,
+            "heap": 8333336,
+            "external": 4680322
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 26,
+          "memory_used": {
+            "total": 19673658,
+            "heap": 8053064,
+            "external": 11620594
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 11,
+          "memory_used": {
+            "total": 11575046,
+            "heap": 8204448,
+            "external": 3370598
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 11,
+          "memory_used": {
+            "total": 11576997,
+            "heap": 8205920,
+            "external": 3371077
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 11,
+          "memory_used": {
+            "total": 11578582,
+            "heap": 8207016,
+            "external": 3371566
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 11,
+          "memory_used": {
+            "total": 11580691,
+            "heap": 8208624,
+            "external": 3372067
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 22,
+          "memory_used": {
+            "total": 19397065,
+            "heap": 8496152,
+            "external": 10900913
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 950,
+          "memory_used": {
+            "total": 78449789,
+            "heap": 75346120,
+            "external": 3103669
+          }
+        }
+      ],
+      "original_entrypoint_unchanged": true,
+      "real_local_auth_db_storage": true,
+      "bundle_bytes": 114215590,
+      "last_verification_read_bytes": 61321247
+    },
+    {
+      "mode": "original",
+      "policy": "per_worker",
+      "calls": [
+        {
+          "step": "original:per_worker:1",
+          "http_status": 200,
+          "wall_ms": 219.0,
+          "container_cpu_ms": 142.3,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:2",
+          "http_status": 200,
+          "wall_ms": 250.0,
+          "container_cpu_ms": 147.4,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:3",
+          "http_status": 200,
+          "wall_ms": 62.0,
+          "container_cpu_ms": 26.1,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:4",
+          "http_status": 200,
+          "wall_ms": 94.0,
+          "container_cpu_ms": 60.6,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:5",
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "container_cpu_ms": 22.4,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:6",
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "container_cpu_ms": 22.9,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:7",
+          "http_status": 200,
+          "wall_ms": 62.0,
+          "container_cpu_ms": 24.6,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:8",
+          "http_status": 200,
+          "wall_ms": 78.0,
+          "container_cpu_ms": 27.1,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:9",
+          "http_status": 200,
+          "wall_ms": 125.0,
+          "container_cpu_ms": 64.9,
+          "status": "verifying",
+          "code": null
+        },
+        {
+          "step": "original:per_worker:10",
+          "http_status": 200,
+          "wall_ms": 1250.0,
+          "container_cpu_ms": 1307.8,
+          "status": "ready",
+          "code": null
+        }
+      ],
+      "shutdowns": [
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 1114,
+          "memory_used": {
+            "total": 11275099,
+            "heap": 8171424,
+            "external": 3103675
+          }
+        }
+      ],
+      "original_entrypoint_unchanged": true,
+      "real_local_auth_db_storage": true,
+      "bundle_bytes": 114215590,
+      "last_verification_read_bytes": 61321247
+    },
+    {
+      "mode": "phase-probes",
+      "policy": "oneshot",
+      "calls": [
+        {
+          "step": "file:content.sqlite",
+          "http_status": 200,
+          "wall_ms": 672.0,
+          "container_cpu_ms": 264.4,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:pack.json",
+          "http_status": 200,
+          "wall_ms": 313.0,
+          "container_cpu_ms": 222.3,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:registry.json",
+          "http_status": 200,
+          "wall_ms": 78.0,
+          "container_cpu_ms": 76.4,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:history_inventory.json",
+          "http_status": 200,
+          "wall_ms": 141.0,
+          "container_cpu_ms": 106.6,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:editorial_reviews.json",
+          "http_status": 200,
+          "wall_ms": 78.0,
+          "container_cpu_ms": 75.6,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:provenance.json",
+          "http_status": 200,
+          "wall_ms": 79.0,
+          "container_cpu_ms": 72.4,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:finalization_report.json",
+          "http_status": 200,
+          "wall_ms": 78.0,
+          "container_cpu_ms": 74.5,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:content.manifest.json",
+          "http_status": 200,
+          "wall_ms": 94.0,
+          "container_cpu_ms": 72.9,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:reader_report.json",
+          "http_status": 200,
+          "wall_ms": 141.0,
+          "container_cpu_ms": 108.4,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "sidecars",
+          "http_status": 200,
+          "wall_ms": 250.0,
+          "container_cpu_ms": 244.0,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_parse",
+          "http_status": 200,
+          "wall_ms": 469.0,
+          "container_cpu_ms": 505.4,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_full_hash",
+          "http_status": 200,
+          "wall_ms": 703.0,
+          "container_cpu_ms": 772.1,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_content_hash",
+          "http_status": 200,
+          "wall_ms": 688.0,
+          "container_cpu_ms": 740.5,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_both_hashes",
+          "http_status": 200,
+          "wall_ms": 1000.0,
+          "container_cpu_ms": 1051.5,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "history",
+          "http_status": 200,
+          "wall_ms": 328.0,
+          "container_cpu_ms": 392.2,
+          "status": null,
+          "code": null
+        }
+      ],
+      "shutdowns": [
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 62,
+          "memory_used": {
+            "total": 18091627,
+            "heap": 9161304,
+            "external": 8930323
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 69,
+          "memory_used": {
+            "total": 13764267,
+            "heap": 8700576,
+            "external": 5063691
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 16,
+          "memory_used": {
+            "total": 11876775,
+            "heap": 8254880,
+            "external": 3621895
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 29,
+          "memory_used": {
+            "total": 11820106,
+            "heap": 8263744,
+            "external": 3556362
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 14,
+          "memory_used": {
+            "total": 12107355,
+            "heap": 8479232,
+            "external": 3628123
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 13,
+          "memory_used": {
+            "total": 12107331,
+            "heap": 8479224,
+            "external": 3628107
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 13,
+          "memory_used": {
+            "total": 12107372,
+            "heap": 8479256,
+            "external": 3628116
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 13,
+          "memory_used": {
+            "total": 12107361,
+            "heap": 8479248,
+            "external": 3628113
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 28,
+          "memory_used": {
+            "total": 18322722,
+            "heap": 8212760,
+            "external": 10109962
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 132,
+          "memory_used": {
+            "total": 32808826,
+            "heap": 29448368,
+            "external": 3360458
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 288,
+          "memory_used": {
+            "total": 60300534,
+            "heap": 57137272,
+            "external": 3163262
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 543,
+          "memory_used": {
+            "total": 60525633,
+            "heap": 57427904,
+            "external": 3097729
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 519,
+          "memory_used": {
+            "total": 60830748,
+            "heap": 57733016,
+            "external": 3097732
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 820,
+          "memory_used": {
+            "total": 60743515,
+            "heap": 57645784,
+            "external": 3097731
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 201,
+          "memory_used": {
+            "total": 51316205,
+            "heap": 48218128,
+            "external": 3098077
+          }
+        }
+      ],
+      "original_entrypoint_unchanged": false,
+      "real_local_auth_db_storage": true,
+      "measurements": [
+        {
+          "step": "file:content.sqlite",
+          "worker_cpu_ms": 62,
+          "container_cpu_ms": 264.4,
+          "largest_observed_heap_plus_external_bytes": 18061837,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 43091940,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:pack.json",
+          "worker_cpu_ms": 69,
+          "container_cpu_ms": 222.3,
+          "largest_observed_heap_plus_external_bytes": 13734325,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 50089183,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:registry.json",
+          "worker_cpu_ms": 16,
+          "container_cpu_ms": 76.4,
+          "largest_observed_heap_plus_external_bytes": 11841432,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 1069160,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:history_inventory.json",
+          "worker_cpu_ms": 29,
+          "container_cpu_ms": 106.6,
+          "largest_observed_heap_plus_external_bytes": 12179505,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 10175780,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:editorial_reviews.json",
+          "worker_cpu_ms": 14,
+          "container_cpu_ms": 75.6,
+          "largest_observed_heap_plus_external_bytes": 12069801,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 6119,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:provenance.json",
+          "worker_cpu_ms": 13,
+          "container_cpu_ms": 72.4,
+          "largest_observed_heap_plus_external_bytes": 12288458,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 8691,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:finalization_report.json",
+          "worker_cpu_ms": 13,
+          "container_cpu_ms": 74.5,
+          "largest_observed_heap_plus_external_bytes": 12179515,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 7955,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:content.manifest.json",
+          "worker_cpu_ms": 13,
+          "container_cpu_ms": 72.9,
+          "largest_observed_heap_plus_external_bytes": 12179504,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 7171,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:reader_report.json",
+          "worker_cpu_ms": 28,
+          "container_cpu_ms": 108.4,
+          "largest_observed_heap_plus_external_bytes": 19116125,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 9814635,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "sidecars",
+          "worker_cpu_ms": 132,
+          "container_cpu_ms": 244.0,
+          "largest_observed_heap_plus_external_bytes": 47898445,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 11244296,
+          "backend_http_requests": 9
+        },
+        {
+          "step": "pack_parse",
+          "worker_cpu_ms": 288,
+          "container_cpu_ms": 505.4,
+          "largest_observed_heap_plus_external_bytes": 160182893,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 50089183,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "pack_full_hash",
+          "worker_cpu_ms": 543,
+          "container_cpu_ms": 772.1,
+          "largest_observed_heap_plus_external_bytes": 160183885,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 50089183,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "pack_content_hash",
+          "worker_cpu_ms": 519,
+          "container_cpu_ms": 740.5,
+          "largest_observed_heap_plus_external_bytes": 160182149,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 50089183,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "pack_both_hashes",
+          "worker_cpu_ms": 820,
+          "container_cpu_ms": 1051.5,
+          "largest_observed_heap_plus_external_bytes": 160183917,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 50089183,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "history",
+          "worker_cpu_ms": 201,
+          "container_cpu_ms": 392.2,
+          "largest_observed_heap_plus_external_bytes": 62673037,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 22471532,
+          "backend_http_requests": 7
+        }
+      ]
+    },
+    {
+      "mode": "phase-probes",
+      "policy": "per_worker",
+      "calls": [
+        {
+          "step": "file:content.sqlite",
+          "http_status": 200,
+          "wall_ms": 610.0,
+          "container_cpu_ms": 254.1,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:pack.json",
+          "http_status": 200,
+          "wall_ms": 250.0,
+          "container_cpu_ms": 149.0,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:registry.json",
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "container_cpu_ms": 25.9,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:history_inventory.json",
+          "http_status": 200,
+          "wall_ms": 94.0,
+          "container_cpu_ms": 49.7,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:editorial_reviews.json",
+          "http_status": 200,
+          "wall_ms": 63.0,
+          "container_cpu_ms": 24.0,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:provenance.json",
+          "http_status": 200,
+          "wall_ms": 31.0,
+          "container_cpu_ms": 26.2,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:finalization_report.json",
+          "http_status": 200,
+          "wall_ms": 62.0,
+          "container_cpu_ms": 23.2,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:content.manifest.json",
+          "http_status": 200,
+          "wall_ms": 47.0,
+          "container_cpu_ms": 21.4,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "file:reader_report.json",
+          "http_status": 200,
+          "wall_ms": 94.0,
+          "container_cpu_ms": 58.6,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "sidecars",
+          "http_status": 200,
+          "wall_ms": 188.0,
+          "container_cpu_ms": 176.7,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_parse",
+          "http_status": 200,
+          "wall_ms": 406.0,
+          "container_cpu_ms": 436.0,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_full_hash",
+          "http_status": 200,
+          "wall_ms": 703.0,
+          "container_cpu_ms": 781.9,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_content_hash",
+          "http_status": 200,
+          "wall_ms": 718.0,
+          "container_cpu_ms": 728.0,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "pack_both_hashes",
+          "http_status": 200,
+          "wall_ms": 938.0,
+          "container_cpu_ms": 1051.6,
+          "status": null,
+          "code": null
+        },
+        {
+          "step": "history",
+          "http_status": 200,
+          "wall_ms": 344.0,
+          "container_cpu_ms": 375.2,
+          "status": null,
+          "code": null
+        }
+      ],
+      "shutdowns": [
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 1029,
+          "memory_used": {
+            "total": 60577277,
+            "heap": 57545064,
+            "external": 3032213
+          }
+        },
+        {
+          "reason": "EarlyDrop",
+          "cpu_time_used": 1295,
+          "memory_used": {
+            "total": 60153488,
+            "heap": 57121280,
+            "external": 3032208
+          }
+        },
+        {
+          "reason": "TerminationRequested",
+          "cpu_time_used": 204,
+          "memory_used": {
+            "total": 11115991,
+            "heap": 8084184,
+            "external": 3031807
+          }
+        }
+      ],
+      "original_entrypoint_unchanged": false,
+      "real_local_auth_db_storage": true,
+      "measurements": [
+        {
+          "step": "file:content.sqlite",
+          "worker_cpu_ms": null,
+          "container_cpu_ms": 254.1,
+          "largest_observed_heap_plus_external_bytes": 12768901,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 43091940,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:pack.json",
+          "worker_cpu_ms": null,
+          "container_cpu_ms": 149.0,
+          "largest_observed_heap_plus_external_bytes": 13784789,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 50089183,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:registry.json",
+          "worker_cpu_ms": null,
+          "container_cpu_ms": 25.9,
+          "largest_observed_heap_plus_external_bytes": 15825422,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 1069160,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:history_inventory.json",
+          "worker_cpu_ms": null,
+          "container_cpu_ms": 49.7,
+          "largest_observed_heap_plus_external_bytes": 19324245,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 10175780,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:editorial_reviews.json",
+          "worker_cpu_ms": null,
+          "container_cpu_ms": 24.0,
+          "largest_observed_heap_plus_external_bytes": 12792368,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 6119,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:provenance.json",
+          "worker_cpu_ms": null,
+          "container_cpu_ms": 26.2,
+          "largest_observed_heap_plus_external_bytes": 13651694,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 8691,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:finalization_report.json",
+          "worker_cpu_ms": null,
+          "container_cpu_ms": 23.2,
+          "largest_observed_heap_plus_external_bytes": 14514213,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 7955,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:content.manifest.json",
+          "worker_cpu_ms": null,
+          "container_cpu_ms": 21.4,
+          "largest_observed_heap_plus_external_bytes": 13086185,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 7171,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "file:reader_report.json",
+          "worker_cpu_ms": null,
+          "container_cpu_ms": 58.6,
+          "largest_observed_heap_plus_external_bytes": 15450501,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 9814635,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "sidecars",
+          "worker_cpu_ms": null,
+          "container_cpu_ms": 176.7,
+          "largest_observed_heap_plus_external_bytes": 48607917,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 11244296,
+          "backend_http_requests": 9
+        },
+        {
+          "step": "pack_parse",
+          "worker_cpu_ms": null,
+          "container_cpu_ms": 436.0,
+          "largest_observed_heap_plus_external_bytes": 160616733,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 50089183,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "pack_full_hash",
+          "worker_cpu_ms": null,
+          "container_cpu_ms": 781.9,
+          "largest_observed_heap_plus_external_bytes": 161022781,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 50089183,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "pack_content_hash",
+          "worker_cpu_ms": null,
+          "container_cpu_ms": 728.0,
+          "largest_observed_heap_plus_external_bytes": 160182037,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 50089183,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "pack_both_hashes",
+          "worker_cpu_ms": null,
+          "container_cpu_ms": 1051.6,
+          "largest_observed_heap_plus_external_bytes": 160591069,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 50089183,
+          "backend_http_requests": 4
+        },
+        {
+          "step": "history",
+          "worker_cpu_ms": null,
+          "container_cpu_ms": 375.2,
+          "largest_observed_heap_plus_external_bytes": 63327269,
+          "not_an_absolute_peak": true,
+          "response_body_bytes_including_metadata": 22471532,
+          "backend_http_requests": 7
+        }
+      ]
+    }
+  ],
+  "injected_abort_shutdowns": [
+    {
+      "reason": "CPUTime",
+      "cpu_time_used": 3043
+    },
+    {
+      "reason": "TerminationRequested",
+      "cpu_time_used": 43
+    }
+  ],
+  "notes": [
+    "Exit 0 means diagnostic completion; CPU/memory targets fail for pack steps.",
+    "per_worker per-request CPU is whole-container cgroup delta including main/exec overhead, not isolate CPU.",
+    "State receipts are diagnostic only; complete always fails without immutable input proof.",
+    "Original handler used in full runs; phase probes are workload measurements, not a replacement validator.",
+    "Storage DELETE authenticated returns HTTP200 with empty rows; readback proves unchanged bytes."
+  ]
+}

@@ -17,10 +17,7 @@ class NarrationPanel extends StatelessWidget {
     return ListenableBuilder(
       listenable: narration,
       builder: (context, _) => DecoratedBox(
-        decoration: BoxDecoration(
-          color: context.appColors.raisedInk,
-          border: Border(top: BorderSide(color: context.appColors.hairline)),
-        ),
+        decoration: BoxDecoration(color: context.appColors.raisedInk),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 10, 12, 6),
           child: Column(

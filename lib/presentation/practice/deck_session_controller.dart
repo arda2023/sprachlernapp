@@ -10,7 +10,7 @@ import '../../domain/srs_state.dart';
 import '../providers/database_providers.dart';
 import '../providers/story_learning_providers.dart';
 import '../../data/learning/practice_item_resolver.dart';
-import '../providers/deck_providers.dart';
+import '../../domain/review_activity.dart';
 import '../providers/preferences_provider.dart';
 import '../../domain/preferences.dart';
 
@@ -31,6 +31,8 @@ class SessionSnapshot {
   final int box;
 }
 
+/// size 0 uses the daily remainder; -1 explicitly continues beyond it.
+/// Positive sizes retain the explicit bounded-session API used by fixtures.
 typedef DeckSessionArgs = ({String deckId, DeckSessionKind kind, int size});
 
 class DeckSessionState {
@@ -40,6 +42,7 @@ class DeckSessionState {
     this.committing = false,
     this.saved = false,
     this.finished = false,
+    this.goalReached = false,
     this.error,
     this.message,
     this.index = 0,
@@ -48,7 +51,7 @@ class DeckSessionState {
     this.snapshots = const [],
   });
   final ReviewPass? pass;
-  final bool loading, committing, saved, finished;
+  final bool loading, committing, saved, finished, goalReached;
   final Object? error;
   final String? message;
   final int index, total;
@@ -81,9 +84,13 @@ class DeckSessionController extends Notifier<DeckSessionState> {
   bool _saved = false;
   bool _busy = false;
   bool _initialized = false;
+  bool _goalReached = false;
+  int _sessionLimit = 0;
 
   @override
   DeckSessionState build() {
+    final releaseContentLease = contentTransitionGate.acquire(reason: 'practice');
+    ref.onDispose(releaseContentLease);
     _clock = ref.read(clockProvider);
     Future.microtask(start);
     return const DeckSessionState(loading: true);
@@ -102,6 +109,7 @@ class DeckSessionController extends Notifier<DeckSessionState> {
       committing: committing,
       saved: _saved,
       finished: _initialized && _index >= _queue.length,
+      goalReached: _goalReached,
       error: error,
       message: message,
       index: _index,
@@ -112,7 +120,7 @@ class DeckSessionController extends Notifier<DeckSessionState> {
   }
 
   Future<void> start() async {
-    if (_busy || !ref.mounted) return;
+    if (_busy || !ref.mounted || (_initialized && state.error == null)) return;
     _busy = true;
     _emit(loading: true);
     try {
@@ -124,6 +132,17 @@ class DeckSessionController extends Notifier<DeckSessionState> {
         _version = await ref.read(appInfoProvider.future);
         _device = await _user.deviceId();
         _preferences = await _user.preferences();
+        final now = _clock().toLocal();
+        final today = DateTime(now.year, now.month, now.day);
+        final completed = completedTargetsByDay(await _user.activityBetween(
+          today, DateTime(now.year, now.month, now.day + 1),
+        ))[today] ?? <String>{};
+        final remaining = (_preferences.dailyGoal - completed.length).clamp(0, _preferences.dailyGoal);
+        _goalReached = remaining == 0 && args.kind != DeckSessionKind.revue;
+        final beyondGoal = args.size != 0 || args.kind == DeckSessionKind.revue;
+        _sessionLimit = args.size > 0 ? args.size
+            : beyondGoal ? _preferences.dailyGoal : remaining;
+        final excluded = beyondGoal ? <String>{} : completed;
         final ids = <String>[];
         if (args.kind == DeckSessionKind.mixed) {
           ids.addAll(await _resolver.activePrimaryIds());
@@ -145,7 +164,7 @@ class DeckSessionController extends Notifier<DeckSessionState> {
                 cards: cards,
                 states: states,
                 now: _clock(),
-                size: args.size,
+                size: _sessionLimit + excluded.length,
               )
             : buildDeckQueue(
                 targetsResolved: true,
@@ -154,13 +173,16 @@ class DeckSessionController extends Notifier<DeckSessionState> {
                 cards: cards,
                 kind: args.kind,
                 now: _clock(),
-                size: args.size,
+                size: _sessionLimit + excluded.length,
               );
+        _queue = _queue.where((entry) => !excluded.contains(entry.cardId))
+            .take(_sessionLimit).toList();
         for (final item in await _resolver.practiceItems(
           _queue.map((e) => e.cardId).toList(),
         )) {
           _items[item.card.id] = item;
         }
+        if (!ref.mounted) return;
         _initialized = true;
       }
       if (ref.mounted) await _showCurrent();
@@ -176,12 +198,14 @@ class DeckSessionController extends Notifier<DeckSessionState> {
       _emit();
       return;
     }
+    if (!ref.mounted) return;
     final entry = _queue[_index];
     await _user.ensureCards(
       [entry.cardId],
       now: _clock(),
       origin: CardOrigin.deck,
     );
+    if (!ref.mounted) return;
     final states = await _user.cardStates([entry.cardId]);
     if (states[entry.cardId]?.isActive == false) {
       _queue.removeAt(_index);
@@ -204,7 +228,7 @@ class DeckSessionController extends Notifier<DeckSessionState> {
       message:
           _index == 0 &&
               args.kind == DeckSessionKind.learn &&
-              _queue.length < args.size
+              _queue.length < _sessionLimit
           ? 'Für diese Sitzung sind ${_queue.length} unterschiedliche Karten verfügbar.'
           : entry.mode == ReviewMode.early
           ? 'Vorab-Üben: Eine saubere Antwort lässt Stufe und Fälligkeit unverändert.'
@@ -262,10 +286,6 @@ class DeckSessionController extends Notifier<DeckSessionState> {
       _saved = true;
       _snapshots.add(SessionSnapshot(_pass!));
       if (_pass!.needsRepeat) _queue = withRepeat(_queue, _index);
-      if (ref.mounted) {
-        ref.invalidate(decksProvider);
-        ref.invalidate(vocabBreakdownProvider);
-      }
       _emit();
     } catch (error) {
       _emit(
@@ -309,8 +329,6 @@ class DeckSessionController extends Notifier<DeckSessionState> {
       _saved = false;
       _emit(loading: true);
       await _showCurrent();
-      ref.invalidate(decksProvider);
-      ref.invalidate(vocabBreakdownProvider);
     } finally {
       _busy = false;
     }

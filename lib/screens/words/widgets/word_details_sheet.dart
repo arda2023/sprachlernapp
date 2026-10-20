@@ -1,3 +1,4 @@
+import '../../../presentation/providers/database_providers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show InputDecoration, OutlineInputBorder, TextField, showModalBottomSheet;
@@ -51,6 +52,10 @@ class WordDetailsSheet extends ConsumerStatefulWidget {
 }
 
 class _WordDetailsSheetState extends ConsumerState<WordDetailsSheet> {
+  @override
+  void initState(){super.initState();_releaseContent=contentTransitionGate.acquire();}
+
+  late final void Function() _releaseContent;
   late final _note = TextEditingController(text: widget.initialWord.note);
 
   Future<void> _pending = Future.value();
@@ -69,6 +74,7 @@ class _WordDetailsSheetState extends ConsumerState<WordDetailsSheet> {
 
   @override
   void dispose() {
+    _pending.whenComplete(_releaseContent);
     _note.dispose();
     super.dispose();
   }

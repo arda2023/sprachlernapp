@@ -15,8 +15,10 @@ class PracticeItemResolver {
     this.bindings,
     this.states,
     this.contentError,
+    this.catalog,
   );
   final ContentRepository? content;
+  final PracticeCatalog? catalog;
   final UserRepository user;
   final Map<String, ContentCard> cards;
   final Map<String, PracticeItem> locals;
@@ -24,22 +26,40 @@ class PracticeItemResolver {
   final Map<String, String> bindings;
   final Map<String, UserCardState> states;
   final Object? contentError;
+  late final _groups = LearningGroups(cards, states);
   static Future<PracticeItemResolver> load(
     UserRepository user,
     ContentRepository? content, {
     Object? contentError,
+    PracticeCatalog? catalog,
   }) async {
     final story = user is StoryLearningRepository
         ? user as StoryLearningRepository
         : null;
+    if (user is StoryContextCorrectionStore && content is StoryContextCorrectionSource) {
+      await (user as StoryContextCorrectionStore).applyStoryContextCorrections(
+        await (content as StoryContextCorrectionSource).storyContextCorrections());
+    }
     final locals = {
       for (final i in await story?.localPracticeItems() ?? <PracticeItem>[])
         i.card.id: i,
     };
+    final retired = catalog?.retired ?? (content is RetiredLearningContentRepository
+        ? await (content as RetiredLearningContentRepository).retiredLearningIdentities()
+        : <String, LearningIdentity>{});
+    final bindings = await story?.identityBindings() ?? <String, String>{};
+    final retiredKeys = retired.values.map((i) => i.key).toSet();
+    final blocked = <String>{...retired.keys,
+      ...retired.values.map((i) => i.localId),
+      for (final e in bindings.entries) if (retiredKeys.contains(e.key)) e.value};
+    locals.removeWhere((id, item) => blocked.contains(id) ||
+      (item.card.senseId != null && retiredKeys.contains(LearningIdentity(
+        item.card.lang, item.card.formNorm, item.card.senseId!,
+        function: item.card.formFunction).key)));
     final cards = attachLocalLearning(
       content == null
           ? <ContentCard>[]
-          : await content.selectionCards(await content.allCardIds()),
+          : catalog?.cards ?? await content.selectionCards(await content.allCardIds()),
       locals.values.map((i) => i.card),
     );
     return PracticeItemResolver._(
@@ -48,9 +68,10 @@ class PracticeItemResolver {
       cards,
       locals,
       await story?.explicitStoryAdditions() ?? {},
-      await story?.identityBindings() ?? {},
+      {for (final e in bindings.entries) if (!blocked.contains(e.value)) e.key: e.value},
       await user.allCardStates(),
       contentError,
+      catalog,
     );
   }
 
@@ -79,7 +100,7 @@ class PracticeItemResolver {
       : bindings[LearningIdentity(card.lang, card.formNorm, card.senseId!,
           function: (form ?? card.formFunction != null) ? card.formFunction : null).key];
   List<String> eligiblePrimaries(Iterable<String> ids) =>
-      LearningGroups(cards, states).project([
+      _groups.project([
         for (final id in ids)
           if (cards.containsKey(id)) states.containsKey(id) ? id : bindingFor(cards[id]!, form: false) ?? bindingFor(cards[id]!, form: true) ?? id,
       ]);
@@ -95,7 +116,7 @@ class PracticeItemResolver {
   }
 
   List<String> projectExisting(Iterable<String> ids) =>
-      LearningGroups(cards, states).project(ids, exactForms: true);
+      _groups.project(ids, exactForms: true);
 
   List<String> resolveTargets(Iterable<DeckPracticeTarget> targets) {
     final result = <String>[];
@@ -119,15 +140,15 @@ class PracticeItemResolver {
   }
 
   Future<List<String>> deckPracticeIds(String deckId) async =>
-      resolveTargets(await content!.deckPracticeTargets(deckId));
+      resolveTargets(catalog?.targets[deckId] ?? await content!.deckPracticeTargets(deckId));
 
   Future<List<String>> activePrimaryIds() async {
     if (content == null) return [];
-    final decks = await content!.decks();
+    final decks = catalog?.decks ?? await content!.decks();
     final active = await user.activeDeckIds(decks.map((d) => d.id));
     return resolveTargets([
       for (final d in decks)
-        if (active.contains(d.id)) ...await content!.deckPracticeTargets(d.id),
+        if (active.contains(d.id)) ...(catalog?.targets[d.id] ?? await content!.deckPracticeTargets(d.id)),
     ]);
   }
 
@@ -163,5 +184,23 @@ class PracticeItemResolver {
       if (local != null) return local;
     }
     return content?.historicalSentence(cardId, sentenceId);
+  }
+}
+
+/// Immutable pack metadata, scoped to the content repository, never user state.
+class PracticeCatalog {
+  PracticeCatalog(this.cards, this.decks, this.targets, {this.retired = const {}});
+  final Map<String, LearningIdentity> retired;
+  final List<ContentCard> cards;
+  final List<DeckSummary> decks;
+  final Map<String, List<DeckPracticeTarget>> targets;
+  static Future<PracticeCatalog> load(ContentRepository content) async {
+    final decks = await content.decks();
+    final cards = await content.selectionCards(await content.allCardIds());
+    return PracticeCatalog(cards, decks, {
+      for (final d in decks) d.id: await content.deckPracticeTargets(d.id),
+    }, retired: content is RetiredLearningContentRepository
+        ? await (content as RetiredLearningContentRepository).retiredLearningIdentities()
+        : const {});
   }
 }

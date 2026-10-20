@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../theme/app_theme.dart';
 
-/// The one filled button: textPrimary fill, Night Page label. Neutral chrome,
-/// never a status ink.
+/// The one filled button (Redesign): popover orange, white label.
 class PrimaryActionButton extends StatelessWidget {
   const PrimaryActionButton({
     super.key,
@@ -18,13 +17,12 @@ class PrimaryActionButton extends StatelessWidget {
   Widget build(BuildContext context) => _ActionButton(
     label: label,
     onPressed: onPressed,
-    fill: context.appColors.textPrimary,
-    border: context.appColors.textPrimary,
-    foreground: context.appColors.nightPage,
+    fill: context.appColors.popover,
+    foreground: const Color(0xFFFFFFFF),
   );
 }
 
-/// Night Page fill with a hairline edge; sits inset on Raised Ink surfaces.
+/// Quiet filled button (Redesign: no outline).
 class OutlineActionButton extends StatelessWidget {
   const OutlineActionButton({
     super.key,
@@ -42,8 +40,7 @@ class OutlineActionButton extends StatelessWidget {
     label: label,
     icon: icon,
     onPressed: onPressed,
-    fill: context.appColors.nightPage,
-    border: context.appColors.hairline,
+    fill: context.appColors.hairline,
     foreground: onPressed == null
         ? context.appColors.textMuted
         : context.appColors.textPrimary,
@@ -55,7 +52,6 @@ class _ActionButton extends StatelessWidget {
     required this.label,
     required this.onPressed,
     required this.fill,
-    required this.border,
     required this.foreground,
     this.icon,
   });
@@ -64,7 +60,6 @@ class _ActionButton extends StatelessWidget {
   final IconData? icon;
   final VoidCallback? onPressed;
   final Color fill;
-  final Color border;
   final Color foreground;
 
   @override
@@ -85,8 +80,7 @@ class _ActionButton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               color: fill,
-              border: Border.all(color: border),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(99),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,

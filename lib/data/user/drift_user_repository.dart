@@ -11,15 +11,43 @@ import 'package:characters/characters.dart';
 import '../../domain/preferences.dart';
 
 import '../../domain/repositories.dart';
+import '../../domain/review_activity.dart';
 import '../../domain/srs_state.dart';
 import 'user_database.dart';
 
 /// [UserRepository] on the Drift user.db of one language.
-class DriftUserRepository implements UserRepository, StoryLearningRepository {
-  DriftUserRepository(this._db, {required this.lang});
+class DriftUserRepository implements UserRepository, StoryLearningRepository, ReviewActivityRepository, StoryContextCorrectionStore {
+  DriftUserRepository(this._db, {required this.lang, this.ownsDatabase = true, this.contentIds});
+  final bool ownsDatabase;
+  final Future<Set<String>> Function(String kind)? contentIds;
 
   final UserDatabase _db;
   final String lang;
+
+  /// Returns the requested IDs without a row yet.
+  Future<Set<String>> _guardCards(Iterable<String> ids, {bool requireExisting = false}) async {
+    final requested = ids.toSet();
+    final found = <String>{};
+    for (final chunk in _chunks(requested)) {
+      final rows = await (_db.select(_db.userCards)..where((t) => t.cardId.isIn(chunk))).get();
+      for (final row in rows) {
+        if (row.lang != lang) throw StateError('Karte gehört zu einer anderen Sprache.');
+        found.add(row.cardId);
+      }
+    }
+    final missing = requested.difference(found);
+    if (requireExisting && missing.isNotEmpty) throw StateError('Karte nicht vorhanden.');
+    if (contentIds != null && missing.isNotEmpty && !(await contentIds!('cards')).containsAll(missing)) {
+      throw StateError('Karte gehört nicht zum gewählten Inhaltsbestand.');
+    }
+    return missing;
+  }
+
+  Future<void> _guardDecks(Iterable<String> ids) async {
+    if (contentIds != null && !(await contentIds!('decks')).containsAll(ids)) {
+      throw StateError('Stapel gehört nicht zur gewählten Sprache.');
+    }
+  }
 
   static const _chunk = 500;
 
@@ -51,6 +79,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
   Future<Map<String, UserCardState>> cardStates(
     Iterable<String> cardIds,
   ) async {
+    await _guardCards(cardIds);
     final out = <String, UserCardState>{};
     for (final chunk in _chunks(cardIds)) {
       final rows = await (_db.select(
@@ -76,10 +105,14 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
     Iterable<String> cardIds, {
     required DateTime now,
     required CardOrigin origin,
-  }) async {
+  }) => _db.transaction(() async {
+    // Existing rows stay untouched. Skipping the no-op insert also avoids a
+    // change event that would re-project every derived view.
+    final missing = await _guardCards(cardIds);
+    if (missing.isEmpty) return;
     final at = now.toUtc();
     await _db.batch((b) {
-      for (final id in cardIds.toSet()) {
+      for (final id in missing) {
         b.insert(
           _db.userCards,
           UserCardsCompanion.insert(
@@ -94,14 +127,19 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
         );
       }
     });
-  }
+  });
 
   @override
   Future<bool> recordReview(ReviewRecord r) => _db.transaction(() async {
+    await _guardCards([r.cardId], requireExisting: true);
     final existing = await (_db.select(
       _db.reviewLog,
     )..where((t) => t.id.equals(r.id))).getSingleOrNull();
-    if (existing != null) return false;
+    if (existing != null) {
+      await _guardCards([existing.cardId], requireExisting: true);
+      if (existing.cardId != r.cardId) throw StateError('Review-ID bereits anders gebunden.');
+      return false;
+    }
     // The primary key on review_log.id guards duplicates at database level;
     // the check above turns a repeated call into a quiet no-op.
     await _db
@@ -154,6 +192,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
 
   @override
   Future<Map<String, int>> reviewCounts(Iterable<String> cardIds) async {
+    await _guardCards(cardIds);
     final out = <String, int>{};
     final count = _db.reviewLog.id.count();
     for (final chunk in _chunks(cardIds)) {
@@ -170,6 +209,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
 
   @override
   Future<List<ReviewRecord>> reviewsFor(String cardId) async {
+    await _guardCards([cardId]);
     final rows =
         await (_db.select(_db.reviewLog)
               ..where((t) => t.cardId.equals(cardId))
@@ -198,7 +238,33 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
   }
 
   @override
+  Future<List<ReviewActivity>> reviewActivity(DateTime from, DateTime until) async {
+    final r = _db.reviewLog;
+    final c = _db.userCards;
+    final query = _db.select(r).join([innerJoin(c, c.cardId.equalsExp(r.cardId))])
+      ..where(c.lang.equals(lang) & r.createdAt.isBiggerOrEqualValue(from.toUtc()) &
+          r.createdAt.isSmallerThanValue(until.toUtc()));
+    return [for (final row in await query.get())
+      ReviewActivity(row.readTable(r).cardId, row.readTable(r).createdAt,
+          ReviewMode.fromCode(row.readTable(r).mode))];
+  }
+
+  @override
+  Future<Map<String, DateTime>> latestReviewTimes() async {
+    final r = _db.reviewLog;
+    final c = _db.userCards;
+    final latest = r.createdAt.max();
+    final query = _db.selectOnly(r)
+      ..join([innerJoin(c, c.cardId.equalsExp(r.cardId))])
+      ..addColumns([r.cardId, latest])
+      ..where(c.lang.equals(lang))
+      ..groupBy([r.cardId]);
+    return {for (final row in await query.get()) row.read(r.cardId)!: row.read(latest)!};
+  }
+
+  @override
   Future<Set<String>> activeDeckIds(Iterable<String> deckIds) async {
+    await _guardDecks(deckIds);
     final ids = deckIds.toSet();
     final off = await (_db.select(
       _db.deckSettings,
@@ -211,8 +277,9 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
     String deckId,
     bool active, {
     required DateTime now,
-  }) => _db
-      .into(_db.deckSettings)
+  }) async {
+    await _guardDecks([deckId]);
+    await _db.into(_db.deckSettings)
       .insertOnConflictUpdate(
         DeckSettingsCompanion.insert(
           deckId: deckId,
@@ -220,6 +287,8 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
           updatedAt: now.toUtc(),
         ),
       );
+
+  }
 
   @override
   Future<String> deviceId() => _db.transaction(() async {
@@ -249,6 +318,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
           _db.reviewLog,
           _db.deckSettings,
           _db.settings,
+          _db.languageLearningPreferences,
           _db.cardContexts,
           _db.storyLearningAdditions,
           _db.storyWordSources,
@@ -259,34 +329,36 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
       .map((_) {});
 
   @override
-  Future<void> close() => _db.close();
+  Future<void> close() async { if (ownsDatabase) await _db.close(); }
 
   @override
   Future<PracticePreferences> preferences() async {
     await deviceId();
     final r = await _db.select(_db.settings).getSingle();
+    final local = await (_db.select(_db.languageLearningPreferences)..where((t) => t.lang.equals(lang))).getSingleOrNull();
     return PracticePreferences(
       motif: AppMotif.values.byName(r.motif),
-      dailyGoal: r.dailyGoal,
-      includeDiacritics: r.includeDiacritics,
+      dailyGoal: local?.dailyGoal ?? 10,
+      includeDiacritics: local?.includeDiacritics ?? true,
       autoNext: r.autoNext,
-      showGrammar: r.showGrammar,
+      showGrammar: local?.showGrammar ?? false,
     );
   }
 
   @override
   Future<void> savePreferences(PracticePreferences value) async {
     await deviceId();
+    await _db.transaction(() async {
+    await _db.into(_db.languageLearningPreferences).insertOnConflictUpdate(LanguageLearningPreferencesCompanion.insert(
+      lang: lang, dailyGoal: Value(value.dailyGoal), includeDiacritics: Value(value.includeDiacritics), showGrammar: Value(value.showGrammar)));
     await (_db.update(_db.settings)..where((t) => t.id.equals(1))).write(
       SettingsCompanion(
         motif: Value(value.motif.name),
-        dailyGoal: Value(value.dailyGoal),
-        includeDiacritics: Value(value.includeDiacritics),
         autoNext: Value(value.autoNext),
-        showGrammar: Value(value.showGrammar),
         updatedAt: Value(DateTime.now().toUtc()),
       ),
     );
+    });
   }
 
   @override
@@ -297,6 +369,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
     bool? inPlaylist,
     String? note,
   }) async {
+    await _guardCards([cardId], requireExisting: true);
     final changed =
         await (_db.update(
           _db.userCards,
@@ -316,6 +389,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
 
   @override
   Future<void> saveSubmission(LocalSubmission s) async {
+    if (s.cardId != null) await _guardCards([s.cardId!]);
     if (s.text.characters.length > 2000 ||
         (s.rating != null && (s.rating! < 1 || s.rating! > 5)) ||
         (s.category == null && s.rating == null)) {
@@ -355,10 +429,11 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
       ),
   ];
   @override
-  Future<Map<String, DateTime>> explicitStoryAdditions() async => {
-    for (final row in await _db.select(_db.storyLearningAdditions).get())
-      row.cardId: row.addedAt.toLocal(),
-  };
+  Future<Map<String, DateTime>> explicitStoryAdditions() async {
+    final cards=await allCardStates();
+    return {for(final row in await _db.select(_db.storyLearningAdditions).get())
+      if(cards.containsKey(row.cardId)) row.cardId:row.addedAt.toLocal()};
+  }
   @override
   Future<Map<String, String>> identityBindings() async => {
     for (final row in await (_db.select(
@@ -488,15 +563,19 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
       return status;
     }
     final id = status.cardId!;
+    if (!id.startsWith('u:')) await _guardCards([id]);
     final existing = await (_db.select(
       _db.userCards,
     )..where((t) => t.cardId.equals(id))).getSingleOrNull();
     final local = id.startsWith('u:');
     if (existing == null && local) {
-      if (!c.token.contextApproved) {
+      if (c.validationProblem() != null ||
+          (!c.token.contextApproved && c.practiceContext == null)) {
         throw StateError('Kein geprüfter lokaler Kontext');
       }
-      final contextId = randomUuidV4();
+      final contextId = c.practiceContext == null
+          ? randomUuidV4()
+          : learningHash(['story-practice-context-v1', id, c.practiceContext!.fingerprint]);
       await _db
           .into(_db.userCards)
           .insert(
@@ -527,10 +606,10 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
             CardContextsCompanion.insert(
               id: contextId,
               cardId: id,
-              textValue: c.sentence.text,
-              translationDe: c.sentence.translation,
-              gapStart: c.token.start,
-              gapEnd: c.token.end,
+              textValue: c.practiceSentence.text,
+              translationDe: c.practiceSentence.translation,
+              gapStart: c.practiceToken.start,
+              gapEnd: c.practiceToken.end,
               sourceRef: c.storyId,
               sentenceRef: c.sentence.id,
               tokenIndex: c.token.index,
@@ -540,7 +619,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
               provenance: 'editorial_chat_reviewed',
               createdAt: now.toUtc(),
               tokensJson: jsonEncode([
-                for (final t in c.sentence.tokens)
+                for (final t in c.practiceSentence.tokens)
                   {
                     'start': t.start,
                     'end': t.end,
@@ -611,6 +690,74 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
         );
     return StoryAddResult(StoryAddState.added, cardId: id);
   });
+
+  @override
+  Future<void> applyStoryContextCorrections(List<StoryContextCorrection> corrections) async {
+    if (corrections.isEmpty) return;
+    await _db.transaction(() async {
+      for (final correction in corrections) {
+        final old = correction.previous, next = correction.current;
+        if (correction.version.isEmpty || old.lang != lang ||
+            old.card != null || next.card != null ||
+            old.validationProblem() != null || next.validationProblem() != null ||
+            old.practiceContext == null || next.practiceContext == null ||
+            old.identity.key != next.identity.key || old.storyId != next.storyId ||
+            old.sentence.id != next.sentence.id || old.token.index != next.token.index) {
+          continue;
+        }
+        final id = old.identity.localId;
+        final oldId = learningHash(['story-practice-context-v1', id, old.practiceContext!.fingerprint]);
+        final newId = learningHash(['story-practice-context-v1', id, next.practiceContext!.fingerprint]);
+        if (oldId == newId) continue;
+        final card = await (_db.select(_db.userCards)..where((t) => t.cardId.equals(id))).getSingleOrNull();
+        if (card == null || !card.localOnly || card.lang != lang || card.retired ||
+            card.primaryContextId != oldId || card.formNorm != old.identity.formNorm ||
+            card.senseIdentity != old.identity.semanticAnchor || card.formFunction != old.token.function) {
+          continue;
+        }
+        final context = await (_db.select(_db.cardContexts)..where((t) => t.id.equals(oldId))).getSingleOrNull();
+        String tokens(StoryLearningCandidate c) => jsonEncode([
+          for (final t in c.practiceSentence.tokens)
+            {'start':t.start, 'end':t.end, 'surface':t.surface, 'translation':t.gloss},
+        ]);
+        if (context == null || context.cardId != id || context.lang != lang ||
+            context.sourceRef != old.storyId || context.sentenceRef != old.sentence.id ||
+            context.tokenIndex != old.token.index || context.revision != old.revision ||
+            context.fingerprint != old.sourceFingerprint ||
+            context.provenance != 'editorial_chat_reviewed' ||
+            context.textValue != old.practiceSentence.text ||
+            context.translationDe != old.practiceSentence.translation ||
+            context.gapStart != old.practiceToken.start || context.gapEnd != old.practiceToken.end ||
+            context.tokensJson != tokens(old)) {
+          continue;
+        }
+        final origin = await (_db.select(_db.storyWordSources)..where((t) =>
+          t.cardId.equals(id) & t.fingerprint.equals(old.sourceFingerprint))).getSingleOrNull();
+        if (origin == null || origin.sourceRef != old.storyId ||
+            origin.sentenceRef != old.sentence.id || origin.tokenIndex != old.token.index ||
+            origin.revision != old.revision) {
+          continue;
+        }
+        await _db.into(_db.cardContexts).insert(CardContextsCompanion.insert(
+          id: newId, cardId: id, textValue: next.practiceSentence.text,
+          translationDe: next.practiceSentence.translation,
+          gapStart: next.practiceToken.start, gapEnd: next.practiceToken.end,
+          sourceRef: next.storyId, sentenceRef: next.sentence.id, tokenIndex: next.token.index,
+          revision: next.revision, fingerprint: next.sourceFingerprint, lang: lang,
+          provenance: 'editorial_chat_reviewed', createdAt: DateTime.now().toUtc(),
+          tokensJson: tokens(next), otherFormsJson: context.otherFormsJson));
+        await _db.into(_db.storyWordSources).insert(StoryWordSourcesCompanion.insert(
+          cardId: id, fingerprint: next.sourceFingerprint, sourceRef: next.storyId,
+          sentenceRef: next.sentence.id, tokenIndex: next.token.index,
+          revision: next.revision, addedAt: DateTime.now().toUtc()),
+          mode: InsertMode.insertOrIgnore);
+        // Append-only history stays intact; no SRS/flag/note timestamp is changed.
+        await (_db.update(_db.userCards)..where((t) =>
+          t.cardId.equals(id) & t.primaryContextId.equals(oldId)))
+          .write(UserCardsCompanion(primaryContextId: Value(newId)));
+      }
+    });
+  }
 
   CardSentence _context(CardContextRow row) => CardSentence(
     cardId: row.cardId,
@@ -700,7 +847,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository {
   ) async {
     final row =
         await (_db.select(_db.cardContexts)
-              ..where((t) => t.id.equals(contextId) & t.cardId.equals(cardId)))
+              ..where((t) => t.id.equals(contextId) & t.cardId.equals(cardId) & t.lang.equals(lang)))
             .getSingleOrNull();
     return row == null ? null : _context(row);
   }

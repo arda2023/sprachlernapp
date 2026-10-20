@@ -1,0 +1,3283 @@
+{
+  "format": "sprachapp.targeted-curation",
+  "format_version": 1,
+  "source_sha256": "03d2476f15efe8eba609241c7dfeddf46ebf138ed6a6db243865915afba9bd8c",
+  "version": "story_single_sentence_v1",
+  "reviewer": "Codex / ausdrückliche redaktionelle Ein-Satz-Vorgabe 16.10.2026",
+  "operations": [
+    {
+      "op": "story_single_sentence_contexts",
+      "story_id": "1fe9baf1b1a199b5bfb116e320a679b9",
+      "sentence_id": "44b39ff345f2360308500786966a03bf",
+      "expect_sentence": {
+        "ref": "open-pocket/s1",
+        "text": "Maya arrives at the station early.",
+        "translation_de": "Maya kommt früh am Bahnhof an.",
+        "origins": [
+          "story"
+        ],
+        "model": null,
+        "qa_status": "editorial_reviewed",
+        "qa_report": {
+          "editorial_create": {
+            "reviewer": "Codex: redaktionelle Chat-Aufbereitung der vom Nutzer freigegebenen sechs Sätze; keine menschliche/externe Modellprüfung",
+            "operation_id": "story-learning-seed-v1",
+            "sentence": "open-pocket/s1",
+            "decision": "approved",
+            "reason": "Satz 1: vorgegebener englischer Storytext und deutsche Übersetzung gelesen; alle Tokenbedeutungen explizit zugeordnet. Redaktionelle Chat-Zulieferung für internes Test-Pack, keine externe oder Modell-QA.",
+            "checked": {
+              "text": "Maya arrives at the station early.",
+              "translation_de": "Maya kommt früh am Bahnhof an.",
+              "tokens_sha256": "2483fc5f9b7e0ad925aecf96d839d0deab1997249ef448cb9c2885460c2135fc",
+              "links_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            },
+            "alternatives_checked": [],
+            "learning_contexts": [],
+            "story_title_de": "Die offene Tasche"
+          },
+          "story_practice_contexts": {
+            "format_version": 1,
+            "reviewer": "Codex: redaktionelle Offline-Prüfung im Nutzerauftrag; internes Test-Pack, keine menschliche oder externe Modell-QA",
+            "source_sha256": "b48c224ef0b2538d2b97f77130742b1a0f23df6215e8feb12bec785d8f98560c",
+            "reason": "Gezielte interne Offline-Prüfung der bislang nicht gebundenen lernbaren Tokenstellen; keine Freigabe von Eigennamen/Satzzeichen oder neuen globalen Karten.",
+            "bindings": [
+              {
+                "token_index": 1,
+                "surface": "arrives",
+                "sense_id": "1c948ee5a17a588f4904de43dd5c4f26",
+                "source_start": 5,
+                "source_end": 12,
+                "reason": "arrives bezeichnet das Ankommen am Bahnhof, Präsens 3. Person; der vollständige Einzelsatz und die Übersetzung belegen genau arrive#ankommt.",
+                "source_sentence_refs": [
+                  "open-pocket/s1"
+                ],
+                "context": {
+                  "id": "44b39ff345f2360308500786966a03bf",
+                  "text": "Maya arrives at the station early.",
+                  "translation": "Maya kommt früh am Bahnhof an.",
+                  "target_index": 1,
+                  "tokens": [
+                    {
+                      "idx": 0,
+                      "surface": "Maya",
+                      "start_pos": 0,
+                      "end_pos": 4,
+                      "lemma_id": "35bd69ce092154c110f060bf46a3100c",
+                      "lemma": "Maya",
+                      "pos": "PROPN",
+                      "sense_id": "39d372d1622eeecb802c30487786fb1e",
+                      "sense_key": "maya#maya",
+                      "gloss": "Maya",
+                      "definition": "Maya"
+                    },
+                    {
+                      "idx": 1,
+                      "surface": "arrives",
+                      "start_pos": 5,
+                      "end_pos": 12,
+                      "lemma_id": "5663cc87b778b25e9f5c336d8e648711",
+                      "lemma": "arrive",
+                      "pos": "VERB",
+                      "sense_id": "1c948ee5a17a588f4904de43dd5c4f26",
+                      "sense_key": "arrive#ankommt",
+                      "gloss": "ankommt",
+                      "definition": "ankommt"
+                    },
+                    {
+                      "idx": 2,
+                      "surface": "at",
+                      "start_pos": 13,
+                      "end_pos": 15,
+                      "lemma_id": "07133457c44db47e6cde8c5fac328c60",
+                      "lemma": "at",
+                      "pos": "ADP",
+                      "sense_id": "c48f35b4d457e15dfab97b6dda532c3b",
+                      "sense_key": "at#ort",
+                      "gloss": "räumlich (an einem bestimmten Ort oder Punkt)",
+                      "definition": "räumlich (an einem bestimmten Ort oder Punkt)"
+                    },
+                    {
+                      "idx": 3,
+                      "surface": "the",
+                      "start_pos": 16,
+                      "end_pos": 19,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 4,
+                      "surface": "station",
+                      "start_pos": 20,
+                      "end_pos": 27,
+                      "lemma_id": "01ce7034a3919e567ead766155645b3d",
+                      "lemma": "station",
+                      "pos": "NOUN",
+                      "sense_id": "d2082da2516f5a62b5c7904c6b68f844",
+                      "sense_key": "station#bahnhof",
+                      "gloss": "Bahnhof",
+                      "definition": "Bahnhof"
+                    },
+                    {
+                      "idx": 5,
+                      "surface": "early",
+                      "start_pos": 28,
+                      "end_pos": 33,
+                      "lemma_id": "048042d2d02e416c1a628df20b739e8e",
+                      "lemma": "early",
+                      "pos": "ADV",
+                      "sense_id": "0c521a613b53587e3d2bb4dcd595f156",
+                      "sense_key": "early#frueh",
+                      "gloss": "früh",
+                      "definition": "Vor dem üblichen oder erwarteten Zeitpunkt."
+                    },
+                    {
+                      "idx": 6,
+                      "surface": ".",
+                      "start_pos": 33,
+                      "end_pos": 34
+                    }
+                  ]
+                }
+              },
+              {
+                "token_index": 5,
+                "surface": "early",
+                "sense_id": "0c521a613b53587e3d2bb4dcd595f156",
+                "source_start": 28,
+                "source_end": 33,
+                "reason": "early bezeichnet den frühen Ankunftszeitpunkt, nicht frühere Lebensjahre; am Bahnhof früh ankommen ist als Einzelaufgabe verständlich.",
+                "source_sentence_refs": [
+                  "open-pocket/s1"
+                ],
+                "context": {
+                  "id": "44b39ff345f2360308500786966a03bf",
+                  "text": "Maya arrives at the station early.",
+                  "translation": "Maya kommt früh am Bahnhof an.",
+                  "target_index": 5,
+                  "tokens": [
+                    {
+                      "idx": 0,
+                      "surface": "Maya",
+                      "start_pos": 0,
+                      "end_pos": 4,
+                      "lemma_id": "35bd69ce092154c110f060bf46a3100c",
+                      "lemma": "Maya",
+                      "pos": "PROPN",
+                      "sense_id": "39d372d1622eeecb802c30487786fb1e",
+                      "sense_key": "maya#maya",
+                      "gloss": "Maya",
+                      "definition": "Maya"
+                    },
+                    {
+                      "idx": 1,
+                      "surface": "arrives",
+                      "start_pos": 5,
+                      "end_pos": 12,
+                      "lemma_id": "5663cc87b778b25e9f5c336d8e648711",
+                      "lemma": "arrive",
+                      "pos": "VERB",
+                      "sense_id": "1c948ee5a17a588f4904de43dd5c4f26",
+                      "sense_key": "arrive#ankommt",
+                      "gloss": "ankommt",
+                      "definition": "ankommt"
+                    },
+                    {
+                      "idx": 2,
+                      "surface": "at",
+                      "start_pos": 13,
+                      "end_pos": 15,
+                      "lemma_id": "07133457c44db47e6cde8c5fac328c60",
+                      "lemma": "at",
+                      "pos": "ADP",
+                      "sense_id": "c48f35b4d457e15dfab97b6dda532c3b",
+                      "sense_key": "at#ort",
+                      "gloss": "räumlich (an einem bestimmten Ort oder Punkt)",
+                      "definition": "räumlich (an einem bestimmten Ort oder Punkt)"
+                    },
+                    {
+                      "idx": 3,
+                      "surface": "the",
+                      "start_pos": 16,
+                      "end_pos": 19,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 4,
+                      "surface": "station",
+                      "start_pos": 20,
+                      "end_pos": 27,
+                      "lemma_id": "01ce7034a3919e567ead766155645b3d",
+                      "lemma": "station",
+                      "pos": "NOUN",
+                      "sense_id": "d2082da2516f5a62b5c7904c6b68f844",
+                      "sense_key": "station#bahnhof",
+                      "gloss": "Bahnhof",
+                      "definition": "Bahnhof"
+                    },
+                    {
+                      "idx": 5,
+                      "surface": "early",
+                      "start_pos": 28,
+                      "end_pos": 33,
+                      "lemma_id": "048042d2d02e416c1a628df20b739e8e",
+                      "lemma": "early",
+                      "pos": "ADV",
+                      "sense_id": "0c521a613b53587e3d2bb4dcd595f156",
+                      "sense_key": "early#frueh",
+                      "gloss": "früh",
+                      "definition": "Vor dem üblichen oder erwarteten Zeitpunkt."
+                    },
+                    {
+                      "idx": 6,
+                      "surface": ".",
+                      "start_pos": 33,
+                      "end_pos": 34
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      "expect_tokens": [
+        {
+          "idx": 0,
+          "surface": "Maya",
+          "start_pos": 0,
+          "end_pos": 4,
+          "sentence": "open-pocket/s1",
+          "lemma": "Maya/PROPN",
+          "sense": "Maya/PROPN|maya#maya",
+          "card": null
+        },
+        {
+          "idx": 1,
+          "surface": "arrives",
+          "start_pos": 5,
+          "end_pos": 12,
+          "sentence": "open-pocket/s1",
+          "lemma": "arrive/VERB",
+          "sense": "arrive/VERB|arrive#ankommt",
+          "card": null
+        },
+        {
+          "idx": 2,
+          "surface": "at",
+          "start_pos": 13,
+          "end_pos": 15,
+          "sentence": "open-pocket/s1",
+          "lemma": "at/ADP",
+          "sense": "at/ADP|at#ort",
+          "card": "at|at/ADP|at#ort"
+        },
+        {
+          "idx": 3,
+          "surface": "the",
+          "start_pos": 16,
+          "end_pos": 19,
+          "sentence": "open-pocket/s1",
+          "lemma": "the/DET",
+          "sense": "the/DET|the#bestimmter_artikel",
+          "card": "the|the/DET|the#bestimmter_artikel"
+        },
+        {
+          "idx": 4,
+          "surface": "station",
+          "start_pos": 20,
+          "end_pos": 27,
+          "sentence": "open-pocket/s1",
+          "lemma": "station/NOUN",
+          "sense": "station/NOUN|station#bahnhof",
+          "card": "station|station/NOUN|station#bahnhof"
+        },
+        {
+          "idx": 5,
+          "surface": "early",
+          "start_pos": 28,
+          "end_pos": 33,
+          "sentence": "open-pocket/s1",
+          "lemma": "early/ADV",
+          "sense": "early/ADV|early#frueh",
+          "card": null
+        },
+        {
+          "idx": 6,
+          "surface": ".",
+          "start_pos": 33,
+          "end_pos": 34,
+          "sentence": "open-pocket/s1",
+          "lemma": null,
+          "sense": null,
+          "card": null
+        }
+      ],
+      "reason": "Erneute Prüfung aller freigegebenen Wortstellen: genau der unveränderte geeignete Originalsatz, keine Nachbarsätze oder unnötigen Ersatztexte.",
+      "contexts": [
+        {
+          "token_index": 1,
+          "surface": "arrives",
+          "sense": "arrive/VERB|arrive#ankommt",
+          "reason": "arrives bezeichnet das Ankommen am Bahnhof im Präsens; Original und Übersetzung belegen die Zielbedeutung.",
+          "sentence_refs": [
+            "open-pocket/s1"
+          ]
+        },
+        {
+          "token_index": 5,
+          "surface": "early",
+          "sense": "early/ADV|early#frueh",
+          "reason": "early bezeichnet die frühe Ankunft; Original und Übersetzung sind als Satzübung geeignet.",
+          "sentence_refs": [
+            "open-pocket/s1"
+          ]
+        }
+      ]
+    },
+    {
+      "op": "story_single_sentence_contexts",
+      "story_id": "1fe9baf1b1a199b5bfb116e320a679b9",
+      "sentence_id": "e545c372b421dff2f69f6c6c6f382462",
+      "expect_sentence": {
+        "ref": "open-pocket/s2",
+        "text": "She puts her backpack on a table in the café.",
+        "translation_de": "Sie stellt ihren Rucksack auf einen Tisch im Café.",
+        "origins": [
+          "story"
+        ],
+        "model": null,
+        "qa_status": "editorial_reviewed",
+        "qa_report": {
+          "editorial_create": {
+            "reviewer": "Codex: redaktionelle Chat-Aufbereitung der vom Nutzer freigegebenen sechs Sätze; keine menschliche/externe Modellprüfung",
+            "operation_id": "story-learning-seed-v1",
+            "sentence": "open-pocket/s2",
+            "decision": "approved",
+            "reason": "Satz 2: vorgegebener englischer Storytext und deutsche Übersetzung gelesen; alle Tokenbedeutungen explizit zugeordnet. Redaktionelle Chat-Zulieferung für internes Test-Pack, keine externe oder Modell-QA.",
+            "checked": {
+              "text": "She puts her backpack on a table in the café.",
+              "translation_de": "Sie stellt ihren Rucksack auf einen Tisch im Café.",
+              "tokens_sha256": "882fdb5be4a69b1e6f823f24a70edc4cf0262c4ebda9c5da743c8db20bdd0a3e",
+              "links_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            },
+            "alternatives_checked": [],
+            "learning_contexts": [
+              {
+                "token_index": 3,
+                "surface": "backpack",
+                "sense": "backpack/NOUN|backpack#rucksack",
+                "approved": true,
+                "reason": "Rucksack auf dem Tisch: eigenständige Handlung mit eindeutiger Gegenstandsbedeutung; vollständige deutsche Übersetzung und genau diese Tokenstelle geprüft."
+              }
+            ]
+          },
+          "story_practice_contexts": {
+            "format_version": 1,
+            "reviewer": "Codex: redaktionelle Offline-Prüfung im Nutzerauftrag; internes Test-Pack, keine menschliche oder externe Modell-QA",
+            "source_sha256": "b48c224ef0b2538d2b97f77130742b1a0f23df6215e8feb12bec785d8f98560c",
+            "reason": "Gezielte interne Offline-Prüfung der bislang nicht gebundenen lernbaren Tokenstellen; keine Freigabe von Eigennamen/Satzzeichen oder neuen globalen Karten.",
+            "bindings": [
+              {
+                "token_index": 0,
+                "surface": "She",
+                "sense_id": "ed958e74d47378378811ed25e07b467c",
+                "source_start": 0,
+                "source_end": 3,
+                "reason": "She ist das Subjektpronomen sie und verweist auf Maya im unmittelbar vorigen Satz; beide Sätze bilden den kurzen geprüften Kontext.",
+                "source_sentence_refs": [
+                  "open-pocket/s1",
+                  "open-pocket/s2"
+                ],
+                "context": {
+                  "id": "751971168893c27b2052902799b50b45",
+                  "text": "Maya arrives at the station early. She puts her backpack on a table in the café.",
+                  "translation": "Maya kommt früh am Bahnhof an. Sie stellt ihren Rucksack auf einen Tisch im Café.",
+                  "target_index": 7,
+                  "tokens": [
+                    {
+                      "idx": 0,
+                      "surface": "Maya",
+                      "start_pos": 0,
+                      "end_pos": 4,
+                      "lemma_id": "35bd69ce092154c110f060bf46a3100c",
+                      "lemma": "Maya",
+                      "pos": "PROPN",
+                      "sense_id": "39d372d1622eeecb802c30487786fb1e",
+                      "sense_key": "maya#maya",
+                      "gloss": "Maya",
+                      "definition": "Maya"
+                    },
+                    {
+                      "idx": 1,
+                      "surface": "arrives",
+                      "start_pos": 5,
+                      "end_pos": 12,
+                      "lemma_id": "5663cc87b778b25e9f5c336d8e648711",
+                      "lemma": "arrive",
+                      "pos": "VERB",
+                      "sense_id": "1c948ee5a17a588f4904de43dd5c4f26",
+                      "sense_key": "arrive#ankommt",
+                      "gloss": "ankommt",
+                      "definition": "ankommt"
+                    },
+                    {
+                      "idx": 2,
+                      "surface": "at",
+                      "start_pos": 13,
+                      "end_pos": 15,
+                      "lemma_id": "07133457c44db47e6cde8c5fac328c60",
+                      "lemma": "at",
+                      "pos": "ADP",
+                      "sense_id": "c48f35b4d457e15dfab97b6dda532c3b",
+                      "sense_key": "at#ort",
+                      "gloss": "räumlich (an einem bestimmten Ort oder Punkt)",
+                      "definition": "räumlich (an einem bestimmten Ort oder Punkt)"
+                    },
+                    {
+                      "idx": 3,
+                      "surface": "the",
+                      "start_pos": 16,
+                      "end_pos": 19,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 4,
+                      "surface": "station",
+                      "start_pos": 20,
+                      "end_pos": 27,
+                      "lemma_id": "01ce7034a3919e567ead766155645b3d",
+                      "lemma": "station",
+                      "pos": "NOUN",
+                      "sense_id": "d2082da2516f5a62b5c7904c6b68f844",
+                      "sense_key": "station#bahnhof",
+                      "gloss": "Bahnhof",
+                      "definition": "Bahnhof"
+                    },
+                    {
+                      "idx": 5,
+                      "surface": "early",
+                      "start_pos": 28,
+                      "end_pos": 33,
+                      "lemma_id": "048042d2d02e416c1a628df20b739e8e",
+                      "lemma": "early",
+                      "pos": "ADV",
+                      "sense_id": "0c521a613b53587e3d2bb4dcd595f156",
+                      "sense_key": "early#frueh",
+                      "gloss": "früh",
+                      "definition": "Vor dem üblichen oder erwarteten Zeitpunkt."
+                    },
+                    {
+                      "idx": 6,
+                      "surface": ".",
+                      "start_pos": 33,
+                      "end_pos": 34
+                    },
+                    {
+                      "idx": 7,
+                      "surface": "She",
+                      "start_pos": 35,
+                      "end_pos": 38,
+                      "lemma_id": "d5277eccbfaa185968a70bddba434fdd",
+                      "lemma": "she",
+                      "pos": "PRON",
+                      "sense_id": "ed958e74d47378378811ed25e07b467c",
+                      "sense_key": "she#sie",
+                      "gloss": "sie",
+                      "definition": "sie"
+                    },
+                    {
+                      "idx": 8,
+                      "surface": "puts",
+                      "start_pos": 39,
+                      "end_pos": 43,
+                      "lemma_id": "0b0552aa55e88c5a3d5d9476e05f8901",
+                      "lemma": "put",
+                      "pos": "VERB",
+                      "sense_id": "9402deaed325d14eeedad6d75ac24801",
+                      "sense_key": "put#stellt",
+                      "gloss": "stellt",
+                      "definition": "stellt"
+                    },
+                    {
+                      "idx": 9,
+                      "surface": "her",
+                      "start_pos": 44,
+                      "end_pos": 47,
+                      "lemma_id": "ea82f5d17131d4337761b5980124375a",
+                      "lemma": "her",
+                      "pos": "DET",
+                      "sense_id": "22b9e161311ba6f36b58222b6d56dcac",
+                      "sense_key": "her#ihr_possessiv",
+                      "gloss": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)",
+                      "definition": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)"
+                    },
+                    {
+                      "idx": 10,
+                      "surface": "backpack",
+                      "start_pos": 48,
+                      "end_pos": 56,
+                      "lemma_id": "505c78ee0890e5f43e85a8108d259561",
+                      "lemma": "backpack",
+                      "pos": "NOUN",
+                      "sense_id": "44909aea7ee2bfdc8d761a2f1d00879d",
+                      "sense_key": "backpack#rucksack",
+                      "gloss": "Rucksack",
+                      "definition": "Eine Tasche mit Schultergurten, die auf dem Rücken getragen wird."
+                    },
+                    {
+                      "idx": 11,
+                      "surface": "on",
+                      "start_pos": 57,
+                      "end_pos": 59,
+                      "lemma_id": "e56c43a0446f3f9a32b75429a13759bb",
+                      "lemma": "on",
+                      "pos": "ADP",
+                      "sense_id": "7695ae3f26715f0c144c635342f5bf2f",
+                      "sense_key": "on#auf",
+                      "gloss": "auf",
+                      "definition": "auf"
+                    },
+                    {
+                      "idx": 12,
+                      "surface": "a",
+                      "start_pos": 60,
+                      "end_pos": 61,
+                      "lemma_id": "23319d1497034d60d3c06bccf11d3180",
+                      "lemma": "a",
+                      "pos": "DET",
+                      "sense_id": "e0196676ff315e3d3a2d2a05dbe929d6",
+                      "sense_key": "a#ein",
+                      "gloss": "ein",
+                      "definition": "ein"
+                    },
+                    {
+                      "idx": 13,
+                      "surface": "table",
+                      "start_pos": 62,
+                      "end_pos": 67,
+                      "lemma_id": "02140a10d739488d5732a5ca7ffa2688",
+                      "lemma": "table",
+                      "pos": "NOUN",
+                      "sense_id": "89d9cb5191e683cdd9916b9907f8420e",
+                      "sense_key": "table#tisch",
+                      "gloss": "Tisch",
+                      "definition": "Möbel mit waagerechter Platte zum Essen oder Arbeiten"
+                    },
+                    {
+                      "idx": 14,
+                      "surface": "in",
+                      "start_pos": 68,
+                      "end_pos": 70,
+                      "lemma_id": "28a6bcd1e8ba4976370b07f601f103ab",
+                      "lemma": "in",
+                      "pos": "ADP",
+                      "sense_id": "eb046fde0a06ef455e0e0e1ac6ae743a",
+                      "sense_key": "in#in_raeumlich",
+                      "gloss": "in (räumlich: innerhalb eines Ortes oder Raumes)",
+                      "definition": "in (räumlich: innerhalb eines Ortes oder Raumes)"
+                    },
+                    {
+                      "idx": 15,
+                      "surface": "the",
+                      "start_pos": 71,
+                      "end_pos": 74,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 16,
+                      "surface": "café",
+                      "start_pos": 75,
+                      "end_pos": 79,
+                      "lemma_id": "4b9c0908a9eac1a56afe02ca0100ff2a",
+                      "lemma": "café",
+                      "pos": "NOUN",
+                      "sense_id": "cc92398b71cdd2c056e95a09075363bc",
+                      "sense_key": "café#cafe",
+                      "gloss": "Café",
+                      "definition": "Ein Lokal, in dem vor allem Kaffee, Getränke und kleine Speisen angeboten werden."
+                    },
+                    {
+                      "idx": 17,
+                      "surface": ".",
+                      "start_pos": 79,
+                      "end_pos": 80
+                    }
+                  ]
+                }
+              },
+              {
+                "token_index": 1,
+                "surface": "puts",
+                "sense_id": "9402deaed325d14eeedad6d75ac24801",
+                "source_start": 4,
+                "source_end": 8,
+                "reason": "puts bedeutet hier stellt den Rucksack auf den Tisch, nicht steckt aus Satz 5. Handlung, Zielort und deutsche Übersetzung sind im Einzelsatz vollständig.",
+                "source_sentence_refs": [
+                  "open-pocket/s2"
+                ],
+                "context": {
+                  "id": "e545c372b421dff2f69f6c6c6f382462",
+                  "text": "She puts her backpack on a table in the café.",
+                  "translation": "Sie stellt ihren Rucksack auf einen Tisch im Café.",
+                  "target_index": 1,
+                  "tokens": [
+                    {
+                      "idx": 0,
+                      "surface": "She",
+                      "start_pos": 0,
+                      "end_pos": 3,
+                      "lemma_id": "d5277eccbfaa185968a70bddba434fdd",
+                      "lemma": "she",
+                      "pos": "PRON",
+                      "sense_id": "ed958e74d47378378811ed25e07b467c",
+                      "sense_key": "she#sie",
+                      "gloss": "sie",
+                      "definition": "sie"
+                    },
+                    {
+                      "idx": 1,
+                      "surface": "puts",
+                      "start_pos": 4,
+                      "end_pos": 8,
+                      "lemma_id": "0b0552aa55e88c5a3d5d9476e05f8901",
+                      "lemma": "put",
+                      "pos": "VERB",
+                      "sense_id": "9402deaed325d14eeedad6d75ac24801",
+                      "sense_key": "put#stellt",
+                      "gloss": "stellt",
+                      "definition": "stellt"
+                    },
+                    {
+                      "idx": 2,
+                      "surface": "her",
+                      "start_pos": 9,
+                      "end_pos": 12,
+                      "lemma_id": "ea82f5d17131d4337761b5980124375a",
+                      "lemma": "her",
+                      "pos": "DET",
+                      "sense_id": "22b9e161311ba6f36b58222b6d56dcac",
+                      "sense_key": "her#ihr_possessiv",
+                      "gloss": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)",
+                      "definition": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)"
+                    },
+                    {
+                      "idx": 3,
+                      "surface": "backpack",
+                      "start_pos": 13,
+                      "end_pos": 21,
+                      "lemma_id": "505c78ee0890e5f43e85a8108d259561",
+                      "lemma": "backpack",
+                      "pos": "NOUN",
+                      "sense_id": "44909aea7ee2bfdc8d761a2f1d00879d",
+                      "sense_key": "backpack#rucksack",
+                      "gloss": "Rucksack",
+                      "definition": "Eine Tasche mit Schultergurten, die auf dem Rücken getragen wird."
+                    },
+                    {
+                      "idx": 4,
+                      "surface": "on",
+                      "start_pos": 22,
+                      "end_pos": 24,
+                      "lemma_id": "e56c43a0446f3f9a32b75429a13759bb",
+                      "lemma": "on",
+                      "pos": "ADP",
+                      "sense_id": "7695ae3f26715f0c144c635342f5bf2f",
+                      "sense_key": "on#auf",
+                      "gloss": "auf",
+                      "definition": "auf"
+                    },
+                    {
+                      "idx": 5,
+                      "surface": "a",
+                      "start_pos": 25,
+                      "end_pos": 26,
+                      "lemma_id": "23319d1497034d60d3c06bccf11d3180",
+                      "lemma": "a",
+                      "pos": "DET",
+                      "sense_id": "e0196676ff315e3d3a2d2a05dbe929d6",
+                      "sense_key": "a#ein",
+                      "gloss": "ein",
+                      "definition": "ein"
+                    },
+                    {
+                      "idx": 6,
+                      "surface": "table",
+                      "start_pos": 27,
+                      "end_pos": 32,
+                      "lemma_id": "02140a10d739488d5732a5ca7ffa2688",
+                      "lemma": "table",
+                      "pos": "NOUN",
+                      "sense_id": "89d9cb5191e683cdd9916b9907f8420e",
+                      "sense_key": "table#tisch",
+                      "gloss": "Tisch",
+                      "definition": "Möbel mit waagerechter Platte zum Essen oder Arbeiten"
+                    },
+                    {
+                      "idx": 7,
+                      "surface": "in",
+                      "start_pos": 33,
+                      "end_pos": 35,
+                      "lemma_id": "28a6bcd1e8ba4976370b07f601f103ab",
+                      "lemma": "in",
+                      "pos": "ADP",
+                      "sense_id": "eb046fde0a06ef455e0e0e1ac6ae743a",
+                      "sense_key": "in#in_raeumlich",
+                      "gloss": "in (räumlich: innerhalb eines Ortes oder Raumes)",
+                      "definition": "in (räumlich: innerhalb eines Ortes oder Raumes)"
+                    },
+                    {
+                      "idx": 8,
+                      "surface": "the",
+                      "start_pos": 36,
+                      "end_pos": 39,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 9,
+                      "surface": "café",
+                      "start_pos": 40,
+                      "end_pos": 44,
+                      "lemma_id": "4b9c0908a9eac1a56afe02ca0100ff2a",
+                      "lemma": "café",
+                      "pos": "NOUN",
+                      "sense_id": "cc92398b71cdd2c056e95a09075363bc",
+                      "sense_key": "café#cafe",
+                      "gloss": "Café",
+                      "definition": "Ein Lokal, in dem vor allem Kaffee, Getränke und kleine Speisen angeboten werden."
+                    },
+                    {
+                      "idx": 10,
+                      "surface": ".",
+                      "start_pos": 44,
+                      "end_pos": 45
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      "expect_tokens": [
+        {
+          "idx": 0,
+          "surface": "She",
+          "start_pos": 0,
+          "end_pos": 3,
+          "sentence": "open-pocket/s2",
+          "lemma": "she/PRON",
+          "sense": "she/PRON|she#sie",
+          "card": null
+        },
+        {
+          "idx": 1,
+          "surface": "puts",
+          "start_pos": 4,
+          "end_pos": 8,
+          "sentence": "open-pocket/s2",
+          "lemma": "put/VERB",
+          "sense": "put/VERB|put#stellt",
+          "card": null
+        },
+        {
+          "idx": 2,
+          "surface": "her",
+          "start_pos": 9,
+          "end_pos": 12,
+          "sentence": "open-pocket/s2",
+          "lemma": "her/DET",
+          "sense": "her/DET|her#ihr_possessiv",
+          "card": "her|her/DET|her#ihr_possessiv"
+        },
+        {
+          "idx": 3,
+          "surface": "backpack",
+          "start_pos": 13,
+          "end_pos": 21,
+          "sentence": "open-pocket/s2",
+          "lemma": "backpack/NOUN",
+          "sense": "backpack/NOUN|backpack#rucksack",
+          "card": null
+        },
+        {
+          "idx": 4,
+          "surface": "on",
+          "start_pos": 22,
+          "end_pos": 24,
+          "sentence": "open-pocket/s2",
+          "lemma": "on/ADP",
+          "sense": "on/ADP|on#auf",
+          "card": "on|on/ADP|on#auf"
+        },
+        {
+          "idx": 5,
+          "surface": "a",
+          "start_pos": 25,
+          "end_pos": 26,
+          "sentence": "open-pocket/s2",
+          "lemma": "a/DET",
+          "sense": "a/DET|a#ein",
+          "card": "a|a/DET|a#ein"
+        },
+        {
+          "idx": 6,
+          "surface": "table",
+          "start_pos": 27,
+          "end_pos": 32,
+          "sentence": "open-pocket/s2",
+          "lemma": "table/NOUN",
+          "sense": "table/NOUN|table#tisch",
+          "card": "table|table/NOUN|table#tisch"
+        },
+        {
+          "idx": 7,
+          "surface": "in",
+          "start_pos": 33,
+          "end_pos": 35,
+          "sentence": "open-pocket/s2",
+          "lemma": "in/ADP",
+          "sense": "in/ADP|in#in_raeumlich",
+          "card": "in|in/ADP|in#in_raeumlich"
+        },
+        {
+          "idx": 8,
+          "surface": "the",
+          "start_pos": 36,
+          "end_pos": 39,
+          "sentence": "open-pocket/s2",
+          "lemma": "the/DET",
+          "sense": "the/DET|the#bestimmter_artikel",
+          "card": "the|the/DET|the#bestimmter_artikel"
+        },
+        {
+          "idx": 9,
+          "surface": "café",
+          "start_pos": 40,
+          "end_pos": 44,
+          "sentence": "open-pocket/s2",
+          "lemma": "café/NOUN",
+          "sense": "café/NOUN|café#cafe",
+          "card": null
+        },
+        {
+          "idx": 10,
+          "surface": ".",
+          "start_pos": 44,
+          "end_pos": 45,
+          "sentence": "open-pocket/s2",
+          "lemma": null,
+          "sense": null,
+          "card": null
+        }
+      ],
+      "reason": "Erneute Prüfung aller freigegebenen Wortstellen: genau der unveränderte geeignete Originalsatz, keine Nachbarsätze oder unnötigen Ersatztexte.",
+      "contexts": [
+        {
+          "token_index": 0,
+          "surface": "She",
+          "sense": "she/PRON|she#sie",
+          "reason": "She ist das weibliche Subjektpronomen sie. Die Identität der Person ist zum Üben dieser Bedeutung nicht erforderlich; nur Originalsatz 2.",
+          "sentence_refs": [
+            "open-pocket/s2"
+          ]
+        },
+        {
+          "token_index": 1,
+          "surface": "puts",
+          "sense": "put/VERB|put#stellt",
+          "reason": "puts bedeutet stellt den Rucksack auf den Tisch; Zielbedeutung und Übersetzung stehen im Original.",
+          "sentence_refs": [
+            "open-pocket/s2"
+          ]
+        }
+      ]
+    },
+    {
+      "op": "story_single_sentence_contexts",
+      "story_id": "1fe9baf1b1a199b5bfb116e320a679b9",
+      "sentence_id": "fde52f7527b9430a9b5388d1a75b8e1b",
+      "expect_sentence": {
+        "ref": "open-pocket/s3",
+        "text": "A man points to the open pocket of her backpack.",
+        "translation_de": "Ein Mann zeigt auf das offene Fach ihres Rucksacks.",
+        "origins": [
+          "story"
+        ],
+        "model": null,
+        "qa_status": "editorial_reviewed",
+        "qa_report": {
+          "editorial_create": {
+            "reviewer": "Codex: redaktionelle Chat-Aufbereitung der vom Nutzer freigegebenen sechs Sätze; keine menschliche/externe Modellprüfung",
+            "operation_id": "story-learning-seed-v1",
+            "sentence": "open-pocket/s3",
+            "decision": "approved",
+            "reason": "Satz 3: vorgegebener englischer Storytext und deutsche Übersetzung gelesen; alle Tokenbedeutungen explizit zugeordnet. Redaktionelle Chat-Zulieferung für internes Test-Pack, keine externe oder Modell-QA.",
+            "checked": {
+              "text": "A man points to the open pocket of her backpack.",
+              "translation_de": "Ein Mann zeigt auf das offene Fach ihres Rucksacks.",
+              "tokens_sha256": "2ba49efac4cd083b13d309260bf9d754f60c76e629c99f28ba6c1c4eb9b67cc2",
+              "links_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            },
+            "alternatives_checked": [],
+            "learning_contexts": []
+          },
+          "story_practice_contexts": {
+            "format_version": 1,
+            "reviewer": "Codex: redaktionelle Offline-Prüfung im Nutzerauftrag; internes Test-Pack, keine menschliche oder externe Modell-QA",
+            "source_sha256": "b48c224ef0b2538d2b97f77130742b1a0f23df6215e8feb12bec785d8f98560c",
+            "reason": "Gezielte interne Offline-Prüfung der bislang nicht gebundenen lernbaren Tokenstellen; keine Freigabe von Eigennamen/Satzzeichen oder neuen globalen Karten.",
+            "bindings": [
+              {
+                "token_index": 2,
+                "surface": "points",
+                "sense_id": "afffa8e66ed42de7078b2ff0fe3bce27",
+                "source_start": 6,
+                "source_end": 12,
+                "reason": "points bedeutet zeigt mit einer Geste auf das offene Fach; man und pocket stehen im Satz, nicht Punkte sammeln.",
+                "source_sentence_refs": [
+                  "open-pocket/s3"
+                ],
+                "context": {
+                  "id": "fde52f7527b9430a9b5388d1a75b8e1b",
+                  "text": "A man points to the open pocket of her backpack.",
+                  "translation": "Ein Mann zeigt auf das offene Fach ihres Rucksacks.",
+                  "target_index": 2,
+                  "tokens": [
+                    {
+                      "idx": 0,
+                      "surface": "A",
+                      "start_pos": 0,
+                      "end_pos": 1,
+                      "lemma_id": "23319d1497034d60d3c06bccf11d3180",
+                      "lemma": "a",
+                      "pos": "DET",
+                      "sense_id": "e0196676ff315e3d3a2d2a05dbe929d6",
+                      "sense_key": "a#ein",
+                      "gloss": "ein",
+                      "definition": "ein"
+                    },
+                    {
+                      "idx": 1,
+                      "surface": "man",
+                      "start_pos": 2,
+                      "end_pos": 5,
+                      "lemma_id": "bf9719d9d3504b2b36b3e6c01984caf8",
+                      "lemma": "man",
+                      "pos": "NOUN",
+                      "sense_id": "31378c50f866b489b7512debae76bef2",
+                      "sense_key": "man#mann",
+                      "gloss": "Mann",
+                      "definition": "Mann"
+                    },
+                    {
+                      "idx": 2,
+                      "surface": "points",
+                      "start_pos": 6,
+                      "end_pos": 12,
+                      "lemma_id": "506253bbc672aa007f7d60568988f915",
+                      "lemma": "point",
+                      "pos": "VERB",
+                      "sense_id": "afffa8e66ed42de7078b2ff0fe3bce27",
+                      "sense_key": "point#zeigt",
+                      "gloss": "zeigt",
+                      "definition": "zeigt"
+                    },
+                    {
+                      "idx": 3,
+                      "surface": "to",
+                      "start_pos": 13,
+                      "end_pos": 15,
+                      "lemma_id": "415f6f3b1f80a4718bbda00c3d29ebee",
+                      "lemma": "to",
+                      "pos": "ADP",
+                      "sense_id": "ce114fc89714188f735ba09a859845cd",
+                      "sense_key": "to#auf",
+                      "gloss": "auf",
+                      "definition": "auf"
+                    },
+                    {
+                      "idx": 4,
+                      "surface": "the",
+                      "start_pos": 16,
+                      "end_pos": 19,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 5,
+                      "surface": "open",
+                      "start_pos": 20,
+                      "end_pos": 24,
+                      "lemma_id": "14fef189974b678b5dd490ca34fcac08",
+                      "lemma": "open",
+                      "pos": "ADJ",
+                      "sense_id": "30c6695c5797906928bfa0d175ea0397",
+                      "sense_key": "open#offen",
+                      "gloss": "offen",
+                      "definition": "offen"
+                    },
+                    {
+                      "idx": 6,
+                      "surface": "pocket",
+                      "start_pos": 25,
+                      "end_pos": 31,
+                      "lemma_id": "55188b10012f8180c2c7336533ca3cef",
+                      "lemma": "pocket",
+                      "pos": "NOUN",
+                      "sense_id": "428db9f7fe42c74a8b651922222a2038",
+                      "sense_key": "pocket#taschenfach",
+                      "gloss": "Fach",
+                      "definition": "Ein kleiner abgeteilter Aufbewahrungsraum an einer Tasche oder einem Kleidungsstück."
+                    },
+                    {
+                      "idx": 7,
+                      "surface": "of",
+                      "start_pos": 32,
+                      "end_pos": 34,
+                      "lemma_id": "bf46e1d7a1e3b8815798473f1c79af7b",
+                      "lemma": "of",
+                      "pos": "ADP",
+                      "sense_id": "2a403f8b0e06c6377bd48f50c072348d",
+                      "sense_key": "of#genitiv_besitz",
+                      "gloss": "Zugehörigkeit oder Besitz (oft dem deutschen Genitiv entsprechend)",
+                      "definition": "Zugehörigkeit oder Besitz (oft dem deutschen Genitiv entsprechend)"
+                    },
+                    {
+                      "idx": 8,
+                      "surface": "her",
+                      "start_pos": 35,
+                      "end_pos": 38,
+                      "lemma_id": "ea82f5d17131d4337761b5980124375a",
+                      "lemma": "her",
+                      "pos": "DET",
+                      "sense_id": "22b9e161311ba6f36b58222b6d56dcac",
+                      "sense_key": "her#ihr_possessiv",
+                      "gloss": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)",
+                      "definition": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)"
+                    },
+                    {
+                      "idx": 9,
+                      "surface": "backpack",
+                      "start_pos": 39,
+                      "end_pos": 47,
+                      "lemma_id": "505c78ee0890e5f43e85a8108d259561",
+                      "lemma": "backpack",
+                      "pos": "NOUN",
+                      "sense_id": "44909aea7ee2bfdc8d761a2f1d00879d",
+                      "sense_key": "backpack#rucksack",
+                      "gloss": "Rucksack",
+                      "definition": "Eine Tasche mit Schultergurten, die auf dem Rücken getragen wird."
+                    },
+                    {
+                      "idx": 10,
+                      "surface": ".",
+                      "start_pos": 47,
+                      "end_pos": 48
+                    }
+                  ]
+                }
+              },
+              {
+                "token_index": 3,
+                "surface": "to",
+                "sense_id": "ce114fc89714188f735ba09a859845cd",
+                "source_start": 13,
+                "source_end": 15,
+                "reason": "to ist die Richtungspräposition in points to und entspricht hier auf; keine Infinitivpartikel und keine Zielortbedeutung nach.",
+                "source_sentence_refs": [
+                  "open-pocket/s3"
+                ],
+                "context": {
+                  "id": "fde52f7527b9430a9b5388d1a75b8e1b",
+                  "text": "A man points to the open pocket of her backpack.",
+                  "translation": "Ein Mann zeigt auf das offene Fach ihres Rucksacks.",
+                  "target_index": 3,
+                  "tokens": [
+                    {
+                      "idx": 0,
+                      "surface": "A",
+                      "start_pos": 0,
+                      "end_pos": 1,
+                      "lemma_id": "23319d1497034d60d3c06bccf11d3180",
+                      "lemma": "a",
+                      "pos": "DET",
+                      "sense_id": "e0196676ff315e3d3a2d2a05dbe929d6",
+                      "sense_key": "a#ein",
+                      "gloss": "ein",
+                      "definition": "ein"
+                    },
+                    {
+                      "idx": 1,
+                      "surface": "man",
+                      "start_pos": 2,
+                      "end_pos": 5,
+                      "lemma_id": "bf9719d9d3504b2b36b3e6c01984caf8",
+                      "lemma": "man",
+                      "pos": "NOUN",
+                      "sense_id": "31378c50f866b489b7512debae76bef2",
+                      "sense_key": "man#mann",
+                      "gloss": "Mann",
+                      "definition": "Mann"
+                    },
+                    {
+                      "idx": 2,
+                      "surface": "points",
+                      "start_pos": 6,
+                      "end_pos": 12,
+                      "lemma_id": "506253bbc672aa007f7d60568988f915",
+                      "lemma": "point",
+                      "pos": "VERB",
+                      "sense_id": "afffa8e66ed42de7078b2ff0fe3bce27",
+                      "sense_key": "point#zeigt",
+                      "gloss": "zeigt",
+                      "definition": "zeigt"
+                    },
+                    {
+                      "idx": 3,
+                      "surface": "to",
+                      "start_pos": 13,
+                      "end_pos": 15,
+                      "lemma_id": "415f6f3b1f80a4718bbda00c3d29ebee",
+                      "lemma": "to",
+                      "pos": "ADP",
+                      "sense_id": "ce114fc89714188f735ba09a859845cd",
+                      "sense_key": "to#auf",
+                      "gloss": "auf",
+                      "definition": "auf"
+                    },
+                    {
+                      "idx": 4,
+                      "surface": "the",
+                      "start_pos": 16,
+                      "end_pos": 19,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 5,
+                      "surface": "open",
+                      "start_pos": 20,
+                      "end_pos": 24,
+                      "lemma_id": "14fef189974b678b5dd490ca34fcac08",
+                      "lemma": "open",
+                      "pos": "ADJ",
+                      "sense_id": "30c6695c5797906928bfa0d175ea0397",
+                      "sense_key": "open#offen",
+                      "gloss": "offen",
+                      "definition": "offen"
+                    },
+                    {
+                      "idx": 6,
+                      "surface": "pocket",
+                      "start_pos": 25,
+                      "end_pos": 31,
+                      "lemma_id": "55188b10012f8180c2c7336533ca3cef",
+                      "lemma": "pocket",
+                      "pos": "NOUN",
+                      "sense_id": "428db9f7fe42c74a8b651922222a2038",
+                      "sense_key": "pocket#taschenfach",
+                      "gloss": "Fach",
+                      "definition": "Ein kleiner abgeteilter Aufbewahrungsraum an einer Tasche oder einem Kleidungsstück."
+                    },
+                    {
+                      "idx": 7,
+                      "surface": "of",
+                      "start_pos": 32,
+                      "end_pos": 34,
+                      "lemma_id": "bf46e1d7a1e3b8815798473f1c79af7b",
+                      "lemma": "of",
+                      "pos": "ADP",
+                      "sense_id": "2a403f8b0e06c6377bd48f50c072348d",
+                      "sense_key": "of#genitiv_besitz",
+                      "gloss": "Zugehörigkeit oder Besitz (oft dem deutschen Genitiv entsprechend)",
+                      "definition": "Zugehörigkeit oder Besitz (oft dem deutschen Genitiv entsprechend)"
+                    },
+                    {
+                      "idx": 8,
+                      "surface": "her",
+                      "start_pos": 35,
+                      "end_pos": 38,
+                      "lemma_id": "ea82f5d17131d4337761b5980124375a",
+                      "lemma": "her",
+                      "pos": "DET",
+                      "sense_id": "22b9e161311ba6f36b58222b6d56dcac",
+                      "sense_key": "her#ihr_possessiv",
+                      "gloss": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)",
+                      "definition": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)"
+                    },
+                    {
+                      "idx": 9,
+                      "surface": "backpack",
+                      "start_pos": 39,
+                      "end_pos": 47,
+                      "lemma_id": "505c78ee0890e5f43e85a8108d259561",
+                      "lemma": "backpack",
+                      "pos": "NOUN",
+                      "sense_id": "44909aea7ee2bfdc8d761a2f1d00879d",
+                      "sense_key": "backpack#rucksack",
+                      "gloss": "Rucksack",
+                      "definition": "Eine Tasche mit Schultergurten, die auf dem Rücken getragen wird."
+                    },
+                    {
+                      "idx": 10,
+                      "surface": ".",
+                      "start_pos": 47,
+                      "end_pos": 48
+                    }
+                  ]
+                }
+              },
+              {
+                "token_index": 5,
+                "surface": "open",
+                "sense_id": "30c6695c5797906928bfa0d175ea0397",
+                "source_start": 20,
+                "source_end": 24,
+                "reason": "open beschreibt das nicht geschlossene Rucksackfach; Adjektiv, kein Verb öffnen. Einzelsatz und Übersetzung sind eindeutig.",
+                "source_sentence_refs": [
+                  "open-pocket/s3"
+                ],
+                "context": {
+                  "id": "fde52f7527b9430a9b5388d1a75b8e1b",
+                  "text": "A man points to the open pocket of her backpack.",
+                  "translation": "Ein Mann zeigt auf das offene Fach ihres Rucksacks.",
+                  "target_index": 5,
+                  "tokens": [
+                    {
+                      "idx": 0,
+                      "surface": "A",
+                      "start_pos": 0,
+                      "end_pos": 1,
+                      "lemma_id": "23319d1497034d60d3c06bccf11d3180",
+                      "lemma": "a",
+                      "pos": "DET",
+                      "sense_id": "e0196676ff315e3d3a2d2a05dbe929d6",
+                      "sense_key": "a#ein",
+                      "gloss": "ein",
+                      "definition": "ein"
+                    },
+                    {
+                      "idx": 1,
+                      "surface": "man",
+                      "start_pos": 2,
+                      "end_pos": 5,
+                      "lemma_id": "bf9719d9d3504b2b36b3e6c01984caf8",
+                      "lemma": "man",
+                      "pos": "NOUN",
+                      "sense_id": "31378c50f866b489b7512debae76bef2",
+                      "sense_key": "man#mann",
+                      "gloss": "Mann",
+                      "definition": "Mann"
+                    },
+                    {
+                      "idx": 2,
+                      "surface": "points",
+                      "start_pos": 6,
+                      "end_pos": 12,
+                      "lemma_id": "506253bbc672aa007f7d60568988f915",
+                      "lemma": "point",
+                      "pos": "VERB",
+                      "sense_id": "afffa8e66ed42de7078b2ff0fe3bce27",
+                      "sense_key": "point#zeigt",
+                      "gloss": "zeigt",
+                      "definition": "zeigt"
+                    },
+                    {
+                      "idx": 3,
+                      "surface": "to",
+                      "start_pos": 13,
+                      "end_pos": 15,
+                      "lemma_id": "415f6f3b1f80a4718bbda00c3d29ebee",
+                      "lemma": "to",
+                      "pos": "ADP",
+                      "sense_id": "ce114fc89714188f735ba09a859845cd",
+                      "sense_key": "to#auf",
+                      "gloss": "auf",
+                      "definition": "auf"
+                    },
+                    {
+                      "idx": 4,
+                      "surface": "the",
+                      "start_pos": 16,
+                      "end_pos": 19,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 5,
+                      "surface": "open",
+                      "start_pos": 20,
+                      "end_pos": 24,
+                      "lemma_id": "14fef189974b678b5dd490ca34fcac08",
+                      "lemma": "open",
+                      "pos": "ADJ",
+                      "sense_id": "30c6695c5797906928bfa0d175ea0397",
+                      "sense_key": "open#offen",
+                      "gloss": "offen",
+                      "definition": "offen"
+                    },
+                    {
+                      "idx": 6,
+                      "surface": "pocket",
+                      "start_pos": 25,
+                      "end_pos": 31,
+                      "lemma_id": "55188b10012f8180c2c7336533ca3cef",
+                      "lemma": "pocket",
+                      "pos": "NOUN",
+                      "sense_id": "428db9f7fe42c74a8b651922222a2038",
+                      "sense_key": "pocket#taschenfach",
+                      "gloss": "Fach",
+                      "definition": "Ein kleiner abgeteilter Aufbewahrungsraum an einer Tasche oder einem Kleidungsstück."
+                    },
+                    {
+                      "idx": 7,
+                      "surface": "of",
+                      "start_pos": 32,
+                      "end_pos": 34,
+                      "lemma_id": "bf46e1d7a1e3b8815798473f1c79af7b",
+                      "lemma": "of",
+                      "pos": "ADP",
+                      "sense_id": "2a403f8b0e06c6377bd48f50c072348d",
+                      "sense_key": "of#genitiv_besitz",
+                      "gloss": "Zugehörigkeit oder Besitz (oft dem deutschen Genitiv entsprechend)",
+                      "definition": "Zugehörigkeit oder Besitz (oft dem deutschen Genitiv entsprechend)"
+                    },
+                    {
+                      "idx": 8,
+                      "surface": "her",
+                      "start_pos": 35,
+                      "end_pos": 38,
+                      "lemma_id": "ea82f5d17131d4337761b5980124375a",
+                      "lemma": "her",
+                      "pos": "DET",
+                      "sense_id": "22b9e161311ba6f36b58222b6d56dcac",
+                      "sense_key": "her#ihr_possessiv",
+                      "gloss": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)",
+                      "definition": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)"
+                    },
+                    {
+                      "idx": 9,
+                      "surface": "backpack",
+                      "start_pos": 39,
+                      "end_pos": 47,
+                      "lemma_id": "505c78ee0890e5f43e85a8108d259561",
+                      "lemma": "backpack",
+                      "pos": "NOUN",
+                      "sense_id": "44909aea7ee2bfdc8d761a2f1d00879d",
+                      "sense_key": "backpack#rucksack",
+                      "gloss": "Rucksack",
+                      "definition": "Eine Tasche mit Schultergurten, die auf dem Rücken getragen wird."
+                    },
+                    {
+                      "idx": 10,
+                      "surface": ".",
+                      "start_pos": 47,
+                      "end_pos": 48
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      "expect_tokens": [
+        {
+          "idx": 0,
+          "surface": "A",
+          "start_pos": 0,
+          "end_pos": 1,
+          "sentence": "open-pocket/s3",
+          "lemma": "a/DET",
+          "sense": "a/DET|a#ein",
+          "card": "a|a/DET|a#ein"
+        },
+        {
+          "idx": 1,
+          "surface": "man",
+          "start_pos": 2,
+          "end_pos": 5,
+          "sentence": "open-pocket/s3",
+          "lemma": "man/NOUN",
+          "sense": "man/NOUN|man#mann",
+          "card": null
+        },
+        {
+          "idx": 2,
+          "surface": "points",
+          "start_pos": 6,
+          "end_pos": 12,
+          "sentence": "open-pocket/s3",
+          "lemma": "point/VERB",
+          "sense": "point/VERB|point#zeigt",
+          "card": null
+        },
+        {
+          "idx": 3,
+          "surface": "to",
+          "start_pos": 13,
+          "end_pos": 15,
+          "sentence": "open-pocket/s3",
+          "lemma": "to/ADP",
+          "sense": "to/ADP|to#auf",
+          "card": null
+        },
+        {
+          "idx": 4,
+          "surface": "the",
+          "start_pos": 16,
+          "end_pos": 19,
+          "sentence": "open-pocket/s3",
+          "lemma": "the/DET",
+          "sense": "the/DET|the#bestimmter_artikel",
+          "card": "the|the/DET|the#bestimmter_artikel"
+        },
+        {
+          "idx": 5,
+          "surface": "open",
+          "start_pos": 20,
+          "end_pos": 24,
+          "sentence": "open-pocket/s3",
+          "lemma": "open/ADJ",
+          "sense": "open/ADJ|open#offen",
+          "card": null
+        },
+        {
+          "idx": 6,
+          "surface": "pocket",
+          "start_pos": 25,
+          "end_pos": 31,
+          "sentence": "open-pocket/s3",
+          "lemma": "pocket/NOUN",
+          "sense": "pocket/NOUN|pocket#taschenfach",
+          "card": null
+        },
+        {
+          "idx": 7,
+          "surface": "of",
+          "start_pos": 32,
+          "end_pos": 34,
+          "sentence": "open-pocket/s3",
+          "lemma": "of/ADP",
+          "sense": "of/ADP|of#genitiv_besitz",
+          "card": "of|of/ADP|of#genitiv_besitz"
+        },
+        {
+          "idx": 8,
+          "surface": "her",
+          "start_pos": 35,
+          "end_pos": 38,
+          "sentence": "open-pocket/s3",
+          "lemma": "her/DET",
+          "sense": "her/DET|her#ihr_possessiv",
+          "card": "her|her/DET|her#ihr_possessiv"
+        },
+        {
+          "idx": 9,
+          "surface": "backpack",
+          "start_pos": 39,
+          "end_pos": 47,
+          "sentence": "open-pocket/s3",
+          "lemma": "backpack/NOUN",
+          "sense": "backpack/NOUN|backpack#rucksack",
+          "card": null
+        },
+        {
+          "idx": 10,
+          "surface": ".",
+          "start_pos": 47,
+          "end_pos": 48,
+          "sentence": "open-pocket/s3",
+          "lemma": null,
+          "sense": null,
+          "card": null
+        }
+      ],
+      "reason": "Erneute Prüfung aller freigegebenen Wortstellen: genau der unveränderte geeignete Originalsatz, keine Nachbarsätze oder unnötigen Ersatztexte.",
+      "contexts": [
+        {
+          "token_index": 2,
+          "surface": "points",
+          "sense": "point/VERB|point#zeigt",
+          "reason": "points bedeutet mit einer Geste zeigt; points to the open pocket belegt die Zielbedeutung.",
+          "sentence_refs": [
+            "open-pocket/s3"
+          ]
+        },
+        {
+          "token_index": 3,
+          "surface": "to",
+          "sense": "to/ADP|to#auf",
+          "reason": "to bedeutet auf in points to, keine Infinitivpartikel; Original und Übersetzung sind ausreichend.",
+          "sentence_refs": [
+            "open-pocket/s3"
+          ]
+        },
+        {
+          "token_index": 5,
+          "surface": "open",
+          "sense": "open/ADJ|open#offen",
+          "reason": "open beschreibt das nicht geschlossene Fach als Adjektiv; Original ist geeignet.",
+          "sentence_refs": [
+            "open-pocket/s3"
+          ]
+        }
+      ]
+    },
+    {
+      "op": "story_single_sentence_contexts",
+      "story_id": "1fe9baf1b1a199b5bfb116e320a679b9",
+      "sentence_id": "9c8a0014817a5713e2b07bdad96192cb",
+      "expect_sentence": {
+        "ref": "open-pocket/s5",
+        "text": "Maya puts it safely inside and thanks the man.",
+        "translation_de": "Maya steckt sie sicher hinein und bedankt sich bei dem Mann.",
+        "origins": [
+          "story"
+        ],
+        "model": null,
+        "qa_status": "editorial_reviewed",
+        "qa_report": {
+          "editorial_create": {
+            "reviewer": "Codex: redaktionelle Chat-Aufbereitung der vom Nutzer freigegebenen sechs Sätze; keine menschliche/externe Modellprüfung",
+            "operation_id": "story-learning-seed-v1",
+            "sentence": "open-pocket/s5",
+            "decision": "approved",
+            "reason": "Satz 5: vorgegebener englischer Storytext und deutsche Übersetzung gelesen; alle Tokenbedeutungen explizit zugeordnet. Redaktionelle Chat-Zulieferung für internes Test-Pack, keine externe oder Modell-QA.",
+            "checked": {
+              "text": "Maya puts it safely inside and thanks the man.",
+              "translation_de": "Maya steckt sie sicher hinein und bedankt sich bei dem Mann.",
+              "tokens_sha256": "1c0b7dddf256b9c68fd33acfbf5f6b311c28a9d5800def83b0fe3d392b52a0b0",
+              "links_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            },
+            "alternatives_checked": [],
+            "learning_contexts": []
+          },
+          "story_practice_contexts": {
+            "format_version": 1,
+            "reviewer": "Codex: redaktionelle Offline-Prüfung im Nutzerauftrag; internes Test-Pack, keine menschliche oder externe Modell-QA",
+            "source_sha256": "b48c224ef0b2538d2b97f77130742b1a0f23df6215e8feb12bec785d8f98560c",
+            "reason": "Gezielte interne Offline-Prüfung der bislang nicht gebundenen lernbaren Tokenstellen; keine Freigabe von Eigennamen/Satzzeichen oder neuen globalen Karten.",
+            "bindings": [
+              {
+                "token_index": 1,
+                "surface": "puts",
+                "sense_id": "3e999a70451ebe40bd0779069056769c",
+                "source_start": 5,
+                "source_end": 9,
+                "reason": "puts bedeutet hier steckt die Fahrkarte hinein. Der unmittelbar vorherige Fahrkartensatz klärt it/sie; andere Bedeutung als stellt in Satz 2.",
+                "source_sentence_refs": [
+                  "open-pocket/s4",
+                  "open-pocket/s5"
+                ],
+                "context": {
+                  "id": "ab851444e42dda9a8c19f0aef13e52a7",
+                  "text": "Her train ticket is about to fall out. Maya puts it safely inside and thanks the man.",
+                  "translation": "Ihre Fahrkarte droht herauszufallen. Maya steckt sie sicher hinein und bedankt sich bei dem Mann.",
+                  "target_index": 10,
+                  "tokens": [
+                    {
+                      "idx": 0,
+                      "surface": "Her",
+                      "start_pos": 0,
+                      "end_pos": 3,
+                      "lemma_id": "ea82f5d17131d4337761b5980124375a",
+                      "lemma": "her",
+                      "pos": "DET",
+                      "sense_id": "22b9e161311ba6f36b58222b6d56dcac",
+                      "sense_key": "her#ihr_possessiv",
+                      "gloss": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)",
+                      "definition": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)"
+                    },
+                    {
+                      "idx": 1,
+                      "surface": "train",
+                      "start_pos": 4,
+                      "end_pos": 9,
+                      "lemma_id": "47d48066436f1d59871ac59bc985e3d5",
+                      "lemma": "train",
+                      "pos": "NOUN",
+                      "sense_id": "57d65c8f7fa4b745bf4436decc8c7177",
+                      "sense_key": "train#zug",
+                      "gloss": "Zug",
+                      "definition": "Zug"
+                    },
+                    {
+                      "idx": 2,
+                      "surface": "ticket",
+                      "start_pos": 10,
+                      "end_pos": 16,
+                      "lemma_id": "56d406dce66ffcacab421cd7b7e93a67",
+                      "lemma": "ticket",
+                      "pos": "NOUN",
+                      "sense_id": "225de47de6ce978fcc55d89fa1afbd0f",
+                      "sense_key": "ticket#fahrkarte",
+                      "gloss": "Fahrkarte",
+                      "definition": "Fahrkarte"
+                    },
+                    {
+                      "idx": 3,
+                      "surface": "is",
+                      "start_pos": 17,
+                      "end_pos": 19,
+                      "lemma_id": "729ab2845a0434b10a158d68d718faa3",
+                      "lemma": "be",
+                      "pos": "AUX",
+                      "sense_id": "f47c06ceb40b579b5f6c10d8df2ed7c9",
+                      "sense_key": "be#sein_vollverb",
+                      "gloss": "sein (als Vollverb oder Kopula zur Angabe von Zustand, Identität oder Eigenschaft)",
+                      "definition": "sein (als Vollverb oder Kopula zur Angabe von Zustand, Identität oder Eigenschaft)"
+                    },
+                    {
+                      "idx": 4,
+                      "surface": "about",
+                      "start_pos": 20,
+                      "end_pos": 25,
+                      "lemma_id": "dd06e0a0794225ec0453be7e31a436e5",
+                      "lemma": "about",
+                      "pos": "ADJ",
+                      "sense_id": "a88f6d831b071673a781d497c4afa05f",
+                      "sense_key": "about#im_begriff",
+                      "gloss": "im Begriff sein (etwas gleich zu tun, v.a. 'about to')",
+                      "definition": "im Begriff sein (etwas gleich zu tun, v.a. 'about to')"
+                    },
+                    {
+                      "idx": 5,
+                      "surface": "to",
+                      "start_pos": 26,
+                      "end_pos": 28,
+                      "lemma_id": "9b810c8d8df88a1405f5834d3d6cc3a8",
+                      "lemma": "to",
+                      "pos": "PART",
+                      "sense_id": "554669a7223f2cbf92e1ac44f8d5fae1",
+                      "sense_key": "to#infinitivpartikel",
+                      "gloss": "Partikel vor einem Infinitiv (z. B. 'to go')",
+                      "definition": "Partikel vor einem Infinitiv (z. B. 'to go')"
+                    },
+                    {
+                      "idx": 6,
+                      "surface": "fall",
+                      "start_pos": 29,
+                      "end_pos": 33,
+                      "lemma_id": "8e0aa6cec1e05a4e22d8252868bc5055",
+                      "lemma": "fall",
+                      "pos": "VERB",
+                      "sense_id": "2d393391ee924fe0fb127c3de8ffa3ac",
+                      "sense_key": "fall#fallen",
+                      "gloss": "fallen",
+                      "definition": "Sich durch die Schwerkraft nach unten bewegen."
+                    },
+                    {
+                      "idx": 7,
+                      "surface": "out",
+                      "start_pos": 34,
+                      "end_pos": 37,
+                      "lemma_id": "d04d5fa22e117e4c1c40b77a5007c453",
+                      "lemma": "out",
+                      "pos": "ADV",
+                      "sense_id": "dc5bcda898b5f93361f65ac5200de9b1",
+                      "sense_key": "out#hinaus",
+                      "gloss": "hinaus, heraus (Bewegung aus einem Inneren ins Freie oder nach außen)",
+                      "definition": "hinaus, heraus (Bewegung aus einem Inneren ins Freie oder nach außen)"
+                    },
+                    {
+                      "idx": 8,
+                      "surface": ".",
+                      "start_pos": 37,
+                      "end_pos": 38
+                    },
+                    {
+                      "idx": 9,
+                      "surface": "Maya",
+                      "start_pos": 39,
+                      "end_pos": 43,
+                      "lemma_id": "35bd69ce092154c110f060bf46a3100c",
+                      "lemma": "Maya",
+                      "pos": "PROPN",
+                      "sense_id": "39d372d1622eeecb802c30487786fb1e",
+                      "sense_key": "maya#maya",
+                      "gloss": "Maya",
+                      "definition": "Maya"
+                    },
+                    {
+                      "idx": 10,
+                      "surface": "puts",
+                      "start_pos": 44,
+                      "end_pos": 48,
+                      "lemma_id": "0b0552aa55e88c5a3d5d9476e05f8901",
+                      "lemma": "put",
+                      "pos": "VERB",
+                      "sense_id": "3e999a70451ebe40bd0779069056769c",
+                      "sense_key": "put#steckt",
+                      "gloss": "steckt",
+                      "definition": "steckt"
+                    },
+                    {
+                      "idx": 11,
+                      "surface": "it",
+                      "start_pos": 49,
+                      "end_pos": 51,
+                      "lemma_id": "19af4743be3df36463be605a87496f62",
+                      "lemma": "it",
+                      "pos": "PRON",
+                      "sense_id": "62d3dd736f2fb30b855ea064fc4e4536",
+                      "sense_key": "it#es_ding",
+                      "gloss": "Personalpronomen der 3. Person Singular für sächliche Dinge oder Tiere",
+                      "definition": "Personalpronomen der 3. Person Singular für sächliche Dinge oder Tiere"
+                    },
+                    {
+                      "idx": 12,
+                      "surface": "safely",
+                      "start_pos": 52,
+                      "end_pos": 58,
+                      "lemma_id": "46af0b59f9a6faf3f4705c3992d8c20d",
+                      "lemma": "safely",
+                      "pos": "ADV",
+                      "sense_id": "8b149e9f6a35b3d7583f3ada6768c54d",
+                      "sense_key": "safely#sicher",
+                      "gloss": "sicher",
+                      "definition": "So, dass etwas vor Verlust oder Schaden geschützt ist."
+                    },
+                    {
+                      "idx": 13,
+                      "surface": "inside",
+                      "start_pos": 59,
+                      "end_pos": 65,
+                      "lemma_id": "5182273ec7f4f913d7ed5dd0a5574fb0",
+                      "lemma": "inside",
+                      "pos": "ADV",
+                      "sense_id": "e2df29d25024d158e771a0aaffe96fdb",
+                      "sense_key": "inside#hinein",
+                      "gloss": "hinein",
+                      "definition": "hinein"
+                    },
+                    {
+                      "idx": 14,
+                      "surface": "and",
+                      "start_pos": 66,
+                      "end_pos": 69,
+                      "lemma_id": "c45fd05c953d582e85f120bad2dc95d1",
+                      "lemma": "and",
+                      "pos": "CCONJ",
+                      "sense_id": "0ed683aabf40e94b25412bec4bb26355",
+                      "sense_key": "and#und",
+                      "gloss": "und",
+                      "definition": "und"
+                    },
+                    {
+                      "idx": 15,
+                      "surface": "thanks",
+                      "start_pos": 70,
+                      "end_pos": 76,
+                      "lemma_id": "63d04b4883a3f90fe3676c71ff317c19",
+                      "lemma": "thank",
+                      "pos": "VERB",
+                      "sense_id": "37b8607d508575dffe69340b2b84ec86",
+                      "sense_key": "thank#danken",
+                      "gloss": "bedankt sich",
+                      "definition": "Jemandem für Hilfe oder eine freundliche Handlung Dank ausdrücken."
+                    },
+                    {
+                      "idx": 16,
+                      "surface": "the",
+                      "start_pos": 77,
+                      "end_pos": 80,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 17,
+                      "surface": "man",
+                      "start_pos": 81,
+                      "end_pos": 84,
+                      "lemma_id": "bf9719d9d3504b2b36b3e6c01984caf8",
+                      "lemma": "man",
+                      "pos": "NOUN",
+                      "sense_id": "31378c50f866b489b7512debae76bef2",
+                      "sense_key": "man#mann",
+                      "gloss": "Mann",
+                      "definition": "Mann"
+                    },
+                    {
+                      "idx": 18,
+                      "surface": ".",
+                      "start_pos": 84,
+                      "end_pos": 85
+                    }
+                  ]
+                }
+              },
+              {
+                "token_index": 3,
+                "surface": "safely",
+                "sense_id": "8b149e9f6a35b3d7583f3ada6768c54d",
+                "source_start": 13,
+                "source_end": 19,
+                "reason": "safely bedeutet hier sicher/so dass die Fahrkarte nicht herausfällt. Satz 4 klärt den Bezug; keine Bedeutung gefahrlos reisen.",
+                "source_sentence_refs": [
+                  "open-pocket/s4",
+                  "open-pocket/s5"
+                ],
+                "context": {
+                  "id": "ab851444e42dda9a8c19f0aef13e52a7",
+                  "text": "Her train ticket is about to fall out. Maya puts it safely inside and thanks the man.",
+                  "translation": "Ihre Fahrkarte droht herauszufallen. Maya steckt sie sicher hinein und bedankt sich bei dem Mann.",
+                  "target_index": 12,
+                  "tokens": [
+                    {
+                      "idx": 0,
+                      "surface": "Her",
+                      "start_pos": 0,
+                      "end_pos": 3,
+                      "lemma_id": "ea82f5d17131d4337761b5980124375a",
+                      "lemma": "her",
+                      "pos": "DET",
+                      "sense_id": "22b9e161311ba6f36b58222b6d56dcac",
+                      "sense_key": "her#ihr_possessiv",
+                      "gloss": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)",
+                      "definition": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)"
+                    },
+                    {
+                      "idx": 1,
+                      "surface": "train",
+                      "start_pos": 4,
+                      "end_pos": 9,
+                      "lemma_id": "47d48066436f1d59871ac59bc985e3d5",
+                      "lemma": "train",
+                      "pos": "NOUN",
+                      "sense_id": "57d65c8f7fa4b745bf4436decc8c7177",
+                      "sense_key": "train#zug",
+                      "gloss": "Zug",
+                      "definition": "Zug"
+                    },
+                    {
+                      "idx": 2,
+                      "surface": "ticket",
+                      "start_pos": 10,
+                      "end_pos": 16,
+                      "lemma_id": "56d406dce66ffcacab421cd7b7e93a67",
+                      "lemma": "ticket",
+                      "pos": "NOUN",
+                      "sense_id": "225de47de6ce978fcc55d89fa1afbd0f",
+                      "sense_key": "ticket#fahrkarte",
+                      "gloss": "Fahrkarte",
+                      "definition": "Fahrkarte"
+                    },
+                    {
+                      "idx": 3,
+                      "surface": "is",
+                      "start_pos": 17,
+                      "end_pos": 19,
+                      "lemma_id": "729ab2845a0434b10a158d68d718faa3",
+                      "lemma": "be",
+                      "pos": "AUX",
+                      "sense_id": "f47c06ceb40b579b5f6c10d8df2ed7c9",
+                      "sense_key": "be#sein_vollverb",
+                      "gloss": "sein (als Vollverb oder Kopula zur Angabe von Zustand, Identität oder Eigenschaft)",
+                      "definition": "sein (als Vollverb oder Kopula zur Angabe von Zustand, Identität oder Eigenschaft)"
+                    },
+                    {
+                      "idx": 4,
+                      "surface": "about",
+                      "start_pos": 20,
+                      "end_pos": 25,
+                      "lemma_id": "dd06e0a0794225ec0453be7e31a436e5",
+                      "lemma": "about",
+                      "pos": "ADJ",
+                      "sense_id": "a88f6d831b071673a781d497c4afa05f",
+                      "sense_key": "about#im_begriff",
+                      "gloss": "im Begriff sein (etwas gleich zu tun, v.a. 'about to')",
+                      "definition": "im Begriff sein (etwas gleich zu tun, v.a. 'about to')"
+                    },
+                    {
+                      "idx": 5,
+                      "surface": "to",
+                      "start_pos": 26,
+                      "end_pos": 28,
+                      "lemma_id": "9b810c8d8df88a1405f5834d3d6cc3a8",
+                      "lemma": "to",
+                      "pos": "PART",
+                      "sense_id": "554669a7223f2cbf92e1ac44f8d5fae1",
+                      "sense_key": "to#infinitivpartikel",
+                      "gloss": "Partikel vor einem Infinitiv (z. B. 'to go')",
+                      "definition": "Partikel vor einem Infinitiv (z. B. 'to go')"
+                    },
+                    {
+                      "idx": 6,
+                      "surface": "fall",
+                      "start_pos": 29,
+                      "end_pos": 33,
+                      "lemma_id": "8e0aa6cec1e05a4e22d8252868bc5055",
+                      "lemma": "fall",
+                      "pos": "VERB",
+                      "sense_id": "2d393391ee924fe0fb127c3de8ffa3ac",
+                      "sense_key": "fall#fallen",
+                      "gloss": "fallen",
+                      "definition": "Sich durch die Schwerkraft nach unten bewegen."
+                    },
+                    {
+                      "idx": 7,
+                      "surface": "out",
+                      "start_pos": 34,
+                      "end_pos": 37,
+                      "lemma_id": "d04d5fa22e117e4c1c40b77a5007c453",
+                      "lemma": "out",
+                      "pos": "ADV",
+                      "sense_id": "dc5bcda898b5f93361f65ac5200de9b1",
+                      "sense_key": "out#hinaus",
+                      "gloss": "hinaus, heraus (Bewegung aus einem Inneren ins Freie oder nach außen)",
+                      "definition": "hinaus, heraus (Bewegung aus einem Inneren ins Freie oder nach außen)"
+                    },
+                    {
+                      "idx": 8,
+                      "surface": ".",
+                      "start_pos": 37,
+                      "end_pos": 38
+                    },
+                    {
+                      "idx": 9,
+                      "surface": "Maya",
+                      "start_pos": 39,
+                      "end_pos": 43,
+                      "lemma_id": "35bd69ce092154c110f060bf46a3100c",
+                      "lemma": "Maya",
+                      "pos": "PROPN",
+                      "sense_id": "39d372d1622eeecb802c30487786fb1e",
+                      "sense_key": "maya#maya",
+                      "gloss": "Maya",
+                      "definition": "Maya"
+                    },
+                    {
+                      "idx": 10,
+                      "surface": "puts",
+                      "start_pos": 44,
+                      "end_pos": 48,
+                      "lemma_id": "0b0552aa55e88c5a3d5d9476e05f8901",
+                      "lemma": "put",
+                      "pos": "VERB",
+                      "sense_id": "3e999a70451ebe40bd0779069056769c",
+                      "sense_key": "put#steckt",
+                      "gloss": "steckt",
+                      "definition": "steckt"
+                    },
+                    {
+                      "idx": 11,
+                      "surface": "it",
+                      "start_pos": 49,
+                      "end_pos": 51,
+                      "lemma_id": "19af4743be3df36463be605a87496f62",
+                      "lemma": "it",
+                      "pos": "PRON",
+                      "sense_id": "62d3dd736f2fb30b855ea064fc4e4536",
+                      "sense_key": "it#es_ding",
+                      "gloss": "Personalpronomen der 3. Person Singular für sächliche Dinge oder Tiere",
+                      "definition": "Personalpronomen der 3. Person Singular für sächliche Dinge oder Tiere"
+                    },
+                    {
+                      "idx": 12,
+                      "surface": "safely",
+                      "start_pos": 52,
+                      "end_pos": 58,
+                      "lemma_id": "46af0b59f9a6faf3f4705c3992d8c20d",
+                      "lemma": "safely",
+                      "pos": "ADV",
+                      "sense_id": "8b149e9f6a35b3d7583f3ada6768c54d",
+                      "sense_key": "safely#sicher",
+                      "gloss": "sicher",
+                      "definition": "So, dass etwas vor Verlust oder Schaden geschützt ist."
+                    },
+                    {
+                      "idx": 13,
+                      "surface": "inside",
+                      "start_pos": 59,
+                      "end_pos": 65,
+                      "lemma_id": "5182273ec7f4f913d7ed5dd0a5574fb0",
+                      "lemma": "inside",
+                      "pos": "ADV",
+                      "sense_id": "e2df29d25024d158e771a0aaffe96fdb",
+                      "sense_key": "inside#hinein",
+                      "gloss": "hinein",
+                      "definition": "hinein"
+                    },
+                    {
+                      "idx": 14,
+                      "surface": "and",
+                      "start_pos": 66,
+                      "end_pos": 69,
+                      "lemma_id": "c45fd05c953d582e85f120bad2dc95d1",
+                      "lemma": "and",
+                      "pos": "CCONJ",
+                      "sense_id": "0ed683aabf40e94b25412bec4bb26355",
+                      "sense_key": "and#und",
+                      "gloss": "und",
+                      "definition": "und"
+                    },
+                    {
+                      "idx": 15,
+                      "surface": "thanks",
+                      "start_pos": 70,
+                      "end_pos": 76,
+                      "lemma_id": "63d04b4883a3f90fe3676c71ff317c19",
+                      "lemma": "thank",
+                      "pos": "VERB",
+                      "sense_id": "37b8607d508575dffe69340b2b84ec86",
+                      "sense_key": "thank#danken",
+                      "gloss": "bedankt sich",
+                      "definition": "Jemandem für Hilfe oder eine freundliche Handlung Dank ausdrücken."
+                    },
+                    {
+                      "idx": 16,
+                      "surface": "the",
+                      "start_pos": 77,
+                      "end_pos": 80,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 17,
+                      "surface": "man",
+                      "start_pos": 81,
+                      "end_pos": 84,
+                      "lemma_id": "bf9719d9d3504b2b36b3e6c01984caf8",
+                      "lemma": "man",
+                      "pos": "NOUN",
+                      "sense_id": "31378c50f866b489b7512debae76bef2",
+                      "sense_key": "man#mann",
+                      "gloss": "Mann",
+                      "definition": "Mann"
+                    },
+                    {
+                      "idx": 18,
+                      "surface": ".",
+                      "start_pos": 84,
+                      "end_pos": 85
+                    }
+                  ]
+                }
+              },
+              {
+                "token_index": 4,
+                "surface": "inside",
+                "sense_id": "e2df29d25024d158e771a0aaffe96fdb",
+                "source_start": 20,
+                "source_end": 26,
+                "reason": "inside bedeutet hier hinein; Satz 4 klärt die zurückgesteckte Fahrkarte. Kein adjektivisches innerer.",
+                "source_sentence_refs": [
+                  "open-pocket/s4",
+                  "open-pocket/s5"
+                ],
+                "context": {
+                  "id": "ab851444e42dda9a8c19f0aef13e52a7",
+                  "text": "Her train ticket is about to fall out. Maya puts it safely inside and thanks the man.",
+                  "translation": "Ihre Fahrkarte droht herauszufallen. Maya steckt sie sicher hinein und bedankt sich bei dem Mann.",
+                  "target_index": 13,
+                  "tokens": [
+                    {
+                      "idx": 0,
+                      "surface": "Her",
+                      "start_pos": 0,
+                      "end_pos": 3,
+                      "lemma_id": "ea82f5d17131d4337761b5980124375a",
+                      "lemma": "her",
+                      "pos": "DET",
+                      "sense_id": "22b9e161311ba6f36b58222b6d56dcac",
+                      "sense_key": "her#ihr_possessiv",
+                      "gloss": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)",
+                      "definition": "ihr (Possessivbegleiter: drückt Besitz einer weiblichen Person aus)"
+                    },
+                    {
+                      "idx": 1,
+                      "surface": "train",
+                      "start_pos": 4,
+                      "end_pos": 9,
+                      "lemma_id": "47d48066436f1d59871ac59bc985e3d5",
+                      "lemma": "train",
+                      "pos": "NOUN",
+                      "sense_id": "57d65c8f7fa4b745bf4436decc8c7177",
+                      "sense_key": "train#zug",
+                      "gloss": "Zug",
+                      "definition": "Zug"
+                    },
+                    {
+                      "idx": 2,
+                      "surface": "ticket",
+                      "start_pos": 10,
+                      "end_pos": 16,
+                      "lemma_id": "56d406dce66ffcacab421cd7b7e93a67",
+                      "lemma": "ticket",
+                      "pos": "NOUN",
+                      "sense_id": "225de47de6ce978fcc55d89fa1afbd0f",
+                      "sense_key": "ticket#fahrkarte",
+                      "gloss": "Fahrkarte",
+                      "definition": "Fahrkarte"
+                    },
+                    {
+                      "idx": 3,
+                      "surface": "is",
+                      "start_pos": 17,
+                      "end_pos": 19,
+                      "lemma_id": "729ab2845a0434b10a158d68d718faa3",
+                      "lemma": "be",
+                      "pos": "AUX",
+                      "sense_id": "f47c06ceb40b579b5f6c10d8df2ed7c9",
+                      "sense_key": "be#sein_vollverb",
+                      "gloss": "sein (als Vollverb oder Kopula zur Angabe von Zustand, Identität oder Eigenschaft)",
+                      "definition": "sein (als Vollverb oder Kopula zur Angabe von Zustand, Identität oder Eigenschaft)"
+                    },
+                    {
+                      "idx": 4,
+                      "surface": "about",
+                      "start_pos": 20,
+                      "end_pos": 25,
+                      "lemma_id": "dd06e0a0794225ec0453be7e31a436e5",
+                      "lemma": "about",
+                      "pos": "ADJ",
+                      "sense_id": "a88f6d831b071673a781d497c4afa05f",
+                      "sense_key": "about#im_begriff",
+                      "gloss": "im Begriff sein (etwas gleich zu tun, v.a. 'about to')",
+                      "definition": "im Begriff sein (etwas gleich zu tun, v.a. 'about to')"
+                    },
+                    {
+                      "idx": 5,
+                      "surface": "to",
+                      "start_pos": 26,
+                      "end_pos": 28,
+                      "lemma_id": "9b810c8d8df88a1405f5834d3d6cc3a8",
+                      "lemma": "to",
+                      "pos": "PART",
+                      "sense_id": "554669a7223f2cbf92e1ac44f8d5fae1",
+                      "sense_key": "to#infinitivpartikel",
+                      "gloss": "Partikel vor einem Infinitiv (z. B. 'to go')",
+                      "definition": "Partikel vor einem Infinitiv (z. B. 'to go')"
+                    },
+                    {
+                      "idx": 6,
+                      "surface": "fall",
+                      "start_pos": 29,
+                      "end_pos": 33,
+                      "lemma_id": "8e0aa6cec1e05a4e22d8252868bc5055",
+                      "lemma": "fall",
+                      "pos": "VERB",
+                      "sense_id": "2d393391ee924fe0fb127c3de8ffa3ac",
+                      "sense_key": "fall#fallen",
+                      "gloss": "fallen",
+                      "definition": "Sich durch die Schwerkraft nach unten bewegen."
+                    },
+                    {
+                      "idx": 7,
+                      "surface": "out",
+                      "start_pos": 34,
+                      "end_pos": 37,
+                      "lemma_id": "d04d5fa22e117e4c1c40b77a5007c453",
+                      "lemma": "out",
+                      "pos": "ADV",
+                      "sense_id": "dc5bcda898b5f93361f65ac5200de9b1",
+                      "sense_key": "out#hinaus",
+                      "gloss": "hinaus, heraus (Bewegung aus einem Inneren ins Freie oder nach außen)",
+                      "definition": "hinaus, heraus (Bewegung aus einem Inneren ins Freie oder nach außen)"
+                    },
+                    {
+                      "idx": 8,
+                      "surface": ".",
+                      "start_pos": 37,
+                      "end_pos": 38
+                    },
+                    {
+                      "idx": 9,
+                      "surface": "Maya",
+                      "start_pos": 39,
+                      "end_pos": 43,
+                      "lemma_id": "35bd69ce092154c110f060bf46a3100c",
+                      "lemma": "Maya",
+                      "pos": "PROPN",
+                      "sense_id": "39d372d1622eeecb802c30487786fb1e",
+                      "sense_key": "maya#maya",
+                      "gloss": "Maya",
+                      "definition": "Maya"
+                    },
+                    {
+                      "idx": 10,
+                      "surface": "puts",
+                      "start_pos": 44,
+                      "end_pos": 48,
+                      "lemma_id": "0b0552aa55e88c5a3d5d9476e05f8901",
+                      "lemma": "put",
+                      "pos": "VERB",
+                      "sense_id": "3e999a70451ebe40bd0779069056769c",
+                      "sense_key": "put#steckt",
+                      "gloss": "steckt",
+                      "definition": "steckt"
+                    },
+                    {
+                      "idx": 11,
+                      "surface": "it",
+                      "start_pos": 49,
+                      "end_pos": 51,
+                      "lemma_id": "19af4743be3df36463be605a87496f62",
+                      "lemma": "it",
+                      "pos": "PRON",
+                      "sense_id": "62d3dd736f2fb30b855ea064fc4e4536",
+                      "sense_key": "it#es_ding",
+                      "gloss": "Personalpronomen der 3. Person Singular für sächliche Dinge oder Tiere",
+                      "definition": "Personalpronomen der 3. Person Singular für sächliche Dinge oder Tiere"
+                    },
+                    {
+                      "idx": 12,
+                      "surface": "safely",
+                      "start_pos": 52,
+                      "end_pos": 58,
+                      "lemma_id": "46af0b59f9a6faf3f4705c3992d8c20d",
+                      "lemma": "safely",
+                      "pos": "ADV",
+                      "sense_id": "8b149e9f6a35b3d7583f3ada6768c54d",
+                      "sense_key": "safely#sicher",
+                      "gloss": "sicher",
+                      "definition": "So, dass etwas vor Verlust oder Schaden geschützt ist."
+                    },
+                    {
+                      "idx": 13,
+                      "surface": "inside",
+                      "start_pos": 59,
+                      "end_pos": 65,
+                      "lemma_id": "5182273ec7f4f913d7ed5dd0a5574fb0",
+                      "lemma": "inside",
+                      "pos": "ADV",
+                      "sense_id": "e2df29d25024d158e771a0aaffe96fdb",
+                      "sense_key": "inside#hinein",
+                      "gloss": "hinein",
+                      "definition": "hinein"
+                    },
+                    {
+                      "idx": 14,
+                      "surface": "and",
+                      "start_pos": 66,
+                      "end_pos": 69,
+                      "lemma_id": "c45fd05c953d582e85f120bad2dc95d1",
+                      "lemma": "and",
+                      "pos": "CCONJ",
+                      "sense_id": "0ed683aabf40e94b25412bec4bb26355",
+                      "sense_key": "and#und",
+                      "gloss": "und",
+                      "definition": "und"
+                    },
+                    {
+                      "idx": 15,
+                      "surface": "thanks",
+                      "start_pos": 70,
+                      "end_pos": 76,
+                      "lemma_id": "63d04b4883a3f90fe3676c71ff317c19",
+                      "lemma": "thank",
+                      "pos": "VERB",
+                      "sense_id": "37b8607d508575dffe69340b2b84ec86",
+                      "sense_key": "thank#danken",
+                      "gloss": "bedankt sich",
+                      "definition": "Jemandem für Hilfe oder eine freundliche Handlung Dank ausdrücken."
+                    },
+                    {
+                      "idx": 16,
+                      "surface": "the",
+                      "start_pos": 77,
+                      "end_pos": 80,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 17,
+                      "surface": "man",
+                      "start_pos": 81,
+                      "end_pos": 84,
+                      "lemma_id": "bf9719d9d3504b2b36b3e6c01984caf8",
+                      "lemma": "man",
+                      "pos": "NOUN",
+                      "sense_id": "31378c50f866b489b7512debae76bef2",
+                      "sense_key": "man#mann",
+                      "gloss": "Mann",
+                      "definition": "Mann"
+                    },
+                    {
+                      "idx": 18,
+                      "surface": ".",
+                      "start_pos": 84,
+                      "end_pos": 85
+                    }
+                  ]
+                }
+              },
+              {
+                "token_index": 6,
+                "surface": "thanks",
+                "sense_id": "37b8607d508575dffe69340b2b84ec86",
+                "source_start": 31,
+                "source_end": 37,
+                "reason": "thanks bezeichnet bedankt sich bei dem Mann, kein substantivischer Dank. Der Mann wird in Satz 3 eingeführt; drei Originalsätze überschreiten 20 Wörter. Der kurze Ersatzsatz macht die Handlung unabhängig von it/sie.",
+                "source_sentence_refs": [],
+                "context": {
+                  "id": "11d10f2350880c255f9ca32d6f228638",
+                  "text": "Maya thanks the man.",
+                  "translation": "Maya bedankt sich bei dem Mann.",
+                  "target_index": 1,
+                  "tokens": [
+                    {
+                      "idx": 0,
+                      "surface": "Maya",
+                      "start_pos": 0,
+                      "end_pos": 4,
+                      "lemma_id": "35bd69ce092154c110f060bf46a3100c",
+                      "lemma": "Maya",
+                      "pos": "PROPN",
+                      "sense_id": "39d372d1622eeecb802c30487786fb1e",
+                      "sense_key": "maya#maya",
+                      "gloss": "Maya",
+                      "definition": "Maya"
+                    },
+                    {
+                      "idx": 1,
+                      "surface": "thanks",
+                      "start_pos": 5,
+                      "end_pos": 11,
+                      "lemma_id": "63d04b4883a3f90fe3676c71ff317c19",
+                      "lemma": "thank",
+                      "pos": "VERB",
+                      "sense_id": "37b8607d508575dffe69340b2b84ec86",
+                      "sense_key": "thank#danken",
+                      "gloss": "bedankt sich",
+                      "definition": "Jemandem für Hilfe oder eine freundliche Handlung Dank ausdrücken."
+                    },
+                    {
+                      "idx": 2,
+                      "surface": "the",
+                      "start_pos": 12,
+                      "end_pos": 15,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 3,
+                      "surface": "man",
+                      "start_pos": 16,
+                      "end_pos": 19,
+                      "lemma_id": "bf9719d9d3504b2b36b3e6c01984caf8",
+                      "lemma": "man",
+                      "pos": "NOUN",
+                      "sense_id": "31378c50f866b489b7512debae76bef2",
+                      "sense_key": "man#mann",
+                      "gloss": "Mann",
+                      "definition": "Mann"
+                    },
+                    {
+                      "idx": 4,
+                      "surface": ".",
+                      "start_pos": 19,
+                      "end_pos": 20
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      "expect_tokens": [
+        {
+          "idx": 0,
+          "surface": "Maya",
+          "start_pos": 0,
+          "end_pos": 4,
+          "sentence": "open-pocket/s5",
+          "lemma": "Maya/PROPN",
+          "sense": "Maya/PROPN|maya#maya",
+          "card": null
+        },
+        {
+          "idx": 1,
+          "surface": "puts",
+          "start_pos": 5,
+          "end_pos": 9,
+          "sentence": "open-pocket/s5",
+          "lemma": "put/VERB",
+          "sense": "put/VERB|put#steckt",
+          "card": null
+        },
+        {
+          "idx": 2,
+          "surface": "it",
+          "start_pos": 10,
+          "end_pos": 12,
+          "sentence": "open-pocket/s5",
+          "lemma": "it/PRON",
+          "sense": "it/PRON|it#es_ding",
+          "card": "it|it/PRON|it#es_ding"
+        },
+        {
+          "idx": 3,
+          "surface": "safely",
+          "start_pos": 13,
+          "end_pos": 19,
+          "sentence": "open-pocket/s5",
+          "lemma": "safely/ADV",
+          "sense": "safely/ADV|safely#sicher",
+          "card": null
+        },
+        {
+          "idx": 4,
+          "surface": "inside",
+          "start_pos": 20,
+          "end_pos": 26,
+          "sentence": "open-pocket/s5",
+          "lemma": "inside/ADV",
+          "sense": "inside/ADV|inside#hinein",
+          "card": null
+        },
+        {
+          "idx": 5,
+          "surface": "and",
+          "start_pos": 27,
+          "end_pos": 30,
+          "sentence": "open-pocket/s5",
+          "lemma": "and/CCONJ",
+          "sense": "and/CCONJ|and#und",
+          "card": "and|and/CCONJ|and#und"
+        },
+        {
+          "idx": 6,
+          "surface": "thanks",
+          "start_pos": 31,
+          "end_pos": 37,
+          "sentence": "open-pocket/s5",
+          "lemma": "thank/VERB",
+          "sense": "thank/VERB|thank#danken",
+          "card": null
+        },
+        {
+          "idx": 7,
+          "surface": "the",
+          "start_pos": 38,
+          "end_pos": 41,
+          "sentence": "open-pocket/s5",
+          "lemma": "the/DET",
+          "sense": "the/DET|the#bestimmter_artikel",
+          "card": "the|the/DET|the#bestimmter_artikel"
+        },
+        {
+          "idx": 8,
+          "surface": "man",
+          "start_pos": 42,
+          "end_pos": 45,
+          "sentence": "open-pocket/s5",
+          "lemma": "man/NOUN",
+          "sense": "man/NOUN|man#mann",
+          "card": null
+        },
+        {
+          "idx": 9,
+          "surface": ".",
+          "start_pos": 45,
+          "end_pos": 46,
+          "sentence": "open-pocket/s5",
+          "lemma": null,
+          "sense": null,
+          "card": null
+        }
+      ],
+      "reason": "Erneute Prüfung aller freigegebenen Wortstellen: genau der unveränderte geeignete Originalsatz, keine Nachbarsätze oder unnötigen Ersatztexte.",
+      "contexts": [
+        {
+          "token_index": 1,
+          "surface": "puts",
+          "sense": "put/VERB|put#steckt",
+          "reason": "puts bedeutet steckt hinein; Übersetzung belegt genau diese Bedeutung. it allein rechtfertigt keinen Nachbarsatz.",
+          "sentence_refs": [
+            "open-pocket/s5"
+          ]
+        },
+        {
+          "token_index": 3,
+          "surface": "safely",
+          "sense": "safely/ADV|safely#sicher",
+          "reason": "safely bedeutet sicher beim Hineinstecken; Original und Übersetzung sind geeignet, der it-Bezug erfordert keinen Zusatzsatz.",
+          "sentence_refs": [
+            "open-pocket/s5"
+          ]
+        },
+        {
+          "token_index": 4,
+          "surface": "inside",
+          "sense": "inside/ADV|inside#hinein",
+          "reason": "inside bedeutet hinein; der Originalsatz mit Übersetzung belegt die Richtung trotz it.",
+          "sentence_refs": [
+            "open-pocket/s5"
+          ]
+        },
+        {
+          "token_index": 6,
+          "surface": "thanks",
+          "sense": "thank/VERB|thank#danken",
+          "reason": "thanks bedeutet bedankt sich bei dem Mann. Der Originalsatz ist eine geeignete Übung, keine Verkürzung nötig.",
+          "sentence_refs": [
+            "open-pocket/s5"
+          ]
+        }
+      ]
+    },
+    {
+      "op": "story_single_sentence_contexts",
+      "story_id": "1fe9baf1b1a199b5bfb116e320a679b9",
+      "sentence_id": "626a0b1e603b31e67f92fd0c210ab618",
+      "expect_sentence": {
+        "ref": "open-pocket/s6",
+        "text": "Then she walks to the platform for her train.",
+        "translation_de": "Dann geht sie zum Bahnsteig für ihren Zug.",
+        "origins": [
+          "story"
+        ],
+        "model": null,
+        "qa_status": "editorial_reviewed",
+        "qa_report": {
+          "editorial_create": {
+            "reviewer": "Codex: redaktionelle Chat-Aufbereitung der vom Nutzer freigegebenen sechs Sätze; keine menschliche/externe Modellprüfung",
+            "operation_id": "story-learning-seed-v1",
+            "sentence": "open-pocket/s6",
+            "decision": "approved",
+            "reason": "Satz 6: vorgegebener englischer Storytext und deutsche Übersetzung gelesen; alle Tokenbedeutungen explizit zugeordnet. Redaktionelle Chat-Zulieferung für internes Test-Pack, keine externe oder Modell-QA.",
+            "checked": {
+              "text": "Then she walks to the platform for her train.",
+              "translation_de": "Dann geht sie zum Bahnsteig für ihren Zug.",
+              "tokens_sha256": "b8cf76608729d0219b028695ff4477b3c3b20ac35f9c88187a53bdaecad8d8fa",
+              "links_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            },
+            "alternatives_checked": [],
+            "learning_contexts": [
+              {
+                "token_index": 5,
+                "surface": "platform",
+                "sense": "platform/NOUN|platform#bahnsteig",
+                "approved": true,
+                "reason": "Weg zum Bahnsteig für den Zug: konkrete Bahnbedeutung, keine digitale Plattform; Übersetzung und diese Tokenstelle geprüft."
+              }
+            ]
+          },
+          "story_practice_contexts": {
+            "format_version": 1,
+            "reviewer": "Codex: redaktionelle Offline-Prüfung im Nutzerauftrag; internes Test-Pack, keine menschliche oder externe Modell-QA",
+            "source_sha256": "b48c224ef0b2538d2b97f77130742b1a0f23df6215e8feb12bec785d8f98560c",
+            "reason": "Gezielte interne Offline-Prüfung der bislang nicht gebundenen lernbaren Tokenstellen; keine Freigabe von Eigennamen/Satzzeichen oder neuen globalen Karten.",
+            "bindings": [
+              {
+                "token_index": 0,
+                "surface": "Then",
+                "sense_id": "010364171e3d4edfbd47e1dc8c9f2239",
+                "source_start": 0,
+                "source_end": 4,
+                "reason": "Then bezeichnet die zeitliche Folge nach der Ankunft. Für den vollständigen ursprünglichen it-Bezug wären Sätze 4–6 mit 26 Wörtern nötig; der kurze Ersatz nennt Ankunft und anschließenden Weg.",
+                "source_sentence_refs": [],
+                "context": {
+                  "id": "aa9f701a916d968890b3c6abc1001d05",
+                  "text": "Maya arrives at the station. Then she walks to the platform.",
+                  "translation": "Maya kommt am Bahnhof an. Dann geht sie zum Bahnsteig.",
+                  "target_index": 6,
+                  "tokens": [
+                    {
+                      "idx": 0,
+                      "surface": "Maya",
+                      "start_pos": 0,
+                      "end_pos": 4,
+                      "lemma_id": "35bd69ce092154c110f060bf46a3100c",
+                      "lemma": "Maya",
+                      "pos": "PROPN",
+                      "sense_id": "39d372d1622eeecb802c30487786fb1e",
+                      "sense_key": "maya#maya",
+                      "gloss": "Maya",
+                      "definition": "Maya"
+                    },
+                    {
+                      "idx": 1,
+                      "surface": "arrives",
+                      "start_pos": 5,
+                      "end_pos": 12,
+                      "lemma_id": "5663cc87b778b25e9f5c336d8e648711",
+                      "lemma": "arrive",
+                      "pos": "VERB",
+                      "sense_id": "1c948ee5a17a588f4904de43dd5c4f26",
+                      "sense_key": "arrive#ankommt",
+                      "gloss": "ankommt",
+                      "definition": "ankommt"
+                    },
+                    {
+                      "idx": 2,
+                      "surface": "at",
+                      "start_pos": 13,
+                      "end_pos": 15,
+                      "lemma_id": "07133457c44db47e6cde8c5fac328c60",
+                      "lemma": "at",
+                      "pos": "ADP",
+                      "sense_id": "c48f35b4d457e15dfab97b6dda532c3b",
+                      "sense_key": "at#ort",
+                      "gloss": "räumlich (an einem bestimmten Ort oder Punkt)",
+                      "definition": "räumlich (an einem bestimmten Ort oder Punkt)"
+                    },
+                    {
+                      "idx": 3,
+                      "surface": "the",
+                      "start_pos": 16,
+                      "end_pos": 19,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 4,
+                      "surface": "station",
+                      "start_pos": 20,
+                      "end_pos": 27,
+                      "lemma_id": "01ce7034a3919e567ead766155645b3d",
+                      "lemma": "station",
+                      "pos": "NOUN",
+                      "sense_id": "d2082da2516f5a62b5c7904c6b68f844",
+                      "sense_key": "station#bahnhof",
+                      "gloss": "Bahnhof",
+                      "definition": "Bahnhof"
+                    },
+                    {
+                      "idx": 5,
+                      "surface": ".",
+                      "start_pos": 27,
+                      "end_pos": 28
+                    },
+                    {
+                      "idx": 6,
+                      "surface": "Then",
+                      "start_pos": 29,
+                      "end_pos": 33,
+                      "lemma_id": "f3cc503d0d9b7e144a6be5adc67169af",
+                      "lemma": "then",
+                      "pos": "ADV",
+                      "sense_id": "010364171e3d4edfbd47e1dc8c9f2239",
+                      "sense_key": "then#danach",
+                      "gloss": "dann",
+                      "definition": "Anschließend, als nächster Schritt einer zeitlichen Folge."
+                    },
+                    {
+                      "idx": 7,
+                      "surface": "she",
+                      "start_pos": 34,
+                      "end_pos": 37,
+                      "lemma_id": "d5277eccbfaa185968a70bddba434fdd",
+                      "lemma": "she",
+                      "pos": "PRON",
+                      "sense_id": "ed958e74d47378378811ed25e07b467c",
+                      "sense_key": "she#sie",
+                      "gloss": "sie",
+                      "definition": "sie"
+                    },
+                    {
+                      "idx": 8,
+                      "surface": "walks",
+                      "start_pos": 38,
+                      "end_pos": 43,
+                      "lemma_id": "95bbf1a609dc83e4f71c02c37b33311c",
+                      "lemma": "walk",
+                      "pos": "VERB",
+                      "sense_id": "d4257c5963fa23d12dffb8e96dc7befc",
+                      "sense_key": "walk#geht-zu-fuss",
+                      "gloss": "geht zu Fuß",
+                      "definition": "Sich gehend fortbewegen"
+                    },
+                    {
+                      "idx": 9,
+                      "surface": "to",
+                      "start_pos": 44,
+                      "end_pos": 46,
+                      "lemma_id": "415f6f3b1f80a4718bbda00c3d29ebee",
+                      "lemma": "to",
+                      "pos": "ADP",
+                      "sense_id": "11c4400399de7986417fcf98bbb3b3e7",
+                      "sense_key": "to#nach_richtung",
+                      "gloss": "Richtung oder Zielort (z. B. 'go to London')",
+                      "definition": "Richtung oder Zielort (z. B. 'go to London')"
+                    },
+                    {
+                      "idx": 10,
+                      "surface": "the",
+                      "start_pos": 47,
+                      "end_pos": 50,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 11,
+                      "surface": "platform",
+                      "start_pos": 51,
+                      "end_pos": 59,
+                      "lemma_id": "a5956d648ff2ee8638a356f4c52b73d4",
+                      "lemma": "platform",
+                      "pos": "NOUN",
+                      "sense_id": "be273c9b25a795f778ff11dae9e9f37a",
+                      "sense_key": "platform#bahnsteig",
+                      "gloss": "Bahnsteig",
+                      "definition": "Bahnsteig"
+                    },
+                    {
+                      "idx": 12,
+                      "surface": ".",
+                      "start_pos": 59,
+                      "end_pos": 60
+                    }
+                  ]
+                }
+              },
+              {
+                "token_index": 1,
+                "surface": "she",
+                "sense_id": "ed958e74d47378378811ed25e07b467c",
+                "source_start": 5,
+                "source_end": 8,
+                "reason": "she bezeichnet Maya als weibliches Subjekt. Der kurze Ersatz nennt Maya explizit und behält ihre anschließende Handlung, ohne unaufgelöstes it aus Satz 5.",
+                "source_sentence_refs": [],
+                "context": {
+                  "id": "aa9f701a916d968890b3c6abc1001d05",
+                  "text": "Maya arrives at the station. Then she walks to the platform.",
+                  "translation": "Maya kommt am Bahnhof an. Dann geht sie zum Bahnsteig.",
+                  "target_index": 7,
+                  "tokens": [
+                    {
+                      "idx": 0,
+                      "surface": "Maya",
+                      "start_pos": 0,
+                      "end_pos": 4,
+                      "lemma_id": "35bd69ce092154c110f060bf46a3100c",
+                      "lemma": "Maya",
+                      "pos": "PROPN",
+                      "sense_id": "39d372d1622eeecb802c30487786fb1e",
+                      "sense_key": "maya#maya",
+                      "gloss": "Maya",
+                      "definition": "Maya"
+                    },
+                    {
+                      "idx": 1,
+                      "surface": "arrives",
+                      "start_pos": 5,
+                      "end_pos": 12,
+                      "lemma_id": "5663cc87b778b25e9f5c336d8e648711",
+                      "lemma": "arrive",
+                      "pos": "VERB",
+                      "sense_id": "1c948ee5a17a588f4904de43dd5c4f26",
+                      "sense_key": "arrive#ankommt",
+                      "gloss": "ankommt",
+                      "definition": "ankommt"
+                    },
+                    {
+                      "idx": 2,
+                      "surface": "at",
+                      "start_pos": 13,
+                      "end_pos": 15,
+                      "lemma_id": "07133457c44db47e6cde8c5fac328c60",
+                      "lemma": "at",
+                      "pos": "ADP",
+                      "sense_id": "c48f35b4d457e15dfab97b6dda532c3b",
+                      "sense_key": "at#ort",
+                      "gloss": "räumlich (an einem bestimmten Ort oder Punkt)",
+                      "definition": "räumlich (an einem bestimmten Ort oder Punkt)"
+                    },
+                    {
+                      "idx": 3,
+                      "surface": "the",
+                      "start_pos": 16,
+                      "end_pos": 19,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 4,
+                      "surface": "station",
+                      "start_pos": 20,
+                      "end_pos": 27,
+                      "lemma_id": "01ce7034a3919e567ead766155645b3d",
+                      "lemma": "station",
+                      "pos": "NOUN",
+                      "sense_id": "d2082da2516f5a62b5c7904c6b68f844",
+                      "sense_key": "station#bahnhof",
+                      "gloss": "Bahnhof",
+                      "definition": "Bahnhof"
+                    },
+                    {
+                      "idx": 5,
+                      "surface": ".",
+                      "start_pos": 27,
+                      "end_pos": 28
+                    },
+                    {
+                      "idx": 6,
+                      "surface": "Then",
+                      "start_pos": 29,
+                      "end_pos": 33,
+                      "lemma_id": "f3cc503d0d9b7e144a6be5adc67169af",
+                      "lemma": "then",
+                      "pos": "ADV",
+                      "sense_id": "010364171e3d4edfbd47e1dc8c9f2239",
+                      "sense_key": "then#danach",
+                      "gloss": "dann",
+                      "definition": "Anschließend, als nächster Schritt einer zeitlichen Folge."
+                    },
+                    {
+                      "idx": 7,
+                      "surface": "she",
+                      "start_pos": 34,
+                      "end_pos": 37,
+                      "lemma_id": "d5277eccbfaa185968a70bddba434fdd",
+                      "lemma": "she",
+                      "pos": "PRON",
+                      "sense_id": "ed958e74d47378378811ed25e07b467c",
+                      "sense_key": "she#sie",
+                      "gloss": "sie",
+                      "definition": "sie"
+                    },
+                    {
+                      "idx": 8,
+                      "surface": "walks",
+                      "start_pos": 38,
+                      "end_pos": 43,
+                      "lemma_id": "95bbf1a609dc83e4f71c02c37b33311c",
+                      "lemma": "walk",
+                      "pos": "VERB",
+                      "sense_id": "d4257c5963fa23d12dffb8e96dc7befc",
+                      "sense_key": "walk#geht-zu-fuss",
+                      "gloss": "geht zu Fuß",
+                      "definition": "Sich gehend fortbewegen"
+                    },
+                    {
+                      "idx": 9,
+                      "surface": "to",
+                      "start_pos": 44,
+                      "end_pos": 46,
+                      "lemma_id": "415f6f3b1f80a4718bbda00c3d29ebee",
+                      "lemma": "to",
+                      "pos": "ADP",
+                      "sense_id": "11c4400399de7986417fcf98bbb3b3e7",
+                      "sense_key": "to#nach_richtung",
+                      "gloss": "Richtung oder Zielort (z. B. 'go to London')",
+                      "definition": "Richtung oder Zielort (z. B. 'go to London')"
+                    },
+                    {
+                      "idx": 10,
+                      "surface": "the",
+                      "start_pos": 47,
+                      "end_pos": 50,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 11,
+                      "surface": "platform",
+                      "start_pos": 51,
+                      "end_pos": 59,
+                      "lemma_id": "a5956d648ff2ee8638a356f4c52b73d4",
+                      "lemma": "platform",
+                      "pos": "NOUN",
+                      "sense_id": "be273c9b25a795f778ff11dae9e9f37a",
+                      "sense_key": "platform#bahnsteig",
+                      "gloss": "Bahnsteig",
+                      "definition": "Bahnsteig"
+                    },
+                    {
+                      "idx": 12,
+                      "surface": ".",
+                      "start_pos": 59,
+                      "end_pos": 60
+                    }
+                  ]
+                }
+              },
+              {
+                "token_index": 2,
+                "surface": "walks",
+                "sense_id": "d4257c5963fa23d12dffb8e96dc7befc",
+                "source_start": 9,
+                "source_end": 14,
+                "reason": "walks bezeichnet geht zu Fuß zum Bahnsteig, Präsens 3. Person. Der kurze Ersatz erhält genau diese Form/Bedeutung und macht den zeitlichen/personalen Bezug vollständig.",
+                "source_sentence_refs": [],
+                "context": {
+                  "id": "aa9f701a916d968890b3c6abc1001d05",
+                  "text": "Maya arrives at the station. Then she walks to the platform.",
+                  "translation": "Maya kommt am Bahnhof an. Dann geht sie zum Bahnsteig.",
+                  "target_index": 8,
+                  "tokens": [
+                    {
+                      "idx": 0,
+                      "surface": "Maya",
+                      "start_pos": 0,
+                      "end_pos": 4,
+                      "lemma_id": "35bd69ce092154c110f060bf46a3100c",
+                      "lemma": "Maya",
+                      "pos": "PROPN",
+                      "sense_id": "39d372d1622eeecb802c30487786fb1e",
+                      "sense_key": "maya#maya",
+                      "gloss": "Maya",
+                      "definition": "Maya"
+                    },
+                    {
+                      "idx": 1,
+                      "surface": "arrives",
+                      "start_pos": 5,
+                      "end_pos": 12,
+                      "lemma_id": "5663cc87b778b25e9f5c336d8e648711",
+                      "lemma": "arrive",
+                      "pos": "VERB",
+                      "sense_id": "1c948ee5a17a588f4904de43dd5c4f26",
+                      "sense_key": "arrive#ankommt",
+                      "gloss": "ankommt",
+                      "definition": "ankommt"
+                    },
+                    {
+                      "idx": 2,
+                      "surface": "at",
+                      "start_pos": 13,
+                      "end_pos": 15,
+                      "lemma_id": "07133457c44db47e6cde8c5fac328c60",
+                      "lemma": "at",
+                      "pos": "ADP",
+                      "sense_id": "c48f35b4d457e15dfab97b6dda532c3b",
+                      "sense_key": "at#ort",
+                      "gloss": "räumlich (an einem bestimmten Ort oder Punkt)",
+                      "definition": "räumlich (an einem bestimmten Ort oder Punkt)"
+                    },
+                    {
+                      "idx": 3,
+                      "surface": "the",
+                      "start_pos": 16,
+                      "end_pos": 19,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 4,
+                      "surface": "station",
+                      "start_pos": 20,
+                      "end_pos": 27,
+                      "lemma_id": "01ce7034a3919e567ead766155645b3d",
+                      "lemma": "station",
+                      "pos": "NOUN",
+                      "sense_id": "d2082da2516f5a62b5c7904c6b68f844",
+                      "sense_key": "station#bahnhof",
+                      "gloss": "Bahnhof",
+                      "definition": "Bahnhof"
+                    },
+                    {
+                      "idx": 5,
+                      "surface": ".",
+                      "start_pos": 27,
+                      "end_pos": 28
+                    },
+                    {
+                      "idx": 6,
+                      "surface": "Then",
+                      "start_pos": 29,
+                      "end_pos": 33,
+                      "lemma_id": "f3cc503d0d9b7e144a6be5adc67169af",
+                      "lemma": "then",
+                      "pos": "ADV",
+                      "sense_id": "010364171e3d4edfbd47e1dc8c9f2239",
+                      "sense_key": "then#danach",
+                      "gloss": "dann",
+                      "definition": "Anschließend, als nächster Schritt einer zeitlichen Folge."
+                    },
+                    {
+                      "idx": 7,
+                      "surface": "she",
+                      "start_pos": 34,
+                      "end_pos": 37,
+                      "lemma_id": "d5277eccbfaa185968a70bddba434fdd",
+                      "lemma": "she",
+                      "pos": "PRON",
+                      "sense_id": "ed958e74d47378378811ed25e07b467c",
+                      "sense_key": "she#sie",
+                      "gloss": "sie",
+                      "definition": "sie"
+                    },
+                    {
+                      "idx": 8,
+                      "surface": "walks",
+                      "start_pos": 38,
+                      "end_pos": 43,
+                      "lemma_id": "95bbf1a609dc83e4f71c02c37b33311c",
+                      "lemma": "walk",
+                      "pos": "VERB",
+                      "sense_id": "d4257c5963fa23d12dffb8e96dc7befc",
+                      "sense_key": "walk#geht-zu-fuss",
+                      "gloss": "geht zu Fuß",
+                      "definition": "Sich gehend fortbewegen"
+                    },
+                    {
+                      "idx": 9,
+                      "surface": "to",
+                      "start_pos": 44,
+                      "end_pos": 46,
+                      "lemma_id": "415f6f3b1f80a4718bbda00c3d29ebee",
+                      "lemma": "to",
+                      "pos": "ADP",
+                      "sense_id": "11c4400399de7986417fcf98bbb3b3e7",
+                      "sense_key": "to#nach_richtung",
+                      "gloss": "Richtung oder Zielort (z. B. 'go to London')",
+                      "definition": "Richtung oder Zielort (z. B. 'go to London')"
+                    },
+                    {
+                      "idx": 10,
+                      "surface": "the",
+                      "start_pos": 47,
+                      "end_pos": 50,
+                      "lemma_id": "f3a192e75e9249f5b0af8a4cb8e6e17b",
+                      "lemma": "the",
+                      "pos": "DET",
+                      "sense_id": "00743a426f5a95e76e29104f56c21948",
+                      "sense_key": "the#bestimmter_artikel",
+                      "gloss": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)",
+                      "definition": "bestimmter Artikel (bezeichnet eine bereits bekannte oder spezifische Sache/Person)"
+                    },
+                    {
+                      "idx": 11,
+                      "surface": "platform",
+                      "start_pos": 51,
+                      "end_pos": 59,
+                      "lemma_id": "a5956d648ff2ee8638a356f4c52b73d4",
+                      "lemma": "platform",
+                      "pos": "NOUN",
+                      "sense_id": "be273c9b25a795f778ff11dae9e9f37a",
+                      "sense_key": "platform#bahnsteig",
+                      "gloss": "Bahnsteig",
+                      "definition": "Bahnsteig"
+                    },
+                    {
+                      "idx": 12,
+                      "surface": ".",
+                      "start_pos": 59,
+                      "end_pos": 60
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      "expect_tokens": [
+        {
+          "idx": 0,
+          "surface": "Then",
+          "start_pos": 0,
+          "end_pos": 4,
+          "sentence": "open-pocket/s6",
+          "lemma": "then/ADV",
+          "sense": "then/ADV|then#danach",
+          "card": null
+        },
+        {
+          "idx": 1,
+          "surface": "she",
+          "start_pos": 5,
+          "end_pos": 8,
+          "sentence": "open-pocket/s6",
+          "lemma": "she/PRON",
+          "sense": "she/PRON|she#sie",
+          "card": null
+        },
+        {
+          "idx": 2,
+          "surface": "walks",
+          "start_pos": 9,
+          "end_pos": 14,
+          "sentence": "open-pocket/s6",
+          "lemma": "walk/VERB",
+          "sense": "walk/VERB|walk#geht-zu-fuss",
+          "card": null
+        },
+        {
+          "idx": 3,
+          "surface": "to",
+          "start_pos": 15,
+          "end_pos": 17,
+          "sentence": "open-pocket/s6",
+          "lemma": "to/ADP",
+          "sense": "to/ADP|to#nach_richtung",
+          "card": "to|to/ADP|to#nach_richtung"
+        },
+        {
+          "idx": 4,
+          "surface": "the",
+          "start_pos": 18,
+          "end_pos": 21,
+          "sentence": "open-pocket/s6",
+          "lemma": "the/DET",
+          "sense": "the/DET|the#bestimmter_artikel",
+          "card": "the|the/DET|the#bestimmter_artikel"
+        },
+        {
+          "idx": 5,
+          "surface": "platform",
+          "start_pos": 22,
+          "end_pos": 30,
+          "sentence": "open-pocket/s6",
+          "lemma": "platform/NOUN",
+          "sense": "platform/NOUN|platform#bahnsteig",
+          "card": null
+        },
+        {
+          "idx": 6,
+          "surface": "for",
+          "start_pos": 31,
+          "end_pos": 34,
+          "sentence": "open-pocket/s6",
+          "lemma": "for/ADP",
+          "sense": "for/ADP|for#fuer_zweck_empfaenger",
+          "card": "for|for/ADP|for#fuer_zweck_empfaenger"
+        },
+        {
+          "idx": 7,
+          "surface": "her",
+          "start_pos": 35,
+          "end_pos": 38,
+          "sentence": "open-pocket/s6",
+          "lemma": "her/DET",
+          "sense": "her/DET|her#ihr_possessiv",
+          "card": "her|her/DET|her#ihr_possessiv"
+        },
+        {
+          "idx": 8,
+          "surface": "train",
+          "start_pos": 39,
+          "end_pos": 44,
+          "sentence": "open-pocket/s6",
+          "lemma": "train/NOUN",
+          "sense": "train/NOUN|train#zug",
+          "card": "train|train/NOUN|train#zug"
+        },
+        {
+          "idx": 9,
+          "surface": ".",
+          "start_pos": 44,
+          "end_pos": 45,
+          "sentence": "open-pocket/s6",
+          "lemma": null,
+          "sense": null,
+          "card": null
+        }
+      ],
+      "reason": "Erneute Prüfung aller freigegebenen Wortstellen: genau der unveränderte geeignete Originalsatz, keine Nachbarsätze oder unnötigen Ersatztexte.",
+      "contexts": [
+        {
+          "token_index": 0,
+          "surface": "Then",
+          "sense": "then/ADV|then#danach",
+          "reason": "Then bezeichnet die zeitliche Folge dann; welche vorherige Handlung stattfand ist für diese Bedeutung nicht erforderlich.",
+          "sentence_refs": [
+            "open-pocket/s6"
+          ]
+        },
+        {
+          "token_index": 1,
+          "surface": "she",
+          "sense": "she/PRON|she#sie",
+          "reason": "she ist das weibliche Subjektpronomen sie; fehlender Name ist allein kein Ersatzgrund.",
+          "sentence_refs": [
+            "open-pocket/s6"
+          ]
+        },
+        {
+          "token_index": 2,
+          "surface": "walks",
+          "sense": "walk/VERB|walk#geht-zu-fuss",
+          "reason": "walks bedeutet geht zu Fuß zum Bahnsteig; Original und Übersetzung belegen genau diese Bedeutung.",
+          "sentence_refs": [
+            "open-pocket/s6"
+          ]
+        }
+      ]
+    }
+  ]
+}

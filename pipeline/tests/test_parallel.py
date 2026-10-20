@@ -119,19 +119,19 @@ def test_retry_only_rate_limit_and_server_error(tmp_path, monkeypatch):
     llm._call = fake_call
     monkeypatch.setattr("sprachpipe.llm.time.sleep", sleeps.append)
     monkeypatch.setattr("sprachpipe.llm.random.random", lambda: 0.0)
-    assert llm.generate_json("p", {"properties": {"answer": {}}}, model="gemini-2.5-flash",
-                             thinking={}, step="blindtest", max_output_tokens=100) == {"answer": "ok"}
+    assert llm.generate_json("p", {"properties": {"answer": {}}}, model="claude-haiku-5-5",
+                             thinking={"type": "disabled"}, step="blindtest", max_output_tokens=100) == {"answer": "ok"}
     assert len(calls) == 3 and sleeps == [0.5, 1.0]
     llm._call = lambda *args: (_ for _ in ()).throw(RetryableError("Vertex 503"))
     with pytest.raises(LlmError):
-        llm.generate_json("p", {"properties": {"answer": {}}}, model="gemini-2.5-flash",
-                          thinking={}, step="blindtest", max_output_tokens=100)
-    assert len(sleeps) == 6  # four more waits, then fifth attempt stops
+        llm.generate_json("p", {"properties": {"answer": {}}}, model="claude-haiku-5-5",
+                          thinking={"type": "disabled"}, step="blindtest", max_output_tokens=100)
+    assert len(sleeps) == 4  # two more waits, then third attempt stops
 
 
 def test_concurrent_budget_reservations_are_safe(tmp_path):
     cfg = load_config()
-    llm = Llm(cfg, tmp_path / "budget.csv", 0.005)
+    llm = Llm(cfg, tmp_path / "budget.csv", 0.002)
     called = []
     def fake_call(*args):
         called.append(1)
@@ -140,8 +140,8 @@ def test_concurrent_budget_reservations_are_safe(tmp_path):
     llm._call = fake_call
     def request(_):
         try:
-            llm.generate_json("p", {"properties": {"answer": {}}}, model="gemini-2.5-flash",
-                              thinking={}, step="blindtest", max_output_tokens=1000)
+            llm.generate_json("p", {"properties": {"answer": {}}}, model="claude-haiku-5-5",
+                              thinking={"type": "disabled"}, step="blindtest", max_output_tokens=1000)
             return "ok"
         except BudgetExceeded:
             return "budget"
@@ -149,4 +149,4 @@ def test_concurrent_budget_reservations_are_safe(tmp_path):
         outcomes = list(pool.map(request, range(8)))
     assert "budget" in outcomes and "ok" in outcomes
     assert len(called) == outcomes.count("ok")
-    assert total_usd(llm.ledger) <= 0.005
+    assert total_usd(llm.ledger) <= 0.002

@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprachapp.local/editorial-content-v4.schema.json",
+  "title": "Sprachapp redaktionelle Lieferung v4",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "format_version",
+    "delivery_id",
+    "lang",
+    "translation_lang",
+    "purpose",
+    "base",
+    "expected_target_refs",
+    "add",
+    "operations"
+  ],
+  "properties": {
+    "format": {
+      "const": "sprachapp.editorial-content"
+    },
+    "format_version": {
+      "const": 4
+    },
+    "delivery_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "supersedes_delivery_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uuid"
+    },
+    "lang": {
+      "type": "string"
+    },
+    "translation_lang": {
+      "const": "de"
+    },
+    "purpose": {
+      "enum": [
+        "new_deck",
+        "append",
+        "correction",
+        "roundtrip"
+      ]
+    },
+    "base": {
+      "type": "object"
+    },
+    "context_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "expected_target_refs": {
+      "type": "array",
+      "maxItems": 1500,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "selection": {
+      "type": "object"
+    },
+    "add": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        }
+      }
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "provenance": {
+      "type": "array"
+    },
+    "submitted_reviews": {
+      "type": "array"
+    },
+    "extensions": {
+      "type": "object",
+      "maxProperties": 0
+    },
+    "completeness": {
+      "enum": [
+        "full",
+        "draft"
+      ]
+    },
+    "locations": {
+      "type": "object"
+    },
+    "legacy_delivery": {
+      "type": "object"
+    }
+  }
+}

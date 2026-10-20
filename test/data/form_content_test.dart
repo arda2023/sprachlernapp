@@ -122,6 +122,12 @@ void main() {
   });
 
   const mutations = {
+    'duplicate target token': "INSERT INTO sentence_tokens SELECT 'duplicate',sentence_id,idx,start_pos,end_pos,surface,lemma_id,sense_id,card_id,removed_in,replaced_by,form_target_id FROM sentence_tokens WHERE card_id IS NOT NULL LIMIT 1",
+    'missing coverage': 'DELETE FROM sentence_tokens WHERE idx=0',
+    'shifted coverage': 'UPDATE sentence_tokens SET idx=idx+1',
+    'inactive target tokens': "UPDATE sentence_tokens SET removed_in='gone' WHERE card_id IS NOT NULL",
+    'inactive dictionary candidates': "UPDATE dictionary_forms SET removed_in='gone'",
+    'unnormalized stored dictionary form': "UPDATE dictionary_forms SET form_norm=upper(form_norm)",
     'second owner': "INSERT INTO deck_words SELECT 'other',lang,form_norm,deck_id,primary_card_id,position,removed_in,replaced_by FROM deck_words LIMIT 1",
     'duplicate identity': "INSERT INTO form_targets SELECT 'duplicate',lang,sense_id,form,form_norm,function,card_id,lexical_target_id,note,removed_in,replaced_by FROM form_targets LIMIT 1",
     'wrong function':
@@ -177,7 +183,7 @@ void main() {
     expect(repo.info.schemaVersion,4);
     expect(await repo.allCardIds(),hasLength(9));
     await repo.close();
-    final installed=File('${support.path}/content/en/content.sqlite');
+    final installed=File('${support.path}/content/en/generations/bootstrap-${staged['sha256']}/content.sqlite');
     final before=installed.readAsBytesSync();
     for(final bad in ['hash','version','content']) {
       final manifest=Map<String,dynamic>.from(staged);
@@ -190,7 +196,10 @@ void main() {
         badBytes=file.readAsBytesSync();
         manifest['sha256']=sha256Of(file);manifest['size_bytes']=badBytes.length;
       }
-      await expectLater(installerFor(support,db:badBytes,manifest:jsonEncode(manifest)).open(),throwsA(isA<ContentUnavailable>()));
+      final pinned=await installerFor(support,db:badBytes,manifest:jsonEncode(manifest)).open();
+      expect(await pinned.allCardIds(),hasLength(9));
+      await pinned.close();
+      await expectLater(installerFor(Directory('${tmp.path}/invalid-fresh-$bad'),db:badBytes,manifest:jsonEncode(manifest)).open(),throwsA(isA<ContentUnavailable>()));
       expect(installed.readAsBytesSync(),before);
     }
   });

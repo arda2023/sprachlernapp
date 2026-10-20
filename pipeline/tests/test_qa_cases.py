@@ -313,7 +313,7 @@ def test_compare_separates_format_errors_from_wrong_verdicts(tmp_path, monkeypat
     # distinct check model so simulated answers can be keyed per model
     import copy
     cfg = copy.deepcopy(CFG)
-    cfg["llm"].update(meaning_check_model=CFG["llm"]["blindtest_model"],
+    cfg["llm"].update(meaning_check_model="synthetic-check-model",
                       meaning_check_thinking=CFG["llm"]["blindtest_thinking"])
     monkeypatch.setattr(script, "load_config", lambda: cfg)
     CHECK_MODEL = cfg["llm"]["meaning_check_model"]
@@ -352,7 +352,7 @@ def test_compare_separates_format_errors_from_wrong_verdicts(tmp_path, monkeypat
     gen_sun = next(r for r in gen["results"] if r["id"] == "sun_too_light_short")
     assert gen_sun["violations"][0]["problem"] == "keine parsebare JSON-Antwort"
     assert gen_sun["usage"] == [{"model": GEN_MODEL, "input_tokens": "100", "output_tokens": "10",
-                                 "thinking_tokens": "5", "usd": "0.001000"}]
+                                 "thinking_tokens": "5", "usd": "0.001000000"}]
 
 
 def test_compare_abort_keeps_partial_results_under_shared_budget(tmp_path, monkeypatch):

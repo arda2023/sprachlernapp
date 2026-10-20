@@ -21,7 +21,7 @@ import 'package:sprachapp/presentation/providers/learning_providers.dart';
 import 'package:sprachapp/presentation/providers/deck_providers.dart';
 import 'package:sprachapp/presentation/practice/deck_session_controller.dart';
 import 'package:sprachapp/screens/stories/story_reader_screen.dart';
-import 'package:sprachapp/screens/stories/widgets/word_lookup_sheet.dart';
+import 'package:sprachapp/screens/stories/widgets/word_popover.dart';
 import 'package:sprachapp/theme/app_theme.dart';
 
 import 'fixtures/story_learning.dart';
@@ -38,7 +38,7 @@ void main() {
         MaterialApp(
           theme: buildAppTheme(),
           home: Scaffold(
-            body: WordLookupSheet(
+            body: WordPopover(
               surface: 'backpack',
               entry: const WordEntry(
                 headword: 'backpack',
@@ -74,7 +74,7 @@ void main() {
         const StoryAddResult(StoryAddState.added, cardId: 'saved'),
       );
       await tester.pumpAndSettle();
-      expect(find.text('Bereits hinzugefügt'), findsOneWidget);
+      expect(find.text('Zum Lernen hinzugefügt'), findsOneWidget);
     },
   );
   test('missing pack keeps a complete local card in list, counters and real mixed controller', () async {
@@ -221,8 +221,8 @@ void main() {
         await tester.pump();
       }
       await tester.pumpAndSettle();
-      expect(find.text('Bereits hinzugefügt'), findsOneWidget);
-      Navigator.of(tester.element(find.byType(WordLookupSheet))).pop();
+      expect(find.text('Zum Lernen hinzugefügt'), findsOneWidget);
+      Navigator.of(tester.element(find.byType(WordPopover))).pop();
       await tester.pumpAndSettle();
       await tap('backpack');
       expect((await user.allCardStates()).length, 1);
@@ -234,7 +234,7 @@ void main() {
         await tester.pump();
       }
       await tester.pumpAndSettle();
-      expect(find.text('Bereits hinzugefügt'), findsOneWidget);
+      expect(find.text('Zum Lernen hinzugefügt'), findsOneWidget);
       final local = (await user.localPracticeItems()).single;
       expect(local.card.form, 'backpack');
       expect(local.practiceSentence.text, s.text);

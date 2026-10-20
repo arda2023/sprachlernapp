@@ -1,0 +1,32 @@
+card_sentences: +1 -0 ~1
+   ~ 3e809f93a53931bdc50e1ccf86b71f89 ['removed_in', 'replaced_by'] {'removed_in': (None, 'chitchat-copy-test-2026-10-18'), 'replaced_by': (None, '51249b5b4bc1009d470dc2b13376cfbf')}
+   + 51249b5b4bc1009d470dc2b13376cfbf {'card_id': '24aafe512840bcd68eaff7658b01b63b', 'sentence_id': 'b7b51ca27c4fe3c053ba10e57c73effb', 'position': 1, 'gap_start': 25, 'gap_end': 33}
+content_releases: +1 -1 ~0 removed!
+   + 7ce7652a0d91d92f4ee2d28f6bf03d63 {}
+sentence_tokens: +12 -0 ~0
+   + 8b3e69ee858126b26c586626f59cd4e4 {'sentence_id': 'b7b51ca27c4fe3c053ba10e57c73effb', 'surface': 'We', 'card_id': None, 'context_gloss_de': 'wir'}
+   + 467379719a701a5808b7d520127b4b9b {'sentence_id': 'b7b51ca27c4fe3c053ba10e57c73effb', 'surface': 'enjoyed', 'card_id': None, 'context_gloss_de': 'genoss'}
+   + 6cdab2425078774e8f19dc12bb11d5ed {'sentence_id': 'b7b51ca27c4fe3c053ba10e57c73effb', 'surface': 'some', 'card_id': None, 'context_gloss_de': 'etwas'}
+   + 45cec204b205afee85b6c7194705db39 {'sentence_id': 'b7b51ca27c4fe3c053ba10e57c73effb', 'surface': 'friendly', 'card_id': None, 'context_gloss_de': 'freundlich'}
+   + 46d97d7a4a284146e77deb7ff5f4065b {'sentence_id': 'b7b51ca27c4fe3c053ba10e57c73effb', 'surface': 'chitchat', 'card_id': '24aafe512840bcd68eaff7658b01b63b', 'context_gloss_de': 'Geplauder'}
+   + c2581ec7021425b2348fe868c1125040 {'sentence_id': 'b7b51ca27c4fe3c053ba10e57c73effb', 'surface': 'while', 'card_id': None, 'context_gloss_de': 'während'}
+sentences: +1 -0 ~0
+   + b7b51ca27c4fe3c053ba10e57c73effb {'text': 'We enjoyed some friendly chitchat while we waited for the bus.', 'translation_de': 'Wir unterhielten uns nett, während wir auf den Bus warteten.', 'root_sentence_id': '43d1a0bb3a30f1c0d940ae67740a93df'}
+story_context_corrections: +8 -0 ~0
+   + af8e9c44483a79439a8b5b89d2dff3de {}
+   + 86c53a83924a6c7331ef117d852ee1df {}
+   + 2339db3c10c5d9350497ce40ecd11143 {}
+   + f179d5a5a0966e4b545df6f8f49dd5eb {}
+   + 30318ec88db8ea92b87f45ae7a50dbae {}
+   + 75f704f9374c540d6d8fcb27e567b524 {}
+Tokens alt==neu (Oberfläche/Offsets/Lemma/Sense/Karte/Glosse): True 12 12
+Satzfelder geändert: ['id', 'qa_report', 'revision_sha256', 'root_sentence_id', 'translation_de']
+alte Satzzeile im Release unverändert: True
+content_releases alt: [('9010d16f3771fcdad0e0a61f32b5e565', 'story_single_sentence_v1')] neu: [('7ce7652a0d91d92f4ee2d28f6bf03d63', 'chitchat-copy-test-2026-10-18')]
+report: {'history_superset': True, 'internal_test_pack': True, 'status': 'ok'} validation valid approved warns 9 errors 0
+editorial_reviews: [('draft', ['chitchat|chitchat/NOUN|chitchat#geplauder'], 'Claude (Testlauf auf Kopie)')]
+reader_report keys ['status', 'lang', 'version', 'schema_version', 'current', 'historical', 'story_display', 'story_source_snapshots', 'story_corrections']
+alt qa_report: {'editorial_create': {'alternatives_checked': [], 'checked': {'links_sha256': '44a44c30732a8069ab72e6c95323fe076f929104f3ebdb0ad9eaeb9ce7bfe6f3', 'text': 'We enjoyed some friendly chitchat while we waited for the bus.', 'tokens_sha256': '03822adf51cd65567981d691d8485d6520371589c9de0d4f10afb860e573f4d9', 'translation_de': 'Wir plauderten nett miteinander, während wir auf den Bus warteten.'}, 'decision': 'approved', 'operation_id': 'alltagssprache-redewendungen-batch-1-v1', 'reason': 'ChatGPT-Redaktion: vollständiger Ausdruck in der vorgegebenen Bedeutung; Satz und natürliche deutsche Übersetzung geprüft, sämtliche Wortbindungen einzeln gegengelesen. Keine Alternative freigegeben; keine Vollständigkeits- oder Eindeutigkeitsgarantie.', 'reviewer': 'ChatGPT – Erstellung und redaktionelle Eigenprüfung; keine unabhängige menschliche Sprachfreigabe', 'sentence': 'alltagssprache-v1-0004-s1'}}
+neu qa_report: {'editor_revision': {'reason': 'Redaktionelle Bearbeitung'}}
+reader story_corrections: 8
+baseline-reader vorhanden: ['baseline-reader.json']

@@ -45,9 +45,11 @@ class DeckLibraryScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       bottom: false,
-      child: ref
-          .watch(decksProvider)
+      child: watchContentStable(ref, decksProvider)
           .when(
+                skipLoadingOnReload: false,
+                skipLoadingOnRefresh: false,
+                skipError: false,
             loading: () => const Center(child: CupertinoActivityIndicator()),
             error: (error, _) => ContentUnavailableView(
               error: error,

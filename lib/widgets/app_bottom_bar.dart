@@ -175,9 +175,11 @@ class PracticeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProgressRing(
-      color: context.appColors.textMuted,
+      color: context.appColors.active,
       fraction: goal.done / goal.target,
       size: ringSize,
+      strokeWidth: 4,
+      gapDegrees: 110,
       child: MergeSemantics(
         child: Semantics(
           label: 'Lernen, Tagesziel ${goal.done} von ${goal.target} Übungen',
@@ -192,9 +194,7 @@ class PracticeButton extends StatelessWidget {
             backgroundColor: context.appColors.raisedInk,
             foregroundColor: context.appColors.textPrimary,
             splashColor: Colors.transparent,
-            shape: CircleBorder(
-              side: BorderSide(color: context.appColors.hairline),
-            ),
+            shape: const CircleBorder(),
             child: const Icon(CupertinoIcons.play_fill, size: 22),
           ),
         ),

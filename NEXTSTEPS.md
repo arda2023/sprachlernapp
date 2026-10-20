@@ -1,25 +1,25 @@
 # NEXTSTEPS
-Stand: 11.10.2026 – Alltagssprache Batch 2 intern gestagt; Batch-3-ZIP geprüft.
-## Erledigt
-- 89 Batch-2-Ziele importiert: 89 Satzpaare, 889 Tokens (742 Wörter/Ausdrücke), zwei Alternativen.
-- Alltagssprache: 178 Ziele, Anzeigen 1–178; Original-/Besitzpositionen unverändert.
-- Pack: pipeline/out/alltagssprache_redewendungen_batch_2_v1/, Schema 4, zwölf Stapel, 2745 Karten.
-- Produktive Projektion: 2631 Übungen / 2360 Wörter; 402 Formen/je 134 Verbenübungen erhalten.
-- Assets/Manifest vor Staging unter build/alltagssprache_batch_2_checks/backup/ bytegleich gesichert.
-- Intern gestagt; Asset-Verifier und echter Zwölfstapel-Lesetest PASS, Exit 0.
-- Auswahl v2: 441 Ziele; Batch-3-Partition 178 importiert / 88 aktuell / 175 später.
-## Dateien und Prüfungen
-- Bericht: docs/alltagssprache-redewendungen-batch-2-import.md; NEXTSTEPS aktualisiert.
-- test/data/real_pack_test.dart um diese Version und 178 Ziele erweitert.
-- Batch-3-Kontexte: selection/words/learning_groups, *_batch_3_context_v2.json.
-- ZIP: build/alltagssprache_redewendungen_authoring_batch_3.zip; checks im Batch-2-Ordner.
-- 447 Pipeline-Tests plus 19 Subtests PASS; Flutter-Analyse ohne Befund; Exit 0.
-- Vollständiger 22-Tabellen-/Bestandsabgleich und Anzeigenprüfung PASS.
-- ZIP geschlossen/erneut geprüft: CRCs, 83 Dateihashes, Referenzen, 441 Identitäten PASS.
-## Abweichungen und offen
-- Importkopie: vier Tokenbindungen korrigiert (high-Betrag, cancelled zweimal, made-Zustand).
-- Ein neuer Wörterbuchsense/eine Form; Zielkarten, Sätze, learning und Alternativen unverändert.
-- Linter 0 Fehler/465 Hinweise; neu unfairly 3,36 und unfriendly 3,10 unter 3,5.
-- Sechs geerbte Formglossen sowie frühere Listen offen; Original-Lieferung erhalten.
-- Nächste Aktion: geprüfte ZIP hochladen und 88 Batch-3-Ziele im Chat redigieren.
-- Kein Commit: uncommittete Schema-4-/450-/V3-Abhängigkeiten und gemischte Hunks; Index leer.
+## Stand 19.10.2026 · nächste Produktphase
+- Stapelphase beendet; nächste Arbeit: UI, Lernalgorithmus und Funktionen. Keine neuen Stapel, Reservierungen oder Sätze aus dem Haiku-Auftrag.
+- Haiku-Direktzugang lokal ergänzt: provider anthropic, claude-haiku-5-5, vorhandenes SDK 1.15.0, gleiche generate_json-Aufrufer; Vertex explizite Alternative, kein Fallback. Nur Redaktion ohne echte Nutzerdaten, keine EU-only-Zusage.
+- KI-Ist: fehlende App-Wort-/Satzübersetzungen lokal über authentifizierte Supabase Functions → Anthropic claude-haiku-5-5 implementiert; explizite Bestätigung, Packübersetzungen offline, keine EU-only-Zusage/kein Fallback. sentence-check bleibt Entwurf.
+- Offline: Pipeline 668 PASS/1 bestehender Skip/19 Subtests, pip check Exit 0; echte SDK-Requests lokal gemockt, bestehende Vertex-Verträge erhalten. Code/Config/Preisaufrufer/Tests und gezielte Regeln/Doku geändert; docs/haiku-direct-api-setup.md.
+- Kosten: keine gemessene Einsparung/Modellqualität. Unbekannte Nutzung konservativ erfasst; lokale Reservierung ist keine garantierte Anbieterrechnungsgrenze.
+- Python-Live: Nutzer meldet 205 Input/8 Output erfolgreich; kein eigener App-Nachweis. Runtime lokal: Deno 32 PASS, Flutter-Gruppe 82 PASS + erweiterte neue Tests 14 PASS, SQL/PGlite PASS; Analyse nur alter avoid_print. Details/Abnahme: docs/haiku-runtime-translations.md; frühere ADC-Nachweise: docs/haiku-live-setup.md.
+- Inhaltsladen: Variante B Paket 2 produktiv, 2 Prozessnachweise/3 Readerplätze, Status ohne Open; iPhone warm en Median 812 ms (8 Läufe), Home zusätzlich 1 350 ms, Übung 60 ms (je 3). Kalter Prozess Home 5 508 ms; Home-Restkosten offen. 479 PASS/6 Skips, Realpack/Stage PASS, Analyse nur Alt-avoid_print. Normaler Profile-Build ohne Sonde; docs/content-validation-package-2.md und docs/content-validation-lifecycle-plan.md.
+## Portugiesisch und aktive Inhalte · relevante Vorbefunde
+- Paket 2 lokal abgeschlossen: Sprachwahl en/pt-BR, Gate/Rollback, getrennte Updatefristen und Akzentpolicy; Lernstände erhalten. docs/portuguese-package-2.md.
+- Übernommene Prüfung Paket 2: UI 2+13, Sprache/Installation 14, Gesamt 380 PASS/5 bestehende Skips, Realpack 1/12s, Stage Exit 0; Analyse Exit 1 nur Alt-avoid_print.
+- Nutzer bestätigt portugiesischen Ablauf bis zur Mobile-App als funktionierend; Nutzerbericht, keine neue eigene Geräteprüfung. Sprachqualität/weitere Freigaben bleiben gesondert.
+- Paket 1: pt-BR-editorial-v1 mit modellfreiem Tokenizer/eigenem Kanal; bestehender Seed und leere 20-Ziel-Vorlage erhalten, manuelle BR-Prüfung offen. docs/portuguese-package-1.md.
+- Sprachplan/Authoringvertrag: docs/portuguese-language-rollout-plan.md und docs/portuguese-authoring-contract-v1/FORMAT.md; kein neuer Inhaltsauftrag durch diesen Plan.
+- Englische chitchat-Korrektur laut Nutzer funktionsfähig; keine neue eigene Geräteprüfung. Historische Reviews/SRS erhalten; docs/content-update-active-context-fix.md.
+- Story-Originalsatz bevorzugen; 1–2 Wörter benötigen redigierten Ersatz, sonst begründete Ausnahme; feste Satz-/Identitätsbindung erhalten. docs/story-single-sentence-v1.md.
+## Erhaltene offene Punkte und Historie
+- Publizierte Basis/Editor: bestehende Uploadanker und Entwürfe erhalten; überholte Finalize-/Reupload-Anweisungen nicht wiederholen. docs/content-editor-initial-release.md, docs/content-published-base-adoption.md.
+- Aktuelle Veröffentlichungs-/Streamingentscheidungen und noch offene Cloud-/Geräteprüfungen stehen in diesen Berichten; keine neue Veröffentlichung oder Deploymentfreigabe.
+- Historische Bestandszahlen, 137 Provenienzlücken, sechs Sprachgrenzfälle und weitere Glossenkuration bleiben dokumentiert; keine neue Bestandsmessung. docs/context-quality-applied-v1.md.
+- UI-Werte 40/30 px, Padding 16/6, Fehlerfeedback und Nutzeränderungen erhalten; frühere Nachweise/Commitgrenzen: docs/practice-error-feedback.md.
+- Passwortlogin laut vorherigem Nutzerbericht funktionsfähig; keine Auth-/Rollenänderung. docs/content-password-login.md.
+- Vollständiger vorheriger NEXTSTEPS-Text: Gitstand 6deba380042578a5cee96af24988db9d713e02ba; relevante Altverweise zusätzlich im Haiku-Plan.
+- Historisch Paket A: Pythonanschluss, Konfiguration, Abhängigkeiten, Offline-Tests/Doku. Jetzt zusätzlich begrenzte Runtime-Übersetzung; kein Deployment/Push. Nächste Nutzeraktion: ANTHROPIC_API_KEY als Supabase-Secret, danach geprüfte Migration, zwei Functions und iPhone-Update gemäß Runtime-Bericht; echte App-Abnahme offen.

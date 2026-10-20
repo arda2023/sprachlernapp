@@ -551,3 +551,280 @@ def card_meta_from_inventory(packs: dict[str, dict], inventory) -> dict[str, dic
             meta[card["ref"]] = {"rank": card.get("freq_rank"), "usage": m.get("usage"),
                                  "sense_index": i}
     return meta
+
+
+def apply_targeted_patch(raw: bytes, patch: dict) -> dict:
+    """Strict Schema-4 delta on the existing offline curation path.
+
+    Source rows are preconditions, never inferred approvals. Historical rows
+    stay in the pack; only explicitly owned relationships may be tombstoned.
+    """
+    import hashlib
+    import json
+    from .annotate import tokenize
+    from .pack import build_rows
+
+    def require(ok, message):
+        if not ok:
+            raise CurationError('targeted: ' + message)
+
+    def keys(value, required, optional=()):
+        require(isinstance(value, dict) and set(required) <= set(value)
+                and set(value) <= set(required) | set(optional), 'unknown/missing fields')
+
+    def text(value):
+        return isinstance(value, str) and bool(value.strip())
+
+    keys(patch, ('format', 'format_version', 'source_sha256', 'version', 'reviewer', 'operations'))
+    require(patch['format'] == 'sprachapp.targeted-curation' and type(patch['format_version']) is int
+            and patch['format_version'] == 1, 'unsupported format')
+    require(hashlib.sha256(raw).hexdigest() == patch['source_sha256'], 'source hash mismatch')
+    source = json.loads(raw)
+    require(source['release']['schema_version'] == 4, 'Schema 4 required')
+    require(text(patch['version']) and patch['version'] != source['release']['version']
+            and text(patch['reviewer']), 'new version/reviewer required')
+    before = build_rows(source)
+    work = copy.deepcopy(source)
+    cards = {r['id']: c for r, c in zip(before['cards'], work['cards'])}
+    sentences = {r['id']: s for r, s in zip(before['sentences'], work['sentences'])}
+    require(isinstance(patch['operations'], list) and bool(patch['operations']), 'operations required')
+    seen = set()
+    version = patch['version']
+    for op in patch['operations']:
+        require(isinstance(op, dict), 'operation object required')
+        kind = op.get('op')
+        if kind in ('story_contexts', 'story_single_sentence_contexts'):
+            _apply_story_contexts(work, before, op, patch, seen)
+            continue
+        extra = {'card_gloss': ('translation_de',),
+                 'replace_sentence': ('sentence_id', 'expect_sentence', 'expect_link', 'sentence', 'tokens', 'link', 'alternatives_checked'),
+                 'retire_card': ()}
+        require(isinstance(kind, str) and kind in extra, 'unsupported operation')
+        keys(op, ('op', 'card_id', 'expect_card', 'reason', *extra[kind]))
+        cid = op['card_id']
+        require(isinstance(cid, str) and cid in cards and cid not in seen, 'missing/duplicate/conflicting card target')
+        seen.add(cid)
+        card = cards[cid]
+        require(not card.get('removed_in') and card == op['expect_card'] and text(op['reason']), 'card precondition')
+        if kind == 'card_gloss':
+            require(text(op['translation_de']) and op['translation_de'] != card.get('translation_de'), 'changed gloss required')
+            card['translation_de'] = op['translation_de']
+            continue
+        links = [l for l in work['card_sentences'] if l['card'] == card['ref'] and not l.get('removed_in')]
+        require(len(links) == 1, 'one active link required')
+        old = links[0]
+        if kind == 'replace_sentence':
+            require(isinstance(op['sentence_id'], str), 'sentence identity required')
+            sn = sentences.get(op['sentence_id'])
+            require(sn is not None and sn['ref'] == old['sentence'] and sn == op['expect_sentence']
+                    and old == op['expect_link'], 'sentence/link precondition')
+            new, ts, link = copy.deepcopy((op['sentence'], op['tokens'], op['link']))
+            keys(new, ('ref', 'text', 'translation_de'))
+            require(all(text(new[k]) for k in new), 'sentence text/reference required')
+            require(_whole_token_count(new['text'], card['form']) == 1, 'target must occur exactly once')
+            sid = sentence_id(work['lang'], new['text'])
+            require(sid not in sentences and all(s['ref'] != new['ref'] for s in work['sentences']), 'sentence identity already exists')
+            keys(link, ('card', 'sentence', 'position', 'gap_start', 'gap_end', 'accepted', 'valid_alternatives'))
+            require(isinstance(link['valid_alternatives'], list) and all(isinstance(a, str) for a in link['valid_alternatives']), 'alternatives must be strings')
+            require(type(link['gap_start']) is int and type(link['gap_end']) is int, 'integer gap required')
+            require(link['card'] == card['ref'] and link['sentence'] == new['ref'] and type(link['position']) is int
+                    and link['position'] == 1 and (link['gap_start'], link['gap_end']) == gap_offsets(new['text'], card['form']), 'new link/gap')
+            require(isinstance(ts, list), 'tokens required')
+            for t in ts:
+                keys(t, ('sentence', 'idx', 'surface', 'start_pos', 'end_pos'), ('lemma', 'sense', 'card', 'form_target'))
+                require(t['sentence'] == new['ref'] and all(type(t[k]) is int for k in ('idx', 'start_pos', 'end_pos')), 'token sentence/offset types')
+            expected = tokenize(new['text'], lexical_spans=[(link['gap_start'], link['gap_end'])])
+            fields = ('idx', 'surface', 'start_pos', 'end_pos')
+            require([{k:t[k] for k in fields} for t in ts] == [{k:t[k] for k in fields} for t in expected], 'incomplete token annotation')
+            require(op['alternatives_checked'] == [{'card': card['ref'], 'alternative': a,
+                    'text': new['text'][:link['gap_start']] + a + new['text'][link['gap_end']:]} for a in link['valid_alternatives']], 'alternative review')
+            new.update(origins=['deck'], model=None, qa_status='editorial_reviewed',
+                       qa_report={'targeted_curation': {'reviewer': patch['reviewer'], 'reason': op['reason'], 'source_sha256': patch['source_sha256']}})
+            old.update(removed_in=version, replaced_by=stable_id('card_sentences', card_id=cid, sentence_id=sid))
+            work['sentences'].append(new)
+            sentences[sid] = new
+            work['sentence_tokens'].extend(ts)
+            work['card_sentences'].append(link)
+        else:
+            learning = card['learning']
+            members = [c for c in work['cards'] if c['learning']['group_id'] == learning['group_id']]
+            require(len(members) == 1 and learning['primary_card_id'] == cid and not card.get('replaced_by'), 'retirement requires singleton without replacement')
+            for table, field in (('deck_words', 'primary_card'), ('deck_cards', 'card'), ('form_targets', 'card'), ('card_lexical_targets', 'card')):
+                require(not any(r.get(field) == card['ref'] and not r.get('removed_in') for r in work.get(table, [])), 'retirement has active ownership/form membership')
+            # Every sentence carrying this card must be exclusively historical or
+            # its own current exercise. Shared contexts cannot be changed here.
+            refs = {t['sentence'] for t in work['sentence_tokens'] if t.get('card') == card['ref']}
+            refs.add(old['sentence'])
+            for ref in refs:
+                require(not any(l['sentence'] == ref and l['card'] != card['ref'] and not l.get('removed_in') for l in work['card_sentences'])
+                        and not any(l['sentence'] == ref and not l.get('removed_in') for l in work.get('story_sentences', [])), 'retirement has shared active context')
+            card['removed_in'] = version
+            old['removed_in'] = version
+            for s in work['sentences']:
+                if s['ref'] in refs and not s.get('removed_in'): s['removed_in'] = version
+            for t in work['sentence_tokens']:
+                if t['sentence'] in refs and not t.get('removed_in'): t['removed_in'] = version
+            for d in work['dictionary_forms']:
+                if d.get('card') == card['ref'] and not d.get('removed_in'): d['removed_in'] = version
+    work['release'] = {'version': version, 'schema_version': 4,
+                       'notes': 'INTERNES TEST-PACK: targeted offline curation; unchanged rows not newly reviewed; no AI QA.'}
+    build_rows(work)
+    return work
+
+
+def _apply_story_contexts(work, rows, op, patch, seen):
+    """Review exact existing story targets via the existing targeted importer."""
+    from .annotate import tokenize
+    from .linter import lint_sentence
+    from .ids import form_norm
+
+    def require(ok, message):
+        if not ok:
+            raise CurationError('story context: ' + message)
+
+    require(set(op) == {'op', 'story_id', 'sentence_id', 'expect_sentence',
+                       'expect_tokens', 'reason', 'contexts'}, 'operation fields')
+    key = ('story', op['sentence_id'])
+    require(key not in seen, 'duplicate sentence operation')
+    seen.add(key)
+    stories = {r['id']: s for r, s in zip(rows['stories'], work.get('stories', []))}
+    story = stories.get(op['story_id'])
+    require(story is not None and not story.get('removed_in'), 'active story required')
+    pairs = {r['id']: s for r, s in zip(rows['sentences'], work['sentences'])}
+    source = pairs.get(op['sentence_id'])
+    require(source is not None and not source.get('removed_in') and source == op['expect_sentence'], 'stale sentence')
+    source_tokens = [t for t in work['sentence_tokens'] if t['sentence'] == source['ref'] and not t.get('removed_in')]
+    require(source_tokens == op['expect_tokens'] and bool(op['reason'].strip()), 'stale tokens/reason')
+    links = sorted([l for l in work['story_sentences'] if l['story'] == story['ref'] and not l.get('removed_in')], key=lambda l:l['idx'])
+    ordered = [l['sentence'] for l in links]
+    require(source['ref'] in ordered, 'sentence outside story')
+    by_ref = {s['ref']: s for s in work['sentences']}
+    lemmas = {s['ref']: (r, s) for r, s in zip(rows['lemmas'], work['lemmas'])}
+    senses = {s['ref']: (r, s) for r, s in zip(rows['senses'], work['senses'])}
+    dictionary = {(form_norm(d['form']), d['sense']): d for d in work['dictionary_forms'] if not d.get('removed_in')}
+    cards = {c['ref']: c for c in work['cards']}
+    single_sentence = op['op'] == 'story_single_sentence_contexts'
+    previous = {b['token_index']: b for b in (source.get('qa_report') or {}).get('story_practice_contexts', {}).get('bindings', [])}
+    bindings = []
+    require(isinstance(op['contexts'], list) and op['contexts'], 'contexts required')
+    for review in op['contexts']:
+        base = {'token_index', 'surface', 'sense', 'reason'}
+        require(set(review) in (base | {'sentence_refs'}, base | {'replacement'}), 'review fields')
+        idx = review['token_index']
+        require(type(idx) is int and 0 <= idx < len(source_tokens) and idx not in [b['token_index'] for b in bindings], 'target index')
+        target = source_tokens[idx]
+        require(target['surface'] == review['surface'] and target.get('sense') == review['sense'] and bool(review['reason'].strip()), 'target identity/reason')
+        require(target.get('sense') in senses and target.get('lemma') in lemmas, 'annotated target required')
+        require(lemmas[target['lemma']][1]['pos'] != 'PROPN', 'proper name is not a learning target')
+        require(not any(c.get('removed_in') and form_norm(c['form']) == form_norm(target['surface']) and c['sense'] == target['sense'] for c in work['cards']), 'retired identity')
+        if 'sentence_refs' in review:
+            refs = review['sentence_refs']
+            require(isinstance(refs, list) and 1 <= len(refs) <= 3 and source['ref'] in refs, 'short source window required')
+            start = ordered.index(refs[0]) if refs[0] in ordered else -1
+            require(start >= 0 and ordered[start:start+len(refs)] == refs, 'context must be contiguous')
+            chunks = [by_ref[r] for r in refs]
+            text = ' '.join(c['text'] for c in chunks)
+            translation = ' '.join(c['translation_de'] for c in chunks)
+            tokens, offset, target_index = [], 0, None
+            for chunk in chunks:
+                ts = [t for t in work['sentence_tokens'] if t['sentence'] == chunk['ref'] and not t.get('removed_in')]
+                if chunk['ref'] == source['ref']: target_index = len(tokens) + idx
+                for t in ts:
+                    tokens.append(dict(t, idx=len(tokens), start_pos=t['start_pos']+offset, end_pos=t['end_pos']+offset))
+                offset += len(chunk['text']) + 1
+        else:
+            replacement = review['replacement']
+            require(set(replacement) == ({'text', 'translation_de', 'tokens', 'target_index', 'reason'} | ({'justification'} if single_sentence else set())), 'replacement fields')
+            require(bool(replacement['reason'].strip()), 'replacement justification')
+            text, translation, tokens, target_index = (replacement[k] for k in ('text', 'translation_de', 'tokens', 'target_index'))
+            refs = []
+        if single_sentence:
+            _validate_story_single_sentence(source, review, text)
+        require(isinstance(text, str) and isinstance(translation, str) and translation.strip(), 'translation required')
+        require(type(target_index) is int and 0 <= target_index < len(tokens), 'context target index')
+        selected = tokens[target_index]
+        require(all(selected.get(k) == target.get(k) for k in ('surface', 'lemma', 'sense', 'form_target')), 'context changed target')
+        expected = tokenize(text, lexical_spans=[(t['start_pos'],t['end_pos']) for t in tokens if ' ' in t['surface']])
+        fields = ('idx', 'surface', 'start_pos', 'end_pos')
+        require([{k:t[k] for k in fields} for t in tokens] == [{k:t[k] for k in fields} for t in expected], 'incomplete annotation')
+        require(sum(t['is_word'] for t in expected) <= 20, 'context exceeds 20 words')
+        snapshot = []
+        for t, e in zip(tokens, expected):
+            item = {k:t[k] for k in fields}
+            if e['is_word']:
+                lm, se = lemmas.get(t.get('lemma')), senses.get(t.get('sense'))
+                d = dictionary.get((form_norm(t['surface']), t.get('sense')))
+                require(lm and se and d and se[1]['lemma'] == t['lemma'] and not lm[1].get('removed_in') and not se[1].get('removed_in'), 'missing dictionary/sense annotation')
+                require(not t.get('card') or (t['card'] in cards and not cards[t['card']].get('removed_in') and cards[t['card']]['sense'] == t['sense'] and form_norm(cards[t['card']]['form']) == form_norm(t['surface'])), 'invalid card binding')
+                item.update(lemma_id=lm[0]['id'], lemma=lm[1]['lemma'], pos=lm[1]['pos'], sense_id=se[0]['id'], sense_key=se[1]['sense_key'], gloss=d['gloss_de'], definition=se[1].get('definition_de') or se[1]['gloss_de'])
+            snapshot.append(item)
+        findings = lint_sentence(text, target['surface'], selected['start_pos'], selected['end_pos'], 0, lang=work['lang'], max_words=20, max_subclauses=1)
+        # Repeated surface is safe here: the selected annotated token is the gap,
+        # unlike the old first-text-match authoring path. All other lint gates stay.
+        require(not any(f.level == 'error' and f.rule != 'repeat' for f in findings), 'invalid context: ' + str(findings))
+        bindings.append({'token_index':idx, 'surface':target['surface'], 'sense_id':senses[target['sense']][0]['id'],
+                         'source_start':target['start_pos'], 'source_end':target['end_pos'],
+                         'reason':review['reason'], 'source_sentence_refs':refs,
+                         'context':{'id':sentence_id(work['lang'],text), 'text':text, 'translation':translation,
+                                    'target_index':target_index, 'tokens':snapshot}})
+        if single_sentence:
+            from .annotate import tokenize
+            bindings[-1]['sentence_policy'] = {'sentence_count': 1,
+                'source_word_count': sum(t['is_word'] for t in tokenize(source['text'])),
+                'exercise_word_count': sum(t['is_word'] for t in tokenize(text)),
+                'replacement': 'replacement' in review}
+        if single_sentence and idx in previous and previous[idx]['context'] != bindings[-1]['context']:
+            old = previous[idx]
+            require(all(old[k] == bindings[-1][k] for k in ('token_index', 'surface', 'sense_id', 'source_start', 'source_end')), 'correction changed origin')
+            bindings[-1]['correction'] = {'version': patch['version'],
+                'revision': work['release']['version'], 'context': copy.deepcopy(old['context'])}
+    source.setdefault('qa_report', {})['story_practice_contexts'] = {
+        'format_version':2 if single_sentence else 1, 'reviewer':patch['reviewer'], 'source_sha256':patch['source_sha256'],
+        'reason':op['reason'], 'bindings':bindings}
+
+
+def story_authoring_gaps(pack):
+    """List concrete unbound story tokens for review; never infer suitability."""
+    from .ids import form_norm
+    sentences = {s['ref']: s for s in pack.get('sentences', [])}
+    lemmas = {s['ref']: s for s in pack.get('lemmas', [])}
+    result = []
+    for link in pack.get('story_sentences', []):
+        if link.get('removed_in'): continue
+        sentence = sentences[link['sentence']]
+        qa = sentence.get('qa_report') or {}
+        approved = {r['token_index'] for r in qa.get('editorial_create', {}).get('learning_contexts', []) if r.get('approved') is True}
+        approved |= {r['token_index'] for r in qa.get('story_practice_contexts', {}).get('bindings', [])}
+        for t in pack.get('sentence_tokens', []):
+            if t['sentence'] != sentence['ref'] or t.get('removed_in') or not t.get('sense'): continue
+            matches = [c for c in pack['cards'] if form_norm(c['form']) == form_norm(t['surface']) and c['sense'] == t['sense']]
+            if matches or t['idx'] in approved: continue
+            result.append({'story': link['story'], 'sentence': sentence['ref'],
+                           'token_index':t['idx'], 'surface':t['surface'], 'sense':t['sense'],
+                           'start_pos':t['start_pos'], 'end_pos':t['end_pos'],
+                           'kind':'proper_name' if lemmas.get(t.get('lemma'), {}).get('pos') == 'PROPN' else 'editorial_context_missing'})
+    return result
+
+
+def _validate_story_single_sentence(source, review, text):
+    """Version 2 authoring gate; legacy deliveries remain replayable."""
+    from .annotate import tokenize
+    from .linter import _nlp
+    def require(ok, message):
+        if not ok:
+            raise CurationError('story single sentence: ' + message)
+    words = sum(t['is_word'] for t in tokenize(source['text']))
+    require(words > 0, 'original has no words')
+    if 'sentence_refs' in review:
+        require(review['sentence_refs'] == [source['ref']], 'only the unchanged original is allowed')
+        require(words >= 3, 'one/two word original requires reviewed replacement')
+        require(text == source['text'], 'original text changed')
+    else:
+        replacement = review['replacement']
+        justification = replacement.get('justification')
+        require(isinstance(justification, dict) and set(justification) == {'kind', 'evidence'}, 'replacement justification contract')
+        require(justification['kind'] in ({'short_original'} if words <= 2 else {'target_meaning_unusable', 'not_sentence_exercise'}), 'replacement justification kind')
+        require(isinstance(justification['evidence'], str) and justification['evidence'].strip(), 'concrete replacement evidence required')
+        require(text != source['text'], 'replacement must replace unsuitable original')
+    require(isinstance(text, str) and len(list(_nlp()(text).sents)) == 1, 'exactly one sentence required')
+    require(3 <= sum(t['is_word'] for t in tokenize(text)) <= 20, 'exercise requires 3..20 unmerged words')

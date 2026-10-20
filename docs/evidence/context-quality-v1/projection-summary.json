@@ -1,0 +1,92 @@
+{
+  "alltag-zuhause": {
+    "raw_words": 241,
+    "learning_targets": 241,
+    "lexical_words": 241,
+    "form_memberships": 0
+  },
+  "alltagssprache-redewendungen": {
+    "raw_words": 441,
+    "learning_targets": 441,
+    "lexical_words": 441,
+    "form_memberships": 0
+  },
+  "arbeit-bildung": {
+    "raw_words": 245,
+    "learning_targets": 245,
+    "lexical_words": 245,
+    "form_memberships": 0
+  },
+  "business-email": {
+    "raw_words": 579,
+    "learning_targets": 579,
+    "lexical_words": 579,
+    "form_memberships": 0
+  },
+  "essen-trinken": {
+    "raw_words": 250,
+    "learning_targets": 250,
+    "lexical_words": 250,
+    "form_memberships": 0
+  },
+  "koerper-gesundheit": {
+    "raw_words": 249,
+    "learning_targets": 249,
+    "lexical_words": 249,
+    "form_memberships": 0
+  },
+  "menschen-beziehungen": {
+    "raw_words": 245,
+    "learning_targets": 245,
+    "lexical_words": 245,
+    "form_memberships": 0
+  },
+  "natur-umwelt": {
+    "raw_words": 242,
+    "learning_targets": 242,
+    "lexical_words": 242,
+    "form_memberships": 0
+  },
+  "verbalphrasen": {
+    "raw_words": 181,
+    "learning_targets": 181,
+    "lexical_words": 181,
+    "form_memberships": 0
+  },
+  "allgemeine-sprache": {
+    "raw_words": 160,
+    "learning_targets": 160,
+    "lexical_words": 154,
+    "form_memberships": 0
+  },
+  "reisen": {
+    "raw_words": 500,
+    "learning_targets": 489,
+    "lexical_words": 489,
+    "form_memberships": 0
+  },
+  "irregular_verbs_base": {
+    "raw_words": 134,
+    "learning_targets": 134,
+    "lexical_words": 134,
+    "form_memberships": 134
+  },
+  "irregular_verbs_past": {
+    "raw_words": 134,
+    "learning_targets": 134,
+    "lexical_words": 134,
+    "form_memberships": 134
+  },
+  "irregular_verbs_participle": {
+    "raw_words": 134,
+    "learning_targets": 134,
+    "lexical_words": 134,
+    "form_memberships": 134
+  },
+  "mixed": {
+    "raw_words": 3735,
+    "learning_targets": 3654,
+    "lexical_words": 3383,
+    "form_memberships": 402
+  }
+}

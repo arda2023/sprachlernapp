@@ -1,3 +1,6 @@
+import '../../data/runtime_translation_client.dart';
+import '../../widgets/runtime_translation_sheet.dart';
+
 import 'dart:async';
 import 'dart:math' as math;
 
@@ -29,9 +32,11 @@ class TextExerciseScreen extends StatefulWidget {
     required this.mode,
     this.translate = sampleTranslateSentence,
     this.chipSeed = 7,
+    this.sourceLanguage = 'en',
   });
 
   final ExerciseText text;
+  final String sourceLanguage;
   final ExerciseMode mode;
   final String Function(String sentence) translate;
 
@@ -351,11 +356,21 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
         p is _Gap ? (p.solved ? p.gap.answer : '…') : p as String,
     ].join();
     setState(() => _selectedSentence = index);
-    await SentenceTranslationSheet.show(
-      context,
-      original: original,
-      translation: widget.translate(key),
-    );
+    final translation = widget.translate(key);
+    if (hasStoredTranslation(translation)) {
+      await SentenceTranslationSheet.show(
+        context,
+        original: original,
+        translation: translation,
+      );
+    } else {
+      await RuntimeTranslationSheet.show(
+        context,
+        lang: widget.sourceLanguage,
+        text: key,
+        displayText: original,
+      );
+    }
     if (mounted) setState(() => _selectedSentence = null);
   }
 
@@ -687,10 +702,8 @@ class _ChipPanel extends StatelessWidget {
       constraints: BoxConstraints(
         maxHeight: MediaQuery.sizeOf(context).height * 0.4,
       ),
-      decoration: BoxDecoration(
-        color: context.appColors.raisedInk,
-        border: Border(top: BorderSide(color: context.appColors.hairline)),
-      ),
+      // No top rule: the tray separates from the text by its tone.
+      decoration: BoxDecoration(color: context.appColors.raisedInk),
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Wrap(
@@ -759,14 +772,15 @@ class _ChipFace extends StatelessWidget {
         context.appColors.error,
         context.appColors.error,
       ),
+      // No outlines at rest (Redesign); tone separates the chips.
       _ChipFlash.none when used => (
         null,
-        context.appColors.hairline,
+        const Color(0x00000000),
         context.appColors.iconOff,
       ),
       _ChipFlash.none => (
-        context.appColors.nightPage,
-        context.appColors.hairline,
+        context.appColors.raisedInk,
+        const Color(0x00000000),
         context.appColors.textPrimary,
       ),
     };

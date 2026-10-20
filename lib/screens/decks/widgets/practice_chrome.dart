@@ -3,28 +3,39 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 
 import '../../../theme/app_theme.dart';
-import '../../../widgets/hairline_track.dart';
 
-/// Home (ends the session), how many words of the session are left over a
-/// neutral track with one segment per word, and the word menu.
+/// Close (ends the session), the session's progress as orange segments with
+/// the count, and the word menu (Redesign 20.10.2026).
 class PracticeSessionBar extends StatelessWidget {
   const PracticeSessionBar({
     super.key,
     required this.done,
     required this.total,
+    this.loading = false,
+    this.goalReached = false,
+    this.repeating = false,
     required this.onHome,
     required this.onMenu,
   });
 
   final int done;
   final int total;
+  final bool loading, goalReached, repeating;
   final VoidCallback onHome;
   final VoidCallback? onMenu;
 
   @override
   Widget build(BuildContext context) {
     final left = total - done;
-    final label = left == 0
+    final label = loading
+        ? 'Übungen werden geladen …'
+        : goalReached && total == 0
+        ? 'Tagesziel erreicht'
+        : total == 0
+        ? 'Keine passenden Übungen'
+        : repeating
+        ? 'Fehlerwiederholung'
+        : left == 0
         ? 'Alle Übungen geübt'
         : 'Noch $left ${left == 1 ? 'Übung' : 'Übungen'}';
     return Padding(
@@ -33,14 +44,12 @@ class PracticeSessionBar extends StatelessWidget {
         children: [
           _BarButton(
             label: 'Session beenden',
-            icon: CupertinoIcons.house,
+            icon: CupertinoIcons.xmark,
             onPressed: onHome,
           ),
           Expanded(
             child: Semantics(
-              label: left == 0
-                  ? 'Alle $total Übungen geübt'
-                  : 'Noch $left von $total Übungen',
+              label: label,
               excludeSemantics: true,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -49,6 +58,8 @@ class PracticeSessionBar extends StatelessWidget {
                   // The track spans the space between the two buttons.
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    SessionTrack(done: done, total: total),
+                    const SizedBox(height: 6),
                     Text(
                       label,
                       textAlign: TextAlign.center,
@@ -59,8 +70,6 @@ class PracticeSessionBar extends StatelessWidget {
                             fontFeatures: const [FontFeature.tabularFigures()],
                           ),
                     ),
-                    const SizedBox(height: 6),
-                    SessionTrack(done: done, total: total),
                   ],
                 ),
               ),
@@ -80,9 +89,9 @@ class PracticeSessionBar extends StatelessWidget {
   }
 }
 
-/// Neutral session progress (Neutral Progress Rule): one `3pt` segment per
-/// word, `textMuted` once done, Hairline while left, so the count of words
-/// left can be read off the bar. Long sessions fall back to one track.
+/// Session progress: one rounded `6pt` segment per word, orange once done,
+/// Hairline while left, so the words left can be read off the bar. Long
+/// sessions fall back to one bar.
 class SessionTrack extends StatelessWidget {
   const SessionTrack({super.key, required this.done, required this.total});
 
@@ -94,18 +103,36 @@ class SessionTrack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (total == 0 || total > maxSegments) {
-      return HairlineTrack(fraction: total == 0 ? 0 : done / total);
+      final fraction = total == 0 ? 0.0 : done / total;
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(99),
+        child: SizedBox(
+          height: 6,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              ColoredBox(color: context.appColors.hairline),
+              FractionallySizedBox(
+                alignment: Alignment.centerLeft,
+                widthFactor: fraction,
+                child: ColoredBox(color: context.appColors.active),
+              ),
+            ],
+          ),
+        ),
+      );
     }
     return Row(
       children: [
         for (var i = 0; i < total; i++) ...[
-          if (i > 0) const SizedBox(width: 3),
+          if (i > 0) const SizedBox(width: 4),
           Expanded(
-            child: Container(
-              height: 3,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              height: 6,
               decoration: BoxDecoration(
                 color: i < done
-                    ? context.appColors.textMuted
+                    ? context.appColors.active
                     : context.appColors.hairline,
                 borderRadius: BorderRadius.circular(999),
               ),
@@ -166,8 +193,7 @@ class PracticeTranslationCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: context.appColors.raisedInk,
-        border: Border.all(color: context.appColors.hairline),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -185,12 +211,24 @@ class PracticeTranslationCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        translation,
-                        style: AppType.editorial(
-                          color: context.appColors.textPrimary,
-                          size: 20,
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Deutsch',
+                            style: AppType.meta(
+                              color: context.appColors.textMuted,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            translation,
+                            style: AppType.editorial(
+                              color: context.appColors.textPrimary,
+                              size: 20,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -216,7 +254,13 @@ class PracticeTranslationCard extends StatelessWidget {
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Container(height: 1, color: context.appColors.hairline),
+                      Container(
+                        height: 1,
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        color: context.appColors.hairline.withValues(
+                          alpha: 0.6,
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 14, 20, 18),
                         child: Text(
@@ -257,18 +301,20 @@ class PracticeAnswerToolbar extends StatelessWidget {
     required this.onSubmit,
     required this.onNext,
     required this.nextLabel,
+    this.error = false,
+    this.errorOffset = 0,
   });
   final bool speakerEnabled, playing, solved, revealed, saved, hasInput;
   final String? message;
   final String nextLabel;
+  final bool error;
+  final double errorOffset;
   final VoidCallback onSpeak, onReveal, onSubmit;
   final VoidCallback? onNext;
   @override
   Widget build(BuildContext context) => DecoratedBox(
-    decoration: BoxDecoration(
-      color: context.appColors.raisedInk,
-      border: Border(top: BorderSide(color: context.appColors.hairline)),
-    ),
+    // Same tone as the page: the actions float, no bar edge.
+    decoration: BoxDecoration(color: context.appColors.nightPage),
     child: Padding(
       padding: EdgeInsets.fromLTRB(
         12,
@@ -317,7 +363,9 @@ class PracticeAnswerToolbar extends StatelessWidget {
                       264.0,
                       math.max(1.0, constraints.maxWidth),
                     );
-                    final label = solved
+                    final label = error
+                        ? 'Eingeben'
+                        : solved
                         ? nextLabel
                         : hasInput
                         ? 'Eingeben'
@@ -326,26 +374,18 @@ class PracticeAnswerToolbar extends StatelessWidget {
                         ? onNext
                         : hasInput
                         ? onSubmit
-                        : revealed
-                        ? null
                         : onReveal;
-                    var slotHeight = 48.0;
-                    for (final text in const [
-                      'Wort erfahren',
-                      'Eingeben',
-                      'Weiter',
-                      'Wird gespeichert …',
-                      'Speichern wiederholen',
-                    ]) {
+                    var slotHeight = 40.0;
+                    for (final text in [label]) {
                       final painter = TextPainter(
                         text: TextSpan(
                           text: text,
-                          style: AppType.chrome(weight: FontWeight.w600),
+                          style: AppType.chrome(weight: FontWeight.w800),
                         ),
                         textDirection: TextDirection.ltr,
                         textScaler: MediaQuery.textScalerOf(context),
                       )..layout(maxWidth: math.max(1, slotWidth - 76));
-                      slotHeight = math.max(slotHeight, painter.height + 20);
+                      slotHeight = math.max(slotHeight, painter.height + 12);
                       painter.dispose();
                     }
                     return Row(
@@ -354,79 +394,52 @@ class PracticeAnswerToolbar extends StatelessWidget {
                         SizedBox(
                           width: slotWidth,
                           height: slotHeight,
-                          child: ClipRect(
-                            child: AnimatedSwitcher(
-                              duration: MediaQuery.disableAnimationsOf(context)
-                                  ? Duration.zero
-                                  : const Duration(milliseconds: 140),
-                              switchInCurve: Curves.easeOutCubic,
-                              switchOutCurve: Curves.easeInCubic,
-                              layoutBuilder: (current, previous) => Stack(
-                                alignment: Alignment.centerRight,
-                                children: [
-                                  for (final child in previous)
-                                    ExcludeSemantics(
-                                      child: IgnorePointer(child: child),
-                                    ),
-                                  ?current,
-                                ],
+                          child: Row(
+                            key: const ValueKey('practice-action'),
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                width: 44,
+                                child: saved
+                                    ? Semantics(
+                                        label: 'Richtig gespeichert',
+                                        child: Container(
+                                          key: const ValueKey(
+                                            'practice-success',
+                                          ),
+                                          width: 28,
+                                          height: 28,
+                                          margin: const EdgeInsets.symmetric(
+                                            horizontal: 8,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color:
+                                                context.appColors.progressWords,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: const Icon(
+                                            CupertinoIcons.check_mark,
+                                            size: 20,
+                                            color: Color(0xFFFFFFFF),
+                                          ),
+                                        ),
+                                      )
+                                    : null,
                               ),
-                              transitionBuilder: (child, animation) =>
-                                  SlideTransition(
-                                    position: Tween<Offset>(
-                                      begin: const Offset(1, 0),
-                                      end: Offset.zero,
-                                    ).animate(animation),
-                                    child: FadeTransition(
-                                      opacity: animation,
-                                      child: child,
-                                    ),
+                              Flexible(
+                                child: Transform.translate(
+                                  key: const ValueKey('practice-button-shake'),
+                                  offset: Offset(errorOffset, 0),
+                                  child: _ToolbarButton(
+                                    error: error,
+                                    label: label,
+                                    primary: solved || hasInput || error,
+                                    onPressed: action,
                                   ),
-                              child: Row(
-                                key: ValueKey(label),
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SizedBox(
-                                    width: 44,
-                                    child: saved
-                                        ? Semantics(
-                                            label: 'Richtig gespeichert',
-                                            child: Container(
-                                              key: const ValueKey(
-                                                'practice-success',
-                                              ),
-                                              width: 28,
-                                              height: 28,
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                    horizontal: 8,
-                                                  ),
-                                              decoration: BoxDecoration(
-                                                color: context
-                                                    .appColors
-                                                    .memoryLevel2,
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: Icon(
-                                                CupertinoIcons.check_mark,
-                                                size: 20,
-                                                color:
-                                                    context.appColors.nightPage,
-                                              ),
-                                            ),
-                                          )
-                                        : null,
-                                  ),
-                                  Flexible(
-                                    child: _ToolbarButton(
-                                      label: label,
-                                      primary: solved || hasInput,
-                                      onPressed: action,
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
                       ],
@@ -442,58 +455,78 @@ class PracticeAnswerToolbar extends StatelessWidget {
   );
 }
 
-/// A `48dp` pill. Primary: `textPrimary` fill, Night Page label (the
-/// Primary button's grammar). Otherwise a quiet Hairline fill.
+/// A `52dp` pill. Primary: popover orange, white label. Otherwise a quiet
+/// Hairline fill, no outline.
 class _ToolbarButton extends StatelessWidget {
   const _ToolbarButton({
     required this.label,
     required this.onPressed,
     this.primary = false,
+    this.error = false,
   });
 
   final String label;
-  final bool primary;
+  final bool primary, error;
   final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
     final enabled = onPressed != null;
-    final foreground = primary
-        ? context.appColors.nightPage
+    final foreground = error
+        ? context.appColors.error
+        : primary
+        ? const Color(0xFFFFFFFF)
         : (enabled ? context.appColors.textPrimary : context.appColors.iconOff);
     return MergeSemantics(
       child: CupertinoButton(
         onPressed: onPressed,
+        pressedOpacity: error ? 1 : .4,
         padding: EdgeInsets.zero,
         minimumSize: const Size(48, 48),
         child: Semantics(
-          label: label,
+          label: error ? 'Falsch' : label,
           enabled: enabled,
           excludeSemantics: true,
           child: Container(
             constraints: const BoxConstraints(minHeight: 48),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
             decoration: BoxDecoration(
-              color: primary
-                  ? context.appColors.textPrimary
-                  : context.appColors.hairline,
-              border: primary
-                  ? null
-                  : Border.all(color: context.appColors.hairline),
+              color: error
+                  ? context.appColors.errorTint
+                  : primary
+                  ? context.appColors.popover
+                  : context.appColors.raisedInk,
               borderRadius: BorderRadius.circular(999),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Flexible(
-                  child: Text(
-                    label,
-                    maxLines: null,
-                    textAlign: TextAlign.center,
-                    style: AppType.chrome(
-                      weight: FontWeight.w600,
-                      color: foreground,
-                    ),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Opacity(
+                        opacity: error ? 0 : 1,
+                        child: Text(
+                          label,
+                          maxLines: null,
+                          textAlign: TextAlign.center,
+                          style: AppType.chrome(
+                            weight: FontWeight.w800,
+                            color: foreground,
+                          ),
+                        ),
+                      ),
+                      if (error)
+                        Text(
+                          'Falsch',
+                          textAlign: TextAlign.center,
+                          style: AppType.chrome(
+                            weight: FontWeight.w600,
+                            color: foreground,
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               ],

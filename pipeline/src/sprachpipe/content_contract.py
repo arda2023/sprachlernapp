@@ -6,7 +6,7 @@ from .ids import form_norm
 
 def sentence_count(pack):
     version = pack.get('release', {}).get('schema_version')
-    if version not in (1, 2, 3, 4):
+    if version not in (1, 2, 3, 4, 5):
         raise ValueError(f'unsupported content schema {version!r}; supported: 1 (legacy), 2, 3')
     return 3 if version == 1 else 1
 
@@ -79,7 +79,7 @@ def validate_registry(pack, rows):
 
 
 def validate_rows(rows, version):
-    if version not in (1, 2, 3, 4):
+    if version not in (1, 2, 3, 4, 5):
         raise ValueError(f'unsupported content schema {version}')
     if version == 1:
         return  # Explicit legacy release: old artifacts remain inspectable.
@@ -115,7 +115,8 @@ def validate_rows(rows, version):
             raise ValueError(f'{cs["id"]}: gap does not match {c["form"]}')
         if cs['accepted'] != [c['form']]:
             raise ValueError(f'{cs["id"]}: accepted must contain only the target form')
-        if live(cs) and live(c):
+        if live(cs):
+            if not live(c): raise ValueError(f'{cs["id"]}: active link to retired card')
             if not live(s): raise ValueError(f'{cs["id"]}: active link to retired sentence')
             links[c['id']].append(cs)
     for c in cards.values():
@@ -145,7 +146,7 @@ def validate_rows(rows, version):
             raise ValueError(f'alias {key}: duplicate or invalid owner {w["deck_id"]}')
         aliases.add(key)
     for c in cards.values():
-        if live(c) and (c['lang'], c['form_norm']) not in owners and not (version == 4 and c.get('introduction_scope') == 'form_only' and (c['lang'], c['form_norm']) in aliases):
+        if live(c) and (c['lang'], c['form_norm']) not in owners and not (version >= 4 and c.get('introduction_scope') == 'form_only' and (c['lang'], c['form_norm']) in aliases):
             raise ValueError(f'word {c["form"]}: missing owner')
     actual = []
     for dc in rows['deck_cards']:
@@ -159,7 +160,7 @@ def validate_rows(rows, version):
     tokens = defaultdict(list)
     for t in rows['sentence_tokens']:
         s = ref('sentences', t['sentence_id'], t['id'])
-        if not live(t): continue
+        if live(t) and not live(s): raise ValueError(f'{t["id"]}: active token on retired sentence')
         if not (0 <= t['start_pos'] < t['end_pos'] <= len(s['text'])
                 and s['text'][t['start_pos']:t['end_pos']] == t['surface']):
             raise ValueError(f'{t["id"]}: invalid token offset/surface')
@@ -169,6 +170,7 @@ def validate_rows(rows, version):
         if t.get('lemma_id'): ref('lemmas', t['lemma_id'], t['id'])
         if t.get('card_id'):
             c = ref('cards', t['card_id'], t['id'])
+            if live(t) and not live(c): raise ValueError(f'{t["id"]}: active token to retired card')
             if c['sense_id'] != t['sense_id'] or c['form_norm'] != form_norm(t['surface']):
                 raise ValueError(f'{t["id"]}: token card mismatch')
         tokens[s['id']].append(t)
@@ -185,8 +187,10 @@ def validate_rows(rows, version):
         if df.get('card_id'): ref('cards', df['card_id'], df['id'])
     glosses = {(d['lang'], d['form_norm'], d['sense_id']) for d in rows['dictionary_forms']
                if live(d) and isinstance(d.get('gloss_de'), str) and d['gloss_de'].strip()}
+    historical_glosses = {(d['lang'], d['form_norm'], d['sense_id']) for d in rows['dictionary_forms']
+                          if isinstance(d.get('gloss_de'), str) and d['gloss_de'].strip()}
     for s in rows['sentences']:
-        ts = sorted(tokens[s['id']], key=lambda t:t['start_pos'])
+        ts = sorted((t for t in tokens[s['id']] if not live(s) or live(t)), key=lambda t:t['start_pos'])
         if not isinstance(s.get('translation_de'), str) or not s['translation_de'].strip():
             raise ValueError(f'{s["id"]}: missing sentence translation')
         cursor = 0
@@ -194,7 +198,7 @@ def validate_rows(rows, version):
             if s['text'][cursor:t['start_pos']].strip():
                 raise ValueError(f'{s["id"]}: incomplete token coverage')
             cursor = t['end_pos']
-            if any(ch.isalpha() for ch in t['surface']) and (s['lang'], form_norm(t['surface']), t.get('sense_id')) not in glosses:
+            if any(ch.isalpha() for ch in t['surface']) and (s['lang'], form_norm(t['surface']), t.get('sense_id')) not in (glosses if live(s) else historical_glosses):
                 raise ValueError(f'{t["id"]}: missing contextual form gloss')
         if s['text'][cursor:].strip():
             raise ValueError(f'{s["id"]}: incomplete token coverage')
@@ -211,6 +215,10 @@ def validate_rows(rows, version):
             pos = sorted(story_positions[story['id']])
             if not pos or pos != list(range(len(pos))): raise ValueError(f'{story["id"]}: story sentence order')
 
-    if version == 4:
+    if version >= 4:
         from .form_targets import validate_form_rows
         validate_form_rows(rows)
+
+    if version == 5:
+        from .context_revisions import validate_context_rows
+        validate_context_rows(rows)

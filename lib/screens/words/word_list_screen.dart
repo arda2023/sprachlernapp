@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show ScaffoldMessenger, SnackBar;
+import 'package:flutter/material.dart'
+    show Scaffold, ScaffoldMessenger, SnackBar;
 
 import '../../models/speech_playback.dart';
+import '../../domain/leitner.dart';
 import '../../models/word_list_models.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,15 +12,38 @@ import '../../presentation/providers/learning_providers.dart';
 import '../../presentation/providers/database_providers.dart';
 import '../../presentation/content_unavailable_view.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/back_bar.dart';
 import 'widgets/memory_level_legend_sheet.dart';
 import 'widgets/playback_highlight.dart';
 import 'widgets/word_details_sheet.dart';
 import 'widgets/word_list_item.dart';
 
 /// The Wortliste tab: every word the learner has seen, most recent first,
-/// with search and a playlist entry point.
+/// with search, status filters (derived from the card state, nothing stored)
+/// and a playlist entry point.
 class WordListScreen extends ConsumerStatefulWidget {
-  const WordListScreen({super.key, this.clock = DateTime.now});
+  const WordListScreen({
+    super.key,
+    this.clock = DateTime.now,
+    this.targetCardId,
+  });
+  final String? targetCardId;
+
+  static Future<void> openTarget(BuildContext context, String cardId) =>
+      Navigator.of(context).push(
+        CupertinoPageRoute<void>(
+          builder: (context) => Scaffold(
+            body: SafeArea(
+              child: Column(
+                children: [
+                  BackBar(onBack: () => Navigator.of(context).maybePop()),
+                  Expanded(child: WordListScreen(targetCardId: cardId)),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
 
   /// Injected so "Zuletzt gesehen" is testable.
   final DateTime Function() clock;
@@ -32,6 +57,7 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
 
   final _query = TextEditingController();
   final _playback = SpeechPlayback();
+  _Filter _filter = _Filter.all;
 
   @override
   void dispose() {
@@ -117,7 +143,7 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
   @override
   Widget build(BuildContext context) {
     final result = ref.watch(wordListProvider);
-    if (result.hasError) {
+    if (result.hasError && !result.hasValue) {
       return SafeArea(
         child: ContentUnavailableView(
           error: result.error!,
@@ -131,14 +157,19 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
     if (!result.hasValue) {
       return const SafeArea(child: Center(child: CupertinoActivityIndicator()));
     }
-    final all = result.requireValue;
+    final all = result.requireValue
+        .where(
+          (w) => widget.targetCardId == null || w.id == widget.targetCardId,
+        )
+        .toList();
     return SafeArea(
       bottom: false,
       child: ListenableBuilder(
         listenable: Listenable.merge([_playback, _query]),
         builder: (context, _) {
           final q = _query.text.trim().toLowerCase();
-          final words = all
+          final filtered = all.where(_filter.matches).toList();
+          final words = filtered
               .where(
                 (w) =>
                     w.entry.headword.toLowerCase().contains(q) ||
@@ -171,7 +202,7 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
               Padding(
                 padding: _gutter,
                 child: Text(
-                  '${all.map((w) => w.lexicalKey ?? w.id).toSet().length} Wörter · ${all.length} Übungen · $playlistCount in der Playlist',
+                  _summary(all, playlistCount),
                   style: AppType.meta(color: context.appColors.textMuted),
                 ),
               ),
@@ -198,13 +229,38 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
+              SizedBox(
+                height: 44,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  padding: _gutter,
+                  children: [
+                    for (final f in _Filter.values) ...[
+                      if (f != _Filter.values.first) const SizedBox(width: 8),
+                      _FilterChip(
+                        label: f.label,
+                        count: all.where(f.matches).length,
+                        selected: f == _filter,
+                        onTap: () => setState(() => _filter = f),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
               Expanded(
                 child: words.isEmpty
                     ? Padding(
                         padding: _gutter,
                         child: Text(
-                          'Keine Wörter für „${_query.text.trim()}“',
+                          all.isEmpty
+                              ? 'Noch keine Wörter. Übe einen Stapel oder füge '
+                                    'in einer Story ein Wort zum Lernen hinzu.'
+                              : _query.text.trim().isNotEmpty
+                              ? 'Keine Wörter für „${_query.text.trim()}“'
+                              : 'Keine Wörter unter „${_filter.label}“.',
                           style: AppType.chrome(
                             color: context.appColors.textMuted,
                           ),
@@ -277,8 +333,7 @@ class _SearchField extends StatelessWidget {
       padding: const EdgeInsetsDirectional.fromSTEB(6, 14, 8, 14),
       decoration: BoxDecoration(
         color: context.appColors.raisedInk,
-        border: Border.all(color: context.appColors.hairline),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(14),
       ),
     );
   }
@@ -308,8 +363,7 @@ class _PlaylistButton extends StatelessWidget {
             height: size,
             decoration: BoxDecoration(
               color: context.appColors.raisedInk,
-              border: Border.all(color: context.appColors.hairline),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(14),
             ),
             child: Icon(
               CupertinoIcons.music_note_list,
@@ -321,4 +375,98 @@ class _PlaylistButton extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Status filters, derived from box and flags like the four categories.
+enum _Filter {
+  all('Alle'),
+  fresh('Neu'),
+  building('Im Aufbau'),
+  mastered('Gemeistert'),
+  favorites('Favoriten'),
+  playlist('Playlist'),
+  disabled('Deaktiviert');
+
+  const _Filter(this.label);
+  final String label;
+
+  bool matches(VocabWord w) => switch (this) {
+    all => true,
+    fresh => w.box == 0,
+    building => w.box > 0 && w.box < leitnerBoxCount,
+    mastered => w.box == leitnerBoxCount,
+    favorites => w.isFavorite,
+    playlist => w.inPlaylist,
+    disabled => w.isDisabled,
+  };
+}
+
+class _FilterChip extends StatelessWidget {
+  const _FilterChip({
+    required this.label,
+    required this.count,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final int count;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.appColors;
+    const white = Color(0xFFFFFFFF);
+    return MergeSemantics(
+      child: CupertinoButton(
+        onPressed: onTap,
+        padding: EdgeInsets.zero,
+        minimumSize: const Size(44, 44),
+        child: Semantics(
+          label: '$label, $count',
+          selected: selected,
+          excludeSemantics: true,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 150),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            decoration: BoxDecoration(
+              color: selected ? colors.popover : colors.raisedInk,
+              borderRadius: BorderRadius.circular(99),
+            ),
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(text: label),
+                  TextSpan(
+                    text: '  $count',
+                    style: TextStyle(
+                      color: selected
+                          ? white.withValues(alpha: 0.8)
+                          : colors.textMuted,
+                    ),
+                  ),
+                ],
+              ),
+              style: AppType.chrome(
+                size: 14,
+                weight: FontWeight.w700,
+                color: selected ? white : colors.textPrimary,
+                tabular: true,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// "3 Wörter · 4 Übungen · 2 in der Playlist", singular where it is one.
+String _summary(List<VocabWord> all, int playlistCount) {
+  final words = all.map((w) => w.lexicalKey ?? w.id).toSet().length;
+  final forms = all.length;
+  return '$words ${words == 1 ? 'Wort' : 'Wörter'} · '
+      '$forms ${forms == 1 ? 'Übung' : 'Übungen'} · '
+      '$playlistCount in der Playlist';
 }

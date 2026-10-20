@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:sqlite3/sqlite3.dart' as sqlite;
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
@@ -11,7 +12,7 @@ part 'user_database.g.dart';
 /// creation + `review_log`. Curated content is referenced; local cards own metadata.
 @DataClassName('UserCardRow')
 class UserCards extends Table {
-  TextColumn get formFunction => text().nullable().check(const CustomExpression("form_function IS NULL OR form_function IN ('base','past','past_participle')"))();
+  TextColumn get formFunction => text().nullable().check(const CustomExpression("form_function IS NULL OR length(trim(form_function)) > 0"))();
   // Local form concepts remain countable when the content pack is unavailable.
   TextColumn get lexicalTargetId => text().nullable()();
   TextColumn get form => text().nullable()();
@@ -184,7 +185,7 @@ class FormIdentityBindings extends Table {
   TextColumn get lang => text()();
   TextColumn get formNorm => text()();
   TextColumn get semanticAnchor => text()();
-  TextColumn get function => text().check(const CustomExpression("function IN ('base','past','past_participle')"))();
+  TextColumn get function => text().check(const CustomExpression("length(trim(function)) > 0"))();
   TextColumn get cardId => text().references(UserCards, #cardId)();
   @override
   Set<Column> get primaryKey => {identityKey};
@@ -192,7 +193,17 @@ class FormIdentityBindings extends Table {
   List<Set<Column>> get uniqueKeys => [{lang, formNorm, semanticAnchor, function}];
 }
 
-/// Learner database (schema v5). Content stays in read-only content.sqlite;
+@DataClassName('LanguagePreferenceRow')
+class LanguageLearningPreferences extends Table {
+  TextColumn get lang => text()();
+  IntColumn get dailyGoal => integer().withDefault(const Constant(10))();
+  BoolColumn get includeDiacritics => boolean().withDefault(const Constant(true))();
+  BoolColumn get showGrammar => boolean().withDefault(const Constant(false))();
+  @override
+  Set<Column> get primaryKey => {lang};
+}
+
+/// Learner database (schema v6). Content stays in read-only content.sqlite;
 /// both databases are joined only by stable ids.
 @DriftDatabase(
   tables: [
@@ -206,19 +217,40 @@ class FormIdentityBindings extends Table {
     StoryWordSources,
     LearningIdentityBindings,
     FormIdentityBindings,
+    LanguageLearningPreferences,
   ],
 )
 class UserDatabase extends _$UserDatabase {
   UserDatabase(super.executor);
 
   /// user.db at [file], created on first open.
-  factory UserDatabase.file(File file) => UserDatabase(NativeDatabase(file));
+  factory UserDatabase.file(File file) {
+    backupBeforeMigration(file);
+    return UserDatabase(NativeDatabase(file));
+  }
+
+  static void backupBeforeMigration(File file) {
+    if (!file.existsSync()) return;
+    final db = sqlite.sqlite3.open(file.path, mode: sqlite.OpenMode.readOnly);
+    try {
+      final version = db.select('PRAGMA user_version').first.values.first as int;
+      if (version <= 0 || version >= 6) return;
+      final backup = File('${file.path}.pre-v6.sqlite');
+      if (backup.existsSync()) return; // Preserve the first recovery snapshot.
+      final temporary = File('${backup.path}.tmp');
+      if (temporary.existsSync()) temporary.deleteSync();
+      db.execute('VACUUM INTO ?', [temporary.path]);
+      temporary.renameSync(backup.path);
+    } finally { db.close(); }
+  }
 
   /// `<application support>/user.db`, opened on a background isolate.
   static Future<UserDatabase> openForApp() async {
     final dir = await getApplicationSupportDirectory();
+    final file = File(p.join(dir.path, 'user.db'));
+    backupBeforeMigration(file);
     return UserDatabase(
-      NativeDatabase.createInBackground(File(p.join(dir.path, 'user.db'))),
+      NativeDatabase.createInBackground(file),
     );
   }
 
@@ -231,11 +263,12 @@ class UserDatabase extends _$UserDatabase {
   }
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onUpgrade: (m, from, to) async {
+      await transaction(() async {
       if (from < 5) {
         await m.addColumn(userCards, userCards.formFunction);
         await m.addColumn(userCards, userCards.lexicalTargetId);
@@ -274,6 +307,15 @@ class UserDatabase extends _$UserDatabase {
         await m.addColumn(settings, settings.showGrammar);
         await m.createTable(localSubmissions);
       }
+      if (from < 6) {
+        await m.createTable(languageLearningPreferences);
+        await customStatement("INSERT INTO language_learning_preferences (lang, daily_goal, include_diacritics, show_grammar) SELECT 'en', daily_goal, include_diacritics, show_grammar FROM settings WHERE id = 1");
+        await m.alterTable(TableMigration(userCards));
+        await m.alterTable(TableMigration(formIdentityBindings));
+        final violations = await customSelect('PRAGMA foreign_key_check').get();
+        if (violations.isNotEmpty) throw StateError('Migration verletzt Datenreferenzen.');
+      }
+      });
     },
     onCreate: (m) async {
       await m.createAll();

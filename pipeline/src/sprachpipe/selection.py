@@ -169,7 +169,7 @@ def print_plan(plan, cfg, max_usd):
     print('Assumption per card: first batch of 5 candidates, 1 accepted; no regeneration.')
     for step, role, calls, inp, out, thinking in stages:
         model = cfg['llm'][role + '_model']
-        price = model_price(cfg['prices'], model)
+        price = model_price(cfg['prices'], model, provider=cfg['llm']['provider'])
         limit = cfg['llm']['max_output_tokens'][step]
         reserve = reservation_usd(price, 2 * (inp - 1), limit)
         reserved_per_card += calls * reserve

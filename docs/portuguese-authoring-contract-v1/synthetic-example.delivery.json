@@ -1,0 +1,132 @@
+{
+  "add": {
+    "dictionary_forms": [
+      {
+        "form": "SYNTHETIC_NON_PUBLISHABLE",
+        "gloss_de": "Synthetischer Strukturmarker",
+        "rank": 0,
+        "sense": "synthetic-sense"
+      }
+    ],
+    "lemmas": [
+      {
+        "lemma": "SYNTHETIC_NON_PUBLISHABLE",
+        "pos": "NOUN",
+        "ref": "synthetic-lemma"
+      }
+    ],
+    "senses": [
+      {
+        "definition_de": "Kein portugiesisches Wort; niemals veröffentlichen.",
+        "gloss_de": "Synthetischer Strukturmarker",
+        "lemma": "synthetic-lemma",
+        "ref": "synthetic-sense",
+        "sense_key": "synthetic#not-language-content"
+      }
+    ]
+  },
+  "base": {
+    "pack_bytes_sha256": "5fe98c7c183552e5e6ae708bbb765f75dcef21be41f71d094fac806c25d8f554",
+    "pack_canonical_sha256": "5fe98c7c183552e5e6ae708bbb765f75dcef21be41f71d094fac806c25d8f554",
+    "profile_sha256": null,
+    "registry_sha256": "629c6f805448faa443955b6fa87880cdc21347d5663e630d9a5ab6cf32063347",
+    "release_id": "empty-pt-BR",
+    "sqlite_sha256": null,
+    "version": "empty-pt-BR"
+  },
+  "completeness": "draft",
+  "context_sha256": null,
+  "delivery_id": "f0abcac4-0e52-4cd0-bd41-f9fc89a4bbf8",
+  "expected_target_refs": [
+    "synthetic-only"
+  ],
+  "extensions": {},
+  "format": "sprachapp.editorial-content",
+  "format_version": 4,
+  "lang": "pt-BR",
+  "operations": [
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_deck",
+      "lang": "pt-BR",
+      "op_id": "pilot-deck",
+      "payload": {
+        "cefr_band": "anfaenger",
+        "description_de": "Redaktioneller 20-Ziele-Pilot für Brasilianisches Portugiesisch.",
+        "practice_kind": "ordinary",
+        "ref": "ptbr-allgemeine-sprache",
+        "slug": "allgemeine-sprache",
+        "sort": 1,
+        "title_de": "Allgemeine Sprache"
+      },
+      "reason": "PLANENTWURF: leerer vertikaler Testlauf, keine Freigabe.",
+      "target_ref": "ptbr-allgemeine-sprache"
+    },
+    {
+      "expect": {
+        "absent": true
+      },
+      "kind": "create_target",
+      "lang": "pt-BR",
+      "op_id": "create-synthetic-only",
+      "payload": {
+        "card": {
+          "cefr_band": "anfaenger",
+          "form": "SYNTHETIC_NON_PUBLISHABLE",
+          "introduction_scope": "ordinary",
+          "sense": "synthetic-sense",
+          "translation_de": "Kein Lerninhalt"
+        },
+        "context": {
+          "gap": {
+            "end_pos": 25,
+            "start_pos": 0
+          },
+          "reason": "Redaktionelle Prüfung offen.",
+          "text": "SYNTHETIC_NON_PUBLISHABLE.",
+          "tokens": [
+            {
+              "binding_status": "unresolved",
+              "context_gloss_de": "Synthetischer Strukturmarker",
+              "end_pos": 25,
+              "idx": 0,
+              "lemma": "synthetic-lemma",
+              "sense": "synthetic-sense",
+              "start_pos": 0,
+              "surface": "SYNTHETIC_NON_PUBLISHABLE"
+            },
+            {
+              "end_pos": 26,
+              "idx": 1,
+              "start_pos": 25,
+              "surface": "."
+            }
+          ],
+          "translation_de": "Nur synthetische Strukturprobe.",
+          "valid_alternatives": []
+        },
+        "deck_ref": "ptbr-allgemeine-sprache",
+        "topic": "allgemeine-sprache"
+      },
+      "reason": "Unvollständiger Refslot; nicht freigeben.",
+      "target_ref": "synthetic-only"
+    }
+  ],
+  "provenance": [],
+  "purpose": "new_deck",
+  "selection": {
+    "batches": [
+      {
+        "number": 1,
+        "target_refs": [
+          "synthetic-only"
+        ]
+      }
+    ],
+    "policy": "editor-deck-v1"
+  },
+  "submitted_reviews": [],
+  "translation_lang": "de"
+}

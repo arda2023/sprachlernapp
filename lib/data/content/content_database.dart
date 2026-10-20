@@ -1,5 +1,10 @@
+import 'dart:async';
+import 'dart:typed_data';
 import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'dart:io';
+import 'dart:isolate';
+import 'package:drift/isolate.dart';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
@@ -8,14 +13,19 @@ import 'package:sqlite3/sqlite3.dart';
 import '../../domain/content.dart';
 
 import 'form_content_validation.dart';
+import 'context_revision_validation.dart';
+
+import 'content_release_client.dart';
+import 'content_update_validation.dart';
 
 part 'content_database.g.dart';
+part 'content_validation_session.dart';
 
 // No Flutter imports: tool/stage_content_pack.dart shares the checks below.
 
 /// The content schema version this app reads (docs/content-schema.md).
-const supportedContentSchemaVersion = 4;
-const supportedContentSchemaVersions = {1, 2, 3, 4};
+const supportedContentSchemaVersion = 5;
+const supportedContentSchemaVersions = {1, 2, 3, 4, 5};
 
 /// Tables and columns the app reads; anything missing is incompatible.
 const requiredContentColumns = <String, List<String>>{
@@ -123,11 +133,12 @@ ContentInfo validateContentSchema(Database db, {required String lang}) {
       validateSingleSentenceContent(db, schemaVersion: release['schema_version'] as int);
     }
     if ((release['schema_version'] as int) >= 3) validateLearningGroups(db);
-    if (release['schema_version'] == 4) {
+    if ((release['schema_version'] as int) >= 4) {
       try { validateFormContent(db); } on ContentUnavailable { rethrow; } catch (e) {
         throw ContentUnavailable(ContentUnavailableReason.incompatible, 'Schema 4: ungültige Formmetadaten ($e)');
       }
     }
+    if (release['schema_version'] == 5) validateContextRevisions(db, lang: lang);
     final languages = db.select('SELECT code FROM languages WHERE code = ?', [
       lang,
     ]);
@@ -171,7 +182,7 @@ void validateLearningGroups(Database db) {
   }
   final rows = {
     for (final r in db.select(
-      'SELECT id, lang, removed_in, learning FROM cards',
+      'SELECT id, lang, removed_in, replaced_by, learning FROM cards',
     ))
       r['id'] as String: r,
   };
@@ -194,12 +205,19 @@ void validateLearningGroups(Database db) {
       }
       metadata[r['id'] as String] = m;
     }
+    final groupHeads = <String, String>{};
     for (final r in rows.values) {
       final m = metadata[r['id']]!;
+      final previousHead = groupHeads.putIfAbsent(m['group_id'] as String, () => m['primary_card_id'] as String);
+      if (previousHead != m['primary_card_id']) reject();
       final head = rows[m['primary_card_id']];
       final hm = metadata[m['primary_card_id']];
+      final historicalSingleton = head?['id'] == r['id'] &&
+          r['removed_in'] is String && (r['removed_in'] as String).isNotEmpty &&
+          r['replaced_by'] == null &&
+          metadata.values.where((v) => v['group_id'] == m['group_id']).length == 1;
       if (head == null ||
-          head['removed_in'] != null ||
+          (head['removed_in'] != null && !historicalSingleton) ||
           head['lang'] != r['lang'] ||
           hm?['group_id'] != m['group_id'] ||
           hm?['primary_card_id'] != head['id']) {
@@ -229,6 +247,34 @@ void validateSingleSentenceContent(Database db, {int schemaVersion = 2}) {
   final aliases = db.select(
     'SELECT id, lang, form_norm, word_id, removed_in FROM word_aliases',
   );
+  // Keep duplicate matches: the validator must still reject ambiguous links.
+  // These indexes live only for this validation of this open database.
+  final cards = db.select('SELECT * FROM cards WHERE removed_in IS NULL');
+  final cardsById = <Object?, List<Row>>{};
+  for (final card in cards) {
+    if (card['id'] != null) (cardsById[card['id']] ??= []).add(card);
+  }
+  final deckCounts = <(Object?, Object?), int>{};
+  for (final deck in db.select(
+    'SELECT id, lang FROM decks WHERE removed_in IS NULL',
+  )) {
+    if (deck['id'] == null || deck['lang'] == null) continue;
+    final key = (deck['id'], deck['lang']);
+    deckCounts.update(key, (count) => count + 1, ifAbsent: () => 1);
+  }
+  final linksByCard = <Object?, List<Row>>{};
+  for (final link in db.select(
+    'SELECT cs.card_id, cs.position, s.removed_in '
+    'FROM card_sentences cs JOIN sentences s ON s.id=cs.sentence_id '
+    'WHERE cs.removed_in IS NULL',
+  )) {
+    if (link['card_id'] != null) {
+      (linksByCard[link['card_id']] ??= []).add(link);
+    }
+  }
+  final wordIdentities = {
+    for (final word in words) (word['id'], word['lang']),
+  };
   final keys = <String>{};
   final primaries = <String>{};
   final positions = <String, List<int>>{};
@@ -239,20 +285,13 @@ void validateSingleSentenceContent(Database db, {int schemaVersion = 2}) {
     if (!keys.add('${w['lang']}/${w['form_norm']}')) {
       reject('doppelter Wortbesitz ${w['form_norm']}');
     }
-    final card = db.select(
-      'SELECT * FROM cards WHERE id=? AND removed_in IS NULL',
-      [w['primary_card_id']],
-    );
+    final card = cardsById[w['primary_card_id']] ?? const <Row>[];
     if (card.length != 1 ||
         card.single['lang'] != w['lang'] ||
         card.single['form_norm'] != w['form_norm']) {
       reject('ungültige Primärkarte ${w['primary_card_id']}');
     }
-    if (db.select(
-          'SELECT id FROM decks WHERE id=? AND lang=? AND removed_in IS NULL',
-          [w['deck_id'], w['lang']],
-        ).length !=
-        1) {
+    if (deckCounts[(w['deck_id'], w['lang'])] != 1) {
       reject('Eigentümerstapel fehlt');
     }
     primaries.add('${w['deck_id']}/${w['primary_card_id']}/${w['position']}');
@@ -268,7 +307,7 @@ void validateSingleSentenceContent(Database db, {int schemaVersion = 2}) {
   for (final a in aliases.where((r) => r['removed_in'] == null)) {
     if (contentFormNorm(a['form_norm'] as String) != a['form_norm'] ||
         !aliasKeys.add('${a['lang']}/${a['form_norm']}') ||
-        !words.any((w) => w['id'] == a['word_id'] && w['lang'] == a['lang'])) {
+        !wordIdentities.contains((a['word_id'], a['lang']))) {
       reject('Alias ohne eindeutigen Wortbesitz ${a['form_norm']}');
     }
   }
@@ -283,18 +322,15 @@ void validateSingleSentenceContent(Database db, {int schemaVersion = 2}) {
       )) {
     reject('Stapelzuordnung entspricht nicht Primärwörtern');
   }
-  for (final c in db.select('SELECT * FROM cards WHERE removed_in IS NULL')) {
+  for (final c in cards) {
     if (contentFormNorm(c['form'] as String) != c['form_norm'] ||
         (c['form'] as String).trim() != c['form']) {
       reject('ungültige Wortnormalisierung');
     }
-    if (!keys.contains('${c['lang']}/${c['form_norm']}') && !(schemaVersion == 4 && c['introduction_scope'] == 'form_only' && aliasKeys.contains('${c['lang']}/${c['form_norm']}'))) {
+    if (!keys.contains('${c['lang']}/${c['form_norm']}') && !(schemaVersion >= 4 && c['introduction_scope'] == 'form_only' && aliasKeys.contains('${c['lang']}/${c['form_norm']}'))) {
       reject('Wort ohne Eigentümer ${c['form']}');
     }
-    final links = db.select(
-      'SELECT cs.position, s.removed_in FROM card_sentences cs JOIN sentences s ON s.id=cs.sentence_id WHERE cs.card_id=? AND cs.removed_in IS NULL',
-      [c['id']],
-    );
+    final links = linksByCard[c['id']] ?? const <Row>[];
     if (links.length != 1 ||
         links.single['position'] != 1 ||
         links.single['removed_in'] != null) {
@@ -397,15 +433,39 @@ class ContentDatabase extends _$ContentDatabase {
     : _raw = raw,
       super(NativeDatabase.opened(raw, enableMigrations: false));
 
-  final Database _raw;
+  ContentDatabase._remote(super.executor, this.info) : _raw = null;
+
+  /// Isolated test executors only; production must use the validated openers.
+  ContentDatabase.forTesting(super.executor, this.info) : _raw = null;
+
+  /// Only a successfully handshaken session can construct a BoundReader.
+  static ContentDatabase fromBoundReader(BoundReader reader) => reader._take();
+
+  /// Count legacy/bootstrap readers without granting validation authority.
+  void bindExternalReservation(ReaderReservation reservation) {
+    if (_boundCleanup != null) throw StateError('Reader bereits gebunden.');
+    _boundCleanup = () => reservation.closeAfter(() async {});
+  }
+
+  Future<void> Function()? _boundCleanup;
+  Future<void>? _boundClose;
+  final Database? _raw;
   final ContentInfo info;
 
   /// Drift closes the connection only if it ever opened it; the raw handle
   /// is closed here in any case (idempotent), so no file stays locked.
   @override
   Future<void> close() async {
+    if (_boundCleanup != null) {
+      return _boundClose ??= _closeBound();
+    }
     await super.close();
-    _raw.close();
+    _raw?.close();
+  }
+
+  Future<void> _closeBound() async {
+    await super.close();
+    await _boundCleanup!();
   }
 
   @override
@@ -418,6 +478,36 @@ class ContentDatabase extends _$ContentDatabase {
     onUpgrade: (_, _, _) async =>
         throw StateError('content.sqlite is never migrated by the app'),
   );
+
+  /// App connections validate and execute queries off the UI isolate. Tools
+  /// retain the synchronous read-only opener below.
+  static Future<ContentDatabase> openInBackground(File file, {required String lang}) async {
+    final path=file.path;
+    final info=await Isolate.run(() {
+      final raw=sqlite3.open(path,mode:OpenMode.readOnly);
+      try {raw.execute('PRAGMA query_only=ON');return validateContentSchema(raw,lang:lang);}
+      finally {raw.close();}
+    });
+    final isolate=await DriftIsolate.spawn(()=>DatabaseConnection(LazyDatabase(() async {
+      final raw=sqlite3.open(path,mode:OpenMode.readOnly);
+      try {
+        raw.execute('PRAGMA query_only=ON');
+        // The full validation above ran on these hash-checked, content-addressed
+        // bytes; this connection re-checks integrity and release identity only.
+        final check=raw.select('PRAGMA quick_check');
+        final release=raw.select('SELECT lang, version, schema_version FROM content_releases');
+        if(check.length!=1||check.first.values.first!='ok'||release.length!=1||release.first['lang']!=lang
+            ||release.first['version']!=info.version||release.first['schema_version']!=info.schemaVersion){throw StateError('Inhalt während Öffnung geändert.');}
+        return NativeDatabase.opened(raw,enableMigrations:false);
+      }catch(_){raw.close();rethrow;}
+    })));
+    try {
+      final connection=await isolate.connect(singleClientMode:true);
+      final database=ContentDatabase._remote(connection.executor,info);
+      await database.customSelect('SELECT 1').getSingle();
+      return database;
+    }catch(_){await isolate.shutdownAll();rethrow;}
+  }
 
   /// Opens [file] read-only and validates it ([validateContentSchema]).
   static ContentDatabase open(File file, {required String lang}) {

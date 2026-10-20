@@ -40,13 +40,22 @@ import 'package:sprachapp/screens/grammar/grammar_rules_screen.dart';
 import 'package:sprachapp/screens/practice/choice_exercise_screen.dart';
 import 'package:sprachapp/screens/practice/practice_library_screen.dart';
 import 'package:sprachapp/screens/home/widgets/deck_tile.dart';
-import 'package:sprachapp/screens/home/widgets/vocab_progress.dart';
-import 'package:sprachapp/screens/home/widgets/weekly_goal_card.dart';
+import 'package:sprachapp/domain/streak.dart';
+import 'package:sprachapp/screens/home/widgets/home_deck_row.dart';
+import 'package:sprachapp/screens/home/widgets/progress_tiles.dart';
+import 'package:sprachapp/screens/home/widgets/goal_panel.dart';
+import 'package:sprachapp/screens/home/widgets/home_header.dart';
+import 'package:sprachapp/screens/home/widgets/streak_calendar.dart';
+import 'package:sprachapp/screens/home/widgets/streak_strip.dart';
+import 'package:sprachapp/widgets/count_format.dart';
+import 'package:sprachapp/widgets/svg_glyph.dart';
 import 'package:sprachapp/screens/stories/story_library_screen.dart';
 import 'package:sprachapp/screens/stories/story_reader_screen.dart';
 import 'package:sprachapp/screens/stories/widgets/narration_panel.dart';
 import 'package:sprachapp/screens/stories/widgets/news_carousel.dart';
-import 'package:sprachapp/screens/stories/widgets/word_lookup_sheet.dart';
+import 'package:sprachapp/screens/stories/widgets/sentence_popover.dart';
+import 'package:sprachapp/screens/stories/widgets/word_popover.dart';
+import 'package:sprachapp/presentation/providers/reading_providers.dart';
 import 'package:sprachapp/screens/words/widgets/memory_level_legend_sheet.dart';
 import 'package:sprachapp/screens/words/widgets/word_details_sheet.dart';
 import 'package:sprachapp/screens/words/widgets/word_list_item.dart';
@@ -57,7 +66,7 @@ import 'package:sprachapp/widgets/app_bottom_bar.dart';
 import 'package:sprachapp/widgets/difficulty_bolts.dart';
 import 'package:sprachapp/widgets/progress_ring.dart';
 import 'package:sprachapp/widgets/reading_toolbar.dart';
-import 'package:sprachapp/widgets/sentence_translation_sheet.dart';
+import 'package:sprachapp/widgets/runtime_translation_sheet.dart';
 import 'package:sprachapp/widgets/section_heading.dart';
 
 void main() {
@@ -95,21 +104,43 @@ void main() {
     await tester.pumpWidget(testScope(const SprachApp(), library: true));
     await tester.pumpAndSettle();
 
-    expect(find.bySemanticsLabel('Zielsprache: Englisch'), findsOneWidget);
-    expect(find.textContaining('A2'), findsNothing);
-    expect(find.textContaining('Tage'), findsNothing);
-    final reisen = find.bySemanticsLabel(
-      RegExp('Reisen & Unterwegs, 20 Prozent'),
-    );
-    await scrollHomeTo(tester, reisen);
-    expect(find.text('Aktive Stapel'), findsOneWidget);
     expect(
-      find.bySemanticsLabel(RegExp('Reisen & Unterwegs, 20 Prozent')),
+      find.bySemanticsLabel('Zielsprache: Englisch. Sprache wählen'),
       findsOneWidget,
+    );
+    expect(find.byType(GoalBadge), findsOneWidget);
+    expect(find.byType(StreakStrip), findsOneWidget);
+    expect(find.byType(ProgressTiles), findsOneWidget);
+    // The week box leads, the statistics follow.
+    expect(
+      tester.getTopLeft(find.byType(StreakStrip)).dy,
+      lessThan(tester.getTopLeft(find.byType(ProgressTiles)).dy),
     );
     await scrollHomeTo(tester, find.text('Mehr entdecken'));
     expect(find.text('Stories'), findsWidgets);
     expect(find.text('Mehr entdecken'), findsOneWidget);
+    final reisen = find.bySemanticsLabel(
+      RegExp('^Reisen & Unterwegs, .*Schwierigkeit Einsteiger'),
+    );
+    await scrollHomeTo(tester, reisen);
+    expect(find.text('Aktive Stapel'), findsOneWidget);
+    expect(reisen, findsOneWidget);
+    // Home's deck rows carry the progress gauge around the icon, bolts
+    // instead of the level name, and stay neutral (not orange).
+    expect(
+      find.descendant(
+        of: find.byType(HomeDeckRow),
+        matching: find.byType(ProgressRing),
+      ),
+      findsWidgets,
+    );
+    expect(
+      find.descendant(
+        of: find.byType(HomeDeckRow),
+        matching: find.byType(DifficultyBolts),
+      ),
+      findsWidgets,
+    );
     expect(
       find.bySemanticsLabel('Lernen, Tagesziel 0 von 10 Übungen'),
       findsOneWidget,
@@ -129,21 +160,34 @@ void main() {
     );
     for (final label in [
       'Lernen, Tagesziel 0 von 10 Übungen',
-      'Profil',
       'Einstellungen',
-      'Tagesziel ändern',
     ]) {
       expectButton(label);
     }
-    const reisen =
-        'Reisen & Unterwegs, 20 Prozent gemeistert, '
-        'Schwierigkeit Einsteiger, aktiv';
-    await scrollHomeTo(tester, find.bySemanticsLabel(reisen));
-    expectButton(reisen);
+    expect(find.bySemanticsLabel('Profil'), findsNothing);
+    for (final pattern in [
+      '^Tagesziel: ',
+      '^Streak: ',
+      '^Streak .*Kalender öffnen',
+    ]) {
+      expect(
+        tester.getSemantics(find.bySemanticsLabel(RegExp(pattern))),
+        isSemantics(isButton: true, hasTapAction: true),
+        reason: pattern,
+      );
+    }
     const story =
         'The Last Train to Seville. Reisen, 4 Minuten Lesezeit, Niveau A2';
     await scrollHomeTo(tester, find.bySemanticsLabel(story));
     expectButton(story);
+    final reisen = find.bySemanticsLabel(
+      RegExp('^Reisen & Unterwegs, .*Schwierigkeit Einsteiger'),
+    );
+    await scrollHomeTo(tester, reisen);
+    expect(
+      tester.getSemantics(reisen),
+      isSemantics(isButton: true, hasTapAction: true),
+    );
     expect(
       tester.getSemantics(find.bySemanticsLabel('Home')),
       isSemantics(isButton: true, isSelected: true, hasTapAction: true),
@@ -164,19 +208,45 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('Vocab track paints mastered and active segments', (
+  testWidgets('Progress tiles explain themselves in a sheet', (tester) async {
+    await tester.pumpWidget(testScope(const SprachApp(), library: true));
+    await tester.pumpAndSettle();
+    for (final title in ['Im Aufbau', 'Gemeistert', 'Wörter geübt']) {
+      expect(
+        tester.getSemantics(find.bySemanticsLabel(RegExp('^$title: '))),
+        isSemantics(isButton: true, hasTapAction: true),
+        reason: title,
+      );
+    }
+    // Each tile opens a popover pointing at it; all three have one size.
+    final sizes = <Size>[];
+    for (final title in ['Im Aufbau', 'Gemeistert', 'Wörter geübt']) {
+      await tester.tap(find.bySemanticsLabel(RegExp('^$title: ')));
+      await tester.pumpAndSettle();
+      final popover = find.byType(SingleChildScrollView).last;
+      sizes.add(tester.getSize(popover));
+      expect(
+        find.descendant(of: popover, matching: find.text(title)),
+        findsWidgets,
+      );
+      await tester.tapAt(const Offset(4, 4)); // outside closes it
+      await tester.pumpAndSettle();
+    }
+    expect(sizes.toSet(), hasLength(1));
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('Flame opens the streak calendar with days and week stars', (
     tester,
   ) async {
     await tester.pumpWidget(testScope(const SprachApp(), library: true));
     await tester.pumpAndSettle();
-    for (final color in [AppColors.mastered, AppColors.active]) {
-      final segment = find.byWidgetPredicate(
-        (w) => w is ColoredBox && w.color == color && w.child == null,
-      );
-      final size = tester.getSize(segment.first);
-      expect(size.height, 8, reason: '$color segment height');
-      expect(size.width, greaterThan(0), reason: '$color segment width');
-    }
+    await tester.tap(find.bySemanticsLabel(RegExp('^Streak: ')));
+    await tester.pumpAndSettle();
+    expect(find.byType(StreakCalendar), findsOneWidget);
+    expect(find.text('Aktueller Streak'), findsOneWidget);
+    expect(find.text('Wochensterne'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 
   test('German thousands separator', () {
@@ -190,7 +260,13 @@ void main() {
   ) async {
     await tester.pumpWidget(testScope(const SprachApp(), library: true));
     await tester.pumpAndSettle();
-    expect(find.byIcon(CupertinoIcons.flame_fill), findsNothing);
+    expect(
+      find.descendant(
+        of: find.byType(PracticeButton),
+        matching: find.byIcon(CupertinoIcons.flame_fill),
+      ),
+      findsNothing,
+    );
 
     final bar = tester.widget<BottomAppBar>(find.byType(BottomAppBar));
     expect(bar.shape, isA<CircularNotchedRectangle>());
@@ -218,7 +294,8 @@ void main() {
         matching: find.byType(ProgressRing),
       ),
     );
-    expect(ring.color, AppColors.textMuted);
+    expect(ring.color, AppColors.active);
+    expect(ring.gapDegrees, greaterThan(0)); // gauge open at the bottom
     expect(ring.fraction, 0);
 
     final tabs = find.byType(AppBottomBar);
@@ -230,56 +307,70 @@ void main() {
     );
   });
 
-  testWidgets('Week row shows met, missed and today without a count', (
+  testWidgets('Streak bar: checks, a crossed missed day, then the star', (
     tester,
   ) async {
-    await tester.pumpWidget(testScope(const SprachApp(), library: true));
-    await tester.pumpAndSettle();
-    final card = find.byType(WeeklyGoalCard);
-    expect(
-      find.bySemanticsLabel(
-        'Diese Woche: Montag verfehlt, Dienstag verfehlt, Mittwoch verfehlt, '
-        'Donnerstag verfehlt, Freitag verfehlt, Samstag verfehlt, Sonntag heute',
-      ),
-      findsOneWidget,
+    final now = DateTime(2026, 10, 20, 12);
+    Future<void> pumpStrip(List<DateTime> days) async {
+      await tester.pumpWidget(
+        ProviderScope(
+          child: MaterialApp(
+            theme: buildAppTheme(),
+            home: Scaffold(
+              body: StreakStrip(
+                summary: summarizeStreak(days, now),
+                calendar: (_) => const SizedBox(),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+    }
+
+    Finder glyph(SvgGlyph g) => find.descendant(
+      of: find.byType(StreakStrip),
+      matching: find.byWidgetPredicate((w) => w is GlyphIcon && w.glyph == g),
     );
-    expect(
-      find.descendant(
-        of: card,
-        matching: find.byIcon(CupertinoIcons.checkmark),
-      ),
-      findsNothing,
-    );
-    expect(
-      find.descendant(of: card, matching: find.byIcon(CupertinoIcons.xmark)),
-      findsNWidgets(6),
-    );
-    final inked = find.descendant(
-      of: card,
-      matching: find.byWidgetPredicate(
-        (w) =>
-            (w is Icon &&
-                {AppColors.active, AppColors.mastered}.contains(w.color)) ||
-            (w is Text &&
-                {
-                  AppColors.active,
-                  AppColors.mastered,
-                }.contains(w.style?.color)),
-      ),
-    );
-    expect(inked, findsNothing);
+
+    // Four days in a row, today included: open orange star, no plain hint.
+    await pumpStrip([for (var i = 0; i < 4; i++) DateTime(2026, 10, 20 - i)]);
+    expect(glyph(AppGlyphs.check), findsNWidgets(4));
+    expect(glyph(AppGlyphs.cross), findsNothing);
+    expect(glyph(AppGlyphs.starOutline), findsOneWidget);
+    expect(find.textContaining('Noch'), findsNothing);
+    expect(find.textContaining('Wochenstern'), findsOneWidget);
+
+    // Three days, then two days missed: the cross stays until next practice.
+    await pumpStrip([for (var i = 3; i < 6; i++) DateTime(2026, 10, 20 - i)]);
+    expect(glyph(AppGlyphs.check), findsNWidgets(3));
+    expect(glyph(AppGlyphs.cross), findsOneWidget);
+    expect(find.textContaining('Neuer Anlauf'), findsOneWidget);
+
+    // Seven days: the star turns solid white inside the pill.
+    await pumpStrip([for (var i = 0; i < 7; i++) DateTime(2026, 10, 20 - i)]);
+    expect(glyph(AppGlyphs.starSolid), findsOneWidget);
+    expect(glyph(AppGlyphs.starOutline), findsNothing);
+    expect(find.textContaining('geholt'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('Gear changes the daily goal everywhere', (tester) async {
     await tester.pumpWidget(testScope(const SprachApp(), library: true));
     await tester.pumpAndSettle();
-    await tester.tap(find.bySemanticsLabel('Tagesziel ändern'));
+    await tester.tap(find.bySemanticsLabel(RegExp('^Tagesziel: ')));
     await tester.pumpAndSettle();
-    expect(find.text('Tagesziel'), findsOneWidget);
-    await tester.tap(find.text('20 Übungen pro Tag'));
+    expect(find.byType(GoalPanel), findsOneWidget);
+    expect(find.textContaining('Du hast heute'), findsOneWidget);
+    await tester.tap(find.bySemanticsLabel('20 Wörter pro Tag'));
+    await tester.pumpAndSettle();
+    expect(find.text('0/20'), findsOneWidget);
+    await tester.tapAt(const Offset(4, 4));
     await tester.pumpAndSettle();
     expect(
-      find.bySemanticsLabel('Tagesziel: 0 von 20 Übungen'),
+      find.bySemanticsLabel(
+        'Tagesziel: 0 von 20 Wörtern geübt. Details öffnen',
+      ),
       findsOneWidget,
     );
     expect(
@@ -312,34 +403,13 @@ void main() {
   testWidgets('Deck tiles show ring, bolts and active state', (tester) async {
     await tester.pumpWidget(testScope(const SprachApp(), library: true));
     await tester.pumpAndSettle();
+    // Home: active decks only, as plain rows.
     await scrollHomeTo(
       tester,
-      find.bySemanticsLabel(RegExp('^Reisen & Unterwegs,')),
+      find.widgetWithText(HomeDeckRow, 'Alltägliche Konversation'),
     );
-    // Home: active decks only.
-    expect(find.widgetWithText(DeckTile, 'Medizin'), findsNothing);
-    final firstTile = tester.widget<DeckTile>(
-      find.widgetWithText(DeckTile, 'Reisen & Unterwegs'),
-    );
-    expect(firstTile.deck.isActive, isTrue);
-    await scrollHomeTo(
-      tester,
-      find.widgetWithText(DeckTile, 'Alltägliche Konversation'),
-    );
-    expect(
-      tester
-          .widget<DeckTile>(
-            find.widgetWithText(DeckTile, 'Alltägliche Konversation'),
-          )
-          .deck
-          .isActive,
-      isTrue,
-    );
-    await tester.scrollUntilVisible(
-      find.widgetWithText(DeckTile, 'Reisen & Unterwegs'),
-      -200,
-      scrollable: find.byType(Scrollable).first,
-    );
+    expect(find.widgetWithText(HomeDeckRow, 'Reisen & Unterwegs'), findsOne);
+    expect(find.widgetWithText(HomeDeckRow, 'Medizin'), findsNothing);
 
     BoxDecoration tileBox(String name) =>
         tester
@@ -354,13 +424,20 @@ void main() {
                 .decoration!
             as BoxDecoration;
 
-    final active = tileBox('Reisen & Unterwegs');
-    expect(active.color, AppColors.activeTint);
-    expect((active.border! as Border).top.color, AppColors.active);
-
-    // Inactive decks show up in the library.
+    // The library keeps the full tiles.
     await tester.tap(find.text('Mehr ansehen'));
     await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.widgetWithText(DeckTile, 'Reisen & Unterwegs'),
+      200,
+      scrollable: find.byType(Scrollable).last,
+    );
+    // Active decks are filled orange in the library, no outline.
+    final active = tileBox('Reisen & Unterwegs');
+    expect(active.color, AppPalette(Brightness.dark).popover);
+    expect(active.border, isNull);
+
+    // Inactive decks show up in the library.
     await tester.scrollUntilVisible(
       find.bySemanticsLabel(RegExp('^Medizin,')),
       200,
@@ -368,26 +445,30 @@ void main() {
     );
     final inactive = tileBox('Medizin');
     expect(inactive.color, AppColors.raisedInk);
-    expect((inactive.border! as Border).top.color, AppColors.hairline);
+    expect(inactive.border, isNull);
 
     expect(
       find.bySemanticsLabel(
-        'Medizin, 20 Prozent gemeistert, Schwierigkeit Fortgeschritten',
+        'Medizin, 60 Prozent geübt, Schwierigkeit Fortgeschritten, 5 Wörter',
       ),
       findsOneWidget,
     );
+    // Bolts instead of the level name; word count beside them.
     expect(
       find.descendant(
         of: find.widgetWithText(DeckTile, 'Medizin'),
-        matching: find.text('20% gemeistert'),
+        matching: find.text('5 Wörter'),
       ),
       findsOneWidget,
     );
     final medizin = find.widgetWithText(DeckTile, 'Medizin');
+    // Progress gauge like the Play button: open at the bottom, orange arc.
     final ring = tester.widget<ProgressRing>(
       find.descendant(of: medizin, matching: find.byType(ProgressRing)),
     );
-    expect(ring.color, AppColors.mastered);
+    expect(ring.color, AppColors.active);
+    expect(ring.gapDegrees, greaterThan(0));
+    expect(ring.fraction, closeTo(0.6, 0.001));
     final bolts = tester
         .widgetList<Icon>(
           find.descendant(
@@ -430,9 +511,15 @@ void main() {
     );
     expect(find.text('Fortgeschritten'), findsOneWidget);
     for (final label in [
-      'Lerne mit diesem Stapel',
+      'Mit diesem Stapel üben',
+      'Stapel-Revue: Stapel nochmals durchsehen',
       'Deine letzten 3 geübten Formen',
     ]) {
+      await tester.scrollUntilVisible(
+        find.bySemanticsLabel(label),
+        200,
+        scrollable: find.byType(Scrollable).last,
+      );
       expect(
         tester.getSemantics(find.bySemanticsLabel(label)),
         isSemantics(isButton: true, hasTapAction: true),
@@ -446,12 +533,11 @@ void main() {
     expect(find.text('walks'), findsOneWidget);
     expect(find.text('geht'), findsOneWidget);
 
-    await tester.scrollUntilVisible(
-      find.text('Stapel nochmals durchsehen'),
-      200,
-      scrollable: find.byType(Scrollable).last,
-    );
     expect(find.text('Stapel-Revue'), findsOneWidget);
+    expect(find.text('Mehr davon'), findsNothing);
+    // The icon carries the deck's progress gauge.
+    final gauge = tester.widget<ProgressRing>(find.byType(ProgressRing).first);
+    expect(gauge.gapDegrees, greaterThan(0));
   });
 
   testWidgets('"Stapel lernen" toggles the deck on every screen', (
@@ -460,7 +546,8 @@ void main() {
     await openMedizin(tester);
     final toggle = tester.widget<CupertinoSwitch>(find.byType(CupertinoSwitch));
     expect(toggle.value, isFalse);
-    expect(toggle.activeTrackColor, AppColors.textMuted);
+    expect(toggle.activeTrackColor, AppColors.active);
+    expect(find.text('In die tägliche Übung'), findsOneWidget);
 
     await tester.tap(find.byType(CupertinoSwitch));
     await tester.pumpAndSettle();
@@ -473,12 +560,16 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Zurück'));
     await tester.pumpAndSettle();
     const medizinActive =
-        'Medizin, 20 Prozent gemeistert, Schwierigkeit Fortgeschritten, aktiv';
+        'Medizin, 60 Prozent geübt, Schwierigkeit Fortgeschritten, '
+        '5 Wörter, aktiv';
     expect(find.bySemanticsLabel(medizinActive), findsOneWidget);
     await tester.tap(find.bySemanticsLabel('Zurück'));
     await tester.pumpAndSettle();
-    await scrollHomeTo(tester, find.text('Mehr ansehen'));
-    expect(find.bySemanticsLabel(medizinActive), findsOneWidget);
+    final medizinHome = find.bySemanticsLabel(
+      RegExp('^Medizin, .*Fortgeschritten'),
+    );
+    await scrollHomeTo(tester, medizinHome);
+    expect(medizinHome, findsOneWidget);
   });
 
   testWidgets('Deck details survive large Dynamic Type', (tester) async {
@@ -503,12 +594,11 @@ void main() {
   ) async {
     await tester.pumpWidget(testScope(const SprachApp(), library: true));
     await tester.pumpAndSettle();
+    expect(find.text('0/10'), findsOneWidget);
     expect(
-      find.bySemanticsLabel(RegExp('6 Wiederholungen verfügbar')),
-      findsOneWidget,
-    );
-    expect(
-      find.bySemanticsLabel('Tagesziel: 0 von 10 Übungen'),
+      find.bySemanticsLabel(
+        'Tagesziel: 0 von 10 Wörtern geübt. Details öffnen',
+      ),
       findsOneWidget,
     );
   });
@@ -525,7 +615,10 @@ void main() {
     await tester.tap(find.text('Mehr entdecken'));
     await tester.pumpAndSettle();
     expect(find.byType(StoryLibraryScreen), findsOneWidget);
-    expect(find.text('Weiterlesen'), findsNothing); // No invented persisted reading progress.
+    expect(
+      find.text('Weiterlesen'),
+      findsNothing,
+    ); // No invented persisted reading progress.
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
     await tester.scrollUntilVisible(
       find.widgetWithText(SectionHeading, 'Reisen'),
@@ -538,6 +631,7 @@ void main() {
           .first,
     );
     expect(find.widgetWithText(SectionHeading, 'Reisen'), findsOneWidget);
+    // Only the three real pack stories; no redesign demo catalogue.
     expect(find.text('3 Stories'), findsWidgets);
   });
 
@@ -595,7 +689,7 @@ void main() {
       await tester.pumpWidget(reader());
       await tapWord(tester, 'arrived');
 
-      expect(find.byType(WordLookupSheet), findsOneWidget);
+      expect(find.byType(WordPopover), findsOneWidget);
       expect(find.text('ankommen'), findsOneWidget);
       expect(find.text('im Text: arrived'), findsOneWidget);
       expect(find.textContaining('Verb', findRichText: true), findsWidgets);
@@ -607,43 +701,50 @@ void main() {
         findsOneWidget,
       );
       expect(
-        tester.getSemantics(find.bySemanticsLabel('Zum Lernen nicht verfügbar')),
+        tester.getSemantics(
+          find.bySemanticsLabel('Zum Lernen nicht verfügbar'),
+        ),
         isSemantics(isButton: true, isEnabled: false),
       );
       expect(find.bySemanticsLabel('Wird gelernt'), findsNothing);
     },
   );
 
-  testWidgets('Lookup sheet uses neutral chrome and no shadow', (tester) async {
+  testWidgets('Word popover points at the word and can pronounce it', (
+    tester,
+  ) async {
     await tester.pumpWidget(reader());
     await tapWord(tester, 'clock');
 
-    final sheet = tester.widget<Material>(
-      find
-          .ancestor(
-            of: find.byType(WordLookupSheet),
-            matching: find.byType(Material),
-          )
-          .first,
+    final popover = find.ancestor(
+      of: find.byType(WordPopover),
+      matching: find.byWidgetPredicate(
+        (w) =>
+            w is DecoratedBox &&
+            w.decoration is ShapeDecoration &&
+            (w.decoration as ShapeDecoration).color ==
+                AppPalette(Brightness.dark).popover,
+      ),
     );
-    expect(sheet.color, AppColors.raisedInk);
-    expect(sheet.elevation, 0);
+    expect(popover, findsOneWidget);
+    expect(
+      tester.getSemantics(find.bySemanticsLabel('Aussprechen')),
+      isSemantics(isButton: true, hasTapAction: true),
+    );
+    await tester.tap(find.bySemanticsLabel('Aussprechen'));
+    Finder inPopover(IconData icon) => find.descendant(
+      of: find.byType(WordPopover),
+      matching: find.byIcon(icon),
+    );
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(inPopover(CupertinoIcons.speaker_3_fill), findsOneWidget);
+    await tester.pumpAndSettle();
+    expect(inPopover(CupertinoIcons.speaker_2_fill), findsOneWidget);
 
-    final button = find.byType(AddToLearningButton);
-    final decorations = tester
-        .widgetList<Container>(
-          find.descendant(of: button, matching: find.byType(Container)),
-        )
-        .map((c) => c.decoration)
-        .whereType<BoxDecoration>();
-    for (final d in decorations) {
-      expect(d.color, isNot(anyOf(AppColors.mastered, AppColors.active)));
-      expect(d.boxShadow, isNull);
-    }
-    final icon = tester.widget<Icon>(
-      find.descendant(of: button, matching: find.byType(Icon)),
-    );
-    expect(icon.color, AppColors.textMuted); // Prototype action is disabled.
+    // Tapping outside closes it.
+    await tester.tapAt(const Offset(5, 400));
+    await tester.pumpAndSettle();
+    expect(find.byType(WordPopover), findsNothing);
   });
 
   testWidgets('Known words keep their status without a downgrade', (
@@ -966,14 +1067,15 @@ void main() {
           .width,
       lessThan(panel / 2),
     );
-    expect(chipBox(tester, 'left').color, AppColors.nightPage);
+    // Resting chips: Raised Ink fill, no outline (Redesign).
+    expect(chipBox(tester, 'left').color, AppColors.raisedInk);
 
     await tester.tap(chip('ran'));
     await tester.pump(const Duration(milliseconds: 200));
     expect(chipBox(tester, 'ran').color, AppColors.errorTint);
     await tester.pump(const Duration(milliseconds: 600));
     await tester.pumpAndSettle();
-    expect(chipBox(tester, 'ran').color, AppColors.nightPage);
+    expect(chipBox(tester, 'ran').color, AppColors.raisedInk);
 
     await tester.tap(chip('left'));
     await tester.pump(const Duration(milliseconds: 200));
@@ -1024,8 +1126,8 @@ void main() {
     expect(find.text(ReadingToolbar.hint), findsOneWidget);
 
     await tapWord(tester, 'arrived');
-    expect(find.byType(WordLookupSheet), findsNothing);
-    expect(find.byType(SentenceTranslationSheet), findsOneWidget);
+    expect(find.byType(WordPopover), findsNothing);
+    expect(find.byType(SentencePopover), findsOneWidget);
     expect(
       find.text('The station was almost empty when Clara arrived.'),
       findsOneWidget,
@@ -1226,31 +1328,40 @@ void main() {
     await tester.pumpWidget(wordList(store));
     Finder toggle(String label) =>
         inCard('platform', find.bySemanticsLabel(label));
+    Finder menu(String label) => find.bySemanticsLabel(label);
+    Future<void> openMenu() async {
+      await tester.tap(toggle('Mehr zu platform'));
+      await tester.pumpAndSettle();
+    }
 
+    // Only the heart stays on the card; the rest lives in "Mehr".
+    expect(toggle('Deaktiviert'), findsNothing);
+    await openMenu();
     expect(
-      tester.getSemantics(toggle('Deaktiviert')),
+      tester.getSemantics(menu('Deaktiviert')),
       isSemantics(isButton: true, hasToggledState: true, isToggled: false),
     );
-    await tester.tap(toggle('Deaktiviert'));
-    await tester.pump();
+    await tester.tap(menu('Deaktiviert'));
+    await tester.pumpAndSettle();
     expect(find.text('Wort deaktiviert'), findsOneWidget);
     expect(store.byId('platform').isDisabled, isTrue);
     expect(
       find.textContaining('Deaktiviert · Zuletzt gesehen: vor 2 Tagen'),
       findsOneWidget,
     );
+    await openMenu();
     expect(
-      tester.getSemantics(toggle('Deaktiviert')),
+      tester.getSemantics(menu('Deaktiviert')),
       isSemantics(isButton: true, hasToggledState: true, isToggled: true),
     );
 
     // Already in the playlist: tapping removes it.
-    await tester.tap(toggle('In der Playlist'));
-    await tester.pump();
+    await tester.tap(menu('In der Playlist'));
+    await tester.pumpAndSettle();
     expect(find.text('Aus der Playlist entfernt'), findsOneWidget);
 
     await tester.tap(toggle('Favorit'));
-    await tester.pump();
+    await tester.pumpAndSettle();
     expect(find.text('Zu Favoriten hinzugefügt'), findsOneWidget);
     expect(find.byIcon(CupertinoIcons.heart_fill), findsWidgets);
     await drainTimers(tester);
@@ -1286,6 +1397,8 @@ void main() {
     phoneView(tester);
     final store = WordListStore(sampleVocabulary(wordListNow));
     await tester.pumpWidget(wordList(store));
+    await tester.tap(find.bySemanticsLabel('Mehr zu platform'));
+    await tester.pumpAndSettle();
     await tester.tap(find.bySemanticsLabel('Details zu platform'));
     await tester.pumpAndSettle();
     final sheet = find.byType(WordDetailsSheet);
@@ -1323,13 +1436,16 @@ void main() {
     tester.platformDispatcher.textScaleFactorTestValue = 2;
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
     await tester.pumpWidget(wordList());
-    await tester.drag(find.byType(ListView), const Offset(0, -600));
+    await tester.drag(find.byType(ListView).last, const Offset(0, -600));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
 
     await tester.tap(
-      find.bySemanticsLabel(RegExp('^Details zu')).hitTestable().first,
+      find.bySemanticsLabel(RegExp('^Mehr zu')).hitTestable().first,
     );
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+    await tester.tap(find.bySemanticsLabel(RegExp('^Details zu')).first);
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
     Navigator.of(tester.element(find.byType(WordDetailsSheet))).pop();
@@ -1343,7 +1459,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('Word rows sit on the Night Page with a Hairline rule', (
+  testWidgets('Word cards: filled, no outline; status filters narrow it', (
     tester,
   ) async {
     phoneView(tester);
@@ -1357,22 +1473,30 @@ void main() {
         )
         .map((c) => c.decoration)
         .whereType<BoxDecoration>();
-    // No card: nothing in the row is outlined or filled with Raised Ink.
-    expect(
-      boxes.where((d) => d.border is Border && d.shape != BoxShape.circle),
-      isEmpty,
+    expect(boxes.where((d) => d.border != null), isEmpty);
+    expect(boxes.where((d) => d.color == AppColors.raisedInk), isNotEmpty);
+
+    final all = tester.widgetList(find.byType(WordListItem)).length;
+    final chip = find.textContaining('Gemeistert  ', findRichText: true);
+    await tester.scrollUntilVisible(
+      chip,
+      120,
+      scrollable: find
+          .descendant(
+            of: find.byType(ListView).first,
+            matching: find.byType(Scrollable),
+          )
+          .first,
     );
-    expect(boxes.where((d) => d.color == AppColors.raisedInk), isEmpty);
-    final rule = find.descendant(
-      of: find.byType(WordListItem).first,
-      matching: find.byWidgetPredicate(
-        (w) =>
-            w is Container &&
-            w.color == AppColors.hairline &&
-            w.constraints?.maxHeight == 1,
-      ),
-    );
-    expect(rule, findsOneWidget);
+    await tester.pumpAndSettle();
+    await tester.tap(chip);
+    await tester.pumpAndSettle();
+    expect(tester.widgetList(find.byType(WordListItem)).length, lessThan(all));
+    for (final item in tester.widgetList<WordListItem>(
+      find.byType(WordListItem),
+    )) {
+      expect(item.word.box, 5);
+    }
   });
 
   // ------------------------------------------------------------- grammar
@@ -2000,7 +2124,12 @@ void main() {
     home: Scaffold(
       body: StoryLibraryScreen(
         stories: sampleStories,
-        continueReading: sampleContinueReading,
+        progress: {
+          sampleContinueReading.storyId: ReadingEntry(
+            fraction: sampleContinueReading.fraction,
+            updatedAt: DateTime(2026, 10, 20),
+          ),
+        },
         onOpenStory: (_) {},
         news: sampleNews,
         onOpenNews: (_) {},
@@ -2008,20 +2137,31 @@ void main() {
     ),
   );
 
-  testWidgets('Nachrichten sit between "Weiterlesen" and the topics', (
+  testWidgets('Nachrichten lead, then "Weiterlesen", own texts, categories', (
     tester,
   ) async {
     phoneView(tester);
     await tester.pumpWidget(storyLibrary());
-    final news = find.widgetWithText(SectionHeading, 'Nachrichten · Demo');
+    final news = find.widgetWithText(SectionHeading, 'Nachrichten');
     expect(news, findsOneWidget);
+    expect(find.text('Demo'), findsOneWidget);
     expect(find.text(StoryLibraryScreen.newsSubheading), findsOneWidget);
     expect(find.textContaining('Zuletzt aktualisiert'), findsNothing);
     double top(Finder f) => tester.getTopLeft(f).dy;
-    expect(top(find.text('Weiterlesen')), lessThan(top(news)));
+    final resume = find.widgetWithText(SectionHeading, 'Weiterlesen');
+    final own = find.widgetWithText(SectionHeading, 'Deine Texte');
+    expect(top(news), lessThan(top(resume)));
+    expect(top(resume), lessThan(top(own)));
     expect(
-      top(news),
+      top(own),
       lessThan(top(find.widgetWithText(SectionHeading, 'Reisen'))),
+    );
+    // The started story shows its position.
+    expect(
+      find.bySemanticsLabel(
+        RegExp(r'^Weiterlesen: The Last Train to Seville, .*40 Prozent'),
+      ),
+      findsOneWidget,
     );
 
     // Endless paging over five desks; the focused card starts on the 20pt
@@ -2120,9 +2260,11 @@ void main() {
 
   Widget newsReader() {
     final article = sampleNews.first;
-    return MaterialApp(
-      theme: buildAppTheme(),
-      home: StoryReaderScreen(story: article.asStory, text: article.text),
+    return ProviderScope(
+      child: MaterialApp(
+        theme: buildAppTheme(),
+        home: StoryReaderScreen(story: article.asStory, text: article.text),
+      ),
     );
   }
 
@@ -2138,24 +2280,26 @@ void main() {
       isSemantics(isHeader: true, label: 'Who pays for it?'),
     );
 
-    // Word lookup.
+    // Missing word opens explicit AI opt-in; no request on tap.
     await tapWord(tester, 'council');
-    expect(find.byType(WordLookupSheet), findsOneWidget);
-    Navigator.of(tester.element(find.byType(WordLookupSheet))).pop();
+    expect(find.byType(RuntimeTranslationSheet), findsOneWidget);
+    expect(find.text('Mit KI übersetzen'), findsOneWidget);
+    expect(find.textContaining('KI ·'), findsNothing);
+    Navigator.of(tester.element(find.byType(RuntimeTranslationSheet))).pop();
     await tester.pumpAndSettle();
 
     // Sentence translation.
     await tester.tap(find.bySemanticsLabel('Übersetzen'));
     await tester.pumpAndSettle();
     await tapWord(tester, 'council');
-    expect(find.byType(SentenceTranslationSheet), findsOneWidget);
+    expect(find.byType(SentencePopover), findsOneWidget);
     expect(
       find.text(
         'Der Stadtrat hat am Dienstag für einen neuen Busplan gestimmt.',
       ),
       findsOneWidget,
     );
-    Navigator.of(tester.element(find.byType(SentenceTranslationSheet))).pop();
+    Navigator.of(tester.element(find.byType(SentencePopover))).pop();
     await tester.pumpAndSettle();
 
     // Narration marks the first sentence, not the subheading.

@@ -67,6 +67,16 @@ def export_sqlite(pack: dict, path: str | Path) -> dict[str, int]:
                         f'INSERT INTO "{table}" ({names}) VALUES ({placeholders})',
                         [[_value(pg, row.get(n)) for n, pg in cols] for row in rows[table]],
                     )
+                # Both tables and indexed columns exist in schema 1–4.
+                # Build inside the same transaction before publishing the file.
+                conn.execute(
+                    "CREATE INDEX idx_sentence_tokens_active_sentence_idx "
+                    "ON sentence_tokens(sentence_id,idx) WHERE removed_in IS NULL"
+                )
+                conn.execute(
+                    "CREATE INDEX idx_dictionary_forms_active_lookup "
+                    "ON dictionary_forms(sense_id,form_norm,rank,id) WHERE removed_in IS NULL"
+                )
         finally:
             conn.close()   # Windows: no own handle may stay open before replace
         os.replace(tmp, path)

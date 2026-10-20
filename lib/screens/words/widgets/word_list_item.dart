@@ -5,10 +5,13 @@ import '../../../models/word_list_models.dart';
 import '../../../theme/app_theme.dart';
 import 'memory_level_indicator.dart';
 import 'playback_highlight.dart';
+import '../../../widgets/popover_trigger.dart';
 
-/// One word in the Wortliste: memory level, headword and example sentence
-/// (both read aloud on tap), metadata, three quiet toggles and a chevron to
-/// the details sheet.
+/// One word in the Wortliste (Redesign 20.10.2026): a card without outline.
+/// Memory level, headword and example sentence (both read aloud on tap) and
+/// metadata; on the right only the favourite heart and "Mehr", which opens
+/// a popover with playlist, deactivation and details (REDESIGN_BERICHTE.md:
+/// not every action permanently on every row).
 class WordListItem extends StatelessWidget {
   const WordListItem({
     super.key,
@@ -25,15 +28,7 @@ class WordListItem extends StatelessWidget {
     required this.onOpenDetails,
   });
 
-  /// The list's right padding is smaller than the gutter so the chevron's
-  /// glyph sits near the edge; the rule still ends at the gutter.
-  static const listPadding = EdgeInsets.fromLTRB(
-    20 - PlaybackHighlight.inset,
-    0,
-    8,
-    32,
-  );
-  static const ruleEndInset = 20.0 - 8;
+  static const listPadding = EdgeInsets.fromLTRB(20, 0, 20, 40);
 
   final VocabWord word;
   final DateTime now;
@@ -49,148 +44,311 @@ class WordListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     const inset = EdgeInsets.only(left: PlaybackHighlight.inset);
     final headword = word.entry.headword;
     final meta = [
-      if (const ['Grundform', 'Präteritum', 'Partizip Perfekt'].contains(word.entry.partOfSpeech)) word.entry.partOfSpeech,
+      if (const [
+        'Grundform',
+        'Präteritum',
+        'Partizip Perfekt',
+      ].contains(word.entry.partOfSpeech))
+        word.entry.partOfSpeech,
       if (word.isDisabled) 'Deaktiviert',
       'Zuletzt gesehen: ${lastSeenLabel(word.lastSeenAt, now)}',
       'Wiederholt: ${reviewCountLabel(word.reviewCount)}',
     ].join(' · ');
 
-    // A row on the Night Page, closed by a Hairline rule. The list pads it
-    // by the gutter minus the playback inset, so the text inside the mark
-    // lines up with the screen gutter and the rule starts under the text.
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(
+          14 - PlaybackHighlight.inset,
+          6,
+          4,
+          14,
+        ),
+        decoration: BoxDecoration(
+          color: colors.raisedInk,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Opacity(
+                opacity: word.isDisabled ? 0.45 : 1,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MergeSemantics(
+                      child: CupertinoButton(
+                        onPressed: onShowLegend,
+                        padding: inset,
+                        minimumSize: const Size(44, 44),
+                        alignment: Alignment.centerLeft,
+                        child: Semantics(
+                          label:
+                              'Erinnerungsstufe ${word.box} von '
+                              '$leitnerBoxCount: ${memoryLevelTitle(word.box)}',
+                          excludeSemantics: true,
+                          child: MemoryLevelIndicator(level: word.box),
+                        ),
+                      ),
+                    ),
+                    ListenButton(
+                      label: '$headword anhören',
+                      playing: playingWord,
+                      onPressed: onPlayWord,
+                      child: HeadwordWithSpeaker(
+                        headword: headword,
+                        playing: playingWord,
+                      ),
+                    ),
+                    if (word.entry.translation.isNotEmpty)
+                      Padding(
+                        padding: inset.copyWith(bottom: 4),
+                        child: Text(
+                          word.entry.translation,
+                          style: AppType.chrome(
+                            size: 15,
+                            weight: FontWeight.w600,
+                            color: colors.active,
+                          ),
+                        ),
+                      ),
+                    ListenButton(
+                      label: 'Satz anhören: ${word.sentence}',
+                      playing: playingSentence,
+                      onPressed: onPlaySentence,
+                      child: Text(
+                        word.sentence,
+                        style: AppType.editorial(
+                          color: colors.textPrimary,
+                          size: 16,
+                          weight: FontWeight.w400,
+                          height: 1.45,
+                          letterSpacing: 0,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Padding(
+                      padding: inset,
+                      child: Text(
+                        word.box == 0
+                            ? '${word.entry.partOfSpeech} · Ungelernt · '
+                                  'Hinzugefügt ${lastSeenLabel(word.lastSeenAt, now)}'
+                            : meta,
+                        style: AppType.meta(color: colors.textMuted).copyWith(
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                WordToggle(
+                  label: 'Favorit',
+                  on: word.isFavorite,
+                  onPressed: onToggleFavorite,
+                  icon: Icon(
+                    word.isFavorite
+                        ? CupertinoIcons.heart_fill
+                        : CupertinoIcons.heart,
+                    size: 19,
+                  ),
+                ),
+                PopoverTrigger<VoidCallback>(
+                  popover: (_) => _WordMenu(
+                    word: word,
+                    onTogglePlaylist: onTogglePlaylist,
+                    onToggleDisabled: onToggleDisabled,
+                    onOpenDetails: onOpenDetails,
+                  ),
+                  // Run the chosen action after the popover has closed.
+                  onClosed: (action) => action?.call(),
+                  builder: (context, open, show) => _MoreButton(
+                    headword: headword,
+                    open: open,
+                    onPressed: show,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MoreButton extends StatelessWidget {
+  const _MoreButton({
+    required this.headword,
+    required this.open,
+    required this.onPressed,
+  });
+
+  final String headword;
+  final bool open;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.appColors;
+    return MergeSemantics(
+      child: CupertinoButton(
+        onPressed: onPressed,
+        padding: EdgeInsets.zero,
+        minimumSize: const Size(44, 44),
+        child: Semantics(
+          label: 'Mehr zu $headword',
+          excludeSemantics: true,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 160),
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(
+              color: open ? colors.popover : null,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              CupertinoIcons.ellipsis,
+              size: 19,
+              color: open ? const Color(0xFFFFFFFF) : colors.textMuted,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// "Mehr" popover: playlist and deactivation as toggles, then details. It
+/// closes with the chosen action, which the row runs afterwards.
+class _WordMenu extends StatelessWidget {
+  const _WordMenu({
+    required this.word,
+    required this.onTogglePlaylist,
+    required this.onToggleDisabled,
+    required this.onOpenDetails,
+  });
+
+  final VocabWord word;
+  final VoidCallback onTogglePlaylist;
+  final VoidCallback onToggleDisabled;
+  final VoidCallback onOpenDetails;
+
+  @override
+  Widget build(BuildContext context) {
+    void choose(VoidCallback action) => Navigator.of(context).pop(action);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 14),
-          child: Row(
-            children: [
-              Expanded(
-                child: Opacity(
-                  opacity: word.isDisabled ? 0.45 : 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      MergeSemantics(
-                        child: CupertinoButton(
-                          onPressed: onShowLegend,
-                          padding: inset,
-                          minimumSize: const Size(44, 44),
-                          alignment: Alignment.centerLeft,
-                          child: Semantics(
-                            label:
-                                'Erinnerungsstufe ${word.box} von '
-                                '$leitnerBoxCount: ${memoryLevelTitle(word.box)}',
-                            excludeSemantics: true,
-                            child: MemoryLevelIndicator(level: word.box),
-                          ),
-                        ),
-                      ),
-                      ListenButton(
-                        label: '$headword anhören',
-                        playing: playingWord,
-                        onPressed: onPlayWord,
-                        child: HeadwordWithSpeaker(
-                          headword: headword,
-                          playing: playingWord,
-                        ),
-                      ),
-                      ListenButton(
-                        label: 'Satz anhören: ${word.sentence}',
-                        playing: playingSentence,
-                        onPressed: onPlaySentence,
-                        child: Text(
-                          word.sentence,
-                          style: AppType.editorial(
-                            color: context.appColors.textPrimary,
-                            size: 16,
-                            weight: FontWeight.w400,
-                            height: 1.45,
-                            letterSpacing: 0,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Padding(
-                        padding: inset,
-                        child: Text(
-                          word.box==0?'${word.entry.partOfSpeech} · Ungelernt · Hinzugefügt ${lastSeenLabel(word.lastSeenAt, now)}':meta,
-                          style:
-                              AppType.meta(color: context.appColors.textMuted)
-                                  .copyWith(
-                                    fontFeatures: const [
-                                      FontFeature.tabularFigures(),
-                                    ],
-                                  ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  WordToggle(
-                    label: 'Deaktiviert',
-                    on: word.isDisabled,
-                    onPressed: onToggleDisabled,
-                    icon: DisableWordIcon(filled: word.isDisabled),
-                  ),
-                  WordToggle(
-                    label: 'In der Playlist',
-                    on: word.inPlaylist,
-                    onPressed: onTogglePlaylist,
-                    icon: const Icon(CupertinoIcons.music_note, size: 19),
-                  ),
-                  WordToggle(
-                    label: 'Favorit',
-                    on: word.isFavorite,
-                    onPressed: onToggleFavorite,
-                    icon: Icon(
-                      word.isFavorite
-                          ? CupertinoIcons.heart_fill
-                          : CupertinoIcons.heart,
-                      size: 19,
-                    ),
-                  ),
-                ],
-              ),
-              MergeSemantics(
-                child: CupertinoButton(
-                  onPressed: onOpenDetails,
-                  padding: EdgeInsets.zero,
-                  minimumSize: const Size(44, 44),
-                  child: Semantics(
-                    label: 'Details zu $headword',
-                    excludeSemantics: true,
-                    child: SizedBox(
-                      width: 44,
-                      height: 44,
-                      child: Icon(
-                        CupertinoIcons.chevron_right,
-                        size: 18,
-                        color: context.appColors.textMuted,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+        Text(
+          word.entry.headword,
+          style: AppType.editorial(color: const Color(0xFFFFFFFF), size: 22),
         ),
-        Container(
-          height: 1,
-          margin: const EdgeInsets.only(
-            left: PlaybackHighlight.inset,
-            right: WordListItem.ruleEndInset,
-          ),
-          color: context.appColors.hairline,
+        const SizedBox(height: 8),
+        _MenuRow(
+          label: 'In der Playlist',
+          icon: CupertinoIcons.music_note,
+          toggled: word.inPlaylist,
+          onTap: () => choose(onTogglePlaylist),
+        ),
+        _MenuRow(
+          label: 'Deaktiviert',
+          icon: CupertinoIcons.nosign,
+          toggled: word.isDisabled,
+          onTap: () => choose(onToggleDisabled),
+        ),
+        _MenuRow(
+          label: 'Details zu ${word.entry.headword}',
+          icon: CupertinoIcons.info_circle,
+          onTap: () => choose(onOpenDetails),
         ),
       ],
+    );
+  }
+}
+
+class _MenuRow extends StatelessWidget {
+  const _MenuRow({
+    required this.label,
+    required this.icon,
+    required this.onTap,
+    this.toggled,
+  });
+
+  final String label;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  /// Null: a plain action, no switch.
+  final bool? toggled;
+
+  @override
+  Widget build(BuildContext context) {
+    const white = Color(0xFFFFFFFF);
+    final on = toggled;
+    return MergeSemantics(
+      child: CupertinoButton(
+        onPressed: onTap,
+        padding: EdgeInsets.zero,
+        minimumSize: const Size(44, 48),
+        child: Semantics(
+          label: label,
+          toggled: on,
+          excludeSemantics: true,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              children: [
+                Icon(icon, size: 20, color: white),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    label,
+                    style: AppType.chrome(
+                      weight: FontWeight.w700,
+                      color: white,
+                    ),
+                  ),
+                ),
+                if (on != null)
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 150),
+                    width: 26,
+                    height: 26,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: on ? white : const Color(0x33FFFFFF),
+                    ),
+                    child: on
+                        ? Icon(
+                            CupertinoIcons.checkmark_alt,
+                            size: 16,
+                            color: context.appColors.popover,
+                          )
+                        : null,
+                  )
+                else
+                  const Icon(
+                    CupertinoIcons.chevron_right,
+                    size: 16,
+                    color: white,
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -227,13 +385,13 @@ class WordToggle extends StatelessWidget {
             width: 34,
             height: 34,
             decoration: BoxDecoration(
-              color: on ? context.appColors.hairline : null,
+              color: on ? context.appColors.activeTint : null,
               shape: BoxShape.circle,
             ),
             child: IconTheme.merge(
               data: IconThemeData(
                 color: on
-                    ? context.appColors.textPrimary
+                    ? context.appColors.active
                     : context.appColors.textMuted,
               ),
               child: Center(child: icon),

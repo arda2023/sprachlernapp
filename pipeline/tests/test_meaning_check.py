@@ -267,8 +267,8 @@ class KwargsCheck(FakeCheck):
 def test_default_is_meaning_check_config_and_override_only_model_and_thinking():
     cfg = load_config()
     c = cfg["llm"]
-    assert (c["meaning_check_model"], c["meaning_check_thinking"]) == ("gemini-3.8-flash",
-                                                                       {"thinking_level": "LOW"})
+    assert (c["meaning_check_model"], c["meaning_check_thinking"]) == ("claude-haiku-5-5",
+                                                                       {"type": "disabled"})
     # only meaning_check gets the higher limit
     assert c["max_output_tokens"]["meaning_check"] == 4096
     assert c["max_output_tokens"] == {'meanings':2048, 'sentences':2048, 'annotate':4096,
@@ -276,14 +276,14 @@ def test_default_is_meaning_check_config_and_override_only_model_and_thinking():
     assert (c["max_output_tokens"]["blindtest"], c["max_output_tokens"]["alternative_check"]) == (256, 1024)
     fake = KwargsCheck(dict(GOOD))
     check(fake, cfg, "Elias left early.", "left", LEAVE, "Elias ging vorzeitig.")
-    assert fake.kwargs == {"model": "gemini-3.8-flash",
-                           "thinking": {"thinking_level": "LOW"}, "step": "meaning_check",
+    assert fake.kwargs == {"model": "claude-haiku-5-5",
+                           "thinking": {"type": "disabled"}, "step": "meaning_check",
                            "max_output_tokens": 4096}
     prompt, schema = fake.prompt, fake.schema
     check(fake, cfg, "Elias left early.", "left", LEAVE, "Elias ging vorzeitig.",
           model=c["blindtest_model"], thinking=c["blindtest_thinking"])
-    assert fake.kwargs["model"] == c["blindtest_model"] == "gemini-2.5-flash"
-    assert fake.kwargs["thinking"] == c["blindtest_thinking"] == {"thinking_budget": 0}
+    assert fake.kwargs["model"] == c["blindtest_model"] == "claude-haiku-5-5"
+    assert fake.kwargs["thinking"] == c["blindtest_thinking"] == {"type": "disabled"}
     assert fake.kwargs["max_output_tokens"] == cfg["llm"]["max_output_tokens"]["meaning_check"]
     assert (fake.prompt, fake.schema) == (prompt, schema)
 
@@ -292,7 +292,7 @@ TRUNCATED = '{\n  "sense_key": "leave#verlassen",\n  "observed_pos": "VERB",\n  
 
 
 def test_new_limit_is_reserved_before_call_and_broken_json_is_not_retried(tmp_path):
-    from sprachpipe.llm import Llm, LlmError, cost_usd, model_price
+    from sprachpipe.llm import Llm, LlmError, cost_usd, model_price, request_body, reservation_usd
     cfg = load_config()
     llm = Llm(cfg, tmp_path/'ledger.csv', 1.00)
     calls = []
@@ -300,55 +300,52 @@ def test_new_limit_is_reserved_before_call_and_broken_json_is_not_retried(tmp_pa
         calls.append(max_output_tokens)
         price = model_price(cfg['prices'], model)
         assert max_output_tokens == 4096
-        assert llm._reserved == pytest.approx(cost_usd(price, len(prompt)//2+1, 4096, 0))
+        assert llm._reserved == pytest.approx(reservation_usd(price, len(json.dumps(request_body(prompt, schema, 4096), ensure_ascii=True).encode()), 4096))
         assert llm._reserved > cost_usd(price, len(prompt)//2+1, 1024, 0)
-        return TRUNCATED, (804,29,981), {'finish_reason':'MAX_TOKENS','usage_known':True}
+        return TRUNCATED, (804,29,981), {'finish_reason':'max_tokens','usage_known':True}
     llm._call = fake_call
     with pytest.raises(LlmError) as err:
         check(llm, cfg, 'Elias left early.', 'left', LEAVE, 'Elias ging vorzeitig.')
-    for part in ['max_output_tokens=4096','output_tokens=29','thinking_tokens=981','finish_reason=MAX_TOKENS']:
+    for part in ['max_output_tokens=4096','output_tokens=29','thinking_tokens=981','finish_reason=max_tokens']:
         assert part in str(err.value)
     assert calls == [4096]
     assert llm._reserved == pytest.approx(0)
 
 
 def vertex_llm(tmp_path, response):
-    """Real Llm wrapper (budget, ledger, _call) with a fake Vertex client."""
-    from types import SimpleNamespace
-    from sprachpipe.llm import Llm
+    """Budget/ledger contract with a synthetic Haiku response at the SDK seam."""
+    from sprachpipe.llm import Llm, usage_counts
     llm = Llm(load_config(), tmp_path / "ledger.csv", 1.0)
-    llm._client = SimpleNamespace(models=SimpleNamespace(generate_content=lambda **kw: response))
+    llm._call = lambda *args: (response.text, usage_counts(response.usage),
+        {"finish_reason": response.stop_reason, "usage_known": response.usage is not None})
     return llm
 
 
 def test_truncated_json_is_visible_error_with_finish_metadata(tmp_path):
     import csv
     from types import SimpleNamespace
-    from google.genai import types
     from sprachpipe.llm import LlmError
-    response = SimpleNamespace(
-        text=TRUNCATED, candidates=[SimpleNamespace(finish_reason=types.FinishReason.MAX_TOKENS)],
-        usage_metadata=SimpleNamespace(prompt_token_count=830, candidates_token_count=30,
-                                       thoughts_token_count=994))
+    response = SimpleNamespace(text=TRUNCATED, stop_reason="max_tokens",
+                               usage=SimpleNamespace(input_tokens=830, output_tokens=1024))
     llm = vertex_llm(tmp_path, response)
     with pytest.raises(LlmError) as err:
         check(llm, load_config(), "Elias left early.", "left", LEAVE, "Elias ging vorzeitig.")
     message = str(err.value)
-    assert message.startswith("meaning_check: Unterminated string starting at")
-    for part in ("model=gemini-3.8-flash", "max_output_tokens=4096", "input_tokens=830",
-                 "output_tokens=30", "thinking_tokens=994", "finish_reason=MAX_TOKENS"):
+    assert message.startswith("meaning_check: incomplete or refused response")
+    for part in ("model=claude-haiku-5-5", "max_output_tokens=4096", "input_tokens=830",
+                 "output_tokens=1024", "thinking_tokens=0", "finish_reason=max_tokens"):
         assert part in message
-    assert "Elias" not in message and "Die Pers" not in message   # no prompt, no response text
-    assert isinstance(err.value.__cause__, json.JSONDecodeError)
+    assert "Elias" not in message and "Die Pers" not in message
+    assert err.value.__cause__ is None  # no JSONDecodeError.doc containing private text
     rows = list(csv.DictReader(open(tmp_path / "ledger.csv", encoding="utf-8")))
     assert [(r["step"], r["model"], r["output_tokens"]) for r in rows] == [
-        ("meaning_check", "gemini-3.8-flash", "30")]
+        ("meaning_check", "claude-haiku-5-5", "1024")]
 
 
 def test_parse_error_without_metadata_says_unknown(tmp_path):
     from types import SimpleNamespace
     from sprachpipe.llm import LlmError
-    llm = vertex_llm(tmp_path, SimpleNamespace(text=TRUNCATED, candidates=None, usage_metadata=None))
+    llm = vertex_llm(tmp_path, SimpleNamespace(text=TRUNCATED, stop_reason=None, usage=None))
     with pytest.raises(LlmError) as err:
         check(llm, load_config(), "Elias left early.", "left", LEAVE, "Elias ging vorzeitig.")
     message = str(err.value)
@@ -362,7 +359,7 @@ def test_blindtest_keeps_its_own_model_and_thinking():
     cfg = load_config()
     fake = KwargsCheck({"answer": "left", "alternatives": []})
     ask(fake, cfg, "Elias left early.", (6, 10), "Elias ging vorzeitig.", "verlassen")
-    assert (fake.kwargs["model"], fake.kwargs["thinking"]) == ("gemini-2.5-flash", {"thinking_budget": 0})
+    assert (fake.kwargs["model"], fake.kwargs["thinking"]) == ("claude-haiku-5-5", {"type": "disabled"})
 
 
 def test_reason_contract_is_non_empty_in_prompt_schema_and_parser():

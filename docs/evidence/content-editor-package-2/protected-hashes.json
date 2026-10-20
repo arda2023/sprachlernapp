@@ -1,0 +1,62 @@
+{
+  "NEXTSTEPS.md": {
+    "before": "6dbe2910d0618827dfa8b338a8d8bea7592a7df05e2810d279a5ab0f4d3ea03a",
+    "after": "6dbe2910d0618827dfa8b338a8d8bea7592a7df05e2810d279a5ab0f4d3ea03a"
+  },
+  "lib/screens/decks/deck_practice_screen.dart": {
+    "before": "6d80a8be603146a275bf7dfbd0178077c29892ed2b637c7da75415d31282d148",
+    "after": "6d80a8be603146a275bf7dfbd0178077c29892ed2b637c7da75415d31282d148"
+  },
+  "lib/screens/decks/widgets/practice_chrome.dart": {
+    "before": "408389703d75a4d398a427dbcab641aede77560eca77527f2c7f3868944c158e",
+    "after": "408389703d75a4d398a427dbcab641aede77560eca77527f2c7f3868944c158e"
+  },
+  "lib/screens/decks/widgets/practice_input.dart": {
+    "before": "770c169e510fa5c0933b7d3bc3b38dab4d56b6c0dee18679a19cf4136270f08a",
+    "after": "770c169e510fa5c0933b7d3bc3b38dab4d56b6c0dee18679a19cf4136270f08a"
+  },
+  "lib/screens/decks/widgets/practice_sentence.dart": {
+    "before": "a48c4ad7518a37fe3618658bc0f299c04b32b5dca522c11a8820fa94408097bd",
+    "after": "a48c4ad7518a37fe3618658bc0f299c04b32b5dca522c11a8820fa94408097bd"
+  },
+  "test/deck_flow_test.dart": {
+    "before": "4e42988857f32463f0ec9b3d885c9c315872277c10c01d045db70de137173bae",
+    "after": "4e42988857f32463f0ec9b3d885c9c315872277c10c01d045db70de137173bae"
+  },
+  "test/learning_ui_device_fixes_test.dart": {
+    "before": "9857746c05a590e1625162aa666e8951a5eaf437dfee156dd8ef7b954429d40e",
+    "after": "9857746c05a590e1625162aa666e8951a5eaf437dfee156dd8ef7b954429d40e"
+  },
+  "test/practice_ui_test.dart": {
+    "before": "ab48c04303f9bf39c836864c83487ee224862657d5cef2f858ca7d12fefa2855",
+    "after": "ab48c04303f9bf39c836864c83487ee224862657d5cef2f858ca7d12fefa2855"
+  },
+  "pubspec.yaml": {
+    "before": "64557ff410bc64d540c2616874b91e3580dcbdbc08861372c60050a515742fac",
+    "after": "64557ff410bc64d540c2616874b91e3580dcbdbc08861372c60050a515742fac"
+  },
+  "assets/content/en/content.sqlite": {
+    "before": "b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb",
+    "after": "b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb"
+  },
+  "assets/content/en/content.manifest.json": {
+    "before": "74a0bce4d16bb3084f762dd6afc69accc44c80db545dba9871b21d0b8c7adbfe",
+    "after": "74a0bce4d16bb3084f762dd6afc69accc44c80db545dba9871b21d0b8c7adbfe"
+  },
+  "pipeline/out/story_single_sentence_v1/pack.json": {
+    "before": "313ea762423478c932cb3c92a512ffd07281afed9028a17b9f6ec3a00b7a9aa5",
+    "after": "313ea762423478c932cb3c92a512ffd07281afed9028a17b9f6ec3a00b7a9aa5"
+  },
+  "pipeline/out/story_single_sentence_v1/content.sqlite": {
+    "before": "b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb",
+    "after": "b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb"
+  },
+  "pipeline/data/curation/story_single_sentence_v1.json": {
+    "before": "be3a8e27b6b919fd51e2ee6e98f49311c2ac03621bdb835b9e35bdb243bf07f5",
+    "after": "be3a8e27b6b919fd51e2ee6e98f49311c2ac03621bdb835b9e35bdb243bf07f5"
+  },
+  "lib/domain/answer_check.dart": {
+    "before": "73ba99fd91e855d99ee2ddc487d0f85ecb8bf748614d0a463fa70c46c6282271",
+    "after": "73ba99fd91e855d99ee2ddc487d0f85ecb8bf748614d0a463fa70c46c6282271"
+  }
+}

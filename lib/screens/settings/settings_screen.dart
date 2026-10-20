@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/preferences.dart';
+import '../../domain/language_profile.dart';
+import '../../presentation/providers/database_providers.dart';
+import '../../presentation/providers/language_selection_provider.dart';
+import 'content_updates_screen.dart';
 import '../../presentation/providers/preferences_provider.dart';
 import '../../theme/app_theme.dart';
 import '../decks/widgets/local_submission_sheet.dart';
@@ -36,9 +40,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(preferencesProvider);
+    final language = ref.watch(selectedContentLanguageProvider);
+    final selection = ref.watch(languageSelectionProvider);
+    final portuguese = language.asData?.value == 'pt-BR';
     return Scaffold(
       appBar: AppBar(title: const Text('Einstellungen')),
       body: state.when(
+        skipLoadingOnReload: false,
+        skipLoadingOnRefresh: false,
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (_, _) => Center(
           child: TextButton(
@@ -49,6 +58,21 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         data: (p) => ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           children: [
+            const ListTile(contentPadding: EdgeInsets.zero, title: Text('Lernsprache'), subtitle: Text('Die Oberfläche bleibt Deutsch.')),
+            for (final profile in const [ContentLanguageProfile.english, ContentLanguageProfile.portugueseBrazil])
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                selected: !language.isLoading && language.asData?.value == profile.lang,
+                title: Text(profile.displayName),
+                subtitle: Text(ref.watch(languageInstallationProvider(profile.lang)).when(
+                  data: (status) => status, loading: () => 'Installation prüfen …', error: (_, _) => 'Installation nicht lesbar')),
+                trailing: language.asData?.value == profile.lang ? const Icon(Icons.check) : null,
+                enabled: !selection.switching && !_saving && !language.isLoading,
+                onTap: () => ref.read(languageSelectionProvider.notifier).selectLanguage(profile.lang),
+              ),
+            if (selection.switching) const LinearProgressIndicator(),
+            if (selection.message != null) Semantics(liveRegion: true, child: Text(selection.message!)),
+            const Divider(),
             LayoutBuilder(
               builder: (context, constraints) {
                 final compact =
@@ -95,6 +119,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               },
             ),
             const Divider(),
+            ListTile(title: const Text('Inhaltsupdates'), subtitle: const Text('Private Versionen und Anmeldung'),
+              trailing: const Icon(Icons.chevron_right), onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const ContentUpdatesScreen()))),
+
             for (final entry in const [
               ('Lern-Benachrichtigungen', 'Lernerinnerungen'),
               (
@@ -115,7 +142,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
               const Divider(),
             ],
-            _toggle(
+            if (portuguese)
+              const ListTile(contentPadding: EdgeInsets.zero, title: Text('Akzente sind für Portugiesisch erforderlich'), subtitle: Text('Zum Beispiel unterscheiden sich a und ã sowie c und ç. Die englische Einstellung bleibt erhalten.'))
+            else _toggle(
               'Diakritische Zeichen einbeziehen',
               'Akzente sind bei der Antwort erforderlich. Standardmäßig eingeschaltet.',
               p.includeDiacritics,

@@ -1,0 +1,70 @@
+{
+  "format_version": 1,
+  "normalization": "NFC-lower-apostrophe-v1",
+  "parent_sha256": "921eb52eafdad4f25c4b96202ac22ed51f627e14a78deede2492c2b022434470",
+  "words": [
+    {
+      "aliases": [],
+      "form_norm": "cut",
+      "lang": "en",
+      "owner_deck_ref": "owner",
+      "position": 1,
+      "primary_card_id": "703a8ba5ce579c60afbcc4e87dc64e10",
+      "primary_card_ref": "cut-old"
+    },
+    {
+      "aliases": [],
+      "form_norm": "go",
+      "lang": "en",
+      "owner_deck_ref": "owner",
+      "position": 2,
+      "primary_card_id": "61ee58a531ddc9d1a0a7ff82ead3deaf",
+      "primary_card_ref": "go-base"
+    },
+    {
+      "aliases": [],
+      "form_norm": "run",
+      "lang": "en",
+      "owner_deck_ref": "owner",
+      "position": 3,
+      "primary_card_id": "cc6db1071bbeffac24a6c434d61a501e",
+      "primary_card_ref": "run-base"
+    },
+    {
+      "aliases": [],
+      "form_norm": "went",
+      "lang": "en",
+      "owner_deck_ref": "owner",
+      "position": 4,
+      "primary_card_id": "e575ccb506b4dd911cc4a9cc32e61ce8",
+      "primary_card_ref": "go-past"
+    },
+    {
+      "aliases": [],
+      "form_norm": "ran",
+      "lang": "en",
+      "owner_deck_ref": "owner",
+      "position": 5,
+      "primary_card_id": "cff0b7132e4e3128dfcc382e4d6606c3",
+      "primary_card_ref": "run-past"
+    },
+    {
+      "aliases": [],
+      "form_norm": "gone",
+      "lang": "en",
+      "owner_deck_ref": "owner",
+      "position": 6,
+      "primary_card_id": "7a63350e83ee03d8cc7f10448e92e156",
+      "primary_card_ref": "go-past_participle"
+    },
+    {
+      "aliases": [],
+      "form_norm": "they",
+      "lang": "en",
+      "owner_deck_ref": "owner",
+      "position": 7,
+      "primary_card_id": "8360507bbbd402a88b860d9f9d968050",
+      "primary_card_ref": "they"
+    }
+  ]
+}

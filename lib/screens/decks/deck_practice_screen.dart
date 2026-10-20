@@ -3,9 +3,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show Scaffold, Material, ScaffoldMessenger, SnackBar;
+    show Scaffold, ScaffoldMessenger, SnackBar;
 import 'package:flutter/semantics.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/answer_check.dart';
@@ -17,6 +16,7 @@ import '../../presentation/providers/preferences_provider.dart';
 import '../../presentation/content_unavailable_view.dart';
 import '../../theme/app_theme.dart';
 import 'widgets/practice_chrome.dart';
+import 'widgets/translation_bubble.dart';
 export 'widgets/practice_chrome.dart' show SessionTrack;
 import '../../widgets/success_feedback_card.dart';
 import '../words/widgets/memory_level_indicator.dart';
@@ -35,7 +35,7 @@ class DeckPracticeScreen extends ConsumerStatefulWidget {
     super.key,
     required this.deckId,
     this.mode = DeckPracticeMode.learn,
-    this.sessionSize = 5,
+    this.sessionSize = 0,
   });
   final String deckId;
   final DeckPracticeMode mode;
@@ -55,12 +55,61 @@ class DeckPracticeScreen extends ConsumerStatefulWidget {
 }
 
 class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
-    with WidgetsBindingObserver {
+    with WidgetsBindingObserver, SingleTickerProviderStateMixin {
   final _input = PracticeInputController();
   final _focus = FocusNode();
   final _sentenceKey = GlobalKey<PracticeSentenceState>();
   final _rootKey = GlobalKey();
-  Timer? _autoTimer;
+  Timer? _autoTimer, _errorTimer;
+  late final AnimationController _errorShake;
+  bool _buttonError = false, _fieldError = false;
+  int _errorGeneration = 0, _textRevision = 0;
+  double get _errorOffset {
+    if (MediaQuery.disableAnimationsOf(context)) return 0;
+    final t = _errorShake.value;
+    return t == 0 || t == 1 ? 0 : 5 * math.sin(t * math.pi * 6) * (1 - t);
+  }
+
+  void _clearError({bool clearField = true}) {
+    _errorTimer?.cancel();
+    _errorGeneration++;
+    _errorShake.stop();
+    _errorShake.value = 0;
+    if (mounted) {
+      setState(() {
+        _buttonError = false;
+        if (clearField) _fieldError = false;
+      });
+    }
+  }
+
+  void _showError() {
+    _clearError();
+    final generation = _errorGeneration;
+    final passId = ref.read(deckSessionControllerProvider(_args)).pass?.id;
+    setState(() {
+      _buttonError = true;
+      _fieldError = true;
+    });
+    if (!MediaQuery.disableAnimationsOf(context)) {
+      _errorShake.forward(from: 0);
+    }
+    _errorTimer = Timer(const Duration(milliseconds: 1500), () {
+      if (!mounted ||
+          generation != _errorGeneration ||
+          ref.read(deckSessionControllerProvider(_args)).pass?.id != passId) {
+        return;
+      }
+      setState(() => _buttonError = false);
+    });
+  }
+
+  void _inputEdited() {
+    if (_textRevision == _input.textRevision) return;
+    _textRevision = _input.textRevision;
+    _clearError();
+  }
+
   bool _translationOpen = true,
       _overlay = false,
       _inputGesture = false,
@@ -83,19 +132,36 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _errorShake =
+        AnimationController(
+          vsync: this,
+          duration: const Duration(milliseconds: 350),
+        )..addListener(() {
+          if (mounted) setState(() {});
+        });
+    _input.addListener(_inputEdited);
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     _foreground = state == AppLifecycleState.resumed;
     _autoTimer?.cancel();
+    if (!_foreground) _clearError(clearField: false);
     if (_foreground) _schedule();
+  }
+
+  @override
+  void didChangeMetrics() {
+    if (mounted && _word != null) setState(() => _word = null);
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _autoTimer?.cancel();
+    _errorTimer?.cancel();
+    _errorShake.dispose();
+    _input.removeListener(_inputEdited);
     _input.dispose();
     _focus.dispose();
     super.dispose();
@@ -107,29 +173,29 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     TextDirection.ltr,
   );
   void _submit() {
-    if (_historyIndex != null ||
-        _overlay ||
-        _word != null ||
-        _input.feedback != InputFeedback.typing) {
+    if (_historyIndex != null || _overlay || _word != null) {
       return;
     }
     final attempt = _input.text;
     final result = _controller.submit(attempt);
     if (result == null) return;
+    _clearError();
     if (result.verdict == AnswerVerdict.target) {
       _focus.unfocus();
       _announce('Richtig');
     } else if (result.verdict == AnswerVerdict.wrong) {
       final pass = ref.read(deckSessionControllerProvider(_args)).pass!;
       _input.showWrong(attempt, pass.item.card.form);
-      HapticFeedback.lightImpact();
+      _showError();
       _announce('Falsch');
     } else {
+      if (result.verdict == AnswerVerdict.wrongForm) _showError();
       _announce(result.message ?? 'Fast richtig – prüf die Schreibweise.');
     }
   }
 
   void _reveal() {
+    _clearError();
     _controller.reveal();
     final pass = ref.read(deckSessionControllerProvider(_args)).pass!;
     _input.showReveal(pass.item.card.form);
@@ -142,6 +208,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final s = ref.read(deckSessionControllerProvider(_args));
     if (!s.saved || s.committing) return;
     _autoTimer?.cancel();
+    _clearError();
     _input.reset();
     await _controller.next();
     if (mounted && !ref.read(deckSessionControllerProvider(_args)).finished) {
@@ -178,6 +245,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
 
   Future<void> _withOverlay(Future<void> Function() action) async {
     _autoTimer?.cancel();
+    _clearError(clearField: false);
     final hadFocus = _focus.hasFocus;
     setState(() {
       _overlay = true;
@@ -210,6 +278,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final index = _historyIndex ?? past.length;
     final next = (index + direction).clamp(0, past.length);
     if (next == index) return;
+    _clearError();
     _autoTimer?.cancel();
     _focus.unfocus();
     setState(() => _historyIndex = next == past.length ? null : next);
@@ -304,6 +373,11 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final state = ref.watch(provider);
     ref.watch(preferencesProvider);
     ref.listen(provider, (previous, next) {
+      if (previous?.pass?.id != next.pass?.id ||
+          next.pass?.solved == true ||
+          next.finished) {
+        _clearError();
+      }
       if (next.saved && previous?.saved != true) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) _schedule();
@@ -338,8 +412,12 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                         ? state.total
                         : state.index + (state.saved ? 1 : 0),
                     total: state.total,
+                    loading: state.loading,
+                    goalReached: state.goalReached,
+                    repeating: state.pass?.logged == false,
                     onHome: () {
                       _autoTimer?.cancel();
+                      _clearError();
                       if (state.canLeave) Navigator.of(context).maybePop();
                     },
                     onMenu: canShow ? _menu : null,
@@ -377,6 +455,22 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                         child: ListView(
                           padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
                           children: [
+                            if (state.goalReached &&
+                                state.total == 0 &&
+                                !state.loading)
+                              CupertinoButton(
+                                onPressed: () =>
+                                    Navigator.of(context).pushReplacement(
+                                      CupertinoPageRoute<void>(
+                                        builder: (_) => DeckPracticeScreen(
+                                          deckId: widget.deckId,
+                                          mode: widget.mode,
+                                          sessionSize: -1,
+                                        ),
+                                      ),
+                                    ),
+                                child: const Text('Weiterlernen'),
+                              ),
                             Center(
                               child: ConstrainedBox(
                                 constraints: const BoxConstraints(
@@ -395,7 +489,9 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                     : !canShow
                                     ? state.total == 0
                                           ? Text(
-                                              'Gerade gibt es keine Übungen.',
+                                              state.goalReached
+                                                  ? 'Tagesziel erreicht'
+                                                  : 'Gerade gibt es keine Übungen.',
                                               style: AppType.chrome(
                                                 color: context
                                                     .appColors
@@ -426,13 +522,13 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                               color:
                                                   context.appColors.raisedInk,
                                               borderRadius:
-                                                  BorderRadius.circular(14),
+                                                  BorderRadius.circular(24),
                                             ),
                                             padding: const EdgeInsets.fromLTRB(
-                                              18,
-                                              8,
-                                              18,
-                                              12,
+                                              20,
+                                              10,
+                                              20,
+                                              14,
                                             ),
                                             child: Column(
                                               crossAxisAlignment:
@@ -482,6 +578,12 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                                   input: _input,
                                                   focus: _focus,
                                                   solved: solved,
+                                                  error:
+                                                      snapshot == null &&
+                                                      _fieldError,
+                                                  errorOffset: snapshot == null
+                                                      ? _errorOffset
+                                                      : 0,
                                                   selectedStart: _word?.start,
                                                   onSubmit: _submit,
                                                   onChanged: _controller
@@ -494,33 +596,66 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                                   },
                                                 ),
                                                 const SizedBox(height: 18),
-                                                CupertinoButton(
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                        vertical: 8,
-                                                      ),
-                                                  onPressed: _grammar,
-                                                  child: Row(
-                                                    children: [
-                                                      Expanded(
-                                                        child: Text(
-                                                          contentCard!.exerciseLabel,
-                                                          style: AppType.chrome(
-                                                            color: context
-                                                                .appColors
-                                                                .textPrimary,
+                                                // Exercise label as a chip that
+                                                // opens the grammar note.
+                                                Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: CupertinoButton(
+                                                    padding: EdgeInsets.zero,
+                                                    minimumSize: const Size(
+                                                      44,
+                                                      44,
+                                                    ),
+                                                    onPressed: _grammar,
+                                                    child: Container(
+                                                      padding:
+                                                          const EdgeInsets.symmetric(
+                                                            horizontal: 12,
+                                                            vertical: 7,
                                                           ),
-                                                        ),
-                                                      ),
-                                                      Icon(
-                                                        CupertinoIcons
-                                                            .chevron_right,
-                                                        size: 18,
+                                                      decoration: BoxDecoration(
                                                         color: context
                                                             .appColors
-                                                            .textMuted,
+                                                            .activeTint,
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              99,
+                                                            ),
                                                       ),
-                                                    ],
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Icon(
+                                                            CupertinoIcons
+                                                                .info_circle,
+                                                            size: 16,
+                                                            color: context
+                                                                .appColors
+                                                                .active,
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 6,
+                                                          ),
+                                                          Flexible(
+                                                            child: Text(
+                                                              contentCard!
+                                                                  .exerciseLabel,
+                                                              style: AppType.chrome(
+                                                                size: 14,
+                                                                weight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                                color: context
+                                                                    .appColors
+                                                                    .textPrimary,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                               ],
@@ -552,16 +687,19 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                   ListenableBuilder(
                     listenable: _input,
                     builder: (context, _) => PracticeAnswerToolbar(
+                      error: _buttonError,
+                      errorOffset: _errorOffset,
                       speakerEnabled: false,
                       playing: false,
                       onSpeak: () {},
                       message:
                           state.saved ||
+                              state.message == 'Falsch' ||
                               state.message ==
                                   'Tippe das Wort ab, um weiterzumachen.'
                           ? null
                           : state.message,
-                      hasInput: _input.text.isNotEmpty,
+                      hasInput: _input.text.trim().isNotEmpty,
                       saved: state.saved,
                       solved: solved,
                       revealed: pass!.revealed,
@@ -587,6 +725,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
               Positioned.fill(
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
+                  onPanStart: (_) => setState(() => _word = null),
                   onTapDown: (e) {
                     if (!(_sentenceKey.currentState?.selectAt(
                           e.globalPosition,
@@ -611,35 +750,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final rect = box == null
         ? word.rect
         : word.rect.shift(-box.localToGlobal(Offset.zero));
-    final width = math.min(260.0, MediaQuery.sizeOf(context).width - 32);
-    return Positioned(
-      left: (rect.center.dx - width / 2).clamp(
-        16.0,
-        MediaQuery.sizeOf(context).width - width - 16,
-      ),
-      top: rect.top < 110 ? rect.bottom + 8 : null,
-      bottom: rect.top < 110
-          ? null
-          : (box?.size.height ?? MediaQuery.sizeOf(context).height) -
-                rect.top +
-                8,
-      width: width,
-      child: Material(
-        color: context.appColors.nightPage,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: context.appColors.hairline),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Text(
-            word.translation,
-            textAlign: TextAlign.center,
-            style: AppType.chrome(color: context.appColors.textPrimary),
-          ),
-        ),
-      ),
-    );
+    return TranslationBubble(anchor: rect, text: word.translation);
   }
 
   Widget _summary(DeckSessionState state) {

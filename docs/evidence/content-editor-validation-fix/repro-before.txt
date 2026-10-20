@@ -1,0 +1,7 @@
+base canonical matches draft binding: True
+R6   ('invalid', Counter({('sentence_count', 'error'): 30, ('i+1', 'warn'): 9})) 45.1 s
+identisch zum gespeicherten Bericht: True
+Befunde an chitchat: []
+ohne Ops ('invalid', Counter({('sentence_count', 'error'): 30, ('i+1', 'warn'): 9}))
+gleiche Befundmenge ohne Ops: True
+JSON-Roundtrip gleich: True

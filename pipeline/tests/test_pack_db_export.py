@@ -206,3 +206,56 @@ def test_failed_export_without_target_leaves_no_file(pack, tmp_path, monkeypatch
         export_sqlite(pack, target)
     assert not target.exists()
     assert not target.parent.exists() or list(target.parent.iterdir()) == []
+
+@pytest.mark.parametrize('version', [1, 2, 3, 4])
+def test_active_lookup_indexes_follow_supported_schema(pack, tmp_path, monkeypatch, version):
+    # Isolate export DDL from version-specific content validation. The unchanged
+    # build_rows contract is exercised by the other export tests and full pack.
+    import sprachpipe.export as export
+    from sprachpipe.schema import columns_for
+    columns = columns_for(version)
+    rows = {table: [] for table in columns}
+    rows['content_releases'] = [dict(pack['release'], schema_version=version)]
+    monkeypatch.setattr(export, 'build_rows', lambda _: rows)
+    target = tmp_path / 'content.sqlite'
+    export_sqlite({'release': {'schema_version': version}}, target)
+    with sqlite3.connect(target) as db:
+        for table, name, keys, query, args in [
+            ('sentence_tokens', 'idx_sentence_tokens_active_sentence_idx',
+             ['sentence_id', 'idx'],
+             'SELECT * FROM sentence_tokens WHERE sentence_id=? AND removed_in IS NULL ORDER BY idx', ['s']),
+            ('dictionary_forms', 'idx_dictionary_forms_active_lookup',
+             ['sense_id', 'form_norm', 'rank', 'id'],
+             'SELECT gloss_de FROM dictionary_forms WHERE sense_id=? AND form_norm=? AND removed_in IS NULL ORDER BY rank,id LIMIT 1', ['s', 'word']),
+        ]:
+            index = next(r for r in db.execute(f'PRAGMA index_list({table})') if r[1] == name)
+            assert index[2] == 0 and index[4] == 1  # non-unique, partial
+            assert [r[2] for r in db.execute(f'PRAGMA index_info({name})')] == keys
+            assert 'WHERE removed_in IS NULL' in db.execute(
+                'SELECT sql FROM sqlite_master WHERE name=?', [name]).fetchone()[0]
+            assert any(name in r[3] for r in db.execute('EXPLAIN QUERY PLAN ' + query, args))
+
+
+@pytest.mark.parametrize('failure_index', [1, 2])
+def test_index_error_preserves_target_and_removes_temporary_files(pack, tmp_path, monkeypatch, failure_index):
+    import sprachpipe.export as export
+    target = tmp_path / 'content.sqlite'
+    before = old_database(target)
+    real_connect = sqlite3.connect
+    calls = []
+
+    class FailingIndexConnection(sqlite3.Connection):
+        def execute(self, sql, parameters=()):
+            if sql.startswith('CREATE INDEX'):
+                calls.append(sql)
+                if len(calls) == failure_index:
+                    raise sqlite3.OperationalError('simulated index failure')
+            return super().execute(sql, parameters)
+
+    monkeypatch.setattr(export.sqlite3, 'connect',
+                        lambda path: real_connect(path, factory=FailingIndexConnection))
+    with pytest.raises(sqlite3.OperationalError, match='simulated index failure'):
+        export_sqlite(pack, target)
+    assert len(calls) == failure_index
+    assert target.read_bytes() == before
+    assert list(tmp_path.iterdir()) == [target]

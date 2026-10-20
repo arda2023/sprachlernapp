@@ -28,13 +28,10 @@ class ReadingToolbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = translating
-        ? context.appColors.textPrimary
+        ? const Color(0xFFFFFFFF)
         : context.appColors.textMuted;
     return DecoratedBox(
-      decoration: BoxDecoration(
-        color: context.appColors.raisedInk,
-        border: Border(top: BorderSide(color: context.appColors.hairline)),
-      ),
+      decoration: BoxDecoration(color: context.appColors.raisedInk),
       child: SafeArea(
         top: false,
         child: ConstrainedBox(
@@ -86,11 +83,8 @@ class ReadingToolbar extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               color: translating
-                                  ? context.appColors.hairline
-                                  : null,
-                              border: Border.all(
-                                color: context.appColors.hairline,
-                              ),
+                                  ? context.appColors.popover
+                                  : context.appColors.hairline,
                               borderRadius: BorderRadius.circular(999),
                             ),
                             child: Row(
@@ -153,16 +147,15 @@ class _ListenToggle extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: on ? context.appColors.hairline : null,
-              border: Border.all(color: context.appColors.hairline),
+              color: on
+                  ? context.appColors.popover
+                  : context.appColors.hairline,
               shape: BoxShape.circle,
             ),
             child: Icon(
               on ? CupertinoIcons.speaker_2_fill : CupertinoIcons.speaker_2,
               size: 20,
-              color: on
-                  ? context.appColors.textPrimary
-                  : context.appColors.textMuted,
+              color: on ? const Color(0xFFFFFFFF) : context.appColors.textMuted,
             ),
           ),
         ),

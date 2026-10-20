@@ -1,0 +1,444 @@
+{
+  "status": "content_export_audit_pass",
+  "pending": 0,
+  "tables": {
+    "languages": {
+      "before": 1,
+      "after": 1,
+      "added": [],
+      "edited": [],
+      "unchanged": 1
+    },
+    "lemmas": {
+      "before": 5007,
+      "after": 5007,
+      "added": [],
+      "edited": [],
+      "unchanged": 5007
+    },
+    "senses": {
+      "before": 6759,
+      "after": 6759,
+      "added": [],
+      "edited": [],
+      "unchanged": 6759
+    },
+    "cards": {
+      "before": 3768,
+      "after": 3768,
+      "added": [],
+      "edited": [
+        {
+          "id": "1bbe26267773ad288ddd7bf7063c4437",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "7e36dbaded1247f91a76a6577dfe5345",
+          "fields": [
+            "translation_de"
+          ]
+        }
+      ],
+      "unchanged": 3766
+    },
+    "dictionary_forms": {
+      "before": 8089,
+      "after": 8089,
+      "added": [],
+      "edited": [
+        {
+          "id": "08ea967512dd3f074ecaed338cbc38b0",
+          "fields": [
+            "removed_in"
+          ]
+        }
+      ],
+      "unchanged": 8088
+    },
+    "decks": {
+      "before": 14,
+      "after": 14,
+      "added": [],
+      "edited": [],
+      "unchanged": 14
+    },
+    "deck_cards": {
+      "before": 3661,
+      "after": 3661,
+      "added": [],
+      "edited": [],
+      "unchanged": 3661
+    },
+    "deck_words": {
+      "before": 3557,
+      "after": 3557,
+      "added": [],
+      "edited": [],
+      "unchanged": 3557
+    },
+    "word_aliases": {
+      "before": 37,
+      "after": 37,
+      "added": [],
+      "edited": [],
+      "unchanged": 37
+    },
+    "sentences": {
+      "before": 4302,
+      "after": 4303,
+      "added": [
+        "ffc8ac9d8c30d444dc471a2c1425bbf4"
+      ],
+      "edited": [
+        {
+          "id": "6b16d298c448ea845b600cfd8eb27637",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "1e047de6e0a0f09136a14753a634cb52",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "d35bd278154554f67175421eda5326d1",
+          "fields": [
+            "removed_in"
+          ]
+        }
+      ],
+      "unchanged": 4299
+    },
+    "sentence_tokens": {
+      "before": 47082,
+      "after": 47089,
+      "added": [
+        "8c0dd6de12445449660bc6445ac22d52",
+        "4574e45fc70385597f3ff9561b5ae2ff",
+        "3274ff5ba4136fa48fe2587259df63d0",
+        "ee60d4272f01a236d2320df22e99f77d",
+        "45a0be9720c6afe245e71d33a30b22e5",
+        "915db5a981ade9368b8d2733d97a79cb",
+        "85ff700837527abed1173bce2863709e"
+      ],
+      "edited": [
+        {
+          "id": "f209a83863c0baaaea11c6460511085b",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "95ffe8966fd3bba64371eb8774fdbf1e",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "6e1b97edaa4e92455f9153bb62e8e095",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "59124c1a890da805a5a487da4d849a8d",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "76ee8fc2dde17fa5a4c237f4e7f0f4cf",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "0f705f8b3c2fc7f83a2aca8d06b7c79a",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "01cbef16a236b6282969726729b314f4",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "b9e784dfba599bd127a06fce37494a00",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "87593ea180e517e5583ebc4bd573ea47",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "eca84a5983e853691aa33e9e114459c5",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "1cf6c05a28c2845f0fdc9ee36e25b413",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "5e2c1bee7a5c1c8b691d193aafe9f667",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "86bc1c49f4fdf8170bb59213ba01d0c4",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "552521148887ec119486cab8f59f2754",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "2ffb4c4a0b30aadc11b7b78e768f6587",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "0bfcac8fbb8d1602927cff3a5da50842",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "459726e46af54a2224ac8fa180dcfd58",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "3e1d94190367849c5f2a902b4c188d97",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "95fe4e8d5763e1ddb15a2e4b888835ce",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "dfa64f7062260612d0338ffacdb45a45",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "60e8891bea4ba6dedcb32e507bee5ca2",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "af48bada5ceb0c21598e65d1e133d046",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "2eecfa736d1f023d05141b14015020ef",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "d4afb14673bec2e3cc55b91e0865cc39",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "c3b4dde71c6bdfce74cd0565d84623c3",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "47becb717db598c306c6958020f014d3",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "2e01b3c3ad898d350889395c71c923c9",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "ad6f690634709b36b291be69034a1a08",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "eae5b6dd1e559674ac12dae7ef0cecae",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "cd641063c5d4edf59d443b08153c0544",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "1eac783f4c641ca9e653c7acb4512dfc",
+          "fields": [
+            "removed_in"
+          ]
+        }
+      ],
+      "unchanged": 47051
+    },
+    "card_sentences": {
+      "before": 4296,
+      "after": 4297,
+      "added": [
+        "4d42271ef9265b522be3945a192f5316"
+      ],
+      "edited": [
+        {
+          "id": "1d4823e6d50251a33f70c10582ae2fce",
+          "fields": [
+            "removed_in"
+          ]
+        },
+        {
+          "id": "f9ab341c0ff992ccb67a0de3c71e5b92",
+          "fields": [
+            "removed_in",
+            "replaced_by"
+          ]
+        }
+      ],
+      "unchanged": 4294
+    },
+    "stories": {
+      "before": 1,
+      "after": 1,
+      "added": [],
+      "edited": [],
+      "unchanged": 1
+    },
+    "story_sentences": {
+      "before": 6,
+      "after": 6,
+      "added": [],
+      "edited": [],
+      "unchanged": 6
+    },
+    "exercises": {
+      "before": 0,
+      "after": 0,
+      "added": [],
+      "edited": [],
+      "unchanged": 0
+    },
+    "grammar_rules": {
+      "before": 0,
+      "after": 0,
+      "added": [],
+      "edited": [],
+      "unchanged": 0
+    },
+    "audio_assets": {
+      "before": 0,
+      "after": 0,
+      "added": [],
+      "edited": [],
+      "unchanged": 0
+    },
+    "content_releases": {
+      "before": 1,
+      "after": 1,
+      "release_replaced": true
+    },
+    "lexical_targets": {
+      "before": 134,
+      "after": 134,
+      "added": [],
+      "edited": [],
+      "unchanged": 134
+    },
+    "card_lexical_targets": {
+      "before": 406,
+      "after": 406,
+      "added": [],
+      "edited": [],
+      "unchanged": 406
+    },
+    "form_targets": {
+      "before": 402,
+      "after": 402,
+      "added": [],
+      "edited": [],
+      "unchanged": 402
+    },
+    "deck_practice_targets": {
+      "before": 402,
+      "after": 402,
+      "added": [],
+      "edited": [],
+      "unchanged": 402
+    }
+  },
+  "sqlite_counts": {
+    "languages": 1,
+    "lemmas": 5007,
+    "senses": 6759,
+    "cards": 3768,
+    "dictionary_forms": 8089,
+    "decks": 14,
+    "deck_cards": 3661,
+    "deck_words": 3557,
+    "word_aliases": 37,
+    "sentences": 4303,
+    "sentence_tokens": 47089,
+    "card_sentences": 4297,
+    "stories": 1,
+    "story_sentences": 6,
+    "exercises": 0,
+    "grammar_rules": 0,
+    "audio_assets": 0,
+    "content_releases": 1,
+    "lexical_targets": 134,
+    "card_lexical_targets": 406,
+    "form_targets": 402,
+    "deck_practice_targets": 402
+  },
+  "indexes": {
+    "idx_sentence_tokens_active_sentence_idx": "CREATE INDEX idx_sentence_tokens_active_sentence_idx ON sentence_tokens(sentence_id,idx) WHERE removed_in IS NULL",
+    "idx_dictionary_forms_active_lookup": "CREATE INDEX idx_dictionary_forms_active_lookup ON dictionary_forms(sense_id,form_norm,rank,id) WHERE removed_in IS NULL"
+  },
+  "old_provenance_gaps_unchanged": 137,
+  "active_cards_before": 3768,
+  "active_cards_after": 3767,
+  "historical_links_before": 528,
+  "historical_links_after": 530,
+  "sha256": "0352850bd9352dc876b0ae560da81d1f35f701c91180cd0f08015e042ddcf191"
+}

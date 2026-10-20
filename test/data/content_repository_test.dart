@@ -384,7 +384,7 @@ void main() {
         expect(
           first.file.path,
           endsWith(
-            ['content', 'en', 'content.sqlite'].join(Platform.pathSeparator),
+            ['content', 'en', 'generations', 'bootstrap-${first.manifest.sha256}', 'content.sqlite'].join(Platform.pathSeparator),
           ),
         );
       },

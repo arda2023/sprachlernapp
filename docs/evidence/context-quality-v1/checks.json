@@ -1,0 +1,84 @@
+{
+  "pytest": {
+    "command": [
+      "pipeline/.venv-macos/bin/python",
+      "-m",
+      "pytest",
+      "pipeline/tests",
+      "-q"
+    ],
+    "exitcode": 0,
+    "seconds": 30.23,
+    "output_tail": "........................................................................ [ 15%]\n........................................................................ [ 31%]\n..................................................... [ 42%]\n........................................................................ [ 58%]\n........................................................................ [ 73%]\n........................................................................ [ 89%]\n................................................                         [100%]\n461 passed, 19 subtests passed in 29.32s\n"
+  },
+  "real-pack": {
+    "command": [
+      "flutter",
+      "test",
+      "--no-pub",
+      "test/data/real_pack_test.dart"
+    ],
+    "exitcode": 0,
+    "seconds": 10.94,
+    "output_tail": ", 250 ownership cards, 250 fixed sentence assignments verified\ndeck natur-umwelt: 242 learning targets, 248 ownership cards, 248 fixed sentence assignments verified\ndeck irregular_verbs_base: 134 learning targets, 129 ownership cards, 129 fixed sentence assignments verified\ndeck irregular_verbs_past: 134 learning targets, 0 ownership cards, 0 fixed sentence assignments verified\ndeck irregular_verbs_participle: 134 learning targets, 0 ownership cards, 0 fixed sentence assignments verified\ndeck alltagssprache-redewendungen: 441 learning targets, 441 ownership cards, 441 fixed sentence assignments verified\ndeck verbalphrasen: 181 learning targets, 181 ownership cards, 181 fixed sentence assignments verified\ndeck business-email: 579 learning targets, 579 ownership cards, 579 fixed sentence assignments verified\npack business_email_batch_6_v1 (schema 4, internal: true); 14 decks: 3557 cards, 3768 card sentences, 204 with valid_alternatives, 3768 cards in the pack\n00:08 +1: All tests passed!\n"
+  },
+  "analyze": {
+    "command": [
+      "flutter",
+      "analyze",
+      "--no-pub"
+    ],
+    "exitcode": 0,
+    "seconds": 4.15,
+    "output_tail": "Analyzing sprachapp...                                          \nNo issues found! (ran in 3.3s)\n"
+  },
+  "audit": {
+    "command": [
+      "pipeline/.venv-macos/bin/python",
+      "docs/evidence/context-quality-v1/audit.py",
+      "--out",
+      "pipeline/out/context_quality_v1"
+    ],
+    "exitcode": 1,
+    "seconds": 6.76,
+    "output_tail": "Traceback (most recent call last):\n  File \"/Users/ardasayar/Documents/FlutterProjekte/sprachapp/docs/evidence/context-quality-v1/audit.py\", line 129, in <module>\n    assert not any(f['level'] == 'error' for f in proposed_lint), proposed_lint\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: [{'level': 'error', 'rule': 'subclauses', 'message': '2 subordinate clauses, max 1'}, {'level': 'warn', 'rule': 'i+1', 'message': \"'tidy'/'tidy' Zipf 3.53 below 4.0\"}]\n"
+  },
+  "audit-final": {
+    "command": [
+      "pipeline/.venv-macos/bin/python",
+      "docs/evidence/context-quality-v1/audit.py",
+      "--out",
+      "pipeline/out/context_quality_v1"
+    ],
+    "exitcode": 0,
+    "seconds": 6.93,
+    "output_tail": "ntences\": 4302,\n    \"sentence_tokens\": 47082,\n    \"card_sentences\": 4296,\n    \"stories\": 1,\n    \"story_sentences\": 6,\n    \"exercises\": 0,\n    \"grammar_rules\": 0,\n    \"audio_assets\": 0,\n    \"content_releases\": 1,\n    \"lexical_targets\": 134,\n    \"card_lexical_targets\": 406,\n    \"form_targets\": 402,\n    \"deck_practice_targets\": 402\n  },\n  \"performance_indexes\": {\n    \"idx_sentence_tokens_active_sentence_idx\": \"CREATE INDEX idx_sentence_tokens_active_sentence_idx ON sentence_tokens(sentence_id,idx) WHERE removed_in IS NULL\",\n    \"idx_dictionary_forms_active_lookup\": \"CREATE INDEX idx_dictionary_forms_active_lookup ON dictionary_forms(sense_id,form_norm,rank,id) WHERE removed_in IS NULL\"\n  },\n  \"blockers\": {\n    \"exchange_scope\": \"corpus does not cover every sentence link\",\n    \"single_card_tombstone\": \"learning: missing/retired/foreign primary\",\n    \"legacy_make_plan\": \"'irregular:beat:past'\"\n  },\n  \"proposed_sentence_lint\": [],\n  \"exported\": false,\n  \"staged\": false,\n  \"cloud_calls\": 0\n}\n"
+  },
+  "verify": {
+    "command": [
+      "dart",
+      "run",
+      "tool/stage_content_pack.dart",
+      "--verify"
+    ],
+    "exitcode": 0,
+    "seconds": 5.36,
+    "output_tail": "Running build hooks...Running build hooks...verified assets/content/en/content.sqlite\n  version business_email_batch_6_v1, schema 4, 26095616 bytes\n  sha256 4861110b1e0ab90b2487db79e47afbe9581f54b6cab3987c1a6d9e9fdd7e64b6\n  22 table counts match finalization_report.json\n  INTERNES TEST-PACK: own devices and selected testers only, no public content release\n"
+  },
+  "projection": {
+    "command": [
+      "dart",
+      "run",
+      "tool/report_learning_groups.dart",
+      "assets/content/en/content.sqlite"
+    ],
+    "exitcode": 0,
+    "seconds": 5.6,
+    "output_tail": {
+      "raw_words": 3735,
+      "learning_targets": 3654,
+      "lexical_words": 3383,
+      "form_memberships": 402
+    }
+  }
+}

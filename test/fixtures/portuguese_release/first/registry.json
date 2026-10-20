@@ -1,0 +1,15 @@
+{
+  "format_version": 1,
+  "normalization": "NFC-lower-apostrophe-v1",
+  "words": [
+    {
+      "aliases": [],
+      "form_norm": "ação",
+      "lang": "pt-BR",
+      "owner_deck_ref": "synthetic",
+      "position": 1,
+      "primary_card_id": "71635e1362b762390a864cd1e31d1ec8",
+      "primary_card_ref": "synthetic-acao"
+    }
+  ]
+}

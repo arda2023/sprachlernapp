@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../../models/home_models.dart';
+import '../../../models/story_category.dart';
 import '../../../theme/app_theme.dart';
 
 /// Level first, genre last: at large Dynamic Type the genre truncates first.
@@ -12,14 +13,24 @@ String storySemanticsLabel(Story story) =>
     '${story.title}. ${story.topic}, ${story.readingMinutes} Minuten '
     'Lesezeit, Niveau ${story.level}';
 
+/// Horizontal row of story covers. [progress] maps story ids to the reading
+/// position (0–1); finished stories carry a check.
 class StoryCarousel extends StatelessWidget {
-  const StoryCarousel({super.key, required this.stories, required this.onOpen});
+  const StoryCarousel({
+    super.key,
+    required this.stories,
+    required this.onOpen,
+    this.progress = const {},
+    this.finished = const {},
+  });
 
-  static const cardWidth = 140.0;
-  static const cardHeight = 200.0;
+  static const cardWidth = 150.0;
+  static const cardHeight = 212.0;
 
   final List<Story> stories;
   final ValueChanged<Story> onOpen;
+  final Map<String, double> progress;
+  final Set<String> finished;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +45,8 @@ class StoryCarousel extends StatelessWidget {
           padding: EdgeInsets.only(right: i == stories.length - 1 ? 0 : 12),
           child: StoryCard(
             story: stories[i],
-            tone: i,
+            progress: progress[stories[i].id],
+            finished: finished.contains(stories[i].id),
             onTap: () => onOpen(stories[i]),
           ),
         ),
@@ -43,39 +55,54 @@ class StoryCarousel extends StatelessWidget {
   }
 }
 
+/// A closed, always-dark cover in the category colour with a placeholder
+/// illustration (the icon) until real artwork exists. Text is fixed white,
+/// so it reads in both motifs.
 class StoryCard extends StatelessWidget {
   const StoryCard({
     super.key,
     required this.story,
     required this.onTap,
-    this.tone = 0,
+    this.progress,
+    this.finished = false,
+    this.width = StoryCarousel.cardWidth,
+    this.height = StoryCarousel.cardHeight,
   });
 
   final Story story;
   final VoidCallback onTap;
 
-  /// Picks a neutral cover tone when the story has no cover image.
-  final int tone;
+  /// Reading position; shown as a bar when the story is started.
+  final double? progress;
+  final bool finished;
+  final double width;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
-    final radius = BorderRadius.circular(12);
+    const white = Color(0xFFFFFFFF);
+    final category = StoryCategory.of(story.topic);
+    final started = !finished && (progress ?? 0) >= 0.02;
+    final percent = ((progress ?? 0) * 100).round();
+    final radius = BorderRadius.circular(18);
     return MergeSemantics(
       child: CupertinoButton(
         onPressed: onTap,
         padding: EdgeInsets.zero,
-        pressedOpacity: 0.7,
+        pressedOpacity: 0.8,
         minimumSize: const Size(44, 44),
         child: Semantics(
-          label: storySemanticsLabel(story),
+          label:
+              '${storySemanticsLabel(story)}'
+              '${finished
+                  ? ', gelesen'
+                  : started
+                  ? ', $percent Prozent gelesen'
+                  : ''}',
           excludeSemantics: true,
-          child: Container(
-            width: StoryCarousel.cardWidth,
-            height: StoryCarousel.cardHeight,
-            foregroundDecoration: BoxDecoration(
-              border: Border.all(color: context.appColors.hairline),
-              borderRadius: radius,
-            ),
+          child: SizedBox(
+            width: width,
+            height: height,
             child: ClipRRect(
               borderRadius: radius,
               child: Stack(
@@ -84,17 +111,48 @@ class StoryCard extends StatelessWidget {
                   if (story.cover case final cover?)
                     Image(image: cover, fit: BoxFit.cover)
                   else
-                    TypeCover(topic: story.topic, tone: tone),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color.lerp(category.color, white, 0.12)!,
+                            Color.lerp(
+                              category.color,
+                              const Color(0xFF000000),
+                              0.35,
+                            )!,
+                          ],
+                        ),
+                      ),
+                    ),
+                  if (story.cover == null)
+                    Positioned(
+                      right: -18,
+                      top: -10,
+                      child: Icon(
+                        category.icon,
+                        size: width * 0.78,
+                        color: white.withValues(alpha: 0.16),
+                      ),
+                    ),
                   const DecoratedBox(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        stops: [0.3, 1],
-                        colors: [Color(0x000D0F14), Color(0xF00D0F14)],
+                        stops: [0.35, 1],
+                        colors: [Color(0x00000000), Color(0x99000000)],
                       ),
                     ),
                   ),
+                  if (finished)
+                    const Positioned(
+                      top: 10,
+                      right: 10,
+                      child: _FinishedBadge(),
+                    ),
                   Positioned(
                     left: 12,
                     right: 12,
@@ -108,20 +166,26 @@ class StoryCard extends StatelessWidget {
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: AppType.editorial(
-                            color: context.appColors.textPrimary,
+                            color: white,
                             size: 17,
                             height: 1.2,
                           ),
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          storyMetaLine(story),
+                          started
+                              ? '${story.level} · $percent %'
+                              : '${story.level} · ${story.readingMinutes} Min',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppType.meta(
-                            color: context.appColors.textMuted,
+                            color: white.withValues(alpha: 0.82),
                           ),
                         ),
+                        if (started) ...[
+                          const SizedBox(height: 8),
+                          ReadingBar(fraction: progress!, onDark: true),
+                        ],
                       ],
                     ),
                   ),
@@ -133,6 +197,63 @@ class StoryCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class _FinishedBadge extends StatelessWidget {
+  const _FinishedBadge();
+
+  @override
+  Widget build(BuildContext context) => Container(
+    width: 26,
+    height: 26,
+    alignment: Alignment.center,
+    decoration: const BoxDecoration(
+      shape: BoxShape.circle,
+      color: Color(0xFFFFFFFF),
+    ),
+    child: Icon(
+      CupertinoIcons.checkmark_alt,
+      size: 16,
+      color: context.appColors.progressWords,
+    ),
+  );
+}
+
+/// Thin rounded reading-progress bar (orange fill).
+class ReadingBar extends StatelessWidget {
+  const ReadingBar({
+    super.key,
+    required this.fraction,
+    this.onDark = false,
+    this.height = 4,
+  });
+
+  final double fraction;
+  final bool onDark;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) => ClipRRect(
+    borderRadius: BorderRadius.circular(99),
+    child: SizedBox(
+      height: height,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          ColoredBox(
+            color: onDark
+                ? const Color(0x40FFFFFF)
+                : context.appColors.hairline,
+          ),
+          FractionallySizedBox(
+            alignment: Alignment.centerLeft,
+            widthFactor: fraction.clamp(0.03, 1.0),
+            child: ColoredBox(color: context.appColors.active),
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 /// Stand-in cover until stories and news ship with artwork: the topic set
@@ -177,7 +298,7 @@ class TypeCover extends StatelessWidget {
                 weight: FontWeight.w700,
                 height: 1,
                 letterSpacing: -size / 52,
-                color: context.appColors.textPrimary.withValues(alpha: 0.09),
+                color: AppColors.textPrimary.withValues(alpha: 0.09),
               ),
             ),
           ),

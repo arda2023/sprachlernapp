@@ -13,13 +13,13 @@ import '../../theme/app_theme.dart';
 import '../../widgets/action_buttons.dart';
 import '../../widgets/back_bar.dart';
 import '../../widgets/difficulty_bolts.dart';
-import '../../widgets/progress_ring.dart';
-import '../../widgets/section_heading.dart';
-import '../home/widgets/vocab_progress.dart' show formatCountDe;
+import '../../widgets/count_format.dart';
+import '../home/widgets/deck_tile.dart';
 import 'deck_practice_screen.dart';
 
-/// One deck: orientation (title, description, progress) first, then the
-/// actions (toggle, practice, recent words, Stapel-Revue).
+/// One deck (Redesign 20.10.2026): icon in its progress gauge, title and
+/// description, the counts side by side, then one orange "practise" button,
+/// the daily-mix switch, the Stapel-Revue as a row and the recent forms.
 class DeckDetailsScreen extends ConsumerWidget {
   const DeckDetailsScreen({super.key, required this.deckId});
 
@@ -46,121 +46,111 @@ class DeckDetailsScreen extends ConsumerWidget {
       child: Scaffold(
         body: SafeArea(
           bottom: false,
-          child: ref
-              .watch(decksProvider)
-              .when(
-                loading: () =>
-                    const Center(child: CupertinoActivityIndicator()),
-                error: (error, _) => Column(
+          child: watchContentStable(ref, decksProvider).when(
+            skipLoadingOnReload: false,
+            skipLoadingOnRefresh: false,
+            skipError: false,
+            loading: () => const Center(child: CupertinoActivityIndicator()),
+            error: (error, _) => Column(
+              children: [
+                BackBar(onBack: () => Navigator.of(context).maybePop()),
+                ContentUnavailableView(
+                  error: error,
+                  onRetry: () {
+                    retryDatabases(ref);
+                    ref.invalidate(decksProvider);
+                  },
+                ),
+              ],
+            ),
+            data: (decks) {
+              final deck = decks.where((d) => d.id == deckId).firstOrNull;
+              if (deck == null) {
+                return Column(
                   children: [
                     BackBar(onBack: () => Navigator.of(context).maybePop()),
-                    ContentUnavailableView(
-                      error: error,
-                      onRetry: () {
-                        retryDatabases(ref);
-                        ref.invalidate(decksProvider);
-                      },
+                    Text(
+                      'Dieser Stapel ist nicht mehr verfügbar.',
+                      style: AppType.chrome(
+                        color: context.appColors.textPrimary,
+                      ),
                     ),
                   ],
-                ),
-                data: (decks) {
-                  final deck = decks.where((d) => d.id == deckId).firstOrNull;
-                  if (deck == null) {
-                    return Column(
-                      children: [
-                        BackBar(onBack: () => Navigator.of(context).maybePop()),
-                        Text(
-                          'Dieser Stapel ist nicht mehr verfügbar.',
-                          style: AppType.chrome(
-                            color: context.appColors.textPrimary,
-                          ),
-                        ),
-                      ],
-                    );
-                  }
-                  final activation = ref.watch(deckActiveControllerProvider);
-                  return Column(
-                    children: [
-                      BackBar(onBack: () => Navigator.of(context).maybePop()),
-                      Expanded(
-                        child: ListView(
-                          physics: const BouncingScrollPhysics(
-                            parent: AlwaysScrollableScrollPhysics(),
-                          ),
-                          padding: const EdgeInsets.fromLTRB(20, 8, 20, 40),
-                          children: [
-                            _Masthead(deck: deck),
-                            const SizedBox(height: 20),
-                            _ProgressLegend(deck: deck),
-                            const SizedBox(height: 28),
-                            _ToggleRow(
-                              label: 'Stapel lernen',
-                              value: deck.isActive,
-                              onChanged: activation.isLoading
-                                  ? null
-                                  : (v) => ref
-                                        .read(
-                                          deckActiveControllerProvider.notifier,
-                                        )
-                                        .setActive(deck.id, v),
-                            ),
-                            if (activation.hasError)
-                              CupertinoButton(
-                                onPressed: () => ref
-                                    .read(deckActiveControllerProvider.notifier)
-                                    .setActive(deck.id, !deck.isActive),
-                                child: Text(
-                                  'Aktivierung nicht gespeichert. Wiederholen',
-                                  style: AppType.chrome(
-                                    color: context.appColors.textPrimary,
-                                  ),
-                                ),
-                              ),
-                            const SizedBox(height: 12),
-                            PrimaryActionButton(
-                              label: 'Lerne mit diesem Stapel',
-                              onPressed: () =>
-                                  _practise(context, DeckPracticeMode.learn),
-                            ),
-                            const SizedBox(height: 12),
-                            if (deck.recentWords.isNotEmpty)
-                              _RecentWords(
-                                words: deck.recentWords.take(5).toList(),
-                              ),
-                            const SizedBox(height: 22),
-                            const SectionHeading(title: 'Mehr davon'),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Inhalte rund um diesen Stapel',
-                              style: AppType.chrome(
-                                color: context.appColors.textMuted,
-                              ),
-                            ),
-                            const SizedBox(height: 14),
-                            _ReviewCard(
-                              onReview: () =>
-                                  _practise(context, DeckPracticeMode.review),
-                            ),
-                            const SizedBox(height: 20),
-                            if (ref
-                                    .watch(contentInfoProvider)
-                                    .asData
-                                    ?.value
-                                    .isInternalTestPack ??
-                                false)
-                              Text(
-                                'Internes Test-Pack',
-                                style: AppType.meta(
-                                  color: context.appColors.textMuted,
-                                ),
-                              ),
-                          ],
-                        ),
+                );
+              }
+              final activation = ref.watch(deckActiveControllerProvider);
+              return Column(
+                children: [
+                  BackBar(onBack: () => Navigator.of(context).maybePop()),
+                  Expanded(
+                    child: ListView(
+                      physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics(),
                       ),
-                    ],
-                  );
-                },
-              ),
+                      padding: const EdgeInsets.fromLTRB(20, 8, 20, 40),
+                      children: [
+                        _Masthead(deck: deck),
+                        const SizedBox(height: 22),
+                        _ProgressLegend(deck: deck),
+                        const SizedBox(height: 20),
+                        PrimaryActionButton(
+                          label: 'Mit diesem Stapel üben',
+                          onPressed: () =>
+                              _practise(context, DeckPracticeMode.learn),
+                        ),
+                        const SizedBox(height: 12),
+                        _ToggleRow(
+                          label: 'In die tägliche Übung',
+                          detail:
+                              'Neue Wörter dieses Stapels kommen in „Lernen“.',
+                          value: activation.values[deck.id] ?? deck.isActive,
+                          onChanged: (v) => ref
+                              .read(deckActiveControllerProvider.notifier)
+                              .setActive(deck.id, v),
+                        ),
+                        if (activation.errors.containsKey(deck.id))
+                          CupertinoButton(
+                            onPressed: () => ref
+                                .read(deckActiveControllerProvider.notifier)
+                                .setActive(deck.id, !deck.isActive),
+                            child: Text(
+                              'Aktivierung nicht gespeichert. Wiederholen',
+                              style: AppType.chrome(
+                                color: context.appColors.textPrimary,
+                              ),
+                            ),
+                          ),
+                        const SizedBox(height: 12),
+                        _ReviewCard(
+                          onReview: () =>
+                              _practise(context, DeckPracticeMode.review),
+                        ),
+                        if (deck.recentWords.isNotEmpty) ...[
+                          const SizedBox(height: 12),
+                          _RecentWords(
+                            words: deck.recentWords.take(5).toList(),
+                          ),
+                        ],
+                        const SizedBox(height: 20),
+                        if (ref
+                                .watch(contentInfoProvider)
+                                .asData
+                                ?.value
+                                .isInternalTestPack ??
+                            false)
+                          Text(
+                            'Internes Test-Pack',
+                            style: AppType.meta(
+                              color: context.appColors.textMuted,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
@@ -174,64 +164,70 @@ class _Masthead extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ExcludeSemantics(
-              child: ProgressRing(
-                fraction: deck.masteredFraction,
-                size: 56,
-                color: context.appColors.mastered,
-                child: Icon(
-                  deck.icon,
-                  size: 24,
-                  color: context.appColors.textPrimary,
-                ),
-              ),
-            ),
+            DeckGauge(deck: deck, size: 84),
             const Spacer(),
-            // The visible level name is the label; bolts only repeat it.
-            Text(
-              deck.difficulty.label,
-              style: AppType.meta(color: context.appColors.textMuted),
-            ),
-            const SizedBox(width: 8),
-            ExcludeSemantics(
-              child: DifficultyBolts(difficulty: deck.difficulty),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(
+                color: colors.raisedInk,
+                borderRadius: BorderRadius.circular(99),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // The visible level name is the label; bolts repeat it.
+                  Text(
+                    deck.difficulty.label,
+                    style: AppType.meta(color: colors.textMuted),
+                  ),
+                  const SizedBox(width: 6),
+                  ExcludeSemantics(
+                    child: DifficultyBolts(difficulty: deck.difficulty),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 18),
         Semantics(
           header: true,
           child: Text(
             deck.name,
             style: AppType.editorial(
-              color: context.appColors.textPrimary,
+              color: colors.textPrimary,
               size: 32,
+              height: 1.15,
             ),
           ),
         ),
-        const SizedBox(height: 8),
-        Text(
-          deck.description,
-          style: AppType.editorial(
-            size: 17,
-            weight: FontWeight.w400,
-            height: 1.45,
-            letterSpacing: 0,
-            color: context.appColors.textMuted,
+        if (deck.description.isNotEmpty) ...[
+          const SizedBox(height: 8),
+          Text(
+            deck.description,
+            style: AppType.editorial(
+              size: 17,
+              weight: FontWeight.w400,
+              height: 1.45,
+              letterSpacing: 0,
+              color: colors.textMuted,
+            ),
           ),
-        ),
+        ],
       ],
     );
   }
 }
 
-/// Counts carry ink underlines, the track the same two inks: violet for
-/// mastered, orange for seen but not yet mastered.
+/// The counts side by side (stat cells) over one bar: violet for mastered,
+/// orange for practised but not yet mastered.
 class _ProgressLegend extends StatelessWidget {
   const _ProgressLegend({required this.deck});
 
@@ -239,20 +235,48 @@ class _ProgressLegend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     final seen = formatCountDe(deck.seenWords);
     final total = formatCountDe(deck.totalWords);
     final mastered = formatCountDe(deck.masteredWords);
     final building = deck.seenWords - deck.masteredWords;
     final rest = deck.totalWords - deck.seenWords;
 
-    TextSpan count(String text, Color ink) => TextSpan(
-      text: text,
-      style: AppType.chrome(
-        color: context.appColors.textPrimary,
-        weight: FontWeight.w700,
-        tabular: true,
-        decoration: TextDecoration.underline,
-        decorationColor: ink,
+    Widget cell(String value, String label, Color? ink) => Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              if (ink != null) ...[
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(color: ink, shape: BoxShape.circle),
+                ),
+                const SizedBox(width: 6),
+              ],
+              Flexible(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppType.meta(color: colors.textMuted),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: AppType.chrome(
+              size: 20,
+              weight: FontWeight.w800,
+              color: colors.textPrimary,
+              tabular: true,
+            ),
+          ),
+        ],
       ),
     );
 
@@ -260,104 +284,112 @@ class _ProgressLegend extends StatelessWidget {
       container: true,
       label: '$seen von $total Übungen gesehen, $mastered Übungen gemeistert',
       excludeSemantics: true,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text.rich(
-            TextSpan(
-              style: AppType.chrome(color: context.appColors.textMuted),
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
+        decoration: BoxDecoration(
+          color: colors.raisedInk,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
               children: [
-                count(seen, context.appColors.active),
-                TextSpan(text: ' von $total Übungen'),
+                cell('$seen / $total', 'Geübt', colors.active),
+                cell(mastered, 'Gemeistert', colors.mastered),
+                cell(formatCountDe(rest), 'Noch neu', null),
               ],
             ),
-          ),
-          const SizedBox(height: 6),
-          Text.rich(
-            TextSpan(
-              style: AppType.chrome(color: context.appColors.textMuted),
-              children: [
-                count(mastered, context.appColors.mastered),
-                const TextSpan(text: ' Übungen gemeistert'),
-              ],
-            ),
-          ),
-          const SizedBox(height: 12),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(999),
-            child: SizedBox(
-              height: 8,
-              child: ColoredBox(
-                color: context.appColors.hairline,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (deck.masteredWords > 0)
-                      Expanded(
-                        flex: deck.masteredWords,
-                        child: ColoredBox(color: context.appColors.mastered),
-                      ),
-                    if (building > 0)
-                      Expanded(
-                        flex: building,
-                        child: ColoredBox(color: context.appColors.active),
-                      ),
-                    if (rest > 0) Expanded(flex: rest, child: const SizedBox()),
-                  ],
+            const SizedBox(height: 14),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(999),
+              child: SizedBox(
+                height: 8,
+                child: ColoredBox(
+                  color: colors.hairline,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (deck.masteredWords > 0)
+                        Expanded(
+                          flex: deck.masteredWords,
+                          child: ColoredBox(color: colors.mastered),
+                        ),
+                      if (building > 0)
+                        Expanded(
+                          flex: building,
+                          child: ColoredBox(color: colors.active),
+                        ),
+                      if (rest > 0)
+                        Expanded(flex: rest, child: const SizedBox()),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
 
-/// Neutral toggle: textMuted track when on, hairline when off, never an ink.
+/// Whether new words of this deck join the daily mix ("Lernen").
 class _ToggleRow extends StatelessWidget {
   const _ToggleRow({
     required this.label,
+    required this.detail,
     required this.value,
     required this.onChanged,
   });
 
   final String label;
+  final String detail;
   final bool value;
   final ValueChanged<bool>? onChanged;
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return MergeSemantics(
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onChanged == null ? null : () => onChanged!(!value),
         child: Container(
-          padding: const EdgeInsets.fromLTRB(16, 10, 12, 10),
+          padding: const EdgeInsets.fromLTRB(16, 12, 12, 12),
           decoration: BoxDecoration(
-            color: context.appColors.raisedInk,
-            border: Border.all(color: context.appColors.hairline),
-            borderRadius: BorderRadius.circular(12),
+            color: colors.raisedInk,
+            borderRadius: BorderRadius.circular(20),
           ),
           child: Row(
             children: [
               Expanded(
-                child: Text(
-                  label,
-                  style: AppType.chrome(
-                    color: context.appColors.textPrimary,
-                    size: 17,
-                    weight: FontWeight.w600,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
+                      style: AppType.chrome(
+                        color: colors.textPrimary,
+                        size: 16,
+                        weight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      detail,
+                      style: AppType.chrome(size: 13, color: colors.textMuted),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(width: 12),
               CupertinoSwitch(
                 value: value,
                 onChanged: onChanged,
-                activeTrackColor: context.appColors.textMuted,
-                inactiveTrackColor: context.appColors.hairline,
-                thumbColor: context.appColors.textPrimary,
+                activeTrackColor: colors.active,
+                inactiveTrackColor: colors.hairline,
+                thumbColor: const Color(0xFFFFFFFF),
               ),
             ],
           ),
@@ -382,15 +414,16 @@ class _RecentWordsState extends State<_RecentWords> {
   @override
   Widget build(BuildContext context) {
     final words = widget.words;
-    final title = words.isEmpty
-        ? 'Deine zuletzt geübten Formen'
-        : 'Deine letzten ${words.length} geübten Formen';
+    final title = switch (words.length) {
+      0 => 'Deine zuletzt geübten Formen',
+      1 => 'Deine zuletzt geübte Form',
+      _ => 'Deine letzten ${words.length} geübten Formen',
+    };
 
     return Container(
       decoration: BoxDecoration(
         color: context.appColors.raisedInk,
-        border: Border.all(color: context.appColors.hairline),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -475,7 +508,11 @@ class _WordRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: context.appColors.hairline)),
+        border: Border(
+          top: BorderSide(
+            color: context.appColors.hairline.withValues(alpha: 0.6),
+          ),
+        ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -506,6 +543,8 @@ class _WordRow extends StatelessWidget {
   }
 }
 
+/// Stapel-Revue as one row: review everything practised in this deck
+/// without waiting for the schedule.
 class _ReviewCard extends StatelessWidget {
   const _ReviewCard({required this.onReview});
 
@@ -513,39 +552,74 @@ class _ReviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: context.appColors.raisedInk,
-        border: Border.all(color: context.appColors.hairline),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'Stapel-Revue',
-            style: AppType.chrome(
-              color: context.appColors.textPrimary,
-              size: 17,
-              weight: FontWeight.w600,
+    final colors = context.appColors;
+    return MergeSemantics(
+      child: CupertinoButton(
+        onPressed: onReview,
+        padding: EdgeInsets.zero,
+        minimumSize: const Size(44, 44),
+        pressedOpacity: 0.75,
+        child: Semantics(
+          label: 'Stapel-Revue: Stapel nochmals durchsehen',
+          excludeSemantics: true,
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(14, 14, 12, 14),
+            decoration: BoxDecoration(
+              color: colors.raisedInk,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 44,
+                  height: 44,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: colors.activeTint,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    CupertinoIcons.arrow_2_circlepath,
+                    size: 20,
+                    color: colors.active,
+                  ),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Stapel-Revue',
+                        style: AppType.chrome(
+                          color: colors.textPrimary,
+                          size: 16,
+                          weight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        'Geübte Karten nochmals durchsehen – ohne auf den '
+                        'Plan zu warten.',
+                        style: AppType.chrome(
+                          size: 13,
+                          color: colors.textMuted,
+                          height: 1.35,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Icon(
+                  CupertinoIcons.chevron_right,
+                  size: 16,
+                  color: colors.textMuted,
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 8),
-          Text(
-            'Sieh die Karten wiederholt durch, ohne darauf zu warten, dass '
-            'der Algorithmus sie dir wieder zeigt.',
-            style: AppType.chrome(
-              color: context.appColors.textMuted,
-              height: 1.4,
-            ),
-          ),
-          const SizedBox(height: 20),
-          OutlineActionButton(
-            label: 'Stapel nochmals durchsehen',
-            onPressed: onReview,
-          ),
-        ],
+        ),
       ),
     );
   }

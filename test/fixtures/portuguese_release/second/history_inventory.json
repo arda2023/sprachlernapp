@@ -1,0 +1,74 @@
+{
+  "baseline_gaps": [],
+  "format_version": 1,
+  "lang": "pt-BR",
+  "story_source_snapshots": [],
+  "tables": {
+    "audio_assets": {},
+    "card_lexical_targets": {},
+    "card_sentences": {
+      "382f61b8d2ab835f80c20bb301e22172": "138218896a39bc425258afd37840b8fed21f37e5c5e8522337b25a2cd6455b95",
+      "664f4623e21fa42cffde416740cd1eaa": "62646fea8879ea35eb6ea4ef5b7b15c9c773ee9bc10c3ee888b5946af492b3a9"
+    },
+    "cards": {
+      "71635e1362b762390a864cd1e31d1ec8": "1102aa7a7bed7ee868130e03a5c6efb20f3cfc6c71a9221f185ea12d5e2cadb4"
+    },
+    "deck_cards": {
+      "3b3dd49e5170f1380a8d3347e7edeb56": "6fc6bc0c315a256f181b147c3d02d09cbc416047658c20687cb7b5cab3c0686d"
+    },
+    "deck_practice_targets": {},
+    "deck_words": {
+      "65827b5fb44280f52e2137e28496a9ff": "4154260012f46524ed5840cb9c9be024b8becfcb09c965e11c6f75fff012fd34"
+    },
+    "decks": {
+      "2968f3cf759ca30011a5ace1dc46df9c": "97f9bc487af5cb9ddd6d189e12fd5ca1d81ef25dc19c6b1e75cc7aa56929b6f0"
+    },
+    "dictionary_forms": {
+      "2bf1c9f83d0820aa9abf747cc9621994": "f3508b11b8556953571e5fdc9c05ad7e6a9e81a8ef299fe82f5aa4cd07e06d64",
+      "457e1c3d34373be12a13611474e1ad2e": "0c9dda7814fa5908bbb823eb24b52073388d509f9238d601ca8c06a8d088dc48",
+      "bc27c54d3c4a7a36c8dff9077af9b654": "45b28db5435bdb06f4152ee0a4006b5ab8716b5e4991a48f7a14c1e473258685",
+      "d96a1de7519fc4b07199449d04a52bed": "45b614452cd80c2a881bc9c54e8970d84a4f14ec44bb799bb36cb847df9a183f"
+    },
+    "exercises": {},
+    "form_targets": {},
+    "grammar_rules": {},
+    "languages": {
+      "pt-BR": "c3dbba048c30e9c0528d2477a56c16602f549527c5930c056a7b9987e879c81e"
+    },
+    "lemmas": {
+      "1e1a31db3b1d260638d894e1eb7a845e": "04585f4fae02ddefdd4947f08c2be42d1d7d69485cee0c624438b0563843cccf",
+      "b13ecd99715ee05cf7356ecc182d1f52": "3410fa1958e3fecdeda604c7224931426475a303f07caeaff8fd9533b18429b5",
+      "b9c141581a2c0279279b63629fba9b88": "e45876da735c6dcd35f675814eec4461c84feb1c55c449c0c240a07d97557d03",
+      "f57dd675544efa25d9f377702c3e1290": "0a5806866bf49491f43325fda19ed00e44cb09ea72c36bf6403f3d835278670c"
+    },
+    "lexical_targets": {},
+    "senses": {
+      "3b9d46c7a1e9534d1791952fd40ac421": "5bf71413aabd3f9f9537c06a3f1d891b928d6bea3118911d747df2b6f4265e6c",
+      "80a9ca100828a397b9b93e326d8f8355": "75d662fd74c3d2731697b0239cc5a4683b81d79bd2e51c02db3a12d9b1b1b0a7",
+      "d2d470a6d7290a3ca3401c589dd58224": "4fd04e0b27835c33830ea4756c137e7464354a116e97a2a97b7a36e0cde8958b",
+      "eddc96c88b673391461fa89f64c9bcd3": "6dd492ac434dc64ada4368f6eea669dc3d0b63e2064a7aaed064518dd956f398"
+    },
+    "sentence_tokens": {
+      "19a8dedca160efcf4af85e08960921d2": "430ce5104775ab891ba813ddba2cdee769f3c1d5cc5ecbfeaeee6c96d396f8d3",
+      "30d5aca322260962da51c1db00060485": "2d956cb74a0ea4bc29edbeebfe916e3a63cc2a767d7439ba8ba5e7fffcfaed41",
+      "4aefebe9f36eac2adca1857e175c9a49": "65a45d33f3c8f80937b83f807b97e2eaa563dd11d4817f67d94a7ba51009f666",
+      "4af3b0b3f51198c68a5fea2bf5ac41cc": "95af37fda43bc677caadb50bd4b213583cbae7cfd8323fc77247b0ef409b4ce9",
+      "5681c95717bc2a8c7b790f4ce9436417": "bf4980160183f779b6155bd476d0c848aea99a4ccf1021c14d82c24d32c822c4",
+      "77bbb133cffb7370197402d171085009": "6c4a5feb593dc2cf19f95ef2b6641bdc6e3af96e5efa0a62cbbcbef71a2cc843",
+      "790fc01ba6fdb7d8230ba819dad58bfc": "3a4fe6344c5bbdae2276bbe3802de3403e15e016b8021543a66b06cf799f3da1",
+      "7b7d243acf241fef8a888cc93b915d49": "1bbed902e8b26daa3313b1a3617b074444f5c545544a8c5297cd5cb63c7e8a41",
+      "8f67f969a187ad838f9f4dda71fa889d": "9b64e4c740b1eeb68b029293674ee05c3fdb83a66586c7f6b595ae983a0b3b00",
+      "9f5ce8618abf349d5887b97b34d89b0f": "b36d8b3fa88c984c563e199fe00176b03c95cd7c199ae0ce99b2cc9159e8ae19",
+      "be173ba8b7b7ff29ecea1fcf0dcd0d8e": "8dbc03c4dea82730cc52feaa4193d8b5a9a09b490b2804b1d37a091d49ef1d45",
+      "eb3fdd24df60f089c14c96a839ad10c9": "9c778ee6813f057bc991a4da2cb6d8f1a0cbecf9a4c548cd5de30c891e7df7ef"
+    },
+    "sentences": {
+      "767a2f0704c9a36582c8a55e7028dd42": "09af12fc678ec1f1638c2e6ac15c3ed3646f354f3cd662ab5f882509e7415102",
+      "906991ff83810a8e4cccfe8c598ea3b2": "b6496c11560554f60bfb8ddca7e940c84335449af5aae8598b4159865f39dab6"
+    },
+    "stories": {},
+    "story_context_corrections": {},
+    "story_sentences": {},
+    "word_aliases": {}
+  }
+}

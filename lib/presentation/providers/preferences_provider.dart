@@ -13,8 +13,11 @@ class PreferencesController extends AsyncNotifier<PracticePreferences> {
   Future<PracticePreferences> build() async =>
       (await ref.watch(userRepositoryProvider.future)).preferences();
   Future<void> save(PracticePreferences value) async {
+    final release = contentTransitionGate.acquire();
+    try {
     final repository = await ref.read(userRepositoryProvider.future);
     await repository.savePreferences(value);
     if (ref.mounted) state = AsyncData(value);
+    } finally { release(); }
   }
 }

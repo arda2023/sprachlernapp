@@ -77,8 +77,8 @@ def test_code_inserts_candidates_literally(cfg):
     assert "Original sentence: " + STAIRS in prompt
     assert "German translation: Zoe trägt das Essen die Treppe hinauf." in prompt
     assert kwargs["step"] == "alternative_check"
-    assert kwargs["model"] == cfg["llm"]["alternative_check_model"] == "gemini-3.8-flash"
-    assert kwargs["thinking"] == cfg["llm"]["alternative_check_thinking"] == {"thinking_level": "LOW"}
+    assert kwargs["model"] == cfg["llm"]["alternative_check_model"] == "claude-haiku-5-5"
+    assert kwargs["thinking"] == cfg["llm"]["alternative_check_thinking"] == {"type": "disabled"}
     assert kwargs["max_output_tokens"] == cfg["llm"]["max_output_tokens"]["alternative_check"] == 1024
     assert schema["properties"]["results"]["minItems"] == schema["properties"]["results"]["maxItems"] == 1
     assert results == [{"candidate_index": 1, "candidate": "up the", "norm": "up the",
@@ -190,17 +190,17 @@ def test_alternative_check_only_after_original_checks(cfg):
 def test_ledger_step_alternative_check(cfg, tmp_path):
     class Vertex(Llm):
         def _call(self, prompt, schema, model, thinking, max_output_tokens):
-            assert max_output_tokens == 1024 and model == "gemini-3.8-flash"
-            assert thinking == {"thinking_level": "LOW"}
+            assert max_output_tokens == 1024 and model == "claude-haiku-5-5"
+            assert thinking == {"type": "disabled"}
             return json.dumps({"results": [{"candidate_index": 1, "valid": True, "reason": "ok"}]}), (80, 20, 10)
     llm = Vertex(cfg, tmp_path / "ledger.csv", 1.0)
     assert check(llm, cfg, ABOUT, ABOUT_GAP, "x", ["approximately"])[0]["status"] == "confirmed"
     rows = list(csv.DictReader(open(tmp_path / "ledger.csv", encoding="utf-8")))
-    assert [(r["step"], r["model"]) for r in rows] == [("alternative_check", "gemini-3.8-flash")]
+    assert [(r["step"], r["model"]) for r in rows] == [("alternative_check", "claude-haiku-5-5")]
     # priced with the model actually called, no fallback
     from sprachpipe.llm import cost_usd, model_price
     assert float(rows[0]["usd"]) == pytest.approx(
-        cost_usd(model_price(cfg["prices"], "gemini-3.8-flash"), 80, 20, 10), abs=1e-6)
+        cost_usd(model_price(cfg["prices"], "claude-haiku-5-5"), 80, 20, 10), abs=1e-6)
 
 
 def test_other_checks_keep_their_models(cfg):
@@ -218,7 +218,7 @@ def test_other_checks_keep_their_models(cfg):
     ask(Rec(), cfg, ABOUT, ABOUT_GAP, "x", "ungefähr")
     check_meaning(Rec(), cfg, ABOUT, "about", [{"sense_key": "about#ungefaehr", "pos": "ADV",
                   "form_kind": "other", "form_label_de": "Adverb", "gloss_de": "ungefähr"}], "x")
-    assert seen == {"blindtest": ("gemini-2.5-flash", {"thinking_budget": 0}, 256),
+    assert seen == {"blindtest": ("claude-haiku-5-5", {"type": "disabled"}, 256),
                     "meaning_check": (c["meaning_check_model"], c["meaning_check_thinking"], 4096)}
 
 

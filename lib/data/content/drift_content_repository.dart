@@ -6,18 +6,20 @@ import '../../domain/content.dart';
 import '../../domain/story_learning.dart';
 import '../../domain/repositories.dart';
 import 'content_database.dart';
+import 'context_revision_validation.dart';
 
 /// [ContentRepository] on the read-only [ContentDatabase]. Rows with
 /// `removed_in` (tombstones) are never returned; ids are passed through
 /// unchanged. Content that breaks the data contract (wrong active sentence count,
 /// gap not on the form, malformed alternatives) is [ContentUnavailable].
 class DriftContentRepository
-    implements ContentRepository, StoryContentRepository {
+    implements ContentRepository, StoryContentRepository, RetiredLearningContentRepository, StoryContextCorrectionSource {
   DriftContentRepository(this._db);
 
   final ContentDatabase _db;
 
-  static const _chunk = 500;
+  // At most 800 bindings in the two-arm lemma UNION (SQLite limit 999).
+  static const _chunk = 400;
 
   @override
   ContentInfo get info => _db.info;
@@ -81,14 +83,28 @@ class DriftContentRepository
     ];
   }
 
-  Future<FormTarget?> _formTarget(String cardId) async {
-    if (info.schemaVersion < 4) return null;
-    final rows = await _select('SELECT * FROM form_targets WHERE card_id=? AND removed_in IS NULL', [cardId]);
-    if (rows.isEmpty) return null;
-    if (rows.length != 1) throw _broken('Mehrdeutige Formkarte');
-    final r = rows.single;
-    return FormTarget(id:r.read<String>('id'),cardId:cardId,senseId:r.read<String>('sense_id'),
-      form:r.read<String>('form'),function:r.read<String>('function'),lexicalTargetId:r.read<String>('lexical_target_id'));
+  Future<FormTarget?> _formTarget(String cardId) async =>
+      (await _formTargets([cardId]))[cardId];
+
+  Future<Map<String, FormTarget>> _formTargets(Iterable<String> cardIds) async {
+    final result = <String, FormTarget>{};
+    if (info.schemaVersion < 4) return result;
+    final ids = cardIds.toSet().toList();
+    for (var i = 0; i < ids.length; i += _chunk) {
+      final batch = ids.sublist(i, (i + _chunk).clamp(0, ids.length));
+      final rows = await _select(
+        'SELECT * FROM form_targets WHERE card_id IN (${_marks(batch.length)}) '
+        'AND removed_in IS NULL', batch);
+      for (final r in rows) {
+        final id = r.read<String>('card_id');
+        if (result.containsKey(id)) throw _broken('Mehrdeutige Formkarte');
+        result[id] = FormTarget(id:r.read<String>('id'), cardId:id,
+          senseId:r.read<String>('sense_id'), form:r.read<String>('form'),
+          function:r.read<String>('function'),
+          lexicalTargetId:r.read<String>('lexical_target_id'));
+      }
+    }
+    return result;
   }
 
   @override
@@ -97,7 +113,8 @@ class DriftContentRepository
       final decks = await _select('SELECT practice_kind FROM decks WHERE id=? AND removed_in IS NULL', [deckId]);
       if (decks.isNotEmpty && decks.single.read<String>('practice_kind') != 'ordinary') {
         final rows=await _select('SELECT f.card_id FROM deck_practice_targets d JOIN form_targets f ON f.id=d.form_target_id WHERE d.deck_id=? AND d.removed_in IS NULL AND f.removed_in IS NULL ORDER BY d.position', [deckId]);
-        return [for (final r in rows) DeckPracticeTarget(cardId:r.read<String>('card_id'),formTarget:await _formTarget(r.read<String>('card_id')))];
+        final targets = await _formTargets(rows.map((r) => r.read<String>('card_id')));
+        return [for (final r in rows) DeckPracticeTarget(cardId:r.read<String>('card_id'),formTarget:targets[r.read<String>('card_id')])];
       }
     }
     final cards = await selectionCards(await deckCardIds(deckId));
@@ -120,7 +137,7 @@ class DriftContentRepository
     for (var i = 0; i < ids.length; i += _chunk) {
       final chunk = ids.sublist(i, (i + _chunk).clamp(0, ids.length));
       final marks = _marks(chunk.length);
-      for (final r in await _select(
+      final rows = await _select(
         'SELECT c.id, c.lang, c.form, c.form_norm, c.lemma_id, l.lemma, c.pos, '
         'c.form_kind, c.form_label_de, c.translation_de, c.cefr_band, c.sense_id, s.sense_key, '
         '${info.schemaVersion >= 3 ? 'c.learning' : 'NULL'} AS learning, '
@@ -131,9 +148,11 @@ class DriftContentRepository
         'JOIN senses s ON s.id = c.sense_id '
         'WHERE c.id IN ($marks) AND c.lang = ? AND c.removed_in IS NULL',
         [...chunk, _lang],
-      )) {
+      );
+      final targets = await _formTargets(rows.map((r) => r.read<String>('id')));
+      for (final r in rows) {
         final card = ContentCard(
-          formTarget: await _formTarget(r.read<String>('id')),
+          formTarget: targets[r.read<String>('id')],
           identityFunction: r.readNullable<String>('identity_function'),
           introductionScope: r.read<String>('introduction_scope'),
           lexicalTargetId: r.readNullable<String>('lexical_target_id'),
@@ -173,14 +192,18 @@ class DriftContentRepository
     final sentences = <String, List<CardSentence>>{};
     for (var i = 0; i < ids.length; i += _chunk) {
       final chunk = ids.sublist(i, (i + _chunk).clamp(0, ids.length));
-      for (final r in await _select(
+      final rows = await _select(
         'SELECT cs.card_id, cs.sentence_id, cs.position, cs.gap_start, '
         'cs.gap_end, cs.valid_alternatives, s.text, s.translation_de '
         'FROM card_sentences cs JOIN sentences s ON s.id = cs.sentence_id '
         'WHERE cs.card_id IN (${_marks(chunk.length)}) AND cs.removed_in IS NULL '
         'AND s.removed_in IS NULL ORDER BY cs.card_id, cs.position',
         chunk,
-      )) {
+      );
+      final tokens = await _tokensFor({
+        for (final r in rows) r.read<String>('sentence_id'): r.read<String>('text'),
+      });
+      for (final r in rows) {
         final cardId = r.read<String>('card_id');
         sentences
             .putIfAbsent(cardId, () => [])
@@ -190,10 +213,7 @@ class DriftContentRepository
                 sentenceId: r.read<String>('sentence_id'),
                 position: r.read<int>('position'),
                 text: r.read<String>('text'),
-                tokens: await _tokens(
-                  r.read<String>('sentence_id'),
-                  r.read<String>('text'),
-                ),
+                tokens: tokens[r.read<String>('sentence_id')] ?? const [],
                 translationDe: r.readNullable<String>('translation_de'),
                 gapStart: _utf16Offset(
                   r.read<String>('text'),
@@ -245,18 +265,40 @@ class DriftContentRepository
     return List.unmodifiable(value.cast<String>());
   }
 
-  Future<List<SentenceToken>> _tokens(String id, String text) async {
-    final rows = await _select(
-      'SELECT t.start_pos, t.end_pos, t.surface, '
-      'COALESCE(c.translation_de, (SELECT df.gloss_de FROM dictionary_forms df '
-      'WHERE df.sense_id = t.sense_id AND df.form_norm = lower(t.surface) '
-      'AND s.id IS NOT NULL AND df.removed_in IS NULL ORDER BY df.rank, df.id LIMIT 1), s.gloss_de) AS gloss '
-      'FROM sentence_tokens t '
-      'LEFT JOIN senses s ON s.id = t.sense_id AND s.removed_in IS NULL '
-      'LEFT JOIN cards c ON c.id = t.card_id AND c.sense_id = s.id AND c.form_norm = lower(t.surface) AND c.removed_in IS NULL '
-      'WHERE t.sentence_id = ? AND t.removed_in IS NULL ORDER BY t.idx',
-      [id],
-    );
+  Future<List<SentenceToken>> _tokens(String id, String text, {bool historical = false}) async =>
+      (await _tokensFor({id: text}, historical: historical))[id] ?? const [];
+
+  Future<Map<String, List<SentenceToken>>> _tokensFor(Map<String, String> texts,
+      {bool historical = false}) async {
+    final result = <String, List<SentenceToken>>{};
+    final ids = texts.keys.toList();
+    for (var i = 0; i < ids.length; i += _chunk) {
+      final batch = ids.sublist(i, (i + _chunk).clamp(0, ids.length));
+      String active(String alias) => historical ? '' : 'AND $alias.removed_in IS NULL';
+      final rows = await _select(
+        'SELECT t.sentence_id, t.start_pos, t.end_pos, t.surface, '
+        '${info.schemaVersion >= 5 ? 't.context_gloss_de, t.context_snapshot,' : ''} '
+        'COALESCE(c.translation_de, (SELECT df.gloss_de FROM dictionary_forms df '
+        'WHERE df.sense_id = t.sense_id AND df.form_norm = lower(t.surface) '
+        'AND s.id IS NOT NULL ${active('df')} ORDER BY df.rank, df.id LIMIT 1), s.gloss_de) AS gloss '
+        'FROM sentence_tokens t '
+        'LEFT JOIN senses s ON s.id = t.sense_id ${active('s')} '
+        'LEFT JOIN cards c ON c.id = t.card_id AND c.sense_id = s.id AND c.form_norm = lower(t.surface) ${active('c')} '
+        'WHERE t.sentence_id IN (${_marks(batch.length)}) ${active('t')} ORDER BY t.sentence_id, t.idx',
+        batch,
+      );
+      final grouped = <String, List<QueryRow>>{};
+      for (final row in rows) {
+        grouped.putIfAbsent(row.read<String>('sentence_id'), () => []).add(row);
+      }
+      for (final id in batch) {
+        result[id] = _readTokens(grouped[id] ?? const [], texts[id]!, historical: historical);
+      }
+    }
+    return result;
+  }
+
+  List<SentenceToken> _readTokens(List<QueryRow> rows, String text, {required bool historical}) {
     final result = <SentenceToken>[];
     var lastEnd = 0;
     for (final r in rows) {
@@ -277,12 +319,21 @@ class DriftContentRepository
           start: start,
           end: end,
           surface: surface,
-          translation: r.readNullable<String>('gloss'),
+          translation: info.schemaVersion >= 5
+              ? _contextGloss(r, historical: historical)
+              : r.readNullable<String>('gloss'),
         ),
       );
       lastEnd = end;
     }
     return List.unmodifiable(result);
+  }
+
+  String? _contextGloss(QueryRow row, {required bool historical}) {
+    final snapshot = jsonDecode(row.read<String>('context_snapshot')) as Map<String, dynamic>;
+    return snapshot['legacy'] == true
+        ? snapshot[historical ? 'legacy_historical_gloss' : 'legacy_active_gloss'] as String?
+        : row.readNullable<String>('context_gloss_de');
   }
 
   int _utf16Offset(String text, int point) => point < 0
@@ -366,9 +417,20 @@ class DriftContentRepository
         r.readNullable<String>('valid_alternatives'),
         cardId,
       ),
-      tokens: await _tokens(sentenceId, text),
+      tokens: await _tokens(sentenceId, text, historical: true),
     );
   }
+
+  @override
+  Future<Map<String, LearningIdentity>> retiredLearningIdentities() async => {
+    for (final r in await _select(
+      'SELECT id, lang, form_norm, sense_id, '
+      '${_db.info.schemaVersion >= 4 ? 'identity_function' : 'NULL'} AS function '
+      'FROM cards WHERE removed_in IS NOT NULL AND lang = ?', [_lang]))
+      r.read<String>('id'): LearningIdentity(r.read<String>('lang'),
+        r.read<String>('form_norm'), r.read<String>('sense_id'),
+        function: r.readNullable<String>('function')),
+  };
 
   @override
   Future<void> close() => _db.close();
@@ -428,6 +490,9 @@ class DriftContentRepository
           'SELECT gloss_de FROM dictionary_forms WHERE lang=? AND form_norm=? AND sense_id=? AND removed_in IS NULL',
           [_lang, contentFormNorm(surface), sense],
         );
+        final snapshot = info.schemaVersion >= 5
+            ? jsonDecode(t.read<String>('context_snapshot')) as Map<String, dynamic>
+            : null;
         tokens.add(
           StoryToken(
             index: t.read<int>('idx'),
@@ -438,14 +503,16 @@ class DriftContentRepository
             formTarget: info.schemaVersion >= 4 && t.readNullable<String>('form_target_id') != null
                 ? await _formTarget(t.read<String>('card_id')) : null,
             lemmaId: t.readNullable<String>('lemma_id'),
-            lemma: t.readNullable<String>('lemma'),
-            pos: t.readNullable<String>('pos'),
+            lemma: snapshot != null ? snapshot['lemma'] as String? : t.readNullable<String>('lemma'),
+            pos: snapshot != null ? snapshot['pos'] as String? : t.readNullable<String>('pos'),
             senseId: sense,
-            senseKey: t.readNullable<String>('sense_key'),
-            gloss: gloss.length == 1
+            senseKey: snapshot != null ? snapshot['sense_key'] as String? : t.readNullable<String>('sense_key'),
+            gloss: snapshot != null
+                ? snapshot['legacy'] == true ? snapshot['story_gloss'] as String? : t.readNullable<String>('context_gloss_de')
+                : gloss.length == 1
                 ? gloss.single.read<String>('gloss_de')
                 : null,
-            definition:
+            definition: snapshot != null ? snapshot['definition_de'] as String? :
                 t.readNullable<String>('definition_de') ??
                 t.readNullable<String>('sense_gloss'),
             contextApproved: approved.contains(t.read<int>('idx')),
@@ -499,6 +566,52 @@ class DriftContentRepository
         problem = 'Die Form ist im Satz nicht eindeutig belegt. Die Übersetzung bleibt verfügbar.';
       }
     }
+    StoryPracticeContext? practiceContext;
+    final sourceRows = await _select('SELECT qa_report FROM sentences WHERE id=?', [sentenceId]);
+    final qa = jsonDecode(sourceRows.single.readNullable<String>('qa_report') ?? '{}') as Map<String, dynamic>;
+    final review = qa['story_practice_contexts'] as Map<String, dynamic>?;
+    if (review != null) {
+      final bindings = (review['bindings'] as List).where((b) => b['token_index'] == tokenIndex).toList();
+      if (bindings.isNotEmpty) {
+        final b = bindings.single;
+        if (!{1, 2}.contains(review['format_version']) || (review['reviewer'] as String? ?? '').isEmpty ||
+            b['surface'] != token.surface || b['sense_id'] != token.senseId ||
+            _utf16Offset(sentence.text, b['source_start'] as int) != token.start ||
+            _utf16Offset(sentence.text, b['source_end'] as int) != token.end) {
+          problem = 'Die geprüfte Kontextbindung passt nicht zur Story-Wortstelle.';
+        } else {
+          practiceContext = _readStoryContext(b['context'] as Map<String, dynamic>, token);
+          if (review['format_version'] == 2) {
+            final policy = b['sentence_policy'] as Map<String, dynamic>?;
+            if (policy == null || policy['sentence_count'] != 1 ||
+                (policy['exercise_word_count'] as int? ?? 0) < 3 ||
+                (policy['exercise_word_count'] as int? ?? 21) > 20 ||
+                ((policy['source_word_count'] as int? ?? 0) <= 2 && policy['replacement'] != true) ||
+                (policy['replacement'] != true &&
+                  (practiceContext.sentence.text != sentence.text ||
+                   practiceContext.sentence.translation != sentence.translation))) {
+              problem = 'Der geprüfte Kontext erfüllt den Ein-Satz-Vertrag nicht.';
+            }
+          }
+        }
+      }
+    }
+    if (info.schemaVersion >= 5 && card == null && !retired && problem == null) {
+      final identity = LearningIdentity(_lang, contentFormNorm(token.surface), token.senseId ?? '', function: token.function);
+      final sourceKey = learningHash([storyId, sentenceId, tokenIndex, identity.key]);
+      final edges = await _select('SELECT previous_fingerprint,next_fingerprint,next_context FROM story_context_corrections WHERE source_key=?', [sourceKey]);
+      final predecessors = edges.map((e) => e.read<String>('previous_fingerprint')).toSet();
+      final terminals = edges.where((e) => !predecessors.contains(e.read<String>('next_fingerprint')));
+      StoryLearningCandidate? latest;
+      for (final edge in terminals) {
+        final candidate = decodeStoryCandidate(jsonDecode(edge.read<String>('next_context')) as Map<String,dynamic>);
+        if (latest != null && latest.practiceContext?.fingerprint != candidate.practiceContext?.fingerprint) {
+          throw _broken('Storykorrekturen haben widersprüchliche Endkontexte.');
+        }
+        latest = candidate;
+      }
+      if (latest != null) practiceContext = latest.practiceContext;
+    }
     final forms = token.lemmaId == null
         ? <String>{}
         : (await _lemmaForms({token.lemmaId!}))[token.lemmaId!] ?? <String>{};
@@ -511,6 +624,7 @@ class DriftContentRepository
       card: card,
       retired: retired,
       problem: problem,
+      practiceContext: practiceContext,
       otherForms: {...forms}..remove(contentFormNorm(token.surface)),
       groupMembers: card?.learning == null
           ? const []
@@ -519,4 +633,88 @@ class DriftContentRepository
                 .toList(),
     );
   }
+
+  StoryPracticeContext _readStoryContext(Map<String, dynamic> context, StoryToken source) {
+    final text = context['text'] as String;
+    final targetIndex = context['target_index'] as int;
+    final tokens = <StoryToken>[
+      for (final t in context['tokens'])
+        StoryToken(index: t['idx'] as int,
+          start: _utf16Offset(text, t['start_pos'] as int),
+          end: _utf16Offset(text, t['end_pos'] as int), surface: t['surface'] as String,
+          lemmaId: t['lemma_id'] as String?, lemma: t['lemma'] as String?,
+          pos: t['pos'] as String?, senseId: t['sense_id'] as String?,
+          senseKey: t['sense_key'] as String?, gloss: t['gloss'] as String?,
+          definition: t['definition'] as String?,
+          formFunction: t['idx'] == targetIndex ? source.function : null,
+          lexicalTargetId: t['idx'] == targetIndex ? source.lexicalId : null),
+    ];
+    if (targetIndex < 0 || targetIndex >= tokens.length) {
+      throw _broken('Die geprüfte Kontextbindung enthält keine eindeutige Ziellücke.');
+    }
+    return StoryPracticeContext(StorySentence(id: context['id'] as String,
+      text: text, translation: context['translation'] as String,
+      paragraph: 0, tokens: tokens), tokens[targetIndex]);
+  }
+
+  Future<List<StoryContextCorrection>>? _corrections;
+
+  @override
+  Future<List<StoryContextCorrection>> storyContextCorrections() =>
+      _corrections ??= _loadStoryContextCorrections();
+
+  Future<List<StoryContextCorrection>> _loadStoryContextCorrections() async {
+    final result = <StoryContextCorrection>[];
+    final coveredSources = <String>{};
+    if (info.schemaVersion >= 5) {
+      final edges = await _select('SELECT * FROM story_context_corrections ORDER BY id', []);
+      final pending = <StoryContextCorrection>[];
+      for (final e in edges) {
+        coveredSources.add(e.read<String>('source_key'));
+        pending.add(StoryContextCorrection(e.read<String>('introduced_in'),
+          decodeStoryCandidate(jsonDecode(e.read<String>('previous_context')) as Map<String,dynamic>),
+          decodeStoryCandidate(jsonDecode(e.read<String>('next_context')) as Map<String,dynamic>)));
+      }
+      // Predecessor edges must be applied before their successors, including
+      // branches from identical contexts created in different release versions.
+      while (pending.isNotEmpty) {
+        final next = pending.where((c) => !pending.any((p) => p.current.sourceFingerprint == c.previous.sourceFingerprint)).toList();
+        if (next.isEmpty) throw _broken('Zyklische Storykorrektur.');
+        result.addAll(next);pending.removeWhere(next.contains);
+      }
+    }
+    final rows = await _select(
+      'SELECT ss.story_id, s.id, s.qa_report FROM story_sentences ss '
+      'JOIN sentences s ON s.id=ss.sentence_id JOIN stories st ON st.id=ss.story_id '
+      'WHERE s.removed_in IS NULL AND ss.removed_in IS NULL AND st.removed_in IS NULL', []);
+    for (final row in rows) {
+      final qa = jsonDecode(row.readNullable<String>('qa_report') ?? '{}');
+      final review = qa['story_practice_contexts'];
+      if (review == null || review['format_version'] != 2) continue;
+      for (final b in review['bindings']) {
+        final correction = b['correction'];
+        if (correction == null) continue;
+        final current = await resolveStoryWord(row.read<String>('story_id'),
+          row.read<String>('id'), b['token_index'] as int);
+        // A correction never converts a global or retired target into a local one.
+        if (current.card != null || current.validationProblem() != null) continue;
+        if (coveredSources.contains(encodeStoryCandidate(current)['source_key'])) continue;
+        if ((correction['version'] as String).isEmpty ||
+            (correction['revision'] as String).isEmpty) {
+          throw _broken('Ungültige Storykontext-Korrekturversion.');
+        }
+        final previous = StoryLearningCandidate(storyId: current.storyId,
+          revision: correction['revision'] as String, lang: current.lang,
+          sentence: current.sentence, token: current.token,
+          practiceContext: _readStoryContext(correction['context'] as Map<String, dynamic>, current.token),
+          otherForms: current.otherForms);
+        if (previous.validationProblem() != null) {
+          throw _broken('Ungültiger historischer Storykontext.');
+        }
+        result.add(StoryContextCorrection(correction['version'] as String, previous, current));
+      }
+    }
+    return List.unmodifiable(result);
+  }
+
 }

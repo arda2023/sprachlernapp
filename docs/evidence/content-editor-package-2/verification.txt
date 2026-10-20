@@ -1,0 +1,56 @@
+Paket 2 – tatsächliche finale Prüfausgaben auf macOS
+Alle folgenden Prüfungen: Exit 0. Flutter sequenziell.
+
+editor-final.log
+................................                                         [100%]
+32 passed in 17.83s
+
+python-full-final.log
+........................................................................ [ 62%]
+........................................................................ [ 76%]
+........................................................................ [ 89%]
+.........................................................                [100%]
+542 passed, 19 subtests passed in 128.84s (0:02:08)
+
+flutter-selected-final.log
+00:13 +19: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_single_sentence_test.dart: safely: update existing card, preserve all state/history and frozen pass; restart/idempotence
+00:14 +20: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_single_sentence_test.dart: Then: update existing card, preserve all state/history and frozen pass; restart/idempotence
+00:17 +21: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_single_sentence_test.dart: same identity with different origin or custom context is never overwritten
+00:17 +22: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/story_single_sentence_test.dart: (tearDownAll)
+00:17 +22: All tests passed!
+
+flutter-full-final.log
+01:00 +326: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/domain/form_projection_test.dart: ordinary group head and exact form remain separate through queue and counts
+01:00 +327: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/domain/story_learning_test.dart: semantic identity folds case/Unicode, never different meanings/languages
+01:00 +328: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/domain/story_learning_test.dart: exact repeated Unicode target and context evidence required
+01:00 +329: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/domain/story_learning_test.dart: explicit story choices reserve actual queue slots ahead of 4:1; box zero remains eligible
+01:00 +330: All tests passed!
+
+flutter-real-pack-final.log
+deck alltagssprache-redewendungen: 441 learning targets, 441 ownership cards, 441 fixed sentence assignments verified
+deck verbalphrasen: 181 learning targets, 181 ownership cards, 181 fixed sentence assignments verified
+deck business-email: 579 learning targets, 579 ownership cards, 579 fixed sentence assignments verified
+pack story_single_sentence_v1 (schema 4, internal: true); 14 decks: 3557 cards, 3767 card sentences, 203 with valid_alternatives, 3767 cards in the pack
+00:09 +1: All tests passed!
+
+flutter-analyze-final.log
+Analyzing sprachapp...
+No issues found! (ran in 3.6s)
+
+stage-verify-final.log
+Running build hooks...Running build hooks...verified assets/content/en/content.sqlite
+  version story_single_sentence_v1, schema 4, 26198016 bytes
+  sha256 b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb
+  22 table counts match finalization_report.json
+  INTERNES TEST-PACK: own devices and selected testers only, no public content release
+
+Graph: node .gitnexus/run.cjs analyze --index-only --pdg --force (Exit 0)
+node .gitnexus/run.cjs detect-changes --scope all --limit 1000 --repo . (Exit 0)
+{"scope": "all", "changed_count": 364, "affected_count": 89, "changed_files": 64, "risk_level": "critical", "partial": false, "truncated": false, "listed": 364}
+{"scope": "staged", "changed_count": 336, "affected_count": 89, "changed_files": 57, "risk_level": "critical", "partial": false, "truncated": false, "listed": 336}
+Graph counts describe indexed flows, not complete static coverage: process-budget/dispatch limits remain.
+PROTECTED_HASHES PASS 14; NEXTSTEPS original bytes preserved; staged paths PASS (own list only).
+CRLF-aware staged diff check rerun after stripping log padding.
+Full graph results include all 364/336 symbols; 89 affected processes. Both partial=false and truncated=false.
+Final precommit: 66 changed files including foreign unstaged work; 364 symbols, 89 processes, CRITICAL; Exit 0.
+DIFF_CHECK Exit 0; OWN_STAGE PASS 59; PROTECTED_HASHES PASS; NEXTSTEPS original preserved (25 lines).

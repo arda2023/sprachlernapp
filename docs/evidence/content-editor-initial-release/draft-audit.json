@@ -1,0 +1,4464 @@
+{
+  "read_only": true,
+  "source": {
+    "sqlite": "pipeline/out/story_single_sentence_v1/content.sqlite",
+    "version": "story_single_sentence_v1",
+    "schema_version": 4,
+    "size_bytes": 26198016,
+    "sqlite_sha256": "b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb",
+    "manifest_sha256": "74a0bce4d16bb3084f762dd6afc69accc44c80db545dba9871b21d0b8c7adbfe",
+    "pack_bytes_sha256": "313ea762423478c932cb3c92a512ffd07281afed9028a17b9f6ec3a00b7a9aa5",
+    "pack_canonical_sha256": "fd3ce96b3472d083ca07d7adbcfed5ec82975db1a451a967073510e9a01932fb",
+    "registry_sha256": "4736bf4819a17cdabd5f57a60f08f53760ade24ef45e87464e1fcbeaa39dc97e",
+    "release": {
+      "version": "story_single_sentence_v1",
+      "schema_version": 4,
+      "notes": "INTERNES TEST-PACK: targeted offline curation; unchanged rows not newly reviewed; no AI QA."
+    },
+    "files": [
+      "content.sqlite",
+      "finalization_report.json",
+      "pack.json"
+    ],
+    "qa_cards": {
+      "qa_status_counts": {
+        "<absent>": 3768
+      },
+      "qa_report_key_counts": {}
+    },
+    "qa_sentences": {
+      "qa_status_counts": {
+        "ok": 602,
+        "editorial_reviewed": 3701
+      },
+      "qa_report_key_counts": {
+        "lint": 600,
+        "blind": 600,
+        "blind_answer": 600,
+        "blind_alternatives": 600,
+        "alternative_candidates": 600,
+        "alternative_check": 600,
+        "blind_attempts": 596,
+        "annotate": 596,
+        "meaning_check": 600,
+        "meaning_check_result": 600,
+        "language_ok": 600,
+        "discard_reason": 596,
+        "discard_reasons": 596,
+        "attempts": 596,
+        "editorial": 190,
+        "historical_source_sentence_id": 190,
+        "curation": 4,
+        "checked": 4,
+        "recheck_alternative_check": 4,
+        "valid_alternatives": 4,
+        "curation_translation_check": 2,
+        "history": 2,
+        "editorial_create": 3510,
+        "story_practice_contexts": 5,
+        "targeted_curation": 1
+      }
+    },
+    "finalization_keys": [
+      "status",
+      "internal_test_pack",
+      "ai_calls",
+      "ai_cost_usd",
+      "lint",
+      "sqlite_counts",
+      "sha256",
+      "story_authoring_gaps"
+    ],
+    "finalization_status": "ok",
+    "lint_errors": 0,
+    "lint_findings": 506,
+    "lint_rules": {
+      "i+1": 506
+    },
+    "story_authoring_gaps": [
+      {
+        "story": "open-pocket",
+        "sentence": "open-pocket/s1",
+        "token_index": 0,
+        "surface": "Maya",
+        "sense": "Maya/PROPN|maya#maya",
+        "start_pos": 0,
+        "end_pos": 4,
+        "kind": "proper_name"
+      },
+      {
+        "story": "open-pocket",
+        "sentence": "open-pocket/s5",
+        "token_index": 0,
+        "surface": "Maya",
+        "sense": "Maya/PROPN|maya#maya",
+        "start_pos": 0,
+        "end_pos": 4,
+        "kind": "proper_name"
+      }
+    ]
+  },
+  "draft": {
+    "id": "2139ad7f-d6f1-4787-9fff-146cf050c509",
+    "revision": 2,
+    "deck": {
+      "cefr_band": "anfaenger",
+      "ref": "allgemeine-sprache",
+      "slug": "allgemeine-sprache",
+      "sort": 1,
+      "title_de": "Allgemeine Sprache"
+    },
+    "base_matches_source": true,
+    "head_matches_draft_base": true,
+    "pack_bytes_match_base": true,
+    "target_count": 181,
+    "unique_target_count": 181,
+    "targets_equal_active_deck_members_in_order": true,
+    "operations": [],
+    "add": {},
+    "delivery_ids": [],
+    "reviews": [],
+    "provenance": [],
+    "has_source_history": false,
+    "content_sha256": "cd1904b28f2e9f202e91012d096d7bd8403187a192ecb319ebc550f5f81323fd",
+    "stored_validation": {
+      "base_sha256": "fd3ce96b3472d083ca07d7adbcfed5ec82975db1a451a967073510e9a01932fb",
+      "content_sha256": "cd1904b28f2e9f202e91012d096d7bd8403187a192ecb319ebc550f5f81323fd",
+      "coverage": {},
+      "draft_revision": 1,
+      "editorial": "open",
+      "findings": [
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "it|it/PRON|it#es_ding"
+          },
+          "message": "'puzzle'/'puzzle' Zipf 3.96 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "up|up/ADV|up#hinauf"
+          },
+          "message": "'parcel'/'parcel' Zipf 3.67 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "his|his/DET|his#sein"
+          },
+          "message": "'neighbour'/'neighbour' Zipf 3.69 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "just|just/ADV|just#gerade_eben"
+          },
+          "message": "'headache'/'headache' Zipf 3.97 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "as|as/ADP|as#als_funktion"
+          },
+          "message": "'waiter'/'waiter' Zipf 3.61 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "had|have/VERB|have#besitzen_past"
+          },
+          "message": "'reservation'/'reservation' Zipf 3.95 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "if|if/SCONJ|if#wenn"
+          },
+          "message": "'umbrella'/'umbrella' Zipf 3.89 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "from|from/ADP|from#von_ausgangspunkt"
+          },
+          "message": "'postcard'/'postcard' Zipf 3.44 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "to|to/ADP|to#nach_richtung"
+          },
+          "message": "'supermarket'/'supermarket' Zipf 3.78 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "can|can/AUX|can#koennen"
+          },
+          "message": "'bake'/'bake' Zipf 3.91 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "the|the/DET|the#bestimmter_artikel"
+          },
+          "message": "'candle'/'candles' Zipf 3.88 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "they|they/PRON|they#sie_plural"
+          },
+          "message": "'neighbour'/'neighbours' Zipf 3.87 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "more|much/DET|much#mehr_menge"
+          },
+          "message": "'towel'/'towels' Zipf 3.94 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "repair|repair/VERB|repair#repariert"
+          },
+          "message": "'bicycle'/'bicycle' Zipf 3.98 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "shoe|shoe/NOUN|shoe#schuhe"
+          },
+          "message": "'lace'/'lace' Zipf 3.82 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "bottle|bottle/NOUN|bottle#flasche"
+          },
+          "message": "'supermarket'/'supermarket' Zipf 3.78 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "price|price/NOUN|price#preis"
+          },
+          "message": "'packet'/'packet' Zipf 3.77 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "arm|arm/NOUN|arm#arm"
+          },
+          "message": "'parcel'/'parcel' Zipf 3.67 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "key|key/NOUN|key#schluessel"
+          },
+          "message": "'unlock'/'unlock' Zipf 3.90 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "paper|paper/NOUN|paper#papier"
+          },
+          "message": "'printer'/'printer' Zipf 3.93 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "choose|choose/VERB|choose#waehlt-aus"
+          },
+          "message": "'snack'/'snack' Zipf 3.90 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "mirror|mirror/NOUN|mirror#spiegel"
+          },
+          "message": "'restroom'/'restroom' Zipf 3.39 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "foot|foot/NOUN|foot#fuss"
+          },
+          "message": "'hike'/'hiking' Zipf 3.95 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "lamp|lamp/NOUN|lamp#lampen"
+          },
+          "message": "'stove'/'stove' Zipf 3.71 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "letter|letter/NOUN|letter#brief"
+          },
+          "message": "'envelope'/'envelope' Zipf 3.86 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "shirt|shirt/NOUN|shirt#hemd"
+          },
+          "message": "'elegant'/'elegant' Zipf 3.95 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "shirt|shirt/NOUN|shirt#hemd"
+          },
+          "message": "'sleeve'/'sleeves' Zipf 3.93 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "bread|bread/NOUN|bread#brot"
+          },
+          "message": "'bake'/'bakes' Zipf 3.91 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "bread|bread/NOUN|bread#brot"
+          },
+          "message": "'picnic'/'picnic' Zipf 3.80 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "cup|cup/NOUN|cup#tasse"
+          },
+          "message": "'saucer'/'saucer' Zipf 3.06 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "spoon|spoon/NOUN|spoon#loeffel"
+          },
+          "message": "'vegetable'/'vegetable' Zipf 3.94 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "open|open/VERB|open#oeffnete"
+          },
+          "message": "'screwdriver'/'screwdriver' Zipf 3.13 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "plate|plate/NOUN|plate#teller"
+          },
+          "message": "'ceramic'/'ceramic' Zipf 3.74 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "box|box/NOUN|box#schachtel"
+          },
+          "message": "'cardboard'/'cardboard' Zipf 3.66 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "cook|cook/VERB|cook#kocht"
+          },
+          "message": "'workweek'/'workweek' Zipf 2.58 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "soap|soap/NOUN|soap#seife"
+          },
+          "message": "'restroom'/'restroom' Zipf 3.39 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "carry|carry/VERB|carry#tragen"
+          },
+          "message": "'supermarket'/'supermarket' Zipf 3.78 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "cut|cut/VERB|cut#schneidet"
+          },
+          "message": "'scissor'/'scissors' Zipf 3.58 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "fork|fork/NOUN|fork#gabel"
+          },
+          "message": "'picnic'/'picnic' Zipf 3.80 below 4.0",
+          "severity": "warn"
+        },
+        {
+          "code": "i+1",
+          "location": {
+            "field": "context.text",
+            "record_ref": "wet|wet/ADJ|wet#nass"
+          },
+          "message": "'umbrella'/'umbrella' Zipf 3.89 below 4.0",
+          "severity": "warn"
+        }
+      ],
+      "sha256": "36a556aa810d75e953cdb51b4042fa87cb52dd5dc11cd0fc81f0f09b13e0c0f4",
+      "technical": "valid",
+      "validator_version": "editor-1"
+    },
+    "stored_content_hash_matches": true,
+    "stored_validation_hash_valid": true,
+    "revisions": [
+      {
+        "file": "1.json",
+        "revision": 1,
+        "target_count": 181,
+        "operations": 0,
+        "add_rows": 0,
+        "reviews": 0,
+        "content_sha256": "cd1904b28f2e9f202e91012d096d7bd8403187a192ecb319ebc550f5f81323fd"
+      },
+      {
+        "file": "2.json",
+        "revision": 2,
+        "target_count": 181,
+        "operations": 0,
+        "add_rows": 0,
+        "reviews": 0,
+        "content_sha256": "cd1904b28f2e9f202e91012d096d7bd8403187a192ecb319ebc550f5f81323fd"
+      }
+    ],
+    "changed_fields_since_revision_1": [
+      "revision",
+      "validation",
+      "updated_at"
+    ],
+    "non_metadata_fields_changed": [],
+    "selected_card_qa": {
+      "qa_status_counts": {
+        "<absent>": 181
+      },
+      "qa_report_key_counts": {}
+    },
+    "selected_active_sentence_qa": {
+      "qa_status_counts": {
+        "ok": 131,
+        "editorial_reviewed": 50
+      },
+      "qa_report_key_counts": {
+        "alternative_candidates": 131,
+        "alternative_check": 131,
+        "annotate": 131,
+        "attempts": 131,
+        "blind": 131,
+        "blind_alternatives": 131,
+        "blind_answer": 131,
+        "blind_attempts": 131,
+        "discard_reason": 131,
+        "discard_reasons": 131,
+        "language_ok": 131,
+        "lint": 131,
+        "meaning_check": 131,
+        "meaning_check_result": 131,
+        "editorial": 29,
+        "historical_source_sentence_id": 29,
+        "editorial_create": 21
+      }
+    },
+    "targets": [
+      {
+        "position": 1,
+        "ref": "the|the/DET|the#bestimmter_artikel",
+        "form": "the",
+        "hint_de": "der, die, das",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s373",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 2,
+        "ref": "to|to/ADP|to#nach_richtung",
+        "form": "to",
+        "hint_de": "nach, zu",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s284",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 3,
+        "ref": "and|and/CCONJ|and#und",
+        "form": "and",
+        "hint_de": "und",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s289",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 4,
+        "ref": "of|of/ADP|of#genitiv_besitz",
+        "form": "of",
+        "hint_de": "von (Genitiv)",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s438",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 5,
+        "ref": "a|a/DET|a#ein",
+        "form": "a",
+        "hint_de": "ein, eine",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s352",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 6,
+        "ref": "in|in/ADP|in#in_raeumlich",
+        "form": "in",
+        "hint_de": "in, im",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s340",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 7,
+        "ref": "i|I/PRON|i#ich",
+        "form": "i",
+        "hint_de": "ich",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s421",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 8,
+        "ref": "is|be/AUX|be#sein_vollverb",
+        "form": "is",
+        "hint_de": "ist",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s308",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 9,
+        "ref": "for|for/ADP|for#fuer_zweck_empfaenger",
+        "form": "for",
+        "hint_de": "für",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s208",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 10,
+        "ref": "that|that/SCONJ|that#dass",
+        "form": "that",
+        "hint_de": "dass",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s128",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 11,
+        "ref": "you|you/PRON|you#du_sie_ihr",
+        "form": "you",
+        "hint_de": "du, Sie, ihr (auch: dir, Ihnen, euch, dich, Sie)",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s136",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 12,
+        "ref": "it|it/PRON|it#es_ding",
+        "form": "it",
+        "hint_de": "es (auch: er, sie)",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s13",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 13,
+        "ref": "on|on/ADP|on#auf",
+        "form": "on",
+        "hint_de": "auf",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s115",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 14,
+        "ref": "with|with/ADP|with#zusammen_mit",
+        "form": "with",
+        "hint_de": "mit",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s133",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 15,
+        "ref": "this|this/DET|this#dieser_begleitend",
+        "form": "this",
+        "hint_de": "dieser / diese / dieses",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s430",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 18,
+        "ref": "as|as/ADP|as#als_funktion",
+        "form": "as",
+        "hint_de": "als",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/pilot/pilot_60_v1/s160",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 20,
+        "ref": "have|have/VERB|have#besitzen",
+        "form": "have",
+        "hint_de": "haben",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s184",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 21,
+        "ref": "at|at/ADP|at#ort",
+        "form": "at",
+        "hint_de": "an, bei, in",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s445",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 22,
+        "ref": "he|he/PRON|he#er",
+        "form": "he",
+        "hint_de": "er",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s454",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 23,
+        "ref": "not|not/PART|not#nicht",
+        "form": "not",
+        "hint_de": "nicht",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s10",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 24,
+        "ref": "by|by/ADP|by#mit_mittel",
+        "form": "by",
+        "hint_de": "mit",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s37",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 25,
+        "ref": "but|but/CCONJ|but#aber",
+        "form": "but",
+        "hint_de": "aber, sondern",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s79",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 26,
+        "ref": "from|from/ADP|from#von_ausgangspunkt",
+        "form": "from",
+        "hint_de": "von, aus",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s263",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 27,
+        "ref": "my|my/DET|my#mein",
+        "form": "my",
+        "hint_de": "mein, meine",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s280",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 28,
+        "ref": "or|or/CCONJ|or#oder",
+        "form": "or",
+        "hint_de": "oder",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/pilot/pilot_60_v1/s368",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 29,
+        "ref": "we|we/PRON|we#wir",
+        "form": "we",
+        "hint_de": "wir",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s175",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 30,
+        "ref": "an|a/DET|a#ein",
+        "form": "an",
+        "hint_de": "ein, eine",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s277",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 31,
+        "ref": "your|your/DET|your#dein",
+        "form": "your",
+        "hint_de": "dein, deine",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s145",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 32,
+        "ref": "all|all/DET|all#alle_det",
+        "form": "all",
+        "hint_de": "alle, ganz",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s232",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 33,
+        "ref": "so|so/ADV|so#so_sehr",
+        "form": "so",
+        "hint_de": "so / derart",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s457",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 34,
+        "ref": "his|his/DET|his#sein",
+        "form": "his",
+        "hint_de": "sein, seine",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s119",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 35,
+        "ref": "they|they/PRON|they#sie_plural",
+        "form": "they",
+        "hint_de": "sie",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/pilot/pilot_60_v1/s381",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 36,
+        "ref": "me|I/PRON|i#mich",
+        "form": "me",
+        "hint_de": "mich",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s91",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 37,
+        "ref": "if|if/SCONJ|if#wenn",
+        "form": "if",
+        "hint_de": "wenn, falls",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s228",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 38,
+        "ref": "can|can/AUX|can#koennen",
+        "form": "can",
+        "hint_de": "kann / können",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s325",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 39,
+        "ref": "will|will/AUX|will#zukunft",
+        "form": "will",
+        "hint_de": "werden",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s19",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 40,
+        "ref": "just|just/ADV|just#gerade_eben",
+        "form": "just",
+        "hint_de": "gerade, eben",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/pilot/pilot_60_v1/s130",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 41,
+        "ref": "like|like/VERB|like#moegen",
+        "form": "like",
+        "hint_de": "mögen / gernhaben",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s219",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 42,
+        "ref": "about|about/ADP|about#ueber_thema",
+        "form": "about",
+        "hint_de": "über",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s391",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 43,
+        "ref": "up|up/ADV|up#hinauf",
+        "form": "up",
+        "hint_de": "hinauf, nach oben, oben",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/pilot/pilot_60_v1/s88",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 44,
+        "ref": "out|out/ADV|out#hinaus",
+        "form": "out",
+        "hint_de": "hinaus / heraus / raus",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s304",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 45,
+        "ref": "what|what/PRON|what#fragepronomen",
+        "form": "what",
+        "hint_de": "was",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s149",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 46,
+        "ref": "has|have/VERB|have#besitzen",
+        "form": "has",
+        "hint_de": "hat",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s154",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 47,
+        "ref": "when|when/ADV|when#wann",
+        "form": "when",
+        "hint_de": "wann",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s469",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 48,
+        "ref": "more|much/DET|much#mehr_menge",
+        "form": "more",
+        "hint_de": "mehr",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s434",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 50,
+        "ref": "no|no/DET|no#kein",
+        "form": "no",
+        "hint_de": "kein / keine",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s473",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 51,
+        "ref": "were|be/AUX|be#sein_vergangenheit",
+        "form": "were",
+        "hint_de": "waren",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s407",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 52,
+        "ref": "who|who/PRON|who#wer",
+        "form": "who",
+        "hint_de": "wer",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s298",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 53,
+        "ref": "had|have/VERB|have#besitzen_past",
+        "form": "had",
+        "hint_de": "hatte",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s214",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 54,
+        "ref": "their|they/PRON|they#ihr_plural",
+        "form": "their",
+        "hint_de": "ihr / ihre",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s424",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 55,
+        "ref": "there|there/PRON|there#es_gibt",
+        "form": "there",
+        "hint_de": "es (in: es gibt)",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s450",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 56,
+        "ref": "her|her/DET|her#ihr_possessiv",
+        "form": "her",
+        "hint_de": "ihr, ihre, ihres",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s356",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 57,
+        "ref": "which|which/DET|which#determiner_auswahl",
+        "form": "which",
+        "hint_de": "welche, welcher, welches",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s200",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 58,
+        "ref": "time|time/NOUN|time#zeit",
+        "form": "time",
+        "hint_de": "Zeit",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/pilot/pilot_60_v1/s415",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 59,
+        "ref": "get|get/VERB|get#bekommen",
+        "form": "get",
+        "hint_de": "bekommen",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s106",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 60,
+        "ref": "been|be/AUX|be#gewesen",
+        "form": "been",
+        "hint_de": "gewesen",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/pilot/pilot_60_v1/s293",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 49,
+        "ref": "do|do/VERB|do#tun",
+        "form": "do",
+        "hint_de": "tun, machen",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pilot_60_v1/s479",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 19,
+        "ref": "are|be/AUX|be#sein_vollverb",
+        "form": "are",
+        "hint_de": "sind / bist / seid",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pos_check_v1/s2",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 16,
+        "ref": "was|be/AUX|be#sein_vollverb",
+        "form": "was",
+        "hint_de": "war",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pos_check_v1/s12",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 17,
+        "ref": "be|be/AUX|be#sein_existieren",
+        "form": "be",
+        "hint_de": "sein",
+        "removed_in": null,
+        "sentence_ref": "source/pilot/pos_check_v1/s19",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 86,
+        "ref": "eat|eat/VERB|eat#essen",
+        "form": "eat",
+        "hint_de": "essen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s1",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 123,
+        "ref": "chair|chair/NOUN|chair#stuhl",
+        "form": "chair",
+        "hint_de": "Stuhl",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s4",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 76,
+        "ref": "phone|phone/NOUN|phone#telefon",
+        "form": "phone",
+        "hint_de": "Telefon",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s7",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 135,
+        "ref": "cheese|cheese/NOUN|cheese#kase",
+        "form": "cheese",
+        "hint_de": "Käse",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s10",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 155,
+        "ref": "pillow|pillow/NOUN|pillow#kissen",
+        "form": "pillow",
+        "hint_de": "Kissen",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/everyday/s13",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 142,
+        "ref": "wash|wash/VERB|wash#waescht",
+        "form": "wash",
+        "hint_de": "waschen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s16",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 146,
+        "ref": "repair|repair/VERB|repair#repariert",
+        "form": "repair",
+        "hint_de": "reparieren",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/everyday/s19",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 147,
+        "ref": "shoe|shoe/NOUN|shoe#schuhe",
+        "form": "shoe",
+        "hint_de": "Schuh",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s22",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 126,
+        "ref": "leg|leg/NOUN|leg#bein",
+        "form": "leg",
+        "hint_de": "Bein",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/everyday/s25",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 134,
+        "ref": "bottle|bottle/NOUN|bottle#flasche",
+        "form": "bottle",
+        "hint_de": "Flasche",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s28",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 73,
+        "ref": "close|close/VERB|close#schliessen",
+        "form": "close",
+        "hint_de": "schließen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s31",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 75,
+        "ref": "buy|buy/VERB|buy#kaufen",
+        "form": "buy",
+        "hint_de": "kaufen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s34",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 96,
+        "ref": "table|table/NOUN|table#tisch",
+        "form": "table",
+        "hint_de": "Tisch",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s37",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 112,
+        "ref": "shop|shop/NOUN|shop#geschaeft",
+        "form": "shop",
+        "hint_de": "Geschäft",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s41",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 81,
+        "ref": "price|price/NOUN|price#preis",
+        "form": "price",
+        "hint_de": "Preis",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/everyday/s45",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 98,
+        "ref": "write|write/VERB|write#schreiben",
+        "form": "write",
+        "hint_de": "schreiben",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s46",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 121,
+        "ref": "arm|arm/NOUN|arm#arm",
+        "form": "arm",
+        "hint_de": "Arm",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s49",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 87,
+        "ref": "key|key/NOUN|key#schluessel",
+        "form": "key",
+        "hint_de": "Schlüssel",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/everyday/s52",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 92,
+        "ref": "paper|paper/NOUN|paper#papier",
+        "form": "paper",
+        "hint_de": "Papier",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/everyday/s56",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 72,
+        "ref": "pay|pay/VERB|pay#bezahlt",
+        "form": "pay",
+        "hint_de": "bezahlen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s58",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 129,
+        "ref": "kitchen|kitchen/NOUN|kitchen#kueche",
+        "form": "kitchen",
+        "hint_de": "Küche",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/everyday/s61",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 62,
+        "ref": "money|money/NOUN|money#geld",
+        "form": "money",
+        "hint_de": "Geld",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s64",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 119,
+        "ref": "map|map/NOUN|map#karte",
+        "form": "map",
+        "hint_de": "Landkarte",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s67",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 133,
+        "ref": "empty|empty/ADJ|empty#leer",
+        "form": "empty",
+        "hint_de": "leer",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s70",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 107,
+        "ref": "choose|choose/VERB|choose#waehlt-aus",
+        "form": "choose",
+        "hint_de": "auswählen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s73",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 74,
+        "ref": "wait|wait/VERB|wait#warten",
+        "form": "wait",
+        "hint_de": "warten",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s76",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 80,
+        "ref": "road|road/NOUN|road#strasse",
+        "form": "road",
+        "hint_de": "Straße",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s79",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 160,
+        "ref": "towel|towel/NOUN|towel#handtuch",
+        "form": "towel",
+        "hint_de": "Handtuch",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s82",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 91,
+        "ref": "bed|bed/NOUN|bed#bett",
+        "form": "bed",
+        "hint_de": "Bett",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s85",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 140,
+        "ref": "mirror|mirror/NOUN|mirror#spiegel",
+        "form": "mirror",
+        "hint_de": "Spiegel",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s88",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 139,
+        "ref": "speaker|speaker/NOUN|speaker#lautsprecher",
+        "form": "speaker",
+        "hint_de": "Lautsprecher",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s91",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 83,
+        "ref": "meeting|meeting/NOUN|meeting#besprechung",
+        "form": "meeting",
+        "hint_de": "Besprechung",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s94",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 149,
+        "ref": "basket|basket/NOUN|basket#korb",
+        "form": "basket",
+        "hint_de": "Korb",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s97",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 63,
+        "ref": "full|full/ADJ|full#vollen",
+        "form": "full",
+        "hint_de": "voll",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/everyday/s100",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 127,
+        "ref": "milk|milk/NOUN|milk#milch",
+        "form": "milk",
+        "hint_de": "Milch",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/everyday/s104",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 113,
+        "ref": "foot|foot/NOUN|foot#fuss",
+        "form": "foot",
+        "hint_de": "Fuß",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s106",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 114,
+        "ref": "bus|bus/NOUN|bus#bus",
+        "form": "bus",
+        "hint_de": "Bus",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s111",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 68,
+        "ref": "car|car/NOUN|car#auto",
+        "form": "car",
+        "hint_de": "Auto",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s112",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 154,
+        "ref": "lamp|lamp/NOUN|lamp#lampen",
+        "form": "lamp",
+        "hint_de": "Lampe",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s115",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 106,
+        "ref": "letter|letter/NOUN|letter#brief",
+        "form": "letter",
+        "hint_de": "Brief",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/everyday/s120",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 131,
+        "ref": "shirt|shirt/NOUN|shirt#hemd",
+        "form": "shirt",
+        "hint_de": "Hemd",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s121",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 90,
+        "ref": "walk|walk/VERB|walk#geht-zu-fuss",
+        "form": "walk",
+        "hint_de": "zu Fuß gehen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s124",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 101,
+        "ref": "sell|sell/VERB|sell#verkaufen",
+        "form": "sell",
+        "hint_de": "verkaufen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s127",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 120,
+        "ref": "dry|dry/ADJ|dry#trocken",
+        "form": "dry",
+        "hint_de": "trocken",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s130",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 108,
+        "ref": "skin|skin/NOUN|skin#haut",
+        "form": "skin",
+        "hint_de": "Haut",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s133",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 138,
+        "ref": "bread|bread/NOUN|bread#brot",
+        "form": "bread",
+        "hint_de": "Brot",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s137",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 151,
+        "ref": "blanket|blanket/NOUN|blanket#decke",
+        "form": "blanket",
+        "hint_de": "Decke",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s139",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 88,
+        "ref": "cup|cup/NOUN|cup#tasse",
+        "form": "cup",
+        "hint_de": "Tasse",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s142",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 89,
+        "ref": "send|send/VERB|send#schicken",
+        "form": "send",
+        "hint_de": "schicken",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s145",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 158,
+        "ref": "spoon|spoon/NOUN|spoon#loeffel",
+        "form": "spoon",
+        "hint_de": "Löffel",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s148",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 67,
+        "ref": "open|open/VERB|open#oeffnete",
+        "form": "open",
+        "hint_de": "öffnen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s151",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 103,
+        "ref": "computer|computer/NOUN|computer#computer",
+        "form": "computer",
+        "hint_de": "Computer",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s154",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 95,
+        "ref": "sleep|sleep/VERB|sleep#schlafen",
+        "form": "sleep",
+        "hint_de": "schlafen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s158",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 116,
+        "ref": "bag|bag/NOUN|bag#tasche",
+        "form": "bag",
+        "hint_de": "Tasche",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s160",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 109,
+        "ref": "drink|drink/VERB|drink#trinkt",
+        "form": "drink",
+        "hint_de": "trinken",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s163",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 141,
+        "ref": "egg|egg/NOUN|egg#ei",
+        "form": "egg",
+        "hint_de": "Ei",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s166",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 136,
+        "ref": "plate|plate/NOUN|plate#teller",
+        "form": "plate",
+        "hint_de": "Teller",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s169",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 85,
+        "ref": "drive|drive/VERB|drive#faehrt",
+        "form": "drive",
+        "hint_de": "fahren",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s172",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 97,
+        "ref": "box|box/NOUN|box#schachtel",
+        "form": "box",
+        "hint_de": "Kiste / Schachtel / Karton",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s175",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 94,
+        "ref": "listen|listen/VERB|listen#zuhoert",
+        "form": "listen",
+        "hint_de": "zuhören",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s178",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 128,
+        "ref": "cook|cook/VERB|cook#kocht",
+        "form": "cook",
+        "hint_de": "kochen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s181",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 84,
+        "ref": "stand|stand/VERB|stand#stehen",
+        "form": "stand",
+        "hint_de": "stehen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s184",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 143,
+        "ref": "clock|clock/NOUN|clock#uhr",
+        "form": "clock",
+        "hint_de": "Uhr",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s187",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 78,
+        "ref": "bring|bring/VERB|bring#bringt",
+        "form": "bring",
+        "hint_de": "bringen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s190",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 150,
+        "ref": "bicycle|bicycle/NOUN|bicycle#fahrrad",
+        "form": "bicycle",
+        "hint_de": "Fahrrad",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s193",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 66,
+        "ref": "head|head/NOUN|head#kopf",
+        "form": "head",
+        "hint_de": "Kopf",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s196",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 118,
+        "ref": "apple|apple/NOUN|apple#aepfel",
+        "form": "apple",
+        "hint_de": "Apfel",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/everyday/s201",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 144,
+        "ref": "desk|desk/NOUN|desk#schreibtisch",
+        "form": "desk",
+        "hint_de": "Schreibtisch",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s202",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 156,
+        "ref": "receipt|receipt/NOUN|receipt#kassenbon",
+        "form": "receipt",
+        "hint_de": "Kassenbon",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s205",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 70,
+        "ref": "hand|hand/NOUN|hand#hand",
+        "form": "hand",
+        "hint_de": "Hand",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/everyday/s208",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 157,
+        "ref": "soap|soap/NOUN|soap#seife",
+        "form": "soap",
+        "hint_de": "Seife",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s211",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 105,
+        "ref": "train|train/NOUN|train#zug",
+        "form": "train",
+        "hint_de": "Zug",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s214",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 115,
+        "ref": "window|window/NOUN|window#fenster",
+        "form": "window",
+        "hint_de": "Fenster",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s217",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 99,
+        "ref": "eye|eye/NOUN|eye#auge",
+        "form": "eye",
+        "hint_de": "Auge",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s220",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 148,
+        "ref": "bandage|bandage/NOUN|bandage#verband",
+        "form": "bandage",
+        "hint_de": "Verband",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s223",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 117,
+        "ref": "bridge|bridge/NOUN|bridge#brucke",
+        "form": "bridge",
+        "hint_de": "Brücke",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s226",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 111,
+        "ref": "carry|carry/VERB|carry#tragen",
+        "form": "carry",
+        "hint_de": "tragen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s229",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 132,
+        "ref": "ticket|ticket/NOUN|ticket#fahrkarte",
+        "form": "ticket",
+        "hint_de": "Fahrkarte",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/everyday/s234",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 102,
+        "ref": "clean|clean/VERB|clean#putzen",
+        "form": "clean",
+        "hint_de": "putzen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s235",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 79,
+        "ref": "cut|cut/VERB|cut#schneidet",
+        "form": "cut",
+        "hint_de": "schneiden",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/everyday/s238",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 153,
+        "ref": "fork|fork/NOUN|fork#gabel",
+        "form": "fork",
+        "hint_de": "Gabel",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s241",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 145,
+        "ref": "knife|knife/NOUN|knife#messer",
+        "form": "knife",
+        "hint_de": "Messer",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s244",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 100,
+        "ref": "station|station/NOUN|station#bahnhof",
+        "form": "station",
+        "hint_de": "Bahnhof",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s247",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 152,
+        "ref": "colleague|colleague/NOUN|colleague#kollege_oder_kollegin",
+        "form": "colleague",
+        "hint_de": "Kollege oder Kollegin",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s250",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 71,
+        "ref": "office|office/NOUN|office#buero",
+        "form": "office",
+        "hint_de": "Büro",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s253",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 64,
+        "ref": "read|read/VERB|read#lesen",
+        "form": "read",
+        "hint_de": "lesen",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s256",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 159,
+        "ref": "tooth|tooth/NOUN|tooth#zahn",
+        "form": "tooth",
+        "hint_de": "Zahn",
+        "removed_in": null,
+        "sentence_ref": "source/everyday/s259",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 82,
+        "ref": "strong|strong/ADJ|strong#stark",
+        "form": "strong",
+        "hint_de": "kräftig",
+        "removed_in": null,
+        "sentence_ref": "source/missing/s1",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 61,
+        "ref": "old|old/ADJ|old#alt",
+        "form": "old",
+        "hint_de": "alt",
+        "removed_in": null,
+        "sentence_ref": "source/missing/s4",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 122,
+        "ref": "cheap|cheap/ADJ|cheap#billiger",
+        "form": "cheap",
+        "hint_de": "günstig",
+        "removed_in": null,
+        "sentence_ref": "source/missing/s7",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 124,
+        "ref": "expensive|expensive/ADJ|expensive#teuer",
+        "form": "expensive",
+        "hint_de": "teuer",
+        "removed_in": null,
+        "sentence_ref": "source/missing/s10",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 65,
+        "ref": "hard|hard/ADJ|hard#hart",
+        "form": "hard",
+        "hint_de": "hart",
+        "removed_in": null,
+        "sentence_ref": "chat_editorial_v1/source/missing/s15",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial",
+          "historical_source_sentence_id"
+        ]
+      },
+      {
+        "position": 69,
+        "ref": "young|young/ADJ|young#jung",
+        "form": "young",
+        "hint_de": "jung",
+        "removed_in": null,
+        "sentence_ref": "source/missing/s16",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 77,
+        "ref": "ready|ready/ADJ|ready#bereit",
+        "form": "ready",
+        "hint_de": "bereit",
+        "removed_in": null,
+        "sentence_ref": "source/missing/s19",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 137,
+        "ref": "wet|wet/ADJ|wet#nass",
+        "form": "wet",
+        "hint_de": "nass",
+        "removed_in": null,
+        "sentence_ref": "source/missing/s22",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 130,
+        "ref": "quiet|quiet/ADJ|quiet#ruhig",
+        "form": "quiet",
+        "hint_de": "ruhig",
+        "removed_in": null,
+        "sentence_ref": "source/missing/s25",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 125,
+        "ref": "soft|soft/ADJ|soft#weiche",
+        "form": "soft",
+        "hint_de": "weich",
+        "removed_in": null,
+        "sentence_ref": "source/missing/s28",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 110,
+        "ref": "sit|sit/VERB|sit#sitzen",
+        "form": "sit",
+        "hint_de": "sitzen",
+        "removed_in": null,
+        "sentence_ref": "source/missing/s31",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 104,
+        "ref": "heavy|heavy/ADJ|heavy#schwer",
+        "form": "heavy",
+        "hint_de": "schwer",
+        "removed_in": null,
+        "sentence_ref": "source/missing/s34",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 93,
+        "ref": "safe|safe/ADJ|safe#sicher",
+        "form": "safe",
+        "hint_de": "sicher",
+        "removed_in": null,
+        "sentence_ref": "source/missing/s37",
+        "source_qa_status": "ok",
+        "source_qa_report_keys": [
+          "alternative_candidates",
+          "alternative_check",
+          "annotate",
+          "attempts",
+          "blind",
+          "blind_alternatives",
+          "blind_answer",
+          "blind_attempts",
+          "discard_reason",
+          "discard_reasons",
+          "language_ok",
+          "lint",
+          "meaning_check",
+          "meaning_check_result"
+        ]
+      },
+      {
+        "position": 161,
+        "ref": "irregular:bring:past",
+        "form": "brought",
+        "hint_de": "bringen",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b1-s036",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 162,
+        "ref": "irregular:buy:past",
+        "form": "bought",
+        "hint_de": "kaufen",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b1-s050",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 163,
+        "ref": "irregular:choose:past",
+        "form": "chose",
+        "hint_de": "auswählen",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b1-s054",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 164,
+        "ref": "irregular:choose:past_participle",
+        "form": "chosen",
+        "hint_de": "auswählen",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b1-s055",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 165,
+        "ref": "irregular:do:past",
+        "form": "did",
+        "hint_de": "tun",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b1-s073",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 166,
+        "ref": "irregular:do:past_participle",
+        "form": "done",
+        "hint_de": "tun",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b1-s074",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 167,
+        "ref": "irregular:drink:past",
+        "form": "drank",
+        "hint_de": "trinken",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b1-s080",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 168,
+        "ref": "irregular:drink:past_participle",
+        "form": "drunk",
+        "hint_de": "trinken",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b1-s081",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 169,
+        "ref": "irregular:drive:past",
+        "form": "drove",
+        "hint_de": "fahren",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b1-s082",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 170,
+        "ref": "irregular:drive:past_participle",
+        "form": "driven",
+        "hint_de": "fahren",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b1-s083",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 171,
+        "ref": "irregular:eat:past",
+        "form": "ate",
+        "hint_de": "essen",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b2-s001",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 172,
+        "ref": "irregular:eat:past_participle",
+        "form": "eaten",
+        "hint_de": "essen",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b2-s002",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 173,
+        "ref": "irregular:get:past",
+        "form": "got",
+        "hint_de": "bekommen",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b2-s027",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 174,
+        "ref": "irregular:pay:past",
+        "form": "paid",
+        "hint_de": "bezahlen",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b3-s025",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 175,
+        "ref": "irregular:sell:past",
+        "form": "sold",
+        "hint_de": "verkaufen",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b3-s056",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 176,
+        "ref": "irregular:send:past",
+        "form": "sent",
+        "hint_de": "senden",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b3-s058",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 177,
+        "ref": "irregular:sit:past",
+        "form": "sat",
+        "hint_de": "sitzen",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b3-s081",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 178,
+        "ref": "irregular:sleep:past",
+        "form": "slept",
+        "hint_de": "schlafen",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b3-s083",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 179,
+        "ref": "irregular:stand:past",
+        "form": "stood",
+        "hint_de": "stehen",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b4-s030",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 180,
+        "ref": "irregular:write:past",
+        "form": "wrote",
+        "hint_de": "schreiben",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b4-s080",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      },
+      {
+        "position": 181,
+        "ref": "irregular:write:past_participle",
+        "form": "written",
+        "hint_de": "schreiben",
+        "removed_in": null,
+        "sentence_ref": "irregular-v1-b4-s081",
+        "source_qa_status": "editorial_reviewed",
+        "source_qa_report_keys": [
+          "editorial_create"
+        ]
+      }
+    ]
+  },
+  "local_release_record_count": 0,
+  "bundle_directory_exists": false
+}

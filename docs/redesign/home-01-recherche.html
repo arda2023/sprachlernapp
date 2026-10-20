@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home-Redesign Recherche</title>
+<style>
+:root{
+  --bg:#f6f5f2; --surface:#ffffff; --ink:#1c1d21; --muted:#62646c; --line:#e3e1dc;
+  --accent:#e2701a; --accent-soft:#fbe7d6; --wire:#d9d7d1; --wire-strong:#b9b6ae; --wire-ink:#3a3b40;
+  --good:#2f7d4f; --risk:#b3412b;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121317; --surface:#1b1d23; --ink:#ececef; --muted:#a2a4ad; --line:#2c2f37;
+    --accent:#f08a3c; --accent-soft:#3a2617; --wire:#2c2f37; --wire-strong:#454955; --wire-ink:#d6d7dc;
+    --good:#6cc28f; --risk:#e58471;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121317; --surface:#1b1d23; --ink:#ececef; --muted:#a2a4ad; --line:#2c2f37;
+  --accent:#f08a3c; --accent-soft:#3a2617; --wire:#2c2f37; --wire-strong:#454955; --wire-ink:#d6d7dc;
+  --good:#6cc28f; --risk:#e58471;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+main{max-width:1040px;margin:0 auto;padding:40px 16px 80px}
+h1{font-size:2rem;line-height:1.15;margin:0 0 8px;letter-spacing:-.02em}
+h2{font-size:1.4rem;margin:56px 0 12px;letter-spacing:-.01em;padding-top:16px;border-top:1px solid var(--line)}
+h3{font-size:1.1rem;margin:28px 0 8px}
+p{margin:0 0 12px}
+.lead{color:var(--muted);font-size:1.05rem;max-width:720px}
+.meta{color:var(--muted);font-size:.85rem}
+ul{padding-left:20px;margin:0 0 12px} li{margin-bottom:6px}
+code{font-size:.88em;background:var(--wire);padding:1px 5px;border-radius:4px}
+a{color:var(--accent)}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0}
+nav.toc a{font-size:.85rem;padding:5px 10px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--ink);background:var(--surface)}
+.callout{background:var(--accent-soft);border-radius:12px;padding:16px 18px;margin:16px 0}
+.callout strong{color:var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:.92rem;margin:12px 0}
+th,td{text-align:left;vertical-align:top;padding:9px 10px;border-bottom:1px solid var(--line)}
+th{font-weight:600;color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+.tablewrap{overflow-x:auto}
+
+/* reference gallery */
+.refs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin:12px 0}
+.ref{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.ref a.shot{display:block;background:var(--wire);aspect-ratio:9/16;max-height:380px;overflow:hidden}
+.ref img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.ref .body{padding:12px 14px 14px;font-size:.9rem}
+.ref .app{font-weight:700;font-size:.95rem;margin-bottom:4px}
+.ref .app a{color:var(--ink);text-decoration:none}
+.ref .app a:after{content:" ↗";color:var(--muted);font-weight:400}
+.ref .good{margin:0 0 6px}
+.ref .us{margin:0;color:var(--muted)}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px;margin-left:6px;vertical-align:2px}
+.tag.anti{background:var(--risk);color:#fff}
+
+/* directions */
+.dir{display:grid;grid-template-columns:280px 1fr;gap:28px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;margin:20px 0}
+@media (max-width:760px){.dir{grid-template-columns:1fr}.phone{margin:0 auto}}
+.dir h3{margin-top:0}
+.pros li::marker{content:"+  ";color:var(--good);font-weight:700}
+.cons li::marker{content:"–  ";color:var(--risk);font-weight:700}
+.badge{display:inline-block;font-size:.75rem;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--accent);color:#fff;margin-left:8px;vertical-align:3px}
+
+/* low-fi wireframe phone */
+.phone{width:260px;border:2px solid var(--wire-strong);border-radius:30px;padding:14px 12px 10px;background:var(--bg);font-size:10.5px;line-height:1.3;color:var(--wire-ink)}
+.w{background:var(--wire);border-radius:8px;padding:7px 8px;margin-bottom:7px}
+.w.strong{background:var(--wire-strong)}
+.w.flat{background:none;padding:2px 2px}
+.row{display:flex;gap:6px;align-items:center}
+.row > *{flex:1}
+.lbl{font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.04em;opacity:.8}
+.btn{background:var(--accent);color:#fff;border-radius:999px;padding:6px 8px;text-align:center;font-weight:700;margin-top:6px}
+.bar{height:5px;border-radius:5px;background:var(--wire-strong);margin-top:4px;position:relative;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--accent)}
+.streakbar{display:flex;align-items:center;gap:3px}
+.streakbar .fill{flex:4;height:12px;border-radius:12px;background:var(--accent)}
+.streakbar .dot{width:12px;height:12px;border-radius:50%;background:var(--wire-strong)}
+.streakbar .star{font-size:13px;color:var(--accent);line-height:1}
+.streakbar .fill{display:flex;align-items:center;justify-content:space-around;color:#fff;font-size:8px;font-weight:700}
+.streakbar .dot.x{display:grid;place-items:center;font-size:9px;color:var(--wire-ink);font-weight:700}
+.streakbar .star.empty{color:var(--wire-strong)}
+/* larger streak-state demo */
+.sdemo{display:flex;flex-direction:column;gap:14px;margin:10px 0}
+.sdemo .case{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:center}
+.sdemo .case > span{font-size:.82rem;color:var(--muted)}
+.sbig{display:flex;align-items:center;gap:6px}
+.sbig .fill{height:26px;border-radius:26px;background:var(--accent);display:flex;align-items:center;justify-content:space-around;color:#fff;font-weight:800;font-size:13px}
+.sbig .dot{width:26px;height:26px;border-radius:50%;background:var(--wire);flex:0 0 26px;display:grid;place-items:center;color:var(--muted);font-weight:800;font-size:13px}
+.sbig .dot.x{background:var(--wire-strong);color:var(--bg)}
+.sbig .star{font-size:26px;line-height:1;color:var(--wire-strong)}
+.sbig .star.on{color:var(--accent)}
+.decision{border-left:4px solid var(--accent);background:var(--surface);border-radius:0 12px 12px 0;padding:14px 18px;margin:16px 0}
+.decision ul{margin:6px 0 0}
+.carousel{display:flex;gap:6px;overflow:hidden}
+.carousel .c{flex:0 0 74px;height:96px;border-radius:8px;background:var(--wire-strong);padding:6px;display:flex;align-items:flex-end;font-weight:600}
+.carousel.tall .c{flex:0 0 150px;height:150px}
+.carousel.chips .c{flex:0 0 96px;height:52px;align-items:center}
+.stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:7px}
+.stat3 .w{margin:0;padding:6px}
+.nav{display:flex;justify-content:space-around;border-top:1px solid var(--wire-strong);padding-top:7px;margin-top:4px;font-size:9px}
+.nav b{background:var(--accent);color:#fff;border-radius:50%;width:22px;height:22px;display:grid;place-items:center;margin-top:-10px}
+.hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;font-weight:600}
+.hdr span:nth-child(2){color:var(--accent)}
+.legend{font-size:.82rem;color:var(--muted);margin-top:8px}
+
+/* fixed building blocks */
+.blocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.block{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.block h3{margin-top:0}
+.inspo{width:100%;border-radius:10px;border:1px solid var(--line);margin:6px 0 10px}
+</style>
+</head>
+<body>
+<main>
+
+<p class="meta">Sprachapp Redesign · Phase 1 &amp; 2 (Struktur &amp; Layout) · Home-Screen · Stand 20.10.2026</p>
+<h1>Home-Screen: Recherche und drei Richtungen</h1>
+<p class="lead">Ziel: Home soll zuerst zum Lernen führen und erst danach Statistik zeigen. Grundlage sind <code>REDESIGN_BERICHTE.md</code>, deine Vorgaben in <code>UI-Inspo/</code>, die echten Daten im Inhaltspaket und 20 Referenzen aus Mobbin. Dieser Bericht legt nur Struktur und Reihenfolge fest. Farben, Schrift, Animation und Texte kommen erst in der Feinschliff-Phase.</p>
+
+<div class="decision">
+<strong>Update 20.10.2026 – deine Entscheidungen</strong>
+<ul>
+  <li><strong>Richtung A „Heute-Karte“</strong> wird umgesetzt.</li>
+  <li><strong>Ein Streak-Tag zählt ab der ersten Übung</strong> des Tages.</li>
+  <li><strong>Lücke:</strong> Streak fällt auf 0, <strong>geholte Sterne bleiben</strong> (Kalender + Wochenzahl).</li>
+  <li><strong>Streak-Leiste wie <code>streak4</code></strong> mit Häkchen im gefüllten Balken; verpasster Tag = grauer Kreis mit ×. Siehe neue Zustandsübersicht in Abschnitt 2.</li>
+  <li><strong>Kästchen:</strong> vorerst Im Aufbau · Gemeistert · Wörter geübt („mal schauen“ – im Prototyp prüfen).</li>
+  <li><strong>Rohtranskripte gelesen</strong> – Abschnitt 4 ist entsprechend neu geschrieben.</li>
+</ul>
+</div>
+
+<nav class="toc">
+  <a href="#kritik">1 · Was Home heute falsch macht</a>
+  <a href="#vorgaben">2 · Deine festen Bausteine</a>
+  <a href="#referenzen">3 · Mobbin-Referenzen</a>
+  <a href="#psychologie">4 · Mikrointeraktionen &amp; Psychologie</a>
+  <a href="#richtungen">5 · Drei Richtungen</a>
+  <a href="#vergleich">6 · Vergleich &amp; Empfehlung</a>
+  <a href="#fragen">7 · Offene Fragen</a>
+</nav>
+
+<!-- ============================================================ -->
+<h2 id="kritik">1 · Was Home heute falsch macht</h2>
+<p>Aus <code>REDESIGN_BERICHTE.md</code>, Abschnitt „Home zeigt zuerst die Verwaltung des Lernens“. Ich habe die Punkte mit dem aktuellen Code abgeglichen (<code>lib/screens/home/</code>).</p>
+<div class="tablewrap"><table>
+<tr><th>Problem</th><th>Wo im Code</th><th>Was das neue Home lösen muss</th></tr>
+<tr><td><strong>Statistik kommt vor dem Lernen.</strong> Reihenfolge: Wochenkarte → 5 Statistikzeilen + Fußnote → Stapel → Stories.</td><td><code>home_screen.dart</code>, <code>vocab_progress.dart</code></td><td>Der nächste Lernschritt steht oben. Statistik wird kompakt und lässt sich bei Bedarf aufklappen.</td></tr>
+<tr><td><strong>Information und Handlung sind getrennt.</strong> „12 Wiederholungen verfügbar“ ist nur Text, gestartet wird über den Play-Knopf in der Leiste.</td><td><code>VocabProgress</code></td><td>Neben der Zahl der fälligen Übungen steht direkt ein Startknopf.</td></tr>
+<tr><td><strong>Home erklärt das eigene System</strong> („Ein Wort kann mehrere Übungen haben“).</td><td><code>vocab_progress.dart:79</code></td><td>Erklärungen wandern in Bottom Sheets und erscheinen erst nach einem Tipp.</td></tr>
+<tr><td><strong>Überall dieselben Container:</strong> Wochenkarte, Stapel-Kacheln und Detailflächen haben gleiche Rahmen und gleiches Gewicht.</td><td><code>weekly_goal_card.dart</code>, <code>deck_tile.dart</code></td><td>Genau eine dominante Fläche, alles andere leiser.</td></tr>
+<tr><td><strong>Stapel-Kachel mit 6 Zeichen um einen Titel</strong>: Tönung, Kontur, Icon im Ring, Prozent, Blitze, „Aktiv“.</td><td><code>deck_tile.dart</code></td><td>Höchstens Name, ein Fortschrittsbalken und das Niveau als Text.</td></tr>
+<tr><td><strong>Toter Profilknopf</strong> (Handler leer).</td><td><code>app_shell.dart</code> <code>_notYetRouted</code></td><td>Der Knopf entfällt. In der Kopfzeile stehen dafür Streak und Einstellungen.</td></tr>
+<tr><td><strong>Story-Cover sind Platzhalter</strong>, im hellen Modus steht dunkle Schrift auf dunklem Cover.</td><td><code>story_carousel.dart</code></td><td>Die Karte ist in sich geschlossen und auf Illustrationen vorbereitet (siehe deine Vorgabe).</td></tr>
+</table></div>
+
+<!-- ============================================================ -->
+<h2 id="vorgaben">2 · Deine festen Bausteine (aus UI-Inspo)</h2>
+<p>Diese Teile sind in <strong>allen drei Richtungen</strong> gleich. Die Richtungen unterscheiden sich nur darin, <em>wo</em> und <em>wie groß</em> sie stehen.</p>
+
+<div class="blocks">
+  <div class="block">
+    <h3>A · Streak in der Kopfzeile</h3>
+    <p>Flamme mit Zahl (aktueller Streak). Ein Tipp öffnet den Kalender als Sheet, angelehnt an <code>kalender1</code>:</p>
+    <ul>
+      <li>Oben links <strong>Aktueller Streak</strong> („14 Tage“).</li>
+      <li>Oben rechts statt „Daily goal“ die <strong>Anzahl der Wochen</strong>, also wie oft man schon einen Stern geholt hat.</li>
+      <li>Monatskalender: Streak-Tage sind als durchgehendes Band verbunden, <strong>Stern-Tage</strong> (jeder 7. Tag am Stück) besonders markiert.</li>
+    </ul>
+    <img class="inspo" src="references/kalender1.png" alt="Inspiration Kalender">
+  </div>
+  <div class="block">
+    <h3>B · Streak-Leiste mit Stern</h3>
+    <p>Angelehnt an <code>streak4</code>, aber <strong>ohne Wochentage</strong>. Die Leiste beginnt links und endet rechts beim Stern. Der Stern steht für Tag 7 einer Serie. Nach dem Stern beginnt ein neuer Durchlauf.</p>
+    <img class="inspo" src="references/streak4.png" alt="Inspiration Streak-Leiste">
+    <p><strong>Entschieden:</strong> 6 Tagesplätze plus Stern als 7. Platz. Erledigte Tage verschmelzen zu einem gefüllten Balken mit Häkchen. Offene Tage sind leere Kreise, ein verpasster Tag ist ein grauer Kreis mit ×.</p>
+    <div class="sdemo">
+      <div class="case"><span>Tag 4 läuft</span><div class="sbig"><div class="fill" style="flex:0 0 128px">✓ ✓ ✓ ✓</div><div class="dot"></div><div class="dot"></div><span class="star">★</span></div></div>
+      <div class="case"><span>Tag verpasst<br>(Streak = 0)</span><div class="sbig"><div class="fill" style="flex:0 0 98px">✓ ✓ ✓</div><div class="dot x">×</div><div class="dot"></div><div class="dot"></div><span class="star">★</span></div></div>
+      <div class="case"><span>Neuer Anlauf<br>(nach Übung)</span><div class="sbig"><div class="fill" style="flex:0 0 34px">✓</div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><span class="star">★</span></div></div>
+      <div class="case"><span>Tag 7 = Stern</span><div class="sbig"><div class="fill" style="flex:0 0 190px">✓ ✓ ✓ ✓ ✓ ✓</div><span class="star on">★</span></div></div>
+    </div>
+    <p class="meta"><strong>Meine Annahme, bitte bestätigen:</strong> Das × bleibt sichtbar, bis du wieder übst. Mit der ersten Übung danach beginnt die Leiste links von vorn. Ohne diese Regel stünde das × nur in der Nacht des verpassten Tages; mit ihr sieht man beim Öffnen, was passiert ist, und bekommt sofort einen „Neuer Anlauf“-Hinweis (z. B. „Neuer Anlauf – deine 3 Sterne bleiben“). Nach dem Stern startet die nächste Woche leer.</p>
+  </div>
+  <div class="block">
+    <h3>C · Lernfortschritt als Kästchen</h3>
+    <p>Wie die unteren drei Kästchen in <code>streak1</code>: Jedes Kästchen hat einen Balken und eine kurze Beschriftung. Ein Tipp öffnet ein Bottom Sheet mit einer kurzen Erklärung.</p>
+    <img class="inspo" src="references/streak1.png" alt="Inspiration Kästchen">
+    <p><strong>Welche Daten es wirklich gibt</strong> (<code>VocabBreakdown</code>, <code>LexicalBreakdown</code>): fällig · im Aufbau · gemeistert · noch nicht geübt, außerdem Wörter gesamt und davon geübt. Mein Vorschlag für <strong>3 Kästchen</strong>:</p>
+    <ul>
+      <li><strong>Im Aufbau</strong>: Balken = im Aufbau / alle Übungen</li>
+      <li><strong>Gemeistert</strong>: Balken = gemeistert / alle Übungen</li>
+      <li><strong>Wörter geübt</strong>: Balken = davon geübt / Wörter gesamt</li>
+    </ul>
+    <p class="meta">Die Zahl der <em>fälligen</em> Übungen ist keine Fortschrittsanzeige, sondern eine Aufgabe. Sie gehört deshalb an den Startknopf. „Noch nicht geübt“ erscheint im Sheet von „Wörter geübt“. Alle Werte bleiben wie bisher aus den Kartenzuständen abgeleitet.</p>
+  </div>
+  <div class="block">
+    <h3>D · Stories-Karussell</h3>
+    <p>Bleibt als horizontales Karussell aus Kärtchen. Die Karten bekommen später Illustrationen als Hintergrund. Deshalb wird jede Karte schon jetzt als geschlossene Fläche mit fester Textfarbe geplant, was auch den Kontrastfehler im hellen Modus behebt.</p>
+    <p class="meta"><strong>Echte Datenlage:</strong> Im Paket ist derzeit <strong>1 Story</strong> („The Open Pocket“). Das Layout muss also auch mit einer einzigen Karte gut aussehen.</p>
+    <h3>E · Stapelnamen bleiben unverändert</h3>
+    <p class="meta">Die 14 Stapel im Paket: Allgemeine Sprache · Reisen · Alltag &amp; Zuhause · Arbeit &amp; Bildung · Menschen &amp; Beziehungen · Körper &amp; Gesundheit · Essen &amp; Trinken · Natur &amp; Umwelt · Unregelmäßige Verben – Infinitiv/Präsens · Unregelmäßige Verben – Präteritum · Unregelmäßige Verben – Partizip Perfekt · Alltagssprache &amp; Redewendungen · Verbalphrasen · Business &amp; E-Mail. Der längste Name („Unregelmäßige Verben – Partizip Perfekt“) dient als Prüffall für jedes Layout.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="referenzen">3 · Mobbin-Referenzen</h2>
+<p>Aus etwa 50 gesichteten iOS-Screens ausgewählt. Ein Klick auf den App-Namen öffnet den Screen auf Mobbin. <span class="meta">Die Vorschaubilder kommen direkt von Mobbin und laufen nach etwa 30 Tagen ab. Die Links bleiben gültig.</span></p>
+
+<h3>3.1 · Nächster Lernschritt zuerst</h3>
+<div class="refs">
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/6a031570-7a5a-4007-a0f0-4ccf5dc47e1b"><img loading="lazy" src="https://mobbin.com/api/mcp/short/7bUzZ1h6" alt="Babbel Today"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/6a031570-7a5a-4007-a0f0-4ccf5dc47e1b">Babbel · Today</a></div>
+    <p class="good">Eine große Lektionskarte mit konkretem Titel und „Start lesson“ dominiert. Der Aktivitäts-Tracker (0/7) ist nur eine schmale Zeile darüber, weitere Lektionen folgen als Karussell darunter.</p>
+    <p class="us">Für uns: Der Tracker ist klein, die Lernkarte groß. Genau diese Gewichtung fehlt uns.</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/832f5742-a189-409a-8bb1-06f5ed82bb60"><img loading="lazy" src="https://mobbin.com/api/mcp/short/wEWHE20T" alt="Babbel Learning plan"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/832f5742-a189-409a-8bb1-06f5ed82bb60">Babbel · Time to review</a></div>
+    <p class="good">Wiederholung ist ein eigener Block mit Handlung („Review now“), das Badge mit der Zahl (21) sitzt am Review-Tab.</p>
+    <p class="us">Für uns: Zahl der fälligen Übungen und Startknopf gehören zusammen.</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/91ee559c-d53f-4bff-b5cd-f853f38cf4c3"><img loading="lazy" src="https://mobbin.com/api/mcp/short/W0skJi5c" alt="Speak Up Next"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/91ee559c-d53f-4bff-b5cd-f853f38cf4c3">Speak · Up Next + Streak</a></div>
+    <p class="good">„Up next“ zeigt den konkreten Inhalt mit Beispielsatz. Der Streak (4 days) ist ein separates, ruhigeres Modul darunter.</p>
+    <p class="us">Für uns: Zuerst kommt der Inhalt, danach der Streak. Der Beispielsatz macht neugierig.</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/857baf3c-3b5e-409f-b997-2f067a91f1d3"><img loading="lazy" src="https://mobbin.com/api/mcp/short/qkGBSEfo" alt="Mimo Daily Review"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/857baf3c-3b5e-409f-b997-2f067a91f1d3">Mimo · Daily Review</a></div>
+    <p class="good">Der Hero oben enthält Thema, Dauer („8 min“) und einen großen Startknopf. Die Statistik (Activities, Time) steht weit unten und ist klein.</p>
+    <p class="us">Für uns: Eine Zeitangabe macht den Start leichter, aber nur wenn wir sie verlässlich schätzen können.</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/15f84fb7-e67c-4483-b5d5-c5650540b051"><img loading="lazy" src="https://mobbin.com/api/mcp/short/JuXDE9s7" alt="Quizlet Jump back in"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/15f84fb7-e67c-4483-b5d5-c5650540b051">Quizlet · Jump back in</a></div>
+    <p class="good">„Jump back in“ zeigt Setname, Fortschrittsbalken (68/68) und „Continue“ in einer Karte. Auch lange Namen werden sauber abgeschnitten.</p>
+    <p class="us">Für uns: Ein Muster für eine Stapelkarte, die auch mit langen Stapelnamen funktioniert.</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/82632e2b-07b1-46ea-9e5c-59f917f9fb5b"><img loading="lazy" src="https://mobbin.com/api/mcp/short/E2aXVDCm" alt="CapWords"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/82632e2b-07b1-46ea-9e5c-59f917f9fb5b">CapWords · Start Review</a></div>
+    <p class="good">Wirkt verspielt ohne Maskottchen: Collage aus Wortkarten, ein einziger schwarzer Startknopf und „Review later“ als leise Alternative.</p>
+    <p class="us">Für uns: Spielerisch, aber erwachsen. Genau die Balance zwischen „nicht wie Duolingo“ und „nicht trocken“.</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/e1a8a9dd-ca53-4276-8909-bf56da5e8331"><img loading="lazy" src="https://mobbin.com/api/mcp/short/PfkTanKR" alt="Waking Up"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/e1a8a9dd-ca53-4276-8909-bf56da5e8331">Waking Up · Day 4 of 28</a></div>
+    <p class="good">Der Kurs-Hero zeigt den Fortschritt im Text („Day 4 of 28“) statt in einem Diagramm. Darunter folgt „Up Next“ als Karussell mit Illustrationen.</p>
+    <p class="us">Für uns: Fortschritt in Worten kann ruhiger wirken als ein Balken.</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/ec3fe703-fe07-489e-92a5-45eb5b3d4720"><img loading="lazy" src="https://mobbin.com/api/mcp/short/GnxMc9Gl" alt="Brilliant"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/ec3fe703-fe07-489e-92a5-45eb5b3d4720">Brilliant · Start</a></div>
+    <p class="good">Der nächste Schritt sitzt als feste Karte unten mit „Start“ und ist immer im Daumenbereich. Der Streak erscheint nur als kurzer Banner („Streak extended!“).</p>
+    <p class="us">Für uns: Den Startknopf in Daumennähe halten. Unser Play-Knopf in der Leiste leistet das bereits.</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/a8fca4da-5640-41e8-bd8d-381bd007e0f3"><img loading="lazy" src="https://mobbin.com/api/mcp/short/sFUGEaGJ" alt="Headway"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/a8fca4da-5640-41e8-bd8d-381bd007e0f3">Headway<span class="tag anti">Gegenbeispiel</span></a></div>
+    <p class="good">Oben steht ein Statistikblock mit lauter Nullen (0 Tage, 0 key points, 0 minutes). Für neue Nutzer ist er leer und sagt nichts.</p>
+    <p class="us">Für uns: Das ist genau unser heutiges Problem. Leere Zahlen dürfen nicht der erste Eindruck sein.</p></div></div>
+</div>
+
+<h3>3.2 · Streak, Wochen und Kalender</h3>
+<div class="refs">
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/ec44aa50-c4f6-49c3-a00f-191212e37576"><img loading="lazy" src="https://mobbin.com/api/mcp/short/daYeQw5Y" alt="Speak Streak"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/ec44aa50-c4f6-49c3-a00f-191212e37576">Speak · Streak-Sheet</a></div>
+    <p class="good"><strong>„Day streak“ links, „Weeks in a row“ rechts</strong>, darunter der Monatskalender und Rekorde. Das ist fast genau deine Vorgabe.</p>
+    <p class="us">Für uns: Direkte Vorlage für den Kalender-Sheet (Tage + Wochen).</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/aa65235f-6b03-491f-bfda-8329766fb3a8"><img loading="lazy" src="https://mobbin.com/api/mcp/short/Gm8axx1K" alt="Liven"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/aa65235f-6b03-491f-bfda-8329766fb3a8">Liven · Streak calendar</a></div>
+    <p class="good">„Current streak“ und „next streak goal“ stehen nebeneinander. Erfüllte Tage tragen ein eigenes Symbol statt nur Farbe.</p>
+    <p class="us">Für uns: Stern-Tage im Kalender mit dem Sternsymbol markieren, nicht nur mit Farbe. Das hilft auch bei Farbschwäche.</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/5c506133-1cc8-470f-b791-468980acda12"><img loading="lazy" src="https://mobbin.com/api/mcp/short/i3W10gq8" alt="Noom Streak"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/5c506133-1cc8-470f-b791-468980acda12">Noom · Day streak</a></div>
+    <p class="good">Große Zahl in Serifenschrift, dazu der Kalender. Unter dem Kalender steht ein erklärender Satz, wie man einen „Streak Freeze“ bekommt.</p>
+    <p class="us">Für uns: Unter dem Kalender ist Platz für einen Satz wie „So bekommst du einen Stern“.</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/a754fe05-cda2-4dbb-a361-19a2a6f02ef4"><img loading="lazy" src="https://mobbin.com/api/mcp/short/ILeKVmQy" alt="Deepstash"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/a754fe05-cda2-4dbb-a361-19a2a6f02ef4">Deepstash · Streak Milestones</a></div>
+    <p class="good">Eine Leiste mit Meilensteinen (7 · 14 · 30). Ein Ziel in Sicht motiviert, weil der Abstand dazu sichtbar ist.</p>
+    <p class="us">Für uns: Bestätigt die Idee einer Leiste, die auf den Stern zuläuft.</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/e67b6449-1b30-4f70-9147-914007cd6351"><img loading="lazy" src="https://mobbin.com/api/mcp/short/HK3jjzVg" alt="Strava"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/e67b6449-1b30-4f70-9147-914007cd6351">Strava · Wochen-Streak</a></div>
+    <p class="good">Strava zählt den Streak in <strong>Wochen</strong> und markiert jede Woche mit einem Kreis am Zeilenende. Das ist nachsichtiger als ein reiner Tages-Streak.</p>
+    <p class="us">Für uns: Die Wochenzahl ist die nachsichtigere Kennzahl und passt zu deiner Stern-Idee.</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/ab8cfc23-fe79-4778-84ee-ddc2895aab55"><img loading="lazy" src="https://mobbin.com/api/mcp/short/wdVwbq80" alt="Vocabulary"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/ab8cfc23-fe79-4778-84ee-ddc2895aab55">Vocabulary · Word stats</a></div>
+    <p class="good">Streak-Karte mit Abzeichen pro Tag, darunter 2×2 Kennzahl-Kacheln und unten „Practice now“.</p>
+    <p class="us">Für uns: Zeigt, wie schnell Kachelraster nach Dashboard aussehen. Deshalb nur <em>eine</em> Reihe mit 3 Kästchen.</p></div></div>
+</div>
+
+<h3>3.3 · Statistik per Bottom Sheet erklären</h3>
+<div class="refs">
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/c2f6a0f1-162b-4534-8aa1-ed7ad9f60a76"><img loading="lazy" src="https://mobbin.com/api/mcp/short/WiuXzQCr" alt="Noom Sheet"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/c2f6a0f1-162b-4534-8aa1-ed7ad9f60a76">Noom · Wert erklären</a></div>
+    <p class="good">Aufbau: Titel, großer Wert, Skala mit Einordnung, zwei kurze Absätze und „Done“. Eine sehr klare Reihenfolge.</p>
+    <p class="us">Für uns: Vorlage für die Sheets der 3 Kästchen: Zahl, Balken, „Was bedeutet das?“, „Wie steigt es?“.</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/f39087da-3120-40c7-8ea5-cdb892982e6f"><img loading="lazy" src="https://mobbin.com/api/mcp/short/qPWTAs3q" alt="Lloyds"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/f39087da-3120-40c7-8ea5-cdb892982e6f">Lloyds · Wie wird das berechnet?</a></div>
+    <p class="good">Das kurze Sheet beantwortet genau eine Frage („How we work out…“) mit zwei Unterpunkten.</p>
+    <p class="us">Für uns: Hierhin wandert der Hinweis „Ein Wort kann mehrere Übungen haben“, der heute auf Home steht.</p></div></div>
+</div>
+
+<h3>3.4 · Stories als Karussell</h3>
+<div class="refs">
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/69de5406-ff2a-451f-b155-4f33490bb60a"><img loading="lazy" src="https://mobbin.com/api/mcp/short/ustzItGX" alt="Apple News"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/69de5406-ff2a-451f-b155-4f33490bb60a">Apple News · Editors' Picks</a></div>
+    <p class="good">Die große Karte nimmt fast die ganze Breite ein, die nächste lugt am Rand hervor. Das signalisiert „hier kann man wischen“. Der Fortschritt beim Hören ist als Mini-Balken direkt in der Karte.</p>
+    <p class="us">Für uns: Ein Fortschrittsbalken „weitergelesen bis …“ in der Story-Karte.</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/63fd9e06-83a9-4e76-b3f9-760b48a04276"><img loading="lazy" src="https://mobbin.com/api/mcp/short/7oYOFN1R" alt="Atoms"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/63fd9e06-83a9-4e76-b3f9-760b48a04276">Atoms · Typografische Karten</a></div>
+    <p class="good">Karten ganz ohne Bild: großer Serifentitel, Lesezeit und Pfeil. Sie unterscheiden sich durch ihren Inhalt, nicht durch Dekoration.</p>
+    <p class="us">Für uns: Eine gute Übergangslösung, bis die Illustrationen fertig sind, deutlich besser als ein blasses Themenwort.</p></div></div>
+
+  <div class="ref"><a class="shot" href="https://mobbin.com/screens/413338d6-0825-44e7-ab0b-cac9abd605ad"><img loading="lazy" src="https://mobbin.com/api/mcp/short/NLL1LVHA" alt="Finimize"></a>
+    <div class="body"><div class="app"><a href="https://mobbin.com/screens/413338d6-0825-44e7-ab0b-cac9abd605ad">Finimize · Continue reading</a></div>
+    <p class="good">„Continue reading“ ist eine schmale, wischbare Zeile ganz oben. Wer etwas angefangen hat, steigt mit einem Tipp wieder ein.</p>
+    <p class="us">Für uns: Eine angefangene Story kann sich wie ein offener Faden anfühlen und zum Weiterlesen ziehen.</p></div></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="psychologie">4 · Mikrointeraktionen &amp; Psychologie – Auswertung der Rohtranskripte</h2>
+<p>Gelesen: alle zuvor offenen Transkripte <strong>A5, A7, B4, B6, B8, B9, B10</strong> sowie die thematisch direkt angrenzenden <strong>A3, A6, B15</strong>. Die meisten Videos stammen von Agenturen, die im selben Atemzug Beratung verkaufen; Zahlen wie „Duolingo verdoppelte DAU durch Animationen“ sind deren Behauptungen und nicht geprüft.</p>
+
+<div class="callout"><strong>Das „Geheimnis“ in einem Satz:</strong> Laut diesen Videos binden Apps nicht über einzelne Features, sondern über <em>Architektur</em>: ein offener Kreis, der sich schließen will (Ringe, Leisten, Ziele), etwas, das sich auch ohne dich verändert (eine „Uhr“), ein Fortschritt, den man nicht verlieren will, und Momente, die überraschen oder sich gut anfühlen. Die Videos sagen selbst, dass dieselben Mechaniken gute Gewohnheiten <em>oder</em> Abhängigkeit erzeugen können (B10: „morally complicated“).</div>
+
+<h3>4.1 · Was die Videos konkret sagen</h3>
+<div class="tablewrap"><table>
+<tr><th>Quelle</th><th>Mechanik</th><th>Kern</th></tr>
+<tr><td>A3</td><td>Emotionales Feedback</td><td>Nicht nur ein grünes Häkchen, sondern eine kurze Reaktion, die sich ermutigend anfühlt (Bounce, Glow, Funkeln). Kleine Erfolge feiern; Fortschritt (Streaks, Level) mit Bewegung zeigen. Bei Phantom/Revolut: Politur = Vertrauen.</td></tr>
+<tr><td>A5</td><td>Handwerk für „fühlt sich besser an als iOS-Standard“</td><td>(1) Übergänge animieren, komplexe Animationen in Teilschritte zerlegen. (2) Eigene Illustrationen v. a. für Leerzustände. (3) Haptik fast überall, aber <strong>abgestuft</strong>: leicht bei häufigem Tippen, stärker bei wichtigen Aktionen. (4) Eine einheitliche Icon-Familie; aktiver Tab = gefüllte Variante. (5) Geschmack durch ständiges Ansehen guter Apps.</td></tr>
+<tr><td>A6</td><td>Peak-End-Regel (Kahneman)</td><td>Man erinnert den intensivsten Moment und das Ende. Pro Ablauf <em>einen</em> Höhepunkt bewusst gestalten (z. B. Meilenstein) und das Ende mit Abschluss, Zusammenfassung und Ausblick versehen („Du warst heute da“). Negative Momente (Warten, Fehler) aktiv entschärfen.</td></tr>
+<tr><td>A7</td><td>Smart Defaults · Goal-Gradient · Reziprozität · IKEA-/Besitzeffekt · Verlustaversion · Kontrast</td><td>Vorbelegte Werte sind Empfehlungen. Nie bei 0 % starten – Fortschritt beschleunigt sich nahe am Ziel. Erst Wert geben, dann etwas verlangen. Was man selbst gebaut hat, gibt man ungern auf. Verlust wiegt doppelt (Beispiel mit Countdown/„I'll risk it“ ist offen manipulativ).</td></tr>
+<tr><td>B4</td><td>„Tick-Tock“-Uhr</td><td>Etwas verändert sich nach einer Uhr, auch wenn man nicht hinsieht (FarmVille-Ernte verrottet, Hinge-Standouts verfallen nach 24 h). Erzeugt eine offene Schleife (Zeigarnik) und Verlustangst.</td></tr>
+<tr><td>B6</td><td>Gefühl, gesehen zu werden</td><td>Barnum-Effekt (generisch, aber persönlich formuliert), Aufwand steigert empfundenen Wert, Identitäts-Label (16 Personalities), teilbarer „Flex“ aus <em>echten</em> Daten (Airbuds-Wochenrückblick, Spotify Wrapped, Wordle-Raster).</td></tr>
+<tr><td>B8</td><td>Unsichtbare Rangliste</td><td>Vergleich am Moment des Abschlusses zeigen, Vergleichsgruppe klein halten (lokal = gewinnbar), Anerkennung menschlich gestalten.</td></tr>
+<tr><td>B9</td><td>Was an Gamification wirklich wirkt</td><td>Punkte/Badges/Ranglisten allein scheitern oft. Zu viele Spielsysteme kippen (S-Kurve, Habitica). <strong>Streak-Falle:</strong> je länger, desto mehr Pflicht statt Lust; Regulierer schauen hin. Besser: <strong>Abschlussdrang</strong> (Apple-Ringe: ein fast geschlossener Kreis will geschlossen werden), <strong>variable Belohnungshöhe</strong> (Vorfreude) und <strong>Kompetenz-Feedback</strong> („du bist besser geworden“ statt „du warst oft da“).</td></tr>
+<tr><td>B10</td><td>Craving · Infinite Game · Status</td><td>Unvorhersehbare Belohnungen (Skinner, Finch-Entdeckungen) – Empfehlung: <em>überwiegend transparent, mit eingestreuter Überraschung</em>. Streaks, die sich zu etwas Bleibendem aufsummieren (Diamanten bei 7/42 Tagen). „Keinen Endzustand“ und sichtbarer Status als Bindung.</td></tr>
+<tr><td>B15</td><td>Rückkehr-Schleife</td><td>Belohnungen und Erinnerungen allein bilden laut Bristol-Studie keine dauerhafte Gewohnheit; wirksam ist die Kopplung an eine bestehende Routine (nach dem Kaffee …). Gewohnheiten brauchen 18–254 Tage. <strong>Forgiveness Design:</strong> was nach einem verpassten Tag passiert, entscheidet (Streak-Freeze, Pausenmodus, verschobene Frist).</td></tr>
+</table></div>
+
+<h3>4.2 · Was davon ins neue Home fließt</h3>
+<div class="tablewrap"><table>
+<tr><th>Prinzip</th><th>Konkret im Home (Richtung A)</th><th>Quelle</th></tr>
+<tr><td><strong>Abschlussdrang</strong></td><td>Die Streak-Leiste ist ein „Ring zum Ausrollen“: 6 Plätze + Stern. Der fehlende Rest bis zum Stern wird immer benannt („Noch 3 Tage“). Das Tagesziel in der Heute-Karte ist ein Balken, der sich schließen will.</td><td>B9, A7</td></tr>
+<tr><td><strong>Streak, der sich aufsummiert</strong></td><td>Deine Regel „Streak fällt auf 0, Sterne bleiben“ ist genau das: Die Wochensterne sind bleibender Besitz (Kalender + Wochenzahl im Sheet). Ein Bruch tut weniger weh, weil nicht alles weg ist.</td><td>B10, B9</td></tr>
+<tr><td><strong>Forgiveness nach einer Lücke</strong></td><td>Kein Schuldtext. Nach einem verpassten Tag zeigt Home „Neuer Anlauf – deine 3 Sterne bleiben“ und die Heute-Karte ist so leicht wie möglich (kleine Menge zuerst).</td><td>B15</td></tr>
+<tr><td><strong>Ehrliche „Uhr“</strong></td><td>Unser SRS ist bereits eine echte Uhr: Wörter werden mit der Zeit fällig, ohne dass wir etwas „verrotten“ lassen müssen. Die Heute-Karte zeigt diese Zahl als Grund zur Rückkehr – ohne künstlichen Verfall.</td><td>B4 (entschärft)</td></tr>
+<tr><td><strong>Kompetenz statt Punkte</strong></td><td>Keine XP, keine Badges. Die 3 Kästchen messen echte Übungen und Wörter. Höchstens ein dauerhaftes Hauptmaß, das man „verfolgt“ – Vorschlag: <em>Gemeistert</em>.</td><td>B9, B10</td></tr>
+<tr><td><strong>Wenige Systeme</strong></td><td>Streak + Sterne + 3 Kästchen + Tagesziel – und nicht mehr. Keine Rangliste, keine Level, keine Währung (S-Kurve).</td><td>B9</td></tr>
+<tr><td><strong>Ein Höhepunkt</strong></td><td>Der Stern-Tag ist der eine geplante Peak auf Home (Leiste läuft zum Stern, Stern „landet“ im Kalender). Ende-Moment gehört zur Sitzungszusammenfassung – für später vorgemerkt.</td><td>A6, A3</td></tr>
+<tr><td><strong>Offene Schleife</strong></td><td>Angefangene Story mit „weiter bei …“ im Karussell; angefangener Stapel mit Fortschritt.</td><td>B4, A7</td></tr>
+<tr><td><strong>Nie bei null wirken</strong></td><td>Ehrlich umgesetzt: Kein erfundener Startfortschritt. Stattdessen zählt die erste Übung sofort als Streak-Tag, und neue Nutzer sehen keine Null-Statistik, sondern „Leg los mit deinem ersten Stapel“.</td><td>A7 (ohne Fake)</td></tr>
+</table></div>
+
+<h3>4.3 · Für den Feinschliff vorgemerkt (Mikrointeraktionen)</h3>
+<ul>
+  <li><strong>Abgestufte Haptik</strong> (A5): leicht bei Kästchen/Sheets, mittel bei „Jetzt üben“, deutlich beim Stern.</li>
+  <li><strong>Leiste füllt sich animiert</strong> beim Öffnen, wenn heute ein Tag dazukam; neues Häkchen „ploppt“ (A3).</li>
+  <li><strong>Stern-Moment</strong>: Stern füllt sich, kurze Glanz-/Funkel-Reaktion, danach im Kalender sichtbar (A6 Peak).</li>
+  <li><strong>Sheets</strong> kommen von unten und verschwinden dorthin; Kästchen → Sheet als zusammenhängende Bewegung.</li>
+  <li><strong>Gedrückt-Zustand</strong> auf allen Karten; aktiver Tab mit gefüllter Icon-Variante, eine einheitliche Icon-Familie (A5).</li>
+  <li><strong>Illustrierte Leerzustände</strong> statt Text (A5) – passt zu den geplanten Story-Illustrationen; ohne Duolingo-Maskottchen.</li>
+  <li><strong>Kontrollierte Überraschung</strong> (B10, B9): z. B. beim Stern ein zufällig gewähltes eigenes gemeistertes Wort als „Wort der Woche“. Braucht deine Zustimmung, weil es eine kleine neue Funktion wäre.</li>
+  <li><strong>Teilbarer Wochenrückblick</strong> (B6 „Flex“ aus echten Daten) – Idee für später, nicht Home-Phase.</li>
+</ul>
+
+<h3>4.4 · Bewusst nicht übernommen</h3>
+<ul class="cons">
+  <li>Verlust-Countdowns und beschämende Ablehnen-Texte (A7 „I'll risk it“).</li>
+  <li>Künstlicher Verfall, um Rückkehr zu erzwingen (B4 FarmVille/Hinge), und Benachrichtigungs-Dauerfeuer.</li>
+  <li>Scheinpersonalisierung nach Barnum (B6) und manipulierte Zufallsquoten (B10 MMR).</li>
+  <li>„Nie einen Endzustand erlauben“ (B10): Bei uns darf „Geschafft für heute“ ein echtes Ende sein.</li>
+  <li>Soziale Ranglisten/öffentlicher Status (B8, B10): Die App hat keine sozialen Funktionen; wäre eine Produktentscheidung, kein Redesign.</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 id="richtungen">5 · Drei Richtungen</h2>
+<p>Alle drei enthalten die festen Bausteine aus Abschnitt 2. Die Wireframes sind bewusst grau gehalten, denn sie zeigen nur Reihenfolge und Gewichtung, noch kein Aussehen. Orange markiert die eine Hauptaktion und die Streak-Elemente.</p>
+
+<!-- A -->
+<div class="dir">
+  <div class="phone" aria-label="Wireframe Richtung A">
+    <div class="hdr"><span>🇬🇧 Englisch</span><span>🔥 12</span><span>⚙︎</span></div>
+    <div class="w strong" style="padding:10px 9px">
+      <div class="lbl">Heute</div>
+      <div style="font-size:14px;font-weight:700;margin:3px 0">12 Übungen fällig</div>
+      <div>+ 5 neue Wörter · aus Reisen, Business &amp; E-Mail</div>
+      <div class="bar"><i style="width:40%"></i></div>
+      <div style="margin-top:3px">4 von 10 heute</div>
+      <div class="btn">Jetzt üben</div>
+    </div>
+    <div class="w flat">
+      <div class="streakbar"><div class="fill">✓ ✓ ✓ ✓</div><div class="dot"></div><div class="dot"></div><span class="star">★</span></div>
+      <div style="margin-top:4px">Noch 3 Tage bis zum Wochenstern</div>
+    </div>
+    <div class="stat3">
+      <div class="w"><div class="lbl">Im Aufbau</div><div class="bar"><i style="width:30%"></i></div></div>
+      <div class="w"><div class="lbl">Gemeistert</div><div class="bar"><i style="width:12%"></i></div></div>
+      <div class="w"><div class="lbl">Wörter</div><div class="bar"><i style="width:45%"></i></div></div>
+    </div>
+    <div class="lbl" style="margin:2px 0 5px">Stories</div>
+    <div class="carousel"><div class="c">The Open Pocket</div><div class="c"></div><div class="c"></div></div>
+    <div class="lbl" style="margin:9px 0 5px">Deine Stapel</div>
+    <div class="w">Reisen<div class="bar"><i style="width:35%"></i></div></div>
+    <div class="nav"><span>Home</span><span>Stories</span><b>▶</b><span>Wörter</span><span>Inhalte</span></div>
+  </div>
+  <div>
+    <h3>A · „Heute-Karte“ <span class="badge">Empfehlung</span></h3>
+    <p><strong>Idee:</strong> Eine einzige große Fläche sagt, was heute ansteht, und startet es. Alles andere folgt darunter in absteigender Wichtigkeit.</p>
+    <p><strong>Reihenfolge:</strong> Kopfzeile mit 🔥 → <em>Heute-Karte</em> (fällige Übungen, neue Wörter, aus welchen Stapeln, Tagesziel-Balken, „Jetzt üben“) → Streak-Leiste mit Satz → 3 Fortschritts-Kästchen → Stories-Karussell → Deine Stapel (kompakte Liste, max. 3).</p>
+    <p><strong>Zustände der Heute-Karte:</strong> Übungen fällig → „Jetzt üben“. Nichts fällig, aber neue Wörter vorhanden → „Neue Wörter lernen“. Tagesziel erreicht → „Geschafft für heute“ mit leisem „Weiter üben“. Erster Start → „Leg los mit deinem ersten Stapel“.</p>
+    <ul class="pros">
+      <li>Löst den Hauptkritikpunkt direkt: Handlung vor Statistik, Zahl und Knopf zusammen.</li>
+      <li>Das Tagesziel bekommt einen sinnvollen Platz, denn im Kalender-Sheet ersetzt die Wochenzahl ja das „Daily goal“.</li>
+      <li>Lässt sich am leichtesten auf den echten Code übertragen, weil alle Daten schon da sind.</li>
+      <li>Klare Hierarchie: eine dominante Fläche, der Rest leiser.</li>
+    </ul>
+    <ul class="cons">
+      <li>Die Heute-Karte und der Play-Knopf starten dieselbe Sitzung („Gemischt“). Das ist gewollt, muss aber visuell als <em>dieselbe</em> Aktion lesbar sein.</li>
+      <li>Die Streak-Leiste ist hier Nebendarsteller und wirkt weniger verspielt als in B.</li>
+    </ul>
+    <p class="meta">Referenzen: Babbel Today, Mimo Daily Review, Speak Up Next, Quizlet Jump back in.</p>
+  </div>
+</div>
+
+<!-- B -->
+<div class="dir">
+  <div class="phone" aria-label="Wireframe Richtung B">
+    <div class="hdr"><span>🇬🇧 Englisch</span><span>🔥 12</span><span>⚙︎</span></div>
+    <div class="w strong" style="padding:12px 9px">
+      <div style="font-size:14px;font-weight:700">Tag 5 von 7</div>
+      <div style="margin:2px 0 8px">Noch 2 Tage bis zum Stern</div>
+      <div class="streakbar"><div class="fill"></div><div class="dot"></div><div class="dot"></div><span class="star" style="font-size:16px">★</span></div>
+      <div style="margin-top:8px">12 fällig · 4 von 10 heute</div>
+      <div class="btn">Heutige Übung starten</div>
+    </div>
+    <div class="stat3">
+      <div class="w"><div class="lbl">Im Aufbau</div><div class="bar"><i style="width:30%"></i></div></div>
+      <div class="w"><div class="lbl">Gemeistert</div><div class="bar"><i style="width:12%"></i></div></div>
+      <div class="w"><div class="lbl">Wörter</div><div class="bar"><i style="width:45%"></i></div></div>
+    </div>
+    <div class="lbl" style="margin:2px 0 5px">Weiter mit</div>
+    <div class="carousel chips"><div class="c">Reisen</div><div class="c">Business &amp; E-Mail</div><div class="c">Verbal…</div></div>
+    <div class="lbl" style="margin:9px 0 5px">Stories</div>
+    <div class="carousel"><div class="c">The Open Pocket</div><div class="c"></div><div class="c"></div></div>
+    <div class="nav"><span>Home</span><span>Stories</span><b>▶</b><span>Wörter</span><span>Inhalte</span></div>
+  </div>
+  <div>
+    <h3>B · „Wochenbogen“</h3>
+    <p><strong>Idee:</strong> Die Streak-Leiste ist die Bühne. Wochenziel und Tagesaktion verschmelzen zu einer Karte, darin ist Platz für eine spätere Illustration, ähnlich wie bei <code>streak2</code>, nur ohne Maskottchen.</p>
+    <p><strong>Reihenfolge:</strong> Kopfzeile mit 🔥 → <em>Wochenkarte</em> („Tag 5 von 7“, große Leiste mit Stern, fällig/Tagesziel, Startknopf) → 3 Kästchen → „Weiter mit“ als Stapel-Karussell → Stories-Karussell.</p>
+    <ul class="pros">
+      <li>Die verspielteste der drei Richtungen, der Fortschritt zum Stern fühlt sich wie ein kleines Spiel an.</li>
+      <li>Streak und Lernen sind sichtbar verbunden: Wer üben will, füllt die Leiste.</li>
+      <li>Bietet die meiste Fläche für einen besonderen Stern-Moment im Feinschliff.</li>
+    </ul>
+    <ul class="cons">
+      <li>Die Gefahr, dass der Streak wichtiger wirkt als der Inhalt, also wieder „Verwaltung zuerst“, nur hübscher.</li>
+      <li>Bei Streak 0 oder nach einer Pause ist die Bühne leer. Dieser Zustand braucht eine eigene Gestaltung.</li>
+      <li>Zwei horizontale Karussells direkt hintereinander (Stapel und Stories) wirken unruhig.</li>
+      <li>Die Kopfzeilen-Flamme und die große Leiste zeigen beide den Streak, also doppelt.</li>
+    </ul>
+    <p class="meta">Referenzen: Speak Streak-Modul, Deepstash Milestones, Strava Wochen-Streak, deine Inspo <code>streak2</code>.</p>
+  </div>
+</div>
+
+<!-- C -->
+<div class="dir">
+  <div class="phone" aria-label="Wireframe Richtung C">
+    <div class="hdr"><span>🇬🇧 Englisch</span><span>🔥 12</span><span>⚙︎</span></div>
+    <div class="w" style="padding:8px 9px">
+      <div class="row"><div><b>12 fällig</b> · 4/10 heute</div><div class="btn" style="margin:0;flex:0 0 60px">Üben</div></div>
+      <div class="streakbar" style="margin-top:7px"><div class="fill"></div><div class="dot"></div><div class="dot"></div><span class="star">★</span></div>
+    </div>
+    <div class="lbl" style="margin:4px 0 5px">Lesen</div>
+    <div class="carousel tall"><div class="c" style="font-size:12px">The Open Pocket<br>· weiter bei Absatz 3</div><div class="c"></div></div>
+    <div class="stat3" style="margin-top:8px">
+      <div class="w"><div class="lbl">Im Aufbau</div><div class="bar"><i style="width:30%"></i></div></div>
+      <div class="w"><div class="lbl">Gemeistert</div><div class="bar"><i style="width:12%"></i></div></div>
+      <div class="w"><div class="lbl">Wörter</div><div class="bar"><i style="width:45%"></i></div></div>
+    </div>
+    <div class="lbl" style="margin:2px 0 5px">Deine Stapel</div>
+    <div class="w">Reisen<div class="bar"><i style="width:35%"></i></div></div>
+    <div class="nav"><span>Home</span><span>Stories</span><b>▶</b><span>Wörter</span><span>Inhalte</span></div>
+  </div>
+  <div>
+    <h3>C · „Lesen zuerst“</h3>
+    <p><strong>Idee:</strong> Der Inhalt selbst ist der Hero. Die Übung wird zu einer kompakten Leiste oben, die Stories bekommen die größte Fläche, so wie bei Apple News oder Waking Up.</p>
+    <p><strong>Reihenfolge:</strong> Kopfzeile mit 🔥 → kompakte <em>Heute-Leiste</em> (fällig + „Üben“ + kleine Streak-Leiste) → großes Stories-Karussell → 3 Kästchen → Deine Stapel.</p>
+    <ul class="pros">
+      <li>Passt am besten zur Positionierung „Lesen zuerst“, die Home heute versteckt.</li>
+      <li>Wirkt am wenigsten wie ein Dashboard und am stärksten nach Magazin.</li>
+      <li>Die späteren Illustrationen kommen hier am besten zur Geltung.</li>
+    </ul>
+    <ul class="cons">
+      <li><strong>Derzeit nur 1 Story im Paket</strong>, das große Karussell hätte also eine einzige Karte. Das wirkt leer, bis mehr Stories da sind.</li>
+      <li>Die fälligen Wiederholungen, also die tägliche Kernaufgabe, sind weniger prominent.</li>
+      <li>Ohne Illustrationen wirken große Karten heute schnell wie Platzhalter, das alte Problem.</li>
+    </ul>
+    <p class="meta">Referenzen: Apple News Editors' Picks, Atoms, Waking Up Up Next, Finimize Continue reading.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="vergleich">6 · Vergleich &amp; Empfehlung</h2>
+<div class="tablewrap"><table>
+<tr><th></th><th>A · Heute-Karte</th><th>B · Wochenbogen</th><th>C · Lesen zuerst</th></tr>
+<tr><td>Nächster Schritt sofort klar</td><td>●●●</td><td>●●○</td><td>●●○</td></tr>
+<tr><td>Spielerisch (ohne Duolingo-Look)</td><td>●●○</td><td>●●●</td><td>●○○</td></tr>
+<tr><td>Löst „Statistik vor Inhalt“</td><td>●●●</td><td>●●○</td><td>●●●</td></tr>
+<tr><td>Funktioniert mit heutigen Daten (1 Story, Streak 0)</td><td>●●●</td><td>●●○</td><td>●○○</td></tr>
+<tr><td>Aufwand im Code</td><td>niedrig</td><td>mittel</td><td>mittel</td></tr>
+</table></div>
+<div class="callout">
+<strong>Meine Empfehlung: A als Grundgerüst, mit zwei Anleihen.</strong> Aus B den Satz „Noch 2 Tage bis zum Stern“ direkt unter der Leiste und eine etwas größere, lebendigere Streak-Leiste. Aus C die Story-Karte mit „weiter bei …“ und einer geschlossenen Fläche für spätere Illustrationen. Damit ist der nächste Schritt immer eindeutig, und Home bleibt trotzdem spielerisch. Sobald es mehr Stories gibt, kann das Karussell weiter nach oben rücken.
+</div>
+
+<!-- ============================================================ -->
+<h2 id="fragen">7 · Entschieden &amp; noch offen</h2>
+<p><strong>Entschieden:</strong> Richtung A · Streak ab erster Übung · Lücke = Streak 0, Sterne bleiben · Leiste wie <code>streak4</code> mit Häkchen und grauem ×-Kreis · Kästchen vorerst Im Aufbau / Gemeistert / Wörter geübt.</p>
+<p><strong>Noch offen (beantworte ich sonst mit meinem Vorschlag):</strong></p>
+<ol>
+  <li><strong>×-Anzeige:</strong> Bleibt das × sichtbar, bis du wieder übst, und startet die Leiste dann links neu? <em>(Mein Vorschlag: ja.)</em></li>
+  <li><strong>Stapel auf Home:</strong> kompakte Liste mit max. 3 aktiven Stapeln <em>(Vorschlag)</em> oder ganz weglassen?</li>
+  <li><strong>„Wort der Woche“ beim Stern</strong> als kontrollierte Überraschung – ja/nein? Ist eine kleine neue Funktion, daher erst nach deinem Okay.</li>
+</ol>
+<p class="meta">Technischer Hinweis: Eine Streak-Zahl und Wochensterne gibt es im Code noch nicht. Ich leite beides – wie alle Zahlen – aus dem Review-Log ab (Tag mit ≥ 1 Review = Streak-Tag; jeder 7. Tag einer ununterbrochenen Serie = Stern) und speichere nichts. Die Lernlogik bleibt unverändert.</p>
+
+</main>
+</body>
+</html>

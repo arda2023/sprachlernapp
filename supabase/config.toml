@@ -114,7 +114,7 @@ port = 54324
 [storage]
 enabled = true
 # The maximum file size allowed (e.g. "5MB", "500KB").
-file_size_limit = "50MiB"
+file_size_limit = "256MiB"
 
 # Uncomment to configure local storage buckets
 # [storage.buckets.images]
@@ -415,4 +415,18 @@ enabled = true
 # format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":180,\"commaStyle\":\"trailing\"}"
 
 [functions.health]
+verify_jwt = true
+
+# Private user-facing endpoints retain gateway JWT verification and additionally
+# verify the token through Auth before checking publisher/reader allowlists.
+[functions.content-publish]
+verify_jwt = true
+
+[functions.content-release]
+verify_jwt = true
+
+[functions.lookup-word]
+verify_jwt = true
+
+[functions.translate-sentence]
 verify_jwt = true

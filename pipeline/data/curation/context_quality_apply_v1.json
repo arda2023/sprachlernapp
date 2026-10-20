@@ -1,0 +1,194 @@
+{
+  "format": "sprachapp.targeted-curation",
+  "format_version": 1,
+  "source_sha256": "48f8c3037e37cf8aaa83188c868af6706fd7f749592785433ee30b74070800d4",
+  "version": "context_quality_applied_v1",
+  "reviewer": "Codex; lokale redaktionelle Prüfung der drei vom Nutzer freigegebenen Entscheidungen, 16.10.2026. Keine Gesamtsprachfreigabe; kein externer KI-Aufruf.",
+  "operations": [
+    {
+      "op": "retire_card",
+      "card_id": "1bbe26267773ad288ddd7bf7063c4437",
+      "expect_card": {
+        "ref": "so|so/ADV|so#auf_diese_weise",
+        "form": "so",
+        "sense": "so/ADV|so#auf_diese_weise",
+        "form_kind": "base",
+        "form_label_de": "Adverb, Grundform",
+        "translation_de": "so / auf diese Weise",
+        "cefr_band": "anfaenger",
+        "freq_rank": 33,
+        "learning": {
+          "group_id": "en:card:1bbe26267773ad288ddd7bf7063c4437",
+          "primary_card_id": "1bbe26267773ad288ddd7bf7063c4437",
+          "topic": "grammar",
+          "related": [],
+          "note": "Eigenständige genaue Form/Bedeutung; keine belegte Gleichsetzung. Historische Funktions-, Personen- und Bedeutungsunterschiede bleiben erhalten."
+        }
+      },
+      "reason": "Originalentscheidung pipeline/data/curation/context_quality_v1.json SHA256 ba6226567b49b914e51fd8f38211f3d975ff9d7753929b7ddee950f9b818b3c4; Einzelreview docs/evidence/context-quality-v1/review.json SHA256 6470ef180b597a672ec855733564809caba524ccc1861a8b27a37e60ad620f74; Quelle pipeline/out/business_email_batch_6_perf_v1/pack.json SHA256 48f8c3037e37cf8aaa83188c868af6706fd7f749592785433ee30b74070800d4; technischer Vertrag docs/schema4-targeted-curation.md, Commit 9e578ca; Nutzerfolgeauftrag 16.10.2026. Originale unverändert. Freigegebene Rückstellung: fehlende Demonstration; keine Ersatzbedeutung, keine Besitzeränderung, Historie erhalten."
+    },
+    {
+      "op": "replace_sentence",
+      "card_id": "ca8c7f9b1f100ebc671639b0d71fdf64",
+      "expect_card": {
+        "ref": "let's keep it that way|let's keep it that way/INTJ|let-s-keep-it-that-way#belassen-wir-es-dabei",
+        "form": "let's keep it that way",
+        "sense": "let's keep it that way/INTJ|let-s-keep-it-that-way#belassen-wir-es-dabei",
+        "translation_de": "belassen wir es dabei",
+        "form_kind": "base",
+        "form_label_de": "Fester Gesprächsausdruck",
+        "cefr_band": "mittel",
+        "learning": {
+          "group_id": "en:card:ca8c7f9b1f100ebc671639b0d71fdf64",
+          "primary_card_id": "ca8c7f9b1f100ebc671639b0d71fdf64",
+          "topic": "Zwischenmenschlicher Umgang",
+          "related": [
+            "conversation-theme:7"
+          ],
+          "note": "Eigenständiger neuer normaler Lernkopf; festgelegte Bedeutungsabsicht, Übungssatz und Alternativen noch zu redigieren."
+        }
+      },
+      "reason": "Originalentscheidung pipeline/data/curation/context_quality_v1.json SHA256 ba6226567b49b914e51fd8f38211f3d975ff9d7753929b7ddee950f9b818b3c4; Einzelreview docs/evidence/context-quality-v1/review.json SHA256 6470ef180b597a672ec855733564809caba524ccc1861a8b27a37e60ad620f74; Quelle pipeline/out/business_email_batch_6_perf_v1/pack.json SHA256 48f8c3037e37cf8aaa83188c868af6706fd7f749592785433ee30b74070800d4; technischer Vertrag docs/schema4-targeted-curation.md, Commit 9e578ca; Nutzerfolgeauftrag 16.10.2026. Originale unverändert. Originalentscheidung context-12. Saubere Küche ist der ausdrückliche Bezug von that way. Offline redaktionell geprüft: The bestimmter Artikel feminin die; kitchen Raum Küche; is Kopula ist; clean prädikativ sauber; feste Zielform unverändert. Zwei Sätze, eine Aufgabe. Beide Punkte ohne Sense. Alle Bedeutungen und Formglossen aus bestehendem Quelllexikon; keine neuen Einträge, keine Cloud-/Modellaufrufe.",
+      "sentence_id": "dd8ab9cfb2023421fe9e62249c9e509a",
+      "expect_sentence": {
+        "ref": "alltagssprache-v1-0176-s1",
+        "text": "Let's keep it that way for the rest of the week.",
+        "translation_de": "Lassen wir es für den Rest der Woche so.",
+        "origins": [
+          "deck"
+        ],
+        "model": null,
+        "qa_status": "editorial_reviewed",
+        "qa_report": {
+          "editorial_create": {
+            "reviewer": "ChatGPT – Erstellung und redaktionelle Eigenprüfung; keine unabhängige menschliche Sprachfreigabe",
+            "operation_id": "alltagssprache-redewendungen-batch-2-v1",
+            "sentence": "alltagssprache-v1-0176-s1",
+            "decision": "approved",
+            "reason": "ChatGPT-Redaktion: vollständiger Ausdruck in der vorgegebenen Bedeutung; Satz und natürliche deutsche Übersetzung geprüft, sämtliche Wortbindungen einzeln gegengelesen. Keine Alternative freigegeben; keine Vollständigkeits- oder Eindeutigkeitsgarantie.",
+            "checked": {
+              "text": "Let's keep it that way for the rest of the week.",
+              "translation_de": "Lassen wir es für den Rest der Woche so.",
+              "tokens_sha256": "36d7c22989ea21d29f5dbbeafd1488637b24a571be20a5f772147f31920d8a22",
+              "links_sha256": "c99a3059eef78f2b4c265acccef051c38f00f6e2450e768c74bec3cdd2968fd7"
+            },
+            "alternatives_checked": []
+          }
+        }
+      },
+      "expect_link": {
+        "card": "let's keep it that way|let's keep it that way/INTJ|let-s-keep-it-that-way#belassen-wir-es-dabei",
+        "sentence": "alltagssprache-v1-0176-s1",
+        "position": 1,
+        "gap_start": 0,
+        "gap_end": 22,
+        "accepted": [
+          "let's keep it that way"
+        ],
+        "valid_alternatives": []
+      },
+      "sentence": {
+        "ref": "context-quality-applied-v1-keep-it-that-way",
+        "text": "The kitchen is clean. Let's keep it that way.",
+        "translation_de": "Die Küche ist sauber. Sorgen wir dafür, dass sie so bleibt."
+      },
+      "tokens": [
+        {
+          "sentence": "context-quality-applied-v1-keep-it-that-way",
+          "idx": 0,
+          "surface": "The",
+          "start_pos": 0,
+          "end_pos": 3,
+          "sense": "the/DET|the#die",
+          "lemma": "the/DET"
+        },
+        {
+          "sentence": "context-quality-applied-v1-keep-it-that-way",
+          "idx": 1,
+          "surface": "kitchen",
+          "start_pos": 4,
+          "end_pos": 11,
+          "sense": "kitchen/NOUN|kitchen#kueche",
+          "lemma": "kitchen/NOUN"
+        },
+        {
+          "sentence": "context-quality-applied-v1-keep-it-that-way",
+          "idx": 2,
+          "surface": "is",
+          "start_pos": 12,
+          "end_pos": 14,
+          "sense": "be/AUX|be#ist",
+          "lemma": "be/AUX"
+        },
+        {
+          "sentence": "context-quality-applied-v1-keep-it-that-way",
+          "idx": 3,
+          "surface": "clean",
+          "start_pos": 15,
+          "end_pos": 20,
+          "sense": "clean/ADJ|clean#sauber",
+          "lemma": "clean/ADJ"
+        },
+        {
+          "sentence": "context-quality-applied-v1-keep-it-that-way",
+          "idx": 4,
+          "surface": ".",
+          "start_pos": 20,
+          "end_pos": 21
+        },
+        {
+          "sentence": "context-quality-applied-v1-keep-it-that-way",
+          "idx": 5,
+          "surface": "Let's keep it that way",
+          "start_pos": 22,
+          "end_pos": 44,
+          "sense": "let's keep it that way/INTJ|let-s-keep-it-that-way#belassen-wir-es-dabei",
+          "lemma": "let's keep it that way/INTJ",
+          "card": "let's keep it that way|let's keep it that way/INTJ|let-s-keep-it-that-way#belassen-wir-es-dabei"
+        },
+        {
+          "sentence": "context-quality-applied-v1-keep-it-that-way",
+          "idx": 6,
+          "surface": ".",
+          "start_pos": 44,
+          "end_pos": 45
+        }
+      ],
+      "link": {
+        "card": "let's keep it that way|let's keep it that way/INTJ|let-s-keep-it-that-way#belassen-wir-es-dabei",
+        "sentence": "context-quality-applied-v1-keep-it-that-way",
+        "position": 1,
+        "gap_start": 22,
+        "gap_end": 44,
+        "accepted": [
+          "let's keep it that way"
+        ],
+        "valid_alternatives": []
+      },
+      "alternatives_checked": []
+    },
+    {
+      "op": "card_gloss",
+      "card_id": "7e36dbaded1247f91a76a6577dfe5345",
+      "expect_card": {
+        "ref": "like|like/ADV|like#fuellwort",
+        "form": "like",
+        "sense": "like/ADV|like#fuellwort",
+        "form_kind": "base",
+        "form_label_de": "Adverb",
+        "translation_de": "quasi / sozusagen",
+        "cefr_band": "mittel",
+        "freq_rank": 42,
+        "learning": {
+          "group_id": "en:card:7e36dbaded1247f91a76a6577dfe5345",
+          "primary_card_id": "7e36dbaded1247f91a76a6577dfe5345",
+          "topic": "grammar",
+          "related": [],
+          "note": "Eigenständige genaue Form/Bedeutung; keine belegte Gleichsetzung. Historische Funktions-, Personen- und Bedeutungsunterschiede bleiben erhalten."
+        }
+      },
+      "reason": "Originalentscheidung pipeline/data/curation/context_quality_v1.json SHA256 ba6226567b49b914e51fd8f38211f3d975ff9d7753929b7ddee950f9b818b3c4; Einzelreview docs/evidence/context-quality-v1/review.json SHA256 6470ef180b597a672ec855733564809caba524ccc1861a8b27a37e60ad620f74; Quelle pipeline/out/business_email_batch_6_perf_v1/pack.json SHA256 48f8c3037e37cf8aaa83188c868af6706fd7f749592785433ee30b74070800d4; technischer Vertrag docs/schema4-targeted-curation.md, Commit 9e578ca; Nutzerfolgeauftrag 16.10.2026. Originale unverändert. Freigegebene Präzisierung der Kartenglosse für quotatives like; Satz, Übersetzung und Wörterbuch-/Senseglossen unverändert.",
+      "translation_de": "so (umgangssprachlich als Zitateinleitung)"
+    }
+  ]
+}

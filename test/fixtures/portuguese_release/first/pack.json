@@ -1,0 +1,304 @@
+{
+  "audio_assets": [],
+  "card_lexical_targets": [],
+  "card_sentences": [
+    {
+      "accepted": [
+        "ação"
+      ],
+      "card": "synthetic-acao",
+      "gap_end": 9,
+      "gap_start": 5,
+      "position": 1,
+      "sentence": "new:synthetic-acao",
+      "valid_alternatives": []
+    }
+  ],
+  "cards": [
+    {
+      "cefr_band": "anfaenger",
+      "form": "ação",
+      "introduction_scope": "ordinary",
+      "learning": {
+        "group_id": "pt-BR:card:71635e1362b762390a864cd1e31d1ec8",
+        "note": "Eigenständiges redaktionelles Lernziel.",
+        "primary_card_id": "71635e1362b762390a864cd1e31d1ec8",
+        "related": [],
+        "topic": "redaktion"
+      },
+      "ref": "synthetic-acao",
+      "sense": "ação",
+      "translation_de": "Test"
+    }
+  ],
+  "deck_cards": [
+    {
+      "card": "synthetic-acao",
+      "deck": "synthetic",
+      "position": 1
+    }
+  ],
+  "deck_practice_targets": [],
+  "deck_words": [
+    {
+      "deck": "synthetic",
+      "form_norm": "ação",
+      "position": 1,
+      "primary_card": "synthetic-acao"
+    }
+  ],
+  "decks": [
+    {
+      "cefr_band": "anfaenger",
+      "practice_kind": "ordinary",
+      "ref": "synthetic",
+      "slug": "synthetic",
+      "sort": 1,
+      "title_de": "SYNTHETISCH – NICHT VERÖFFENTLICHEN"
+    }
+  ],
+  "dictionary_forms": [
+    {
+      "form": "na",
+      "gloss_de": "Test",
+      "rank": 0,
+      "sense": "na"
+    },
+    {
+      "form": "ação",
+      "gloss_de": "Test",
+      "rank": 0,
+      "sense": "ação"
+    },
+    {
+      "form": "do",
+      "gloss_de": "Test",
+      "rank": 0,
+      "sense": "do"
+    },
+    {
+      "form": "teste",
+      "gloss_de": "Test",
+      "rank": 0,
+      "sense": "teste"
+    }
+  ],
+  "editor_history": {
+    "baseline_gaps": [],
+    "story_source_snapshots": []
+  },
+  "exercises": [],
+  "form_targets": [],
+  "grammar_rules": [],
+  "lang": "pt-BR",
+  "languages": [
+    {
+      "code": "pt-BR",
+      "gloss_lang": "de",
+      "name_de": "Portugiesisch (Brasilien)",
+      "name_native": "Português do Brasil"
+    }
+  ],
+  "lemmas": [
+    {
+      "lemma": "na",
+      "pos": "NOUN",
+      "ref": "na"
+    },
+    {
+      "lemma": "ação",
+      "pos": "NOUN",
+      "ref": "ação"
+    },
+    {
+      "lemma": "do",
+      "pos": "NOUN",
+      "ref": "do"
+    },
+    {
+      "lemma": "teste",
+      "pos": "NOUN",
+      "ref": "teste"
+    }
+  ],
+  "lexical_targets": [],
+  "release": {
+    "created_at": "2026-10-18T11:39:24.601392+00:00",
+    "notes": "INTERNES TEST-PACK · Lokaler redaktioneller Export",
+    "schema_version": 5,
+    "version": "synthetic_ptbr_1"
+  },
+  "senses": [
+    {
+      "definition_de": "Nur synthetische Strukturprüfung.",
+      "gloss_de": "Test",
+      "lemma": "na",
+      "ref": "na",
+      "sense_key": "na#synthetic"
+    },
+    {
+      "definition_de": "Nur synthetische Strukturprüfung.",
+      "gloss_de": "Test",
+      "lemma": "ação",
+      "ref": "ação",
+      "sense_key": "ação#synthetic"
+    },
+    {
+      "definition_de": "Nur synthetische Strukturprüfung.",
+      "gloss_de": "Test",
+      "lemma": "do",
+      "ref": "do",
+      "sense_key": "do#synthetic"
+    },
+    {
+      "definition_de": "Nur synthetische Strukturprüfung.",
+      "gloss_de": "Test",
+      "lemma": "teste",
+      "ref": "teste",
+      "sense_key": "teste#synthetic"
+    }
+  ],
+  "sentence_tokens": [
+    {
+      "context_gloss_de": null,
+      "context_snapshot": {
+        "definition_de": null,
+        "form_label_de": null,
+        "function": null,
+        "lemma": null,
+        "pos": null,
+        "sense_key": null
+      },
+      "end_pos": 1,
+      "idx": 0,
+      "sentence": "new:synthetic-acao",
+      "start_pos": 0,
+      "surface": "😀"
+    },
+    {
+      "context_gloss_de": "Synthetische Testbindung",
+      "context_snapshot": {
+        "definition_de": "Nur synthetische Strukturprüfung.",
+        "form_label_de": null,
+        "function": null,
+        "lemma": "na",
+        "pos": "NOUN",
+        "sense_key": "na#synthetic"
+      },
+      "end_pos": 4,
+      "idx": 1,
+      "lemma": "na",
+      "sense": "na",
+      "sentence": "new:synthetic-acao",
+      "start_pos": 2,
+      "surface": "Na"
+    },
+    {
+      "card": "synthetic-acao",
+      "context_gloss_de": "Synthetische Testbindung",
+      "context_snapshot": {
+        "definition_de": "Nur synthetische Strukturprüfung.",
+        "form_label_de": null,
+        "function": null,
+        "lemma": "ação",
+        "pos": "NOUN",
+        "sense_key": "ação#synthetic"
+      },
+      "end_pos": 9,
+      "idx": 2,
+      "lemma": "ação",
+      "sense": "ação",
+      "sentence": "new:synthetic-acao",
+      "start_pos": 5,
+      "surface": "ação"
+    },
+    {
+      "context_gloss_de": "Synthetische Testbindung",
+      "context_snapshot": {
+        "definition_de": "Nur synthetische Strukturprüfung.",
+        "form_label_de": null,
+        "function": null,
+        "lemma": "do",
+        "pos": "NOUN",
+        "sense_key": "do#synthetic"
+      },
+      "end_pos": 12,
+      "idx": 3,
+      "lemma": "do",
+      "sense": "do",
+      "sentence": "new:synthetic-acao",
+      "start_pos": 10,
+      "surface": "do"
+    },
+    {
+      "context_gloss_de": "Synthetische Testbindung",
+      "context_snapshot": {
+        "definition_de": "Nur synthetische Strukturprüfung.",
+        "form_label_de": null,
+        "function": null,
+        "lemma": "teste",
+        "pos": "NOUN",
+        "sense_key": "teste#synthetic"
+      },
+      "end_pos": 18,
+      "idx": 4,
+      "lemma": "teste",
+      "sense": "teste",
+      "sentence": "new:synthetic-acao",
+      "start_pos": 13,
+      "surface": "teste"
+    },
+    {
+      "context_gloss_de": null,
+      "context_snapshot": {
+        "definition_de": null,
+        "form_label_de": null,
+        "function": null,
+        "lemma": null,
+        "pos": null,
+        "sense_key": null
+      },
+      "end_pos": 19,
+      "idx": 5,
+      "sentence": "new:synthetic-acao",
+      "start_pos": 18,
+      "surface": "."
+    }
+  ],
+  "sentences": [
+    {
+      "model": null,
+      "origins": [
+        "deck"
+      ],
+      "qa_status": "editorial_reviewed",
+      "ref": "new:synthetic-acao",
+      "revision_sha256": "dbb308e40c90f14f5d7750fe68d871f27c9376bd1c39674939394102ac96a155",
+      "root_sentence_id": "ce647907702632c5640b7ed46847f388",
+      "text": "😀 Na ação do teste.",
+      "translation_de": "Synthetischer Test, keine Übersetzungsfreigabe."
+    }
+  ],
+  "stories": [],
+  "story_context_corrections": [],
+  "story_sentences": [],
+  "word_aliases": [],
+  "word_registry": {
+    "sha256": "2bb86885a1434c92e9f916cd44a3429b5e6565809e64f188187efb264687e2d1",
+    "snapshot": {
+      "format_version": 1,
+      "normalization": "NFC-lower-apostrophe-v1",
+      "words": [
+        {
+          "aliases": [],
+          "form_norm": "ação",
+          "lang": "pt-BR",
+          "owner_deck_ref": "synthetic",
+          "position": 1,
+          "primary_card_id": "71635e1362b762390a864cd1e31d1ec8",
+          "primary_card_ref": "synthetic-acao"
+        }
+      ]
+    }
+  }
+}

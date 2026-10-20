@@ -1,0 +1,669 @@
+{
+  "summary": {
+    "changed_count": 75,
+    "affected_count": 11,
+    "changed_files": 25,
+    "risk_level": "high"
+  },
+  "changed_symbols": [
+    {
+      "id": "Section:NEXTSTEPS.md:L1:NEXTSTEPS",
+      "name": "NEXTSTEPS",
+      "type": "Section",
+      "filePath": "NEXTSTEPS.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:NEXTSTEPS.md:L3:Erledigt / Dateien",
+      "name": "Erledigt / Dateien",
+      "type": "Section",
+      "filePath": "NEXTSTEPS.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:NEXTSTEPS.md:L9:Tests / Abweichungen",
+      "name": "Tests / Abweichungen",
+      "type": "Section",
+      "filePath": "NEXTSTEPS.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:NEXTSTEPS.md:L16:Erhaltene Altstände / offen",
+      "name": "Erhaltene Altstände / offen",
+      "type": "Section",
+      "filePath": "NEXTSTEPS.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/story-single-sentence-v1/audit.py:ROOT",
+      "name": "ROOT",
+      "type": "Variable",
+      "filePath": "docs/evidence/story-single-sentence-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/story-single-sentence-v1/audit.py:old",
+      "name": "old",
+      "type": "Variable",
+      "filePath": "docs/evidence/story-single-sentence-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/story-single-sentence-v1/audit.py:out",
+      "name": "out",
+      "type": "Variable",
+      "filePath": "docs/evidence/story-single-sentence-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/story-single-sentence-v1/audit.py:new",
+      "name": "new",
+      "type": "Variable",
+      "filePath": "docs/evidence/story-single-sentence-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/story-single-sentence-v1/audit.py:counts",
+      "name": "counts",
+      "type": "Variable",
+      "filePath": "docs/evidence/story-single-sentence-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/story-single-sentence-v1/audit.py:changes",
+      "name": "changes",
+      "type": "Variable",
+      "filePath": "docs/evidence/story-single-sentence-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:docs/evidence/story-single-sentence-v1/audit.py:missing",
+      "name": "missing",
+      "type": "Function",
+      "filePath": "docs/evidence/story-single-sentence-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:docs/evidence/story-single-sentence-v1/audit.py:report",
+      "name": "report",
+      "type": "Variable",
+      "filePath": "docs/evidence/story-single-sentence-v1/audit.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/schema4-targeted-curation.md:L1:Gezielte Schema-4-Kuration",
+      "name": "Gezielte Schema-4-Kuration",
+      "type": "Section",
+      "filePath": "docs/schema4-targeted-curation.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/schema4-targeted-curation.md:L108:Additive Storykontext-Prüfung (16.10.2026)",
+      "name": "Additive Storykontext-Prüfung (16.10.2026)",
+      "type": "Section",
+      "filePath": "docs/schema4-targeted-curation.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/schema4-targeted-curation.md:L120:Story-Einzelsatzvertrag v2 (16.10.2026)",
+      "name": "Story-Einzelsatzvertrag v2 (16.10.2026)",
+      "type": "Section",
+      "filePath": "docs/schema4-targeted-curation.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/story-single-sentence-v1.md:L1:Story-Einzelsätze: Plan und Abnahme",
+      "name": "Story-Einzelsätze: Plan und Abnahme",
+      "type": "Section",
+      "filePath": "docs/story-single-sentence-v1.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/story-single-sentence-v1.md:L3:Plan vor Implementierung",
+      "name": "Plan vor Implementierung",
+      "type": "Section",
+      "filePath": "docs/story-single-sentence-v1.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/story-single-sentence-v1.md:L17:Präzisierung aus der Aufruferprüfung",
+      "name": "Präzisierung aus der Aufruferprüfung",
+      "type": "Section",
+      "filePath": "docs/story-single-sentence-v1.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/story-single-sentence-v1.md:L21:Erneute Redaktion aller 14 Wortstellen",
+      "name": "Erneute Redaktion aller 14 Wortstellen",
+      "type": "Section",
+      "filePath": "docs/story-single-sentence-v1.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/story-single-sentence-v1.md:L42:Lokaler Updatepfad und Historienschutz",
+      "name": "Lokaler Updatepfad und Historienschutz",
+      "type": "Section",
+      "filePath": "docs/story-single-sentence-v1.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/story-single-sentence-v1.md:L50:Bestandsprüfung und internes Staging",
+      "name": "Bestandsprüfung und internes Staging",
+      "type": "Section",
+      "filePath": "docs/story-single-sentence-v1.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Section:docs/story-single-sentence-v1.md:L56:Manuelle Prüfung bereits hinzugefügter Wörter",
+      "name": "Manuelle Prüfung bereits hinzugefügter Wörter",
+      "type": "Section",
+      "filePath": "docs/story-single-sentence-v1.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/data/content/drift_content_repository.dart:DriftContentRepository",
+      "name": "DriftContentRepository",
+      "type": "Class",
+      "filePath": "lib/data/content/drift_content_repository.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:lib/data/content/drift_content_repository.dart:DriftContentRepository._readStoryContext#2",
+      "name": "_readStoryContext",
+      "type": "Method",
+      "filePath": "lib/data/content/drift_content_repository.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/data/content/drift_content_repository.dart:DriftContentRepository._corrections",
+      "name": "_corrections",
+      "type": "Property",
+      "filePath": "lib/data/content/drift_content_repository.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:lib/data/content/drift_content_repository.dart:DriftContentRepository.storyContextCorrections#0",
+      "name": "storyContextCorrections",
+      "type": "Method",
+      "filePath": "lib/data/content/drift_content_repository.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:lib/data/content/drift_content_repository.dart:DriftContentRepository._loadStoryContextCorrections#0",
+      "name": "_loadStoryContextCorrections",
+      "type": "Method",
+      "filePath": "lib/data/content/drift_content_repository.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/data/learning/practice_item_resolver.dart:PracticeItemResolver",
+      "name": "PracticeItemResolver",
+      "type": "Class",
+      "filePath": "lib/data/learning/practice_item_resolver.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/data/user/drift_user_repository.dart:DriftUserRepository",
+      "name": "DriftUserRepository",
+      "type": "Class",
+      "filePath": "lib/data/user/drift_user_repository.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:lib/data/user/drift_user_repository.dart:DriftUserRepository.applyStoryContextCorrections#1",
+      "name": "applyStoryContextCorrections",
+      "type": "Method",
+      "filePath": "lib/data/user/drift_user_repository.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/domain/story_learning.dart:StoryContextCorrection",
+      "name": "StoryContextCorrection",
+      "type": "Class",
+      "filePath": "lib/domain/story_learning.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/domain/story_learning.dart:StoryContextCorrection.version",
+      "name": "version",
+      "type": "Property",
+      "filePath": "lib/domain/story_learning.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/domain/story_learning.dart:StoryContextCorrection.current",
+      "name": "current",
+      "type": "Property",
+      "filePath": "lib/domain/story_learning.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/domain/story_learning.dart:StoryContextCorrection.previous",
+      "name": "previous",
+      "type": "Property",
+      "filePath": "lib/domain/story_learning.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/domain/story_learning.dart:StoryContextCorrectionSource",
+      "name": "StoryContextCorrectionSource",
+      "type": "Class",
+      "filePath": "lib/domain/story_learning.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:lib/domain/story_learning.dart:StoryContextCorrectionSource.storyContextCorrections#0",
+      "name": "storyContextCorrections",
+      "type": "Method",
+      "filePath": "lib/domain/story_learning.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/domain/story_learning.dart:StoryContextCorrectionStore",
+      "name": "StoryContextCorrectionStore",
+      "type": "Class",
+      "filePath": "lib/domain/story_learning.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:lib/domain/story_learning.dart:StoryContextCorrectionStore.applyStoryContextCorrections#1",
+      "name": "applyStoryContextCorrections",
+      "type": "Method",
+      "filePath": "lib/domain/story_learning.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:lib/presentation/providers/learning_providers.dart:wordListProvider",
+      "name": "wordListProvider",
+      "type": "Variable",
+      "filePath": "lib/presentation/providers/learning_providers.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/screens/decks/deck_practice_screen.dart:_DeckPracticeScreenState",
+      "name": "_DeckPracticeScreenState",
+      "type": "Class",
+      "filePath": "lib/screens/decks/deck_practice_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/decks/deck_practice_screen.dart:_DeckPracticeScreenState._autoTimer",
+      "name": "_autoTimer",
+      "type": "Property",
+      "filePath": "lib/screens/decks/deck_practice_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/decks/deck_practice_screen.dart:_DeckPracticeScreenState._errorTimer",
+      "name": "_errorTimer",
+      "type": "Property",
+      "filePath": "lib/screens/decks/deck_practice_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/decks/deck_practice_screen.dart:_DeckPracticeScreenState._errorShake",
+      "name": "_errorShake",
+      "type": "Property",
+      "filePath": "lib/screens/decks/deck_practice_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/decks/deck_practice_screen.dart:_DeckPracticeScreenState._buttonError",
+      "name": "_buttonError",
+      "type": "Property",
+      "filePath": "lib/screens/decks/deck_practice_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/decks/deck_practice_screen.dart:_DeckPracticeScreenState._fieldError",
+      "name": "_fieldError",
+      "type": "Property",
+      "filePath": "lib/screens/decks/deck_practice_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/decks/deck_practice_screen.dart:_DeckPracticeScreenState._errorGeneration",
+      "name": "_errorGeneration",
+      "type": "Property",
+      "filePath": "lib/screens/decks/deck_practice_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/decks/deck_practice_screen.dart:_DeckPracticeScreenState._textRevision",
+      "name": "_textRevision",
+      "type": "Property",
+      "filePath": "lib/screens/decks/deck_practice_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/decks/deck_practice_screen.dart:_DeckPracticeScreenState._errorOffset",
+      "name": "_errorOffset",
+      "type": "Property",
+      "filePath": "lib/screens/decks/deck_practice_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:lib/screens/decks/deck_practice_screen.dart:_DeckPracticeScreenState._clearError#1",
+      "name": "_clearError",
+      "type": "Method",
+      "filePath": "lib/screens/decks/deck_practice_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:lib/screens/decks/deck_practice_screen.dart:_DeckPracticeScreenState._showError#0",
+      "name": "_showError",
+      "type": "Method",
+      "filePath": "lib/screens/decks/deck_practice_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:lib/screens/decks/deck_practice_screen.dart:_DeckPracticeScreenState._inputEdited#0",
+      "name": "_inputEdited",
+      "type": "Method",
+      "filePath": "lib/screens/decks/deck_practice_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/screens/decks/widgets/practice_chrome.dart:PracticeSessionBar",
+      "name": "PracticeSessionBar",
+      "type": "Class",
+      "filePath": "lib/screens/decks/widgets/practice_chrome.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/screens/decks/widgets/practice_chrome.dart:PracticeAnswerToolbar",
+      "name": "PracticeAnswerToolbar",
+      "type": "Class",
+      "filePath": "lib/screens/decks/widgets/practice_chrome.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/decks/widgets/practice_chrome.dart:PracticeAnswerToolbar.error",
+      "name": "error",
+      "type": "Property",
+      "filePath": "lib/screens/decks/widgets/practice_chrome.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/decks/widgets/practice_chrome.dart:PracticeAnswerToolbar.errorOffset",
+      "name": "errorOffset",
+      "type": "Property",
+      "filePath": "lib/screens/decks/widgets/practice_chrome.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/screens/decks/widgets/practice_chrome.dart:_ToolbarButton",
+      "name": "_ToolbarButton",
+      "type": "Class",
+      "filePath": "lib/screens/decks/widgets/practice_chrome.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/decks/widgets/practice_chrome.dart:_ToolbarButton.error",
+      "name": "error",
+      "type": "Property",
+      "filePath": "lib/screens/decks/widgets/practice_chrome.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/decks/widgets/practice_chrome.dart:_ToolbarButton.primary",
+      "name": "primary",
+      "type": "Property",
+      "filePath": "lib/screens/decks/widgets/practice_chrome.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/screens/decks/widgets/practice_input.dart:PracticeInputController",
+      "name": "PracticeInputController",
+      "type": "Class",
+      "filePath": "lib/screens/decks/widgets/practice_input.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/decks/widgets/practice_input.dart:PracticeInputController.textRevision",
+      "name": "textRevision",
+      "type": "Property",
+      "filePath": "lib/screens/decks/widgets/practice_input.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/screens/decks/widgets/practice_sentence.dart:PracticeSentence",
+      "name": "PracticeSentence",
+      "type": "Class",
+      "filePath": "lib/screens/decks/widgets/practice_sentence.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/decks/widgets/practice_sentence.dart:PracticeSentence.error",
+      "name": "error",
+      "type": "Property",
+      "filePath": "lib/screens/decks/widgets/practice_sentence.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/decks/widgets/practice_sentence.dart:PracticeSentence.errorOffset",
+      "name": "errorOffset",
+      "type": "Property",
+      "filePath": "lib/screens/decks/widgets/practice_sentence.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/screens/decks/widgets/practice_sentence.dart:PracticeSentenceState",
+      "name": "PracticeSentenceState",
+      "type": "Class",
+      "filePath": "lib/screens/decks/widgets/practice_sentence.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/curate.py:apply_targeted_patch",
+      "name": "apply_targeted_patch",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/curate.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/curate.py:_apply_story_contexts",
+      "name": "_apply_story_contexts",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/curate.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/curate.py:_validate_story_single_sentence",
+      "name": "_validate_story_single_sentence",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/curate.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/curate.py:_validate_story_single_sentence.require@812:4",
+      "name": "require",
+      "type": "Function",
+      "filePath": "pipeline/src/sprachpipe/curate.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_story_contexts.py:single_sentence_reviewed",
+      "name": "single_sentence_reviewed",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_story_contexts.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_story_contexts.py:test_single_sentence_all_fourteen_exact_originals_and_eight_exact_corrections",
+      "name": "test_single_sentence_all_fourteen_exact_originals_and_eight_exact_corrections",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_story_contexts.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_story_contexts.py:test_short_original_requires_fully_reviewed_replacement",
+      "name": "test_short_original_requires_fully_reviewed_replacement",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_story_contexts.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_story_contexts.py:test_three_words_pronouns_then_abbreviation_unicode_are_not_replacement_reasons",
+      "name": "test_three_words_pronouns_then_abbreviation_unicode_are_not_replacement_reasons",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_story_contexts.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_story_contexts.py:test_unmerged_multiword_target_and_punctuation_do_not_bypass_short_rule",
+      "name": "test_unmerged_multiword_target_and_punctuation_do_not_bypass_short_rule",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_story_contexts.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:pipeline/tests/test_story_contexts.py:test_neighbors_multiple_sentences_and_pronoun_only_replacement_are_rejected",
+      "name": "test_neighbors_multiple_sentences_and_pronoun_only_replacement_are_rejected",
+      "type": "Function",
+      "filePath": "pipeline/tests/test_story_contexts.py",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:test/story_single_sentence_test.dart:main",
+      "name": "main",
+      "type": "Function",
+      "filePath": "test/story_single_sentence_test.dart",
+      "change_type": "touched"
+    }
+  ],
+  "affected_processes": [
+    {
+      "id": "proc_184_apply_targeted_patch",
+      "name": "Apply_targeted_patch → Require",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "apply_targeted_patch",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_333_apply_targeted_patch",
+      "name": "Apply_targeted_patch → _canonical_value",
+      "process_type": "cross_community",
+      "step_count": 6,
+      "changed_steps": [
+        {
+          "symbol": "apply_targeted_patch",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_351_apply_targeted_patch",
+      "name": "Apply_targeted_patch → Form_norm",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "apply_targeted_patch",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_352_apply_targeted_patch",
+      "name": "Apply_targeted_patch → Digest",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "apply_targeted_patch",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_353_apply_targeted_patch",
+      "name": "Apply_targeted_patch → Live",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "apply_targeted_patch",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_354_apply_targeted_patch",
+      "name": "Apply_targeted_patch → Ref",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "apply_targeted_patch",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_355_apply_targeted_patch",
+      "name": "Apply_targeted_patch → Validate_learning",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "apply_targeted_patch",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_356_apply_targeted_patch",
+      "name": "Apply_targeted_patch → _complete",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "apply_targeted_patch",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_357_apply_targeted_patch",
+      "name": "Apply_targeted_patch → _tombstones",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "apply_targeted_patch",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_358_apply_targeted_patch",
+      "name": "Apply_targeted_patch → Columns_for",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "apply_targeted_patch",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_359_apply_targeted_patch",
+      "name": "Apply_targeted_patch → Sentence_count",
+      "process_type": "cross_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "apply_targeted_patch",
+          "step": 1
+        }
+      ]
+    }
+  ]
+}
