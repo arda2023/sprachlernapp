@@ -1,7 +1,5 @@
 # Product
 
-<!-- impeccable:product-schema 1 -->
-
 ## Platform
 
 iOS and Android (Flutter). Targeted for release on the Apple App Store and Google Play; no web application. One unified custom design system across both platforms — the brand sets the visual language, not the OS (not Cupertino/Material-adaptive).
