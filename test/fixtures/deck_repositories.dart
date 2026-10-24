@@ -7,6 +7,7 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:sprachapp/domain/content.dart';
 import 'package:sprachapp/domain/repositories.dart';
 import 'package:sprachapp/domain/srs_state.dart';
@@ -316,8 +317,10 @@ Widget testScope(
   ContentRepository? content,
   UserRepository? user,
   bool library = false,
+  List<Override> overrides = const [],
 }) => ProviderScope(
   overrides: [
+    ...overrides,
     contentRepositoryProvider.overrideWith(
       (ref) => content ?? TestContent(library: library),
     ),

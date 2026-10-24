@@ -38,6 +38,8 @@ Herleitung, Mobbin-Referenzen und verworfene Richtungen: [historische Home-Reche
 
 Mobbin-Referenzen: Import-Raster wie [ElevenReader](https://mobbin.com/screens/499ce035-77a7-4fa7-9254-e3f3db60c2d5) und [Speechify](https://mobbin.com/screens/50a3b7f2-1361-47df-8f77-398102fbebaa); „Continue“-Zeile wie [Apple Books](https://mobbin.com/screens/38f5b90d-0d5b-467f-9e2d-7155ba17a3ea) und [Blinkist](https://mobbin.com/screens/7cec730b-97f5-48c2-9ccb-4846a2d8ef69); Kategorie-Karussells mit Anzahl wie [Life Reset](https://mobbin.com/screens/c68ed0a3-309b-4e13-acfa-44f65e4246c1); markiertes Wort im Lesetext wie [ElevenReader](https://mobbin.com/screens/812faffb-b3bf-40d1-8992-b01bc23ca873).
 
+**Nachrichten-Karte:** Bild oben, darunter nur der Titel (Ressort, Niveau und Lesezeit nur im VoiceOver-Label), knapper Innenabstand.
+
 **Stories-Tab, Reihenfolge:** Titel + „Importieren“ → Nachrichten-Karussell (endlos, links/rechts) mit „Demo“-Chip → Weiterlesen (max. 3, zuletzt gelesen zuerst) → Deine Texte → eine Karussell-Reihe pro Kategorie mit Anzahl.
 
 | Baustein | Regel | Datei |
@@ -46,7 +48,7 @@ Mobbin-Referenzen: Import-Raster wie [ElevenReader](https://mobbin.com/screens/4
 | Kategorien | Wissenschaft, Restaurant, Englisch im Beruf, Reisen, Alltag, Gesundheit, Kultur, Technik – je Farbe + Icon (`StoryCategory`). „Küche“ → Restaurant, „Medizin“ → Gesundheit. | `models/story_category.dart` |
 | Weiterlesen | Zeile mit Mini-Cover, Titel, Kategorie · Niveau, Balken + Prozent, oranger Play-Kreis. Nur begonnene, nicht beendete Stories/Texte. | `story_library_screen.dart` |
 | Importieren | Pill oben rechts. Öffnet das orange Popover (Pfeil zum Knopf) mit 2×2-Raster: Text einfügen (Zwischenablage, funktioniert) · Datei (TXT, EPUB, PDF, SRT) · YouTube (Transkript per Link) · Webseite – die letzten drei als „Bald“. Max. 5.000 Wörter (PRODUCT.md). Nach dem Import öffnet sich der Text direkt. | `widgets/import_panel.dart` |
-| Deine Texte | Leer: Hinweis-Karte mit „Text importieren“. Sonst „+ Import“-Karte und papierfarbene Karten (Quelle, Titel, Wörter · Minuten, Fortschritt). Lange drücken → löschen. | `story_library_screen.dart` |
+| Deine Texte | Leer: Hinweis-Karte (Titel ohne Untertitel) mit „Text importieren“. Sonst „+ Import“-Karte und papierfarbene Karten (Quelle, Titel, Wörter · Minuten, Fortschritt). Lange drücken → löschen. | `story_library_screen.dart` |
 | Reader | Eine lange Seite, nur nach unten. Oben: Zurück · Titel (erscheint beim Scrollen) · Prozent. Links eine 4-pt-Leiste, die sich beim Scrollen orange füllt. Kopf: Kategorie-Symbol, Meta, Serif-Titel, Hinweis. Ende: „Geschafft!“-Karte. Schwebendes Dock unten: Vorlesen · Übersetzen. Öffnet an der zuletzt gelesenen Stelle. | `stories/story_reader_screen.dart` |
 | Wort-Popover | Orange Sprechblase mit Pfeil auf die Tippstelle: Grundform (Serif), Wortart, „im Text: …“, Lautsprecher-Knopf (Aussprechen), Deutsch, weißer Knopf „Zum Lernen hinzufügen“ (echter Speicherstatus entscheidet). Das getippte Wort ist orange hinterlegt. | `widgets/word_popover.dart` |
 | Satz-Popover | Übersetzungsmodus: Satz + Deutsch in derselben Sprechblase. | `widgets/sentence_popover.dart` |
@@ -69,5 +71,58 @@ Mobbin-Referenzen: Wortliste wie [Preply](https://mobbin.com/screens/a839b88a-b5
 | Stapel-Karte | Links das Stapel-Icon im Fortschritts-Halbkreis wie der Play-Knopf (Anteil geübter Übungen, orange), daneben Name, Blitze statt Niveau-Text und Wortzahl. In der Stapelübersicht sind aktive Stapel komplett orange (weiße Inhalte, „Aktiv“-Chip); auf Home bleiben sie neutral. | `home/widgets/deck_tile.dart` |
 | Stapel-Details | Großes Icon im Halbkreis (84 pt), Niveau-Chip mit Blitzen, Serif-Titel, Beschreibung; Kennzahlen „Geübt / Gemeistert / Noch neu“ nebeneinander über einem Balken; oranger Knopf „Mit diesem Stapel üben“; Schalter „In die tägliche Übung“ (orange); Stapel-Revue als eine Zeile; zuletzt geübte Formen. Ohne „Mehr davon“-Überschrift. | `decks/deck_details_screen.dart` |
 | Wortliste | Suche + Playlist ohne Rahmen; Filter-Chips Alle · Neu · Im Aufbau · Gemeistert · Favoriten · Playlist · Deaktiviert (abgeleitet, nichts gespeichert). Jedes Wort als Karte: Stufe, Wort (anhören), Übersetzung in Orange, Satz (anhören), Metadaten; rechts nur Herz und „…“ → Popover mit Playlist, Deaktivieren, Details. Leere Liste und erfolglose Suche haben eigene Texte. | `words/word_list_screen.dart`, `words/widgets/word_list_item.dart` |
-| Lernen | Oben Schließen (×), orange Segment-Fortschritt mit „Noch N Übungen“, Menü. Satzkarte mit großem Radius, Übungsart als Chip (öffnet Grammatik). Übersetzung als Karte mit „Deutsch“-Label. Aktionen schweben ohne Leiste: Hauptknopf orange, sonst ruhige Fläche; Erfolgshaken grün. Wort-Tooltip in Popover-Orange. Logik, Reihenfolge und Abtipp-Regeln unverändert. | `decks/deck_practice_screen.dart`, `decks/widgets/practice_chrome.dart` |
+| Lernen | Oben Schließen (×), durchgehender orangefarbener Fortschrittsbalken ohne Textzeile; Fehlerwiederholungen zeichnen ab ihrem Start einen gelben Abschnitt, danach geht es orange weiter und ältere gelbe Abschnitte bleiben erhalten (Anzahl nur für VoiceOver; Sonderzustände wie „Tagesziel erreicht“ bleiben sichtbar), Menü. Satzkarte mit großem Radius, Übungsart als Chip (öffnet Grammatik). Übersetzung als Karte ohne „Deutsch“-Label. Nach einer gelösten Aufgabe bleibt die Tastatur offen (Feld behält den Fokus, Eingaben gesperrt); ihre Fertig-Taste öffnet die nächste Aufgabe. Aktionen schweben ohne Leiste: Hauptknopf orange, sonst ruhige Fläche; Erfolgshaken grün. Wort-Tooltip in Popover-Orange. Logik, Reihenfolge und Abtipp-Regeln unverändert. | `decks/deck_practice_screen.dart`, `decks/widgets/practice_chrome.dart` |
 | Knöpfe allgemein | `PrimaryActionButton` orange mit weißer Schrift, `OutlineActionButton` als ruhige Fläche ohne Rahmen, beide als Pille. | `widgets/action_buttons.dart` |
+
+## Inhalte (24.10.2026)
+
+Mobbin-Referenzen: große „Als Nächstes“-Karte mit Kachel-Reihe darunter wie [Babbel](https://mobbin.com/screens/4362b601-1544-43d7-aa4a-20a178466c8b); Sektionen mit „See all“ wie [Nibble](https://mobbin.com/screens/227d5950-a38c-4df2-a9e6-fd3ffdcd662c) und [Coursera](https://mobbin.com/screens/94c8c55f-9447-4e5d-a071-db7b6c2a055c); Spalten mit gestapelten Zeilen wie die App-Listen im [App Store](https://mobbin.com/screens/19a11986-b09c-4e5b-976c-78a23137378f).
+
+**Reihenfolge:** Titel „Inhalte“ → Texte → Hören → Grammatik → Grammatikregeln. Jede Kategorie zeigt ihre Inhalte direkt; kein Zwischenraster mehr. Jede Sektion hat eine eigene Form, damit die Seite nicht aus vier gleichen Karussells besteht.
+
+| Baustein | Regel | Datei |
+|---|---|---|
+| Sektionskopf | Serif-Überschrift, rechts „Mehr anzeigen ›“ (wie „Mehr ansehen“ auf Home) → vollständige Liste der Kategorie. Keine Meta-Zeile mit Anzahlen darunter. VoiceOver: „Alle Texte/Hörübungen/Grammatikübungen/Grammatikregeln anzeigen“. | `content/content_dashboard_screen.dart`, `widgets/more_button.dart` |
+| Texte | Karussell mit denselben Covern wie Stories (`StoryCard`), Texte aus gelesenen Stories zuerst, höchstens 8. Antippen → Übungsart-Sheet → Übung. | `content_dashboard_screen.dart`, `content/text_library_screen.dart` |
+| Hören | Breite Karte im Wiedergabe-Ton (`playback`) mit blassem Wellenform-Icon: „Als Nächstes“ (erste offene Übung; sind alle gelöst: „Noch einmal hören“), Serif-Titel, Untertitel, Blitze + Thema, oranger Play-Kreis. Darunter Kacheln für die übrigen Übungen: Lautsprecher-Badge, Titel, Blitze, Thema; gelöst = grüner Haken. Kein Untertitel auf den Kacheln. | `content_dashboard_screen.dart` |
+| Grammatik | Horizontal scrollende Spalten mit je drei Zeilen; die nächste Spalte schaut rechts herein. Zeile: 52-pt-Feld (`activeTint` mit „Aa“, gelöst `successTint` mit Haken), Titel, Untertitel, Blitze. | `content_dashboard_screen.dart` |
+| Grammatikregeln | Zweispaltiges Raster der ersten vier Regeln als Karteikarten: Blitze (Niveau) + Lesezeit, direkt darunter Serif-Titel und Kurzbeschreibung (oben bündig, kein Leerraum dazwischen). Antippen → Regel-Detail. | `content_dashboard_screen.dart` |
+| Übungsliste („Mehr anzeigen“ bei Hören/Grammatik) | Keine Aufteilung in „Meine Übungen“/„Fertig“ mehr: alle Übungen in Inhaltsreihenfolge, gelöste mit grünem Haken vor dem Chevron. Keine Zeile „N Übungen · N fertig“. | `practice/practice_library_screen.dart`, `widgets/chevron_row.dart` |
+
+**Dynamic Type:** Kachel-Reihen und Spalten haben keine feste Höhe; sie wachsen mit der höchsten Karte (`IntrinsicHeight`), statt abzuschneiden.
+
+## Onboarding (24.10.2026)
+
+Herleitung: Recherche unter `aislop/onboarding` (Reddit-Threads, YouTube-Transkripte). Kernpunkte: erst Wert zeigen, dann nach dem Konto fragen (Duolingo); jede Frage muss den nächsten Screen sichtbar verändern; Fortschritt zeigen, Zurück erlauben; Social Login (Apple zuerst) plus Weg ohne Konto. Mobbin-Referenzen: Illustration + „Weiter“ + „Ich habe schon ein Konto“ wie [Nibble](https://mobbin.com/screens/43b10bcd-05d6-496b-a3ae-051f56687de5) und [Headway](https://mobbin.com/screens/35d60dff-8ff0-4748-83f0-915d87faf1ed); Anmeldeknöpfe wie [Me+](https://mobbin.com/screens/66b2668a-f0e0-451a-a7de-993c9efb2e7f) und [Uxcel Go](https://mobbin.com/screens/8ea4e776-8f94-45eb-befa-5fa3ca08a590).
+
+**Reihenfolge (5 Seiten):** Willkommen → Thema → Tagesziel → Wort antippen → Konto. Oben Zurück und orange Schritt-Segmente wie in der Übung; unten ein oranger Hauptknopf, der abgeblendet bleibt, bis die Seite hat, was sie braucht. Arbeitsname „Lingvist“ (Platzhalter).
+
+| Seite | Regel | Datei |
+|---|---|---|
+| Willkommen | Logo + Wortmarke, animiertes Buch mit Wort-Blasen, Serif-Titel, ein Satz. „Los geht’s“; „Ich habe schon ein Konto“ springt zur Konto-Seite. | `onboarding/onboarding_screen.dart` |
+| Thema | Vier Kacheln in den Story-Farben (Reisen, Beruf, Alltag, Kultur). Gewählt = oranger Rand + Haken. Bestimmt den Beispielsatz auf Seite 4 und wird gespeichert. | `onboarding_screen.dart` |
+| Tagesziel | Animierter Ring mit Flamme; Locker 5 · Normal 10 (vorgewählt) · Ernsthaft 15 · Intensiv 20 Wörter. Gewählt in Popover-Orange. Wird als echtes Tagesziel gespeichert. | `onboarding_screen.dart`, `main.dart` |
+| Wort antippen | Beispielsatz aus dem gewählten Thema; antippbare Wörter gepunktet unterstrichen, das erste pulsiert ein paar Mal. Antippen → Wort orange, darunter die orange Bedeutungs-Karte wie im Reader. Nur Onboarding-Demo, kein Inhaltspaket, kein Lernstand. | `onboarding_screen.dart` |
+| Konto | Animiertes Logo, „Speichere deinen Fortschritt“; „Mit Apple fortfahren“ (weiß), „Mit Google fortfahren“, „Mit E-Mail fortfahren“, „Ohne Konto weiter“. Anmeldung ist Platzhalter: jede Option beendet das Onboarding, Konto-Optionen sagen per Hinweis, dass die Anmeldung bald kommt und bis dahin lokal gelernt wird. | `onboarding_screen.dart` |
+
+**Animationen:** Rive (`assets/rive/onboarding.riv`), drei Artboards Logo · Welcome · Goal, je „Intro“ (einmal) → „Idle“ (Schleife). Quelle ist der Generator `tool/rive/onboarding/build_scene.py`; neu bauen mit `python3 tool/rive/onboarding/build_scene.py` und `rive tool/rive/onboarding --once` (Rive CLI, ohne Login, keine Skripte). Bei reduzierter Bewegung, in Widget-Tests und ohne native Rive-Runtime zeigt `OnboardingArt` ein Standbild (Logo per `CustomPaint`).
+
+**Gespeichert:** `<support>/ui/onboarding.json` (`done`, `interest`), nur UI-Zustand; das Tagesziel in den Einstellungen. Tests und Vorschauen überspringen das Onboarding (`onboardingStoreProvider` ist dort `null`).
+
+## Abschluss nach der Übung (24.10.2026)
+
+Mobbin-/Video-Referenzen: Abschluss-Hierarchie wie Babbels „Gut gemacht“-Screen (Titel, zwei Kennzahl-Kästchen, Vokabeln, „Weiter“); Wortkarten als „Stacked Cards“-Scroll-Effekt (Framer-Tutorial „Stacked Cards Effect“); Häkchen-Animation nach der vom Nutzer gelieferten `check.riv` (Ring, Strich, Punkte).
+
+**Wann:** Nach jeder Stapel-Übung (auch „Lernen“ über den Play-Knopf), sobald das Tagesziel erreicht ist. Sonst bleibt die bisherige Zusammenfassung. Ziel und Streak werden nach der letzten Antwort frisch gelesen.
+
+**Ablauf:** (1) Die Streak-Leiste erscheint in der Bildmitte. (2) Der orange Balken lädt sich von links bis zu heute auf, mit einem nach rechts laufenden Lichtband (dunkles Orange → hell). Passiert er einen Tag, poppt dessen Häkchen (Ring platzt, Haken zeichnet sich mit Überschwinger, Punkte fliegen weg) mit kurzem Ton und mittlerer Haptik. Solange der Balken lädt, vibriert das Telefon durchgehend (leichte Impulse alle 55 ms); der Ladeton wird bei Ankunft ausgeblendet. Währenddessen blendet der Titel über der Leiste ein. (3) Am 7. Tag: Der Stern wird weiß, sobald der Balken ihn erreicht, taucht ab, schwillt an und setzt sich (weiche Ein-/Ausgänge, keine harten Knicke), dreht sich dabei in der Luft um die Hochachse und zeigt nach der Hälfte die gefüllte Seite; Glockenton, starke Haptik. Der Stern-Moment auf Home spielt danach nicht noch einmal. (4) Titel und Leiste gleiten nach oben an ihren Platz, darunter erscheinen gestaffelt die Kästchen, die Wortkarten und „Weiter“.
+
+| Baustein | Regel | Datei |
+|---|---|---|
+| Titel | „Sehr gut!“ (Stern-Tag: „Wochenstern geholt!“), darunter ein Satz mit Tag und Abstand zum Wochenstern. Ohne Namen, solange es kein Profil gibt. | `completion/practice_completion_screen.dart` |
+| Streak-Leiste | Gleiche Geometrie wie die Streak-Box auf Home (6 Tage + Stern), ohne Motivationssatz. | `completion/widgets/streak_charge_bar.dart` |
+| Kästchen | Links animierte Rivetober-Flamme (`assets/rive/completion_flame.riv`, orange eingefärbt; Standbild bei reduzierter Bewegung) + Streak („Tage in Folge“), rechts Ziel-Icon + „erreicht/Ziel“ (darf über dem Ziel liegen, z. B. 12/10). | `practice_completion_screen.dart` |
+| Wortkarten | „Neue Wörter“ (erstmals gesehen) bzw. „Heute geübt“, wenn nichts neu war. Gestapelt: Titel, Streak-Leiste, Kennzahlen und „Neue Wörter“ bleiben fest. Nur der Kartenbereich darunter scrollt: Jede Karte bleibt unterhalb der Überschrift hängen, die nächste schiebt sich darüber; kurze Auswahl-Haptik beim Ein-/Ausrasten; verdeckte Karten werden etwas kleiner und dunkler. Trennung über einen weichen Schatten, keine Umrandung. | `completion/widgets/stacked_word_cards.dart` |
+| Ton | `assets/sounds/` (Epidemic Sound): Laden, Häkchen, Stern. iOS „ambient“: Stummschalter gilt, mischt sich mit anderer Wiedergabe. | `presentation/celebration_sounds.dart` |
+
+**Reduzierte Bewegung:** sofort der Endzustand, keine Töne, ein Haptik-Impuls.

@@ -12,6 +12,8 @@ import '../../domain/grammar_hint.dart';
 import '../../domain/srs_state.dart';
 import '../../presentation/practice/deck_session_controller.dart';
 import '../../presentation/providers/database_providers.dart';
+import '../../presentation/providers/learning_providers.dart';
+import '../../presentation/providers/streak_providers.dart';
 import '../../presentation/providers/preferences_provider.dart';
 import '../../presentation/content_unavailable_view.dart';
 import '../../theme/app_theme.dart';
@@ -22,6 +24,8 @@ import '../../widgets/success_feedback_card.dart';
 import '../words/widgets/memory_level_indicator.dart';
 import '../words/widgets/memory_level_legend_sheet.dart';
 import '../settings/settings_screen.dart';
+import '../completion/practice_completion_screen.dart';
+import '../completion/widgets/stacked_word_cards.dart';
 import 'widgets/form_info_sheet.dart';
 import 'widgets/practice_input.dart';
 import 'widgets/practice_sentence.dart';
@@ -58,6 +62,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     with WidgetsBindingObserver, SingleTickerProviderStateMixin {
   final _input = PracticeInputController();
   final _focus = FocusNode();
+  bool _completing = false;
   final _sentenceKey = GlobalKey<PracticeSentenceState>();
   final _rootKey = GlobalKey();
   Timer? _autoTimer, _errorTimer;
@@ -177,11 +182,15 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
       return;
     }
     final attempt = _input.text;
+    // Solved: the keyboard stays up and its Done key moves on.
+    if (ref.read(deckSessionControllerProvider(_args)).pass?.solved == true) {
+      _next();
+      return;
+    }
     final result = _controller.submit(attempt);
     if (result == null) return;
     _clearError();
     if (result.verdict == AnswerVerdict.target) {
-      _focus.unfocus();
       _announce('Richtig');
     } else if (result.verdict == AnswerVerdict.wrong) {
       final pass = ref.read(deckSessionControllerProvider(_args)).pass!;
@@ -209,8 +218,9 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     if (!s.saved || s.committing) return;
     _autoTimer?.cancel();
     _clearError();
-    _input.reset();
     await _controller.next();
+    if (!mounted) return;
+    _input.reset();
     if (mounted && !ref.read(deckSessionControllerProvider(_args)).finished) {
       _focus.requestFocus();
     }
@@ -383,6 +393,9 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
           if (mounted) _schedule();
         });
       }
+      if (next.finished && previous?.finished != true) {
+        unawaited(_maybeComplete(next));
+      }
     });
     final past = _past(state);
     final snapshot = _historyIndex != null && _historyIndex! < past.length
@@ -412,6 +425,12 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                         ? state.total
                         : state.index + (state.saved ? 1 : 0),
                     total: state.total,
+                    repeatIndices: {
+                      for (final (i, snapshot) in state.snapshots.indexed)
+                        if (snapshot.repeating) i,
+                      if (state.pass?.logged == false) state.index,
+                    },
+                    activeRepeat: state.pass?.logged == false && !state.saved,
                     loading: state.loading,
                     goalReached: state.goalReached,
                     repeating: state.pass?.logged == false,
@@ -571,13 +590,14 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                                           ),
                                                   ),
                                                 ),
-                                                const SizedBox(height: 12),
+                                                const SizedBox(height: 6),
                                                 PracticeSentence(
                                                   key: _sentenceKey,
                                                   sentence: sentence,
                                                   input: _input,
                                                   focus: _focus,
                                                   solved: solved,
+                                                  keepFocus: snapshot == null,
                                                   error:
                                                       snapshot == null &&
                                                       _fieldError,
@@ -751,6 +771,45 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
         ? word.rect
         : word.rect.shift(-box.localToGlobal(Offset.zero));
     return TranslationBubble(anchor: rect, text: word.translation);
+  }
+
+  /// A finished session that reached the daily goal ends on the completion
+  /// screen instead of the summary (docs/redesign/design-system.md ›
+  /// Abschluss). Goal and streak are read fresh, after the last review.
+  Future<void> _maybeComplete(DeckSessionState state) async {
+    if (_completing || state.records.isEmpty) return;
+    _completing = true;
+    try {
+      ref.invalidate(learningProgressProvider);
+      ref.invalidate(streakProvider);
+      final progress = await ref.read(learningProgressProvider.future);
+      if (!mounted || progress.goal.done < progress.goal.target) return;
+      final streak = await ref.read(streakProvider.future);
+      if (!mounted) return;
+      final seen = <String>{};
+      final words = [
+        for (final s in state.snapshots)
+          if (seen.add(s.card.id))
+            CompletionWord(
+              form: s.card.form,
+              translation: s.card.translationDe ?? '',
+              sentence: s.sentence.text,
+              isNew: s.box == 0,
+            ),
+      ];
+      final fresh = words.where((w) => w.isNew).toList();
+      await Navigator.of(context).pushReplacement(
+        PracticeCompletionScreen.route(
+          streak: streak,
+          goal: progress.goal,
+          words: fresh.isNotEmpty ? fresh : words,
+        ),
+      );
+    } catch (_) {
+      // The summary stays; the completion screen is a bonus.
+    } finally {
+      _completing = false;
+    }
   }
 
   Widget _summary(DeckSessionState state) {

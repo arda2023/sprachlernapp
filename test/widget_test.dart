@@ -22,6 +22,7 @@ import 'package:sprachapp/screens/content/content_dashboard_screen.dart';
 import 'package:sprachapp/screens/content/text_exercise_screen.dart';
 import 'package:sprachapp/screens/content/text_library_screen.dart';
 import 'package:sprachapp/screens/content/widgets/exercise_choice_sheet.dart';
+import 'package:sprachapp/widgets/more_button.dart';
 import 'package:sprachapp/screens/home/widgets/story_carousel.dart';
 import 'package:sprachapp/models/home_models.dart';
 import 'package:sprachapp/models/news_models.dart';
@@ -691,7 +692,8 @@ void main() {
 
       expect(find.byType(WordPopover), findsOneWidget);
       expect(find.text('ankommen'), findsOneWidget);
-      expect(find.text('im Text: arrived'), findsOneWidget);
+      expect(find.text('im Text: arrived'), findsNothing);
+      expect(find.text('Deutsch'), findsNothing);
       expect(find.textContaining('Verb', findRichText: true), findsWidgets);
 
       expect(
@@ -807,7 +809,25 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('Inhalte tab is a grid of four categories, no decks', (
+  Finder dashboardScrollable() => find
+      .descendant(
+        of: find.byType(ContentDashboardScreen),
+        matching: find.byType(Scrollable),
+      )
+      .first;
+
+  /// Scrolls [finder] into view and clear of the notched bar.
+  Future<void> reveal(WidgetTester tester, Finder finder) async {
+    await tester.scrollUntilVisible(
+      finder,
+      200,
+      scrollable: dashboardScrollable(),
+    );
+    await tester.ensureVisible(finder);
+    await tester.pumpAndSettle();
+  }
+
+  testWidgets('Inhalte shows every category with its content, no decks', (
     tester,
   ) async {
     await openContentTab(tester);
@@ -822,42 +842,72 @@ void main() {
       findsNothing,
     );
     expect(find.textContaining('Bald verfügbar'), findsNothing);
-    await tester.scrollUntilVisible(
-      find.text('Grammatikregeln'),
-      200,
-      scrollable: find
-          .descendant(
-            of: find.byType(ContentDashboardScreen),
-            matching: find.byType(Scrollable),
-          )
-          .first,
-    );
+
+    // Texte: the exercise texts as covers right under the title.
+    expect(find.text('Texte'), findsOneWidget);
     expect(
-      tester.getSemantics(find.bySemanticsLabel('Texte, 5 Texte')),
-      isSemantics(isButton: true, hasTapAction: true, isEnabled: true),
+      find.descendant(of: dashboard, matching: find.byType(StoryCarousel)),
+      findsOneWidget,
     );
+    expect(tester.getTopLeft(find.byType(StoryCarousel)).dy, lessThan(220));
+
+    // Hören: the first open exercise as a wide card, the rest as tiles.
+    final feature = find.bySemanticsLabel(
+      RegExp('^Als Nächstes: Das th in „think“'),
+    );
+    await reveal(tester, feature);
+    expect(
+      tester.getSemantics(feature),
+      isSemantics(isButton: true, hasTapAction: true),
+    );
+    expect(tester.getSize(feature).width, greaterThan(300));
+    final solved = find.bySemanticsLabel(RegExp(r'^w oder v\..*, fertig$'));
+    await reveal(tester, solved);
+    expect(solved, findsOne);
+    expect(find.text('Meine Übungen'), findsNothing);
+
+    // Grammatik: rows with title and summary.
+    await tester.scrollUntilVisible(
+      find.text('Das -s in der 3. Person'),
+      200,
+      scrollable: dashboardScrollable(),
+    );
+    expect(find.text('Simple Present mit he, she und it'), findsOneWidget);
+
+    // Grammatikregeln: rule cards in two columns.
+    final artikel = find.bySemanticsLabel(RegExp('^Artikel, a, an und the'));
+    await reveal(tester, artikel);
+    final plural = find.bySemanticsLabel(RegExp('^Pluralbildung, '));
+    expect(tester.getSize(artikel).width, tester.getSize(plural).width);
+    expect(tester.getTopLeft(artikel).dy, tester.getTopLeft(plural).dy);
+
+    // Every section has its "Mehr anzeigen", named for VoiceOver.
+    await tester.drag(dashboard, const Offset(0, 4000));
+    await tester.pumpAndSettle();
     for (final label in [
-      'Hören, 6 Übungen',
-      'Grammatik, 7 Übungen',
-      'Grammatikregeln, 9 Regeln',
+      'Alle Texte anzeigen',
+      'Alle Hörübungen anzeigen',
+      'Alle Grammatikübungen anzeigen',
+      'Alle Grammatikregeln anzeigen',
     ]) {
+      final more = find.bySemanticsLabel(label);
+      await tester.scrollUntilVisible(
+        more,
+        200,
+        scrollable: dashboardScrollable(),
+      );
       expect(
-        tester.getSemantics(find.bySemanticsLabel(label)),
-        isSemantics(isButton: true, hasTapAction: true, isEnabled: true),
+        tester.getSemantics(more),
+        isSemantics(isButton: true, hasTapAction: true),
+      );
+      expect(
+        find.descendant(
+          of: find.ancestor(of: more, matching: find.byType(MoreButton)),
+          matching: find.text('Mehr anzeigen'),
+        ),
+        findsOneWidget,
       );
     }
-    // The grid starts right under the title.
-    expect(
-      tester.getTopLeft(find.bySemanticsLabel('Texte, 5 Texte')).dy,
-      lessThan(200),
-    );
-    // Cards fill their grid column, whatever their text length.
-    final texte = tester.getSize(find.bySemanticsLabel('Texte, 5 Texte'));
-    final regeln = tester.getSize(
-      find.bySemanticsLabel('Grammatikregeln, 9 Regeln'),
-    );
-    expect(texte.width, regeln.width);
-    expect(texte.width, greaterThan(150));
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
   });
 
@@ -865,12 +915,40 @@ void main() {
     tester.platformDispatcher.textScaleFactorTestValue = 2;
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
     await openContentTab(tester);
-    await tester.drag(
-      find.byType(ContentDashboardScreen),
-      const Offset(0, -600),
-    );
+    for (var i = 0; i < 6; i++) {
+      await tester.drag(
+        find.byType(ContentDashboardScreen),
+        const Offset(0, -600),
+      );
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+    }
+  });
+
+  testWidgets('Dashboard cards open their exercise directly', (tester) async {
+    await openContentTab(tester);
+    await tester.tap(find.bySemanticsLabel(RegExp(r'^A Slow Morning\.')));
     await tester.pumpAndSettle();
-    expect(tester.takeException(), isNull);
+    expect(find.byType(ExerciseChoiceSheet), findsOneWidget);
+    await tester.tapAt(const Offset(20, 40));
+    await tester.pumpAndSettle();
+
+    final feature = find.bySemanticsLabel(
+      RegExp('^Als Nächstes: Das th in „think“'),
+    );
+    expect(find.byType(ExerciseChoiceSheet), findsNothing);
+    await reveal(tester, feature);
+    await tester.tap(feature);
+    await tester.pumpAndSettle();
+    expect(find.byType(ListeningExerciseScreen), findsOneWidget);
+    await tester.tap(find.bySemanticsLabel('Zurück'));
+    await tester.pumpAndSettle();
+
+    final artikel = find.bySemanticsLabel(RegExp('^Artikel, a, an und the'));
+    await reveal(tester, artikel);
+    await tester.tap(artikel);
+    await tester.pumpAndSettle();
+    expect(find.byType(GrammarRuleDetailScreen), findsOneWidget);
   });
 
   // ----------------------------------------------------------- text library
@@ -922,18 +1000,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    final texte = find.bySemanticsLabel('Texte, 5 Texte');
-    await tester.scrollUntilVisible(
-      texte,
-      200,
-      scrollable: find
-          .descendant(
-            of: find.byType(ContentDashboardScreen),
-            matching: find.byType(Scrollable),
-          )
-          .first,
-    );
-    await tester.tap(texte);
+    await tester.tap(find.bySemanticsLabel('Alle Texte anzeigen'));
     await tester.pumpAndSettle();
     final fromStories = find.ancestor(
       of: find.text('Aus deinen Stories'),
@@ -1553,23 +1620,13 @@ void main() {
 
   testWidgets('Grammatikregeln opens from the dashboard', (tester) async {
     await openContentTab(tester);
+    final more = find.bySemanticsLabel('Alle Grammatikregeln anzeigen');
     await tester.scrollUntilVisible(
-      find.text('Grammatikregeln'),
+      more,
       200,
-      scrollable: find
-          .descendant(
-            of: find.byType(ContentDashboardScreen),
-            matching: find.byType(Scrollable),
-          )
-          .first,
+      scrollable: dashboardScrollable(),
     );
-    // Clear the notched bar before tapping.
-    await tester.drag(
-      find.byType(ContentDashboardScreen),
-      const Offset(0, -300),
-    );
-    await tester.pumpAndSettle();
-    await tester.tap(find.bySemanticsLabel('Grammatikregeln, 9 Regeln'));
+    await tester.tap(more);
     await tester.pumpAndSettle();
     expect(find.byType(GrammarRulesScreen), findsOneWidget);
   });
@@ -1845,17 +1902,18 @@ void main() {
               ),
       );
 
-  testWidgets('Practice library splits "Meine Übungen" and "Fertig"', (
+  testWidgets('Practice library lists every exercise, solved ones marked', (
     tester,
   ) async {
     final progress = PracticeProgress({'listen-w-v'});
     addTearDown(progress.dispose);
     await tester.pumpWidget(practiceLibrary(PracticeKind.listening, progress));
     expect(find.text('Hören'), findsOneWidget);
-    expect(find.text('6 Übungen · 1 fertig'), findsOneWidget);
-    expect(find.text('Meine Übungen'), findsOneWidget);
+    expect(find.textContaining('fertig'), findsNothing);
+    expect(find.text('Meine Übungen'), findsNothing);
+    expect(find.text('Fertig'), findsNothing);
     expect(find.text('Das th in „think“'), findsOneWidget);
-    expect(find.text('w oder v'), findsNothing);
+    expect(find.text('w oder v'), findsOneWidget);
     expect(
       tester.getSemantics(
         find.bySemanticsLabel(
@@ -1864,13 +1922,20 @@ void main() {
       ),
       isSemantics(isButton: true, hasTapAction: true),
     );
+    expect(
+      find.bySemanticsLabel(RegExp(r'^w oder v, .*, fertig$')),
+      findsOneWidget,
+    );
+    expect(find.byIcon(CupertinoIcons.checkmark_alt_circle_fill), findsOne);
     expect(find.byIcon(CupertinoIcons.chevron_right), findsWidgets);
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
 
-    await tester.tap(find.text('Fertig'));
+    progress.complete('listen-th-think');
     await tester.pumpAndSettle();
-    expect(find.text('w oder v'), findsOneWidget);
-    expect(find.text('Das th in „think“'), findsNothing);
+    expect(
+      find.byIcon(CupertinoIcons.checkmark_alt_circle_fill),
+      findsNWidgets(2),
+    );
   });
 
   /// The answer card labelled [option].
@@ -1955,7 +2020,7 @@ void main() {
     expect(find.byType(SuccessFeedbackCard), findsNothing);
     await tester.tap(find.bySemanticsLabel('Zurück'));
     await tester.pumpAndSettle();
-    expect(find.text('6 Übungen · 1 fertig'), findsOneWidget);
+    expect(find.byType(ListeningLibraryScreen), findsOneWidget);
   });
 
   testWidgets('Grammar: no player, the answer fills the gap', (tester) async {
@@ -2003,12 +2068,24 @@ void main() {
 
   testWidgets('Hören and Grammatik open from the dashboard', (tester) async {
     await openContentTab(tester);
-    await tester.tap(find.bySemanticsLabel('Hören, 6 Übungen'));
+    final listening = find.bySemanticsLabel('Alle Hörübungen anzeigen');
+    await tester.scrollUntilVisible(
+      listening,
+      200,
+      scrollable: dashboardScrollable(),
+    );
+    await tester.tap(listening);
     await tester.pumpAndSettle();
     expect(find.byType(ListeningLibraryScreen), findsOneWidget);
     await tester.tap(find.bySemanticsLabel('Zurück'));
     await tester.pumpAndSettle();
-    await tester.tap(find.bySemanticsLabel('Grammatik, 7 Übungen'));
+    final grammar = find.bySemanticsLabel('Alle Grammatikübungen anzeigen');
+    await tester.scrollUntilVisible(
+      grammar,
+      200,
+      scrollable: dashboardScrollable(),
+    );
+    await tester.tap(grammar);
     await tester.pumpAndSettle();
     expect(find.byType(GrammarLibraryScreen), findsOneWidget);
   });
@@ -2183,7 +2260,7 @@ void main() {
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
   });
 
-  testWidgets('News card: image on top, title and sand kicker below', (
+  testWidgets('News card: image on top, only the title below', (
     tester,
   ) async {
     phoneView(tester);
@@ -2191,17 +2268,12 @@ void main() {
     final card = find.widgetWithText(NewsCard, 'Politik in 100 Sekunden');
     expect(card, findsOneWidget);
     final cover = find.descendant(of: card, matching: find.byType(TypeCover));
-    expect(tester.getSize(cover).height, NewsCard.height * 0.6);
-    final kicker = tester.widget<Text>(
-      find.descendant(of: card, matching: find.text('POLITIK')),
-    );
-    expect(kicker.style?.color, AppColors.newsKicker);
-    expect(kicker.style?.fontWeight, FontWeight.w700);
+    expect(tester.getSize(cover).height, NewsCard.imageHeight);
+    // Desk, level and reading time are only in the semantics label.
+    expect(find.descendant(of: card, matching: find.text('POLITIK')), findsNothing);
     expect(
-      tester.getTopLeft(find.text('POLITIK')).dy,
-      greaterThan(
-        tester.getBottomLeft(find.text('Politik in 100 Sekunden')).dy,
-      ),
+      find.descendant(of: card, matching: find.text('A2 · 2 Min')),
+      findsNothing,
     );
     expect(
       find.bySemanticsLabel(
@@ -2209,15 +2281,6 @@ void main() {
         'Lesezeit, Niveau A2',
       ),
       findsOneWidget,
-    );
-
-    // The level and reading time sit right under the kicker.
-    final meta = find.descendant(of: card, matching: find.text('A2 · 2 Min'));
-    expect(tester.widget<Text>(meta).style?.color, AppColors.textMuted);
-    expect(
-      tester.getTopLeft(meta).dy -
-          tester.getBottomLeft(find.text('POLITIK')).dy,
-      inInclusiveRange(0, 8),
     );
 
     // Swiping brings the next desk onto the gutter …

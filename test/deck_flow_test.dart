@@ -152,7 +152,10 @@ void main() {
         'wlaks',
       );
       await answer(tester, ' WALKS ');
-      expect(tester.widget<TextField>(find.byType(TextField)).readOnly, isTrue);
+      expect(
+        tester.widget<TextField>(find.byType(TextField)).inputFormatters,
+        isNotEmpty,
+      );
       expect(user.records.values.single.errorCount, 2);
       expect(user.records.values.single.boxAfter, 1);
       expect(user.records.values.single.firstAttemptCorrect, isFalse);

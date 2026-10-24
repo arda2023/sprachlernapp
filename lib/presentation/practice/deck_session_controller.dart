@@ -20,6 +20,7 @@ class SessionSnapshot {
       card = pass.item.card,
       sentence = pass.sentence,
       box = pass.boxBefore,
+      repeating = !pass.logged,
       feedback = pass.errorCount > 0
           ? 'Richtig nach ${pass.errorCount} ${pass.errorCount == 1 ? 'Fehler' : 'Fehlern'}'
           : pass.revealed || pass.hintUsed
@@ -29,6 +30,7 @@ class SessionSnapshot {
   final ContentCard card;
   final CardSentence sentence;
   final int box;
+  final bool repeating;
 }
 
 /// size 0 uses the daily remainder; -1 explicitly continues beyond it.
@@ -302,12 +304,13 @@ class DeckSessionController extends Notifier<DeckSessionState> {
     if (_busy || !_saved || state.finished) return;
     _busy = true;
     _index++;
-    _saved = false;
-    _pass = null;
-    _emit(loading: true);
+    // Keep the solved pass mounted until its replacement is ready.
+    // Removing it here closes the native text input connection.
     try {
       await _showCurrent();
     } catch (error) {
+      _pass = null;
+      _saved = false;
       _emit(error: error);
     } finally {
       _busy = false;

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../domain/content.dart';
 import '../../../theme/app_theme.dart';
@@ -26,6 +27,7 @@ class PracticeSentence extends StatefulWidget {
     required this.onChanged,
     required this.onWord,
     this.selectedStart,
+    this.keepFocus = false,
     this.error = false,
     this.errorOffset = 0,
   });
@@ -36,6 +38,10 @@ class PracticeSentence extends StatefulWidget {
   final VoidCallback onSubmit, onChanged;
   final ValueChanged<WordAnchor> onWord;
   final int? selectedStart;
+
+  /// The current exercise: once solved it keeps focus (and the keyboard)
+  /// and refuses edits. Past exercises in the history are read-only.
+  final bool keepFocus;
   final bool error;
   final double errorOffset;
   @override
@@ -232,10 +238,13 @@ class PracticeSentenceState extends State<PracticeSentence> {
                         child: TextField(
                         key: const ValueKey('practice-input'),
                         controller: widget.solved ? _solution : input,
-                        focusNode: widget.solved ? null : widget.focus,
-                        readOnly: widget.solved,
+                        focusNode: widget.solved && !widget.keepFocus
+                            ? null
+                            : widget.focus,
+                        readOnly: widget.solved && !widget.keepFocus,
+                        canRequestFocus: !widget.solved || widget.keepFocus,
+                        inputFormatters: widget.solved ? const [_Locked()] : null,
                         showCursor: !widget.solved,
-                        canRequestFocus: !widget.solved,
                         enableInteractiveSelection: !widget.solved,
                         autofocus: !widget.solved,
                         maxLines: null,
@@ -291,4 +300,15 @@ class PracticeSentenceState extends State<PracticeSentence> {
       },
     ),
   );
+}
+
+/// Keeps the solved answer as it is while the keyboard stays open.
+class _Locked extends TextInputFormatter {
+  const _Locked();
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) => oldValue;
 }

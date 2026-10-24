@@ -194,7 +194,10 @@ void main() {
       await t.tap(find.text('Eingeben'));
       await t.pumpAndSettle();
       final field = t.widget<TextField>(find.byType(TextField));
-      expect(field.readOnly, isTrue);
+      // Solved: still focused (keyboard stays up), but edits are refused.
+      expect(field.readOnly, isFalse);
+      expect(field.focusNode!.hasFocus, isTrue);
+      expect(field.inputFormatters, isNotEmpty);
       expect(field.showCursor, isFalse);
       expect(field.controller!.text, 'walks');
       expect(

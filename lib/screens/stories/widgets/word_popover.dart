@@ -132,7 +132,6 @@ class _WordPopoverState extends State<WordPopover>
   @override
   Widget build(BuildContext context) {
     final entry = widget.entry;
-    final inflected = widget.surface.toLowerCase() != entry.headword;
     // The real save status decides, never a display mark alone.
     final label = _saving
         ? 'Wird hinzugefügt …'
@@ -178,13 +177,6 @@ class _WordPopoverState extends State<WordPopover>
                       ],
                     ),
                   ),
-                  if (inflected) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      'im Text: ${widget.surface}',
-                      style: AppType.meta(color: _white.withValues(alpha: 0.8)),
-                    ),
-                  ],
                 ],
               ),
             ),
@@ -195,11 +187,6 @@ class _WordPopoverState extends State<WordPopover>
         const SizedBox(height: 14),
         Container(height: 1, color: _white.withValues(alpha: 0.25)),
         const SizedBox(height: 12),
-        Text(
-          'Deutsch',
-          style: AppType.meta(color: _white.withValues(alpha: 0.8)),
-        ),
-        const SizedBox(height: 2),
         Text(
           entry.translation,
           style: AppType.editorial(

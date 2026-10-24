@@ -33,13 +33,17 @@ class TextLibraryScreen extends StatelessWidget {
     ),
   );
 
-  Future<void> _choose(BuildContext context, String id) async {
-    final text = texts.firstWhere((t) => t.id == id);
+  /// Asks for the exercise mode, then opens [text] in it. Shared with the
+  /// Inhalte dashboard.
+  static Future<void> start(BuildContext context, ExerciseText text) async {
     final mode = await ExerciseChoiceSheet.show(context, text);
     if (mode != null && context.mounted) {
       await TextExerciseScreen.open(context, text, mode);
     }
   }
+
+  Future<void> _choose(BuildContext context, String id) =>
+      start(context, texts.firstWhere((t) => t.id == id));
 
   @override
   Widget build(BuildContext context) {

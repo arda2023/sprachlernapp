@@ -1,0 +1,24 @@
+{
+  "adoption_sha256": "e245126446605df27964be34f7181357423ff109c7443d9f9975347dc56fd80e",
+  "editorial_reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "format": 2,
+  "history_inventory_sha256": "844fd964d15772c82157a13c4d4041071862a8883fa56edc5d0e2e84523773e5",
+  "internal_test_pack": true,
+  "lang": "en",
+  "local_only": true,
+  "min_reader_version": 5,
+  "pack_json_sha256": "098f01abacb11ef2aa1601ff10f11d185f690cf688e515ae62343d344561d8c9",
+  "parent_release_id": null,
+  "profile_id": "en-legacy-v1",
+  "profile_sha256": "59eec37d0a4f322d666701e00bc1bf4cfb44d19b183b1742d16b443989a505cf",
+  "publication_kind": "internal-baseline-adoption-v1",
+  "registry_sha256": "4736bf4819a17cdabd5f57a60f08f53760ade24ef45e87464e1fcbeaa39dc97e",
+  "required_features": [
+    "immutable-contexts-v1"
+  ],
+  "schema_version": 5,
+  "sha256": "ac87b43105b9305579a7fff38de0343f874cbb19e533e1bebbed8942d975acdd",
+  "size_bytes": 43085824,
+  "translation_lang": "de",
+  "version": "story_single_sentence_v1-internal-baseline"
+}

@@ -386,11 +386,6 @@ class _ImportPrompt extends StatelessWidget {
                     color: colors.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 2),
-                Text(
-                  'YouTube-Transkripte, E-Books oder Artikel importieren.',
-                  style: AppType.chrome(size: 13, color: colors.textMuted),
-                ),
                 const SizedBox(height: 10),
                 trigger(
                   (open, onPressed) => MergeSemantics(

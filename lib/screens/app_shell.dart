@@ -23,12 +23,9 @@ import 'decks/deck_practice_screen.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_bottom_bar.dart';
 import 'content/content_dashboard_screen.dart';
-import 'content/text_library_screen.dart';
 import 'decks/deck_details_screen.dart';
 import 'decks/deck_library_screen.dart';
-import 'grammar/grammar_rules_screen.dart';
 import 'home/home_screen.dart';
-import 'practice/practice_library_screen.dart';
 import 'stories/story_library_screen.dart';
 import 'stories/story_reader_screen.dart';
 import 'words/word_list_screen.dart';
@@ -120,49 +117,6 @@ class _AppShellState extends ConsumerState<AppShell> {
   }
 
   void _browseDecks() => DeckLibraryScreen.open(context, onOpenDeck: _openDeck);
-
-  void _openTexts() => TextLibraryScreen.open(
-    context,
-    texts: sampleExerciseTexts,
-    history: _history,
-  );
-
-  List<ContentCategory> get _categories => [
-    ContentCategory(
-      title: 'Texte',
-      icon: CupertinoIcons.doc_text,
-      detail: '${sampleExerciseTexts.length} Texte',
-      onOpen: _openTexts,
-    ),
-    ContentCategory(
-      title: 'Hören',
-      icon: CupertinoIcons.headphones,
-      detail: '${sampleListeningExercises.length} Übungen',
-      onOpen: () => PracticeLibraryScreen.open(
-        context,
-        kind: PracticeKind.listening,
-        exercises: sampleListeningExercises,
-        progress: _practice,
-      ),
-    ),
-    ContentCategory(
-      title: 'Grammatik',
-      icon: CupertinoIcons.textformat,
-      detail: '${sampleGrammarExercises.length} Übungen',
-      onOpen: () => PracticeLibraryScreen.open(
-        context,
-        kind: PracticeKind.grammar,
-        exercises: sampleGrammarExercises,
-        progress: _practice,
-      ),
-    ),
-    ContentCategory(
-      title: 'Grammatikregeln',
-      icon: CupertinoIcons.book,
-      detail: '${sampleGrammarRules.length} Regeln',
-      onOpen: () => GrammarRulesScreen.open(context, sampleGrammarRules),
-    ),
-  ];
 
   void _openDeck(Deck deck) => DeckDetailsScreen.open(context, deck.id);
 
@@ -333,7 +287,14 @@ class _AppShellState extends ConsumerState<AppShell> {
                             'Für Portugiesisch (Brasilien) sind noch keine weiteren Inhalte verfügbar.',
                           ),
                         )
-                      : ContentDashboardScreen(categories: _categories),
+                      : ContentDashboardScreen(
+                          texts: sampleExerciseTexts,
+                          history: _history,
+                          listening: sampleListeningExercises,
+                          grammar: sampleGrammarExercises,
+                          progress: _practice,
+                          rules: sampleGrammarRules,
+                        ),
                 ],
               ),
         floatingActionButton: switching || unavailable

@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../theme/app_theme.dart';
 
-/// Close (ends the session), the session's progress as orange segments with
-/// the count, and the word menu (Redesign 20.10.2026).
+/// Close (ends the session), the session's progress as orange segments
+/// (the count only for screen readers), and the word menu (Redesign 20.10.2026).
 class PracticeSessionBar extends StatelessWidget {
   const PracticeSessionBar({
     super.key,
@@ -14,10 +14,14 @@ class PracticeSessionBar extends StatelessWidget {
     this.loading = false,
     this.goalReached = false,
     this.repeating = false,
+    this.repeatIndices = const {},
+    this.activeRepeat = false,
     required this.onHome,
     required this.onMenu,
   });
 
+  final Set<int> repeatIndices;
+  final bool activeRepeat;
   final int done;
   final int total;
   final bool loading, goalReached, repeating;
@@ -27,6 +31,7 @@ class PracticeSessionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final left = total - done;
+    final counting = !loading && total > 0 && !repeating && left > 0;
     final label = loading
         ? 'Übungen werden geladen …'
         : goalReached && total == 0
@@ -58,18 +63,22 @@ class PracticeSessionBar extends StatelessWidget {
                   // The track spans the space between the two buttons.
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SessionTrack(done: done, total: total),
-                    const SizedBox(height: 6),
-                    Text(
-                      label,
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppType.meta(color: context.appColors.textMuted)
-                          .copyWith(
-                            fontFeatures: const [FontFeature.tabularFigures()],
-                          ),
+                    ContinuousSessionTrack(
+                      done: done, total: total,
+                      repeatIndices: repeatIndices, activeRepeat: activeRepeat,
                     ),
+                    // The bar shows what's left; only states it can't show
+                    // get a line.
+                    if (!counting) ...[
+                      const SizedBox(height: 6),
+                      Text(
+                        label,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppType.meta(color: context.appColors.textMuted),
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -87,6 +96,34 @@ class PracticeSessionBar extends StatelessWidget {
       ),
     );
   }
+}
+
+/// A continuous timeline. Completed repeat phases keep their yellow colour.
+class ContinuousSessionTrack extends StatelessWidget {
+  const ContinuousSessionTrack({super.key, required this.done,
+    required this.total, this.repeatIndices = const {}, this.activeRepeat = false});
+  final int done, total;
+  final Set<int> repeatIndices;
+  final bool activeRepeat;
+  static const repeatColor = Color(0xFFF2C94C);
+
+  @override
+  Widget build(BuildContext context) => ClipRRect(
+    borderRadius: BorderRadius.circular(99),
+    child: SizedBox(height: 6, child: LayoutBuilder(
+      builder: (context, constraints) => Stack(
+        fit: StackFit.expand,
+        children: [
+          ColoredBox(color: context.appColors.hairline),
+          for (var i = 0; i < (done + (activeRepeat ? 1 : 0)).clamp(0, total); i++)
+            Positioned(left: constraints.maxWidth * i / total,
+              width: constraints.maxWidth / total, top: 0, bottom: 0,
+              child: ColoredBox(color: repeatIndices.contains(i)
+                ? repeatColor : context.appColors.active)),
+        ],
+      ),
+    )),
+  );
 }
 
 /// Session progress: one rounded `6pt` segment per word, orange once done,
@@ -214,13 +251,6 @@ class PracticeTranslationCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Deutsch',
-                            style: AppType.meta(
-                              color: context.appColors.textMuted,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
                           Text(
                             translation,
                             style: AppType.editorial(

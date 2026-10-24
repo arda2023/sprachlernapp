@@ -1,0 +1,61 @@
+[
+  {
+    "cloud_state": "not_checked",
+    "confirmation": {
+      "accepted": true,
+      "at": "2026-10-16T18:12:26.149390+00:00",
+      "scope": "internal-baseline-adoption-v1"
+    },
+    "counts": {
+      "audio_assets": 0,
+      "card_lexical_targets": 406,
+      "card_sentences": 4297,
+      "cards": 3768,
+      "content_releases": 1,
+      "deck_cards": 3661,
+      "deck_practice_targets": 402,
+      "deck_words": 3557,
+      "decks": 14,
+      "dictionary_forms": 8089,
+      "exercises": 0,
+      "form_targets": 402,
+      "grammar_rules": 0,
+      "languages": 1,
+      "lemmas": 5007,
+      "lexical_targets": 134,
+      "senses": 6759,
+      "sentence_tokens": 47089,
+      "sentences": 4303,
+      "stories": 1,
+      "story_context_corrections": 8,
+      "story_sentences": 6,
+      "word_aliases": 37
+    },
+    "existing_evidence": {
+      "qa_scope": "Historische Satznachweise unverändert; keine neue sprachliche Gesamtprüfung.",
+      "source_notes": "INTERNES TEST-PACK: targeted offline curation; unchanged rows not newly reviewed; no AI QA.",
+      "technical_report_status": "ok"
+    },
+    "kind": "internal-baseline-adoption-v1",
+    "notice": "Übernimmt den bereits verwendeten internen Bestand. Damit bestätigst du keine neue sprachliche Gesamtprüfung.",
+    "open_findings": [
+      "506 bestehende i+1-Warnungen; keine neue sprachliche Bewertung.",
+      "137 bereits fehlende Provenienz-Satz-IDs bleiben offen.",
+      "Zwei Maya-Eigennamenstellen bleiben von der Lernaufnahme ausgenommen.",
+      "Historische Sprach- und Glossengrenzfälle bleiben offen."
+    ],
+    "sha256": "de6669ddfefde70438e2447462e925beaadb03a5e43c2ec45f08cfb977aabee1",
+    "source": {
+      "asset_sha256": "b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb",
+      "finalization_sha256": "60edcf988fb98200dbec1a49e8268e28a0b38b870deecf3ae0e037f786b420ae",
+      "manifest_sha256": "74a0bce4d16bb3084f762dd6afc69accc44c80db545dba9871b21d0b8c7adbfe",
+      "pack_bytes_sha256": "313ea762423478c932cb3c92a512ffd07281afed9028a17b9f6ec3a00b7a9aa5",
+      "pack_canonical_sha256": "fd3ce96b3472d083ca07d7adbcfed5ec82975db1a451a967073510e9a01932fb",
+      "qa_payloads_sha256": "45e22d1a69f296cbd23b61b888bd713644774b56bc07fb4be7dd9c29d7c9cc07",
+      "registry_sha256": "4736bf4819a17cdabd5f57a60f08f53760ade24ef45e87464e1fcbeaa39dc97e",
+      "sqlite_sha256": "b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb",
+      "version": "story_single_sentence_v1"
+    },
+    "version": "story_single_sentence_v1-internal-baseline"
+  }
+]

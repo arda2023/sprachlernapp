@@ -1,0 +1,66 @@
+{
+  "adoption_sha256": "e245126446605df27964be34f7181357423ff109c7443d9f9975347dc56fd80e",
+  "baseline_gaps": [
+    {
+      "missing": [
+        "story_gloss"
+      ],
+      "sentence_id": "6b16d298c448ea845b600cfd8eb27637",
+      "surface": "so",
+      "token_id": "76ee8fc2dde17fa5a4c237f4e7f0f4cf"
+    },
+    {
+      "missing": [
+        "story_gloss"
+      ],
+      "sentence_id": "1e047de6e0a0f09136a14753a634cb52",
+      "surface": "so",
+      "token_id": "552521148887ec119486cab8f59f2754"
+    },
+    {
+      "missing": [
+        "story_gloss"
+      ],
+      "sentence_id": "d35bd278154554f67175421eda5326d1",
+      "surface": "so",
+      "token_id": "cd641063c5d4edf59d443b08153c0544"
+    }
+  ],
+  "history_superset": true,
+  "internal_test_pack": true,
+  "reader_output": "Reader: ok; schema 5; 3767 active targets; 4297 historical contexts",
+  "sqlite_counts": {
+    "audio_assets": 0,
+    "card_lexical_targets": 406,
+    "card_sentences": 4297,
+    "cards": 3768,
+    "content_releases": 1,
+    "deck_cards": 3661,
+    "deck_practice_targets": 402,
+    "deck_words": 3557,
+    "decks": 14,
+    "dictionary_forms": 8089,
+    "exercises": 0,
+    "form_targets": 402,
+    "grammar_rules": 0,
+    "languages": 1,
+    "lemmas": 5007,
+    "lexical_targets": 134,
+    "senses": 6759,
+    "sentence_tokens": 47089,
+    "sentences": 4303,
+    "stories": 1,
+    "story_context_corrections": 8,
+    "story_sentences": 6,
+    "word_aliases": 37
+  },
+  "status": "ok",
+  "validation": {
+    "base_sha256": "fd3ce96b3472d083ca07d7adbcfed5ec82975db1a451a967073510e9a01932fb",
+    "content_sha256": "aa2eaf04dceed03c3941dfefc18f09dbc0d5318fd53958a024636e6ac6295a23",
+    "editorial": "existing-evidence-only",
+    "findings": [],
+    "sha256": "22579921f9e32fafabf19c024453528195f708eb391d71cc1d1c3d4c117ba630",
+    "technical": "valid"
+  }
+}

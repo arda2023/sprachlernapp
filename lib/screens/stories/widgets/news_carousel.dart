@@ -68,9 +68,8 @@ class _NewsCarouselState extends State<NewsCarousel> {
   }
 }
 
-/// A news card: the article image on the top 60%, then on Raised Ink the
-/// title, the category kicker in Newsprint Sand right under it, and under
-/// that the level and reading time.
+/// A news card: the article image on top, then on Raised Ink only the
+/// title. Desk, level and reading time stay in the semantics label.
 class NewsCard extends StatelessWidget {
   const NewsCard({
     super.key,
@@ -79,8 +78,8 @@ class NewsCard extends StatelessWidget {
     this.tone = 0,
   });
 
-  static const height = 340.0;
-  static const imageShare = 0.6;
+  static const height = 290.0;
+  static const imageHeight = 204.0;
 
   final NewsArticle article;
   final VoidCallback onTap;
@@ -111,7 +110,7 @@ class NewsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SizedBox(
-                    height: height * imageShare,
+                    height: imageHeight,
                     child: switch (article.cover) {
                       final cover? => Image(image: cover, fit: BoxFit.cover),
                       null => TypeCover(
@@ -125,7 +124,7 @@ class NewsCard extends StatelessWidget {
                     child: ColoredBox(
                       color: context.appColors.raisedInk,
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
+                        padding: const EdgeInsets.fromLTRB(16, 14, 16, 12),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -140,26 +139,6 @@ class NewsCard extends StatelessWidget {
                                   color: context.appColors.textPrimary,
                                   size: 22,
                                 ),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              article.category.kicker,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppType.chrome(
-                                size: 13,
-                                weight: FontWeight.w700,
-                                color: context.appColors.newsKicker,
-                              ).copyWith(letterSpacing: 1.2),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              '${article.level} · '
-                              '${article.readingMinutes} Min',
-                              maxLines: 1,
-                              style: AppType.meta(
-                                color: context.appColors.textMuted,
                               ),
                             ),
                           ],

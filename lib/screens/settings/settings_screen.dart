@@ -6,6 +6,7 @@ import '../../domain/language_profile.dart';
 import '../../presentation/providers/database_providers.dart';
 import '../../presentation/providers/language_selection_provider.dart';
 import 'content_updates_screen.dart';
+import '../previews/screen_previews_screen.dart';
 import '../../presentation/providers/preferences_provider.dart';
 import '../../theme/app_theme.dart';
 import '../decks/widgets/local_submission_sheet.dart';
@@ -58,6 +59,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         data: (p) => ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           children: [
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('Bildschirm-Vorschauen'),
+              subtitle: const Text('Onboarding, Abschluss und Wochenstern ausprobieren'),
+              trailing: const Icon(Icons.play_circle_outline),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                builder: (_) => const ScreenPreviewsScreen(),
+              )),
+            ),
+            const Divider(),
             const ListTile(contentPadding: EdgeInsets.zero, title: Text('Lernsprache'), subtitle: Text('Die Oberfläche bleibt Deutsch.')),
             for (final profile in const [ContentLanguageProfile.english, ContentLanguageProfile.portugueseBrazil])
               ListTile(

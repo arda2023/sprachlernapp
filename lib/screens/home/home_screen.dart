@@ -11,6 +11,7 @@ import '../../presentation/providers/reading_providers.dart';
 import '../../presentation/providers/story_learning_providers.dart';
 import '../../presentation/providers/streak_providers.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/more_button.dart';
 import '../../widgets/section_heading.dart';
 import 'widgets/goal_panel.dart';
 import 'widgets/home_deck_row.dart';
@@ -127,7 +128,7 @@ class HomeScreen extends ConsumerWidget {
             padding: const EdgeInsets.only(left: 20, right: 8),
             child: SectionHeading(
               title: 'Stories',
-              trailing: _MoreButton(
+              trailing: MoreButton(
                 label: 'Mehr entdecken',
                 onPressed: onBrowseStories,
               ),
@@ -189,7 +190,7 @@ class HomeScreen extends ConsumerWidget {
             padding: const EdgeInsets.only(left: 20, right: 8),
             child: SectionHeading(
               title: 'Aktive Stapel',
-              trailing: _MoreButton(
+              trailing: MoreButton(
                 label: 'Mehr ansehen',
                 onPressed: onBrowseDecks,
               ),
@@ -249,39 +250,4 @@ class _Loading extends StatelessWidget {
     height: height,
     child: const Center(child: CupertinoActivityIndicator()),
   );
-}
-
-class _MoreButton extends StatelessWidget {
-  const _MoreButton({required this.label, required this.onPressed});
-
-  final String label;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoButton(
-      onPressed: onPressed,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      minimumSize: const Size(44, 44),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            label,
-            style: AppType.chrome(
-              color: context.appColors.textPrimary,
-              size: 15,
-              weight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(width: 2),
-          Icon(
-            CupertinoIcons.chevron_right,
-            size: 14,
-            color: context.appColors.textMuted,
-          ),
-        ],
-      ),
-    );
-  }
 }

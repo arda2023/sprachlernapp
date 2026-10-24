@@ -47,6 +47,8 @@ dependencies:
   characters: ^1.4.1
   supabase_flutter: ^2.18.3
   flutter_secure_storage: ^11.2.0
+  rive: ^0.14.11
+  audioplayers: ^6.8.1
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +79,8 @@ flutter:
   # material; the folder itself is tracked so builds work without a pack).
   assets:
     - assets/content/en/
+    - assets/rive/
+    - assets/sounds/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

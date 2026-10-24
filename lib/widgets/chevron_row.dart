@@ -4,7 +4,8 @@ import '../theme/app_theme.dart';
 
 /// A list entry that opens a screen: title (Figtree 17 w600), a one-line
 /// [summary], an optional [meta] line, a `textMuted` chevron and a Hairline
-/// rule below. At least `72pt` tall.
+/// rule below. At least `72pt` tall. [done] adds a green check before the
+/// chevron.
 class ChevronRow extends StatelessWidget {
   const ChevronRow({
     super.key,
@@ -12,12 +13,14 @@ class ChevronRow extends StatelessWidget {
     required this.summary,
     required this.onTap,
     this.meta,
+    this.done = false,
   });
 
   final String title;
   final String summary;
   final String? meta;
   final VoidCallback onTap;
+  final bool done;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class ChevronRow extends StatelessWidget {
         pressedOpacity: 0.7,
         minimumSize: const Size(44, 56),
         child: Semantics(
-          label: [title, summary, ?meta].join(', '),
+          label: [title, summary, ?meta, if (done) 'fertig'].join(', '),
           excludeSemantics: true,
           child: Container(
             constraints: const BoxConstraints(minHeight: 72),
@@ -72,6 +75,14 @@ class ChevronRow extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
+                if (done) ...[
+                  Icon(
+                    CupertinoIcons.checkmark_alt_circle_fill,
+                    size: 22,
+                    color: context.appColors.progressWords,
+                  ),
+                  const SizedBox(width: 10),
+                ],
                 Icon(
                   CupertinoIcons.chevron_right,
                   size: 16,

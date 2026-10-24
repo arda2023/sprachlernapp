@@ -82,8 +82,11 @@ class HomeHeader extends StatelessWidget {
             ),
           ),
         ];
-        if (constraints.maxWidth < 360 ||
-            MediaQuery.textScalerOf(context).scale(1) > 1.3) {
+        // One row on every phone; the language chip truncates first. Only
+        // very narrow widths or large Dynamic Type move goal and streak to
+        // a second line.
+        if (constraints.maxWidth < 300 ||
+            MediaQuery.textScalerOf(context).scale(1) > 1.5) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
