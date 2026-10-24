@@ -27,6 +27,7 @@ import 'decks/deck_details_screen.dart';
 import 'decks/deck_library_screen.dart';
 import 'home/home_screen.dart';
 import 'stories/story_library_screen.dart';
+import 'stories/story_collection_screen.dart';
 import 'stories/story_reader_screen.dart';
 import 'words/word_list_screen.dart';
 
@@ -241,6 +242,7 @@ class _AppShellState extends ConsumerState<AppShell> {
                     ),
                   ),
                   StoryLibraryScreen(
+                    collection: const StoryCollectionEntry(),
                     stories: ref.watch(libraryStoriesProvider).isLoading
                         ? []
                         : ref.watch(libraryStoriesProvider).asData?.value ?? [],

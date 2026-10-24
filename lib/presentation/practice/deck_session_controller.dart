@@ -7,6 +7,7 @@ import '../../domain/content.dart';
 import '../../domain/repositories.dart';
 import '../../domain/review_pass.dart';
 import '../../domain/srs_state.dart';
+import '../../domain/story_learning_diagnostics.dart';
 import '../providers/database_providers.dart';
 import '../providers/story_learning_providers.dart';
 import '../../data/learning/practice_item_resolver.dart';
@@ -149,7 +150,7 @@ class DeckSessionController extends Notifier<DeckSessionState> {
         if (args.kind == DeckSessionKind.mixed) {
           ids.addAll(await _resolver.activePrimaryIds());
         } else {
-          if (_resolver.content == null) {
+          if (_resolver.content == null && args.deckId != storyCollectionId) {
             throw _resolver.contentError ?? StateError('Inhaltspaket fehlt');
           }
           ids.addAll(

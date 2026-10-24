@@ -2,6 +2,7 @@ import '../../domain/content.dart';
 import '../../domain/learning_groups.dart';
 import '../../domain/repositories.dart';
 import '../../domain/story_learning.dart';
+import '../../domain/story_learning_diagnostics.dart';
 import '../../domain/srs_state.dart';
 
 /// One projection over the two existing repositories; owns no database.
@@ -139,8 +140,21 @@ class PracticeItemResolver {
     return result.toSet().toList();
   }
 
+  /// Stable persisted identities, including old story-origin cards. No projection
+  /// that could silently replace a saved card with another group member.
+  List<String> get storyCollectionIds {
+    final ids = states.keys.where((id) => additions.containsKey(id) ||
+        states[id]!.origin == CardOrigin.story).toList();
+    ids.sort((a, b) {
+      final date = (additions[b] ?? states[b]!.createdAt ?? DateTime(1970))
+          .compareTo(additions[a] ?? states[a]!.createdAt ?? DateTime(1970));
+      return date != 0 ? date : a.compareTo(b);
+    });
+    return ids;
+  }
+
   Future<List<String>> deckPracticeIds(String deckId) async =>
-      resolveTargets(catalog?.targets[deckId] ?? await content!.deckPracticeTargets(deckId));
+      deckId == storyCollectionId ? storyCollectionIds.where(cards.containsKey).toList() : resolveTargets(catalog?.targets[deckId] ?? await content!.deckPracticeTargets(deckId));
 
   Future<List<String>> activePrimaryIds() async {
     if (content == null) return [];

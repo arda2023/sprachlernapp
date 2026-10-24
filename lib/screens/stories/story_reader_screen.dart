@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/story_learning.dart';
+import '../../domain/story_learning_diagnostics.dart';
 import '../../presentation/providers/story_learning_providers.dart';
 
 import 'package:flutter/foundation.dart';
@@ -462,17 +463,13 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
           status: status,
           onAdd: () => service.add(candidate),
           onReactivate: () => service.reactivate(candidate),
+          onSaved: (result) {
+            if (mounted && result.state == StoryAddState.added) {
+              setState(() => _marks['${word.sentenceId}/${word.tokenIndex}'] = WordMark.active);
+            }
+          },
         );
-        if (mounted) {
-          final after = await service.status(candidate);
-          if (mounted && after.state == StoryAddState.added) {
-            setState(
-              () => _marks['${word.sentenceId}/${word.tokenIndex}'] =
-                  WordMark.active,
-            );
-          }
-        }
-      } catch (_) {
+      } catch (error) {
         if (mounted) {
           await WordPopover.show(
             context,
@@ -481,10 +478,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
             entry: word.entry,
             mark: null,
             learningAvailable: false,
-            status: const StoryAddResult(
-              StoryAddState.unavailable,
-              message: 'Storydaten konnten nicht geladen werden. Bitte erneut öffnen.',
-            ),
+            failure: error is StoryLearningFailure
+                ? error : const StoryLearningFailure(StoryLearningStep.context),
             onAdd: () async => const StoryAddResult(StoryAddState.unavailable),
           );
         }
@@ -1136,7 +1131,7 @@ class _StoredStoryReader extends ConsumerWidget {
                 if (token.senseId != null)
                   if (ref.watch(practiceResolverProvider).value
                       case final resolver?)
-                    if (resolver.storyStateId('en', token) case final id?)
+                    if (resolver.storyStateId(ref.watch(contentRepositoryProvider).requireValue.info.lang, token) case final id?)
                       if (resolver.states[id] case final state?)
                         if (state.box > 0 || resolver.additions.containsKey(id))
                           '${sentence.id}/${token.index}': state.box == 5

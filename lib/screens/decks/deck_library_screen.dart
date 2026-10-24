@@ -12,6 +12,7 @@ import '../../theme/app_theme.dart';
 import '../../widgets/back_bar.dart';
 import '../../widgets/section_heading.dart';
 import '../home/widgets/deck_tile.dart';
+import '../stories/story_collection_screen.dart';
 
 /// All decks, active first. Pushed from "Alle Stapel" on the content
 /// dashboard and from "Mehr ansehen" on Home.
@@ -108,6 +109,7 @@ class DeckLibraryScreen extends ConsumerWidget {
                       style: AppType.meta(color: context.appColors.textMuted),
                     ),
                   ),
+                  const StoryCollectionEntry(),
                   if (active.isNotEmpty) ...section('Aktiv', active),
                   if (others.isNotEmpty) ...section('Weitere Stapel', others),
                 ],
