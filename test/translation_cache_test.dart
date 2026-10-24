@@ -1,3 +1,5 @@
+import 'fixtures/offline_translation.dart';
+import 'package:sprachapp/presentation/providers/offline_translation_provider.dart';
 import 'dart:async';
 import 'dart:io';
 
@@ -452,7 +454,9 @@ void main() {
       await tester.runAsync(() => fetch());
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [runtimeTranslationProvider.overrideWithValue(client)],
+          overrides: [
+          offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
+          deviceTranslationProvider.overrideWithValue(UnsupportedDeviceTranslation()),runtimeTranslationProvider.overrideWithValue(client)],
           child: const MaterialApp(
             home: Scaffold(
               body: RuntimeTranslationSheet(

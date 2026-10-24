@@ -8,7 +8,7 @@ iOS and Android (Flutter). Targeted for release on the Apple App Store and Googl
 
 - **Framework**: Flutter (SDK constraint `^3.13.2`, see `pubspec.yaml`).
 - **Layers** (see `ARCHITECTURE.md`): pure Dart domain (`lib/domain/`, no Flutter imports); data in `lib/data/` (Drift `user.db` for learner state plus a read-only `content.sqlite` per language, joined by stable IDs); presentation with Riverpod; `supabase/` (migrations, Edge Functions); `pipeline/` (Python, offline, never part of the app).
-- **Runtime**: Local-first client with local databases. The client never calls AI providers directly. Curated content is generated before release; missing runtime translations only via authenticated Supabase Edge Functions calling direct Anthropic `claude-haiku-5-5`, with no EU-only guarantee or fallback.
+- **Runtime**: Local-first client with local databases. The client never calls AI providers directly. Curated content is generated before release; translation display follows checked context → exact private cache → offline dictionary candidates (words) or explicitly requested device translation (sentences). Optional runtime AI translations only via authenticated Supabase Edge Functions calling direct Anthropic `claude-haiku-5-5`, with no EU-only guarantee or automatic fallback. Local results never establish learning identities. Package 2B contract, platform limits and provenance: [offline translations](docs/offline-translation-package-2b.md).
 
 ## Users
 

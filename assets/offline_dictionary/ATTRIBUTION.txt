@@ -1,0 +1,22 @@
+Offlinewörterbuch · Version dewiktionary-2026-10-24-v1
+© Mitwirkende des deutschsprachigen Wiktionary.
+Quelle: https://de.wiktionary.org/ – Autoren und Bearbeitungen jeder Seite:
+https://de.wiktionary.org/w/index.php?title=<Eintrag>&action=history
+Die konkrete Quellseite ist bei jedem Wörterbuchkandidaten angegeben.
+Extraktion: Kaikki.org / Wiktextract (Tatu Ylönen und Mitwirkende),
+https://kaikki.org/dewiktionary/ · https://github.com/tatuylonen/wiktextract
+
+Lizenz der Daten und dieser bearbeiteten Datenbank: CC BY-SA 4.0
+https://creativecommons.org/licenses/by-sa/4.0/
+Vollständiger Lizenztext: CC-BY-SA-4.0.txt im selben Verzeichnis.
+Kommerzielle Nutzung, Weitergabe und Bearbeitung gemäß dieser Lizenz erlaubt.
+Keine zusätzlichen Beschränkungen für die Wörterbuchdaten.
+
+Änderungen durch Sprachapp: auf Englisch/Portugiesisch und deutsche Glossen
+reduziert, indexiertes SQLite-Format, NFC/Kleinschreibung nur für Suchschlüssel,
+explizite form_of-Verweise auf vorhandene Lemmata aufgelöst. Keine erfundenen
+Bedeutungen oder KI-Übersetzungen. Nicht auflösbare Formverweise ausgelassen;
+die gelieferten Kandidaten sind keine geprüfte kontextuelle Bedeutungszuordnung.
+Quelle/Hashes/Umfang: manifest.json. Reproduktion: tool/offline_dictionary/build.py.
+Portugiesisch umfasst nicht zuverlässig getrennte regionale Varianten.
+Die Lizenz gilt für die Wörterbuchdaten, nicht automatisch für unabhängigen App-Code.

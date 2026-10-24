@@ -1,3 +1,5 @@
+import 'fixtures/offline_translation.dart';
+import 'package:sprachapp/presentation/providers/offline_translation_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'fixtures/deck_repositories.dart';
@@ -2324,6 +2326,10 @@ void main() {
   Widget newsReader() {
     final article = sampleNews.first;
     return ProviderScope(
+      overrides: [
+        offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
+        deviceTranslationProvider.overrideWithValue(UnsupportedDeviceTranslation()),
+      ],
       child: MaterialApp(
         theme: buildAppTheme(),
         home: StoryReaderScreen(story: article.asStory, text: article.text),

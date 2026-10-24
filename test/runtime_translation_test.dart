@@ -1,3 +1,5 @@
+import 'fixtures/offline_translation.dart';
+import 'package:sprachapp/presentation/providers/offline_translation_provider.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -160,7 +162,9 @@ void main() {
         final word = lang == 'en' ? 'bank' : 'banco';
         await tester.pumpWidget(
           ProviderScope(
-            overrides: [runtimeTranslationProvider.overrideWithValue(fake)],
+            overrides: [
+          offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
+          deviceTranslationProvider.overrideWithValue(UnsupportedDeviceTranslation()),runtimeTranslationProvider.overrideWithValue(fake)],
             child: MaterialApp(
               theme: buildAppTheme(),
               home: StoryReaderScreen(
@@ -246,7 +250,9 @@ void main() {
     final fake = FakeTranslations();
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [runtimeTranslationProvider.overrideWithValue(fake)],
+        overrides: [
+          offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
+          deviceTranslationProvider.overrideWithValue(UnsupportedDeviceTranslation()),runtimeTranslationProvider.overrideWithValue(fake)],
         child: MaterialApp(
           theme: buildAppTheme(),
           home: StoryReaderScreen(
@@ -281,6 +287,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
+          deviceTranslationProvider.overrideWithValue(UnsupportedDeviceTranslation()),
           runtimeTranslationProvider.overrideWith(
             (ref) => throw StateError('network must not be used'),
           ),
@@ -336,7 +344,9 @@ void main() {
     final fake = FakeTranslations();
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [runtimeTranslationProvider.overrideWithValue(fake)],
+        overrides: [
+          offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
+          deviceTranslationProvider.overrideWithValue(UnsupportedDeviceTranslation()),runtimeTranslationProvider.overrideWithValue(fake)],
         child: MaterialApp(
           theme: buildAppTheme(),
           home: StoryReaderScreen(
@@ -366,7 +376,9 @@ void main() {
       final fake = FakeTranslations()..fail = true;
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [runtimeTranslationProvider.overrideWithValue(fake)],
+          overrides: [
+          offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
+          deviceTranslationProvider.overrideWithValue(UnsupportedDeviceTranslation()),runtimeTranslationProvider.overrideWithValue(fake)],
           child: const MaterialApp(
             home: Scaffold(
               body: RuntimeTranslationSheet(
