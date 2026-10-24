@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import '../../domain/story_failure_trace.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/story_learning.dart';
@@ -59,7 +61,9 @@ class StoryLearningService {
       return await action();
     } on StoryLearningFailure {
       rethrow;
-    } catch (_) {
+    } catch (error, stack) {
+      // Profile diagnostics retain only the exception class and source locations.
+      if (!kReleaseMode) debugPrint(storyFailureTrace(step, error, stack));
       // Deliberately discard raw errors: they can contain private text/URLs.
       throw StoryLearningFailure(step);
     }

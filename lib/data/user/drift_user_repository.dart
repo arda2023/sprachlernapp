@@ -512,8 +512,13 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
       }
     }
     final bound = bindings[c.identity.key];
+    // A candidate's deterministic local ID is a creation proposal, not a pack
+    // reference. Only request its state when a row exists. Bound/pack IDs still
+    // go through cardStates and its strict language/content checks unchanged.
+    final localRow = await (_db.select(_db.userCards)
+      ..where((t) => t.cardId.equals(c.identity.localId))).getSingleOrNull();
     final states = await cardStates({
-      c.identity.localId,
+      if (localRow != null) c.identity.localId,
       if (c.card != null) c.card!.id,
       ?bound,
     });

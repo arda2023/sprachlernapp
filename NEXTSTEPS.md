@@ -22,4 +22,4 @@
 - UI-Werte 40/30 px, Padding 16/6, Fehlerfeedback und Nutzeränderungen erhalten; frühere Nachweise/Commitgrenzen: docs/practice-error-feedback.md.
 - Passwortlogin laut vorherigem Nutzerbericht funktionsfähig; keine Auth-/Rollenänderung. docs/content-password-login.md.
 - Vollständiger vorheriger NEXTSTEPS-Text: Gitstand 6deba380042578a5cee96af24988db9d713e02ba; relevante Altverweise zusätzlich im Haiku-Plan.
-- Cache-Cloudschritte offen: Remote-Migrationsliste abgleichen, 20261024000001_private_translation_cache.sql nach vorhandener Runtime-Limitmigration anwenden, lookup-word und translate-sentence deployen, dann iPhone-App aktualisieren. Kein Push/Deployment/Gerätetest dieses Auftrags; bestehende Secrets verwenden.
+- Cachemigration und beide Übersetzungsfunctions laut Nutzer erfolgreich deployed (Nutzerbericht). STORY_STATUS_01: Ursache mit aktivem Gerätepack/Altbestand reproduziert und lokal behoben; 66 gezielte Tests PASS/1 bestehender Skip, Analyse nur Alt-avoid_print. Profile-Update installiert, Lernbestand nach Update unverändert; Nutzer bestätigt alle vier Wortdialoge korrekt (Geräteabnahme durch Nutzerbeobachtung); docs/story-status-device-fix.md.
