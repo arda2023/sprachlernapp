@@ -1,4 +1,5 @@
 import 'dart:convert';
+import '../../domain/personal_learning.dart';
 
 import 'package:drift/drift.dart';
 
@@ -16,7 +17,7 @@ import '../../domain/srs_state.dart';
 import 'user_database.dart';
 
 /// [UserRepository] on the Drift user.db of one language.
-class DriftUserRepository implements UserRepository, StoryLearningRepository, ReviewActivityRepository, StoryContextCorrectionStore {
+class DriftUserRepository implements PersonalLearningStore, UserRepository, StoryLearningRepository, ReviewActivityRepository, StoryContextCorrectionStore {
   DriftUserRepository(this._db, {required this.lang, this.ownsDatabase = true, this.contentIds});
   final bool ownsDatabase;
   final Future<Set<String>> Function(String kind)? contentIds;
@@ -455,6 +456,17 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
 
   @override
   Future<StoryAddResult> storyLearningStatus(StoryLearningCandidate c) async {
+    if (c is PersonalLearningCandidate) {
+      // Fail closed for aliases of a disabled/retired local target, inside the
+      // same transaction as Add. No existing row or review is altered.
+      final blocked = await (_db.select(_db.userCards)..where((t) =>
+        t.lang.equals(lang) & t.formNorm.equals(c.identity.formNorm) &
+        (t.disabled.equals(true) | t.retired.equals(true)))).get();
+      if (blocked.isNotEmpty) {
+        return const StoryAddResult(StoryAddState.unavailable,
+        message: 'Ein Ziel dieser Wortform ist gesperrt. Bitte zuerst in der Wortliste prüfen.');
+      }
+    }
     final invalid = c.validationProblem(needsContext: false);
     if (c.lang != lang || invalid != null) {
       return StoryAddResult(
@@ -637,7 +649,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
               revision: c.revision,
               fingerprint: c.sourceFingerprint,
               lang: lang,
-              provenance: 'editorial_chat_reviewed',
+              provenance: c is PersonalLearningCandidate ? c.provenance : 'editorial_chat_reviewed',
               createdAt: now.toUtc(),
               tokensJson: jsonEncode([
                 for (final t in c.practiceSentence.tokens)
@@ -711,6 +723,26 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
         );
     return StoryAddResult(StoryAddState.added, cardId: id);
   });
+
+  @override
+  Future<StoryAddResult> savePersonalLearning(StoryLearningCandidate candidate,
+      {required DateTime now, required PersonalTarget source, required void Function() verify}) =>
+    _db.transaction(() async {
+      verify();
+      final result = await addStoryWord(candidate, now: now);
+      if (result.state == StoryAddState.added) {
+        await _db.into(_db.learningIdentityBindings).insert(
+          LearningIdentityBindingsCompanion.insert(identityKey: source.identity.key,
+            lang: lang, formNorm: source.identity.formNorm,
+            semanticAnchor: source.identity.semanticAnchor, cardId: result.cardId!),
+          mode: InsertMode.insertOrIgnore);
+        final bound = await (_db.select(_db.learningIdentityBindings)..where((t) =>
+          t.identityKey.equals(source.identity.key))).getSingle();
+        if (bound.cardId != result.cardId) throw StateError('Parallel anders zugeordnet');
+      }
+      verify(); // A changed account/scope rolls the complete transaction back.
+      return result;
+    });
 
   @override
   Future<void> applyStoryContextCorrections(List<StoryContextCorrection> corrections) async {

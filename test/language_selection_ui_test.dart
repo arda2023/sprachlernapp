@@ -185,6 +185,8 @@ void main() {
 
       await show(const SettingsScreen());
       expect(find.text('Lernsprache'), findsOneWidget);
+      await t.scrollUntilVisible(find.text('Portugiesisch (Brasilien)'), 200,
+        scrollable: find.byType(Scrollable).first);
       expect(find.text('Portugiesisch (Brasilien)'), findsOneWidget);
       await capture('settings');
       await t.tap(find.text('Portugiesisch (Brasilien)'));

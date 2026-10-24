@@ -1,3 +1,4 @@
+import '../../widgets/personal_learning_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -71,6 +72,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               )),
             ),
             const WordCloudConsentTile(),
+            const PersonalLearningConsentTile(),
             const TranslationCacheDeleteTile(),
             const Divider(),
             const ListTile(contentPadding: EdgeInsets.zero, title: Text('Lernsprache'), subtitle: Text('Die Oberfläche bleibt Deutsch.')),

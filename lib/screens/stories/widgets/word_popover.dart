@@ -24,6 +24,7 @@ class WordPopover extends StatefulWidget {
     this.failure,
     this.onReactivate,
     this.learningAvailable = true,
+    this.personalAction,
   });
 
   /// The word as it appears in the text, e.g. 'arrived'.
@@ -36,6 +37,7 @@ class WordPopover extends StatefulWidget {
   final StoryLearningFailure? failure;
   final Future<StoryAddResult> Function()? onReactivate;
   final bool learningAvailable;
+  final Widget? personalAction;
 
   static Future<void> show(
     BuildContext context, {
@@ -49,6 +51,7 @@ class WordPopover extends StatefulWidget {
     StoryLearningFailure? failure,
     Future<StoryAddResult> Function()? onReactivate,
     bool learningAvailable = true,
+    Widget? personalAction,
   }) => showAnchoredPopoverAt<void>(
     context: context,
     anchor: anchor,
@@ -63,6 +66,7 @@ class WordPopover extends StatefulWidget {
       failure: failure,
       onReactivate: onReactivate,
       learningAvailable: learningAvailable,
+      personalAction: personalAction,
     ),
   );
 
@@ -209,7 +213,7 @@ class _WordPopoverState extends State<WordPopover>
           ),
         ),
         const SizedBox(height: 18),
-        if (!widget.learningAvailable && widget.failure == null && _status.message == null)
+        if (widget.personalAction == null && !widget.learningAvailable && widget.failure == null && _status.message == null)
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
@@ -231,7 +235,7 @@ class _WordPopoverState extends State<WordPopover>
               ),
             ),
           ),
-        Semantics(
+        if (widget.personalAction case final action?) action else Semantics(
           liveRegion: true,
           child: _LearnButton(
             label: label,

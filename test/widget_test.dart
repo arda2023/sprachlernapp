@@ -700,13 +700,13 @@ void main() {
 
       expect(
         find.text(
-          'Für diesen Text sind keine geprüften Lernreferenzen vorhanden.',
+          'Lernstatus nicht lesbar. Bitte erneut öffnen.',
         ),
         findsOneWidget,
       );
       expect(
         tester.getSemantics(
-          find.bySemanticsLabel('Zum Lernen nicht verfügbar'),
+          find.bySemanticsLabel('Zum Lernen hinzufügen'),
         ),
         isSemantics(isButton: true, isEnabled: false),
       );
@@ -756,8 +756,9 @@ void main() {
   ) async {
     await tester.pumpWidget(reader());
     await tapWord(tester, 'station');
-    expect(find.bySemanticsLabel('Zum Lernen nicht verfügbar'), findsOneWidget);
-    // Demo marks remain visual only; no saved-learning claim.
+    expect(find.bySemanticsLabel('Zum Lernen hinzufügen'), findsOneWidget);
+    // Demo has no repository: Add fails closed; marks never claim a saved card.
+    expect(find.text('Hinzugefügt'), findsNothing);
     expect(sampleWordMarks['station'], WordMark.mastered);
   });
 

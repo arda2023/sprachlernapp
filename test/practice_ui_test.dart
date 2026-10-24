@@ -294,7 +294,9 @@ void main() {
     final context = t.element(find.byType(Scaffold).first);
     SettingsScreen.open(context);
     await t.pumpAndSettle();
-    await t.ensureVisible(find.byType(DropdownButton<AppMotif>));
+    // Consent controls above can put this lazy ListView child off-screen.
+    await t.scrollUntilVisible(find.byType(DropdownButton<AppMotif>), 200,
+      scrollable: find.descendant(of: find.byType(SettingsScreen), matching: find.byType(Scrollable)).first);
     await t.pumpAndSettle();
     await t.tap(find.byType(DropdownButton<AppMotif>));
     await t.pumpAndSettle();
@@ -305,7 +307,9 @@ void main() {
       Theme.of(t.element(find.byType(SettingsScreen))).brightness,
       Brightness.dark,
     );
-    await t.ensureVisible(find.byType(DropdownButton<AppMotif>));
+    // Consent controls above can put this lazy ListView child off-screen.
+    await t.scrollUntilVisible(find.byType(DropdownButton<AppMotif>), 200,
+      scrollable: find.descendant(of: find.byType(SettingsScreen), matching: find.byType(Scrollable)).first);
     await t.pumpAndSettle();
     await t.tap(find.byType(DropdownButton<AppMotif>));
     await t.pumpAndSettle();

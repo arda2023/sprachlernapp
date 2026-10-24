@@ -1,3 +1,6 @@
+import '../domain/personal_learning.dart';
+import 'personal_learning_button.dart';
+
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
@@ -27,7 +30,9 @@ class RuntimeTranslationSheet extends ConsumerStatefulWidget {
     this.senseRef,
     this.formRef,
     this.wordTap = false,
+    this.learningTarget,
   });
+  final PersonalTarget? learningTarget;
   final String lang, text;
   final String? form, displayText, senseRef, formRef;
   final int? start;
@@ -42,6 +47,7 @@ class RuntimeTranslationSheet extends ConsumerStatefulWidget {
     String? senseRef,
     String? formRef,
     bool wordTap = false,
+    PersonalTarget? learningTarget,
   }) => showModalBottomSheet<void>(
     context: context,
     showDragHandle: false,
@@ -59,6 +65,7 @@ class RuntimeTranslationSheet extends ConsumerStatefulWidget {
       senseRef: senseRef,
       formRef: formRef,
       wordTap: wordTap,
+      learningTarget: learningTarget,
     ),
   );
   @override
@@ -341,6 +348,8 @@ class _RuntimeTranslationSheetState
                 'Keine eindeutige lokale Übersetzung. Automatische Wortübersetzung kannst du in den Einstellungen aktivieren.',
               ),
           ],
+          if (widget.learningTarget case final target?)
+            PersonalLearningButton(key: ValueKey(target.key), target: target),
           if (error != null) Semantics(liveRegion: true, child: Text(error!)),
           if (widget.form != null && !checking && !loading)
             CupertinoButton(

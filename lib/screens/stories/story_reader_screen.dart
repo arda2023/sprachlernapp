@@ -1,3 +1,5 @@
+import '../../domain/personal_learning.dart';
+import '../../widgets/personal_learning_button.dart';
 import 'dart:convert';
 import '../../data/runtime_translation_client.dart';
 import '../../widgets/runtime_translation_sheet.dart';
@@ -265,7 +267,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
       if (t.start > cursor) {
         sentence.tokens.add(source.text.substring(cursor, t.start));
       }
-      if (t.lemmaId == null) {
+      if (t.lemmaId == null && !RegExp(r'[\p{L}]', unicode: true).hasMatch(t.surface)) {
         sentence.tokens.add(t.surface);
       } else {
         final word = _words.length;
@@ -438,6 +440,23 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
 
   Future<void> _lookUp(int index) async {
     final word = _words[index];
+    PersonalTarget? personal;
+    if (widget.document == null) {
+      personal = PersonalTarget(lang: widget.sourceLanguage,
+        text: _sentences.firstWhere((s) => s.tokens.contains(index)).text,
+        form: word.text, start: word.start!, source: widget.story.id);
+    } else if (word.sentenceId != null) {
+      try {
+        final candidate = await ProviderScope.containerOf(context, listen: false)
+          .read(storyLearningServiceProvider).candidate(widget.story.id, word.sentenceId!, word.tokenIndex!);
+        if (!candidate.retired && candidate.problem == null && candidate.card == null &&
+            !candidate.token.annotated && candidate.token.pos != 'PROPN') {
+          personal = PersonalTarget(lang: widget.sourceLanguage, text: candidate.sentence.text,
+            form: word.text, start: word.start!, source: widget.story.id);
+        }
+      } catch (_) { /* No creation fallback for a technical context failure. */ }
+      if (!mounted) return;
+    }
     if (!hasStoredTranslation(word.entry.translation)) {
       final sentence = _sentences
           .firstWhere((s) => s.tokens.contains(index))
@@ -448,6 +467,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
         text: sentence,
         form: word.text,
         wordTap: true,
+        learningTarget: personal,
         start: word.start,
         senseRef: word.senseRef,
         formRef: word.formRef,
@@ -476,6 +496,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
           entry: word.entry,
           mark: status.state == StoryAddState.added ? WordMark.active : null,
           status: status,
+          personalAction: personal == null ? null : PersonalLearningButton(target: personal, foregroundColor: const Color(0xFFFFFFFF)),
           onAdd: () => service.add(candidate),
           onReactivate: () => service.reactivate(candidate),
           onSaved: (result) {
@@ -507,6 +528,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
         entry: word.entry,
         mark: _marks[headword],
         learningAvailable: false,
+        personalAction: personal == null ? null : PersonalLearningButton(target: personal, foregroundColor: const Color(0xFFFFFFFF)),
         onAdd: () async => const StoryAddResult(StoryAddState.unavailable),
       );
     }

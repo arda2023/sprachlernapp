@@ -77,3 +77,5 @@ Content-Schema 4 und user.db v5 bleiben getrennt. `PracticeItemResolver` verbind
 
 ## Textanschluss Paket A (historischer Stand 18.10.2026)
 Der bestehende Offline-Wrapper nutzt `claude-haiku-5-5`, Projekt `sprachlernapp-510508`, EU-Multiregion `eu`, Thinking aus und Effort low. Kein Fallback. SDK-Retries aus; maximal drei kontrollierte Versuche, feste Request-/Gesamtdeadline, vollständige ursprüngliche JSON-Schema-Prüfung lokal. Keine neue Runtime-KI oder Appänderung. Cloudfreischaltung und Modellqualität bleiben ungeprüft; Offline-Nachweise: [Umsetzung](docs/haiku-migration-implementation.md). Die Stapelphase ist beendet; keine neuen Produktionsläufe aus dieser Änderung.
+
+Paket 2C: ausdrückliches Add → PersonalLearningService → bestehende Karte oder separater privater Erstellungs-Claim (`create-learning-card`) → streng validierter PersonalLearningCandidate → bestehende atomare user.db-Karten-/Kontexttransaktion und „Aus Storys“. Eigene Konto-/Gerätefreigabe in private_learning_consent.sqlite; Übersetzungscache und Kartenspeicher getrennt. Keine Scheduleränderung. Cloud und Geräteabnahme noch offen: docs/story-import-learning-package-2c.md.
