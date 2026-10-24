@@ -2,7 +2,7 @@
 
 ## Vertrag vor Implementierung
 
-Reihenfolge: geprüfter Inhalt → privater lokaler Treffer → ausdrückliche Onlineanfrage (serverseitiger Treffer vor Generierungsbudget). Keine Karten-/Satzgenerierung, keine Änderungen an Packs, SRS oder Story-Identitäten.
+Aktualisiert durch [Paket-2B-Änderungsvertrag](offline-translation-revision.md): geprüfter Inhalt → privater lokaler Treffer → bei Wörtern geeigneter Offline-Wörterbuchtreffer → bei fachlichem Miss automatische Onlineanfrage nur nach Wort-Tap und dauerhafter, widerrufbarer Zustimmung. Sätze behalten die ausdrückliche Aktion „Übersetzen“. Serverseitiger Treffer bleibt vor Generierungsbudget. Keine Karten-/Satzgenerierung, keine Änderungen an Packs, SRS oder Story-Identitäten.
 
 Identität: Konto + Supabase-Projekt, Operation, en/pt-BR → de, exakter vollständiger Satz, exakte Wortform und UTF-16-Start/Ende, optionale Sense-/Formreferenzen, Vertragsversion 2. Keine Unicode-/Case-/Whitespace-Normalisierung. Promptversion `translation-v2`, Anbieter Anthropic, Modell `claude-haiku-5-5` als Herkunft. Vertrags-/Promptänderung invalidiert gezielt; Neustart/Refresh nicht.
 
@@ -19,7 +19,7 @@ Lokal implementiert und mit synthetischen Antworten geprüft. Kein Push, Deploym
 ## Tatsächliche Speicher- und Aufrufwege
 
 - `TranslationRequest` vereinheitlicht die Identität; Dart und JavaScript benutzen UTF-16-Offsets. Wiederholte Wörter erfordern einen expliziten Start. Ältere Clients ohne Offset werden ausschließlich bei einem eindeutigen, exakt geschriebenen Vorkommen angenommen. Ein ungültiger Offset ist kein Anlass zu raten.
-- `RuntimeTranslationClient` bleibt der HTTP-Transport; `CachedRuntimeTranslationClient` erweitert diesen vorhandenen Pfad. Reader und Textübung prüfen weiterhin zuerst ihre gespeicherte Übersetzung; erst der bestehende Runtime-Dialog liest den privaten Cache. Bis zum Knopfdruck erfolgt keine Netzwerkanfrage. Auch ein nicht lokaler Serverhit benötigt diese Onlinefreigabe; das vermeidet einen zusätzlichen stillen Textupload.
+- `RuntimeTranslationClient` bleibt der HTTP-Transport; `CachedRuntimeTranslationClient` erweitert diesen vorhandenen Pfad. Reader und Textübung prüfen weiterhin zuerst ihre gespeicherte Übersetzung; erst der bestehende Runtime-Dialog liest den privaten Cache. Die aktuelle Onlinefreigabe ist bei Wort-Taps eine versionierte Zustimmung pro Konto/Gerät; bei Sätzen bleibt es die ausdrückliche Aktion. Auch ein Serverhit benötigt diese Freigabe. Kein Abruf beim Öffnen, Scrollen oder Importieren einer Story.
 - Lokal: `<ApplicationSupport>/private_translations.sqlite`, Tabellen `translations` und `deletion`, keine Änderung der Drift-Lerndatenbank. Die DB enthält Kontokennung mit Projekthost, Anfragehash, validierte Antwort und Ablaufzeit; keine JWTs und keinen Anthropic-Schlüssel. Zugriff im App-Sandboxspeicher, keine zusätzlich behauptete Dateiverschlüsselung. `secure_delete=ON`; Gerätesicherungen und Anbieter-Backups sind davon nicht automatisch gelöscht.
 - Konto wird aus der vorhandenen lokal wiederhergestellten Supabase-Sitzung bestimmt. Offline-Treffer brauchen keine Tokenauffrischung; anonym/abgemeldet liefert keinen Treffer. Konto-/Löschrevisionen sperren späte Ergebnisse und entfernen offene Ergebnisanzeigen. Tokenbeschaffung prüft ebenfalls einen zwischenzeitlichen Kontowechsel.
 - Server: `app.translation_cache` mit `(user_id,request_key)` als Primärschlüssel. Originalsatz und Wortreferenzen werden gehasht, nicht dauerhaft auf dem Server abgelegt; der Antworttext ist weiterhin privat. Keine Public-/Anon-/Authenticated-Tabellenrechte, RLS aktiv ohne Clientpolicies. Nur Service-only RPCs; die Function nimmt die Identität aus `/auth/v1/user`, niemals aus Clientfeldern.
@@ -66,7 +66,9 @@ supabase test db supabase/tests/database/translation_cache.test.sql
 
 PGlite-Alternative ohne Cloud: `npm install --prefix <externes-testverzeichnis> --no-audit --no-fund @electric-sql/pglite`, danach `node tool/test_translation_cache_sql.mjs <absoluter-pfad-zum-testverzeichnis>/node_modules/@electric-sql/pglite/dist/index.js` (macOS/PowerShell; Pfade entsprechend anpassen). Das Tool lädt die echten Migrationen und SQL-Assertions; nur Supabase-Systemrollen/Auth-/Storage-Minimalschema und der pgTAP-Ausgaberahmen werden ersetzt. Es prüft PostgreSQL-Semantik, nicht reale konkurrierende Sessions oder das Supabase-Gateway.
 
-## iPhone-Prüfweg nach Cloudschritten und Appupdate
+## Historischer Paket-2A-Prüfweg nach Cloudschritten und Appupdate
+
+Aktueller Wort-Tap-/Einwilligungsablauf: [Änderungsvertrag](offline-translation-revision.md). Die folgenden Knopfnamen beziehen sich auf Paket 2A.
 
 1. Bestehenden Account unter Einstellungen → Inhaltsupdates anmelden. App mit der vorhandenen öffentlichen Supabase-Konfiguration bauen; keinen neuen Service-/KI-Key in Flutter eintragen. Auf macOS `flutter devices`, dann `flutter run -d <geräte-id>` mit den bereits verwendeten `--dart-define`-Parametern. Windows kann die iOS-App nicht bauen; dort nur Cloudschritte. Installation nicht löschen, damit Lerndaten bleiben.
 2. Stories → Nachrichten → „Politik in 100 Sekunden“ → im ersten Satz **council** antippen. Bei fehlender lokaler Übersetzung einmal **Mit KI übersetzen** bestätigen. Satz-/Quellsprache kontrollieren. Dieser manuelle Schritt ist eine echte kostenpflichtige Anfrage, nicht Teil der lokalen Abnahme dieses Auftrags.

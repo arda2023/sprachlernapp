@@ -2328,7 +2328,7 @@ void main() {
     return ProviderScope(
       overrides: [
         offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
-        deviceTranslationProvider.overrideWithValue(UnsupportedDeviceTranslation()),
+
       ],
       child: MaterialApp(
         theme: buildAppTheme(),
@@ -2352,7 +2352,7 @@ void main() {
     // Missing word opens explicit AI opt-in; no request on tap.
     await tapWord(tester, 'council');
     expect(find.byType(RuntimeTranslationSheet), findsOneWidget);
-    expect(find.text('Mit KI übersetzen'), findsOneWidget);
+    expect(find.text('Automatische Wortübersetzung aktivieren?'), findsOneWidget);
     expect(find.textContaining('KI ·'), findsNothing);
     Navigator.of(tester.element(find.byType(RuntimeTranslationSheet))).pop();
     await tester.pumpAndSettle();

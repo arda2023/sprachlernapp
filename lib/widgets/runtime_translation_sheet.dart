@@ -1,21 +1,21 @@
 import 'dart:async';
-import 'dart:io';
-
-import 'package:flutter/services.dart';
-import 'package:device_translation/device_translation.dart';
-
-import '../data/offline_translation/offline_dictionary.dart';
-import '../presentation/providers/offline_translation_provider.dart';
-import '../theme/app_theme.dart';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show showModalBottomSheet, SelectableText;
+import 'package:flutter/material.dart'
+    show showModalBottomSheet, SelectableText;
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../data/offline_translation/offline_dictionary.dart';
+import '../data/offline_translation/dictionary_selection.dart';
 import '../data/runtime_translation_client.dart';
+import '../presentation/providers/offline_translation_provider.dart';
 import '../presentation/providers/runtime_translation_provider.dart';
+import '../theme/app_theme.dart';
+import 'word_cloud_consent.dart';
 
-/// Missing translations only. No network until the explicit button is tapped.
+/// The reader has already checked its exact pack/context translation.
+/// Only a word tap can opt into automatic cloud lookup; mounting alone cannot.
 class RuntimeTranslationSheet extends ConsumerStatefulWidget {
   const RuntimeTranslationSheet({
     super.key,
@@ -26,10 +26,12 @@ class RuntimeTranslationSheet extends ConsumerStatefulWidget {
     this.start,
     this.senseRef,
     this.formRef,
+    this.wordTap = false,
   });
   final String lang, text;
   final String? form, displayText, senseRef, formRef;
   final int? start;
+  final bool wordTap;
   static Future<void> show(
     BuildContext context, {
     required String lang,
@@ -39,6 +41,7 @@ class RuntimeTranslationSheet extends ConsumerStatefulWidget {
     int? start,
     String? senseRef,
     String? formRef,
+    bool wordTap = false,
   }) => showModalBottomSheet<void>(
     context: context,
     showDragHandle: false,
@@ -55,6 +58,7 @@ class RuntimeTranslationSheet extends ConsumerStatefulWidget {
       start: start,
       senseRef: senseRef,
       formRef: formRef,
+      wordTap: wordTap,
     ),
   );
   @override
@@ -64,226 +68,223 @@ class RuntimeTranslationSheet extends ConsumerStatefulWidget {
 
 class _RuntimeTranslationSheetState
     extends ConsumerState<RuntimeTranslationSheet> {
-  bool started = false, loading = false, checking = true;
   StreamSubscription<void>? _changes;
-  int _epoch = 0, _localEpoch = 0;
+  int _epoch = 0;
+  bool checking = true, loading = false, started = false;
+  WordCloudConsent? consent;
+  RuntimeTranslation? result;
+  String? dictionaryText, error;
   List<DictionaryCandidate> candidates = [];
-  int visibleCandidates = 3;
-  DeviceModelState modelState = DeviceModelState.unsupported;
-  bool localBusy = false;
-  String? localText, localError;
-  late final DeviceTranslation device;
+  bool _current(int epoch) => mounted && epoch == _epoch;
+
   @override
   void initState() {
     super.initState();
-    device = ref.read(deviceTranslationProvider);
-    final client = ref.read(runtimeTranslationProvider);
-    _changes = client.changes.listen((_) {
+    _changes = ref.read(runtimeTranslationProvider).changes.listen((_) {
       _epoch++;
-      _localEpoch++;
-      unawaited(device.cancel());
-      if (mounted) {
-        setState(() {
-          result = null;
-          localText = null;
-          candidates = [];
-          localBusy = false;
-          started = true;
-          loading = false;
-          checking = false;
-          error =
-              'Konto oder Übersetzungsspeicher geändert. Bitte erneut öffnen.';
-        });
-      }
+      if (!mounted) return;
+      setState(() {
+        result = null;
+        dictionaryText = null;
+        candidates = [];
+        consent = null;
+        started = true;
+        loading = false;
+        checking = false;
+        error =
+            'Konto oder Übersetzungsspeicher geändert. Bitte erneut öffnen.';
+      });
     });
-    _loadSaved();
+    _load();
   }
 
-  Future<void> _loadSaved() async {
+  @override
+  void didUpdateWidget(covariant RuntimeTranslationSheet oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.lang == widget.lang &&
+        oldWidget.text == widget.text &&
+        oldWidget.form == widget.form &&
+        oldWidget.start == widget.start &&
+        oldWidget.senseRef == widget.senseRef &&
+        oldWidget.formRef == widget.formRef &&
+        oldWidget.wordTap == widget.wordTap) {
+      return;
+    }
+    _epoch++;
+    result = null;
+    dictionaryText = null;
+    candidates = [];
+    consent = null;
+    started = false;
+    loading = false;
+    checking = true;
+    error = null;
+    _load();
+  }
+
+  Future<void> _load() async {
     final epoch = _epoch;
+    final client = ref.read(runtimeTranslationProvider);
     try {
-      final saved = await ref
-          .read(runtimeTranslationProvider)
-          .cached(
-            lang: widget.lang,
-            text: widget.text,
-            form: widget.form,
-            start: widget.start,
-            senseRef: widget.senseRef,
-            formRef: widget.formRef,
-          );
-      if (mounted && epoch == _epoch) {
+      final saved = await client.cached(
+        lang: widget.lang,
+        text: widget.text,
+        form: widget.form,
+        start: widget.start,
+        senseRef: widget.senseRef,
+        formRef: widget.formRef,
+      );
+      if (!_current(epoch)) return;
+      if (saved != null) {
         setState(() {
           result = saved;
-          started = saved != null;
+          checking = false;
         });
-        if (saved == null) await loadLocal();
+        return;
+      }
+      final form = widget.form;
+      if (form != null) {
+        final values = await ref
+            .read(offlineDictionaryProvider)
+            .lookup(widget.lang, form);
+        if (!_current(epoch)) return;
+        candidates = values;
+        dictionaryText = singleDictionaryTranslation(form, values);
+        if (dictionaryText == null && widget.wordTap) {
+          consent = await client.wordCloudConsent();
+          if (!_current(epoch)) return;
+        }
+      }
+      setState(() => checking = false);
+      if (widget.form != null &&
+          widget.wordTap &&
+          dictionaryText == null &&
+          consent == WordCloudConsent.enabled) {
+        await request();
       }
     } on TranslationFailure catch (e) {
-      if (mounted && epoch == _epoch) {
+      if (_current(epoch)) {
+        setState(() {
+          error = e.message;
+          started = true;
+          checking = false;
+        });
+      }
+    } catch (_) {
+      if (_current(epoch)) {
+        setState(() {
+          error = 'Lokaler Übersetzungsspeicher nicht lesbar. Keine Onlineanfrage gestartet.';
+          started = true;
+          checking = false;
+        });
+      }
+    }
+  }
+
+  Future<void> decideConsent(bool enabled) async {
+    if (loading || checking || started) return;
+    final epoch = _epoch;
+    setState(() => loading = true);
+    try {
+      await ref.read(runtimeTranslationProvider).setWordCloudConsent(enabled);
+      if (!_current(epoch)) return;
+      setState(() {
+        consent = enabled
+            ? WordCloudConsent.enabled
+            : WordCloudConsent.disabled;
+        loading = false;
+      });
+      if (enabled && widget.wordTap) await request();
+    } on TranslationFailure catch (e) {
+      if (_current(epoch)) {
         setState(() {
           error = e.message;
           started = true;
         });
       }
     } catch (_) {
-      if (mounted && epoch == _epoch) {
+      if (_current(epoch)) {
         setState(() {
-          error = 'Übersetzungsspeicher konnte nicht gelesen werden.';
+          error =
+              'Cloud-Einstellung nicht gespeichert. Keine Anfrage gestartet.';
           started = true;
         });
       }
     } finally {
-      if (mounted && epoch == _epoch) setState(() => checking = false);
+      if (_current(epoch)) setState(() => loading = false);
     }
   }
 
-  @override
-  void dispose() {
-    _changes?.cancel();
-    _localEpoch++;
-    unawaited(device.cancel());
-    super.dispose();
-  }
-
-  RuntimeTranslation? result;
-  String? error;
   Future<void> request() async {
-    if (started || checking || localBusy) return;
+    if (started || checking || loading) return;
+    if (widget.form != null &&
+        (!widget.wordTap || consent != WordCloudConsent.enabled)) {
+      return;
+    }
     final epoch = _epoch;
     setState(() {
       started = true;
       loading = true;
     });
     try {
-      final value = await ref
-          .read(runtimeTranslationProvider)
-          .translate(
-            lang: widget.lang,
-            text: widget.text,
-            form: widget.form,
-            start: widget.start,
-            senseRef: widget.senseRef,
-            formRef: widget.formRef,
-          );
-      if (mounted && epoch == _epoch) setState(() => result = value);
+      final client = ref.read(runtimeTranslationProvider);
+      final value = widget.form == null
+          ? await client.translate(lang: widget.lang, text: widget.text)
+          : await client.translateWordOnTap(
+              lang: widget.lang,
+              text: widget.text,
+              form: widget.form!,
+              start: widget.start,
+              senseRef: widget.senseRef,
+              formRef: widget.formRef,
+            );
+      if (_current(epoch)) setState(() => result = value);
     } on TranslationFailure catch (e) {
-      if (mounted && epoch == _epoch) setState(() => error = e.message);
+      if (_current(epoch)) setState(() => error = e.message);
     } catch (_) {
-      if (mounted && epoch == _epoch) {
+      if (_current(epoch)) {
         setState(() => error = 'Übersetzung derzeit nicht verfügbar.');
       }
     } finally {
-      if (mounted && epoch == _epoch) setState(() => loading = false);
+      if (_current(epoch)) setState(() => loading = false);
     }
-  }
-
-  Future<void> loadLocal() async {
-    final epoch = _epoch, localEpoch = ++_localEpoch;
-    try {
-      if (widget.form case final form?) {
-        final values = await ref
-            .read(offlineDictionaryProvider)
-            .lookup(widget.lang, form);
-        if (mounted && epoch == _epoch && localEpoch == _localEpoch) {
-          setState(() => candidates = values);
-        }
-      } else {
-        final state = await device.status(widget.lang);
-        if (mounted && epoch == _epoch && localEpoch == _localEpoch) {
-          setState(() {
-            modelState = state;
-            localError = null;
-          });
-        }
-      }
-    } catch (_) {
-      if (mounted && epoch == _epoch && localEpoch == _localEpoch) {
-        setState(
-          () => localError = 'Lokales Nachschlagen nicht möglich. Bitte Speicherplatz prüfen und erneut öffnen.',
-        );
-      }
-    }
-  }
-
-  Future<void> requestLocal() async {
-    if (localBusy || checking || started) return;
-    final epoch = _epoch, operation = ++_localEpoch;
-    setState(() {
-      localBusy = true;
-      localError = null;
-    });
-    try {
-      if (modelState == DeviceModelState.supported) {
-        await device.prepare(widget.lang);
-        final state = await device.status(widget.lang);
-        if (mounted && epoch == _epoch && operation == _localEpoch) {
-          setState(() => modelState = state);
-        }
-      } else if (modelState == DeviceModelState.installed) {
-        final value = await device.translate(widget.lang, widget.text);
-        if (mounted && epoch == _epoch && operation == _localEpoch) {
-          setState(() => localText = value);
-        }
-      }
-    } on PlatformException catch (e) {
-      if (mounted && epoch == _epoch && operation == _localEpoch) {
-        setState(
-          () => localError = switch (e.code) {
-            'cancelled' => 'Abgebrochen.',
-            'missing_model' =>
-              'Sprachmodell fehlt. Bitte Status erneut prüfen.',
-            'unsupported' =>
-              'Dieses Sprachpaar wird auf deinem Gerät nicht unterstützt.',
-            'storage' => 'Nicht genug Speicherplatz für das Sprachmodell.',
-            _ => 'Geräteübersetzung nicht möglich. Bitte WLAN, freien Speicher und Modelldownload prüfen.',
-          },
-        );
-      }
-    } catch (_) {
-      if (mounted && epoch == _epoch && operation == _localEpoch) {
-        setState(
-          () => localError = 'Geräteübersetzung derzeit nicht verfügbar.',
-        );
-      }
-    } finally {
-      if (mounted && epoch == _epoch && operation == _localEpoch) {
-        setState(() => localBusy = false);
-      }
-    }
-  }
-
-  void cancelLocal() {
-    _localEpoch++;
-    unawaited(device.cancel());
-    setState(() {
-      localBusy = false;
-      localError = 'Abgebrochen. Ein systemverwalteter Modelldownload kann im Hintergrund weiterlaufen.';
-    });
   }
 
   Future<void> showSources() async {
-    final notice = await rootBundle.loadString(
-      'assets/offline_dictionary/ATTRIBUTION.txt',
-    );
-    final license = await rootBundle.loadString(
-      'assets/offline_dictionary/CC-BY-SA-4.0.txt',
-    );
-    if (!mounted) return;
-    await showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      builder: (_) => SizedBox(
-        height: MediaQuery.sizeOf(context).height * 0.7,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
-          child: SelectableText(
-            '$notice\n${candidates.map((c) => '${c.lemma}: ${c.source}${c.formSource.isEmpty ? '' : '\nForm: ${c.formSource}'}').toSet().join('\n')}\n\n$license',
+    try {
+      final notice = await rootBundle.loadString(
+        'assets/offline_dictionary/ATTRIBUTION.txt',
+      );
+      final license = await rootBundle.loadString(
+        'assets/offline_dictionary/CC-BY-SA-4.0.txt',
+      );
+      if (!mounted) return;
+      await showModalBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        useSafeArea: true,
+        builder: (_) => SizedBox(
+          height: MediaQuery.sizeOf(context).height * 0.7,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
+            child: SelectableText(
+              '$notice\n${candidates.map((c) => '${c.lemma}: ${c.source}${c.formSource.isEmpty ? '' : '\nForm: ${c.formSource}'}').toSet().join('\n')}\n\n$license',
+            ),
           ),
         ),
-      ),
-    );
+      );
+    } catch (_) {
+      if (mounted) {
+        setState(() => error = 'Quelleninformationen derzeit nicht lesbar.');
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _epoch++;
+    _changes?.cancel();
+    super.dispose();
   }
 
   @override
@@ -302,132 +303,50 @@ class _RuntimeTranslationSheetState
             ),
           ),
           const SizedBox(height: 16),
-          if (checking) const CupertinoActivityIndicator(),
-          if (!started && !checking) ...[
-            if (widget.form != null) ...[
-              Text(
-                candidates.isEmpty
-                    ? 'Kein Offline-Wörterbuchtreffer.'
-                    : 'Mögliche Bedeutungen · Wörterbuch',
-              ),
-              if (widget.lang == 'pt-BR')
-                const Text(
-                  'Portugiesisch: regionale Varianten sind nicht immer getrennt.',
-                ),
-              for (final c in candidates.take(visibleCandidates))
-                Padding(
-                  padding: const EdgeInsets.only(top: 12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${c.lemma} · ${c.pos}',
-                        style: AppType.meta(color: context.appColors.textMuted),
-                      ),
-                      Text(c.gloss),
-                      if (c.tags.isNotEmpty)
-                        Text(
-                          c.tags,
-                          style: AppType.meta(
-                            color: context.appColors.textMuted,
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              if (candidates.length > visibleCandidates)
-                CupertinoButton(
-                  onPressed: () => setState(() => visibleCandidates += 5),
-                  child: const Text('Weitere Bedeutungen'),
-                ),
-              if (candidates.isNotEmpty) ...[
-                const SizedBox(height: 12),
-                const Text(
-                  'Nicht auf diesen Satz festgelegt. Kein geprüfter Lernkontext.',
-                ),
-                CupertinoButton(
-                  onPressed: showSources,
-                  child: const Text('Wiktionary · Quellen & Lizenz'),
-                ),
-              ],
-            ] else ...[
-              Text(switch (modelState) {
-                DeviceModelState.installed =>
-                  'Sprachmodell bereit · offline nutzbar',
-                DeviceModelState.supported =>
-                  'Sprachmodell muss vorbereitet werden.',
-                DeviceModelState.unsupported =>
-                  'Geräteübersetzung für dieses Sprachpaar nicht verfügbar.',
-              }),
-              if (modelState == DeviceModelState.supported)
-                Text(
-                  Platform.isAndroid
-                      ? 'Download über WLAN: etwa 30 MB je Modell. Für Portugiesisch und Deutsch können zwei Modelle nötig sein.'
-                      : 'Apple verwaltet Download und Speicherbedarf. Die Größe ist hier nicht vorab verfügbar.',
-                ),
-              if (widget.lang == 'pt-BR')
-                const Text(
-                  'Die Geräteengine garantiert keine ausschließlich brasilianische Variante.',
-                ),
-              if (modelState != DeviceModelState.unsupported)
-                CupertinoButton(
-                  onPressed: localBusy ? null : requestLocal,
-                  child: Text(
-                    modelState == DeviceModelState.installed
-                        ? (Platform.isAndroid
-                              ? 'Mit Google übersetzen · auf dem Gerät'
-                              : 'Auf dem Gerät übersetzen')
-                        : 'Sprachmodelle laden',
-                  ),
-                ),
-              if (localBusy) ...[
-                const CupertinoActivityIndicator(),
-                CupertinoButton(
-                  onPressed: cancelLocal,
-                  child: const Text('Abbrechen'),
-                ),
-              ],
-              if (localError != null ||
-                  modelState == DeviceModelState.supported)
-                CupertinoButton(
-                  onPressed: localBusy ? null : loadLocal,
-                  child: const Text('Status erneut prüfen'),
-                ),
-              if (localText != null) ...[
-                Text(localText!),
-                Text(
-                  Platform.isAndroid
-                      ? 'Automatisch mit Google Translate · ML Kit 17.0.3 / Vertrag 1'
-                      : 'Automatisch mit Apple Translation · Vertrag 1',
-                ),
-                if (Platform.isAndroid)
-                  Image.asset(
-                    'assets/offline_dictionary/google-translate.png',
-                    height: 24,
-                    alignment: Alignment.centerLeft,
-                  ),
-                const Text(
-                  'Anzeigehilfe, kein geprüfter Lernkontext. Nicht dauerhaft gespeichert.',
-                ),
-              ],
-            ],
-            if (localError != null) Text(localError!),
-            const SizedBox(height: 16),
-            const Text(
-              'Für eine KI-Übersetzung im Kontext wird dieser Satz an Anthropic übermittelt. Keine ausschließliche EU-Verarbeitung.',
-            ),
-            CupertinoButton(
-              onPressed: localBusy ? null : request,
-              child: const Text('Mit KI übersetzen'),
-            ),
-          ],
-          if (loading) const CupertinoActivityIndicator(),
-          if (error != null) Text(error!, semanticsLabel: error),
+          if (checking || loading) const CupertinoActivityIndicator(),
           if (result case final value?) ...[
             Text(value.text),
-            const SizedBox(height: 12),
             if (value.storageWarning != null) Text(value.storageWarning!),
+          ] else if (dictionaryText != null) ...[
+            Text(dictionaryText!),
+            const SizedBox(height: 8),
+            Text(
+              'Wörterbuch · allgemeine Bedeutung',
+              style: AppType.meta(color: context.appColors.textMuted),
+            ),
+          ] else if (!checking && !loading && !started) ...[
+            if (widget.form == null) ...[
+              const Text(
+                'Für eine neue Übersetzung wird dieser Satz an Anthropic übermittelt. Keine ausschließliche EU-Verarbeitung.',
+              ),
+              CupertinoButton(
+                onPressed: request,
+                child: const Text('Übersetzen'),
+              ),
+            ] else if (consent == WordCloudConsent.unknown &&
+                widget.wordTap) ...[
+              const Text('Automatische Wortübersetzung aktivieren?'),
+              const SizedBox(height: 8),
+              const Text(wordCloudDisclosure),
+              CupertinoButton(
+                onPressed: () => decideConsent(true),
+                child: const Text('Aktivieren'),
+              ),
+              CupertinoButton(
+                onPressed: () => decideConsent(false),
+                child: const Text('Nicht jetzt'),
+              ),
+            ] else
+              const Text(
+                'Keine eindeutige lokale Übersetzung. Automatische Wortübersetzung kannst du in den Einstellungen aktivieren.',
+              ),
           ],
+          if (error != null) Semantics(liveRegion: true, child: Text(error!)),
+          if (widget.form != null && !checking && !loading)
+            CupertinoButton(
+              onPressed: showSources,
+              child: const Text('Wörterbuch · Quellen & Lizenz'),
+            ),
         ],
       ),
     ),

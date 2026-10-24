@@ -1,5 +1,12 @@
 # Paket 2B – Offline-Anzeigeübersetzungen
 
+> **Aktueller Produktentscheid:** [Änderungsvertrag](offline-translation-revision.md).
+> Apple-/ML-Kit-Übersetzung, Downloadablauf und Kandidatenliste wurden nach
+> 6d3427d zurückgenommen. Wörterbuchdaten und Lizenz bleiben unverändert.
+> Wort-Taps nutzen bei Bedarf Haiku nach einmaliger widerrufbarer Zustimmung;
+> Sätze nach ausdrücklichem „Übersetzen“. Der folgende Text dokumentiert die
+> historische erste Lieferung, nicht den aktuellen Geräteübersetzungsumfang.
+
 ## Vertrag vor Implementierung · 24.10.2026
 
 Ausgangsbasis: sauberer Hauptprojekt-Commit 1c31881. Nutzer bestätigt Paket 2A

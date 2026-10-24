@@ -18,6 +18,9 @@ class TranslationCache {
       'CREATE TABLE IF NOT EXISTS translations (owner TEXT NOT NULL, key TEXT NOT NULL, response TEXT NOT NULL, expires INTEGER NOT NULL, PRIMARY KEY(owner,key))',
     );
     db.execute('CREATE TABLE IF NOT EXISTS deletion (owner TEXT PRIMARY KEY)');
+    db.execute(
+      'CREATE TABLE IF NOT EXISTS word_cloud_consent (owner TEXT PRIMARY KEY, version INTEGER NOT NULL, enabled INTEGER NOT NULL, decided_at INTEGER NOT NULL)',
+    );
     db.execute('DELETE FROM translations WHERE expires <= ?', [
       DateTime.now().millisecondsSinceEpoch,
     ]);
@@ -76,6 +79,26 @@ class TranslationCache {
   ).isNotEmpty;
   Future<void> deletionDone(String owner) async =>
       (await _db()).execute('DELETE FROM deletion WHERE owner=?', [owner]);
+  Future<WordCloudConsent> readWordConsent(String owner) async {
+    final rows = (await _db()).select(
+      'SELECT version,enabled FROM word_cloud_consent WHERE owner=?',
+      [owner],
+    );
+    if (rows.isEmpty || rows.single['version'] != 1) {
+      return WordCloudConsent.unknown;
+    }
+    return rows.single['enabled'] == 1
+        ? WordCloudConsent.enabled
+        : WordCloudConsent.disabled;
+  }
+
+  Future<void> writeWordConsent(String owner, bool enabled) async {
+    (await _db()).execute(
+      'INSERT OR REPLACE INTO word_cloud_consent VALUES(?,?,?,?)',
+      [owner, 1, enabled ? 1 : 0, DateTime.now().millisecondsSinceEpoch],
+    );
+  }
+
   Future<void> close() async {
     final opening = _opening;
     if (opening == null) return;
@@ -110,6 +133,94 @@ class CachedRuntimeTranslationClient extends RuntimeTranslationClient {
   final _changes = StreamController<void>.broadcast(sync: true);
   late final StreamSubscription<void> _identitySubscription;
   int _epoch = 0;
+  int _consentEpoch = 0;
+  bool _consentWritePending = false;
+  bool _consentBlocked = false;
+
+  @override
+  Future<WordCloudConsent> wordCloudConsent() async {
+    final account = await owner();
+    if (account == null) return WordCloudConsent.unknown;
+    final epoch = _epoch, authRevision = revision();
+    if (_consentWritePending || _consentBlocked) {
+      return WordCloudConsent.disabled;
+    }
+    try {
+      final value = await store.readWordConsent(account);
+      await _check(account, epoch, authRevision);
+      return _consentWritePending ? WordCloudConsent.disabled : value;
+    } on TranslationFailure {
+      rethrow;
+    } catch (_) {
+      throw const TranslationFailure(
+        'Cloud-Einstellung konnte nicht gelesen werden. Keine Anfrage gestartet.',
+      );
+    }
+  }
+
+  @override
+  Future<void> setWordCloudConsent(bool enabled) async {
+    if (_consentWritePending) {
+      throw const TranslationFailure('Einstellung wird noch gespeichert.');
+    }
+    _consentEpoch++;
+    _consentBlocked = true;
+    _consentWritePending = true;
+    try {
+      final account = await _owner();
+      final epoch = _epoch, authRevision = revision();
+      await store.writeWordConsent(account, enabled);
+      await _check(account, epoch, authRevision);
+      _consentBlocked = false;
+    } on TranslationFailure {
+      rethrow;
+    } catch (_) {
+      throw const TranslationFailure(
+        'Cloud-Einstellung konnte nicht gespeichert werden.',
+      );
+    } finally {
+      _consentWritePending = false;
+    }
+  }
+
+  @override
+  Future<RuntimeTranslation> translateWordOnTap({
+    required String lang,
+    required String text,
+    required String form,
+    int? start,
+    String? senseRef,
+    String? formRef,
+  }) async {
+    final consentEpoch = _consentEpoch;
+    final account = await _owner();
+    final epoch = _epoch, authRevision = revision();
+    Future<void> authorize() async {
+      await _check(account, epoch, authRevision);
+      if (consentEpoch != _consentEpoch ||
+          _consentWritePending ||
+          await wordCloudConsent() != WordCloudConsent.enabled ||
+          consentEpoch != _consentEpoch) {
+        throw const TranslationFailure(
+          'Automatische Cloudübersetzung ist ausgeschaltet.',
+        );
+      }
+    }
+
+    await authorize();
+    final value = await translate(
+      lang: lang,
+      text: text,
+      form: form,
+      start: start,
+      senseRef: senseRef,
+      formRef: formRef,
+      authorize: authorize,
+    );
+    await authorize();
+    return value;
+  }
+
   final _cloudDeletions = <String, Future<void>>{};
   Future<void> _flushDeletion(
     String account,
@@ -198,7 +309,9 @@ class CachedRuntimeTranslationClient extends RuntimeTranslationClient {
     int? start,
     String? senseRef,
     String? formRef,
+    Future<void> Function()? authorize,
   }) async {
+    await authorize?.call();
     final account = await _owner();
     final epoch = _epoch, authRevision = revision();
     final request = TranslationRequest(
@@ -231,6 +344,7 @@ class CachedRuntimeTranslationClient extends RuntimeTranslationClient {
         );
       }
       await _check(account, epoch, authRevision);
+      await authorize?.call();
       final value = await remote.translate(
         lang: lang,
         text: text,
@@ -238,7 +352,9 @@ class CachedRuntimeTranslationClient extends RuntimeTranslationClient {
         start: start,
         senseRef: senseRef,
         formRef: formRef,
+        authorize: authorize,
       );
+      await authorize?.call();
       await _check(account, epoch, authRevision);
       final payload = value.payload;
       if (payload == null) {

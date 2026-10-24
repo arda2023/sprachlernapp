@@ -7,6 +7,7 @@ import '../../presentation/providers/database_providers.dart';
 import '../../presentation/providers/language_selection_provider.dart';
 import 'content_updates_screen.dart';
 import '../../widgets/translation_cache_delete_tile.dart';
+import '../../widgets/word_cloud_consent.dart';
 import '../previews/screen_previews_screen.dart';
 import '../../presentation/providers/preferences_provider.dart';
 import '../../theme/app_theme.dart';
@@ -69,6 +70,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 builder: (_) => const ScreenPreviewsScreen(),
               )),
             ),
+            const WordCloudConsentTile(),
             const TranslationCacheDeleteTile(),
             const Divider(),
             const ListTile(contentPadding: EdgeInsets.zero, title: Text('Lernsprache'), subtitle: Text('Die Oberfläche bleibt Deutsch.')),

@@ -13,6 +13,8 @@ bool hasStoredTranslation(String value) =>
       'Übersetzung nicht verfügbar',
     }.contains(value.trim());
 
+enum WordCloudConsent { unknown, enabled, disabled }
+
 class RuntimeTranslationClient {
   RuntimeTranslationClient(
     this.url,
@@ -34,6 +36,26 @@ class RuntimeTranslationClient {
     String? senseRef,
     String? formRef,
   }) async => null;
+  Future<WordCloudConsent> wordCloudConsent() async => WordCloudConsent.unknown;
+  Future<void> setWordCloudConsent(bool enabled) async {
+    throw const TranslationFailure(
+      'Bitte zuerst in den Einstellungen anmelden.',
+    );
+  }
+
+  Future<RuntimeTranslation> translateWordOnTap({
+    required String lang,
+    required String text,
+    required String form,
+    int? start,
+    String? senseRef,
+    String? formRef,
+  }) async {
+    throw const TranslationFailure(
+      'Automatische Cloudübersetzung ist ausgeschaltet.',
+    );
+  }
+
   Future<void> clearSaved() async {
     await _send('translate-sentence', method: 'DELETE');
   }
@@ -45,6 +67,7 @@ class RuntimeTranslationClient {
     int? start,
     String? senseRef,
     String? formRef,
+    Future<void> Function()? authorize,
   }) async {
     final TranslationRequest input;
     try {
@@ -61,7 +84,11 @@ class RuntimeTranslationClient {
         'Dieser Text kann nicht übersetzt werden.',
       );
     }
-    final value = await _send(input.kind, body: input.body);
+    final value = await _send(
+      input.kind,
+      body: input.body,
+      authorize: authorize,
+    );
     try {
       return RuntimeTranslation.parse(value, input);
     } catch (_) {
@@ -73,6 +100,7 @@ class RuntimeTranslationClient {
     String path, {
     String method = 'POST',
     Map<String, dynamic>? body,
+    Future<void> Function()? authorize,
   }) async {
     final uri = Uri.tryParse(url);
     if (uri == null || uri.scheme != 'https' || publicKey.isEmpty) {
@@ -80,6 +108,7 @@ class RuntimeTranslationClient {
         'Übersetzungsserver ist noch nicht eingerichtet.',
       );
     }
+    await authorize?.call();
     final identity = identityRevision?.call();
     final String access;
     try {
@@ -92,6 +121,7 @@ class RuntimeTranslationClient {
     if (identity != identityRevision?.call()) {
       throw const TranslationFailure('Konto geändert. Bitte erneut öffnen.');
     }
+    await authorize?.call();
     final client = _createClient()
       ..connectionTimeout = const Duration(seconds: 10);
     try {
@@ -104,6 +134,7 @@ class RuntimeTranslationClient {
         request.headers.set('apikey', publicKey);
         request.headers.set('Authorization', 'Bearer $access');
         request.headers.contentType = ContentType.json;
+        await authorize?.call();
         if (body != null) request.write(jsonEncode(body));
         final response = await request.close();
         if (response.statusCode != 200) {

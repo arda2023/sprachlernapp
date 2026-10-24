@@ -1,5 +1,7 @@
 import 'fixtures/offline_translation.dart';
+
 import 'package:sprachapp/presentation/providers/offline_translation_provider.dart';
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -41,6 +43,31 @@ class FakeTranslations extends RuntimeTranslationClient {
     : super('https://unused.invalid', 'public', () async => 'synthetic');
   final List<Map<String, Object?>> calls = [];
   bool fail = false;
+  WordCloudConsent consent = WordCloudConsent.unknown;
+  @override
+  Future<WordCloudConsent> wordCloudConsent() async => consent;
+  @override
+  Future<void> setWordCloudConsent(bool enabled) async {
+    consent = enabled ? WordCloudConsent.enabled : WordCloudConsent.disabled;
+  }
+
+  @override
+  Future<RuntimeTranslation> translateWordOnTap({
+    required String lang,
+    required String text,
+    required String form,
+    int? start,
+    String? senseRef,
+    String? formRef,
+  }) => translate(
+    lang: lang,
+    text: text,
+    form: form,
+    start: start,
+    senseRef: senseRef,
+    formRef: formRef,
+  );
+
   final spans = <int?>[];
   @override
   Future<RuntimeTranslation> translate({
@@ -50,7 +77,9 @@ class FakeTranslations extends RuntimeTranslationClient {
     int? start,
     String? senseRef,
     String? formRef,
+    Future<void> Function()? authorize,
   }) async {
+    await authorize?.call();
     calls.add({'lang': lang, 'text': text, 'form': form});
     spans.add(start);
     if (fail) throw const TranslationFailure('Übersetzungslimit erreicht.');
@@ -155,7 +184,7 @@ void main() {
       });
     });
     testWidgets(
-      'missing word requires explicit action and sends full context ($lang)',
+      'missing word first requests durable consent and sends full context ($lang)',
       (tester) async {
         final fake = FakeTranslations();
         final text = lang == 'en' ? 'The bank.' : 'O banco.';
@@ -163,8 +192,9 @@ void main() {
         await tester.pumpWidget(
           ProviderScope(
             overrides: [
-          offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
-          deviceTranslationProvider.overrideWithValue(UnsupportedDeviceTranslation()),runtimeTranslationProvider.overrideWithValue(fake)],
+              offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
+              runtimeTranslationProvider.overrideWithValue(fake),
+            ],
             child: MaterialApp(
               theme: buildAppTheme(),
               home: StoryReaderScreen(
@@ -179,7 +209,7 @@ void main() {
         await tapWord(tester, word);
         expect(find.byType(RuntimeTranslationSheet), findsOneWidget);
         expect(fake.calls, isEmpty);
-        await tester.tap(find.text('Mit KI übersetzen'));
+        await tester.tap(find.text('Aktivieren'));
         await tester.pumpAndSettle();
         expect(fake.calls.single, {'lang': lang, 'text': text, 'form': word});
         expect(find.text('Die Bank.'), findsOneWidget);
@@ -252,7 +282,8 @@ void main() {
       ProviderScope(
         overrides: [
           offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
-          deviceTranslationProvider.overrideWithValue(UnsupportedDeviceTranslation()),runtimeTranslationProvider.overrideWithValue(fake)],
+          runtimeTranslationProvider.overrideWithValue(fake),
+        ],
         child: MaterialApp(
           theme: buildAppTheme(),
           home: StoryReaderScreen(
@@ -277,7 +308,7 @@ void main() {
         .first;
     await tester.tapAt(p.localToGlobal(box.toRect().center));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Mit KI übersetzen'));
+    await tester.tap(find.text('Aktivieren'));
     await tester.pumpAndSettle();
     expect(fake.spans.single, 5);
   });
@@ -288,7 +319,7 @@ void main() {
       ProviderScope(
         overrides: [
           offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
-          deviceTranslationProvider.overrideWithValue(UnsupportedDeviceTranslation()),
+
           runtimeTranslationProvider.overrideWith(
             (ref) => throw StateError('network must not be used'),
           ),
@@ -346,7 +377,8 @@ void main() {
       ProviderScope(
         overrides: [
           offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
-          deviceTranslationProvider.overrideWithValue(UnsupportedDeviceTranslation()),runtimeTranslationProvider.overrideWithValue(fake)],
+          runtimeTranslationProvider.overrideWithValue(fake),
+        ],
         child: MaterialApp(
           theme: buildAppTheme(),
           home: StoryReaderScreen(
@@ -361,14 +393,25 @@ void main() {
     await tester.pumpAndSettle();
     await tapWord(tester, 'bank');
     expect(fake.calls, isEmpty);
-    await tester.tap(find.text('Mit KI übersetzen'));
+    await tester.tap(
+      find.descendant(
+        of: find.byType(RuntimeTranslationSheet),
+        matching: find.text('Übersetzen'),
+      ),
+    );
     await tester.pumpAndSettle();
     expect(fake.calls.single, {
       'lang': 'en',
       'text': 'The bank.',
       'form': null,
     });
-    expect(find.text('Mit KI übersetzen'), findsNothing);
+    expect(
+      find.descendant(
+        of: find.byType(RuntimeTranslationSheet),
+        matching: find.text('Übersetzen'),
+      ),
+      findsNothing,
+    );
   });
   testWidgets(
     'failure shows no invented translation and masked exercise stays masked',
@@ -377,8 +420,9 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-          offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
-          deviceTranslationProvider.overrideWithValue(UnsupportedDeviceTranslation()),runtimeTranslationProvider.overrideWithValue(fake)],
+            offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
+            runtimeTranslationProvider.overrideWithValue(fake),
+          ],
           child: const MaterialApp(
             home: Scaffold(
               body: RuntimeTranslationSheet(
@@ -393,7 +437,12 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Tom woke up.'), findsNothing);
       expect(find.text('Tom … up.'), findsOneWidget);
-      await tester.tap(find.text('Mit KI übersetzen'));
+      await tester.tap(
+        find.descendant(
+          of: find.byType(RuntimeTranslationSheet),
+          matching: find.text('Übersetzen'),
+        ),
+      );
       await tester.pumpAndSettle();
       expect(find.text('Übersetzungslimit erreicht.'), findsOneWidget);
       expect(find.text('Die Bank.'), findsNothing);

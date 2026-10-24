@@ -1,5 +1,7 @@
 import 'fixtures/offline_translation.dart';
+
 import 'package:sprachapp/presentation/providers/offline_translation_provider.dart';
+
 import 'dart:async';
 import 'dart:io';
 
@@ -50,7 +52,9 @@ class Remote extends RuntimeTranslationClient {
     int? start,
     String? senseRef,
     String? formRef,
+    Future<void> Function()? authorize,
   }) async {
+    await authorize?.call();
     calls++;
     if (!entered.isCompleted) entered.complete();
     if (offline) throw const TranslationFailure('Offline');
@@ -455,8 +459,9 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-          offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
-          deviceTranslationProvider.overrideWithValue(UnsupportedDeviceTranslation()),runtimeTranslationProvider.overrideWithValue(client)],
+            offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
+            runtimeTranslationProvider.overrideWithValue(client),
+          ],
           child: const MaterialApp(
             home: Scaffold(
               body: RuntimeTranslationSheet(

@@ -447,6 +447,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
         lang: widget.sourceLanguage,
         text: sentence,
         form: word.text,
+        wordTap: true,
         start: word.start,
         senseRef: word.senseRef,
         formRef: word.formRef,
