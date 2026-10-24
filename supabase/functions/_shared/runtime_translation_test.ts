@@ -4,6 +4,7 @@ import {
   MODEL,
   TranslationBackend,
   translationHandler,
+  validateInput,
 } from "./runtime_translation.ts";
 
 const uid = "12345678-1234-4234-8234-123456789abc";
@@ -36,8 +37,16 @@ function fixture(
     if (String(url).endsWith("/auth/v1/user")) {
       return Response.json({ id: uid }, { status: options.auth ?? 200 });
     }
-    if (String(url).includes("/rpc/")) {
-      return Response.json(options.allowed ?? { allowed: true });
+    if (String(url).endsWith("/rpc/claim_translation")) {
+      const allowed = options.allowed as { reason?: string } | undefined;
+      return Response.json(
+        allowed
+          ? { status: allowed.reason }
+          : { status: "claimed", ticket: uid },
+      );
+    }
+    if (String(url).endsWith("/rpc/finish_translation")) {
+      return Response.json({ stored: true });
     }
     if (options.hang) {
       return await new Promise((_, reject) =>
@@ -105,7 +114,7 @@ for (const lang of ["en", "pt-BR"]) {
     assert.equal(r.body.model, MODEL);
     assert.equal(r.headers.get("cache-control"), "no-store");
     assert.equal(r.body.request_id, r.headers.get("x-request-id"));
-    assert.equal(f.calls.length, 3);
+    assert.equal(f.calls.length, 4); // auth, atomic claim, model, validated save
     const call = f.calls[2];
     assert.equal(call.url, "https://api.anthropic.com/v1/messages");
     const data = JSON.parse(String(call.init.body));
@@ -113,10 +122,10 @@ for (const lang of ["en", "pt-BR"]) {
     assert.equal(data.max_tokens, 384);
     assert.deepEqual(data.thinking, { type: "disabled" });
     assert.equal(data.output_config.effort, "low");
-    assert.deepEqual(JSON.parse(data.messages[0].content), {
-      ...sentence,
-      lang,
-    });
+    assert.deepEqual(
+      JSON.parse(data.messages[0].content),
+      validateInput("translate-sentence", { ...sentence, lang }),
+    );
     assert(!JSON.stringify(r.body).includes("test-api-value"));
     assert(!JSON.stringify(r.body).includes(uid));
   });
@@ -137,7 +146,7 @@ for (const lang of ["en", "pt-BR"]) {
     assert.equal(r.body.form, input.form);
     assert.deepEqual(
       JSON.parse(JSON.parse(String(f.calls[2].init.body)).messages[0].content),
-      input,
+      validateInput("lookup-word", input),
     );
   });
 }

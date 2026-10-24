@@ -34,9 +34,12 @@ void main() {
     );
     await auth.initialize();
     expect(auth.signedIn, isTrue);
+    expect(await auth.cacheOwner(), 'synthetic.invalid:11111111-1111-4111-8111-111111111111');
     expect(await auth.accessToken(), token);
     await auth.signOut();
     expect(auth.signedIn, isFalse);
+    expect(await auth.cacheOwner(), isNull);
+    expect(auth.identityRevision, greaterThan(0));
     expect(await const FlutterSecureStorage().readAll(), isEmpty);
     await expectLater(auth.accessToken(), throwsStateError);
     await auth.close();

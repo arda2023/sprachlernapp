@@ -1,3 +1,4 @@
+import 'dart:convert';
 import '../../data/runtime_translation_client.dart';
 import '../../widgets/runtime_translation_sheet.dart';
 import '../../presentation/providers/database_providers.dart';
@@ -129,9 +130,13 @@ class _Word {
     this.recognizer, {
     this.sentenceId,
     this.tokenIndex,
+    this.start,
+    this.senseRef,
+    this.formRef,
   });
   final String? sentenceId;
-  final int? tokenIndex;
+  final int? tokenIndex, start;
+  final String? senseRef, formRef;
 
   final String text;
   final WordEntry entry;
@@ -275,6 +280,11 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
             _recognizer(() => _lookUp(word)),
             sentenceId: source.id,
             tokenIndex: t.index,
+            start: t.start,
+            senseRef: t.senseId ?? t.senseKey,
+            formRef: t.function == null && t.lexicalId == null
+                ? null
+                : jsonEncode([t.lexicalId, t.function]),
           ),
         );
         sentence.tokens.add(word);
@@ -302,6 +312,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
           match[0]!,
           widget.lookup(match[0]!),
           _recognizer(() => _lookUp(word)),
+          start: match.start,
         ),
       );
       sentence.tokens.add(word);
@@ -436,6 +447,9 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
         lang: widget.sourceLanguage,
         text: sentence,
         form: word.text,
+        start: word.start,
+        senseRef: word.senseRef,
+        formRef: word.formRef,
       );
       return;
     }

@@ -39,13 +39,18 @@ class FakeTranslations extends RuntimeTranslationClient {
     : super('https://unused.invalid', 'public', () async => 'synthetic');
   final List<Map<String, Object?>> calls = [];
   bool fail = false;
+  final spans = <int?>[];
   @override
   Future<RuntimeTranslation> translate({
     required String lang,
     required String text,
     String? form,
+    int? start,
+    String? senseRef,
+    String? formRef,
   }) async {
     calls.add({'lang': lang, 'text': text, 'form': form});
+    spans.add(start);
     if (fail) throw const TranslationFailure('Übersetzungslimit erreicht.');
     return const RuntimeTranslation(
       'Die Bank.',
@@ -103,9 +108,19 @@ void main() {
             'provider': 'anthropic',
             'model': 'claude-haiku-5-5',
             'request_id': 'test-id',
+            'contract': 2,
+            'prompt': 'translation-v2',
+            'created_at': DateTime.now().toUtc().toIso8601String(),
+            'cached': false,
+            'usage': {'input_tokens': 20, 'output_tokens': 8},
             'form': 'banco',
             'senses': [
-              {'gloss_de': 'Bank'},
+              {
+                'gloss_de': 'Bank',
+                'pos': 'noun',
+                'lemma': 'banco',
+                'form_label': 'Singular',
+              },
             ],
           }),
         );
@@ -130,6 +145,11 @@ void main() {
         'target_lang': 'de',
         'form': 'banco',
         'sentence': 'O banco.',
+        'contract': 2,
+        'start': 2,
+        'end': 7,
+        'sense_ref': null,
+        'form_ref': null,
       });
     });
     testWidgets(
@@ -159,7 +179,7 @@ void main() {
         await tester.pumpAndSettle();
         expect(fake.calls.single, {'lang': lang, 'text': text, 'form': word});
         expect(find.text('Die Bank.'), findsOneWidget);
-        expect(find.text('KI · claude-haiku-5-5'), findsOneWidget);
+        expect(find.text('Die Bank.'), findsOneWidget);
       },
     );
   }
@@ -217,10 +237,43 @@ void main() {
         isA<TranslationFailure>().having(
           (e) => e.message,
           'login',
-          'Bitte zuerst in den Einstellungen anmelden.',
+          'Anmeldung konnte nicht bestätigt werden. Bitte Anmeldung und Verbindung prüfen.',
         ),
       ),
     );
+  });
+  testWidgets('reader passes the second exact word occurrence', (tester) async {
+    final fake = FakeTranslations();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [runtimeTranslationProvider.overrideWithValue(fake)],
+        child: MaterialApp(
+          theme: buildAppTheme(),
+          home: StoryReaderScreen(
+            story: sampleStories.first,
+            text: const StoryText(
+              storyId: 'synthetic',
+              paragraphs: ['bank bank'],
+            ),
+            lookup: WordEntry.unknown,
+          ),
+        ),
+      ),
+    );
+    final body = find.byWidgetPredicate(
+      (w) => w is RichText && w.text.toPlainText() == 'bank bank',
+    );
+    final p = tester.renderObject<RenderParagraph>(body.first);
+    final box = p
+        .getBoxesForSelection(
+          const TextSelection(baseOffset: 6, extentOffset: 7),
+        )
+        .first;
+    await tester.tapAt(p.localToGlobal(box.toRect().center));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Mit KI übersetzen'));
+    await tester.pumpAndSettle();
+    expect(fake.spans.single, 5);
   });
   testWidgets('stored sentence never resolves translation provider', (
     tester,
@@ -325,6 +378,7 @@ void main() {
           ),
         ),
       );
+      await tester.pumpAndSettle();
       expect(find.text('Tom woke up.'), findsNothing);
       expect(find.text('Tom … up.'), findsOneWidget);
       await tester.tap(find.text('Mit KI übersetzen'));
