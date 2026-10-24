@@ -1,238 +1,198 @@
-# Paket 2C: private Lernkarten aus Texten
+# Paket 2C – Abschluss des lokalen Zwischenstands c90680b
 
-Status: implementierter Zwischenstand, **noch nicht abnahmebereit**. Ein neuer
-UI-Test und die unten genannten fachlichen/Integrationspunkte bleiben offen.
-Keine Deploymentfreigabe, kein Geräte-PASS.
+Stand: 24.10.2026. Implementierung und lokale Prüfung; **keine Cloud- oder
+Gerätefreigabe**. Keine Migration, Function, Produktionspacks oder echten
+Lernstände verändert; keine echten Modellaufrufe. Paket 3 nicht begonnen.
 
-## Vertrag vor Implementierung (24.10.2026)
+## Einwilligung und tatsächlicher Finderfehler
 
-Ausgangspunkt: 136e01b, Hauptprojekt sauber. Wort-Tap übersetzt ausschließlich.
-Add verwendet zuerst den bestehenden geprüften Storyweg. Unannotierte Ziele
-werden erst auf Add mit gesonderter, widerrufbarer Konto-/Gerätefreigabe verarbeitet.
-Die Übersetzungsfreigabe ist dafür keine Zustimmung.
+Unmittelbar vor der ursprünglich fehlschlagenden Assertion wurde gemessen:
+`busy=true`, `error=null`, `saved=null`, Service `AsyncData`,
+`transientCallbackCount=0`, `hasScheduledFrame=true`. Die UI wartete auf einen
+nativen Repository-Future; es war nicht der frühere Teardown-Hänger.
+Diagnoseprotokoll: `/tmp/2c-close-ui-diagnostic.log`.
 
-Vorhandener Speicher: user_cards enthält Form, Formnorm, Lemma-/Senseidentität,
-Glosse, Wortart, primary_context_id und denselben SRS-Zustand wie Packkarten.
-card_contexts enthält unveränderliche Satz-/Übersetzungs-/Lücken-/Token-Snapshots,
-Quelle, Revision und Herkunft. story_learning_additions und story_word_sources
-verknüpfen dieselbe Karte mit „Aus Storys“. Die vorhandene Transaktion und der
-PracticeItemResolver bleiben der Speicher-/Lernweg; kein zweites SRS.
+Der Widgettest prüft jetzt Dialog und Abbruch mit deterministischem Store und
+Service. Echte SQLite-/HTTP-/Packtests bleiben separat bestehen. Unveränderte
+Assertion: genau ein Einwilligungsdialog, Abbruch, null Modellanfragen, keine
+Karten. Keine zusätzlichen Wartezeiten, Timeoutänderungen oder Skips. Der
+vorhandene Pump von 300 ms betrifft ausschließlich die Dialogtransition.
 
-Neue private Kandidaten erhalten einen eigenen strengen Validator und Herkunft
-private_haiku_v1, niemals editorial_chat_reviewed. IDs sind deterministisch aus
-Sprache, exaktem Originalsatz und UTF-16-Zielstelle getrennt von Pack-Senses.
-Unsichere Bedeutungen verschiedener Kontexte werden nicht zusammengeführt.
-Bestehende Packkandidaten müssen aus dem aktiven Pack stammen und serverseitig
-gegen content geprüft werden. Das Modell darf nur eine angebotene Kandidaten-ID
-wählen; der Client prüft den gewählten Datensatz erneut. Gesperrte/retirierte
-Ziele derselben Oberfläche blockieren konservativ eine neue Alias-Erstellung.
+Der Client veröffentlicht Identitäts-/Einwilligungsänderungen. Die bereits
+geöffnete Settingskachel bindet bei einem anderen Projektclient neu und lädt bei
+Kontowechsel erneut. Epochenschutz verwirft verspätete Reads. Der Versand prüft
+weiter Konto, Revision und gespeicherte Zustimmung unmittelbar vor dem Senden.
+Ein eigener Widgettest bestätigt sichtbaren Zustand und Versandzustimmung nach
+Konto-/Projektwechsel sowie Widerruf. Private Kartenerstellung hat weiterhin
+eine eigene Zustimmung, getrennt von automatischer Wortübersetzung.
 
-Originalsatz unverändert bevorzugen; 1–2 Wörter benötigen bei einer neuen Karte
-Ersatz. Bei längeren Sätzen nur belegte Ungeeignetheit des konkreten Lernziels;
-Pronomen/fehlende Annotation allein rechtfertigen keinen Ersatz. Ein vollständiger
-fester Kontext wird atomar gespeichert, Herkunft inklusive Original bleibt erhalten.
-Tokenisierung/Offsets und Antwort werden technisch geprüft; Sprachqualität ist
-eine separate reale Abnahme. Fehler speichern nichts, kein bezahlter Retry.
+## Tatsächliche Referenzarchitektur
 
-Separater privater serverseitiger Erstellungs-Claim, dieselben globalen/nutzer-
-bezogenen Reservierungslimits wie Übersetzung, begrenzte Ein-/Ausgabe. Keine
-Kartendaten in translation_cache. Fertige lokale Karten haben keine Cache-TTL.
-Cloudmigration und Function werden vorbereitet, nicht deployed. Keine echten
-Modellaufrufe, keine Reviews oder Gerätedatenänderungen für lokale Tests.
+Quellen: `pipeline/src/sprachpipe/editor/publisher.py`,
+`supabase/functions/_shared/content_distribution.ts`,
+`content_verification_steps.ts` und Migration `20261017000002`.
+Der Publisher lädt unveränderliche Releaseartefakte hoch und veröffentlicht
+Katalog, Kanalzeiger und Audit. Er synchronisiert **nicht** die vorausgesetzten
+`content.cards/senses/lemmas`. Die bisherige Annahme war falsch.
 
-## Nachweis zum Test-Hänger
+Neuer Erstellungskontrakt 2:
 
-Zwei gezielte Änderungen an asynchronem Testaufbau/-abbau beseitigten den
-Hänger nicht. Phasenprotokoll `/tmp/2c-widget-diagnostic2.log`: alle UI- und
-Datenprüfungen erreicht, anschließend `close consent`, kein `closed consent`.
-Die Datenbank ist geöffnet; `close()` wartet auf das in der FakeAsync-Zone
-des Widgets erzeugte memoierte Future. Teardown außerhalb dieser Zone kann
-dessen Fortsetzung nicht pumpen. Nächster gezielter Diagnoseschritt: genau
-dieses Future vor dem Widget in `tester.runAsync` erzeugen, damit Öffnen und
-Schließen derselben realen Async-Zone gehören. Keine Produktänderung, keine
-Timeout-Erhöhung und keine entfernte Assertion.
+1. Die App liest das installierte Angebot aus dem Installationsjournal. Version
+   und `GenerationIdentity` müssen zum geöffneten Inhaltsrepository passen.
+2. Anfrage enthält Release-ID, Manifest-SHA256 und SQLite-SHA256; eine nicht
+   veröffentlichte Bootstrapbasis genügt nicht. Gespeicherte Karten bleiben
+   unabhängig davon offline nutzbar.
+3. `personal_learning_release` prüft mit Serviceberechtigung Nutzer/Sprachfreigabe
+   und exakt den unveränderlichen Katalogeintrag. Ein älterer aktiver Release ist
+   zulässig. Der aktuelle Kanalzeiger ersetzt niemals dessen Version.
+4. Die Function liest dessen `pack.json` aus dem privaten Releasepfad, prüft
+   Bytezahl und SHA256 gegen den vertrauenswürdigen Descriptor sowie Sprache,
+   Version und Schema. Daraus werden IDs nach dem eingefrorenen Pipelinevertrag
+   abgeleitet (NFC, U+001F, SHA256/16 Bytes). Formfunktionen kommen aus aktiven
+   Formtargets bzw. expliziter Formidentität; Tombstones bleiben sichtbar.
+5. Client-Packreferenzen müssen in dieser Quelle existieren. Das Modell bekommt
+   alle passenden Packkandidaten; manipulierte Referenzen werden nicht ignoriert.
+   Private Kandidaten sind ausdrücklich private Daten, keine Redaktion.
+6. Pro warmem Functionprozess werden höchstens zwei unveränderliche Projektionen
+   gehalten. Authentifizierung/Katalogbindung erfolgt pro Anfrage; vollständige
+   Byteprüfung und JSON-Projektion nur beim kalten Cacheeintrag. Kein erneuter
+   vollständiger Editorialvalidator pro Add. Kaltstartkosten sind nicht gemessen.
 
-## Implementierter Ablauf
+SQLtests belegen den älteren Release bei inzwischen geändertem Kanal, falsche
+Hashes und Sprach-/Nutzergrenzen. Backendtests belegen manipulierte Kandidaten,
+Artefakttampering, deterministische IDs, Formfunktionen und Projektionsreuse.
+Das sind synthetische Nachweise, kein Nachweis eines aktuell geladenen Gerätepacks.
 
-- Wort-Tap bleibt Übersetzung. Nur Add ruft `PersonalLearningService.add` auf.
-  Unannotierte/importierte Stellen erhalten den privaten Button; kaputte
-  vorhandene Referenzen werden nicht durch einen Generierungsfallback kaschiert.
-- Vorhandene Quellenbindung wird lokal aufgelöst, einschließlich produktivem
-  `contentIds`-Guard. Gleiche Quelle/Wortstelle braucht keinen neuen Aufruf.
-- Der tatsächliche Resolver liefert mögliche Pack- und lokale Karten. Auswahl
-  durch Haiku erfordert passende Bedeutung und Form; Rückgabe darf nur eine
-  angebotene ID sein. Packreferenzen werden zusätzlich serverseitig geprüft,
-  lokale Referenzen vor dem Save erneut gegen die private Datenbank geprüft.
-  Eine neue Kontextstelle kann daher trotz gleicher Oberfläche eine eigene
-  Identität erhalten. Maximal 24 Kandidaten insgesamt, davon vier lokale.
-- Neue Karte: Lemma, POS, Bedeutungsdefinition, Formbeschreibung/-funktion,
-  deutsche Glosse, deutscher Satz, exakte Lücke und vollständige Token-Spannen.
-  Original inklusive ausgewähltem UTF-16-Span bleibt in der Provenienz erhalten.
-  Original bei neuen Karten mindestens drei Wörter; ein/zwei Wörter erzwingen
-  Ersatz. Gründe `original`, `too_short`, `unusable_target` mit Detailtext.
-- `PersonalLearningCandidate` validiert ausschließlich diesen privaten Weg.
-  Redaktionelle Story- und Packvalidatoren unverändert. Neue IDs beginnen mit
-  `private:` bzw. bestehendem lokalem `u:`-Schema; keine erfundenen Pack-Senses.
-- Bestehende Karten-/Kontext-/Sammlungs-Transaktion plus Quellenalias in einer
-  äußeren Transaktion. Bei Konto-/Scopewechsel Rollback. Kein zweites SRS,
-  keine gespeicherten Zähler. Bestandskarte, fester Kontext und Reviews bleiben
-  bei Wiederverwendung unverändert. Keine fallible Statusnachabfrage nach Save.
-- Hinzugefügt → tatsächliche Karten-ID in Wortliste. Sperren und Retirements
-  werden konservativ auch für andere Quellen derselben Form berücksichtigt.
-  Das kann fachlich unabhängige Bedeutungen vorübergehend ebenfalls blockieren.
-- Separate versionsgebundene Einwilligung pro Konto/Gerät in eigener SQLite-Datei,
-  abschaltbar in Einstellungen. Kein Ableiten aus Übersetzungsfreigabe.
-  Konto/Freigabe werden vor Versand und nach Antwort erneut geprüft.
+### Rein lesende Liveabnahme
 
-## Server, Datenschutz und Kosten
+In der Prozessumgebung waren `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` und
+`SUPABASE_ACCESS_TOKEN` nicht verfügbar. Ein Cloudabgleich wurde nicht ausgeführt.
+Vor einer Freigabe das tatsächliche `active.json` und die aktive Generation von
+`content.sqlite` vom Gerät **lesend** exportieren. Kein Reset/Bootstrapersatz.
+Mit vorhandenen Zugangsdaten ausschließlich in der Prozessumgebung:
 
-`create-learning-card` nutzt die vorhandene Authentifizierung/Sprachfreigabe und
-Anthropic `claude-haiku-5-5`, Schlüssel ausschließlich als Serversecret.
-Eingabe höchstens 16 KiB, Original 600 UTF-16-Zeichen, Wort 80,
-Ausgabe 1.500 Modelltoken, HTTP-Antwort begrenzt. Text/Kandidaten sind Daten,
-keine Modellanweisungen. Striktes Antwortschema, exakte Referenzen und Spans;
-keine automatische Reparatur, kein Provider-Fallback, kein bezahlter Retry.
+macOS (Terminal):
 
-Eigene Tabelle `app.personal_learning_jobs`, keine Einträge als Übersetzung.
-Service-only RPCs und RLS ohne Clientrechte; gemeinsames Reservierungsbudget
-mit Übersetzungen (5/Minute, 20/Tag je Konto und 1.000/Tag global nach bestehendem
-Vertrag). Diese Anzahllimits sind keine garantierte Eurogrenze; Kartenerstellung
-hat einen höheren Ausgabedeckel als reine Übersetzung. Pending 45 Sekunden,
-unklares Ergebnis 24 Stunden gesperrt, fertige Antwort 30 Tage wiederverwendbar.
-Ablaufbereinigung erfolgt bei späteren Claims; die Frist ist keine Zusage einer
-sekundengenauen physischen Löschung. Lokale Karten haben keine Ablaufzeit.
-Abschalten verhindert weitere Verarbeitung; laufender Versand ist nicht rückholbar.
+```sh
+node --experimental-transform-types tool/audit_personal_release.ts /absoluter/pfad/active.json /absoluter/pfad/content.sqlite
+```
 
-Es wurden **null echte Modellaufrufe** und **keine Cloudmutationen** ausgeführt.
-Gemessene Modellaufrufe im synthetischen Backend:
+Windows (PowerShell):
 
-| Fall | Modellaufrufe im Stub |
-|---|---:|
-| erfolgreiche neue Karte | 1 |
-| acht parallele gleiche Anfragen zusammen | 1 |
-| nachfolgender Treffer des Erstellungsclaims | 0 zusätzliche |
-| ungültige Zustimmung, Auth, Budget, Referenz vor Generierung | 0 |
-| Anbieterfehler/Timeout/ungültige Modellantwort | 1, kein Retry |
+```powershell
+node --experimental-transform-types tool/audit_personal_release.ts C:\Abnahme\active.json C:\Abnahme\content.sqlite
+```
 
-Im echten Repository-/Provider-Test: Packverknüpfung 1 HTTP-Aufruf zum lokalen
-Stub; erneutes Add derselben Quelle 0; acht parallele Adds einer neuen Karte
-zusammen 1; neue Quelle mit Wiederverwendung der privaten Karte 1. Diese HTTP-
-Zahlen sind keine weiteren echten Modellaufrufe. Bereits vollständig geprüfter
-Storyweg bleibt ohne diesen Erstellungsaufruf.
+Das Werkzeug führt nur GETs auf exakten Katalogeintrag und privates Artefakt aus,
+prüft auch den Hash der exportierten SQLite und gibt ausschließlich Release-ID,
+Sprache, Hashes und Zähler aus. Keine Schlüssel oder Nutzertexte. Es setzt keine
+neue Migration voraus. Den Leseberechtigungsnachweis für das konkrete Appkonto
+anschließend separat prüfen; ein Servicekey ersetzt diesen Nachweis nicht.
 
-## Noch notwendige Cloudschritte — ausdrücklich nicht ausgeführt
+## Rückstellungen und Bedeutungsgrenzen
 
-Erst nach Behebung der offenen Abnahmebefunde:
+Eine pauschale Vorabsperre der Oberfläche wurde entfernt. Bekannte gesperrte
+oder zurückgezogene Kandidaten werden als zu unterscheidende Bedeutungen
+übermittelt. Für jedes Ziel verlangt der Vertrag `independent`, `same` oder
+`unclear` samt konkreter Begründung. `same`, fehlende oder unklare Abgrenzung
+speichern nichts. Bekannte identische Sense-IDs überstimmen eine anderslautende
+Modellbehauptung. Eine passende bestehende Karte wird weiter wiederverwendet.
 
-1. Migrationstand und bestehenden Serverbestand prüfen. Besonders wichtig:
-   `content.cards`, `content.senses`, `content.lemmas` samt Formfunktionen müssen
-   die angebotenen IDs des **wirklich aktiven heruntergeladenen Packs** enthalten.
-   Weder Bootstrap-Asset noch lokaler Original-Packtest belegen das. Fehlt dieser
-   Bestand, schlägt Referenzprüfung vor dem Modell mit 422 fehl. Keine Referenzen
-   entfernen, Validatoren lockern oder zusätzlichen Contentimport improvisieren.
-2. Bestehende Schemas, Sprachfreigaben, `reserve_runtime_translation` und
-   private Cachemigration müssen vorhanden sein. Dann ausschließlich vorbereitete
-   Migration `20261024000002_personal_learning.sql` prüfen und anwenden; vorher
-   mit `supabase migration list` und `supabase db push --dry-run` fremde/pending
-   Migrationen ausschließen. Kein ungeprüftes pauschales db push.
-3. Bestehendes `ANTHROPIC_API_KEY`-Secret weiterverwenden, keine Clientdefines
-   um Providerkeys ergänzen. `supabase functions deploy create-learning-card`;
-   JWT-Prüfung bleibt in config aktiv. Auth-, Sprach- und RLS-Smokeprüfungen zuerst.
-4. Erst dann autorisierte echte Modell-/Geräteabnahme durchführen. Bestehende
-   Supabase-dart-defines erhalten, iPhone als Update installieren, kein Reset.
+Eine neue Karte trägt die geprüfte Liste unabhängiger Ziele und deren Herkunft.
+Die Transaktion überprüft aktuelle gesperrte Zeilen erneut: Eine erst inzwischen
+hinzugekommene Sperre ohne Beleg blockiert. Alte Flags, Reviews, Kontexte und
+Quellbindungen werden nicht umgeschrieben. Tests: gleiche Oberfläche, gesperrte
+Bedeutung, unabhängige Bedeutung und nachträgliche zusätzliche Sperre.
 
-Die genannten Supabase-/Flutter-Befehle sind auf macOS (Terminal) und Windows
-(PowerShell) identisch. SQL-Migrationen nicht über Shell-Zitatkonstruktionen mit
-Schlüsseln oder privaten Texten ausführen.
+Die semantische Abgrenzung neuer Bedeutungen bleibt eine Modellentscheidung,
+kein Beweis perfekter Sprachqualität. Strukturelle Tests ersetzen keine
+fachliche Liveabnahme. Nicht auflösbare Referenzen bleiben Fehler.
 
-## Getrennte spätere iPhone-Abnahme
+## Private Übersetzungsteile
 
-Kein neues Geräte-PASS und keine Installation für dieses Paket behauptet.
-Nach Cloudfreigabe mit Testkonto und synthetischen Texten:
+`personalTranslationHints` liest nur `cached`, niemals `translate`. Exakter
+Requestkey umfasst Sprache, Originaltext, UTF-16-Wortstelle und Vertragsversion;
+Kontoskopierung und Revisionsschutz liegen im bestehenden Cacheclient. Der Adapter
+validiert zusätzlich Responsevertrag, Provider, Modell, Zeitgrenze und Wortform.
+Technische Speicherfehler werden weitergegeben, nicht als fachlicher Miss getarnt.
 
-1. Stories → Eigene Texte → `She puts a lantern on the table.` importieren.
-   `lantern` antippen: nur Übersetzung; Add → separate Freigabe → Ergebnis.
-2. `She holds it near her lantern.`: Pronomen allein dürfen den Originalsatz
-   nicht ersetzen. Eine passende vorhandene Karte darf jedoch verknüpft werden.
-3. `Lantern.` sowie `A lantern.`: für neue Karten Ersatz; bei vorhandener
-   passender Karte Wiederverwendung zulässig.
-4. `I went to the bank.` und `We sat on the bank.`: `went` als Flexion,
-   `bank` als unterschiedliche Bedeutungen; `😀 bank and bank are here.` für
-   zweite Wortstelle. Fachliche Modellqualität jeweils am gespeicherten Kontext
-   prüfen, nicht nur an erfolgreicher HTTP-Antwort.
-5. Portugiesisch: `O coração é importante.`; Akzente und Sprachtrennung prüfen.
-6. Sammlung „Aus Storys“ → tatsächliche Karte; App neu starten und offline öffnen.
-   Ursprungstext löschen und Übersetzungscache leeren: feste Karte bleibt.
-   Übungen/Reviews ausschließlich auf diesen neuen Testkarten nach Zustimmung.
-7. Private-Lernkarten-Freigabe abschalten, neues Ziel Add: erneute Freigabe nötig;
-   vorhandene Karten bleiben offline nutzbar. Konto-/Sprachwechsel separat prüfen.
+Übermittelt werden Requestkey/-ID, Vertrag, Promptversion, Datum und passende
+Wortbestandteile bzw. Satzübersetzung. Im Modellprompt sind sie ausdrücklich
+Daten, keine Anweisungen oder redaktionelle Freigabe. `cache_use` dokumentiert,
+welche Teile tatsächlich übernommen wurden: Bei Wortübernahme müssen Lemma, POS,
+Gloss und Formbeschreibung exakt übereinstimmen; bei Satzübernahme müssen Original
+und deutsche Übersetzung exakt übereinstimmen. Widersprüche werden abgewiesen.
+Ungeeignete Teile werden begründet nicht übernommen (`cache_note`). Fehlende
+Annotationen können in demselben begrenzten Aufruf ergänzt werden. Herkunft bleibt
+in der privaten Karte gespeichert. Keine gemessene Tokenersparnis behauptet.
 
-## Offene Grenzen / keine Releasefreigabe
+Tests benutzen echte lokale Cache-SQLite: Konto-/Textwechsel, genaue Provenienz,
+technischer Speicherfehler; Backendtests ergänzen Vertrags-/Zeit-/Keyprüfung und
+widersprüchliche Übernahme. Bestehende Cachetests decken Ablauf, Löschen,
+Deduplizierung und Nutzerwechsel weiter ab.
 
-- Ein neuer Widgettest zur Einwilligung bleibt rot. Nach isolierter Diagnose ist
-  der Teardown-Hänger beseitigt, aber die Dialog-Assertion erreicht den Dialog
-  nicht zuverlässig (`findsOneWidget`, gefunden 0). Nach zwei weiteren gezielten
-  Async-Anpassungen keine spekulative Umbaufolge. Nächster Schritt: Zustand und
-  ausstehende Future unmittelbar vor dem Finder erfassen; FakeAsync/RealAsync
-  anhand eines minimalen Consent-Store-Tests trennen. Keine Skips/Timeouterhöhung.
-- Der Schalter liest Einwilligung beim Öffnen und nach Bedienung; eine schon
-  offene Settingsroute aktualisiert ihre Darstellung bei externem Kontowechsel
-  noch nicht aktiv. Versand wird trotzdem kontogebunden geprüft.
-- Vorhandene Kartenmetadaten werden wiederverwendet. Ein zusätzlicher Adapter,
-  der schon passende **Anzeigeübersetzungen aus dem privaten Übersetzungscache**
-  als geprüfte Teilinformationen in die Erstellung übernimmt, fehlt noch. Sie
-  werden nicht ungeprüft zur Lernkarte befördert; beim Neuanlegen werden benötigte
-  Angaben derzeit gemeinsam mit einem Modellaufruf vervollständigt.
-- Bedeutungsgleichheit, sinnvoller deutscher Hinweis und fachlich gerechtfertigter
-  Ersatz sind Modellentscheidungen; Strukturprüfungen beweisen keine Sprachqualität.
-  Auch „genau ein Satz“ eines Ersatzes ist derzeit Promptvorgabe, kein separater
-  linguistischer Satzgrenzenvalidator. Keine redaktionelle Freigabe behauptet.
-- Kein Live-Nachweis des Serverregistry-Abgleichs mit aktuellem Gerätepack und
-  keine neue Geräteabnahme. Kein Scheduler-, CMS- oder Veröffentlichungsauftrag.
+## Original und Ersatz
 
-## Tatsächliche lokale Prüfergebnisse (24.10.2026)
+Geeignete längere Originale bleiben bytegenau erhalten; Pronomen oder fehlende
+Annotation allein rechtfertigen keinen Ersatz. Neue Karten aus 1–2 Wörtern
+benötigen Ersatz; passende Bestandskarten bleiben auch dabei verknüpfbar.
 
-| Prüfung | Ergebnis | Protokoll dieses Laufs |
-|---|---|---|
-| vollständige Flutter-Suite, finaler Stand | 595 PASS, 6 bestehende Skips, 1 FAIL (neuer Einwilligungs-UI-Test) | `/tmp/2c-full-final.log` |
-| neue Domain-/Repo-/Providerfälle | 7 Domain + 3 Provider PASS; UI-Fall FAIL | `/tmp/2c-target2.log`, Gesamtlauf |
-| angepasste Bestands-UI + Original-Pack | 83 PASS, ursprüngliches Pack-Zeitbudget | `/tmp/2c-existing-final.log` |
-| Backend Runtime/Cache/Erstellung | 36 PASS, nur lokale Fetch-Stubs | `/tmp/2c-backend-all.log` |
-| SQL Runtime/Cache/Erstellung | 3 Prüfsuiten PASS in PostgreSQL/PGlite | `/tmp/2c-sql-final.log` |
-| Deno Typecheck Function-Entrypoint | Exit 0 | `/tmp/2c-deno-check.log` |
-| Stage Verify | Exit 0, 22 Tabellen unverändert | `/tmp/2c-stage.log` |
-| Flutter analyze | ein bestehender avoid_print-Infohinweis in baseline_adoption_pack_test.dart:43; keine neuen Befunde | `/tmp/2c-analyze-last.log` |
+Nur neue Ersatzsätze werden zusätzlich technisch segmentiert. Gemeinsame
+Dart-/TypeScriptfälle prüfen en/pt-BR-Titel, Initialen, Abkürzungen, Dezimalpunkte,
+Schlusszeichen und Anführungen; mehrere interne Satzenden und unklare Ellipsen
+werden abgewiesen. Abschlusszeichen ist erforderlich. Grenzen: endliche
+Abkürzungsliste, mehrdeutige Initialen und ungewöhnliche Zeichensetzung sind keine
+vollständig linguistisch lösbare Klassifikation. Keine globale Änderung der
+redaktionellen Minidialogvalidatoren. Ungültige Ergebnisse speichern nichts;
+kein automatischer kostenpflichtiger Reparaturaufruf.
 
-Original-Pack: 26.198.016 Bytes; SHA256
+## Lokale Abschlussprüfung
+
+Alle Modelltests benutzen lokale Fetch-/HTTP-Stubs. Ausgangsstand c90680b hatte
+595 PASS, sechs bestehende Skips und den einen neuen UI-FAIL; diese Zahlen sind
+historisch, keine aktuelle Abnahme.
+
+| Prüfung | Aktueller Nachweis |
+|---|---|
+| Flutter vollständig | 600 PASS, sechs bestehende Skips; `/tmp/2c-full-final-close.log` |
+| Gezielte UI/Domain/Provider/Satzfälle | 13 PASS vor zusätzlicher Identitätsschutzprüfung; finale Gesamtsuite enthält alle |
+| Cacheadapter / unabhängige Bedeutung | je 1 PASS, finale Gesamtsuite enthält beide |
+| Backend Runtime/Cache/Erstellung/Release/Satz | 43 PASS; `/tmp/2c-backend-close.log` |
+| SQL/PGlite | alle drei Prüfdateien PASS; `/tmp/2c-sql-close.log` |
+| Function-Typecheck | Exit 0; `/tmp/2c-typecheck-close.log` (gezielte Backend-ID-Regression danach 9 PASS) |
+| Original-Pack | 1 PASS, 11 s, unverändertes 30-s-Budget; `/tmp/2c-realpack-close.log` |
+| Stage | 22 Tabellen stimmen, 26.198.016 Bytes; `/tmp/2c-stage-close.log` |
+| Analyse | nur bestehendes `avoid_print` in `baseline_adoption_pack_test.dart:43`; `/tmp/2c-analyze-final-close.log` |
+
+Original-Pack unverändert:
 `b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb`.
+Produktiver contentIds-Guard, STORY_STATUS_01-Altstand, echte Provider-/Repository-
+Integration, paralleles Add, atomarer Rollback, Offline-Neustart, Quellenlöschung,
+Reviews und Sprachtrennung bleiben abgedeckt. Keine vorhandenen Validatoren
+abgeschwächt. GitNexus-Warnung CRITICAL beim Backendvalidator wurde nicht als
+Freigabe gewertet; direkte Aufrufer plus vollständige Regressionen geprüft.
 
-Providerfall benutzt echten Fixture-Packinstaller, DriftContentRepository,
-produktive Provider und tatsächlichen Pack-ID-Guard. Er prüft Pack- sowie lokale
-Wiederverwendung, acht parallele Adds, keine Veränderung alter Reviews/Flags,
-Löschen über ImportedTextsNotifier und echte abgelaufene TranslationCache-Zeile.
-Separater Datei-DB-Neustart löst die private Karte ohne Content/Netzwerk auf;
-Transaktionsfehler und spät geänderter Konto-/Providerscope speichern nichts.
-Der unveränderte STORY_STATUS_01-Altstandtest ist Teil der Gesamtsuite.
+## Noch ausstehend und genaue spätere Reihenfolge
 
-Vier Bestandstests wurden an den autorisierten neuen UI-Vertrag angepasst:
-fehlender Repositorystatus bleibt ein deaktiviertes Add ohne falsche Erfolgsmeldung;
-längere Settingslisten werden wirklich gescrollt. Assertions zu Kartenstatus,
-Motiv und Sprachwechsel bleiben erhalten. Keine Test-Timeouts erhöht.
+1. Rein lesenden Geräte-/Katalog-/Artefaktabgleich oben ausführen. Ein gültiger
+   veröffentlichter Schema-5-Pack und passende `content_readers`-Freigabe sind
+   zwingende Voraussetzungen. Kein Vollimport in alte Contenttabellen.
+2. Nur nach gesonderter Deploymentfreigabe Migration
+   `20261024000002_personal_learning.sql` anwenden. Voraussetzungen: bestehende
+   Distribution-, Runtime-Limits- und private Cachemigration. Keine zusätzliche
+   Migration dieser bestehenden Strukturen in diesem Paket.
+3. Danach `create-learning-card` mit JWT-Prüfung deployen. Bestehende Server-Secrets
+   und Modellfreigabe beibehalten. Keine Änderungen an Übersetzungsfunctions nötig.
+4. Erst anschließend passenden Appbuild mit Vertrag 2 als Update installieren,
+   vorhandene dart-defines erhalten. Keine Deinstallation oder Datenlöschung.
+5. Synthetische Liveabnahme mit ausdrücklicher Zustimmung zu Modellkosten:
+   `She went to the bank.` / `She sat by the bank.` (Rückstellung und unabhängige
+   Bedeutung), `She holds it near her lantern.` (Original/Pronomen), `coração`
+   (kurzer pt-BR-Ersatz), wiederholtes Wort mit exakter Auswahlstelle; einmal
+   vorhandene Packkarte, einmal neue private Karte. Anschließend Quelle/Cache
+   löschen und gespeicherte Karte offline öffnen. Keine automatisierten Reviews.
+6. Konto-/Projektwechsel in offener Einstellung, acht schnelle Adds, einmal
+   Limit/Offline/Anbieterfehler synthetisch prüfen. Nie kostenpflichtig automatisch
+   wiederholen. Alte aktive Generation nach Kanalfortschritt getrennt abnehmen.
 
-GitNexus: Impacts für gemeinsame Repository-/Reader-/Popover-/Settingspfade vor
-Änderung ausgeführt, HIGH/CRITICAL gemeldet. Neue Symbole anfangs UNKNOWN;
-Aufrufer zusätzlich im Quelltext geprüft. Index erneut vollständig aufgebaut
-(9.880 Knoten, 22.721 Kanten); Tool meldet dennoch einen Commit Rückstand und
-begrenzte Prozessabdeckung. Das ist keine Aussage, dass fehlende Aufrufer nicht
-existieren. Abschließende detect_changes-Prüfung nach Aufnahme neuer Dateien
-separat protokollieren; Testbefund bleibt unabhängig vom Graphresultat offen.
-
-Abschließendes `detect_changes(scope: all)` nach Staging: 171 Symbole,
-27 geänderte Dateien inklusive fremder skills-lock.json (nicht im Commit),
-8 betroffene Prozesse, Risiko HIGH; vollständige Antwort ohne partial/truncated.
-Betroffen sind Reader/Übersetzungssheet, Wortlistennavigation, private
-Erstellungsvalidierung und Backend/RPC-Pfad. Context-Prüfung bestätigt Provider
-als Service-Aufrufer sowie bestehenden Datenbankprovider und Review-/Storytests
-als Repository-Verbraucher. SQL/Config ohne Graphsymbole separat geprüft.
-Die Ausgabe begründet keine Freigabe des roten UI-Tests. CRLF-Dateien bleiben
-CRLF; `git -c core.whitespace=cr-at-eol diff --check` besteht.
+Kein Geräte-PASS und keine Livequalität behauptet. Kein Push.

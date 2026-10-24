@@ -2,6 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:sprachapp/data/runtime_translation_client.dart';
+import 'package:sprachapp/presentation/providers/runtime_translation_provider.dart';
+
 import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,9 +25,55 @@ import 'package:sprachapp/widgets/personal_learning_button.dart';
 
 import 'package:sprachapp/presentation/providers/reading_providers.dart';
 
+import 'package:sprachapp/data/learning/personal_learning_service.dart';
+
 import 'data/support.dart';
 import 'personal_learning_test.dart' show target, reply;
 import 'runtime_translation_test.dart' show LoopbackClient;
+
+// Widget orchestration is deliberately independent of native DB scheduling.
+// The tests above it exercise the real SQLite store, provider and pack guard.
+class WidgetConsentStore extends PersonalConsentStore {
+  WidgetConsentStore()
+    : super(() async => throw StateError('No native DB in widget fixture'));
+  final values = <String, bool>{};
+  @override
+  Future<bool> read(String owner) async => values[owner] ?? false;
+  @override
+  Future<void> write(String owner, bool value) async {
+    values[owner] = value;
+  }
+
+  @override
+  Future<void> close() async {}
+}
+
+class WidgetLearningService extends PersonalLearningService {
+  WidgetLearningService({
+    required super.content,
+    required super.user,
+    required super.client,
+  }) : super(verify: () {});
+  @override
+  Future<StoryAddResult?> saved(PersonalTarget t) async => null;
+  @override
+  Future<StoryAddResult> add(PersonalTarget t) =>
+      throw StateError('Declined consent must not Add');
+}
+
+class EmptyTranslationCache extends RuntimeTranslationClient {
+  EmptyTranslationCache()
+    : super('https://synthetic.invalid', 'public', () async => 'synthetic');
+  @override
+  Future<RuntimeTranslation?> cached({
+    required String lang,
+    required String text,
+    String? form,
+    int? start,
+    String? senseRef,
+    String? formRef,
+  }) async => null;
+}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -100,6 +149,14 @@ void main() {
         contentRepositoryProvider.overrideWith((_) => content),
         userRepositoryProvider.overrideWith((_) => user),
         personalLearningClientProvider.overrideWithValue(client),
+        personalReleaseReferenceProvider.overrideWith(
+          (_) async => {
+            'release_id': '12345678-1234-4234-8234-123456789abc',
+            'manifest_sha256': 'a' * 64,
+            'sqlite_sha256': 'b' * 64,
+          },
+        ),
+        runtimeTranslationProvider.overrideWithValue(EmptyTranslationCache()),
       ],
     );
     addTearDown(scope.dispose);
@@ -288,6 +345,14 @@ void main() {
         contentRepositoryProvider.overrideWith((_) => content),
         userRepositoryProvider.overrideWith((_) => user),
         personalLearningClientProvider.overrideWithValue(client),
+        personalReleaseReferenceProvider.overrideWith(
+          (_) async => {
+            'release_id': '12345678-1234-4234-8234-123456789abc',
+            'manifest_sha256': 'a' * 64,
+            'sqlite_sha256': 'b' * 64,
+          },
+        ),
+        runtimeTranslationProvider.overrideWithValue(EmptyTranslationCache()),
       ],
     );
     addTearDown(scope.dispose);
@@ -329,6 +394,74 @@ void main() {
     await checkedScope;
     expect(await user.allCardStates(), isEmpty);
   });
+  testWidgets('open Settings follows account and project changes', (
+    tester,
+  ) async {
+    final identities = StreamController<void>.broadcast(sync: true);
+    var owner = 'project:a', revision = 0;
+    final store = WidgetConsentStore()..values['project:a'] = true;
+    final client = PersonalLearningClient(
+      url: 'https://synthetic.invalid',
+      publicKey: 'public',
+      token: () async => 'synthetic',
+      owner: () async => owner,
+      revision: () => revision,
+      store: store,
+      identityChanges: identities.stream,
+    );
+    final scope = ProviderContainer(
+      overrides: [personalLearningClientProvider.overrideWithValue(client)],
+    );
+    addTearDown(scope.dispose);
+    addTearDown(client.close);
+    addTearDown(identities.close);
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: scope,
+        child: const MaterialApp(
+          home: Scaffold(body: PersonalLearningConsentTile()),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      tester.widget<SwitchListTile>(find.byType(SwitchListTile)).value,
+      isTrue,
+    );
+    owner = 'project:b';
+    revision++;
+    identities.add(null);
+    await tester.pumpAndSettle();
+    expect(
+      tester.widget<SwitchListTile>(find.byType(SwitchListTile)).value,
+      isFalse,
+    );
+    expect(await client.consent(), isFalse);
+    final other = PersonalLearningClient(
+      url: 'https://other.invalid',
+      publicKey: 'public',
+      token: () async => 'synthetic',
+      owner: () async => 'other:a',
+      revision: () => 0,
+      store: WidgetConsentStore()..values['other:a'] = true,
+    );
+    addTearDown(other.close);
+    scope.updateOverrides([
+      personalLearningClientProvider.overrideWithValue(other),
+    ]);
+    await tester.pumpAndSettle();
+    expect(
+      tester.widget<SwitchListTile>(find.byType(SwitchListTile)).value,
+      isTrue,
+    );
+    expect(await other.consent(), isTrue);
+    await other.setConsent(false);
+    await tester.pumpAndSettle();
+    expect(
+      tester.widget<SwitchListTile>(find.byType(SwitchListTile)).value,
+      isFalse,
+    );
+  });
   testWidgets(
     'mount does not create; Add requests separate consent; decline makes zero requests',
     (tester) async {
@@ -344,12 +477,7 @@ void main() {
         contentIds: (_) => content.allCardIds(),
       );
       addTearDown(user.close);
-      final store = PersonalConsentStore(
-        () async => sql.sqlite3.openInMemory(),
-      );
-      // Teardown runs outside FakeAsync: create the memoized Future there too.
-      await tester.runAsync(store.db);
-      addTearDown(store.close);
+      final store = WidgetConsentStore();
       var calls = 0;
       final client = PersonalLearningClient(
         url: 'https://fixture.invalid',
@@ -368,6 +496,23 @@ void main() {
             contentRepositoryProvider.overrideWith((_) => content),
             userRepositoryProvider.overrideWith((_) => user),
             personalLearningClientProvider.overrideWithValue(client),
+            personalReleaseReferenceProvider.overrideWith(
+              (_) async => {
+                'release_id': '12345678-1234-4234-8234-123456789abc',
+                'manifest_sha256': 'a' * 64,
+                'sqlite_sha256': 'b' * 64,
+              },
+            ),
+            runtimeTranslationProvider.overrideWithValue(
+              EmptyTranslationCache(),
+            ),
+            personalLearningServiceProvider.overrideWith(
+              (_) => WidgetLearningService(
+                content: content,
+                user: user,
+                client: client,
+              ),
+            ),
           ],
           child: MaterialApp(
             home: Scaffold(body: PersonalLearningButton(target: target())),
@@ -378,13 +523,9 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(calls, 0);
-      await tester.runAsync(() async {
-        await tester.tap(find.text('Zum Lernen hinzufügen'));
-        // Consent storage was opened in the real async zone. Drain its I/O.
-        await Future<void>.delayed(Duration.zero);
-      });
-      // Add intentionally stays busy while the consent dialog awaits input.
+      await tester.tap(find.text('Zum Lernen hinzufügen'));
       await tester.pump();
+      // Advance only the dialog's transition; the busy indicator does not settle.
       await tester.pump(const Duration(milliseconds: 300));
       expect(find.text('Private Lernkarten ermöglichen?'), findsOneWidget);
       expect(calls, 0);

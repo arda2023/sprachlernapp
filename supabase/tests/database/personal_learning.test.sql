@@ -8,18 +8,20 @@ begin
  assert (select relrowsecurity from pg_class where oid='app.personal_learning_jobs'::regclass);
  assert not has_table_privilege('authenticated','app.personal_learning_jobs','SELECT');
  assert not has_function_privilege('authenticated','public.claim_personal_learning(uuid,text,text)','EXECUTE');
- assert not has_function_privilege('anon','public.personal_learning_candidates(uuid,text,text,jsonb)','EXECUTE');
+ assert not has_function_privilege('anon','public.personal_learning_release(uuid,text,uuid,text)','EXECUTE');
  insert into auth.users(id,email) values(actor,'personal@example.test'),(other,'other@example.test');
  insert into public.content_readers(user_id,channel,lang) values(actor,'internal','en');
- insert into content.languages values('en','English','Englisch','de');
- insert into content.lemmas(id,lang,lemma,pos) values('lemma','en','zorb','NOUN');
- insert into content.senses(id,lang,lemma_id,sense_key,gloss_de) values('sense','en','lemma','ball','Kugel');
- insert into content.cards(id,lang,form,sense_id,form_norm,lemma_id,pos) values('card','en','zorb','sense','zorb','lemma','NOUN');
- assert public.personal_learning_candidates(actor,'en','zorb','["card"]')->>'status'='ok';
- assert public.personal_learning_candidates(actor,'en','zorb','["invented"]')->>'status'='invalid';
- assert public.personal_learning_candidates(actor,'pt-BR','zorb','["card"]')->>'status'='forbidden';
- update content.cards set removed_in='retired' where id='card';
- assert public.personal_learning_candidates(actor,'en','zorb','["card"]')->>'status'='invalid';
+ insert into public.content_release_uploads(id,request_id,owner_id,lang,channel,expected_generation,draft_manifest,objects)
+ select id,id,actor,'en','internal',0,'{}','{}' from unnest(array['2a100000-0000-4000-8000-000000000003'::uuid,'2a100000-0000-4000-8000-000000000004'::uuid]) id;
+ insert into public.content_release_catalog(release_id,lang,channel,generation,manifest,manifest_sha256,objects,published_by) values
+ ('2a100000-0000-4000-8000-000000000003','en','internal',1,'{}',repeat('a',64),'{}',actor),
+ ('2a100000-0000-4000-8000-000000000004','en','internal',2,'{}',repeat('b',64),'{}',actor);
+ insert into public.content_channels values('en','internal',2,'2a100000-0000-4000-8000-000000000004',repeat('b',64));
+ -- Older active release remains valid after channel advancement; exact hash required.
+ assert public.personal_learning_release(actor,'en','2a100000-0000-4000-8000-000000000003',repeat('a',64))->>'status'='ok';
+ assert public.personal_learning_release(actor,'en','2a100000-0000-4000-8000-000000000003',repeat('b',64))->>'status'='invalid';
+ assert public.personal_learning_release(actor,'pt-BR','2a100000-0000-4000-8000-000000000003',repeat('a',64))->>'status'='forbidden';
+ assert public.personal_learning_release(other,'en','2a100000-0000-4000-8000-000000000003',repeat('a',64))->>'status'='forbidden';
  assert public.claim_personal_learning(other,'en',key)->>'status'='forbidden';
  r:=public.claim_personal_learning(actor,'en',key);assert r->>'status'='claimed';ticket:=(r->>'ticket')::uuid;
  assert public.claim_personal_learning(actor,'en',key)->>'status'='busy';

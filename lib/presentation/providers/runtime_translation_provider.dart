@@ -10,7 +10,7 @@ import '../../data/translation_cache.dart';
 import 'content_update_provider.dart';
 
 final runtimeTranslationProvider = Provider<RuntimeTranslationClient>((ref) {
-  final auth = ref.read(contentAuthProvider);
+  final auth = ref.watch(contentAuthProvider);
   final client = CachedRuntimeTranslationClient(
     remote: RuntimeTranslationClient(
       auth.url,

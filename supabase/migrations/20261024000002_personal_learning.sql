@@ -64,24 +64,16 @@ grant execute on function public.finish_personal_learning(uuid,text,uuid,jsonb) 
 
 -- Verify IDs supplied from the actual installed pack, then supply authoritative
 -- metadata to the model. Unknown/stale/foreign references fail; never dropped.
-create function public.personal_learning_candidates(p_user uuid,p_lang text,p_form text,p_ids jsonb)
+create function public.personal_learning_release(p_user uuid,p_lang text,p_release uuid,p_manifest text)
 returns jsonb language plpgsql security definer set search_path='' as $$
-declare cards jsonb;
+declare r public.content_release_catalog;
 begin
-  if p_lang not in ('en','pt-BR') or not exists(select 1 from public.content_readers
-    where user_id=p_user and lang=p_lang and channel='internal') then
-    return jsonb_build_object('status','forbidden'); end if;
-  if jsonb_typeof(p_ids)<>'array' or jsonb_array_length(p_ids)>24 or length(p_form)>80 then
-    raise exception 'invalid references'; end if;
-  select coalesce(jsonb_agg(jsonb_build_object('id',c.id,'lemma',l.lemma,'pos',c.pos,
-    'function',c.identity_function,'sense_id',c.sense_id,'definition_de',s.definition_de,
-    'gloss_de',s.gloss_de,'form_label',c.form_label_de) order by c.id),'[]'::jsonb) into cards
-    from content.cards c join content.senses s on s.id=c.sense_id join content.lemmas l on l.id=c.lemma_id
-    where c.lang=p_lang and c.form=p_form and c.removed_in is null and s.removed_in is null
-      and l.removed_in is null and c.id in(select jsonb_array_elements_text(p_ids));
-  if jsonb_array_length(cards)<>jsonb_array_length(p_ids) then
-    return jsonb_build_object('status','invalid'); end if;
-  return jsonb_build_object('status','ok','cards',cards);
-end $$;
-revoke all on function public.personal_learning_candidates(uuid,text,text,jsonb) from public,anon,authenticated;
-grant execute on function public.personal_learning_candidates(uuid,text,text,jsonb) to service_role;
+  if not exists(select 1 from public.content_readers where user_id=p_user and lang=p_lang and channel='internal') then
+    return jsonb_build_object('status','forbidden');
+  end if;
+  select * into r from public.content_release_catalog where release_id=p_release and lang=p_lang and channel='internal' and manifest_sha256=p_manifest;
+  if not found then return jsonb_build_object('status','invalid'); end if;
+  return jsonb_build_object('status','ok','release',to_jsonb(r)-array['published_by']);
+end; $$;
+revoke all on function public.personal_learning_release(uuid,text,uuid,text) from public,anon,authenticated;
+grant execute on function public.personal_learning_release(uuid,text,uuid,text) to service_role;

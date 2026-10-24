@@ -1,8 +1,12 @@
+import {createHash} from 'node:crypto';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {personalInput,personalOutput,PersonalLearningBackend,personalHandler} from './personal_learning.ts';
-const input={contract:1,consent:1,lang:'en',text:'She puts a zorb on the table.',form:'zorb',start:11,end:15,candidates:[],local_candidates:[]};
-const answer={reuse_id:null,lemma:'zorb',pos:'NOUN',definition_de:'Ein Gegenstand.',gloss_de:'Kugel',
+const pack={lang:'en',release:{version:'1',schema_version:5},lemmas:[],senses:[],cards:[]};
+const bytes=JSON.stringify(pack),hash=createHash('sha256').update(bytes).digest('hex');
+const release={release_id:'12345678-1234-4234-8234-123456789abc',manifest_sha256:'a'.repeat(64),sqlite_sha256:'b'.repeat(64)};
+const input={release,hints:{},blocked:[],contract:2,consent:1,lang:'en',text:'She puts a zorb on the table.',form:'zorb',start:11,end:15,candidates:[],local_candidates:[]};
+const answer={distinctions:{},cache_use:{word:false,sentence:false},cache_note:'Keine Cacheteile.',reuse_id:null,lemma:'zorb',pos:'NOUN',definition_de:'Ein Gegenstand.',gloss_de:'Kugel',
  form_detail:'Substantiv',function:null,sentence:input.text,translation_de:'Sie stellt eine Kugel auf den Tisch.',start:11,reason:'original',reason_detail:'Original geeignet.'};
 function fixture(options:any={}){
  let models=0,claims=0,body:any,ready:any,pending=false;
@@ -10,7 +14,8 @@ function fixture(options:any={}){
  const fetcher:typeof fetch=async(url,init:any)=>{
   const path=String(url);const payload=init.body?JSON.parse(init.body):null;
   if(path.endsWith('/auth/v1/user'))return Response.json({id:'12345678-1234-4234-8234-123456789abc',is_anonymous:false},{status:options.auth??200});
-  if(path.endsWith('/personal_learning_candidates'))return Response.json({status:options.refs??'ok',cards:options.cards??[]});
+  if(path.endsWith('/personal_learning_release'))return Response.json({status:options.refs??'ok',release:{...release,lang:'en',manifest:{sha256:release.sqlite_sha256,version:'1',pack_json_sha256:hash},objects:{'pack.json':{sha256:hash,size_bytes:Buffer.byteLength(bytes)}}}});
+  if(path.includes('/storage/v1/'))return new Response(bytes);
   if(path.endsWith('/claim_personal_learning')){claims++;if(claims===8)allDone();if(ready)return Response.json({status:'hit',response:ready});
    if(pending)return Response.json({status:'busy'});pending=true;
    return Response.json({status:options.claim??'claimed',ticket:'ticket'});}
@@ -61,4 +66,31 @@ test('short source needs replacement only for new card; matching existing identi
  const c={id:'real',lemma:'zorb',pos:'NOUN',function:null};
  assert.equal(personalOutput(i,{...answer,reuse_id:'real',sentence:i.text,start:0},[c]).reuse_id,'real');
  assert.throws(()=>personalOutput(i,{...answer,reuse_id:'real',function:'past'},[c]));
+});
+
+test('forged candidate and wrong active release hash fail before quota/model',async()=>{
+ for(const v of [{...input,candidates:['invented']},{...input,release:{...release,sqlite_sha256:'c'.repeat(64)}},{...input,release:{...release,manifest_sha256:'c'.repeat(64)}}]){
+ const f=fixture();assert.equal((await f.run(v)).status,422);assert.equal(f.stats().models,0);assert.equal(f.stats().claims,0);
+ }
+});
+test('deferred meaning requires explicit independence, same and unclear fail closed',()=>{
+ const i={...input,blocked:['old-bank']};
+ for(const relation of ['same','unclear'])assert.throws(()=>personalOutput(i,{...answer,distinctions:{'old-bank':{relation,reason:'Meaning is not independent.'}}},[]));
+ assert.throws(()=>personalOutput(i,answer,[]));
+ assert.equal(personalOutput(i,{...answer,distinctions:{'old-bank':{relation:'independent',reason:'River bank instead of financial institution.'}}},[]).reuse_id,null);
+});
+test('exact cache provenance and claimed reused fields; contradictions rejected',()=>{
+ const hint=(kind:string,value:any)=>({request_key:createHash('sha256').update(JSON.stringify([2,'translation-v2',kind==='word'?'lookup-word':'translate-sentence','en','de',input.text,kind==='word'?input.form:null,kind==='word'?11:null,kind==='word'?15:null,null,null])).digest('hex'),request_id:'synthetic',contract:2,prompt:'translation-v2',created_at:new Date().toISOString(),value});
+ const hints={word:hint('word',{lemma:'zorb',pos:'NOUN',gloss_de:'Kugel',form_label:'Substantiv'}),sentence:hint('sentence',answer.translation_de)};
+ const i=personalInput({...input,hints}),a={...answer,cache_use:{word:true,sentence:true}};
+ assert.equal(personalOutput(i,a,[]).gloss_de,'Kugel');
+ assert.throws(()=>personalOutput(i,{...a,gloss_de:'Widerspruch'},[]));
+ assert.throws(()=>personalOutput(i,{...a,translation_de:'Widerspruch'},[]));
+ assert.throws(()=>personalInput({...input,hints:{word:{...hints.word,request_key:'0'.repeat(64)}}}));
+ assert.throws(()=>personalInput({...input,hints:{word:{...hints.word,created_at:'2020-01-01'}}}));
+});
+
+test('known shared semantic identity overrides claimed model independence',()=>{
+ const c={id:'available',sense_id:'same-sense',lemma:'zorb',pos:'NOUN',function:null};
+ assert.throws(()=>personalOutput({...input,blocked:['disabled']},{...answer,reuse_id:'available',distinctions:{disabled:{relation:'independent',reason:'False claim'}}},[c,{...c,id:'disabled'}]));
 });

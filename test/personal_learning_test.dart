@@ -35,6 +35,9 @@ Map<String, dynamic> reply(PersonalTarget t) => {
   'start': t.start,
   'reason': 'original',
   'reason_detail': 'Original geeignet.',
+  'distinctions': <String, dynamic>{},
+  'cache_use': {'word': false, 'sentence': false},
+  'cache_note': 'Keine passenden Cacheteile.',
 };
 void main() {
   test(

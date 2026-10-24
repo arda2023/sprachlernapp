@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'content.dart';
 import 'story_learning.dart';
+import 'personal_sentence.dart';
 
 /// A source occurrence, never a model instruction or a claimed pack identity.
 class PersonalTarget {
@@ -21,7 +22,7 @@ class PersonalTarget {
   LearningIdentity get identity =>
       LearningIdentity(lang, contentFormNorm(form), anchor);
   Map<String, dynamic> get body => {
-    'contract': 1,
+    'contract': 2,
     'lang': lang,
     'text': text,
     'form': form,
@@ -55,6 +56,8 @@ class PersonalLearningCandidate extends StoryLearningCandidate {
   PersonalLearningCandidate._(
     this.target,
     this.payload,
+    this.independentOf,
+    this.hints,
     StorySentence original,
     StoryToken selected,
     StoryPracticeContext practice,
@@ -68,6 +71,8 @@ class PersonalLearningCandidate extends StoryLearningCandidate {
       );
   final PersonalTarget target;
   final Map<String, dynamic> payload;
+  final Set<String> independentOf;
+  final Map<String, dynamic> hints;
   String get provenance => jsonEncode({
     'kind': 'private_haiku_v1',
     'provider': 'anthropic',
@@ -77,13 +82,25 @@ class PersonalLearningCandidate extends StoryLearningCandidate {
     'reason_detail': payload['reason_detail'],
     'form_detail': payload['form_detail'],
     'function': payload['function'],
+    'distinctions': payload['distinctions'],
+    'cache_use': payload['cache_use'],
+    'cache_note': payload['cache_note'],
+    'translation_hints': hints,
   });
   factory PersonalLearningCandidate.parse(
     PersonalTarget t,
-    Map<String, dynamic> p,
-  ) {
+    Map<String, dynamic> p, {
+    Set<String> independentOf = const {},
+    Map<String, dynamic> hints = const {},
+  }) {
     validatePersonalResponse(t, p);
     if (p['reuse_id'] != null) throw const FormatException('Existing target');
+    if (independentOf.any(
+      (id) => p['distinctions'][id]?['relation'] != 'independent',
+    )) {
+      throw const FormatException('Unbelegte Bedeutungsabgrenzung');
+    }
+    validatePersonalHints(t, p, hints);
     final lemmaId = 'private:lemma:${t.key}';
     StoryToken token(int index, int start, int end, String surface) =>
         StoryToken(
@@ -140,6 +157,8 @@ class PersonalLearningCandidate extends StoryLearningCandidate {
     return PersonalLearningCandidate._(
       t,
       Map.unmodifiable(p),
+      Set.unmodifiable(independentOf),
+      Map.unmodifiable(hints),
       original,
       selected,
       StoryPracticeContext(sentence, chosen),
@@ -166,6 +185,9 @@ class PersonalLearningCandidate extends StoryLearningCandidate {
 void validatePersonalResponse(PersonalTarget t, Map<String, dynamic> p) {
   t.validate();
   const keys = {
+    'distinctions',
+    'cache_use',
+    'cache_note',
     'reuse_id',
     'lemma',
     'pos',
@@ -194,6 +216,7 @@ void validatePersonalResponse(PersonalTarget t, Map<String, dynamic> p) {
     'translation_de',
     'reason',
     'reason_detail',
+    'cache_note',
   ]) {
     final v = p[k];
     require(
@@ -229,6 +252,24 @@ void validatePersonalResponse(PersonalTarget t, Map<String, dynamic> p) {
     p['function'] == null ||
         {'base', 'past', 'past_participle'}.contains(p['function']),
   );
+  require(
+    p['distinctions'] is Map &&
+        (p['distinctions'] as Map).values.every(
+          (v) =>
+              v is Map &&
+              v.length == 2 &&
+              {'independent', 'same', 'unclear'}.contains(v['relation']) &&
+              v['reason'] is String &&
+              (v['reason'] as String).trim().isNotEmpty &&
+              (v['reason'] as String).length <= 200,
+        ),
+  );
+  require(
+    p['cache_use'] is Map &&
+        (p['cache_use'] as Map).length == 2 &&
+        p['cache_use']['word'] is bool &&
+        p['cache_use']['sentence'] is bool,
+  );
   require(p['reuse_id'] == null || p['reuse_id'] is String);
   require(p['start'] is int && (p['start'] as int) >= 0);
   require({'original', 'too_short', 'unusable_target'}.contains(p['reason']));
@@ -246,6 +287,7 @@ void validatePersonalResponse(PersonalTarget t, Map<String, dynamic> p) {
   require(count >= 3 && count <= 40);
   final reason = p['reason'];
   require({'original', 'too_short', 'unusable_target'}.contains(reason));
+  if (reason != 'original') require(onePersonalSentence(sentence));
   if (reason == 'original') {
     require(sentence == t.text && start == t.start);
   }
@@ -272,4 +314,29 @@ abstract interface class PersonalLearningStore {
     required PersonalTarget source,
     required void Function() verify,
   });
+}
+
+/// Cache evidence is never a complete card. Claimed reuse must be exact.
+void validatePersonalHints(
+  PersonalTarget t,
+  Map<String, dynamic> p,
+  Map<String, dynamic> hints,
+) {
+  final use = p['cache_use'] as Map;
+  if (use['word'] == true) {
+    final value = hints['word']?['value'];
+    if (value is! Map ||
+        value['lemma'] != p['lemma'] ||
+        value['pos'] != p['pos'] ||
+        value['gloss_de'] != p['gloss_de'] ||
+        value['form_label'] != p['form_detail']) {
+      throw const FormatException('Widersprüchliche Wortübernahme');
+    }
+  }
+  if (use['sentence'] == true &&
+      (hints['sentence'] == null ||
+          p['sentence'] != t.text ||
+          hints['sentence']['value'] != p['translation_de'])) {
+    throw const FormatException('Widersprüchliche Satzübernahme');
+  }
 }

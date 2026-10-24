@@ -48,8 +48,22 @@ class PersonalLearningClient {
     required this.owner,
     required this.revision,
     required this.store,
+    Stream<void> identityChanges = const Stream.empty(),
     HttpClient Function()? createClient,
-  }) : createClient = createClient ?? HttpClient.new;
+  }) : createClient = createClient ?? HttpClient.new {
+    _identities = identityChanges.listen((_) {
+      _changes.add(null);
+    });
+  }
+  final _changes = StreamController<void>.broadcast(sync: true);
+  StreamSubscription<void>? _identities;
+  Stream<void> get changes => _changes.stream;
+  Future<void> close() async {
+    await _identities?.cancel();
+    await _changes.close();
+    await store.close();
+  }
+
   final String url, publicKey;
   final Future<String> Function() token;
   final Future<String?> Function() owner;
@@ -60,8 +74,10 @@ class PersonalLearningClient {
   bool _blocked = false;
   final _inflight = <String, Future<Map<String, dynamic>>>{};
   Future<bool> consent() async {
-    final who = await owner();
-    return who != null && !_blocked && await store.read(who);
+    final who = await owner(), epoch = revision();
+    final value = who != null && !_blocked && await store.read(who);
+    if (epoch != revision() || await owner() != who) return false;
+    return value;
   }
 
   Future<void> setConsent(bool enabled) async {
@@ -78,12 +94,16 @@ class PersonalLearningClient {
       );
     }
     _blocked = false;
+    _changes.add(null);
   }
 
   Future<Map<String, dynamic>> create(
     PersonalTarget t,
     List<String> ids, {
     List<Map<String, dynamic>> localCandidates = const [],
+    Map<String, dynamic> release = const {},
+    Map<String, dynamic> hints = const {},
+    List<String> blocked = const [],
   }) async {
     t.validate();
     final who = await owner(),
@@ -105,11 +125,15 @@ class PersonalLearningClient {
     }
 
     await authorize();
-    final key = '$who:${t.key}:${ids.join(',')}:${jsonEncode(localCandidates)}';
+    final key =
+        '$who:${t.key}:${ids.join(',')}:${jsonEncode([localCandidates, release, hints, blocked])}';
     if (_inflight[key] case final pending?) return pending;
     final pending = _send({
       ...t.body,
       'candidates': ids,
+      'release': release,
+      'hints': hints,
+      'blocked': blocked,
       'local_candidates': localCandidates,
       'consent': 1,
     }, authorize);

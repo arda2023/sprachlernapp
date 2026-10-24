@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -184,53 +186,86 @@ class _PersonalLearningConsentTileState
     extends ConsumerState<PersonalLearningConsentTile> {
   bool enabled = false, busy = true;
   String? error;
+  int epoch = 0;
+  StreamSubscription<void>? subscription;
+  late PersonalLearningClient client;
   @override
   void initState() {
     super.initState();
+    bind(ref.read(personalLearningClientProvider));
+  }
+
+  void bind(PersonalLearningClient next) {
+    subscription?.cancel();
+    client = next;
+    subscription = client.changes.listen((_) => reload());
+    reload();
+  }
+
+  void reload() {
+    epoch++;
+    setState(() {
+      enabled = false;
+      busy = true;
+      error = null;
+    });
     load();
   }
 
+  @override
+  void dispose() {
+    subscription?.cancel();
+    super.dispose();
+  }
+
   Future<void> load() async {
+    final generation = epoch;
     try {
-      final v = await ref.read(personalLearningClientProvider).consent();
-      if (mounted) setState(() => enabled = v);
+      final value = await client.consent();
+      if (mounted && generation == epoch) setState(() => enabled = value);
     } catch (_) {
-      if (mounted) setState(() => error = 'Freigabe nicht lesbar.');
+      if (mounted && generation == epoch) {
+        setState(() => error = 'Freigabe nicht lesbar.');
+      }
     } finally {
-      if (mounted) setState(() => busy = false);
+      if (mounted && generation == epoch) setState(() => busy = false);
     }
   }
 
   Future<void> change(bool value) async {
+    final selected = client, generation = epoch;
     setState(() => busy = true);
     try {
-      final client = ref.read(personalLearningClientProvider);
-      await client.owner();
-      final epoch = client.revision();
-      if (!mounted) return;
+      await selected.owner();
+      final identity = selected.revision();
+      if (!mounted || generation != epoch) return;
       if (value && !await confirmPersonalLearning(context)) return;
-      if (!mounted || epoch != client.revision()) return;
-      await client.setConsent(value);
-      if (mounted) {
-        setState(() {
-          enabled = value;
-          error = null;
-        });
+      if (!mounted ||
+          generation != epoch ||
+          identity != selected.revision() ||
+          !identical(client, selected)) {
+        return;
       }
+      await selected.setConsent(value);
     } catch (_) {
-      if (mounted) setState(() => error = 'Freigabe nicht gespeichert.');
+      if (mounted && generation == epoch) {
+        setState(() => error = 'Freigabe nicht gespeichert.');
+      }
     } finally {
-      if (mounted) setState(() => busy = false);
+      if (mounted && generation == epoch) setState(() => busy = false);
     }
   }
 
   @override
-  Widget build(BuildContext context) => SwitchListTile(
-    title: const Text('Private Lernkarten mit KI'),
-    subtitle: Text(
-      error ?? 'Nur nach „Zum Lernen hinzufügen“. Gesonderte Freigabe.',
-    ),
-    value: enabled,
-    onChanged: busy ? null : change,
-  );
+  Widget build(BuildContext context) {
+    ref.listen(personalLearningClientProvider, (_, next) => bind(next));
+    return SwitchListTile(
+      title: const Text('Private Lernkarten mit KI'),
+      subtitle: Text(
+        error ?? 'Nur nach „Zum Lernen hinzufügen“. Gesonderte Freigabe.',
+      ),
+      value: enabled,
+      onChanged: busy ? null : change,
+    );
+  }
 }

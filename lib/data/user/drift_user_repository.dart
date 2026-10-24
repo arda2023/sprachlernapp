@@ -462,7 +462,7 @@ class DriftUserRepository implements PersonalLearningStore, UserRepository, Stor
       final blocked = await (_db.select(_db.userCards)..where((t) =>
         t.lang.equals(lang) & t.formNorm.equals(c.identity.formNorm) &
         (t.disabled.equals(true) | t.retired.equals(true)))).get();
-      if (blocked.isNotEmpty) {
+      if (blocked.any((row) => !c.independentOf.contains(row.cardId))) {
         return const StoryAddResult(StoryAddState.unavailable,
         message: 'Ein Ziel dieser Wortform ist gesperrt. Bitte zuerst in der Wortliste prüfen.');
       }

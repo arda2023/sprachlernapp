@@ -14,11 +14,15 @@ class PersonalLearningService {
     required this.user,
     required this.client,
     required this.verify,
+    this.release,
+    this.translationHints,
   });
   final ContentRepository content;
   final UserRepository user;
   final PersonalLearningClient client;
   final void Function() verify;
+  final Future<Map<String, dynamic>> Function()? release;
+  final Future<Map<String, dynamic>> Function(PersonalTarget)? translationHints;
   final _inflight = <String, Future<StoryAddResult>>{};
   Future<StoryAddResult> add(PersonalTarget t) {
     final existing = _inflight[t.key];
@@ -68,34 +72,40 @@ class PersonalLearningService {
     final resolver = await PracticeItemResolver.load(user, content);
     verify();
     final norm = contentFormNorm(t.form);
+    // Resolver hides retired aliases from practice. Keep their evidence for
+    // semantic comparison without reactivating them or changing any row.
+    final locals = {
+      for (final item
+          in await (user as StoryLearningRepository).localPracticeItems())
+        item.card.id: item,
+    };
+    final cards = {
+      ...resolver.cards,
+      for (final item in locals.values) item.card.id: item.card,
+    };
     final retired = content is RetiredLearningContentRepository
         ? await (content as RetiredLearningContentRepository)
               .retiredLearningIdentities()
         : <String, LearningIdentity>{};
-    if (retired.values.any((i) => i.lang == t.lang && i.formNorm == norm) ||
-        resolver.cards.values.any(
-          (c) =>
-              c.lang == t.lang &&
-              c.formNorm == norm &&
-              (resolver.states[c.id]?.disabled == true ||
-                  resolver.states[c.id]?.retired == true),
-        )) {
-      return const StoryAddResult(
-        StoryAddState.unavailable,
-        message: 'Ein Ziel dieser Wortform ist gesperrt. Bitte in der Wortliste prüfen.',
-      );
-    }
+    final blocked = <String>{
+      for (final e in retired.entries)
+        if (e.value.lang == t.lang && e.value.formNorm == norm) e.key,
+      for (final c in cards.values)
+        if (c.lang == t.lang &&
+            c.formNorm == norm &&
+            (resolver.states[c.id]?.disabled == true ||
+                resolver.states[c.id]?.retired == true))
+          c.id,
+    };
     final candidates =
-        resolver.cards.values
+        cards.values
             .where(
               (c) => c.lang == t.lang && c.form == t.form && c.senseId != null,
             )
             .toList()
           ..sort((a, b) => a.id.compareTo(b.id));
     final localCandidates = <Map<String, dynamic>>[
-      for (final c in candidates.where(
-        (c) => resolver.locals.containsKey(c.id),
-      ))
+      for (final c in candidates.where((c) => locals.containsKey(c.id)))
         {
           'id': c.id,
           'lemma': c.lemma,
@@ -104,9 +114,8 @@ class PersonalLearningService {
           'form': c.form,
           'lang': c.lang,
           'gloss_de': c.translationDe,
-          'sentence': resolver.locals[c.id]!.practiceSentence.text,
-          'translation_de':
-              resolver.locals[c.id]!.practiceSentence.translationDe,
+          'sentence': locals[c.id]!.practiceSentence.text,
+          'translation_de': locals[c.id]!.practiceSentence.translationDe,
         },
     ];
     if (candidates.length > 24 || localCandidates.length > 4) {
@@ -116,15 +125,37 @@ class PersonalLearningService {
     }
     await client.owner();
     final epoch = client.revision(), consentEpoch = client.consentRevision;
+    final reference = await release?.call();
+    if (reference == null) {
+      throw const PersonalLearningFailure(
+        'Ein veröffentlichter Inhaltspack ist erforderlich. Bitte Inhalte aktualisieren.',
+      );
+    }
+    final hints = await translationHints?.call(t) ?? <String, dynamic>{};
+    verify();
+    if (epoch != client.revision() || consentEpoch != client.consentRevision) {
+      throw const PersonalLearningFailure('Konto oder Freigabe geändert.');
+    }
     final response = await client.create(
       t,
       candidates
-          .where((c) => !resolver.locals.containsKey(c.id))
+          .where((c) => !locals.containsKey(c.id))
           .map((c) => c.id)
           .toList(),
       localCandidates: localCandidates,
+      release: reference,
+      hints: hints,
+      blocked: blocked.toList(),
     );
     validatePersonalResponse(t, response);
+    final distinctions = response['distinctions'] as Map;
+    if (blocked.any((id) => distinctions[id]?['relation'] != 'independent')) {
+      return const StoryAddResult(
+        StoryAddState.unavailable,
+        message: 'Diese Bedeutung ist zurückgestellt oder nicht eindeutig zuordenbar.',
+      );
+    }
+    validatePersonalHints(t, response, hints);
     void current() {
       verify();
       if (epoch != client.revision() ||
@@ -143,6 +174,16 @@ class PersonalLearningService {
         throw const PersonalLearningFailure('Unbekannte Kartenreferenz.');
       }
       final c = matches.single;
+      if (blocked.any(
+        (id) =>
+            cards[id]?.senseId == c.senseId ||
+            retired[id]?.semanticAnchor == c.senseId,
+      )) {
+        return const StoryAddResult(
+          StoryAddState.unavailable,
+          message: 'Diese Bedeutung ist zurückgestellt.',
+        );
+      }
       if (c.lemma != response['lemma'] ||
           c.pos != response['pos'] ||
           c.formFunction != response['function']) {
@@ -151,7 +192,7 @@ class PersonalLearningService {
         );
       }
       // Check the actual active pack again, including its complete exercise.
-      if (resolver.locals.containsKey(id)) {
+      if (locals.containsKey(id)) {
         final currentItems = await (user as StoryLearningRepository)
             .localPracticeItems();
         if (!currentItems.any(
@@ -196,7 +237,7 @@ class PersonalLearningService {
         ),
         token: token,
         card: c,
-        groupMembers: resolver.cards.values
+        groupMembers: cards.values
             .where(
               (other) =>
                   !other.id.startsWith('u:') &&
@@ -205,7 +246,12 @@ class PersonalLearningService {
             .toList(),
       );
     } else {
-      candidate = PersonalLearningCandidate.parse(t, response);
+      candidate = PersonalLearningCandidate.parse(
+        t,
+        response,
+        independentOf: blocked,
+        hints: hints,
+      );
     }
     current();
     return (user as PersonalLearningStore).savePersonalLearning(
