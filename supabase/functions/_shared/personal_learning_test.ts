@@ -9,13 +9,14 @@ const input={release,hints:{},blocked:[],contract:2,consent:1,lang:'en',text:'Sh
 const answer={distinctions:{},cache_use:{word:false,sentence:false},cache_note:'Keine Cacheteile.',reuse_id:null,lemma:'zorb',pos:'NOUN',definition_de:'Ein Gegenstand.',gloss_de:'Kugel',
  form_detail:'Substantiv',function:null,sentence:input.text,translation_de:'Sie stellt eine Kugel auf den Tisch.',start:11,reason:'original',reason_detail:'Original geeignet.'};
 function fixture(options:any={}){
+ const packBytes=options.pack?JSON.stringify(options.pack):bytes,packHash=createHash('sha256').update(packBytes).digest('hex');
  let models=0,claims=0,body:any,ready:any,pending=false;
  let allDone!:()=>void; const allClaims=new Promise<void>(resolve=>allDone=resolve);
  const fetcher:typeof fetch=async(url,init:any)=>{
   const path=String(url);const payload=init.body?JSON.parse(init.body):null;
   if(path.endsWith('/auth/v1/user'))return Response.json({id:'12345678-1234-4234-8234-123456789abc',is_anonymous:false},{status:options.auth??200});
-  if(path.endsWith('/personal_learning_release'))return Response.json({status:options.refs??'ok',release:{...release,lang:'en',manifest:{sha256:release.sqlite_sha256,version:'1',pack_json_sha256:hash},objects:{'pack.json':{sha256:hash,size_bytes:Buffer.byteLength(bytes)}}}});
-  if(path.includes('/storage/v1/'))return new Response(bytes);
+  if(path.endsWith('/personal_learning_release'))return Response.json({status:options.refs??'ok',release:{...release,lang:'en',manifest:{sha256:release.sqlite_sha256,version:'1',pack_json_sha256:packHash},objects:{'pack.json':{sha256:packHash,size_bytes:Buffer.byteLength(packBytes)}}}});
+  if(path.includes('/storage/v1/'))return new Response(packBytes);
   if(path.endsWith('/claim_personal_learning')){claims++;if(claims===8)allDone();if(ready)return Response.json({status:'hit',response:ready});
    if(pending)return Response.json({status:'busy'});pending=true;
    return Response.json({status:options.claim??'claimed',ticket:'ticket'});}
@@ -163,18 +164,63 @@ test('provider contract exposes the unchanged validator bounds and value sets',a
  assert.deepEqual([...s.required].sort(),Object.keys(answer).sort());assert.equal(s.additionalProperties,false);
  assert.deepEqual(p.pos.enum,['NOUN','VERB','AUX','ADJ','ADV','PRON','DET','ADP','CCONJ','SCONJ','NUM','PART','INTJ']);
  assert.deepEqual(p.function.anyOf,[{type:'string',enum:['base','past','past_participle']},{type:'null'}]);
- assert.deepEqual(p.reason.enum,['original','too_short','unusable_target']);assert.equal(p.reuse_id.type,'null');
+ // Seven-word original: too_short is excluded exactly as RULE_20 does.
+ assert.deepEqual(p.reason.enum,['original','unusable_target']);assert.equal(p.reuse_id.type,'null');
  assert.match(p.start.description,/zero-based UTF-16/);
  assert.match(p.cache_note.description,/including when BOTH/);
  for(const k of ['cache_note','lemma','definition_de','gloss_de','form_detail','reason_detail'])assert.match(p[k].description,/1–200 UTF-16/);
  assert.match(p.sentence.description,/1–600 UTF-16/);assert.match(p.translation_de.description,/1–1200 UTF-16/);
  assert.match(system,/original exceeds 40 word tokens/);assert.match(system,/Original\/reuse text is copied exactly/);
  assert.match(system,/Always provide a nonblank cache_note/);
- assert.match(p.cache_use.properties.word.description,/canonical allowed uppercase POS/);
- assert.match(p.cache_use.properties.sentence.description,/Never reuse a reading translation that reveals/);
+ // Without hints both flags are pinned to false; hinted rules: see the per-request schema test.
+ assert.deepEqual(p.cache_use.properties.word.enum,[false]);assert.deepEqual(p.cache_use.properties.sentence.enum,[false]);
  // Provider does not support these JSON Schema keywords; the explicit field
  // descriptions carry the exact constraints and the validator enforces them.
  assert.doesNotMatch(JSON.stringify(s),/"(?:minLength|maxLength|minimum|maximum)":/);
+});
+
+test('schema states the existing short-original, reason and cache rules per request',async()=>{
+ // Live C4: reason=too_short, yet the original "Cheers!" came back (RULE_15).
+ const s={...input,text:'Cheers!',form:'Cheers',start:0,end:6};
+ const f=fixture({answer:{...answer,lemma:'cheers',pos:'INTJ',sentence:'Cheers, everyone, and thank you for coming!',start:0,reason:'too_short',
+  reason_detail:'Nur ein Wort.',gloss_de:'Prost',translation_de:'Prost, ihr alle, und danke fürs Kommen!'}});
+ assert.equal((await f.run(s)).status,200);
+ let p=f.stats().body.output_config.format.schema.properties;
+ assert.deepEqual(p.reason.enum,['too_short']);
+ assert.match(p.sentence.description,/NEW sentence/);assert.match(p.start.description,/new sentence/);
+ // Live C7: the replacement came back in German with a wrong offset (RULE_13).
+ assert.match(p.sentence.description,/SOURCE LANGUAGE input\.lang .*never German/);assert.match(f.stats().body.system,/always written in the source language/);
+ // Live C1: reuse of cache parts claimed although no hints were supplied (CACHE_CONFLICT).
+ assert.deepEqual(p.cache_use.properties.word.enum,[false]);assert.deepEqual(p.cache_use.properties.sentence.enum,[false]);
+ const g=fixture();assert.equal((await g.run()).status,200);
+ p=g.stats().body.output_config.format.schema.properties;
+ assert.deepEqual(p.reason.enum,['original','unusable_target']);assert.doesNotMatch(p.sentence.description,/NEW sentence/);
+ const hint=(kind:string,value:any)=>({request_key:createHash('sha256').update(JSON.stringify([2,'translation-v2',kind==='word'?'lookup-word':'translate-sentence','en','de',input.text,kind==='word'?input.form:null,kind==='word'?11:null,kind==='word'?15:null,null,null])).digest('hex'),request_id:'synthetic',contract:2,prompt:'translation-v2',created_at:new Date().toISOString(),value});
+ const h=fixture();assert.equal((await h.run({...input,hints:{word:hint('word',{lemma:'zorb',pos:'NOUN',gloss_de:'Kugel',form_label:'Substantiv'}),sentence:hint('sentence','Sie legt eine Kugel auf den Tisch.')}})).status,200);
+ p=h.stats().body.output_config.format.schema.properties;
+ assert.equal(p.cache_use.properties.word.enum,undefined);assert.equal(p.cache_use.properties.sentence.enum,undefined);
+ assert.match(p.cache_use.properties.word.description,/canonical allowed uppercase POS/);
+ assert.match(p.cache_use.properties.sentence.description,/Never reuse a reading translation that reveals/);
+ const w=fixture();assert.equal((await w.run({...input,hints:{word:hint('word',{lemma:'zorb',pos:'NOUN',gloss_de:'Kugel',form_label:'Substantiv'})}})).status,200);
+ assert.deepEqual(w.stats().body.output_config.format.schema.properties.cache_use.properties.sentence.enum,[false]);
+ // Live C3/C6: German lemma and needless paraphrase of the plain German equivalent.
+ assert.match(h.stats().body.system,/source-language dictionary form/);assert.match(h.stats().body.system,/plain German equivalent/);
+});
+
+test('case variants of the form are offered, blockable and valid locals (no duplicate private card)',async()=>{
+ const withStation={...pack,lemmas:[{ref:'l1',lemma:'station',pos:'NOUN'}],senses:[{ref:'s1',lemma:'l1',sense_key:'station#bahnhof',gloss_de:'Bahnhof',definition_de:'Haltepunkt für Züge.'}],
+  cards:[{ref:'c1',form:'station',sense:'s1',translation_de:'Bahnhof'}]};
+ const text='Station staff help travellers.',v={...input,text,form:'Station',start:0,end:7};
+ const a={...answer,lemma:'station',sentence:text,start:0,gloss_de:'Haltepunkt',translation_de:'Das Personal am Haltepunkt hilft Reisenden.'};
+ const f=fixture({pack:withStation,answer:a});assert.equal((await f.run(v)).status,200);
+ const offered=JSON.parse(f.stats().body.messages[0].content).candidates;
+ assert.deepEqual(offered.map((c:any)=>c.form),['station']);
+ const id=offered[0].id;
+ const g=fixture({pack:withStation,answer:{...a,distinctions:{[id]:{relation:'independent',reason:'Andere Bedeutung.'}}}});
+ assert.equal((await g.run({...v,blocked:[id]})).status,200);
+ const local={id:'u:'+'d'.repeat(64),lang:'en',form:'Zorb',lemma:'zorb',pos:'NOUN',function:null,gloss_de:'Kugel',sentence:'Zorb rolls away.',translation_de:'Eine Kugel rollt weg.'};
+ assert.doesNotThrow(()=>personalInput({...input,local_candidates:[local]}));
+ assert.throws(()=>personalInput({...input,local_candidates:[{...local,form:'zorbs'}]}));
 });
 
 test('nullable value sets use anyOf; no enum value under a type array (provider 400)',async()=>{

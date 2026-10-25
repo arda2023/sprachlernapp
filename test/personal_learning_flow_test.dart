@@ -249,6 +249,84 @@ void main() {
     );
     revision++;
   });
+  test('sentence-initial capital is offered the lowercase pack card; no second private card', () async {
+    HttpOverrides.global = null;
+    final dir = Directory.systemTemp.createTempSync('personal-case');
+    addTearDown(() => dir.deleteSync(recursive: true));
+    final content = await fixtureInstaller(
+      dir,
+      Directory('${dir.path}/support'),
+    ).open();
+    addTearDown(content.close);
+    final db = UserDatabase(NativeDatabase.memory());
+    final user = DriftUserRepository(
+      db,
+      lang: 'en',
+      contentIds: (_) => content.allCardIds(),
+    );
+    addTearDown(user.close);
+    final consent = PersonalConsentStore(
+      () async => sql.sqlite3.open('${dir.path}/consent.db'),
+    );
+    addTearDown(consent.close);
+    final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+    addTearDown(() => server.close(force: true));
+    final inputs = <Map<String, dynamic>>[];
+    server.listen((request) async {
+      final b = jsonDecode(
+        await utf8.decoder.bind(request).join(),
+      ) as Map<String, dynamic>;
+      inputs.add(b);
+      final t = PersonalTarget(
+        lang: b['lang'],
+        text: b['text'],
+        form: b['form'],
+        start: b['start'],
+        source: 'test',
+      );
+      // The provider can only reuse a card it was offered.
+      final p = (b['candidates'] as List).contains('card-went')
+          ? {...reply(t), 'reuse_id': 'card-went', 'lemma': 'go', 'pos': 'VERB'}
+          : reply(t);
+      request.response.headers.contentType = ContentType.json;
+      request.response.write(jsonEncode(p));
+      await request.response.close();
+    });
+    final client = PersonalLearningClient(
+      url: 'https://synthetic.invalid',
+      publicKey: 'public',
+      token: () async => 'synthetic',
+      owner: () async => 'owner',
+      revision: () => 0,
+      store: consent,
+      createClient: () => LoopbackClient(server.port),
+    );
+    await client.setConsent(true);
+    final scope = ProviderContainer(
+      overrides: [
+        contentRepositoryProvider.overrideWith((_) => content),
+        userRepositoryProvider.overrideWith((_) => user),
+        personalLearningClientProvider.overrideWithValue(client),
+        personalReleaseReferenceProvider.overrideWith(
+          (_) async => {
+            'release_id': '12345678-1234-4234-8234-123456789abc',
+            'manifest_sha256': 'a' * 64,
+            'sqlite_sha256': 'b' * 64,
+          },
+        ),
+        runtimeTranslationProvider.overrideWithValue(EmptyTranslationCache()),
+      ],
+    );
+    addTearDown(scope.dispose);
+    final service = await scope.read(personalLearningServiceProvider.future);
+    final added = await service.add(
+      target(text: 'Went home early, she said.', form: 'Went'),
+    );
+    expect(inputs.single['candidates'], ['card-went']);
+    expect(added.cardId, 'card-went');
+    expect(await user.localPracticeItems(), isEmpty);
+  });
+
   test('consent separate, owner scoped, fail closed, revocation before token prevents HTTP', () async {
     final db = sql.sqlite3.openInMemory(),
         store = PersonalConsentStore(() async => db);

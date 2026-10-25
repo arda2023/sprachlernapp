@@ -100,7 +100,8 @@ class PersonalLearningService {
     final candidates =
         cards.values
             .where(
-              (c) => c.lang == t.lang && c.form == t.form && c.senseId != null,
+              // Case variants are one word; the gap keeps the exact surface.
+              (c) => c.lang == t.lang && c.formNorm == norm && c.senseId != null,
             )
             .toList()
           ..sort((a, b) => a.id.compareTo(b.id));
