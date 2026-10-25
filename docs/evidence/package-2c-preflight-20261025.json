@@ -1,0 +1,1186 @@
+{
+  "ref": "90673bb",
+  "image_id": "sha256:645d0e45446181f3e9d87efeef637b494615f32365befff00e2d2b0fe8535fef",
+  "architecture": "arm64",
+  "limits": {
+    "memory_mb": 256,
+    "cpu_soft_ms": 1000,
+    "cpu_hard_ms": 2000,
+    "wall_ms": 150000
+  },
+  "sources": {
+    "supabase/functions/create-learning-card/index.ts": "0a9fd58606b279e4081ff2082ebfd364c2a42b0b3397378fe144010fd40034cd",
+    "supabase/functions/_shared/personal_learning.ts": "d28b43609512abbb441827b8eebcc9fb29a7b1b6e6322dee9ed7f842adb432c2",
+    "supabase/functions/_shared/personal_release.ts": "cf9a3255e1da10e27aef13a73249b1345678be19aabb95693f92d438567120f3",
+    "supabase/functions/_shared/personal_sentence.ts": "44265f53050a28a008e8c9a1ca5babee5a0f868d119b1712986e4551c1a17527",
+    "supabase/functions/_shared/runtime_translation.ts": "4765ebb66188268938d4d87f772ee9816f58801ddd3e9bb93b2001a910bc3a6d"
+  },
+  "artifacts": [
+    {
+      "lang": "en",
+      "release_id": "510c6685-f0ea-4002-9c7c-a09f0bf8212b",
+      "pack": {
+        "sha256": "92c44ef9f163e213cf9a44e6e23a264de6bfb11f6d233a1b8c5c8f676704f37c",
+        "size_bytes": 50282981
+      }
+    },
+    {
+      "lang": "pt-BR",
+      "release_id": "4213d487-044d-45b9-ae95-e14a7c3c0d35",
+      "pack": {
+        "sha256": "20300e21b7a14df67ee9e03fc6bca2604a71f04caa90a986dc503bbbf43ed563",
+        "size_bytes": 124750
+      }
+    }
+  ],
+  "simulated_services": [
+    "GoTrue response",
+    "PostgREST release/claim/finish (no SQL/RLS)",
+    "Storage transport (exact published bytes)",
+    "Anthropic response; zero provider traffic"
+  ],
+  "gateway_jwt_simulated": true,
+  "cloud_pass": false,
+  "runs": [
+    {
+      "scenario": "cold-en",
+      "calls": [
+        {
+          "status": 200,
+          "wall_ms": 957.7,
+          "error": null
+        }
+      ],
+      "counts": {
+        "storage": {
+          "510c6685-f0ea-4002-9c7c-a09f0bf8212b": 1
+        },
+        "auth": 1,
+        "release": 1,
+        "model": 1,
+        "claim": 1,
+        "finish": 1
+      },
+      "runtime_process_rss_peak_bytes": 306290688,
+      "container_memory_peak_bytes": 288145408,
+      "events": [
+        {
+          "timestamp": "2026-10-25T06:03:09.701Z",
+          "event_type": "Boot",
+          "event": {
+            "boot_time": 610
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:10.050Z",
+          "event_type": "Shutdown",
+          "event": {
+            "reason": "EarlyDrop",
+            "cpu_time_used": 314,
+            "memory_used": {
+              "total": 166384212,
+              "heap": 162822552,
+              "external": 3561660,
+              "mem_check_captured": {
+                "current": {
+                  "totalHeapSize": 165588992,
+                  "totalHeapSizeExecutable": 786432,
+                  "totalPhysicalSize": 165421056,
+                  "totalAvailableSize": 204818424,
+                  "totalGlobalHandlesSize": 24576,
+                  "usedGlobalHandlesSize": 20928,
+                  "usedHeapSize": 162825872,
+                  "mallocedMemory": 319608,
+                  "externalMemory": 3561660,
+                  "peakMallocedMemory": 4572432
+                },
+                "exceeded": false
+              }
+            }
+          }
+        }
+      ],
+      "metrics": [
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 341.263279,
+          "builds_delta": 1,
+          "builds_total": 1,
+          "peak_observed_heap_external": 166340538,
+          "before": {
+            "rss": 0,
+            "heapTotal": 9629696,
+            "heapUsed": 7860352,
+            "external": 3097333
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 165588992,
+            "heapUsed": 162793328,
+            "external": 3561650
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "warm-en",
+      "calls": [
+        {
+          "status": 200,
+          "wall_ms": 803.6,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 322.9,
+          "error": null
+        }
+      ],
+      "counts": {
+        "storage": {
+          "510c6685-f0ea-4002-9c7c-a09f0bf8212b": 2
+        },
+        "auth": 2,
+        "release": 2,
+        "model": 2,
+        "claim": 2,
+        "finish": 2
+      },
+      "runtime_process_rss_peak_bytes": 315695104,
+      "container_memory_peak_bytes": 297730048,
+      "events": [
+        {
+          "timestamp": "2026-10-25T06:03:10.885Z",
+          "event_type": "Boot",
+          "event": {
+            "boot_time": 469
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:11.226Z",
+          "event_type": "Shutdown",
+          "event": {
+            "reason": "EarlyDrop",
+            "cpu_time_used": 298,
+            "memory_used": {
+              "total": 166618884,
+              "heap": 163057224,
+              "external": 3561660,
+              "mem_check_captured": {
+                "current": {
+                  "totalHeapSize": 165326848,
+                  "totalHeapSizeExecutable": 524288,
+                  "totalPhysicalSize": 165158912,
+                  "totalAvailableSize": 204580584,
+                  "totalGlobalHandlesSize": 24576,
+                  "usedGlobalHandlesSize": 20928,
+                  "usedHeapSize": 163057600,
+                  "mallocedMemory": 442536,
+                  "externalMemory": 3561660,
+                  "peakMallocedMemory": 4572432
+                },
+                "exceeded": false
+              }
+            }
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:11.236Z",
+          "event_type": "Boot",
+          "event": {
+            "boot_time": 16
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:11.545Z",
+          "event_type": "Shutdown",
+          "event": {
+            "reason": "EarlyDrop",
+            "cpu_time_used": 278,
+            "memory_used": {
+              "total": 166369604,
+              "heap": 162807944,
+              "external": 3561660,
+              "mem_check_captured": {
+                "current": {
+                  "totalHeapSize": 165588992,
+                  "totalHeapSizeExecutable": 786432,
+                  "totalPhysicalSize": 165421056,
+                  "totalAvailableSize": 204791328,
+                  "totalGlobalHandlesSize": 24576,
+                  "usedGlobalHandlesSize": 20928,
+                  "usedHeapSize": 162808672,
+                  "mallocedMemory": 319608,
+                  "externalMemory": 3561660,
+                  "peakMallocedMemory": 4678960
+                },
+                "exceeded": false
+              }
+            }
+          }
+        }
+      ],
+      "metrics": [
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 327.259423,
+          "builds_delta": 1,
+          "builds_total": 1,
+          "peak_observed_heap_external": 166572266,
+          "before": {
+            "rss": 0,
+            "heapTotal": 9629696,
+            "heapUsed": 7860352,
+            "external": 3097333
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 165326848,
+            "heapUsed": 163025056,
+            "external": 3561650
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 302.15866,
+          "builds_delta": 1,
+          "builds_total": 1,
+          "peak_observed_heap_external": 166323338,
+          "before": {
+            "rss": 0,
+            "heapTotal": 9629696,
+            "heapUsed": 7861488,
+            "external": 3097333
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 165588992,
+            "heapUsed": 162776128,
+            "external": 3561650
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "second-language",
+      "calls": [
+        {
+          "status": 200,
+          "wall_ms": 686.5,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 27.7,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 296.9,
+          "error": null
+        }
+      ],
+      "counts": {
+        "storage": {
+          "510c6685-f0ea-4002-9c7c-a09f0bf8212b": 2,
+          "4213d487-044d-45b9-ae95-e14a7c3c0d35": 1
+        },
+        "auth": 3,
+        "release": 3,
+        "model": 3,
+        "claim": 3,
+        "finish": 3
+      },
+      "runtime_process_rss_peak_bytes": 316723200,
+      "container_memory_peak_bytes": 298156032,
+      "events": [
+        {
+          "timestamp": "2026-10-25T06:03:12.240Z",
+          "event_type": "Boot",
+          "event": {
+            "boot_time": 354
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:12.574Z",
+          "event_type": "Shutdown",
+          "event": {
+            "reason": "EarlyDrop",
+            "cpu_time_used": 295,
+            "memory_used": {
+              "total": 166386860,
+              "heap": 162825200,
+              "external": 3561660,
+              "mem_check_captured": {
+                "current": {
+                  "totalHeapSize": 165588992,
+                  "totalHeapSizeExecutable": 786432,
+                  "totalPhysicalSize": 165421056,
+                  "totalAvailableSize": 204820536,
+                  "totalGlobalHandlesSize": 24576,
+                  "usedGlobalHandlesSize": 20928,
+                  "usedHeapSize": 162825272,
+                  "mallocedMemory": 393376,
+                  "externalMemory": 3561660,
+                  "peakMallocedMemory": 5158408
+                },
+                "exceeded": false
+              }
+            }
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:12.585Z",
+          "event_type": "Boot",
+          "event": {
+            "boot_time": 15
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:12.898Z",
+          "event_type": "Shutdown",
+          "event": {
+            "reason": "EarlyDrop",
+            "cpu_time_used": 278,
+            "memory_used": {
+              "total": 166511844,
+              "heap": 162950184,
+              "external": 3561660,
+              "mem_check_captured": {
+                "current": {
+                  "totalHeapSize": 165326848,
+                  "totalHeapSizeExecutable": 524288,
+                  "totalPhysicalSize": 164900864,
+                  "totalAvailableSize": 204290952,
+                  "totalGlobalHandlesSize": 24576,
+                  "usedGlobalHandlesSize": 20928,
+                  "usedHeapSize": 162950560,
+                  "mallocedMemory": 696544,
+                  "externalMemory": 3561660,
+                  "peakMallocedMemory": 4306184
+                },
+                "exceeded": false
+              }
+            }
+          }
+        }
+      ],
+      "metrics": [
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 323.629671,
+          "builds_delta": 1,
+          "builds_total": 1,
+          "peak_observed_heap_external": 166339938,
+          "before": {
+            "rss": 0,
+            "heapTotal": 9629696,
+            "heapUsed": 7860352,
+            "external": 3097333
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 165588992,
+            "heapUsed": 162792728,
+            "external": 3561650
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 8.295315000000002,
+          "builds_delta": 1,
+          "builds_total": 1,
+          "peak_observed_heap_external": 13070653,
+          "before": {
+            "rss": 0,
+            "heapTotal": 9629696,
+            "heapUsed": 7860424,
+            "external": 3097333
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 11202560,
+            "heapUsed": 8287632,
+            "external": 3691899
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 295.533398,
+          "builds_delta": 1,
+          "builds_total": 2,
+          "peak_observed_heap_external": 166471602,
+          "before": {
+            "rss": 0,
+            "heapTotal": 11202560,
+            "heapUsed": 8325440,
+            "external": 3691899
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 165326848,
+            "heapUsed": 162924216,
+            "external": 3561650
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "parallel-cold-en",
+      "calls": [
+        {
+          "status": 200,
+          "wall_ms": 1130.1,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 1154.1,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 1159.5,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 1475.2,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 1164.6,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 1161.4,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 1156.8,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 1162.6,
+          "error": null
+        }
+      ],
+      "counts": {
+        "storage": {
+          "510c6685-f0ea-4002-9c7c-a09f0bf8212b": 3
+        },
+        "auth": 8,
+        "release": 8,
+        "model": 8,
+        "claim": 8,
+        "finish": 8
+      },
+      "runtime_process_rss_peak_bytes": 507547648,
+      "container_memory_peak_bytes": 490639360,
+      "events": [
+        {
+          "timestamp": "2026-10-25T06:03:13.896Z",
+          "event_type": "Boot",
+          "event": {
+            "boot_time": 643
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:13.898Z",
+          "event_type": "Boot",
+          "event": {
+            "boot_time": 644
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:14.385Z",
+          "event_type": "Shutdown",
+          "event": {
+            "reason": "EarlyDrop",
+            "cpu_time_used": 317,
+            "memory_used": {
+              "total": 166348292,
+              "heap": 162786632,
+              "external": 3561660,
+              "mem_check_captured": {
+                "current": {
+                  "totalHeapSize": 165326848,
+                  "totalHeapSizeExecutable": 524288,
+                  "totalPhysicalSize": 165158912,
+                  "totalAvailableSize": 204881144,
+                  "totalGlobalHandlesSize": 24576,
+                  "usedGlobalHandlesSize": 20928,
+                  "usedHeapSize": 162789216,
+                  "mallocedMemory": 577800,
+                  "externalMemory": 3561660,
+                  "peakMallocedMemory": 6326080
+                },
+                "exceeded": false
+              }
+            }
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:14.417Z",
+          "event_type": "Boot",
+          "event": {
+            "boot_time": 32
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:14.729Z",
+          "event_type": "Shutdown",
+          "event": {
+            "reason": "EarlyDrop",
+            "cpu_time_used": 279,
+            "memory_used": {
+              "total": 166218284,
+              "heap": 162656624,
+              "external": 3561660,
+              "mem_check_captured": {
+                "current": {
+                  "totalHeapSize": 165588992,
+                  "totalHeapSizeExecutable": 786432,
+                  "totalPhysicalSize": 165421056,
+                  "totalAvailableSize": 204989512,
+                  "totalGlobalHandlesSize": 24576,
+                  "usedGlobalHandlesSize": 20928,
+                  "usedHeapSize": 162656696,
+                  "mallocedMemory": 393360,
+                  "externalMemory": 3561660,
+                  "peakMallocedMemory": 4859240
+                },
+                "exceeded": false
+              }
+            }
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:14.821Z",
+          "event_type": "Shutdown",
+          "event": {
+            "reason": "TerminationRequested",
+            "cpu_time_used": 345,
+            "memory_used": {
+              "total": 13304167,
+              "heap": 10272360,
+              "external": 3031807,
+              "mem_check_captured": {
+                "current": {
+                  "totalHeapSize": 12251136,
+                  "totalHeapSizeExecutable": 524288,
+                  "totalPhysicalSize": 11157504,
+                  "totalAvailableSize": 259039864,
+                  "totalGlobalHandlesSize": 24576,
+                  "usedGlobalHandlesSize": 20928,
+                  "usedHeapSize": 10275072,
+                  "mallocedMemory": 278632,
+                  "externalMemory": 3031807,
+                  "peakMallocedMemory": 4678960
+                },
+                "exceeded": false
+              }
+            }
+          }
+        }
+      ],
+      "metrics": [
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 476.32462999999996,
+          "builds_delta": 1,
+          "builds_total": 1,
+          "peak_observed_heap_external": 166303866,
+          "before": {
+            "rss": 0,
+            "heapTotal": 9629696,
+            "heapUsed": 7861488,
+            "external": 3097333
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 165326848,
+            "heapUsed": 162756656,
+            "external": 3561650
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 499.16371599999997,
+          "builds_delta": 1,
+          "builds_total": 1,
+          "peak_observed_heap_external": 160571645,
+          "before": {
+            "rss": 0,
+            "heapTotal": 9629696,
+            "heapUsed": 7861488,
+            "external": 3097333
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 65265664,
+            "heapUsed": 62273376,
+            "external": 3561650
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 3.172941000000037,
+          "builds_delta": 0,
+          "builds_total": 1,
+          "peak_observed_heap_external": 160571645,
+          "before": {
+            "rss": 0,
+            "heapTotal": 65265664,
+            "heapUsed": 62316792,
+            "external": 3561650
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 65265664,
+            "heapUsed": 62577952,
+            "external": 4356750
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 1.4759070000000065,
+          "builds_delta": 0,
+          "builds_total": 1,
+          "peak_observed_heap_external": 160571645,
+          "before": {
+            "rss": 0,
+            "heapTotal": 65265664,
+            "heapUsed": 62600176,
+            "external": 4356750
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 65265664,
+            "heapUsed": 62836568,
+            "external": 5151850
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 1.9685990000000402,
+          "builds_delta": 0,
+          "builds_total": 1,
+          "peak_observed_heap_external": 160571645,
+          "before": {
+            "rss": 0,
+            "heapTotal": 65265664,
+            "heapUsed": 62858280,
+            "external": 5151850
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 65265664,
+            "heapUsed": 62308472,
+            "external": 5946950
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 1.1366179999999986,
+          "builds_delta": 0,
+          "builds_total": 1,
+          "peak_observed_heap_external": 160571645,
+          "before": {
+            "rss": 0,
+            "heapTotal": 65265664,
+            "heapUsed": 62329560,
+            "external": 5946950
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 65265664,
+            "heapUsed": 62547392,
+            "external": 6742050
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 1.1206649999999172,
+          "builds_delta": 0,
+          "builds_total": 1,
+          "peak_observed_heap_external": 160571645,
+          "before": {
+            "rss": 0,
+            "heapTotal": 65265664,
+            "heapUsed": 62570632,
+            "external": 6742050
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 65527808,
+            "heapUsed": 63287520,
+            "external": 7537150
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 305.715618,
+          "builds_delta": 1,
+          "builds_total": 1,
+          "peak_observed_heap_external": 166171362,
+          "before": {
+            "rss": 0,
+            "heapTotal": 9629696,
+            "heapUsed": 7861488,
+            "external": 3097333
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 165588992,
+            "heapUsed": 162624152,
+            "external": 3561650
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "parallel-cold-two-languages",
+      "calls": [
+        {
+          "status": 200,
+          "wall_ms": 885.0,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 927.4,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 951.5,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 929.1,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 1298.0,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 1327.6,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 1639.0,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 954.1,
+          "error": null
+        }
+      ],
+      "counts": {
+        "storage": {
+          "510c6685-f0ea-4002-9c7c-a09f0bf8212b": 4,
+          "4213d487-044d-45b9-ae95-e14a7c3c0d35": 3
+        },
+        "auth": 8,
+        "release": 8,
+        "model": 8,
+        "claim": 8,
+        "finish": 8
+      },
+      "runtime_process_rss_peak_bytes": 517193728,
+      "container_memory_peak_bytes": 500469760,
+      "events": [
+        {
+          "timestamp": "2026-10-25T06:03:15.571Z",
+          "event_type": "Boot",
+          "event": {
+            "boot_time": 436
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:15.608Z",
+          "event_type": "Boot",
+          "event": {
+            "boot_time": 475
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:16.020Z",
+          "event_type": "Shutdown",
+          "event": {
+            "reason": "EarlyDrop",
+            "cpu_time_used": 300,
+            "memory_used": {
+              "total": 166300924,
+              "heap": 162739264,
+              "external": 3561660,
+              "mem_check_captured": {
+                "current": {
+                  "totalHeapSize": 165588992,
+                  "totalHeapSizeExecutable": 786432,
+                  "totalPhysicalSize": 165421056,
+                  "totalAvailableSize": 204930632,
+                  "totalGlobalHandlesSize": 24576,
+                  "usedGlobalHandlesSize": 20928,
+                  "usedHeapSize": 162739336,
+                  "mallocedMemory": 385160,
+                  "externalMemory": 3561660,
+                  "peakMallocedMemory": 5154248
+                },
+                "exceeded": false
+              }
+            }
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:16.044Z",
+          "event_type": "Boot",
+          "event": {
+            "boot_time": 23
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:16.087Z",
+          "event_type": "Shutdown",
+          "event": {
+            "reason": "EarlyDrop",
+            "cpu_time_used": 297,
+            "memory_used": {
+              "total": 167187414,
+              "heap": 163167000,
+              "external": 4020414,
+              "mem_check_captured": {
+                "current": {
+                  "totalHeapSize": 166113280,
+                  "totalHeapSizeExecutable": 786432,
+                  "totalPhysicalSize": 165945344,
+                  "totalAvailableSize": 204503592,
+                  "totalGlobalHandlesSize": 24576,
+                  "usedGlobalHandlesSize": 20928,
+                  "usedHeapSize": 163167072,
+                  "mallocedMemory": 385160,
+                  "externalMemory": 4020414,
+                  "peakMallocedMemory": 5080496
+                },
+                "exceeded": false
+              }
+            }
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:16.102Z",
+          "event_type": "Boot",
+          "event": {
+            "boot_time": 14
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:16.433Z",
+          "event_type": "Shutdown",
+          "event": {
+            "reason": "EarlyDrop",
+            "cpu_time_used": 295,
+            "memory_used": {
+              "total": 165974628,
+              "heap": 162412968,
+              "external": 3561660,
+              "mem_check_captured": {
+                "current": {
+                  "totalHeapSize": 165326848,
+                  "totalHeapSizeExecutable": 524288,
+                  "totalPhysicalSize": 165158912,
+                  "totalAvailableSize": 205256624,
+                  "totalGlobalHandlesSize": 24576,
+                  "usedGlobalHandlesSize": 20928,
+                  "usedHeapSize": 162414888,
+                  "mallocedMemory": 2173896,
+                  "externalMemory": 3561660,
+                  "peakMallocedMemory": 4572432
+                },
+                "exceeded": false
+              }
+            }
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:16.448Z",
+          "event_type": "Boot",
+          "event": {
+            "boot_time": 14
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:16.776Z",
+          "event_type": "Shutdown",
+          "event": {
+            "reason": "EarlyDrop",
+            "cpu_time_used": 287,
+            "memory_used": {
+              "total": 166495260,
+              "heap": 162933600,
+              "external": 3561660,
+              "mem_check_captured": {
+                "current": {
+                  "totalHeapSize": 165588992,
+                  "totalHeapSizeExecutable": 786432,
+                  "totalPhysicalSize": 165421056,
+                  "totalAvailableSize": 204587472,
+                  "totalGlobalHandlesSize": 24576,
+                  "usedGlobalHandlesSize": 20928,
+                  "usedHeapSize": 162933672,
+                  "mallocedMemory": 434336,
+                  "externalMemory": 3561660,
+                  "peakMallocedMemory": 3962024
+                },
+                "exceeded": false
+              }
+            }
+          }
+        },
+        {
+          "timestamp": "2026-10-25T06:03:16.863Z",
+          "event_type": "Shutdown",
+          "event": {
+            "reason": "TerminationRequested",
+            "cpu_time_used": 12,
+            "memory_used": {
+              "total": 10960607,
+              "heap": 7928800,
+              "external": 3031807,
+              "mem_check_captured": {
+                "current": {
+                  "totalHeapSize": 9629696,
+                  "totalHeapSizeExecutable": 262144,
+                  "totalPhysicalSize": 8482816,
+                  "totalAvailableSize": 261263224,
+                  "totalGlobalHandlesSize": 24576,
+                  "usedGlobalHandlesSize": 20928,
+                  "usedHeapSize": 7928800,
+                  "mallocedMemory": 278632,
+                  "externalMemory": 3031807,
+                  "peakMallocedMemory": 246024
+                },
+                "exceeded": false
+              }
+            }
+          }
+        }
+      ],
+      "metrics": [
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 440.44171500000004,
+          "builds_delta": 1,
+          "builds_total": 1,
+          "peak_observed_heap_external": 166253986,
+          "before": {
+            "rss": 0,
+            "heapTotal": 9629696,
+            "heapUsed": 7861488,
+            "external": 3097333
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 165588992,
+            "heapUsed": 162706776,
+            "external": 3561650
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 10.201852999999998,
+          "builds_delta": 1,
+          "builds_total": 1,
+          "peak_observed_heap_external": 13018365,
+          "before": {
+            "rss": 0,
+            "heapTotal": 9105408,
+            "heapUsed": 7834872,
+            "external": 3097333
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 11464704,
+            "heapUsed": 8175760,
+            "external": 3758260
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 1.4922900000000006,
+          "builds_delta": 0,
+          "builds_total": 1,
+          "peak_observed_heap_external": 13018365,
+          "before": {
+            "rss": 0,
+            "heapTotal": 11464704,
+            "heapUsed": 8213416,
+            "external": 3758260
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 11464704,
+            "heapUsed": 8468552,
+            "external": 4553275
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 467.370213,
+          "builds_delta": 1,
+          "builds_total": 1,
+          "peak_observed_heap_external": 167314851,
+          "before": {
+            "rss": 0,
+            "heapTotal": 9629696,
+            "heapUsed": 7860352,
+            "external": 3097333
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 165851136,
+            "heapUsed": 162897176,
+            "external": 3957882
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 7.536182999999994,
+          "builds_delta": 1,
+          "builds_total": 2,
+          "peak_observed_heap_external": 168130202,
+          "before": {
+            "rss": 0,
+            "heapTotal": 165851136,
+            "heapUsed": 162568416,
+            "external": 3163621
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 166113280,
+            "heapUsed": 163681848,
+            "external": 4020404
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 323.927683,
+          "builds_delta": 1,
+          "builds_total": 1,
+          "peak_observed_heap_external": 165929554,
+          "before": {
+            "rss": 0,
+            "heapTotal": 9629696,
+            "heapUsed": 7860352,
+            "external": 3097333
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 165064704,
+            "heapUsed": 162382344,
+            "external": 3561650
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 7.890416999999999,
+          "builds_delta": 1,
+          "builds_total": 1,
+          "peak_observed_heap_external": 13070293,
+          "before": {
+            "rss": 0,
+            "heapTotal": 9629696,
+            "heapUsed": 7860352,
+            "external": 3097333
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 11464704,
+            "heapUsed": 8304112,
+            "external": 3691899
+          }
+        },
+        {
+          "probe": "request",
+          "status": 200,
+          "wall_ms": 310.69401199999993,
+          "builds_delta": 1,
+          "builds_total": 2,
+          "peak_observed_heap_external": 166455394,
+          "before": {
+            "rss": 0,
+            "heapTotal": 11464704,
+            "heapUsed": 8716920,
+            "external": 4553275
+          },
+          "after": {
+            "rss": 0,
+            "heapTotal": 165588992,
+            "heapUsed": 162907136,
+            "external": 3561650
+          }
+        }
+      ]
+    }
+  ],
+  "device_audits": [
+    {
+      "release_id": "510c6685-f0ea-4002-9c7c-a09f0bf8212b",
+      "lang": "en",
+      "manifest_sha256": "aceedef5f598e0b5e8332f3b7b5de67c9cb7298bc5178f0db03119ed4c68a11c",
+      "sqlite_sha256": "30cfd77190e8985dac0c058fa3504c3bf20c792ea8830adec2a48b185dda46be",
+      "reference_cards": 3768,
+      "retired": 1
+    },
+    {
+      "release_id": "4213d487-044d-45b9-ae95-e14a7c3c0d35",
+      "lang": "pt-BR",
+      "manifest_sha256": "0a78d7b41083c485c8d59b001d4aa95173f513d54a4d645431bf9a7c030e32a1",
+      "sqlite_sha256": "31a8ff4179b4e70985da118d05d2a49746dc489920d5f686ade5d7a5be65870a",
+      "reference_cards": 20,
+      "retired": 0
+    }
+  ],
+  "reader_check": {
+    "user_supplied_account_found": true,
+    "identity_source": "user report, not extracted active iOS session",
+    "anonymous": false,
+    "reader_languages": [
+      "en",
+      "pt-BR"
+    ],
+    "session_proven": false
+  }
+}

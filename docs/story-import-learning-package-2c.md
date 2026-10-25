@@ -196,3 +196,157 @@ Freigabe gewertet; direkte Aufrufer plus vollständige Regressionen geprüft.
    wiederholen. Alte aktive Generation nach Kanalfortschritt getrennt abnehmen.
 
 Kein Geräte-PASS und keine Livequalität behauptet. Kein Push.
+
+## Technische Vorabnahme 25.10.2026 — unveränderter Stand 90673bb
+
+**Entscheidung:** Lokaler vollständiger Handler besteht die unten beschriebenen
+Ressourcenfälle. Keine belegte CPU-/Memory-Hardlimitverletzung, daher keine
+Produktionskorrektur. Keine Cloudfreigabe: Die aktive App-Sitzungsidentität ist
+noch nicht unabhängig bestätigt, SQL/RLS und Gateway waren im Lasttest simuliert.
+Der Prozesscache ist keine verlässliche Zusage warmer englischer Folgeaufrufe.
+
+### Tatsächlicher Gerätebestand
+
+`iPhone von Claus`, UDID `00008110-001651611E01401E`: ausschließlich lesender
+Appcontainerexport von `Library/Application Support/content/{lang}/active.json`
+und der darin ausgewählten `generations/{release_id}/content.sqlite`.
+Kein Bootstrap als Ersatz, keine Installation, kein Reset, keine Reviews,
+kein Export von user.db oder Authsitzung. Geschützte Kopien außerhalb des Repos:
+`/private/tmp/sprachapp-2c-preflight-20261025` (Verzeichnis 0700, Dateien 0600).
+
+| Sprache | Aktiver Release | SQLite-Bytes | Referenzkarten / retired | Publizierte pack.json-Bytes |
+|---|---|---:|---:|---:|
+| en | 510c6685-f0ea-4002-9c7c-a09f0bf8212b | 43.089.920 | 3.768 / 1 | 50.282.981 |
+| pt-BR | 4213d487-044d-45b9-ae95-e14a7c3c0d35 | 311.296 | 20 / 0 | 124.750 |
+
+`tool/audit_personal_release.ts` lief erfolgreich gegen **beide exakten Exporte**
+und den veröffentlichten Katalog. Manifest-, SQLite- und veröffentlichte
+Packobjekt-Hashes stimmen; vollständige Hashwerte im verlinkten Nachweis.
+Die englische aktive SQLite ist ausdrücklich nicht der bisher getestete
+26.198.016-Byte-Originalpack. Zugang über vorhandene Supabase-CLI-Anmeldung im
+macOS-Schlüsselbund; Management-/Servicezugang nur im Prozessspeicher bzw.
+Kindprozess-Environment. Keine Schlüssel gespeichert, ausgegeben oder committed.
+
+Zusätzliche Kontoprüfung: Das vom Nutzer vermutete Konto existiert, ist nicht
+anonym und hat `content_readers` für **en und pt-BR**. Das ist mehr als ein
+Service-Role-Downloadnachweis, aber **kein Beleg der aktiven iPhone-Sitzung**:
+Die Kontoadresse ist in der App nicht sichtbar, der Nutzer nennt sie mit
+Unsicherheit, die Sitzung liegt im iOS-Schlüsselbund. Fehlende Voraussetzung ist
+nur die sichere Zuordnung der bestehenden App-Sitzung zu diesem Konto, etwa durch
+eine spätere authentifizierte Diagnose der eigenen Readerfreigaben. Kein neuer
+Schlüssel erforderlich, keine Authänderung im Rahmen dieser Vorabnahme.
+
+### Vollhandler unter Edge-Limits
+
+Reproduzierbare Sonde: `tool/check_personal_edge_resources.py` und
+`tool/personal_edge_probe/`. Fünf Produktionsmodule werden per `git show 90673bb`
+unverändert kopiert; ihre SHA256 stehen im Nachweis. Tatsächliche Packbytes werden
+vorher gegen die Kataloghashes geprüft. Keine Geräte-SQLite oder Zugangsdaten im
+Container. Synthetische Wortstelle `zorb`, unterschiedliche Requesttexte;
+keine privaten Storytexte, keine bezahlten Modellaufrufe.
+
+Offizielles ARM64-Image `public.ecr.aws/supabase/edge-runtime:v1.77.1`,
+Deno-kompatibel 2.1.4, Image-ID
+`sha256:645d0e45446181f3e9d87efeef637b494615f32365befff00e2d2b0fe8535fef`.
+Dedizierte lokale Colima-VM, 2 CPU / 4 GiB, normaler `per_worker`-Pool.
+Erzwungen pro Userworker: **256 MB, 2.000 ms CPU hart, 150.000 ms Wall**;
+zusätzlich 1.000 ms CPU weich als lokale Retirement-Einstellung, nicht als
+behauptetes Plattform-Hardlimit. Die aktuellen [Supabase-Limits](https://supabase.com/docs/guides/functions/limits)
+nennen 256 MB, 2 s CPU pro Request, 150 s Free bzw. 400 s Paid Wall.
+Der lokale per-worker-Zähler ist kumulativ und damit für mehrere Anfragen strenger;
+er ist kein isolierter CPU-Zähler pro HTTP-Anfrage. Keine internen Reserveziele
+als Plattformlimits verwendet.
+
+Simuliert: GoTrue-Antwort, PostgREST Release-/Claim-/Finish-RPC (keine SQL/RLS,
+keine echte Quotenbuchung), Storage-Transport mit exakten veröffentlichten Bytes,
+Anthropic-Antwort. Der Handler führt seine unveränderten Prüfungen aus;
+JWT-Gatewayprüfung und Dienstimplementierungen sind damit nicht live abgenommen.
+Alle ausgehenden Fetches werden auf lokale Fixtures umgebogen, fremde Ziele
+abgewiesen. Der Modellstub ist ausdrücklich kein Sprachqualitätsnachweis.
+
+| Fall | HTTP | End-to-End ms | CPU ms je beendetem Worker | Downloads en / pt | Prozess-RSS-Spitze MiB |
+|---|---|---|---|---|---:|
+| Kalt en | 200 | 957,7 | 314 | 1 / 0 | 292,1 |
+| en, Folgeaufruf | 2 × 200 | 803,6 / 322,9 | 298 / 278 | 2 / 0 | 301,1 |
+| en → pt-BR → en | 3 × 200 | 686,5 / 27,7 / 296,9 | 295 / 278 | 2 / 1 | 302,1 |
+| 8 parallel en, leerer Pool | 8 × 200 | 1.130,1–1.475,2 | 317 / 279 / 345 | 3 / 0 | 484,0 |
+| 8 parallel en/pt-BR, leerer Pool | 8 × 200 | 885,0–1.639,0 | 300 / 297 / 295 / 287 / 12 | 4 / 3 | 493,2 |
+
+**Messgrenzen:** CPU stammt aus Runtime-Shutdown-Ereignissen, nicht Wallzeit.
+`VmHWM` ist die Kernel-RSS-Spitze des gesamten Runtimeprozesses einschließlich
+Main-/Eventworker und mehrerer Userisolate; sie darf nicht gegen das
+256-MB-Userworkerlimit gerechnet werden. Cgroup-Highwater separat im JSON.
+Instrumentiertes `heapUsed + external` beobachtet beim englischen Kaltlauf
+166.340.538 Bytes; Shutdown meldet 166.384.212 Bytes und `exceeded:false`.
+Weder Shutdownspeicher noch das 2-ms-Sampling sind eine garantierte
+Isolat-Speicherspitze: synchrone Zwischenstände können fehlen. Die Runtime
+überwachte das konfigurierte Limit tatsächlich; kein `Memory`, `CPUTime` oder
+`WORKER_RESOURCE_LIMIT` in diesen Läufen. Einzelmessungen, keine Lastkapazitäts-
+oder Cloudhardwaregarantie.
+
+**Warm-/Parallelbefund:** Der sequenzielle englische Folgeaufruf war erneut kalt:
+`EarlyDrop`, neuer Worker, zweiter Download/Parse. Im parallelen englischen Lauf
+wurden dagegen fünf Anfragen aus einem erhaltenen Cache bedient (kein weiterer
+Parse, 1,12–3,17 ms Handlerzeit). Bei 8 Anfragen entstanden drei englische
+Projektionen in drei Workern. Die Deduplizierung ist also workerlokal, nicht
+pool-/prozessübergreifend; mehrere große JSON-Strukturen existieren gleichzeitig.
+Bei zwei Sprachen entstanden vier EN- und drei PT-Downloads in fünf Workern.
+Eine PT-Projektion und anschließend EN wurden im selben Worker aufgebaut.
+
+Der [Quellcode dieser Runtimeversion](https://github.com/supabase/edge-runtime/blob/v1.77.1/crates/base/src/worker/supervisor/strategy_per_worker.rs)
+führt u. a. das Erreichen der halben Speichergrenze als EarlyDrop-Bedingung nach
+abgeschlossenen Aufgaben. Das passt zum gemessenen EN-Speicher; der genaue
+interne Trigger ist im Shutdownereignis nicht separat ausgewiesen. EarlyDrop
+ist hier **kein fehlgeschlagener Request**. Ein erster verworfener Messaufbau
+hielt den inzwischen beendeten Workerhandle fest und produzierte deshalb 546
+beim Folgeaufruf. Die Tabelle enthält ausschließlich den korrigierten normalen
+Pool, nicht diese Harnessfehler.
+
+Historischer Vergleich: `docs/content-editor-initial-release.md` dokumentiert
+Cloud v1.77.0 mit 546/CPUTime 2.441 ms, 4.572 ms Wall und 79.508.379 Bytes
+**Shutdownspeicher**, nicht Peak. Der damalige lokale PASS widerlegte den
+Cloudfehler nicht. Auch die jetzigen lokalen 278–345 ms für EN-Worker sind kein
+Cloud-PASS; tatsächlich eingesetzte Cloudruntime/Hardware noch nicht verifiziert.
+
+### Konsequenz und verbleibende Abnahme
+
+Kein nachgewiesener Hardlimitengpass verlangt eine Sofortkorrektur. Die begrenzte
+Architekturoption, falls Cloudmessungen Kaltkosten problematisch machen: eine
+redaktionell erzeugte, unveränderliche lernrelevante Projektion pro Release mit
+eigenem Kataloghash veröffentlichen; serverseitig weiterhin Release-, Hash- und
+sämtliche Referenzprüfungen. Ziel wäre, das vollständige 50,3-MB-JSON samt Parsing
+zu vermeiden. Das erfordert einen versionierten Publikationsvertrag und einen
+separaten Auftrag, keine spontane Cache-/Validator-Abschwächung. Keine solche
+Änderung implementiert und keine ungemessene Einsparung versprochen.
+
+Vor Deployment fehlen die eindeutige aktive Kontozuordnung; danach gesonderte
+Freigabe für Migration/Deployment. Anschließend echte JWT/RLS-/Quoten-/Storage-
+Integration, Cloudkaltstart und synthetische Livequalität nach Kostenfreigabe
+prüfen. Keine exakten Deploymentbefehle vor Klärung dieser Voraussetzungen.
+Die oben dokumentierten früheren Tests bleiben historische Nachweise; keine
+neue Flutter-/Geräte-Funktionsabnahme aus diesem reinen Serverprobe-Lauf.
+
+Nachweise: [sanitisierte Messdaten](evidence/package-2c-preflight-20261025.json),
+Python-Syntaxprüfung Exit 0, vollständige Edge-Ausführung **22/22 HTTP 200**.
+Private Rohdaten/Logs bleiben außerhalb des Repos; keine Produktdatei verändert.
+
+Abschluss: `git diff --cached --check` Exit 0; GitNexus nach erfolgreicher
+Neuindizierung `detect_changes(all)` und `detect_changes(staged)` ohne
+partial/truncated, eigener Stage 7 Dateien / 48 Symbole / 0 erkannte Prozesse,
+Risiko low. Das ersetzt nicht die Prüfung dynamischer Fixture-Callbacks; diese
+wurden durch die vollständigen Edge-Läufe ausgeführt. Fremde Onboardingänderungen
+bleiben außerhalb des Commits. Dedizierte Colima-VM nach Messung gestoppt;
+lokal installierte Docker-/Colima-Werkzeuge bleiben verfügbar.
+
+Reproduktion auf macOS (Terminal, vorhandene private Fixtures und gestarteter
+Docker-Kontext vorausgesetzt):
+
+```sh
+python3 tool/check_personal_edge_resources.py --private-input /private/tmp/sprachapp-2c-preflight-20261025 --output /private/tmp/sprachapp-2c-preflight-20261025/repeat --context colima-sprachapp-2c --ref 90673bb
+```
+
+Windows (PowerShell): Diese Hostsonde wurde dort nicht validiert. Sie verwendet
+bewusst den macOS-Mountpfad `~/Library/Caches` und den lokalen Colima-Kontext;
+keine unveränderte Windows-Ausführbarkeit behauptet. Edge-Fixtures sind unabhängig
+vom Host, ein Windows-Runner benötigt einen explizit freigegebenen privaten
+Mountpfad und seinen eigenen Docker-Kontext. Kein Cloud-Deploymentbefehl.
