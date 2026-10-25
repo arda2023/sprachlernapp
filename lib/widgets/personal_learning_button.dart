@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+
 import '../domain/story_failure_trace.dart';
 import '../domain/story_learning_diagnostics.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/personal_learning_client.dart';
@@ -59,6 +61,7 @@ class PersonalLearningButton extends ConsumerStatefulWidget {
 class _PersonalLearningButtonState
     extends ConsumerState<PersonalLearningButton> {
   bool busy = false;
+  bool retryable = false;
   String? error;
   StoryAddResult? saved;
   int epoch = 0;
@@ -74,6 +77,7 @@ class _PersonalLearningButtonState
     if (old.target.key != widget.target.key) {
       epoch++;
       saved = null;
+      retryable = false;
       error = null;
       busy = false;
       _load();
@@ -89,8 +93,9 @@ class _PersonalLearningButtonState
         debugPrint(storyFailureTrace(StoryLearningStep.status, e, stack));
       }
       if (mounted && epoch == current) {
-        setState(() => error =
-            'Diese Wortstelle eignet sich nicht als Lernziel. Bitte ein vollständiges Wort in einem kürzeren Satz wählen.');
+        setState(
+          () => error = 'Diese Wortstelle eignet sich nicht als Lernziel. Bitte ein vollständiges Wort in einem kürzeren Satz wählen.',
+        );
       }
       return;
     }
@@ -114,6 +119,7 @@ class _PersonalLearningButtonState
     final release = contentTransitionGate.acquire();
     setState(() {
       busy = true;
+      retryable = false;
       error = null;
     });
     try {
@@ -139,9 +145,10 @@ class _PersonalLearningButtonState
       if (mounted && epoch == current) setState(() => saved = value);
     } catch (e) {
       if (mounted && epoch == current) {
-        setState(
-          () => error = e is PersonalLearningFailure ? e.message : 'Lernkarte nicht gespeichert. Bitte Eingabe oder Verbindung prüfen.',
-        );
+        setState(() {
+          retryable = e is PersonalLearningFailure && e.retryable;
+          error = e is PersonalLearningFailure ? e.message : 'Lernkarte nicht gespeichert. Bitte Eingabe oder Verbindung prüfen.';
+        });
       }
     } finally {
       release();
@@ -163,6 +170,10 @@ class _PersonalLearningButtonState
           liveRegion: true,
           child: Text(error!, style: TextStyle(color: widget.foregroundColor)),
         ),
+      if (retryable)
+        const Text(
+          'Zuerst wird ein vorhandenes Ergebnis gesucht. Ein neuer Versuch kann erneut KI-Kosten verursachen.',
+        ),
       if (saved?.message != null)
         Text(saved!.message!, style: TextStyle(color: widget.foregroundColor)),
       TextButton(
@@ -173,12 +184,16 @@ class _PersonalLearningButtonState
           ),
           minimumSize: const Size(44, 48),
         ),
-        onPressed: busy || saved != null || error != null ? null : add,
+        onPressed: busy || saved != null || (error != null && !retryable)
+            ? null
+            : add,
         child: Text(
           busy
               ? 'Wird hinzugefügt …'
               : saved?.state == StoryAddState.added
               ? 'Hinzugefügt'
+              : retryable
+              ? 'Erneut versuchen'
               : saved?.label ?? 'Zum Lernen hinzufügen',
         ),
       ),

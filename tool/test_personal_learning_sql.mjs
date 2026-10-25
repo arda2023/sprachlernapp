@@ -10,14 +10,15 @@ try {
     create schema auth; create table auth.users(id uuid primary key,email text);
     create function auth.uid() returns uuid language sql as $$select null::uuid$$;
     create schema storage; create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint);`);
-  for(const file of ['20261003000001_schemas.sql','20261003000002_content_tables.sql','20261010000001_form_targets.sql','20261003000003_app_tables.sql','20261017000002_content_distribution.sql','20261019000001_runtime_translation_limits.sql','20261024000001_private_translation_cache.sql','20261024000002_personal_learning.sql']) {
+  for(const file of ['20261003000001_schemas.sql','20261003000002_content_tables.sql','20261010000001_form_targets.sql','20261003000003_app_tables.sql','20261017000002_content_distribution.sql','20261019000001_runtime_translation_limits.sql','20261024000001_private_translation_cache.sql','20261024000002_personal_learning.sql','20261025000001_personal_learning_retry.sql','20261025000002_personal_learning_retry_retention.sql']) {
     await db.exec(await readFile(new URL('../supabase/migrations/'+file,import.meta.url),'utf8'));
   }
-  for(const file of ['runtime_translation.test.sql','translation_cache.test.sql','personal_learning.test.sql']) {
+  for(const file of ['runtime_translation.test.sql','translation_cache.test.sql','personal_learning.test.sql','personal_learning_retry.test.sql']) {
     let sql=await readFile(new URL('../supabase/tests/database/'+file,import.meta.url),'utf8');
     // Only the pgTAP presentation wrapper is omitted. DO assertions run unchanged.
     sql=sql.replace(/^create extension.*$/gm,'').replace(/^select plan\(.*$/gm,'').replace(/^select pass\(.*$/gm,'').replace(/^select \* from finish\(\);$/gm,'');
     await db.exec(sql);
     console.log('PASS PostgreSQL/PGlite: '+file);
   }
+  await (await import('./personal_retry_probe.mjs')).retryProbe(db);
 } finally {await db.close();}

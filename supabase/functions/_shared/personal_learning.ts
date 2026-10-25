@@ -19,7 +19,8 @@ async function json(body:ReadableStream<Uint8Array>|null,max:number,signal:Abort
   } finally {signal.removeEventListener('abort',abort);void reader.cancel().catch(()=>{});reader.releaseLock();}
 }
 export function personalInput(v:Json):Json {
-  check(v && Object.keys(v).sort().join(',')==='blocked,candidates,consent,contract,end,form,hints,lang,local_candidates,release,start,text');
+  check(v && Object.keys(v).filter(k=>k!=='retry_ticket').sort().join(',')==='blocked,candidates,consent,contract,end,form,hints,lang,local_candidates,release,start,text');
+  check(v.retry_ticket===undefined || (typeof v.retry_ticket==='string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(v.retry_ticket)));
   check(v.contract===2 && v.consent===1 && ['en','pt-BR'].includes(v.lang));
   check(text(v.text,600)&&text(v.form,80));
   check(Number.isSafeInteger(v.start)&&Number.isSafeInteger(v.end)&&v.start>=0&&v.end===v.start+v.form.length);
@@ -109,6 +110,9 @@ export function personalOutput(input:Json,v:Json,candidates:Json[],trace?:Person
   for(const field of ['gloss_de','translation_de'])validate(21,!words(v[field]).some(m=>m[0].normalize('NFC').toLowerCase()===input.form.normalize('NFC').toLowerCase()),'ANSWER_LEAK',502);
   return v;
 }
+class PersonalAttemptError extends TranslationError {
+  constructor(code:string,status:number,readonly retryTicket?:string){super(code,status);}
+}
 export class PersonalLearningBackend {
   private releases=new PersonalReleaseCache();
   constructor(public url:string,private serviceKey:string,private apiKey:string,
@@ -137,11 +141,13 @@ export class PersonalLearningBackend {
     const key=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(
       ['personal-v2',input.lang,input.text,input.start,input.end,input.release,input.hints,input.blocked,candidates])))),b=>b.toString(16).padStart(2,'0')).join('');
     trace?.enter('claim');
-    const claim=await this.rpc('claim_personal_learning',{p_user:user,p_lang:input.lang,p_key:key},signal);
+    const claim=await this.rpc('claim_personal_learning',{p_user:user,p_lang:input.lang,p_key:key,p_retry_ticket:input.retry_ticket??null},signal);
     if(claim.status==='hit'){trace?.enter('cached_response');return personalOutput(input,claim.response,candidates,trace);}
     check(claim.status!=='limit','RATE_LIMIT',429);check(claim.status!=='forbidden','READER_REQUIRED',403);
-    check(!['busy','uncertain'].includes(claim.status),'REQUEST_UNCERTAIN',409);
+    if(['busy','uncertain'].includes(claim.status))throw new PersonalAttemptError('REQUEST_UNCERTAIN',409,claim.retry_ticket);
     check(claim.status==='claimed'&&typeof claim.ticket==='string','STORAGE_UNAVAILABLE',503);
+    let storing=false;
+    try {
     trace?.enter('configuration');
     check(this.apiKey,'NOT_CONFIGURED',503);
     const schema=personalResponseSchema(input,candidates);
@@ -162,9 +168,23 @@ export class PersonalLearningBackend {
     const payload=JSON.parse(envelope.content[0].text);
     trace?.enter('validation');
     const result=personalOutput(input,payload,candidates,trace);
+    storing=true;
     trace?.enter('storage');
     const saved=await this.rpc('finish_personal_learning',{p_user:user,p_key:key,p_ticket:claim.ticket,p_response:result},signal);
     check(saved.stored===true,'STORAGE_UNAVAILABLE',503);return result;
+    } catch(e) {
+      // Once storage starts its outcome may be unknown. Never mark it failed.
+      // An aborted worker also leaves its lease intact; an explicit later request checks ready first.
+      let retryTicket:string|undefined;
+      if(!storing&&!signal.aborted){
+        try {
+          const failed=await this.rpc('fail_personal_learning',{p_user:user,p_key:key,p_ticket:claim.ticket},signal);
+          if(failed.failed===true)retryTicket=claim.ticket;
+        } catch { /* Failure bookkeeping must not conceal the original diagnosis. */ }
+      }
+      const error=e instanceof TranslationError?e:new TranslationError('SERVICE_UNAVAILABLE',503);
+      throw new PersonalAttemptError(error.code,error.status,retryTicket);
+    }
   }
 }
 export function personalHandler(backend:PersonalLearningBackend,emit:(line:string)=>void=console.log){return async(request:Request)=>{
@@ -179,6 +199,6 @@ export function personalHandler(backend:PersonalLearningBackend,emit:(line:strin
     return Response.json(result,{headers});
   }catch(e){const error=controller.signal.aborted?new TranslationError('TIMEOUT',504):e instanceof TranslationError?e:new TranslationError('SERVICE_UNAVAILABLE',503);
     trace.fail(error.code,error.status);
-    return Response.json({error:error.code},{status:error.status,headers});
+    return Response.json({error:error.code,...(e instanceof PersonalAttemptError&&typeof e.retryTicket==='string'&&/^[0-9a-f-]{36}$/.test(e.retryTicket)?{retry_ticket:e.retryTicket}:{})},{status:error.status,headers});
   }finally{clearTimeout(timer);}
 };}

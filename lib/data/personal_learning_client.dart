@@ -7,7 +7,13 @@ import 'package:sqlite3/sqlite3.dart';
 import '../domain/personal_learning.dart';
 
 class PersonalLearningFailure implements Exception {
-  const PersonalLearningFailure(this.message);
+  const PersonalLearningFailure(
+    this.message, {
+    this.retryTicket,
+    this.retryable = false,
+  });
+  final String? retryTicket;
+  final bool retryable;
   final String message;
 }
 
@@ -72,6 +78,7 @@ class PersonalLearningClient {
   final HttpClient Function() createClient;
   int consentRevision = 0;
   bool _blocked = false;
+  final _retryTickets = <String, String>{};
   final _inflight = <String, Future<Map<String, dynamic>>>{};
   Future<bool> consent() async {
     final who = await owner(), epoch = revision();
@@ -136,10 +143,16 @@ class PersonalLearningClient {
       'blocked': blocked,
       'local_candidates': localCandidates,
       'consent': 1,
+      'retry_ticket': ?_retryTickets[key],
     }, authorize);
     _inflight[key] = pending;
     try {
-      return await pending;
+      final result = await pending;
+      _retryTickets.remove(key);
+      return result;
+    } on PersonalLearningFailure catch (e) {
+      if (e.retryTicket case final ticket?) _retryTickets[key] = ticket;
+      rethrow;
     } finally {
       _inflight.remove(key);
     }
@@ -176,6 +189,7 @@ class PersonalLearningClient {
           // Only a fixed server-code allowlist can reach the UI. Never display
           // raw errors, provider messages, URLs or arbitrary response fields.
           var detail = '';
+          String? retryTicket;
           try {
             final errorBytes = <int>[];
             await for (final chunk in response) {
@@ -184,15 +198,32 @@ class PersonalLearningClient {
             }
             final value = jsonDecode(utf8.decode(errorBytes));
             const safeCodes = {
-              'MODEL_FAILED', 'MODEL_INVALID', 'CACHE_CONFLICT',
-              'SENTENCE_INVALID', 'ORIGINAL_CHANGED', 'SHORT_CONTEXT',
-              'REASON_INVALID', 'ANSWER_LEAK', 'STORAGE_UNAVAILABLE',
-              'NOT_CONFIGURED', 'REQUEST_UNCERTAIN', 'TIMEOUT',
+              'MODEL_FAILED',
+              'MODEL_INVALID',
+              'CACHE_CONFLICT',
+              'SENTENCE_INVALID',
+              'ORIGINAL_CHANGED',
+              'SHORT_CONTEXT',
+              'REASON_INVALID',
+              'ANSWER_LEAK',
+              'STORAGE_UNAVAILABLE',
+              'NOT_CONFIGURED',
+              'REQUEST_UNCERTAIN',
+              'TIMEOUT',
             };
+            if (value is Map &&
+                value['retry_ticket'] is String &&
+                RegExp(
+                  r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$',
+                ).hasMatch(value['retry_ticket'] as String)) {
+              retryTicket = value['retry_ticket'] as String;
+            }
             if (value is Map && safeCodes.contains(value['error'])) {
               detail = ' (${value['error']})';
             }
-          } catch (_) { /* Keep the original HTTP failure if diagnostics fail. */ }
+          } catch (_) {
+            /* Keep the original HTTP failure if diagnostics fail. */
+          }
           final message = switch (response.statusCode) {
             401 || 403 => 'Anmeldung oder Sprachfreigabe erforderlich.',
             429 => 'Tages- oder Minutenlimit erreicht. Bitte später versuchen.',
@@ -203,7 +234,11 @@ class PersonalLearningClient {
             _ =>
               'Lernkarte derzeit nicht verfügbar. Kein Hinzufügen bestätigt.',
           };
-          throw PersonalLearningFailure('$message$detail');
+          throw PersonalLearningFailure(
+            '$message$detail',
+            retryTicket: retryTicket,
+            retryable: ![401, 403, 422].contains(response.statusCode),
+          );
         }
         final bytes = <int>[];
         await for (final chunk in response) {
@@ -218,14 +253,17 @@ class PersonalLearningClient {
     } on SocketException {
       throw const PersonalLearningFailure(
         'Offline: Neue Karten benötigen eine Verbindung. Gespeicherte Karten bleiben lernbar.',
+        retryable: true,
       );
     } on TimeoutException {
       throw const PersonalLearningFailure(
         'Erstellung hat zu lange gedauert. Keine automatische Wiederholung.',
+        retryable: true,
       );
     } catch (_) {
       throw const PersonalLearningFailure(
-        'Ungültige Antwort oder Verbindungsfehler. Nichts gespeichert.',
+        'Antwort nicht angekommen. Beim erneuten Versuch wird zuerst ein gespeichertes Ergebnis gesucht.',
+        retryable: true,
       );
     } finally {
       client.close(force: true);
