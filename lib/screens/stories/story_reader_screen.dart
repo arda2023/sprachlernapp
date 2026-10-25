@@ -157,10 +157,6 @@ class _Sentence {
 
 class _StoryReaderScreenState extends State<StoryReaderScreen> {
   late final void Function() _releaseContent;
-  static final _wordPattern = RegExp(
-    r"[\p{L}\p{M}]+(?:['’][\p{L}\p{M}]+)*",
-    unicode: true,
-  );
 
   final _words = <_Word>[];
 
@@ -304,7 +300,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     final index = _sentences.length;
     final sentence = _Sentence(text, _recognizer(() => _translate(index)));
     var last = 0;
-    for (final match in _wordPattern.allMatches(text)) {
+    // Share the creation contract: a hyphenated word is one selected span.
+    for (final match in personalWords(text)) {
       if (match.start > last) {
         sentence.tokens.add(text.substring(last, match.start));
       }

@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import '../domain/story_failure_trace.dart';
+import '../domain/story_learning_diagnostics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/personal_learning_client.dart';
@@ -81,10 +84,24 @@ class _PersonalLearningButtonState
     final current = epoch;
     try {
       widget.target.validate();
+    } on FormatException catch (e, stack) {
+      if (!kReleaseMode) {
+        debugPrint(storyFailureTrace(StoryLearningStep.status, e, stack));
+      }
+      if (mounted && epoch == current) {
+        setState(() => error =
+            'Diese Wortstelle eignet sich nicht als Lernziel. Bitte ein vollständiges Wort in einem kürzeren Satz wählen.');
+      }
+      return;
+    }
+    try {
       final service = await ref.read(personalLearningServiceProvider.future);
       final value = await service.saved(widget.target);
       if (mounted && epoch == current) setState(() => saved = value);
-    } catch (_) {
+    } catch (e, stack) {
+      if (!kReleaseMode) {
+        debugPrint(storyFailureTrace(StoryLearningStep.status, e, stack));
+      }
       if (mounted && epoch == current) {
         setState(() => error = 'Lernstatus nicht lesbar. Bitte erneut öffnen.');
       }
