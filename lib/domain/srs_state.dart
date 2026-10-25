@@ -216,14 +216,17 @@ LexicalBreakdown deriveLexicalBreakdown(Set<String> eligibleIds,
   return LexicalBreakdown(total: total.length, practiced: practiced.length);
 }
 
-/// The two deck sessions (PRODUCT.md, Practice Modes).
+/// Session kinds (PRODUCT.md, Practice Modes).
 enum DeckSessionKind {
   /// Lerne mit diesem Stapel: due cards of the deck, then new ones.
   learn(ReviewMode.deck),
 
   /// Stapel-Revue: seen cards of the deck only, early practice rule.
   revue(ReviewMode.revue),
-  mixed(ReviewMode.mixed);
+  mixed(ReviewMode.mixed),
+
+  /// Vorab üben, chosen explicitly: seen, not yet due cards of a scope.
+  early(ReviewMode.early);
 
   const DeckSessionKind(this.mode);
 
@@ -233,11 +236,14 @@ enum DeckSessionKind {
 /// One place in a session queue. A [repeat] is the in-session repeat of a
 /// card: it is practised again but never logged and never changes the box.
 class SessionEntry {
-  const SessionEntry(this.cardId, {this.repeat = false, this.mode});
+  const SessionEntry(this.cardId, {this.repeat = false, this.mode, this.source});
 
   final String cardId;
   final bool repeat;
   final ReviewMode? mode;
+
+  /// New-word source whose turn this entry used; null for reviews.
+  final String? source;
 
   @override
   bool operator ==(Object other) =>
@@ -254,10 +260,180 @@ class SessionEntry {
       repeat ? 'SessionEntry($cardId, repeat)' : 'SessionEntry($cardId)';
 }
 
-/// Queue of a deck session (docs/srs.md, Queue je Modus). [deckCardIds] in
-/// deck order. Learn: due cards (oldest due first), then new cards (no row
-/// or box 0) through the shared diverse selector. Revue: seen cards (box ≥ 1), soonest due first.
-/// Disabled and retired cards never appear. At most [size] entries.
+/// "Aus Storys" as a source of new targets in mixed practice.
+const storySourceId = 'story';
+
+/// One source of new targets: an active deck or [storySourceId]. [cardIds]
+/// keep the source's own order (deck content order, story add date).
+class NewWordSource {
+  const NewWordSource(this.id, this.cardIds);
+  final String id;
+  final List<String> cardIds;
+}
+
+/// A selected new target and the source whose turn it filled.
+typedef NewTarget = ({String cardId, String source});
+
+/// Fair new targets (docs/srs.md, Neue Wörter): sources take turns, starting
+/// with the first source after [lastSource] in [order] (all deck ids in
+/// catalog order, then [storySourceId]), so short sessions continue the
+/// rotation. Empty or exhausted sources are skipped; each keeps its order.
+/// A target listed by several sources is offered once, by the first of them
+/// in [order]. Only admissible targets take a turn: new (no row or box 0),
+/// active, resolvable, and per session one per learning group, lemma and
+/// surface form.
+List<NewTarget> selectNewTargets({
+  required List<NewWordSource> sources,
+  required Map<String, ContentCard> cards,
+  required Map<String, UserCardState> states,
+  required int limit,
+  List<String> order = const [],
+  String? lastSource,
+}) {
+  if (limit <= 0) return [];
+  int rank(String id) {
+    final i = order.indexOf(id);
+    return i < 0 ? order.length : i;
+  }
+
+  final ranked = [...sources]
+    ..sort((a, b) {
+      final r = rank(a.id).compareTo(rank(b.id));
+      return r != 0 ? r : sources.indexOf(a).compareTo(sources.indexOf(b));
+    });
+  final owner = <String, String>{};
+  for (final source in ranked) {
+    for (final id in source.cardIds) {
+      owner.putIfAbsent(id, () => source.id);
+    }
+  }
+  final queues = [
+    for (final source in ranked)
+      (
+        id: source.id,
+        ids: [
+          for (final id in source.cardIds)
+            if (owner[id] == source.id &&
+                cards.containsKey(id) &&
+                (states[id]?.isActive ?? true) &&
+                (states[id]?.box ?? 0) == 0)
+              id,
+        ],
+      ),
+  ];
+  if (queues.isEmpty) return [];
+  final last = lastSource == null ? -1 : order.indexOf(lastSource);
+  var turn = last < 0 ? 0 : queues.indexWhere((q) => rank(q.id) > last);
+  if (turn < 0) turn = 0;
+  final cursor = List.filled(queues.length, 0);
+  final groups = <String>{}, lemmas = <String>{}, surfaces = <String>{};
+  final picked = <NewTarget>[];
+  var idle = 0;
+  while (picked.length < limit && idle < queues.length) {
+    final q = queues[turn];
+    String? chosen;
+    while (cursor[turn] < q.ids.length && chosen == null) {
+      final card = cards[q.ids[cursor[turn]++]]!;
+      if (groups.contains(card.introductionKey) ||
+          lemmas.contains(selectionLemma(card)) ||
+          surfaces.contains(card.formNorm)) {
+        continue;
+      }
+      chosen = card.id;
+      groups.add(card.introductionKey);
+      lemmas.add(selectionLemma(card));
+      surfaces.add(card.formNorm);
+    }
+    if (chosen == null) {
+      idle++;
+    } else {
+      idle = 0;
+      picked.add((cardId: chosen, source: q.id));
+    }
+    turn = (turn + 1) % queues.length;
+  }
+  return picked;
+}
+
+/// The one rule for learning sessions (docs/srs.md, Queue je Modus): due
+/// reviews among [reviewIds] first, longest overdue first, then new
+/// targets from [sources] while seats remain. Due reviews are never
+/// displaced and no not-yet-due card fills the session.
+List<SessionEntry> buildPracticeQueue({
+  required List<String> reviewIds,
+  required List<NewWordSource> sources,
+  required Map<String, ContentCard> cards,
+  required Map<String, UserCardState> states,
+  required DateTime now,
+  required int size,
+  required ReviewMode mode,
+  List<String> order = const [],
+  String? lastSource,
+}) {
+  final position = <String, int>{};
+  for (final id in reviewIds) {
+    position.putIfAbsent(id, () => position.length);
+  }
+  final due = [
+    for (final id in position.keys)
+      if (cards.containsKey(id) &&
+          (states[id]?.isActive ?? false) &&
+          states[id]!.isDue(now))
+        id,
+  ]..sort((a, b) {
+      final d = states[a]!.dueAt == null || states[b]!.dueAt == null
+          ? 0
+          : states[a]!.dueAt!.compareTo(states[b]!.dueAt!);
+      return d != 0 ? d : position[a]!.compareTo(position[b]!);
+    });
+  final fresh = selectNewTargets(
+    sources: sources,
+    cards: cards,
+    states: states,
+    limit: size - due.length,
+    order: order,
+    lastSource: lastSource,
+  );
+  return [
+    for (final id in due) SessionEntry(id, mode: mode),
+    for (final t in fresh) SessionEntry(t.cardId, mode: mode, source: t.source),
+  ].take(size < 0 ? 0 : size).toList();
+}
+
+/// Vorab üben, only when chosen: seen cards of [scopeIds] that are not due
+/// yet, soonest due first, under the early practice rule.
+List<SessionEntry> buildEarlyQueue({
+  required List<String> scopeIds,
+  required Map<String, ContentCard> cards,
+  required Map<String, UserCardState> states,
+  required DateTime now,
+  required int size,
+  ReviewMode mode = ReviewMode.early,
+}) {
+  final ids = {
+    for (final id in scopeIds)
+      if (cards.containsKey(id) &&
+          (states[id]?.isActive ?? false) &&
+          states[id]!.box >= 1)
+        id,
+  }.toList();
+  final order = {for (final (i, id) in ids.indexed) id: i};
+  final picked = (mode == ReviewMode.early
+      ? ids.where((id) => !states[id]!.isDue(now)).toList()
+      : ids)
+    ..sort((a, b) {
+      final da = states[a]!.dueAt, db = states[b]!.dueAt;
+      final c = da == null || db == null
+          ? (da == null ? (db == null ? 0 : -1) : 1)
+          : da.compareTo(db);
+      return c != 0 ? c : order[a]!.compareTo(order[b]!);
+    });
+  return [for (final id in picked.take(size)) SessionEntry(id, mode: mode)];
+}
+
+/// Queue of a deck session. [deckCardIds] in deck order. Learn: the shared
+/// rule with this deck as the only source. Revue: seen cards, soonest due
+/// first. Disabled and retired cards never appear. At most [size] entries.
 List<SessionEntry> buildDeckQueue({
   bool targetsResolved = false,
   required List<String> deckCardIds,
@@ -267,103 +443,80 @@ List<SessionEntry> buildDeckQueue({
   required DateTime now,
   int size = 5,
 }) {
-  final order = <String, int>{};
-  for (final id in targetsResolved ? deckCardIds : LearningGroups(cards, states).project(deckCardIds, exactForms: true)) {
-    order.putIfAbsent(id, () => order.length);
-  }
-  final ids = order.keys.where((id) => cards.containsKey(id) && (states[id]?.isActive ?? true)).toList();
-  int byDue(String a, String b) {
-    final da = states[a]!.dueAt, db = states[b]!.dueAt;
-    final c = (da == null || db == null)
-        ? (da == null ? (db == null ? 0 : -1) : 1)
-        : da.compareTo(db);
-    return c != 0 ? c : order[a]!.compareTo(order[b]!);
-  }
-
-  final seen = ids.where((id) => (states[id]?.box ?? 0) >= 1).toList()
-    ..sort(byDue);
-  final List<String> picked;
-  switch (kind) {
-    case DeckSessionKind.learn:
-      final fresh = ids.where((id) => (states[id]?.box ?? 0) == 0);
-      final due = seen.where((id) => states[id]!.isDue(now)).toList();
-      final newIds = selectNewCards(
-        candidates: [for (final id in fresh) cards[id]!],
-        knownLemmas: {
-          for (final id in states.keys)
-            if (cards[id] case final card?) selectionLemma(card),
-        },
-        limit: size - due.length,
-      );
-      picked = [...due, ...newIds];
-    case DeckSessionKind.revue:
-      picked = seen;
-    case DeckSessionKind.mixed:
-      throw ArgumentError('Use buildMixedQueue for all-source sessions');
-  }
-  return [for (final id in picked.take(size)) SessionEntry(id)];
+  final ids = targetsResolved
+      ? deckCardIds
+      : LearningGroups(cards, states).project(deckCardIds, exactForms: true);
+  return switch (kind) {
+    DeckSessionKind.learn => buildPracticeQueue(
+        reviewIds: ids,
+        sources: [NewWordSource('deck', ids)],
+        cards: cards,
+        states: states,
+        now: now,
+        size: size,
+        mode: ReviewMode.deck,
+      ),
+    DeckSessionKind.revue => buildEarlyQueue(scopeIds: ids, cards: cards,
+        states: states, now: now, size: size, mode: ReviewMode.revue),
+    DeckSessionKind.early => buildEarlyQueue(scopeIds: ids, cards: cards,
+        states: states, now: now, size: size),
+    DeckSessionKind.mixed =>
+      throw ArgumentError('Use buildMixedQueue for all-source sessions'),
+  };
 }
 
-/// Mixed uses only resolvable, connected content. Seen cards remain eligible
-/// independently of deck activation; activation gates only new deck cards.
+/// Mixed: due cards of every origin (deck activation never hides seen
+/// cards), then new targets taking turns between [deckSources] (active
+/// decks) and "Aus Storys" (explicit story additions, oldest first).
+/// Without [deckSources], [activeDeckCardIds] form one deck source.
 List<SessionEntry> buildMixedQueue({
   bool targetsResolved = false,
   Map<String, DateTime> storyAdditions = const {},
   required List<String> activeDeckCardIds,
+  List<NewWordSource>? deckSources,
+  List<String> sourceOrder = const [],
+  String? lastSource,
   required Map<String, ContentCard> cards,
   required Map<String, UserCardState> states,
   required DateTime now,
   int size = 10,
 }) {
-  final eligible = states.values
-      .where((s) => s.isActive && cards.containsKey(s.cardId))
-      .toList();
-  int dueOrder(UserCardState a, UserCardState b) {
-    final d = (a.dueAt ?? DateTime(1970)).compareTo(b.dueAt ?? DateTime(1970));
-    return d != 0 ? d : a.cardId.compareTo(b.cardId);
-  }
-
-  final due = eligible.where((s) => s.isDue(now)).toList()..sort(dueOrder);
-  final storyNew =
-      eligible
-          .where(
-            (s) =>
-                s.box == 0 &&
-                (storyAdditions.containsKey(s.cardId) ||
-                    s.origin == CardOrigin.story),
-          )
-          .toList()
-        ..sort((a, b) {
-          final d = (storyAdditions[a.cardId] ?? a.createdAt ?? DateTime(1970))
-              .compareTo(
-                storyAdditions[b.cardId] ?? b.createdAt ?? DateTime(1970),
-              );
-          return d != 0 ? d : a.cardId.compareTo(b.cardId);
-        });
   final groups = LearningGroups(cards, states);
-  final freshIds = targetsResolved
-      ? {...groups.project(storyNew.map((s) => s.cardId), exactForms: true), ...activeDeckCardIds}.toList()
-      : groups.project([...storyNew.map((s) => s.cardId), ...activeDeckCardIds], exactForms: true);
-  final fresh = selectNewCards(
-    priorityIds: storyNew.map((s) => s.cardId).toSet(),
-    candidates: [
-      for (final id in freshIds)
-        if (cards.containsKey(id) && (states[id]?.isActive ?? true) && (states[id]?.box ?? 0) == 0)
-          cards[id]!,
-    ],
-    knownLemmas: {
-      for (final id in states.keys)
-        if (cards[id] case final c?) selectionLemma(c),
-    },
-    limit: size - due.length,
+  final storyNew = states.values
+      .where((s) =>
+          s.isActive &&
+          s.box == 0 &&
+          (storyAdditions.containsKey(s.cardId) || s.origin == CardOrigin.story))
+      .toList()
+    ..sort((a, b) {
+      final d = (storyAdditions[a.cardId] ?? a.createdAt ?? DateTime(1970))
+          .compareTo(storyAdditions[b.cardId] ?? b.createdAt ?? DateTime(1970));
+      return d != 0 ? d : a.cardId.compareTo(b.cardId);
+    });
+  final story = groups.project(storyNew.map((s) => s.cardId), exactForms: true);
+  final decks = deckSources ??
+      [
+        NewWordSource(
+          'decks',
+          targetsResolved
+              ? activeDeckCardIds
+              : groups.project(activeDeckCardIds, exactForms: true),
+        ),
+      ];
+  final reviewIds = states.keys.toList()..sort();
+  return buildPracticeQueue(
+    reviewIds: reviewIds,
+    sources: [...decks, NewWordSource(storySourceId, story)],
+    cards: cards,
+    states: states,
+    now: now,
+    size: size,
+    mode: ReviewMode.mixed,
+    order: sourceOrder.isNotEmpty
+        ? sourceOrder
+        : [...decks.map((d) => d.id), storySourceId],
+    lastSource: lastSource,
   );
-  final early = eligible.where((s) => s.box >= 1 && !s.isDue(now)).toList()
-    ..sort(dueOrder);
-  return [
-    for (final s in due) SessionEntry(s.cardId, mode: ReviewMode.mixed),
-    for (final id in fresh) SessionEntry(id, mode: ReviewMode.mixed),
-    for (final s in early) SessionEntry(s.cardId, mode: ReviewMode.early),
-  ].take(size).toList();
 }
 
 /// Cards between a pass and its in-session repeat ("etwa 3 Karten später").

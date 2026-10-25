@@ -17,12 +17,14 @@ void main() {
   expect(storyCandidate(approved:false).unavailableReason,isNotNull);
   expect(storyCandidate(card:exactCard(sense:'wrong')).unavailableReason,isNotNull);
  });
- test('explicit story choices reserve actual queue slots ahead of 4:1; box zero remains eligible',(){
+ test('saved story words are an equal new-word source in the rotation; box zero remains eligible',(){
   final now=DateTime(2026,10,4);final fn=ContentCard(id:'fn',lang:'en',form:'and',formNorm:'and',lemmaId:'and',lemma:'and',pos:'CCONJ');
   final lexical=exactCard(id:'lex');
   final states={'fn':UserCardState(cardId:'fn',box:0,dueAt:null)};
   final q=buildMixedQueue(activeDeckCardIds:['lex'],cards:{'fn':fn,'lex':lexical},states:states,now:now,size:1,storyAdditions:{'fn':now});
-  expect(q.single.cardId,'fn');
+  expect(q.single.cardId,'lex');
+  // After a completed deck word it is the story's turn.
+  expect(buildMixedQueue(activeDeckCardIds:['lex'],cards:{'fn':fn,'lex':lexical},states:states,now:now,size:1,storyAdditions:{'fn':now},lastSource:'decks').single.cardId,'fn');
   final count=deriveVocabBreakdown(activeDeckCardIds:{},cards:states,knownCardIds:{'fn'},now:now,explicitStoryIds:{'fn'});
   expect(count.unseen,1);
   expect(deriveVocabBreakdown(activeDeckCardIds:{},cards:states,knownCardIds:{},now:now,explicitStoryIds:{'fn'}).total,0);

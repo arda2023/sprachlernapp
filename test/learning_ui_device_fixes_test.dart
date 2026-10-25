@@ -162,8 +162,9 @@ void main() {
       return s;
     }
 
-    expect((await c.read(learningProgressProvider.future)).goal.done, 12);
-    expect((await start()).total, 8);
+    // 12 passes plus one Revue target; the repeated same target counts once.
+    expect((await c.read(learningProgressProvider.future)).goal.done, 13);
+    expect((await start()).total, 7);
     await user.ensureCards(
       ['deck-5/2', 'deck-5/3'],
       now: now,
@@ -178,13 +179,16 @@ void main() {
     await user.close();
     user = DriftUserRepository(UserDatabase.file(file), lang: 'en');
     c = scope();
-    expect((await start()).total, 8);
+    expect((await start()).total, 7);
     await user.savePreferences(const PracticePreferences(dailyGoal: 12));
     c.dispose();
     c = scope();
+    // Goal reached: Play opens the voluntary continuation directly (no empty
+    // session) and never offers today's completed targets as normal tasks.
     final reached = await start();
-    expect(reached.total, 0);
     expect(reached.goalReached, isTrue);
+    expect(reached.total, 12);
+    expect(ids.take(13), isNot(contains(reached.pass!.item.card.id)));
     now = DateTime(2026, 10, 26, 0, 1);
     c.dispose();
     c = scope();
@@ -196,7 +200,7 @@ void main() {
   });
 
   test(
-    'local date grouping excludes revue and deduplicates exact exercise IDs',
+    'local date grouping counts every mode once, Revue included, and deduplicates exact exercise IDs',
     () {
       final day = DateTime(2026, 3, 29);
       final days = completedTargetsByDay([
@@ -210,7 +214,7 @@ void main() {
         ReviewActivity('revue', day, ReviewMode.revue),
         ReviewActivity('next', DateTime(2026, 3, 30), ReviewMode.deck),
       ]);
-      expect(days[day], {'form-a', 'form-b'});
+      expect(days[day], {'form-a', 'form-b', 'revue'});
       expect(days[DateTime(2026, 3, 30)], {'next'});
     },
   );

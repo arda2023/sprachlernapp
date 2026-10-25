@@ -199,6 +199,8 @@ class LanguageLearningPreferences extends Table {
   IntColumn get dailyGoal => integer().withDefault(const Constant(10))();
   BoolColumn get includeDiacritics => boolean().withDefault(const Constant(true))();
   BoolColumn get showGrammar => boolean().withDefault(const Constant(false))();
+  /// Rotation metadata only: source of the last completed new target.
+  TextColumn get newWordSource => text().nullable()();
   @override
   Set<Column> get primaryKey => {lang};
 }
@@ -263,7 +265,7 @@ class UserDatabase extends _$UserDatabase {
   }
 
   @override
-  int get schemaVersion => 6;
+  int get schemaVersion => 7;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -306,6 +308,9 @@ class UserDatabase extends _$UserDatabase {
         await m.addColumn(settings, settings.autoNext);
         await m.addColumn(settings, settings.showGrammar);
         await m.createTable(localSubmissions);
+      }
+      if (from == 6) {
+        await m.addColumn(languageLearningPreferences, languageLearningPreferences.newWordSource);
       }
       if (from < 6) {
         await m.createTable(languageLearningPreferences);

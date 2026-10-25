@@ -144,3 +144,7 @@ Auslieferung:
 3. Flugmodus an, App ganz schließen und neu öffnen. Schritt 1 und 2 wiederholen: beides funktioniert offline. Flugmodus aus.
 4. Ein beliebiges Wort mit Packübersetzung in einer Pack-Story antippen und das Blatt schließen: keine neue Karte in Wortliste oder „Aus Storys“.
 5. Optional, **nur mit zusätzlicher Freigabe für eine Generierung** (≈ 0,0005 USD): „Computer games are fun.“ importieren, *Computer* antippen, einmal „Zum Lernen hinzufügen“. Erwartet: Verknüpfung mit der bestehenden Packkarte *computer*, keine zweite Karte. Bei einem Fehler: Code notieren, nicht wiederholen.
+
+## Nutzerbeobachtung iPhone · 25.10.2026
+
+Der Nutzer hat die Prüfliste auf „iPhone von Claus“ selbst durchgeführt und meldet: „Die von mir durchgeführte iPhone-Prüfung funktioniert.“ Das gilt für die Schritte 1–4 (Hamster-Karte mit genau einem Kontext, Cache-Übersetzung mit „Hinzugefügt“, Offlinebetrieb nach Neustart, keine Karte durch bloßes Antippen). Schritt 5 (*Computer*-Wiederverwendung, optional, zusätzliche Generierung) wurde nicht ausdrücklich bestätigt und gilt **nicht** als bestanden. Die Wiederverwendung mit Großschreibung auf dem Gerät bleibt damit unbestätigt.

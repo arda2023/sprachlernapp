@@ -6028,12 +6028,24 @@ class $LanguageLearningPreferencesTable extends LanguageLearningPreferences
     ),
     defaultValue: const Constant(false),
   );
+  static const VerificationMeta _newWordSourceMeta = const VerificationMeta(
+    'newWordSource',
+  );
+  @override
+  late final GeneratedColumn<String> newWordSource = GeneratedColumn<String>(
+    'new_word_source',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     lang,
     dailyGoal,
     includeDiacritics,
     showGrammar,
+    newWordSource,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -6079,6 +6091,15 @@ class $LanguageLearningPreferencesTable extends LanguageLearningPreferences
         ),
       );
     }
+    if (data.containsKey('new_word_source')) {
+      context.handle(
+        _newWordSourceMeta,
+        newWordSource.isAcceptableOrUnknown(
+          data['new_word_source']!,
+          _newWordSourceMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -6104,6 +6125,10 @@ class $LanguageLearningPreferencesTable extends LanguageLearningPreferences
         DriftSqlType.bool,
         data['${effectivePrefix}show_grammar'],
       )!,
+      newWordSource: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}new_word_source'],
+      ),
     );
   }
 
@@ -6119,11 +6144,15 @@ class LanguagePreferenceRow extends DataClass
   final int dailyGoal;
   final bool includeDiacritics;
   final bool showGrammar;
+
+  /// Rotation metadata only: source of the last completed new target.
+  final String? newWordSource;
   const LanguagePreferenceRow({
     required this.lang,
     required this.dailyGoal,
     required this.includeDiacritics,
     required this.showGrammar,
+    this.newWordSource,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -6132,6 +6161,9 @@ class LanguagePreferenceRow extends DataClass
     map['daily_goal'] = Variable<int>(dailyGoal);
     map['include_diacritics'] = Variable<bool>(includeDiacritics);
     map['show_grammar'] = Variable<bool>(showGrammar);
+    if (!nullToAbsent || newWordSource != null) {
+      map['new_word_source'] = Variable<String>(newWordSource);
+    }
     return map;
   }
 
@@ -6141,6 +6173,9 @@ class LanguagePreferenceRow extends DataClass
       dailyGoal: Value(dailyGoal),
       includeDiacritics: Value(includeDiacritics),
       showGrammar: Value(showGrammar),
+      newWordSource: newWordSource == null && nullToAbsent
+          ? const Value.absent()
+          : Value(newWordSource),
     );
   }
 
@@ -6154,6 +6189,7 @@ class LanguagePreferenceRow extends DataClass
       dailyGoal: serializer.fromJson<int>(json['dailyGoal']),
       includeDiacritics: serializer.fromJson<bool>(json['includeDiacritics']),
       showGrammar: serializer.fromJson<bool>(json['showGrammar']),
+      newWordSource: serializer.fromJson<String?>(json['newWordSource']),
     );
   }
   @override
@@ -6164,6 +6200,7 @@ class LanguagePreferenceRow extends DataClass
       'dailyGoal': serializer.toJson<int>(dailyGoal),
       'includeDiacritics': serializer.toJson<bool>(includeDiacritics),
       'showGrammar': serializer.toJson<bool>(showGrammar),
+      'newWordSource': serializer.toJson<String?>(newWordSource),
     };
   }
 
@@ -6172,11 +6209,15 @@ class LanguagePreferenceRow extends DataClass
     int? dailyGoal,
     bool? includeDiacritics,
     bool? showGrammar,
+    Value<String?> newWordSource = const Value.absent(),
   }) => LanguagePreferenceRow(
     lang: lang ?? this.lang,
     dailyGoal: dailyGoal ?? this.dailyGoal,
     includeDiacritics: includeDiacritics ?? this.includeDiacritics,
     showGrammar: showGrammar ?? this.showGrammar,
+    newWordSource: newWordSource.present
+        ? newWordSource.value
+        : this.newWordSource,
   );
   LanguagePreferenceRow copyWithCompanion(
     LanguageLearningPreferencesCompanion data,
@@ -6190,6 +6231,9 @@ class LanguagePreferenceRow extends DataClass
       showGrammar: data.showGrammar.present
           ? data.showGrammar.value
           : this.showGrammar,
+      newWordSource: data.newWordSource.present
+          ? data.newWordSource.value
+          : this.newWordSource,
     );
   }
 
@@ -6199,14 +6243,20 @@ class LanguagePreferenceRow extends DataClass
           ..write('lang: $lang, ')
           ..write('dailyGoal: $dailyGoal, ')
           ..write('includeDiacritics: $includeDiacritics, ')
-          ..write('showGrammar: $showGrammar')
+          ..write('showGrammar: $showGrammar, ')
+          ..write('newWordSource: $newWordSource')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(lang, dailyGoal, includeDiacritics, showGrammar);
+  int get hashCode => Object.hash(
+    lang,
+    dailyGoal,
+    includeDiacritics,
+    showGrammar,
+    newWordSource,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -6214,7 +6264,8 @@ class LanguagePreferenceRow extends DataClass
           other.lang == this.lang &&
           other.dailyGoal == this.dailyGoal &&
           other.includeDiacritics == this.includeDiacritics &&
-          other.showGrammar == this.showGrammar);
+          other.showGrammar == this.showGrammar &&
+          other.newWordSource == this.newWordSource);
 }
 
 class LanguageLearningPreferencesCompanion
@@ -6223,12 +6274,14 @@ class LanguageLearningPreferencesCompanion
   final Value<int> dailyGoal;
   final Value<bool> includeDiacritics;
   final Value<bool> showGrammar;
+  final Value<String?> newWordSource;
   final Value<int> rowid;
   const LanguageLearningPreferencesCompanion({
     this.lang = const Value.absent(),
     this.dailyGoal = const Value.absent(),
     this.includeDiacritics = const Value.absent(),
     this.showGrammar = const Value.absent(),
+    this.newWordSource = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   LanguageLearningPreferencesCompanion.insert({
@@ -6236,6 +6289,7 @@ class LanguageLearningPreferencesCompanion
     this.dailyGoal = const Value.absent(),
     this.includeDiacritics = const Value.absent(),
     this.showGrammar = const Value.absent(),
+    this.newWordSource = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : lang = Value(lang);
   static Insertable<LanguagePreferenceRow> custom({
@@ -6243,6 +6297,7 @@ class LanguageLearningPreferencesCompanion
     Expression<int>? dailyGoal,
     Expression<bool>? includeDiacritics,
     Expression<bool>? showGrammar,
+    Expression<String>? newWordSource,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -6250,6 +6305,7 @@ class LanguageLearningPreferencesCompanion
       if (dailyGoal != null) 'daily_goal': dailyGoal,
       if (includeDiacritics != null) 'include_diacritics': includeDiacritics,
       if (showGrammar != null) 'show_grammar': showGrammar,
+      if (newWordSource != null) 'new_word_source': newWordSource,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -6259,6 +6315,7 @@ class LanguageLearningPreferencesCompanion
     Value<int>? dailyGoal,
     Value<bool>? includeDiacritics,
     Value<bool>? showGrammar,
+    Value<String?>? newWordSource,
     Value<int>? rowid,
   }) {
     return LanguageLearningPreferencesCompanion(
@@ -6266,6 +6323,7 @@ class LanguageLearningPreferencesCompanion
       dailyGoal: dailyGoal ?? this.dailyGoal,
       includeDiacritics: includeDiacritics ?? this.includeDiacritics,
       showGrammar: showGrammar ?? this.showGrammar,
+      newWordSource: newWordSource ?? this.newWordSource,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -6285,6 +6343,9 @@ class LanguageLearningPreferencesCompanion
     if (showGrammar.present) {
       map['show_grammar'] = Variable<bool>(showGrammar.value);
     }
+    if (newWordSource.present) {
+      map['new_word_source'] = Variable<String>(newWordSource.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -6298,6 +6359,7 @@ class LanguageLearningPreferencesCompanion
           ..write('dailyGoal: $dailyGoal, ')
           ..write('includeDiacritics: $includeDiacritics, ')
           ..write('showGrammar: $showGrammar, ')
+          ..write('newWordSource: $newWordSource, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();

@@ -102,13 +102,24 @@ void main() {
     const mixedArgs = (deckId: '', kind: DeckSessionKind.mixed, size: 5);
     final mixed = deckSessionControllerProvider(mixedArgs);
     final msub = container.listen(mixed, (_, _) {});
-    for (var i = 0; i < 30 && container.read(mixed).pass == null; i++) {
+    for (var i = 0; i < 30 && container.read(mixed).loading; i++) {
       await settle();
     }
-    final pass = container.read(mixed).pass!;
+    // Nothing due, no new words from active decks: no silent Vorab-Üben.
+    expect(container.read(mixed).total, 0);
+    expect(container.read(mixed).pass, isNull);
+    // Vorab üben is an explicit session on the same learning state.
+    const earlyArgs = (deckId: '', kind: DeckSessionKind.early, size: 0);
+    final early = deckSessionControllerProvider(earlyArgs);
+    final esub = container.listen(early, (_, _) {});
+    for (var i = 0; i < 30 && container.read(early).pass == null; i++) {
+      await settle();
+    }
+    final pass = container.read(early).pass!;
     expect(pass.item.card.id, 'card-went');
     expect(pass.boxBefore, 3);
     expect(pass.mode, ReviewMode.early);
+    esub.close();
     await container
         .read(wordActionsProvider)
         .save(

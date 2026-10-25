@@ -166,6 +166,25 @@ class PracticeItemResolver {
     ]);
   }
 
+  /// Active decks as separate new-word sources in catalog order; [order] lists
+  /// every deck so the rotation continues past a deactivated one.
+  Future<({List<String> order, List<NewWordSource> active})> newWordSources() async {
+    if (content == null) return (order: const <String>[], active: const <NewWordSource>[]);
+    final decks = catalog?.decks ?? await content!.decks();
+    final active = await user.activeDeckIds(decks.map((d) => d.id));
+    return (
+      order: [for (final d in decks) d.id],
+      active: [
+        for (final d in decks)
+          if (active.contains(d.id))
+            NewWordSource(d.id, resolveTargets(catalog?.targets[d.id] ?? await content!.deckPracticeTargets(d.id))),
+      ],
+    );
+  }
+
+  /// Saved story targets for practice, oldest addition first.
+  List<String> get storyPracticeIds => storyCollectionIds.reversed.where(cards.containsKey).toList();
+
   Future<List<PracticeItem>> practiceItems(List<String> ids) async {
     final remote = ids.where((id) => !locals.containsKey(id)).toList();
     if (remote.isNotEmpty && content == null) {

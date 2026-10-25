@@ -43,7 +43,7 @@ Three core learning surfaces:
 - **Appwide learning groups (06.10.2026)**: versioned content metadata groups exact card meanings for introduction, independently of spelling aliases and word ownership. New learners receive the editorial head. Existing group state reserves the target: all learned members retain their own reviews, flags and notes; otherwise the oldest existing Box-0 member is reused. Disabled/retired state cannot be bypassed by introducing a synonym. No state merging or stored counters.
   - Deck progress, unseen counts, word list and new selection use this same projection. Learned multiple members still count individually; unseen groups count once. Deck totals therefore comprise retained active learned rows plus one eligible new representative per group, not raw ownership positions. Old packs keep singleton targets.
   - Story Add reuses an existing group target, otherwise the head. The tooltip retains the tapped word; practice uses the selected target's checked fixed sentence, never a rewritten story. Local cards join only through exact language/form/sense identity.
-  - New targets are selected deterministically across topics and related concepts with three intervening new targets when possible. Relax to two, one, zero only when the available quota has no eligible candidate; input order breaks ties. A session freezes its order; due reviews and necessary repeats retain their rules. No replacement words to maintain a nominal count.
+  - New targets (25.10.2026): in Mixed the active decks and „Aus Storys“ are equal sources that take turns; empty or currently unsuitable sources are skipped. A deck keeps its content order, stories their add date. The rotation continues across sessions and restarts from the source after the last one whose new target was actually answered (language-scoped metadata only). A target in several sources is offered once, by the first source in catalog order (stories last). Per session at most one target per learning group, lemma and surface. A session freezes its order; due reviews and necessary repeats retain their rules. No replacement words to maintain a nominal count.
 - **Activation**: A card is created at its first display in a deck session or when the learner taps "Zum Lernen hinzufügen" in a story. Decks and story-added words feed a single spaced-repetition pool.
 - **Disabled cards**: A disabled card (Wortliste, practice menu) is excluded from every queue and every count.
 - **Four Derived Lingvist-Style Categories**:
@@ -76,9 +76,11 @@ Three core learning surfaces:
   - In multiple choice (Lücke per Auswahl), the user keeps tapping options until the correct one is selected.
   - **In-session repeat**: a failed or revealed card returns once, about 3 cards later. The box is decided by the card's first pass only; the repeat changes neither box nor due date.
 - **Practice Modes**:
-  - **Gemischt**: (1) due cards of all origins, (2) new words from active decks up to the daily goal, (3) more new words, (4) early practice (*Vorab-Üben*). The deck toggle ("Stapel lernen") controls only new words here; seen cards are always reviewed.
+  - **One rule everywhere**: due reviews of the chosen scope first (longest overdue first), then new targets; never filled with not-yet-due cards. With nothing due or new, the scope shows its own completion and offers *Vorab üben* explicitly.
+  - **Gemischt** (Play): all eligible targets; new ones rotate fairly between active decks and „Aus Storys“. The deck toggle controls only new words here; seen cards are always reviewed.
   - **Lerne mit diesem Stapel**: this deck’s learning targets and their fixed sentences; existing learned group members retain reviews, including exactly mapped local story cards; works even if the deck is inactive.
   - **Stapel-Revue**: seen cards representing this deck’s learning groups, including every already learned member; a correct answer keeps the box, an error sends the card to Box 1.
+  - **Vorab üben**: only when chosen; seen, not yet due cards of the scope, soonest due first.
   - Early practice rule (Vorab-Üben and Stapel-Revue): correct answers do not advance the box; errors reset the card to Box 1.
 - **Story Words (Package B, locally implemented)**: tapping only opens the translation; the explicit Add button persists a learning decision. Existing sense-specific state and its fixed sentence remain unchanged. An explicitly selected own context is separate, needs complete annotation/translation and editorial validation (≤20 words, ≤1 subordinate clause), and may be local-only. No mandatory cloud check or automatic fallback. "Inhalte" exercises never add words.
 - **Text Exercises (Inhalte → Texte)**:
@@ -93,8 +95,8 @@ Three core learning surfaces:
   - Fill-in-the-blank via multiple choice (*Lücke per Auswahl*).
   - Flashcard with the complete sentence (*Karteikarte mit ganzem Satz*).
 - **Daily Goal**:
-  - The daily goal (e.g. 10 words) is a guiding recommendation, never a hard lockout.
-  - After the goal the learner may keep practicing: remaining new words first, then early practice (*Vorab-Üben*).
+  - The daily goal (e.g. 10 words) is a guiding recommendation, never a hard lockout. It counts distinct targets with a completed first pass today in any mode, Revue and chosen Vorab-Üben included („7 von 10 Wörtern geübt“); display alone and in-session repeats do not count. Derived from the review log.
+  - After the goal the same entry continues voluntarily without an empty interim session; targets completed today are not offered again as normal tasks, Vorab/Revue remain explicit.
 - **Difficulty**: One scale, `CefrBand`: Anfänger ⚡ (A1–A2), Mittleres Niveau ⚡⚡ (B1–B2), Fortgeschritten ⚡⚡⚡ (C1–C2).
 - **News**: v1 ships timeless short texts. Weekly news is an open decision.
 - **Streak**:
@@ -172,7 +174,7 @@ Fällige Reviews, SRS und In-Session-Wiederholungen behalten ihre bisherigen Reg
 
 ### Story learning — local Package B (04.10.2026)
 The real annotated story library, Home and reader share the content repository. A word tap only reads its exact sentence/token/sense reference. Add awaits an atomic commit; new decisions start in box 0 without reviews or daily-goal progress. Existing state, flags, origin and curated context remain unchanged. Disabled cards require explicit reactivation; retired cards cannot be bypassed by local duplicates.
-Explicit story additions appear immediately as “Ungelernt” in the word list and take priority after due cards in Mixed, independently of deck activation and the automatic 4:1 mix. Complete local cards remain available without a content pack. Exact later content counterparts do not create a second first encounter; existing conflicting states remain separate and visible. No context-selection UI or sync is included.
+Explicit story additions appear immediately as “Ungelernt” in the word list and form the „Aus Storys“ source in Mixed, independently of deck activation, taking turns with the active decks (25.10.2026). Complete local cards remain available without a content pack. Exact later content counterparts do not create a second first encounter; existing conflicting states remain separate and visible. No context-selection UI or sync is included.
 
 ### Persönliche Sammlung „Aus Storys“ (24.10.2026)
 Erst eine erfolgreich gespeicherte Story-Lernentscheidung macht die Sammlung sichtbar. Sie ist je Sprache aus `storyLearningAdditions`, historischen `storyWordSources` und Story-Ursprüngen abgeleitet, kein redaktioneller Content-Stapel. Bestehende Themenkarten werden über dieselbe ID verknüpft, auch wenn sie bereits gelernt wurden; wiederholtes Hinzufügen bleibt idempotent. Box, Fälligkeit, Flags und Historie werden dabei nicht zurückgesetzt. Deaktivierte/zurückgestellte Einträge bleiben sichtbar; die Übung verwendet nur die bisher zulässigen Ziele und unverändert Tagesrest, Fälligkeiten und Zählregeln. Aktuelle Sätze erscheinen in der Sammlung, historische Sätze bleiben an Reviews gebunden. In diesem Paket gibt es keine neue Entfernen-/Deaktivieren-Aktion in der Sammlung. Technische Lade-/Status-/Speicherfehler sind keine fehlende Lernannotation und lösen keine Generierung aus; ein bestätigter Save hängt nicht von einer nachträglichen Statusabfrage ab.

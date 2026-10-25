@@ -34,10 +34,8 @@ class PracticeSessionBar extends StatelessWidget {
     final counting = !loading && total > 0 && !repeating && left > 0;
     final label = loading
         ? 'Übungen werden geladen …'
-        : goalReached && total == 0
-        ? 'Tagesziel erreicht'
         : total == 0
-        ? 'Keine passenden Übungen'
+        ? 'Nichts offen'
         : repeating
         ? 'Fehlerwiederholung'
         : left == 0

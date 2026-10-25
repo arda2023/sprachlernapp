@@ -50,21 +50,21 @@ Ersetzt die frühere Hinweissanktion. Ausschließlich `valid_alternatives` des k
 
 Eine Karte mit Fehler oder Aufdecken kommt einmal wieder, etwa 3 Karten später. Die Box entscheidet allein der erste Durchgang; die Wiederholung ändert Box und `due_at` nicht und erzeugt keine eigene Zeile im `review_log`.
 
-## Queue je Modus
+## Queue je Modus (Lernablauf ab 25.10.2026)
 
-Deaktivierte und retired Karten sind nie in einer Queue.
+Deaktivierte und retired Karten sind nie in einer Queue. Alle Einstiege nutzen denselben Lernstand je Karte und eine Regel (`buildPracticeQueue`, `lib/domain/srs_state.dart`):
 
-**Gemischt**
-1. Fällige Karten aller Herkunft (`due_at ≤ jetzt`, älteste zuerst).
-2. Neue Wörter bis zum Tagesziel: zuerst Story-Karten in Box 0 (älteste zuerst), danach neue Stapelwörter aktiver Stapel.
-3. Weitere neue Wörter.
-4. Vorab-Üben der als Nächstes fälligen Karten (`mode = early`).
+1. Fällige Wiederholungen des Bereichs (`due_at ≤ jetzt`), am längsten überfällige zuerst. Sie werden nie für neue Wörter verdrängt.
+2. Neue Ziele (keine Zeile oder Box 0), solange Plätze frei sind.
+3. Keine Auffüllung mit noch nicht fälligen Karten. Ist nichts fällig und nichts neu, zeigt die App einen Abschluss für genau diesen Bereich und bietet „Vorab üben“ ausdrücklich an.
 
-Der Stapelschalter steuert nur neue Stapelwörter (Schritt 2 und 3); gesehene Karten werden immer wiederholt.
+Bereiche: **Gemischt** (Play) = alle zulässigen Karten; **Lerne mit diesem Stapel** = nur dieser Stapel, auch wenn er für Gemischt deaktiviert ist; **„Aus Storys“** = nur gespeicherte/verknüpfte Story-Ziele. **Stapel-Revue** = gesehene Karten des Stapels, nächstfällige zuerst. **Vorab üben** = gesehene, noch nicht fällige Karten des Bereichs, nächstfällige zuerst. Revue und Vorab: richtig → Box und Fälligkeit bleiben, Fehler → Box 1.
 
-**Lerne mit diesem Stapel**: ausschließlich Primärkarten und deren feste Sätze dieses Stapels, nie reine Story-Karten, auch bei inaktivem Stapel. Reihenfolge: fällige Karten des Stapels, dann neue Wörter des Stapels.
+**Neue Wörter in Gemischt (faire Rotation).** Quellen sind die aktiven Stapel (Katalogreihenfolge) und „Aus Storys“ (zuletzt), gleichberechtigt. Sie wechseln sich ab; leere oder derzeit ungeeignete Quellen werden übersprungen. Innerhalb eines Stapels gilt seine Inhaltsreihenfolge, in „Aus Storys“ das Hinzufügedatum (älteste zuerst). Die Rotation beginnt bei der Quelle nach der zuletzt bedienten. Gespeichert wird nur diese Quelle, sprachgetrennt in `language_learning_preferences.new_word_source`, und erst wenn ein neues Ziel in Gemischt tatsächlich beantwortet und gespeichert ist; Vorschau, Queue-Aufbau oder Öffnen schreiben nichts. Ein Ziel in mehreren Quellen gehört der ersten Quelle dieser Reihenfolge und wird nur einmal angeboten. Zulässig sind nur neue, aktive, auflösbare Ziele, je Sitzung höchstens eines je Lerngruppe, Lemma und Oberfläche. Der Stapelschalter steuert nur neue Wörter in Gemischt; Gelerntes wird weiter wiederholt.
 
-**Stapel-Revue**: nur gesehene Primärkarten des Stapels (Box ≥ 1), als Vorab-Üben (richtig → unverändert, Fehler → Box 1).
+**Sitzungslänge.** Play und direktes Stapellernen dauern so lange wie der Tagesrest. Ist das Ziel erreicht, startet derselbe Einstieg direkt freiwilliges Weiterlernen in Tageszielgröße, ohne leere Zwischensitzung. Heute normal geübte Karten sind danach weder fällig noch neu; nur per Revue/Vorab geübte, weiterhin fällige Karten bleiben fällig.
+
+**Tagesziel.** Zählt unterschiedliche Karten mit einem heute gespeicherten ersten Durchgang in jedem Modus, auch Revue und Vorab. Anzeigen allein und In-Session-Wiederholungen schreiben keine Aktivität. Abgeleitet aus `review_log`, kein Zähler.
 
 ## Abgeleitete Zähler
 
@@ -113,27 +113,9 @@ Eine Zeile je Karte und Session, geschrieben nach dem ersten Durchgang der Karte
 - Eine `review_log`-Zeile je Karte und Session; die In-Session-Wiederholung wird nicht geloggt. ✔
 - Geprüfte Alternative → neutraler erneuter Versuch; sauberer Erstkontakt nach Zielform Box 3, echte Fehler/Aufdecken bleiben wirksam (06.10.2026). ✔
 
-### Vielfalt bei der Einführung neuer Karten (2026-10-04)
+### Vielfalt bei der Einführung neuer Karten (2026-10-04, ersetzt)
 
-Fällige Reviews bleiben zuerst und unverändert. Nur freie neue Plätze verwenden
-vier Inhaltswörter, danach höchstens ein Funktionswort. Innerhalb jeder Gruppe
-bleibt die bestehende Relevanzreihenfolge erhalten; nie angezeigte Lemmas kommen
-vor bereits angezeigten. Je Sitzung höchstens eine neue Karte je normalisiertem
-Lemma und je normalisierter Oberfläche, auch über unterschiedliche POS hinweg.
-Reichen Inhaltswörter nicht, wird die Sitzung kürzer: höchstens ein Funktionswort
-pro vier Inhaltswörtern, mindestens ein verfügbarer Funktionswort-Platz bei einem
-kleinen/reinen Funktionswortbestand. Keine Wiederauffüllung mit Nebenbedeutungen.
-Die Begrenzung bedeutet begrenzte aktuelle Auswahl, nicht abgeschlossene Sprache.
-NOUN, lexikalische VERB, ADJ und bedeutungstragende ADV sind Inhaltswörter.
-Artikel, Pronomen, Präpositionen, Konjunktionen, Partikeln und AUX sind Funktion.
-Sinnspezifische Grenzfälle stehen in `new_card_selection.dart`: z.B. have#muessen
-und get#werden sind Funktion, be#befinden ist lexikalisch; keine Form-Blacklist.
-Unbekannte ADV werden nach POS als Inhaltswort behandelt, unbekannte AUX als
-Funktion. Neue Grenzfälle benötigen Bedeutungsdaten und eine explizite Zuordnung.
-Deaktivierte/entfernte Karten bleiben gefiltert. Revue und In-Session-Wiederholung
-ändern sich nicht. Direkter Start eines inaktiven Stapels bleibt wie bisher erlaubt.
-Aktuell nutzt der echte Stapel-Lernmodus die gemeinsame Domain-Auswahl; noch nicht
-migrierte Demo-Modi werden hierdurch nicht als echte Lernabläufe ausgewiesen.
+Ersetzt am 25.10.2026 durch die faire Rotation oben: keine Themenabstände, keine 4:1-Funktionswortquote und keine Lemma-Vorsortierung mehr; die Inhaltsreihenfolge des Stapels gilt. Erhalten bleiben je Sitzung ein Ziel je Lerngruppe, Lemma und Oberfläche sowie alle Aktivitäts-/Rückstellungsfilter.
 
 ### Lokaler Pack-Vergleich (04.10.2026)
 

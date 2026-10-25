@@ -145,7 +145,7 @@ void main() {
       findsWidgets,
     );
     expect(
-      find.bySemanticsLabel('Lernen, Tagesziel 0 von 10 Übungen'),
+      find.bySemanticsLabel('Lernen, Tagesziel 0 von 10 Wörtern geübt'),
       findsOneWidget,
     );
     expect(tester.takeException(), isNull);
@@ -162,7 +162,7 @@ void main() {
       reason: label,
     );
     for (final label in [
-      'Lernen, Tagesziel 0 von 10 Übungen',
+      'Lernen, Tagesziel 0 von 10 Wörtern geübt',
       'Einstellungen',
     ]) {
       expectButton(label);
@@ -377,7 +377,7 @@ void main() {
       findsOneWidget,
     );
     expect(
-      find.bySemanticsLabel('Lernen, Tagesziel 0 von 20 Übungen'),
+      find.bySemanticsLabel('Lernen, Tagesziel 0 von 20 Wörtern geübt'),
       findsOneWidget,
     );
   });

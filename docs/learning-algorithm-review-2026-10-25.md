@@ -1,5 +1,7 @@
 # Lernalgorithmus: Ist-Zustand und Vereinfachungsvorschlag · 25.10.2026
 
+**Umsetzung 25.10.2026:** Der Lernablauf wurde danach nach Nutzerauftrag vereinfacht (siehe `docs/srs.md`, Queue je Modus). Abweichend von diesem Bericht wurde zusätzlich die faire Rotation neuer Wörter zwischen aktiven Stapeln und „Aus Storys“ eingeführt; die Bewertung (Leitner, erste Einstufung, Rückstufung) blieb unverändert. Der folgende Ist-Zustand beschreibt den Stand davor.
+
 Nur Analyse. Der Bericht ändert keinen Scheduler, keine Fälligkeiten, Queues, Tageszielzählung oder Stapelverteilung und migriert keine Lernstände. Grundlage ist der produktive Code bei `682d92c`:
 - `lib/domain/leitner.dart`, `srs_state.dart`, `new_card_selection.dart`, `review_pass.dart`, `review_activity.dart`
 - `lib/presentation/practice/deck_session_controller.dart`

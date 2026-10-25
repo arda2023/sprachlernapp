@@ -17,7 +17,7 @@ import '../../domain/srs_state.dart';
 import 'user_database.dart';
 
 /// [UserRepository] on the Drift user.db of one language.
-class DriftUserRepository implements PersonalLearningStore, UserRepository, StoryLearningRepository, ReviewActivityRepository, StoryContextCorrectionStore {
+class DriftUserRepository implements PersonalLearningStore, UserRepository, StoryLearningRepository, ReviewActivityRepository, StoryContextCorrectionStore, NewWordRotationStore {
   DriftUserRepository(this._db, {required this.lang, this.ownsDatabase = true, this.contentIds});
   final bool ownsDatabase;
   final Future<Set<String>> Function(String kind)? contentIds;
@@ -344,6 +344,18 @@ class DriftUserRepository implements PersonalLearningStore, UserRepository, Stor
       autoNext: r.autoNext,
       showGrammar: local?.showGrammar ?? false,
     );
+  }
+
+  @override
+  Future<String?> lastNewWordSource() async =>
+      (await (_db.select(_db.languageLearningPreferences)..where((t) => t.lang.equals(lang))).getSingleOrNull())?.newWordSource;
+
+  /// Touches only the rotation column; a missing row gets the column defaults,
+  /// which are also what [preferences] reads without a row.
+  @override
+  Future<void> saveLastNewWordSource(String source) async {
+    await _db.into(_db.languageLearningPreferences).insertOnConflictUpdate(
+      LanguageLearningPreferencesCompanion.insert(lang: lang, newWordSource: Value(source)));
   }
 
   @override
