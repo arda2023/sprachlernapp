@@ -134,3 +134,24 @@ test('hamster validation failures identify exact invariant without response cont
   assert.equal((await f.run(i)).status,409);assert.equal(f.stats().models,1);
  }
 });
+
+test('sentence cue contract handles identical German spelling without weakening leak checks',async()=>{
+ // Independently authored synthetic case; no captured provider response is stored here.
+ const text='The robot waits beside the door.';
+ const i={...input,text,form:'robot',start:4,end:9};
+ const a={...answer,lemma:'robot',sentence:text,start:4,gloss_de:'automatische Maschine',translation_de:'Die automatische Maschine wartet neben der Tür.'};
+ const f=fixture({answer:a});
+ assert.equal((await f.run(i)).status,200);
+ const sent=f.stats().body;
+ assert.match(sent.system,/Both gloss_de and translation_de are visible before the learner answers/);
+ assert.match(sent.system,/including case variants and identical German spellings/);
+ assert.match(sent.system,/Do not reuse a cached word or sentence translation that reveals the answer/);
+ assert.match(sent.output_config.format.schema.properties.translation_de.description,/answer-free German sentence cue/);
+ assert.equal((await f.run(i)).status,200);assert.equal(f.stats().models,1);
+ const lines:string[]=[];
+ const bad=fixture({answer:{...a,translation_de:'Der Robot wartet neben der Tür.'},emit:s=>lines.push(s)});
+ assert.equal((await bad.run(i)).status,502);
+ assert.ok(lines.map(s=>JSON.parse(s)).some(e=>e.event==='validation_rule'&&e.code==='RULE_21'));
+ assert.ok(!lines.map(s=>JSON.parse(s)).some(e=>e.stage==='storage'));
+ assert.equal((await bad.run(i)).status,409);assert.equal(bad.stats().models,1);
+});
