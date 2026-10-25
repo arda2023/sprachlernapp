@@ -126,3 +126,14 @@ Korrektur: `function` und `reuse_id` verwenden `anyOf:[{type:"string",enum:[…]
 Verifikation: Backend45 PASS (personal_learning, trace, release, sentence, runtime_translation); vier PGlite-SQL-Suiten plus Produktionshandler-/SQL-Retryprobe PASS; Flutter32 gezielte Tests inklusive Original-Pack PASS. GitNexus-Impact `personalResponseSchema` CRITICAL (ein direkter Aufrufer `perform`, breite Namenskanten); `detect_changes --scope all` vollständig, eigene Symbole nur Schema/Test.
 
 Offen: Die Variante mit mindestens einem anbietbaren Kandidaten (`reuse_id` als `anyOf` mit IDs) ist lokal getestet, aber nicht anbieterseitig geprüft. Function-Auslieferung, Geräte-Add, Speicherung unter „Aus Storys“, genau ein Übungskontext und Erhalt nach Neustart sind nicht bestätigt.
+
+## Auslieferung v7 und Geräteabnahme · 25.10.2026
+
+Freigegeben und ausgeführt: ausschließlich `create-learning-card`. Vorher lesend: v6 ACTIVE, verify_jwt=true, ausgelieferte Quellen byte-identisch mit bfd5edb; einziger Unterschied zu 0bfa641 die Schemakorrektur. `npx supabase functions deploy create-learning-card --project-ref yevntxclpchapacqdizm --use-api` (macOS Terminal und Windows PowerShell gleich). Danach lesend: v7 ACTIVE, verify_jwt=true, alle sechs ausgelieferten Quelldateien byte-identisch mit 0bfa641; übrige Functions unverändert. Keine Migration, kein Secret, kein Clientupdate.
+
+Geräteabnahme auf „iPhone von Claus“, bestehende englische Story „The hamster sleeps in the cage“, Ziel `hamster`, Klicks durch den Nutzer. Sicherer Trace (UTC):
+
+- 10:49:13 `b79af494-12b8-4c1a-aeb0-7814ace849b5`: Auth/Release/Pack/Referenzen ok, claim `REQUEST_UNCERTAIN`/409, kein Modellaufruf (Ticket nach App-Neustart nur serverseitig).
+- 10:49:38 `3e6a9ca0-fb0a-4b9d-bb1d-0f5402545caf` („Erneut versuchen“): claim ok, Anbieter 200 nach 3731 ms, Envelope/JSON ok, Validierung ohne Prüfcode, Speicherung 85 ms, complete nach 4817 ms. Genau ein Modellaufruf.
+
+Nutzerbeobachtung: Button „Hinzugefügt“; Karte unter „Aus Storys“; Übung mit genau einem Kontext; keine Antwort abgegeben; nach App-Neustart vorhanden. Damit sind die Erfolgskriterien 1–5 auf dem Gerät bestätigt. Kriterium 6 (bestehende Karten, gemeinsame Lernstände, Historie, Sprachtrennung) wurde nicht gesondert auf dem Gerät geprüft; der Clientcode ist unverändert und die gezielten Flutter-/SQL-Regressionen dazu bestehen.
