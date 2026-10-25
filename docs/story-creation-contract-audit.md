@@ -44,6 +44,34 @@ Minimale Korrektur in PersonalLearningBackend.perform: translation_de heißt jet
 - Die synthetische positive Fixture ist KEINE zweite Modellantwort und KEIN Beweis, dass das Modell den korrigierten Auftrag live erfüllt. Der eine genehmigte Aufruf ist aufgebraucht; keine weiteren Modellaufrufe. Die reale negative Antwort bleibt mit dem korrigierten Code abgelehnt.
 - Damit: Diagnose exakt; nachgewiesene Vertragslücke korrigiert; erfolgreiche Livegenerierung nach Korrektur und Geräte-Add noch unbestätigt. Alte return-hamster-/hamster-Sperren unangetastet, keine Wiederholung oder neue Schlüssel zum Umgehen.
 
-## Auslieferung
+## Vorherige Auslieferung (d8a60b0)
 
 Ausschließlich create-learning-card mit npx supabase deployed; danach Version3 ACTIVE und verify_jwt=true lesend bestätigt. Keine Migration, Secrets oder anderen Functions verändert. Aktueller Profile-Build erfolgreich mit beiden vorhandenen Supabase-Defines, als Update auf 00008110-001651611E01401E installiert und gestartet. Keine Deinstallation/Datenrücksetzung. Installation/Start sind kein Geräte-PASS für Erstellung. Kein weiterer Add-Klick im verbleibenden genehmigten Budget zulässig. Der einmalige Testschlüssel kann widerrufen werden.
+
+## Abschluss des lokalen Vertragsabgleichs · 25.10.2026
+
+Die oben aufgeführten offenen Vertragslücken sind jetzt im tatsächlich gesendeten Auftrag und Antwortschema beschrieben. Die bestehenden Validatorbedingungen bleiben gleich; nur die identischen POS-/Funktions-/Grundwerte werden mit dem Schema geteilt. Kein neuer Modellaufruf und keine semantische Reparatur unbrauchbarer Antworten.
+
+| Bereich | Abgleich |
+|---|---|
+| Pflichtfelder/Typen | Alle 15 Felder weiterhin erforderlich, keine zusätzlichen Felder; verschachtelte Cache-/Unterscheidungsobjekte ebenfalls exakt. |
+| Erlaubte Werte/Referenzen | Dieselben 13 POS, drei Funktionen plus null und drei Gründe; reuse_id nur null oder angebotene, nicht zurückgestellte aktive IDs. Bedeutung, Form und Referenzbindung bleiben lokal geprüft. |
+| Textgrenzen | Nichtleer, keine U+0000–001F; 200 UTF-16-Einheiten, Satz600, Satzhinweis1200. Anthropic unterstützt die betreffenden minLength/maxLength/minimum-Schlüssel nicht; Feldbeschreibungen und Auftrag drücken die Grenzen aus, der Validator erzwingt sie. Das ist keine Garantie für Modellkonformität. |
+| Position/Wörter | Nullbasierte UTF-16-Einheiten, astrale Zeichen zählen zwei; ganze exakte Zielform; interne Apostrophe/Bindestriche gehören zum Wort. |
+| Original/Ersatz | Original unverändert einschließlich fehlender Schlussinterpunktion. Bestehende Grenze 3–40 Wörter gilt auch für Originale. Über40 benötigt deshalb einen begründeten geeigneten Ersatz; keine neue Grenze eingeführt. Ersatz genau ein Satz mit Endzeichen. |
+| cache_note | Immer nichtleer, auch bei Vollübernahme oder fehlenden Cacheteilen. |
+| Cacheeignung | Exakte übernommene Felder, kanonischer POS, passende Form/Bedeutung und bestehende Textgrenzen; verräterische Leseübersetzungen sind keine geeigneten Übungshinweise. Kein Umschreiben des Lesecaches. |
+
+Verifikation:
+- Backend/Trace: 18 PASS. Neue Vertragsregression gegen vorherigen HEAD: FAIL wegen fehlender Schema-Enums; gleicher Test mit Korrektur PASS. Zusätzliche Grenztests für UTF-16, Textlängen, Original41/40 Wörter, fehlendes Satzende, Cacheübernahme und leere cache_note.
+- Flutter: 30 PASS inklusive Original-Packtest, erfolgreichem Speicher-/Sammlungsweg, genau einem Übungskontext, Wiederaufnahme ohne zweite Generierung und Erhalt bestehender Historie. Neue Regression schließt/öffnet echte lokale SQLite-Dateien: eine Karte nach dreifacher idempotenter Anlage; normale Leseübersetzung mit „Hamster“ bleibt unverändert neben dem separaten lösungsfreien Hinweis. Keine automatische Übungsantwort.
+- Analyse: allein vorhandenes avoid_print in test/data/baseline_adoption_pack_test.dart:43. Eigene Änderungen whitespace-sauber; fremde CRLF-Hinweise in lib/main.dart nicht verändert.
+- Vollhandler mit tatsächlichem veröffentlichtem EN-Pack in Edge Runtime v1.77.1, 256MB-Isolate, CPU soft1000/hard2000ms, Wall150s. Auth/RPC/Storagetransport simuliert; aufgezeichnete negative Antwort bzw. ausdrücklich synthetischer positiver Satzhinweis statt Anbieterzugriff. Negativ502 ANSWER_LEAK/409, null Finish, ein Modellstub; positiv200/200, ein Finish, ein Modellstub. Laufzeiten1167,5/666,5 bzw.1145,6/625,8ms; CPU629/573 bzw.545/537ms; maximaler gemessener Isolate-Speicher beim Shutdown166.440.659Bytes. Kein Ressourcenabbruch; Shutdown-Wert ist kein garantierter zeitkontinuierlicher Peak.
+
+## Freigegebener Geräteversuch und reguläre Sperrfristen
+
+Read-only-Prüfung der beiden bestehenden Aufträge: pending, keine gespeicherte Antwort, unveränderte24h-Frist. return-hamster endet26.10.2026 um07:27:51 Europe/Berlin; hamster endet26.10.2026 um10:13:52. Vorher kein Add, keine Sperrlöschung/Schlüsseländerung/Textvariante. Der Nutzer hat genau einen weiteren potenziell kostenpflichtigen Geräte-Add freigegeben und führt den Klick selbst aus.
+
+Ab26.10.2026 10:14Uhr: bestehende englische Story „The hamster sleeps in the cage“ öffnen, hamster antippen, einmal „Zum Lernen hinzufügen“. Keine Neuimporte oder Textänderungen zur Sperrumgehung. Bei Wiederverwendung keinen Modellaufruf erzwingen. Danach „Aus Storys“ → Karte → Übung mit genau einem Kontext öffnen, keine Antwort absenden; App neu starten und Vorhandensein prüfen. Bei erstem Fehler stoppen; UI-Code und Zeitpunkt mit sicherem Stage-/RULE-Trace abgleichen, keine zweite Anfrage.
+
+Auslieferung: ausschließlich create-learning-card Version4 ACTIVE, verify_jwt=true lesend bestätigt; keine Migration/Secretänderung/andere Function. Profile-Build mit denselben zwei vorhandenen Supabase-Defines erfolgreich, als Update auf iPhone von Claus installiert und gestartet (devicectl bestätigt). Keine Deinstallation oder Datenrücksetzung. Sichere Diagnose enthält nur Stufen, Dauer, Status und Prüfcodes; keine Texte/Antworten/Schlüssel. Erfolgreiche Modellantwort im korrigierten Produktionsablauf und Geräte-Persistenz bleiben bis zum Nutzerklick unbestätigt.

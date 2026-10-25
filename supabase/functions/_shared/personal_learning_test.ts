@@ -155,3 +155,65 @@ test('sentence cue contract handles identical German spelling without weakening 
  assert.ok(!lines.map(s=>JSON.parse(s)).some(e=>e.stage==='storage'));
  assert.equal((await bad.run(i)).status,409);assert.equal(bad.stats().models,1);
 });
+
+test('provider contract exposes the unchanged validator bounds and value sets',async()=>{
+ const f=fixture();assert.equal((await f.run()).status,200);
+ const {system,output_config}=f.stats().body;const s=output_config.format.schema,p=s.properties;
+ assert.deepEqual([...s.required].sort(),Object.keys(answer).sort());assert.equal(s.additionalProperties,false);
+ assert.deepEqual(p.pos.enum,['NOUN','VERB','AUX','ADJ','ADV','PRON','DET','ADP','CCONJ','SCONJ','NUM','PART','INTJ']);
+ assert.deepEqual(p.function.enum,[null,'base','past','past_participle']);
+ assert.deepEqual(p.reason.enum,['original','too_short','unusable_target']);assert.deepEqual(p.reuse_id.enum,[null]);
+ assert.match(p.start.description,/zero-based UTF-16/);
+ assert.match(p.cache_note.description,/including when BOTH/);
+ for(const k of ['cache_note','lemma','definition_de','gloss_de','form_detail','reason_detail'])assert.match(p[k].description,/1–200 UTF-16/);
+ assert.match(p.sentence.description,/1–600 UTF-16/);assert.match(p.translation_de.description,/1–1200 UTF-16/);
+ assert.match(system,/original exceeds 40 word tokens/);assert.match(system,/Original\/reuse text is copied exactly/);
+ assert.match(system,/Always provide a nonblank cache_note/);
+ assert.match(p.cache_use.properties.word.description,/canonical allowed uppercase POS/);
+ assert.match(p.cache_use.properties.sentence.description,/Never reuse a reading translation that reveals/);
+ // Provider does not support these JSON Schema keywords; the explicit field
+ // descriptions carry the exact constraints and the validator enforces them.
+ assert.doesNotMatch(JSON.stringify(s),/"(?:minLength|maxLength|minimum|maximum)":/);
+});
+
+test('UTF16 lengths, nonblank notes and enum boundaries remain enforced',()=>{
+ for(const patch of [{cache_note:''},{cache_note:'   '},{cache_note:'x'.repeat(201)},
+  {lemma:'x\n'},{pos:'noun'},{function:'present'},{reason:'missing_annotation'},
+  {definition_de:'😀'.repeat(101)},{translation_de:'x'.repeat(1201)}])
+  assert.throws(()=>personalOutput(input,{...answer,...patch},[]));
+ assert.equal(personalOutput(input,{...answer,cache_note:'😀'.repeat(100),translation_de:'x'.repeat(1200)},[]).cache_note.length,200);
+ const s='zorb '+'a'.repeat(295)+' '+'b'.repeat(299);assert.equal(s.length,600);
+ const i={...input,text:s,start:0,end:4};
+ assert.equal(personalOutput(i,{...answer,sentence:s,start:0},[]).sentence.length,600);
+ assert.throws(()=>personalOutput(i,{...answer,sentence:s+'x',start:0},[]));
+ const unicode={...input,text:'😀 zorb sits here.',start:3,end:7};
+ assert.equal(personalOutput(unicode,{...answer,sentence:unicode.text,start:3},[]).start,3);
+ assert.throws(()=>personalOutput(unicode,{...answer,sentence:unicode.text,start:2},[]));
+});
+
+test('original punctuation and 40-word boundary differ from replacement sentence rules',()=>{
+ const unpunctuated={...input,text:'The zorb sits here',start:4,end:8};
+ assert.equal(personalOutput(unpunctuated,{...answer,sentence:unpunctuated.text,start:4},[]).reason,'original');
+ const long='zorb '+Array(40).fill('word').join(' ');
+ const i={...input,text:long,start:0,end:4};
+ assert.throws(()=>personalOutput(i,{...answer,sentence:long,start:0},[]));
+ assert.equal(personalOutput(i,{...answer,sentence:'The zorb sits here.',start:4,reason:'unusable_target',reason_detail:'Original überschreitet die bestehende 40-Wort-Grenze.'},[]).start,4);
+ assert.throws(()=>personalOutput(i,{...answer,sentence:'The zorb sits here',start:4,reason:'unusable_target'},[]));
+ const boundary='zorb '+Array(39).fill('word').join(' ');
+ assert.equal(personalOutput({...i,text:boundary},{...answer,sentence:boundary,start:0},[]).sentence,boundary);
+});
+
+test('reading hints remain unchanged when unsuitable for practice; full reuse still needs cache note',async()=>{
+ const text='The hamster sleeps in its cage.';
+ const i={...input,text,form:'hamster',start:4,end:11};
+ const hint=(kind:string,value:any)=>({request_key:createHash('sha256').update(JSON.stringify([2,'translation-v2',kind==='word'?'lookup-word':'translate-sentence','en','de',text,kind==='word'?'hamster':null,kind==='word'?4:null,kind==='word'?11:null,null,null])).digest('hex'),request_id:'synthetic',contract:2,prompt:'translation-v2',created_at:new Date().toISOString(),value});
+ const hints={word:hint('word',{lemma:'hamster',pos:'noun',gloss_de:'Hamster',form_label:'Substantiv'}),sentence:hint('sentence','Der Hamster schläft in seinem Käfig.')};
+ const before=JSON.stringify(hints);
+ const a={...answer,lemma:'hamster',sentence:text,start:4,gloss_de:'kleines Nagetier',translation_de:'Das kleine Nagetier schläft in seinem Käfig.'};
+ const f=fixture({answer:a});assert.equal((await f.run({...i,hints})).status,200);
+ assert.equal(JSON.stringify(hints),before);assert.equal((await f.run({...i,hints})).status,200);assert.equal(f.stats().models,1);
+ assert.throws(()=>personalOutput({...i,hints},{...a,cache_use:{word:true,sentence:false}},[]));
+ const safeHints={word:hint('word',{lemma:a.lemma,pos:a.pos,gloss_de:a.gloss_de,form_label:a.form_detail}),sentence:hint('sentence',a.translation_de)};
+ assert.equal(personalOutput({...i,hints:safeHints},{...a,cache_use:{word:true,sentence:true}},[]).cache_use.word,true);
+ assert.throws(()=>personalOutput({...i,hints:safeHints},{...a,cache_use:{word:true,sentence:true},cache_note:''},[]));
+});
