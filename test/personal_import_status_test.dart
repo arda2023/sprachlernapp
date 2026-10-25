@@ -35,8 +35,9 @@ import 'data/support.dart';
 
 Future<DriftContentRepository> openContent(Directory dir) async {
   final path = Platform.environment['STORY_STATUS_PACK'];
-  if (path != null)
+  if (path != null) {
     return DriftContentRepository(ContentDatabase.open(File(path), lang: 'en'));
+  }
   return fixtureInstaller(dir, Directory('${dir.path}/support')).open();
 }
 

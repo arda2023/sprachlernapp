@@ -173,7 +173,27 @@ class PersonalLearningClient {
         r.write(jsonEncode(body));
         final response = await r.close();
         if (response.statusCode != 200) {
-          throw PersonalLearningFailure(switch (response.statusCode) {
+          // Only a fixed server-code allowlist can reach the UI. Never display
+          // raw errors, provider messages, URLs or arbitrary response fields.
+          var detail = '';
+          try {
+            final errorBytes = <int>[];
+            await for (final chunk in response) {
+              if (errorBytes.length + chunk.length > 1024) break;
+              errorBytes.addAll(chunk);
+            }
+            final value = jsonDecode(utf8.decode(errorBytes));
+            const safeCodes = {
+              'MODEL_FAILED', 'MODEL_INVALID', 'CACHE_CONFLICT',
+              'SENTENCE_INVALID', 'ORIGINAL_CHANGED', 'SHORT_CONTEXT',
+              'REASON_INVALID', 'ANSWER_LEAK', 'STORAGE_UNAVAILABLE',
+              'NOT_CONFIGURED', 'REQUEST_UNCERTAIN', 'TIMEOUT',
+            };
+            if (value is Map && safeCodes.contains(value['error'])) {
+              detail = ' (${value['error']})';
+            }
+          } catch (_) { /* Keep the original HTTP failure if diagnostics fail. */ }
+          final message = switch (response.statusCode) {
             401 || 403 => 'Anmeldung oder Sprachfreigabe erforderlich.',
             429 => 'Tages- oder Minutenlimit erreicht. Bitte später versuchen.',
             409 => 'Erstellung läuft bereits oder ihr Ausgang ist unklar. Keine automatische Wiederholung.',
@@ -181,8 +201,9 @@ class PersonalLearningClient {
               'Wortstelle oder Packreferenz passt nicht. Bitte Inhalte prüfen.',
             504 => 'Erstellung hat zu lange gedauert. Keine automatische Wiederholung.',
             _ =>
-              'Lernkarte derzeit nicht verfügbar. Es wurde nichts gespeichert.',
-          });
+              'Lernkarte derzeit nicht verfügbar. Kein Hinzufügen bestätigt.',
+          };
+          throw PersonalLearningFailure('$message$detail');
         }
         final bytes = <int>[];
         await for (final chunk in response) {

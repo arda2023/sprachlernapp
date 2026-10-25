@@ -19,12 +19,12 @@ function fixture(options:any={}){
   if(path.endsWith('/claim_personal_learning')){claims++;if(claims===8)allDone();if(ready)return Response.json({status:'hit',response:ready});
    if(pending)return Response.json({status:'busy'});pending=true;
    return Response.json({status:options.claim??'claimed',ticket:'ticket'});}
-  if(path.endsWith('/finish_personal_learning')){ready=payload.p_response;return Response.json({stored:true});}
+  if(path.endsWith('/finish_personal_learning')){if(options.finishFailure)return Response.json({stored:false});ready=payload.p_response;return Response.json({stored:true});}
   assert.equal(path,'https://api.anthropic.com/v1/messages');models++;body=payload;await options.wait;
   if(options.hang)return new Promise((_,reject)=>init.signal.addEventListener('abort',()=>reject(Error('aborted'))));
   return Response.json({model:'claude-haiku-5-5',stop_reason:'end_turn',content:[{type:'text',text:JSON.stringify(options.answer??answer)}],usage:{input_tokens:40,output_tokens:80}},{status:options.modelStatus??200});
  };
- const handler=personalHandler(new PersonalLearningBackend('https://example.test','service','server-only',fetcher,options.hang?10:25000));
+ const handler=personalHandler(new PersonalLearningBackend('https://example.test','service','server-only',fetcher,options.hang?10:25000),options.emit??(()=>{}));
  return {run:(v:any=input)=>handler(new Request('https://example.test',{method:'POST',headers:{Authorization:'Bearer synthetic'},body:JSON.stringify(v)})),
  allClaims, stats:()=>({models,claims,body})};
 }
@@ -93,4 +93,28 @@ test('exact cache provenance and claimed reused fields; contradictions rejected'
 test('known shared semantic identity overrides claimed model independence',()=>{
  const c={id:'available',sense_id:'same-sense',lemma:'zorb',pos:'NOUN',function:null};
  assert.throws(()=>personalOutput({...input,blocked:['disabled']},{...answer,reuse_id:'available',distinctions:{disabled:{relation:'independent',reason:'False claim'}}},[c,{...c,id:'disabled'}]));
+});
+
+test('safe traces distinguish provider, validation, storage and uncertain retry',async()=>{
+ for(const [options,stage,code,status] of [
+  [{modelStatus:400},'model_request','MODEL_FAILED',502],
+  [{answer:{...answer,start:0}},'validation','MODEL_INVALID',502],
+  [{finishFailure:true},'storage','STORAGE_UNAVAILABLE',503],
+ ] as const){
+  const lines:string[]=[];const f=fixture({...options,emit:(s:string)=>lines.push(s)});
+  assert.equal((await f.run()).status,status);
+  const error=lines.map(s=>JSON.parse(s)).find(e=>e.event==='error');
+  assert.equal(error.stage,stage);assert.equal(error.code,code);
+  assert.ok(!lines.some(s=>s.includes(input.text)||s.includes('server-only')||s.includes('Bearer')));
+  assert.equal((await f.run()).status,409);assert.equal(f.stats().models,1);
+ }
+});
+test('success only after storage; cached replay makes no second model call',async()=>{
+ const lines:string[]=[];const f=fixture({emit:(s:string)=>lines.push(s)});
+ const response=await f.run();assert.equal(response.status,200);
+ assert.match(response.headers.get('X-Diagnostic-ID')!,/^[0-9a-f-]{36}$/);
+ assert.equal((await f.run()).status,200);assert.equal(f.stats().models,1);
+ const stages=lines.map(s=>JSON.parse(s));
+ assert.ok(stages.find(e=>e.stage==='storage'&&e.event==='ok'));
+ assert.ok(stages.find(e=>e.stage==='cached_response'&&e.event==='ok'));
 });
