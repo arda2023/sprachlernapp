@@ -48,34 +48,40 @@ export function personalInput(v:Json):Json {
   return v;
 }
 const fields=['distinctions','cache_use','cache_note','reuse_id','lemma','pos','definition_de','gloss_de','form_detail','function','sentence','translation_de','start','reason','reason_detail'];
-export function personalOutput(input:Json,v:Json,candidates:Json[]):Json {
-  check(v&&Object.keys(v).sort().join(',')===fields.slice().sort().join(','),'MODEL_INVALID',502);
-  for(const k of fields.filter(k=>!['reuse_id','function','start','distinctions','cache_use'].includes(k)))
-    check(text(v[k],k==='sentence'?600:k==='translation_de'?1200:200),'MODEL_INVALID',502);
-  check(['NOUN','VERB','AUX','ADJ','ADV','PRON','DET','ADP','CCONJ','SCONJ','NUM','PART','INTJ'].includes(v.pos),'MODEL_INVALID',502);
-  check(v.function===null||['base','past','past_participle'].includes(v.function),'MODEL_INVALID',502);
-  check(Number.isSafeInteger(v.start)&&v.start>=0&&['original','too_short','unusable_target'].includes(v.reason),'MODEL_INVALID',502);
-  check(v.distinctions && Object.keys(v.distinctions).sort().join(',')===(input.blocked??[]).slice().sort().join(','),'MODEL_INVALID',502);
-  for(const d of Object.values(v.distinctions) as Json[]) check(d&&Object.keys(d).sort().join(',')==='reason,relation'&&['independent','same','unclear'].includes(d.relation)&&text(d.reason,200),'MODEL_INVALID',502);
-  check(v.cache_use&&Object.keys(v.cache_use).sort().join(',')==='sentence,word'&&typeof v.cache_use.word==='boolean'&&typeof v.cache_use.sentence==='boolean','MODEL_INVALID',502);
-  if(v.cache_use.word){const h=input.hints?.word?.value;check(h&&h.lemma===v.lemma&&h.pos===v.pos&&h.gloss_de===v.gloss_de&&h.form_label===v.form_detail,'CACHE_CONFLICT',502);}
-  if(v.cache_use.sentence)check(input.hints?.sentence?.value===v.translation_de&&v.sentence===input.text,'CACHE_CONFLICT',502);
-  check(Object.values(v.distinctions).every((d:any)=>d.relation==='independent'),'MEANING_BLOCKED',422);
+export function personalOutput(input:Json,v:Json,candidates:Json[],trace?:PersonalTrace):Json {
+  const validate = (rule:number, ok:unknown, code='MODEL_INVALID', status=502) => {
+    if (!ok) { trace?.validationRule(rule); throw new TranslationError(code,status); }
+  };
+  validate(1,v&&Object.keys(v).sort().join(',')===fields.slice().sort().join(','),'MODEL_INVALID',502);
+  for(const [index,k] of fields.filter(k=>!['reuse_id','function','start','distinctions','cache_use'].includes(k)).entries()) {
+    if(!text(v[k],k==='sentence'?600:k==='translation_de'?1200:200)) {
+      trace?.validationRule(100+index); throw new TranslationError('MODEL_INVALID',502);
+    }
+  }
+  validate(2,['NOUN','VERB','AUX','ADJ','ADV','PRON','DET','ADP','CCONJ','SCONJ','NUM','PART','INTJ'].includes(v.pos),'MODEL_INVALID',502);
+  validate(3,v.function===null||['base','past','past_participle'].includes(v.function),'MODEL_INVALID',502);
+  validate(4,Number.isSafeInteger(v.start)&&v.start>=0&&['original','too_short','unusable_target'].includes(v.reason),'MODEL_INVALID',502);
+  validate(5,v.distinctions && Object.keys(v.distinctions).sort().join(',')===(input.blocked??[]).slice().sort().join(','),'MODEL_INVALID',502);
+  for(const d of Object.values(v.distinctions) as Json[]) validate(6,d&&Object.keys(d).sort().join(',')==='reason,relation'&&['independent','same','unclear'].includes(d.relation)&&text(d.reason,200),'MODEL_INVALID',502);
+  validate(7,v.cache_use&&Object.keys(v.cache_use).sort().join(',')==='sentence,word'&&typeof v.cache_use.word==='boolean'&&typeof v.cache_use.sentence==='boolean','MODEL_INVALID',502);
+  if(v.cache_use.word){const h=input.hints?.word?.value;validate(8,h&&h.lemma===v.lemma&&h.pos===v.pos&&h.gloss_de===v.gloss_de&&h.form_label===v.form_detail,'CACHE_CONFLICT',502);}
+  if(v.cache_use.sentence)validate(9,input.hints?.sentence?.value===v.translation_de&&v.sentence===input.text,'CACHE_CONFLICT',502);
+  validate(10,Object.values(v.distinctions).every((d:any)=>d.relation==='independent'),'MEANING_BLOCKED',422);
   if(v.reuse_id!==null) {
     const found=candidates.find(c=>c.id===v.reuse_id);
-    check(found && !input.blocked?.includes(found.id) && !found.retired && found.lemma===v.lemma && found.pos===v.pos && found.function===v.function,'REFERENCE_INVALID',502);
-    check(!candidates.some(c=>input.blocked?.includes(c.id)&&c.sense_id&&c.sense_id===found!.sense_id),'MEANING_BLOCKED',422);
+    validate(11,found && !input.blocked?.includes(found.id) && !found.retired && found.lemma===v.lemma && found.pos===v.pos && found.function===v.function,'REFERENCE_INVALID',502);
+    validate(12,!candidates.some(c=>input.blocked?.includes(c.id)&&c.sense_id&&c.sense_id===found!.sense_id),'MEANING_BLOCKED',422);
     return v;
   }
-  check(Number.isSafeInteger(v.start)&&v.start>=0&&v.sentence.slice(v.start,v.start+input.form.length)===input.form,'MODEL_INVALID',502);
-  check(words(v.sentence).some(m=>m.index===v.start&&m[0]===input.form),'MODEL_INVALID',502);
-  check(words(v.sentence).length>=3&&words(v.sentence).length<=40,'MODEL_INVALID',502);
-  check(['original','too_short','unusable_target'].includes(v.reason),'MODEL_INVALID',502);
-  if(v.reason!=='original')check(onePersonalSentence(v.sentence),'SENTENCE_INVALID',502);
-  if(v.reason==='original')check(v.sentence===input.text&&v.start===input.start,'ORIGINAL_CHANGED',502);
-  if(words(input.text).length<=2)check(v.reason==='too_short','SHORT_CONTEXT',502);
-  else check(v.reason!=='too_short','REASON_INVALID',502);
-  for(const field of ['gloss_de','translation_de'])check(!words(v[field]).some(m=>m[0].normalize('NFC').toLowerCase()===input.form.normalize('NFC').toLowerCase()),'ANSWER_LEAK',502);
+  validate(13,Number.isSafeInteger(v.start)&&v.start>=0&&v.sentence.slice(v.start,v.start+input.form.length)===input.form,'MODEL_INVALID',502);
+  validate(14,words(v.sentence).some(m=>m.index===v.start&&m[0]===input.form),'MODEL_INVALID',502);
+  validate(15,words(v.sentence).length>=3&&words(v.sentence).length<=40,'MODEL_INVALID',502);
+  validate(16,['original','too_short','unusable_target'].includes(v.reason),'MODEL_INVALID',502);
+  if(v.reason!=='original')validate(17,onePersonalSentence(v.sentence),'SENTENCE_INVALID',502);
+  if(v.reason==='original')validate(18,v.sentence===input.text&&v.start===input.start,'ORIGINAL_CHANGED',502);
+  if(words(input.text).length<=2)validate(19,v.reason==='too_short','SHORT_CONTEXT',502);
+  else validate(20,v.reason!=='too_short','REASON_INVALID',502);
+  for(const field of ['gloss_de','translation_de'])validate(21,!words(v[field]).some(m=>m[0].normalize('NFC').toLowerCase()===input.form.normalize('NFC').toLowerCase()),'ANSWER_LEAK',502);
   return v;
 }
 export class PersonalLearningBackend {
@@ -107,7 +113,7 @@ export class PersonalLearningBackend {
       ['personal-v2',input.lang,input.text,input.start,input.end,input.release,input.hints,input.blocked,candidates])))),b=>b.toString(16).padStart(2,'0')).join('');
     trace?.enter('claim');
     const claim=await this.rpc('claim_personal_learning',{p_user:user,p_lang:input.lang,p_key:key},signal);
-    if(claim.status==='hit'){trace?.enter('cached_response');return personalOutput(input,claim.response,candidates);}
+    if(claim.status==='hit'){trace?.enter('cached_response');return personalOutput(input,claim.response,candidates,trace);}
     check(claim.status!=='limit','RATE_LIMIT',429);check(claim.status!=='forbidden','READER_REQUIRED',403);
     check(!['busy','uncertain'].includes(claim.status),'REQUEST_UNCERTAIN',409);
     check(claim.status==='claimed'&&typeof claim.ticket==='string','STORAGE_UNAVAILABLE',503);
@@ -131,7 +137,7 @@ export class PersonalLearningBackend {
     trace?.enter('model_json');
     const payload=JSON.parse(envelope.content[0].text);
     trace?.enter('validation');
-    const result=personalOutput(input,payload,candidates);
+    const result=personalOutput(input,payload,candidates,trace);
     trace?.enter('storage');
     const saved=await this.rpc('finish_personal_learning',{p_user:user,p_key:key,p_ticket:claim.ticket,p_response:result},signal);
     check(saved.stored===true,'STORAGE_UNAVAILABLE',503);return result;

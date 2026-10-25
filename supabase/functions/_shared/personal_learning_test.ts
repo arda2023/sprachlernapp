@@ -118,3 +118,19 @@ test('success only after storage; cached replay makes no second model call',asyn
  assert.ok(stages.find(e=>e.stage==='storage'&&e.event==='ok'));
  assert.ok(stages.find(e=>e.stage==='cached_response'&&e.event==='ok'));
 });
+
+test('hamster validation failures identify exact invariant without response content',async()=>{
+ const text='The hamster sleeps in its cage.';
+ const i={...input,text,form:'hamster',start:4,end:11};
+ const valid={...answer,lemma:'hamster',sentence:text,start:4,gloss_de:'kleines Nagetier',translation_de:'Das kleine Nagetier schläft in seinem Käfig.'};
+ for(const [patch,rule] of [[{cache_note:''},100],[{pos:'noun'},2],[{start:5},13]] as const){
+  const lines:string[]=[];const f=fixture({answer:{...valid,...patch},emit:(line:string)=>lines.push(line)});
+  const response=await f.run(i);assert.equal(response.status,502);
+  assert.equal((await response.json()).error,'MODEL_INVALID');
+  const events=lines.map(line=>JSON.parse(line));
+  assert.equal(events.find(e=>e.event==='validation_rule')?.code,'RULE_'+rule);
+  assert.ok(!events.some(e=>e.stage==='storage'));
+  assert.ok(!lines.some(line=>line.includes(text)||line.includes('Nageti')));
+  assert.equal((await f.run(i)).status,409);assert.equal(f.stats().models,1);
+ }
+});

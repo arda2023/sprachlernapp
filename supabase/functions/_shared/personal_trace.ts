@@ -11,6 +11,11 @@ export class PersonalTrace {
   enter(stage: PersonalStage) {
     this.write('ok'); this.stage=stage; this.started=performance.now(); this.write('start');
   }
+  validationRule(rule:number) {
+    // Fixed validator positions only; never accept field names or values.
+    if(Number.isInteger(rule)&&((rule>=1&&rule<=30)||(rule>=100&&rule<=109)))
+      this.write('validation_rule','RULE_'+rule);
+  }
   finish() { this.write('ok'); }
   fail(code:string, status:number) { this.write('error', codes.has(code)?code:'SERVICE_UNAVAILABLE',status); }
   providerStatus(status:number) { this.write('provider_status',undefined,status); }
