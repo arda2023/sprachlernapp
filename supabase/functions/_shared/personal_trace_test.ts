@@ -11,3 +11,16 @@ test('trace is content-free, bounded and request-local even on emitter failure',
  assert.ok(records.every(r=>Object.keys(r).every(k=>['component','diagnostic_id','stage','event','elapsed_ms','stage_ms','code','http_status'].includes(k))));
  assert.doesNotThrow(()=>new PersonalTrace(()=>{throw Error('private');}).enter('auth'));
 });
+
+test('provider error diagnostics are a closed vocabulary, never raw messages',()=>{
+ const lines:string[]=[];const trace=new PersonalTrace(s=>lines.push(s));
+ for(const [type,message,expected]of [
+  ['invalid_request_error','Your credit balance is too low to access the Anthropic API. PRIVATE','PROVIDER_CREDIT'],
+  ['invalid_request_error','Schema is too complex for compilation. PRIVATE','PROVIDER_SCHEMA_COMPLEXITY'],
+  ['invalid_request_error','PRIVATE unknown reason','PROVIDER_INVALID_REQUEST'],
+  ['PRIVATE','PRIVATE','PROVIDER_ERROR_UNCLASSIFIED'],
+  ['authentication_error','PRIVATE','PROVIDER_AUTH'],
+ ]){trace.providerFailure({error:{type,message}});assert.equal(JSON.parse(lines.at(-1)!).code,expected);}
+ trace.providerFailure(null);trace.providerFailure({error:{message:{private:'PRIVATE'}}});
+ assert.ok(!lines.join('').includes('PRIVATE'));
+});

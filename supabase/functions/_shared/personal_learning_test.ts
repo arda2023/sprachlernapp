@@ -19,10 +19,11 @@ function fixture(options:any={}){
   if(path.endsWith('/claim_personal_learning')){claims++;if(claims===8)allDone();if(ready)return Response.json({status:'hit',response:ready});
    if(pending)return Response.json({status:'busy'});pending=true;
    return Response.json({status:options.claim??'claimed',ticket:'ticket'});}
+  if(path.endsWith('/fail_personal_learning'))return Response.json({failed:true});
   if(path.endsWith('/finish_personal_learning')){if(options.finishFailure)return Response.json({stored:false});ready=payload.p_response;return Response.json({stored:true});}
   assert.equal(path,'https://api.anthropic.com/v1/messages');models++;body=payload;await options.wait;
   if(options.hang)return new Promise((_,reject)=>init.signal.addEventListener('abort',()=>reject(Error('aborted'))));
-  return Response.json({model:'claude-haiku-5-5',stop_reason:'end_turn',content:[{type:'text',text:JSON.stringify(options.answer??answer)}],usage:{input_tokens:40,output_tokens:80}},{status:options.modelStatus??200});
+  return Response.json(options.providerError??{model:'claude-haiku-5-5',stop_reason:'end_turn',content:[{type:'text',text:JSON.stringify(options.answer??answer)}],usage:{input_tokens:40,output_tokens:80}},{status:options.modelStatus??200});
  };
  const handler=personalHandler(new PersonalLearningBackend('https://example.test','service','server-only',fetcher,options.hang?10:25000),options.emit??(()=>{}));
  return {run:(v:any=input)=>handler(new Request('https://example.test',{method:'POST',headers:{Authorization:'Bearer synthetic'},body:JSON.stringify(v)})),
@@ -216,4 +217,14 @@ test('reading hints remain unchanged when unsuitable for practice; full reuse st
  const safeHints={word:hint('word',{lemma:a.lemma,pos:a.pos,gloss_de:a.gloss_de,form_label:a.form_detail}),sentence:hint('sentence',a.translation_de)};
  assert.equal(personalOutput({...i,hints:safeHints},{...a,cache_use:{word:true,sentence:true}},[]).cache_use.word,true);
  assert.throws(()=>personalOutput({...i,hints:safeHints},{...a,cache_use:{word:true,sentence:true},cache_note:''},[]));
+});
+
+test('provider rejection category survives without private body, no storage or retry',async()=>{
+ const lines:string[]=[];
+ const f=fixture({modelStatus:400,providerError:{error:{type:'invalid_request_error',message:'Invalid JSON schema: PRIVATE_SENTINEL token=SECRET_SENTINEL'}},emit:(s:string)=>lines.push(s)});
+ const r=await f.run();assert.equal(r.status,502);assert.equal((await r.json()).error,'MODEL_FAILED');
+ assert.equal(f.stats().models,1);assert.ok(lines.some(s=>JSON.parse(s).code==='PROVIDER_SCHEMA'));
+ assert.ok(!lines.join('').includes('PRIVATE_SENTINEL'));assert.ok(!lines.join('').includes('SECRET_SENTINEL'));
+ assert.ok(!lines.some(s=>JSON.parse(s).stage==='storage'));
+ assert.equal((await f.run()).status,409);assert.equal(f.stats().models,1);
 });

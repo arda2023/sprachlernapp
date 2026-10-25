@@ -159,6 +159,10 @@ export class PersonalLearningBackend {
       messages:[{role:'user',content:JSON.stringify({lang:input.lang,text:input.text,form:input.form,start:input.start,end:input.end,candidates,blocked:input.blocked,translation_hints:input.hints})}],
       output_config:{effort:'low',format:{type:'json_schema',schema}}})});
     trace?.providerStatus(response.status);
+    if(!response.ok) {
+      try { trace?.providerFailure(await json(response.body,8192,signal)); }
+      catch { trace?.providerFailure(null); }
+    }
     check(response.status!==429,'PROVIDER_RATE_LIMIT',429);check(response.ok,'MODEL_FAILED',502);
     trace?.enter('model_envelope');
     const envelope=await json(response.body,32768,signal);

@@ -18,6 +18,26 @@ export class PersonalTrace {
   }
   finish() { this.write('ok'); }
   fail(code:string, status:number) { this.write('error', codes.has(code)?code:'SERVICE_UNAVAILABLE',status); }
+  providerFailure(payload:unknown) {
+    // Only fixed categories leave this boundary. Never log provider messages,
+    // request IDs, schema paths, input, credentials or response fragments.
+    const error=(payload as {error?:{type?:unknown;message?:unknown}}|null)?.error;
+    const type=error?.type;
+    const message=typeof error?.message==='string'?error.message:'';
+    let code='PROVIDER_ERROR_UNCLASSIFIED';
+    if(type==='invalid_request_error') {
+      code='PROVIDER_INVALID_REQUEST';
+      if(/credit balance is too low|insufficient credits/i.test(message))code='PROVIDER_CREDIT';
+      else if(/schema is too complex for compilation/i.test(message))code='PROVIDER_SCHEMA_COMPLEXITY';
+      else if(/(?:invalid|unsupported) (?:json )?schema|(?:output_config|output_format)\.format|json_schema/i.test(message))code='PROVIDER_SCHEMA';
+    } else if(type==='authentication_error')code='PROVIDER_AUTH';
+    else if(type==='permission_error')code='PROVIDER_PERMISSION';
+    else if(type==='not_found_error')code='PROVIDER_NOT_FOUND';
+    else if(type==='rate_limit_error')code='PROVIDER_RATE_LIMIT';
+    else if(type==='overloaded_error')code='PROVIDER_OVERLOADED';
+    else if(type==='api_error')code='PROVIDER_API';
+    this.write('provider_error',code);
+  }
   providerStatus(status:number) { this.write('provider_status',undefined,status); }
   private write(event:string,code?:string,status?:number) {
     const record={component:'personal_learning',diagnostic_id:this.id,stage:this.stage,event,
