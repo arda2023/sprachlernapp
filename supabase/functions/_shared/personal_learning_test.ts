@@ -162,8 +162,8 @@ test('provider contract exposes the unchanged validator bounds and value sets',a
  const {system,output_config}=f.stats().body;const s=output_config.format.schema,p=s.properties;
  assert.deepEqual([...s.required].sort(),Object.keys(answer).sort());assert.equal(s.additionalProperties,false);
  assert.deepEqual(p.pos.enum,['NOUN','VERB','AUX','ADJ','ADV','PRON','DET','ADP','CCONJ','SCONJ','NUM','PART','INTJ']);
- assert.deepEqual(p.function.enum,[null,'base','past','past_participle']);
- assert.deepEqual(p.reason.enum,['original','too_short','unusable_target']);assert.deepEqual(p.reuse_id.enum,[null]);
+ assert.deepEqual(p.function.anyOf,[{type:'string',enum:['base','past','past_participle']},{type:'null'}]);
+ assert.deepEqual(p.reason.enum,['original','too_short','unusable_target']);assert.equal(p.reuse_id.type,'null');
  assert.match(p.start.description,/zero-based UTF-16/);
  assert.match(p.cache_note.description,/including when BOTH/);
  for(const k of ['cache_note','lemma','definition_de','gloss_de','form_detail','reason_detail'])assert.match(p[k].description,/1–200 UTF-16/);
@@ -175,6 +175,28 @@ test('provider contract exposes the unchanged validator bounds and value sets',a
  // Provider does not support these JSON Schema keywords; the explicit field
  // descriptions carry the exact constraints and the validator enforces them.
  assert.doesNotMatch(JSON.stringify(s),/"(?:minLength|maxLength|minimum|maximum)":/);
+});
+
+test('nullable value sets use anyOf; no enum value under a type array (provider 400)',async()=>{
+ // Anthropic rejected e7b46e8 with: Invalid schema: Enum value None does not match declared type '['string', 'null']'.
+ const local={id:'u:'+'c'.repeat(64),lang:'en',form:'zorb',lemma:'zorb',pos:'NOUN',function:null,gloss_de:'Kugel',sentence:'A zorb rolls away.',translation_de:'Eine Kugel rollt weg.'};
+ for(const [v,ids] of [[input,[]],[{...input,local_candidates:[local]},[local.id]]] as [any,string[]][]){
+  const f=fixture();assert.equal((await f.run(v)).status,200);
+  const s=f.stats().body.output_config.format.schema,p=s.properties;
+  const walk=(n:any):void=>{
+   if(!n||typeof n!=='object')return;
+   if(!Array.isArray(n)&&'enum' in n){
+    assert.equal(typeof n.type,'string');
+    for(const x of n.enum)assert.ok(n.type==='null'?x===null:typeof x===n.type);
+   }
+   Object.values(n).forEach(walk);
+  };
+  walk(s);
+  assert.deepEqual(p.function,{anyOf:[{type:'string',enum:['base','past','past_participle']},{type:'null'}]});
+  const {description,...reuse}=p.reuse_id;
+  assert.match(description,/Null for a new card/);
+  assert.deepEqual(reuse,ids.length?{anyOf:[{type:'string',enum:ids},{type:'null'}]}:{type:'null'});
+ }
 });
 
 test('UTF16 lengths, nonblank notes and enum boundaries remain enforced',()=>{

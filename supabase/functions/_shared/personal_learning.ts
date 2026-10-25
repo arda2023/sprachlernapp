@@ -60,9 +60,13 @@ function personalResponseSchema(input:Json,candidates:Json[]):Json {
     `Required nonblank text, 1–${max} UTF-16 code units, no U+0000–U+001F control characters. ${detail}`});
   const properties:Json=Object.fromEntries(fields.map(k=>[k,string()]));
   properties.pos={type:'string',enum:personalPos,description:string().description+' Use the exact uppercase Universal POS value.'};
-  properties.function={type:['string','null'],enum:[null,...personalFunctions]};
+  // Anthropic rejects null enum values under a type array ("Enum value None does
+  // not match declared type"); nullable value sets therefore use anyOf.
+  const nullable=(values:string[])=>values.length?{anyOf:[{type:'string',enum:values},{type:'null'}]}:{type:'null'};
+  properties.function=nullable(personalFunctions);
   properties.reason={type:'string',enum:personalReasons};
-  properties.reuse_id={type:['string','null'],enum:[null,...new Set(candidates.filter(c=>!c.retired&&!input.blocked.includes(c.id)).map(c=>c.id))],description:'Null for a new card; otherwise an exact offered, nonblocked candidate ID with matching meaning, lemma, POS and function. Never invent or alias an ID.'};
+  properties.reuse_id={description:'Null for a new card; otherwise an exact offered, nonblocked candidate ID with matching meaning, lemma, POS and function. Never invent or alias an ID.',
+    ...nullable([...new Set<string>(candidates.filter(c=>!c.retired&&!input.blocked.includes(c.id)).map(c=>c.id))])};
   properties.start={type:'integer',description:'Nonnegative zero-based UTF-16 code-unit offset in sentence, NOT a word index, code-point index or byte offset. It must begin the exact whole input.form token; for original/reuse copy input.start unchanged.'};
   properties.sentence=string(600,'New cards: 3–40 word tokens, counting words with internal apostrophes/hyphens as one. Original: copy input.text exactly, even if it lacks terminal punctuation. Replacement: exactly one sentence ending in . ! ? or … (optional closing quotes/brackets), containing the exact target form. Never repair the original silently. Reuse: keep input.text and input.start; its existing exercise is retained.');
   properties.translation_de=string(1200,'An answer-free German sentence cue preserving the source meaning. Never include the selected input.form as a whole word, ignoring case. When German uses the same spelling, use a natural contextual German paraphrase instead. This is an exercise hint, NOT an update to the normal reading translation or its cache.');

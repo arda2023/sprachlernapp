@@ -103,3 +103,26 @@ Damit ist der reguläre Retry auf dem Gerät nachgewiesen, die Kartenerstellung 
 Diagnoselücke geschlossen: Nicht-2xx-Anbieterantworten werden einmal begrenzt auf8192Bytes gelesen und ausschließlich auf feste Fehlerkategorien abgebildet (Schema, Schemakomplexität, Guthaben, Auth/Rechte, Rate-Limit, Anbieterfehler, unbekannt). Keine rohen Texte, Credentials, IDs, Schema-/Nutzerwerte gelangen in Logs oder UI. Unbekannte Fehler bleiben ausdrücklich unklassifiziert. Der ursprüngliche HTTP-/UI-Fehler, Retry-Schutz und Sperren bleiben bestehen; Diagnosefehler verändern ihn nicht.
 
 Tests20 Backend/Trace PASS, einschließlich privater Sentinel-Texte und fehlender Speicher-/Wiederholungsaufrufe. Vier SQL-Suiten plus Produktionshandler-/SQL-Retryprobe weiterhin PASS. Ausschließlich create-learning-card-Diagnose deployed; kein Clientwechsel/keine neue Migration. Kein weiterer echter Modellaufruf. Das insgesamt freigegebene Geräteexperiment ist verbraucht; eine weitere potenziell kostenpflichtige Anfrage benötigt neue ausdrückliche Freigabe. Ursache der400-Ablehnung und erfolgreicher Geräte-Add bleiben offen; fehlender Nachweis ist die konkrete Anbieterbegründung dieses Requests, nicht ein weiterer Ablaufstatus.
+
+## Belegte Ursache des Anbieter-HTTP400 und Korrektur · 25.10.2026
+
+Eingrenzung ohne Modellaufruf: Gerätversuch D (09:13 UTC, angenommen) und Retry H (10:05 UTC, HTTP400) liefen über denselben Auftragsschlüssel; Nutzerinhalt, Hinweise, Kandidaten und gesperrte IDs waren damit identisch, ebenso Modell, `max_tokens`, `thinking`, `effort`, Header und Endpunkt. Ein lokaler Offline-Nachbau reproduziert den aufgezeichneten angenommenen Request E byte-genau. Geändert hatten sich nur Systemprompt und Schema aus d8a60b0/e7b46e8. Für „hamster“ gibt es weder Pack- noch lokale Kandidaten; das Schema enthielt deshalb `reuse_id: {type:["string","null"], enum:[null]}` und `function: {type:["string","null"], enum:[null,"base","past","past_participle"]}`.
+
+Ausdrücklich freigegebene synthetische Probe (Satz „The hamster sleeps in its cage.“, Schlüssel nur verdeckt im Nutzerterminal, keine Nutzerdaten): sechs kostenlose Tokenzählungen, **keine Generierung**.
+
+| Variante | Status |
+|---|---|
+| Kontrolle D (zuletzt angenommener Request) | 200 |
+| H exakt (v5/v6) | 400 `invalid_request_error`: `output_config.format.schema: Invalid schema: Enum value None does not match declared type '['string', 'null']'` |
+| H, nullbare Wertemengen als `anyOf` | 200 |
+| H ohne Enums | 200 |
+| neuer Systemprompt + altes Schema | 200 |
+| alter Systemprompt + neues Schema | 400, gleiche Meldung |
+
+Ursache: Der Anbieter lehnt `null` als Enum-Wert unter einem Typ-Array ab. Systemprompt sowie die String-Enums für `pos`/`reason` sind nicht betroffen. Die frühere Einschätzung in diesem Bericht, primitive/null-Enums und Typ-Arrays seien unterstützt, gilt für diese Kombination nicht.
+
+Korrektur: `function` und `reuse_id` verwenden `anyOf:[{type:"string",enum:[…]},{type:"null"}]`; ohne anbietbare Kandidaten ist `reuse_id` `{type:"null"}`. Gleiche zulässige Wertemengen, Validator unverändert, kein Prompt-/Retry-/SQL-Eingriff. Der korrigierte Produktionsrequest für die Geräteeingabe ist byte-identisch mit der angenommenen Variante (Schema-Fingerprint `5ee2cbbc7b10`). Neue Regression prüft ohne und mit lokalem Kandidaten, dass jeder Enum-Wert zu genau einem deklarierten Typ passt; sie schlug vor der Korrektur fehl.
+
+Verifikation: Backend45 PASS (personal_learning, trace, release, sentence, runtime_translation); vier PGlite-SQL-Suiten plus Produktionshandler-/SQL-Retryprobe PASS; Flutter32 gezielte Tests inklusive Original-Pack PASS. GitNexus-Impact `personalResponseSchema` CRITICAL (ein direkter Aufrufer `perform`, breite Namenskanten); `detect_changes --scope all` vollständig, eigene Symbole nur Schema/Test.
+
+Offen: Die Variante mit mindestens einem anbietbaren Kandidaten (`reuse_id` als `anyOf` mit IDs) ist lokal getestet, aber nicht anbieterseitig geprüft. Function-Auslieferung, Geräte-Add, Speicherung unter „Aus Storys“, genau ein Übungskontext und Erhalt nach Neustart sind nicht bestätigt.
