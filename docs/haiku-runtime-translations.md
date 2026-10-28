@@ -1,5 +1,7 @@
 # Haiku-Laufzeitübersetzungen · 19.10.2026
 
+**Fortschreibung 24.10.2026:** Die folgenden Cache-/Dialogaussagen dokumentieren den damaligen Stand. Paket 2A ersetzt erneute identische Modellanfragen durch private lokale/serverseitige Wiederverwendung; aktuelle Verträge, Nachweise und Deploymentbefehle: [Übersetzungsspeicher](story-translation-cache.md). Keine neue Cloud-/Geräteabnahme dadurch behauptet.
+
 ## Ergebnis und Abnahmegrenze
 
 Lokal implementiert: vorhandene Übersetzungsaktionen → gespeicherter Inhalt oder ausdrückliche KI-Bestätigung → authentifizierte Supabase Function → direkte Anthropic Messages API mit `claude-haiku-5-5` → validierte deutsche Antwort. Keine EU-only-Zusage, kein Gemini-/Vertex-Fallback. Kein Deployment, keine Cloudänderung, keine Geräteinstallation und keine kostenpflichtige Modellanfrage in diesem Auftrag. Der vollständige reale App-Weg bleibt bis zur unten beschriebenen Abnahme offen.

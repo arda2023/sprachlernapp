@@ -1,3 +1,5 @@
+import 'fixtures/offline_translation.dart';
+import 'package:sprachapp/presentation/providers/offline_translation_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'fixtures/deck_repositories.dart';
@@ -143,7 +145,7 @@ void main() {
       findsWidgets,
     );
     expect(
-      find.bySemanticsLabel('Lernen, Tagesziel 0 von 10 Übungen'),
+      find.bySemanticsLabel('Lernen, Tagesziel 0 von 10 Wörtern geübt'),
       findsOneWidget,
     );
     expect(tester.takeException(), isNull);
@@ -160,7 +162,7 @@ void main() {
       reason: label,
     );
     for (final label in [
-      'Lernen, Tagesziel 0 von 10 Übungen',
+      'Lernen, Tagesziel 0 von 10 Wörtern geübt',
       'Einstellungen',
     ]) {
       expectButton(label);
@@ -375,7 +377,7 @@ void main() {
       findsOneWidget,
     );
     expect(
-      find.bySemanticsLabel('Lernen, Tagesziel 0 von 20 Übungen'),
+      find.bySemanticsLabel('Lernen, Tagesziel 0 von 20 Wörtern geübt'),
       findsOneWidget,
     );
   });
@@ -698,13 +700,13 @@ void main() {
 
       expect(
         find.text(
-          'Für diesen Text sind keine geprüften Lernreferenzen vorhanden.',
+          'Lernstatus nicht lesbar. Bitte erneut öffnen.',
         ),
         findsOneWidget,
       );
       expect(
         tester.getSemantics(
-          find.bySemanticsLabel('Zum Lernen nicht verfügbar'),
+          find.bySemanticsLabel('Zum Lernen hinzufügen'),
         ),
         isSemantics(isButton: true, isEnabled: false),
       );
@@ -754,8 +756,9 @@ void main() {
   ) async {
     await tester.pumpWidget(reader());
     await tapWord(tester, 'station');
-    expect(find.bySemanticsLabel('Zum Lernen nicht verfügbar'), findsOneWidget);
-    // Demo marks remain visual only; no saved-learning claim.
+    expect(find.bySemanticsLabel('Zum Lernen hinzufügen'), findsOneWidget);
+    // Demo has no repository: Add fails closed; marks never claim a saved card.
+    expect(find.text('Hinzugefügt'), findsNothing);
     expect(sampleWordMarks['station'], WordMark.mastered);
   });
 
@@ -2327,6 +2330,10 @@ void main() {
   Widget newsReader() {
     final article = sampleNews.first;
     return ProviderScope(
+      overrides: [
+        offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
+
+      ],
       child: MaterialApp(
         theme: buildAppTheme(),
         home: StoryReaderScreen(story: article.asStory, text: article.text),
@@ -2349,7 +2356,7 @@ void main() {
     // Missing word opens explicit AI opt-in; no request on tap.
     await tapWord(tester, 'council');
     expect(find.byType(RuntimeTranslationSheet), findsOneWidget);
-    expect(find.text('Mit KI übersetzen'), findsOneWidget);
+    expect(find.text('Automatische Wortübersetzung aktivieren?'), findsOneWidget);
     expect(find.textContaining('KI ·'), findsNothing);
     Navigator.of(tester.element(find.byType(RuntimeTranslationSheet))).pop();
     await tester.pumpAndSettle();

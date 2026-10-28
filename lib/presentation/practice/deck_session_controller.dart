@@ -7,6 +7,7 @@ import '../../domain/content.dart';
 import '../../domain/repositories.dart';
 import '../../domain/review_pass.dart';
 import '../../domain/srs_state.dart';
+import '../../domain/story_learning_diagnostics.dart';
 import '../providers/database_providers.dart';
 import '../providers/story_learning_providers.dart';
 import '../../data/learning/practice_item_resolver.dart';
@@ -23,8 +24,8 @@ class SessionSnapshot {
       repeating = !pass.logged,
       feedback = pass.errorCount > 0
           ? 'Richtig nach ${pass.errorCount} ${pass.errorCount == 1 ? 'Fehler' : 'Fehlern'}'
-          : pass.revealed || pass.hintUsed
-          ? 'Richtig mit Hinweis'
+          : pass.revealed
+          ? 'Richtig nach „Wort erfahren“'
           : 'Richtig';
   final String id, feedback;
   final ContentCard card;
@@ -33,7 +34,8 @@ class SessionSnapshot {
   final bool repeating;
 }
 
-/// size 0 uses the daily remainder; -1 explicitly continues beyond it.
+/// size 0 uses the daily remainder (the full goal once it is reached);
+/// -1 explicitly continues beyond it.
 /// Positive sizes retain the explicit bounded-session API used by fixtures.
 typedef DeckSessionArgs = ({String deckId, DeckSessionKind kind, int size});
 
@@ -140,45 +142,56 @@ class DeckSessionController extends Notifier<DeckSessionState> {
           today, DateTime(now.year, now.month, now.day + 1),
         ))[today] ?? <String>{};
         final remaining = (_preferences.dailyGoal - completed.length).clamp(0, _preferences.dailyGoal);
-        _goalReached = remaining == 0 && args.kind != DeckSessionKind.revue;
-        final beyondGoal = args.size != 0 || args.kind == DeckSessionKind.revue;
+        _goalReached = remaining == 0;
+        // The goal is a recommendation: once reached, a normal start is the
+        // voluntary continuation. Cards done today are not due or new any
+        // more; Revue/Vorab keep due dates, so such cards stay due.
         _sessionLimit = args.size > 0 ? args.size
-            : beyondGoal ? _preferences.dailyGoal : remaining;
-        final excluded = beyondGoal ? <String>{} : completed;
-        final ids = <String>[];
-        if (args.kind == DeckSessionKind.mixed) {
-          ids.addAll(await _resolver.activePrimaryIds());
-        } else {
-          if (_resolver.content == null) {
-            throw _resolver.contentError ?? StateError('Inhaltspaket fehlt');
-          }
-          ids.addAll(
-            await _resolver.deckPracticeIds(args.deckId),
-          );
+            : args.size < 0 || remaining == 0 || args.kind == DeckSessionKind.revue ||
+                    args.kind == DeckSessionKind.early
+                ? _preferences.dailyGoal
+                : remaining;
+        if (args.kind != DeckSessionKind.mixed &&
+            _resolver.content == null && args.deckId != storyCollectionId &&
+            args.deckId.isNotEmpty) {
+          throw _resolver.contentError ?? StateError('Inhaltspaket fehlt');
         }
+        final scope = args.deckId == storyCollectionId
+            ? _resolver.storyPracticeIds
+            : args.deckId.isEmpty ? null : await _resolver.deckPracticeIds(args.deckId);
         final states = await _user.allCardStates();
         final cards = _resolver.cards;
-        _queue = args.kind == DeckSessionKind.mixed
-            ? buildMixedQueue(
-                targetsResolved: true,
-                activeDeckCardIds: ids,
-                storyAdditions: _resolver.additions,
-                cards: cards,
-                states: states,
-                now: _clock(),
-                size: _sessionLimit + excluded.length,
-              )
-            : buildDeckQueue(
-                targetsResolved: true,
-                deckCardIds: ids,
-                states: states,
-                cards: cards,
-                kind: args.kind,
-                now: _clock(),
-                size: _sessionLimit + excluded.length,
-              );
-        _queue = _queue.where((entry) => !excluded.contains(entry.cardId))
-            .take(_sessionLimit).toList();
+        if (args.kind == DeckSessionKind.mixed) {
+          final sources = await _resolver.newWordSources();
+          final rotation = _user is NewWordRotationStore
+              ? await (_user as NewWordRotationStore).lastNewWordSource()
+              : null;
+          _queue = buildMixedQueue(
+            targetsResolved: true,
+            activeDeckCardIds: const [],
+            deckSources: sources.active,
+            sourceOrder: [...sources.order, storySourceId],
+            lastSource: rotation,
+            storyAdditions: _resolver.additions,
+            cards: cards,
+            states: states,
+            now: _clock(),
+            size: _sessionLimit,
+          );
+        } else if (args.kind == DeckSessionKind.early && scope == null) {
+          _queue = buildEarlyQueue(scopeIds: states.keys.toList()..sort(),
+              cards: cards, states: states, now: _clock(), size: _sessionLimit);
+        } else {
+          _queue = buildDeckQueue(
+            targetsResolved: true,
+            deckCardIds: scope ?? const [],
+            states: states,
+            cards: cards,
+            kind: args.kind,
+            now: _clock(),
+            size: _sessionLimit,
+          );
+        }
         for (final item in await _resolver.practiceItems(
           _queue.map((e) => e.cardId).toList(),
         )) {
@@ -228,7 +241,10 @@ class DeckSessionController extends Notifier<DeckSessionState> {
     _saved = false;
     _emit(
       message:
-          _index == 0 &&
+          _index == 0 && _goalReached && args.kind != DeckSessionKind.revue &&
+              args.kind != DeckSessionKind.early
+          ? 'Tagesziel erreicht – du lernst freiwillig weiter.'
+          : _index == 0 &&
               args.kind == DeckSessionKind.learn &&
               _queue.length < _sessionLimit
           ? 'Für diese Sitzung sind ${_queue.length} unterschiedliche Karten verfügbar.'
@@ -284,6 +300,15 @@ class DeckSessionController extends Notifier<DeckSessionState> {
         // previous write response). It is still a successful completion.
         await _user.recordReview(record);
         _records.add(record);
+        final source = _queue[_index].source;
+        if (args.kind == DeckSessionKind.mixed && record.boxBefore == 0 && source != null &&
+            _user is NewWordRotationStore) {
+          // Only a completed new target moves the rotation. It is advisory
+          // metadata: a failed write must not undo or hide the saved review.
+          try {
+            await (_user as NewWordRotationStore).saveLastNewWordSource(source);
+          } catch (_) {}
+        }
       }
       _saved = true;
       _snapshots.add(SessionSnapshot(_pass!));

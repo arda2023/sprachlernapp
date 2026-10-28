@@ -29,6 +29,8 @@ void main() {
       300,
       scrollable: find.byType(Scrollable).first,
     );
+    await t.ensureVisible(find.text('Bildschirm-Vorschauen'));
+    await t.pumpAndSettle();
     await t.tap(find.text('Bildschirm-Vorschauen'));
     await t.pumpAndSettle();
     expect(find.byType(ScreenPreviewsScreen), findsOneWidget);

@@ -144,8 +144,8 @@ void validateContextRevisions(Database db, {required String lang}) {
     if (!ok) reject(message);
   }
 
-  final profile = ContentLanguageProfile.forLanguage(lang);
-  require(profile != null, 'Sprachprofil nicht unterstützt.');
+  final profiles = ContentLanguageProfile.supportedForLanguage(lang);
+  require(profiles.isNotEmpty, 'Sprachprofil nicht unterstützt.');
   const required = {
     'sentences': ['root_sentence_id', 'revision_sha256'],
     'sentence_tokens': ['context_gloss_de', 'context_snapshot'],
@@ -239,12 +239,14 @@ void validateContextRevisions(Database db, {required String lang}) {
       continue;
     }
     for (final token in tokens[id] ?? <Map<String, Object?>>[]) {
-      require((token['context_snapshot'] as Map)['legacy'] != true,
-          'Neue Satzrevision darf keine Legacyanzeige vortäuschen.');
+      require(
+        (token['context_snapshot'] as Map)['legacy'] != true,
+        'Neue Satzrevision darf keine Legacyanzeige vortäuschen.',
+      );
     }
     final payload = {
       'lang': s['lang'],
-      'profile_sha256': profile!.sha256,
+      'profile_sha256': profiles.first.sha256,
       'text': s['text'],
       'translation_de': s['translation_de'],
       'tokens': [
@@ -263,7 +265,14 @@ void validateContextRevisions(Database db, {required String lang}) {
       'Ungültige Satzrevision.',
     );
     require(
-      contextCanonicalHash(payload) == revision &&
+      profiles.any(
+            (profile) =>
+                contextCanonicalHash({
+                  ...payload,
+                  'profile_sha256': profile.sha256,
+                }) ==
+                revision,
+          ) &&
           id ==
               _stableId([
                 'sentence_revisions',

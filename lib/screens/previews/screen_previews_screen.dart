@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/streak.dart';
+import '../../domain/content.dart';
+import '../../domain/srs_state.dart';
+import '../../presentation/providers/story_collection_provider.dart';
+import '../stories/story_collection_screen.dart';
 import '../../models/home_models.dart';
 import '../../presentation/providers/streak_providers.dart';
 import '../../theme/app_theme.dart';
@@ -21,6 +25,23 @@ class ScreenPreviewsScreen extends StatelessWidget {
   // Jeder Vorschau-Screen muss jederzeit wieder geschlossen werden können.
   static final _previews =
       <({String title, String detail, WidgetBuilder build})>[
+        (
+          title: 'Aus Storys',
+          detail: 'Persönliche Sammlung · Vorschau ohne Speicherung',
+          build: (_) => StoryCollectionScreen(preview: [
+            StoryCollectionWord(
+              const UserCardState(cardId: 'preview', box: 0, dueAt: null),
+              PracticeItem(otherFormsOfLemma: const {}, card: const ContentCard(
+                id: 'preview', lang: 'en', form: 'pocket', formNorm: 'pocket',
+                lemmaId: 'pocket', lemma: 'pocket', pos: 'NOUN', translationDe: 'Tasche',
+              ), sentences: const [CardSentence(
+                cardId: 'preview', position: 1, sentenceId: 'preview', text: 'My keys are in my pocket.',
+                translationDe: 'Meine Schlüssel sind in meiner Tasche.',
+                gapStart: 18, gapEnd: 24,
+              )]),
+            ),
+          ]),
+        ),
         (
           title: 'Onboarding',
           detail: 'Alle fünf Schritte ab dem Willkommen-Bildschirm',

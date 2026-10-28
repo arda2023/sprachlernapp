@@ -294,6 +294,10 @@ void main() {
     final context = t.element(find.byType(Scaffold).first);
     SettingsScreen.open(context);
     await t.pumpAndSettle();
+    // Consent controls can put this lazy ListView child off-screen.
+    await t.scrollUntilVisible(find.bySemanticsLabel('Motiv Dunkel'), 200,
+      scrollable: find.descendant(of: find.byType(SettingsScreen), matching: find.byType(Scrollable)).first);
+    await t.pumpAndSettle();
     await t.tap(find.bySemanticsLabel('Motiv Dunkel'));
     await t.pumpAndSettle();
     expect(u.prefs.motif, AppMotif.dark);
@@ -301,6 +305,10 @@ void main() {
       Theme.of(t.element(find.byType(SettingsScreen))).brightness,
       Brightness.dark,
     );
+    // Consent controls can put this lazy ListView child off-screen.
+    await t.scrollUntilVisible(find.bySemanticsLabel('Motiv Hell'), 200,
+      scrollable: find.descendant(of: find.byType(SettingsScreen), matching: find.byType(Scrollable)).first);
+    await t.pumpAndSettle();
     await t.tap(find.bySemanticsLabel('Motiv Hell'));
     await t.pumpAndSettle();
     expect(u.prefs.motif, AppMotif.light);

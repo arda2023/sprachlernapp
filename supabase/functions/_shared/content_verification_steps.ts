@@ -1,5 +1,5 @@
 // One shared implementation for both the reference wrapper and durable stages.
-import {ADOPTION, ADOPTION_NOTICE, FILES, DistributionBackend, Json, canonical, digest, requireThat, requireEmptyBaselineChannel} from './content_distribution.ts';
+import {ADOPTION, ADOPTION_NOTICE, FILES, supportedProfile, compatibleParentProfile, DistributionBackend, Json, canonical, digest, requireThat, requireEmptyBaselineChannel} from './content_distribution.ts';
 import baseline from './internal_baseline_source.json' with {type:'json'};
 export const VERIFIER = 'native-v2';
 const SHA=/^[0-9a-f]{64}$/;
@@ -40,8 +40,7 @@ export async function verifyStage(backend:DistributionBackend,u:Json,stage:strin
     requireThat(rows.length===1&&rows[0].lang===u.lang&&rows[0].channel===u.channel&&
       rows[0].manifest_sha256===u.parent_manifest_sha256,'PARENT_CHANGED',409);
     const parent=rows[0];
-    if(u.lang==='pt-BR')requireThat(parent.manifest.profile_id===u.draft_manifest.profile_id&&
-      parent.manifest.profile_sha256===u.draft_manifest.profile_sha256,'PARENT_PROFILE_CHANGED',409);
+    if(u.lang!=='en')requireThat(compatibleParentProfile(u.lang,parent.manifest,u.draft_manifest),'PARENT_PROFILE_CHANGED',409);
     requireThat(v.base_sha256===parent.manifest.pack_canonical_sha256,'PARENT_CONTENT_CHANGED',409);
     requireThat(results.P_full.has_registry_words,'REGISTRY_INVALID');
     const oldRegistry=await backend.object(parent.release_id,'registry.json',parent.objects['registry.json'],true);
@@ -78,9 +77,11 @@ async function verifyMetadata(backend:DistributionBackend,u:Json):Promise<Json>{
     Array.isArray(v.findings)&&!v.findings.some((f:Json)=>f.severity==='error'),'ATTESTATION_INVALID');
   const unsigned={...v};delete unsigned.sha256;requireThat(digest(unsigned)===v.sha256,'VALIDATION_HASH');
   requireThat(Array.isArray(reviews)&&(adoption?reviews.length===0:reviews.some((r:Json)=>r.decision==='approved'&&r.payload_sha256===v.content_sha256)),'REVIEW_UNBOUND');
-  if(u.lang==='pt-BR')requireThat(reviews.some((r:Json)=>r.decision==='approved'&&
+  if(u.lang!=='en')requireThat(supportedProfile(u.lang,m)&&reviews.some((r:Json)=>r.decision==='approved'&&
     r.payload_sha256===v.content_sha256&&r.profile_sha256===m.profile_sha256&&
-    r.editorial_policy==='manual-pt-BR-editorial-v1'),'REVIEW_PROFILE_UNBOUND');
+    (m.profile_id==='pt-BR-editorial-v1'?r.editorial_policy==='manual-pt-BR-editorial-v1':
+      r.editorial_policy==='ai-editorial-reviewed-v1'&&r.human_review===false&&
+      r.user_requested_private_device_test===true&&typeof r.reviewer==='string'&&r.reviewer.trim().length>0)),'REVIEW_PROFILE_UNBOUND');
   requireThat(digest(reviews)===m.editorial_reviews_sha256&&digest(inventory)===m.history_inventory_sha256&&digest(registry)===m.registry_sha256,'SIDECAR_HASH');
   requireThat(inventory.lang===u.lang&&inventory.format_version===1&&inventory.tables,'HISTORY_INVALID');
   if(adoption){

@@ -10,8 +10,8 @@ import '../../../widgets/popover_content.dart';
 class LanguagePanel extends ConsumerStatefulWidget {
   const LanguagePanel({super.key, this.current = 'Englisch'});
 
-  /// Every selectable language ([ContentLanguageProfile.supported]).
-  static const languages = ContentLanguageProfile.supported;
+  /// Every selectable language ([ContentLanguageProfile.selectable]).
+  static const languages = ContentLanguageProfile.selectable;
 
   /// Display name of the current language.
   final String current;

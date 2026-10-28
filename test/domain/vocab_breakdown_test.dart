@@ -118,6 +118,7 @@ void main() {
     };
 
     test('learn: due cards oldest first, then new cards in deck order', () {
+      // c was displayed earlier but never answered: it stays new in its place.
       final q = buildDeckQueue(
         deckCardIds: deck,
         cards: {
@@ -136,7 +137,7 @@ void main() {
         kind: DeckSessionKind.learn,
         now: now,
       );
-      expect(q.map((e) => e.cardId), ['b', 'd', 'f', 'g', 'c']);
+      expect(q.map((e) => e.cardId), ['b', 'd', 'c', 'f', 'g']);
       expect(q.every((e) => !e.repeat), isTrue);
     });
 
@@ -160,7 +161,7 @@ void main() {
         now: now,
         size: 3,
       );
-      expect(q.map((e) => e.cardId), ['b', 'd', 'f']);
+      expect(q.map((e) => e.cardId), ['b', 'd', 'c']);
     });
 
     test('revue: seen cards only, soonest due first', () {

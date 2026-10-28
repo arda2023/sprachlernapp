@@ -64,7 +64,13 @@ String _cardHint(ContentCard card, {required bool solved}) {
       : null;
   final form = switch (function) {
     'plural' => ' in der Mehrzahl',
-    'past' => ' in der Vergangenheit',
+    'past' => switch (card.lang) {
+      'it' => ' im Passato remoto',
+      'es' => ' im Pretérito indefinido',
+      'pt-BR' => ' im Pretérito perfeito',
+      'nb' => ' im Präteritum',
+      _ => ' in der Vergangenheit',
+    },
     'past_participle' => ' als Partizip Perfekt',
     'present_participle' => ' als Partizip Präsens',
     'third_person' => ' in der 3. Person Singular',

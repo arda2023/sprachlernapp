@@ -121,13 +121,21 @@ class DriftContentRepository
     return [for (final c in cards) if(c.introductionScope == 'ordinary') DeckPracticeTarget(cardId:c.id)];
   }
 
+  // A repository owns one immutable pack snapshot. Guard checks may request
+  // these IDs for every Add; share the database read, never a mutable result.
+  Future<Set<String>>? _cardIds;
   @override
   Future<Set<String>> allCardIds() async {
-    final rows = await _select(
+    final pending = _cardIds ??= _select(
       'SELECT id FROM cards WHERE lang = ? AND removed_in IS NULL',
       [_lang],
-    );
-    return {for (final r in rows) r.read<String>('id')};
+    ).then((rows) => {for (final r in rows) r.read<String>('id')});
+    try {
+      return Set.of(await pending);
+    } catch (_) {
+      if (identical(_cardIds, pending)) _cardIds = null;
+      rethrow;
+    }
   }
 
   @override
@@ -628,9 +636,11 @@ class DriftContentRepository
       otherForms: {...forms}..remove(contentFormNorm(token.surface)),
       groupMembers: card?.learning == null
           ? const []
-          : (await selectionCards(await allCardIds()))
-                .where((c) => c.learningGroup == card!.learningGroup)
-                .toList(),
+          : await selectionCards((await _select(
+              "SELECT id FROM cards WHERE lang = ? AND removed_in IS NULL "
+              r"AND json_extract(learning, '$.group_id') = ?",
+              [_lang, card!.learningGroup],
+            )).map((r) => r.read<String>('id')).toList()),
     );
   }
 

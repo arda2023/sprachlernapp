@@ -21,6 +21,7 @@ class StoryLibraryScreen extends StatelessWidget {
     required this.stories,
     required this.onOpenStory,
     this.status,
+    this.collection,
     this.news = const [],
     this.onOpenNews,
     this.progress = const {},
@@ -37,6 +38,7 @@ class StoryLibraryScreen extends StatelessWidget {
 
   final List<Story> stories;
   final Widget? status;
+  final Widget? collection;
   final ValueChanged<Story> onOpenStory;
 
   /// One article per desk; the section is left out when empty.
@@ -134,6 +136,7 @@ class StoryLibraryScreen extends StatelessWidget {
               ],
             ),
           ),
+          ?collection,
           if (status != null) Padding(padding: _gutter, child: status!),
           if (news.isNotEmpty) ...[
             const SizedBox(height: 18),

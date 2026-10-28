@@ -19,9 +19,21 @@ void main() {
       );
       expect(
         contextCanonicalHash(manifest),
-        ContentLanguageProfile.portugueseBrazil.sha256,
+        ContentLanguageProfile.portugueseBrazilV1.sha256,
       );
-      expect(ContentLanguageProfile.forLanguage('pt-BR')!.id, manifest['id']);
+      expect(ContentLanguageProfile.portugueseBrazilV1.id, manifest['id']);
+      expect(
+        ContentLanguageProfile.resolve(
+          'pt-BR',
+          manifest['id'],
+          contextCanonicalHash(manifest),
+        ),
+        ContentLanguageProfile.portugueseBrazilV1,
+      );
+      expect(
+        ContentLanguageProfile.forLanguage('pt-BR'),
+        ContentLanguageProfile.portugueseBrazil,
+      );
       for (final lang in ['pt', 'pt-PT', 'pt-br']) {
         expect(ContentLanguageProfile.forLanguage(lang), isNull);
       }

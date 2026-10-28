@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:path_provider/path_provider.dart';
+
+import 'data/content/bundled_content_updates.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rive/rive.dart' show RiveNative;
 
 import 'domain/preferences.dart';
 import 'presentation/celebration_sounds.dart';
+import 'presentation/content_startup_gate.dart';
+import 'presentation/onboarding_sounds.dart';
 import 'presentation/providers/database_providers.dart';
 import 'presentation/providers/content_update_provider.dart';
 import 'presentation/providers/onboarding_provider.dart';
@@ -29,6 +35,9 @@ Future<void> main() async {
         celebrationSoundsProvider.overrideWith(
           (ref) => AudioCelebrationSounds(),
         ),
+        onboardingSoundsProvider.overrideWith(
+          (ref) => AudioOnboardingSounds(),
+        ),
         onboardingStoreProvider.overrideWith(
           (ref) => FileJsonStore('onboarding'),
         ),
@@ -48,7 +57,25 @@ Future<void> main() async {
           ),
         ),
       ],
-      child: const SprachApp(),
+      child: ContentStartupGate(
+        initialize: () async {
+          final bundledUpdateFailures = await applyBundledContentUpdates(
+            supportDirectory: await getApplicationSupportDirectory(),
+            loadAsset: (key) async {
+              try {
+                final data = await rootBundle.load(key);
+                return data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+              } on FlutterError {
+                return null;
+              }
+            },
+          );
+          for (final failure in bundledUpdateFailures.entries) {
+            debugPrint('Gebündeltes Inhaltsupdate ${failure.key}: ${failure.value}');
+          }
+        },
+        child: const SprachApp(),
+      ),
     ),
   );
 }

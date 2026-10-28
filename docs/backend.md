@@ -55,17 +55,17 @@ Die Python-Pipeline unterstützt explizit direkte Anthropic-API oder Vertex EU/A
 
 ## Übersetzungsverträge
 
-Beide: `POST`, JSON, `Authorization: Bearer <Nutzer-JWT>`; Flutter sendet zusätzlich den vorhandenen öffentlichen `apikey`. `verify_jwt=true` bleibt aktiv, zusätzlich prüft die Function den Nutzer bei Auth. Anonyme Nutzer sind ausgeschlossen. `lang` ist `en` oder `pt-BR`, `target_lang` ist zwingend `de`. Die bisherigen Antwortfelder bleiben erhalten; Metadaten `provider`, `model`, `request_id`, `usage` kommen hinzu. Kein persistenter KI-Cache, `cached=false`.
+Beide: `POST`, JSON, `Authorization: Bearer <Nutzer-JWT>`; Flutter sendet zusätzlich den vorhandenen öffentlichen `apikey`. `verify_jwt=true` bleibt aktiv, zusätzlich prüft die Function den Nutzer bei Auth. Anonyme Nutzer sind ausgeschlossen. `lang` ist `en` oder `pt-BR`, `target_lang` ist zwingend `de`. Die bisherigen Antwortfelder bleiben erhalten; Metadaten `provider`, `model`, `request_id`, `usage` kommen hinzu. Paket 2A: privater persistenter Cache, `cached=true` bei Serverwiederverwendung. Vertrag 2 ergänzt `contract`, `prompt`, `created_at`; die ursprüngliche Erfolgs-`request_id` bleibt bei Wiederverwendung erhalten. Details: [Cachevertrag und Deployment](story-translation-cache.md).
 
 **`lookup-word`**:
 ```json
-{"lang":"pt-BR","target_lang":"de","form":"banco","sentence":"Ela sentou no banco."}
+{"contract":2,"lang":"pt-BR","target_lang":"de","form":"banco","sentence":"Ela sentou no banco.","start":14,"end":19,"sense_ref":null,"form_ref":null}
 ```
 Antwortvertrag (Illustration, kein Liveergebnis):
 ```json
 {"form":"banco","senses":[{"pos":"substantivo","form_label":"Substantiv","gloss_de":"Bank zum Sitzen","lemma":"banco"}],"cached":false}
 ```
-Genau eine kontextbezogene Bedeutung; alle vier Sinnfelder werden serverseitig validiert. Optionales altes `sentence_id` wird ignoriert und nicht an Anthropic übertragen.
+Genau eine kontextbezogene Bedeutung; alle vier Sinnfelder werden serverseitig validiert. UTF-16-Start/Ende identifizieren genau das ausgewählte Vorkommen; Sense-/Formreferenzen sind optional. Alte Clients ohne Vertrag/Offsets werden nur bei genau einem exakten Vorkommen akzeptiert. Optionales altes `sentence_id` wird weiterhin ignoriert.
 
 **`translate-sentence`**:
 ```json
@@ -73,16 +73,18 @@ Genau eine kontextbezogene Bedeutung; alle vier Sinnfelder werden serverseitig v
 ```
 Antwortkern: `{"translation_de":"Sie kniete sich hin.","cached":false}`. Optionales altes `import_id` wird ignoriert. Keine Profile, Lernstände oder ganzen Packs im Modellrequest.
 
-Fehler: JSON mit festem `error`, sicherer `message`, `request_id`; `401` Anmeldung, `403` fehlende Sprachfreigabe, `405` Methode, `413` Bodylimit, `422` Eingabe, `429` eigenes oder Anbieterlimit, `502` ungültige/fehlgeschlagene Modellantwort, `503` Konfiguration/Infrastruktur, `504` Deadline. Keine rohen Anbieter-/Authfehler im Client. Antworten `Cache-Control: no-store`.
+Fehler: JSON mit festem `error`, sicherer `message`, `request_id`; `401` Anmeldung, `403` fehlende Sprachfreigabe, `405` Methode, `409` laufende/unklare Anfrage (kein automatischer Retry), `413` Bodylimit, `422` Eingabe, `429` eigenes oder Anbieterlimit, `502` ungültige/fehlgeschlagene Modellantwort, `503` Konfiguration/Infrastruktur, `504` Deadline. Keine rohen Anbieter-/Authfehler im Client. Antworten `Cache-Control: no-store`.
 
 ## Begrenzung und Schlüsselhaltung
 
 - Body ≤4096 Byte, Satz ≤600 Zeichen, Wortform ≤80 Zeichen; nur erlaubte Felder und explizite Sprachrichtungen. Die Wortform muss im Kontext stehen. Modellantwort ≤16384 Byte, deutsche Satzantwort ≤1200 Zeichen; Wortantwort genau ein Sinn mit vier Feldern ≤200 Zeichen.
-- Höchstens 384 Outputtokens, insgesamt 25 Sekunden Function-Deadline einschließlich Auth/Limitcheck; Flutter maximal 30 Sekunden für HTTP, separat maximal 30 Sekunden für vorhandene Tokenbeschaffung. Null automatische Wiederholungen. Erneutes Öffnen plus ausdrücklicher Bestätigung ist eine neue, erneut gezählte Anfrage.
-- Migration `20261019000001_runtime_translation_limits.sql`: service-only `reserve_runtime_translation`, bestehende `content_readers` und `app.usage`. Gemeinsame Limits beider Functions und Sprachen: 5 Anfragen je UTC-Minute/Nutzer, 20 je UTC-Tag/Nutzer, 1000 je UTC-Tag insgesamt. Transaktions-Advisory-Lock schützt die Reservierung; Fehler nach Reservierung zählen mit. Keine Textspeicherung, keine Lernstandsänderung.
+- Höchstens 384 Outputtokens, insgesamt 25 Sekunden Function-Deadline einschließlich Auth/Limitcheck; Flutter maximal 30 Sekunden für HTTP, separat maximal 30 Sekunden für vorhandene Tokenbeschaffung. Null automatische Wiederholungen. Erneutes Öffnen verwendet einen lokalen Treffer ohne Bestätigung. Eine ausdrücklich angefragte identische Serverübersetzung verwendet den privaten Treffer ohne Generierungsbudget.
+- Migration `20261019000001_runtime_translation_limits.sql`: service-only `reserve_runtime_translation`, bestehende `content_readers` und `app.usage`. Gemeinsame Limits beider Functions und Sprachen: 5 Anfragen je UTC-Minute/Nutzer, 20 je UTC-Tag/Nutzer, 1000 je UTC-Tag insgesamt. Transaktions-Advisory-Lock schützt die Reservierung; Fehler nach Reservierung zählen mit. Paket 2A ergänzt `20261024000001_private_translation_cache.sql`: private validierte Antworttexte, ansonsten nur Anfragehash und kurzlebige Reservierungsdaten; keine Originalsatzspeicherung auf dem Server und keine Lernstandsänderung. Fehler nach Claim bleiben konservativ 24 Stunden gesperrt. Lokale Originaltexte gehören weiterhin zum Reader, nicht zum Cache.
 - Diese Anfrage-/Ausgabelimits sind keine garantierte Dollar-Rechnungsgrenze. Inputtokens enthalten auch Prompt und Schema; nicht aus Zeichenlimits eine Tokenobergrenze ableiten. Anbieterlimits separat verwalten.
-- Erfolgslogs enthalten nur Anfrage-ID, Provider, Modell und Tokenzahlen; keine Texte, Nutzer-IDs, Schlüssel oder Tokens. Die Antwortmodell-ID wird vor Erfolg exakt geprüft.
+- Erfolgslogs enthalten nur ursprüngliche Anfrage-ID, Cachehit-Flag, Provider, Modell und historische Tokenzahlen (bei `cached=true` kein neuer Verbrauch); keine Texte, Nutzer-IDs, Schlüssel oder Tokens. Die Antwortmodell-ID wird vor Erfolg exakt geprüft.
 - Lokale SQL-/Deno-/Flutter-Nachweise und genaue manuelle Einrichtung: [Laufzeitbericht](haiku-runtime-translations.md). Cloud-Gateway, echte Parallelität mehrerer DB-Sitzungen, Abrechnung und iPhone bleiben gesonderte Abnahme.
+
+Authentifiziertes `DELETE /functions/v1/translate-sentence` ohne Body löscht private Übersetzungen des verifizierten Kontos. Kein Generierungsbudget und keine Sprachfreigabe nötig, damit Löschung auch nach Entzug einer Leserfreigabe möglich bleibt. Keine andere Function unterstützt DELETE.
 
 ## Weiterhin Entwurf: `sentence-check`
 

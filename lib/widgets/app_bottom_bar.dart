@@ -182,7 +182,9 @@ class PracticeButton extends StatelessWidget {
       gapDegrees: 110,
       child: MergeSemantics(
         child: Semantics(
-          label: 'Lernen, Tagesziel ${goal.done} von ${goal.target} Übungen',
+          label: goal.done >= goal.target
+              ? 'Weiterlernen, Tagesziel erreicht: ${goal.done} von ${goal.target} Wörtern geübt'
+              : 'Lernen, Tagesziel ${goal.done} von ${goal.target} Wörtern geübt',
           child: FloatingActionButton(
             onPressed: onPressed,
             heroTag: null,

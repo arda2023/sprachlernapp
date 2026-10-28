@@ -12,8 +12,22 @@ const SHA = /^[0-9a-f]{64}$/;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 export const PROFILES: Readonly<Record<string, {id:string;sha256:string}>> = {
   en: {id:'en-legacy-v1',sha256:'59eec37d0a4f322d666701e00bc1bf4cfb44d19b183b1742d16b443989a505cf'},
-  'pt-BR': {id:'pt-BR-editorial-v1',sha256:'7c59364c0d1ef562ee5a6a679b7d895e0ebec6bf2ad47d8eae56afdcba87fe32'},
+  'pt-BR': {id:'pt-BR-editorial-v2',sha256:'304d086c7d53956babe9bb27ff306de20849971670f402d07a5add9ea9c0c04b'},
+  nb: {id:'nb-editorial-v1',sha256:'b8886ad2d29b0e5f437a11673cf4eafb38851e05f6add41c3e9825c65b346f85'},
+  it: {id:'it-editorial-v1',sha256:'4b1424f02189910755ddb165b903eb8bafb9fcd637554838490620c3bb57965a'},
+  es: {id:'es-editorial-v1',sha256:'b5f925882e20fc15147cafbc881f2e510dcd56cb0d085eb420e6197efc97771f'},
 };
+// Historical manifests remain valid after a default profile upgrade.
+const LEGACY_PT = {id:'pt-BR-editorial-v1',sha256:'7c59364c0d1ef562ee5a6a679b7d895e0ebec6bf2ad47d8eae56afdcba87fe32'};
+export function supportedProfile(lang:string, manifest:{profile_id?:string;profile_sha256?:string}):boolean {
+  const profile=lang==='pt-BR'&&manifest.profile_id===LEGACY_PT.id?LEGACY_PT:PROFILES[lang];
+  return !!profile&&manifest.profile_id===profile.id&&manifest.profile_sha256===profile.sha256;
+}
+export function compatibleParentProfile(lang:string, parent:Json, next:Json):boolean {
+  return supportedProfile(lang,parent)&&supportedProfile(lang,next)&&
+    (parent.profile_id===next.profile_id||
+      (lang==='pt-BR'&&parent.profile_id===LEGACY_PT.id&&next.profile_id===PROFILES['pt-BR'].id));
+}
 export class DistributionError extends Error {
   constructor(public code: string, public status = 422) { super(code); }
 }
@@ -58,7 +72,7 @@ export function validateStart(data: Json) {
   if(m?.publication_kind===ADOPTION)requireThat(data.lang==='en'&&data.expected_generation===0&&
     data.parent_release_id===null&&data.parent_manifest_sha256===null&&m.parent_release_id===null,'ADOPTION_FIRST_ONLY');
   requireThat(m?.format===2&&m.lang===data.lang&&m.schema_version===5&&m.translation_lang==='de'&&
-    m.profile_id===PROFILES[data.lang].id&&m.profile_sha256===PROFILES[data.lang].sha256&&m.internal_test_pack===true&&
+    supportedProfile(data.lang,m)&&m.internal_test_pack===true&&
     m.min_reader_version===5&&canonical(m.required_features)===canonical(['immutable-contexts-v1']), 'MANIFEST_INCOMPATIBLE');
   requireThat(typeof m.version==='string'&&/^[A-Za-z0-9._-]{1,100}$/.test(m.version),'VERSION_INVALID');
   requireThat(data.objects&&canonical(Object.keys(data.objects).sort())===canonical([...FILES].sort()),'OBJECT_SET_INVALID');

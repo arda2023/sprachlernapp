@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/answer_check.dart';
 import '../../domain/grammar_hint.dart';
 import '../../domain/srs_state.dart';
+import '../../domain/story_learning_diagnostics.dart' show storyCollectionId;
 import '../../presentation/practice/deck_session_controller.dart';
 import '../../presentation/providers/database_providers.dart';
 import '../../presentation/providers/learning_providers.dart';
@@ -34,7 +35,7 @@ import 'widgets/practice_sentence.dart';
 import 'widgets/practice_menu.dart';
 import 'widgets/local_submission_sheet.dart';
 
-enum DeckPracticeMode { learn, review, mixed }
+enum DeckPracticeMode { learn, review, mixed, early }
 
 /// Practice controls that open a popover.
 enum _Trigger { level, info, menu }
@@ -153,6 +154,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
       DeckPracticeMode.learn => DeckSessionKind.learn,
       DeckPracticeMode.review => DeckSessionKind.revue,
       DeckPracticeMode.mixed => DeckSessionKind.mixed,
+      DeckPracticeMode.early => DeckSessionKind.early,
     },
     size: widget.sessionSize,
   );
@@ -517,22 +519,6 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                         child: ListView(
                           padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
                           children: [
-                            if (state.goalReached &&
-                                state.total == 0 &&
-                                !state.loading)
-                              CupertinoButton(
-                                onPressed: () =>
-                                    Navigator.of(context).pushReplacement(
-                                      CupertinoPageRoute<void>(
-                                        builder: (_) => DeckPracticeScreen(
-                                          deckId: widget.deckId,
-                                          mode: widget.mode,
-                                          sessionSize: -1,
-                                        ),
-                                      ),
-                                    ),
-                                child: const Text('Weiterlernen'),
-                              ),
                             Center(
                               child: ConstrainedBox(
                                 constraints: const BoxConstraints(
@@ -550,16 +536,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                       )
                                     : !canShow
                                     ? state.total == 0
-                                          ? Text(
-                                              state.goalReached
-                                                  ? 'Tagesziel erreicht'
-                                                  : 'Gerade gibt es keine Übungen.',
-                                              style: AppType.chrome(
-                                                color: context
-                                                    .appColors
-                                                    .textPrimary,
-                                              ),
-                                            )
+                                          ? _nothingOpen()
                                           : _summary(state)
                                     : Column(
                                         crossAxisAlignment:
@@ -809,6 +786,43 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     }
   }
 
+  /// Nothing due or new in this scope: say so for exactly this scope and offer
+  /// Vorab üben explicitly; it never fills a learning session by itself.
+  Widget _nothingOpen() {
+    final story = widget.deckId == storyCollectionId;
+    final text = switch (widget.mode) {
+      DeckPracticeMode.mixed =>
+        'Heute ist nichts fällig, und aktive Stapel und „Aus Storys“ haben keine neuen Wörter.',
+      DeckPracticeMode.learn => story
+          ? 'In „Aus Storys“ ist gerade nichts fällig und kein neues Wort offen.'
+          : 'In diesem Stapel ist gerade nichts fällig und kein neues Wort offen. Andere Stapel können noch Aufgaben haben.',
+      _ => 'Hier gibt es noch keine gelernten Wörter zum Üben.',
+    };
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          text,
+          textAlign: TextAlign.center,
+          style: AppType.chrome(color: context.appColors.textPrimary),
+        ),
+        if (widget.mode == DeckPracticeMode.mixed ||
+            widget.mode == DeckPracticeMode.learn)
+          CupertinoButton(
+            onPressed: () => Navigator.of(context).pushReplacement(
+              CupertinoPageRoute<void>(
+                builder: (_) => DeckPracticeScreen(
+                  deckId: widget.deckId,
+                  mode: DeckPracticeMode.early,
+                ),
+              ),
+            ),
+            child: const Text('Vorab üben'),
+          ),
+      ],
+    );
+  }
+
   Widget _summary(DeckSessionState state) {
     final records = state.records;
     final first = records.where((r) => r.firstAttemptCorrect).length;
@@ -821,11 +835,16 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
           '${records.length} ${records.length == 1 ? 'Übung' : 'Übungen'} geübt',
       subtitle:
           '$first auf Anhieb richtig · $reset zurück auf Stufe 1${afterTypo > 0 ? ' · $afterTypo nach Schreibkorrektur' : ''}',
-      explanation: widget.mode == DeckPracticeMode.review
-          ? 'In der Stapel-Revue bleiben saubere Antworten auf ihrer Stufe. Fehler, Hinweise und „Wort erfahren“ führen zu Stufe 1.'
-          : widget.mode == DeckPracticeMode.mixed
-          ? 'Fällige Karten werden zuerst geübt. Neue Übungen starten ohne Hilfe auf Stufe 3. Beim Vorab-Üben bleiben saubere Antworten auf ihrer Stufe.'
-          : 'Neue Übungen starten ohne Hilfe auf Stufe 3. Saubere Wiederholungen rücken eine Stufe auf. Fehler, Hinweise und „Wort erfahren“ führen zu Stufe 1.',
+      explanation: switch (widget.mode) {
+        DeckPracticeMode.review =>
+          'In der Stapel-Revue bleiben saubere Antworten auf ihrer Stufe. Fehler und „Wort erfahren“ führen zu Stufe 1.',
+        DeckPracticeMode.early =>
+          'Beim Vorab-Üben bleiben saubere Antworten auf ihrer Stufe. Fehler und „Wort erfahren“ führen zu Stufe 1.',
+        DeckPracticeMode.mixed =>
+          'Fällige Wiederholungen kommen zuerst, danach neue Wörter. Ein neues Wort startet nach einer sauberen ersten Antwort auf Stufe 3. Fehler und „Wort erfahren“ führen zu Stufe 1.',
+        DeckPracticeMode.learn =>
+          'Ein neues Wort startet nach einer sauberen ersten Antwort auf Stufe 3. Saubere Wiederholungen rücken eine Stufe auf. Fehler und „Wort erfahren“ führen zu Stufe 1.',
+      },
       actionLabel: widget.mode == DeckPracticeMode.mixed
           ? 'Zurück zur Startseite'
           : 'Zurück zum Stapel',

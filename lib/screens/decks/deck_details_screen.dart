@@ -102,7 +102,7 @@ class DeckDetailsScreen extends ConsumerWidget {
                         _ToggleRow(
                           label: 'In die tägliche Übung',
                           detail:
-                              'Neue Wörter dieses Stapels kommen in „Lernen“.',
+                              'Neue Wörter dieses Stapels kommen in „Lernen“. Aus: keine neuen Wörter daraus, Gelerntes wird weiter wiederholt.',
                           value: activation.values[deck.id] ?? deck.isActive,
                           onChanged: (v) => ref
                               .read(deckActiveControllerProvider.notifier)

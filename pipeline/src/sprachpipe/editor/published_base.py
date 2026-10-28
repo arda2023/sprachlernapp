@@ -41,7 +41,7 @@ def channel_binding(channel, lang):
             and m.get('generation') == channel['generation'] and SHA.fullmatch(str(channel.get('manifest_sha256')))
             and digest(m) == channel['manifest_sha256'],
             'PUBLISHED_CHANNEL_INVALID', 'Antwort des privaten Kanals ist widersprüchlich.', status=502)
-    profile = get_profile(lang)
+    profile = get_profile(lang, m.get('profile_id'))
     require(m.get('lang') == lang and m.get('channel') == 'internal' and m.get('schema_version') == 5
             and m.get('profile_id') == profile.id and m.get('profile_sha256') == profile.sha256
             and isinstance(m.get('version'), str) and type(m.get('size_bytes')) is int

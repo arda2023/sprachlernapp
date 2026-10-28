@@ -1,4 +1,5 @@
 import 'dart:convert';
+import '../../domain/personal_learning.dart';
 
 import 'package:drift/drift.dart';
 
@@ -16,7 +17,7 @@ import '../../domain/srs_state.dart';
 import 'user_database.dart';
 
 /// [UserRepository] on the Drift user.db of one language.
-class DriftUserRepository implements UserRepository, StoryLearningRepository, ReviewActivityRepository, StoryContextCorrectionStore {
+class DriftUserRepository implements PersonalLearningStore, UserRepository, StoryLearningRepository, ReviewActivityRepository, StoryContextCorrectionStore, NewWordRotationStore {
   DriftUserRepository(this._db, {required this.lang, this.ownsDatabase = true, this.contentIds});
   final bool ownsDatabase;
   final Future<Set<String>> Function(String kind)? contentIds;
@@ -346,6 +347,18 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
   }
 
   @override
+  Future<String?> lastNewWordSource() async =>
+      (await (_db.select(_db.languageLearningPreferences)..where((t) => t.lang.equals(lang))).getSingleOrNull())?.newWordSource;
+
+  /// Touches only the rotation column; a missing row gets the column defaults,
+  /// which are also what [preferences] reads without a row.
+  @override
+  Future<void> saveLastNewWordSource(String source) async {
+    await _db.into(_db.languageLearningPreferences).insertOnConflictUpdate(
+      LanguageLearningPreferencesCompanion.insert(lang: lang, newWordSource: Value(source)));
+  }
+
+  @override
   Future<void> savePreferences(PracticePreferences value) async {
     await deviceId();
     await _db.transaction(() async {
@@ -430,9 +443,14 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
   ];
   @override
   Future<Map<String, DateTime>> explicitStoryAdditions() async {
-    final cards=await allCardStates();
-    return {for(final row in await _db.select(_db.storyLearningAdditions).get())
-      if(cards.containsKey(row.cardId)) row.cardId:row.addedAt.toLocal()};
+    final rows = await _db.customSelect(
+      'SELECT a.card_id, MIN(a.added_at) AS added_at FROM ('
+      'SELECT card_id, added_at FROM story_learning_additions UNION ALL '
+      'SELECT card_id, added_at FROM story_word_sources) a '
+      'JOIN user_cards u ON u.card_id = a.card_id WHERE u.lang = ? GROUP BY a.card_id',
+      variables: [Variable(lang)], readsFrom: {_db.storyLearningAdditions, _db.storyWordSources, _db.userCards},
+    ).get();
+    return {for (final r in rows) r.read<String>('card_id'): r.read<DateTime>('added_at').toLocal()};
   }
   @override
   Future<Map<String, String>> identityBindings() async => {
@@ -444,8 +462,23 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
       row.identityKey: row.cardId,
   };
 
+  Future<bool> _hasStoryAddition(String id) async =>
+      (await (_db.select(_db.storyLearningAdditions)..where((t) => t.cardId.equals(id))).getSingleOrNull()) != null ||
+      (await (_db.select(_db.storyWordSources)..where((t) => t.cardId.equals(id))..limit(1)).getSingleOrNull()) != null;
+
   @override
   Future<StoryAddResult> storyLearningStatus(StoryLearningCandidate c) async {
+    if (c is PersonalLearningCandidate) {
+      // Fail closed for aliases of a disabled/retired local target, inside the
+      // same transaction as Add. No existing row or review is altered.
+      final blocked = await (_db.select(_db.userCards)..where((t) =>
+        t.lang.equals(lang) & t.formNorm.equals(c.identity.formNorm) &
+        (t.disabled.equals(true) | t.retired.equals(true)))).get();
+      if (blocked.any((row) => !c.independentOf.contains(row.cardId))) {
+        return const StoryAddResult(StoryAddState.unavailable,
+        message: 'Ein Ziel dieser Wortform ist gesperrt. Bitte zuerst in der Wortliste prüfen.');
+      }
+    }
     final invalid = c.validationProblem(needsContext: false);
     if (c.lang != lang || invalid != null) {
       return StoryAddResult(
@@ -454,11 +487,20 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
       );
     }
     if (c.token.function == null && c.groupMembers.isNotEmpty && c.card?.learning != null) {
+      final bindings = await identityBindings();
+      final localIds = <String>{
+        for (final member in c.groupMembers)
+          if (member.senseId != null)
+            ...[
+              LearningIdentity(lang, member.formNorm, member.senseId!).localId,
+              ?bindings[LearningIdentity(lang, member.formNorm, member.senseId!).key],
+            ],
+      };
       final members = attachLocalLearning(
         c.groupMembers,
-        (await localPracticeItems()).map((i) => i.card),
+        (await _localPracticeItems(ids: localIds)).map((i) => i.card),
       );
-      final states = await allCardStates();
+      final states = await cardStates(members.keys);
       final selected = LearningGroups(members, states).project([c.card!.id]);
       if (selected.isNotEmpty) {
         // Prefer an active existing member, retaining every other learned row.
@@ -475,9 +517,8 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
         }
         return StoryAddResult(
           state != null &&
-                  (state.box >= 1 ||
-                      state.origin == CardOrigin.story ||
-                      (await explicitStoryAdditions()).containsKey(id))
+                  (state.origin == CardOrigin.story ||
+                      await _hasStoryAddition(id))
               ? StoryAddState.added
               : StoryAddState.available,
           cardId: id,
@@ -495,8 +536,13 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
       }
     }
     final bound = bindings[c.identity.key];
+    // A candidate's deterministic local ID is a creation proposal, not a pack
+    // reference. Only request its state when a row exists. Bound/pack IDs still
+    // go through cardStates and its strict language/content checks unchanged.
+    final localRow = await (_db.select(_db.userCards)
+      ..where((t) => t.cardId.equals(c.identity.localId))).getSingleOrNull();
     final states = await cardStates({
-      c.identity.localId,
+      if (localRow != null) c.identity.localId,
       if (c.card != null) c.card!.id,
       ?bound,
     });
@@ -513,7 +559,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
             : c.card?.id ?? c.identity.localId);
     final state = states[id];
     if (state?.localOnly == true &&
-        !(await localPracticeItems()).any((i) => i.card.id == id)) {
+        !(await _localPracticeItems(ids: {id})).any((i) => i.card.id == id)) {
       return StoryAddResult(
         StoryAddState.unavailable,
         cardId: id,
@@ -531,9 +577,8 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
       return StoryAddResult(StoryAddState.disabled, cardId: id);
     }
     if (state != null &&
-        (state.box >= 1 ||
-            state.origin == CardOrigin.story ||
-            (await explicitStoryAdditions()).containsKey(id))) {
+        (state.origin == CardOrigin.story ||
+            await _hasStoryAddition(id))) {
       return StoryAddResult(StoryAddState.added, cardId: id);
     }
     if (c.unavailableReason != null && state == null) {
@@ -616,7 +661,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
               revision: c.revision,
               fingerprint: c.sourceFingerprint,
               lang: lang,
-              provenance: 'editorial_chat_reviewed',
+              provenance: c is PersonalLearningCandidate ? c.provenance : 'editorial_chat_reviewed',
               createdAt: now.toUtc(),
               tokensJson: jsonEncode([
                 for (final t in c.practiceSentence.tokens)
@@ -690,6 +735,26 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
         );
     return StoryAddResult(StoryAddState.added, cardId: id);
   });
+
+  @override
+  Future<StoryAddResult> savePersonalLearning(StoryLearningCandidate candidate,
+      {required DateTime now, required PersonalTarget source, required void Function() verify}) =>
+    _db.transaction(() async {
+      verify();
+      final result = await addStoryWord(candidate, now: now);
+      if (result.state == StoryAddState.added) {
+        await _db.into(_db.learningIdentityBindings).insert(
+          LearningIdentityBindingsCompanion.insert(identityKey: source.identity.key,
+            lang: lang, formNorm: source.identity.formNorm,
+            semanticAnchor: source.identity.semanticAnchor, cardId: result.cardId!),
+          mode: InsertMode.insertOrIgnore);
+        final bound = await (_db.select(_db.learningIdentityBindings)..where((t) =>
+          t.identityKey.equals(source.identity.key))).getSingle();
+        if (bound.cardId != result.cardId) throw StateError('Parallel anders zugeordnet');
+      }
+      verify(); // A changed account/scope rolls the complete transaction back.
+      return result;
+    });
 
   @override
   Future<void> applyStoryContextCorrections(List<StoryContextCorrection> corrections) async {
@@ -779,12 +844,21 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
   );
 
   @override
-  Future<List<PracticeItem>> localPracticeItems() async {
+  Future<List<PracticeItem>> localPracticeItems() => _localPracticeItems();
+
+  Future<List<PracticeItem>> _localPracticeItems({Set<String>? ids}) async {
     final result = <PracticeItem>[];
-    final rows = await (_db.select(
-      _db.userCards,
-    )..where((t) => t.localOnly.equals(true) & t.lang.equals(lang))).get();
-    for (final r in rows) {
+    if (ids?.isEmpty == true) return result;
+    final query = _db.select(_db.userCards).join([
+      innerJoin(_db.cardContexts,
+        _db.cardContexts.id.equalsExp(_db.userCards.primaryContextId) &
+        _db.cardContexts.cardId.equalsExp(_db.userCards.cardId) &
+        _db.cardContexts.lang.equals(lang)),
+    ])..where(_db.userCards.localOnly.equals(true) & _db.userCards.lang.equals(lang));
+    if (ids != null) query.where(_db.userCards.cardId.isIn(ids));
+    for (final row in await query.get()) {
+      final r = row.readTable(_db.userCards);
+      final ctx = row.readTable(_db.cardContexts);
       if ([
         r.form,
         r.formNorm,
@@ -797,15 +871,7 @@ class DriftUserRepository implements UserRepository, StoryLearningRepository, Re
       ].any((v) => v == null || v.isEmpty)) {
         continue;
       }
-      final ctx =
-          await (_db.select(_db.cardContexts)..where(
-                (t) =>
-                    t.id.equals(r.primaryContextId!) &
-                    t.cardId.equals(r.cardId),
-              ))
-              .getSingleOrNull();
-      if (ctx == null ||
-          ctx.gapStart < 0 ||
+      if (ctx.gapStart < 0 ||
           ctx.gapEnd > ctx.textValue.length ||
           ctx.gapStart >= ctx.gapEnd ||
           contentFormNorm(ctx.textValue.substring(ctx.gapStart, ctx.gapEnd)) !=

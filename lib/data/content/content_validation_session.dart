@@ -30,6 +30,7 @@ final class GenerationIdentity {
     final parsed = ReleaseOffer.parse(
       jsonDecode(jsonEncode(offer.toJson())) as Map<String, dynamic>,
       offer.lang,
+      allowBundled: true,
     );
     return GenerationIdentity._(
       jsonEncode(_sortedJson(parsed.toJson())),
@@ -43,8 +44,11 @@ final class GenerationIdentity {
   final String lang;
   final int contractVersion;
   String get fingerprint => _key;
-  ReleaseOffer get offer =>
-      ReleaseOffer.parse(jsonDecode(_offerJson) as Map<String, dynamic>, lang);
+  ReleaseOffer get offer => ReleaseOffer.parse(
+    jsonDecode(_offerJson) as Map<String, dynamic>,
+    lang,
+    allowBundled: true,
+  );
   @override
   bool operator ==(Object other) =>
       other is GenerationIdentity && _key == other._key;
@@ -427,6 +431,7 @@ Future<QueryExecutor> _prepareBoundExecutor(
   final offer = ReleaseOffer.parse(
     jsonDecode(offerJson) as Map<String, dynamic>,
     lang,
+    allowBundled: true,
   );
   final copy = File('$directory/content.sqlite');
   await _copyBound(File(source), copy, offer.size, events);

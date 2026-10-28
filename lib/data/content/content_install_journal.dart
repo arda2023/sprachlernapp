@@ -39,7 +39,7 @@ class ContentInstallJournal {
     final value = await read('active');
     return value == null || value['bootstrap'] == true
         ? null
-        : ReleaseOffer.parse(value, lang);
+        : ReleaseOffer.parse(value, lang, allowBundled: true);
   }
 
   File bootstrapFile(ContentManifest manifest) => File(
@@ -56,7 +56,7 @@ class ContentInstallJournal {
         ContentManifest.parse(jsonEncode(pointer['manifest']), lang: lang),
       );
     }
-    final offer = ReleaseOffer.parse(pointer, lang);
+    final offer = ReleaseOffer.parse(pointer, lang, allowBundled: true);
     return File('${generation(offer.id).path}/content.sqlite');
   }
 

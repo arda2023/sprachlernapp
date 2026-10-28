@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart' show CupertinoPicker;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -101,11 +102,16 @@ void main() {
       ),
     );
     await t.pumpAndSettle();
-    for (final profile in ContentLanguageProfile.supported) {
-      expect(
-        find.text('${profile.flag}  ${profile.displayName}'),
-        findsOneWidget,
-      );
-    }
+    // The wheel builds only the rows in view: check its rows, then that the
+    // last language is reachable.
+    final picker = t.widget<CupertinoPicker>(find.byType(CupertinoPicker));
+    expect(
+      picker.childDelegate.estimatedChildCount,
+      ContentLanguageProfile.selectable.length,
+    );
+    final last = ContentLanguageProfile.selectable.last;
+    await t.drag(find.byType(CupertinoPicker), const Offset(0, -400));
+    await t.pumpAndSettle();
+    expect(find.text('${last.flag}  ${last.displayName}'), findsOneWidget);
   });
 }

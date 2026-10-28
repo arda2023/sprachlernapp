@@ -95,3 +95,11 @@ abstract interface class UserRepository {
 
   Future<void> close();
 }
+
+/// Language-scoped rotation metadata for fair new words (docs/srs.md): the
+/// source of the last completed new target in mixed practice. Learning
+/// states, reviews and due dates are never used for it.
+abstract interface class NewWordRotationStore {
+  Future<String?> lastNewWordSource();
+  Future<void> saveLastNewWordSource(String source);
+}

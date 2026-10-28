@@ -2,6 +2,16 @@
 
 Quelle der Regeln: `PRODUCT.md`. Code: `lib/domain/` (Interface `SpacedRepetitionEngine`). Tabellen: `docs/user-schema.md`.
 
+## Aktueller Vertrag (gültig ab 25.10.2026)
+
+Dieser Abschnitt und „Queue je Modus“ sind verbindlich. Spätere Abschnitte mit Datum davor sind Historie und Nachweis; wo sie abweichen, sind sie als überholt markiert.
+
+- **Bewertung unverändert:** Boxen 1–5 mit 1/4/14/40/90 Tagen; sauberer Erstkontakt Box 3, Fehler oder „Wort erfahren“ Box 1; Revue und Vorab: richtig unverändert, Fehler Box 1; eine ungeloggte In-Session-Wiederholung.
+- **Reihenfolge überall:** fällige Wiederholungen des Bereichs, am längsten überfällige zuerst, dann neue Ziele. Keine automatische Auffüllung mit nicht fälligen Karten; „Vorab üben“ nur ausdrücklich.
+- **Neue Wörter in Gemischt:** faire Rotation zwischen aktiven Stapeln und „Aus Storys“ als gleichberechtigten Quellen; kein Story-Vorrang, keine Themenabstände, keine 4:1-Funktionswortquote. Inhaltsreihenfolge je Stapel, Hinzufügedatum je Story-Ziel; je Sitzung ein Ziel je Lerngruppe, Lemma und Oberfläche.
+- **Tagesziel:** verschiedene Karten mit heute gespeichertem ersten Durchgang in **jedem** Modus, einschließlich Revue und Vorab. Nach Erreichen startet freiwilliges Weiterlernen direkt.
+- **Verbleibende interne Grenze:** Die vier Zähler (`eligiblePracticeIds`/`deriveVocabBreakdown`) und die Warteschlange (`buildPracticeQueue` mit `buildMixedQueue`/`buildDeckQueue`/`buildEarlyQueue`) folgen denselben fachlichen Regeln (aktiv, auflösbar, Gruppenprojektion, Fälligkeit), sind aber weiterhin **getrennte Funktionen**. „Insgesamt fällig“ (Zähler) und „Plätze dieser Sitzung“ (Queue) sind bewusst verschiedene Größen. Eine gemeinsame Eignungsfunktion ist nicht umgesetzt.
+
 ## Karte und Zustand
 
 Eine Karte ist eine exakte Wortform in einer Bedeutung. Zustand je Karte in `user_cards`: `box` (0 = noch nie beantwortet, 1–5), `due_at`, `origin` (deck / story), `disabled`, `retired`, `created_at`.
@@ -50,21 +60,21 @@ Ersetzt die frühere Hinweissanktion. Ausschließlich `valid_alternatives` des k
 
 Eine Karte mit Fehler oder Aufdecken kommt einmal wieder, etwa 3 Karten später. Die Box entscheidet allein der erste Durchgang; die Wiederholung ändert Box und `due_at` nicht und erzeugt keine eigene Zeile im `review_log`.
 
-## Queue je Modus
+## Queue je Modus (Lernablauf ab 25.10.2026)
 
-Deaktivierte und retired Karten sind nie in einer Queue.
+Deaktivierte und retired Karten sind nie in einer Queue. Alle Einstiege nutzen denselben Lernstand je Karte und eine Regel (`buildPracticeQueue`, `lib/domain/srs_state.dart`):
 
-**Gemischt**
-1. Fällige Karten aller Herkunft (`due_at ≤ jetzt`, älteste zuerst).
-2. Neue Wörter bis zum Tagesziel: zuerst Story-Karten in Box 0 (älteste zuerst), danach neue Stapelwörter aktiver Stapel.
-3. Weitere neue Wörter.
-4. Vorab-Üben der als Nächstes fälligen Karten (`mode = early`).
+1. Fällige Wiederholungen des Bereichs (`due_at ≤ jetzt`), am längsten überfällige zuerst. Sie werden nie für neue Wörter verdrängt.
+2. Neue Ziele (keine Zeile oder Box 0), solange Plätze frei sind.
+3. Keine Auffüllung mit noch nicht fälligen Karten. Ist nichts fällig und nichts neu, zeigt die App einen Abschluss für genau diesen Bereich und bietet „Vorab üben“ ausdrücklich an.
 
-Der Stapelschalter steuert nur neue Stapelwörter (Schritt 2 und 3); gesehene Karten werden immer wiederholt.
+Bereiche: **Gemischt** (Play) = alle zulässigen Karten; **Lerne mit diesem Stapel** = nur dieser Stapel, auch wenn er für Gemischt deaktiviert ist; **„Aus Storys“** = nur gespeicherte/verknüpfte Story-Ziele. **Stapel-Revue** = gesehene Karten des Stapels, nächstfällige zuerst. **Vorab üben** = gesehene, noch nicht fällige Karten des Bereichs, nächstfällige zuerst. Revue und Vorab: richtig → Box und Fälligkeit bleiben, Fehler → Box 1.
 
-**Lerne mit diesem Stapel**: ausschließlich Primärkarten und deren feste Sätze dieses Stapels, nie reine Story-Karten, auch bei inaktivem Stapel. Reihenfolge: fällige Karten des Stapels, dann neue Wörter des Stapels.
+**Neue Wörter in Gemischt (faire Rotation).** Quellen sind die aktiven Stapel (Katalogreihenfolge) und „Aus Storys“ (zuletzt), gleichberechtigt. Sie wechseln sich ab; leere oder derzeit ungeeignete Quellen werden übersprungen. Innerhalb eines Stapels gilt seine Inhaltsreihenfolge, in „Aus Storys“ das Hinzufügedatum (älteste zuerst). Die Rotation beginnt bei der Quelle nach der zuletzt bedienten. Gespeichert wird nur diese Quelle, sprachgetrennt in `language_learning_preferences.new_word_source`, und erst wenn ein neues Ziel in Gemischt tatsächlich beantwortet und gespeichert ist; Vorschau, Queue-Aufbau oder Öffnen schreiben nichts. Ein Ziel in mehreren Quellen gehört der ersten Quelle dieser Reihenfolge und wird nur einmal angeboten. Zulässig sind nur neue, aktive, auflösbare Ziele, je Sitzung höchstens eines je Lerngruppe, Lemma und Oberfläche. Der Stapelschalter steuert nur neue Wörter in Gemischt; Gelerntes wird weiter wiederholt.
 
-**Stapel-Revue**: nur gesehene Primärkarten des Stapels (Box ≥ 1), als Vorab-Üben (richtig → unverändert, Fehler → Box 1).
+**Sitzungslänge.** Play und direktes Stapellernen dauern so lange wie der Tagesrest. Ist das Ziel erreicht, startet derselbe Einstieg direkt freiwilliges Weiterlernen in Tageszielgröße, ohne leere Zwischensitzung. Heute normal geübte Karten sind danach weder fällig noch neu; nur per Revue/Vorab geübte, weiterhin fällige Karten bleiben fällig.
+
+**Tagesziel.** Zählt unterschiedliche Karten mit einem heute gespeicherten ersten Durchgang in jedem Modus, auch Revue und Vorab. Anzeigen allein und In-Session-Wiederholungen schreiben keine Aktivität. Abgeleitet aus `review_log`, kein Zähler.
 
 ## Abgeleitete Zähler
 
@@ -79,7 +89,7 @@ Nie gespeichert. Mit `A` = aktive Stapel, `C` = Karten mit `disabled = false` un
 
 Zuordnung in dieser Reihenfolge, damit die Zähler disjunkt sind. **Invariante:** Summe der vier = gelernte auflösbare Karten in `C` + zulässige Box-0-Karten + unbekannte Primärkarten aus `A`. Retired Karten zählen wie deaktivierte nirgends mit.
 
-**Tagesziel** = Anzahl verschiedener `card_id` mit einem abgeschlossenen, gespeicherten Durchgang in `review_log` am heutigen lokalen Kalendertag, ohne `mode = revue`. Formziele zählen getrennt; Doppelabgaben und In-Session-Wiederholungen zählen nicht zusätzlich. Der Streak entsteht aus derselben regulären Tagesauswertung. Neue reguläre Sitzungen verwenden `max(0, dailyGoal − heute erledigte Ziele)`; aktive Sitzungen bleiben bei Einstellungs- oder Tageswechsel erhalten. Bei Rest 0 steht „Tagesziel erreicht“ mit explizitem Weiterlernen; Revue bleibt verfügbar.
+**Tagesziel** = Anzahl verschiedener `card_id` mit einem abgeschlossenen, gespeicherten Durchgang in `review_log` am heutigen lokalen Kalendertag, in jedem Modus einschließlich `revue` und `early` (seit 25.10.2026; vorher ohne Revue). Formziele zählen getrennt; Doppelabgaben und In-Session-Wiederholungen zählen nicht zusätzlich. Der Streak entsteht aus derselben regulären Tagesauswertung. Neue reguläre Sitzungen verwenden `max(0, dailyGoal − heute erledigte Ziele)`; aktive Sitzungen bleiben bei Einstellungs- oder Tageswechsel erhalten. Bei Rest 0 startet derselbe Einstieg direkt freiwilliges Weiterlernen in Tageszielgröße (keine leere Zwischensitzung); Revue und Vorab bleiben ausdrücklich wählbar.
 
 ## review_log (nur anhängen)
 
@@ -108,34 +118,19 @@ Eine Zeile je Karte und Session, geschrieben nach dem ersten Durchgang der Karte
 ## Bestätigte Regeln (früher Annahmen)
 
 - Karte in Box 0 (aus Story, noch nie beantwortet) zählt als "Noch nicht geübt". ✔
-- Tagesziel = verschiedene Ziele mit regulärer `review_log`-Zeile heute, ohne Revue. ✔
-- `mode = early` kennzeichnet Vorab-Üben innerhalb von Gemischt (Box-Regel wie Revue). ✔
+- ~~Tagesziel = verschiedene Ziele mit regulärer `review_log`-Zeile heute, ohne Revue.~~ Überholt 25.10.2026: alle Modi zählen einmal, siehe „Aktueller Vertrag“.
+- `mode = early` kennzeichnet Vorab-Üben (Box-Regel wie Revue); seit 25.10.2026 nur noch als ausdrücklich gewählte Sitzung, nicht mehr innerhalb von Gemischt. ✔
 - Eine `review_log`-Zeile je Karte und Session; die In-Session-Wiederholung wird nicht geloggt. ✔
 - Geprüfte Alternative → neutraler erneuter Versuch; sauberer Erstkontakt nach Zielform Box 3, echte Fehler/Aufdecken bleiben wirksam (06.10.2026). ✔
 
-### Vielfalt bei der Einführung neuer Karten (2026-10-04)
+### Vielfalt bei der Einführung neuer Karten (2026-10-04, ersetzt)
 
-Fällige Reviews bleiben zuerst und unverändert. Nur freie neue Plätze verwenden
-vier Inhaltswörter, danach höchstens ein Funktionswort. Innerhalb jeder Gruppe
-bleibt die bestehende Relevanzreihenfolge erhalten; nie angezeigte Lemmas kommen
-vor bereits angezeigten. Je Sitzung höchstens eine neue Karte je normalisiertem
-Lemma und je normalisierter Oberfläche, auch über unterschiedliche POS hinweg.
-Reichen Inhaltswörter nicht, wird die Sitzung kürzer: höchstens ein Funktionswort
-pro vier Inhaltswörtern, mindestens ein verfügbarer Funktionswort-Platz bei einem
-kleinen/reinen Funktionswortbestand. Keine Wiederauffüllung mit Nebenbedeutungen.
-Die Begrenzung bedeutet begrenzte aktuelle Auswahl, nicht abgeschlossene Sprache.
-NOUN, lexikalische VERB, ADJ und bedeutungstragende ADV sind Inhaltswörter.
-Artikel, Pronomen, Präpositionen, Konjunktionen, Partikeln und AUX sind Funktion.
-Sinnspezifische Grenzfälle stehen in `new_card_selection.dart`: z.B. have#muessen
-und get#werden sind Funktion, be#befinden ist lexikalisch; keine Form-Blacklist.
-Unbekannte ADV werden nach POS als Inhaltswort behandelt, unbekannte AUX als
-Funktion. Neue Grenzfälle benötigen Bedeutungsdaten und eine explizite Zuordnung.
-Deaktivierte/entfernte Karten bleiben gefiltert. Revue und In-Session-Wiederholung
-ändern sich nicht. Direkter Start eines inaktiven Stapels bleibt wie bisher erlaubt.
-Aktuell nutzt der echte Stapel-Lernmodus die gemeinsame Domain-Auswahl; noch nicht
-migrierte Demo-Modi werden hierdurch nicht als echte Lernabläufe ausgewiesen.
+Ersetzt am 25.10.2026 durch die faire Rotation oben: keine Themenabstände, keine 4:1-Funktionswortquote und keine Lemma-Vorsortierung mehr; die Inhaltsreihenfolge des Stapels gilt. Erhalten bleiben je Sitzung ein Ziel je Lerngruppe, Lemma und Oberfläche sowie alle Aktivitäts-/Rückstellungsfilter.
 
 ### Lokaler Pack-Vergleich (04.10.2026)
+
+> **Überholt (25.10.2026):** Historischer Nachweis der damaligen Themen-/4:1-Auswahl; gilt nicht mehr, siehe „Queue je Modus“.
+
 
 Read-only-Diagnose mit der produktiven Auswahl: `tool/inspect_new_card_selection.dart`.
 Windows PowerShell und macOS Terminal, ab Repository-Root (ohne Nutzerzustand):
@@ -167,6 +162,9 @@ Vollständige Vorher/Nachher-Zeilen mit Form, Lemma, Sense, Klasse und Grund:
 `build/selection_queue_report.txt` (lokaler Nachweis, nicht versioniert).
 
 ## Anbindung Gemischt (04.10.2026)
+
+> **Überholt (25.10.2026):** `selectNewCards` und das anschließende Vorab-Üben in Gemischt sind ersetzt durch `buildPracticeQueue` mit fairer Rotation und ausdrücklichem „Vorab üben“; siehe „Queue je Modus“.
+
 Gemischt verwendet jetzt `buildMixedQueue` im gemeinsamen `DeckSessionController`: fällige aktive bekannte Karten aller Quellen, neue Karten aktivierter Stapel über den unveränderten `selectNewCards`, anschließend Vorab-Üben mit `mode=early`. Bereits gesehene Karten bleiben bei deaktiviertem Stapel erreichbar; deaktivierte/retirierte Karten entfallen. Wiederholungen verwenden weiterhin `withRepeat`, Antworten `ReviewPass` und Termine `scheduleReview`. Nicht annotierte Story-/News-Demos erzeugen keine Lernstände. Der oben dokumentierte Pilot-Snapshot bleibt ein historischer Vergleich, keine Aussage über das heutige 264-Karten-Pack.
 
 ## Ein-Satz-Vertrag und Altstände (Paket A, 04.10.2026)
@@ -175,13 +173,13 @@ Direkte Stapelübungen und Revue enthalten ausschließlich Primärkarten. Gelern
 
 ### Paket B: gemeinsame auflösbare Lernmenge
 `PracticeItemResolver` liefert kuratierte und vollständige lokale Karten. Zähler berücksichtigen nur diesen auflösbaren Bestand; fehlende alte IDs bleiben gespeichert und werden in der Wortliste als Inhaltsbefund ausgewiesen. Explizite Story-Box-0-Karten sind sofort „Ungelernt“ in der Wortliste; kein Tagesziel-/Wochenfortschritt ohne Review.
-Gemischt reserviert nach fälligen Karten zuerst Slots für explizite Story-Box-0-Karten (älteste Entscheidung zuerst), dann automatische Primärwörter, zuletzt Vorab-Üben. Die 4:1-Auswahl betrifft nur automatische neue Karten und kann Story-Slots nicht verdrängen. Vielfalt bei neuen Karten gilt pro Sitzung; vorhandene Box-0-Zustände bleiben spätere Kandidaten. Gelernte unterschiedliche Bedeutungen werden nach Karten-ID getrennt behandelt.
+~~Gemischt reserviert nach fälligen Karten zuerst Slots für explizite Story-Box-0-Karten (älteste Entscheidung zuerst), dann automatische Primärwörter, zuletzt Vorab-Üben. Die 4:1-Auswahl betrifft nur automatische neue Karten und kann Story-Slots nicht verdrängen. Vielfalt bei neuen Karten gilt pro Sitzung;~~ *(überholt 25.10.2026: Story-Ziele sind eine gleichberechtigte Rotationsquelle, kein Vorrang, keine 4:1-Auswahl, kein Vorab-Auffüllen)* vorhandene Box-0-Zustände bleiben spätere Kandidaten. Gelernte unterschiedliche Bedeutungen werden nach Karten-ID getrennt behandelt.
 Exakte Bindungen einer lokalen Karte an spätere Content-Entsprechungen verhindern einen zweiten automatischen Erstkontakt. Der lokale Stand kann einen Primärplatz als „über Story gelernt“ abdecken; Besitz/Deckgröße ändern sich nicht. Haben beide IDs bereits Zustände, bleiben beide erreichbar und der Konflikt sichtbar. Keine automatische Verschmelzung.
 
 ## Gruppenprojektion und Reihenfolge v1 (06.10.2026)
 `LearningGroups.project` ist die gemeinsame Regel: genaue Gruppe der relevanten Primär-/Storykarte ermitteln; alle bereits gelernten Mitglieder erhalten, andernfalls ältesten vorhandenen Box-0-Stand (Zeitpunkt, dann ID) oder redaktionellen Kopf auswählen. Inaktive Zustände reservieren die Gruppe, erscheinen aber nicht in Queue/Zählern. Bereits gelernte mehrere Mitglieder behalten einzeln fällige Reviews und Revueplätze. Auch Kopf außerhalb des gewählten Stapels wird appweit wiederverwendet. Einzelne historische Nebenbedeutungen ohne explizite Gruppe bleiben getrennt.
 Die vier Zähler verwenden diese Projektion nur für neue Ziele; die disjunkten Kategorien der gelernten Karten bleiben unverändert. Stapelfortschritt hat dieselbe abgeleitete Menge, keine gespeicherten Zähler. Die Wortliste erhält alle gelernten Zeilen und nur einen unbewerteten Gruppenvertreter; deaktivierte Zeilen bleiben dort bedienbar.
-`selectNewCards` verwendet Themen und explizite Kontrasttags aus Content. Verwandt bedeutet gleiches Thema oder gemeinsames Kontrasttag. Drei andere neue Ziele dazwischen; falls kein Kandidat die Inhalts-/Funktionswortquote erfüllt, kontrolliert 2/1/0. Unbekannte Lemmas, stabile Eingangsreihenfolge und die bestehende 4:1-Regel bleiben; explizite Storyziele haben Vorrang innerhalb der Abstandsstufe. Jede Auswahl verbraucht einen Kandidaten; bei späteren Sessions rücken übrig gebliebene Wörter nach, ohne Zufallsneusortierung. Ein einmal aufgebauter Controller behält seine Session über Provider-Neuberechnungen. Reviews und In-Session-Wiederholungen unterliegen nicht dem Themenabstand.
+*(Überholt 25.10.2026 für alle Lernqueues; `selectNewCards` dient nur noch Werkzeugen/Altvergleichen:)* `selectNewCards` verwendet Themen und explizite Kontrasttags aus Content. Verwandt bedeutet gleiches Thema oder gemeinsames Kontrasttag. Drei andere neue Ziele dazwischen; falls kein Kandidat die Inhalts-/Funktionswortquote erfüllt, kontrolliert 2/1/0. Unbekannte Lemmas, stabile Eingangsreihenfolge und die bestehende 4:1-Regel bleiben; explizite Storyziele haben Vorrang innerhalb der Abstandsstufe. Jede Auswahl verbraucht einen Kandidaten; bei späteren Sessions rücken übrig gebliebene Wörter nach, ohne Zufallsneusortierung. Ein einmal aufgebauter Controller behält seine Session über Provider-Neuberechnungen. Reviews und In-Session-Wiederholungen unterliegen nicht dem Themenabstand.
 Die vorherigen Paket-A/B-Abschnitte beschreiben den historischen Stand; für gruppierte Schema-3-Inhalte gelten die hier beschriebenen Ergänzungen. Quelle, Vorher/Nachher-Auswahl und Bestandsprüfungen: `docs/learning-groups-v1.md`.
 
 ## Historischer Verben-Paket-A-Stand: Transport (durch Paket B ergänzt)

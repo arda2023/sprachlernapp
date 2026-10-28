@@ -43,12 +43,14 @@ extension ReviewActivityReads on UserRepository {
   }
 }
 
+/// Distinct cards with a completed (logged) first pass per local day, in every
+/// mode including Revue and chosen Vorab-Üben. Display alone and in-session
+/// repeats write no activity and never count.
 Map<DateTime, Set<String>> completedTargetsByDay(
   Iterable<ReviewActivity> activity,
 ) {
   final days = <DateTime, Set<String>>{};
   for (final r in activity) {
-    if (r.mode == ReviewMode.revue) continue;
     final at = r.at.toLocal();
     (days[DateTime(at.year, at.month, at.day)] ??= {}).add(r.cardId);
   }

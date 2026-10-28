@@ -1,0 +1,128 @@
+{
+  "en": {
+    "id": "en-legacy-v1",
+    "lang": "en",
+    "translation_lang": "de",
+    "model": "en_core_web_sm",
+    "model_version": "3.8.0",
+    "normalization": "NFC-lower-apostrophe-v1",
+    "answer_policy": "legacy-target-alternative-form-typo-wrong-v1",
+    "allowed_functions": [
+      "base",
+      "past",
+      "past_participle"
+    ]
+  },
+  "pt-BR": {
+    "id": "pt-BR-editorial-v2",
+    "lang": "pt-BR",
+    "translation_lang": "de",
+    "model": "spacy.blank.pt",
+    "model_version": "3.8.16",
+    "tokenizer_sha256": "b528e0528ca541b2815e374dbec35bdbc4574141e7683b23b85384423e782317",
+    "normalization": "NFC-lower-apostrophe-v1",
+    "answer_policy": "strict-accents-target-alternative-form-typo-wrong-v1",
+    "allowed_functions": [
+      "base",
+      "past",
+      "past_participle"
+    ],
+    "practice_kinds": [
+      "ordinary",
+      "verb_base",
+      "verb_past",
+      "verb_participle"
+    ],
+    "editorial_policy": "ai-editorial-reviewed-v1",
+    "frequency_policy": "manual-editorial-no-zipf-v1",
+    "automatic_grammar": false,
+    "automatic_frequency": false,
+    "max_words": 14,
+    "max_subclauses_editorial": 1,
+    "sentence_policy": "one-sentence-no-dashes-semicolons-v1"
+  },
+  "nb": {
+    "id": "nb-editorial-v1",
+    "lang": "nb",
+    "translation_lang": "de",
+    "model": "spacy.blank.nb",
+    "model_version": "3.8.16",
+    "tokenizer_sha256": "a30c9163c269f78262cc77a713d52fe6529d3f3a2b9a9bc673a933c114cd6fae",
+    "normalization": "NFC-lower-apostrophe-v1",
+    "answer_policy": "strict-accents-target-alternative-form-typo-wrong-v1",
+    "allowed_functions": [
+      "base",
+      "past",
+      "past_participle"
+    ],
+    "practice_kinds": [
+      "ordinary",
+      "verb_base",
+      "verb_past",
+      "verb_participle"
+    ],
+    "editorial_policy": "ai-editorial-reviewed-v1",
+    "frequency_policy": "manual-editorial-no-zipf-v1",
+    "automatic_grammar": false,
+    "automatic_frequency": false,
+    "max_words": 14,
+    "max_subclauses_editorial": 1,
+    "sentence_policy": "one-sentence-no-dashes-semicolons-v1"
+  },
+  "it": {
+    "id": "it-editorial-v1",
+    "lang": "it",
+    "translation_lang": "de",
+    "model": "spacy.blank.it",
+    "model_version": "3.8.16",
+    "tokenizer_sha256": "1ed4ee22bdb73d6ba807a1452b4080811977e0149572b577b8e778bf20414ace",
+    "normalization": "NFC-lower-apostrophe-v1",
+    "answer_policy": "strict-accents-target-alternative-form-typo-wrong-v1",
+    "allowed_functions": [
+      "base",
+      "past",
+      "past_participle"
+    ],
+    "practice_kinds": [
+      "ordinary",
+      "verb_base",
+      "verb_past",
+      "verb_participle"
+    ],
+    "editorial_policy": "ai-editorial-reviewed-v1",
+    "frequency_policy": "manual-editorial-no-zipf-v1",
+    "automatic_grammar": false,
+    "automatic_frequency": false,
+    "max_words": 14,
+    "max_subclauses_editorial": 1,
+    "sentence_policy": "one-sentence-no-dashes-semicolons-v1"
+  },
+  "es": {
+    "id": "es-editorial-v1",
+    "lang": "es",
+    "translation_lang": "de",
+    "model": "spacy.blank.es",
+    "model_version": "3.8.16",
+    "tokenizer_sha256": "4276d2d6fbdb461831dd97a48abc02d7e5300647b37da21b42abab99a07f02fd",
+    "normalization": "NFC-lower-apostrophe-v1",
+    "answer_policy": "strict-accents-target-alternative-form-typo-wrong-v1",
+    "allowed_functions": [
+      "base",
+      "past",
+      "past_participle"
+    ],
+    "practice_kinds": [
+      "ordinary",
+      "verb_base",
+      "verb_past",
+      "verb_participle"
+    ],
+    "editorial_policy": "ai-editorial-reviewed-v1",
+    "frequency_policy": "manual-editorial-no-zipf-v1",
+    "automatic_grammar": false,
+    "automatic_frequency": false,
+    "max_words": 14,
+    "max_subclauses_editorial": 1,
+    "sentence_policy": "one-sentence-no-dashes-semicolons-v1"
+  }
+}

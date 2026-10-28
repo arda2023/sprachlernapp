@@ -27,6 +27,7 @@ import 'decks/deck_details_screen.dart';
 import 'decks/deck_library_screen.dart';
 import 'home/home_screen.dart';
 import 'stories/story_library_screen.dart';
+import 'stories/story_collection_screen.dart';
 import 'stories/story_reader_screen.dart';
 import 'words/word_list_screen.dart';
 
@@ -144,8 +145,7 @@ class _AppShellState extends ConsumerState<AppShell> {
     if (ref.read(languageSelectionProvider).switching) return;
     final lang = ref.read(selectedContentLanguageProvider);
     if (lang.isLoading && lang.hasValue) return;
-    // Only English ships with the app; other packs may still be missing.
-    if (lang.asData?.value case final value? when value != 'en') {
+    if (lang.asData?.value != 'en') {
       final content = ref.read(contentInfoProvider);
       if (content.isLoading || content.hasError) return;
     }
@@ -173,14 +173,12 @@ class _AppShellState extends ConsumerState<AppShell> {
     });
     final selected = ref.watch(selectedContentLanguageProvider);
     final lang = selected.asData?.value ?? 'en';
-    // Only English ships with the app (and its sample texts); every other
-    // language depends on an installed pack.
-    final downloaded = lang != 'en';
+    final hasEnglishSamples = lang == 'en';
     final switching =
         ref.watch(languageSelectionProvider).switching ||
         selected.isLoading && selected.hasValue;
-    final info = downloaded ? ref.watch(contentInfoProvider) : null;
-    final unavailable = downloaded && (info!.isLoading || info.hasError);
+    final info = !hasEnglishSamples ? ref.watch(contentInfoProvider) : null;
+    final unavailable = !hasEnglishSamples && (info!.isLoading || info.hasError);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value:
           (context.appColors.light
@@ -201,8 +199,7 @@ class _AppShellState extends ConsumerState<AppShell> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                       child: Text(
-                        ContentLanguageProfile.forLanguage(lang)?.displayName ??
-                            'Lernsprache',
+                        ContentLanguageProfile.forLanguage(lang)!.displayName,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
@@ -245,6 +242,7 @@ class _AppShellState extends ConsumerState<AppShell> {
                     ),
                   ),
                   StoryLibraryScreen(
+                    collection: const StoryCollectionEntry(),
                     stories: ref.watch(libraryStoriesProvider).isLoading
                         ? []
                         : ref.watch(libraryStoriesProvider).asData?.value ?? [],
@@ -280,15 +278,15 @@ class _AppShellState extends ConsumerState<AppShell> {
                           ),
                         ),
                     onOpenStory: _openStory,
-                    news: downloaded ? [] : sampleNews,
+                    news: hasEnglishSamples ? sampleNews : [],
                     onOpenNews: (article) =>
                         StoryReaderScreen.openNews(context, article),
                   ),
                   const WordListScreen(),
-                  downloaded
+                  !hasEnglishSamples
                       ? Center(
                           child: Text(
-                            'Für ${ContentLanguageProfile.forLanguage(lang)?.displayName ?? 'diese Sprache'} sind noch keine weiteren Inhalte verfügbar.',
+                            'Für ${ContentLanguageProfile.forLanguage(lang)!.displayName} sind noch keine weiteren Inhalte verfügbar.',
                           ),
                         )
                       : ContentDashboardScreen(

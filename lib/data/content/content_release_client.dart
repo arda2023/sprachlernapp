@@ -15,6 +15,11 @@ class ReleaseOffer {
   String get lang => manifest['lang'] as String;
   String get id => manifest['release_id'] as String;
   int get generation => manifest['generation'] as int;
+  bool get isBundled => manifest['origin'] == 'bundle';
+  int get cloudGeneration =>
+      isBundled ? manifest['cloud_generation'] as int : generation;
+  String? get cloudManifestHash =>
+      isBundled ? manifest['cloud_manifest_sha256'] as String? : manifestHash;
   String get sha => manifest['sha256'] as String;
   int get size => manifest['size_bytes'] as int;
   ContentManifest get contentManifest => ContentManifest(
@@ -31,9 +36,10 @@ class ReleaseOffer {
     Map<String, dynamic> value,
     String lang, {
     ContentLanguageProfile? profile,
+    bool allowBundled = false,
   }) {
     final m = value['manifest'];
-    final expected = profile ?? ContentLanguageProfile.forLanguage(lang);
+    final expected = profile;
     void check(bool valid, String message) {
       if (!valid) throw FormatException(message);
     }
@@ -55,6 +61,22 @@ class ReleaseOffer {
           data['internal_test_pack'] == true,
       'Falscher Sprach- oder Freigabebereich.',
     );
+    final bundled = data['origin'] == 'bundle';
+    check(
+      bundled
+          ? allowBundled &&
+                data['cloud_generation'] is int &&
+                data['cloud_generation'] >= 0 &&
+                (data['cloud_generation'] == 0
+                    ? data['cloud_manifest_sha256'] == null
+                    : data['cloud_manifest_sha256'] is String &&
+                          RegExp(r'^[0-9a-f]{64}$')
+                              .hasMatch(data['cloud_manifest_sha256']))
+          : !data.containsKey('origin') &&
+                !data.containsKey('cloud_generation') &&
+                !data.containsKey('cloud_manifest_sha256'),
+      'Inhaltsherkunft oder Cloudcursor nicht unterstützt.',
+    );
     check(
       data['schema_version'] == 5 &&
           data['min_reader_version'] is int &&
@@ -62,9 +84,16 @@ class ReleaseOffer {
       'App-Aktualisierung erforderlich: Inhaltsschema nicht unterstützt.',
     );
     check(
-      expected != null &&
-          data['profile_id'] == expected.id &&
-          data['profile_sha256'] == expected.sha256,
+      expected != null
+          ? expected.lang == lang &&
+                data['profile_id'] == expected.id &&
+                data['profile_sha256'] == expected.sha256
+          : ContentLanguageProfile.resolve(
+                  lang,
+                  data['profile_id'],
+                  data['profile_sha256'],
+                ) !=
+                null,
       'App-Aktualisierung erforderlich: Sprachprofil nicht unterstützt.',
     );
     check(

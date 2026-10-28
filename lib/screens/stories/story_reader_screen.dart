@@ -1,3 +1,6 @@
+import '../../domain/personal_learning.dart';
+import '../../widgets/personal_learning_button.dart';
+import 'dart:convert';
 import '../../data/runtime_translation_client.dart';
 import '../../widgets/runtime_translation_sheet.dart';
 import '../../presentation/providers/database_providers.dart';
@@ -6,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/story_learning.dart';
+import '../../domain/story_learning_diagnostics.dart';
 import '../../presentation/providers/story_learning_providers.dart';
 
 import 'package:flutter/foundation.dart';
@@ -128,9 +132,13 @@ class _Word {
     this.recognizer, {
     this.sentenceId,
     this.tokenIndex,
+    this.start,
+    this.senseRef,
+    this.formRef,
   });
   final String? sentenceId;
-  final int? tokenIndex;
+  final int? tokenIndex, start;
+  final String? senseRef, formRef;
 
   final String text;
   final WordEntry entry;
@@ -149,10 +157,6 @@ class _Sentence {
 
 class _StoryReaderScreenState extends State<StoryReaderScreen> {
   late final void Function() _releaseContent;
-  static final _wordPattern = RegExp(
-    r"[\p{L}\p{M}]+(?:['’][\p{L}\p{M}]+)*",
-    unicode: true,
-  );
 
   final _words = <_Word>[];
 
@@ -259,7 +263,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
       if (t.start > cursor) {
         sentence.tokens.add(source.text.substring(cursor, t.start));
       }
-      if (t.lemmaId == null) {
+      if (t.lemmaId == null && !RegExp(r'[\p{L}]', unicode: true).hasMatch(t.surface)) {
         sentence.tokens.add(t.surface);
       } else {
         final word = _words.length;
@@ -274,6 +278,11 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
             _recognizer(() => _lookUp(word)),
             sentenceId: source.id,
             tokenIndex: t.index,
+            start: t.start,
+            senseRef: t.senseId ?? t.senseKey,
+            formRef: t.function == null && t.lexicalId == null
+                ? null
+                : jsonEncode([t.lexicalId, t.function]),
           ),
         );
         sentence.tokens.add(word);
@@ -291,7 +300,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     final index = _sentences.length;
     final sentence = _Sentence(text, _recognizer(() => _translate(index)));
     var last = 0;
-    for (final match in _wordPattern.allMatches(text)) {
+    // Share the creation contract: a hyphenated word is one selected span.
+    for (final match in personalWords(text)) {
       if (match.start > last) {
         sentence.tokens.add(text.substring(last, match.start));
       }
@@ -301,6 +311,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
           match[0]!,
           widget.lookup(match[0]!),
           _recognizer(() => _lookUp(word)),
+          start: match.start,
         ),
       );
       sentence.tokens.add(word);
@@ -430,6 +441,23 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     final word = _words[index];
     // A short tap on every word lookup, as in practice.
     HapticFeedback.lightImpact();
+    PersonalTarget? personal;
+    if (widget.document == null) {
+      personal = PersonalTarget(lang: widget.sourceLanguage,
+        text: _sentences.firstWhere((s) => s.tokens.contains(index)).text,
+        form: word.text, start: word.start!, source: widget.story.id);
+    } else if (word.sentenceId != null) {
+      try {
+        final candidate = await ProviderScope.containerOf(context, listen: false)
+          .read(storyLearningServiceProvider).candidate(widget.story.id, word.sentenceId!, word.tokenIndex!);
+        if (!candidate.retired && candidate.problem == null && candidate.card == null &&
+            !candidate.token.annotated && candidate.token.pos != 'PROPN') {
+          personal = PersonalTarget(lang: widget.sourceLanguage, text: candidate.sentence.text,
+            form: word.text, start: word.start!, source: widget.story.id);
+        }
+      } catch (_) { /* No creation fallback for a technical context failure. */ }
+      if (!mounted) return;
+    }
     if (!hasStoredTranslation(word.entry.translation)) {
       final sentence = _sentences
           .firstWhere((s) => s.tokens.contains(index))
@@ -440,6 +468,11 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
         lang: widget.sourceLanguage,
         text: sentence,
         form: word.text,
+        wordTap: true,
+        learningTarget: personal,
+        start: word.start,
+        senseRef: word.senseRef,
+        formRef: word.formRef,
       );
       return;
     }
@@ -465,19 +498,16 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
           entry: word.entry,
           mark: status.state == StoryAddState.added ? WordMark.active : null,
           status: status,
+          personalAction: personal == null ? null : PersonalLearningButton(target: personal, foregroundColor: const Color(0xFFFFFFFF)),
           onAdd: () => service.add(candidate),
           onReactivate: () => service.reactivate(candidate),
+          onSaved: (result) {
+            if (mounted && result.state == StoryAddState.added) {
+              setState(() => _marks['${word.sentenceId}/${word.tokenIndex}'] = WordMark.active);
+            }
+          },
         );
-        if (mounted) {
-          final after = await service.status(candidate);
-          if (mounted && after.state == StoryAddState.added) {
-            setState(
-              () => _marks['${word.sentenceId}/${word.tokenIndex}'] =
-                  WordMark.active,
-            );
-          }
-        }
-      } catch (_) {
+      } catch (error) {
         if (mounted) {
           await WordPopover.show(
             context,
@@ -486,10 +516,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
             entry: word.entry,
             mark: null,
             learningAvailable: false,
-            status: const StoryAddResult(
-              StoryAddState.unavailable,
-              message: 'Storydaten konnten nicht geladen werden. Bitte erneut öffnen.',
-            ),
+            failure: error is StoryLearningFailure
+                ? error : const StoryLearningFailure(StoryLearningStep.context),
             onAdd: () async => const StoryAddResult(StoryAddState.unavailable),
           );
         }
@@ -502,6 +530,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
         entry: word.entry,
         mark: _marks[headword],
         learningAvailable: false,
+        personalAction: personal == null ? null : PersonalLearningButton(target: personal, foregroundColor: const Color(0xFFFFFFFF)),
         onAdd: () async => const StoryAddResult(StoryAddState.unavailable),
       );
     }
@@ -1141,7 +1170,7 @@ class _StoredStoryReader extends ConsumerWidget {
                 if (token.senseId != null)
                   if (ref.watch(practiceResolverProvider).value
                       case final resolver?)
-                    if (resolver.storyStateId('en', token) case final id?)
+                    if (resolver.storyStateId(ref.watch(contentRepositoryProvider).requireValue.info.lang, token) case final id?)
                       if (resolver.states[id] case final state?)
                         if (state.box > 0 || resolver.additions.containsKey(id))
                           '${sentence.id}/${token.index}': state.box == 5

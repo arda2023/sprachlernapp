@@ -1,0 +1,41 @@
+{
+  "contract": 1,
+  "version": "dewiktionary-2026-10-24-v1",
+  "license": "CC-BY-SA-4.0",
+  "sha256": "d16ab91d64cdff64e5ae6536359a2337c0bd3d5644c22c1321f8ab5de0f21306",
+  "bytes": 5779456,
+  "compressed_bytes": 1473187,
+  "compressed_sha256": "1f8908cf43e7148b1ea5785b4522742bd01ce73eaf2a5447aecf4ded4ba53592",
+  "sources": [
+    {
+      "lang": "en",
+      "url": "https://kaikki.org/dewiktionary/Englisch/kaikki.org-dictionary-Englisch.jsonl",
+      "sha256": "a3487e4e223b24980613d813cdc9891870d6d50a69f79672a72c1607b5fa9739",
+      "bytes": 83208409,
+      "source_rows": 70891,
+      "explicit_form_links": 56933,
+      "unresolved_form_links": 45483
+    },
+    {
+      "lang": "pt-BR",
+      "url": "https://kaikki.org/dewiktionary/Portugiesisch/kaikki.org-dictionary-Portugiesisch.jsonl",
+      "sha256": "19dd1426977850891858401782bcf4a32eabcc4708434a74abf2c02771f00d77",
+      "bytes": 8988739,
+      "source_rows": 7595,
+      "explicit_form_links": 9507,
+      "unresolved_form_links": 71
+    }
+  ],
+  "counts": {
+    "en": {
+      "senses": 22860,
+      "lookup_forms": 21665,
+      "form_links": 19522
+    },
+    "pt-BR": {
+      "senses": 1536,
+      "lookup_forms": 7344,
+      "form_links": 16033
+    }
+  }
+}

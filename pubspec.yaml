@@ -79,8 +79,13 @@ flutter:
   # material; the folder itself is tracked so builds work without a pack).
   assets:
     - assets/content/en/
+    - assets/content/pt-BR/
+    - assets/content/nb/
+    - assets/content/it/
+    - assets/content/es/
     - assets/rive/
     - assets/sounds/
+    - assets/offline_dictionary/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

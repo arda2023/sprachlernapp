@@ -50,7 +50,8 @@ void main() {
         now: start,
         size: 3,
       );
-      expect(queue.map((e) => e.cardId), ['card-went', 'card-about']);
+      // New targets keep the deck's content order; no function-word quota.
+      expect(queue.map((e) => e.cardId), ['card-went', 'card-about', 'card-a']);
       final items = {
         for (final i in await content.practiceItems([
           for (final e in queue) e.cardId,
@@ -93,8 +94,7 @@ void main() {
       expect(about.needsRepeat, isFalse);
       expect(await book(about), isTrue);
 
-      // A separate session can introduce a: the first session is deliberately
-      // short, since two function words would refill it without diversity.
+      // A separate session also offers a while it is still new (box 0).
       final aQueue = buildDeckQueue(
         deckCardIds: ['card-a'],
         cards: {'card-a': items['card-a']!.card},
@@ -112,6 +112,7 @@ void main() {
       expect(session.map((e) => e.repeat ? '${e.cardId}*' : e.cardId), [
         'card-went',
         'card-about',
+        'card-a',
       ]);
       final repeat = passFor('card-went', logged: false);
       repeat.submit('went', start);

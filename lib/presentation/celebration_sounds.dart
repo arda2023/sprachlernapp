@@ -37,20 +37,7 @@ class SilentCelebrationSounds implements CelebrationSounds {
 /// and they mix with whatever else is playing.
 class AudioCelebrationSounds implements CelebrationSounds {
   AudioCelebrationSounds() {
-    unawaited(
-      AudioPlayer.global
-          .setAudioContext(
-            AudioContext(
-              iOS: AudioContextIOS(category: AVAudioSessionCategory.ambient),
-              android: const AudioContextAndroid(
-                contentType: AndroidContentType.sonification,
-                usageType: AndroidUsageType.assistanceSonification,
-                audioFocus: AndroidAudioFocus.none,
-              ),
-            ),
-          )
-          .catchError((Object _) {}),
-    );
+    useAmbientAudio();
   }
 
   final _charge = AudioPlayer();
@@ -95,6 +82,29 @@ class AudioCelebrationSounds implements CelebrationSounds {
   @override
   void star() => _play(_star, 'streak_star.mp3', volume: 0.9);
 }
+
+/// Sound effects are ambient: the iOS Silent switch mutes them, they mix
+/// with other audio and never take focus. Set once for the whole app.
+void useAmbientAudio() {
+  if (_ambient) return;
+  _ambient = true;
+  unawaited(
+    AudioPlayer.global
+        .setAudioContext(
+          AudioContext(
+            iOS: AudioContextIOS(category: AVAudioSessionCategory.ambient),
+            android: const AudioContextAndroid(
+              contentType: AndroidContentType.sonification,
+              usageType: AndroidUsageType.assistanceSonification,
+              audioFocus: AndroidAudioFocus.none,
+            ),
+          ),
+        )
+        .catchError((Object _) {}),
+  );
+}
+
+bool _ambient = false;
 
 final celebrationSoundsProvider = Provider<CelebrationSounds>(
   (ref) => const SilentCelebrationSounds(),

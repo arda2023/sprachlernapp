@@ -226,8 +226,14 @@ def test_portuguese_first_and_followup_bundle_use_real_reader(tmp_path):
             assert job['state']=='succeeded',job
             draft=job['result']['draft'];assert draft['validation']['technical']=='valid',draft['validation']
             assert draft['validation']['editorial']=='open'
-            draft=service.review(draft['draft_id'],{'payload_sha256':author.draft_content_hash(draft),
-                'reviewer':'SYNTHETIC TEST ONLY','reason':'Technical fixture only; no linguistic approval or publication.'},service.store.etag(draft))
+            review={'payload_sha256':author.draft_content_hash(draft),
+                'reviewer':'SYNTHETIC TEST ONLY','reason':'Technical fixture only; no linguistic approval or publication.'}
+            with pytest.raises(AuthoringError,match='KI-Prüfung'):
+                service.review(draft['draft_id'],review,service.store.etag(draft))
+            review.update(human_review=False,user_requested_private_device_test=True)
+            draft=service.review(draft['draft_id'],review,service.store.etag(draft))
+            assert draft['reviews'][-1]['human_review'] is False
+            assert draft['reviews'][-1]['editorial_policy']=='ai-editorial-reviewed-v1'
             assert draft['validation']['editorial']=='approved'
             job=wait(service,service.release(draft['draft_id'],{'version':label,'validation_sha256':draft['validation']['sha256']},service.store.etag(draft)))
             assert job['state']=='succeeded',job

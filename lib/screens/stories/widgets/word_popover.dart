@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 import '../../../domain/story_learning.dart';
+import '../../../domain/story_learning_diagnostics.dart';
 import '../../../presentation/providers/database_providers.dart';
 import '../../words/word_list_screen.dart';
 import '../../../models/story_models.dart';
@@ -21,8 +22,11 @@ class WordPopover extends StatefulWidget {
     required this.mark,
     required this.onAdd,
     this.status,
+    this.onSaved,
+    this.failure,
     this.onReactivate,
     this.learningAvailable = true,
+    this.personalAction,
   });
 
   /// The word as it appears in the text, e.g. 'arrived'.
@@ -31,8 +35,11 @@ class WordPopover extends StatefulWidget {
   final WordMark? mark;
   final Future<StoryAddResult> Function() onAdd;
   final StoryAddResult? status;
+  final ValueChanged<StoryAddResult>? onSaved;
+  final StoryLearningFailure? failure;
   final Future<StoryAddResult> Function()? onReactivate;
   final bool learningAvailable;
+  final Widget? personalAction;
 
   static Future<void> show(
     BuildContext context, {
@@ -42,8 +49,11 @@ class WordPopover extends StatefulWidget {
     required WordMark? mark,
     required Future<StoryAddResult> Function() onAdd,
     StoryAddResult? status,
+    ValueChanged<StoryAddResult>? onSaved,
+    StoryLearningFailure? failure,
     Future<StoryAddResult> Function()? onReactivate,
     bool learningAvailable = true,
+    Widget? personalAction,
   }) => showAnchoredPopoverAt<void>(
     context: context,
     anchor: anchor,
@@ -54,8 +64,11 @@ class WordPopover extends StatefulWidget {
       mark: mark,
       onAdd: onAdd,
       status: status,
+      onSaved: onSaved,
+      failure: failure,
       onReactivate: onReactivate,
       learningAvailable: learningAvailable,
+      personalAction: personalAction,
     ),
   );
 
@@ -107,14 +120,16 @@ class _WordPopoverState extends State<WordPopover> {
           }
         });
       }
-    } catch (_) {
+    } catch (error) {
       if (mounted) {
-        setState(() => _error = 'Nicht gespeichert – erneut versuchen.');
+        setState(() => _error = error is StoryLearningFailure
+            ? error.message : 'Nicht gespeichert – erneut versuchen.');
       }
     } finally {
       releaseWrite();
       if (mounted) setState(() => _saving = false);
     }
+    if (_addedNow) widget.onSaved?.call(_status);
   }
 
   @override
@@ -125,7 +140,7 @@ class _WordPopoverState extends State<WordPopover> {
         ? 'Wird hinzugefügt …'
         : _addedNow
         ? 'Zum Lernen hinzugefügt'
-        : _status.label;
+        : widget.failure != null ? 'Lernstatus nicht geladen' : _status.label;
     final added = _status.state == StoryAddState.added;
     final canAdd = widget.learningAvailable && _status.canAdd && !_saving;
 
@@ -185,7 +200,7 @@ class _WordPopoverState extends State<WordPopover> {
           ),
         ),
         const SizedBox(height: 18),
-        if (!widget.learningAvailable)
+        if (widget.personalAction == null && !widget.learningAvailable && widget.failure == null && _status.message == null)
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
@@ -193,18 +208,18 @@ class _WordPopoverState extends State<WordPopover> {
               style: PopoverText.small(),
             ),
           ),
-        if (_error != null || _status.message != null)
+        if (_error != null || widget.failure != null || _status.message != null)
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Semantics(
               liveRegion: true,
               child: Text(
-                _error ?? _status.message!,
+                _error ?? widget.failure?.message ?? _status.message!,
                 style: PopoverText.small(),
               ),
             ),
           ),
-        Semantics(
+        if (widget.personalAction case final action?) action else Semantics(
           liveRegion: true,
           child: _LearnButton(
             label: label,

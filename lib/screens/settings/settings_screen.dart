@@ -3,6 +3,7 @@ import 'package:flutter/material.dart'
     show
         Colors,
         LinearProgressIndicator,
+        Material,
         MaterialPageRoute,
         Scaffold;
 import 'package:flutter/services.dart';
@@ -16,6 +17,9 @@ import '../../presentation/providers/preferences_provider.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/anchored_popover.dart';
 import '../../widgets/back_bar.dart';
+import '../../widgets/personal_learning_button.dart';
+import '../../widgets/translation_cache_delete_tile.dart';
+import '../../widgets/word_cloud_consent.dart';
 import '../decks/widgets/local_submission_sheet.dart';
 import '../home/widgets/goal_panel.dart';
 import '../previews/screen_previews_screen.dart';
@@ -151,7 +155,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final colors = context.appColors;
     final language = ref.watch(selectedContentLanguageProvider);
     final selection = ref.watch(languageSelectionProvider);
-    final portuguese = language.asData?.value == 'pt-BR';
+    final selectedProfile = ContentLanguageProfile.forLanguage(
+      language.asData?.value ?? 'en',
+    );
     final version = ref.watch(appInfoProvider).asData?.value;
     return ListView(
       controller: _scroll,
@@ -174,7 +180,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           title: 'Lernsprache',
           footer: 'Die Oberfläche bleibt Deutsch.',
           children: [
-            for (final profile in ContentLanguageProfile.supported)
+            for (final profile in ContentLanguageProfile.selectable)
               _LanguageRow(
                 profile: profile,
                 selected:
@@ -231,12 +237,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               open: _goalOpen,
               onTap: () => _editGoal(p),
             ),
-            if (portuguese)
-              const _Row(
+            if (selectedProfile?.requiresDiacritics ?? false)
+              _Row(
                 icon: CupertinoIcons.textformat_abc,
-                title: 'Akzente sind für Portugiesisch erforderlich',
+                title: selectedProfile!.lang == 'pt-BR'
+                    ? 'Akzente sind für Portugiesisch erforderlich'
+                    : 'Akzente sind für ${selectedProfile.displayName} erforderlich',
                 subtitle:
-                    'Zum Beispiel unterscheiden sich a und ã sowie c und ç. Die englische Einstellung bleibt erhalten.',
+                    'Sprachspezifische Buchstaben und Akzente gehören zur richtigen Antwort. Die englische Einstellung bleibt erhalten.',
               )
             else
               _SwitchRow(
@@ -306,6 +314,24 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 enabled: false,
                 trailing: const _SoonChip(),
               ),
+          ],
+        ),
+        const _Section(
+          title: 'Daten und Datenschutz',
+          children: [
+            // These tiles carry no inset of their own.
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: WordCloudConsentTile(),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: PersonalLearningConsentTile(),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: TranslationCacheDeleteTile(),
+            ),
           ],
         ),
         _Section(
@@ -388,7 +414,8 @@ class _Section extends StatelessWidget {
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: ColoredBox(
+            // A Material, so embedded ListTiles (consent rows) paint here.
+            child: Material(
               color: colors.raisedInk,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -54,7 +54,7 @@ def test_explicit_test_only_adapter_exports_separate_language(tmp_path,monkeypat
 def test_portuguese_profile_golden_and_english_pin():
     import unicodedata
     from sprachpipe.ids import form_norm
-    p=get_profile('pt-BR')
+    p=get_profile('pt-BR','pt-BR-editorial-v1')
     assert get_profile('en').sha256=='59eec37d0a4f322d666701e00bc1bf4cfb44d19b183b1742d16b443989a505cf'
     assert p.sha256=='7c59364c0d1ef562ee5a6a679b7d895e0ebec6bf2ad47d8eae56afdcba87fe32'
     for lang in ('pt','pt-PT'):
@@ -102,7 +102,7 @@ def test_portuguese_requires_confirmed_bindings_and_ordinary_decks():
     d=draft(base);d['operations'][1]['payload']['context']['tokens'][2].pop('binding_status')
     assert a.validate_draft(d,base)['technical']=='invalid'
     d=draft(base);d['operations'][0]['payload']['practice_kind']='verb_past'
-    assert a.validate_draft(d,base)['technical']=='invalid'
+    assert a.validate_draft(d,base,profile=get_profile('pt-BR','pt-BR-editorial-v1'))['technical']=='invalid'
 
 
 def test_portuguese_word_flag_cannot_bypass_manual_binding():
@@ -126,3 +126,63 @@ def test_portuguese_raw_table_import_cannot_infer_binding_confirmation():
     assert a.validate_draft(d,base)['technical']=='valid'
     d['add']['sentence_tokens'][2].pop('binding_status')
     assert a.validate_draft(d,base)['technical']=='invalid'
+
+
+@pytest.mark.parametrize('lang,text,form', [
+    ('pt-BR', 'Minha irmã escreveu uma carta.', 'escreveu'),
+    ('nb', 'Hun skrev et brev i går.', 'skrev'),
+    ('it', 'Mia sorella scrisse una lettera.', 'scrisse'),
+    ('es', 'Mi hermana escribió una carta.', 'escribió'),
+])
+def test_editorial_profiles_pin_forms_and_sentence_contract(lang,text,form):
+    p=get_profile(lang);start=text.index(form);end=start+len(form)
+    assert p.manifest['allowed_functions']==['base','past','past_participle']
+    assert p.manifest['practice_kinds']==['ordinary','verb_base','verb_past','verb_participle']
+    assert not p.manifest['automatic_grammar'] and not p.manifest['automatic_frequency']
+    assert not [f for f in p.validate_sentence(text,form,start,end) if f.level=='error']
+    assert p.gap(text,start,end,form)['surface']==form
+    assert any(f.rule=='sentence_count' for f in p.validate_sentence(text+' Sim.',form,start,end))
+    assert any(f.rule=='sentence_punctuation' for f in p.validate_sentence(text[:-1]+'; sim.',form,start,end))
+    with pytest.raises(UnsupportedLanguage):get_profile(lang,'en-legacy-v1')
+
+
+def test_portuguese_v2_form_capability_does_not_change_v1():
+    from portuguese_fixture import draft
+    from sprachpipe import authoring_service as a
+    base=a.empty_pack('pt-BR','Portugiesisch');d=draft(base)
+    d['operations'][0]['payload']['practice_kind']='verb_past'
+    assert a.validate_draft(d,base)['technical']=='valid'
+    assert a.validate_draft(d,base,profile=get_profile('pt-BR','pt-BR-editorial-v1'))['technical']=='invalid'
+    p=get_profile('pt-BR')
+    assert p.id=='pt-BR-editorial-v2'
+    d['reviews']=[{'decision':'approved','payload_sha256':a.draft_content_hash(d),
+        'profile_sha256':get_profile('pt-BR','pt-BR-editorial-v1').sha256,
+        'editorial_policy':'manual-pt-BR-editorial-v1'}]
+    assert a.validate_draft(d,base)['editorial']=='open'
+
+
+
+def test_ai_editorial_approval_requires_truthful_explicit_provenance():
+    from portuguese_fixture import draft
+    from sprachpipe import authoring_service as a
+    base=a.empty_pack('pt-BR','Portugiesisch');d=draft(base);p=get_profile('pt-BR')
+    review={'decision':'approved','payload_sha256':a.draft_content_hash(d),
+        'profile_sha256':p.sha256,'editorial_policy':p.manifest['editorial_policy']}
+    d['reviews']=[review]
+    assert a.validate_draft(d,base)['editorial']=='open'
+    review.update(human_review=False, reviewer='Codex AI editorial review',user_requested_private_device_test=True)
+    assert a.validate_draft(d,base)['editorial']=='approved'
+    for field,value in [('human_review',True),('user_requested_private_device_test',False),('reviewer',' ')]:
+        previous=review[field];review[field]=value
+        assert a.validate_draft(d,base)['editorial']=='open'
+        review[field]=previous
+
+
+def test_editorial_empty_seeds_have_no_published_parent():
+    from sprachpipe.authoring_service import empty_pack, release_parent_id
+    for lang in ('pt-BR','nb','it','es'):
+        seed=empty_pack(lang,'Test')
+        assert release_parent_id(seed) is None
+        seed['release']['version']='published-v1'
+        assert release_parent_id(seed)=='published-v1'
+    assert release_parent_id(empty_pack('en','English'))=='empty-en'

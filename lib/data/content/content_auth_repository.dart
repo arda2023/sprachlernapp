@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -14,6 +15,29 @@ class ContentAuthRepository {
   final String url, publicKey;
   final FlutterSecureStorage _storage;
   SupabaseClient? _client;
+  final _identityChanges = StreamController<void>.broadcast(sync: true);
+  Stream<void> get identityChanges => _identityChanges.stream;
+  int identityRevision = 0;
+  String? _lastIdentity;
+  String? get localOwner {
+    final user = _client?.auth.currentUser;
+    return user == null || user.isAnonymous
+        ? null
+        : '${Uri.parse(url).host}:${user.id}';
+  }
+
+  Future<String?> cacheOwner() async {
+    await initialize();
+    return localOwner;
+  }
+
+  void _notifyIdentity() {
+    if (_lastIdentity == localOwner) return;
+    _lastIdentity = localOwner;
+    identityRevision++;
+    _identityChanges.add(null);
+  }
+
   Future<void>? _initializing;
   String get _key => 'sprachapp.content.auth.${Uri.parse(url).host}';
   bool get configured => url.isNotEmpty && publicKey.isNotEmpty;
@@ -57,6 +81,7 @@ class ContentAuthRepository {
         await _storage.delete(key: _key);
       }
     }
+    _lastIdentity = localOwner;
   }
 
   Future<void> requestCode(String email) async {
@@ -103,6 +128,7 @@ class ContentAuthRepository {
   }
 
   Future<void> _persist() async {
+    _notifyIdentity();
     final session = _client?.auth.currentSession;
     if (session == null) {
       await _storage.delete(key: _key);
@@ -128,12 +154,15 @@ class ContentAuthRepository {
 
   Future<void> signOut() async {
     await initialize();
-    await _storage.delete(key: _key);
-    await _client?.dispose();
+    final previous = _client;
     _client = configured ? _create() : null;
+    _notifyIdentity();
+    await _storage.delete(key: _key);
+    await previous?.dispose();
   }
 
   Future<void> close() async {
     await _client?.dispose();
+    await _identityChanges.close();
   }
 }

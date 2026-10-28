@@ -59,10 +59,10 @@ def base_fingerprint(pack, raw=None, sqlite_sha256=None):
 
 
 def release_parent_id(base):
-    # Only the exact empty BR seed is a local anchor, never a published parent.
+    # Only exact empty editorial seeds are local anchors, never published parents.
     # Do not infer this from a version prefix or alter legacy English semantics.
-    if base['lang']=='pt-BR':
-        seed=empty_pack('pt-BR',base['languages'][0]['name_de'])
+    if base['lang'] in ('pt-BR','nb','it','es'):
+        seed=empty_pack(base['lang'],base['languages'][0]['name_de'])
         seed['languages']=base['languages']
         if base==seed:return None
     return base['release']['version']
@@ -219,7 +219,7 @@ def preview_import(base, delivery):
     return {'inventory':inventory,'findings':findings,'payload_sha256':digest(delivery)}
 
 
-def target_findings(pack, view, *, linguistic=True):
+def target_findings(pack, view, *, linguistic=True, profile=None):
     errors=[];ref=view['ref'];card=view['card'];context=view['context']
     def fail(code,message,field):errors.append(AuthoringError(code,message,field=field,record_ref=ref).finding())
     for field,val in [('form',card.get('form')),('translation_de',card.get('translation_de')),
@@ -230,17 +230,19 @@ def target_findings(pack, view, *, linguistic=True):
     gap=context.get('gap') or {}
     if any(type(gap.get(k)) is not int for k in ('start_pos','end_pos')):fail('GAP_MISSING','Ziellücke auswählen.','context.gap')
     for token in context.get('tokens',[]):
-        if (any(c.isalpha() for c in token.get('surface','')) if pack['lang']=='pt-BR' else
+        if (any(c.isalpha() for c in token.get('surface','')) if pack['lang'] in ('pt-BR','nb','it','es') else
                 token.get('is_word',any(c.isalpha() for c in token.get('surface','')))):
             if not token.get('sense'):fail('AMBIGUOUS_SENSE','Bedeutung für „'+token.get('surface','')+'“ auswählen.','tokens.'+str(token.get('idx'))+'.sense')
             if not token.get('context_gloss_de'):fail('TOKEN_GLOSS_MISSING','Kontextübersetzung für „'+token.get('surface','')+'“ fehlt.','tokens.'+str(token.get('idx'))+'.context_gloss_de')
-            if token.get('binding_status') not in (('confirmed',) if pack['lang']=='pt-BR' else (None,'confirmed')):fail('TOKEN_REVIEW_OPEN','Wortbindung ausdrücklich bestätigen.','tokens.'+str(token.get('idx')))
+            if token.get('binding_status') not in (('confirmed',) if pack['lang'] in ('pt-BR','nb','it','es') else (None,'confirmed')):fail('TOKEN_REVIEW_OPEN','Wortbindung ausdrücklich bestätigen.','tokens.'+str(token.get('idx')))
     if context.get('text') and not context.get('tokens'):fail('TOKENS_MISSING','Tokenannotation fehlt.','context.tokens')
     if linguistic:
         try:
-            profile=get_profile(pack['lang'])
-            if pack['lang']=='pt-BR':
-                if card.get('identity_function') or card.get('introduction_scope','ordinary')!='ordinary':
+            profile=profile or get_profile(pack['lang'])
+            if profile.manifest.get('editorial_policy'):
+                if card.get('identity_function') and card['identity_function'] not in profile.manifest['allowed_functions']:
+                    fail('PROFILE_FUNCTION_UNSUPPORTED','Diese Formfunktion wird vom Profil nicht unterstützt.','card')
+                if not profile.manifest['allowed_functions'] and card.get('introduction_scope','ordinary')!='ordinary':
                     fail('PROFILE_FUNCTION_UNSUPPORTED','Dieses Profil unterstützt nur gewöhnliche Lernziele.','card')
                 if not errors:
                     expected=profile.tokenize(context['text'],(gap['start_pos'],gap['end_pos']))
@@ -375,6 +377,28 @@ def freeze_new_context(pack, sentence_ref):
     sentence['revision_sha256']=digest(context_payload(rows,sentence_identity(pack['lang'],sentence)))
 
 
+def freeze_new_contexts(pack, sentence_refs):
+    """Freeze a batch with identical payload hashing and one row projection."""
+    from .pack import _build_rows
+    from .context_revisions import sentence_identity, context_payload
+    from collections import defaultdict
+    selected = [s for s in pack['sentences'] if s['ref'] in sentence_refs]
+    for sentence in selected:
+        sentence['root_sentence_id'] = stable_id('sentences', lang=pack['lang'], text=sentence['text'])
+        # Distinct temporary IDs prevent equal texts with different target bindings
+        # from sharing tokens while their final content hashes are computed.
+        sentence['revision_sha256'] = digest({'temporary_sentence_ref': sentence['ref']})
+    rows = _build_rows(pack)
+    tokens, links = defaultdict(list), defaultdict(list)
+    for row in rows['sentence_tokens']: tokens[row['sentence_id']].append(row)
+    for row in rows['card_sentences']: links[row['sentence_id']].append(row)
+    sentences = {s['id']: s for s in rows['sentences']}
+    for sentence in selected:
+        sid = sentence_identity(pack['lang'], sentence)
+        subset = {'sentences': [sentences[sid]], 'sentence_tokens': tokens[sid], 'card_sentences': links[sid]}
+        sentence['revision_sha256'] = digest(context_payload(subset, sid))
+
+
 def materialize_draft(draft,base,profile=None,*,release_version=None):
     """One atomic authoring transaction, including meanings, owner reservations and contexts."""
     work=migrate_schema5(base)
@@ -404,17 +428,15 @@ def materialize_draft(draft,base,profile=None,*,release_version=None):
              'owner_deck_ref':owner['deck'],'primary_card_ref':card['ref'],'primary_card_id':cid,'position':owner['position']})
         reservations.add(key)
     work['word_registry']['sha256']=digest(registry)
-    for sentence in work['sentences']:
-        if sentence['ref'] in old_sentences:continue
-        tokens=[t for t in work['sentence_tokens'] if t['sentence']==sentence['ref']]
-        for token in tokens:
-            require(not (token.get('context_snapshot') or {}).get('legacy'),'HISTORY_FORGED','Neue Kontexte dürfen sich nicht als Altdaten ausgeben.')
-            if work['lang']=='pt-BR' and any(c.isalpha() for c in token['surface']):
-                require(token.get('binding_status')=='confirmed','TOKEN_REVIEW_OPEN','Importierte BR-Wortbindung ausdrücklich bestätigen.')
-            require(token.get('binding_status') not in ('unresolved','suggested'),'TOKEN_REVIEW_OPEN','Importierte Wortbindung noch nicht bestätigt.')
-        cleaned=clean_tokens(work,{'tokens':tokens})
-        for token,new in zip(tokens,cleaned):token.update(new)
-        freeze_new_context(work,sentence['ref'])
+    new_sentences={s['ref'] for s in work['sentences']} - old_sentences
+    tokens=[t for t in work['sentence_tokens'] if t['sentence'] in new_sentences]
+    for token in tokens:
+        require(not (token.get('context_snapshot') or {}).get('legacy'),'HISTORY_FORGED','Neue Kontexte dürfen sich nicht als Altdaten ausgeben.')
+        if work['lang'] in ('pt-BR','nb','it','es') and any(c.isalpha() for c in token['surface']):
+            require(token.get('binding_status')=='confirmed','TOKEN_REVIEW_OPEN','Importierte Wortbindung ausdrücklich bestätigen.')
+        require(token.get('binding_status') not in ('unresolved','suggested'),'TOKEN_REVIEW_OPEN','Importierte Wortbindung noch nicht bestätigt.')
+    for token,new in zip(tokens,clean_tokens(work,{'tokens':tokens})):token.update(new)
+    if new_sentences:freeze_new_contexts(work,new_sentences)
     return apply_operations(work,draft.get('operations',[]),profile)
 
 
@@ -491,16 +513,16 @@ def validate_draft(draft, base, profile=None):
     try:
         profile=profile or get_profile(draft['lang'])
         working=materialize_draft(draft,base,profile)
-        if draft['lang']=='pt-BR':
-            require(all(d.get('practice_kind','ordinary')=='ordinary' for d in working['decks']) and
-                    not working.get('form_targets') and not working.get('deck_practice_targets'),
-                    'PROFILE_FUNCTION_UNSUPPORTED','Das BR-Pilotprofil unterstützt ausschließlich ordinary-Stapel.')
+        if profile.manifest.get('editorial_policy'):
+            require(all(d.get('practice_kind','ordinary') in profile.manifest['practice_kinds'] for d in working['decks']) and
+                    all(f['function'] in profile.manifest['allowed_functions'] for f in working.get('form_targets',[])),
+                    'PROFILE_FUNCTION_UNSUPPORTED','Stapelart oder Formfunktion wird vom Sprachprofil nicht unterstützt.')
         for card in working['cards']:
             if not card.get('removed_in'):
                 view=target_view(working,card['ref'])
                 # Only new/edited contexts get editorial linguistic checks;
                 # legacy provenance is not silently re-approved.
-                if card['ref'] in draft.get('target_refs',[]): findings.extend(target_findings(working,view))
+                if card['ref'] in draft.get('target_refs',[]): findings.extend(target_findings(working,view,profile=profile))
         before=build_rows(base);after=build_rows(working)
         assert_history_preserved(before,after)
     except (AuthoringError,UnsupportedLanguage,ValueError,KeyError,TypeError) as e:
@@ -511,8 +533,11 @@ def validate_draft(draft, base, profile=None):
         findings.append(AuthoringError('INCOMPLETE_BATCH','Die Lieferung ist noch nicht vollständig und konfliktfrei verarbeitet.').finding())
     review_hash=draft_content_hash(draft)
     approved=any(r.get('payload_sha256')==review_hash and r.get('decision')=='approved' and
-        (draft['lang']!='pt-BR' or (r.get('profile_sha256')==get_profile('pt-BR').sha256 and
-         r.get('editorial_policy')==get_profile('pt-BR').manifest['editorial_policy'])) for r in draft.get('reviews',[]))
+        (draft['lang'] not in ('pt-BR','nb','it','es') or (r.get('profile_sha256')==profile.sha256 and
+         r.get('editorial_policy')==profile.manifest['editorial_policy'] and
+         (profile.manifest['editorial_policy']!='ai-editorial-reviewed-v1' or
+          (r.get('human_review') is False and r.get('user_requested_private_device_test') is True and
+           isinstance(r.get('reviewer'),str) and bool(r['reviewer'].strip()))))) for r in draft.get('reviews',[]))
     result={'draft_revision':draft['revision'],'base_sha256':digest(base),'validator_version':'editor-1',
             'technical':'unsupported' if any(f['code']=='PROFILE_UNSUPPORTED' for f in findings) else
                         'invalid' if any(f['severity']=='error' for f in findings) else 'valid',

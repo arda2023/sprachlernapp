@@ -2,6 +2,7 @@ import '../../domain/content.dart';
 import '../../domain/learning_groups.dart';
 import '../../domain/repositories.dart';
 import '../../domain/story_learning.dart';
+import '../../domain/story_learning_diagnostics.dart';
 import '../../domain/srs_state.dart';
 
 /// One projection over the two existing repositories; owns no database.
@@ -139,8 +140,21 @@ class PracticeItemResolver {
     return result.toSet().toList();
   }
 
+  /// Stable persisted identities, including old story-origin cards. No projection
+  /// that could silently replace a saved card with another group member.
+  List<String> get storyCollectionIds {
+    final ids = states.keys.where((id) => additions.containsKey(id) ||
+        states[id]!.origin == CardOrigin.story).toList();
+    ids.sort((a, b) {
+      final date = (additions[b] ?? states[b]!.createdAt ?? DateTime(1970))
+          .compareTo(additions[a] ?? states[a]!.createdAt ?? DateTime(1970));
+      return date != 0 ? date : a.compareTo(b);
+    });
+    return ids;
+  }
+
   Future<List<String>> deckPracticeIds(String deckId) async =>
-      resolveTargets(catalog?.targets[deckId] ?? await content!.deckPracticeTargets(deckId));
+      deckId == storyCollectionId ? storyCollectionIds.where(cards.containsKey).toList() : resolveTargets(catalog?.targets[deckId] ?? await content!.deckPracticeTargets(deckId));
 
   Future<List<String>> activePrimaryIds() async {
     if (content == null) return [];
@@ -151,6 +165,25 @@ class PracticeItemResolver {
         if (active.contains(d.id)) ...(catalog?.targets[d.id] ?? await content!.deckPracticeTargets(d.id)),
     ]);
   }
+
+  /// Active decks as separate new-word sources in catalog order; [order] lists
+  /// every deck so the rotation continues past a deactivated one.
+  Future<({List<String> order, List<NewWordSource> active})> newWordSources() async {
+    if (content == null) return (order: const <String>[], active: const <NewWordSource>[]);
+    final decks = catalog?.decks ?? await content!.decks();
+    final active = await user.activeDeckIds(decks.map((d) => d.id));
+    return (
+      order: [for (final d in decks) d.id],
+      active: [
+        for (final d in decks)
+          if (active.contains(d.id))
+            NewWordSource(d.id, resolveTargets(catalog?.targets[d.id] ?? await content!.deckPracticeTargets(d.id))),
+      ],
+    );
+  }
+
+  /// Saved story targets for practice, oldest addition first.
+  List<String> get storyPracticeIds => storyCollectionIds.reversed.where(cards.containsKey).toList();
 
   Future<List<PracticeItem>> practiceItems(List<String> ids) async {
     final remote = ids.where((id) => !locals.containsKey(id)).toList();

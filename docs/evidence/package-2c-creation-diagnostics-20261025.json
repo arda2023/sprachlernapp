@@ -1,0 +1,254 @@
+{
+  "ref": "working-tree",
+  "image_id": "sha256:645d0e45446181f3e9d87efeef637b494615f32365befff00e2d2b0fe8535fef",
+  "architecture": "arm64",
+  "limits": {
+    "memory_mb": 256,
+    "cpu_soft_ms": 1000,
+    "cpu_hard_ms": 2000,
+    "wall_ms": 150000
+  },
+  "sources": {
+    "supabase/functions/create-learning-card/index.ts": "0a9fd58606b279e4081ff2082ebfd364c2a42b0b3397378fe144010fd40034cd",
+    "supabase/functions/_shared/personal_learning.ts": "0ae7a9aebe0311776b32464f17ad580ab41ed5555effe88e60a17d3986f1e354",
+    "supabase/functions/_shared/personal_release.ts": "cf9a3255e1da10e27aef13a73249b1345678be19aabb95693f92d438567120f3",
+    "supabase/functions/_shared/personal_sentence.ts": "44265f53050a28a008e8c9a1ca5babee5a0f868d119b1712986e4551c1a17527",
+    "supabase/functions/_shared/runtime_translation.ts": "4765ebb66188268938d4d87f772ee9816f58801ddd3e9bb93b2001a910bc3a6d",
+    "supabase/functions/_shared/personal_trace.ts": "ae52f84fa75dfb3ed0447820504740e1f61e0df7c570a4b803bb390fd767af2a"
+  },
+  "artifacts": [
+    {
+      "lang": "en",
+      "release_id": "510c6685-f0ea-4002-9c7c-a09f0bf8212b",
+      "pack": {
+        "sha256": "92c44ef9f163e213cf9a44e6e23a264de6bfb11f6d233a1b8c5c8f676704f37c",
+        "size_bytes": 50282981
+      }
+    },
+    {
+      "lang": "pt-BR",
+      "release_id": "4213d487-044d-45b9-ae95-e14a7c3c0d35",
+      "pack": {
+        "sha256": "20300e21b7a14df67ee9e03fc6bca2604a71f04caa90a986dc503bbbf43ed563",
+        "size_bytes": 124750
+      }
+    }
+  ],
+  "simulated_services": [
+    "GoTrue response",
+    "PostgREST release/claim/finish (no SQL/RLS)",
+    "Storage transport (exact published bytes)",
+    "Anthropic response; zero provider traffic"
+  ],
+  "gateway_jwt_simulated": true,
+  "cloud_pass": false,
+  "runs": [
+    {
+      "scenario": "provider-failure",
+      "calls": [
+        {
+          "status": 502,
+          "wall_ms": 1169.2,
+          "error": "MODEL_FAILED"
+        },
+        {
+          "status": 409,
+          "wall_ms": 626.8,
+          "error": "REQUEST_UNCERTAIN"
+        }
+      ],
+      "counts": {
+        "storage": {
+          "510c6685-f0ea-4002-9c7c-a09f0bf8212b": 2
+        },
+        "auth": 2,
+        "release": 2,
+        "model": 1,
+        "claim": 2,
+        "finish": 0
+      },
+      "errors": [
+        {
+          "component": "personal_learning",
+          "diagnostic_id": "1f4073de-0ff4-431c-9880-ad400e9c7165",
+          "stage": "model_request",
+          "event": "error",
+          "elapsed_ms": 663,
+          "stage_ms": 1,
+          "code": "MODEL_FAILED",
+          "http_status": 502
+        },
+        {
+          "component": "personal_learning",
+          "diagnostic_id": "beda1053-bf81-41d2-93e7-0b0e767939e4",
+          "stage": "claim",
+          "event": "error",
+          "elapsed_ms": 588,
+          "stage_ms": 3,
+          "code": "REQUEST_UNCERTAIN",
+          "http_status": 409
+        }
+      ],
+      "cpu_ms_per_worker": [
+        593,
+        542
+      ],
+      "shutdown_reasons": [
+        "EarlyDrop",
+        "EarlyDrop"
+      ],
+      "process_peak_rss_bytes": 319229952,
+      "observed_heap_external_bytes": 165879119
+    },
+    {
+      "scenario": "validation-failure",
+      "calls": [
+        {
+          "status": 502,
+          "wall_ms": 1015.6,
+          "error": "MODEL_INVALID"
+        },
+        {
+          "status": 409,
+          "wall_ms": 618.3,
+          "error": "REQUEST_UNCERTAIN"
+        }
+      ],
+      "counts": {
+        "storage": {
+          "510c6685-f0ea-4002-9c7c-a09f0bf8212b": 2
+        },
+        "auth": 2,
+        "release": 2,
+        "model": 1,
+        "claim": 2,
+        "finish": 0
+      },
+      "errors": [
+        {
+          "component": "personal_learning",
+          "diagnostic_id": "6e719dae-c2cc-4709-8e23-3ee66fd0bedf",
+          "stage": "validation",
+          "event": "error",
+          "elapsed_ms": 592,
+          "stage_ms": 0,
+          "code": "MODEL_INVALID",
+          "http_status": 502
+        },
+        {
+          "component": "personal_learning",
+          "diagnostic_id": "4755f6bd-3803-4478-819b-2defa986d40d",
+          "stage": "claim",
+          "event": "error",
+          "elapsed_ms": 580,
+          "stage_ms": 3,
+          "code": "REQUEST_UNCERTAIN",
+          "http_status": 409
+        }
+      ],
+      "cpu_ms_per_worker": [
+        535,
+        533
+      ],
+      "shutdown_reasons": [
+        "EarlyDrop",
+        "EarlyDrop"
+      ],
+      "process_peak_rss_bytes": 314171392,
+      "observed_heap_external_bytes": 166119146
+    },
+    {
+      "scenario": "storage-failure",
+      "calls": [
+        {
+          "status": 503,
+          "wall_ms": 1032.9,
+          "error": "STORAGE_UNAVAILABLE"
+        },
+        {
+          "status": 409,
+          "wall_ms": 616.1,
+          "error": "REQUEST_UNCERTAIN"
+        }
+      ],
+      "counts": {
+        "storage": {
+          "510c6685-f0ea-4002-9c7c-a09f0bf8212b": 2
+        },
+        "auth": 2,
+        "release": 2,
+        "model": 1,
+        "claim": 2,
+        "finish": 1
+      },
+      "errors": [
+        {
+          "component": "personal_learning",
+          "diagnostic_id": "dcec469a-1eb4-42f1-93fe-25d009a66473",
+          "stage": "storage",
+          "event": "error",
+          "elapsed_ms": 589,
+          "stage_ms": 1,
+          "code": "STORAGE_UNAVAILABLE",
+          "http_status": 503
+        },
+        {
+          "component": "personal_learning",
+          "diagnostic_id": "a31bc461-92bd-4466-ac5d-871ee8af3231",
+          "stage": "claim",
+          "event": "error",
+          "elapsed_ms": 579,
+          "stage_ms": 2,
+          "code": "REQUEST_UNCERTAIN",
+          "http_status": 409
+        }
+      ],
+      "cpu_ms_per_worker": [
+        542,
+        531
+      ],
+      "shutdown_reasons": [
+        "EarlyDrop",
+        "EarlyDrop"
+      ],
+      "process_peak_rss_bytes": 317972480,
+      "observed_heap_external_bytes": 166334100
+    },
+    {
+      "scenario": "stored-replay",
+      "calls": [
+        {
+          "status": 200,
+          "wall_ms": 1211.3,
+          "error": null
+        },
+        {
+          "status": 200,
+          "wall_ms": 615.5,
+          "error": null
+        }
+      ],
+      "counts": {
+        "storage": {
+          "510c6685-f0ea-4002-9c7c-a09f0bf8212b": 2
+        },
+        "auth": 2,
+        "release": 2,
+        "model": 1,
+        "claim": 2,
+        "finish": 1
+      },
+      "errors": [],
+      "cpu_ms_per_worker": [
+        545,
+        538
+      ],
+      "shutdown_reasons": [
+        "EarlyDrop",
+        "EarlyDrop"
+      ],
+      "process_peak_rss_bytes": 318517248,
+      "observed_heap_external_bytes": 166331971
+    }
+  ]
+}

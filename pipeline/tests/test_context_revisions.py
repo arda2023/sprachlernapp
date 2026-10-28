@@ -89,3 +89,29 @@ def test_cumulative_origins_and_skipped_release_preserve_edges(base):
     build_rows(work)
     bad=copy.deepcopy(c);bad['practice_context']['sentence']['translation']='forged'
     with pytest.raises(ValueError,match='fingerprint'):correction_edge(bad,d,'D','bad')
+
+
+def test_batch_freeze_matches_individual_context_hashes(base):
+    from sprachpipe.authoring_service import freeze_new_context, freeze_new_contexts
+    one=migrate_schema5(base)
+    batch=copy.deepcopy(one)
+    refs={s['ref'] for s in one['sentences']}
+    for ref in refs:freeze_new_context(one,ref)
+    freeze_new_contexts(batch,refs)
+    assert one['sentences']==batch['sentences']
+    assert one['sentence_tokens']==batch['sentence_tokens']
+
+
+def test_registered_portuguese_v1_context_remains_valid_after_v2_default(monkeypatch):
+    from portuguese_fixture import draft
+    from sprachpipe import authoring_service as author
+    from sprachpipe.language_profiles import PROFILES,get_profile
+    base=author.empty_pack('pt-BR','Portugiesisch')
+    current=PROFILES['pt-BR']
+    monkeypatch.setitem(PROFILES,'pt-BR',get_profile('pt-BR','pt-BR-editorial-v1'))
+    work=author.materialize_draft(draft(base),base)
+    before=build_rows(work)
+    monkeypatch.setitem(PROFILES,'pt-BR',current)
+    assert build_rows(work)==before
+    work['sentences'][0]['translation_de']='Tampered.'
+    with pytest.raises(ValueError,match='context revision'):build_rows(work)

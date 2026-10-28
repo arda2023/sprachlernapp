@@ -92,7 +92,8 @@ void main() {
     expect(find.text('Mia geht nach Hause.'), findsOneWidget);
     expect(find.text('Verb, 3. Person Singular'), findsOneWidget);
     expect(find.text('Neues Wort'), findsOneWidget);
-    for (final form in ['walks', 'about', 'went', 'a']) {
+    // Deck content order (walks, about, a, went); goes shares the lemma of went.
+    for (final form in ['walks', 'about', 'a', 'went']) {
       await answer(tester, form);
       await next(tester);
     }
@@ -266,8 +267,6 @@ void main() {
     await next(tester);
     await answer(tester, 'about');
     await next(tester);
-    await answer(tester, 'went');
-    await next(tester);
     await answer(tester, 'one');
     expect(
       find.text(
@@ -437,10 +436,12 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(DeckDetailsScreen), findsOneWidget);
       expect(user.records, hasLength(2));
-      expect(user.states['deck-0/3']!.box, 0);
+      // The aborted, unanswered "a" stays new (box 0) and is not skipped:
+      // reentry offers it again first, with a fresh neutral input.
+      expect(user.states['deck-0/2']!.box, 0);
       await tester.tap(find.text('Mit diesem Stapel üben'));
       await tester.pumpAndSettle();
-      expect(find.text('Verb, Vergangenheit'), findsOneWidget);
+      expect(find.text('Artikel'), findsOneWidget);
       expect(find.textContaining('passt hier auch'), findsNothing);
     },
   );
