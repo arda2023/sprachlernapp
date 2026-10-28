@@ -32,6 +32,8 @@ class MemoryLevelIndicator extends StatelessWidget {
     super.key,
     required this.level,
     this.dashWidth = 14,
+    this.litColor,
+    this.offColor,
   }) : assert(level >= 0 && level <= leitnerBoxCount);
 
   static const dashHeight = 4.0;
@@ -40,12 +42,18 @@ class MemoryLevelIndicator extends StatelessWidget {
   final int level;
   final double dashWidth;
 
+  /// On the orange popover the dashes are white: [litColor] white,
+  /// [offColor] translucent white. Null: the level's colour and Hairline.
+  final Color? litColor, offColor;
+
   static double widthFor(double dashWidth) =>
       leitnerBoxCount * dashWidth + (leitnerBoxCount - 1) * gap;
 
   @override
   Widget build(BuildContext context) {
-    final lit = level==0?context.appColors.hairline:context.appColors.memoryLevel(level);
+    final off = offColor ?? context.appColors.hairline;
+    final lit = litColor ??
+        (level == 0 ? off : context.appColors.memoryLevel(level));
     return ExcludeSemantics(
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -56,7 +64,7 @@ class MemoryLevelIndicator extends StatelessWidget {
               height: dashHeight,
               margin: EdgeInsets.only(right: i < leitnerBoxCount ? gap : 0),
               decoration: BoxDecoration(
-                color: i <= level ? lit : context.appColors.hairline,
+                color: i <= level ? lit : off,
                 borderRadius: BorderRadius.circular(999),
               ),
             ),

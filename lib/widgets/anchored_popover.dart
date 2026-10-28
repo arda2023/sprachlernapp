@@ -107,7 +107,6 @@ class _PopoverLayout extends StatelessWidget {
 
   static const gutter = 16.0;
   static const gap = 8.0;
-  static const arrowHeight = 10.0;
 
   final Rect anchor;
   final Color color;
@@ -150,31 +149,17 @@ class _PopoverLayout extends StatelessWidget {
 
     final bubble = ConstrainedBox(
       constraints: BoxConstraints(maxHeight: maxHeight),
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: color,
-          shape: _BubbleBorder(arrowX: arrowX, arrowUp: below),
-          shadows: const [
-            BoxShadow(
-              color: Color(0x33000000),
-              blurRadius: 24,
-              offset: Offset(0, 8),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: below ? arrowHeight : 0,
-            bottom: below ? 0 : arrowHeight,
-          ),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
-            child: DefaultTextStyle.merge(
-              style: const TextStyle(color: Colors.white),
-              child: IconTheme.merge(
-                data: const IconThemeData(color: Colors.white),
-                child: Builder(builder: builder),
-              ),
+      child: PopoverBubble(
+        color: color,
+        arrowX: arrowX,
+        arrowUp: below,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: DefaultTextStyle.merge(
+            style: const TextStyle(color: Colors.white),
+            child: IconTheme.merge(
+              data: const IconThemeData(color: Colors.white),
+              child: Builder(builder: builder),
             ),
           ),
         ),
@@ -195,15 +180,64 @@ class _PopoverLayout extends StatelessWidget {
   }
 }
 
+/// The speech bubble itself: a [color] panel with a small rounded arrow at
+/// [arrowX] on its top edge ([arrowUp]) or bottom edge, pointing at what
+/// opened it. Shared by the anchored popovers and the practice word bubble,
+/// so every orange bubble in the app has the same shape.
+class PopoverBubble extends StatelessWidget {
+  const PopoverBubble({
+    super.key,
+    required this.color,
+    required this.arrowX,
+    required this.arrowUp,
+    required this.child,
+    this.radius = defaultRadius,
+  });
+
+  static const arrowHeight = 10.0;
+  static const defaultRadius = 22.0;
+
+  /// Keeps the arrow off the rounded corners.
+  static double minArrowX(double radius) => radius + _BubbleBorder.arrowHalf;
+
+  final Color color;
+  final double arrowX;
+  final bool arrowUp;
+  final double radius;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => DecoratedBox(
+    decoration: ShapeDecoration(
+      color: color,
+      shape: _BubbleBorder(arrowX: arrowX, arrowUp: arrowUp, radius: radius),
+      shadows: const [
+        BoxShadow(color: Color(0x33000000), blurRadius: 24, offset: Offset(0, 8)),
+      ],
+    ),
+    child: Padding(
+      padding: EdgeInsets.only(
+        top: arrowUp ? arrowHeight : 0,
+        bottom: arrowUp ? 0 : arrowHeight,
+      ),
+      child: child,
+    ),
+  );
+}
+
 /// Rounded panel with a small rounded arrow at [arrowX] on the top (or
 /// bottom) edge.
 class _BubbleBorder extends ShapeBorder {
-  const _BubbleBorder({required this.arrowX, required this.arrowUp});
+  const _BubbleBorder({
+    required this.arrowX,
+    required this.arrowUp,
+    required this.radius,
+  });
 
   final double arrowX;
   final bool arrowUp;
+  final double radius;
 
-  static const radius = 22.0;
   static const arrowHalf = 11.0;
 
   @override
@@ -215,13 +249,13 @@ class _BubbleBorder extends ShapeBorder {
 
   @override
   Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
-    const h = _PopoverLayout.arrowHeight;
+    const h = PopoverBubble.arrowHeight;
     final body = arrowUp
         ? Rect.fromLTRB(rect.left, rect.top + h, rect.right, rect.bottom)
         : Rect.fromLTRB(rect.left, rect.top, rect.right, rect.bottom - h);
     final x = rect.left + arrowX;
     final path = Path()
-      ..addRRect(RRect.fromRectAndRadius(body, const Radius.circular(radius)));
+      ..addRRect(RRect.fromRectAndRadius(body, Radius.circular(radius)));
     final arrow = Path();
     if (arrowUp) {
       arrow

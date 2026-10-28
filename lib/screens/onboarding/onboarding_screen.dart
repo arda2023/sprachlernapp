@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart'
     show Icons, Scaffold, ScaffoldMessenger, SnackBar;
 
@@ -103,7 +104,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   _TryPage(
                     interest: interest,
                     tapped: _tapped,
-                    onTap: (i) => setState(() => _tapped = i),
+                    onTap: (i) {
+                      HapticFeedback.lightImpact();
+                      setState(() => _tapped = i);
+                    },
                   ),
                   _AccountPage(
                     onAccount: (provider) => _finish(

@@ -4,7 +4,9 @@ import '../../../domain/leitner.dart';
 import '../../../models/word_list_models.dart';
 import '../../../theme/app_theme.dart';
 import 'memory_level_indicator.dart';
+import 'memory_level_legend_sheet.dart';
 import 'playback_highlight.dart';
+import '../../../widgets/popover_content.dart';
 import '../../../widgets/popover_trigger.dart';
 
 /// One word in the Wortliste (Redesign 20.10.2026): a card without outline.
@@ -21,7 +23,6 @@ class WordListItem extends StatelessWidget {
     required this.playingSentence,
     required this.onPlayWord,
     required this.onPlaySentence,
-    required this.onShowLegend,
     required this.onToggleDisabled,
     required this.onTogglePlaylist,
     required this.onToggleFavorite,
@@ -36,7 +37,6 @@ class WordListItem extends StatelessWidget {
   final bool playingSentence;
   final VoidCallback onPlayWord;
   final VoidCallback onPlaySentence;
-  final VoidCallback onShowLegend;
   final VoidCallback onToggleDisabled;
   final VoidCallback onTogglePlaylist;
   final VoidCallback onToggleFavorite;
@@ -81,18 +81,33 @@ class WordListItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    MergeSemantics(
-                      child: CupertinoButton(
-                        onPressed: onShowLegend,
-                        padding: inset,
-                        minimumSize: const Size(44, 44),
-                        alignment: Alignment.centerLeft,
-                        child: Semantics(
-                          label:
-                              'Erinnerungsstufe ${word.box} von '
-                              '$leitnerBoxCount: ${memoryLevelTitle(word.box)}',
-                          excludeSemantics: true,
-                          child: MemoryLevelIndicator(level: word.box),
+                    // The dashes open the level legend, pointing at them.
+                    PopoverTrigger<void>(
+                      popover: (_) => MemoryLevelLegendSheet(current: word.box),
+                      builder: (context, open, show) => MergeSemantics(
+                        child: CupertinoButton(
+                          onPressed: show,
+                          padding: inset,
+                          minimumSize: const Size(44, 44),
+                          alignment: Alignment.centerLeft,
+                          child: Semantics(
+                            label:
+                                'Erinnerungsstufe ${word.box} von '
+                                '$leitnerBoxCount: ${memoryLevelTitle(word.box)}',
+                            excludeSemantics: true,
+                            child: TriggerPill(
+                              open: open,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 6,
+                              ),
+                              child: MemoryLevelIndicator(
+                                level: word.box,
+                                litColor: open ? const Color(0xFFFFFFFF) : null,
+                                offColor: open ? const Color(0x59FFFFFF) : null,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -256,99 +271,24 @@ class _WordMenu extends StatelessWidget {
           style: AppType.editorial(color: const Color(0xFFFFFFFF), size: 22),
         ),
         const SizedBox(height: 8),
-        _MenuRow(
+        PopoverMenuRow(
           label: 'In der Playlist',
           icon: CupertinoIcons.music_note,
           toggled: word.inPlaylist,
           onTap: () => choose(onTogglePlaylist),
         ),
-        _MenuRow(
+        PopoverMenuRow(
           label: 'Deaktiviert',
           icon: CupertinoIcons.nosign,
           toggled: word.isDisabled,
           onTap: () => choose(onToggleDisabled),
         ),
-        _MenuRow(
+        PopoverMenuRow(
           label: 'Details zu ${word.entry.headword}',
           icon: CupertinoIcons.info_circle,
           onTap: () => choose(onOpenDetails),
         ),
       ],
-    );
-  }
-}
-
-class _MenuRow extends StatelessWidget {
-  const _MenuRow({
-    required this.label,
-    required this.icon,
-    required this.onTap,
-    this.toggled,
-  });
-
-  final String label;
-  final IconData icon;
-  final VoidCallback onTap;
-
-  /// Null: a plain action, no switch.
-  final bool? toggled;
-
-  @override
-  Widget build(BuildContext context) {
-    const white = Color(0xFFFFFFFF);
-    final on = toggled;
-    return MergeSemantics(
-      child: CupertinoButton(
-        onPressed: onTap,
-        padding: EdgeInsets.zero,
-        minimumSize: const Size(44, 48),
-        child: Semantics(
-          label: label,
-          toggled: on,
-          excludeSemantics: true,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Row(
-              children: [
-                Icon(icon, size: 20, color: white),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    label,
-                    style: AppType.chrome(
-                      weight: FontWeight.w700,
-                      color: white,
-                    ),
-                  ),
-                ),
-                if (on != null)
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 150),
-                    width: 26,
-                    height: 26,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: on ? white : const Color(0x33FFFFFF),
-                    ),
-                    child: on
-                        ? Icon(
-                            CupertinoIcons.checkmark_alt,
-                            size: 16,
-                            color: context.appColors.popover,
-                          )
-                        : null,
-                  )
-                else
-                  const Icon(
-                    CupertinoIcons.chevron_right,
-                    size: 16,
-                    color: white,
-                  ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

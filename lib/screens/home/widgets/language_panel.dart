@@ -1,19 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../domain/language_profile.dart';
 import '../../../presentation/providers/language_selection_provider.dart';
-
 import '../../../theme/app_theme.dart';
 
 /// Language picker using the same validated transition as Settings.
 class LanguagePanel extends ConsumerStatefulWidget {
   const LanguagePanel({super.key, this.current = 'Englisch'});
 
-  static const languages = [
-    ('🇬🇧', 'Englisch'),
-    ('🇧🇷', 'Portugiesisch (Brasilien)'),
-  ];
+  /// Every selectable language ([ContentLanguageProfile.supported]).
+  static const languages = ContentLanguageProfile.supported;
 
+  /// Display name of the current language.
   final String current;
 
   @override
@@ -25,7 +24,7 @@ class _LanguagePanelState extends ConsumerState<LanguagePanel> {
   static const _itemExtent = 44.0;
 
   late int _index = LanguagePanel.languages
-      .indexWhere((l) => l.$2 == widget.current)
+      .indexWhere((l) => l.displayName == widget.current)
       .clamp(0, LanguagePanel.languages.length - 1);
   late final _wheel = FixedExtentScrollController(initialItem: _index);
   String? _note;
@@ -37,7 +36,7 @@ class _LanguagePanelState extends ConsumerState<LanguagePanel> {
   }
 
   Future<void> _choose() async {
-    final lang = _index == 0 ? 'en' : 'pt-BR';
+    final lang = LanguagePanel.languages[_index].lang;
     final controller = ref.read(languageSelectionProvider.notifier);
     // Close the popup before the app rebuilds its language scope.
     Navigator.of(context).pop();
@@ -46,7 +45,7 @@ class _LanguagePanelState extends ConsumerState<LanguagePanel> {
 
   @override
   Widget build(BuildContext context) {
-    final (_, chosen) = LanguagePanel.languages[_index];
+    final chosen = LanguagePanel.languages[_index].displayName;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -83,10 +82,12 @@ class _LanguagePanelState extends ConsumerState<LanguagePanel> {
               _note = null;
             }),
             children: [
-              for (final (flag, name) in LanguagePanel.languages)
+              for (final language in LanguagePanel.languages)
                 Center(
                   child: Text(
-                    '$flag  $name',
+                    '${language.flag}  ${language.displayName}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: AppType.chrome(
                       size: 20,
                       weight: FontWeight.w700,

@@ -70,7 +70,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
             const Divider(),
             const ListTile(contentPadding: EdgeInsets.zero, title: Text('Lernsprache'), subtitle: Text('Die Oberfläche bleibt Deutsch.')),
-            for (final profile in const [ContentLanguageProfile.english, ContentLanguageProfile.portugueseBrazil])
+            for (final profile in ContentLanguageProfile.supported)
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 selected: !language.isLoading && language.asData?.value == profile.lang,

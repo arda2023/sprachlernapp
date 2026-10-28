@@ -212,13 +212,14 @@ void main() {
   );
 
   testWidgets(
-    'reduced motion, reveal and disposal cancel obsolete feedback without haptics',
+    'reduced motion, reveal and disposal cancel obsolete feedback; '
+    'each wrong answer vibrates once',
     (tester) async {
       final calls = <String>[];
       tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
         SystemChannels.platform,
         (call) async {
-          calls.add(call.method);
+          calls.add('${call.method}:${call.arguments}');
           return null;
         },
       );
@@ -251,9 +252,14 @@ void main() {
       await close(tester, user);
       await tester.pump(const Duration(seconds: 2));
       expect(tester.takeException(), isNull);
+      // Haptics are not motion: the error haptic stays with reduced motion
+      // (user decision 28.10.2026), one per wrong answer, and no sound.
       expect(
         calls.where((c) => c.contains('Haptic') || c.contains('SystemSound')),
-        isEmpty,
+        [
+          'HapticFeedback.vibrate:HapticFeedbackType.errorNotification',
+          'HapticFeedback.vibrate:HapticFeedbackType.errorNotification',
+        ],
       );
     },
   );

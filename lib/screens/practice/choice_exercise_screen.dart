@@ -116,7 +116,7 @@ class _ChoiceExerciseScreenState extends State<ChoiceExerciseScreen> {
   void _pick(String option) {
     if (_solved || _flashing.contains(option)) return;
     if (option != _exercise.answer) {
-      HapticFeedback.lightImpact();
+      HapticFeedback.errorNotification();
       setState(() => _flashing.add(option));
       _announce('Falsch');
       _timers.add(
@@ -127,6 +127,7 @@ class _ChoiceExerciseScreenState extends State<ChoiceExerciseScreen> {
       return;
     }
     _clip.pause();
+    HapticFeedback.successNotification();
     setState(() => _solved = true);
     _announce('Richtig: $option');
     widget.progress.complete(_exercise.id);

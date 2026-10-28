@@ -218,6 +218,7 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
   void _submit(_Gap g) {
     switch (checkAnswer(g.controller.text, g.gap.answer)) {
       case AnswerResult.correct:
+        HapticFeedback.successNotification();
         setState(() {
           g.solved = true;
           _feedback = null;
@@ -231,10 +232,11 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
           _completeIfDone();
         }
       case AnswerResult.almost:
+        HapticFeedback.warningNotification();
         setState(() => _say('Fast richtig – prüf die Schreibweise.'));
         g.focus.requestFocus();
       case AnswerResult.wrong:
-        HapticFeedback.lightImpact();
+        HapticFeedback.errorNotification();
         setState(() {
           g.controller.clear();
           g.flashError = true;
@@ -253,13 +255,14 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
     if (_flight != null) return;
 
     if (chip.answer.toLowerCase() != target.gap.answer.toLowerCase()) {
-      HapticFeedback.lightImpact();
+      HapticFeedback.errorNotification();
       setState(() => chip.flash = _ChipFlash.error);
       _announce('Falsch');
       _after(_flashDuration, () => chip.flash = _ChipFlash.none);
       return;
     }
 
+    HapticFeedback.successNotification();
     setState(() => chip.flash = _ChipFlash.success);
     _announce('Richtig: ${chip.answer}');
     await _fly(chip, target);
@@ -355,6 +358,7 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
       for (final p in pieces)
         p is _Gap ? (p.solved ? p.gap.answer : '…') : p as String,
     ].join();
+    HapticFeedback.lightImpact();
     setState(() => _selectedSentence = index);
     final translation = widget.translate(key);
     if (hasStoredTranslation(translation)) {

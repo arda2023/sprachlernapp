@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show Scaffold, ScaffoldMessenger, SnackBar;
 import 'package:flutter/semantics.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/answer_check.dart';
@@ -20,6 +21,7 @@ import '../../theme/app_theme.dart';
 import 'widgets/practice_chrome.dart';
 import 'widgets/translation_bubble.dart';
 export 'widgets/practice_chrome.dart' show SessionTrack;
+import '../../widgets/popover_content.dart';
 import '../../widgets/success_feedback_card.dart';
 import '../words/widgets/memory_level_indicator.dart';
 import '../words/widgets/memory_level_legend_sheet.dart';
@@ -33,6 +35,9 @@ import 'widgets/practice_menu.dart';
 import 'widgets/local_submission_sheet.dart';
 
 enum DeckPracticeMode { learn, review, mixed }
+
+/// Practice controls that open a popover.
+enum _Trigger { level, info, menu }
 
 class DeckPracticeScreen extends ConsumerStatefulWidget {
   const DeckPracticeScreen({
@@ -115,6 +120,26 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     _clearError();
   }
 
+  /// The trigger whose popover is open; it turns popover orange meanwhile
+  /// (docs/redesign/design-system.md › Popover-Auslöser).
+  _Trigger? _openTrigger;
+  final _triggerKeys = {for (final t in _Trigger.values) t: GlobalKey()};
+
+  /// Opens a popover pointing at [trigger] with the usual selection tick.
+  Future<T?> _popover<T>(
+    _Trigger trigger,
+    Future<T?> Function(BuildContext anchor) show,
+  ) async {
+    final anchor = _triggerKeys[trigger]!.currentContext ?? context;
+    HapticFeedback.selectionClick();
+    setState(() => _openTrigger = trigger);
+    try {
+      return await show(anchor);
+    } finally {
+      if (mounted) setState(() => _openTrigger = null);
+    }
+  }
+
   bool _translationOpen = true,
       _overlay = false,
       _inputGesture = false,
@@ -190,15 +215,25 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final result = _controller.submit(attempt);
     if (result == null) return;
     _clearError();
+    // System haptics in their documented meaning (HIG › Playing haptics):
+    // success for a solved gap, error for a wrong answer or form, warning
+    // for "Fast richtig".
     if (result.verdict == AnswerVerdict.target) {
+      HapticFeedback.successNotification();
       _announce('Richtig');
     } else if (result.verdict == AnswerVerdict.wrong) {
+      HapticFeedback.errorNotification();
       final pass = ref.read(deckSessionControllerProvider(_args)).pass!;
       _input.showWrong(attempt, pass.item.card.form);
       _showError();
       _announce('Falsch');
     } else {
-      if (result.verdict == AnswerVerdict.wrongForm) _showError();
+      if (result.verdict == AnswerVerdict.wrongForm) {
+        HapticFeedback.errorNotification();
+        _showError();
+      } else if (result.verdict == AnswerVerdict.almost) {
+        HapticFeedback.warningNotification();
+      }
       _announce(result.message ?? 'Fast richtig – prüf die Schreibweise.');
     }
   }
@@ -304,15 +339,15 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final card = snapshot?.card ?? s.pass!.item.card;
     final solved = snapshot != null || s.pass!.solved;
     final hint = grammarHint(card, solved: solved);
-    await FormInfoSheet.show(
-      context,
+    await _popover(_Trigger.info, (anchor) => FormInfoSheet.show(
+      anchor,
       label: card.exerciseLabel,
       explanation: hint.explanation,
       examples: hint.examples,
       forms: solved && snapshot == null
           ? ([card.form, ...s.pass!.item.otherFormsOfLemma]..sort())
           : const [],
-    );
+    ));
   });
   Future<void> _menu() => _withOverlay(() async {
     final s = ref.read(deckSessionControllerProvider(_args));
@@ -323,10 +358,13 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
       final user = await ref.read(userRepositoryProvider.future);
       final flags = (await user.cardStates([card.id]))[card.id];
       if (!mounted) return;
-      final action = await showPracticeMenu(
-        context,
-        favorite: flags?.favorite ?? false,
-        canDisable: snapshot == null && s.canLeave,
+      final action = await _popover(
+        _Trigger.menu,
+        (anchor) => showPracticeMenu(
+          anchor,
+          favorite: flags?.favorite ?? false,
+          canDisable: snapshot == null && s.canLeave,
+        ),
       );
       if (!mounted || action == null) return;
       switch (action) {
@@ -344,7 +382,10 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
             favorite: !(flags?.favorite ?? false),
           );
         case PracticeAction.report:
-          final category = await showProblemCategories(context);
+          final category = await _popover(
+            _Trigger.menu,
+            showProblemCategories,
+          );
           if (!mounted || category == null) return;
           final pack = (await ref.read(contentRepositoryProvider.future))
               .info
@@ -440,6 +481,8 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                       if (state.canLeave) Navigator.of(context).maybePop();
                     },
                     onMenu: canShow ? _menu : null,
+                    menuKey: _triggerKeys[_Trigger.menu],
+                    menuOpen: _openTrigger == _Trigger.menu,
                   ),
                 ),
                 Expanded(
@@ -556,38 +599,29 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                                 Align(
                                                   alignment:
                                                       Alignment.centerLeft,
-                                                  child: CupertinoButton(
-                                                    padding: EdgeInsets.zero,
+                                                  child: _LevelTrigger(
+                                                    key: _triggerKeys[_Trigger.level],
+                                                    level:
+                                                        snapshot?.box ??
+                                                        pass!.boxBefore,
+                                                    open:
+                                                        _openTrigger ==
+                                                        _Trigger.level,
                                                     onPressed: () => _withOverlay(
-                                                      () =>
-                                                          MemoryLevelLegendSheet.show(
-                                                            context,
-                                                            current: math.max(
-                                                              1,
-                                                              snapshot?.box ??
-                                                                  pass!
-                                                                      .boxBefore,
-                                                            ),
-                                                          ),
-                                                    ),
-                                                    child:
-                                                        (snapshot?.box ??
-                                                                pass!
-                                                                    .boxBefore) ==
-                                                            0
-                                                        ? Text(
-                                                            'Neues Wort',
-                                                            style: AppType.meta(
-                                                              color: context
-                                                                  .appColors
-                                                                  .textMuted,
-                                                            ),
-                                                          )
-                                                        : MemoryLevelIndicator(
-                                                            level:
+                                                      () => _popover(
+                                                        _Trigger.level,
+                                                        (anchor) =>
+                                                            MemoryLevelLegendSheet.show(
+                                                              anchor,
+                                                              current: math.max(
+                                                                1,
                                                                 snapshot?.box ??
-                                                                pass!.boxBefore,
-                                                          ),
+                                                                    pass!
+                                                                        .boxBefore,
+                                                              ),
+                                                            ),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                                 const SizedBox(height: 6),
@@ -610,6 +644,16 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                                       .clearWrongFormHint,
                                                   onWord: (word) {
                                                     _autoTimer?.cancel();
+                                                    // Tapping the open word
+                                                    // again closes its bubble.
+                                                    if (_word?.start ==
+                                                        word.start) {
+                                                      setState(
+                                                        () => _word = null,
+                                                      );
+                                                      _schedule();
+                                                      return;
+                                                    }
                                                     setState(
                                                       () => _word = word,
                                                     );
@@ -621,61 +665,14 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                                 Align(
                                                   alignment:
                                                       Alignment.centerLeft,
-                                                  child: CupertinoButton(
-                                                    padding: EdgeInsets.zero,
-                                                    minimumSize: const Size(
-                                                      44,
-                                                      44,
-                                                    ),
+                                                  child: _InfoChip(
+                                                    key: _triggerKeys[_Trigger.info],
+                                                    label: contentCard!
+                                                        .exerciseLabel,
+                                                    open:
+                                                        _openTrigger ==
+                                                        _Trigger.info,
                                                     onPressed: _grammar,
-                                                    child: Container(
-                                                      padding:
-                                                          const EdgeInsets.symmetric(
-                                                            horizontal: 12,
-                                                            vertical: 7,
-                                                          ),
-                                                      decoration: BoxDecoration(
-                                                        color: context
-                                                            .appColors
-                                                            .activeTint,
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                              99,
-                                                            ),
-                                                      ),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: [
-                                                          Icon(
-                                                            CupertinoIcons
-                                                                .info_circle,
-                                                            size: 16,
-                                                            color: context
-                                                                .appColors
-                                                                .active,
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 6,
-                                                          ),
-                                                          Flexible(
-                                                            child: Text(
-                                                              contentCard!
-                                                                  .exerciseLabel,
-                                                              style: AppType.chrome(
-                                                                size: 14,
-                                                                weight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                color: context
-                                                                    .appColors
-                                                                    .textPrimary,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
                                                   ),
                                                 ),
                                               ],
@@ -833,6 +830,109 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
           ? 'Zurück zur Startseite'
           : 'Zurück zum Stapel',
       onAction: () => Navigator.of(context).maybePop(),
+    );
+  }
+}
+
+/// The memory level above the sentence ("Neues Wort" or the five dashes).
+/// Opens the level legend; while it shows, the trigger turns popover
+/// orange with white content.
+class _LevelTrigger extends StatelessWidget {
+  const _LevelTrigger({
+    super.key,
+    required this.level,
+    required this.open,
+    required this.onPressed,
+  });
+
+  final int level;
+  final bool open;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    const white = Color(0xFFFFFFFF);
+    final colors = context.appColors;
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      minimumSize: const Size(44, 44),
+      onPressed: onPressed,
+      child: TriggerPill(
+        open: open,
+        child: level == 0
+            ? Text(
+                'Neues Wort',
+                style: AppType.meta(color: open ? white : colors.textMuted),
+              )
+            : Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: MemoryLevelIndicator(
+                  level: level,
+                  litColor: open ? white : null,
+                  offColor: open ? white.withValues(alpha: 0.35) : null,
+                ),
+              ),
+      ),
+    );
+  }
+}
+
+/// The exercise label as a chip ("Substantiv", "Grundform") that opens the
+/// form info. Orange with white content while its popover shows.
+class _InfoChip extends StatelessWidget {
+  const _InfoChip({
+    super.key,
+    required this.label,
+    required this.open,
+    required this.onPressed,
+  });
+
+  final String label;
+  final bool open;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    const white = Color(0xFFFFFFFF);
+    final colors = context.appColors;
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      minimumSize: const Size(44, 44),
+      onPressed: onPressed,
+      child: Semantics(
+        label: '$label, Erklärung anzeigen',
+        expanded: open,
+        excludeSemantics: true,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 160),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+          decoration: BoxDecoration(
+            color: open ? colors.popover : colors.activeTint,
+            borderRadius: BorderRadius.circular(99),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                CupertinoIcons.info_circle,
+                size: 16,
+                color: open ? white : colors.active,
+              ),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  label,
+                  style: AppType.chrome(
+                    size: 14,
+                    weight: FontWeight.w700,
+                    color: open ? white : colors.textPrimary,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

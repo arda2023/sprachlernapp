@@ -18,7 +18,15 @@ class PracticeSessionBar extends StatelessWidget {
     this.activeRepeat = false,
     required this.onHome,
     required this.onMenu,
+    this.menuKey,
+    this.menuOpen = false,
   });
+
+  /// The menu button, so its popover can point at it.
+  final Key? menuKey;
+
+  /// The menu's popover shows: the button turns popover orange.
+  final bool menuOpen;
 
   final Set<int> repeatIndices;
   final bool activeRepeat;
@@ -86,9 +94,11 @@ class PracticeSessionBar extends StatelessWidget {
           ),
           if (onMenu case final onMenu?)
             _BarButton(
+              key: menuKey,
               label: 'Mehr',
               icon: CupertinoIcons.ellipsis_vertical,
               onPressed: onMenu,
+              open: menuOpen,
             )
           else
             const SizedBox(width: 44),
@@ -183,14 +193,17 @@ class SessionTrack extends StatelessWidget {
 
 class _BarButton extends StatelessWidget {
   const _BarButton({
+    super.key,
     required this.label,
     required this.icon,
     required this.onPressed,
+    this.open = false,
   });
 
   final String label;
   final IconData icon;
   final VoidCallback onPressed;
+  final bool open;
 
   @override
   Widget build(BuildContext context) {
@@ -202,7 +215,24 @@ class _BarButton extends StatelessWidget {
         child: Semantics(
           label: label,
           excludeSemantics: true,
-          child: Icon(icon, size: 22, color: context.appColors.textPrimary),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 160),
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: open
+                  ? context.appColors.popover
+                  : context.appColors.popover.withValues(alpha: 0),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              icon,
+              size: 22,
+              color: open
+                  ? const Color(0xFFFFFFFF)
+                  : context.appColors.textPrimary,
+            ),
+          ),
         ),
       ),
     );

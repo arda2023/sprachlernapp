@@ -1,6 +1,8 @@
 // Pure Dart: no Flutter imports (see CLAUDE.md, domain layer).
 import 'package:unorm_dart/unorm_dart.dart' as unicode;
 
+import 'part_of_speech.dart';
+
 /// Same NFC -> lowercase -> apostrophe sequence as sprachpipe.ids.form_norm.
 /// Identity never strips accents or trims content forms.
 String contentFormNorm(String value) =>
@@ -117,7 +119,8 @@ class ContentCard {
     'base' => 'Grundform',
     'past' => 'Präteritum',
     'past_participle' => 'Partizip Perfekt',
-    _ => formLabelDe ?? pos,
+    // Packs without an editorial label carry the raw UD tag ("NOUN").
+    _ => germanPartOfSpeech(formLabelDe ?? pos),
   };
   String get learningGroup => learning?.groupId ?? id;
   String get learningHead => learning?.primaryCardId ?? id;

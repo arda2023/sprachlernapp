@@ -13,7 +13,6 @@ import '../../presentation/providers/database_providers.dart';
 import '../../presentation/content_unavailable_view.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/back_bar.dart';
-import 'widgets/memory_level_legend_sheet.dart';
 import 'widgets/playback_highlight.dart';
 import 'widgets/word_details_sheet.dart';
 import 'widgets/word_list_item.dart';
@@ -293,10 +292,6 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
                             onPlaySentence: () => _playback.play(
                               sentenceAudioKey(word.id),
                               word.sentence,
-                            ),
-                            onShowLegend: () => MemoryLevelLegendSheet.show(
-                              context,
-                              current: word.box,
                             ),
                             onToggleDisabled: () => _toggleDisabled(word),
                             onTogglePlaylist: () => _togglePlaylist(word),

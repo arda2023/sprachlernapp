@@ -90,6 +90,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
     final word = _words[start]!;
     final rect = _rect(word.key);
     if (rect != null) {
+      HapticFeedback.lightImpact();
       widget.onWord(
         WordAnchor(
           start,
@@ -145,33 +146,53 @@ class PracticeSentenceState extends State<PracticeSentence> {
               offset,
               () => (key: GlobalKey(), translation: annotated?.translation),
             );
+            final selected = widget.selectedStart == offset;
+            final word = text.substring(0, wordLength);
+            final wordStyle = selected
+                // Like every popover trigger: popover orange, white ink.
+                ? style.copyWith(color: const Color(0xFFFFFFFF))
+                : style.copyWith(
+                    color: colors.memoryLevel2.withValues(
+                      alpha: widget.selectedStart == null ? 1 : .5,
+                    ),
+                    decoration: TextDecoration.underline,
+                    decorationStyle: TextDecorationStyle.dotted,
+                    decorationColor: colors.textMuted.withValues(alpha: .45),
+                  );
             children.add(
               WidgetSpan(
                 alignment: PlaceholderAlignment.baseline,
                 baseline: TextBaseline.alphabetic,
                 child: GestureDetector(
-                  key: item.key,
                   onTap: () => _select(offset),
                   child: Semantics(
                     button: true,
+                    selected: selected,
                     label: '$text, Übersetzung anzeigen',
-                    child: Text(
-                      text,
-                      style: style.copyWith(
-                        color: colors.memoryLevel2.withValues(
-                          alpha:
-                              widget.selectedStart == null ||
-                                  widget.selectedStart == offset
-                              ? 1
-                              : .5,
+                    excludeSemantics: true,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        // The bubble's arrow points at the word itself, not
+                        // at its trailing punctuation.
+                        _WordHighlight(
+                          key: item.key,
+                          on: selected,
+                          color: colors.popover,
+                          child: Text(word, style: wordStyle),
                         ),
-                        backgroundColor: widget.selectedStart == offset ? colors.hairline : null,
-                        decoration: TextDecoration.underline,
-                        decorationStyle: TextDecorationStyle.dotted,
-                        decorationColor: colors.textMuted.withValues(
-                          alpha: .45,
-                        ),
-                      ),
+                        if (wordLength < text.length)
+                          Text(
+                            text.substring(wordLength),
+                            style: style.copyWith(
+                              color: colors.memoryLevel2.withValues(
+                                alpha: widget.selectedStart == null ? 1 : .5,
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                 ),
@@ -300,6 +321,59 @@ class PracticeSentenceState extends State<PracticeSentence> {
       },
     ),
   );
+}
+
+/// The tapped word while its bubble shows: a rounded popover-orange plate
+/// behind the glyphs, painted outside the word's box so the sentence
+/// never reflows.
+class _WordHighlight extends StatelessWidget {
+  const _WordHighlight({
+    super.key,
+    required this.on,
+    required this.color,
+    required this.child,
+  });
+
+  final bool on;
+  final Color color;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => TweenAnimationBuilder<double>(
+    tween: Tween(end: on ? 1 : 0),
+    duration: MediaQuery.disableAnimationsOf(context)
+        ? Duration.zero
+        : const Duration(milliseconds: 140),
+    curve: Curves.easeOut,
+    builder: (context, t, child) => CustomPaint(
+      painter: t == 0 ? null : _PlatePainter(color.withValues(alpha: t)),
+      child: child,
+    ),
+    child: child,
+  );
+}
+
+class _PlatePainter extends CustomPainter {
+  const _PlatePainter(this.color);
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // The line box is taller than the glyphs (line height 1.5).
+    final plate = Rect.fromLTRB(
+      -5,
+      size.height * 0.12,
+      size.width + 5,
+      size.height * 0.94,
+    );
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(plate, const Radius.circular(8)),
+      Paint()..color = color,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_PlatePainter old) => old.color != color;
 }
 
 /// Keeps the solved answer as it is while the keyboard stays open.

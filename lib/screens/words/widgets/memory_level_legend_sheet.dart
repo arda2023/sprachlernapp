@@ -1,58 +1,47 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show showModalBottomSheet;
 
 import '../../../domain/leitner.dart';
 import '../../../theme/app_theme.dart';
+import '../../../widgets/anchored_popover.dart';
+import '../../../widgets/popover_content.dart';
 import 'memory_level_indicator.dart';
 
-/// Explains the five memory levels. The [current] level (the tapped word's)
-/// is marked in text, not color.
+/// Explains the five memory levels, as the orange popover pointing at the
+/// tapped dashes. The [current] level (the tapped word's) is marked in
+/// text, not color.
 class MemoryLevelLegendSheet extends StatelessWidget {
   const MemoryLevelLegendSheet({super.key, this.current});
 
   final int? current;
 
+  /// [context] is the tapped level; the arrow points there.
   static Future<void> show(BuildContext context, {int? current}) =>
-      showModalBottomSheet<void>(
-        context: context,
-        showDragHandle: true,
-        isScrollControlled: true,
-        useSafeArea: true,
+      showAnchoredPopover<void>(
+        anchorContext: context,
+        color: context.appColors.popover,
         builder: (_) => MemoryLevelLegendSheet(current: current),
       );
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Semantics(
-              header: true,
-              child: Text(
-                'Erinnerungsstufen',
-                style: AppType.editorial(
-                  color: context.appColors.textPrimary,
-                  size: 24,
-                ),
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              'Jede richtige Wiederholung hebt ein Wort eine Stufe höher. '
-              'Ein Fehler setzt es auf Stufe 1 zurück.',
-              style: AppType.chrome(color: context.appColors.textMuted),
-            ),
-            const SizedBox(height: 16),
-            for (var level = 1; level <= leitnerBoxCount; level++)
-              _LegendRow(level: level, isCurrent: level == current),
-          ],
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const PopoverTitle('Erinnerungsstufen'),
+        const SizedBox(height: 6),
+        Text(
+          'Jede richtige Wiederholung hebt ein Wort eine Stufe höher. '
+          'Ein Fehler setzt es auf Stufe 1 zurück.',
+          style: AppType.chrome(
+            color: popoverInk.withValues(alpha: 0.9),
+            height: 1.35,
+          ),
         ),
-      ),
+        const SizedBox(height: 12),
+        for (var level = 1; level <= leitnerBoxCount; level++)
+          _LegendRow(level: level, isCurrent: level == current),
+      ],
     );
   }
 }
@@ -73,16 +62,22 @@ class _LegendRow extends StatelessWidget {
           '${isCurrent ? '. Dieses Wort' : ''}',
       excludeSemantics: true,
       child: Container(
-        constraints: const BoxConstraints(minHeight: 56),
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        constraints: const BoxConstraints(minHeight: 52),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: context.appColors.hairline)),
+          border: Border(
+            top: BorderSide(color: popoverInk.withValues(alpha: 0.25)),
+          ),
         ),
         child: Row(
           children: [
             SizedBox(
               width: MemoryLevelIndicator.widthFor(14),
-              child: MemoryLevelIndicator(level: level),
+              child: MemoryLevelIndicator(
+                level: level,
+                litColor: popoverInk,
+                offColor: popoverInk.withValues(alpha: 0.3),
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -92,20 +87,32 @@ class _LegendRow extends StatelessWidget {
                   Text(
                     title,
                     style: AppType.chrome(
-                      color: context.appColors.textPrimary,
-                      weight: isCurrent ? FontWeight.w700 : FontWeight.w600,
+                      color: popoverInk,
+                      weight: isCurrent ? FontWeight.w800 : FontWeight.w600,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     detail,
-                    style: AppType.meta(color: context.appColors.textMuted),
+                    style: AppType.meta(
+                      color: popoverInk.withValues(alpha: 0.85),
+                    ),
                   ),
                   if (isCurrent) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      'Dieses Wort',
-                      style: AppType.meta(color: context.appColors.textPrimary),
+                    const SizedBox(height: 6),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: popoverInk,
+                        borderRadius: BorderRadius.circular(99),
+                      ),
+                      child: Text(
+                        'Dieses Wort',
+                        style: AppType.meta(color: context.appColors.popover),
+                      ),
                     ),
                   ],
                 ],

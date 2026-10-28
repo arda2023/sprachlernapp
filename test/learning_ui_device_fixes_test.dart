@@ -413,7 +413,8 @@ void main() {
       await show('nach', 1, 0);
       expect(find.text('Alle Übungen geübt'), findsNothing);
       final bubble = find.byKey(const ValueKey('translation-bubble'));
-      expect(tester.getSize(bubble).width, lessThan(100));
+      // Content sized: the word, the speaker button and the bubble's insets.
+      expect(tester.getSize(bubble).width, lessThan(160));
       expect(tester.getSize(find.text('nach')).height, lessThan(30));
       await screenshot(tester, boundary, 'bubble-short');
       await show(

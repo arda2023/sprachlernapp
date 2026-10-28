@@ -144,7 +144,8 @@ class _AppShellState extends ConsumerState<AppShell> {
     if (ref.read(languageSelectionProvider).switching) return;
     final lang = ref.read(selectedContentLanguageProvider);
     if (lang.isLoading && lang.hasValue) return;
-    if (lang.asData?.value == 'pt-BR') {
+    // Only English ships with the app; other packs may still be missing.
+    if (lang.asData?.value case final value? when value != 'en') {
       final content = ref.read(contentInfoProvider);
       if (content.isLoading || content.hasError) return;
     }
@@ -172,12 +173,14 @@ class _AppShellState extends ConsumerState<AppShell> {
     });
     final selected = ref.watch(selectedContentLanguageProvider);
     final lang = selected.asData?.value ?? 'en';
-    final portuguese = lang == 'pt-BR';
+    // Only English ships with the app (and its sample texts); every other
+    // language depends on an installed pack.
+    final downloaded = lang != 'en';
     final switching =
         ref.watch(languageSelectionProvider).switching ||
         selected.isLoading && selected.hasValue;
-    final info = portuguese ? ref.watch(contentInfoProvider) : null;
-    final unavailable = portuguese && (info!.isLoading || info.hasError);
+    final info = downloaded ? ref.watch(contentInfoProvider) : null;
+    final unavailable = downloaded && (info!.isLoading || info.hasError);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value:
           (context.appColors.light
@@ -198,7 +201,8 @@ class _AppShellState extends ConsumerState<AppShell> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                       child: Text(
-                        ContentLanguageProfile.portugueseBrazil.displayName,
+                        ContentLanguageProfile.forLanguage(lang)?.displayName ??
+                            'Lernsprache',
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
@@ -276,15 +280,15 @@ class _AppShellState extends ConsumerState<AppShell> {
                           ),
                         ),
                     onOpenStory: _openStory,
-                    news: portuguese ? [] : sampleNews,
+                    news: downloaded ? [] : sampleNews,
                     onOpenNews: (article) =>
                         StoryReaderScreen.openNews(context, article),
                   ),
                   const WordListScreen(),
-                  portuguese
-                      ? const Center(
+                  downloaded
+                      ? Center(
                           child: Text(
-                            'Für Portugiesisch (Brasilien) sind noch keine weiteren Inhalte verfügbar.',
+                            'Für ${ContentLanguageProfile.forLanguage(lang)?.displayName ?? 'diese Sprache'} sind noch keine weiteren Inhalte verfügbar.',
                           ),
                         )
                       : ContentDashboardScreen(

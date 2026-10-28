@@ -370,6 +370,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
 
   Future<void> _translate(int index) async {
     final sentence = _sentences[index].text;
+    HapticFeedback.lightImpact();
     setState(() => _selectedSentence = index);
     final translation =
         widget.document?.sentences[index].translation ??
@@ -426,6 +427,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
 
   Future<void> _lookUp(int index) async {
     final word = _words[index];
+    // A short tap on every word lookup, as in practice.
+    HapticFeedback.lightImpact();
     if (!hasStoredTranslation(word.entry.translation)) {
       final sentence = _sentences
           .firstWhere((s) => s.tokens.contains(index))

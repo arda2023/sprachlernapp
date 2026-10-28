@@ -7,6 +7,7 @@ import '../../words/word_list_screen.dart';
 import '../../../models/story_models.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/anchored_popover.dart';
+import '../../../widgets/speak_button.dart';
 
 /// Tapped word in the reader: popover pointing at the word with headword,
 /// word class, German translation, pronunciation and "Zum Lernen
@@ -61,8 +62,7 @@ class WordPopover extends StatefulWidget {
   State<WordPopover> createState() => _WordPopoverState();
 }
 
-class _WordPopoverState extends State<WordPopover>
-    with SingleTickerProviderStateMixin {
+class _WordPopoverState extends State<WordPopover> {
   static const _white = Color(0xFFFFFFFF);
 
   late WordMark? _mark = widget.mark;
@@ -79,17 +79,9 @@ class _WordPopoverState extends State<WordPopover>
 
   String? _error;
 
-  /// Pronunciation: pre-generated audio is not in this copy yet, so the
-  /// button shows its playing state like the Wortliste does.
-  late final _speaking = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 1200),
-  );
-
   @override
   void dispose() {
     _releaseContent();
-    _speaking.dispose();
     super.dispose();
   }
 
@@ -122,11 +114,6 @@ class _WordPopoverState extends State<WordPopover>
       releaseWrite();
       if (mounted) setState(() => _saving = false);
     }
-  }
-
-  void _speak() {
-    HapticFeedback.selectionClick();
-    _speaking.forward(from: 0);
   }
 
   @override
@@ -181,7 +168,8 @@ class _WordPopoverState extends State<WordPopover>
               ),
             ),
             const SizedBox(width: 8),
-            _SpeakButton(speaking: _speaking, onPressed: _speak),
+            // Pronunciation: shows its playing state until real audio ships.
+            const SpeakButton(),
           ],
         ),
         const SizedBox(height: 14),
@@ -247,61 +235,6 @@ class _WordPopoverState extends State<WordPopover>
             ),
           ),
       ],
-    );
-  }
-}
-
-class _SpeakButton extends StatelessWidget {
-  const _SpeakButton({required this.speaking, required this.onPressed});
-
-  final Animation<double> speaking;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return MergeSemantics(
-      child: CupertinoButton(
-        onPressed: onPressed,
-        padding: EdgeInsets.zero,
-        minimumSize: const Size(44, 44),
-        child: Semantics(
-          label: 'Aussprechen',
-          excludeSemantics: true,
-          child: AnimatedBuilder(
-            animation: speaking,
-            builder: (context, _) {
-              final on = speaking.isAnimating;
-              // Gentle pulse while "playing".
-              final pulse = on
-                  ? 1 + 0.08 * (1 - (speaking.value * 4 % 2 - 1).abs())
-                  : 1.0;
-              return Transform.scale(
-                scale: pulse,
-                child: Container(
-                  width: 44,
-                  height: 44,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: on
-                        ? const Color(0xFFFFFFFF)
-                        : const Color(0x33FFFFFF),
-                  ),
-                  child: Icon(
-                    on
-                        ? CupertinoIcons.speaker_3_fill
-                        : CupertinoIcons.speaker_2_fill,
-                    size: 20,
-                    color: on
-                        ? context.appColors.popover
-                        : const Color(0xFFFFFFFF),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ),
     );
   }
 }
