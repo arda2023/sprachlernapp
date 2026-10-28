@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 import '../../../domain/leitner.dart';
 import '../../../models/word_list_models.dart';
@@ -315,7 +316,11 @@ class WordToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     return MergeSemantics(
       child: CupertinoButton(
-        onPressed: onPressed,
+        onPressed: () {
+          // Toggles tick like a switch.
+          HapticFeedback.selectionClick();
+          onPressed();
+        },
         padding: EdgeInsets.zero,
         minimumSize: const Size(44, 44),
         child: Semantics(

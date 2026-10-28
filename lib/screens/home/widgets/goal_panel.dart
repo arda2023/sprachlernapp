@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../presentation/providers/learning_providers.dart';
 import '../../../theme/app_theme.dart';
+import '../../../widgets/popover_content.dart';
 
 /// Popover content behind the target icon: today's progress and the daily
 /// goal choice. The goal is a recommendation, never a lockout (PRODUCT.md).
@@ -18,7 +20,7 @@ class GoalPanel extends ConsumerWidget {
     const white = Color(0xFFFFFFFF);
     final goal = ref.watch(learningProgressProvider).value?.goal;
     if (goal == null) return const SizedBox(height: 120);
-    final base = AppType.chrome(size: 17, color: white, height: 1.35);
+    final base = PopoverText.body();
     final fraction = (goal.done / goal.target).clamp(0.0, 1.0);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -70,11 +72,7 @@ class GoalPanel extends ConsumerWidget {
         const SizedBox(height: 20),
         Text(
           'Tagesziel anpassen',
-          style: AppType.chrome(
-            size: 14,
-            weight: FontWeight.w700,
-            color: white.withValues(alpha: 0.85),
-          ),
+          style: PopoverText.small(),
         ),
         const SizedBox(height: 8),
         Wrap(
@@ -85,7 +83,10 @@ class GoalPanel extends ConsumerWidget {
               _GoalChip(
                 target: target,
                 selected: target == goal.target,
-                onTap: () => onSetGoal(target),
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  onSetGoal(target);
+                },
               ),
           ],
         ),

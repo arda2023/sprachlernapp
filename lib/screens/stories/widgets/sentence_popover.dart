@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../theme/app_theme.dart';
 import '../../../widgets/anchored_popover.dart';
+import '../../../widgets/popover_content.dart';
 
 /// Translation mode in the reader: the tapped sentence and its German
 /// translation, pointing at the sentence.
@@ -48,10 +49,7 @@ class SentencePopover extends StatelessWidget {
         const SizedBox(height: 12),
         Container(height: 1, color: white.withValues(alpha: 0.25)),
         const SizedBox(height: 10),
-        Text(
-          'Deutsch',
-          style: AppType.meta(color: white.withValues(alpha: 0.8)),
-        ),
+        Text('Deutsch', style: PopoverText.caption()),
         const SizedBox(height: 2),
         Text(
           translation,

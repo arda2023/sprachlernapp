@@ -464,6 +464,8 @@ class PracticeAnswerToolbar extends StatelessWidget {
                                 child: saved
                                     ? Semantics(
                                         label: 'Richtig gespeichert',
+                                        // Pops in with the success haptic.
+                                        child: _PopIn(
                                         child: Container(
                                           key: const ValueKey(
                                             'practice-success',
@@ -483,6 +485,7 @@ class PracticeAnswerToolbar extends StatelessWidget {
                                             size: 20,
                                             color: Color(0xFFFFFFFF),
                                           ),
+                                        ),
                                         ),
                                       )
                                     : null,
@@ -594,6 +597,29 @@ class _ToolbarButton extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Grows from 60 % with a small overshoot when it appears; reduced motion
+/// shows it at once.
+class _PopIn extends StatelessWidget {
+  const _PopIn({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if (MediaQuery.disableAnimationsOf(context)) return child;
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.6, end: 1),
+      duration: const Duration(milliseconds: 260),
+      curve: Curves.easeOutBack,
+      builder: (context, scale, child) => Transform.scale(
+        scale: scale,
+        child: Opacity(opacity: ((scale - 0.6) / 0.4).clamp(0, 1), child: child),
+      ),
+      child: child,
     );
   }
 }

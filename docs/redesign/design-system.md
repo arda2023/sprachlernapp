@@ -67,7 +67,9 @@ Mobbin-Referenzen: Wortliste wie [Preply](https://mobbin.com/screens/a839b88a-b5
 
 **Overlay-Regel (28.10.2026).** Eine Sache, ein Muster: Kurze Infos und Auswahlen, die von einem Element ausgehen, sind immer das orange Popover mit Pfeil auf dieses Element – Wortart-Info, Erinnerungsstufen, Übungsmenü und „Ein Problem melden“, Übungsart eines Textes (Pfeil aufs Cover), Satz- und KI-Übersetzung in Reader und Textübung. Ein Bottom Sheet bleibt nur für lange Inhalte oder Formulare: Wort-Details (Notiz), Bericht/Feedback, Tastaturhilfe. Löschen bestätigt ein Cupertino-Aktionsblatt (destruktiv, HIG › Action sheets).
 
-**Haptik (28.10.2026).** Systemmuster in ihrer dokumentierten Bedeutung (HIG › Playing haptics): Popover öffnen und Schalter = Auswahl-Tick; Wort antippen (Lernen, Reader, Textübung, Onboarding) = leichter Impuls; gelöste Lücke = Erfolg; falsche Antwort oder falsche Form = Fehler (auch bei reduzierter Bewegung, Haptik ist keine Bewegung); „Fast richtig“ = Warnung; neutrales Synonym = keine Haptik (PRODUCT.md). Gilt für Lernen, Textübungen und Hören.
+**Haptik (28.10.2026).** Systemmuster in ihrer dokumentierten Bedeutung (HIG › Playing haptics): Popover öffnen und Schalter = Auswahl-Tick; Wort antippen (Lernen, Reader, Textübung, Onboarding) = leichter Impuls; gelöste Lücke = Erfolg; falsche Antwort oder falsche Form = Fehler (auch bei reduzierter Bewegung, Haptik ist keine Bewegung); „Fast richtig“ = Warnung; neutrales Synonym = keine Haptik (PRODUCT.md). Gilt für Lernen, Textübungen und Hören. Tagesziel-Chips und Wortlisten-Schalter (Favorit) ticken wie Schalter.
+
+**Mikrointeraktionen (28.10.2026).** Story-Cover und Stapel-Karten sinken unter dem Finger auf 97 % und federn zurück (`widgets/press_scale.dart`; ein Scrollen löst sofort, reduzierte Bewegung: kein Skalieren). Der grüne Erfolgshaken beim Lernen ploppt mit kleinem Überschwinger auf, gleichzeitig mit der Erfolgs-Haptik. Neue Popovers wachsen aus ihrem Pfeil (Skalierung 0,9 → 1).
 
 | Baustein | Regel | Datei |
 |---|---|---|

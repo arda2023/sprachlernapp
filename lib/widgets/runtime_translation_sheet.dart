@@ -73,7 +73,6 @@ class _RuntimeTranslationSheetState
 
   @override
   Widget build(BuildContext context) {
-    final muted = popoverInk.withValues(alpha: 0.85);
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -93,8 +92,8 @@ class _RuntimeTranslationSheetState
           Text(
             widget.text,
             style: AppType.editorial(
-              color: muted,
-              size: 17,
+              color: popoverInk,
+              size: 18,
               weight: FontWeight.w400,
               height: 1.4,
               letterSpacing: 0,
@@ -107,7 +106,7 @@ class _RuntimeTranslationSheetState
         if (!started) ...[
           Text(
             'Keine gespeicherte Übersetzung. Für eine KI-Übersetzung wird dieser Satz an Anthropic übermittelt. Keine ausschließliche EU-Verarbeitung.',
-            style: AppType.chrome(size: 14, color: muted, height: 1.4),
+            style: PopoverText.small(),
           ),
           const SizedBox(height: 14),
           PopoverPillButton(
@@ -127,14 +126,11 @@ class _RuntimeTranslationSheetState
             child: Text(
               error!,
               semanticsLabel: error,
-              style: AppType.chrome(color: popoverInk, height: 1.4),
+              style: PopoverText.small(),
             ),
           ),
         if (result case final value?) ...[
-          Text(
-            'Deutsch',
-            style: AppType.meta(color: muted),
-          ),
+          Text('Deutsch', style: PopoverText.caption()),
           const SizedBox(height: 2),
           Text(
             value.text,
@@ -147,16 +143,10 @@ class _RuntimeTranslationSheetState
             ),
           ),
           const SizedBox(height: 12),
-          Text(
-            'KI · ${value.model}',
-            style: AppType.meta(color: muted),
-          ),
+          Text('KI · ${value.model}', style: PopoverText.caption()),
           SelectableText(
             'Anfrage: ${value.requestId}',
-            style: AppType.chrome(
-              size: 12,
-              color: popoverInk.withValues(alpha: 0.7),
-            ),
+            style: PopoverText.caption().copyWith(fontSize: 12),
           ),
         ],
       ],

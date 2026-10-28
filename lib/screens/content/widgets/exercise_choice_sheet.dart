@@ -29,10 +29,7 @@ class ExerciseChoiceSheet extends StatelessWidget {
       children: [
         PopoverTitle(text.info.title, editorial: true),
         const SizedBox(height: 4),
-        Text(
-          storyMetaLine(text.info),
-          style: AppType.meta(color: popoverInk.withValues(alpha: 0.85)),
-        ),
+        Text(storyMetaLine(text.info), style: PopoverText.caption()),
         const SizedBox(height: 10),
         for (final mode in ExerciseMode.values)
           _ModeOption(
@@ -99,10 +96,10 @@ class _ModeOption extends StatelessWidget {
                       const SizedBox(height: 2),
                       Text(
                         detail,
-                        style: AppType.meta(
-                          color: popoverInk.withValues(
-                            alpha: enabled ? 0.85 : 0.55,
-                          ),
+                        style: PopoverText.caption().copyWith(
+                          color: enabled
+                              ? popoverInk
+                              : popoverInk.withValues(alpha: 0.55),
                         ),
                       ),
                     ],

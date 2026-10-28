@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../../widgets/popover_content.dart';
 
 /// Popover content behind "Importieren": where a text can come from. Pasting
 /// works on the device; files, YouTube transcripts and web pages need a file
@@ -85,11 +86,7 @@ class _ImportPanelState extends State<ImportPanel> {
         const SizedBox(height: 4),
         Text(
           'Lies Transkripte, E-Books oder Artikel mit Wort-Übersetzung.',
-          style: AppType.chrome(
-            size: 14,
-            color: _white.withValues(alpha: 0.9),
-            height: 1.35,
-          ),
+          style: PopoverText.small(),
         ),
         const SizedBox(height: 16),
         LayoutBuilder(
@@ -112,17 +109,14 @@ class _ImportPanelState extends State<ImportPanel> {
             liveRegion: true,
             child: Text(
               _message!,
-              style: AppType.chrome(size: 14, color: _white, height: 1.35),
+              style: PopoverText.small(),
             ),
           ),
         ],
         const SizedBox(height: 12),
         Text(
           'Importierte Texte bleiben auf diesem Gerät. Höchstens 5.000 Wörter.',
-          style: AppType.chrome(
-            size: 12,
-            color: _white.withValues(alpha: 0.75),
-          ),
+          style: PopoverText.caption().copyWith(fontSize: 12),
         ),
       ],
     );
@@ -208,11 +202,10 @@ class _Option extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   detail,
-                  style: AppType.chrome(
-                    size: 12,
-                    color: available
-                        ? context.appColors.popover.withValues(alpha: 0.8)
-                        : white.withValues(alpha: 0.8),
+                  // Orange on white is 3.3:1 as well: bold, full strength.
+                  style: PopoverText.caption().copyWith(
+                    fontSize: 12,
+                    color: available ? context.appColors.popover : white,
                   ),
                 ),
               ],

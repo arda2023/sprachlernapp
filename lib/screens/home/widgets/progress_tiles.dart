@@ -5,6 +5,7 @@ import '../../../domain/srs_state.dart' show LexicalBreakdown, VocabBreakdown;
 import '../../../theme/app_theme.dart';
 import '../../../widgets/anchored_popover.dart';
 import '../../../widgets/count_format.dart';
+import '../../../widgets/popover_content.dart';
 
 /// One tile per progress measure (title, number, bar). Tapping highlights the
 /// tile and explains the measure in a popover pointing at it. All values stay
@@ -325,13 +326,7 @@ class _ExplanationBody extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        Text(
-          m.explanation,
-          style: AppType.chrome(
-            color: white.withValues(alpha: 0.92),
-            height: 1.4,
-          ),
-        ),
+        Text(m.explanation, style: PopoverText.small()),
       ],
     );
   }

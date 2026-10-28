@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/language_profile.dart';
 import '../../../presentation/providers/language_selection_provider.dart';
 import '../../../theme/app_theme.dart';
+import '../../../widgets/popover_content.dart';
 
 /// Language picker using the same validated transition as Settings.
 class LanguagePanel extends ConsumerStatefulWidget {
@@ -105,7 +106,7 @@ class _LanguagePanelState extends ConsumerState<LanguagePanel> {
             child: Text(
               _note!,
               textAlign: TextAlign.center,
-              style: AppType.chrome(size: 14, color: _white, height: 1.35),
+              style: PopoverText.small(),
             ),
           ),
         ],

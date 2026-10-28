@@ -60,10 +60,7 @@ class FormInfoSheet extends StatelessWidget {
       children: [
         PopoverTitle(label),
         const SizedBox(height: 8),
-        Text(
-          explanation,
-          style: AppType.chrome(size: 16, color: popoverInk, height: 1.4),
-        ),
+        Text(explanation, style: PopoverText.body()),
         if (examples.isNotEmpty) ...[
           const SizedBox(height: 12),
           Text(examples.join(' · '), style: serif),
@@ -72,10 +69,7 @@ class FormInfoSheet extends StatelessWidget {
           const SizedBox(height: 14),
           const PopoverDivider(),
           const SizedBox(height: 12),
-          Text(
-            'Vorhandene Formen',
-            style: AppType.meta(color: popoverInk.withValues(alpha: 0.85)),
-          ),
+          Text('Vorhandene Formen', style: PopoverText.caption()),
           const SizedBox(height: 4),
           Text(forms.join(' · '), style: serif),
         ],

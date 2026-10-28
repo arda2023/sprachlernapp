@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import '../../../models/home_models.dart';
 import '../../../models/story_category.dart';
 import '../../../theme/app_theme.dart';
+import '../../../widgets/press_scale.dart';
 
 /// Level first, genre last: at large Dynamic Type the genre truncates first.
 String storyMetaLine(Story story) =>
@@ -95,110 +96,113 @@ class StoryCard extends StatelessWidget {
     final percent = ((progress ?? 0) * 100).round();
     final radius = BorderRadius.circular(18);
     return MergeSemantics(
-      child: CupertinoButton(
-        onPressed: onTap,
-        padding: EdgeInsets.zero,
-        pressedOpacity: 0.8,
-        minimumSize: const Size(44, 44),
-        child: Semantics(
-          label:
-              '${storySemanticsLabel(story)}'
-              '${finished
-                  ? ', gelesen'
-                  : started
-                  ? ', $percent Prozent gelesen'
-                  : ''}',
-          excludeSemantics: true,
-          child: SizedBox(
-            width: width,
-            height: height,
-            child: ClipRRect(
-              borderRadius: radius,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  if (story.cover case final cover?)
-                    Image(image: cover, fit: BoxFit.cover)
-                  else
-                    DecoratedBox(
+      // Cards sink slightly under the finger (press feedback).
+      child: PressScale(
+        child: CupertinoButton(
+          onPressed: onTap,
+          padding: EdgeInsets.zero,
+          pressedOpacity: 0.9,
+          minimumSize: const Size(44, 44),
+          child: Semantics(
+            label:
+                '${storySemanticsLabel(story)}'
+                '${finished
+                    ? ', gelesen'
+                    : started
+                    ? ', $percent Prozent gelesen'
+                    : ''}',
+            excludeSemantics: true,
+            child: SizedBox(
+              width: width,
+              height: height,
+              child: ClipRRect(
+                borderRadius: radius,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    if (story.cover case final cover?)
+                      Image(image: cover, fit: BoxFit.cover)
+                    else
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Color.lerp(category.color, white, 0.12)!,
+                              Color.lerp(
+                                category.color,
+                                const Color(0xFF000000),
+                                0.35,
+                              )!,
+                            ],
+                          ),
+                        ),
+                      ),
+                    if (story.cover == null)
+                      Positioned(
+                        right: -18,
+                        top: -10,
+                        child: Icon(
+                          category.icon,
+                          size: width * 0.78,
+                          color: white.withValues(alpha: 0.16),
+                        ),
+                      ),
+                    const DecoratedBox(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Color.lerp(category.color, white, 0.12)!,
-                            Color.lerp(
-                              category.color,
-                              const Color(0xFF000000),
-                              0.35,
-                            )!,
-                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: [0.35, 1],
+                          colors: [Color(0x00000000), Color(0x99000000)],
                         ),
                       ),
                     ),
-                  if (story.cover == null)
+                    if (finished)
+                      const Positioned(
+                        top: 10,
+                        right: 10,
+                        child: _FinishedBadge(),
+                      ),
                     Positioned(
-                      right: -18,
-                      top: -10,
-                      child: Icon(
-                        category.icon,
-                        size: width * 0.78,
-                        color: white.withValues(alpha: 0.16),
-                      ),
-                    ),
-                  const DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        stops: [0.35, 1],
-                        colors: [Color(0x00000000), Color(0x99000000)],
-                      ),
-                    ),
-                  ),
-                  if (finished)
-                    const Positioned(
-                      top: 10,
-                      right: 10,
-                      child: _FinishedBadge(),
-                    ),
-                  Positioned(
-                    left: 12,
-                    right: 12,
-                    bottom: 12,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          story.title,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppType.editorial(
-                            color: white,
-                            size: 17,
-                            height: 1.2,
+                      left: 12,
+                      right: 12,
+                      bottom: 12,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            story.title,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppType.editorial(
+                              color: white,
+                              size: 17,
+                              height: 1.2,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          started
-                              ? '${story.level} · $percent %'
-                              : '${story.level} · ${story.readingMinutes} Min',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppType.meta(
-                            color: white.withValues(alpha: 0.82),
+                          const SizedBox(height: 6),
+                          Text(
+                            started
+                                ? '${story.level} · $percent %'
+                                : '${story.level} · ${story.readingMinutes} Min',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppType.meta(
+                              color: white.withValues(alpha: 0.82),
+                            ),
                           ),
-                        ),
-                        if (started) ...[
-                          const SizedBox(height: 8),
-                          ReadingBar(fraction: progress!, onDark: true),
+                          if (started) ...[
+                            const SizedBox(height: 8),
+                            ReadingBar(fraction: progress!, onDark: true),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

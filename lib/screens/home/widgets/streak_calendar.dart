@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../domain/streak.dart';
 import '../../../theme/app_theme.dart';
+import '../../../widgets/popover_content.dart';
 import '../../../widgets/svg_glyph.dart';
 
 /// Popover content behind the flame: current streak, earned week stars and a
@@ -23,7 +24,9 @@ const _months = [
 ];
 const _weekdays = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
 const _ink = Color(0xFFFFFFFF);
-const _muted = Color(0xCCFFFFFF);
+// Text on the popover is bold or 18 pt+ and never translucent (white on
+// #E26C00 is 3.3:1, see PopoverText); quieter text is lighter in weight only.
+const _muted = _ink;
 
 class _StreakCalendarState extends State<StreakCalendar> {
   late DateTime _month = DateTime(widget.today.year, widget.today.month);
@@ -110,7 +113,7 @@ class _StreakCalendarState extends State<StreakCalendar> {
         Text(
           '7 Tage am Stück ergeben einen Wochenstern. Deine Sterne bleiben, '
           'auch wenn eine Serie einmal reißt.',
-          style: AppType.chrome(size: 14, color: _muted, height: 1.35),
+          style: PopoverText.small(),
         ),
       ],
     );
@@ -148,7 +151,7 @@ class _Stat extends StatelessWidget {
                       color: _ink,
                     ),
                   ),
-                  Text(label, style: AppType.meta(color: _muted)),
+                  Text(label, style: PopoverText.caption()),
                 ],
               ),
             ),
@@ -213,7 +216,7 @@ class _MonthGrid extends StatelessWidget {
             for (final name in _weekdays)
               Expanded(
                 child: Center(
-                  child: Text(name, style: AppType.meta(color: _muted)),
+                  child: Text(name, style: PopoverText.caption()),
                 ),
               ),
           ],
@@ -309,7 +312,7 @@ class _DayCell extends StatelessWidget {
                 '$day',
                 style: AppType.chrome(
                   size: 15,
-                  weight: on || today ? FontWeight.w800 : FontWeight.w500,
+                  weight: on || today ? FontWeight.w800 : FontWeight.w700,
                   color: star
                       ? context.appColors.popover
                       : on || today

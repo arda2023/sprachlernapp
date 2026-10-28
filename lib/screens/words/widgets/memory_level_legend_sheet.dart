@@ -33,10 +33,7 @@ class MemoryLevelLegendSheet extends StatelessWidget {
         Text(
           'Jede richtige Wiederholung hebt ein Wort eine Stufe höher. '
           'Ein Fehler setzt es auf Stufe 1 zurück.',
-          style: AppType.chrome(
-            color: popoverInk.withValues(alpha: 0.9),
-            height: 1.35,
-          ),
+          style: PopoverText.small(),
         ),
         const SizedBox(height: 12),
         for (var level = 1; level <= leitnerBoxCount; level++)
@@ -88,16 +85,11 @@ class _LegendRow extends StatelessWidget {
                     title,
                     style: AppType.chrome(
                       color: popoverInk,
-                      weight: isCurrent ? FontWeight.w800 : FontWeight.w600,
+                      weight: isCurrent ? FontWeight.w800 : FontWeight.w700,
                     ),
                   ),
                   const SizedBox(height: 2),
-                  Text(
-                    detail,
-                    style: AppType.meta(
-                      color: popoverInk.withValues(alpha: 0.85),
-                    ),
-                  ),
+                  Text(detail, style: PopoverText.caption()),
                   if (isCurrent) ...[
                     const SizedBox(height: 6),
                     Container(
@@ -111,7 +103,9 @@ class _LegendRow extends StatelessWidget {
                       ),
                       child: Text(
                         'Dieses Wort',
-                        style: AppType.meta(color: context.appColors.popover),
+                        style: PopoverText.caption().copyWith(
+                          color: context.appColors.popover,
+                        ),
                       ),
                     ),
                   ],

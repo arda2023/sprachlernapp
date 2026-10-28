@@ -7,6 +7,7 @@ import '../../words/word_list_screen.dart';
 import '../../../models/story_models.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/anchored_popover.dart';
+import '../../../widgets/popover_content.dart';
 import '../../../widgets/speak_button.dart';
 
 /// Tapped word in the reader: popover pointing at the word with headword,
@@ -157,9 +158,7 @@ class _WordPopoverState extends State<WordPopover> {
                         const TextSpan(text: '   '),
                         TextSpan(
                           text: entry.partOfSpeech,
-                          style: AppType.meta(
-                            color: _white.withValues(alpha: 0.8),
-                          ),
+                          style: PopoverText.caption(),
                         ),
                       ],
                     ),
@@ -191,10 +190,7 @@ class _WordPopoverState extends State<WordPopover> {
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
               'Für diesen Text sind keine geprüften Lernreferenzen vorhanden.',
-              style: AppType.chrome(
-                size: 13,
-                color: _white.withValues(alpha: 0.85),
-              ),
+              style: PopoverText.small(),
             ),
           ),
         if (_error != null || _status.message != null)
@@ -204,7 +200,7 @@ class _WordPopoverState extends State<WordPopover> {
               liveRegion: true,
               child: Text(
                 _error ?? _status.message!,
-                style: AppType.chrome(size: 13, color: _white),
+                style: PopoverText.small(),
               ),
             ),
           ),
