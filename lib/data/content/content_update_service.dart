@@ -63,7 +63,9 @@ class ContentUpdateService {
     required this.openReaders,
     this.notice,
     this.invalidateReadProofs,
+    this.bundled = false,
   });
+  final bool bundled;
   final ContentInstallJournal journal;
   final ContentReleaseTransport transport;
   final Future<File?> Function() currentFile;
@@ -94,21 +96,39 @@ class ContentUpdateService {
     }
   }
 
+  int _cursor(ReleaseOffer? active) => bundled
+      ? (active?.isBundled == true ? active!.generation : 0)
+      : active?.cloudGeneration ?? 0;
+
+  String? _cursorHash(ReleaseOffer? active) => bundled
+      ? (active?.isBundled == true ? active!.manifestHash : null)
+      : active?.cloudManifestHash;
+
+  void _checkOrigin(ReleaseOffer offer) {
+    if (offer.isBundled != bundled) {
+      throw const FormatException(
+        'Inhaltsangebot gehört zu einer anderen Herkunft.',
+      );
+    }
+  }
+
   Future<void> check() => _exclusive(() async {
     notice?.call('checking', 'Private Version prüfen …');
     _step = 'local_state';
     final active = await journal.active();
     _step = 'release_check';
-    final offer = await transport.latest(journal.lang, active?.generation ?? 0);
+    final cursor = _cursor(active);
+    final offer = await transport.latest(journal.lang, cursor);
     if (offer != null) {
-      if (offer.generation < (active?.generation ?? 0) ||
-          offer.generation == active?.generation &&
-              offer.manifestHash != active?.manifestHash) {
+      _checkOrigin(offer);
+      if (offer.generation < cursor ||
+          offer.generation == cursor &&
+              offer.manifestHash != _cursorHash(active)) {
         throw const FormatException(
           'Veraltetes oder widersprüchliches Versionsangebot.',
         );
       }
-      available = offer.generation == (active?.generation ?? 0) ? null : offer;
+      available = offer.generation == cursor ? null : offer;
     } else {
       available = null;
     }
@@ -138,6 +158,7 @@ class ContentUpdateService {
   Future<void> download() => _exclusive(() async {
     final offer = available;
     if (offer == null) throw StateError('Zuerst nach einer Version suchen.');
+    _checkOrigin(offer);
     _step = 'local_state';
     final destination = journal.generation(offer.id);
     if (await destination.exists()) {
@@ -239,18 +260,17 @@ class ContentUpdateService {
       final pending = await journal.read('pending');
       offer ??= pending == null
           ? null
-          : ReleaseOffer.parse(pending, journal.lang);
+          : ReleaseOffer.parse(pending, journal.lang, allowBundled: bundled);
       if (offer == null) {
         throw StateError('Keine geprüfte Version zur Aktivierung.');
       }
+      _checkOrigin(offer);
       // Reauthorize immediately before activation; expired authorization is never
       // silently treated as permission. Already installed content remains offline.
       final active = await journal.active();
       _step = 'reauthorize';
-      final authorized = await transport.latest(
-        journal.lang,
-        active?.generation ?? 0,
-      );
+      final authorized = await transport.latest(journal.lang, _cursor(active));
+      if (authorized != null) _checkOrigin(authorized);
       if (authorized == null ||
           authorized.id != offer.id ||
           authorized.manifestHash != offer.manifestHash) {
@@ -275,7 +295,9 @@ class ContentUpdateService {
         // is not a successful activation of next and must never commit it.
         if (contextCanonicalHash(await journal.read('active')) !=
             contextCanonicalHash(next.toJson())) {
-          throw StateError('Aktivierung wurde auf den Vorgänger zurückgesetzt.');
+          throw StateError(
+            'Aktivierung wurde auf den Vorgänger zurückgesetzt.',
+          );
         }
         await journal.commit(next);
       } catch (_) {
@@ -409,7 +431,7 @@ Future<InstalledContentState> resolveInstalledState(
   final pointer = await journal.read('active');
   final offer = pointer == null || pointer['bootstrap'] == true
       ? null
-      : ReleaseOffer.parse(pointer, journal.lang);
+      : ReleaseOffer.parse(pointer, journal.lang, allowBundled: true);
   if (log?['state'] == 'committed' &&
       (offer == null ||
           contextCanonicalHash(pointer) !=

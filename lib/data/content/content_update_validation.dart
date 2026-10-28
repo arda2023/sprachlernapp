@@ -90,7 +90,11 @@ void validateDownloadedContent(
   Map<String, dynamic> offerJson,
   String? previousPath,
 ) {
-  final offer = ReleaseOffer.parse(offerJson, offerJson['manifest']['lang']);
+  final offer = ReleaseOffer.parse(
+    offerJson,
+    offerJson['manifest']['lang'],
+    allowBundled: true,
+  );
   final inventory = jsonDecode(
     File('${File(path).parent.path}/history_inventory.json').readAsStringSync(),
   ) as Map<String, dynamic>;
@@ -179,6 +183,7 @@ ContentInfo validateDownloadedDatabase(
       final previous = ReleaseOffer.parse(
         jsonDecode(priorOfferFile.readAsStringSync()) as Map<String, dynamic>,
         offer.lang,
+        allowBundled: true,
       );
       final bytes = priorInventory.readAsBytesSync();
       prior = jsonDecode(utf8.decode(bytes)) as Map<String, dynamic>;

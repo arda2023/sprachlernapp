@@ -152,11 +152,67 @@ def _portuguese_tokenizer():
     return nlp
 
 
-PROFILES = {'en': LanguageProfile(), 'pt-BR': PortugueseEditorialProfile()}
+@dataclass(frozen=True)
+class MultilingualEditorialProfile(PortugueseEditorialProfile):
+    """Pinned technical tokenizer; editorial judgment is never inferred."""
+    lang: str = 'pt-BR'
+    id: str = 'pt-BR-editorial-v2'
+    tokenizer_language: str = 'pt'
+    tokenizer_sha256: str = 'b528e0528ca541b2815e374dbec35bdbc4574141e7683b23b85384423e782317'
+
+    @property
+    def manifest(self):
+        return {**super().manifest, 'id': self.id, 'lang': self.lang,
+                'model': 'spacy.blank.' + self.tokenizer_language,
+                'tokenizer_sha256': self.tokenizer_sha256,
+                'allowed_functions': ['base', 'past', 'past_participle'],
+                'practice_kinds': ['ordinary', 'verb_base', 'verb_past', 'verb_participle'],
+                'editorial_policy': 'ai-editorial-reviewed-v1',
+                'sentence_policy': 'one-sentence-no-dashes-semicolons-v1'}
+
+    def tokenize(self, text, gap=None):
+        from .annotate import tokenize
+        return tokenize(text, _editorial_tokenizer(self.tokenizer_language, self.model_version,
+            self.tokenizer_sha256), lexical_spans=[gap] if gap else None)
+
+    def validate_sentence(self, text, form, start, end, cefr_band='anfaenger', *, single_sentence=True):
+        from .linter import Finding
+        result = [f for f in super().validate_sentence(text, form, start, end, cefr_band,
+            single_sentence=single_sentence) if f.rule != 'manual-pt-BR-editorial-v1']
+        if not re.fullmatch(r'[^.!?\n]+[.!?]', text):
+            result.append(Finding('error', 'sentence_count', 'Genau ein abgeschlossener Übungssatz ist erforderlich.'))
+        if any(c == ';' or unicodedata.category(c) == 'Pd' or c in '\u00ad\u2212' for c in text):
+            result.append(Finding('error', 'sentence_punctuation', 'Keine Bindestriche, Gedankenstriche oder Semikolons.'))
+        result.append(Finding('warn', self.manifest['editorial_policy'],
+            'Keine automatische Grammatik- oder Frequenzfreigabe: muttersprachlichen Gebrauch, '
+            'höchstens einen Nebensatz, Niveau, Übersetzungen und alle Bindungen redaktionell prüfen.'))
+        return result
+
+
+@lru_cache(maxsize=4)
+def _editorial_tokenizer(language, version, expected_sha256):
+    import hashlib
+    import spacy
+    nlp = spacy.blank(language)
+    if spacy.__version__ != version or hashlib.sha256(nlp.tokenizer.to_bytes()).hexdigest() != expected_sha256:
+        raise UnsupportedLanguage('Tokenizer stimmt nicht mit dem geprüften Sprachprofil überein.')
+    return nlp
+
+
+PROFILES = {'en': LanguageProfile(), 'pt-BR': MultilingualEditorialProfile(),
+    'nb': MultilingualEditorialProfile(lang='nb', id='nb-editorial-v1', model='spacy.blank.nb',
+        tokenizer_language='nb', tokenizer_sha256='a30c9163c269f78262cc77a713d52fe6529d3f3a2b9a9bc673a933c114cd6fae'),
+    'it': MultilingualEditorialProfile(lang='it', id='it-editorial-v1', model='spacy.blank.it',
+        tokenizer_language='it', tokenizer_sha256='1ed4ee22bdb73d6ba807a1452b4080811977e0149572b577b8e778bf20414ace'),
+    'es': MultilingualEditorialProfile(lang='es', id='es-editorial-v1', model='spacy.blank.es',
+        tokenizer_language='es', tokenizer_sha256='4276d2d6fbdb461831dd97a48abc02d7e5300647b37da21b42abab99a07f02fd')}
+LEGACY_PROFILES = {('pt-BR', 'pt-BR-editorial-v1'): PortugueseEditorialProfile()}
 
 
 def get_profile(lang, profile_id=None):
-    profile = PROFILES.get(canonical_language(lang))
+    language = canonical_language(lang)
+    profile = LEGACY_PROFILES.get((language, profile_id)) if profile_id else None
+    profile = profile or PROFILES.get(language)
     if profile is None or (profile_id is not None and profile.id != profile_id):
         raise UnsupportedLanguage('Sprachfunktionen noch nicht unterstützt. Entwurf speichern ist möglich.')
     return profile

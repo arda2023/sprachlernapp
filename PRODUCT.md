@@ -23,7 +23,7 @@ Helps adult German speakers build real vocabulary in English through connected l
 
 Both stories and decks feed **one unified vocabulary and spaced-repetition system**. Success means a card genuinely progressing through structured intervals from unknown, through active practice, to mastered.
 
-v1 is English for German speakers. Spanish, French and Italian follow as updates. The data model is multilingual from day one: every entity carries explicit language tags.
+English is the initial content language. The private device-test expansion requested on 27.10.2026 adds Brazilian Portuguese, Norwegian Bokmål, Italian and Spanish, as specified below. Every entity carries explicit language tags.
 
 ## Positioning
 
@@ -197,3 +197,11 @@ Story-Add bindet Sprache, Oberfläche, Sense und belegte Formfunktion. Fehlende/
 - Profil `pt-BR-editorial-v1`: modellfreier portugiesischer Tokenizer; keine automatische Satzgenerierung, Grammatik- oder Frequenzfreigabe. Brasilianischer Gebrauch, genau ein Satz, maximal ein Nebensatz, Niveau und Bindungen werden ausdrücklich redaktionell geprüft; technische Tests sind keine Sprachfreigabe.
 - „Allgemeine Sprache“ beginnt später mit 20 redigierten Zielen; nach Abnahme ungefähr 160 ohne Auffüllpflicht. Dieses Paket liefert nur technische Fähigkeiten und eine leere Authoring-Vorlage, keine echten Lerninhalte.
 - Erster privater pt-BR-Kanal hat keinen englischen Vorgänger. Mobile Sprachwahl und profilabhängige Antwortprüfung sind Inkrement 2; noch keine portugiesische Geräte-/Lernfreigabe.
+
+## Mehrsprachige Stapel für privaten Gerätetest (27.10.2026)
+
+Auf ausdrücklichen Nutzerwunsch erhalten `pt-BR`, `nb` (Bokmål), `it` und `es` dieselben 14 Stapel wie Englisch, mit jeweils 3.830 Übungszielen. Die drei Verbenstapel enthalten je 134 Formübungen; Formübungen und eindeutige Wörter bleiben verschiedene Zählgrößen. Brasilianisches Portugiesisch bleibt die vorhandene portugiesische Variante. Die bisherigen 20 portugiesischen Karten behalten ihre Identitäten und historischen Kontexte.
+
+Jedes Ziel verwendet einen redaktionell geprüften, ohne weiteren Kontext verständlichen Satz. Quell- und Übersetzungssätze enthalten keine Bindestriche, Gedankenstriche oder Semikolons. Die neuen Profile verwenden die ausdrücklich als KI-Prüfung gekennzeichnete Richtlinie `ai-editorial-reviewed-v1`; sie behauptet keine menschliche oder muttersprachliche Abnahme. Die Freigabe gilt für den angeforderten privaten Gerätetest. Vollständige Wortbindungen, Kontextglossen, unveränderliche Satzrevisionen und die technischen Veröffentlichungsprüfungen bleiben verpflichtend. `pt-BR-editorial-v1` bleibt für historische Inhalte lesbar.
+
+Installierte Inhalte werden über den bestehenden geprüften Aktualisierungspfad erweitert, ohne Lernstände zurückzusetzen. Die neue Sprachwahl allein ist kein Nachweis, dass ein Inhaltspaket installiert ist. Die bisherigen Laufzeitgrenzen der Onlineübersetzung werden durch diese Offline-Inhaltserweiterung nicht aufgehoben.

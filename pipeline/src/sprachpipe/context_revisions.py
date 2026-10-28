@@ -129,6 +129,15 @@ def context_payload(rows, sentence_id):
             'links': [{k:c.get(k) for k in link_fields} for c in links]}
 
 
+def matches_registered_context_profile(rows, sentence_id, revision):
+    """Historic snapshots retain their original, explicitly registered profile."""
+    from .language_profiles import LEGACY_PROFILES
+    payload = context_payload(rows, sentence_id)
+    candidates = {payload['profile_sha256']}
+    candidates.update(p.sha256 for (lang, _), p in LEGACY_PROFILES.items() if lang == payload['lang'])
+    return any(digest({**payload, 'profile_sha256': sha}) == revision for sha in candidates)
+
+
 def validate_context_rows(rows):
     """Extra invariants; ordinary ownership/form checks still run unchanged."""
     sentences = {s['id']:s for s in rows['sentences']}
@@ -147,7 +156,7 @@ def validate_context_rows(rows):
             if s.get('root_sentence_id') is not None or s['id'] != stable_id('sentences', lang=s['lang'], text=s['text']):
                 raise ValueError('legacy sentence identity changed')
         elif (len(revision) != 64 or not s.get('root_sentence_id') or
-              revision != digest(context_payload(rows, s['id'])) or
+              not matches_registered_context_profile(rows, s['id'], revision) or
               s['id'] != stable_id('sentence_revisions', lang=s['lang'],
                                   root_sentence_id=s['root_sentence_id'], revision_sha256=revision)):
             raise ValueError(f'{s["id"]}: invalid immutable context revision')

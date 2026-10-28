@@ -433,3 +433,7 @@ verify_jwt = true
 
 [functions.create-learning-card]
 verify_jwt = true
+
+# Offline administrative annotation: gateway JWT plus exact service-role secret.
+[functions.editorial-annotate]
+verify_jwt = true

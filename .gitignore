@@ -56,6 +56,8 @@ supabase/.branches/
 /assets/content/*/content.sqlite
 /assets/content/*/content.sqlite.tmp
 /assets/content/*/content.manifest.json
+/assets/content/*/bundled-release.json
+/assets/content/*/history_inventory.json
 
 # Editorial content batches (local working material, not versioned)
 /*_batch_*/

@@ -4,7 +4,23 @@ import 'word_form.dart';
 typedef GrammarHint = ({String explanation, List<String> examples});
 GrammarHint grammarHint(ContentCard card, {required bool solved}) {
   if (card.lang != 'en') {
-    return (explanation: 'Setze die gesuchte Wortform in die Lücke ein. Akzente sind für Portugiesisch erforderlich.', examples: const []);
+    final form = switch (card.formKind) {
+      'base' => 'Gesucht ist die Grundform des Verbs.',
+      'past_participle' => 'Gesucht ist das Partizip der Vergangenheit.',
+      'past' => switch (card.lang) {
+        'it' => 'Gesucht ist eine Form des Passato remoto.',
+        'es' => 'Gesucht ist eine Form des Pretérito indefinido.',
+        'pt-BR' => 'Gesucht ist eine Form des Pretérito perfeito.',
+        'nb' => 'Gesucht ist eine Form des Präteritums.',
+        _ => 'Gesucht ist eine Vergangenheitsform.',
+      },
+      _ => 'Setze die gesuchte Wortform in die Lücke ein.',
+    };
+    return (
+      explanation:
+          '$form Sprachspezifische Buchstaben und Akzente sind erforderlich.',
+      examples: const [],
+    );
   }
   final kind = switch (card.formKind) {
     'base' => FormKind.base,

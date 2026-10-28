@@ -92,19 +92,77 @@ Mobbin-Referenzen: große „Als Nächstes“-Karte mit Kachel-Reihe darunter wi
 
 **Dynamic Type:** Kachel-Reihen und Spalten haben keine feste Höhe; sie wachsen mit der höchsten Karte (`IntrinsicHeight`), statt abzuschneiden.
 
-## Onboarding (24.10.2026)
+## Onboarding und Paywall (24.10.2026)
 
-Herleitung: Recherche unter `aislop/onboarding` (Reddit-Threads, YouTube-Transkripte). Kernpunkte: erst Wert zeigen, dann nach dem Konto fragen (Duolingo); jede Frage muss den nächsten Screen sichtbar verändern; Fortschritt zeigen, Zurück erlauben; Social Login (Apple zuerst) plus Weg ohne Konto. Mobbin-Referenzen: Illustration + „Weiter“ + „Ich habe schon ein Konto“ wie [Nibble](https://mobbin.com/screens/43b10bcd-05d6-496b-a3ae-051f56687de5) und [Headway](https://mobbin.com/screens/35d60dff-8ff0-4748-83f0-915d87faf1ed); Anmeldeknöpfe wie [Me+](https://mobbin.com/screens/66b2668a-f0e0-451a-a7de-993c9efb2e7f) und [Uxcel Go](https://mobbin.com/screens/8ea4e776-8f94-45eb-befa-5fa3ca08a590).
+Herleitung: Recherche unter `aislop/onboarding` und der Freemium-Plan (Premium 9,99 €/Monat oder 49,99 €/Jahr, kein Trial, Paywall einmal nach der Wort-Demo, schließbar, kein zweites Angebot; kostenlos lernen ohne Konto, Konto erst vor einem Kauf). Refero-Referenzen:
+- Ablauf: [CapWords „Photo-to-Word Onboarding“](https://refero.design/flows/6104) – personalisieren → kurze Demo → Paywall direkt nach dem Erfolgsmoment.
+- Brücke vor der Paywall: [Clucky Plan-Checkliste](https://refero.design/screens/746df9c6-8e56-4b63-b4bc-791fec47a3a9).
+- Paywall-Aufbau:
+  - X links, „Wiederherstellen“ rechts, wenige Vorteile, Bedingungen unter dem Knopf: [Perplexity](https://refero.design/screens/4182e2ca-0000-4d6a-a477-cf89130425c3), [CapWords](https://refero.design/screens/b13c6d76-0182-4741-8226-48cfabeca7b2).
+  - Tarif und Knopf unten angeheftet: [IFTTT](https://refero.design/screens/3f7373f6-512d-4ce7-9412-1d56d5ac36a3); gestapelte Tarifzeilen: [Perplexity](https://refero.design/screens/4182e2ca-0000-4d6a-a477-cf89130425c3).
+  - Beruhigungszeile unter dem Knopf: [Revolut](https://refero.design/screens/f6875db2-4608-49b4-b803-9e390a1801b5).
+- Stil:
+  - Leitstil Chantlings: dunkle Fläche, Serif-Titel, Orange nur für gefüllte Hauptaktionen, Glut-Schein als einzige Tiefe.
+  - Von Cron Calendar der weiche Glow unter dem Hauptknopf, von Pipe die Tonflächen statt Rahmen.
 
-**Reihenfolge (5 Seiten):** Willkommen → Thema → Tagesziel → Wort antippen → Konto. Oben Zurück und orange Schritt-Segmente wie in der Übung; unten ein oranger Hauptknopf, der abgeblendet bleibt, bis die Seite hat, was sie braucht. Arbeitsname „Lingvist“ (Platzhalter).
+**Reihenfolge (5 Seiten + Paywall):** Willkommen → Thema → Tagesziel → Wort antippen → „Dein Start steht“ → Paywall. Oben Zurück und orange Schritt-Segmente wie in der Übung; unten ein oranger Hauptknopf mit Glut-Schein, abgeblendet, bis die Seite hat, was sie braucht. Vorwärts-Wischen ist bis dahin gesperrt, Zurück-Wischen geht immer. Arbeitsname „Lingvist“ (Platzhalter).
 
 | Seite | Regel | Datei |
 |---|---|---|
-| Willkommen | Logo + Wortmarke, animiertes Buch mit Wort-Blasen, Serif-Titel, ein Satz. „Los geht’s“; „Ich habe schon ein Konto“ springt zur Konto-Seite. | `onboarding/onboarding_screen.dart` |
-| Thema | Vier Kacheln in den Story-Farben (Reisen, Beruf, Alltag, Kultur). Gewählt = oranger Rand + Haken. Bestimmt den Beispielsatz auf Seite 4 und wird gespeichert. | `onboarding_screen.dart` |
-| Tagesziel | Animierter Ring mit Flamme; Locker 5 · Normal 10 (vorgewählt) · Ernsthaft 15 · Intensiv 20 Wörter. Gewählt in Popover-Orange. Wird als echtes Tagesziel gespeichert. | `onboarding_screen.dart`, `main.dart` |
-| Wort antippen | Beispielsatz aus dem gewählten Thema; antippbare Wörter gepunktet unterstrichen, das erste pulsiert ein paar Mal. Antippen → Wort orange, darunter die orange Bedeutungs-Karte wie im Reader. Nur Onboarding-Demo, kein Inhaltspaket, kein Lernstand. | `onboarding_screen.dart` |
-| Konto | Animiertes Logo, „Speichere deinen Fortschritt“; „Mit Apple fortfahren“ (weiß), „Mit Google fortfahren“, „Mit E-Mail fortfahren“, „Ohne Konto weiter“. Anmeldung ist Platzhalter: jede Option beendet das Onboarding, Konto-Optionen sagen per Hinweis, dass die Anmeldung bald kommt und bis dahin lokal gelernt wird. | `onboarding_screen.dart` |
+| Willkommen | Logo + Wortmarke (Schriftskalierung bis 1,3 wie Chrome), animiertes Buch, Serif-Titel. „Los geht’s“; „Ich habe schon ein Konto“ öffnet das Konto-Sheet (Platzhalter, startet ohne Konto). | `onboarding/onboarding_screen.dart` |
+| Thema | Vier Kacheln (Reisen, Beruf, Alltag, Kultur) mit Beispielsatz. Gewählt = oranger Rand + Haken. Bestimmt Seite 4, die Plan-Zeile und den ersten Paywall-Vorteil; wird gespeichert. | `onboarding_screen.dart` |
+| Tagesziel | Locker 5 · Normal 10 (vorgewählt) · Ernsthaft 15 · Intensiv 20. Gewählt in Popover-Orange; bei großer Schrift bricht die Wortzahl unter den Namen um. Wird als echtes Tagesziel gespeichert. | `onboarding_screen.dart`, `main.dart` |
+| Wort antippen | Satz aus dem Thema; antippbare Wörter gepunktet, das erste pulsiert viermal. Antippen → orange Bedeutungs-Karte wie im Reader. Nur Demo, kein Lernstand. | `onboarding_screen.dart` |
+| Dein Start steht | Karte mit Plan-Pille („Dein Plan · Thema · N Wörter / Tag“) und drei Zeilen, die nacheinander abgehakt werden (Thema, Tagesziel, erstes Wort). Erst nach dem letzten Haken wird „Weiter“ aktiv. | `onboarding_screen.dart` |
+| Paywall | Siehe unten. | `onboarding/paywall_screen.dart` |
+
+**Paywall:**
+- **Kopf:**
+  - Oben links X („Schließen“, führt direkt in die App), rechts „Wiederherstellen“; die Leiste wird bis 1,3 skaliert.
+  - Darunter die Plan-Pille, dann „Lingvist Premium“ und der Serif-Titel „Mehr lesen. Deine eigenen Wörter lernen.“.
+- **Vorteile** in fester Reihenfolge, je eine Zeile Detail, darunter „Alle veröffentlichten Grammatik- und Textübungen inklusive.“:
+  1. „Lies, was dich interessiert“ – „Alle Storys ohne Tageslimit – auch zu {Thema}.“
+  2. „Lerne mit deinen eigenen Texten“.
+  3. „Verstehe fehlende Stellen direkt“ – „500 neue KI-Übersetzungen pro Monat.“
+- Kopf und Vorteile scrollen; wo sie unter den angehefteten Block laufen, blenden sie auf 20 pt weich aus statt hart abgeschnitten zu werden.
+- **Tarife** als gestapelte Zeilen, direkt über dem Knopf angeheftet, damit der Preis immer neben „Premium abonnieren“ steht (ab Schriftgröße 1,35 scrollen sie mit, damit der Block den Bildschirm nicht füllt):
+  - Links Auswahlkreis, Titel und Zusatz, rechts Preis und Zeitraum – so bricht kein deutscher Text um.
+  - Jährlich ist vorgewählt: 49,99 € / Jahr, „entspricht 4,17 € / Monat“, Plakette „58 % sparen“ neben dem Titel.
+  - Monatlich: 9,99 € / Monat, monatlich kündbar.
+  - Der gewählte Tarif bekommt einen orangen Rand, eine Orange-Tönung und einen gefüllten Kreis, dessen Haken mit leichtem Überschwinger einploppt; der andere zeigt nur einen leeren Ring.
+- **Fuß:**
+  - „Premium abonnieren“, direkt darunter die Bedingungen des gewählten Tarifs („… Automatische Verlängerung, im Store kündbar.“, wechseln weich mit).
+  - Dann „Kostenlos weiterlernen“ sowie „Nutzungsbedingungen“ und „Datenschutz“ (brechen bei großer Schrift um).
+- **Ehrliche Platzhalter:**
+  - „Premium abonnieren“ öffnet zuerst das Konto-Sheet („Konto für dein Abo“). Nach der Wahl sagt ein Hinweis, dass Käufe in dieser Version noch nicht freigeschaltet sind, und die App startet kostenlos.
+  - Wiederherstellen und Rechtslinks melden ebenfalls nur „kommt bald“.
+  - Ohne echte Store-Abrechnung darf die Paywall nicht veröffentlicht werden.
+- **Einmalig:** Schließen, „Kostenlos weiterlernen“ und ein Kaufversuch beenden das Onboarding. System-Zurück führt zu „Dein Start steht“ und speichert nichts.
+
+**Bewegung:**
+- **Seiten:** Seitenwechsel per Knopf in 340 ms (easeOutCubic). Beim Wischen liegt der Inhalt jeder Seite leicht zurück (35 % Parallaxe) und blendet aus.
+- **Textblöcke:** Sie kommen beim ersten Besuch gestaffelt von unten (`Reveal`, 420 ms + 60 ms je Stufe).
+- **Tippen:** Antippbare Elemente geben auf 97 % nach (`Pressable`).
+- **Übergang Plan → Paywall:**
+  - Das Onboarding tritt zurück (Skalierung 0,94, Deckkraft 0,4).
+  - Die Paywall blendet ein und gleitet 6 % von unten (520 ms, zurück 360 ms).
+  - Die Plan-Pille fliegt als Hero an ihren Platz oben in der Paywall.
+- **Reduzierte Bewegung:** Alles steht sofort; Seiten springen.
+
+**Haptik** (`Haptic` in `widgets/onboarding_motion.dart`):
+- `selectionClick`: Auswahl, Tarif, Wischen auf eine neue Seite, jeder Plan-Haken.
+- `lightImpact`: Wörter, Zurück, X, Textlinks.
+- `mediumImpact`: Hauptknöpfe und Anmeldeknöpfe.
+
+Knöpfe geben ihre Haptik selbst; das programmatische Weiterblättern löst keine zweite aus.
+
+**Töne:**
+- Epidemic Sound, ambient, also stumm bei Lautlos-Schalter (`presentation/onboarding_sounds.dart`):
+  - Auswahl-Klick bei Thema, Ziel und Tarifwechsel (`onboarding_select.mp3`).
+  - Häkchen-Ton je Plan-Zeile (`streak_check.mp3`).
+  - Aufsteigendes „Hud“ beim Öffnen der Paywall (`onboarding_paywall.mp3`).
+- Wörter, Zurück und Schließen haben nur Haptik.
+- In Tests sind die Töne stumm.
 
 **Animationen:** Rive (`assets/rive/onboarding.riv`), drei Artboards Logo · Welcome · Goal, je „Intro“ (einmal) → „Idle“ (Schleife). Quelle ist der Generator `tool/rive/onboarding/build_scene.py`; neu bauen mit `python3 tool/rive/onboarding/build_scene.py` und `rive tool/rive/onboarding --once` (Rive CLI, ohne Login, keine Skripte). Bei reduzierter Bewegung, in Widget-Tests und ohne native Rive-Runtime zeigt `OnboardingArt` ein Standbild (Logo per `CustomPaint`).
 

@@ -145,7 +145,7 @@ class _AppShellState extends ConsumerState<AppShell> {
     if (ref.read(languageSelectionProvider).switching) return;
     final lang = ref.read(selectedContentLanguageProvider);
     if (lang.isLoading && lang.hasValue) return;
-    if (lang.asData?.value == 'pt-BR') {
+    if (lang.asData?.value != 'en') {
       final content = ref.read(contentInfoProvider);
       if (content.isLoading || content.hasError) return;
     }
@@ -173,12 +173,12 @@ class _AppShellState extends ConsumerState<AppShell> {
     });
     final selected = ref.watch(selectedContentLanguageProvider);
     final lang = selected.asData?.value ?? 'en';
-    final portuguese = lang == 'pt-BR';
+    final hasEnglishSamples = lang == 'en';
     final switching =
         ref.watch(languageSelectionProvider).switching ||
         selected.isLoading && selected.hasValue;
-    final info = portuguese ? ref.watch(contentInfoProvider) : null;
-    final unavailable = portuguese && (info!.isLoading || info.hasError);
+    final info = !hasEnglishSamples ? ref.watch(contentInfoProvider) : null;
+    final unavailable = !hasEnglishSamples && (info!.isLoading || info.hasError);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value:
           (context.appColors.light
@@ -199,7 +199,7 @@ class _AppShellState extends ConsumerState<AppShell> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                       child: Text(
-                        ContentLanguageProfile.portugueseBrazil.displayName,
+                        ContentLanguageProfile.forLanguage(lang)!.displayName,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
@@ -278,15 +278,15 @@ class _AppShellState extends ConsumerState<AppShell> {
                           ),
                         ),
                     onOpenStory: _openStory,
-                    news: portuguese ? [] : sampleNews,
+                    news: hasEnglishSamples ? sampleNews : [],
                     onOpenNews: (article) =>
                         StoryReaderScreen.openNews(context, article),
                   ),
                   const WordListScreen(),
-                  portuguese
-                      ? const Center(
+                  !hasEnglishSamples
+                      ? Center(
                           child: Text(
-                            'Für Portugiesisch (Brasilien) sind noch keine weiteren Inhalte verfügbar.',
+                            'Für ${ContentLanguageProfile.forLanguage(lang)!.displayName} sind noch keine weiteren Inhalte verfügbar.',
                           ),
                         )
                       : ContentDashboardScreen(

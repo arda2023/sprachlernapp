@@ -82,7 +82,7 @@ class HomeScreen extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 8),
             child: HomeHeader(
-              flag: lang == 'pt-BR' ? '🇧🇷' : '🇬🇧',
+              flag: language.flag,
               languageName: language.displayName,
               goal: progress.value?.goal,
               streak: streak.value?.current,

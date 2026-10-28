@@ -46,7 +46,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final state = ref.watch(preferencesProvider);
     final language = ref.watch(selectedContentLanguageProvider);
     final selection = ref.watch(languageSelectionProvider);
-    final portuguese = language.asData?.value == 'pt-BR';
+    final selectedProfile = ContentLanguageProfile.forLanguage(language.asData?.value ?? 'en')!;
     return Scaffold(
       appBar: AppBar(title: const Text('Einstellungen')),
       body: state.when(
@@ -76,7 +76,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             const TranslationCacheDeleteTile(),
             const Divider(),
             const ListTile(contentPadding: EdgeInsets.zero, title: Text('Lernsprache'), subtitle: Text('Die Oberfläche bleibt Deutsch.')),
-            for (final profile in const [ContentLanguageProfile.english, ContentLanguageProfile.portugueseBrazil])
+            for (final profile in ContentLanguageProfile.selectable)
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 selected: !language.isLoading && language.asData?.value == profile.lang,
@@ -159,8 +159,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
               const Divider(),
             ],
-            if (portuguese)
-              const ListTile(contentPadding: EdgeInsets.zero, title: Text('Akzente sind für Portugiesisch erforderlich'), subtitle: Text('Zum Beispiel unterscheiden sich a und ã sowie c und ç. Die englische Einstellung bleibt erhalten.'))
+            if (selectedProfile.requiresDiacritics)
+              ListTile(contentPadding: EdgeInsets.zero, title: Text(selectedProfile.lang == 'pt-BR' ? 'Akzente sind für Portugiesisch erforderlich' : 'Akzente sind für ${selectedProfile.displayName} erforderlich'), subtitle: const Text('Sprachspezifische Buchstaben und Akzente gehören zur richtigen Antwort. Die englische Einstellung bleibt erhalten.'))
             else _toggle(
               'Diakritische Zeichen einbeziehen',
               'Akzente sind bei der Antwort erforderlich. Standardmäßig eingeschaltet.',
