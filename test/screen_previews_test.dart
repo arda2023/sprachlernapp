@@ -23,6 +23,12 @@ void main() {
       ),
     );
     await t.pumpAndSettle();
+    // A developer tool: the last row, under "Inhalte und Hilfe".
+    await t.scrollUntilVisible(
+      find.text('Bildschirm-Vorschauen'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
     await t.tap(find.text('Bildschirm-Vorschauen'));
     await t.pumpAndSettle();
     expect(find.byType(ScreenPreviewsScreen), findsOneWidget);

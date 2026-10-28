@@ -56,6 +56,12 @@ String _cardHint(ContentCard card, {required bool solved}) {
   final function = card.formFunction ?? card.formKind;
   final base = function == 'base' ||
       (function == null && contentFormNorm(card.form) == contentFormNorm(card.lemma));
+  final label = card.formLabelDe;
+  // An editorial label names the form after the word class:
+  // "Verb, Vergangenheit" → "Vergangenheit".
+  final labelled = label != null && label.contains(', ')
+      ? label.substring(label.indexOf(', ') + 2).trim()
+      : null;
   final form = switch (function) {
     'plural' => ' in der Mehrzahl',
     'past' => ' in der Vergangenheit',
@@ -64,22 +70,20 @@ String _cardHint(ContentCard card, {required bool solved}) {
     'third_person' => ' in der 3. Person Singular',
     'comparative' => ' im Komparativ',
     'superlative' => ' im Superlativ',
+    _ when labelled != null && labelled.isNotEmpty => ' in der Form „$labelled“',
     _ when base => switch (card.pos.toUpperCase()) {
       'NOUN' => ' in der Einzahl',
       'VERB' || 'AUX' => ' in der Grundform (Infinitiv)',
       _ => ' in der Grundform',
     },
-    _ => ', aber nicht in der Grundform',
+    _ => ' in einer gebeugten Form',
   };
   final article = const {'Präposition', 'Konjunktion', 'Subjunktion', 'Partikel'}.contains(pos)
       ? 'eine'
       : 'ein';
-  final label = card.formLabelDe;
   final parts = [
     known ? 'Gesucht ist $article $pos$form.' : 'Gesucht ist ein Wort$form.',
     ?partOfSpeechRole(card.pos),
-    if (label != null && label != card.pos && germanPartOfSpeech(label) != pos)
-      'Form: $label.',
     ?_letters(card.lang),
     if (solved && !base) 'Grundform: „${card.lemma}“.',
   ];

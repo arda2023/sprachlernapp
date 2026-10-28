@@ -18,7 +18,7 @@ import '../../models/sample_content.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/back_bar.dart';
 import '../../widgets/reading_toolbar.dart';
-import '../../widgets/sentence_translation_sheet.dart';
+import '../stories/widgets/sentence_popover.dart';
 import '../../widgets/success_feedback_card.dart';
 
 /// A text with gaps. Verb mode: each gap is an inline text field. Choice
@@ -111,6 +111,9 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
   OverlayEntry? _flight;
   bool _translating = false;
   int? _selectedSentence;
+
+  /// Where the last sentence tap landed; its translation points there.
+  Offset? _tapAt;
   String? _feedback;
 
   bool get _choice => widget.mode == ExerciseMode.anyWordClass;
@@ -164,7 +167,9 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
       _Sentence(
         paragraph,
         range,
-        TapGestureRecognizer()..onTap = () => _translate(index),
+        TapGestureRecognizer()
+          ..onTapUp = ((details) => _tapAt = details.globalPosition)
+          ..onTap = () => _translate(index),
       ),
     );
     return index;
@@ -361,15 +366,20 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
     HapticFeedback.lightImpact();
     setState(() => _selectedSentence = index);
     final translation = widget.translate(key);
+    // The bubble points at where the sentence was tapped.
+    final at = _tapAt ?? MediaQuery.sizeOf(context).center(Offset.zero);
+    final anchor = Rect.fromCenter(center: at, width: 24, height: 28);
     if (hasStoredTranslation(translation)) {
-      await SentenceTranslationSheet.show(
+      await SentencePopover.show(
         context,
+        anchor: anchor,
         original: original,
         translation: translation,
       );
     } else {
       await RuntimeTranslationSheet.show(
         context,
+        anchor: anchor,
         lang: widget.sourceLanguage,
         text: key,
         displayText: original,

@@ -385,6 +385,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     } else {
       await RuntimeTranslationSheet.show(
         context,
+        anchor: _anchor,
         lang: widget.sourceLanguage,
         text: sentence,
       );
@@ -435,6 +436,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
           .text;
       await RuntimeTranslationSheet.show(
         context,
+        anchor: _anchor,
         lang: widget.sourceLanguage,
         text: sentence,
         form: word.text,

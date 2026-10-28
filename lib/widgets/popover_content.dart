@@ -7,6 +7,10 @@ import '../theme/app_theme.dart';
 /// reads the same.
 const popoverInk = Color(0xFFFFFFFF);
 
+/// Width of menu popovers: only as wide as their rows need (HIG › Popovers:
+/// "Avoid making a popover too big").
+const menuPopoverWidth = 300.0;
+
 /// Bold popover heading ("Sprache wählen", "Tagesziel").
 class PopoverTitle extends StatelessWidget {
   const PopoverTitle(this.text, {super.key, this.editorial = false});

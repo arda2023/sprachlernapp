@@ -179,6 +179,7 @@ class WordListItem extends StatelessWidget {
                   ),
                 ),
                 PopoverTrigger<VoidCallback>(
+                  maxWidth: menuPopoverWidth,
                   popover: (_) => _WordMenu(
                     word: word,
                     onTogglePlaylist: onTogglePlaylist,

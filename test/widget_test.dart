@@ -1023,6 +1023,9 @@ void main() {
       ),
       findsOneWidget,
     );
+    // The popover below the cover scrolls on the short test window.
+    await tester.ensureVisible(find.text('Beliebige Wortart'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Beliebige Wortart'));
     await tester.pumpAndSettle();
     expect(find.byType(TextExerciseScreen), findsOneWidget);

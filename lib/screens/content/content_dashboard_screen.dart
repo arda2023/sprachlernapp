@@ -124,6 +124,10 @@ class ContentDashboardScreen extends StatelessWidget {
           context,
           ordered.firstWhere((t) => t.info.id == story.id),
         ),
+        onOpenFrom: (story, card) => TextLibraryScreen.start(
+          card,
+          ordered.firstWhere((t) => t.info.id == story.id),
+        ),
       ),
     ];
   }

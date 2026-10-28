@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 /// A speech-bubble panel whose arrow points at the widget that opened it
@@ -8,6 +10,7 @@ Future<T?> showAnchoredPopover<T>({
   required Color color,
   required WidgetBuilder builder,
   String barrierLabel = 'Schließen',
+  double maxWidth = 440,
 }) {
   final box = anchorContext.findRenderObject()! as RenderBox;
   return showAnchoredPopoverAt<T>(
@@ -16,6 +19,7 @@ Future<T?> showAnchoredPopover<T>({
     color: color,
     builder: builder,
     barrierLabel: barrierLabel,
+    maxWidth: maxWidth,
   );
 }
 
@@ -27,12 +31,14 @@ Future<T?> showAnchoredPopoverAt<T>({
   required Color color,
   required WidgetBuilder builder,
   String barrierLabel = 'Schließen',
+  double maxWidth = 440,
 }) => Navigator.of(context).push(
   _PopoverRoute<T>(
     anchor: anchor,
     color: color,
     builder: builder,
     barrierLabel: barrierLabel,
+    maxWidth: maxWidth,
   ),
 );
 
@@ -42,11 +48,15 @@ class _PopoverRoute<T> extends PopupRoute<T> {
     required this.color,
     required this.builder,
     required this.barrierLabel,
+    required this.maxWidth,
   });
 
   final Rect anchor;
   final Color color;
   final WidgetBuilder builder;
+
+  /// Menus stay narrow; info bubbles may use the full phone width.
+  final double maxWidth;
 
   @override
   final String barrierLabel;
@@ -69,7 +79,12 @@ class _PopoverRoute<T> extends PopupRoute<T> {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
-    return _PopoverLayout(anchor: anchor, color: color, builder: builder);
+    return _PopoverLayout(
+      anchor: anchor,
+      color: color,
+      builder: builder,
+      maxWidth: maxWidth,
+    );
   }
 
   @override
@@ -103,6 +118,7 @@ class _PopoverLayout extends StatelessWidget {
     required this.anchor,
     required this.color,
     required this.builder,
+    required this.maxWidth,
   });
 
   static const gutter = 16.0;
@@ -111,6 +127,7 @@ class _PopoverLayout extends StatelessWidget {
   final Rect anchor;
   final Color color;
   final WidgetBuilder builder;
+  final double maxWidth;
 
   static bool _below(BuildContext context, Rect anchor) {
     final media = MediaQuery.of(context);
@@ -130,13 +147,17 @@ class _PopoverLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
     final screen = media.size;
-    final width = (screen.width - 2 * gutter).clamp(0.0, 440.0);
+    final width = (screen.width - 2 * gutter).clamp(0.0, maxWidth);
     final left = (anchor.center.dx - width / 2).clamp(
       gutter,
       screen.width - gutter - width,
     );
     final below = _below(context, anchor);
-    final arrowX = (anchor.center.dx - left).clamp(28.0, width - 28.0);
+    // The arrow stays on the straight edge, off the rounded corners.
+    final minArrow = PopoverBubble.minArrowX(PopoverBubble.defaultRadius);
+    final arrowX = (anchor.center.dx - left)
+        .clamp(minArrow, math.max(minArrow, width - minArrow))
+        .toDouble();
     final maxHeight =
         (below
                 ? screen.height -

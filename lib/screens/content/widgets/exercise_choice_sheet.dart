@@ -1,61 +1,46 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show showModalBottomSheet;
 
 import '../../../models/exercise_models.dart';
 import '../../../theme/app_theme.dart';
+import '../../../widgets/anchored_popover.dart';
+import '../../../widgets/popover_content.dart';
 import '../../home/widgets/story_carousel.dart';
 
-/// Picks the exercise mode for a text. Returns the chosen mode, or null when
-/// dismissed.
+/// Picks the exercise mode for a text, as the orange popover pointing at
+/// the tapped cover. Returns the chosen mode, or null when dismissed.
 class ExerciseChoiceSheet extends StatelessWidget {
   const ExerciseChoiceSheet({super.key, required this.text});
 
   final ExerciseText text;
 
+  /// [context] is the tapped card; the arrow points there.
   static Future<ExerciseMode?> show(BuildContext context, ExerciseText text) =>
-      showModalBottomSheet<ExerciseMode>(
-        context: context,
-        showDragHandle: true,
-        isScrollControlled: true,
-        useSafeArea: true,
+      showAnchoredPopover<ExerciseMode>(
+        anchorContext: context,
+        color: context.appColors.popover,
         builder: (_) => ExerciseChoiceSheet(text: text),
       );
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Semantics(
-              header: true,
-              child: Text(
-                text.info.title,
-                style: AppType.editorial(
-                  color: context.appColors.textPrimary,
-                  size: 24,
-                ),
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              storyMetaLine(text.info),
-              style: AppType.meta(color: context.appColors.textMuted),
-            ),
-            const SizedBox(height: 16),
-            for (final mode in ExerciseMode.values)
-              _ModeOption(
-                mode: mode,
-                gaps: text.gapCount(mode),
-                onTap: () => Navigator.of(context).pop(mode),
-              ),
-          ],
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        PopoverTitle(text.info.title, editorial: true),
+        const SizedBox(height: 4),
+        Text(
+          storyMetaLine(text.info),
+          style: AppType.meta(color: popoverInk.withValues(alpha: 0.85)),
         ),
-      ),
+        const SizedBox(height: 10),
+        for (final mode in ExerciseMode.values)
+          _ModeOption(
+            mode: mode,
+            gaps: text.gapCount(mode),
+            onTap: () => Navigator.of(context).pop(mode),
+          ),
+      ],
     );
   }
 }
@@ -92,7 +77,7 @@ class _ModeOption extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 12),
             decoration: BoxDecoration(
               border: Border(
-                top: BorderSide(color: context.appColors.hairline),
+                top: BorderSide(color: popoverInk.withValues(alpha: 0.25)),
               ),
             ),
             child: Row(
@@ -105,16 +90,20 @@ class _ModeOption extends StatelessWidget {
                         mode.title,
                         style: AppType.chrome(
                           size: 17,
-                          weight: FontWeight.w600,
+                          weight: FontWeight.w700,
                           color: enabled
-                              ? context.appColors.textPrimary
-                              : context.appColors.textMuted,
+                              ? popoverInk
+                              : popoverInk.withValues(alpha: 0.55),
                         ),
                       ),
                       const SizedBox(height: 2),
                       Text(
                         detail,
-                        style: AppType.meta(color: context.appColors.textMuted),
+                        style: AppType.meta(
+                          color: popoverInk.withValues(
+                            alpha: enabled ? 0.85 : 0.55,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -123,9 +112,7 @@ class _ModeOption extends StatelessWidget {
                 Icon(
                   CupertinoIcons.chevron_right,
                   size: 16,
-                  color: enabled
-                      ? context.appColors.textMuted
-                      : context.appColors.iconOff,
+                  color: popoverInk.withValues(alpha: enabled ? 1 : 0.5),
                 ),
               ],
             ),

@@ -13,7 +13,11 @@ class PopoverTrigger<T> extends StatefulWidget {
     required this.builder,
     required this.popover,
     this.onClosed,
+    this.maxWidth = 440,
   });
+
+  /// Menus stay narrow (see [showAnchoredPopover]).
+  final double maxWidth;
 
   /// [open] is true while the popover shows; call [show] to open it.
   final Widget Function(BuildContext context, bool open, VoidCallback show)
@@ -38,6 +42,7 @@ class _PopoverTriggerState<T> extends State<PopoverTrigger<T>> {
       anchorContext: context,
       color: context.appColors.popover,
       builder: widget.popover,
+      maxWidth: widget.maxWidth,
     );
     if (mounted) setState(() => _open = false);
     widget.onClosed?.call(result);

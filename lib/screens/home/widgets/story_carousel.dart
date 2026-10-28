@@ -22,6 +22,7 @@ class StoryCarousel extends StatelessWidget {
     required this.onOpen,
     this.progress = const {},
     this.finished = const {},
+    this.onOpenFrom,
   });
 
   static const cardWidth = 150.0;
@@ -29,6 +30,10 @@ class StoryCarousel extends StatelessWidget {
 
   final List<Story> stories;
   final ValueChanged<Story> onOpen;
+
+  /// Instead of [onOpen], when the tap opens a popover at the card: also
+  /// passes the tapped card's context, for the popover's arrow.
+  final void Function(Story story, BuildContext card)? onOpenFrom;
   final Map<String, double> progress;
   final Set<String> finished;
 
@@ -43,11 +48,15 @@ class StoryCarousel extends StatelessWidget {
         itemCount: stories.length,
         itemBuilder: (context, i) => Padding(
           padding: EdgeInsets.only(right: i == stories.length - 1 ? 0 : 12),
-          child: StoryCard(
-            story: stories[i],
-            progress: progress[stories[i].id],
-            finished: finished.contains(stories[i].id),
-            onTap: () => onOpen(stories[i]),
+          child: Builder(
+            builder: (card) => StoryCard(
+              story: stories[i],
+              progress: progress[stories[i].id],
+              finished: finished.contains(stories[i].id),
+              onTap: () => onOpenFrom != null
+                  ? onOpenFrom!(stories[i], card)
+                  : onOpen(stories[i]),
+            ),
           ),
         ),
       ),

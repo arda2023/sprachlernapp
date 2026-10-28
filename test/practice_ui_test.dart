@@ -294,18 +294,14 @@ void main() {
     final context = t.element(find.byType(Scaffold).first);
     SettingsScreen.open(context);
     await t.pumpAndSettle();
-    await t.tap(find.byType(DropdownButton<AppMotif>));
-    await t.pumpAndSettle();
-    await t.tap(find.text('Dunkel').last);
+    await t.tap(find.bySemanticsLabel('Motiv Dunkel'));
     await t.pumpAndSettle();
     expect(u.prefs.motif, AppMotif.dark);
     expect(
       Theme.of(t.element(find.byType(SettingsScreen))).brightness,
       Brightness.dark,
     );
-    await t.tap(find.byType(DropdownButton<AppMotif>));
-    await t.pumpAndSettle();
-    await t.tap(find.text('Hell').last);
+    await t.tap(find.bySemanticsLabel('Motiv Hell'));
     await t.pumpAndSettle();
     expect(u.prefs.motif, AppMotif.light);
     expect(
@@ -353,7 +349,7 @@ void main() {
       await t.pumpWidget(host(const SettingsScreen()));
       await t.pumpAndSettle();
       expect(t.takeException(), isNull);
-      final motif = find.byType(DropdownButton<AppMotif>);
+      final motif = find.bySemanticsLabel('Motiv Dunkel');
       await t.scrollUntilVisible(
         motif,
         200,
@@ -363,9 +359,9 @@ void main() {
       expect(motif.hitTestable(), findsOneWidget);
       expect(t.getRect(motif).top, greaterThanOrEqualTo(0));
       expect(t.getRect(motif).bottom, lessThanOrEqualTo(760));
+      // Narrow and large text: one full-width row per motif.
+      expect(t.getRect(motif).width, greaterThan(200));
       await t.tap(motif);
-      await t.pumpAndSettle();
-      await t.tap(find.text('Dunkel').last);
       await t.pumpAndSettle();
       expect(u.prefs.motif, AppMotif.dark);
       expect(t.takeException(), isNull);

@@ -25,6 +25,7 @@ Future<PracticeAction?> showPracticeMenu(
 }) => showAnchoredPopover<PracticeAction>(
   anchorContext: context,
   color: context.appColors.popover,
+  maxWidth: menuPopoverWidth,
   builder: (context) => Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     mainAxisSize: MainAxisSize.min,
@@ -71,6 +72,7 @@ Future<String?> showProblemCategories(BuildContext context) =>
     showAnchoredPopover<String>(
       anchorContext: context,
       color: context.appColors.popover,
+      maxWidth: menuPopoverWidth,
       builder: (context) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,

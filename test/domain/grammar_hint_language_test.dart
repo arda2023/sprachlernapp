@@ -50,11 +50,22 @@ void main() {
     final inflected = _card(lang: 'es', form: 'casas', lemma: 'casa');
     expect(
       grammarHint(inflected, solved: false).explanation,
-      allOf(contains('nicht in der Grundform'), isNot(contains('casa'))),
+      allOf(contains('in einer gebeugten Form'), isNot(contains('casa'))),
     );
     expect(
       grammarHint(inflected, solved: true).explanation,
       contains('Grundform: „casa“.'),
+    );
+  });
+
+  test('an editorial label names the form', () {
+    expect(
+      grammarHint(
+        _card(lang: 'it', form: 'andava', lemma: 'andare', pos: 'VERB',
+            label: 'Verb, Vergangenheit'),
+        solved: false,
+      ).explanation,
+      startsWith('Gesucht ist ein Verb in der Form „Vergangenheit“.'),
     );
   });
 

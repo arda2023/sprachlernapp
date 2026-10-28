@@ -34,7 +34,8 @@ class TextLibraryScreen extends StatelessWidget {
   );
 
   /// Asks for the exercise mode, then opens [text] in it. Shared with the
-  /// Inhalte dashboard.
+  /// Inhalte dashboard. [context] is the tapped card: the mode popover
+  /// points at it.
   static Future<void> start(BuildContext context, ExerciseText text) async {
     final mode = await ExerciseChoiceSheet.show(context, text);
     if (mode != null && context.mounted) {
@@ -136,6 +137,7 @@ class TextLibraryScreen extends StatelessWidget {
                             StoryCarousel(
                               stories: [for (final t in group) t.info],
                               onOpen: (s) => _choose(context, s.id),
+                              onOpenFrom: (s, card) => _choose(card, s.id),
                             ),
                           ],
                       ],
