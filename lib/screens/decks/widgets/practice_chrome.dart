@@ -74,8 +74,8 @@ class PracticeSessionBar extends StatelessWidget {
                       repeatIndices: repeatIndices, activeRepeat: activeRepeat,
                     ),
                     // The bar shows what's left; only states it can't show
-                    // get a line.
-                    if (!counting) ...[
+                    // get a line. An empty scope says so on the page.
+                    if (!counting && (loading || total > 0)) ...[
                       const SizedBox(height: 6),
                       Text(
                         label,
@@ -106,14 +106,16 @@ class PracticeSessionBar extends StatelessWidget {
   }
 }
 
-/// A continuous timeline. Completed repeat phases keep their yellow colour.
+/// A continuous timeline. Completed repeat phases keep their colour.
 class ContinuousSessionTrack extends StatelessWidget {
   const ContinuousSessionTrack({super.key, required this.done,
     required this.total, this.repeatIndices = const {}, this.activeRepeat = false});
   final int done, total;
   final Set<int> repeatIndices;
   final bool activeRepeat;
-  static const repeatColor = Color(0xFFF2C94C);
+
+  /// Error repeats in cyan: yellow next to the orange was hard to tell apart.
+  static const repeatColor = Color(0xFF35C2D8);
 
   @override
   Widget build(BuildContext context) => ClipRRect(
@@ -266,8 +268,8 @@ class PracticeTranslationCard extends StatelessWidget {
           MergeSemantics(
             child: CupertinoButton(
               onPressed: onToggle,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-              minimumSize: const Size(44, 56),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              minimumSize: const Size(44, 48),
               pressedOpacity: 0.7,
               child: Semantics(
                 label: 'Übersetzung: $translation, ganzer Satz',
@@ -283,7 +285,7 @@ class PracticeTranslationCard extends StatelessWidget {
                             translation,
                             style: AppType.editorial(
                               color: context.appColors.textPrimary,
-                              size: 20,
+                              size: 18,
                             ),
                           ),
                         ],
@@ -320,11 +322,11 @@ class PracticeTranslationCard extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 14, 20, 18),
+                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 14),
                         child: Text(
                           sentence,
                           style: AppType.editorial(
-                            size: 18,
+                            size: 16,
                             weight: FontWeight.w400,
                             color: context.appColors.textMuted,
                             height: 1.45,
@@ -376,9 +378,9 @@ class PracticeAnswerToolbar extends StatelessWidget {
     child: Padding(
       padding: EdgeInsets.fromLTRB(
         12,
-        8,
+        2,
         12,
-        8 +
+        4 +
             math.max(
               MediaQuery.viewInsetsOf(context).bottom,
               MediaQuery.viewPaddingOf(context).bottom,
@@ -403,15 +405,15 @@ class PracticeAnswerToolbar extends StatelessWidget {
             ),
           Row(
             children: [
-              Semantics(
-                label: 'Aussprechen, noch nicht verfügbar',
-                enabled: false,
-                child: SizedBox(
-                  width: 44,
-                  child: Icon(
-                    CupertinoIcons.speaker_2,
-                    color: context.appColors.iconOff,
-                  ),
+              CupertinoButton(
+                onPressed: speakerEnabled ? onSpeak : null,
+                padding: EdgeInsets.zero,
+                minimumSize: const Size(44, 44),
+                child: Semantics(
+                  label: playing ? 'Vorlesen stoppen' : 'Satz vorlesen',
+                  excludeSemantics: true,
+                  child: Icon(playing ? CupertinoIcons.stop_fill : CupertinoIcons.speaker_2,
+                    color: speakerEnabled ? context.appColors.textPrimary : context.appColors.iconOff),
                 ),
               ),
               Expanded(
@@ -433,12 +435,15 @@ class PracticeAnswerToolbar extends StatelessWidget {
                         : hasInput
                         ? onSubmit
                         : onReveal;
-                    var slotHeight = 40.0;
+                    var slotHeight = 44.0;
                     for (final text in [label]) {
                       final painter = TextPainter(
                         text: TextSpan(
                           text: text,
-                          style: AppType.chrome(weight: FontWeight.w800),
+                          style: AppType.chrome(
+                            size: 14,
+                            weight: FontWeight.w800,
+                          ),
                         ),
                         textDirection: TextDirection.ltr,
                         textScaler: MediaQuery.textScalerOf(context),
@@ -543,14 +548,16 @@ class _ToolbarButton extends StatelessWidget {
         onPressed: onPressed,
         pressedOpacity: error ? 1 : .4,
         padding: EdgeInsets.zero,
-        minimumSize: const Size(48, 48),
+        minimumSize: const Size(48, 44),
         child: Semantics(
           label: error ? 'Falsch' : label,
           enabled: enabled,
           excludeSemantics: true,
           child: Container(
-            constraints: const BoxConstraints(minHeight: 48),
-            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
+            // A 36 pt pill inside the 44 pt tap target (29.10.2026: lower,
+            // so more of the German sentence shows above the keyboard).
+            constraints: const BoxConstraints(minHeight: 36),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
             decoration: BoxDecoration(
               color: error
                   ? context.appColors.errorTint
@@ -573,6 +580,7 @@ class _ToolbarButton extends StatelessWidget {
                           maxLines: null,
                           textAlign: TextAlign.center,
                           style: AppType.chrome(
+                            size: 14,
                             weight: FontWeight.w800,
                             color: foreground,
                           ),
@@ -583,6 +591,7 @@ class _ToolbarButton extends StatelessWidget {
                           'Falsch',
                           textAlign: TextAlign.center,
                           style: AppType.chrome(
+                            size: 14,
                             weight: FontWeight.w600,
                             color: foreground,
                           ),

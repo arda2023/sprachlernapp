@@ -238,4 +238,35 @@ void main() {
     );
     expect(remote.calls, 0);
   });
+
+  test('onboarding consent applies until an account decides itself', () async {
+    final db = sqlite3.openInMemory();
+    addTearDown(db.close);
+    final remote = Remote();
+    String? owner;
+    final client = CachedRuntimeTranslationClient(
+      remote: remote,
+      store: TranslationCache(() async => db),
+      owner: () async => owner,
+      revision: () => 0,
+    );
+    expect(await client.wordCloudConsent(), WordCloudConsent.unknown);
+    await client.setOnboardingWordCloudConsent(true);
+    // Shown as on, but nothing can be sent without an account.
+    expect(await client.wordCloudConsent(), WordCloudConsent.enabled);
+    await expectLater(
+      client.translateWordOnTap(lang: 'en', text: 'The bank.', form: 'bank'),
+      throwsA(isA<TranslationFailure>()),
+    );
+    expect(remote.calls, 0);
+    owner = 'project:a';
+    expect(await client.wordCloudConsent(), WordCloudConsent.enabled);
+    await client.translateWordOnTap(lang: 'en', text: 'The bank.', form: 'bank');
+    expect(remote.calls, 1);
+    // The account's own "off" in Settings wins over the onboarding answer.
+    await client.setWordCloudConsent(false);
+    expect(await client.wordCloudConsent(), WordCloudConsent.disabled);
+    owner = 'project:b';
+    expect(await client.wordCloudConsent(), WordCloudConsent.enabled);
+  });
 }

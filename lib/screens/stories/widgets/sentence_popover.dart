@@ -1,3 +1,5 @@
+import '../../../widgets/speak_button.dart';
+
 import 'package:flutter/cupertino.dart';
 
 import '../../../theme/app_theme.dart';
@@ -11,9 +13,11 @@ class SentencePopover extends StatelessWidget {
     super.key,
     required this.original,
     required this.translation,
+    this.language,
   });
 
   final String original;
+  final String? language;
   final String translation;
 
   static Future<void> show(
@@ -21,12 +25,16 @@ class SentencePopover extends StatelessWidget {
     required Rect anchor,
     required String original,
     required String translation,
+    String? language,
   }) => showAnchoredPopoverAt<void>(
     context: context,
     anchor: anchor,
     color: context.appColors.popover,
-    builder: (_) =>
-        SentencePopover(original: original.trim(), translation: translation),
+    builder: (_) => SentencePopover(
+      original: original.trim(),
+      translation: translation,
+      language: language,
+    ),
   );
 
   @override
@@ -44,6 +52,14 @@ class SentencePopover extends StatelessWidget {
             weight: FontWeight.w600,
             height: 1.4,
             letterSpacing: 0,
+          ),
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: SpeakButton(
+            text: original,
+            language: language,
+            label: 'Satz vorlesen',
           ),
         ),
         const SizedBox(height: 12),

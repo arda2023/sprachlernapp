@@ -184,9 +184,10 @@ void main() {
       });
     });
     testWidgets(
-      'missing word first requests durable consent and sends full context ($lang)',
+      'missing word with onboarding consent sends full context ($lang)',
       (tester) async {
-        final fake = FakeTranslations();
+        // Consent was given in the onboarding; the bubble never asks.
+        final fake = FakeTranslations()..consent = WordCloudConsent.enabled;
         final text = lang == 'en' ? 'The bank.' : 'O banco.';
         final word = lang == 'en' ? 'bank' : 'banco';
         await tester.pumpWidget(
@@ -208,12 +209,7 @@ void main() {
         );
         await tapWord(tester, word);
         expect(find.byType(RuntimeTranslationSheet), findsOneWidget);
-        expect(fake.calls, isEmpty);
-        // The popover scrolls on the short test window.
-        await tester.ensureVisible(find.text('Aktivieren'));
-        await tester.pumpAndSettle();
-        await tester.tap(find.text('Aktivieren'));
-        await tester.pumpAndSettle();
+        expect(find.text('Aktivieren'), findsNothing);
         expect(fake.calls.single, {'lang': lang, 'text': text, 'form': word});
         expect(find.text('Die Bank.'), findsOneWidget);
         expect(find.text('Die Bank.'), findsOneWidget);
@@ -280,7 +276,7 @@ void main() {
     );
   });
   testWidgets('reader passes the second exact word occurrence', (tester) async {
-    final fake = FakeTranslations();
+    final fake = FakeTranslations()..consent = WordCloudConsent.enabled;
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -310,10 +306,6 @@ void main() {
         )
         .first;
     await tester.tapAt(p.localToGlobal(box.toRect().center));
-    await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Aktivieren'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Aktivieren'));
     await tester.pumpAndSettle();
     expect(fake.spans.single, 5);
   });

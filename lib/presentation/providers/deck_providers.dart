@@ -18,6 +18,55 @@ final userChangesProvider = StreamProvider<int>((ref) async* {
   }
 });
 
+/// Short deck names without "&" (user decision 29.10.2026). The packs keep
+/// their titles; slugs are the same in every language, so one table covers
+/// all of them. Unknown slugs show the pack title.
+String deckDisplayName(String slug, String titleDe) => switch (slug) {
+  'alltag-zuhause' => 'Zuhause',
+  'alltagssprache-redewendungen' => 'Redewendungen',
+  'arbeit-bildung' => 'Beruf',
+  'menschen-beziehungen' => 'Beziehungen',
+  'koerper-gesundheit' => 'Gesundheit',
+  'essen-trinken' => 'Essen',
+  'natur-umwelt' => 'Natur',
+  'business-email' => 'Business',
+  'irregular_verbs_base' => 'Unregelmäßige Verben',
+  'irregular_verbs_past' => 'Unregelmäßiges Präteritum',
+  'irregular_verbs_participle' => 'Unregelmäßige Partizipien',
+  _ => titleDe,
+};
+
+/// Bolts per deck. The packs' own band is "mittel" almost everywhere (empty
+/// in English), so it cannot tell decks apart. The level comes from what the
+/// decks contain, checked against all five packs (29.10.2026):
+/// - 1: core function words, house and household, base forms of common verbs.
+/// - 2: topic vocabulary around A2–B1 (travel, work and school, body and
+///   health, people and feelings, food, nature) and irregular past forms.
+/// - 3: idioms, phrasal verbs and business language, mostly multiword
+///   (up to 100 % of a deck) and B2 level.
+/// Unknown slugs fall back to the pack's band.
+DeckDifficulty deckDifficulty(String slug, String? cefrBand) => switch (slug) {
+  'allgemeine-sprache' ||
+  'alltag-zuhause' ||
+  'irregular_verbs_base' => DeckDifficulty.beginner,
+  'reisen' ||
+  'arbeit-bildung' ||
+  'koerper-gesundheit' ||
+  'menschen-beziehungen' ||
+  'essen-trinken' ||
+  'natur-umwelt' ||
+  'irregular_verbs_past' ||
+  'irregular_verbs_participle' => DeckDifficulty.intermediate,
+  'alltagssprache-redewendungen' ||
+  'verbalphrasen' ||
+  'business-email' => DeckDifficulty.advanced,
+  _ => switch (cefrBand) {
+    'mittel' => DeckDifficulty.intermediate,
+    'fortgeschritten' => DeckDifficulty.advanced,
+    _ => DeckDifficulty.beginner,
+  },
+};
+
 final decksProvider = FutureProvider<List<Deck>>((ref) async {
   ref.watch(userChangesProvider);
   final user = await ref.watch(userRepositoryProvider.future);
@@ -52,15 +101,11 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
     result.add(
       Deck(
         id: deck.id,
-        name: deck.titleDe,
+        name: deckDisplayName(deck.slug, deck.titleDe),
         description:
             '${deck.descriptionDe ?? ''}${viaStory > 0 ? ' · $viaStory über Story gelernt' : ''}',
         icon: CupertinoIcons.square_stack,
-        difficulty: switch (deck.cefrBand) {
-          'mittel' => DeckDifficulty.intermediate,
-          'fortgeschritten' => DeckDifficulty.advanced,
-          _ => DeckDifficulty.beginner,
-        },
+        difficulty: deckDifficulty(deck.slug, deck.cefrBand),
         totalWords: ids
             .where((id) => resolver.states[id]?.isActive ?? true)
             .length,

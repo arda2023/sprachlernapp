@@ -11,6 +11,7 @@ import 'package:sprachapp/data/runtime_translation_client.dart';
 import 'package:sprachapp/presentation/providers/offline_translation_provider.dart';
 import 'package:sprachapp/presentation/providers/runtime_translation_provider.dart';
 import 'package:sprachapp/widgets/runtime_translation_sheet.dart';
+import 'package:sprachapp/widgets/dictionary_sources_sheet.dart';
 import 'package:sprachapp/widgets/word_cloud_consent.dart';
 
 class CountingRemote extends RuntimeTranslationClient {
@@ -178,7 +179,7 @@ void main() {
     expect(find.textContaining('Sprachmodell'), findsNothing);
     expect(find.text('Auf dem Gerät übersetzen'), findsNothing);
   });
-  testWidgets('single dictionary meaning stays offline and sources reachable', (
+  testWidgets('single dictionary meaning stays offline; sources in Settings', (
     tester,
   ) async {
     dictionary.values = [cat, cat];
@@ -186,7 +187,10 @@ void main() {
     expect(find.text('Katze'), findsOneWidget);
     expect(remote.calls, 0);
     expect(find.text('Wörterbuch · allgemeine Bedeutung'), findsOneWidget);
-    await tester.tap(find.text('Wörterbuch · Quellen & Lizenz'));
+    // The bubble no longer carries the licence link.
+    expect(find.text('Wörterbuch · Quellen & Lizenz'), findsNothing);
+    // Completes when the sheet closes, so it is not awaited here.
+    unawaited(showDictionarySources(tester.element(find.byType(Scaffold))));
     await tester.pumpAndSettle();
     expect(find.byType(SelectableText), findsOneWidget);
     expect(
@@ -211,29 +215,19 @@ void main() {
     });
   }
   for (final consent in [WordCloudConsent.unknown, WordCloudConsent.disabled]) {
-    testWidgets('no automatic upload for $consent', (tester) async {
+    testWidgets('no automatic upload and no opt-in text for $consent', (
+      tester,
+    ) async {
       remote.consent = consent;
       await mount(tester);
       expect(remote.calls, 0);
-      if (consent == WordCloudConsent.unknown) {
-        expect(find.textContaining('vollständige Satzkontext'), findsOneWidget);
-        await tester.tap(find.text('Aktivieren'));
-        await tester.pumpAndSettle();
-        expect(remote.calls, 1);
-        expect(remote.consent, WordCloudConsent.enabled);
-      } else {
-        expect(find.text('Aktivieren'), findsNothing);
-      }
+      // Consent is asked once in the onboarding, never in the bubble.
+      expect(find.textContaining('vollständige Satzkontext'), findsNothing);
+      expect(find.text('Aktivieren'), findsNothing);
+      expect(find.textContaining('in den Einstellungen'), findsOneWidget);
+      expect(remote.consent, consent);
     });
   }
-  testWidgets('declining is saved without request', (tester) async {
-    remote.consent = WordCloudConsent.unknown;
-    await mount(tester);
-    await tester.tap(find.text('Nicht jetzt'));
-    await tester.pumpAndSettle();
-    expect(remote.consent, WordCloudConsent.disabled);
-    expect(remote.calls, 0);
-  });
   testWidgets('mounting without word tap cannot start cloud', (tester) async {
     await mount(tester, tap: false);
     expect(remote.calls, 0);

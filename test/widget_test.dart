@@ -1,4 +1,10 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:sprachapp/data/runtime_translation_client.dart';
+import 'package:sprachapp/presentation/providers/runtime_translation_provider.dart';
+import 'package:sprachapp/presentation/audio/device_speech_playback.dart';
 import 'fixtures/offline_translation.dart';
+import 'package:sprachapp/models/speech_playback.dart';
 import 'package:sprachapp/presentation/providers/offline_translation_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -85,6 +91,23 @@ void main() {
         .clearPlatformBrightnessTestValue(),
   );
   setUpAll(() => GoogleFonts.config.allowRuntimeFetching = false);
+
+  Future<void> mockNativeSpeech(WidgetTester tester) async {
+    await DeviceSpeechPlayback.resetForTest();
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
+      const MethodChannel('flutter_tts'), (call) async => call.method == 'getVoices'
+        ? [{'identifier': 'test.en', 'locale': 'en-US', 'gender': 'female', 'quality': 'default'}] : 1);
+    addTearDown(() async {
+      debugDefaultTargetPlatformOverride = null;
+      await tester.runAsync(DeviceSpeechPlayback.resetForTest);
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(const MethodChannel('flutter_tts'), null);
+    });
+  }
+  Future<void> completeSpeech() async {
+    await TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
+      'flutter_tts', const StandardMethodCodec().encodeMethodCall(const MethodCall('speak.onComplete')), (_) {});
+  }
 
   Future<void> scrollHomeTo(WidgetTester tester, Finder target) =>
       tester.scrollUntilVisible(
@@ -531,15 +554,22 @@ void main() {
     }
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
 
+    await tester.ensureVisible(find.text('Deine letzten 3 geübten Formen'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Deine letzten 3 geübten Formen'));
+    await tester.pumpAndSettle();
+    // The shorter "Stapel aktivieren" row leaves the forms below the fold.
+    await tester.drag(find.byType(Scrollable).last, const Offset(0, -300));
     await tester.pumpAndSettle();
     expect(find.text('walks'), findsOneWidget);
     expect(find.text('geht'), findsOneWidget);
 
     expect(find.text('Stapel-Revue'), findsOneWidget);
     expect(find.text('Mehr davon'), findsNothing);
-    // The icon carries the deck's progress gauge.
-    final gauge = tester.widget<ProgressRing>(find.byType(ProgressRing).first);
+    // The icon carries the deck's progress gauge (scrolled above by now).
+    final gauge = tester.widget<ProgressRing>(
+      find.byType(ProgressRing, skipOffstage: false).first,
+    );
     expect(gauge.gapDegrees, greaterThan(0));
   });
 
@@ -550,7 +580,7 @@ void main() {
     final toggle = tester.widget<CupertinoSwitch>(find.byType(CupertinoSwitch));
     expect(toggle.value, isFalse);
     expect(toggle.activeTrackColor, AppColors.active);
-    expect(find.text('In die tägliche Übung'), findsOneWidget);
+    expect(find.text('Stapel aktivieren'), findsOneWidget);
 
     await tester.tap(find.byType(CupertinoSwitch));
     await tester.pumpAndSettle();
@@ -649,6 +679,7 @@ void main() {
   });
 
   StoryReaderScreen readerScreen() => StoryReaderScreen(
+    narrationFactory: () => PlaybackClock.forText(sampleStoryText(sampleStories.first.id).paragraphs),
     story: sampleStories.first,
     text: sampleStoryText(sampleStories.first.id),
   );
@@ -717,6 +748,7 @@ void main() {
   testWidgets('Word popover points at the word and can pronounce it', (
     tester,
   ) async {
+    await mockNativeSpeech(tester);
     await tester.pumpWidget(reader());
     await tapWord(tester, 'clock');
 
@@ -741,7 +773,9 @@ void main() {
       matching: find.byIcon(icon),
     );
     await tester.pump(const Duration(milliseconds: 300));
-    expect(inPopover(CupertinoIcons.speaker_3_fill), findsOneWidget);
+    expect(inPopover(CupertinoIcons.stop_fill), findsOneWidget);
+    await completeSpeech();
+    debugDefaultTargetPlatformOverride = null;
     await tester.pumpAndSettle();
     expect(inPopover(CupertinoIcons.speaker_2_fill), findsOneWidget);
 
@@ -1021,9 +1055,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(ExerciseChoiceSheet), findsOneWidget);
     expect(
-      find.bySemanticsLabel(
-        'Lückentext-Übungen: Verben. Tippe die passende Verbform · 6 Lücken',
-      ),
+      find.bySemanticsLabel('Lückentext-Übungen: Verben'),
       findsOneWidget,
     );
     // The popover below the cover scrolls on the short test window.
@@ -1239,7 +1271,7 @@ void main() {
       ],
       child: MaterialApp(
         theme: buildAppTheme(),
-        home: Scaffold(body: WordListScreen(clock: () => wordListNow)),
+        home: Scaffold(body: WordListScreen(clock: () => wordListNow, playbackFactory: SpeechPlayback.new)),
       ),
     );
   }
@@ -1306,7 +1338,9 @@ void main() {
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
   });
 
-  testWidgets('Word card shows level, sentence and metadata', (tester) async {
+  testWidgets('Word card shows level and sentence, no metadata line', (
+    tester,
+  ) async {
     phoneView(tester);
     await tester.pumpWidget(wordList());
     expect(find.text('platform'), findsOneWidget);
@@ -1314,10 +1348,9 @@ void main() {
       find.text('Anna ran to the platform, but the doors were already closed.'),
       findsOneWidget,
     );
-    expect(
-      find.text('Zuletzt gesehen: vor 2 Tagen · Wiederholt: 5 Mal'),
-      findsOneWidget,
-    );
+    // Last seen and review count left the card (29.10.2026).
+    expect(find.textContaining('Zuletzt gesehen'), findsNothing);
+    expect(find.textContaining('Wiederholt:'), findsNothing);
     expect(
       tester.getSemantics(
         inCard(
@@ -1418,8 +1451,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Wort deaktiviert'), findsOneWidget);
     expect(store.byId('platform').isDisabled, isTrue);
+    // The card dims; no "Deaktiviert" text, only for screen readers.
+    expect(find.textContaining('Deaktiviert ·'), findsNothing);
     expect(
-      find.textContaining('Deaktiviert · Zuletzt gesehen: vor 2 Tagen'),
+      find.byWidgetPredicate(
+        (w) => w is Semantics && w.properties.value == 'Deaktiviert',
+      ),
       findsOneWidget,
     );
     await openMenu();
@@ -1457,11 +1494,13 @@ void main() {
     expect(find.text('Maximales Erinnerungsvermögen'), findsOneWidget);
     expect(
       find.bySemanticsLabel(
-        RegExp('^Stufe 3 von 5: Gut verankert.*Dieses Wort'),
+        RegExp('^Stufe 3 von 5: Gut verankert.*Aktuelle Stufe'),
       ),
       findsOneWidget,
     );
-    expect(find.text('Dieses Wort'), findsOneWidget);
+    // Marked by a band, not by text; the intro sentence is gone too.
+    expect(find.text('Dieses Wort'), findsNothing);
+    expect(find.textContaining('Jede richtige Wiederholung'), findsNothing);
   });
 
   testWidgets('Chevron opens the details sheet; notes are kept', (
@@ -1509,7 +1548,9 @@ void main() {
     tester.platformDispatcher.textScaleFactorTestValue = 2;
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
     await tester.pumpWidget(wordList());
-    await tester.drag(find.byType(ListView).last, const Offset(0, -600));
+    // Cards are shorter without the metadata line: scroll less far so a
+    // card's "Mehr" stays in view.
+    await tester.drag(find.byType(ListView).last, const Offset(0, -300));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
 
@@ -1961,24 +2002,28 @@ void main() {
   testWidgets('Listening: wrong flashes, right stays sage and slides in', (
     tester,
   ) async {
+    await mockNativeSpeech(tester);
     final progress = PracticeProgress();
     addTearDown(progress.dispose);
     await tester.pumpWidget(practiceLibrary(PracticeKind.listening, progress));
     await tester.tap(find.text('Das th in „think“'));
     await tester.pumpAndSettle();
     expect(find.byType(ListeningExerciseScreen), findsOneWidget);
+    // The instruction is self-explanatory and left the screen.
     expect(
       find.text('Hör zu und wähle die Antwort, die du hörst.'),
-      findsOneWidget,
+      findsNothing,
     );
     expect(find.text('0:00'), findsOneWidget);
-    expect(find.text('0:02'), findsOneWidget);
+    expect(find.textContaining('ca. '), findsOneWidget);
     expect(optionBox(tester, 'sink').color, AppColors.raisedInk);
 
-    // The clip runs on the clock, then stops at its end.
+    // The native completion event, not elapsed wall time, ends playback.
     await tester.tap(find.bySemanticsLabel('Abspielen'));
     await tester.pump(const Duration(seconds: 1));
-    expect(find.text('0:01'), findsOneWidget);
+    expect(find.bySemanticsLabel('Pause'), findsOneWidget);
+    await completeSpeech();
+    debugDefaultTargetPlatformOverride = null;
     await tester.pump(const Duration(seconds: 2));
     expect(find.bySemanticsLabel('Abspielen'), findsOneWidget);
 
@@ -2332,11 +2377,18 @@ void main() {
     return ProviderScope(
       overrides: [
         offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
-
+        // No account and no consent; keeps the private store off disk.
+        runtimeTranslationProvider.overrideWithValue(
+          RuntimeTranslationClient(
+            'https://unused.invalid',
+            'public',
+            () async => 'synthetic',
+          ),
+        ),
       ],
       child: MaterialApp(
         theme: buildAppTheme(),
-        home: StoryReaderScreen(story: article.asStory, text: article.text),
+        home: StoryReaderScreen(story: article.asStory, text: article.text, narrationFactory: () => PlaybackClock.forText(article.text.paragraphs)),
       ),
     );
   }
@@ -2344,7 +2396,9 @@ void main() {
   testWidgets('News read like stories, with bold subheadings', (tester) async {
     await tester.pumpWidget(newsReader());
     expect(find.text('Politik in 100 Sekunden'), findsOneWidget);
-    expect(find.text('A2 · 2 Min · Politik'), findsOneWidget);
+    // Only the topic shows; level and minutes stay in the semantics label.
+    expect(find.text('Politik'), findsOneWidget);
+    expect(find.text('A2 · 2 Min · Politik'), findsNothing);
     final heading = tester.widget<Text>(find.text('A new plan for city buses'));
     expect(heading.style?.fontWeight, FontWeight.w700);
     expect(heading.style?.fontSize, greaterThan(AppType.storyBody().fontSize!));
@@ -2353,10 +2407,12 @@ void main() {
       isSemantics(isHeader: true, label: 'Who pays for it?'),
     );
 
-    // Missing word opens explicit AI opt-in; no request on tap.
+    // Missing word without consent: no opt-in text, no request on tap
+    // (consent is asked in the onboarding).
     await tapWord(tester, 'council');
     expect(find.byType(RuntimeTranslationSheet), findsOneWidget);
-    expect(find.text('Automatische Wortübersetzung aktivieren?'), findsOneWidget);
+    expect(find.text('Automatische Wortübersetzung aktivieren?'), findsNothing);
+    expect(find.text('Wörterbuch · Quellen & Lizenz'), findsNothing);
     expect(find.textContaining('KI ·'), findsNothing);
     Navigator.of(tester.element(find.byType(RuntimeTranslationSheet))).pop();
     await tester.pumpAndSettle();

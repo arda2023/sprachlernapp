@@ -1,7 +1,9 @@
+import '../../presentation/audio/speech_narration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show Scaffold, ScaffoldMessenger, SnackBar;
 
+import '../../presentation/audio/device_speech_playback.dart';
 import '../../models/speech_playback.dart';
 import '../../domain/leitner.dart';
 import '../../models/word_list_models.dart';
@@ -25,8 +27,12 @@ class WordListScreen extends ConsumerStatefulWidget {
     super.key,
     this.clock = DateTime.now,
     this.targetCardId,
+    this.playbackFactory,
   });
   final String? targetCardId;
+
+  /// Allows widget tests to supply deterministic playback.
+  final SpeechPlayback Function()? playbackFactory;
 
   static Future<void> openTarget(BuildContext context, String cardId) =>
       Navigator.of(context).push(
@@ -54,12 +60,28 @@ class WordListScreen extends ConsumerStatefulWidget {
 class _WordListScreenState extends ConsumerState<WordListScreen> {
   static const _gutter = EdgeInsets.symmetric(horizontal: 20);
 
+  SpeechNarration? _playlist;
   final _query = TextEditingController();
-  final _playback = SpeechPlayback();
+  late final SpeechPlayback _playback =
+      widget.playbackFactory?.call() ??
+      DeviceSpeechPlayback(
+        language: () => ref.read(selectedContentLanguageProvider).asData?.value,
+        onError: (message) {
+          if (mounted) _toast(message);
+        },
+      );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!TickerMode.valuesOf(context).enabled) { _playback.stop(); _playlist?.pause(); }
+  }
+
   _Filter _filter = _Filter.all;
 
   @override
   void dispose() {
+    _playlist?.dispose();
     _query.dispose();
     _playback.dispose();
     super.dispose();
@@ -119,17 +141,19 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
         : 'Zur Playlist hinzugefügt',
   );
 
-  // TODO: play the playlist through TTS once the audio layer exists.
   void _openPlaylist() {
-    final count = (ref.read(wordListProvider).value ?? [])
-        .where((w) => w.inPlaylist)
-        .length;
-    _toast(
-      count == 0
-          ? 'Deine Playlist ist noch leer'
-          : 'Playlist-Modus folgt bald ($count '
-                '${count == 1 ? 'Übung' : 'Übungen'})',
-    );
+    if (_playlist?.playing == true) { _playlist!.pause(); return; }
+    final words = (ref.read(wordListProvider).value ?? [])
+        .where((w) => w.inPlaylist && !w.isDisabled).toList();
+    if (words.isEmpty) { _toast('Deine Playlist ist noch leer'); return; }
+    final language = ref.read(selectedContentLanguageProvider).asData?.value;
+    if (language == null) return;
+    _playlist?.dispose();
+    _playlist = SpeechNarration(
+      text: words.map((w) => '${w.entry.headword}. ${w.sentence}').join('\n'),
+      language: language,
+      onError: (message) { if (mounted) _toast(message); });
+    _playlist!.play();
   }
 
   void _openDetails(VocabWord word) => WordDetailsSheet.show(
@@ -205,15 +229,6 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
                   style: AppType.meta(color: context.appColors.textMuted),
                 ),
               ),
-              for (final notice
-                  in ref.watch(learningNoticesProvider).value ?? <String>[])
-                Padding(
-                  padding: _gutter.copyWith(top: 8),
-                  child: Text(
-                    notice,
-                    style: AppType.meta(color: context.appColors.textMuted),
-                  ),
-                ),
               const SizedBox(height: 20),
               Padding(
                 padding: _gutter,

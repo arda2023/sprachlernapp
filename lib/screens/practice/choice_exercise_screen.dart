@@ -1,3 +1,7 @@
+import '../../widgets/speak_button.dart';
+import '../../presentation/audio/speech_narration.dart';
+import '../../presentation/audio/device_speech_playback.dart';
+
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
@@ -83,9 +87,10 @@ class GrammarExerciseScreen extends ChoiceExerciseScreen {
 class _ChoiceExerciseScreenState extends State<ChoiceExerciseScreen> {
   static const _flashDuration = Duration(milliseconds: 600);
 
-  late final _clip = PlaybackClock(
-    duration: widget.exercise.audioDuration,
-    tick: const Duration(milliseconds: 100),
+  late final _clip = SpeechNarration(
+    text: widget.exercise.audioText ?? '',
+    language: widget.exercise.targetLanguage,
+    onError: (message) => showSpeechError(context, message),
   );
 
   /// Wrong options during their Muted Brick flash.
@@ -162,13 +167,7 @@ class _ChoiceExerciseScreenState extends State<ChoiceExerciseScreen> {
         body: SafeArea(
           child: Column(
             children: [
-              BackBar(
-                onBack: () => Navigator.of(context).maybePop(),
-                trailing: Text(
-                  _exercise.meta,
-                  style: AppType.meta(color: context.appColors.textMuted),
-                ),
-              ),
+              BackBar(onBack: () => Navigator.of(context).maybePop()),
               Expanded(
                 child: ListView(
                   controller: _scroll,
@@ -183,13 +182,9 @@ class _ChoiceExerciseScreenState extends State<ChoiceExerciseScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text(
-                              _exercise.kind.title,
-                              style: AppType.meta(
-                                color: context.appColors.textMuted,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
+                            // Kind, topic, level and the instruction are
+                            // self-explanatory here (user decision
+                            // 29.10.2026): the title leads.
                             Semantics(
                               header: true,
                               child: Text(
@@ -198,14 +193,6 @@ class _ChoiceExerciseScreenState extends State<ChoiceExerciseScreen> {
                                   color: context.appColors.textPrimary,
                                   size: 28,
                                 ),
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              _exercise.kind.instruction,
-                              style: AppType.chrome(
-                                size: 13,
-                                color: context.appColors.textMuted,
                               ),
                             ),
                             const SizedBox(height: 28),
@@ -220,9 +207,21 @@ class _ChoiceExerciseScreenState extends State<ChoiceExerciseScreen> {
                                 ),
                               ),
                             ] else
-                              _GapSentence(
-                                prompt: _exercise.prompt,
-                                answer: _solved ? _exercise.answer : null,
+                              Column(
+                                children: [
+                                  _GapSentence(
+                                    prompt: _exercise.prompt,
+                                    answer: _solved ? _exercise.answer : null,
+                                  ),
+                                  SpeakButton(
+                                    text: _exercise.prompt.replaceAll(
+                                      ChoiceExercise.gap,
+                                      _solved ? _exercise.answer : ' … ',
+                                    ),
+                                    language: _exercise.targetLanguage,
+                                    label: 'Satz vorlesen',
+                                  ),
+                                ],
                               ),
                             const SizedBox(height: 24),
                             for (final option in _exercise.options) ...[

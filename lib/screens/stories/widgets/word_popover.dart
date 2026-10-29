@@ -27,10 +27,12 @@ class WordPopover extends StatefulWidget {
     this.onReactivate,
     this.learningAvailable = true,
     this.personalAction,
+    this.language,
   });
 
   /// The word as it appears in the text, e.g. 'arrived'.
   final String surface;
+  final String? language;
   final WordEntry entry;
   final WordMark? mark;
   final Future<StoryAddResult> Function() onAdd;
@@ -54,12 +56,14 @@ class WordPopover extends StatefulWidget {
     Future<StoryAddResult> Function()? onReactivate,
     bool learningAvailable = true,
     Widget? personalAction,
+    String? language,
   }) => showAnchoredPopoverAt<void>(
     context: context,
     anchor: anchor,
     color: context.appColors.popover,
     builder: (_) => WordPopover(
       surface: surface,
+      language: language,
       entry: entry,
       mark: mark,
       onAdd: onAdd,
@@ -182,8 +186,8 @@ class _WordPopoverState extends State<WordPopover> {
               ),
             ),
             const SizedBox(width: 8),
-            // Pronunciation: shows its playing state until real audio ships.
-            const SpeakButton(),
+            // Pronounce the exact form shown in the source text.
+            SpeakButton(text: widget.surface, language: widget.language),
           ],
         ),
         const SizedBox(height: 14),

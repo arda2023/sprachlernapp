@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -109,6 +109,12 @@ void main() {
     // The sample sentence comes from the picked topic.
     await tapLabel(tester, 'train, Übersetzung anzeigen');
     expect(find.bySemanticsLabel('train: der Zug'), findsOneWidget);
+    // The only AI-translation consent: shown here, off until switched on.
+    expect(find.text('Fehlende Wörter mit KI übersetzen'), findsOneWidget);
+    expect(
+      tester.widget<CupertinoSwitch>(find.byType(CupertinoSwitch)).value,
+      isFalse,
+    );
     await tapLabel(tester, 'Weiter');
 
     // "Dein Start steht" ticks the answers off, then "Weiter" lights up.

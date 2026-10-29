@@ -7,8 +7,8 @@ import '../../../widgets/popover_content.dart';
 import 'memory_level_indicator.dart';
 
 /// Explains the five memory levels, as the orange popover pointing at the
-/// tapped dashes. The [current] level (the tapped word's) is marked in
-/// text, not color.
+/// tapped dashes. The [current] level (the tapped word's) sits on a soft
+/// white band; screen readers hear it as "aktuelle Stufe".
 class MemoryLevelLegendSheet extends StatelessWidget {
   const MemoryLevelLegendSheet({super.key, this.current});
 
@@ -29,12 +29,6 @@ class MemoryLevelLegendSheet extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const PopoverTitle('Erinnerungsstufen'),
-        const SizedBox(height: 6),
-        Text(
-          'Jede richtige Wiederholung hebt ein Wort eine Stufe höher. '
-          'Ein Fehler setzt es auf Stufe 1 zurück.',
-          style: PopoverText.small(),
-        ),
         const SizedBox(height: 12),
         for (var level = 1; level <= leitnerBoxCount; level++)
           _LegendRow(level: level, isCurrent: level == current),
@@ -56,59 +50,63 @@ class _LegendRow extends StatelessWidget {
     return Semantics(
       label:
           'Stufe $level von $leitnerBoxCount: $title. $detail'
-          '${isCurrent ? '. Dieses Wort' : ''}',
+          '${isCurrent ? '. Aktuelle Stufe' : ''}',
       excludeSemantics: true,
       child: Container(
-        constraints: const BoxConstraints(minHeight: 52),
-        padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           border: Border(
             top: BorderSide(color: popoverInk.withValues(alpha: 0.25)),
           ),
         ),
-        child: Row(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Stack(
+          clipBehavior: Clip.none,
           children: [
-            SizedBox(
-              width: MemoryLevelIndicator.widthFor(14),
-              child: MemoryLevelIndicator(
-                level: level,
-                litColor: popoverInk,
-                offColor: popoverInk.withValues(alpha: 0.3),
+            // The band reaches into the popover's padding, so the dashes
+            // stay aligned with the heading.
+            if (isCurrent)
+              Positioned(
+                left: -10,
+                right: -10,
+                top: 0,
+                bottom: 0,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: const Color(0x29FFFFFF),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            Container(
+              constraints: const BoxConstraints(minHeight: 52),
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
                 children: [
-                  Text(
-                    title,
-                    style: AppType.chrome(
-                      color: popoverInk,
-                      weight: isCurrent ? FontWeight.w800 : FontWeight.w700,
+                  SizedBox(
+                    width: MemoryLevelIndicator.widthFor(14),
+                    child: MemoryLevelIndicator(
+                      level: level,
+                      litColor: popoverInk,
+                      offColor: popoverInk.withValues(alpha: 0.3),
                     ),
                   ),
-                  const SizedBox(height: 2),
-                  Text(detail, style: PopoverText.caption()),
-                  if (isCurrent) ...[
-                    const SizedBox(height: 6),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 3,
-                      ),
-                      decoration: BoxDecoration(
-                        color: popoverInk,
-                        borderRadius: BorderRadius.circular(99),
-                      ),
-                      child: Text(
-                        'Dieses Wort',
-                        style: PopoverText.caption().copyWith(
-                          color: context.appColors.popover,
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: AppType.chrome(
+                            color: popoverInk,
+                            weight: FontWeight.w700,
+                          ),
                         ),
-                      ),
+                        const SizedBox(height: 2),
+                        Text(detail, style: PopoverText.caption()),
+                      ],
                     ),
-                  ],
+                  ),
                 ],
               ),
             ),

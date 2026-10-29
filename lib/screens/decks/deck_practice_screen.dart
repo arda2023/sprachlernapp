@@ -1,3 +1,4 @@
+import '../../presentation/audio/device_speech_playback.dart';
 import 'dart:async';
 import 'dart:math' as math;
 
@@ -20,6 +21,7 @@ import '../../presentation/providers/preferences_provider.dart';
 import '../../presentation/content_unavailable_view.dart';
 import '../../theme/app_theme.dart';
 import 'widgets/practice_chrome.dart';
+import 'widgets/practice_empty_state.dart';
 import 'widgets/translation_bubble.dart';
 export 'widgets/practice_chrome.dart' show SessionTrack;
 import '../../widgets/popover_content.dart';
@@ -66,6 +68,8 @@ class DeckPracticeScreen extends ConsumerStatefulWidget {
 
 class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     with WidgetsBindingObserver, SingleTickerProviderStateMixin {
+  String? _speechLanguage;
+  late final _speech = DeviceSpeechPlayback(language: () => _speechLanguage, onError: (message) => showSpeechError(context, message));
   final _input = PracticeInputController();
   final _focus = FocusNode();
   bool _completing = false;
@@ -189,6 +193,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
 
   @override
   void dispose() {
+    _speech.dispose();
     WidgetsBinding.instance.removeObserver(this);
     _autoTimer?.cancel();
     _errorTimer?.cancel();
@@ -402,8 +407,6 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
           );
         case PracticeAction.feedback:
           await LocalSubmissionSheet.open(context);
-        case PracticeAction.keyboard:
-          await showKeyboardHelp(context);
         case PracticeAction.settings:
           await SettingsScreen.open(context);
       }
@@ -426,6 +429,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final state = ref.watch(provider);
     ref.watch(preferencesProvider);
     ref.listen(provider, (previous, next) {
+      if (previous?.pass?.id != next.pass?.id || next.finished) _speech.stop();
       if (previous?.pass?.id != next.pass?.id ||
           next.pass?.solved == true ||
           next.finished) {
@@ -517,7 +521,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                           }
                         },
                         child: ListView(
-                          padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+                          padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
                           children: [
                             Center(
                               child: ConstrainedBox(
@@ -565,9 +569,9 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                             ),
                                             padding: const EdgeInsets.fromLTRB(
                                               20,
-                                              10,
+                                              6,
                                               20,
-                                              14,
+                                              10,
                                             ),
                                             child: Column(
                                               crossAxisAlignment:
@@ -636,7 +640,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                                     );
                                                   },
                                                 ),
-                                                const SizedBox(height: 18),
+                                                const SizedBox(height: 12),
                                                 // Exercise label as a chip that
                                                 // opens the grammar note.
                                                 Align(
@@ -655,7 +659,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                               ],
                                             ),
                                           ),
-                                          const SizedBox(height: 16),
+                                          const SizedBox(height: 12),
                                           PracticeTranslationCard(
                                             translation:
                                                 contentCard.translationDe ?? '',
@@ -679,13 +683,16 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                 ),
                 if (canShow && snapshot == null)
                   ListenableBuilder(
-                    listenable: _input,
+                    listenable: Listenable.merge([_input, _speech]),
                     builder: (context, _) => PracticeAnswerToolbar(
                       error: _buttonError,
                       errorOffset: _errorOffset,
-                      speakerEnabled: false,
-                      playing: false,
-                      onSpeak: () {},
+                      speakerEnabled: true,
+                      playing: _speech.playing != null,
+                      onSpeak: () {
+                        _speechLanguage = contentCard?.lang;
+                        _speech.play(sentence.sentenceId, solved ? sentence.text : sentence.text.replaceRange(sentence.gapStart, sentence.gapEnd, ' … '));
+                      },
                       message:
                           state.saved ||
                               state.message == 'Falsch' ||
@@ -744,7 +751,9 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final rect = box == null
         ? word.rect
         : word.rect.shift(-box.localToGlobal(Offset.zero));
-    return TranslationBubble(anchor: rect, text: word.translation);
+    final sentence = _sentenceKey.currentState?.widget.sentence;
+    final token = sentence?.tokens.where((w) => w.start == word.start).firstOrNull;
+    return TranslationBubble(anchor: rect, text: word.translation, language: ref.read(deckSessionControllerProvider(_args)).pass?.item.card.lang, spokenText: token == null ? '' : sentence!.text.substring(token.start, token.end));
   }
 
   /// A finished session that reached the daily goal ends on the completion
@@ -787,40 +796,43 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
   }
 
   /// Nothing due or new in this scope: say so for exactly this scope and offer
-  /// Vorab üben explicitly; it never fills a learning session by itself.
+  /// Vorab üben explicitly; it never fills a learning session by itself. A
+  /// review without practised words offers to learn the deck instead.
   Widget _nothingOpen() {
     final story = widget.deckId == storyCollectionId;
-    final text = switch (widget.mode) {
-      DeckPracticeMode.mixed =>
-        'Heute ist nichts fällig, und aktive Stapel und „Aus Storys“ haben keine neuen Wörter.',
-      DeckPracticeMode.learn => story
-          ? 'In „Aus Storys“ ist gerade nichts fällig und kein neues Wort offen.'
-          : 'In diesem Stapel ist gerade nichts fällig und kein neues Wort offen. Andere Stapel können noch Aufgaben haben.',
-      _ => 'Hier gibt es noch keine gelernten Wörter zum Üben.',
-    };
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          text,
-          textAlign: TextAlign.center,
-          style: AppType.chrome(color: context.appColors.textPrimary),
-        ),
-        if (widget.mode == DeckPracticeMode.mixed ||
-            widget.mode == DeckPracticeMode.learn)
-          CupertinoButton(
-            onPressed: () => Navigator.of(context).pushReplacement(
-              CupertinoPageRoute<void>(
-                builder: (_) => DeckPracticeScreen(
-                  deckId: widget.deckId,
-                  mode: DeckPracticeMode.early,
-                ),
-              ),
-            ),
-            child: const Text('Vorab üben'),
-          ),
-      ],
+    void open(DeckPracticeMode mode) => Navigator.of(context).pushReplacement(
+      CupertinoPageRoute<void>(
+        builder: (_) => DeckPracticeScreen(deckId: widget.deckId, mode: mode),
+      ),
     );
+    void early() => open(DeckPracticeMode.early);
+    return switch (widget.mode) {
+      DeckPracticeMode.mixed => PracticeEmptyState(
+        title: 'Für heute alles geschafft',
+        message:
+            'Nichts ist fällig, und deine aktiven Stapel und „Aus Storys“ '
+            'haben keine neuen Wörter.',
+        actionLabel: 'Vorab üben',
+        onAction: early,
+      ),
+      DeckPracticeMode.learn => PracticeEmptyState(
+        title: 'Hier ist gerade alles erledigt',
+        message: story
+            ? 'In „Aus Storys“ ist nichts fällig und kein neues Wort offen.'
+            : 'In diesem Stapel ist nichts fällig und kein neues Wort offen.',
+        actionLabel: 'Vorab üben',
+        onAction: early,
+      ),
+      _ => PracticeEmptyState(
+        title: 'Ups, hier gibt’s noch nichts zu üben',
+        message: 'Lerne zuerst ein paar Wörter, dann kannst du sie hier '
+            'wiederholen.',
+        actionLabel: widget.deckId.isEmpty ? null : 'Wörter lernen',
+        onAction: widget.deckId.isEmpty
+            ? null
+            : () => open(DeckPracticeMode.learn),
+      ),
+    };
   }
 
   Widget _summary(DeckSessionState state) {
@@ -924,7 +936,7 @@ class _InfoChip extends StatelessWidget {
         excludeSemantics: true,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 160),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+          padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
           decoration: BoxDecoration(
             color: open ? colors.popover : colors.activeTint,
             borderRadius: BorderRadius.circular(99),
@@ -934,7 +946,7 @@ class _InfoChip extends StatelessWidget {
             children: [
               Icon(
                 CupertinoIcons.info_circle,
-                size: 16,
+                size: 15,
                 color: open ? white : colors.active,
               ),
               const SizedBox(width: 6),
@@ -942,8 +954,8 @@ class _InfoChip extends StatelessWidget {
                 child: Text(
                   label,
                   style: AppType.chrome(
-                    size: 14,
-                    weight: FontWeight.w700,
+                    size: 13,
+                    weight: FontWeight.w500,
                     color: open ? white : colors.textPrimary,
                   ),
                 ),

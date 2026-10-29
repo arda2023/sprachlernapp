@@ -318,9 +318,10 @@ class _ExplanationBody extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           m.summary,
+          // Medium under the bold title (no bold subtext, 29.10.2026).
           style: AppType.chrome(
             size: 15,
-            weight: FontWeight.w700,
+            weight: FontWeight.w500,
             color: white,
             tabular: true,
           ),

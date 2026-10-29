@@ -37,6 +37,11 @@ class RuntimeTranslationClient {
     String? formRef,
   }) async => null;
   Future<WordCloudConsent> wordCloudConsent() async => WordCloudConsent.unknown;
+
+  /// The answer given in the onboarding, before any account exists. It holds
+  /// for this device until an account decides for itself in Settings.
+  Future<void> setOnboardingWordCloudConsent(bool enabled) async {}
+
   Future<void> setWordCloudConsent(bool enabled) async {
     throw const TranslationFailure(
       'Bitte zuerst in den Einstellungen anmelden.',

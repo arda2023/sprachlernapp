@@ -12,13 +12,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/language_profile.dart';
 import '../../domain/preferences.dart';
 import '../../presentation/providers/database_providers.dart';
-import '../../presentation/providers/language_selection_provider.dart';
 import '../../presentation/providers/preferences_provider.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/anchored_popover.dart';
 import '../../widgets/back_bar.dart';
 import '../../widgets/personal_learning_button.dart';
 import '../../widgets/translation_cache_delete_tile.dart';
+import '../../widgets/dictionary_sources_sheet.dart';
 import '../../widgets/word_cloud_consent.dart';
 import '../decks/widgets/local_submission_sheet.dart';
 import '../home/widgets/goal_panel.dart';
@@ -154,7 +154,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   Widget _content(PracticePreferences p) {
     final colors = context.appColors;
     final language = ref.watch(selectedContentLanguageProvider);
-    final selection = ref.watch(languageSelectionProvider);
     final selectedProfile = ContentLanguageProfile.forLanguage(
       language.asData?.value ?? 'en',
     );
@@ -176,47 +175,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ),
         ),
         const SizedBox(height: 20),
-        _Section(
-          title: 'Lernsprache',
-          footer: 'Die Oberfläche bleibt Deutsch.',
-          children: [
-            for (final profile in ContentLanguageProfile.selectable)
-              _LanguageRow(
-                profile: profile,
-                selected:
-                    !language.isLoading &&
-                    language.asData?.value == profile.lang,
-                status: ref
-                    .watch(languageInstallationProvider(profile.lang))
-                    .when(
-                      data: (status) => status,
-                      loading: () => 'Installation prüfen …',
-                      error: (_, _) => 'Installation nicht lesbar',
-                    ),
-                onTap: selection.switching || _saving || language.isLoading
-                    ? null
-                    : () => ref
-                          .read(languageSelectionProvider.notifier)
-                          .selectLanguage(profile.lang),
-              ),
-          ],
-        ),
-        if (selection.switching)
-          const Padding(
-            padding: EdgeInsets.only(bottom: 12),
-            child: LinearProgressIndicator(),
-          ),
-        if (selection.message != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: Semantics(
-              liveRegion: true,
-              child: Text(
-                selection.message!,
-                style: AppType.chrome(size: 14, color: colors.textMuted),
-              ),
-            ),
-          ),
         _Section(
           title: 'Darstellung',
           children: [
@@ -348,6 +306,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               title: 'Lokale Berichte und Feedback',
               subtitle: 'Gespeicherte Einträge ansehen und teilen.',
               onTap: () => LocalSubmissionSheet.openSaved(context),
+            ),
+            _Row(
+              icon: CupertinoIcons.book,
+              title: 'Wörterbuch · Quellen & Lizenz',
+              subtitle: 'Wiktionary, CC BY-SA 4.0',
+              onTap: () => showDictionarySources(context),
             ),
             _Row(
               icon: CupertinoIcons.play_rectangle,
@@ -633,83 +597,6 @@ class _SwitchRow extends StatelessWidget {
 
 /// Flag, language and installation state; the current one carries an
 /// orange check.
-class _LanguageRow extends StatelessWidget {
-  const _LanguageRow({
-    required this.profile,
-    required this.selected,
-    required this.status,
-    required this.onTap,
-  });
-
-  final ContentLanguageProfile profile;
-  final bool selected;
-  final String status;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.appColors;
-    return MergeSemantics(
-      child: CupertinoButton(
-        onPressed: onTap,
-        padding: EdgeInsets.zero,
-        minimumSize: const Size(44, 60),
-        pressedOpacity: 0.6,
-        child: Semantics(
-          button: true,
-          selected: selected,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 28,
-                  child: Text(
-                    profile.flag,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 22),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        profile.displayName,
-                        style: AppType.chrome(
-                          size: 16,
-                          weight: selected ? FontWeight.w700 : FontWeight.w600,
-                          color: colors.textPrimary,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        status,
-                        style: AppType.chrome(size: 13, color: colors.textMuted),
-                      ),
-                    ],
-                  ),
-                ),
-                AnimatedOpacity(
-                  duration: const Duration(milliseconds: 160),
-                  opacity: selected ? 1 : 0,
-                  child: Icon(
-                    CupertinoIcons.checkmark_alt,
-                    size: 22,
-                    color: colors.active,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// "Bald" on features that are not implemented yet.
 class _SoonChip extends StatelessWidget {
   const _SoonChip();
 

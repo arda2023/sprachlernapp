@@ -1,12 +1,10 @@
+import 'speak_button.dart';
 import '../domain/personal_learning.dart';
 import 'personal_learning_button.dart';
 
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart'
-    show showModalBottomSheet, SelectableText;
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/offline_translation/offline_dictionary.dart';
@@ -17,10 +15,12 @@ import '../presentation/providers/runtime_translation_provider.dart';
 import '../theme/app_theme.dart';
 import 'anchored_popover.dart';
 import 'popover_content.dart';
-import 'word_cloud_consent.dart';
+import 'dictionary_sources_sheet.dart' show showDictionarySources;
 
 /// The reader has already checked its exact pack/context translation.
-/// Only a word tap can opt into automatic cloud lookup; mounting alone cannot.
+/// Only a word tap can start an automatic cloud lookup, and only after the
+/// onboarding or Settings consent; mounting alone cannot. Dictionary sources
+/// and licence live in Settings ([showDictionarySources]).
 /// Shown as the orange popover pointing at the tapped word or sentence, like
 /// a stored translation (design-system.md › Overlay-Regel).
 class RuntimeTranslationSheet extends ConsumerStatefulWidget {
@@ -189,40 +189,6 @@ class _RuntimeTranslationSheetState
     }
   }
 
-  Future<void> decideConsent(bool enabled) async {
-    if (loading || checking || started) return;
-    final epoch = _epoch;
-    setState(() => loading = true);
-    try {
-      await ref.read(runtimeTranslationProvider).setWordCloudConsent(enabled);
-      if (!_current(epoch)) return;
-      setState(() {
-        consent = enabled
-            ? WordCloudConsent.enabled
-            : WordCloudConsent.disabled;
-        loading = false;
-      });
-      if (enabled && widget.wordTap) await request();
-    } on TranslationFailure catch (e) {
-      if (_current(epoch)) {
-        setState(() {
-          error = e.message;
-          started = true;
-        });
-      }
-    } catch (_) {
-      if (_current(epoch)) {
-        setState(() {
-          error =
-              'Cloud-Einstellung nicht gespeichert. Keine Anfrage gestartet.';
-          started = true;
-        });
-      }
-    } finally {
-      if (_current(epoch)) setState(() => loading = false);
-    }
-  }
-
   Future<void> request() async {
     if (started || checking || loading) return;
     if (widget.form != null &&
@@ -255,36 +221,6 @@ class _RuntimeTranslationSheetState
       }
     } finally {
       if (_current(epoch)) setState(() => loading = false);
-    }
-  }
-
-  Future<void> showSources() async {
-    try {
-      final notice = await rootBundle.loadString(
-        'assets/offline_dictionary/ATTRIBUTION.txt',
-      );
-      final license = await rootBundle.loadString(
-        'assets/offline_dictionary/CC-BY-SA-4.0.txt',
-      );
-      if (!mounted) return;
-      await showModalBottomSheet<void>(
-        context: context,
-        isScrollControlled: true,
-        useSafeArea: true,
-        builder: (_) => SizedBox(
-          height: MediaQuery.sizeOf(context).height * 0.7,
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
-            child: SelectableText(
-              '$notice\n${candidates.map((c) => '${c.lemma}: ${c.source}${c.formSource.isEmpty ? '' : '\nForm: ${c.formSource}'}').toSet().join('\n')}\n\n$license',
-            ),
-          ),
-        ),
-      );
-    } catch (_) {
-      if (mounted) {
-        setState(() => error = 'Quelleninformationen derzeit nicht lesbar.');
-      }
     }
   }
 
@@ -323,6 +259,7 @@ class _RuntimeTranslationSheetState
           ),
         ),
         const SizedBox(height: 12),
+        Align(alignment: Alignment.centerRight, child: SpeakButton(text: widget.displayText ?? widget.form ?? widget.text, language: widget.lang)),
         const PopoverDivider(),
         const SizedBox(height: 12),
         if (checking || loading)
@@ -350,22 +287,11 @@ class _RuntimeTranslationSheetState
               style: PopoverText.small(),
             ),
             action('Übersetzen', request),
-          ] else if (consent == WordCloudConsent.unknown &&
-              widget.wordTap) ...[
-            Text(
-              'Automatische Wortübersetzung aktivieren?',
-              style: PopoverText.body(weight: FontWeight.w700),
-            ),
-            const SizedBox(height: 8),
-            Text(wordCloudDisclosure, style: PopoverText.small()),
-            action('Aktivieren', () => decideConsent(true)),
-            CupertinoButton(
-              onPressed: () => decideConsent(false),
-              child: Text('Nicht jetzt', style: PopoverText.small()),
-            ),
           ] else
+            // Consent is asked once in the onboarding (user decision
+            // 29.10.2026), never again in the bubble.
             Text(
-              'Keine eindeutige lokale Übersetzung. Automatische Wortübersetzung kannst du in den Einstellungen aktivieren.',
+              'Keine lokale Übersetzung. KI-Übersetzungen lassen sich in den Einstellungen einschalten.',
               style: PopoverText.small(),
             ),
         ],
@@ -381,14 +307,6 @@ class _RuntimeTranslationSheetState
             child: Padding(
               padding: const EdgeInsets.only(top: 8),
               child: Text(error!, style: PopoverText.small()),
-            ),
-          ),
-        if (widget.form != null && !checking && !loading)
-          CupertinoButton(
-            onPressed: showSources,
-            child: Text(
-              'Wörterbuch · Quellen & Lizenz',
-              style: PopoverText.caption(),
             ),
           ),
       ],

@@ -15,11 +15,15 @@ class TranslationBubble extends StatefulWidget {
     super.key,
     required this.anchor,
     required this.text,
+    this.spokenText = '',
+    this.language,
   });
 
   /// The tapped word, in the coordinates of the enclosing [Stack].
   final Rect anchor;
   final String text;
+  final String spokenText;
+  final String? language;
 
   static const radius = 14.0;
   static const gap = 6.0;
@@ -89,11 +93,12 @@ class _TranslationBubbleState extends State<TranslationBubble>
     );
     painter.dispose();
     final above = anchor.top - TranslationBubble.gap - height >= top;
-    final y = (above
-            ? anchor.top - TranslationBubble.gap - height
-            : anchor.bottom + TranslationBubble.gap)
-        .clamp(top, math.max(top, bottom - height))
-        .toDouble();
+    final y =
+        (above
+                ? anchor.top - TranslationBubble.gap - height
+                : anchor.bottom + TranslationBubble.gap)
+            .clamp(top, math.max(top, bottom - height))
+            .toDouble();
     final x = (anchor.center.dx - width / 2)
         .clamp(left, math.max(left, right - width))
         .toDouble();
@@ -121,7 +126,11 @@ class _TranslationBubbleState extends State<TranslationBubble>
                 ),
               ),
               const SizedBox(width: gap),
-              const SpeakButton(diameter: speaker),
+              SpeakButton(
+                diameter: speaker,
+                text: widget.spokenText,
+                language: widget.language,
+              ),
             ],
           ),
         ),

@@ -1,3 +1,4 @@
+import '../../models/playback_clock.dart';
 import '../../domain/personal_learning.dart';
 import '../../widgets/personal_learning_button.dart';
 import 'dart:convert';
@@ -24,7 +25,8 @@ import '../../domain/sentences.dart';
 import '../../models/sample_content.dart';
 import '../../models/story_category.dart';
 import '../../models/story_models.dart';
-import '../../models/playback_clock.dart';
+import '../../presentation/audio/speech_narration.dart';
+import '../../presentation/audio/device_speech_playback.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/back_bar.dart';
 import '../../widgets/reading_toolbar.dart';
@@ -53,8 +55,10 @@ class StoryReaderScreen extends StatefulWidget {
     this.translate = sampleTranslateSentence,
     this.initialProgress,
     this.onProgress,
+    this.narrationFactory,
   });
 
+  final PlaybackClock Function()? narrationFactory;
   final Story story;
   final String sourceLanguage;
   final StoryDocument? document;
@@ -166,7 +170,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   final _sentences = <_Sentence>[];
 
   late final Map<String, WordMark> _marks = Map.of(widget.initialMarks);
-  late final _narration = PlaybackClock.forText(widget.text.paragraphs);
+  late final _narration = widget.narrationFactory?.call() ?? SpeechNarration(text: widget.text.paragraphs.join('\n\n'), language: widget.sourceLanguage, onError: (message) => showSpeechError(context, message));
   int? _selected;
   int? _selectedSentence;
   bool _translating = false;
@@ -389,6 +393,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     if (hasStoredTranslation(translation)) {
       await SentencePopover.show(
         context,
+        language: widget.sourceLanguage,
         anchor: _anchor,
         original: sentence,
         translation: translation,
@@ -495,6 +500,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
           context,
           anchor: _anchor,
           surface: word.text,
+          language: widget.sourceLanguage,
           entry: word.entry,
           mark: status.state == StoryAddState.added ? WordMark.active : null,
           status: status,
@@ -513,6 +519,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
             context,
             anchor: _anchor,
             surface: word.text,
+          language: widget.sourceLanguage,
             entry: word.entry,
             mark: null,
             learningAvailable: false,
@@ -527,6 +534,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
         context,
         anchor: _anchor,
         surface: word.text,
+          language: widget.sourceLanguage,
         entry: word.entry,
         mark: _marks[headword],
         learningAvailable: false,
@@ -633,11 +641,13 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                               ),
                               const SizedBox(width: 10),
                               Expanded(
+                                // Only the topic shows; level and
+                                // reading time stay for VoiceOver.
                                 child: Semantics(
                                   label: storySemanticsLabel(story),
                                   excludeSemantics: true,
                                   child: Text(
-                                    storyMetaLine(story),
+                                    story.topic,
                                     style: AppType.meta(
                                       color: colors.textMuted,
                                     ),
@@ -658,29 +668,36 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 14),
-                          Row(
-                            children: [
-                              Icon(
-                                _translating
-                                    ? CupertinoIcons.textformat_abc
-                                    : CupertinoIcons.hand_point_right,
-                                size: 16,
-                                color: colors.active,
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  _translating
-                                      ? 'Übersetzungsmodus: Tippe auf einen Satz.'
-                                      : 'Tippe auf ein Wort, um es nachzuschlagen.',
-                                  style: AppType.chrome(
-                                    size: 13,
-                                    color: colors.textMuted,
+                          // Tapping a word needs no hint; the translation
+                          // mode says that sentences now answer instead.
+                          AnimatedSize(
+                            duration: const Duration(milliseconds: 200),
+                            curve: Curves.easeOutCubic,
+                            alignment: Alignment.topLeft,
+                            child: !_translating
+                                ? const SizedBox(width: double.infinity)
+                                : Padding(
+                                    padding: const EdgeInsets.only(top: 14),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          CupertinoIcons.textformat_abc,
+                                          size: 16,
+                                          color: colors.active,
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: Text(
+                                            'Übersetzungsmodus: Tippe auf einen Satz.',
+                                            style: AppType.chrome(
+                                              size: 13,
+                                              color: colors.textMuted,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ],
                           ),
                           const SizedBox(height: 22),
                           Container(

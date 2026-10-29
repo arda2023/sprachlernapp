@@ -183,13 +183,14 @@ void main() {
         });
       }
 
+      // Settings no longer lists languages; the Home wheel is the only
+      // picker and uses this same validated transition.
       await show(const SettingsScreen());
-      expect(find.text('Lernsprache'), findsOneWidget);
-      await t.scrollUntilVisible(find.text('Portugiesisch (Brasilien)'), 200,
-        scrollable: find.byType(Scrollable).first);
-      expect(find.text('Portugiesisch (Brasilien)'), findsOneWidget);
+      expect(find.text('Lernsprache'), findsNothing);
       await capture('settings');
-      await t.tap(find.text('Portugiesisch (Brasilien)'));
+      await t.runAsync(
+        () => c.read(languageSelectionProvider.notifier).selectLanguage('pt-BR'),
+      );
       await settleIo();
       expect(
         await t.runAsync(() => c.read(selectedContentLanguageProvider.future)),

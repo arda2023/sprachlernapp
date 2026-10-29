@@ -1,3 +1,5 @@
+import '../../presentation/audio/speech_narration.dart';
+import '../../presentation/audio/device_speech_playback.dart';
 import '../../data/runtime_translation_client.dart';
 import '../../widgets/runtime_translation_sheet.dart';
 
@@ -96,6 +98,18 @@ class _Sentence {
 }
 
 class _TextExerciseScreenState extends State<TextExerciseScreen> {
+  SpeechNarration? _speech;
+  void _onSpeech() { if (mounted) setState(() {}); }
+  void _readText() {
+    if (_speech?.playing == true) { _speech!.pause(); return; }
+    _speech?.removeListener(_onSpeech);
+    _speech?.dispose();
+    _speech = SpeechNarration(text: _spokenText, language: widget.sourceLanguage,
+      onError: (message) => showSpeechError(context, message))..addListener(_onSpeech);
+    _speech!.play();
+  }
+  String get _spokenText => [for (final paragraph in _paragraphs) [for (final part in paragraph) part is _Gap ? (part.solved ? part.gap.answer : ' … ') : part as String].join()].join('\n');
+
   static const _flashDuration = Duration(milliseconds: 600);
   static const _flightDuration = Duration(milliseconds: 350);
 
@@ -177,6 +191,8 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
 
   @override
   void dispose() {
+    _speech?.removeListener(_onSpeech);
+    _speech?.dispose();
     for (final t in _timers) {
       t.cancel();
     }
@@ -372,6 +388,7 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
     if (hasStoredTranslation(translation)) {
       await SentencePopover.show(
         context,
+        language: widget.sourceLanguage,
         anchor: anchor,
         original: original,
         translation: translation,
@@ -471,6 +488,8 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
               .copyWith(statusBarColor: Colors.transparent),
       child: Scaffold(
         bottomNavigationBar: ReadingToolbar(
+          listening: _speech?.playing == true,
+          onToggleListen: _readText,
           translating: _translating,
           onToggleTranslate: _toggleTranslate,
         ),
@@ -523,16 +542,18 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 12),
-                            Text(
-                              _translating
-                                  ? 'Übersetzungsmodus aktiv.'
-                                  : widget.mode.description,
-                              style: AppType.chrome(
-                                size: 13,
-                                color: context.appColors.textMuted,
+                            // The gaps explain themselves; only the
+                            // translation mode needs a line.
+                            if (_translating) ...[
+                              const SizedBox(height: 12),
+                              Text(
+                                'Übersetzungsmodus aktiv.',
+                                style: AppType.chrome(
+                                  size: 13,
+                                  color: context.appColors.textMuted,
+                                ),
                               ),
-                            ),
+                            ],
                             const SizedBox(height: 28),
                             for (var i = 0; i < _paragraphs.length; i++)
                               Padding(

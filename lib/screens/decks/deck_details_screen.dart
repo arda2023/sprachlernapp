@@ -100,9 +100,7 @@ class DeckDetailsScreen extends ConsumerWidget {
                         ),
                         const SizedBox(height: 12),
                         _ToggleRow(
-                          label: 'In die tägliche Übung',
-                          detail:
-                              'Neue Wörter dieses Stapels kommen in „Lernen“. Aus: keine neuen Wörter daraus, Gelerntes wird weiter wiederholt.',
+                          label: 'Stapel aktivieren',
                           value: activation.values[deck.id] ?? deck.isActive,
                           onChanged: (v) => ref
                               .read(deckActiveControllerProvider.notifier)
@@ -334,17 +332,16 @@ class _ProgressLegend extends StatelessWidget {
   }
 }
 
-/// Whether new words of this deck join the daily mix ("Lernen").
+/// "Stapel aktivieren": whether new words of this deck join the daily mix
+/// ("Lernen"); learned words keep being reviewed either way.
 class _ToggleRow extends StatelessWidget {
   const _ToggleRow({
     required this.label,
-    required this.detail,
     required this.value,
     required this.onChanged,
   });
 
   final String label;
-  final String detail;
   final bool value;
   final ValueChanged<bool>? onChanged;
 
@@ -364,23 +361,13 @@ class _ToggleRow extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      label,
-                      style: AppType.chrome(
-                        color: colors.textPrimary,
-                        size: 16,
-                        weight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      detail,
-                      style: AppType.chrome(size: 13, color: colors.textMuted),
-                    ),
-                  ],
+                child: Text(
+                  label,
+                  style: AppType.chrome(
+                    color: colors.textPrimary,
+                    size: 16,
+                    weight: FontWeight.w700,
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
@@ -543,8 +530,8 @@ class _WordRow extends StatelessWidget {
   }
 }
 
-/// Stapel-Revue as one row: review everything practised in this deck
-/// without waiting for the schedule.
+/// Stapel-Revue as one row: review everything practised in this deck,
+/// whether due or not.
 class _ReviewCard extends StatelessWidget {
   const _ReviewCard({required this.onReview});
 
@@ -599,8 +586,7 @@ class _ReviewCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'Geübte Karten nochmals durchsehen – ohne auf den '
-                        'Plan zu warten.',
+                        'Geübte Karten nochmals durchsehen',
                         style: AppType.chrome(
                           size: 13,
                           color: colors.textMuted,

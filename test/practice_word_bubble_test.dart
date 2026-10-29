@@ -104,9 +104,12 @@ void main() {
     await t.pumpAndSettle();
     // The wheel builds only the rows in view: check its rows, then that the
     // last language is reachable.
+    // The wheel loops, so the current language sits in the middle.
     final picker = t.widget<CupertinoPicker>(find.byType(CupertinoPicker));
     expect(
-      picker.childDelegate.estimatedChildCount,
+      (picker.childDelegate as ListWheelChildLoopingListDelegate)
+          .children
+          .length,
       ContentLanguageProfile.selectable.length,
     );
     final last = ContentLanguageProfile.selectable.last;

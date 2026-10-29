@@ -112,6 +112,10 @@ class TranslationCache {
   }
 }
 
+/// Owner key of the onboarding decision (user decision 29.10.2026: the
+/// onboarding asks once). Account keys never take this form.
+const onboardingConsentOwner = 'device:onboarding';
+
 class CachedRuntimeTranslationClient extends RuntimeTranslationClient {
   CachedRuntimeTranslationClient({
     required this.remote,
@@ -137,24 +141,54 @@ class CachedRuntimeTranslationClient extends RuntimeTranslationClient {
   bool _consentWritePending = false;
   bool _consentBlocked = false;
 
+  /// An account's own decision wins; without one the onboarding answer of
+  /// this device applies. Requests still need an account (see [_owner]).
   @override
   Future<WordCloudConsent> wordCloudConsent() async {
     final account = await owner();
-    if (account == null) return WordCloudConsent.unknown;
-    final epoch = _epoch, authRevision = revision();
+    // Without an account nothing can be sent; the stored answer only shows.
+    if (account == null) {
+      if (_consentWritePending) return WordCloudConsent.disabled;
+      try {
+        return await store.readWordConsent(onboardingConsentOwner);
+      } catch (_) {
+        return WordCloudConsent.unknown;
+      }
+    }
     if (_consentWritePending || _consentBlocked) {
       return WordCloudConsent.disabled;
     }
     try {
+      final epoch = _epoch, authRevision = revision();
       final value = await store.readWordConsent(account);
       await _check(account, epoch, authRevision);
-      return _consentWritePending ? WordCloudConsent.disabled : value;
+      if (_consentWritePending) return WordCloudConsent.disabled;
+      if (value != WordCloudConsent.unknown) return value;
+      return await store.readWordConsent(onboardingConsentOwner);
     } on TranslationFailure {
       rethrow;
     } catch (_) {
       throw const TranslationFailure(
         'Cloud-Einstellung konnte nicht gelesen werden. Keine Anfrage gestartet.',
       );
+    }
+  }
+
+  @override
+  Future<void> setOnboardingWordCloudConsent(bool enabled) async {
+    if (_consentWritePending) {
+      throw const TranslationFailure('Einstellung wird noch gespeichert.');
+    }
+    _consentEpoch++;
+    _consentWritePending = true;
+    try {
+      await store.writeWordConsent(onboardingConsentOwner, enabled);
+    } catch (_) {
+      throw const TranslationFailure(
+        'Cloud-Einstellung konnte nicht gespeichert werden.',
+      );
+    } finally {
+      _consentWritePending = false;
     }
   }
 

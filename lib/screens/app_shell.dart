@@ -282,7 +282,10 @@ class _AppShellState extends ConsumerState<AppShell> {
                     onOpenNews: (article) =>
                         StoryReaderScreen.openNews(context, article),
                   ),
-                  const WordListScreen(),
+                  TickerMode(
+                    enabled: _tab == AppTab.words,
+                    child: const WordListScreen(),
+                  ),
                   !hasEnglishSamples
                       ? Center(
                           child: Text(

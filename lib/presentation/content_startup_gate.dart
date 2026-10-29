@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
+import '../widgets/launch_splash.dart';
 
 /// Opens content readers only after bundled installation has finished.
 class ContentStartupGate extends StatefulWidget {
@@ -64,12 +65,12 @@ class _ContentStartupGateState extends State<ContentStartupGate> {
       theme: buildAppTheme(brightness: Brightness.light),
       darkTheme: buildAppTheme(),
       home: Scaffold(
-        body: SafeArea(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: _failed
-                  ? Column(
+        body: _failed
+            ? SafeArea(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const Text(
@@ -82,26 +83,19 @@ class _ContentStartupGateState extends State<ContentStartupGate> {
                           child: const Text('Erneut versuchen'),
                         ),
                       ],
-                    )
-                  : _showHint
-                  ? Semantics(
-                      liveRegion: true,
-                      child: const Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CircularProgressIndicator(),
-                          SizedBox(height: 24),
-                          Text(
-                            'Deine Wörter werden vorbereitet.',
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    )
-                  : const SizedBox.shrink(),
-            ),
-          ),
-        ),
+                    ),
+                  ),
+                ),
+              )
+            // The launch screen, not a spinner; a slow install adds a line.
+            : Semantics(
+                liveRegion: _showHint,
+                child: LaunchSplash(
+                  caption: _showHint
+                      ? 'Deine Wörter werden vorbereitet.'
+                      : null,
+                ),
+              ),
       ),
     );
   }

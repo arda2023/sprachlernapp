@@ -110,7 +110,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
       builder: (context, constraints) {
         final colors = context.appColors;
         final style = AppType.editorial(
-          size: 26,
+          size: 24,
           weight: FontWeight.w400,
           height: 1.5,
           letterSpacing: 0,

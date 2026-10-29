@@ -6,7 +6,9 @@ import '../../../presentation/providers/language_selection_provider.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/popover_content.dart';
 
-/// Language picker using the same validated transition as Settings.
+/// The only language picker (Settings no longer lists languages): a looping
+/// wheel, so the current language always sits in the middle with the others
+/// above and below it. Uses the validated language transition.
 class LanguagePanel extends ConsumerStatefulWidget {
   const LanguagePanel({super.key, this.current = 'Englisch'});
 
@@ -71,6 +73,8 @@ class _LanguagePanelState extends ConsumerState<LanguagePanel> {
             magnification: 1.12,
             useMagnifier: true,
             squeeze: 1.1,
+            // A loop leaves no empty rows above the first language.
+            looping: LanguagePanel.languages.length > 2,
             selectionOverlay: Container(
               margin: const EdgeInsets.symmetric(horizontal: 4),
               decoration: BoxDecoration(

@@ -14,7 +14,6 @@ import '../../widgets/action_buttons.dart';
 import '../../widgets/svg_glyph.dart';
 import 'widgets/stacked_word_cards.dart';
 import 'widgets/streak_charge_bar.dart';
-import 'widgets/completion_flame.dart';
 
 /// Shown after a deck practice session once the daily goal is reached
 /// (docs/redesign/design-system.md › Abschluss). The streak bar appears in
@@ -532,7 +531,13 @@ class _Stats extends StatelessWidget {
               value: '$streak',
               semantics:
                   'Streak: $streak ${streak == 1 ? 'Tag' : 'Tage'} in Folge',
-              icon: const CompletionFlame(),
+              // The animated Rive flame rendered as a square on device; the
+              // plain flame stands in for now.
+              icon: Icon(
+                CupertinoIcons.flame_fill,
+                size: 30,
+                color: colors.active,
+              ),
             ),
           ),
           const SizedBox(width: 12),

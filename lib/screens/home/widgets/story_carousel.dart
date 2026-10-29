@@ -5,11 +5,8 @@ import '../../../models/story_category.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/press_scale.dart';
 
-/// Level first, genre last: at large Dynamic Type the genre truncates first.
-String storyMetaLine(Story story) =>
-    '${story.level} · ${story.readingMinutes} Min · ${story.topic}';
-
-/// Spells out what [storyMetaLine] abbreviates.
+/// Level and reading time are no longer shown on covers or in the reader
+/// (user decision 29.10.2026); VoiceOver still hears them.
 String storySemanticsLabel(Story story) =>
     '${story.title}. ${story.topic}, ${story.readingMinutes} Minuten '
     'Lesezeit, Niveau ${story.level}';
@@ -183,18 +180,18 @@ class StoryCard extends StatelessWidget {
                               height: 1.2,
                             ),
                           ),
-                          const SizedBox(height: 6),
-                          Text(
-                            started
-                                ? '${story.level} · $percent %'
-                                : '${story.level} · ${story.readingMinutes} Min',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppType.meta(
-                              color: white.withValues(alpha: 0.82),
-                            ),
-                          ),
+                          // Level and reading time only for VoiceOver
+                          // (user decision 29.10.2026); progress stays.
                           if (started) ...[
+                            const SizedBox(height: 6),
+                            Text(
+                              '$percent %',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppType.meta(
+                                color: white.withValues(alpha: 0.82),
+                              ),
+                            ),
                             const SizedBox(height: 8),
                             ReadingBar(fraction: progress!, onDark: true),
                           ],

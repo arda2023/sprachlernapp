@@ -279,7 +279,7 @@ void main() {
         tester.widget<CupertinoSwitch>(find.byType(CupertinoSwitch)).value,
         isFalse,
       );
-      expect(find.text('In die tägliche Übung'), findsOneWidget);
+      expect(find.text('Stapel aktivieren'), findsOneWidget);
       final second = controller.setActive('deck-0', true);
       final third = controller.setActive('deck-0', false);
       user.gate.complete();
@@ -349,7 +349,8 @@ void main() {
       expect(field.decoration!.fillColor, colors.successTint);
       expect(find.byKey(const ValueKey('practice-success')), findsOneWidget);
       final action = find.bySemanticsLabel('Weiter');
-      expect(tester.getSize(action).height, 40); // User-adjusted action slot.
+      // 44 pt tap target around the lowered 36 pt pill (29.10.2026).
+      expect(tester.getSize(action).height, 44);
       await screenshot(tester, boundary, 'success-compact');
       tester.view.viewInsets = const FakeViewPadding(bottom: 300);
       tester.platformDispatcher.textScaleFactorTestValue = 2;

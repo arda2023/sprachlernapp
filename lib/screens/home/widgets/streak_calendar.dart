@@ -27,6 +27,8 @@ const _ink = Color(0xFFFFFFFF);
 // Text on the popover is bold or 18 pt+ and never translucent (white on
 // #E26C00 is 3.3:1, see PopoverText); quieter text is lighter in weight only.
 const _muted = _ink;
+// Practised days: one light band; each day in it carries a small flame.
+const _band = Color(0x33FFFFFF);
 
 class _StreakCalendarState extends State<StreakCalendar> {
   late DateTime _month = DateTime(widget.today.year, widget.today.month);
@@ -109,13 +111,81 @@ class _StreakCalendarState extends State<StreakCalendar> {
         ),
         const SizedBox(height: 4),
         _MonthGrid(month: _month, summary: s, today: widget.today),
-        const SizedBox(height: 12),
-        Text(
-          '7 Tage am Stück ergeben einen Wochenstern. Deine Sterne bleiben, '
-          'auch wenn eine Serie einmal reißt.',
-          style: PopoverText.small(),
-        ),
+        const SizedBox(height: 14),
+        const _Legend(),
       ],
+    );
+  }
+}
+
+/// What the marks mean, drawn with the same marks as the grid: a band with
+/// a flame for practised days, the white disc for star days, the ring for
+/// today.
+class _Legend extends StatelessWidget {
+  const _Legend();
+
+  @override
+  Widget build(BuildContext context) {
+    Widget entry(Widget mark, String label) => Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        mark,
+        const SizedBox(width: 6),
+        Text(label, style: PopoverText.caption()),
+      ],
+    );
+    return ExcludeSemantics(
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 16,
+        runSpacing: 8,
+        children: [
+          entry(
+            Container(
+              width: 30,
+              height: 20,
+              decoration: BoxDecoration(
+                color: _band,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(
+                CupertinoIcons.flame_fill,
+                size: 12,
+                color: _ink,
+              ),
+            ),
+            'Geübt',
+          ),
+          entry(
+            Container(
+              width: 20,
+              height: 20,
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: _ink,
+              ),
+              child: GlyphIcon(
+                AppGlyphs.starSolid,
+                size: 11,
+                color: context.appColors.popover,
+              ),
+            ),
+            'Wochenstern',
+          ),
+          entry(
+            Container(
+              width: 20,
+              height: 20,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: _ink, width: 1.5),
+              ),
+            ),
+            'Heute',
+          ),
+        ],
+      ),
     );
   }
 }
@@ -233,7 +303,7 @@ class _MonthGrid extends StatelessWidget {
                       builder: (context) {
                         final n = r * 7 + c - lead + 1;
                         if (n < 1 || n > length) {
-                          return const SizedBox(height: 38);
+                          return const SizedBox(height: 40);
                         }
                         final day = DateTime(month.year, month.month, n);
                         final isOn = on(n);
@@ -271,7 +341,7 @@ class _DayCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const radius = Radius.circular(19);
+    const radius = Radius.circular(20);
     final label =
         '$day.${star
             ? ', Wochenstern'
@@ -282,10 +352,10 @@ class _DayCell extends StatelessWidget {
       label: label,
       excludeSemantics: true,
       child: Container(
-        height: 38,
+        height: 40,
         decoration: on
             ? BoxDecoration(
-                color: const Color(0x33FFFFFF),
+                color: _band,
                 borderRadius: BorderRadius.horizontal(
                   left: joinLeft ? Radius.zero : radius,
                   right: joinRight ? Radius.zero : radius,
@@ -298,8 +368,8 @@ class _DayCell extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Container(
-              width: 34,
-              height: 34,
+              width: 36,
+              height: 36,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -308,18 +378,30 @@ class _DayCell extends StatelessWidget {
                     ? Border.all(color: _ink, width: 1.5)
                     : null,
               ),
-              child: Text(
-                '$day',
-                style: AppType.chrome(
-                  size: 15,
-                  weight: on || today ? FontWeight.w800 : FontWeight.w700,
-                  color: star
-                      ? context.appColors.popover
-                      : on || today
-                      ? _ink
-                      : _muted,
-                  tabular: true,
-                ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    '$day',
+                    style: AppType.chrome(
+                      size: 14,
+                      weight: on || today ? FontWeight.w800 : FontWeight.w600,
+                      color: star
+                          ? context.appColors.popover
+                          : on || today
+                          ? _ink
+                          : _muted,
+                      height: 1.1,
+                      tabular: true,
+                    ),
+                  ),
+                  if (on && !star)
+                    const Icon(
+                      CupertinoIcons.flame_fill,
+                      size: 9,
+                      color: _ink,
+                    ),
+                ],
               ),
             ),
             if (star)

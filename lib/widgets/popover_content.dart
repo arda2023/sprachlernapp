@@ -7,25 +7,25 @@ import '../theme/app_theme.dart';
 /// reads the same.
 const popoverInk = Color(0xFFFFFFFF);
 
-/// Text on the popover. White on #E26C00 reaches 3.3:1, which HIG ›
-/// Accessibility accepts only for bold text or text of 18 pt and more:
-/// body copy is 18 pt, small print bold, and nothing is translucent.
-/// Hierarchy comes from size and weight.
+/// Text on the popover. Nothing is translucent; hierarchy comes from size
+/// and weight: headings and row titles bold, the line below them in medium
+/// weight (user decision 29.10.2026: no bold subtext under bold text). White
+/// on #E26C00 reaches 3.3:1, so small print stays medium, never regular.
 abstract final class PopoverText {
   static TextStyle body({FontWeight weight = FontWeight.w500}) =>
       AppType.chrome(size: 18, weight: weight, color: popoverInk, height: 1.35);
 
-  /// Short notes (14 pt, bold).
+  /// Short notes (14 pt, medium).
   static TextStyle small() => AppType.chrome(
     size: 14,
-    weight: FontWeight.w700,
+    weight: FontWeight.w500,
     color: popoverInk,
     height: 1.35,
   );
 
-  /// Labels and metadata (13 pt, bold).
+  /// Labels and metadata (13 pt, medium).
   static TextStyle caption() =>
-      AppType.chrome(size: 13, weight: FontWeight.w700, color: popoverInk);
+      AppType.chrome(size: 13, weight: FontWeight.w500, color: popoverInk);
 }
 
 /// Width of menu popovers: only as wide as their rows need (HIG › Popovers:

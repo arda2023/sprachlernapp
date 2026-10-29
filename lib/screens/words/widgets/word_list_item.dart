@@ -48,156 +48,141 @@ class WordListItem extends StatelessWidget {
     final colors = context.appColors;
     const inset = EdgeInsets.only(left: PlaybackHighlight.inset);
     final headword = word.entry.headword;
-    final meta = [
-      if (const [
-        'Grundform',
-        'Präteritum',
-        'Partizip Perfekt',
-      ].contains(word.entry.partOfSpeech))
-        word.entry.partOfSpeech,
-      if (word.isDisabled) 'Deaktiviert',
-      'Zuletzt gesehen: ${lastSeenLabel(word.lastSeenAt, now)}',
-      'Wiederholt: ${reviewCountLabel(word.reviewCount)}',
-    ].join(' · ');
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(
-          14 - PlaybackHighlight.inset,
-          6,
-          4,
-          14,
-        ),
-        decoration: BoxDecoration(
-          color: colors.raisedInk,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Opacity(
-                opacity: word.isDisabled ? 0.45 : 1,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // The dashes open the level legend, pointing at them.
-                    PopoverTrigger<void>(
-                      popover: (_) => MemoryLevelLegendSheet(current: word.box),
-                      builder: (context, open, show) => MergeSemantics(
-                        child: CupertinoButton(
-                          onPressed: show,
-                          padding: inset,
-                          minimumSize: const Size(44, 44),
-                          alignment: Alignment.centerLeft,
-                          child: Semantics(
-                            label:
-                                'Erinnerungsstufe ${word.box} von '
-                                '$leitnerBoxCount: ${memoryLevelTitle(word.box)}',
-                            excludeSemantics: true,
-                            child: TriggerPill(
-                              open: open,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 6,
-                              ),
-                              child: MemoryLevelIndicator(
-                                level: word.box,
-                                litColor: open ? const Color(0xFFFFFFFF) : null,
-                                offColor: open ? const Color(0x59FFFFFF) : null,
+    // A deactivated word is dimmed; screen readers get the state in words.
+    return Semantics(
+      value: word.isDisabled ? 'Deaktiviert' : null,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(
+            14 - PlaybackHighlight.inset,
+            6,
+            4,
+            14,
+          ),
+          decoration: BoxDecoration(
+            color: colors.raisedInk,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Opacity(
+                  opacity: word.isDisabled ? 0.45 : 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // The dashes open the level legend, pointing at them.
+                      PopoverTrigger<void>(
+                        popover: (_) =>
+                            MemoryLevelLegendSheet(current: word.box),
+                        builder: (context, open, show) => MergeSemantics(
+                          child: CupertinoButton(
+                            onPressed: show,
+                            padding: inset,
+                            minimumSize: const Size(44, 44),
+                            alignment: Alignment.centerLeft,
+                            child: Semantics(
+                              label:
+                                  'Erinnerungsstufe ${word.box} von '
+                                  '$leitnerBoxCount: ${memoryLevelTitle(word.box)}',
+                              excludeSemantics: true,
+                              child: TriggerPill(
+                                open: open,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 6,
+                                ),
+                                child: MemoryLevelIndicator(
+                                  level: word.box,
+                                  litColor: open
+                                      ? const Color(0xFFFFFFFF)
+                                      : null,
+                                  offColor: open
+                                      ? const Color(0x59FFFFFF)
+                                      : null,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    ListenButton(
-                      label: '$headword anhören',
-                      playing: playingWord,
-                      onPressed: onPlayWord,
-                      child: HeadwordWithSpeaker(
-                        headword: headword,
+                      ListenButton(
+                        label: '$headword anhören',
                         playing: playingWord,
+                        onPressed: onPlayWord,
+                        child: HeadwordWithSpeaker(
+                          headword: headword,
+                          playing: playingWord,
+                        ),
                       ),
-                    ),
-                    if (word.entry.translation.isNotEmpty)
-                      Padding(
-                        padding: inset.copyWith(bottom: 4),
+                      if (word.entry.translation.isNotEmpty)
+                        Padding(
+                          padding: inset.copyWith(bottom: 4),
+                          child: Text(
+                            word.entry.translation,
+                            style: AppType.chrome(
+                              size: 15,
+                              weight: FontWeight.w600,
+                              color: colors.active,
+                            ),
+                          ),
+                        ),
+                      ListenButton(
+                        label: 'Satz anhören: ${word.sentence}',
+                        playing: playingSentence,
+                        onPressed: onPlaySentence,
                         child: Text(
-                          word.entry.translation,
-                          style: AppType.chrome(
-                            size: 15,
-                            weight: FontWeight.w600,
-                            color: colors.active,
+                          word.sentence,
+                          style: AppType.editorial(
+                            color: colors.textPrimary,
+                            size: 16,
+                            weight: FontWeight.w400,
+                            height: 1.45,
+                            letterSpacing: 0,
                           ),
                         ),
                       ),
-                    ListenButton(
-                      label: 'Satz anhören: ${word.sentence}',
-                      playing: playingSentence,
-                      onPressed: onPlaySentence,
-                      child: Text(
-                        word.sentence,
-                        style: AppType.editorial(
-                          color: colors.textPrimary,
-                          size: 16,
-                          weight: FontWeight.w400,
-                          height: 1.45,
-                          letterSpacing: 0,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Padding(
-                      padding: inset,
-                      child: Text(
-                        word.box == 0
-                            ? '${word.entry.partOfSpeech} · Ungelernt · '
-                                  'Hinzugefügt ${lastSeenLabel(word.lastSeenAt, now)}'
-                            : meta,
-                        style: AppType.meta(color: colors.textMuted).copyWith(
-                          fontFeatures: const [FontFeature.tabularFigures()],
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                WordToggle(
-                  label: 'Favorit',
-                  on: word.isFavorite,
-                  onPressed: onToggleFavorite,
-                  icon: Icon(
-                    word.isFavorite
-                        ? CupertinoIcons.heart_fill
-                        : CupertinoIcons.heart,
-                    size: 19,
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  WordToggle(
+                    label: 'Favorit',
+                    on: word.isFavorite,
+                    onPressed: onToggleFavorite,
+                    icon: Icon(
+                      word.isFavorite
+                          ? CupertinoIcons.heart_fill
+                          : CupertinoIcons.heart,
+                      size: 19,
+                    ),
                   ),
-                ),
-                PopoverTrigger<VoidCallback>(
-                  maxWidth: menuPopoverWidth,
-                  popover: (_) => _WordMenu(
-                    word: word,
-                    onTogglePlaylist: onTogglePlaylist,
-                    onToggleDisabled: onToggleDisabled,
-                    onOpenDetails: onOpenDetails,
+                  PopoverTrigger<VoidCallback>(
+                    maxWidth: menuPopoverWidth,
+                    popover: (_) => _WordMenu(
+                      word: word,
+                      onTogglePlaylist: onTogglePlaylist,
+                      onToggleDisabled: onToggleDisabled,
+                      onOpenDetails: onOpenDetails,
+                    ),
+                    // Run the chosen action after the popover has closed.
+                    onClosed: (action) => action?.call(),
+                    builder: (context, open, show) => _MoreButton(
+                      headword: headword,
+                      open: open,
+                      onPressed: show,
+                    ),
                   ),
-                  // Run the chosen action after the popover has closed.
-                  onClosed: (action) => action?.call(),
-                  builder: (context, open, show) => _MoreButton(
-                    headword: headword,
-                    open: open,
-                    onPressed: show,
-                  ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

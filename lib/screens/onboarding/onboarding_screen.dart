@@ -17,8 +17,21 @@ import 'widgets/onboarding_art.dart';
 import 'widgets/onboarding_motion.dart';
 
 /// What the onboarding hands back: the topic picked on page 2 (also the
-/// sample sentence on page 4) and the daily goal from page 3.
-typedef OnboardingResult = ({String interest, int dailyGoal});
+/// sample sentence on page 4), the daily goal from page 3 and whether the
+/// learner allowed AI translations on page 4 (off unless switched on).
+/// What switching AI translations on in the onboarding agrees to: the
+/// facts of the full disclosure in Settings, short.
+const onboardingAiDisclosure =
+    'Fehlt eine Übersetzung, schicken wir beim Antippen das Wort mit seinem '
+    'Satz über unseren Server an Anthropic. Keine rein europäische '
+    'Verarbeitung, 30 Tage privat gespeichert, in den Einstellungen '
+    'jederzeit abschaltbar.';
+
+typedef OnboardingResult = ({
+  String interest,
+  int dailyGoal,
+  bool aiTranslations,
+});
 
 /// First start (docs/redesign/design-system.md › Onboarding): five pages,
 /// value before any account or price. Welcome → topic → daily goal → tap a
@@ -56,14 +69,18 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
   _Interest? _interest;
   int _goal = 10;
   int? _tapped;
+  bool _aiTranslations = false;
   bool _planReady = false;
 
   _Interest get _topic => _interest ?? _Interest.everyday;
 
   OnboardingSounds get _sounds => ref.read(onboardingSoundsProvider);
 
-  OnboardingResult get _result =>
-      (interest: _topic.category.name, dailyGoal: _goal);
+  OnboardingResult get _result => (
+    interest: _topic.category.name,
+    dailyGoal: _goal,
+    aiTranslations: _aiTranslations,
+  );
 
   /// The furthest page a swipe may reach right now.
   int get _maxPage => _page == 1 && _interest == null
@@ -171,6 +188,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
         onTap: (i) {
           HapticFeedback.lightImpact();
           setState(() => _tapped = i);
+        },
+        aiTranslations: _aiTranslations,
+        onAiTranslations: (value) {
+          Haptic.select();
+          setState(() => _aiTranslations = value);
         },
       ),
       _PlanPage(
@@ -807,12 +829,16 @@ class _TryPage extends StatelessWidget {
     required this.interest,
     required this.tapped,
     required this.onTap,
+    required this.aiTranslations,
+    required this.onAiTranslations,
   });
 
   final bool active;
   final _Interest interest;
   final int? tapped;
   final ValueChanged<int> onTap;
+  final bool aiTranslations;
+  final ValueChanged<bool> onAiTranslations;
 
   @override
   Widget build(BuildContext context) {
@@ -887,7 +913,84 @@ class _TryPage extends StatelessWidget {
                   meaning: interest.glossary[tapped]!,
                 ),
         ),
+        const SizedBox(height: 20),
+        Reveal(
+          active: active,
+          order: 2,
+          child: _AiConsentCard(
+            value: aiTranslations,
+            onChanged: onAiTranslations,
+          ),
+        ),
+        const SizedBox(height: 16),
       ],
+    );
+  }
+}
+
+/// The one place that asks about AI translations (user decision
+/// 29.10.2026): the reader's bubble no longer interrupts with a consent
+/// text. Off until switched on; Settings can change it any time.
+class _AiConsentCard extends StatelessWidget {
+  const _AiConsentCard({required this.value, required this.onChanged});
+
+  final bool value;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.appColors;
+    return MergeSemantics(
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => onChanged(!value),
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(16, 14, 12, 16),
+          decoration: BoxDecoration(
+            color: colors.raisedInk,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(CupertinoIcons.sparkles, size: 18, color: colors.active),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Fehlende Wörter mit KI übersetzen',
+                      style: AppType.chrome(
+                        size: 16,
+                        weight: FontWeight.w700,
+                        color: colors.textPrimary,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  CupertinoSwitch(
+                    value: value,
+                    onChanged: onChanged,
+                    activeTrackColor: colors.active,
+                    inactiveTrackColor: colors.hairline,
+                    thumbColor: const Color(0xFFFFFFFF),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              Text(
+                onboardingAiDisclosure,
+                style: AppType.chrome(
+                  size: 13,
+                  weight: FontWeight.w400,
+                  color: colors.textMuted,
+                  height: 1.4,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

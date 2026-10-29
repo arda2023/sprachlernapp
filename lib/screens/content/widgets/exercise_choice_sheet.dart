@@ -4,7 +4,6 @@ import '../../../models/exercise_models.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/anchored_popover.dart';
 import '../../../widgets/popover_content.dart';
-import '../../home/widgets/story_carousel.dart';
 
 /// Picks the exercise mode for a text, as the orange popover pointing at
 /// the tapped cover. Returns the chosen mode, or null when dismissed.
@@ -28,8 +27,6 @@ class ExerciseChoiceSheet extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         PopoverTitle(text.info.title, editorial: true),
-        const SizedBox(height: 4),
-        Text(storyMetaLine(text.info), style: PopoverText.caption()),
         const SizedBox(height: 10),
         for (final mode in ExerciseMode.values)
           _ModeOption(
@@ -56,9 +53,8 @@ class _ModeOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final enabled = gaps > 0;
-    final detail = enabled
-        ? '${mode.description} · $gaps ${gaps == 1 ? 'Lücke' : 'Lücken'}'
-        : 'In diesem Text nicht verfügbar';
+    // The mode's name says what to do; only an unavailable mode explains.
+    final detail = enabled ? null : 'In diesem Text nicht verfügbar';
     return MergeSemantics(
       child: CupertinoButton(
         onPressed: enabled ? onTap : null,
@@ -66,7 +62,7 @@ class _ModeOption extends StatelessWidget {
         pressedOpacity: 0.7,
         minimumSize: const Size(44, 56),
         child: Semantics(
-          label: '${mode.title}. $detail',
+          label: [mode.title, ?detail].join('. '),
           enabled: enabled,
           excludeSemantics: true,
           child: Container(
@@ -93,15 +89,15 @@ class _ModeOption extends StatelessWidget {
                               : popoverInk.withValues(alpha: 0.55),
                         ),
                       ),
-                      const SizedBox(height: 2),
-                      Text(
-                        detail,
-                        style: PopoverText.caption().copyWith(
-                          color: enabled
-                              ? popoverInk
-                              : popoverInk.withValues(alpha: 0.55),
+                      if (detail != null) ...[
+                        const SizedBox(height: 2),
+                        Text(
+                          detail,
+                          style: PopoverText.caption().copyWith(
+                            color: popoverInk.withValues(alpha: 0.55),
+                          ),
                         ),
-                      ),
+                      ],
                     ],
                   ),
                 ),

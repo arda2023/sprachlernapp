@@ -171,14 +171,14 @@ class StoryLibraryScreen extends StatelessWidget {
                 child: switch (item) {
                   Story story => ContinueReadingTile(
                     title: story.title,
-                    meta: '${story.topic} · ${story.level}',
+                    meta: story.topic,
                     category: StoryCategory.of(story.topic),
                     fraction: entry.fraction,
                     onTap: () => onOpenStory(story),
                   ),
                   ImportedText text => ContinueReadingTile(
                     title: text.title,
-                    meta: 'Eigener Text · ${text.readingMinutes} Min',
+                    meta: 'Eigener Text',
                     category: _importCategory,
                     fraction: entry.fraction,
                     onTap: () => onOpenImported?.call(text),
@@ -571,7 +571,7 @@ class _ImportedCard extends StatelessWidget {
                     Text(
                       started
                           ? '${(entry.fraction * 100).round()} % gelesen'
-                          : '${text.wordCount} Wörter · ${text.readingMinutes} Min',
+                          : '${text.wordCount} Wörter',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppType.meta(color: const Color(0xFF6E6457)),
