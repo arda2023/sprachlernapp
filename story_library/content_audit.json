@@ -1,0 +1,2497 @@
+{
+  "scope": "Mechanical text inventory only, not factual, language or application acceptance",
+  "required_texts": 295,
+  "present_texts": 285,
+  "missing_texts": [
+    "en/work_04.txt",
+    "en/work_05.txt",
+    "pt-BR/work_04.txt",
+    "pt-BR/work_05.txt",
+    "es/work_04.txt",
+    "es/work_05.txt",
+    "it/work_04.txt",
+    "it/work_05.txt",
+    "nb/work_04.txt",
+    "nb/work_05.txt"
+  ],
+  "problems": [
+    {
+      "path": "en/video_07.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 977
+        }
+      ]
+    },
+    {
+      "path": "en/video_13.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 1047
+        }
+      ]
+    },
+    {
+      "path": "en/video_14.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 1053
+        }
+      ]
+    },
+    {
+      "path": "en/video_15.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 879
+        }
+      ]
+    },
+    {
+      "path": "en/video_18.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 931
+        }
+      ]
+    },
+    {
+      "path": "en/video_19.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 678
+        }
+      ]
+    },
+    {
+      "path": "en/video_27.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 935
+        }
+      ]
+    },
+    {
+      "path": "en/video_29.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 992
+        }
+      ]
+    },
+    {
+      "path": "pt-BR/video_07.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 973
+        }
+      ]
+    },
+    {
+      "path": "pt-BR/video_13.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 1088
+        }
+      ]
+    },
+    {
+      "path": "pt-BR/video_14.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 1065
+        }
+      ]
+    },
+    {
+      "path": "pt-BR/video_15.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 839
+        }
+      ]
+    },
+    {
+      "path": "pt-BR/video_18.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 928
+        }
+      ]
+    },
+    {
+      "path": "pt-BR/video_19.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 689
+        }
+      ]
+    },
+    {
+      "path": "pt-BR/video_27.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 938
+        }
+      ]
+    },
+    {
+      "path": "pt-BR/video_29.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 989
+        }
+      ]
+    },
+    {
+      "path": "es/video_07.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 983
+        }
+      ]
+    },
+    {
+      "path": "es/video_13.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 1109
+        }
+      ]
+    },
+    {
+      "path": "es/video_14.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 1090
+        }
+      ]
+    },
+    {
+      "path": "es/video_15.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 849
+        }
+      ]
+    },
+    {
+      "path": "es/video_18.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 931
+        }
+      ]
+    },
+    {
+      "path": "es/video_19.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 699
+        }
+      ]
+    },
+    {
+      "path": "es/video_27.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 923
+        }
+      ]
+    },
+    {
+      "path": "es/video_29.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 1006
+        }
+      ]
+    },
+    {
+      "path": "it/video_07.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 961
+        }
+      ]
+    },
+    {
+      "path": "it/video_13.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 1075
+        }
+      ]
+    },
+    {
+      "path": "it/video_14.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 1059
+        }
+      ]
+    },
+    {
+      "path": "it/video_15.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 821
+        }
+      ]
+    },
+    {
+      "path": "it/video_18.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 902
+        }
+      ]
+    },
+    {
+      "path": "it/video_19.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 678
+        }
+      ]
+    },
+    {
+      "path": "it/video_27.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 904
+        }
+      ]
+    },
+    {
+      "path": "it/video_29.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 970
+        }
+      ]
+    },
+    {
+      "path": "nb/video_07.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 922
+        }
+      ]
+    },
+    {
+      "path": "nb/video_13.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 1021
+        }
+      ]
+    },
+    {
+      "path": "nb/video_14.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 1041
+        }
+      ]
+    },
+    {
+      "path": "nb/video_15.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 792
+        }
+      ]
+    },
+    {
+      "path": "nb/video_18.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 861
+        }
+      ]
+    },
+    {
+      "path": "nb/video_19.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 645
+        }
+      ]
+    },
+    {
+      "path": "nb/video_27.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 874
+        }
+      ]
+    },
+    {
+      "path": "nb/video_29.txt",
+      "errors": [
+        {
+          "word_range": [
+            1200,
+            3600
+          ],
+          "actual": 945
+        }
+      ]
+    }
+  ],
+  "checked": [
+    {
+      "path": "en/video_01.txt",
+      "title": "Selling the dream",
+      "words": 1449,
+      "minutes_at_120_words": 12.1,
+      "sha256": "ea020bff66558a9893d69caecf14c97887279585ecc211b756badef245a1e6c3"
+    },
+    {
+      "path": "en/video_02.txt",
+      "title": "When the boom ended",
+      "words": 1419,
+      "minutes_at_120_words": 11.8,
+      "sha256": "21f8274267477eb827a8c41649dea0b635356b3eba37bf3803973c5a5c9a8394"
+    },
+    {
+      "path": "en/video_03.txt",
+      "title": "Beyond the bookstore",
+      "words": 1725,
+      "minutes_at_120_words": 14.4,
+      "sha256": "5c9214865efb9efa4b56b07186e43c87d052f58d4732b98288e8f5c1dd6e2b47"
+    },
+    {
+      "path": "en/video_04.txt",
+      "title": "Building Claude",
+      "words": 1597,
+      "minutes_at_120_words": 13.3,
+      "sha256": "87cb606fc95908b6298121e3a56dcddc851c6e80e480f026ab36caa25e8ae432"
+    },
+    {
+      "path": "en/video_05.txt",
+      "title": "Rockets that return",
+      "words": 1527,
+      "minutes_at_120_words": 12.7,
+      "sha256": "102c0791e6ff597a5cf1d388e012d0555fe04e99d988ee2cbe9cf55c1f61ed54"
+    },
+    {
+      "path": "en/video_06.txt",
+      "title": "Making other people's chips",
+      "words": 1607,
+      "minutes_at_120_words": 13.4,
+      "sha256": "ee35d79dfb9c610946b6653f6ad6d76e42bd5d41e009c162e51b71e7959bcbbc"
+    },
+    {
+      "path": "en/video_07.txt",
+      "title": "Money without a bank",
+      "words": 977,
+      "minutes_at_120_words": 8.1,
+      "sha256": "d4a932d34c63b67bcb58b9ceb7584989914d60da79bdf74990517eabc27402b3"
+    },
+    {
+      "path": "en/video_08.txt",
+      "title": "Buying Hollywood",
+      "words": 1300,
+      "minutes_at_120_words": 10.8,
+      "sha256": "0a92b56b8aa74b3578f1260d3fb84e3cf3a3cd68a21ac704d0528abf569e07c9"
+    },
+    {
+      "path": "en/video_09.txt",
+      "title": "Full planes, thin profits",
+      "words": 1324,
+      "minutes_at_120_words": 11.0,
+      "sha256": "c19173184bb4db0460455160113c673cb4d1d53a28c26171b0e42d0b98719970"
+    },
+    {
+      "path": "en/video_10.txt",
+      "title": "Inside a payment card",
+      "words": 2716,
+      "minutes_at_120_words": 22.6,
+      "sha256": "7b8057699fd8929d9cbb76074c485b1b5e0d3883764d3e023d28e4df0c781168"
+    },
+    {
+      "path": "en/video_11.txt",
+      "title": "How black holes grow",
+      "words": 1430,
+      "minutes_at_120_words": 11.9,
+      "sha256": "7f47a835dfb3a19e4d1b06f46936ce0ab9b3a0b637d0206e792181d33802ddfe"
+    },
+    {
+      "path": "en/video_12.txt",
+      "title": "Editing life's instructions",
+      "words": 1472,
+      "minutes_at_120_words": 12.3,
+      "sha256": "5d46867ff2ac9ac9a76815eec440e1779928395f1474187f812df4e1e6386e92"
+    },
+    {
+      "path": "en/video_13.txt",
+      "title": "A city after the flash",
+      "words": 1047,
+      "minutes_at_120_words": 8.7,
+      "sha256": "71b39451408c13be767e321a5ee55ee224ecb48841c94b7b59b086b8907937c2"
+    },
+    {
+      "path": "en/video_14.txt",
+      "title": "Below the last sunlight",
+      "words": 1053,
+      "minutes_at_120_words": 8.8,
+      "sha256": "d9e24d97aed520f015a5d3d4a9d2a90d58522fc7f274219e9cacd089945fc57d"
+    },
+    {
+      "path": "en/video_15.txt",
+      "title": "A star inside a city",
+      "words": 879,
+      "minutes_at_120_words": 7.3,
+      "sha256": "4cf7d5bd69e67f47922644ee374be3270eaa7b02d4c529befe173d935d187add"
+    },
+    {
+      "path": "en/video_16.txt",
+      "title": "If the Moon came closer",
+      "words": 1233,
+      "minutes_at_120_words": 10.3,
+      "sha256": "2c853c60ec1e17d729163681cb2b53e95bfebfff7c5924388c44f7d332f55349"
+    },
+    {
+      "path": "en/video_17.txt",
+      "title": "Why a smaller shop can win",
+      "words": 1281,
+      "minutes_at_120_words": 10.7,
+      "sha256": "4c0e5050ba11bcf66f0208a8f705fea3ca130ada6829fb7e54ca0d3ec1688c6f"
+    },
+    {
+      "path": "en/video_18.txt",
+      "title": "The price after checkout",
+      "words": 931,
+      "minutes_at_120_words": 7.8,
+      "sha256": "341c5733d9a01e3eace17e52626d80d844f7ca2dba08f370ee948c67273797dc"
+    },
+    {
+      "path": "en/video_19.txt",
+      "title": "When the cash machine disappears",
+      "words": 678,
+      "minutes_at_120_words": 5.7,
+      "sha256": "75ef2c3a64259aa14c9cc3e1a4a2de2f6cca32f117cef20baa4c778d038008ac"
+    },
+    {
+      "path": "en/video_20.txt",
+      "title": "The price of a comeback",
+      "words": 1546,
+      "minutes_at_120_words": 12.9,
+      "sha256": "bf59578cf347aa4d456eca1a8c9a79ea153699bb2555e6f0374c32a1ca3a64d4"
+    },
+    {
+      "path": "en/video_21.txt",
+      "title": "Can AI shorten invention?",
+      "words": 1627,
+      "minutes_at_120_words": 13.6,
+      "sha256": "4e1732bc50d4001299498bd6326c92bb18a5093d18d0eba5094ae7d76571a3a1"
+    },
+    {
+      "path": "en/video_22.txt",
+      "title": "When police became suspects",
+      "words": 2398,
+      "minutes_at_120_words": 20.0,
+      "sha256": "fb7b28c5d179fa8e75f6cbe2df6a87bfb240926f12e2ce1bf6044cfd503db721"
+    },
+    {
+      "path": "en/video_23.txt",
+      "title": "Four months aboard a prison",
+      "words": 1877,
+      "minutes_at_120_words": 15.6,
+      "sha256": "502c911ea84edb937d5005e3fa37bab9ba4e23f8578c068165ceb5ff706cc55e"
+    },
+    {
+      "path": "en/video_24.txt",
+      "title": "The letters of Monsieur X",
+      "words": 1678,
+      "minutes_at_120_words": 14.0,
+      "sha256": "45370fa69f39d18b2faa28ed8b099b2a1ce92de87114036af6fc9b3a766d48c7"
+    },
+    {
+      "path": "en/video_25.txt",
+      "title": "Behind the prison doors",
+      "words": 2282,
+      "minutes_at_120_words": 19.0,
+      "sha256": "007ad848795efc361aab8eb13466ed4904d75171dcfa42eda341b09366d351a0"
+    },
+    {
+      "path": "en/video_26.txt",
+      "title": "The letters that spread fear",
+      "words": 1366,
+      "minutes_at_120_words": 11.4,
+      "sha256": "f9392356bd861a9cf73b8cd10672953a76b30027bef8f82b52ada56a7b8e2996"
+    },
+    {
+      "path": "en/video_27.txt",
+      "title": "The return of Flight 705",
+      "words": 935,
+      "minutes_at_120_words": 7.8,
+      "sha256": "4536e021e393cb14ce1b638f6552b9839c2cb600dce105afcc607f2d141a6a83"
+    },
+    {
+      "path": "en/video_28.txt",
+      "title": "After the ransom",
+      "words": 1357,
+      "minutes_at_120_words": 11.3,
+      "sha256": "05d99a2623195da7fe693bc3b2de5f51879a6edb26d28a40fd82a8b3bd9d0bd0"
+    },
+    {
+      "path": "en/video_29.txt",
+      "title": "The limits of consent",
+      "words": 992,
+      "minutes_at_120_words": 8.3,
+      "sha256": "21660679146de0eed1a613b92eb75ec33415aec54bd1532af7fd87831767c1d3"
+    },
+    {
+      "path": "en/video_30.txt",
+      "title": "Beyond the burning streets",
+      "words": 1293,
+      "minutes_at_120_words": 10.8,
+      "sha256": "33899cab7945245590510863389dbf714e4d1d94f5354e5bb618ae7512849c77"
+    },
+    {
+      "path": "en/video_31.txt",
+      "title": "The difference was permission",
+      "words": 2618,
+      "minutes_at_120_words": 21.8,
+      "sha256": "e18cd596f8b13cb3a9270240c70bff9648566060bb629d75625ff9edf5b95313"
+    },
+    {
+      "path": "en/video_32.txt",
+      "title": "Behind the armoured glass",
+      "words": 1406,
+      "minutes_at_120_words": 11.7,
+      "sha256": "50cd7beb301f66fe6af2f50b4e484e53ea6126def9499ad8a491667587934c9f"
+    },
+    {
+      "path": "en/video_33.txt",
+      "title": "The assistant and the secrets",
+      "words": 1892,
+      "minutes_at_120_words": 15.8,
+      "sha256": "1cb870a305bd685f17dbcaa2676d5ea209b60e717900c34df45eb3eb01ab9227"
+    },
+    {
+      "path": "en/video_34.txt",
+      "title": "Hidden in a tablet",
+      "words": 1947,
+      "minutes_at_120_words": 16.2,
+      "sha256": "1761624eb4dc49872228a265731d26e039f2fde85176814a019de141e00561b5"
+    },
+    {
+      "path": "en/video_35.txt",
+      "title": "The state sells cigarettes",
+      "words": 1781,
+      "minutes_at_120_words": 14.8,
+      "sha256": "a56446c4e9abe17bc29778246dd13e05540e7df2cf3e3f72938418b8c99e934f"
+    },
+    {
+      "path": "en/video_36.txt",
+      "title": "After the cartel leader",
+      "words": 2057,
+      "minutes_at_120_words": 17.1,
+      "sha256": "eb1469f259254368bd5ccdd61433641d023466c28f95cbd51569ee1f96564278"
+    },
+    {
+      "path": "en/video_38.txt",
+      "title": "Peter Thiel and power",
+      "words": 2540,
+      "minutes_at_120_words": 21.2,
+      "sha256": "6d8e12afbbda2328ad5ae9dcb6ec02c38658ec2500253bc76a4d4d9bcc9c0f2a"
+    },
+    {
+      "path": "en/video_39.txt",
+      "title": "Who shapes our sweet tooth?",
+      "words": 3321,
+      "minutes_at_120_words": 27.7,
+      "sha256": "8036f1a3e9b33c249f6402889b98c86c3b1ae8cc3e3473dde6f7d90c55689b4c"
+    },
+    {
+      "path": "en/video_40.txt",
+      "title": "DMT and the feeling of reality",
+      "words": 2372,
+      "minutes_at_120_words": 19.8,
+      "sha256": "d9fe2ca3dad8616e8042b510ac2df31020be5f488683ce2ed0f6af9644f68a50"
+    },
+    {
+      "path": "en/everyday_01.txt",
+      "title": "Someone else's letter",
+      "words": 918,
+      "minutes_at_120_words": 7.7,
+      "sha256": "08a69499674c678a3717892184679ea2a28e5bc9369848ab5331a46e36b14ed3"
+    },
+    {
+      "path": "en/everyday_02.txt",
+      "title": "The shelf in the hall",
+      "words": 931,
+      "minutes_at_120_words": 7.8,
+      "sha256": "bf188483c4be89dd46ab8181b4c84fdad659fb569e0efcddd5636effb27dade6"
+    },
+    {
+      "path": "en/everyday_03.txt",
+      "title": "Saturday without power",
+      "words": 961,
+      "minutes_at_120_words": 8.0,
+      "sha256": "fe7e4052b782bc91b5fabdadde27f468565673a0cec38d79f15379ace539cbe2"
+    },
+    {
+      "path": "en/everyday_04.txt",
+      "title": "The new neighbour",
+      "words": 933,
+      "minutes_at_120_words": 7.8,
+      "sha256": "452047add89d242a7d418c49e16fc6660e3ecbb116f7cfb67c7a7b5d057abd29"
+    },
+    {
+      "path": "en/everyday_05.txt",
+      "title": "The missing cat",
+      "words": 959,
+      "minutes_at_120_words": 8.0,
+      "sha256": "ba657ea73256035de86546f5cbe2c340bf37e43e2b8a5ae4edbbf88f23ca0698"
+    },
+    {
+      "path": "en/travel_01.txt",
+      "title": "The wrong suitcase",
+      "words": 871,
+      "minutes_at_120_words": 7.3,
+      "sha256": "961488954ae2d6ca090ba6a2c947d1fbe72fd240d1bc3666979fa36e15179467"
+    },
+    {
+      "path": "en/travel_02.txt",
+      "title": "The last room",
+      "words": 956,
+      "minutes_at_120_words": 8.0,
+      "sha256": "bfa1ebf5becfb848ab317e3f7644bcdc538b7bc035b95a527717d0c2b73bb4e3"
+    },
+    {
+      "path": "en/travel_03.txt",
+      "title": "A stop by the sea",
+      "words": 980,
+      "minutes_at_120_words": 8.2,
+      "sha256": "42363da838ece41543402b0b29dce1d497534fd4e2345ec27bd928714c4311ef"
+    },
+    {
+      "path": "en/travel_04.txt",
+      "title": "The missed train",
+      "words": 1027,
+      "minutes_at_120_words": 8.6,
+      "sha256": "31dad16012beed9e12df9f925bee3fcfa566b75a1bce67cfe9ff68deb5b4a453"
+    },
+    {
+      "path": "en/travel_05.txt",
+      "title": "A paper map",
+      "words": 982,
+      "minutes_at_120_words": 8.2,
+      "sha256": "de23b32b66eee0f935413cc4f0eb8b52cdbc5f99d11240ea78663da2291456fd"
+    },
+    {
+      "path": "en/restaurant_01.txt",
+      "title": "A table by the window",
+      "words": 989,
+      "minutes_at_120_words": 8.2,
+      "sha256": "d6d5ffdeb41fb86acc4716baecbd16ba4c19b5747f212a1de9ebb419fc7acd23"
+    },
+    {
+      "path": "en/restaurant_02.txt",
+      "title": "The missing order",
+      "words": 993,
+      "minutes_at_120_words": 8.3,
+      "sha256": "66b20c7ab5ac1a8bf0ebe3f9b05320af9c5a8d90e7107d4bb90967491da8cafb"
+    },
+    {
+      "path": "en/restaurant_03.txt",
+      "title": "The family recipe",
+      "words": 955,
+      "minutes_at_120_words": 8.0,
+      "sha256": "be79f317a781eba4aaadf1ac075455f1dae2a4a48465a0c3dc787c90aab49461"
+    },
+    {
+      "path": "en/restaurant_04.txt",
+      "title": "The last guest",
+      "words": 963,
+      "minutes_at_120_words": 8.0,
+      "sha256": "7e701d878530fa7ee240fd3dbdad8b95799e9ebd55fc30efef2d7e2e3c955d84"
+    },
+    {
+      "path": "en/restaurant_05.txt",
+      "title": "The first evening",
+      "words": 972,
+      "minutes_at_120_words": 8.1,
+      "sha256": "48e180a7f6ad587954c38aff6d6d0a531a6f3d42b4fea86f19bd521310ebb722"
+    },
+    {
+      "path": "en/work_01.txt",
+      "title": "The first order",
+      "words": 910,
+      "minutes_at_120_words": 7.6,
+      "sha256": "e318fb86f5bd80e6fad5417c3a16fd87d9c38bc3a9a8672ea3a7f1478e0de387"
+    },
+    {
+      "path": "en/work_02.txt",
+      "title": "The wrong file",
+      "words": 916,
+      "minutes_at_120_words": 7.6,
+      "sha256": "92d2ca74c1d1edbd6bb7cbd65edcf87afb3bdfcc7dd7462b96fc4147c3611973"
+    },
+    {
+      "path": "en/work_03.txt",
+      "title": "A difficult handover",
+      "words": 906,
+      "minutes_at_120_words": 7.5,
+      "sha256": "503125a6878953cea7772a2936fe504931af2b5ea07d0386010b23655501629b"
+    },
+    {
+      "path": "pt-BR/video_01.txt",
+      "title": "Vendendo um sonho",
+      "words": 1453,
+      "minutes_at_120_words": 12.1,
+      "sha256": "f1404c5e72b7a5c8fc473979e51dbce053db1eef7d9b7883bdceb7027d8e363e"
+    },
+    {
+      "path": "pt-BR/video_02.txt",
+      "title": "O fim da prosperidade",
+      "words": 1489,
+      "minutes_at_120_words": 12.4,
+      "sha256": "05c79f96e04c292602a8e2cb92111d16bd39c30b78ea079feed86d1b9b194c02"
+    },
+    {
+      "path": "pt-BR/video_03.txt",
+      "title": "Além da livraria",
+      "words": 1764,
+      "minutes_at_120_words": 14.7,
+      "sha256": "7176b7171a60cd5c715dc6cbac5387dc0e109631b777e665e5561ae9038eb9af"
+    },
+    {
+      "path": "pt-BR/video_04.txt",
+      "title": "A criação do Claude",
+      "words": 1691,
+      "minutes_at_120_words": 14.1,
+      "sha256": "8b420df06c2723e8664fd739e1be9b7f5b4e040e3f9abb276435c319f65fad75"
+    },
+    {
+      "path": "pt-BR/video_05.txt",
+      "title": "Foguetes que voltam",
+      "words": 1638,
+      "minutes_at_120_words": 13.7,
+      "sha256": "deab9546a9a9d48f934febed26d3d07b99f796addecb3bd5518432ae72d9d7b4"
+    },
+    {
+      "path": "pt-BR/video_06.txt",
+      "title": "Chips para os outros",
+      "words": 1691,
+      "minutes_at_120_words": 14.1,
+      "sha256": "cb08643b244814f96120786284f3671b46bbc6b36673365ae43c5521360e3001"
+    },
+    {
+      "path": "pt-BR/video_07.txt",
+      "title": "Dinheiro sem um banco",
+      "words": 973,
+      "minutes_at_120_words": 8.1,
+      "sha256": "2d2c616747e7845bfb5c5a5da3ed2a3484afd275c7cb8f3552c0c68a4ecd9c8b"
+    },
+    {
+      "path": "pt-BR/video_08.txt",
+      "title": "A compra de Hollywood",
+      "words": 1412,
+      "minutes_at_120_words": 11.8,
+      "sha256": "c1f3bb868587772cb18e4db130c88cd65d39337d257b52433a35d1249f42bd0a"
+    },
+    {
+      "path": "pt-BR/video_09.txt",
+      "title": "Voar com pouca margem",
+      "words": 1380,
+      "minutes_at_120_words": 11.5,
+      "sha256": "bbe746776d3d9ce343011cc1e10545c665067a6e57760ae875e4a4ccebc54dcf"
+    },
+    {
+      "path": "pt-BR/video_10.txt",
+      "title": "Dentro de um cartão",
+      "words": 2755,
+      "minutes_at_120_words": 23.0,
+      "sha256": "857e1df9ea687ebd821bec54a44f7bb77554d748134b7d48c2f697678b50cd28"
+    },
+    {
+      "path": "pt-BR/video_11.txt",
+      "title": "Gigantes escuros",
+      "words": 1440,
+      "minutes_at_120_words": 12.0,
+      "sha256": "623355e11171c4d04fcab45e429a50acd990efec93e7980a631034f613bc65e2"
+    },
+    {
+      "path": "pt-BR/video_12.txt",
+      "title": "Editar as instruções da vida",
+      "words": 1556,
+      "minutes_at_120_words": 13.0,
+      "sha256": "92cc6e91fd9081d00d888ae8aa3f40217c5bb1b4cc57603265fda0df6c6c638a"
+    },
+    {
+      "path": "pt-BR/video_13.txt",
+      "title": "Uma cidade após o clarão",
+      "words": 1088,
+      "minutes_at_120_words": 9.1,
+      "sha256": "0f57bf8f2a8e3d3cd445d0a8903575a6cb97c80a6c8ce71802a7840b1122c408"
+    },
+    {
+      "path": "pt-BR/video_14.txt",
+      "title": "Onde termina a luz",
+      "words": 1065,
+      "minutes_at_120_words": 8.9,
+      "sha256": "ad288799209d8b00efc86ada5db9724ffd9d397392b192eb36e5f991ed54ba6f"
+    },
+    {
+      "path": "pt-BR/video_15.txt",
+      "title": "Uma estrela numa cidade",
+      "words": 839,
+      "minutes_at_120_words": 7.0,
+      "sha256": "1c4dd0772aed8223aea29fdb825debccd9dcb60bba66ff1e8a9eaa8f2c62c04b"
+    },
+    {
+      "path": "pt-BR/video_16.txt",
+      "title": "Se a Lua chegasse mais perto",
+      "words": 1260,
+      "minutes_at_120_words": 10.5,
+      "sha256": "ac88b386cbf07eff40f63a36083c07825be8a463e89c348383096f63dc706cf6"
+    },
+    {
+      "path": "pt-BR/video_17.txt",
+      "title": "A força de uma loja pequena",
+      "words": 1276,
+      "minutes_at_120_words": 10.6,
+      "sha256": "3c520ab2eeadaad5c0928fcfb91a43b6858598a9f21847a59a13d06e976eab32"
+    },
+    {
+      "path": "pt-BR/video_18.txt",
+      "title": "O preço depois da compra",
+      "words": 928,
+      "minutes_at_120_words": 7.7,
+      "sha256": "9c517d66bc05b23610929f1bcf08dde1104fca8c1e1848a71f90a600b2fb96e3"
+    },
+    {
+      "path": "pt-BR/video_19.txt",
+      "title": "Quando o caixa desaparece",
+      "words": 689,
+      "minutes_at_120_words": 5.7,
+      "sha256": "185fb95cad5af5ad7286248e27e8188dc155604b8abd61d37141fa398253d18c"
+    },
+    {
+      "path": "pt-BR/video_20.txt",
+      "title": "O preço de uma volta",
+      "words": 1544,
+      "minutes_at_120_words": 12.9,
+      "sha256": "d344f61f2aad2421d957ddb7a54050d16d1bee8afe0d3c119efa0c08456c9c22"
+    },
+    {
+      "path": "pt-BR/video_21.txt",
+      "title": "Inventar com ajuda da IA",
+      "words": 1655,
+      "minutes_at_120_words": 13.8,
+      "sha256": "5575b0d49414c9fbdd39e99aded241313abf8dd61469c509f41944826bdf753b"
+    },
+    {
+      "path": "pt-BR/video_22.txt",
+      "title": "Policiais sob suspeita",
+      "words": 2597,
+      "minutes_at_120_words": 21.6,
+      "sha256": "2b709efcc1000219776225f65111dbaedfa31e73f2369ce1588e4a810174682d"
+    },
+    {
+      "path": "pt-BR/video_23.txt",
+      "title": "Quatro meses em cativeiro",
+      "words": 1943,
+      "minutes_at_120_words": 16.2,
+      "sha256": "6e916ea6613150685e138847abc70e11852d4d7524bbfc93f40db6183ad4a8ae"
+    },
+    {
+      "path": "pt-BR/video_24.txt",
+      "title": "As cartas de Monsieur X",
+      "words": 1761,
+      "minutes_at_120_words": 14.7,
+      "sha256": "2ba7cdb8fb987b95f0b8da663676a14a29a0200027540a8151190a26fc1f4025"
+    },
+    {
+      "path": "pt-BR/video_25.txt",
+      "title": "Atrás das portas da prisão",
+      "words": 2329,
+      "minutes_at_120_words": 19.4,
+      "sha256": "4791fb1fe6dd71ebb42d40eb71d3d3f9f36537279e0b82752d4955cbc2cc50c3"
+    },
+    {
+      "path": "pt-BR/video_26.txt",
+      "title": "As cartas que espalharam medo",
+      "words": 1452,
+      "minutes_at_120_words": 12.1,
+      "sha256": "c0449f718fb2cb39e394244021119b8874b87dda1f1945b75dd3a1a8017f6cd1"
+    },
+    {
+      "path": "pt-BR/video_27.txt",
+      "title": "A volta do voo 705",
+      "words": 938,
+      "minutes_at_120_words": 7.8,
+      "sha256": "d3423af3db2679505d8e12bb0e3a2fffc49ab59b54539818dd9dbd3f519931e1"
+    },
+    {
+      "path": "pt-BR/video_28.txt",
+      "title": "Depois do resgate",
+      "words": 1351,
+      "minutes_at_120_words": 11.3,
+      "sha256": "ad96b24bb71888cd29aacdadda6a0a21f334b607ac7cbb4f27f95fc5c0cbc7b1"
+    },
+    {
+      "path": "pt-BR/video_29.txt",
+      "title": "Os limites do consentimento",
+      "words": 989,
+      "minutes_at_120_words": 8.2,
+      "sha256": "3769be5e3c4270a0e0945cc5b30821c771df2868c27f845ba1dc4e3137096428"
+    },
+    {
+      "path": "pt-BR/video_30.txt",
+      "title": "Além das ruas em chamas",
+      "words": 1304,
+      "minutes_at_120_words": 10.9,
+      "sha256": "df0b76443f9caf05ee17799e8d32894bd1dd20c73bbc8052a60e4b6e5c81ef4b"
+    },
+    {
+      "path": "pt-BR/video_31.txt",
+      "title": "A diferença era a permissão",
+      "words": 2713,
+      "minutes_at_120_words": 22.6,
+      "sha256": "d8e378fa9c14732a3940191284a1bfdbc9d07790d278e5ff7aa74b09a8a0ae4f"
+    },
+    {
+      "path": "pt-BR/video_32.txt",
+      "title": "Por trás do vidro blindado",
+      "words": 1446,
+      "minutes_at_120_words": 12.1,
+      "sha256": "72fc530a309f7158ada7bfaef0e81b7af1839b6a9c2e3d671c834fb7ef301da1"
+    },
+    {
+      "path": "pt-BR/video_33.txt",
+      "title": "O assistente e os segredos",
+      "words": 2019,
+      "minutes_at_120_words": 16.8,
+      "sha256": "429aff62d67fb430fb2cfb313aaa03362ac661c6e0c60bd816497f913942b8eb"
+    },
+    {
+      "path": "pt-BR/video_34.txt",
+      "title": "Escondido num comprimido",
+      "words": 2084,
+      "minutes_at_120_words": 17.4,
+      "sha256": "695586fcda1ab676503ef7155927a683ccb4d7e556069fad722d1105cd53499d"
+    },
+    {
+      "path": "pt-BR/video_35.txt",
+      "title": "O Estado vende cigarros",
+      "words": 1887,
+      "minutes_at_120_words": 15.7,
+      "sha256": "d7ca0081911a37c348e1d5a9efe43cf3e3e33ec9dbbcb53d1d26d40ff025e205"
+    },
+    {
+      "path": "pt-BR/video_36.txt",
+      "title": "Depois do chefe do cartel",
+      "words": 2242,
+      "minutes_at_120_words": 18.7,
+      "sha256": "f07b3236d44e9e2c578c84b8d5291c0c72f7da7ce8298aeba19b9a7992ca2b54"
+    },
+    {
+      "path": "pt-BR/video_38.txt",
+      "title": "Peter Thiel e o poder",
+      "words": 2716,
+      "minutes_at_120_words": 22.6,
+      "sha256": "b8055e5101a614add3a363eafa7aad75d424b1320494f2415b0e4d2e753322e5"
+    },
+    {
+      "path": "pt-BR/video_39.txt",
+      "title": "Quem decide quanto adoçamos?",
+      "words": 3498,
+      "minutes_at_120_words": 29.1,
+      "sha256": "7d74b4a889087fc9032b2996a69c296096944669bd4275c461a09e670ac80e5b"
+    },
+    {
+      "path": "pt-BR/video_40.txt",
+      "title": "DMT e a sensação de realidade",
+      "words": 2376,
+      "minutes_at_120_words": 19.8,
+      "sha256": "9b0d1d0a6195d109a5625cd480426e94e82242140452438d2988ee3a5bcdadbb"
+    },
+    {
+      "path": "pt-BR/everyday_01.txt",
+      "title": "A carta de outra pessoa",
+      "words": 923,
+      "minutes_at_120_words": 7.7,
+      "sha256": "6bd5be2ebc7b9ae160af0883cc1595faac7f2286a2219e7564e1211822b8a547"
+    },
+    {
+      "path": "pt-BR/everyday_02.txt",
+      "title": "A estante no corredor",
+      "words": 900,
+      "minutes_at_120_words": 7.5,
+      "sha256": "b795eddd6d32965fecbe1441256b3c1b61ebf120c49cd9be213c165ae87f340b"
+    },
+    {
+      "path": "pt-BR/everyday_03.txt",
+      "title": "Um sábado sem energia",
+      "words": 931,
+      "minutes_at_120_words": 7.8,
+      "sha256": "151425fb966c222e8a581b98d57598226015c49d0d2c7f32b69169705e9fb2d9"
+    },
+    {
+      "path": "pt-BR/everyday_04.txt",
+      "title": "O novo vizinho",
+      "words": 902,
+      "minutes_at_120_words": 7.5,
+      "sha256": "641275cdad7fec7b8f71d85e656de0024c5fe02170727fc2c6833e963c203ff3"
+    },
+    {
+      "path": "pt-BR/everyday_05.txt",
+      "title": "O gato desaparecido",
+      "words": 927,
+      "minutes_at_120_words": 7.7,
+      "sha256": "e58c450c95267f914439ce616913d7d9ed475f998a1e182012b5f4dbf3811cad"
+    },
+    {
+      "path": "pt-BR/travel_01.txt",
+      "title": "A mala trocada",
+      "words": 876,
+      "minutes_at_120_words": 7.3,
+      "sha256": "2b4863d61ed6fd8d69a2b04e79ebb7ab1ad2befb2575adca9333838ed2fce9db"
+    },
+    {
+      "path": "pt-BR/travel_02.txt",
+      "title": "O último quarto",
+      "words": 932,
+      "minutes_at_120_words": 7.8,
+      "sha256": "b8a9d4ab9d112d053018dfa7ec4441a88560a6489fbc8d9f5cbc3fe447626314"
+    },
+    {
+      "path": "pt-BR/travel_03.txt",
+      "title": "Uma parada à beira do mar",
+      "words": 964,
+      "minutes_at_120_words": 8.0,
+      "sha256": "b121d5c8b9f3d6f423b69e15162f6e8770322766fb7c2bcdc65cbb51de395136"
+    },
+    {
+      "path": "pt-BR/travel_04.txt",
+      "title": "O trem perdido",
+      "words": 964,
+      "minutes_at_120_words": 8.0,
+      "sha256": "04956dacaceb9d6ffd0bbd24124660049d64aa65e6d5c63c529f15c621db3f99"
+    },
+    {
+      "path": "pt-BR/travel_05.txt",
+      "title": "Um mapa de papel",
+      "words": 988,
+      "minutes_at_120_words": 8.2,
+      "sha256": "a0c3415b47477223f7c24fe160f5646a1a12a7635ba8b7b432238b8531f06abf"
+    },
+    {
+      "path": "pt-BR/restaurant_01.txt",
+      "title": "Uma mesa junto à janela",
+      "words": 976,
+      "minutes_at_120_words": 8.1,
+      "sha256": "af29b9658f818fd3ad639dce75d3a1d199bb720499552bb2659d8d1e9478259f"
+    },
+    {
+      "path": "pt-BR/restaurant_02.txt",
+      "title": "O pedido esquecido",
+      "words": 954,
+      "minutes_at_120_words": 8.0,
+      "sha256": "244ebe78ab0fce68f34ca1a351da7a543f26f4600267eee21b02640ba5a31226"
+    },
+    {
+      "path": "pt-BR/restaurant_03.txt",
+      "title": "A receita da família",
+      "words": 930,
+      "minutes_at_120_words": 7.8,
+      "sha256": "a6fecfc909f770afb893c513fe966655f9bef25acd98f00676a3bcfd398d0b93"
+    },
+    {
+      "path": "pt-BR/restaurant_04.txt",
+      "title": "A última cliente",
+      "words": 926,
+      "minutes_at_120_words": 7.7,
+      "sha256": "64132b76df6ad07482a9a7f1e238ec2d0446cb2d28243df449ad88ec900bf130"
+    },
+    {
+      "path": "pt-BR/restaurant_05.txt",
+      "title": "A primeira noite",
+      "words": 942,
+      "minutes_at_120_words": 7.8,
+      "sha256": "b545b9da4c4c66260279a12c5a4ca3f434d942e4ce58d7662dc0f887b50a1601"
+    },
+    {
+      "path": "pt-BR/work_01.txt",
+      "title": "O primeiro trabalho",
+      "words": 909,
+      "minutes_at_120_words": 7.6,
+      "sha256": "7cd5eef6c5f336b9f0f586a79cdb97f4792d63df2677586a962b4391e37c6acc"
+    },
+    {
+      "path": "pt-BR/work_02.txt",
+      "title": "O arquivo errado",
+      "words": 919,
+      "minutes_at_120_words": 7.7,
+      "sha256": "44090448dbace259d7110e582f68757bb3395fd682f8eae4d35861b0478900a8"
+    },
+    {
+      "path": "pt-BR/work_03.txt",
+      "title": "Uma troca de turno difícil",
+      "words": 903,
+      "minutes_at_120_words": 7.5,
+      "sha256": "584ad742d2610bd112e72514ec80acb67b95c65caa75e99413f7de8f321c1b66"
+    },
+    {
+      "path": "es/video_01.txt",
+      "title": "Vender un sueño",
+      "words": 1489,
+      "minutes_at_120_words": 12.4,
+      "sha256": "bacd04fc8859442ceeb426d58f24aada4464a8c8234450046aa73686ba79a8f6"
+    },
+    {
+      "path": "es/video_02.txt",
+      "title": "El fin de la prosperidad",
+      "words": 1570,
+      "minutes_at_120_words": 13.1,
+      "sha256": "7dd526454b27e25aed72e812af8605341fd35005aa8cc412ff8847dffa27e057"
+    },
+    {
+      "path": "es/video_03.txt",
+      "title": "Más allá de los libros",
+      "words": 1784,
+      "minutes_at_120_words": 14.9,
+      "sha256": "29b9c4025a45376195d9eb4c7cf2c701138e6f4faf8a7979a9b40f2f8dbddde0"
+    },
+    {
+      "path": "es/video_04.txt",
+      "title": "La creación de Claude",
+      "words": 1695,
+      "minutes_at_120_words": 14.1,
+      "sha256": "231444a86442f16f9417d708e61c126f42847ddca066f5fc1276cb4452eb4566"
+    },
+    {
+      "path": "es/video_05.txt",
+      "title": "Cohetes que regresan",
+      "words": 1623,
+      "minutes_at_120_words": 13.5,
+      "sha256": "e29cdd0f95b541bdf32b41e0c4c5a2e105f08c2c37f90ef65f8e3a07b1c17c54"
+    },
+    {
+      "path": "es/video_06.txt",
+      "title": "Chips para otros",
+      "words": 1686,
+      "minutes_at_120_words": 14.1,
+      "sha256": "bd9978e8eab42d507281e47d0c6b4b81ea29b64872fbe52620765755f99936ae"
+    },
+    {
+      "path": "es/video_07.txt",
+      "title": "Dinero sin un banco",
+      "words": 983,
+      "minutes_at_120_words": 8.2,
+      "sha256": "429f90018f0cef1e3a8125bda930035f4a0f83a3ab760b70bd1ac4570aa6c88e"
+    },
+    {
+      "path": "es/video_08.txt",
+      "title": "La compra de Hollywood",
+      "words": 1399,
+      "minutes_at_120_words": 11.7,
+      "sha256": "4b736725be34badfd8f5b7c787cc1c8166210781eca3bfbbff807f3c7128e7e1"
+    },
+    {
+      "path": "es/video_09.txt",
+      "title": "Volar con poco margen",
+      "words": 1388,
+      "minutes_at_120_words": 11.6,
+      "sha256": "954c92e4790af3e1a8ed1d7d9e3020fcb2264b6623e9c9ca481d3b286425c6fe"
+    },
+    {
+      "path": "es/video_10.txt",
+      "title": "Dentro de una tarjeta",
+      "words": 2732,
+      "minutes_at_120_words": 22.8,
+      "sha256": "b9f0602d4c0357ef1022fc594af732d1dfc15d9cc95a193e66dc624de266b67c"
+    },
+    {
+      "path": "es/video_11.txt",
+      "title": "Gigantes oscuros",
+      "words": 1460,
+      "minutes_at_120_words": 12.2,
+      "sha256": "f3b3969551a3addbb64b79daf0acbf3a5758835979713c0aa09ad969a4d004e8"
+    },
+    {
+      "path": "es/video_12.txt",
+      "title": "Editar la vida",
+      "words": 1568,
+      "minutes_at_120_words": 13.1,
+      "sha256": "881296ede99f8704b44283926d0a955a1282441dcf3b147b6426c6ec6ada051b"
+    },
+    {
+      "path": "es/video_13.txt",
+      "title": "Una ciudad tras el destello",
+      "words": 1109,
+      "minutes_at_120_words": 9.2,
+      "sha256": "ee37b4c30e397650d04d52bae4e6ecf74ec8fdc65f31c9dae87ef68f0f9b85e9"
+    },
+    {
+      "path": "es/video_14.txt",
+      "title": "Donde termina la luz",
+      "words": 1090,
+      "minutes_at_120_words": 9.1,
+      "sha256": "30fd3c36e10fd3f2a61b6ab8f43c146ec323eecaae23953028c7fda95dcbc94e"
+    },
+    {
+      "path": "es/video_15.txt",
+      "title": "Una estrella en una ciudad",
+      "words": 849,
+      "minutes_at_120_words": 7.1,
+      "sha256": "16ee53023539f687d906507c4b92ba8cc40e7fe6eca65c9e85d7c31e38bcdb68"
+    },
+    {
+      "path": "es/video_16.txt",
+      "title": "Si la Luna se acercara",
+      "words": 1257,
+      "minutes_at_120_words": 10.5,
+      "sha256": "64dd8d810923f10325c4f423d77ae239a0ce0dcc5065bba74f822c5dcdc38686"
+    },
+    {
+      "path": "es/video_17.txt",
+      "title": "La ventaja de una tienda pequeña",
+      "words": 1265,
+      "minutes_at_120_words": 10.5,
+      "sha256": "866565ba7f77f82f2e845479cc0020a77132dd8f9a7116eb496cb4270c123ffc"
+    },
+    {
+      "path": "es/video_18.txt",
+      "title": "El precio después de comprar",
+      "words": 931,
+      "minutes_at_120_words": 7.8,
+      "sha256": "73cab7c81d1c6e74f7517ce64e82b65b5484d84afa7f2394291504a9921e4708"
+    },
+    {
+      "path": "es/video_19.txt",
+      "title": "Cuando desaparece el cajero",
+      "words": 699,
+      "minutes_at_120_words": 5.8,
+      "sha256": "f1bbf619f0a653fdb9f4bfb28f2b32817f965ae3f0a605123fde8ee9ca797a60"
+    },
+    {
+      "path": "es/video_20.txt",
+      "title": "El precio de volver",
+      "words": 1571,
+      "minutes_at_120_words": 13.1,
+      "sha256": "54fec9183eee4f08cd18fb62d08a0787eb945a689d408e1e1bad22e65a7d60e7"
+    },
+    {
+      "path": "es/video_21.txt",
+      "title": "Inventar con ayuda de la IA",
+      "words": 1658,
+      "minutes_at_120_words": 13.8,
+      "sha256": "ccde94771e2cfc2f3a548d615b97e2a12662c1a6314f4ac4b566c4a1885ccc8a"
+    },
+    {
+      "path": "es/video_22.txt",
+      "title": "Policías bajo sospecha",
+      "words": 2413,
+      "minutes_at_120_words": 20.1,
+      "sha256": "e4e0e8e91433d5b9de3416f47f9f787c8f33ef639130c238df127c1efec8b396"
+    },
+    {
+      "path": "es/video_23.txt",
+      "title": "Cuatro meses de cautiverio",
+      "words": 1958,
+      "minutes_at_120_words": 16.3,
+      "sha256": "1d5ac81eae5ccb26bcdc4a81bd09961d98aa3ec84bd452ab801dda8b37f9d3e9"
+    },
+    {
+      "path": "es/video_24.txt",
+      "title": "Las cartas de Monsieur X",
+      "words": 1757,
+      "minutes_at_120_words": 14.6,
+      "sha256": "4decf0456274e003f45ddab65dca67aeaa87640b5f57d4065b8622f8015eaee7"
+    },
+    {
+      "path": "es/video_25.txt",
+      "title": "Tras las puertas de la prisión",
+      "words": 2374,
+      "minutes_at_120_words": 19.8,
+      "sha256": "89e1f98df2262ef7f72ee8e6846f1d1469e03a494b9449aa39ac6d959d29bc2c"
+    },
+    {
+      "path": "es/video_26.txt",
+      "title": "Las cartas que sembraron miedo",
+      "words": 1456,
+      "minutes_at_120_words": 12.1,
+      "sha256": "8d07b1e8763eac326c2439dba2fdec7b35a5db032b4c566266e19e210003f86a"
+    },
+    {
+      "path": "es/video_27.txt",
+      "title": "El regreso del vuelo 705",
+      "words": 923,
+      "minutes_at_120_words": 7.7,
+      "sha256": "c778a5257b0e0a18cd834e29ad3879d9ab900a5ae651f0b9fdeaf87c50176c9f"
+    },
+    {
+      "path": "es/video_28.txt",
+      "title": "Después del rescate",
+      "words": 1369,
+      "minutes_at_120_words": 11.4,
+      "sha256": "338fbdce94f4bbf8b47b53a4aae4e99e6930b2e61bcd1dc858980710fb6a0b56"
+    },
+    {
+      "path": "es/video_29.txt",
+      "title": "Los límites del consentimiento",
+      "words": 1006,
+      "minutes_at_120_words": 8.4,
+      "sha256": "41baa944f0549b82f9097b1d0f45d0158ed31d72b66ce530ebdeb91e9e00af85"
+    },
+    {
+      "path": "es/video_30.txt",
+      "title": "Más allá de los incendios",
+      "words": 1345,
+      "minutes_at_120_words": 11.2,
+      "sha256": "4de7554153aa378f84d650d24e87cb9e1506a54633d042a929bb4c8d66d9db0a"
+    },
+    {
+      "path": "es/video_31.txt",
+      "title": "La diferencia era el permiso",
+      "words": 2766,
+      "minutes_at_120_words": 23.1,
+      "sha256": "b95bc8742ca9b28070722790ae4d38fe0db63a637cee2c6f204fffa26be4aa23"
+    },
+    {
+      "path": "es/video_32.txt",
+      "title": "Tras el cristal blindado",
+      "words": 1473,
+      "minutes_at_120_words": 12.3,
+      "sha256": "05987af44652e4d6627e04982107f00774176e75eefc3a32fd0ba163c33b3b00"
+    },
+    {
+      "path": "es/video_33.txt",
+      "title": "El asistente y los secretos",
+      "words": 2055,
+      "minutes_at_120_words": 17.1,
+      "sha256": "ef5609b37b36e101f7cdd4b42b8bb1b6a325435d65efca8c8de0f51c65fba053"
+    },
+    {
+      "path": "es/video_34.txt",
+      "title": "Oculto en una pastilla",
+      "words": 2134,
+      "minutes_at_120_words": 17.8,
+      "sha256": "a239b7478d342dc3331241d7f65742a836738f81f1cde36045a5ae259ae131ff"
+    },
+    {
+      "path": "es/video_35.txt",
+      "title": "El Estado vende cigarrillos",
+      "words": 1946,
+      "minutes_at_120_words": 16.2,
+      "sha256": "feee7ab7d20b92fbfd347093f16b3c74db9b4025929bf5ca4a358626a77ac172"
+    },
+    {
+      "path": "es/video_36.txt",
+      "title": "Después del jefe del cartel",
+      "words": 2304,
+      "minutes_at_120_words": 19.2,
+      "sha256": "b96406029eca591ccd67144ccff6bbe89f3b80e55b4f233b33ee10689345e71e"
+    },
+    {
+      "path": "es/video_38.txt",
+      "title": "Peter Thiel y el poder",
+      "words": 2828,
+      "minutes_at_120_words": 23.6,
+      "sha256": "61e779e13256e9f15e6761fae431a6258c20f4b7d1d5d4f3202df57739137bcd"
+    },
+    {
+      "path": "es/video_39.txt",
+      "title": "¿Quién decide cuánto endulzamos?",
+      "words": 3325,
+      "minutes_at_120_words": 27.7,
+      "sha256": "4696be21e0b3ddc7a273c4ff119bf8a435b89e830a58d355d1b28a914db0478e"
+    },
+    {
+      "path": "es/video_40.txt",
+      "title": "DMT y la sensación de realidad",
+      "words": 2415,
+      "minutes_at_120_words": 20.1,
+      "sha256": "559089eb4fac110a4932611c35032b38dacbebd543149c4eec8ab4c0afc4a289"
+    },
+    {
+      "path": "es/everyday_01.txt",
+      "title": "Una carta ajena",
+      "words": 938,
+      "minutes_at_120_words": 7.8,
+      "sha256": "5a327b0913e7e5eb6da86cbbfffceb191337a6afb14d66fc8fb040999f75de04"
+    },
+    {
+      "path": "es/everyday_02.txt",
+      "title": "La estantería del pasillo",
+      "words": 908,
+      "minutes_at_120_words": 7.6,
+      "sha256": "b184a44701a0a8ae29438ce09c6e1a7e2888c3336baae994ef0132848c12fe36"
+    },
+    {
+      "path": "es/everyday_03.txt",
+      "title": "Un sábado sin luz",
+      "words": 937,
+      "minutes_at_120_words": 7.8,
+      "sha256": "892b384f470bff156ae931abbadbb6d5b2a814d35c5545957c21341d1215e00a"
+    },
+    {
+      "path": "es/everyday_04.txt",
+      "title": "El nuevo vecino",
+      "words": 915,
+      "minutes_at_120_words": 7.6,
+      "sha256": "6e8b030e58275a7eb532a33ca9f94dcf00da8f884b02cb6207c32f0fa3832a1f"
+    },
+    {
+      "path": "es/everyday_05.txt",
+      "title": "El gato desaparecido",
+      "words": 949,
+      "minutes_at_120_words": 7.9,
+      "sha256": "6decbbc920af0e58753119fa39881eb252d0b74ff6e1b0082adffe07bfc586a0"
+    },
+    {
+      "path": "es/travel_01.txt",
+      "title": "La maleta equivocada",
+      "words": 893,
+      "minutes_at_120_words": 7.4,
+      "sha256": "4a636019f093f4c3de57548fbc353c38af9017aba9fcd7c6afb1a638975a98d4"
+    },
+    {
+      "path": "es/travel_02.txt",
+      "title": "La última habitación",
+      "words": 934,
+      "minutes_at_120_words": 7.8,
+      "sha256": "1e2dbb1ce3add645e25d5a4d089db20defdbd7f9a6edc0b9a521e4e216761129"
+    },
+    {
+      "path": "es/travel_03.txt",
+      "title": "Una parada junto al mar",
+      "words": 976,
+      "minutes_at_120_words": 8.1,
+      "sha256": "03b946ce17a27535ef0fad33e497b63d7f83ff5888a34549abc737cabf629e95"
+    },
+    {
+      "path": "es/travel_04.txt",
+      "title": "El tren perdido",
+      "words": 990,
+      "minutes_at_120_words": 8.2,
+      "sha256": "bfb3b0a3a5e9596abc2e84edc08cb96462a4068b9e1757060cc9f84df115b6ae"
+    },
+    {
+      "path": "es/travel_05.txt",
+      "title": "Un mapa de papel",
+      "words": 969,
+      "minutes_at_120_words": 8.1,
+      "sha256": "e087290a2ff1891a35a37a09706c8b4a5a7db45ee4a1652865a23be7dbbe1404"
+    },
+    {
+      "path": "es/restaurant_01.txt",
+      "title": "Una mesa junto a la ventana",
+      "words": 990,
+      "minutes_at_120_words": 8.2,
+      "sha256": "c1e2a5057c1ef70310979584437bd11227ef28b04f042e840f1043a4b9832086"
+    },
+    {
+      "path": "es/restaurant_02.txt",
+      "title": "El pedido olvidado",
+      "words": 968,
+      "minutes_at_120_words": 8.1,
+      "sha256": "be869448a57ac7a81f80ea743396ede5dc05760cb69811a36acd4dcc7ab590ca"
+    },
+    {
+      "path": "es/restaurant_03.txt",
+      "title": "La receta de familia",
+      "words": 966,
+      "minutes_at_120_words": 8.1,
+      "sha256": "ce862e4a8ea55afeb635289eedfa923fa5bf72ce5579587430056cdf5a7a1a47"
+    },
+    {
+      "path": "es/restaurant_04.txt",
+      "title": "La última clienta",
+      "words": 949,
+      "minutes_at_120_words": 7.9,
+      "sha256": "a8625ddb89bab91151d96ac1f099fe048b9cf3868be2028ca8f12cb78b72139f"
+    },
+    {
+      "path": "es/restaurant_05.txt",
+      "title": "La primera noche",
+      "words": 978,
+      "minutes_at_120_words": 8.2,
+      "sha256": "5fbf766c68cdea03dcf072aca6347efcd8e3879bde74fe786b357ee131b87cdd"
+    },
+    {
+      "path": "es/work_01.txt",
+      "title": "El primer encargo",
+      "words": 940,
+      "minutes_at_120_words": 7.8,
+      "sha256": "72afc2e2eb0eebc22a9c3168c14e6ef5ead567bd0d89d8e436220e6fd3c6b5fb"
+    },
+    {
+      "path": "es/work_02.txt",
+      "title": "El archivo equivocado",
+      "words": 942,
+      "minutes_at_120_words": 7.8,
+      "sha256": "a6918a5764f4bcf5bf3096456f7c02d4da1af8c4dce4c758e6c092462c0de0fe"
+    },
+    {
+      "path": "es/work_03.txt",
+      "title": "Un cambio de turno difícil",
+      "words": 910,
+      "minutes_at_120_words": 7.6,
+      "sha256": "9a89597cf4a4d974a156f8f7280db2cd1a00ba6b63e44305815c513db87e2646"
+    },
+    {
+      "path": "it/video_01.txt",
+      "title": "Vendere un sogno",
+      "words": 1424,
+      "minutes_at_120_words": 11.9,
+      "sha256": "3954c97eea9b38d7f82cdc68a2a6cc1aae6e556edf7752d21bc9f6ae82192bf6"
+    },
+    {
+      "path": "it/video_02.txt",
+      "title": "La fine della prosperità",
+      "words": 1505,
+      "minutes_at_120_words": 12.5,
+      "sha256": "6b175521826e66d77757b76dd37fecd3de51e943b6570c90e91cfd7bd74fc6a6"
+    },
+    {
+      "path": "it/video_03.txt",
+      "title": "Oltre la libreria",
+      "words": 1701,
+      "minutes_at_120_words": 14.2,
+      "sha256": "04d280cdd5eb274ec74f1912f09b6b4fdcc226b4900a0a6982986d5db430c853"
+    },
+    {
+      "path": "it/video_04.txt",
+      "title": "La nascita di Claude",
+      "words": 1636,
+      "minutes_at_120_words": 13.6,
+      "sha256": "0a732fb0863df8072f15c0a4b3c2921c7571d2715873b1601d009482c79b802f"
+    },
+    {
+      "path": "it/video_05.txt",
+      "title": "Razzi che ritornano",
+      "words": 1554,
+      "minutes_at_120_words": 12.9,
+      "sha256": "e7f5c7cc97a25a6dd926d48d92fbced6b516b7228550d0d311b387a6cdd44a7c"
+    },
+    {
+      "path": "it/video_06.txt",
+      "title": "Chip per gli altri",
+      "words": 1638,
+      "minutes_at_120_words": 13.7,
+      "sha256": "68382aa864c0f15d7823cbc5ea689d6ebd4725cf03049596093e7cb59cd80b14"
+    },
+    {
+      "path": "it/video_07.txt",
+      "title": "Denaro senza una banca",
+      "words": 961,
+      "minutes_at_120_words": 8.0,
+      "sha256": "802c26f740f4ec0b053ac28b20ff56f21ff79429f78d8d27d5b158042edd0708"
+    },
+    {
+      "path": "it/video_08.txt",
+      "title": "Comprare Hollywood",
+      "words": 1379,
+      "minutes_at_120_words": 11.5,
+      "sha256": "86efdf76337660e3d2a7ad30183911f8fc8aa12ab9a3b72965d7e2c3768b7606"
+    },
+    {
+      "path": "it/video_09.txt",
+      "title": "Volare con poco margine",
+      "words": 1348,
+      "minutes_at_120_words": 11.2,
+      "sha256": "73438209e96f03d92ec317499281c7a576e5c821e935acfded6b35cabaafeb51"
+    },
+    {
+      "path": "it/video_10.txt",
+      "title": "Dentro una carta",
+      "words": 2698,
+      "minutes_at_120_words": 22.5,
+      "sha256": "e1c2e8e702756b5ac30917251bf051df243775bece1eb14219bae09201cb01e9"
+    },
+    {
+      "path": "it/video_11.txt",
+      "title": "Giganti oscuri",
+      "words": 1416,
+      "minutes_at_120_words": 11.8,
+      "sha256": "7d53b9760b3b3e1696a71c5976d7bda59363085b995a7b0f765d9c76a3b89689"
+    },
+    {
+      "path": "it/video_12.txt",
+      "title": "Riscrivere la vita",
+      "words": 1523,
+      "minutes_at_120_words": 12.7,
+      "sha256": "9a7cb4577c9c97be033318203b18a1035ed670058c2cd74c79bba996435d100f"
+    },
+    {
+      "path": "it/video_13.txt",
+      "title": "Una città dopo il lampo",
+      "words": 1075,
+      "minutes_at_120_words": 9.0,
+      "sha256": "c4c045b8c29a3593977048a3b64ab91360b5e4a824bd8110cfc55b2d59667792"
+    },
+    {
+      "path": "it/video_14.txt",
+      "title": "Dove finisce la luce",
+      "words": 1059,
+      "minutes_at_120_words": 8.8,
+      "sha256": "c5a8a69c7854a455d9796ec35b679a789395bd1c4fee776df22e9ba787716b51"
+    },
+    {
+      "path": "it/video_15.txt",
+      "title": "Una stella in una città",
+      "words": 821,
+      "minutes_at_120_words": 6.8,
+      "sha256": "9a29b1c3543fb06d99bafb5f26ead4cf531e9077ecc89cebd2fc6ff902d384e3"
+    },
+    {
+      "path": "it/video_16.txt",
+      "title": "Se la Luna si avvicinasse",
+      "words": 1202,
+      "minutes_at_120_words": 10.0,
+      "sha256": "f15f3a073f07444e29ed851f01efb03cd8005b516f40d4f79a4ad141fab7ffd4"
+    },
+    {
+      "path": "it/video_17.txt",
+      "title": "La forza del negozio piccolo",
+      "words": 1240,
+      "minutes_at_120_words": 10.3,
+      "sha256": "dec932d148844a834b0884dc186f509de86c2bb0808e199fe89e70bbc5b95e34"
+    },
+    {
+      "path": "it/video_18.txt",
+      "title": "Il prezzo dopo l'acquisto",
+      "words": 902,
+      "minutes_at_120_words": 7.5,
+      "sha256": "68bd0ef678ca5a6bf488c0fb4f58535e8fb6d4d58cbffd0d40a3a3c9c67bbae9"
+    },
+    {
+      "path": "it/video_19.txt",
+      "title": "Quando scompare il bancomat",
+      "words": 678,
+      "minutes_at_120_words": 5.7,
+      "sha256": "cd62701db8b78f70e18b1f775f068776de9765c107936a708f4590f4846108a9"
+    },
+    {
+      "path": "it/video_20.txt",
+      "title": "Il prezzo di un ritorno",
+      "words": 1520,
+      "minutes_at_120_words": 12.7,
+      "sha256": "5d9efe6da775513025c92b22aa33fecc6fb656d048269c735f2dfd1454d31337"
+    },
+    {
+      "path": "it/video_21.txt",
+      "title": "Inventare con l'IA",
+      "words": 1601,
+      "minutes_at_120_words": 13.3,
+      "sha256": "9cacf054907c418ee88b19e41ba15edea24d0b8d11c698a4f1ae85f16a8da238"
+    },
+    {
+      "path": "it/video_22.txt",
+      "title": "Poliziotti sotto sospetto",
+      "words": 2458,
+      "minutes_at_120_words": 20.5,
+      "sha256": "f39e1b4868453c3377ed5be59349cf714916cf312e606e35603d7666b11808bb"
+    },
+    {
+      "path": "it/video_23.txt",
+      "title": "Quattro mesi prigionieri",
+      "words": 1913,
+      "minutes_at_120_words": 15.9,
+      "sha256": "7bf8eead77fa1fb398ab9eb01d284b92170a13ec4f3a73a3c5fe7b0c2e6769ce"
+    },
+    {
+      "path": "it/video_24.txt",
+      "title": "Le lettere di Monsieur X",
+      "words": 1698,
+      "minutes_at_120_words": 14.2,
+      "sha256": "2aa1b4eaaa056899cfcc4346d662dd8ef39e643616e713359a0b4f9ca2034ce5"
+    },
+    {
+      "path": "it/video_25.txt",
+      "title": "Dietro le porte del carcere",
+      "words": 2325,
+      "minutes_at_120_words": 19.4,
+      "sha256": "5f86b81fbc568afe4071ea43a9798db78e9768260851ec6f2c2bb14125689a01"
+    },
+    {
+      "path": "it/video_26.txt",
+      "title": "Le lettere della paura",
+      "words": 1390,
+      "minutes_at_120_words": 11.6,
+      "sha256": "8d2cbd426595c65115225c7f7a80378710c7ccf0147d4a651e2a8a53b7f6a53b"
+    },
+    {
+      "path": "it/video_27.txt",
+      "title": "Il ritorno del volo 705",
+      "words": 904,
+      "minutes_at_120_words": 7.5,
+      "sha256": "67bd06dfd748bcd4b565d47b8aa1f969ba1d010fe40c2184b8419cf2724e8965"
+    },
+    {
+      "path": "it/video_28.txt",
+      "title": "Dopo il riscatto",
+      "words": 1330,
+      "minutes_at_120_words": 11.1,
+      "sha256": "51dae2a149d723a1f6a8fe0fcd5c598af753e9d40f557b3042682693e3e92aff"
+    },
+    {
+      "path": "it/video_29.txt",
+      "title": "I limiti del consenso",
+      "words": 970,
+      "minutes_at_120_words": 8.1,
+      "sha256": "917e1bdaae1131d3c46c65ae35780fc65b0ba5daaa879538a98fb56c71c1ea9f"
+    },
+    {
+      "path": "it/video_30.txt",
+      "title": "Oltre le strade in fiamme",
+      "words": 1307,
+      "minutes_at_120_words": 10.9,
+      "sha256": "e3e7e743c99c01c1bc2e23a513055d6a0c0fa2fc75a685605c19e586332e351d"
+    },
+    {
+      "path": "it/video_31.txt",
+      "title": "La differenza era il permesso",
+      "words": 2640,
+      "minutes_at_120_words": 22.0,
+      "sha256": "3f71c60f8ee72713695d11e9dc5c09f555df818de6e8be5c4fba9790da9ff472"
+    },
+    {
+      "path": "it/video_32.txt",
+      "title": "Dietro il vetro blindato",
+      "words": 1420,
+      "minutes_at_120_words": 11.8,
+      "sha256": "d49b689ff85c6509e1c4cd63a9e0e133bfec0b17af37ba7a45e222254e4873ef"
+    },
+    {
+      "path": "it/video_33.txt",
+      "title": "L'assistente e i segreti",
+      "words": 1941,
+      "minutes_at_120_words": 16.2,
+      "sha256": "3395c5be2cd82d0908dddd5d2ea9ce0948ad2ed201b9076d73382753825dfd5c"
+    },
+    {
+      "path": "it/video_34.txt",
+      "title": "Nascosto in una pillola",
+      "words": 2018,
+      "minutes_at_120_words": 16.8,
+      "sha256": "6198442183e85fc23538421d65ba71188d24016faba6e1e6eca27c030210541f"
+    },
+    {
+      "path": "it/video_35.txt",
+      "title": "Lo Stato vende sigarette",
+      "words": 1828,
+      "minutes_at_120_words": 15.2,
+      "sha256": "02b51acc44dc843098a3cb012af4332564dfec9dd5871714079c7afdc4888479"
+    },
+    {
+      "path": "it/video_36.txt",
+      "title": "Dopo il capo del cartello",
+      "words": 2159,
+      "minutes_at_120_words": 18.0,
+      "sha256": "ca41451605c5d353ed2f216a0a67f8bce1dea119c54a3a1ebebc56d5792e0307"
+    },
+    {
+      "path": "it/video_38.txt",
+      "title": "Peter Thiel e il potere",
+      "words": 2670,
+      "minutes_at_120_words": 22.2,
+      "sha256": "1899e3ef0c47c59e997c787ddde5f4f00769c1af03cf6902d0f19a71a7c3693f"
+    },
+    {
+      "path": "it/video_39.txt",
+      "title": "Chi decide quanto zucchero?",
+      "words": 3352,
+      "minutes_at_120_words": 27.9,
+      "sha256": "dd1c61ba04c3a4234ac66d405601476bf951515508f63a7d4f413ca4c3f89496"
+    },
+    {
+      "path": "it/video_40.txt",
+      "title": "DMT e il senso della realtà",
+      "words": 2325,
+      "minutes_at_120_words": 19.4,
+      "sha256": "2f818529951811c10649c66842b1d130aaf3da48b16413e31d40295cbc1d3369"
+    },
+    {
+      "path": "it/everyday_01.txt",
+      "title": "La lettera di un'altra",
+      "words": 881,
+      "minutes_at_120_words": 7.3,
+      "sha256": "d569be00c504c2be833248523a4b590af2eb64184684a9c5b09c08325e295acf"
+    },
+    {
+      "path": "it/everyday_02.txt",
+      "title": "Lo scaffale in corridoio",
+      "words": 867,
+      "minutes_at_120_words": 7.2,
+      "sha256": "9ba192ad4efff04135acedbe0fd2697eb5ab1aff1e7aaaf8c3c78aba73e672e0"
+    },
+    {
+      "path": "it/everyday_03.txt",
+      "title": "Un sabato senza corrente",
+      "words": 895,
+      "minutes_at_120_words": 7.5,
+      "sha256": "6664f978124729c05dd058f40a3573bc53eafc11a836bca05570439f644186a1"
+    },
+    {
+      "path": "it/everyday_04.txt",
+      "title": "Il nuovo vicino",
+      "words": 875,
+      "minutes_at_120_words": 7.3,
+      "sha256": "4878171a8ff7a23a9d86e04cb5b29c88759d3c6516b65ded158007c99e9b675b"
+    },
+    {
+      "path": "it/everyday_05.txt",
+      "title": "Il gatto scomparso",
+      "words": 886,
+      "minutes_at_120_words": 7.4,
+      "sha256": "b9a692a749e5a552ac0968e0e23db52578f4b55af484100da56adf048b70818c"
+    },
+    {
+      "path": "it/travel_01.txt",
+      "title": "La valigia sbagliata",
+      "words": 873,
+      "minutes_at_120_words": 7.3,
+      "sha256": "2097c9c8d80b9ce45236b8b5adb3624951256d71d1f841c288a4e04b18c3c2ce"
+    },
+    {
+      "path": "it/travel_02.txt",
+      "title": "L'ultima camera",
+      "words": 912,
+      "minutes_at_120_words": 7.6,
+      "sha256": "c0f24d40782b0b1f1502b3dae20d45e8bd04d043990628a181f8c425bf004e6a"
+    },
+    {
+      "path": "it/travel_03.txt",
+      "title": "Una sosta al mare",
+      "words": 905,
+      "minutes_at_120_words": 7.5,
+      "sha256": "15b2e5715597a295a3f9e6a737f46d2d808896ee83ea1f99a188d150e63d17d3"
+    },
+    {
+      "path": "it/travel_04.txt",
+      "title": "Il treno perso",
+      "words": 952,
+      "minutes_at_120_words": 7.9,
+      "sha256": "d5e59b490fcf742e566ae3644d04d5147464e859834b5b83d05c71f2d66205fa"
+    },
+    {
+      "path": "it/travel_05.txt",
+      "title": "Una mappa di carta",
+      "words": 904,
+      "minutes_at_120_words": 7.5,
+      "sha256": "a1a3f6ed4bb843e88f2de13e7d72ac06d4165052d866a94be1ff8f21a1af6fdd"
+    },
+    {
+      "path": "it/restaurant_01.txt",
+      "title": "Un tavolo alla finestra",
+      "words": 937,
+      "minutes_at_120_words": 7.8,
+      "sha256": "5aa5944e935536609c2e8f949348f03c8d2531eb609d81f83aca2896b862b2ae"
+    },
+    {
+      "path": "it/restaurant_02.txt",
+      "title": "L'ordine dimenticato",
+      "words": 926,
+      "minutes_at_120_words": 7.7,
+      "sha256": "838ccc9828cb3949b40b3c2f373622e62b56f08884172bd8e8d313bec3002957"
+    },
+    {
+      "path": "it/restaurant_03.txt",
+      "title": "La ricetta di famiglia",
+      "words": 932,
+      "minutes_at_120_words": 7.8,
+      "sha256": "fc1f91ef7e5e603c10965cfb619ffbc01ef6019fb99c81462d791241a1e74c49"
+    },
+    {
+      "path": "it/restaurant_04.txt",
+      "title": "L'ultima cliente",
+      "words": 911,
+      "minutes_at_120_words": 7.6,
+      "sha256": "f51f8db7e021e307ff14cc7a2f510ccd05582c8120d8191e87995beea02c6c6e"
+    },
+    {
+      "path": "it/restaurant_05.txt",
+      "title": "La prima sera",
+      "words": 931,
+      "minutes_at_120_words": 7.8,
+      "sha256": "3c400e8dfeda86588eaafb175a0430dc95b607fd9766eac71fbb6443fef1d228"
+    },
+    {
+      "path": "it/work_01.txt",
+      "title": "Il primo incarico",
+      "words": 878,
+      "minutes_at_120_words": 7.3,
+      "sha256": "e3751ca40d32386a4fe66f08b0e9a6c7d5af192f11cc942760df2d59ca6bc873"
+    },
+    {
+      "path": "it/work_02.txt",
+      "title": "Il file sbagliato",
+      "words": 882,
+      "minutes_at_120_words": 7.3,
+      "sha256": "470de267bd5132911978f4dac47cad229650f15dfa6aa06e6bc791eb13908110"
+    },
+    {
+      "path": "it/work_03.txt",
+      "title": "Un passaggio difficile",
+      "words": 852,
+      "minutes_at_120_words": 7.1,
+      "sha256": "01915f231268ee6c983c6cb3163229360679aceb1b2e62ecf16948884aa53bcf"
+    },
+    {
+      "path": "nb/video_01.txt",
+      "title": "Å selge en drøm",
+      "words": 1453,
+      "minutes_at_120_words": 12.1,
+      "sha256": "08c07d6d23965e97e4a5300b87befe7d6d79573237d8ade7f2a2a06a48a5f2b4"
+    },
+    {
+      "path": "nb/video_02.txt",
+      "title": "Da oppgangen tok slutt",
+      "words": 1399,
+      "minutes_at_120_words": 11.7,
+      "sha256": "0ddbe6e8f155ba69d8e567a5760a1fbf3d353e99d9ccb72d70dfc80e4742175d"
+    },
+    {
+      "path": "nb/video_03.txt",
+      "title": "Mer enn en bokhandel",
+      "words": 1637,
+      "minutes_at_120_words": 13.6,
+      "sha256": "99dff59b425870f8e63089ec0a39eb2fe4d512308c6bad50e5e8631492394235"
+    },
+    {
+      "path": "nb/video_04.txt",
+      "title": "Veien til Claude",
+      "words": 1560,
+      "minutes_at_120_words": 13.0,
+      "sha256": "c986eab4b3e3e57c5d8dbbaf77e0e9ed5a25a3c453d5c428dc6091e5f212fdaa"
+    },
+    {
+      "path": "nb/video_05.txt",
+      "title": "Raketter som vender tilbake",
+      "words": 1457,
+      "minutes_at_120_words": 12.1,
+      "sha256": "8d0810b150b2976cd668aa480d733bb38bdd6449d39e7da79e8179d0e60ee5f5"
+    },
+    {
+      "path": "nb/video_06.txt",
+      "title": "Brikker for andre",
+      "words": 1542,
+      "minutes_at_120_words": 12.8,
+      "sha256": "b00e37a409874afb4fe101ff998cdc0be6c2068118c40ca7cbeb5c3dcef363d4"
+    },
+    {
+      "path": "nb/video_07.txt",
+      "title": "Penger uten en bank",
+      "words": 922,
+      "minutes_at_120_words": 7.7,
+      "sha256": "cf9a2be3af3d8bf43a7ad7c872da4ef1dac0e50505cc4dc53fcce9bbce7edb84"
+    },
+    {
+      "path": "nb/video_08.txt",
+      "title": "Kjøpet av Hollywood",
+      "words": 1311,
+      "minutes_at_120_words": 10.9,
+      "sha256": "bcf81a676b64e37d7a09675e353ef52cdb4c34663c79d0e64f7a5789844bf62b"
+    },
+    {
+      "path": "nb/video_09.txt",
+      "title": "Fulle fly, små marginer",
+      "words": 1260,
+      "minutes_at_120_words": 10.5,
+      "sha256": "0dcdbae8da2721a18d1772f4270536f8afb2280285912cb45c9954ae1fb20a28"
+    },
+    {
+      "path": "nb/video_10.txt",
+      "title": "Inne i et betalingskort",
+      "words": 2700,
+      "minutes_at_120_words": 22.5,
+      "sha256": "c9511ef071acd76f9a86c3862667794594b10729c2285249796b2c0e8d74ab1a"
+    },
+    {
+      "path": "nb/video_11.txt",
+      "title": "Mørke kjemper",
+      "words": 1343,
+      "minutes_at_120_words": 11.2,
+      "sha256": "f58b1c69bba869ead7517d31111c1d31107fb948fedc37bb7a74c8d253caeae7"
+    },
+    {
+      "path": "nb/video_12.txt",
+      "title": "Å redigere livet",
+      "words": 1432,
+      "minutes_at_120_words": 11.9,
+      "sha256": "4bba28957197a05a471d81dba875cbe37a3c6c79425e709ce63495b305f73e58"
+    },
+    {
+      "path": "nb/video_13.txt",
+      "title": "En by etter lysglimtet",
+      "words": 1021,
+      "minutes_at_120_words": 8.5,
+      "sha256": "bec4b38899277875e94274af4255e2119fe0c34555e55dcb09a504ecbc37565e"
+    },
+    {
+      "path": "nb/video_14.txt",
+      "title": "Der sollyset tar slutt",
+      "words": 1041,
+      "minutes_at_120_words": 8.7,
+      "sha256": "a3e72a65637651207d92148038be2567c5a14bdf65b94209f19a5510404c0542"
+    },
+    {
+      "path": "nb/video_15.txt",
+      "title": "En stjerne i en by",
+      "words": 792,
+      "minutes_at_120_words": 6.6,
+      "sha256": "6ccd96da9b6394972dfe6fa3c529538803bbdd5b1de2398df2e38834f174cd2d"
+    },
+    {
+      "path": "nb/video_16.txt",
+      "title": "Hvis månen kom nærmere",
+      "words": 1216,
+      "minutes_at_120_words": 10.1,
+      "sha256": "c37c523d7efe3399e71ede585e46ed98995def40cc8f7e3439f913dfc98dc799"
+    },
+    {
+      "path": "nb/video_17.txt",
+      "title": "Fordelen med en liten butikk",
+      "words": 1237,
+      "minutes_at_120_words": 10.3,
+      "sha256": "068a907a8d90a1308abda175806886c5e118cc02e759c2bbe9aa05ec89c29a70"
+    },
+    {
+      "path": "nb/video_18.txt",
+      "title": "Prisen etter kjøpet",
+      "words": 861,
+      "minutes_at_120_words": 7.2,
+      "sha256": "781cfb629572e591a5f652f9b1c61f88b1dbeed984b2be25213a7c7de1080ab4"
+    },
+    {
+      "path": "nb/video_19.txt",
+      "title": "Når minibanken forsvinner",
+      "words": 645,
+      "minutes_at_120_words": 5.4,
+      "sha256": "e13ce05912ce214ed9525dab05889670c86af606f9477b43fa7d7da9b7932041"
+    },
+    {
+      "path": "nb/video_20.txt",
+      "title": "Prisen for å komme tilbake",
+      "words": 1514,
+      "minutes_at_120_words": 12.6,
+      "sha256": "a4478234afb909da00ff75226d750309b93903460d6d1c189697bf5734f54f35"
+    },
+    {
+      "path": "nb/video_21.txt",
+      "title": "Oppfinnelser med KI",
+      "words": 1570,
+      "minutes_at_120_words": 13.1,
+      "sha256": "05319fa32c871185a63ed26f52efb7c1efb689550d2f37aaa848502d587c42c1"
+    },
+    {
+      "path": "nb/video_22.txt",
+      "title": "Da politiet ble mistenkt",
+      "words": 2505,
+      "minutes_at_120_words": 20.9,
+      "sha256": "b2dac47b97adb2679f56a890aa899861e0d008027da52ed6f8f8d8205aa39c75"
+    },
+    {
+      "path": "nb/video_23.txt",
+      "title": "Fire måneder i fangenskap",
+      "words": 1864,
+      "minutes_at_120_words": 15.5,
+      "sha256": "e1bd84e6ebceebc3928fa79a5e847f1e1a6d7a10b93544fd5d4040a5dc29a7e7"
+    },
+    {
+      "path": "nb/video_24.txt",
+      "title": "Brevene fra Monsieur X",
+      "words": 1683,
+      "minutes_at_120_words": 14.0,
+      "sha256": "cc57889501996f37bf03b17d6bad9fd7ba36024033ce03b96001e2df26a2be53"
+    },
+    {
+      "path": "nb/video_25.txt",
+      "title": "Bak fengselsdørene",
+      "words": 2260,
+      "minutes_at_120_words": 18.8,
+      "sha256": "679362ccca0f1e8f8609766d3dd0dd51676129c14c02e473771a48a50b27b154"
+    },
+    {
+      "path": "nb/video_26.txt",
+      "title": "Brevene som spredte frykt",
+      "words": 1322,
+      "minutes_at_120_words": 11.0,
+      "sha256": "e95d4a2bc736ce5b0a205a5caa8fa4ac48e0decd38a87fa2b009edff3bce8884"
+    },
+    {
+      "path": "nb/video_27.txt",
+      "title": "Flight 705 vender tilbake",
+      "words": 874,
+      "minutes_at_120_words": 7.3,
+      "sha256": "3d2b6be478e22a39ab44816005c6f42326183020eee634ed37ceeb477291a73b"
+    },
+    {
+      "path": "nb/video_28.txt",
+      "title": "Etter løsepengene",
+      "words": 1326,
+      "minutes_at_120_words": 11.1,
+      "sha256": "b724bbcd525160362907e0075a564208411b537e054adee7b67b761bb2b5d01f"
+    },
+    {
+      "path": "nb/video_29.txt",
+      "title": "Grensene for samtykke",
+      "words": 945,
+      "minutes_at_120_words": 7.9,
+      "sha256": "dbfe267e56933221c1e0a9cc681a6d0b20d28e5be2559d17ea377d856f1b2599"
+    },
+    {
+      "path": "nb/video_30.txt",
+      "title": "Bak bildene av brennende gater",
+      "words": 1261,
+      "minutes_at_120_words": 10.5,
+      "sha256": "d93f1310fa49b1e3e2822a06f5155d322f81d6d630a828dd5bfb00248b46d988"
+    },
+    {
+      "path": "nb/video_31.txt",
+      "title": "Forskjellen var tillatelse",
+      "words": 2617,
+      "minutes_at_120_words": 21.8,
+      "sha256": "82fee95a14b266984a223e8c9429b0d9156ef23784a5bd9177d88b2d67156ab9"
+    },
+    {
+      "path": "nb/video_32.txt",
+      "title": "Bak det pansrede glasset",
+      "words": 1327,
+      "minutes_at_120_words": 11.1,
+      "sha256": "5028447f07f9c52f9fdc0d12b629d9c6e9a230de63aab8299c236dcc1dc5fce9"
+    },
+    {
+      "path": "nb/video_33.txt",
+      "title": "Assistenten og hemmelighetene",
+      "words": 1889,
+      "minutes_at_120_words": 15.7,
+      "sha256": "878eed96f5cd800cd9f5e886e6c1c117705575a5572319243947309a60d4ef44"
+    },
+    {
+      "path": "nb/video_34.txt",
+      "title": "Skjult i en tablett",
+      "words": 1908,
+      "minutes_at_120_words": 15.9,
+      "sha256": "73fde67c4e2c300875dee708f051cb26d278110800f948569cf0e83f448f4ac3"
+    },
+    {
+      "path": "nb/video_35.txt",
+      "title": "Staten selger sigaretter",
+      "words": 1692,
+      "minutes_at_120_words": 14.1,
+      "sha256": "e265c21e0dea4c2a1ea0a323416e522712799037c7e0bc407e9362669f861a7d"
+    },
+    {
+      "path": "nb/video_36.txt",
+      "title": "Etter kartellsjefen",
+      "words": 2091,
+      "minutes_at_120_words": 17.4,
+      "sha256": "af8d24baa5cb95c448862482d55fcb90e608bc9817ff0a6c2a9cd54c9b9fbeae"
+    },
+    {
+      "path": "nb/video_38.txt",
+      "title": "Peter Thiel og makten",
+      "words": 2564,
+      "minutes_at_120_words": 21.4,
+      "sha256": "ad1b6efde608e467effdda18529a2262bac711a480ab7a6410c90956dc1976b5"
+    },
+    {
+      "path": "nb/video_39.txt",
+      "title": "Hvem former søtsuget vårt?",
+      "words": 3375,
+      "minutes_at_120_words": 28.1,
+      "sha256": "2bf32e8b37fa6fa9e0ace685c57a0ed3582babcb53a5672ad8bb95d4bd113024"
+    },
+    {
+      "path": "nb/video_40.txt",
+      "title": "DMT og følelsen av virkelighet",
+      "words": 2305,
+      "minutes_at_120_words": 19.2,
+      "sha256": "fa0e05b1a8b883b6f1bccd557763e11837e07ce070c981d722c44d5c2a1648f5"
+    },
+    {
+      "path": "nb/everyday_01.txt",
+      "title": "En annens brev",
+      "words": 875,
+      "minutes_at_120_words": 7.3,
+      "sha256": "ff1b677d956fa21c044496326247e9a309ccaaf0abd64048c1a9cab4aecd71a1"
+    },
+    {
+      "path": "nb/everyday_02.txt",
+      "title": "Hyllen i gangen",
+      "words": 829,
+      "minutes_at_120_words": 6.9,
+      "sha256": "e3a72347470e8b8413058ee1f52a4274b99ae54047d098227a49fc4f7575c73c"
+    },
+    {
+      "path": "nb/everyday_03.txt",
+      "title": "En lørdag uten strøm",
+      "words": 907,
+      "minutes_at_120_words": 7.6,
+      "sha256": "75c445d9010937722a501b37442c8bf083e800d791e1cb03801bc14e70ceac40"
+    },
+    {
+      "path": "nb/everyday_04.txt",
+      "title": "Den nye naboen",
+      "words": 899,
+      "minutes_at_120_words": 7.5,
+      "sha256": "4a8eb80c9992ee27ccc27cde19c49639198d1eb4d79044a88aea98522a323a9d"
+    },
+    {
+      "path": "nb/everyday_05.txt",
+      "title": "Katten som forsvant",
+      "words": 883,
+      "minutes_at_120_words": 7.4,
+      "sha256": "2a6a68aa840d191568a788da1e842b28e4387036a56a0390612cfbc45928eac7"
+    },
+    {
+      "path": "nb/travel_01.txt",
+      "title": "Feil koffert",
+      "words": 837,
+      "minutes_at_120_words": 7.0,
+      "sha256": "0a995c561e228f6d8b34ec35035e9653c64debc0194d142b1558bfe9649eb607"
+    },
+    {
+      "path": "nb/travel_02.txt",
+      "title": "Det siste rommet",
+      "words": 918,
+      "minutes_at_120_words": 7.7,
+      "sha256": "56b9d7708109031fe1bf58aa8f90276feb0a76c32e727fffc1375c0d25c20875"
+    },
+    {
+      "path": "nb/travel_03.txt",
+      "title": "Et stopp ved sjøen",
+      "words": 911,
+      "minutes_at_120_words": 7.6,
+      "sha256": "4d6c3e6984d798b349caae1cc0cc880680f12747a239ab651eafcc1659a89ca3"
+    },
+    {
+      "path": "nb/travel_04.txt",
+      "title": "Toget de mistet",
+      "words": 944,
+      "minutes_at_120_words": 7.9,
+      "sha256": "f1d70b43dd3a7aa87c5246fec0e0834937b2040d6450cc78437a0e6dd4ab8b03"
+    },
+    {
+      "path": "nb/travel_05.txt",
+      "title": "Et kart av papir",
+      "words": 939,
+      "minutes_at_120_words": 7.8,
+      "sha256": "fd844361270a4228a4a8b61b7fd8efa893a210c2fa9decf7f04ec5180bf77583"
+    },
+    {
+      "path": "nb/restaurant_01.txt",
+      "title": "Et bord ved vinduet",
+      "words": 940,
+      "minutes_at_120_words": 7.8,
+      "sha256": "37751fd8649842bc27530a94487be15867f2d5b6073a51273459b19fee72bfbc"
+    },
+    {
+      "path": "nb/restaurant_02.txt",
+      "title": "Den glemte bestillingen",
+      "words": 955,
+      "minutes_at_120_words": 8.0,
+      "sha256": "4766bedd90b2973dfad37c0261c6b32a0690041d55d6baa57cd54f40fe914490"
+    },
+    {
+      "path": "nb/restaurant_03.txt",
+      "title": "Familieoppskriften",
+      "words": 921,
+      "minutes_at_120_words": 7.7,
+      "sha256": "1d95624ae3cd9a14c302b78e1890e4718f170c8a0b9c5b1668bfd1cf29448ed7"
+    },
+    {
+      "path": "nb/restaurant_04.txt",
+      "title": "Den siste gjesten",
+      "words": 895,
+      "minutes_at_120_words": 7.5,
+      "sha256": "fe4b325426d25eeadf2791319d930c3b2c2ab177de6e23e4da00b9682299e254"
+    },
+    {
+      "path": "nb/restaurant_05.txt",
+      "title": "Den første kvelden",
+      "words": 932,
+      "minutes_at_120_words": 7.8,
+      "sha256": "2333302a753b911cceec9ab27c71dbef55f6792d659588ac4e85ebca983a92a9"
+    },
+    {
+      "path": "nb/work_01.txt",
+      "title": "Det første oppdraget",
+      "words": 884,
+      "minutes_at_120_words": 7.4,
+      "sha256": "aa15bfac2588c40a223b9ad0032e6ccfbdfbed7a8efea0536b3440236a1a8c97"
+    },
+    {
+      "path": "nb/work_02.txt",
+      "title": "Feil fil",
+      "words": 850,
+      "minutes_at_120_words": 7.1,
+      "sha256": "a16d390ff6987842996dda2a6ff295529874eb7a19b73322ca409284fc275eda"
+    },
+    {
+      "path": "nb/work_03.txt",
+      "title": "Et vanskelig vaktskifte",
+      "words": 828,
+      "minutes_at_120_words": 6.9,
+      "sha256": "419b1598cc4267b5dc52ef496a8bcd25f972cf40c4b93e6d97285903d5bf247c"
+    }
+  ],
+  "mechanical_text_requirements_complete": false
+}

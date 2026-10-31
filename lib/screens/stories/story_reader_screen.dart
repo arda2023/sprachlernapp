@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/story_learning.dart';
 import '../../domain/story_learning_diagnostics.dart';
 import '../../presentation/providers/story_learning_providers.dart';
+import '../../presentation/providers/bundled_stories_provider.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -30,6 +31,7 @@ import '../../presentation/audio/device_speech_playback.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/back_bar.dart';
 import '../../widgets/reading_toolbar.dart';
+import '../../widgets/rounded_text_highlight.dart';
 import '../home/widgets/story_carousel.dart';
 import 'widgets/narration_panel.dart';
 import 'widgets/sentence_popover.dart';
@@ -159,7 +161,8 @@ class _Sentence {
   final tokens = <Object>[];
 }
 
-class _StoryReaderScreenState extends State<StoryReaderScreen> {
+class _StoryReaderScreenState extends State<StoryReaderScreen>
+    with WidgetsBindingObserver {
   late final void Function() _releaseContent;
 
   final _words = <_Word>[];
@@ -224,6 +227,11 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     _scrolled.value = position.pixels > 120;
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed) _report();
+  }
+
   void _report() {
     if (!_moved) return;
     widget.onProgress?.call(_progress.value);
@@ -232,6 +240,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _releaseContent = contentTransitionGate.acquire();
     _scroll.addListener(_onScroll);
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -338,6 +347,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _releaseContent();
     // Riverpod state must not change while the tree is being torn down.
     final last = _progress.value;
@@ -421,9 +431,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   /// status underlines stay.
   TextSpan _sentenceSpan(int index, {required bool narrated}) {
     final sentence = _sentences[index];
-    final background = index == _selectedSentence
-        ? context.appColors.popover.withValues(alpha: 0.28)
-        : (narrated ? context.appColors.playback : null);
+    final selected = index == _selectedSentence;
+    final background = !selected && narrated ? context.appColors.playback : null;
     final children = <InlineSpan>[
       for (final token in sentence.tokens)
         if (token is String)
@@ -433,11 +442,13 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
             text: _words[token as int].text,
             recognizer: sentence.recognizer,
             style: _wordSpan(token).style
-                ?.copyWith(backgroundColor: background),
+                ?.copyWith(backgroundColor: background,
+                    color: selected ? const Color(0xFFFFFFFF) : null),
           ),
     ];
     return TextSpan(
-      style: TextStyle(backgroundColor: background),
+      style: TextStyle(backgroundColor: background,
+          color: selected ? const Color(0xFFFFFFFF) : null),
       children: children,
     );
   }
@@ -467,6 +478,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
       final sentence = _sentences
           .firstWhere((s) => s.tokens.contains(index))
           .text;
+      // The tapped word is marked here too, as with a stored translation.
+      setState(() => _selected = index);
       await RuntimeTranslationSheet.show(
         context,
         anchor: _anchor,
@@ -479,6 +492,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
         senseRef: word.senseRef,
         formRef: word.formRef,
       );
+      if (mounted) setState(() => _selected = null);
       return;
     }
     final headword = word.entry.headword;
@@ -504,7 +518,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
           entry: word.entry,
           mark: status.state == StoryAddState.added ? WordMark.active : null,
           status: status,
-          personalAction: personal == null ? null : PersonalLearningButton(target: personal, foregroundColor: const Color(0xFFFFFFFF)),
+          personalAction: personal == null ? null : PersonalLearningButton(target: personal, foregroundColor: const Color(0xFFFFFFFF), compact: true),
           onAdd: () => service.add(candidate),
           onReactivate: () => service.reactivate(candidate),
           onSaved: (result) {
@@ -538,7 +552,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
         entry: word.entry,
         mark: _marks[headword],
         learningAvailable: false,
-        personalAction: personal == null ? null : PersonalLearningButton(target: personal, foregroundColor: const Color(0xFFFFFFFF)),
+        personalAction: personal == null ? null : PersonalLearningButton(target: personal, foregroundColor: const Color(0xFFFFFFFF), compact: true),
         onAdd: () async => const StoryAddResult(StoryAddState.unavailable),
       );
     }
@@ -562,9 +576,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
         decoration: ink == null ? null : TextDecoration.underline,
         decorationColor: ink,
         decorationThickness: 2,
-        backgroundColor: index == _selected
-            ? context.appColors.popover.withValues(alpha: 0.28)
-            : null,
+        color: index == _selected ? const Color(0xFFFFFFFF) : null,
       ),
     );
   }
@@ -575,13 +587,32 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
   TextSpan _wordModeSentenceSpan(int index, {required bool narrated}) =>
       TextSpan(
         style: TextStyle(
-          backgroundColor: narrated ? context.appColors.playback : null,
+          backgroundColor: narrated && !_sentences[index].tokens.contains(_selected)
+              ? context.appColors.playback : null,
         ),
         children: [
           for (final token in _sentences[index].tokens)
             token is int ? _wordSpan(token) : TextSpan(text: token as String),
         ],
       );
+
+  TextSelection? _selectionFor(List<int> sentences) {
+    var offset = 0;
+    for (final index in sentences) {
+      final start = offset;
+      for (final token in _sentences[index].tokens) {
+        final length = token is String ? token.length : _words[token as int].text.length;
+        if (!_translating && token is int && token == _selected) {
+          return TextSelection(baseOffset: offset, extentOffset: offset + length);
+        }
+        offset += length;
+      }
+      if (_translating && index == _selectedSentence) {
+        return TextSelection(baseOffset: start, extentOffset: offset);
+      }
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -729,7 +760,10 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                               ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 22),
-                              child: Text.rich(
+                              child: RoundedTextHighlight(
+                                selection: _selectionFor(sentences),
+                                color: colors.popover,
+                                child: Text.rich(
                                 key: _paragraphKeys[i],
                                 TextSpan(
                                   style: AppType.storyBody(),
@@ -746,6 +780,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                                             ),
                                   ],
                                 ),
+                              ),
                               ),
                             ),
                           ],
@@ -1164,8 +1199,29 @@ class _StoredStoryReader extends ConsumerWidget {
   final double? initialProgress;
   final ValueChanged<double>? onProgress;
   @override
-  Widget build(BuildContext context, WidgetRef ref) => ref
-      .watch(storyDocumentProvider(story.id))
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (story.id.startsWith('library:')) {
+      return ref.watch(bundledStoriesProvider).when(
+        data: (stories) {
+          final item = stories.where((s) => s.story.id == story.id).firstOrNull;
+          if (item == null) return const Scaffold(body: Center(child: Text('Story nicht verfügbar.')));
+          return StoryReaderScreen(
+            story: story, text: item.text, sourceLanguage: item.language,
+            lookup: (surface) => WordEntry(headword: surface, partOfSpeech: '',
+              translation: '', sourceLanguage: item.language),
+            initialMarks: const {}, translate: (_) => '',
+            initialProgress: initialProgress, onProgress: onProgress,
+          );
+        },
+        loading: () => const Scaffold(body: Center(child: CupertinoActivityIndicator())),
+        error: (_, _) => Scaffold(body: SafeArea(child: Column(children: [
+          BackBar(onBack: () => Navigator.of(context).maybePop()),
+          const Text('Story-Inhalt nicht verfügbar.'),
+          CupertinoButton(onPressed: () => ref.invalidate(bundledStoriesProvider), child: const Text('Erneut versuchen')),
+        ]))),
+      );
+    }
+    return ref.watch(storyDocumentProvider(story.id))
       .when(
         data: (doc) => StoryReaderScreen(
           story: story,
@@ -1213,4 +1269,5 @@ class _StoredStoryReader extends ConsumerWidget {
           ),
         ),
       );
+  }
 }

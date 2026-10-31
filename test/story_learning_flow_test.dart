@@ -55,10 +55,10 @@ void main() {
           ),
         ),
       );
-      await tester.tap(find.text('Zum Lernen hinzufügen'));
+      await tester.tap(find.bySemanticsLabel('Zum Lernen hinzufügen'));
       await tester.pump();
-      expect(find.text('Wird hinzugefügt …'), findsOneWidget);
-      await tester.tap(find.text('Wird hinzugefügt …'));
+      expect(find.bySemanticsLabel('Wird hinzugefügt'), findsOneWidget);
+      await tester.tap(find.bySemanticsLabel('Wird hinzugefügt'));
       expect(calls, 1);
       pending.completeError(StateError('write failure'));
       await tester.pumpAndSettle();
@@ -68,13 +68,13 @@ void main() {
       );
       expect(find.text('Bereits hinzugefügt'), findsNothing);
       pending = Completer<StoryAddResult>();
-      await tester.tap(find.text('Zum Lernen hinzufügen'));
+      await tester.tap(find.bySemanticsLabel('Zum Lernen hinzufügen'));
       await tester.pump();
       pending.complete(
         const StoryAddResult(StoryAddState.added, cardId: 'saved'),
       );
       await tester.pumpAndSettle();
-      expect(find.text('Zum Lernen hinzugefügt'), findsOneWidget);
+      expect(find.bySemanticsLabel('Hinzugefügt, in Wortliste ansehen'), findsOneWidget);
     },
   );
   test('missing pack keeps a complete local card in list, counters and real mixed controller', () async {
@@ -213,7 +213,7 @@ void main() {
       );
       expect(table.card, isNotNull);
       final original = (await content.practiceItems([table.card!.id])).single;
-      await tester.tap(find.text('Zum Lernen hinzufügen'));
+      await tester.tap(find.bySemanticsLabel('Zum Lernen hinzufügen'));
       for (var i = 0; i < 15; i++) {
         await tester.runAsync(
           () => Future<void>.delayed(const Duration(milliseconds: 15)),
@@ -221,12 +221,12 @@ void main() {
         await tester.pump();
       }
       await tester.pumpAndSettle();
-      expect(find.text('Zum Lernen hinzugefügt'), findsOneWidget);
+      expect(find.bySemanticsLabel('Hinzugefügt, in Wortliste ansehen'), findsOneWidget);
       Navigator.of(tester.element(find.byType(WordPopover))).pop();
       await tester.pumpAndSettle();
       await tap('backpack');
       expect((await user.allCardStates()).length, 1);
-      await tester.tap(find.text('Zum Lernen hinzufügen'));
+      await tester.tap(find.bySemanticsLabel('Zum Lernen hinzufügen'));
       for (var i = 0; i < 15; i++) {
         await tester.runAsync(
           () => Future<void>.delayed(const Duration(milliseconds: 15)),
@@ -234,7 +234,7 @@ void main() {
         await tester.pump();
       }
       await tester.pumpAndSettle();
-      expect(find.text('Zum Lernen hinzugefügt'), findsOneWidget);
+      expect(find.bySemanticsLabel('Hinzugefügt, in Wortliste ansehen'), findsOneWidget);
       final local = (await user.localPracticeItems()).single;
       expect(local.card.form, 'backpack');
       expect(local.practiceSentence.text, s.text);

@@ -93,10 +93,9 @@ void main() {
         now: now,
         size: 10,
       );
-      expect(q.map((e) => e.cardId), [
-        for (var i = 6; i >= 0; i--) 'due$i', // longest overdue first
-        'a0', 'a1', 'a2',
-      ]);
+      expect(q.take(7).map((e) => e.cardId), [for (var i = 6; i >= 0; i--) 'due$i']);
+      expect(q.skip(7), hasLength(3));
+      expect(q.skip(7).every((e) => e.cardId.startsWith('a')), isTrue);
       expect(q.take(7).every((e) => e.source == null), isTrue);
     });
 
@@ -146,15 +145,19 @@ void main() {
             limit: limit, order: order, lastSource: last))
           t.cardId,
       ];
-      expect(pick(6, null), ['a0', 'b0', 's0', 'a1', 'b1', 's1']);
+      final first = pick(6, null);
+      expect(first.map((id) => id[0]), ['a', 'b', 's', 'a', 'b', 's']);
+      expect([first[2], first[5]], ['s0', 's1']);
+      expect(first.toSet(), hasLength(6));
+      expect(pick(6, null), first);
       // Small sessions do not restart at the first deck.
-      expect(pick(2, 'A'), ['b0', 's0']);
-      expect(pick(2, storySourceId), ['a0', 'b0']);
+      expect(pick(2, 'A'), [first[1], 's0']);
+      expect(pick(2, storySourceId), first.take(2).toList());
       // A deactivated last source: continue with the next source in order.
       expect(
         [for (final t in selectNewTargets(sources: sources.skip(1).toList(), cards: cards,
             states: const {}, limit: 2, order: const ['A', 'X', 'B', storySourceId], lastSource: 'X')) t.cardId],
-        ['b0', 's0'],
+        [first[1], 's0'],
       );
     });
 
@@ -179,12 +182,12 @@ void main() {
         limit: 6,
         order: const ['A', 'Empty', 'B'],
       );
-      expect(picked.map((t) => '${t.source}:${t.cardId}'), [
+      expect(picked.map((t) => '${t.source}:${t.cardId}'), unorderedEquals([
         'A:a1', // a0 disabled
         'B:b2', // b0 retired, shared belongs to A, b1 shares a1's group
         'A:a2',
         'A:shared', // B has nothing admissible left; shared counted once
-      ]);
+      ]));
     });
   });
 
@@ -205,7 +208,7 @@ void main() {
     setUp(() async {
       dir = Directory.systemTemp.createTempSync('flow-rules-');
       file = File('${dir.path}/user.db');
-      user = DriftUserRepository(UserDatabase.file(file), lang: 'en');
+      user = DriftUserRepository(UserDatabase.file(file), lang: 'en', defaultActiveDeckIds: () async => {'deck-0', 'deck-1'});
       for (var i = 2; i < 6; i++) {
         await user.setDeckActive('deck-$i', false, now: now);
       }
@@ -247,7 +250,7 @@ void main() {
     Future<void> restart() async {
       c.dispose();
       await user.close();
-      user = DriftUserRepository(UserDatabase.file(file), lang: 'en');
+      user = DriftUserRepository(UserDatabase.file(file), lang: 'en', defaultActiveDeckIds: () async => {'deck-0', 'deck-1'});
       c = scope();
     }
 
@@ -258,7 +261,8 @@ void main() {
       final firsts = <String>[];
       // Opening without answering never moves the rotation.
       await open(one);
-      expect(read(one).pass!.item.card.id, 'deck-0/0');
+      final preview = read(one).pass!.item.card.id;
+      expect(preview, startsWith('deck-0/'));
       await restart();
       for (var round = 0; round < 4; round++) {
         await open(one);
@@ -267,7 +271,9 @@ void main() {
       }
       // deck-0 → deck-1 → Aus Storys (inactive decks skipped) → deck-0 again;
       // deck-0/1 belongs to deck-0 once, it is never offered twice.
-      expect(firsts, ['deck-0/0', 'deck-1/0', 'deck-3/0', 'deck-0/1']);
+      expect(firsts.first, preview);
+      expect(firsts.map((id) => id.split('/').first), ['deck-0', 'deck-1', 'deck-3', 'deck-0']);
+      expect(firsts.toSet(), hasLength(4));
       expect(await user.lastNewWordSource(), 'deck-0');
       expect(await done(), 4);
     });
@@ -275,7 +281,7 @@ void main() {
     test('aborted session: unanswered targets are not counted and come back', () async {
       const three = (deckId: '', kind: DeckSessionKind.mixed, size: 3);
       await open(three);
-      expect(await answer(three), 'deck-0/0');
+      expect(await answer(three), startsWith('deck-0/'));
       await c.read(deckSessionControllerProvider(three).notifier).next();
       final shown = read(three).pass!.item.card.id; // displayed, never answered
       expect((await user.cardStates([shown]))[shown]!.box, 0);
@@ -291,7 +297,8 @@ void main() {
       final learned = [await answer(deck)];
       await c.read(deckSessionControllerProvider(deck).notifier).next();
       learned.add(await answer(deck));
-      expect(learned, ['deck-1/0', 'deck-1/1']);
+      expect(learned.toSet(), hasLength(2));
+      expect(learned.every((id) => id.startsWith('deck-1/')), isTrue);
       await restart();
       const play = (deckId: '', kind: DeckSessionKind.mixed, size: 0);
       await open(play);
@@ -394,14 +401,14 @@ void main() {
     final dir = Directory.systemTemp.createTempSync('rotation-migration-');
     addTearDown(() => dir.deleteSync(recursive: true));
     final file = File('${dir.path}/user.db');
-    var repo = DriftUserRepository(UserDatabase.file(file), lang: 'en');
+    var repo = DriftUserRepository(UserDatabase.file(file), lang: 'en', defaultActiveDeckIds: () async => {'deck-0', 'deck-1'});
     await repo.savePreferences(const PracticePreferences(dailyGoal: 17));
     await repo.close();
     final raw = sql.sqlite3.open(file.path);
     raw.execute('ALTER TABLE language_learning_preferences DROP COLUMN new_word_source');
     raw.execute('PRAGMA user_version = 6');
     raw.close();
-    repo = DriftUserRepository(UserDatabase.file(file), lang: 'en');
+    repo = DriftUserRepository(UserDatabase.file(file), lang: 'en', defaultActiveDeckIds: () async => {'deck-0', 'deck-1'});
     expect((await repo.preferences()).dailyGoal, 17);
     expect(await repo.lastNewWordSource(), isNull);
     await repo.saveLastNewWordSource(storySourceId);

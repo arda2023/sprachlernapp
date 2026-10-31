@@ -9,7 +9,7 @@ import '../../../models/story_models.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/anchored_popover.dart';
 import '../../../widgets/popover_content.dart';
-import '../../../widgets/speak_button.dart';
+import '../../../widgets/word_bubble.dart';
 
 /// Tapped word in the reader: popover pointing at the word with headword,
 /// word class, German translation, pronunciation and "Zum Lernen
@@ -61,6 +61,8 @@ class WordPopover extends StatefulWidget {
     context: context,
     anchor: anchor,
     color: context.appColors.popover,
+    maxWidth: wordBubbleWidth(context),
+    padding: wordBubblePadding,
     builder: (_) => WordPopover(
       surface: surface,
       language: language,
@@ -81,8 +83,6 @@ class WordPopover extends StatefulWidget {
 }
 
 class _WordPopoverState extends State<WordPopover> {
-  static const _white = Color(0xFFFFFFFF);
-
   late WordMark? _mark = widget.mark;
   late StoryAddResult _status =
       widget.status ?? const StoryAddResult(StoryAddState.unavailable);
@@ -96,6 +96,9 @@ class _WordPopoverState extends State<WordPopover> {
   }
 
   String? _error;
+
+  /// What a personal add button reported ([LearningMessageNotification]).
+  String? _learningMessage;
 
   @override
   void dispose() {
@@ -126,8 +129,11 @@ class _WordPopoverState extends State<WordPopover> {
       }
     } catch (error) {
       if (mounted) {
-        setState(() => _error = error is StoryLearningFailure
-            ? error.message : 'Nicht gespeichert – erneut versuchen.');
+        setState(
+          () => _error = error is StoryLearningFailure
+              ? error.message
+              : 'Nicht gespeichert – erneut versuchen.',
+        );
       }
     } finally {
       releaseWrite();
@@ -140,180 +146,80 @@ class _WordPopoverState extends State<WordPopover> {
   Widget build(BuildContext context) {
     final entry = widget.entry;
     // The real save status decides, never a display mark alone.
-    final label = _saving
-        ? 'Wird hinzugefügt …'
-        : _addedNow
-        ? 'Zum Lernen hinzugefügt'
-        : widget.failure != null ? 'Lernstatus nicht geladen' : _status.label;
     final added = _status.state == StoryAddState.added;
+    final reactivate =
+        _status.state == StoryAddState.disabled && widget.onReactivate != null;
     final canAdd = widget.learningAvailable && _status.canAdd && !_saving;
+    final Widget? action = switch (widget.personalAction) {
+      final personal? => personal,
+      null when added && _status.cardId != null => AddWordButton(
+        done: true,
+        label: 'Hinzugefügt, in Wortliste ansehen',
+        onPressed: () => WordListScreen.openTarget(context, _status.cardId!),
+      ),
+      null when reactivate => AddWordButton(
+        busy: _saving,
+        label: 'Wort reaktivieren',
+        onPressed: () => _add(reactivate: true),
+      ),
+      null when widget.learningAvailable => AddWordButton(
+        busy: _saving,
+        done: added,
+        label: _addedNow ? 'Zum Lernen hinzugefügt' : _status.label,
+        onPressed: canAdd && widget.failure == null ? () => _add() : null,
+      ),
+      _ => null,
+    };
+    final message =
+        _error ??
+        widget.failure?.message ??
+        _status.message ??
+        _learningMessage;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: entry.headword,
-                          // Known words keep their underline, like in the text.
-                          style: AppType.editorial(color: _white, size: 28)
-                              .copyWith(
-                                decoration: _mark == null
-                                    ? null
-                                    : TextDecoration.underline,
-                                decorationColor: _white,
-                                decorationThickness: 2,
-                              ),
-                        ),
-                        const TextSpan(text: '   '),
-                        TextSpan(
-                          text: entry.partOfSpeech,
-                          style: PopoverText.caption(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 8),
+        NotificationListener<LearningMessageNotification>(
+          onNotification: (note) {
+            if (note.message != _learningMessage) {
+              setState(() => _learningMessage = note.message);
+            }
+            return true;
+          },
+          child: WordBubbleHeader(
+            word: entry.headword,
             // Pronounce the exact form shown in the source text.
-            SpeakButton(text: widget.surface, language: widget.language),
-          ],
-        ),
-        const SizedBox(height: 14),
-        Container(height: 1, color: _white.withValues(alpha: 0.25)),
-        const SizedBox(height: 12),
-        Text(
-          entry.translation,
-          style: AppType.editorial(
-            color: _white,
-            size: 22,
-            weight: FontWeight.w400,
-            height: 1.3,
-            letterSpacing: 0,
+            speak: widget.surface,
+            language: widget.language,
+            underline: _mark != null,
+            trailing: action,
           ),
         ),
-        const SizedBox(height: 18),
-        if (widget.personalAction == null && !widget.learningAvailable && widget.failure == null && _status.message == null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: Text(
-              'Für diesen Text sind keine geprüften Lernreferenzen vorhanden.',
-              style: PopoverText.small(),
-            ),
+        Padding(
+          padding: const EdgeInsets.only(top: 2, right: 6),
+          child: Wrap(
+            spacing: 8,
+            crossAxisAlignment: WrapCrossAlignment.end,
+            children: [
+              Text(entry.translation, style: wordBubbleTranslation()),
+              if (entry.partOfSpeech.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 3),
+                  child: Text(entry.partOfSpeech, style: PopoverText.caption()),
+                ),
+            ],
           ),
-        if (_error != null || widget.failure != null || _status.message != null)
+        ),
+        if (message != null)
           Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(top: 6, right: 6),
             child: Semantics(
               liveRegion: true,
-              child: Text(
-                _error ?? widget.failure?.message ?? _status.message!,
-                style: PopoverText.small(),
-              ),
-            ),
-          ),
-        if (widget.personalAction case final action?) action else Semantics(
-          liveRegion: true,
-          child: _LearnButton(
-            label: label,
-            done: added,
-            onPressed: canAdd ? () => _add() : null,
-          ),
-        ),
-        if (_status.state == StoryAddState.added && _status.cardId != null)
-          CupertinoButton(
-            onPressed: () =>
-                WordListScreen.openTarget(context, _status.cardId!),
-            child: Text(
-              'In Wortliste ansehen',
-              style: AppType.chrome(color: _white),
-            ),
-          ),
-        if (_status.state == StoryAddState.disabled &&
-            widget.onReactivate != null)
-          CupertinoButton(
-            onPressed: _saving ? null : () => _add(reactivate: true),
-            child: Text(
-              'Wort reaktivieren',
-              style: AppType.chrome(weight: FontWeight.w700, color: _white),
+              child: Text(message, style: PopoverText.caption()),
             ),
           ),
       ],
-    );
-  }
-}
-
-/// White pill on the coloured popover; outlined once the word is learned.
-class _LearnButton extends StatelessWidget {
-  const _LearnButton({
-    required this.label,
-    required this.done,
-    required this.onPressed,
-  });
-
-  final String label;
-  final bool done;
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    const white = Color(0xFFFFFFFF);
-    final enabled = onPressed != null;
-    final filled = enabled;
-    final ink = filled ? context.appColors.popover : white;
-    return MergeSemantics(
-      child: CupertinoButton(
-        onPressed: onPressed,
-        padding: EdgeInsets.zero,
-        minimumSize: const Size(44, 50),
-        child: Semantics(
-          label: label,
-          excludeSemantics: true,
-          child: Container(
-            constraints: const BoxConstraints(minHeight: 50),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: BoxDecoration(
-              // Soft white fill instead of an outline (no-outline rule).
-              color: filled ? white : white.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(99),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  done ? CupertinoIcons.checkmark_alt : CupertinoIcons.plus,
-                  size: 18,
-                  color: enabled || done ? ink : white.withValues(alpha: 0.7),
-                ),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Text(
-                    label,
-                    textAlign: TextAlign.center,
-                    style: AppType.chrome(
-                      weight: FontWeight.w800,
-                      color: enabled || done
-                          ? ink
-                          : white.withValues(alpha: 0.7),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

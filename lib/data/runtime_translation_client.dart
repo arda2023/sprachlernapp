@@ -143,13 +143,28 @@ class RuntimeTranslationClient {
         if (body != null) request.write(jsonEncode(body));
         final response = await request.close();
         if (response.statusCode != 200) {
-          throw TranslationFailure(switch (response.statusCode) {
-            401 || 403 => 'Anmeldung oder Sprachfreigabe erforderlich.',
-            409 => 'Diese Anfrage läuft bereits oder ihr Ausgang ist unklar. Es wird nicht automatisch erneut übersetzt. Bitte später versuchen.',
-            429 => 'Übersetzungslimit erreicht. Bitte später versuchen.',
-            504 => 'Die Übersetzung hat zu lange gedauert. Keine automatische Wiederholung.',
-            _ => 'Übersetzung derzeit nicht verfügbar.',
-          });
+          final errorBytes = <int>[];
+          await for (final part in response) {
+            errorBytes.addAll(part);
+            if (errorBytes.length > 16384) break;
+          }
+          Map<String, dynamic> error = const {};
+          try {
+            error = jsonDecode(utf8.decode(errorBytes)) as Map<String, dynamic>;
+          } catch (_) {}
+          final message = switch (error['error']) {
+            'TRANSLATION_QUOTA_EXHAUSTED' => _quotaMessage(error),
+            'EMAIL_VERIFICATION_REQUIRED' =>
+              'Bitte bestätige zuerst die E-Mail-Adresse deines Kontos.',
+            _ => switch (response.statusCode) {
+              401 || 403 => 'Anmeldung oder Sprachfreigabe erforderlich.',
+              409 => 'Diese Anfrage läuft bereits oder ihr Ausgang ist unklar. Es wird nicht automatisch erneut übersetzt. Bitte später versuchen.',
+              429 => 'Übersetzungslimit erreicht. Bitte später versuchen.',
+              504 => 'Die Übersetzung hat zu lange gedauert. Keine automatische Wiederholung.',
+              _ => 'Übersetzung derzeit nicht verfügbar.',
+            },
+          };
+          throw TranslationFailure(message);
         }
         final bytes = <int>[];
         await for (final part in response) {
@@ -177,5 +192,19 @@ class RuntimeTranslationClient {
     } finally {
       client.close(force: true);
     }
+  }
+
+  String _quotaMessage(Map<String, dynamic> error) {
+    if (error['quota_kind'] != 'premium') {
+      return 'Die fünf kostenlosen KI-Übersetzungen sind aufgebraucht.';
+    }
+    final raw = error['resets_at'];
+    final date = raw is String ? DateTime.tryParse(raw)?.toLocal() : null;
+    if (date == null) {
+      return 'Dein Premium-Übersetzungskontingent ist ausgeschöpft.';
+    }
+    final formatted =
+        '${date.day.toString().padLeft(2, '0')}.${date.month.toString().padLeft(2, '0')}.${date.year}';
+    return 'Dein Premium-Übersetzungskontingent ist ausgeschöpft. Es erneuert sich am $formatted.';
   }
 }

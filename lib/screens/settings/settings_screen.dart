@@ -1,11 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show
-        Colors,
-        LinearProgressIndicator,
-        Material,
-        MaterialPageRoute,
-        Scaffold;
+    show Colors, LinearProgressIndicator, Material, MaterialPageRoute, Scaffold;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,11 +10,14 @@ import '../../presentation/providers/database_providers.dart';
 import '../../presentation/providers/preferences_provider.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/anchored_popover.dart';
+import '../../widgets/account_tile.dart';
 import '../../widgets/back_bar.dart';
 import '../../widgets/personal_learning_button.dart';
+import '../../widgets/subscription_tile.dart';
 import '../../widgets/translation_cache_delete_tile.dart';
 import '../../widgets/dictionary_sources_sheet.dart';
 import '../../widgets/word_cloud_consent.dart';
+import '../legal/legal_documents_tile.dart';
 import '../decks/widgets/local_submission_sheet.dart';
 import '../home/widgets/goal_panel.dart';
 import '../previews/screen_previews_screen.dart';
@@ -69,12 +67,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       color: context.appColors.popover,
       builder: (_) => GoalPanel(
         onSetGoal: (target) => _save(
-          (ref.read(preferencesProvider).value ?? p).copyWith(dailyGoal: target),
+          (ref.read(preferencesProvider).value ?? p).copyWith(
+            dailyGoal: target,
+          ),
         ),
       ),
     );
     if (mounted) setState(() => _goalOpen = false);
   }
+
   Future<void> _save(PracticePreferences value) async {
     setState(() {
       _saving = true;
@@ -91,9 +92,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     }
   }
 
-  void _push(Widget screen) => Navigator.of(
-    context,
-  ).push(MaterialPageRoute<void>(builder: (_) => screen));
+  void _push(Widget screen) =>
+      Navigator.of(context)
+          .push(MaterialPageRoute<void>(builder: (_) => screen));
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +136,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               child: state.when(
                 skipLoadingOnReload: false,
                 skipLoadingOnRefresh: false,
-                loading: () => const Center(child: CupertinoActivityIndicator()),
+                loading: () =>
+                    const Center(child: CupertinoActivityIndicator()),
                 error: (_, _) => Center(
                   child: CupertinoButton(
                     onPressed: () => ref.invalidate(preferencesProvider),
@@ -175,6 +177,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ),
         ),
         const SizedBox(height: 20),
+        // Its own card; the plan name is the heading.
+        const Padding(
+          padding: EdgeInsets.only(bottom: 24),
+          child: SubscriptionTile(),
+        ),
         _Section(
           title: 'Darstellung',
           children: [
@@ -201,15 +208,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 title: selectedProfile!.lang == 'pt-BR'
                     ? 'Akzente sind für Portugiesisch erforderlich'
                     : 'Akzente sind für ${selectedProfile.displayName} erforderlich',
-                subtitle:
-                    'Sprachspezifische Buchstaben und Akzente gehören zur richtigen Antwort. Die englische Einstellung bleibt erhalten.',
               )
             else
               _SwitchRow(
                 icon: CupertinoIcons.textformat_abc,
                 title: 'Diakritische Zeichen einbeziehen',
-                subtitle:
-                    'Akzente sind bei der Antwort erforderlich. Standardmäßig eingeschaltet.',
                 value: p.includeDiacritics,
                 onChanged: _saving
                     ? null
@@ -218,56 +221,32 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             _SwitchRow(
               icon: CupertinoIcons.forward_end,
               title: 'Automatisch nächste Karte anzeigen',
-              subtitle:
-                  'Nach dem Speichern und einer kurzen Rückmeldung weitergehen.',
               value: p.autoNext,
-              onChanged: _saving
-                  ? null
-                  : (v) => _save(p.copyWith(autoNext: v)),
-            ),
-            _SwitchRow(
-              icon: CupertinoIcons.table,
-              title: 'Grammatiktabellen anzeigen',
-              subtitle:
-                  'Vorhandene Forminformationen nach der richtigen Antwort öffnen.',
-              value: p.showGrammar,
-              onChanged: _saving
-                  ? null
-                  : (v) => _save(p.copyWith(showGrammar: v)),
+              onChanged: _saving ? null : (v) => _save(p.copyWith(autoNext: v)),
             ),
           ],
         ),
         _Section(
           title: 'Audio und Erinnerungen',
-          footer:
-              'Noch nicht verfügbar – diese Funktionen kommen mit einem späteren Update.',
+          footer: 'Noch nicht verfügbar – diese Funktionen kommen mit einem späteren Update.',
           children: [
-            for (final (icon, title, detail) in const [
+            for (final (icon, title) in const [
               (
                 CupertinoIcons.bell,
                 'Lern-Benachrichtigungen',
-                'Lernerinnerungen',
               ),
               (
                 CupertinoIcons.speaker_slash,
                 'Ton aus',
-                'Automatische Audioinhalte stummschalten; manuelles Abspielen bleibt möglich.',
-              ),
-              (
-                CupertinoIcons.speedometer,
-                'Audiogeschwindigkeit',
-                'Geschwindigkeit der Audiowiedergabe',
               ),
               (
                 CupertinoIcons.mic,
                 'Spracheingabe aktivieren',
-                'Mit geräteinterner Spracherkennung antworten.',
               ),
             ])
               _Row(
                 icon: icon,
                 title: title,
-                subtitle: detail,
                 semanticsHint: 'Noch nicht verfügbar',
                 enabled: false,
                 trailing: const _SoonChip(),
@@ -290,33 +269,34 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: TranslationCacheDeleteTile(),
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: LegalDocumentsTile(),
+            ),
           ],
         ),
         _Section(
           title: 'Inhalte und Hilfe',
           children: [
+            const AccountTile(),
             _Row(
               icon: CupertinoIcons.arrow_down_circle,
               title: 'Inhaltsupdates',
-              subtitle: 'Private Versionen und Anmeldung',
               onTap: () => _push(const ContentUpdatesScreen()),
             ),
             _Row(
               icon: CupertinoIcons.chat_bubble_text,
               title: 'Lokale Berichte und Feedback',
-              subtitle: 'Gespeicherte Einträge ansehen und teilen.',
               onTap: () => LocalSubmissionSheet.openSaved(context),
             ),
             _Row(
               icon: CupertinoIcons.book,
               title: 'Wörterbuch · Quellen & Lizenz',
-              subtitle: 'Wiktionary, CC BY-SA 4.0',
               onTap: () => showDictionarySources(context),
             ),
             _Row(
               icon: CupertinoIcons.play_rectangle,
               title: 'Bildschirm-Vorschauen',
-              subtitle: 'Onboarding, Abschluss und Wochenstern ausprobieren',
               onTap: () => _push(const ScreenPreviewsScreen()),
             ),
           ],
@@ -417,13 +397,12 @@ class _Section extends StatelessWidget {
   }
 }
 
-/// Icon, title, optional subtitle and value; a chevron when it navigates.
+/// Icon, title and optional value; a chevron when it navigates.
 /// [open]: its popover shows, so the row's value turns popover orange.
 class _Row extends StatelessWidget {
   const _Row({
     required this.icon,
     required this.title,
-    this.subtitle,
     this.value,
     this.trailing,
     this.onTap,
@@ -435,7 +414,7 @@ class _Row extends StatelessWidget {
 
   final IconData icon;
   final String title;
-  final String? subtitle, value;
+  final String? value;
 
   /// Read aloud after the row (e.g. "Noch nicht verfügbar").
   final String? semanticsHint;
@@ -462,7 +441,9 @@ class _Row extends StatelessWidget {
             // title's edge.
             transform: Matrix4.translationValues(stacked ? -10 : 0, 0, 0),
             decoration: BoxDecoration(
-              color: open ? colors.popover : colors.popover.withValues(alpha: 0),
+              color: open
+                  ? colors.popover
+                  : colors.popover.withValues(alpha: 0),
               borderRadius: BorderRadius.circular(99),
             ),
             child: Text(
@@ -500,17 +481,6 @@ class _Row extends StatelessWidget {
                     color: ink,
                   ),
                 ),
-                if (subtitle case final subtitle?) ...[
-                  const SizedBox(height: 2),
-                  Text(
-                    subtitle,
-                    style: AppType.chrome(
-                      size: 13,
-                      color: colors.textMuted,
-                      height: 1.3,
-                    ),
-                  ),
-                ],
                 if (stacked && valuePill != null) valuePill,
               ],
             ),
@@ -555,13 +525,12 @@ class _SwitchRow extends StatelessWidget {
   const _SwitchRow({
     required this.icon,
     required this.title,
-    required this.subtitle,
     required this.value,
     required this.onChanged,
   });
 
   final IconData icon;
-  final String title, subtitle;
+  final String title;
   final bool value;
   final ValueChanged<bool>? onChanged;
 
@@ -581,7 +550,6 @@ class _SwitchRow extends StatelessWidget {
         child: _Row(
           icon: icon,
           title: title,
-          subtitle: subtitle,
           trailing: CupertinoSwitch(
             value: value,
             onChanged: change,
@@ -754,9 +722,7 @@ class _MotifTile extends StatelessWidget {
                     ],
                   ),
                 )
-              : Column(
-                  children: [preview, const SizedBox(height: 8), text],
-                ),
+              : Column(children: [preview, const SizedBox(height: 8), text]),
         ),
       ),
     );

@@ -1,0 +1,47 @@
+Penger uten en bank
+
+Et forslag under krisen
+
+I 2008 svekket finanskrisen tilliten til bankene og institusjonene som skulle føre tilsyn med dem. Lehman Brothers gikk konkurs, myndigheter organiserte krisehjelp, og mange familier sto i fare for å miste hjemmene sine. På denne tiden publiserte en person eller gruppe under navnet Satoshi Nakamoto et forslag til et annerledes system for elektroniske betalinger.
+
+Dokumentet om Bitcoin kom i oktober 2008. Det beskrev betalinger uten at en finansinstitusjon førte det sentrale registeret. Problemet var kjent fra digitale systemer: Hvis informasjon kan kopieres, hvordan hindrer man at noen bruker de samme pengene to ganger? Bitcoin foreslo en felles transaksjonshistorie støttet av kryptografi og beregningsarbeid.
+
+Den første blokken ble laget i januar 2009. Den inneholdt en avisoverskrift om en ny mulig bankredning. Meldingen knyttet starten på Bitcoin til finanshendelsene rundt, uten å forklare alle hensiktene til den ukjente skaperen. Til å begynne med var nettverket et lite eksperiment fulgt av folk som interesserte seg for datamaskiner og digitale penger.
+
+I 2010 ble en handel med ti tusen bitcoin og to pizzaer en varig del av historien. Den viste at noen var villige til å bytte den nye valutaen mot et vanlig kjøp. Senere prisøkninger fikk mengden til å virke utrolig. Den gangen undersøkte deltakerne fortsatt hva systemet faktisk kunne brukes til.
+
+Et register som deles
+
+Bitcoin samler transaksjoner i blokker som er koblet til tidligere blokker. Deltakere som kjører valideringsprogrammer, undersøker om foreslåtte transaksjoner og blokker følger reglene. De trenger ikke godta et endret register bare fordi noen erklærer det riktig. Kontrollene er avgjørende for hvordan nettverket fungerer.
+
+Utvinning skjer gjennom konkurranse om å produsere et gyldig arbeidsbevis. Dette krever gjentatte beregninger og bruker strøm. Den som lykkes, kan foreslå neste blokk og motta nye mynter og transaksjonsgebyrer når blokken blir del av den godkjente kjeden. Andre deltakere kontrollerer fortsatt gyldigheten. Datakraft gjør ikke en ugyldig betaling gyldig.
+
+Systemet gjør det kostbart å skrive om etablert historie, uten å gjøre det bokstavelig umulig. En angriper med tilstrekkelig datakraft for utvinning kan forsøke å omorganisere nylige transaksjoner eller bruke de samme midlene to ganger. Det gir ikke fri adgang til å ta mynter fra enhver adresse. Å kalle registeret umulig å angripe skjuler vilkårene beskyttelsen bygger på.
+
+Nettverket er dessuten forskjellig fra tjenestene folk bruker for å få tilgang. En handelsplattform kan oppbevare verdier for kunder, mens den som styrer sin egen lommebok, kontrollerer de nødvendige nøklene. Tyveri, tapte innloggingsopplysninger eller en uredelig tjeneste kan gi tap selv om transaksjonsreglene fortsetter å fungere.
+
+Knapphet og pris
+
+Utstedelsen av bitcoin følger en plan i de eksisterende reglene. Subsidien begynte på femti bitcoin per blokk og halveres etter hvert intervall på 210 000 blokker, omtrent hvert fjerde år. Planen nærmer seg en grense på tjueen millioner bitcoin. Dette skiller seg fra en valuta der en sentralbank styrer pengemengden.
+
+En begrenset mengde gir ikke en stabil pris. Folk kan bli mer eller mindre villige til å kjøpe, og beløpet de vil betale, kan endre seg kraftig. Knapphet er én grunn til at tilhengere verdsetter Bitcoin, men garanterer ikke kjøpekraft eller fremtidig gevinst. Å eie bitcoin kan gi store tap i tillegg til mulige gevinster.
+
+Tilhengere sammenligner ofte Bitcoin med gull. De viser til den begrensede mengden og muligheten til å flytte verdi uten å frakte en fysisk gjenstand. Kritikere påpeker at Bitcoin ikke i seg selv produserer leieinntekter, overskudd eller utbytte. Uenigheten gjelder hva som gir en eiendel verdi, og hvor mye kjøpere bør betale.
+
+En tidligere prisøkning avgjør ikke den diskusjonen. En person som kjøpte på ett tidspunkt, kan ha hatt en helt annen opplevelse enn en som kjøpte senere. Forventninger om fremtidig etterspørsel påvirker prisen, og forventninger kan endres. En teknologi kan fortsette å fungere mens markedsprisen faller.
+
+Forsøk utenfor skjermen
+
+Bitcoin tiltrakk seg folk som var interessert i internasjonale betalinger og alternativer til eksisterende finansielle tjenester. Å sende verdi over landegrenser virket nyttig. Det praktiske resultatet var avhengig av tilgang, gebyrer og hvordan mottakeren vekslet eller brukte beløpet. Det var ikke automatisk øyeblikkelig eller gratis i enhver situasjon.
+
+El Salvador innførte Bitcoin som lovlig betalingsmiddel i 2021 og støttet en offentlig lommebok. Forsøket fikk oppmerksomhet fordi en regjering ville fremme bruk utenfor en liten gruppe entusiaster. Å kunngjøre en politikk var likevel forskjellig fra å få utbredt bruk i hverdagen. Folk trengte fortsatt grunner til å velge systemet for kjøp og betalinger.
+
+I 2025 gjorde reformer det frivillig for privat sektor å godta Bitcoin og krevde at skatt ble betalt i amerikanske dollar. Det internasjonale pengefondet beskrev endringene som del av arbeidet med å håndtere prosjektets risiko. Historien omfattet dermed politiske justeringer, fremfor en ubrutt utvikling mot at alle brukte systemet.
+
+Hvem kan endre reglene?
+
+Satoshi sluttet etter hvert å delta offentlig. Bitcoin fortsatte uten en identifiserbar grunnlegger som styrte hver beslutning. Programkoden kunne undersøkes og endringsforslag diskuteres. Et forslag måtte likevel tas i bruk av deltakerne. Å ha skapt systemet ga ingen et spesielt passord for å endre alles regler.
+
+Enighet kunne være vanskelig fordi brukerne hadde ulike interesser. Utviklere, utvinnere og bedrifter kunne være uenige om en endring. Prosessen var ikke én verdensomspennende avstemning der hver person måtte godkjenne alle oppdateringer. Programvaren folk valgte å kjøre, bidro til å avgjøre hvilke regler de godtok.
+
+Myndigheter kunne også påvirke utvinningsbedrifter, handelsplattformer og tilgangen til finansielle tjenester. Et distribuert nettverk lovet ikke immunitet mot regulering eller praktiske forstyrrelser. Bitcoins drift, juridiske behandling og markedsverdi forble forskjellige spørsmål. En betaling var fortsatt avhengig av gyldig godkjenning, aksept fra nettverket og noen som var villige til å motta den.

@@ -206,7 +206,12 @@ final contentRepositoryProvider = FutureProvider<ContentRepository>((ref) async 
 final userRepositoryProvider = FutureProvider<UserRepository>((ref) async {
   final db=await ref.watch(userDatabaseProvider.future);
   final lang=await ref.watch(selectedContentLanguageProvider.future);
-  final repository=DriftUserRepository(db,lang:lang,ownsDatabase:false,contentIds:(kind) async {
+  final repository=DriftUserRepository(db,lang:lang,ownsDatabase:false,defaultActiveDeckIds:() async {
+    final content = await ref.read(contentRepositoryProvider.future);
+    if (content.info.lang != lang) throw StateError('Sprachansicht hat sich geändert.');
+    return {for (final deck in await content.decks())
+      if (deck.titleDe == 'Allgemeine Sprache') deck.id};
+  },contentIds:(kind) async {
     if (!ref.mounted) throw StateError('Sprachansicht wurde geschlossen.');
     final content=await ref.read(contentRepositoryProvider.future);
     if (content.info.lang != lang) throw StateError('Sprachansicht hat sich geändert.');

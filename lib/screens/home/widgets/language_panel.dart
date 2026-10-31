@@ -39,11 +39,13 @@ class _LanguagePanelState extends ConsumerState<LanguagePanel> {
   }
 
   Future<void> _choose() async {
-    final lang = LanguagePanel.languages[_index].lang;
+    final language = LanguagePanel.languages[_index];
     final controller = ref.read(languageSelectionProvider.notifier);
     // Close the popup before the app rebuilds its language scope.
     Navigator.of(context).pop();
-    await controller.selectLanguage(lang);
+    // The current language again: nothing to switch (and no word wall).
+    if (language.displayName == widget.current) return;
+    await controller.selectLanguage(language.lang);
   }
 
   @override

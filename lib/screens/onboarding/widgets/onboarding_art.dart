@@ -91,7 +91,7 @@ class _Still extends StatelessWidget {
   @override
   Widget build(BuildContext context) => switch (artboard) {
     OnboardingArtboard.logo => Center(
-      child: LingvistMark(size: size.height * 0.7),
+      child: LinglossaMark(size: size.height * 0.7),
     ),
     OnboardingArtboard.welcome => Center(
       child: Icon(
@@ -110,10 +110,10 @@ class _Still extends StatelessWidget {
   };
 }
 
-/// The Lingvist mark without animation: an orange speech bubble with a
+/// The Linglossa mark without animation: an orange speech bubble with a
 /// white "L" and an accent dot. Same geometry as the Rive "Logo" artboard.
-class LingvistMark extends StatelessWidget {
-  const LingvistMark({super.key, required this.size});
+class LinglossaMark extends StatelessWidget {
+  const LinglossaMark({super.key, required this.size});
 
   final double size;
 

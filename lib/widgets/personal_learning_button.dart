@@ -14,45 +14,31 @@ import '../domain/story_learning.dart';
 import '../presentation/providers/personal_learning_provider.dart';
 import '../presentation/providers/database_providers.dart';
 import '../screens/words/word_list_screen.dart';
+import 'word_bubble.dart';
 
+/// What the AI learning cards send, for the legal texts and Settings. The
+/// app no longer asks in a dialog (user decision 31.10.2026): the AI switch
+/// in the onboarding and in Settings covers it.
 const personalLearningDisclosure =
     'Beim Hinzufügen dürfen das gewählte Wort, sein Satz und nötige '
     'Karten-Vergleichskontexte über unseren Server an Anthropic übertragen werden, um eine passende Karte zuzuordnen '
-    'oder eine private Übung zu erstellen. Der Originalsatz bleibt möglichst erhalten; ungeeignete kurze '
-    'Kontexte können ersetzt werden. Keine ausschließliche EU-Verarbeitung. Antworten werden bis zu 30 Tage '
-    'privat zur Wiederverwendung gespeichert; hinzugefügte Lernkarten bleiben dauerhaft auf diesem Gerät. '
-    'KI-Inhalte sind nicht redaktionell geprüft. Diese gesonderte Freigabe gilt für dein Konto auf diesem '
-    'Gerät und ist in Einstellungen abschaltbar. Bereits gesendete Anfragen können nicht zurückgeholt werden.';
-Future<bool> confirmPersonalLearning(BuildContext context) async =>
-    await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Private Lernkarten ermöglichen?'),
-        content: const SingleChildScrollView(
-          child: Text(personalLearningDisclosure),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Abbrechen'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Erlauben'),
-          ),
-        ],
-      ),
-    ) ??
-    false;
+    'oder eine private Übung zu erstellen. Keine ausschließliche EU-Verarbeitung.';
 
 class PersonalLearningButton extends ConsumerStatefulWidget {
   const PersonalLearningButton({
     super.key,
     required this.target,
     this.foregroundColor,
+    this.compact = false,
+    this.onMessage,
   });
   final PersonalTarget target;
   final Color? foregroundColor;
+
+  /// A round icon button for the word bubble ([AddWordButton]); messages
+  /// go to [onMessage] instead of below the button.
+  final bool compact;
+  final ValueChanged<String?>? onMessage;
   @override
   ConsumerState<PersonalLearningButton> createState() =>
       _PersonalLearningButtonState();
@@ -65,11 +51,22 @@ class _PersonalLearningButtonState
   String? error;
   StoryAddResult? saved;
   int epoch = 0;
+
+  /// False once the AI switch is known to be off for a signed-in account:
+  /// the button then stays hidden instead of asking.
+  bool aiEnabled = true;
   @override
   void initState() {
     super.initState();
     _load();
   }
+
+  void _report() => WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (!mounted) return;
+    final message = error ?? saved?.message;
+    widget.onMessage?.call(message);
+    LearningMessageNotification(message).dispatch(context);
+  });
 
   @override
   void didUpdateWidget(covariant PersonalLearningButton old) {
@@ -96,10 +93,16 @@ class _PersonalLearningButtonState
         setState(
           () => error = 'Diese Wortstelle eignet sich nicht als Lernziel. Bitte ein vollständiges Wort in einem kürzeren Satz wählen.',
         );
+        if (widget.compact) _report();
       }
       return;
     }
     try {
+      final client = ref.read(personalLearningClientProvider);
+      if (await client.owner() != null && !await client.consent()) {
+        if (mounted && epoch == current) setState(() => aiEnabled = false);
+        return;
+      }
       final service = await ref.read(personalLearningServiceProvider.future);
       final value = await service.saved(widget.target);
       if (mounted && epoch == current) setState(() => saved = value);
@@ -109,6 +112,7 @@ class _PersonalLearningButtonState
       }
       if (mounted && epoch == current) {
         setState(() => error = 'Lernstatus nicht lesbar. Bitte erneut öffnen.');
+        if (widget.compact) _report();
       }
     }
   }
@@ -130,15 +134,15 @@ class _PersonalLearningButtonState
         return;
       }
       final client = ref.read(personalLearningClientProvider);
-      await client.owner();
-      final identity = client.revision();
+      if (await client.owner() == null) {
+        throw const PersonalLearningFailure(
+          'Zum Hinzufügen bitte zuerst anmelden.',
+        );
+      }
+      // No dialog any more: the AI switch decides (onboarding, Settings).
       if (!await client.consent()) {
-        if (!mounted || epoch != current) return;
-        if (!await confirmPersonalLearning(context)) return;
-        if (!mounted || epoch != current || identity != client.revision()) {
-          return;
-        }
-        await client.setConsent(true);
+        if (mounted && epoch == current) setState(() => aiEnabled = false);
+        return;
       }
       if (!mounted || epoch != current) return;
       final value = await service.add(target);
@@ -153,11 +157,34 @@ class _PersonalLearningButtonState
     } finally {
       release();
       if (mounted && epoch == current) setState(() => busy = false);
+      if (widget.compact) _report();
     }
   }
 
   @override
-  Widget build(BuildContext context) => Column(
+  Widget build(BuildContext context) {
+    if (!aiEnabled) return const SizedBox.shrink();
+    if (widget.compact) {
+      final added = saved?.state == StoryAddState.added;
+      return AddWordButton(
+        busy: busy,
+        done: added,
+        label: added
+            ? 'Hinzugefügt, in Wortliste ansehen'
+            : retryable
+            ? 'Erneut versuchen'
+            : saved?.label ?? 'Zum Lernen hinzufügen',
+        onPressed: added && saved?.cardId != null
+            ? () => WordListScreen.openTarget(context, saved!.cardId!)
+            : saved != null || (error != null && !retryable)
+            ? null
+            : add,
+      );
+    }
+    return _full(context);
+  }
+
+  Widget _full(BuildContext context) => Column(
     mainAxisSize: MainAxisSize.min,
     children: [
       if (busy)
@@ -271,7 +298,6 @@ class _PersonalLearningConsentTileState
       await selected.owner();
       final identity = selected.revision();
       if (!mounted || generation != epoch) return;
-      if (value && !await confirmPersonalLearning(context)) return;
       if (!mounted ||
           generation != epoch ||
           identity != selected.revision() ||
@@ -293,9 +319,7 @@ class _PersonalLearningConsentTileState
     ref.listen(personalLearningClientProvider, (_, next) => bind(next));
     return SwitchListTile(
       title: const Text('Private Lernkarten mit KI'),
-      subtitle: Text(
-        error ?? 'Nur nach „Zum Lernen hinzufügen“. Gesonderte Freigabe.',
-      ),
+      subtitle: error == null ? null : Text(error!),
       value: enabled,
       onChanged: busy ? null : change,
     );

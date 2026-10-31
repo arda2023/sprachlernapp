@@ -4,12 +4,13 @@ import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
-import 'package:flutter/foundation.dart' show FlutterError;
+import 'package:flutter/foundation.dart' show FlutterError, debugPrint;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import '../../domain/content.dart';
+import 'bundled_content_updates.dart';
 import 'content_database.dart';
 import 'drift_content_repository.dart';
 import 'content_install_journal.dart';
@@ -47,6 +48,10 @@ class ContentPackInstaller {
   /// the application support directory.
   static Future<ContentPackInstaller> forApp({String lang = 'en'}) async {
     final support = await getApplicationSupportDirectory();
+    // A language's bundled release is activated the first time that language
+    // is opened in this process, before any of its readers exists, instead of
+    // every bundled language on the first app start (about 7 s each).
+    await (_bundledActivations[lang] ??= _activateBundled(lang, support));
     return ContentPackInstaller(
       loadAsset: _loadBundled, supportDirectory: support, lang: lang,
       validationRegistry: await ProcessValidationRegistry.forAppSupport(support),
@@ -84,6 +89,19 @@ class ContentPackInstaller {
     final version = state.offer?.manifest['version'] ??
       ContentManifest.parse(jsonEncode(state.pointer!['manifest']), lang: lang).version;
     return 'Installiert · $version · Prüfung beim Öffnen';
+  }
+
+  static final _bundledActivations = <String, Future<void>>{};
+
+  static Future<void> _activateBundled(String lang, Directory support) async {
+    final failures = await applyBundledContentUpdates(
+      loadAsset: _loadBundled,
+      supportDirectory: support,
+      languages: [lang],
+    );
+    for (final failure in failures.entries) {
+      debugPrint('Gebündeltes Inhaltsupdate ${failure.key}: ${failure.value}');
+    }
   }
 
   static Future<Uint8List?> _loadBundled(String key) async {
@@ -136,8 +154,10 @@ class ContentPackInstaller {
         'Kein Inhaltspaket installiert ($databaseAsset fehlt)',
       );
     }
+    // Off the UI isolate: a 25 MB hash would stall the animations around it.
     if (bytes.length != manifest.sizeBytes ||
-        sha256.convert(bytes).toString() != manifest.sha256) {
+        await Isolate.run(() => sha256.convert(bytes).toString()) !=
+            manifest.sha256) {
       throw const ContentUnavailable(
         ContentUnavailableReason.corrupt,
         'Inhaltspaket passt nicht zur Prüfsumme im Manifest',

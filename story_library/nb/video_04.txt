@@ -1,0 +1,73 @@
+Veien til Claude
+
+Et nytt forskningsselskap
+
+I mai 2021 kunngjorde et lite selskap innen kunstig intelligens at det hadde hentet inn 124 millioner dollar. Anthropic ville bygge systemer som mennesker kunne forstå og styre på en mer pålitelig måte. Dario Amodei ledet selskapet som administrerende direktør, mens søsteren Daniela hadde rollen som president. Flere i gruppen hadde allerede arbeidet med forskning som lå bak store språkmodeller.
+
+De gikk inn i et felt der utviklingen var vanskelig å forutsi. En modell trent på store mengder tekst kunne gi flytende svar på spørsmål den aldri hadde sett i akkurat den formen. Den kunne også finne på en forklaring og presentere den like selvsikkert som et riktig svar. Bedre språk betydde ikke nødvendigvis bedre vurderingsevne.
+
+For en som prøvde en samtalerobot for moro skyld, kunne et absurd svar være underholdende. På en arbeidsplass kunne den samme feilen skape problemer. Noen kunne kopiere en uriktig påstand inn i en rapport eller stole på kode uten å oppdage en svakhet. Jo mer nyttige modellene ble, desto viktigere ble det å forstå begrensningene deres.
+
+Grunnleggerne av Anthropic hadde forlatt OpenAI for å starte sitt eget selskap. De ville gjøre sikkerhet og pålitelighet til sentrale deler av forskningen. Den ambisjonen krevde likevel et produkt som fungerte. Et system som unngikk alle vanskelige spørsmål, ville være lite nyttig. Et system som svarte på enhver forespørsel, kunne skape andre problemer.
+
+Gruppen sto overfor et praktisk spørsmål: Hvordan kunne de lære en modell å være hjelpsom og samtidig sette fornuftige grenser? Det var enklere å skrive en regel enn å få systemet til å følge den konsekvent. Det samme ordet kunne vise til noe farlig i én samtale og en vanlig oppgave i en annen. Modellen måtte forstå forespørselen, ikke bare kjenne igjen ordene.
+
+Å lære av prinsipper
+
+En etablert treningsmetode brukte tilbakemeldinger fra mennesker. Folk sammenlignet svar og fortalte hvilket de foretrakk. Vurderingene bidro til å styre den videre treningen. Metoden kunne forbedre oppførselen, men det tok tid og arbeid å samle inn grundige tilbakemeldinger. Den reiste også spørsmål om hvilke menneskers preferanser systemet egentlig lærte.
+
+Anthropic undersøkte en tilnærming kalt Constitutional AI. Her fikk modellen et skriftlig sett med prinsipper som den brukte til å kritisere og revidere svar. Videre trening bygde på sammenligninger der kunstig intelligens bidro med vurderinger. Mennesker valgte fortsatt prinsippene og utformet prosessen. Metoden reduserte behovet for enkelte menneskelige vurderinger, men fjernet ikke menneskelige beslutninger fra systemet.
+
+Navnet kunne få metoden til å virke mer avklart enn den var. En slik grunnlov garanterte verken riktige svar eller fornuftige avslag. Forskerne måtte fortsatt teste modellen og undersøke feil. En nyttig assistent måtte kunne kjenne igjen legitime spørsmål i tillegg til skadelige forespørsler.
+
+Samtidig fortsatte utgiftene å vokse. Trening av større modeller krevde datainfrastruktur og mennesker som kunne bygge og studere dem. I april 2022 kunngjorde Anthropic en finansieringsrunde på 580 millioner dollar. Pengene ga rom for flere eksperimenter, men avgjorde ikke om forskningen kunne bli til en virksomhet som var økonomisk bærekraftig.
+
+Mot slutten av 2022 lanserte OpenAI ChatGPT. Folk kunne plutselig prøve en samtalende kunstig intelligens uten å forstå forskningen bak den. Anthropic utviklet sin egen assistent, Claude, i et marked der mange mulige brukere allerede hadde dannet forventninger gjennom et konkurrerende produkt.
+
+Å finne nyttige oppgaver
+
+Anthropic gjorde Claude tilgjengelig for et bredere publikum i mars 2023, etter testing med samarbeidspartnere. Assistenten kunne hjelpe med skriving, spørsmål og andre oppgaver knyttet til tekst. Kunder kunne bruke et samtalegrensesnitt. Utviklere kunne koble modellen til annen programvare gjennom et programmeringsgrensesnitt. Selskapet måtte vise hvordan disse mulighetene kunne passe inn i vanlig arbeid.
+
+Lange dokumenter ga én mulighet. I mai 2023 utvidet Anthropic Claudes kontekstvindu til 100 000 token. Et token er en enhet modellen bruker til å behandle tekst, og tilsvarer ikke alltid et helt ord. Selskapet anslo at vinduet kunne romme omtrent 75 000 ord.
+
+Det gjorde det mulig å sende inn langt mer materiale i én omgang. En bedrift kunne legge inn en omfattende rapport eller en samling dokumenter og stille spørsmål om innholdet. En programmerer kunne inkludere en større del av et prosjekt når vedkommende ba om hjelp. Behovet for å dele alt opp i små, atskilte biter ble mindre.
+
+Et kontekstvindu var likevel ikke et permanent minne. Det beskrev hvor mye materiale modellen kunne arbeide med i en interaksjon. At den tok imot et langt dokument, beviste heller ikke at den forsto hver detalj riktig. Resultatet måtte fortsatt kontrolleres, særlig når en liten feil kunne påvirke en beslutning.
+
+For bedrifter var nytten konkret. Det tok tid å lese og sammenligne dokumenter. Et system som hjalp med å finne relevante avsnitt eller forklare en vanskelig del, kunne være nyttig selv om det ikke erstattet menneskelig dømmekraft. Kundene kunne prøve det på arbeid de allerede hadde, uten å basere vurderingen på fjerne løfter om kunstig intelligens.
+
+Pengene bak modellene
+
+Amazon og Google ble viktige partnere og investorer. Samarbeidet ga tilgang til ressurser et ungt forskningsselskap vanskelig kunne bygge opp alene. Store modeller trengte datakapasitet. Leverandører av skytjenester hadde både utstyret og forbindelsene til bedriftskunder. Avtalene knyttet forskningen til infrastruktur og distribusjon.
+
+Samarbeidet gjenspeilte også konkurransen mellom teknologiselskaper. Microsoft hadde et nært forhold til OpenAI. Amazon og Google hadde grunner til å støtte andre utviklere og tilby modellene deres gjennom egne tjenester. En investering ga dem en andel i selskapets utvikling. Levering av datakapasitet bidro samtidig til arbeidet som gjorde utviklingen mulig.
+
+Anthropic presenterte modellfamilien Claude 3 i mars 2024. Haiku, Sonnet og Opus tilbød forskjellige kombinasjoner av hastighet, pris og kapasitet. En kunde trengte ikke nødvendigvis den største modellen til hvert spørsmål. En enkel oppgave kunne løses rimeligere, mens en krevende oppgave kunne forsvare større ressursbruk.
+
+Modellene kunne også behandle bilder, blant annet diagrammer og grafer. Det gjorde dem aktuelle for dokumenter der meningen var avhengig av mer enn skrevne avsnitt. Anthropic publiserte gode resultater fra sammenlignende tester. Et testresultat kunne likevel ikke fastslå hvordan modellen ville fungere i enhver kundes arbeid. Valget krevde fortsatt utprøving på den faktiske oppgaven.
+
+Selskapet hadde nå flere måter å nå kunder på. Noen ønsket en assistent de kunne snakke med. Andre ville bygge en modell inn i et eksisterende produkt eller en arbeidsprosess. Forventningene var forskjellige, og det samme gjaldt konsekvensene av feil. En lovende demonstrasjon måtte bli til en tjeneste folk kunne bruke pålitelig over tid.
+
+Fra svar til handling
+
+Programvareutvikling ga en ny åpning. En samtalerobot kunne allerede foreslå kode, men en utvikler måtte ofte kopiere forslaget, finne riktig fil og teste det. Hvis noe ikke virket, kom utvikleren tilbake med et nytt spørsmål. Mye av det praktiske arbeidet foregikk mellom ett svar og det neste.
+
+Claude Code tok modellen inn i denne arbeidsprosessen. Anthropic lanserte verktøyet som en tidlig forskningsversjon i februar 2025. Det kjørte i en terminal og kunne undersøke filer, redigere kode og utføre kommandoer. Resultatene fra en test kunne brukes til å styre et nytt forsøk. Arbeidet kunne dermed fortsette etter at en mulig løsning var foreslått.
+
+Dette endret hva slags oppgave en utvikler kunne gi systemet. I stedet for å be om et kort eksempel kunne man be verktøyet undersøke en feil i et prosjekt. Modellen måtte kanskje lese flere filer før den foreslo en endring. Tester ga informasjon om endringen fungerte, selv om godkjente tester ikke beviste at alt var riktig.
+
+Verdien var avhengig av arbeidet. Et verktøy som håndterte en rutineendring godt, kunne spare tid. En feilaktig endring kunne også gi mer arbeid til personen som skulle kontrollere den. Tilgang til kommandoer og filer gjorde modellens handlinger mer betydningsfulle enn et uriktig avsnitt i et samtalevindu.
+
+Utviklerne måtte derfor vurdere hva verktøyet skulle få tilgang til, og hvilke handlinger som krevde gjennomgang. Målet var praktisk hjelp med programvare. Ansvaret for resultatet lå fortsatt hos mennesker, og ikke alle oppgaver kunne overlates til verktøyet med like godt resultat.
+
+Grenser og investorer
+
+Spørsmålet om akseptabel bruk ble særlig synlig i Anthropics forhold til det amerikanske forsvaret. I februar 2026 beskrev selskapet en uenighet om to begrensninger: innenlandsk masseovervåking og fullt autonome våpen. Anthropic sa at det støttet annen lovlig bruk innen nasjonal sikkerhet, men ville beholde disse grensene.
+
+I mars opplyste selskapet at det hadde mottatt et brev som klassifiserte det som en risiko i forsyningskjeden. Anthropic bestred beslutningen og sa at den ville bli utfordret i retten. Selskapet hevdet også at begrensningen gjaldt bruk direkte knyttet til forsvarskontrakter, snarere enn all virksomhet hos enhver bedrift med militære kunder. Dette var selskapets uttalte standpunkter i en pågående konflikt.
+
+Uenigheten viste de kommersielle følgene av en sikkerhetspolitikk. Å begrense en kundes bruk kunne sette en kontrakt i fare. Å godta enhver ønsket bruk kunne komme i konflikt med begrunnelsen for grensene. Dette presset kom i tillegg til de løpende utgiftene til forskning og infrastruktur.
+
+Den 1. juni 2026 kunngjorde Anthropic at selskapet hadde sendt inn et konfidensielt utkast til registrering av en mulig børsnotering. Kunngjøringen fastsatte verken aksjepris eller antall aksjer. Tilbudet ville avhenge av markedsforhold og andre faktorer. Innsendingen ga en mulighet til å gå videre, uten å garantere at børsnoteringen ville bli gjennomført.
+
+Private investorer hadde allerede bidratt til å finansiere utviklingen av Claude. En børsnotering kunne gi en ny kilde til kapital, sammen med aksjonærer som ville vurdere selskapets utgifter og utsikter. Påstander om en endelig verdsettelse gikk lenger enn det som faktisk var kunngjort. På dette tidspunktet var prisen i et eventuelt tilbud fortsatt ikke bestemt.

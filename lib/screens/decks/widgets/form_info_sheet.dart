@@ -58,9 +58,12 @@ class FormInfoSheet extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        PopoverTitle(label),
-        const SizedBox(height: 8),
-        Text(explanation, style: PopoverText.body()),
+        // The chip already shows the label; VoiceOver still hears it.
+        Semantics(
+          label: '$label: $explanation',
+          excludeSemantics: true,
+          child: Text(explanation, style: PopoverText.body()),
+        ),
         if (examples.isNotEmpty) ...[
           const SizedBox(height: 12),
           Text(examples.join(' · '), style: serif),

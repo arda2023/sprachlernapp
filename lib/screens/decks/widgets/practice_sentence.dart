@@ -207,10 +207,13 @@ class PracticeSentenceState extends State<PracticeSentence> {
             '';
         {
           final input = widget.input;
+          final ghost = widget.solved ? '' : input.ghost;
           final shown = widget.solved
               ? s.gapText
               : input.text.isEmpty
               ? input.hint
+              : ghost.length > input.text.length
+              ? ghost
               : input.text;
           if (_solution.text != s.gapText) _solution.text = s.gapText;
           final punctuationPainter = TextPainter(
@@ -256,7 +259,9 @@ class PracticeSentenceState extends State<PracticeSentence> {
                       child: Transform.translate(
                         key: const ValueKey('practice-field-shake'),
                         offset: Offset(widget.errorOffset, 0),
-                        child: TextField(
+                        child: Stack(
+                          children: [
+                            TextField(
                         key: const ValueKey('practice-input'),
                         controller: widget.solved ? _solution : input,
                         focusNode: widget.solved && !widget.keepFocus
@@ -285,7 +290,10 @@ class PracticeSentenceState extends State<PracticeSentence> {
                           ),
                           filled: true,
                           fillColor: widget.solved ? colors.successTint : widget.error ? colors.errorTint : colors.memoryLevel2.withValues(alpha: .12),
-                          hintText: widget.solved || input.hint.isEmpty
+                          hintText:
+                              widget.solved ||
+                                  input.hint.isEmpty ||
+                                  ghost.isNotEmpty
                               ? null
                               : input.hint,
                           hintStyle: style.copyWith(
@@ -297,6 +305,47 @@ class PracticeSentenceState extends State<PracticeSentence> {
                           ),
                         ),
                       ),
+                            // The whole word, faint, over the field (its fill would hide
+                            // it); the typed part of it stays transparent.
+                            if (ghost.isNotEmpty)
+                              Positioned.fill(
+                                child: IgnorePointer(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 5,
+                                    ),
+                                    child: Text.rich(
+                                      key: const ValueKey('practice-ghost'),
+                                      TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: ghost.characters
+                                                .take(input.text.characters.length)
+                                                .toString(),
+                                            style: style.copyWith(
+                                              color: const Color(0x00000000),
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: ghost.characters
+                                                .skip(input.text.characters.length)
+                                                .toString(),
+                                            style: style.copyWith(
+                                              color: colors.memoryLevel2
+                                                  .withValues(alpha: .5),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      maxLines: 1,
+                                      softWrap: false,
+                                      overflow: TextOverflow.clip,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
                     ),
                     ),
                     if (punctuation.isNotEmpty) Text(punctuation, style: style),

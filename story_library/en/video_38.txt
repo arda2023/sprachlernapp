@@ -1,0 +1,111 @@
+Peter Thiel and power
+
+A question about freedom
+
+In 2009, Peter Thiel published an essay with a sentence that would follow him for years: “I no longer believe that freedom and democracy are compatible.” It was a striking statement from a businessman whose career had benefited from American universities, financial markets and legal institutions. He was not an obscure commentator. He had helped build PayPal, invested in Facebook and become involved in a company supplying software to government agencies.
+
+Thiel's idea of freedom placed great importance on individuals being able to build, invest and experiment without political interference. Democracy, however, gives other people a say in the rules that govern those activities. The tension between those two positions runs through his public career.
+
+It would be easy to turn that career into a story about one man secretly moving every piece on a chessboard. Thiel does play chess, and the comparison appears often in accounts of his life. But influence is not the same as complete control. Businesses fail, political allies disagree, and institutions can resist the wishes of their richest participants. The more useful question is how his money, ideas and relationships have given him opportunities that most people never have.
+
+The student newspaper
+
+At Stanford, Thiel helped create a place for arguments that he felt were missing from campus debate. In 1987, he became the first editor of the Stanford Review. The paper challenged the prevailing politics of the university and developed a reputation for provocation. Its own history describes a founding mission of presenting alternative viewpoints.
+
+The newspaper also brought people together. A publication needs writers, editors and readers who return for the next issue. Over time, those relationships can outlast the arguments that first created them. In Thiel's later career, connections made through education and work would become part of a much wider business and political network.
+
+Accounts of his student years often try to explain his politics through his childhood or his treatment by classmates. Such explanations can sound convincing without being easy to prove. A person's later beliefs cannot be read directly from a school experience. What is visible is that Thiel was already interested in challenging campus orthodoxies and organizing people who shared some of his objections.
+
+He completed his undergraduate degree at Stanford in 1989 and his law degree in 1992. For a time, he followed a conventional professional path into legal work. It did not hold his attention. In a later Stanford appearance, he described a law firm where outsiders wanted to get in and the people inside wanted to leave. He eventually turned toward investing and technology.
+
+Money moving online
+
+In the late 1990s, online shopping created a practical problem. Buyers and sellers needed a way to transfer money quickly, including when they did not already have a relationship. Thiel and the engineer Max Levchin became involved in building a business that would help solve it. That business became PayPal.
+
+The product was useful for a simple reason. A payment could connect people who were otherwise separated by distance and unfamiliar banking arrangements. But moving money also created difficult responsibilities. Fraud, losses and disputes did not disappear because a transaction happened on a screen. A service that made payment easier also needed ways to handle people using it dishonestly.
+
+PayPal's development included competition and a merger with X.com, the company associated with Elon Musk. The history contains disagreements about management and technology, but the broad outcome is clear. Thiel became chief executive of the combined business, and PayPal established itself in online commerce.
+
+On 3 October 2002, eBay completed its purchase of PayPal. The announced transaction value was approximately $1.5 billion, paid through an exchange of shares. It was not a cash payment of that amount to Thiel. He resigned as chief executive when the deal closed. The sale nevertheless gave him capital and a business record that made future founders more likely to take his calls.
+
+In his later political writing, Thiel described a founding ambition for PayPal that went beyond convenient payments. He had imagined money escaping government control. The actual company still operated within a world of banks, customers, contracts and regulators. The distance between the ambition and the operating business would recur in other projects.
+
+The value of an early bet
+
+Thiel became an early investor in Facebook, supporting a company that was still far from the global platform it would become. He also served on its board for many years. When Meta announced his planned departure in 2022, Mark Zuckerberg publicly credited him with advice on business and economics as well as early belief in the company.
+
+An investment can therefore buy more than a financial interest. It can establish a relationship at a moment when a founder needs money and reassurance. Advice given during those early years may influence later decisions. That does not mean an investor makes every decision, but it helps explain why a comparatively small group of people can appear repeatedly in the histories of large technology companies.
+
+Thiel has also argued that entrepreneurs should try to create businesses with something distinctive enough to escape ordinary competition. In a Stanford discussion of his ideas, he described monopoly as a goal for a company. His argument was that intense rivalry can trap businesses in small differences while a genuinely new product creates a market of its own.
+
+There is a harder question on the other side of that argument. A powerful company may offer a valuable service while leaving customers, workers or competitors with fewer alternatives. Business success and public benefit do not always move together. Judging a company requires looking at what it does with its position, not merely how cleverly it acquired it.
+
+Software for the state
+
+Palantir brought Thiel's business interests into especially close contact with public power. Founded in 2003 by a team that included Thiel, the company developed software for working with complex information. Alex Karp, another figure from his Stanford connections, became its chief executive.
+
+The name comes from the seeing stones in Tolkien's fiction. That reference is memorable, but it can also encourage an exaggerated picture of the technology. Palantir does not possess a magical view of everything happening in the world. Its software helps users bring information together, examine relationships and organize work. What users can establish depends on the information available, its quality and the decisions people make with it.
+
+For an investigator, connecting records may reveal a relationship that was difficult to see when the records were kept separately. The same process can also carry mistakes from one system into another. A misspelled name, an outdated record or a misleading association can matter greatly if the result affects someone's freedom. Technical capability and justified conclusions are different things.
+
+Government customers make those questions particularly important. Public agencies can investigate, detain and use force in ways that ordinary businesses cannot. A private company supplying them with software becomes part of how public authority works, even when officials remain responsible for the decisions.
+
+An ICE procurement document from April 2025 illustrates the relationship. It described Palantir's existing case management software and proposed ImmigrationOS capabilities for immigration enforcement. The agency wanted to connect records and support operational workflows using infrastructure it already had. This was a concrete administrative role, not evidence that the software could reliably predict what every person would do next.
+
+The document also helps explain why an established supplier can be difficult to replace. Once software has been configured around an agency's records and procedures, switching to another provider takes time. That creates a practical dependence worth examining separately from any claim about a personal relationship between an investor and a politician.
+
+Military work raises additional questions. Palantir has acknowledged work with Israel's defence establishment after the attacks of 7 October 2023. It has also explicitly denied providing or being involved in the systems known as Gospel and Lavender. Those denials need to remain visible when discussing allegations about targeting technology. Neither the existence of a defence contract nor a company's denial of a specific allegation establishes everything its software does in a conflict.
+
+The public does not see every detail of such work. That limited visibility makes careful distinctions more necessary. It does not justify treating a company as all powerful, and it does not remove the need to examine contracts, safeguards and the effects on people whose information is processed.
+
+A courtroom and a publisher
+
+Thiel's influence became visible in another setting through the case against Gawker Media. In 2012, Gawker published intimate footage of the wrestler Hulk Hogan. Hogan sued over the invasion of his privacy. Thiel helped finance the litigation, a role that became public after the trial.
+
+In 2016, a jury awarded Hogan $140 million. The parties later reached a $31 million settlement, and Gawker had entered bankruptcy. The distinction between the verdict and the settlement matters. The original award was not simply the amount ultimately paid.
+
+Thiel had his own history with Gawker, which had publicly discussed his sexuality in 2007. He described his support for litigation as a response to reporting that harmed people without serving a public interest. That was his explanation for his involvement, rather than proof of every private motive attributed to him.
+
+The case brought two legitimate concerns into conflict. Publication of intimate material can violate privacy even when the person involved is famous. At the same time, a wealthy individual funding a case against a critical publisher can create a chilling effect beyond that particular dispute. Other editors may wonder whether investigating a rich person will expose them to legal costs they cannot survive.
+
+Freedom House discussed those concerns in its account of internet freedom in 2016. The issue was not that publishers should have immunity from the law. It was that access to legal resources is deeply unequal. The ability to finance litigation can shape which disputes reach court and how long the parties can afford to continue.
+
+An argument against politics
+
+Thiel's 2009 essay had already made his frustration with electoral politics explicit. He identified women voters and recipients of welfare as groups resistant to libertarian policies. In a clarification appended to the essay, he said he did not think any group should lose the vote. That qualification belongs beside his criticism, rather than disappearing from the account.
+
+He suggested looking for freedom through new spaces created by technology, including the internet, ocean settlements and eventually space. The idea was that a builder might create possibilities without first winning an election. But a project can offer new choices while still raising questions about the people affected by it. A place governed under unusual rules must still decide who writes those rules and who can challenge them.
+
+Libertarianism itself includes different positions. Wanting lower taxes or fewer restrictions on business does not automatically mean rejecting democracy. Thiel's particular criticism should be understood as his argument, not assigned to everyone who uses the same political label.
+
+Entering the political arena
+
+Despite his frustration with politics, Thiel continued participating in it. In July 2016, he spoke at the Republican National Convention in support of Donald Trump. His appearance was public and deliberate. He presented himself as someone who built companies and argued that the prosperity of Silicon Valley had not reached much of the country.
+
+The speech showed how a business reputation could become a political resource. An investor known for backing successful companies could tell an audience that he saw promise in a candidate too. That was an endorsement, not a guarantee that the candidate would deliver the investor's preferred policies.
+
+Thiel later provided major financial support to an outside political organization backing J. D. Vance's Senate bid. In 2022, the Washington Post reported that he had given $15 million to a super PAC supporting Vance. The money went to an outside group, not directly to Vance's campaign.
+
+That distinction does not make the support unimportant. Money can help a candidate become visible and remain competitive. But it also does not establish that the donor controls the candidate or that voters played no role. Vance won a Senate seat and later joined Trump's presidential ticket. After the 2024 election, he took office as vice president on 20 January 2025.
+
+These connections deserve scrutiny because they place people with longstanding business ties near public decisions. Scrutiny is different from assuming that every policy is purchased. A useful investigation asks what was donated, who received it, what decisions followed and what evidence links them. A photograph of two people together cannot answer all of those questions.
+
+Different rules, familiar institutions
+
+Projects associated with Thiel have often explored ways to change the conditions under which people live and work. Some involve new technology. Others involve governance, finance or attempts to extend human life. The ambitions can be large, but an ambition is not the same as a demonstrated result. Research into aging has not made human beings immortal.
+
+Erebor, a banking venture he has backed, provides a useful example of the distance between a dramatic description and the institutional reality. Calling it a crypto bank can suggest a project outside the financial system. Yet in October 2025, the Office of the Comptroller of the Currency granted preliminary conditional approval for its national bank charter. In December, the FDIC approved its deposit insurance application subject to conditions.
+
+The proposed business covered technology and other industries, including participants in virtual currency markets. Those approvals were steps within a regulatory process. They did not create a bank beyond government oversight. In this case, innovation was being pursued through public institutions with legal requirements attached.
+
+Próspera in Honduras raises a different set of questions about private development and government authority. The project has become associated with debate over special rules for investment and governance. It is not an independent country free of all law. A dispute between the investors and Honduras has been proceeding through international arbitration.
+
+As of October 2026, the public ICSID case record listed that proceeding as pending. The existence of a claim did not mean the investors had won, and the dispute itself showed how contested the arrangement was. It would be misleading to present the project as a completed political experiment whose future had already been settled.
+
+Who gets to decide?
+
+Thiel's career moves between several kinds of power. A newspaper can shape an argument. An investment can give a company room to grow. Software can change how an agency works. Funding can help sustain a political campaign or a lawsuit. These are different mechanisms, and each creates its own questions about responsibility.
+
+His supporters see an investor willing to take unusual ideas seriously and support people whom others overlook. Critics see concentrated wealth giving one person an outsized role in decisions with consequences far beyond his own life. Both descriptions point toward something that can be examined through actual choices, institutions and outcomes.
+
+There is no need to imagine a secret plan that explains every event. The public record already presents a difficult question. When a wealthy builder wants freedom from rules, what happens to the freedom of people who must live with what he builds? Their ability to understand, challenge and change those arrangements is part of the story too.

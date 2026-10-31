@@ -49,6 +49,7 @@ app.*.map.json
 
 # Secrets and Supabase CLI state
 .env
+config/adapty.local.json
 supabase/.temp/
 supabase/.branches/
 

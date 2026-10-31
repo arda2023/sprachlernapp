@@ -304,12 +304,12 @@ void main() {
     expect((await repo.allCardStates())['verb-befinden']!.box, 3);
   });
 
-  test('decks are active until switched off', () async {
-    expect(await repo.activeDeckIds(['d1', 'd2']), {'d1', 'd2'});
+  test('decks without defaults are inactive until explicitly enabled', () async {
+    expect(await repo.activeDeckIds(['d1', 'd2']), isEmpty);
     await repo.setDeckActive('d2', false, now: now);
-    expect(await repo.activeDeckIds(['d1', 'd2']), {'d1'});
+    expect(await repo.activeDeckIds(['d1', 'd2']), isEmpty);
     await repo.setDeckActive('d2', true, now: now);
-    expect(await repo.activeDeckIds(['d1', 'd2']), {'d1', 'd2'});
+    expect(await repo.activeDeckIds(['d1', 'd2']), {'d2'});
   });
 
   test('review counts per card and change notifications', () async {

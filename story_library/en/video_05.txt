@@ -1,0 +1,67 @@
+Rockets that return
+
+Before the launch pad
+
+On June 12, 2026, SpaceX began trading on Nasdaq. Its shares had been priced at 135 dollars, and the initial offering raised 75 billion dollars before any additional shares from the underwriters' option. The company arriving on the stock market included a launch business, satellite communications and, following an acquisition, artificial intelligence. Its history had begun with a much smaller rocket.
+
+Elon Musk founded SpaceX in 2002 after making money in internet businesses. He had grown up in South Africa, moved to Canada and then continued his education in the United States. Computing interested him early. Before trying to send hardware into space, he had worked on getting information and payments to move through computer networks.
+
+In the 1990s, Musk and his brother Kimbal helped build Zip2, which supplied online business information and city guides to newspapers. The idea connected familiar local information with a new way of reaching readers. A newspaper could offer more than a printed page, while businesses could appear in a directory people accessed from a computer.
+
+Growing a company also meant dealing with investors and changes in management. Musk did not retain full control over the business he had helped establish. Compaq acquired Zip2 in 1999, giving him money to invest elsewhere. His next major venture, X.com, focused on financial services over the internet.
+
+X.com merged with Confinity, and the combined business became PayPal. Musk lost his position as chief executive but remained a shareholder. In 2002, eBay acquired PayPal in a transaction valued at about 1.5 billion dollars. The sale gave him resources for ventures whose risks were quite different from those of an online payment service.
+
+Building a rocket company
+
+SpaceX needed engineers, equipment and somewhere to test the things it built. A software error might be corrected and deployed again. A failed launch could destroy the vehicle and its payload in seconds. Each attempt depended on the interaction of engines, structures and control systems, with little room for error once the rocket left the ground.
+
+The first vehicle was Falcon 1. The team operated from Omelek Island in the Marshall Islands, far from the offices and factories associated with the American technology industry. Moving equipment and preparing launches in that setting added practical difficulties to the engineering work. A launch was the visible end of a long chain of tasks.
+
+Falcon 1's first flight, in March 2006, failed. The second attempt also failed to reach orbit. A third flight in August 2008 ended after a problem during the separation of the rocket's stages. Each failure produced information, but collecting information this way was expensive. The company still had to build another vehicle and get it ready.
+
+By 2008, Musk was also deeply involved in Tesla, the electric car company. Both businesses needed money while trying to solve difficult production problems. The financial crisis made the search for funding harder. Investors had reasons to be cautious, and a promise of future success did not pay the bills arriving that month.
+
+The fourth Falcon 1 launch took place on September 28, 2008. This time the rocket reached orbit. It became the first privately developed rocket using liquid fuel to do so. For SpaceX, that result demonstrated something its earlier attempts had not: the vehicle could complete the central task the company had built it to perform.
+
+Success did not erase the cost of the failed flights. It did give the company a stronger basis for seeking work. In December 2008, NASA awarded SpaceX a contract worth 1.6 billion dollars for twelve cargo supply missions to the International Space Station. The contract linked the company's future to deliveries that other people would depend on.
+
+Delivering and coming back
+
+SpaceX developed the larger Falcon 9 rocket and the Dragon spacecraft. Its work expanded from proving that a vehicle could reach orbit to providing a transport service. A customer paying for a mission needed more than an impressive demonstration. The cargo had to arrive, and the provider had to prepare for the next flight as well.
+
+In May 2012, Dragon became the first commercial spacecraft to attach to the International Space Station, deliver cargo and return to Earth. The mission was part of a broader change in how NASA obtained transport services. SpaceX now had experience operating around a destination occupied by people, with requirements extending well beyond the launch itself.
+
+Another problem concerned what happened to expensive hardware after it had done its first job. A conventional rocket discarded stages as it climbed. Much of the vehicle was lost after a single flight. SpaceX wanted to recover the first stage of Falcon 9 and eventually use recovered boosters again.
+
+Getting a booster back was difficult. It had to separate, change its path and control its descent. Landing required accurate timing and enough remaining propellant. Several attempts ended in crashes or explosions. A video of a failed landing showed only the final seconds of work that included calculations, manufacturing and repeated adjustments.
+
+In December 2015, a Falcon 9 first stage returned to a landing pad in Florida and stood upright. Above it, the second stage continued the mission to put communications satellites into orbit. The returning booster had not travelled all the way around Earth. It was one part of an orbital launch vehicle coming back after completing its part of the ascent.
+
+Recovery opened a path toward using costly components on later missions. The financial benefit depended on how much inspection and repair a booster needed, as well as how often it could fly. A landing alone did not establish a new price for every launch. Reuse had to become a repeatable process that customers could trust.
+
+Satellites and a larger vehicle
+
+Starlink gave SpaceX a continuing reason to launch large numbers of satellites. The network supplied internet connections through satellites in orbit, including to places where conventional connections were limited. It connected the launch business with a communications service used by customers on the ground.
+
+Launching satellites for its own network differed from carrying a single payload for an outside customer. SpaceX had to consider the network as a whole, with spacecraft working together to provide service. Launch capacity was one part of that operation. The equipment used by subscribers and the communications links also had to work.
+
+The company also pursued Starship, a much larger vehicle intended to carry people and cargo on ambitious missions. Musk's plans included travel to Mars. Such plans created demanding engineering goals, but a proposed destination was not an accomplished journey. Development still required tests, infrastructure and regulatory permission.
+
+The distinction mattered when discussing the company. Falcon missions, satellite internet and future travel to Mars were related through SpaceX, but they were at different stages of development. A customer using an internet connection was buying an existing service. An investor considering a distant space mission was evaluating a prospect with unresolved difficulties.
+
+Meanwhile, Musk became involved in more businesses. He bought Twitter in 2022, later renamed it X, and founded xAI in 2023. His interests now included a social platform and the development of artificial intelligence models, alongside electric vehicles and space transport. These activities involved different customers, costs and competitors.
+
+A company with several businesses
+
+In February 2026, SpaceX announced that it had acquired xAI. The transaction brought artificial intelligence into the space company's organisation. It also brought together activities that investors would have to examine jointly, rather than treating SpaceX solely as a provider of rocket launches.
+
+One proposed connection involved computing in orbit. Artificial intelligence required large amounts of computing capacity, and operating that capacity required energy and cooling. Musk's vision connected launch vehicles, satellite communications and computing infrastructure in space. It was a proposal about what those businesses might eventually make possible together.
+
+The proposal still required technical and economic answers. Launching equipment was only one part of operating a computing service. Investors had to consider whether the combined businesses could deliver the promised benefits and what it would cost to build the necessary systems. Ownership of several technologies did not itself settle whether a particular project would work.
+
+The public offering brought those questions to a wider group of investors. SpaceX announced the offering price on June 11, 2026, with trading beginning the following day. Nasdaq reported an initial offering valuation of approximately 1.77 trillion dollars. That valuation described the company through the price of its shares, rather than money sitting in a bank account.
+
+Musk's personal wealth was a separate question. Estimates of an owner's wealth depend in part on the assessed value of their holdings, and those values can change. A company's market value is not identical to its founder's wealth, nor does an increase in share price mean the founder has received that amount in cash.
+
+At the time of the offering, SpaceX had travelled from repeated failures of Falcon 1 to operating launch and satellite businesses. It had also taken on new activities through acquisition. Public investors were buying into that mixture of operating services and future plans. The capital raised could support further work, while the company still had to manufacture hardware, serve customers and complete the next mission.

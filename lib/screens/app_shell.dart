@@ -16,6 +16,8 @@ import '../models/reading_history.dart';
 import '../models/sample_content.dart';
 import '../models/story_models.dart';
 import '../presentation/providers/reading_providers.dart';
+import '../presentation/providers/content_access_provider.dart';
+import '../domain/content_access_policy.dart';
 import '../presentation/providers/learning_providers.dart';
 import '../presentation/providers/story_learning_providers.dart';
 import '../presentation/providers/preferences_provider.dart';
@@ -109,6 +111,15 @@ class _AppShellState extends ConsumerState<AppShell> {
   }
 
   String? _importText(String text) {
+    final access = ref.read(contentAccessProvider);
+    if (access == ContentAccessDecision.statusUnknown) {
+      return 'Dein Premium-Zugang konnte noch nicht geprüft werden. '
+          'Bitte prüfe ihn erneut.';
+    }
+    if (access == ContentAccessDecision.premiumRequired) {
+      return 'Neue eigene Texte kannst du mit Premium importieren. '
+          'Dein Text bleibt hier vorgemerkt.';
+    }
     try {
       ref.read(importedTextsProvider.notifier).add(text);
       return null;

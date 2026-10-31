@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/answer_check.dart';
 
-enum InputFeedback { typing, firstWrong, prefix, revealed }
+/// After a wrong answer: [firstWrong] keeps the letters, [prefix] shows the
+/// start (2nd) or the whole word (3rd) until typing starts, [ghost] keeps
+/// the whole word faintly behind what is typed (4th on, user request
+/// 31.10.2026).
+enum InputFeedback { typing, firstWrong, prefix, ghost, revealed }
 
 String targetPrefix(String target) {
   final letters = target.characters;
@@ -29,10 +33,16 @@ class PracticeInputController extends TextEditingController {
     lastChecked = answer;
     target = goal;
     ordinaryErrors++;
-    feedback = ordinaryErrors == 1
-        ? InputFeedback.firstWrong
-        : InputFeedback.prefix;
-    hint = ordinaryErrors == 1 ? '' : targetPrefix(goal);
+    feedback = switch (ordinaryErrors) {
+      1 => InputFeedback.firstWrong,
+      2 || 3 => InputFeedback.prefix,
+      _ => InputFeedback.ghost,
+    };
+    hint = switch (ordinaryErrors) {
+      1 => '',
+      2 => targetPrefix(goal),
+      _ => goal,
+    };
     super.value = TextEditingValue(
       text: ordinaryErrors == 1 ? answer : '',
       selection: TextSelection.collapsed(
@@ -49,6 +59,9 @@ class PracticeInputController extends TextEditingController {
     notifyListeners();
   }
 
+  /// The faint word behind the field in [InputFeedback.ghost].
+  String get ghost => feedback == InputFeedback.ghost ? hint : '';
+
   void reset() {
     feedback = InputFeedback.typing;
     lastChecked = hint = target = '';
@@ -62,7 +75,10 @@ class PracticeInputController extends TextEditingController {
     final previous = super.value;
     final edited = next.text != previous.text;
     if (edited) textRevision++;
-    if (feedback != InputFeedback.typing && next.text != previous.text) {
+    // The ghost word stays while typing; every other hint goes.
+    if (feedback != InputFeedback.typing &&
+        feedback != InputFeedback.ghost &&
+        next.text != previous.text) {
       if (feedback == InputFeedback.firstWrong) {
         var start = 0;
         // Prefer the actual selection boundary, preserving repeated letters.

@@ -186,8 +186,8 @@ void main() {
     await mount(tester, form: 'cat', text: 'The cat.');
     expect(find.text('Katze'), findsOneWidget);
     expect(remote.calls, 0);
-    expect(find.text('Wörterbuch · allgemeine Bedeutung'), findsOneWidget);
-    // The bubble no longer carries the licence link.
+    // The small bubble shows the meaning only (31.10.2026): no source line
+    // and no licence link.
     expect(find.text('Wörterbuch · Quellen & Lizenz'), findsNothing);
     // Completes when the sheet closes, so it is not awaited here.
     unawaited(showDictionarySources(tester.element(find.byType(Scaffold))));
@@ -221,10 +221,11 @@ void main() {
       remote.consent = consent;
       await mount(tester);
       expect(remote.calls, 0);
-      // Consent is asked once in the onboarding, never in the bubble.
+      // Consent comes from the onboarding switch; the bubble neither asks
+      // nor points to Settings (31.10.2026).
       expect(find.textContaining('vollständige Satzkontext'), findsNothing);
       expect(find.text('Aktivieren'), findsNothing);
-      expect(find.textContaining('in den Einstellungen'), findsOneWidget);
+      expect(find.textContaining('in den Einstellungen'), findsNothing);
       expect(remote.consent, consent);
     });
   }
@@ -259,11 +260,20 @@ void main() {
     });
   }
   testWidgets(
-    'sentence still requires explicit Translate action; cache does not',
+    'sentence translates on tap while the AI switch is on (31.10.2026)',
     (tester) async {
       await mount(tester, form: null);
-      expect(remote.calls, 0);
+      expect(remote.calls, 1);
       expect(dictionary.lookups, 0);
+      expect(find.text('Übersetzen'), findsNothing);
+    },
+  );
+  testWidgets(
+    'sentence with the AI switch off still needs the explicit Translate',
+    (tester) async {
+      remote.consent = WordCloudConsent.disabled;
+      await mount(tester, form: null);
+      expect(remote.calls, 0);
       await tester.tap(find.text('Übersetzen'));
       await tester.pumpAndSettle();
       expect(remote.calls, 1);

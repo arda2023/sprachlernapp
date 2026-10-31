@@ -1,0 +1,43 @@
+A star inside a city
+
+A neutron star can contain more mass than the Sun within a sphere only a few tens of kilometres across. On a map, that size would fit within a large city. In space, it represents the compressed remains of a massive star. Its story begins with a struggle between gravity and the pressure inside a star that is still shining.
+
+For much of a star's life, nuclear fusion helps maintain that pressure. Hydrogen becomes helium, releasing energy. Gravity pulls inward while pressure resists compression. The balance changes as the available fuel and the star's internal structure change. What happens next depends strongly on the star's mass and history.
+
+When the core gives way
+
+A star like the Sun eventually leaves a white dwarf rather than a neutron star. More massive stars can pass through further stages of nuclear burning, producing increasingly heavy elements in their interiors. The later stages become shorter, but their duration is not a universal timetable shared by every star.
+
+Eventually, an iron rich core presents a problem. Fusing iron into heavier nuclei does not supply the energy needed to support the star in the way earlier fusion reactions did. This does not mean iron can never undergo nuclear reactions. It means that the energy balance no longer works in the same direction.
+
+When the core can no longer support itself, it collapses. Electrons are captured by protons, producing neutrons and neutrinos. Matter is compressed to extraordinary density. The resulting explosion is more complicated than an entire star simply bouncing off an unchanged iron ball. Shock waves, neutrinos and the behaviour of the surrounding material all belong in the explanation.
+
+Some collapsing stars leave neutron stars, while others form black holes. A neutron star is not made of perfectly uniform pure neutrons. It has layers, and its composition changes with depth. Calling it a giant atomic nucleus conveys its density, but does not describe its whole structure.
+
+Beneath the surface
+
+The gravity near a neutron star bends the paths of light. Its compactness can allow an observer to see more of its surface than would be visible on an ordinary sphere. Newly formed neutron stars are extremely hot, but their temperatures change as they cool. They do not all keep one fixed surface temperature throughout their lives.
+
+Models describe a solid crust containing nuclei and electrons. Deeper down, increasingly unusual forms of matter become possible. Near the base of the crust, some calculations predict structures shaped like rods or sheets. Physicists call these arrangements nuclear pasta because the shapes suggest spaghetti and lasagne.
+
+These are predictions about matter under extreme conditions, not photographs taken inside a star. Claims that nuclear pasta is literally unbreakable go beyond the evidence. Its properties may help explain observations, but researchers must test those explanations against measurements and competing models.
+
+The deepest interior remains uncertain. Neutrons and protons may persist there, or other forms of matter may appear, potentially involving their constituent quarks. Scientists investigate these possibilities by comparing theoretical predictions with the masses, sizes and behaviour of observed neutron stars. The uncertainty is a specific research problem, not permission to present every exotic idea as equally established.
+
+Signals in the darkness
+
+As a stellar core contracts, conservation of angular momentum can make it rotate much faster. The comparison with a skater pulling in their arms is useful here. Some neutron stars spin hundreds of times each second. Their subsequent history, including interactions with a companion, can also affect their rotation.
+
+A pulsar is observed through repeating pulses of radiation. Beams associated with the star's magnetic environment sweep past us as it turns, rather like a lighthouse beam. Whether we detect pulses depends partly on geometry. A neutron star does not need to disappear and reappear physically to produce that rhythm.
+
+Magnetars are neutron stars with exceptionally strong magnetic fields. They are not simply the name for every neutron star immediately after birth. Their magnetic activity can power dramatic outbursts. Pulsars and magnetars describe important observed behaviours and properties, not a compulsory sequence that every object follows.
+
+When two stars meet
+
+Two neutron stars orbiting one another can lose orbital energy through gravitational waves and spiral together. In August 2017, the event called GW170817 gave researchers gravitational wave observations of such a system, followed by observations of light. Together, those signals opened a new way to investigate these collisions.
+
+Material expelled during a merger can form heavy elements through rapid neutron capture and subsequent nuclear transformations. The radioactive decay of newly formed material helps power the glow called a kilonova. Later analysis identified strontium in the aftermath of GW170817, providing evidence for this element production.
+
+The remaining object does not always become a black hole immediately. Depending on its mass and the properties of dense matter, a neutron star may survive temporarily or longer. The outcome itself can teach researchers about conditions they cannot reproduce directly on Earth.
+
+Such mergers contribute to the universe's supply of heavy elements, but they did not manufacture every element in our bodies or technology. Different elements have different cosmic histories. Material from earlier generations eventually becomes part of new stars and planets. Some of that history is present in familiar objects around us, even when its violent beginnings remain invisible.

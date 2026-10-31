@@ -154,27 +154,26 @@ class HomeScreen extends ConsumerWidget {
                     );
                   }
                   final reading = ref.watch(readingProgressProvider);
-                  final all = stories;
-                  // Started stories first; only real content from the active pack.
-                  final started = [
-                    for (final s in all)
-                      if (reading[s.id]?.inProgress ?? false) s,
-                  ];
-                  final shown = [
-                    ...started,
-                    ...all.where((s) => !started.contains(s)),
-                  ].take(6).toList();
+                  final progress = {
+                    for (final MapEntry(:key, :value) in reading.entries)
+                      if (value.inProgress) key: value.fraction,
+                  };
+                  final finished = {
+                    for (final MapEntry(:key, :value) in reading.entries)
+                      if (value.finished) key,
+                  };
+                  // Started stories first, then one category after another
+                  // (a mix of colours); finished ones only at the end.
+                  final shown = mixedByCategory(
+                    stories,
+                    progress: progress,
+                    finished: finished,
+                  ).take(6).toList();
                   return StoryCarousel(
                     stories: shown,
                     onOpen: onOpenStory,
-                    progress: {
-                      for (final MapEntry(:key, :value) in reading.entries)
-                        if (value.inProgress) key: value.fraction,
-                    },
-                    finished: {
-                      for (final MapEntry(:key, :value) in reading.entries)
-                        if (value.finished) key,
-                    },
+                    progress: progress,
+                    finished: finished,
                   );
                 },
                 loading: () => const _Loading(height: 200),

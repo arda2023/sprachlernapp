@@ -541,7 +541,7 @@ void main() {
     );
   });
   testWidgets(
-    'mount does not create; Add requests separate consent; decline makes zero requests',
+    'AI switch off: no add button, no consent dialog, zero requests',
     (tester) async {
       final dir = Directory.systemTemp.createTempSync('personal-ui');
       addTearDown(() => dir.deleteSync(recursive: true));
@@ -601,17 +601,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(calls, 0);
-      await tester.tap(find.text('Zum Lernen hinzufügen'));
-      await tester.pump();
-      // Advance only the dialog's transition; the busy indicator does not settle.
-      await tester.pump(const Duration(milliseconds: 300));
-      expect(find.text('Private Lernkarten ermöglichen?'), findsOneWidget);
-      expect(calls, 0);
-
-      await tester.tap(find.text('Abbrechen'));
-
-      await tester.pumpAndSettle();
-
+      // The app never asks in a dialog any more (31.10.2026): with the AI
+      // switch off the add action is simply not offered.
+      expect(find.bySemanticsLabel('Zum Lernen hinzufügen'), findsNothing);
+      expect(find.text('Private Lernkarten ermöglichen?'), findsNothing);
       expect(calls, 0);
 
       expect(await tester.runAsync(user.allCardStates), isEmpty);

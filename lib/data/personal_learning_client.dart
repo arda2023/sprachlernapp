@@ -29,12 +29,20 @@ class PersonalConsentStore {
     );
     return db;
   })();
+  /// Device-wide answer from the onboarding's AI switch; an account's own
+  /// choice in Settings wins over it.
+  static const deviceOwner = 'device:onboarding';
+
   Future<bool> read(String owner) async {
-    final rows = (await db()).select(
-      'SELECT enabled FROM consent WHERE owner=? AND version=1',
-      [owner],
-    );
-    return rows.isNotEmpty && rows.single['enabled'] == 1;
+    final database = await db();
+    for (final who in [owner, deviceOwner]) {
+      final rows = database.select(
+        'SELECT enabled FROM consent WHERE owner=? AND version=1',
+        [who],
+      );
+      if (rows.isNotEmpty) return rows.single['enabled'] == 1;
+    }
+    return false;
   }
 
   Future<void> write(String owner, bool enabled) async => (await db()).execute(
@@ -85,6 +93,13 @@ class PersonalLearningClient {
     final value = who != null && !_blocked && await store.read(who);
     if (epoch != revision() || await owner() != who) return false;
     return value;
+  }
+
+  /// The onboarding's AI switch, before any account exists.
+  Future<void> setDeviceConsent(bool enabled) async {
+    consentRevision++;
+    await store.write(PersonalConsentStore.deviceOwner, enabled);
+    _changes.add(null);
   }
 
   Future<void> setConsent(bool enabled) async {

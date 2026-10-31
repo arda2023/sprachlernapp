@@ -1,0 +1,121 @@
+The difference was permission
+
+A boy who liked tricks
+
+Before Kevin Mitnick became a familiar name in stories about computer crime, he wanted to perform magic. He liked the moment when an audience looked in the wrong direction and missed what was happening in front of it. A successful trick depended on understanding what people expected to see.
+
+Much of the documentary's account of his early life comes from his autobiography. Those memories offer his perspective, rather than an independent record of every conversation. In his telling, an early adventure involved the buses of Los Angeles. As a boy, he worked out how the transfer tickets operated and found a way to travel without paying the required fares.
+
+He remembered the experience as a satisfying puzzle. An ordinary system had rules, and he had discovered how to get around them. The bus company would have had a different description. His enjoyment did not change the fact that he was using a service without paying for it.
+
+At school, he met people fascinated by the telephone network. They belonged to a loose community often called phone phreaks. Some explored equipment and signals. Some found ways to make calls without being charged. Others were interested in information that telephone companies kept away from the public.
+
+For Mitnick, the person answering the telephone could be as interesting as the machinery behind it. A confident voice and a convincing story sometimes opened a door that technical knowledge alone could not. He began learning not just how systems worked, but how the people responsible for them made decisions.
+
+The person on the other end
+
+Companies needed employees to exchange information and help one another. That cooperation created opportunities for someone pretending to belong. Mitnick described studying departments, job titles and everyday procedures until he could sound familiar to the person he called.
+
+This kind of deception is commonly called social engineering. It does not require the victim to be foolish. A busy employee may hear a request that resembles many legitimate requests received that day. If the caller appears to know the company, the employee may accept an identity that has never actually been checked.
+
+The documentary recounts Mitnick using this approach to obtain private telephone information. Numbers that their owners had deliberately kept out of public directories became objects of curiosity. To him, finding them demonstrated skill. To the people whose information was exposed, it was a loss of privacy.
+
+In his account, warnings from telephone company representatives and investigators failed to stop him. He felt frightened when authority appeared at his door, then returned to the same activities after the immediate danger passed. The thrill of succeeding was easier to imagine than the consequences of another arrest.
+
+One episode involved entering a telephone company building with companions and taking technical manuals. The documents described systems the group wanted to understand. Their knowledge of the company helped them appear to belong there, but familiarity was not permission. The incident brought legal consequences while Mitnick was still a teenager.
+
+His early record included further encounters with the justice system. The pattern mattered more than the legend of one brilliant trick. A warning or sentence would interrupt his activities. Later, he would return to them. Each return made it harder to describe the problem as a single youthful mistake.
+
+A job and another intrusion
+
+Mitnick also tried to turn his interest in computers into legitimate work. The documentary describes a programming job at a telephone company that ended soon after it began. In his account, questions about his background brought the opportunity to an abrupt close. He had found work he wanted, then lost it.
+
+His past complicated later job searches as well. Employers could be reluctant to give access to someone known for crossing access boundaries. That was frustrating for a person whose strongest skills involved computers. It did not leave him without responsibility for what he chose to do next.
+
+During the 1980s, he and an associate targeted Digital Equipment Corporation, usually called DEC. The company was an important computer manufacturer. Its VAX computers ran an operating system called VMS. Mitnick wanted the source code, the human readable instructions used to build the software.
+
+Reading source code could reveal how a program worked and where its weaknesses might be. But the code belonged to the company and was not freely available. Getting it required crossing a boundary that DEC had deliberately put in place. The documentary describes deception and unauthorized access used to reach its development systems.
+
+The target also explains why this was different from stealing a finished computer. Source code could be copied while the original remained in place. The developers might still have their files and yet no longer control who could study them. For Mitnick, possession offered time to examine the software away from the company's machines. For DEC, the same possession meant that someone outside its authorised staff had acquired material it intended to protect. The absence of an empty shelf or a missing machine did not make the breach imaginary. Information could be taken without removing the owner's copy.
+
+The intrusion involved more than simply looking at a screen. Mitnick and his associate sought continuing access and copied material away from the systems where it belonged. The account describes copies eventually stored on magnetic tape, a medium used for keeping large amounts of computer data.
+
+Mitnick presented the challenge itself as a central motive. He wanted to obtain something difficult to reach and understand what others could not see. That explanation may help describe his interest. It does not mean the activity was harmless. A company discovering an intruder had to determine what had been accessed, what had changed and whether the intruder could return.
+
+The documentary also recounts rivalry between the two associates and a personal dispute that led to cooperation with investigators. The precise exchanges belong to the autobiographical narrative. The broader outcome is clearer: the Digital intrusion became a federal case, and Mitnick received a prison sentence followed by a treatment programme.
+
+A frightening new figure
+
+Computer crime was attracting public attention in a world that was still becoming familiar with networked machines. Many readers used computers rarely, if at all. Someone who could enter a distant system seemed to possess powers that were difficult to understand or measure.
+
+The film WarGames, released in 1983, gave audiences an especially dramatic picture. A young computer user accidentally reaches a military system, and the story moves toward a nuclear crisis. It was fiction, but it offered a memorable image of what a person at a keyboard might do.
+
+Mitnick's public reputation grew in that atmosphere. Accounts of real intrusions appeared alongside alarming claims about his capabilities. A complicated person became easier to present as a dangerous figure with almost unlimited reach. Later, supporters would build an opposite image of a misunderstood explorer punished for being too clever.
+
+Neither picture was enough. His convictions were real. So were legitimate questions about how allegations were reported and how his case was handled. Understanding one did not require ignoring the other. A person could commit offences without possessing every extraordinary power attributed to him.
+
+The claim that his behaviour resembled an addiction also became part of the story. Lawyers and Mitnick used the language of compulsion to explain his repeated return to hacking. That did not establish a general medical explanation for hackers or make technical curiosity a diagnosis. It described one way his conduct was discussed at the time.
+
+Another chance, then flight
+
+After the earlier sentence, Mitnick faced restrictions intended to prevent further offences. His access to computers and his activities were subject to supervision. The conditions changed over time, but the basic situation was clear: another unauthorized intrusion could have serious consequences.
+
+The documentary describes him renewing contacts in the hacking community and becoming involved in further telephone system activity. In his account, a contact seemed knowledgeable but suspicious. He began wondering whether someone close to the conversations was passing information to investigators.
+
+That part of the story reads like a chase in which everyone is watching everyone else. It also concerns real privacy violations. Listening to communications and obtaining private records were not merely clever moves in a game between rivals. Other people's information was involved, whether or not those people knew Mitnick's name.
+
+By 1992, federal investigators were again pursuing him. A warrant related to violations of his release conditions followed. He evaded the authorities and spent more than two years as a fugitive. During that period, his name became increasingly familiar to readers of newspaper accounts about computer crime.
+
+Living under another identity did not provide a settled new life. The documentary describes unsuccessful attempts to find work and continuing intrusions. Mitnick remained attached to the activity that had helped make ordinary employment difficult. Moving to another city could change his address without changing that pattern.
+
+The public could not see most of this directly. It encountered headlines, allegations and descriptions supplied by people involved in the pursuit. The distance between a private person and a public character grew. Eventually, his name could suggest an entire category of threat without explaining any particular act.
+
+An investigator follows the evidence
+
+In December 1994, the computer systems of security researcher Tsutomu Shimomura were compromised. Shimomura worked at the San Diego Supercomputer Center. The intrusion involved personal information and technical material, giving him both professional and personal reasons to investigate.
+
+The documentary also describes taunting messages left for him. The identity of the speaker became part of the dispute around the case. Those messages should not be treated as proof that Mitnick personally carried out every act associated with the intrusion. A dramatic voice recording and a documented computer connection are different kinds of evidence.
+
+Shimomura examined what had happened and worked with other specialists. One issue concerned false network identity, often called IP spoofing. In broad terms, information arriving over a network could appear to come from a source that a system trusted. Trust based on that appearance could be misplaced.
+
+A CERT security advisory in January 1995 warned about reported attacks involving spoofed addresses and hijacked connections. Such a warning helped administrators understand a technical risk. It did not establish that one named person had invented the technique or was responsible for every attack using it.
+
+The investigation developed through several organisations. Information found on online systems, records held by service providers and observations of activity helped narrow the search. Shimomura contributed important expertise, but the pursuit was not simply a private contest between two men. Investigators and employees at other organisations also played roles.
+
+The trail led to Raleigh, North Carolina. On 15 February 1995, FBI agents and the local fugitive task force arrested Mitnick at an apartment there. The Justice Department announced the arrest that day. More than two years of flight had ended with officers at his door.
+
+The arrest produced another wave of headlines. Accounts of the courtroom encounter between Mitnick and Shimomura helped turn the pursuit into a memorable rivalry. Yet an arrest was the beginning of further legal proceedings, not a complete judgment on every story that had appeared in print.
+
+The case and the campaign
+
+Mitnick remained in custody as different proceedings unfolded. There was a separate cellular telephone fraud sentence as well as later charges and issues involving his release conditions. Describing the whole period as nothing but detention awaiting one trial would leave out that legal history.
+
+Charges concerned unauthorized access and information taken from major technology companies. His supporters questioned the scale of the loss claims and the way the case was presented. The Free Kevin campaign grew into a visible cause within parts of the computer community.
+
+Some supporters believed he had become a convenient symbol for public fear. Others focused on the length and conditions of his confinement. Books and plans for a film brought further arguments over who controlled the account of his life. The people telling the story did not all agree about its facts or its meaning.
+
+There were also attacks on websites carried out in his name. These actions did not demonstrate his innocence or provide an answer to the charges against him. Support for a defendant and permission to interfere with someone else's systems were separate questions, even when the participants claimed a common cause.
+
+In 1999, Mitnick pleaded guilty to offences in federal cases. Contemporary reporting described seven counts across two indictments and a sentence of forty six months in the 1999 proceedings. An official later summary recorded a combined total of sixty eight months across the relevant sentences. Those figures describe different scopes and should not be treated as competing accounts of one simple number.
+
+The restitution order was $4,125. That small amount became a striking detail in a case associated with much larger claims. It did not mean a court had decided that the total harm was only a few thousand dollars. Reporting on the sentencing explained that his limited ability to pay was central to the order.
+
+Questions about how companies valued losses were still worth asking. The cost of investigating an intrusion, repairing systems and losing control of proprietary information could differ from the commercial value assigned to copied software. None of those questions could be settled merely by comparing a large headline figure with a small restitution payment.
+
+Life after prison
+
+Mitnick left prison in January 2000 after almost five years in custody following the Raleigh arrest. Release brought substantial restrictions. Computer and communications use, as well as work involving those systems, remained subject to strict conditions and authorised exceptions.
+
+That mattered in practical ways. The skills for which he was best known were closely connected to equipment he could not simply use whenever he wanted. Finding lawful work required more than deciding to change. He also had to comply with supervision and persuade others that they could trust him.
+
+In March 2000, he appeared before a United States Senate committee discussing computer security. A man previously pursued by federal authorities was now being asked what organisations should understand about intrusions. He spoke about the attraction of technical challenges and the importance of people in security failures.
+
+His testimony was an account from someone with experience of breaking rules. It was not proof of every claim he made about his past. Still, the appearance showed a possible new role. Knowledge gained through wrongdoing could be used to explain risks without repeating the wrongdoing itself.
+
+Over time, Mitnick built a career as a security consultant, speaker and author. Companies paid for authorised assessments. He later became Chief Hacking Officer at the security training company KnowBe4. His public reputation, once a barrier to employment, also became part of the reason audiences wanted to hear him.
+
+The change involved a concrete condition: permission. A company could agree to have its defences tested and define the boundaries of that work. The person carrying out the test then had responsibilities to the client and to anyone whose information might be affected. Technical skill alone did not supply that agreement.
+
+Mitnick died on 16 July 2023, aged fifty nine, after pancreatic cancer. Tributes remembered his knowledge, humour and later work. His life also left a record of offences, disputed stories and a public fascination with the figure of the hacker.
+
+The early stories about magic offer one way to understand his interests, but they cannot explain away the people harmed by deception. An audience chooses to watch a magician. An employee tricked into exposing private information has made no such choice. In Mitnick's later career, asking for permission changed that relationship. It did not rewrite the past, but it made a different kind of work possible.

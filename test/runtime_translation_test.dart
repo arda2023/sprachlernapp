@@ -257,6 +257,83 @@ void main() {
       },
     );
   }
+  test(
+    'quota errors give a clear reset date and never upsell active Premium',
+    () async {
+      HttpOverrides.global = null;
+      final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+      addTearDown(() => server.close(force: true));
+      server.listen((request) async {
+        await request.drain<void>();
+        request.response.statusCode = 429;
+        request.response.headers.contentType = ContentType.json;
+        request.response.write(
+          jsonEncode({
+            'error': 'TRANSLATION_QUOTA_EXHAUSTED',
+            'quota_kind': 'premium',
+            'resets_at': '2026-11-30T12:00:00.000Z',
+          }),
+        );
+        await request.response.close();
+      });
+      final client = RuntimeTranslationClient(
+        'https://project.invalid',
+        'public',
+        () async => 'synthetic',
+        createClient: () => LoopbackClient(server.port),
+      );
+      await expectLater(
+        client.translate(lang: 'en', text: 'A sentence.'),
+        throwsA(
+          isA<TranslationFailure>().having(
+            (e) => e.message,
+            'premium quota message',
+            allOf(
+              contains('Premium-Übersetzungskontingent'),
+              contains('30.11.2026'),
+              isNot(anyOf(contains('abonnieren'), contains('Premium ansehen'))),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+  test(
+    'free quota exhaustion is described without exposing server details',
+    () async {
+      HttpOverrides.global = null;
+      final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+      addTearDown(() => server.close(force: true));
+      server.listen((request) async {
+        await request.drain<void>();
+        request.response.statusCode = 429;
+        request.response.headers.contentType = ContentType.json;
+        request.response.write(
+          jsonEncode({
+            'error': 'TRANSLATION_QUOTA_EXHAUSTED',
+            'quota_kind': 'free',
+          }),
+        );
+        await request.response.close();
+      });
+      final client = RuntimeTranslationClient(
+        'https://project.invalid',
+        'public',
+        () async => 'synthetic',
+        createClient: () => LoopbackClient(server.port),
+      );
+      await expectLater(
+        client.translate(lang: 'en', text: 'A sentence.'),
+        throwsA(
+          isA<TranslationFailure>().having(
+            (e) => e.message,
+            'free quota message',
+            'Die fünf kostenlosen KI-Übersetzungen sind aufgebraucht.',
+          ),
+        ),
+      );
+    },
+  );
   test('missing local login fails before HTTP construction', () async {
     final client = RuntimeTranslationClient(
       'https://project.invalid',

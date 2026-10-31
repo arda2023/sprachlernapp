@@ -270,12 +270,14 @@ void main() {
           );
           await tester.pump();
           expect(find.byType(TextField), findsOneWidget);
-          expect(find.text('clean.'), findsOneWidget);
+          // The word and its trailing period are drawn apart so the
+          // bubble's arrow points at the word itself.
+          expect(find.text('clean'), findsOneWidget);
           for (final pair in [
             ('The', 'die', 0),
             ('kitchen', 'Küche', 4),
             ('is', 'ist', 12),
-            ('clean.', 'sauber', 15),
+            ('clean', 'sauber', 15),
           ]) {
             await tester.tap(find.text(pair.$1));
             expect(selected!.translation, pair.$2);

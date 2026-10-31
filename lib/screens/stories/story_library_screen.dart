@@ -69,6 +69,41 @@ class StoryLibraryScreen extends StatelessWidget {
     builder: (context, open, show) => builder(open, show),
   );
 
+  /// Feature + wide row, tall covers, numbered list, wide row – in turn.
+  Widget _shelf(
+    int index,
+    List<Story> stories,
+    Map<String, double> started,
+    Set<String> finished,
+  ) => switch (stories.length < 3 ? 1 : index % 4) {
+    0 => StoryFeatureShelf(
+      stories: stories,
+      onOpen: onOpenStory,
+      progress: started,
+      finished: finished,
+    ),
+    2 => StoryListShelf(
+      stories: stories,
+      onOpen: onOpenStory,
+      progress: started,
+      finished: finished,
+    ),
+    3 => StoryCarousel(
+      stories: stories,
+      onOpen: onOpenStory,
+      progress: started,
+      finished: finished,
+      width: 232,
+      height: 132,
+    ),
+    _ => StoryCarousel(
+      stories: stories,
+      onOpen: onOpenStory,
+      progress: started,
+      finished: finished,
+    ),
+  };
+
   @override
   Widget build(BuildContext context) {
     final groups = <String, List<Story>>{};
@@ -233,7 +268,10 @@ class StoryLibraryScreen extends StatelessWidget {
                 ],
               ),
             ),
-          for (final MapEntry(key: topic, value: group) in groups.entries) ...[
+          // Each category takes another shape, so the page does not read
+          // as one carousel after another (user request 31.10.2026).
+          for (final (i, MapEntry(key: topic, value: group))
+              in groups.entries.indexed) ...[
             const SizedBox(height: 28),
             Padding(
               padding: _gutter,
@@ -245,11 +283,11 @@ class StoryLibraryScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            StoryCarousel(
-              stories: group,
-              onOpen: onOpenStory,
-              progress: started,
-              finished: finished,
+            _shelf(
+              i,
+              shelfOrder(group, progress: started, finished: finished),
+              started,
+              finished,
             ),
           ],
         ],

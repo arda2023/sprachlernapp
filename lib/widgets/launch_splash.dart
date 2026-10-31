@@ -1,13 +1,16 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../presentation/providers/language_selection_provider.dart';
 import '../theme/app_theme.dart';
+import 'word_rain.dart';
 
 /// The launch screen while content and Home load, instead of spinners
-/// (user request 29.10.2026). The Lingvist mark builds itself – bubble pops,
+/// (user request 29.10.2026). The Linglossa mark builds itself – bubble pops,
 /// the "L" draws, the dot lands – then breathes over a soft ember glow, the
 /// way the onboarding buttons glow (Refero references: centred mark on a
 /// dark ground as in Matter, Revolut and the glowing icon of Kann).
@@ -69,7 +72,7 @@ class _LaunchSplashState extends State<LaunchSplash>
       child: DefaultTextStyle(
         style: const TextStyle(decoration: TextDecoration.none),
         child: Semantics(
-          label: 'Lingvist wird gestartet',
+          label: 'Linglossa wird gestartet',
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -118,7 +121,7 @@ class _LaunchSplashState extends State<LaunchSplash>
                     child: MediaQuery.withClampedTextScaling(
                       maxScaleFactor: 1.3,
                       child: Text(
-                        'Lingvist',
+                        'Linglossa',
                         style: AppType.editorial(
                           color: colors.textPrimary,
                           size: 30,
@@ -156,7 +159,7 @@ class _LaunchSplashState extends State<LaunchSplash>
 double _phase(double t, double from, double to) =>
     ((t - from) / (to - from)).clamp(0.0, 1.0);
 
-/// The Lingvist mark (same geometry as `LingvistMark`), built in three
+/// The Linglossa mark (same geometry as `LinglossaMark`), built in three
 /// beats: the bubble pops with a small overshoot, the "L" draws itself,
 /// the dot lands.
 class _MarkPainter extends CustomPainter {
@@ -228,6 +231,10 @@ class _MarkPainter extends CustomPainter {
 /// mark grows a touch) and leaves the tree. [ready] itself watches what the
 /// first screen needs, so that loads meanwhile; the app's own entrances and
 /// Home's one-off moments start only once it can be seen.
+///
+/// When [ready] turns false again later (another learning language loads),
+/// the splash fades back in over the app, which keeps its state, and lifts
+/// once the new content has settled.
 class LaunchCurtain extends ConsumerStatefulWidget {
   const LaunchCurtain({super.key, required this.ready, required this.child});
 
@@ -236,6 +243,10 @@ class LaunchCurtain extends ConsumerStatefulWidget {
   final Widget child;
 
   static const maxWait = Duration(seconds: 6);
+
+  /// Safety net for a cover that came back: a language install takes about
+  /// 7 s, so this only fires when something hangs.
+  static const maxCover = Duration(seconds: 30);
 
   @override
   ConsumerState<LaunchCurtain> createState() => _LaunchCurtainState();
@@ -248,13 +259,27 @@ class _LaunchCurtainState extends ConsumerState<LaunchCurtain>
     duration: const Duration(milliseconds: 380),
   );
   bool _lifting = false, _gone = false;
+  // Keeps the app's state when the splash comes back over it.
+  final _app = GlobalKey();
+  Timer? _coverLimit;
+
+  /// A cover for a language switch shows a wall of words in that language
+  /// (user request 31.10.2026) and stays until the words have landed.
+  String? _coverLang;
+  final _coverTime = Stopwatch();
 
   @override
   void initState() {
     super.initState();
     _lift.addStatusListener((status) {
-      if (status == AnimationStatus.completed && mounted) {
-        setState(() => _gone = true);
+      // Only a lift ends the cover; a returning cover sets the value itself.
+      if (status == AnimationStatus.completed && _lifting && mounted) {
+        _coverLimit?.cancel();
+        _coverLimit = null;
+        setState(() {
+          _gone = true;
+          _coverLang = null;
+        });
       }
     });
     Future<void>.delayed(LaunchCurtain.maxWait, () {
@@ -264,9 +289,10 @@ class _LaunchCurtainState extends ConsumerState<LaunchCurtain>
 
   void _startLift() {
     if (_lifting) return;
-    final wait =
-        LaunchSplash.intro.inMilliseconds -
-        LaunchSplash.clock.elapsedMilliseconds;
+    final wait = _coverLang != null
+        ? WordWall.settle.inMilliseconds + 450 - _coverTime.elapsedMilliseconds
+        : LaunchSplash.intro.inMilliseconds -
+              LaunchSplash.clock.elapsedMilliseconds;
     if (wait > 0) {
       // Let the mark finish building before it lifts.
       Future<void>.delayed(Duration(milliseconds: wait), () {
@@ -276,23 +302,66 @@ class _LaunchCurtainState extends ConsumerState<LaunchCurtain>
     }
     _lifting = true;
     if (MediaQuery.disableAnimationsOf(context)) {
-      setState(() => _gone = true);
+      _coverLimit?.cancel();
+      _coverLimit = null;
+      setState(() {
+        _gone = true;
+        _coverLang = null;
+      });
     } else {
       _lift.forward();
       setState(() {});
     }
   }
 
+  /// Brings the splash back over the visible app: it fades in from the
+  /// lifted state and stays until [LaunchCurtain.ready] holds again.
+  void _cover() {
+    if (!_gone) return;
+    _coverLimit?.cancel();
+    _coverLimit = Timer(LaunchCurtain.maxCover, () {
+      if (mounted) _startLift();
+    });
+    final selection = ref.read(languageSelectionProvider);
+    setState(() {
+      _gone = false;
+      _lifting = false;
+      _coverLang = selection.switching ? selection.target : null;
+    });
+    _coverTime
+      ..reset()
+      ..start();
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _lift.value = 0;
+    } else if (_coverLang != null) {
+      // The words build the cover themselves; no fade in.
+      _lift.value = 0;
+    } else {
+      _lift.value = 1;
+      _lift.reverse();
+    }
+  }
+
   @override
   void dispose() {
+    _coverLimit?.cancel();
     _lift.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_gone) return widget.child;
-    if (widget.ready(ref)) {
+    final app = KeyedSubtree(key: _app, child: widget.child);
+    final ready = widget.ready(ref);
+    if (_gone) {
+      if (!ready) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) _cover();
+        });
+      }
+      return app;
+    }
+    if (ready) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) _startLift();
       });
@@ -300,7 +369,8 @@ class _LaunchCurtainState extends ConsumerState<LaunchCurtain>
     return Stack(
       fit: StackFit.expand,
       children: [
-        if (_lifting) widget.child,
+        // A returning cover keeps the app mounted underneath.
+        if (_lifting || _coverLimit != null) app,
         IgnorePointer(
           ignoring: _lifting,
           child: AnimatedBuilder(
@@ -312,7 +382,9 @@ class _LaunchCurtainState extends ConsumerState<LaunchCurtain>
                 child: Transform.scale(scale: 1 + 0.06 * t, child: child),
               );
             },
-            child: const LaunchSplash(),
+            child: _coverLang == null
+                ? const LaunchSplash()
+                : WordWall(key: ValueKey(_coverLang), lang: _coverLang!),
           ),
         ),
       ],

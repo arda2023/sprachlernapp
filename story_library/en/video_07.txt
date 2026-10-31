@@ -1,0 +1,47 @@
+Money without a bank
+
+A proposal during a crisis
+
+In 2008, the financial crisis damaged confidence in banks and the institutions responsible for supervising them. Lehman Brothers collapsed, governments arranged emergency support, and many households faced losing their homes. Against that background, a person or group using the name Satoshi Nakamoto published a proposal for a different kind of electronic payment system.
+
+The Bitcoin paper appeared in October 2008. It described how people could send payments without relying on a financial institution to maintain the central record. The problem was familiar in digital systems: if information can be copied, how do you prevent someone from spending the same money twice? Bitcoin proposed a shared transaction history supported by cryptography and computing work.
+
+The first block was created in January 2009. It included a newspaper headline about another possible bank rescue. The message connected Bitcoin's beginning with the financial events around it, although it could not explain every intention of its unidentified creator. At first, the network was a small experiment followed by people interested in computers and digital money.
+
+In 2010, a transaction involving ten thousand bitcoins and two pizzas became an enduring part of Bitcoin's history. It showed that someone was willing to exchange the new currency for an ordinary purchase. Later price increases made the quantity seem extraordinary. At the time, participants were still discovering what people might actually do with the system.
+
+A record shared across a network
+
+Bitcoin groups transactions into blocks linked to earlier blocks. Participants running validating software check whether proposed transactions and blocks follow the rules. They do not need to accept a changed record merely because someone announces that it is correct. The network's checks are essential to the way it operates.
+
+Miners compete to produce a valid proof of work. This requires repeated calculations and consumes electricity. A successful miner can propose the next block, receiving a subsidy and transaction fees when the block becomes part of the accepted chain. Other participants still check its validity. Computing power does not make an invalid payment valid.
+
+The system makes rewriting established history costly, rather than literally impossible. An attacker with sufficient mining power could attempt to reorganise recent transactions or spend the same funds twice. That does not mean the attacker can freely take coins from any address. Describing the ledger as unhackable hides the conditions under which its protections operate.
+
+The network also differs from the services people use to access it. An exchange may hold assets for customers, while someone managing their own wallet controls the necessary keys. Theft, lost credentials or a dishonest service can cause losses even when the underlying transaction rules continue working.
+
+Scarcity and price
+
+Bitcoin's issuance follows a schedule in its existing rules. The subsidy began at fifty bitcoins per block and is reduced by half after each interval of 210,000 blocks, roughly every four years. The schedule approaches a limit of twenty one million bitcoins. This differs from a currency whose monetary supply is managed by a central bank.
+
+A limited supply does not establish a stable price. People can become more or less willing to buy Bitcoin, and the amount they will pay can change sharply. Scarcity is one reason supporters value it, but scarcity alone cannot guarantee purchasing power or future returns. Holding it can involve substantial losses as well as gains.
+
+Supporters often compare Bitcoin with gold. They point to its limited supply and the possibility of transferring value without transporting a physical object. Critics note that Bitcoin does not itself produce rent, profits or dividends. The disagreement concerns what gives an asset value and how much buyers should be willing to pay.
+
+These arguments cannot be settled simply by pointing to a past price increase. A person who bought at one moment may have had a very different experience from someone who bought later. Expectations about future demand influence the price, and expectations can change. A technology can continue operating while its market price falls.
+
+Experiments beyond the computer screen
+
+Bitcoin attracted people interested in international payments and alternatives to existing financial services. Sending value across borders was an appealing possibility. The practical result depended on access, fees and the way recipients converted or spent what they received. It was not automatically instant or free in every situation.
+
+El Salvador adopted Bitcoin as legal tender in 2021 and supported a public wallet. The experiment drew attention because a government was promoting use beyond a small group of enthusiasts. Announcing a policy, however, was different from achieving widespread everyday adoption. People still needed reasons to use the system for purchases and payments.
+
+In 2025, reforms made private sector acceptance voluntary and required taxes to be paid in United States dollars. The International Monetary Fund described these changes as part of efforts to address risks associated with the project. The history therefore included policy revisions, rather than a simple progression from adoption to universal use.
+
+Who can change the rules?
+
+Satoshi eventually stopped participating publicly. Bitcoin continued without an identifiable founder directing every decision. Its software could be examined and proposals for changes discussed. A proposal still needed adoption by participants. Authorship of the original system did not give someone a special password for changing everyone's rules.
+
+Agreement could be difficult because users had different interests. Developers, miners and businesses might disagree about a change. That process was not a single worldwide vote in which every person had to approve every update. The software people chose to run helped determine which rules they accepted.
+
+Governments could also affect mining businesses, exchanges and access to financial services. A distributed network was not a promise of immunity from regulation or practical disruption. Bitcoin's operation, its legal treatment and its market value remained separate questions. A payment still depended on valid authorisation, acceptance by the network and someone willing to receive it.

@@ -1,0 +1,73 @@
+Building Claude
+
+A new research company
+
+In May 2021, a small artificial intelligence company announced that it had raised 124 million dollars. Anthropic wanted to build systems that people could understand and direct more reliably. Dario Amodei led the company as chief executive, while his sister Daniela served as president. Members of the team had already worked on some of the research behind large language models.
+
+They entered a field where progress was difficult to predict. A model trained on large amounts of text could produce fluent answers to questions it had never encountered in exactly that form. It could also invent an explanation and present it with the same confidence as a correct answer. Better writing did not necessarily mean better judgment.
+
+For a person trying a chatbot for fun, an absurd answer might be amusing. In a workplace, the same mistake could cause trouble. Someone might copy an incorrect statement into a report or trust a piece of code without noticing a flaw. As models became more useful, there were more reasons to take their limitations seriously.
+
+Anthropic's founders had left OpenAI to establish their own company. They wanted to make safety and reliability central to their research. That ambition still required a working product. A system that avoided every difficult question would be of little use to customers, while a system that answered everything could create other problems.
+
+The team faced a practical question: how could it teach a model to respond helpfully while setting meaningful limits? Writing a rule was easier than making the system apply it consistently. The same word could refer to something dangerous in one conversation and something ordinary in another. Understanding the request mattered as much as recognising its vocabulary.
+
+Learning from principles
+
+One established training method used human feedback. People compared answers and indicated which they preferred. Those judgments helped guide further training. The process could improve behaviour, but collecting detailed feedback took time and effort. It also raised questions about whose preferences the system was learning.
+
+Anthropic explored an approach called Constitutional AI. A written set of principles guided a model as it criticised and revised responses. Further training used comparisons informed by AI feedback. People still chose the principles and designed the process. The approach reduced the need for certain human labels rather than removing human decisions from the system.
+
+The name could make the method sound more settled than it was. A constitution did not guarantee that every answer would be correct or every refusal sensible. Researchers still had to test the model and examine failures. A useful assistant needed to recognise legitimate requests as well as harmful ones.
+
+Meanwhile, the cost of the work continued to grow. Training larger models required computing infrastructure and people able to build and study them. In April 2022, Anthropic announced a funding round of 580 million dollars. Money gave the team room to expand its experiments, but it did not settle whether those experiments would become a sustainable business.
+
+Late in 2022, OpenAI released ChatGPT. The public could suddenly try a conversational AI system without needing to understand the research behind it. Anthropic was developing its own assistant, Claude, in a market where many potential users had already formed expectations around a competitor.
+
+Finding useful work
+
+Anthropic introduced Claude more broadly in March 2023, after testing with partners. It could help with writing, questions and tasks involving text. A customer could use a chat interface, while developers could connect the model to other software through an API. The company needed to show where those capabilities could fit into daily work.
+
+Long documents offered one opportunity. In May 2023, Anthropic expanded Claude's context window to 100,000 tokens. A token is a unit used by the model to process text, and does not always correspond to a whole word. The company estimated that this window could hold roughly 75,000 words.
+
+That capacity allowed users to provide much more material in a single interaction. A business could submit a long report or a collection of documents and ask questions about them. A programmer could include more of a project when asking for help. There was less need to cut everything into small, disconnected pieces.
+
+A context window was not permanent memory, however. It described how much material the model could work with in an interaction. Nor did accepting a long document prove that every detail would be understood correctly. The result still needed checking, especially when a small mistake could change a decision.
+
+For businesses, the attraction was concrete. Reading and comparing documents took time. A system that could help locate relevant passages or explain a difficult section might be useful even if it could not replace a person's judgment. Customers could evaluate it against tasks they already had, rather than against a distant promise about artificial intelligence.
+
+The money behind the models
+
+Amazon and Google became important partners and investors. Their involvement brought access to resources that a young research company could not easily build alone. Large models needed computing capacity, and cloud providers had both the equipment and relationships with business customers. The partnerships connected research to infrastructure and distribution.
+
+Those arrangements also reflected competition among technology companies. Microsoft had a close relationship with OpenAI. Amazon and Google had reasons to support other developers and make their models available through their own services. Investing in a model company offered a stake in its progress, while supplying computing resources supported the work required to make that progress possible.
+
+Anthropic introduced the Claude 3 family in March 2024. Haiku, Sonnet and Opus offered different balances of speed, cost and capability. A customer did not necessarily need the largest model for every request. A simpler task might be handled more cheaply, while a demanding one could justify additional resources.
+
+The models could also process images, including charts and diagrams. This made them relevant to documents whose meaning depended on more than written paragraphs. Anthropic published favourable benchmark results, but a test score could not establish performance on every customer's work. Choosing a model still involved trying it on the actual task.
+
+The company now had more than one way to reach customers. Some wanted a conversational assistant. Others wanted a model inside an existing product or business process. Their expectations differed, and so did the consequences of failure. A useful demonstration had to become a service people could depend on repeatedly.
+
+From answers to actions
+
+Software development offered another opening. A chatbot could already suggest code, but a developer often had to copy the suggestion, find the right file and test it. If something failed, the developer returned with another question. Much of the practical work remained between one answer and the next.
+
+Claude Code brought the model into that workflow. Anthropic released it as a research preview in February 2025. The tool ran in a terminal and could examine files, edit code and run commands. It could use the results of a test to guide another attempt, rather than stopping after producing a proposed solution.
+
+This changed the kind of task a developer could assign. Instead of asking for a short example, someone could ask the tool to investigate a bug across a project. The system might need to read several files before suggesting a change. Running tests gave it information about whether the change worked, although passing tests could not prove everything was correct.
+
+The value depended on the work involved. A tool that handled a routine change well could save time. A mistaken edit could also create more work for the person reviewing it. Giving a model access to commands and files made its behaviour more consequential than an incorrect paragraph in a chat window.
+
+Developers therefore had to consider what the tool could access and which actions needed review. The promise was practical assistance with software work. It was not evidence that every engineering task could be delegated successfully or that responsibility for the resulting program had disappeared.
+
+Limits and investors
+
+The question of acceptable use became especially visible in Anthropic's dealings with the United States military. In February 2026, the company described a disagreement over two restrictions: mass domestic surveillance and fully autonomous weapons. Anthropic said it supported other lawful national security uses but would retain those limits.
+
+In March, it said it had received notice designating it a supply chain risk. Anthropic disputed the action and said it would challenge it in court. It also argued that the restriction concerned use connected directly to defence contracts, rather than every activity of every business with military customers. Those were the company's stated positions in an ongoing dispute.
+
+The disagreement made the commercial consequences of a safety policy visible. Restricting a customer's use could put a contract at risk. Accepting every requested use could conflict with the reasons the company had given for setting limits. The pressure existed alongside the continuing expense of research and infrastructure.
+
+On June 1, 2026, Anthropic announced that it had confidentially submitted a draft registration statement for a proposed public offering. The announcement did not set a share price or the number of shares. It said the offering would depend on market conditions and other factors. Filing documents gave the company an option to proceed, rather than a guaranteed outcome.
+
+Private investors had already helped finance the development of Claude. A public offering could bring another source of capital, along with shareholders judging the company's spending and prospects. Claims about a final valuation remained separate from what had actually been announced. At that point, the price of an eventual offering was still undecided.

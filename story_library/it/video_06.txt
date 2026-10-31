@@ -1,0 +1,73 @@
+Chip per gli altri
+
+Una fabbrica senza prodotto proprio
+
+Nel 1987 Morris Chang contribuì a fondare un'impresa di semiconduttori con una promessa insolita. Avrebbe fabbricato chip per altre aziende senza vendere una propria marca concorrente. Taiwan Semiconductor Manufacturing Company, conosciuta come TSMC, offriva ai clienti un luogo dove trasformare progetti in prodotti fisici. Un progettista poteva concentrarsi su ciò che il chip doveva fare, mentre un'altra impresa si occupava della produzione.
+
+Chang aveva trascorso gran parte della carriera nell'industria americana dei semiconduttori. Nato in Cina nel 1931, si era trasferito da giovane negli Stati Uniti e aveva studiato ingegneria. Aveva lavorato per molti anni in Texas Instruments. Quando arrivò a Taiwan nel 1985, conosceva le difficoltà della fabbricazione dei chip e le decisioni commerciali che accompagnavano quel lavoro.
+
+Il governo taiwanese voleva sviluppare una forte industria dei semiconduttori. L'Istituto di ricerca sulla tecnologia industriale forniva parte delle basi per questo progetto. La proposta di Chang indicava una direzione precisa: costruire un'attività che producesse per i clienti, invece di cercare di vendere un'altra linea di chip propri. Il sostegno pubblico e l'investimento di Philips contribuirono alla nascita di TSMC.
+
+Molte grandi imprese del settore univano progettazione e produzione. Decidevano come avrebbero funzionato i loro chip e gestivano le fabbriche che li realizzavano. Questo dava loro controllo, ma richiedeva investimenti enormi. Un progetto promettente non pagava la costruzione di uno stabilimento, e una nuova impresa poteva faticare a finanziare entrambe le attività.
+
+C'era anche una questione di fiducia. Un progettista che consegnava informazioni riservate a un altro produttore voleva sapere come sarebbero state trattate. Se il fabbricante vendeva un prodotto rivale, il rapporto poteva diventare difficile. L'impegno di TSMC a fornire servizi di produzione dava ai clienti un motivo per affidarle i propri progetti.
+
+I clienti arrivano lentamente
+
+I primi anni non dimostrarono subito che l'idea avrebbe trasformato il settore. Chang raccontò in seguito che i primi clienti erano produttori affermati, i cui incarichi non erano sempre regolari. Arrivavano anche ordini da piccole società, prima a Taiwan e poi negli Stati Uniti. Per riempire una fabbrica serviva un flusso costante di lavoro, oltre all'interesse per un nuovo modello commerciale.
+
+La crescita aumentò quando più aziende scelsero di progettare chip senza possedere stabilimenti. Queste imprese vennero chiamate fabless, cioè prive di fabbriche proprie. Avevano comunque bisogno di qualcuno che producesse i loro articoli, ma potevano dedicare più risorse alla progettazione e alle vendite. La produzione per conto terzi permetteva di entrare nei mercati senza costruire ogni parte della filiera.
+
+Con quel cambiamento si ampliarono anche le possibilità di TSMC. Un cliente poteva avere un'idea per un chip di comunicazione o un processore grafico e cercare una fabbrica capace di produrlo in modo affidabile. Le responsabilità erano diverse, ma il risultato dipendeva dalla collaborazione. Il progetto doveva essere compatibile con il processo produttivo scelto.
+
+Questa divisione non rendeva la fabbricazione un servizio semplice da copiare. Realizzare chip richiedeva molti passaggi precisi. Una fabbrica doveva controllare i processi e aumentare la percentuale di prodotti funzionanti. Ai clienti interessava quanti chip utilizzabili ricevevano, oltre alle prestazioni promesse sulla carta.
+
+Quella percentuale viene spesso chiamata resa produttiva. Un processo capace di realizzare ogni tanto un chip straordinario poteva essere ancora troppo costoso per un prodotto di largo consumo. I chip difettosi consumavano materiali, tempo delle macchine e denaro. Imparare a ridurre i difetti faceva parte delle competenze che il produttore vendeva ai clienti.
+
+Preparare la generazione successiva
+
+L'attività richiedeva anche di investire prima di conoscere con certezza la domanda. Preparare attrezzature e nuovi stabilimenti poteva richiedere anni. Aspettare la conferma di ogni ordine rischiava di lasciare il produttore senza capacità quando i clienti ne avevano bisogno. Costruire troppo poteva invece lasciare impianti costosi poco utilizzati durante un rallentamento delle vendite.
+
+Le crisi tecnologiche rendevano queste scelte più difficili. La fine del boom di internet e la crisi finanziaria del 2008 colpirono la domanda del settore. I clienti modificavano i programmi e i produttori dovevano decidere quali spese mantenere. Gli investimenti nella ricerca e nella capacità potevano sostenere il lavoro futuro anche mentre gli ordini diminuivano.
+
+Lo sviluppo di TSMC era quindi più complesso di una serie di numeri sempre più piccoli su una tabella tecnologica. Comprendeva finanziamenti, esperienza produttiva e rapporti con i clienti. Un nuovo processo doveva funzionare su scala commerciale. L'impresa doveva mantenere le promesse e prepararsi per prodotti che i clienti non avevano ancora lanciato.
+
+Gli smartphone aumentarono l'importanza di quella preparazione. Un dispositivo di successo poteva richiedere quantità enormi di chip entro tempi stretti. Apple diventò un grande cliente di TSMC, mentre anche altri progettisti cercavano produzione avanzata. Un ordine importante portava ricavi, ma per soddisfarlo servivano capacità e risultati costanti su moltissime unità.
+
+Il rapporto contava per entrambe le parti. I progettisti volevano chip adatti ai loro prodotti e il fabbricante aveva bisogno di informazioni per pianificare. Nessuno dei due poteva considerare l'altro un dettaglio facilmente sostituibile. Modificare un progetto o trasferire la produzione poteva richiedere molto lavoro, anziché un semplice cambio di fornitore.
+
+Che cosa indicano i numeri piccoli
+
+Le generazioni produttive dei semiconduttori vengono spesso descritte con numeri espressi in nanometri. Questi nomi aiutano a distinguere i processi, ma non sono una misura diretta dell'intero chip o di ogni elemento al suo interno. Confrontare produttori richiede più della scelta del numero più basso in un annuncio.
+
+Contano le prestazioni, il consumo energetico e la quantità di circuiti che entra in una certa superficie. Sono importanti anche il prezzo e l'adeguatezza al compito. Un processore destinato a calcoli impegnativi ha esigenze diverse da un componente che controlla una funzione semplice. Non tutti i chip utili richiedono la generazione più recente.
+
+Per questo è fuorviante descrivere TSMC come il produttore di tutti i chip del mondo. L'industria dei semiconduttori comprende molti prodotti e numerosi fabbricanti. Memorie, circuiti logici e componenti specializzati svolgono funzioni diverse. TSMC è particolarmente importante nella produzione per conto terzi, ma quel mercato non coincide con l'intero settore.
+
+Anche le quote di mercato dipendono da ciò che viene contato. Una percentuale dei ricavi della produzione per terzi non indica automaticamente la quota di tutti i chip fabbricati. TSMC stessa ha utilizzato una definizione più ampia, chiamata Foundry 2.0, che comprende altri servizi e attività produttive. Numeri basati su definizioni differenti possono descrivere mercati diversi anche quando vengono presentati insieme.
+
+Nel rapporto relativo al 2025, TSMC dichiarò che la tecnologia denominata a due nanometri era entrata nella produzione su larga scala nell'ultimo trimestre dell'anno. Era un traguardo produttivo, senza implicare che tutti i clienti fossero già passati a quel processo. Le generazioni precedenti continuavano ad avere impieghi e la domanda arrivava da diversi tipi di dispositivi.
+
+Quando mancavano i chip
+
+Durante la pandemia, le carenze resero visibile la dipendenza dai semiconduttori anche fuori dal settore tecnologico. La produzione di automobili poteva interrompersi perché mancava un componente necessario. Un veicolo conteneva elettronica per molte funzioni diverse, e l'assenza di una sola parte indispensabile poteva impedirne il completamento.
+
+La domanda cambiava rapidamente. Le persone compravano strumenti per lavorare e studiare da casa, mentre i produttori di altri settori rivedevano gli ordini. Quando la domanda riprendeva o cambiava ancora, la produzione di chip non poteva adeguarsi all'istante. Le fabbriche avevano già clienti in attesa e aumentare la capacità richiedeva tempo.
+
+Il problema andava oltre una singola azienda che sceglieva tra automobili e console. La capacità produttiva, i materiali e le fasi successive, come assemblaggio e collaudo, potevano diventare ostacoli. La filiera doveva consegnare il componente giusto. Avere molte unità di un chip diverso non risolveva la necessità.
+
+Nel gennaio 2022 il Dipartimento del Commercio degli Stati Uniti pubblicò i risultati di un'indagine sulle forniture. Per i semiconduttori difficili da acquistare indicati dai compratori che avevano risposto, la mediana delle scorte era scesa da quaranta giorni nel 2019 a meno di cinque nel 2021. Con un inventario così ridotto, anche una breve interruzione poteva fermare la produzione altrove.
+
+Governi e imprese iniziarono a prestare più attenzione ai luoghi in cui venivano prodotti i componenti essenziali. Il prezzo d'acquisto era solo uno degli aspetti da considerare. Dipendere da fornitori lontani poteva esporre una fabbrica a eventi fuori dal suo controllo. Aumentare la capacità sembrava interessante, ma non risolveva una carenza immediata da un giorno all'altro.
+
+Più fabbriche, più dipendenze
+
+L'importanza di Taiwan nella produzione avanzata suscitava anche preoccupazioni per conflitti e interruzioni. La concentrazione di stabilimenti importanti faceva sì che un problema in una regione potesse colpire clienti molto lontani. Alcuni osservatori consideravano questo ruolo un possibile deterrente contro i conflitti. Non era però una garanzia che i rischi politici o militari sarebbero scomparsi.
+
+Controllare un edificio non avrebbe dato automaticamente a qualcuno un'industria di chip funzionante. La produzione dipendeva da persone preparate, attrezzature, materiali e rapporti continui con i fornitori. Questi collegamenti attraversavano le frontiere. Parte del valore di una fabbrica risiedeva nel lavoro e nelle conoscenze, che non si riducevano alla proprietà dei muri.
+
+Ampliare la produzione all'estero era una risposta alle preoccupazioni sulla concentrazione. TSMC sviluppò attività produttive in Arizona. Nel marzo 2025 annunciò l'intenzione di aggiungere 100 miliardi di dollari al precedente programma di investimenti da 65 miliardi negli Stati Uniti. Il piano comprendeva altri stabilimenti, impianti per il confezionamento avanzato dei chip e attività di ricerca.
+
+Un investimento annunciato non equivaleva a capacità produttiva già disponibile. Un nuovo sito aveva bisogno di lavoratori, fornitori e processi capaci di funzionare insieme. L'esperienza degli impianti esistenti poteva aiutare, ma costruire edifici non riproduceva ogni parte di una rete industriale consolidata. I clienti avevano bisogno di una produzione affidabile dalle nuove strutture.
+
+I clienti di TSMC potevano mettere i propri nomi sui dispositivi comprati dal pubblico, lasciando meno visibile il ruolo del fabbricante. La separazione tra progetto e produzione restava comunque centrale. Ogni nuovo prodotto richiedeva un progetto realizzabile, un processo costante e capacità sufficiente per consegnare i chip quando servivano.

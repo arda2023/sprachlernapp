@@ -1,0 +1,73 @@
+La creación de Claude
+
+Una nueva empresa de investigación
+
+En mayo de 2021, una pequeña empresa de inteligencia artificial anunció que había conseguido 124 millones de dólares. Anthropic quería desarrollar sistemas que las personas pudieran comprender y dirigir con mayor fiabilidad. Dario Amodei era su director ejecutivo y su hermana Daniela ocupaba la presidencia. Varios miembros del equipo ya habían participado en investigaciones sobre grandes modelos de lenguaje.
+
+Entraban en un campo cuyo avance resultaba difícil de prever. Un modelo entrenado con grandes cantidades de texto podía responder con fluidez a preguntas que nunca había visto exactamente de esa forma. También podía inventar una explicación y presentarla con la misma seguridad que una respuesta correcta. Escribir mejor no significaba necesariamente juzgar mejor.
+
+Para alguien que probaba un asistente por diversión, una respuesta absurda podía resultar graciosa. En el trabajo, el mismo error podía causar problemas. Una persona podía copiar una afirmación falsa en un informe o confiar en un fragmento de código sin advertir un fallo. Cuanto más útiles se volvían los modelos, más importante era conocer sus límites.
+
+Los fundadores de Anthropic habían dejado OpenAI para crear su propia empresa. Querían que la seguridad y la fiabilidad ocuparan un lugar central en la investigación. Esa ambición necesitaba también un producto que funcionara. Un sistema que evitara cualquier pregunta difícil serviría de poco a los clientes, mientras que otro dispuesto a responderlo todo podía generar problemas distintos.
+
+El equipo debía resolver una cuestión práctica: cómo enseñar a un modelo a ayudar y, al mismo tiempo, respetar límites claros. Escribir una regla era más sencillo que conseguir que el sistema la aplicara de forma coherente. Una palabra podía referirse a algo peligroso en una conversación y a una tarea corriente en otra. Había que entender la petición, además de reconocer su vocabulario.
+
+Aprender con principios
+
+Uno de los métodos de entrenamiento utilizaba opiniones humanas. Las personas comparaban respuestas e indicaban cuál preferían. Esos juicios orientaban las siguientes etapas del entrenamiento. El proceso podía mejorar el comportamiento, pero reunir evaluaciones detalladas exigía tiempo y esfuerzo. También planteaba una pregunta: ¿las preferencias de quién estaba aprendiendo el sistema?
+
+Anthropic exploró un método llamado Constitutional AI, o inteligencia artificial constitucional. Una lista de principios escritos guiaba al modelo mientras examinaba y corregía respuestas. Otras etapas del entrenamiento empleaban comparaciones basadas en evaluaciones realizadas por inteligencia artificial. Las personas seguían eligiendo los principios y diseñando el proceso. El método reducía la necesidad de ciertas valoraciones humanas, sin eliminar las decisiones humanas de su funcionamiento.
+
+El nombre podía dar una impresión de certeza mayor de la que existía. Una constitución no garantizaba respuestas correctas ni rechazos razonables en todos los casos. Los investigadores todavía debían poner a prueba el modelo y estudiar sus errores. Un asistente útil tenía que distinguir las peticiones legítimas de las perjudiciales.
+
+Mientras tanto, los gastos seguían creciendo. Entrenar modelos más grandes requería infraestructura informática y personal capaz de construirlos y estudiarlos. En abril de 2022, Anthropic anunció una ronda de financiación de 580 millones de dólares. El dinero permitía ampliar los experimentos, aunque todavía no demostraba que pudieran convertirse en un negocio sostenible.
+
+A finales de 2022, OpenAI lanzó ChatGPT. El público podía probar un sistema de inteligencia artificial conversacional sin conocer la investigación que había detrás. Anthropic estaba desarrollando su propio asistente, Claude, en un mercado donde muchos posibles usuarios ya habían formado sus expectativas alrededor de un competidor.
+
+Encontrar tareas útiles
+
+Anthropic presentó Claude a un público más amplio en marzo de 2023, después de realizar pruebas con empresas colaboradoras. Podía ayudar a escribir, responder preguntas y realizar tareas relacionadas con textos. Los usuarios podían conversar con él en una interfaz de chat. Los desarrolladores también podían conectarlo a otros programas mediante una API. Faltaba demostrar dónde encajaban esas capacidades en el trabajo diario.
+
+Los documentos largos ofrecían una oportunidad. En mayo de 2023, Anthropic amplió la ventana de contexto de Claude a 100.000 tokens. Un token es una unidad que el modelo utiliza para procesar texto y no siempre equivale a una palabra completa. Según la estimación de la empresa, aquella ventana podía contener unas 75.000 palabras.
+
+Esto permitía proporcionar mucho más material en una sola interacción. Una empresa podía enviar un informe extenso o varios documentos y hacer preguntas sobre ellos. Un programador podía incluir una parte mayor de su proyecto al pedir ayuda. Disminuía así la necesidad de dividirlo todo en pequeños fragmentos separados.
+
+La ventana de contexto no era una memoria permanente. Indicaba cuánto material podía manejar el modelo durante una interacción. Aceptar un documento largo tampoco demostraba que entendiera correctamente cada detalle. Seguía siendo necesario comprobar el resultado, sobre todo cuando un error pequeño podía cambiar una decisión.
+
+Para las empresas, la utilidad era fácil de reconocer. Leer y comparar documentos llevaba tiempo. Un sistema que ayudara a localizar pasajes relevantes o explicar una sección difícil podía resultar práctico, aunque no sustituyera el criterio de una persona. Los clientes podían evaluarlo con tareas que ya necesitaban resolver, sin depender únicamente de promesas sobre el futuro de la inteligencia artificial.
+
+El dinero detrás de los modelos
+
+Amazon y Google se convirtieron en socios e inversores importantes. Su participación dio acceso a recursos que una empresa joven difícilmente podía construir por su cuenta. Los grandes modelos necesitaban capacidad informática. Los proveedores de servicios en la nube tenían equipos y relaciones con clientes empresariales. Estas alianzas conectaban la investigación con la infraestructura y la distribución.
+
+Los acuerdos también reflejaban la competencia entre compañías tecnológicas. Microsoft mantenía una relación estrecha con OpenAI. Amazon y Google tenían motivos para apoyar a otros desarrolladores y ofrecer sus modelos mediante servicios propios. Invertir en una empresa de modelos les daba una participación en su progreso. Proporcionar recursos informáticos ayudaba a sostener el trabajo necesario para conseguirlo.
+
+Anthropic presentó la familia Claude 3 en marzo de 2024. Haiku, Sonnet y Opus ofrecían distintas combinaciones de velocidad, precio y capacidad. Un cliente no necesitaba necesariamente el modelo más grande para todas sus consultas. Una tarea sencilla podía resolverse con menos gasto, mientras que otra más exigente podía justificar recursos adicionales.
+
+Los modelos también podían procesar imágenes, incluidos gráficos y diagramas. Esto los hacía útiles para documentos cuyo significado dependía de algo más que los párrafos escritos. Anthropic publicó resultados favorables en pruebas comparativas, pero una puntuación no demostraba cómo funcionarían en el trabajo de cada cliente. Elegir un modelo seguía requiriendo pruebas con la tarea concreta.
+
+La empresa disponía ya de varias formas de llegar al mercado. Algunas personas querían un asistente para conversar. Otras necesitaban incorporar un modelo a un producto o proceso de trabajo existente. Las expectativas eran distintas, igual que las consecuencias de un fallo. Una demostración prometedora debía convertirse en un servicio que funcionara de forma habitual.
+
+De responder a actuar
+
+El desarrollo de software abrió otra posibilidad. Un asistente ya podía proponer código, pero el programador a menudo tenía que copiarlo, encontrar el archivo adecuado y probarlo. Si algo fallaba, volvía con otra pregunta. Una parte importante del trabajo ocurría entre una respuesta y la siguiente.
+
+Claude Code incorporó el modelo a ese proceso. Anthropic lo lanzó como una versión preliminar de investigación en febrero de 2025. La herramienta funcionaba en una terminal y podía examinar archivos, modificar código y ejecutar comandos. Los resultados de una prueba podían orientar un nuevo intento, de modo que el trabajo continuaba después de proponer una solución.
+
+Eso cambiaba las tareas que un desarrollador podía encargarle. En lugar de pedir un ejemplo breve, podía solicitar una investigación de un error dentro de un proyecto. El sistema quizá necesitara leer varios archivos antes de sugerir un cambio. Ejecutar pruebas aportaba información sobre el resultado, aunque superarlas no demostraba que todo estuviera correcto.
+
+La utilidad dependía del trabajo. Una herramienta capaz de resolver bien un cambio rutinario podía ahorrar tiempo. Una modificación equivocada también podía aumentar el esfuerzo de quien tuviera que revisarla. El acceso a comandos y archivos hacía que las acciones del modelo tuvieran consecuencias mayores que un párrafo incorrecto en una conversación.
+
+Por eso, los desarrolladores debían decidir a qué podía acceder la herramienta y qué acciones necesitaban revisión. El programa ofrecía ayuda práctica para trabajar con software. La responsabilidad sobre el resultado seguía en manos de las personas, y no todas las tareas podían delegarse con el mismo éxito.
+
+Límites e inversores
+
+La cuestión de los usos aceptables se hizo especialmente visible en la relación de Anthropic con las fuerzas armadas de Estados Unidos. En febrero de 2026, la empresa describió un desacuerdo sobre dos restricciones: la vigilancia masiva dentro del país y las armas completamente autónomas. Anthropic afirmó que apoyaba otros usos legales relacionados con la seguridad nacional, pero que mantendría esos límites.
+
+En marzo, comunicó que había recibido una notificación que la designaba como un riesgo para la cadena de suministro. La empresa rechazó la medida y anunció que la impugnaría ante los tribunales. También sostuvo que la restricción afectaba al uso vinculado directamente a contratos de defensa, en lugar de abarcar todas las actividades de cualquier empresa con clientes militares. Eran las posiciones declaradas por Anthropic en una disputa que seguía abierta.
+
+El desacuerdo mostró las consecuencias comerciales de una política de seguridad. Limitar el uso de un cliente podía poner en peligro un contrato. Aceptar cualquier uso solicitado podía entrar en conflicto con las razones dadas para establecer restricciones. Esa presión se sumaba al gasto continuo en investigación e infraestructura.
+
+El 1 de junio de 2026, Anthropic anunció que había presentado de forma confidencial un borrador de registro para una posible salida a bolsa. El anuncio no fijaba el precio ni el número de acciones. La operación dependería de las condiciones del mercado y de otros factores. Presentar la documentación abría una posibilidad, sin garantizar que la oferta llegara a realizarse.
+
+Los inversores privados ya habían ayudado a financiar el desarrollo de Claude. Una salida a bolsa podía aportar otra fuente de capital, junto con accionistas que evaluarían los gastos y las perspectivas de la empresa. Las afirmaciones sobre una valoración definitiva iban más allá de lo anunciado. En aquel momento, el precio de una eventual oferta todavía estaba por decidir.

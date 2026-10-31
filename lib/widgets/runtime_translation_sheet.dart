@@ -16,6 +16,7 @@ import '../theme/app_theme.dart';
 import 'anchored_popover.dart';
 import 'popover_content.dart';
 import 'dictionary_sources_sheet.dart' show showDictionarySources;
+import 'word_bubble.dart';
 
 /// The reader has already checked its exact pack/context translation.
 /// Only a word tap can start an automatic cloud lookup, and only after the
@@ -57,6 +58,9 @@ class RuntimeTranslationSheet extends ConsumerStatefulWidget {
     context: context,
     anchor: anchor,
     color: context.appColors.popover,
+    // A word gets the small bubble, a sentence the full width.
+    maxWidth: form != null ? wordBubbleWidth(context) : 440,
+    padding: form != null ? wordBubblePadding : const EdgeInsets.all(20),
     builder: (_) => RuntimeTranslationSheet(
       lang: lang,
       text: text,
@@ -82,6 +86,9 @@ class _RuntimeTranslationSheetState
   WordCloudConsent? consent;
   RuntimeTranslation? result;
   String? dictionaryText, error;
+
+  /// The add button's last message (compact mode reports it here).
+  String? learningMessage;
   List<DictionaryCandidate> candidates = [];
   bool _current(int epoch) => mounted && epoch == _epoch;
 
@@ -162,12 +169,15 @@ class _RuntimeTranslationSheetState
           consent = await client.wordCloudConsent();
           if (!_current(epoch)) return;
         }
+      } else {
+        consent = await client.wordCloudConsent();
+        if (!_current(epoch)) return;
       }
       setState(() => checking = false);
-      if (widget.form != null &&
-          widget.wordTap &&
-          dictionaryText == null &&
-          consent == WordCloudConsent.enabled) {
+      // With the AI switch on, words and sentences translate right away
+      // (user decision 31.10.2026: no further notice in the bubble).
+      if (consent == WordCloudConsent.enabled &&
+          (form == null || widget.wordTap && dictionaryText == null)) {
         await request();
       }
     } on TranslationFailure catch (e) {
@@ -232,7 +242,68 @@ class _RuntimeTranslationSheetState
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) =>
+      widget.form != null ? _word(context) : _sentence(context);
+
+  /// The small word bubble: word and speaker (and the add button) on one
+  /// line, the translation below; nothing else unless something failed.
+  Widget _word(BuildContext context) {
+    final shown = widget.displayText ?? widget.form!;
+    final translation = result?.text ?? dictionaryText;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        WordBubbleHeader(
+          word: shown,
+          speak: shown,
+          language: widget.lang,
+          trailing: switch (widget.learningTarget) {
+            final target? => PersonalLearningButton(
+              key: ValueKey(target.key),
+              target: target,
+              foregroundColor: popoverInk,
+              compact: true,
+              onMessage: (message) {
+                if (mounted && message != learningMessage) {
+                  setState(() => learningMessage = message);
+                }
+              },
+            ),
+            null => null,
+          },
+        ),
+        if (checking || loading)
+          const Padding(
+            padding: EdgeInsets.only(top: 6, bottom: 2),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: CupertinoActivityIndicator(color: popoverInk),
+            ),
+          )
+        else if (translation != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 2, right: 6),
+            child: Text(translation, style: wordBubbleTranslation()),
+          ),
+        if (result?.storageWarning case final warning?)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text(warning, style: PopoverText.caption()),
+          ),
+        if (error ?? learningMessage case final message?)
+          Semantics(
+            liveRegion: true,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 6, right: 6),
+              child: Text(message, style: PopoverText.caption()),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _sentence(BuildContext context) {
     final serif = AppType.editorial(
       color: popoverInk,
       size: 20,
@@ -240,26 +311,28 @@ class _RuntimeTranslationSheetState
       height: 1.4,
       letterSpacing: 0,
     );
-    Widget action(String label, VoidCallback onPressed) => Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child: PopoverPillButton(label: label, onPressed: onPressed),
-    );
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          widget.displayText ?? widget.form ?? widget.text,
+          widget.displayText ?? widget.text,
           style: AppType.editorial(
             color: popoverInk,
-            size: widget.form != null ? 26 : 19,
+            size: 19,
             weight: FontWeight.w600,
             height: 1.35,
             letterSpacing: 0,
           ),
         ),
         const SizedBox(height: 12),
-        Align(alignment: Alignment.centerRight, child: SpeakButton(text: widget.displayText ?? widget.form ?? widget.text, language: widget.lang)),
+        Align(
+          alignment: Alignment.centerRight,
+          child: SpeakButton(
+            text: widget.displayText ?? widget.text,
+            language: widget.lang,
+          ),
+        ),
         const PopoverDivider(),
         const SizedBox(height: 12),
         if (checking || loading)
@@ -273,34 +346,9 @@ class _RuntimeTranslationSheetState
             const SizedBox(height: 6),
             Text(value.storageWarning!, style: PopoverText.small()),
           ],
-        ] else if (dictionaryText != null) ...[
-          Text(dictionaryText!, style: serif),
-          const SizedBox(height: 8),
-          Text(
-            'Wörterbuch · allgemeine Bedeutung',
-            style: PopoverText.caption(),
-          ),
-        ] else if (!checking && !loading && !started) ...[
-          if (widget.form == null) ...[
-            Text(
-              'Für eine neue Übersetzung wird dieser Satz an Anthropic übermittelt. Keine ausschließliche EU-Verarbeitung.',
-              style: PopoverText.small(),
-            ),
-            action('Übersetzen', request),
-          ] else
-            // Consent is asked once in the onboarding (user decision
-            // 29.10.2026), never again in the bubble.
-            Text(
-              'Keine lokale Übersetzung. KI-Übersetzungen lassen sich in den Einstellungen einschalten.',
-              style: PopoverText.small(),
-            ),
-        ],
-        if (widget.learningTarget case final target?)
-          PersonalLearningButton(
-            key: ValueKey(target.key),
-            target: target,
-            foregroundColor: popoverInk,
-          ),
+        ] else if (!checking && !loading && !started)
+          // AI switched off: one explicit tap translates this sentence.
+          PopoverPillButton(label: 'Übersetzen', onPressed: request),
         if (error != null)
           Semantics(
             liveRegion: true,

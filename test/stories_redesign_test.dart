@@ -6,10 +6,17 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sprachapp/models/home_models.dart';
 import 'package:sprachapp/models/sample_content.dart';
 import 'package:sprachapp/presentation/providers/reading_providers.dart';
+import 'package:sprachapp/presentation/providers/purchase_provider.dart';
 import 'package:sprachapp/screens/stories/story_library_screen.dart';
 import 'package:sprachapp/screens/stories/story_reader_screen.dart';
 import 'package:sprachapp/screens/stories/widgets/import_panel.dart';
 import 'package:sprachapp/theme/app_theme.dart';
+
+class _PremiumPurchaseController extends PurchaseController {
+  @override
+  PurchaseState build() =>
+      const PurchaseState(hasVerifiedAccount: true, premiumActive: true);
+}
 
 void main() {
   setUpAll(() => GoogleFonts.config.allowRuntimeFetching = false);
@@ -107,17 +114,22 @@ void main() {
       ),
     );
     await tester.pumpWidget(
-      MaterialApp(
-        theme: buildAppTheme(),
-        home: Scaffold(
-          body: StoryLibraryScreen(
-            stories: sampleStories,
-            onOpenStory: (_) {},
-            onImportText: (text) {
-              imported = text;
-              return null;
-            },
-            onImported: () => done = true,
+      ProviderScope(
+        overrides: [
+          purchaseProvider.overrideWith(() => _PremiumPurchaseController()),
+        ],
+        child: MaterialApp(
+          theme: buildAppTheme(),
+          home: Scaffold(
+            body: StoryLibraryScreen(
+              stories: sampleStories,
+              onOpenStory: (_) {},
+              onImportText: (text) {
+                imported = text;
+                return null;
+              },
+              onImported: () => done = true,
+            ),
           ),
         ),
       ),

@@ -1,0 +1,73 @@
+Brikker for andre
+
+En fabrikk uten eget produkt
+
+I 1987 var Morris Chang med på å etablere et halvlederselskap med et uvanlig løfte. Det skulle produsere databrikker for andre bedrifter uten å selge sitt eget konkurrerende merke. Taiwan Semiconductor Manufacturing Company, vanligvis kalt TSMC, tilbød kundene et sted der tegninger kunne bli til fysiske produkter. En utvikler kunne konsentrere seg om hva brikken skulle gjøre, mens en annen bedrift tok seg av produksjonen.
+
+Chang hadde tilbrakt mye av karrieren i den amerikanske halvlederindustrien. Han ble født i Kina i 1931, flyttet til USA som ung og studerte ingeniørfag. Han arbeidet blant annet i mange år hos Texas Instruments. Da han kom til Taiwan i 1985, kjente han både vanskelighetene ved å lage brikker og de kommersielle beslutningene rundt arbeidet.
+
+Taiwans myndigheter ønsket å utvikle en sterk halvlederindustri. Instituttet for industriell teknologiforskning ga noe av grunnlaget for satsingen. Changs forslag pekte ut en bestemt retning: Bygg en bedrift som produserer for kunder, fremfor å prøve å selge enda en serie egne brikker. Offentlig støtte og investeringer fra Philips bidro til å gjøre TSMC mulig.
+
+Mange viktige halvlederselskaper kombinerte utvikling og produksjon. De bestemte hvordan brikkene skulle fungere og drev fabrikkene som laget dem. Det ga kontroll, men krevde også enorme investeringer. En lovende konstruksjon betalte ikke for en fabrikk, og en ny bedrift kunne slite med å finansiere begge deler.
+
+Det handlet også om tillit. En utvikler som ga følsomme planer til en annen produsent, ville vite hvordan de ble behandlet. Hvis produsenten solgte et konkurrerende produkt, kunne forholdet bli vanskelig. TSMCs løfte om å holde seg til produksjonstjenester ga kundene en grunn til å overlate konstruksjonene sine til selskapet.
+
+Kundene kommer langsomt
+
+De første årene beviste ikke straks at ideen ville forandre bransjen. Chang beskrev senere de tidlige kundene som etablerte produsenter som ga fra seg arbeid, men ikke alltid regelmessig. Små selskaper bestilte også, først i Taiwan og senere i USA. For å fylle en fabrikk trengtes en jevn strøm av oppdrag, ikke bare interesse for en ny forretningsmodell.
+
+Veksten ble sterkere da flere selskaper valgte å utvikle brikker uten egne fabrikker. Disse bedriftene ble kjent som fabless. De trengte fortsatt noen som kunne lage produktene, men kunne bruke mer av sine egne ressurser på utvikling og salg. Produksjon på oppdrag ga dem en vei inn i markedene uten at de måtte bygge hele produksjonskjeden selv.
+
+TSMCs muligheter vokste med denne endringen. En kunde kunne ha en idé til en kommunikasjonsbrikke eller grafikkprosessor og trenge en fabrikk som kunne produsere den pålitelig. Selskapene hadde ulike oppgaver, men sluttproduktet var avhengig av samarbeidet. Konstruksjonen måtte passe til produksjonsprosessen som var valgt.
+
+Denne arbeidsdelingen gjorde ikke produksjon til en enkel tjeneste som hvem som helst kunne kopiere. Å lage brikker krevde mange presise trinn. Fabrikken måtte ha god kontroll over prosessene og forbedre andelen produkter som fungerte riktig. Kundene brydde seg om hvor mange brukbare brikker de mottok, i tillegg til egenskapene som var lovet på papiret.
+
+Denne andelen kalles ofte produksjonsutbytte. En prosess som av og til klarte å lage en imponerende brikke, kunne fortsatt være for dyr for et produkt beregnet på et stort marked. Defekte brikker brukte materialer, maskintid og penger. Kunnskap om hvordan feil kunne reduseres, var en del av kompetansen produsenten solgte.
+
+Å forberede neste generasjon
+
+Virksomheten krevde dessuten investeringer før etterspørselen var sikker. Det kunne ta flere år å få utstyr og nye anlegg klare. Å vente til alle bestillinger var bekreftet, kunne bety at produsenten manglet kapasitet når kundene trengte den. Å bygge for mye kunne etterlate dyrt utstyr med for lite arbeid dersom salget falt.
+
+Nedturer i teknologibransjen gjorde disse valgene vanskeligere. Slutten på internettboomen og finanskrisen i 2008 påvirket etterspørselen i industrien. Kundene endret planer, og produsentene måtte avgjøre hvilke utgifter de kunne opprettholde. Investeringer i forskning og kapasitet kunne legge grunnlag for fremtidige oppdrag selv om dagens bestillinger ble færre.
+
+TSMCs utvikling var derfor mer komplisert enn en rekke stadig mindre tall i en teknologisk oversikt. Den omfattet finansiering, produksjonserfaring og forhold til kunder. En ny prosess måtte fungere i kommersiell skala. Selskapet måtte levere det som var lovet, samtidig som det forberedte seg på produkter kundene ennå ikke hadde lansert.
+
+Smarttelefoner gjorde slik planlegging enda viktigere. En populær telefon kunne kreve store mengder brikker innen stramme tidsfrister. Apple ble en viktig kunde hos TSMC, mens andre utviklere også trengte avansert produksjon. En stor bestilling ga inntekter, men krevde kapasitet og jevne resultater gjennom produksjonen av svært mange enheter.
+
+Forholdet betydde noe for begge parter. Utviklerne ønsket brikker som passet til produktene deres, og produsenten trengte informasjon for å planlegge. Ingen av partene kunne behandle den andre som en detalj det var lett å bytte ut. Endring av en konstruksjon eller flytting av produksjon kunne kreve mye arbeid, fremfor et raskt skifte av leverandør.
+
+Hva de små tallene betyr
+
+Generasjoner innen halvlederproduksjon blir ofte beskrevet med tall målt i nanometer. Navnene hjelper til med å skille prosesser fra hverandre, men bør ikke leses som en direkte måling av en hel brikke eller alle delene inni den. Å sammenligne produsenter krever mer enn å velge det minste tallet i en kunngjøring.
+
+Ytelse, energibruk og mengden kretser som får plass på et bestemt areal, har betydning. Det samme gjelder pris og egnethet for oppgaven. En prosessor for krevende beregninger har andre behov enn en komponent som styrer en enkel funksjon. Ikke alle nyttige brikker trenger den nyeste produksjonsgenerasjonen.
+
+Derfor blir det misvisende å omtale TSMC som produsenten av alle verdens brikker. Halvlederproduksjon omfatter mange slags produkter og mange selskaper. Minne, logiske kretser og spesialiserte komponenter har forskjellige oppgaver. TSMC er særlig viktig innen produksjon for andre, men dette markedet er ikke det samme som hele halvlederindustrien.
+
+Markedsandeler avhenger også av hva man teller. En prosentandel av inntektene fra oppdragsproduksjon kan ikke automatisk brukes som andelen av alle produserte brikker. TSMC har selv brukt en bredere definisjon kalt Foundry 2.0, som omfatter flere produksjonstjenester og aktiviteter. Tall bygget på forskjellige definisjoner kan beskrive ulike markeder selv når de står ved siden av hverandre.
+
+I rapporten for 2025 oppga TSMC at teknologien kjent som to nanometer hadde startet volumproduksjon i årets siste kvartal. Dette var en milepæl i produksjonen, uten å bety at alle kundene allerede hadde tatt prosessen i bruk. Eldre generasjoner hadde fortsatt bruksområder, og etterspørselen kom fra flere typer utstyr.
+
+Da brikkene manglet
+
+Under pandemien gjorde mangelen på halvledere avhengigheten synlig også utenfor teknologibransjen. Bilproduksjon kunne stoppe fordi en nødvendig komponent ikke var tilgjengelig. Et kjøretøy inneholdt elektronikk for mange forskjellige funksjoner, og fraværet av én påkrevd del kunne hindre at hele bilen ble ferdig.
+
+Etterspørselen endret seg raskt. Folk kjøpte utstyr for å arbeide og studere hjemme, mens produsenter i andre bransjer justerte bestillingene sine. Når etterspørselen tok seg opp eller skiftet igjen, kunne ikke brikkeproduksjonen følge etter umiddelbart. Fabrikkene hadde allerede kunder i kø, og økt kapasitet tok tid.
+
+Problemet var større enn at ett selskap valgte mellom biler og spillkonsoller. Produksjonskapasitet, materialer og senere trinn som montering og testing kunne alle bli begrensninger. Forsyningskjeden måtte levere riktig komponent. Et stort antall av en annen brikke løste ikke nødvendigvis behovet.
+
+I januar 2022 publiserte USAs handelsdepartement funn fra en undersøkelse av forsyningskjeden. For halvlederproduktene som de svarende kjøperne hadde oppgitt som vanskelige å skaffe, hadde medianen for lagerbeholdning falt fra førti dager i 2019 til under fem dager i 2021. Med så små lagre kunne selv et kort avbrudd stanse produksjon et annet sted.
+
+Myndigheter og bedrifter begynte å se nærmere på hvor viktige komponenter ble laget. En lav innkjøpspris var bare ett hensyn. Avhengighet av fjerne leverandører kunne gjøre en fabrikk sårbar for hendelser den ikke kontrollerte. Mer kapasitet virket attraktivt, men kunne ikke løse en akutt mangel over natten.
+
+Flere fabrikker og flere forbindelser
+
+Taiwans betydning for avansert halvlederproduksjon skapte også bekymring for konflikt og forstyrrelser. Når viktige fabrikker var samlet i én region, kunne problemer der påvirke kunder langt unna. Noen betraktet denne betydningen som en mulig avskrekking mot konflikt. Det var likevel ingen garanti for at politiske eller militære farer ville forsvinne.
+
+Kontroll over en bygning ville heller ikke automatisk gi noen en fungerende brikkeindustri. Produksjonen var avhengig av dyktige mennesker, utstyr, materialer og løpende forhold til leverandører. Disse forbindelsene krysset landegrenser. En del av fabrikkens verdi lå i arbeid og kunnskap som ikke kunne reduseres til eierskap til veggene.
+
+Utvidelse av produksjon i utlandet var ett svar på bekymringen for konsentrasjon. TSMC utviklet produksjonsvirksomhet i Arizona. I mars 2025 kunngjorde selskapet planer om å legge 100 milliarder dollar til sitt tidligere investeringsprogram på 65 milliarder i USA. Utvidelsen omfattet planer om flere fabrikker, anlegg for avansert innkapsling og forskningsaktivitet.
+
+En kunngjort investering var ikke det samme som ferdig kapasitet. Et nytt anlegg trengte arbeidere, leverandører og prosesser som fungerte sammen. Erfaring fra eksisterende drift kunne hjelpe, men bygging alene gjenskapte ikke alle delene av et etablert industrinettverk. Kundene trengte pålitelig produksjon fra de nye anleggene, ikke bare nye bygninger.
+
+TSMCs kunder kunne sette egne navn på produktene folk kjøpte, slik at produsentens rolle ble mindre synlig. Skillet mellom utvikling og produksjon forble likevel sentralt. Hvert nytt produkt krevde en konstruksjon som kunne produseres, en stabil prosess og nok kapasitet til å levere brikkene når de var nødvendige.

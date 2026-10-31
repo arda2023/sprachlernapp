@@ -109,9 +109,7 @@ class ProgressMeasure {
     value: b.building,
     total: b.total,
     unit: 'Übungen',
-    explanation:
-        'Übungen, die du schon kennst, die aber noch nicht sicher sitzen '
-        '(Stufe 1–4). Jede richtige Wiederholung hebt sie eine Stufe höher.',
+    explanation: 'Kennst du schon, sitzt aber noch nicht sicher.',
   );
 
   factory ProgressMeasure.mastered(VocabBreakdown b) => ProgressMeasure(
@@ -121,8 +119,7 @@ class ProgressMeasure {
     total: b.total,
     unit: 'Übungen',
     explanation:
-        'Übungen auf der höchsten Stufe (Stufe 5). Sie kommen nur noch selten '
-        'zur Kontrolle wieder – ungefähr alle drei Monate einmal.',
+        'Sitzt sicher und kommt nur noch selten zur Kontrolle.',
   );
 
   factory ProgressMeasure.words(LexicalBreakdown l, VocabBreakdown b) =>
@@ -133,8 +130,7 @@ class ProgressMeasure {
         total: l.total,
         unit: 'Wörtern',
         explanation:
-            'Wörter, von denen du schon eine Form beantwortet hast. Ein Wort '
-            'kann mehrere Übungen haben – zum Beispiel go, went und gone.',
+            'Mindestens eine Form davon hast du schon beantwortet.',
       );
 
   final ProgressKind kind;
@@ -304,29 +300,21 @@ class _ExplanationBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
+        // The tile already names the measure; the count leads (31.10.2026).
         Semantics(
-          header: true,
+          label: '${m.title}: ${m.summary}',
+          excludeSemantics: true,
           child: Text(
-            m.title,
+            m.summary,
             style: AppType.chrome(
               size: 20,
               weight: FontWeight.w800,
               color: white,
+              tabular: true,
             ),
           ),
         ),
-        const SizedBox(height: 4),
-        Text(
-          m.summary,
-          // Medium under the bold title (no bold subtext, 29.10.2026).
-          style: AppType.chrome(
-            size: 15,
-            weight: FontWeight.w500,
-            color: white,
-            tabular: true,
-          ),
-        ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 6),
         Text(m.explanation, style: PopoverText.small()),
       ],
     );

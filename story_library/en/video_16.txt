@@ -1,0 +1,57 @@
+If the Moon came closer
+
+The Moon looks dependable. It rises, changes shape through the month and returns to familiar places in the sky. We can predict its movements well enough to plan eclipses years ahead. Yet that familiar sight invites an unsettling question. What would happen if it began moving towards Earth instead of remaining in its usual orbit?
+
+This is a thought experiment, not a forecast. The real Moon is gradually moving away from Earth, at about 3.8 centimetres per year. Nothing in its present motion suggests the approaching disaster imagined here. To explore the question, we must invent a mechanism that changes its orbit enormously. The invention belongs to the story, while gravity supplies some of the consequences.
+
+Falling without landing
+
+An orbit is not a place where gravity stops working. Earth's gravity continually bends the Moon's motion. The Moon also has enough sideways motion to keep missing the ground as it falls. Its average distance from Earth's centre is about 384,400 kilometres, and a circuit relative to the stars takes roughly 27.3 days.
+
+Changing an orbit requires changing an object's motion, usually through forces acting over time. Simply reducing the Moon's speed once would not automatically produce a smooth spiral lasting exactly a year. It could create a different elliptical orbit. For our imagined gradual approach, the fictional mechanism must keep changing the system's energy and angular momentum.
+
+That distinction matters. Once a story introduces magic, it cannot claim that every later date follows inevitably from physics. We can examine broad effects of a much closer Moon. We cannot honestly assign each flooded city or damaged satellite to a particular month without specifying and modelling the whole scenario.
+
+The first warning from the sea
+
+The Moon already helps produce tides. Its gravitational pull differs across Earth because the nearer side is closer than the centre, while the farther side is more distant. Those differences create tidal effects. The Sun contributes too. Real oceans respond within basins and along coastlines, so tides do not rise by the same amount everywhere.
+
+A closer Moon would strengthen its tidal influence. In a useful approximation, the strength varies with the inverse cube of distance. Halving the distance would therefore multiply this influence by about eight. That does not mean every harbour would experience precisely eight times its present tidal range. Coastline shape, water depth and the timing of the forcing would still matter.
+
+Imagine a port where water repeatedly reaches above the levels its quays were built to withstand. Roads flood, electrical equipment fails and cargo cannot move normally. The immediate problem is water, but the consequences spread through transport and supply networks. A factory far inland may depend on parts arriving through that port.
+
+Fresh water would become another concern wherever salt water entered rivers or damaged supplies. Homes and farmland in vulnerable coastal areas could become unusable. These are plausible kinds of disruption, not a reliable count of displaced people. The outcome would depend on geography, the pace of change and what communities could do in response.
+
+Connections under strain
+
+Communications would face several different risks. Submarine cables are designed to operate underwater, but their connections on land depend on power and protected facilities. Flooding those facilities could interrupt service even if much of a cable survived. Other routes might remain available. A global network does not fail everywhere at one identical moment.
+
+Satellites would also feel the changing gravitational environment. The Moon already perturbs their orbits, but bringing its mass much closer would change those disturbances substantially. Effects would vary with altitude and orbit. Some spacecraft might require corrections beyond their available fuel, while others would encounter different problems. There is no universal month when all navigation satellites must fail.
+
+Fuel production, food distribution and medical care would depend on how much infrastructure remained usable. Moving people away from threatened coasts would require transport and places to live. A settlement on higher ground might escape flooding while still losing deliveries, electricity or employment. Distance from the sea would not mean independence from it.
+
+A planet that bends
+
+Tides are not confined to water. Solid Earth already deforms slightly under tidal forces. A much closer Moon would increase stresses in rock as well as changing the oceans. It would be wrong to say that water absorbs all the effect until some maximum tide is reached, after which the ground suddenly begins to respond.
+
+Severe deformation could affect geological activity. However, a list of specific volcanoes erupting on schedule would be speculation. Predicting where faults move or magma reaches the surface requires far more than knowing the Moon's distance. The same caution applies to claims that particular eruptions would inevitably create one exact global climate outcome.
+
+The Moon would be distorted too. Earth's gravity pulls more strongly on its near side than on its far side. As the distance shrank, that difference would become more important compared with the forces holding the Moon together. Its shape and internal stresses could change long before a simple picture of two solid balls touching became relevant.
+
+An unfamiliar sky
+
+Closer circular orbits have shorter periods. At one stage, an imagined inward journey could bring the orbital period near Earth's rotation period. But matching the period alone would not make the Moon hang motionless above one spot. A stationary appearance also requires suitable orbital shape and alignment with the equator, as it does for geostationary satellites.
+
+In this extreme scenario, Earth's rotation and the Moon's motion could both change. Treating the present day length as fixed while moving a massive companion inward leaves out part of the system. The apparent movement across the sky would reflect all those changes, rather than following a simple calendar invented in advance.
+
+The Moon would look larger as it approached. Its phase would still depend on how sunlight illuminated it relative to the observer. Eclipses would depend on alignment, not just closeness. A spectacular sky would accompany the changing environment, but beauty would tell an observer little about the stability of the ground or the next tide.
+
+Breaking into a ring
+
+The Roche limit describes the region where tidal forces can overcome an object's ability to hold itself together. It is not simply where Earth's total pull becomes stronger than the Moon's gravity. Differences in that pull across the Moon are crucial. The disruption distance also depends on density, structure, rotation and material strength.
+
+If the Moon broke apart, some debris could spread into orbiting material. Other fragments might follow paths that intersected Earth. A neat, permanent ring is not the only possible result. Nor would the disappearance of an intact Moon instantly switch off every hazard. The debris would still have mass, motion and gravitational effects.
+
+Material entering the atmosphere would deposit energy. The consequences would depend on how much arrived, its speed and the timing of its arrival. Ring material and atmospheric particles could also affect sunlight. Without a physical model, choosing between boiling oceans, global freezing or a survivable aftermath would be storytelling rather than a calculated result.
+
+Our experiment ends with a more complicated picture than a single impact. Bringing a large companion close would change oceans, rock, infrastructure and orbits together. The fictional mechanism does not make the real Moon threatening. Instead, the exercise shows how much the familiar world depends on distances and motions that usually change far too slowly for us to notice.

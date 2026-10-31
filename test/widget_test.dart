@@ -251,9 +251,14 @@ void main() {
       await tester.pumpAndSettle();
       final popover = find.byType(SingleChildScrollView).last;
       sizes.add(tester.getSize(popover));
+      // The tile names the measure; the popover leads with the count.
+      expect(
+        find.descendant(of: popover, matching: find.textContaining(' von ')),
+        findsWidgets,
+      );
       expect(
         find.descendant(of: popover, matching: find.text(title)),
-        findsWidgets,
+        findsNothing,
       );
       await tester.tapAt(const Offset(4, 4)); // outside closes it
       await tester.pumpAndSettle();

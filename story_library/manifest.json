@@ -1,0 +1,3910 @@
+{
+  "source": "Youtube_stories.rtf",
+  "source_sha256": "1a98c67cd23bf375c504d889fc83c14760a13091181fb6e96004c13d0f529fbe",
+  "missing_source_numbers": [
+    37
+  ],
+  "languages": [
+    "en",
+    "pt-BR",
+    "es",
+    "it",
+    "nb"
+  ],
+  "reading_estimate_words_per_minute": 120,
+  "items": [
+    {
+      "id": "video_01",
+      "source_number": 1,
+      "source_file": "sources/video_01.txt",
+      "source_words": 2448,
+      "source_sha256": "f68e60d8f82bc3cc7cd9a846c2c8add964f980bb7ad807e254ad93cfbf7b3667",
+      "opening": "„He lied about $1 stock, made millions, and only served 22 months in jail. Then Hollywood turned his crimes into a blockbuster. This is the story of Jordan Bele",
+      "target_words_after_reduction": [
+        1224,
+        1958
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Wirtschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_01.txt",
+          "title": "Selling the dream",
+          "words": 1449,
+          "estimated_minutes": 13,
+          "reduction_percent": 40.8,
+          "sha256": "ea020bff66558a9893d69caecf14c97887279585ecc211b756badef245a1e6c3",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_01.txt",
+          "title": "Vendendo um sonho",
+          "words": 1453,
+          "estimated_minutes": 13,
+          "reduction_percent": 40.6,
+          "sha256": "f1404c5e72b7a5c8fc473979e51dbce053db1eef7d9b7883bdceb7027d8e363e",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_01.txt",
+          "title": "Vender un sueño",
+          "words": 1489,
+          "estimated_minutes": 13,
+          "reduction_percent": 39.2,
+          "sha256": "bacd04fc8859442ceeb426d58f24aada4464a8c8234450046aa73686ba79a8f6",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_01.txt",
+          "title": "Vendere un sogno",
+          "words": 1424,
+          "estimated_minutes": 12,
+          "reduction_percent": 41.8,
+          "sha256": "3954c97eea9b38d7f82cdc68a2a6cc1aae6e556edf7752d21bc9f6ae82192bf6",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_01.txt",
+          "title": "Å selge en drøm",
+          "words": 1453,
+          "estimated_minutes": 13,
+          "reduction_percent": 40.6,
+          "sha256": "08c07d6d23965e97e4a5300b87befe7d6d79573237d8ade7f2a2a06a48a5f2b4",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "confirmed_core": [
+          "Stratton Oakmont used high pressure fraudulent selling and stock manipulation",
+          "Belfort pleaded guilty to securities fraud and money laundering",
+          "Restitution exceeded 100 million dollars",
+          "Memoir published in 2007"
+        ],
+        "references": [
+          "https://www.sec.gov/news/digest/1992/dig032092.pdf",
+          "https://www.govinfo.gov/content/pkg/USCOURTS-nyed-2_14-cv-01044/pdf/USCOURTS-nyed-2_14-cv-01044-3.pdf",
+          "https://www.justice.gov/osg/brief/shuster-v-united-states-opposition"
+        ],
+        "remaining": "Biographical anecdotes, precise restitution sum, prison duration and yacht story still rely on supplied transcript. No claim that every detail is independently verified."
+      }
+    },
+    {
+      "id": "video_02",
+      "source_number": 2,
+      "source_file": "sources/video_02.txt",
+      "source_words": 2432,
+      "source_sha256": "b9f13c3eb51a613b27699dc6c7ac288514804061d5ec39d7bf1fe84d7eee9a57",
+      "opening": "„It's the Great Depression. You woke up rich, then went to bed broke. No war, no warning, just a terrifying crash that wiped out $200 billion and sent America s",
+      "target_words_after_reduction": [
+        1216,
+        1946
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Wirtschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_02.txt",
+          "title": "When the boom ended",
+          "words": 1419,
+          "estimated_minutes": 12,
+          "reduction_percent": 41.7,
+          "sha256": "21f8274267477eb827a8c41649dea0b635356b3eba37bf3803973c5a5c9a8394",
+          "humanizer_review": "completed",
+          "factual_audit": "core_timeline_checked",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_02.txt",
+          "title": "Da oppgangen tok slutt",
+          "words": 1399,
+          "estimated_minutes": 12,
+          "reduction_percent": 42.5,
+          "sha256": "0ddbe6e8f155ba69d8e567a5760a1fbf3d353e99d9ccb72d70dfc80e4742175d",
+          "humanizer_review": "completed",
+          "factual_audit": "same_corrected_timeline_as_english",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_02.txt",
+          "title": "El fin de la prosperidad",
+          "words": 1570,
+          "estimated_minutes": 14,
+          "reduction_percent": 35.4,
+          "sha256": "7dd526454b27e25aed72e812af8605341fd35005aa8cc412ff8847dffa27e057",
+          "humanizer_review": "completed",
+          "factual_audit": "same_corrected_timeline_as_english",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_02.txt",
+          "title": "La fine della prosperità",
+          "words": 1505,
+          "estimated_minutes": 13,
+          "reduction_percent": 38.1,
+          "sha256": "6b175521826e66d77757b76dd37fecd3de51e943b6570c90e91cfd7bd74fc6a6",
+          "humanizer_review": "completed",
+          "factual_audit": "same_corrected_timeline_as_english",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_02.txt",
+          "title": "O fim da prosperidade",
+          "words": 1489,
+          "estimated_minutes": 13,
+          "reduction_percent": 38.8,
+          "sha256": "05c79f96e04c292602a8e2cb92111d16bd39c30b78ea079feed86d1b9b194c02",
+          "humanizer_review": "completed",
+          "factual_audit": "same_corrected_timeline_as_english",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://www.federalreservehistory.org/essays/great-depression",
+          "https://www.dol.gov/general/aboutdol/history/chapter5",
+          "https://www.fdrlibrary.org/great-depression-facts"
+        ],
+        "corrections": [
+          "Unemployment near one quarter belongs to 1933, not 1931",
+          "Banking panics unfolded over several years, not immediately on Black Tuesday",
+          "New Deal did not finish the Depression before wartime mobilisation",
+          "Added 1937 setback to prevent falsely smooth recovery account"
+        ],
+        "removed": [
+          "Invented dialogue and personal crisis anecdotes",
+          "Unsupported obsolete inflation conversion",
+          "Claim that newspapers could not keep up with obituaries"
+        ]
+      }
+    },
+    {
+      "id": "video_03",
+      "source_number": 3,
+      "source_file": "sources/video_03.txt",
+      "source_words": 3058,
+      "source_sha256": "efa79075a91056042764458621febe894c55b215c2606706cbd1b374af9a7a41",
+      "opening": "„This adopted kid built a $2 trillion empire from the passenger seat of a beat up Chevy Blazer. He typed out a business plan during a cross-country drive in 199",
+      "target_words_after_reduction": [
+        1529,
+        2446
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Wirtschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_03.txt",
+          "title": "Beyond the bookstore",
+          "words": 1725,
+          "estimated_minutes": 15,
+          "reduction_percent": 43.6,
+          "sha256": "5c9214865efb9efa4b56b07186e43c87d052f58d4732b98288e8f5c1dd6e2b47",
+          "humanizer_review": "completed",
+          "factual_audit": "core_timeline_checked",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_03.txt",
+          "title": "Mer enn en bokhandel",
+          "words": 1637,
+          "estimated_minutes": 14,
+          "reduction_percent": 46.5,
+          "sha256": "99dff59b425870f8e63089ec0a39eb2fe4d512308c6bad50e5e8631492394235",
+          "humanizer_review": "completed",
+          "factual_audit": "same_corrected_timeline_as_english",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_03.txt",
+          "title": "Más allá de los libros",
+          "words": 1784,
+          "estimated_minutes": 15,
+          "reduction_percent": 41.7,
+          "sha256": "29b9c4025a45376195d9eb4c7cf2c701138e6f4faf8a7979a9b40f2f8dbddde0",
+          "humanizer_review": "completed",
+          "factual_audit": "core_timeline_checked",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_03.txt",
+          "title": "Oltre la libreria",
+          "words": 1701,
+          "estimated_minutes": 15,
+          "reduction_percent": 44.4,
+          "sha256": "04d280cdd5eb274ec74f1912f09b6b4fdcc226b4900a0a6982986d5db430c853",
+          "humanizer_review": "completed",
+          "factual_audit": "same_corrected_timeline_as_english",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_03.txt",
+          "title": "Além da livraria",
+          "words": 1764,
+          "estimated_minutes": 15,
+          "reduction_percent": 42.3,
+          "sha256": "7176b7171a60cd5c715dc6cbac5387dc0e109631b777e665e5561ae9038eb9af",
+          "humanizer_review": "completed",
+          "factual_audit": "same_corrected_timeline_as_english",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://ir.aboutamazon.com/faqs/default.aspx",
+          "https://ir.aboutamazon.com/officers-and-directors/default.aspx",
+          "https://ir.aboutamazon.com/news-release/news-release-details/2021/Amazon.com-Announces-Fourth-Quarter-Results/",
+          "https://www.washingtonpost.com/business/economy/washington-post-closes-sale-to-amazon-founder-jeff-bezos/2013/10/01/fca3b16a-2acf-11e3-97a3-ff2758228523_story.html"
+        ],
+        "corrections": [
+          "Bezos became executive chair in July 2021, he did not vanish from Amazon",
+          "Washington Post and Blue Origin distinguished from Amazon businesses",
+          "Removed misdated acquisitions and claim all Whole Foods stores replaced checkouts",
+          "Removed unsupported claim Bezos graduated Princeton as valedictorian and questionable initial funding sum",
+          "Avoided attributing every retailer bankruptcy solely to Amazon",
+          "Seller and labour allegations remain attributed concerns, not adjudicated findings"
+        ]
+      }
+    },
+    {
+      "id": "video_04",
+      "source_number": 4,
+      "source_file": "sources/video_04.txt",
+      "source_words": 2726,
+      "source_sha256": "ba84d8c955391785d57a10c633978f87f425e51f11792f18cd017548ad1db669",
+      "opening": "„This is Anthropic. Soon it will go public at a $2 trillion valuation. The biggest IPO ever on Earth, bigger than SpaceX [music] and Saudi Aramco. But how did i",
+      "target_words_after_reduction": [
+        1363,
+        2181
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Technik",
+      "outputs": {
+        "en": {
+          "file": "en/video_04.txt",
+          "title": "Building Claude",
+          "words": 1597,
+          "estimated_minutes": 14,
+          "reduction_percent": 41.4,
+          "sha256": "87cb606fc95908b6298121e3a56dcddc851c6e80e480f026ab36caa25e8ae432",
+          "humanizer_review": "completed",
+          "factual_audit": "core_timeline_checked_historical_cutoff_2026_06_01",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_04.txt",
+          "title": "La creación de Claude",
+          "words": 1695,
+          "estimated_minutes": 15,
+          "reduction_percent": 37.8,
+          "sha256": "231444a86442f16f9417d708e61c126f42847ddca066f5fc1276cb4452eb4566",
+          "humanizer_review": "completed",
+          "factual_audit": "core_timeline_checked_historical_cutoff_2026_06_01",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_04.txt",
+          "title": "La nascita di Claude",
+          "words": 1636,
+          "estimated_minutes": 14,
+          "reduction_percent": 40.0,
+          "sha256": "0a732fb0863df8072f15c0a4b3c2921c7571d2715873b1601d009482c79b802f",
+          "humanizer_review": "completed",
+          "factual_audit": "core_timeline_checked_historical_cutoff_2026_06_01",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_04.txt",
+          "title": "Veien til Claude",
+          "words": 1560,
+          "estimated_minutes": 13,
+          "reduction_percent": 42.8,
+          "sha256": "c986eab4b3e3e57c5d8dbbaf77e0e9ed5a25a3c453d5c428dc6091e5f212fdaa",
+          "humanizer_review": "completed",
+          "factual_audit": "core_timeline_checked_historical_cutoff_2026_06_01",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_04.txt",
+          "title": "A criação do Claude",
+          "words": 1691,
+          "estimated_minutes": 15,
+          "reduction_percent": 38.0,
+          "sha256": "8b420df06c2723e8664fd739e1be9b7f5b4e040e3f9abb276435c319f65fad75",
+          "humanizer_review": "completed",
+          "factual_audit": "core_timeline_checked_historical_cutoff_2026_06_01",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "historical_cutoff": "2026-06-01",
+        "references": [
+          "https://www.anthropic.com/news/anthropic-raises-124-million-to-build-more-reliable-general-ai-systems",
+          "https://www.anthropic.com/news/anthropic-raises-series-b-to-build-safe-reliable-ai",
+          "https://www.anthropic.com/news/constitutional-ai-harmlessness-from-ai-feedback",
+          "https://www.anthropic.com/news/introducing-claude",
+          "https://www.anthropic.com/news/100k-context-windows",
+          "https://www.anthropic.com/news/claude-3-7-sonnet",
+          "https://www.anthropic.com/news/statement-comments-secretary-war",
+          "https://www.anthropic.com/news/where-stand-department-war",
+          "https://www.anthropic.com/news/confidential-draft-s1-sec"
+        ],
+        "corrections": [
+          "Removed sponsor copy, imagined dialogue, unsupported intimate biography and subjective motives",
+          "No assertion of guaranteed largest IPO or final two trillion dollar valuation",
+          "Narrative explicitly ends at June 1 2026 confidential filing, not current investment status",
+          "Funding round total distinguished from an individual investor contribution",
+          "Context window distinguished from permanent memory and guaranteed recall",
+          "Constitutional AI described as human chosen principles, not independent moral judgment",
+          "Benchmark claims attributed; no universal superiority claim",
+          "Removed unverified revenue, GitHub share and dramatic productivity multipliers",
+          "Military dispute dated and attributed to company statements; no legal outcome claimed"
+        ],
+        "remaining": "Company sources substantiate announcements and stated positions, not independent proof of effectiveness or resolution of military dispute. Later IPO developments intentionally outside historical narrative."
+      }
+    },
+    {
+      "id": "video_05",
+      "source_number": 5,
+      "source_file": "sources/video_05.txt",
+      "source_words": 2737,
+      "source_sha256": "8581eb3dbb6a714db6c9ec5ab752777bee0c40a8a151416932d74c4fbfe34ca2",
+      "opening": "\"June 2026, SpaceX goes public and Elon Musk becomes the first trillionaire in human history. The second richest person on Earth is worth roughly 300 billion. A",
+      "target_words_after_reduction": [
+        1368,
+        2190
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Technik",
+      "outputs": {
+        "en": {
+          "file": "en/video_05.txt",
+          "title": "Rockets that return",
+          "words": 1527,
+          "estimated_minutes": 13,
+          "reduction_percent": 44.2,
+          "sha256": "102c0791e6ff597a5cf1d388e012d0555fe04e99d988ee2cbe9cf55c1f61ed54",
+          "humanizer_review": "completed",
+          "factual_audit": "core_milestones_checked_historical_cutoff_2026_06_12",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_05.txt",
+          "title": "Cohetes que regresan",
+          "words": 1623,
+          "estimated_minutes": 14,
+          "reduction_percent": 40.7,
+          "sha256": "e29cdd0f95b541bdf32b41e0c4c5a2e105f08c2c37f90ef65f8e3a07b1c17c54",
+          "humanizer_review": "completed",
+          "factual_audit": "core_milestones_checked_historical_cutoff_2026_06_12",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_05.txt",
+          "title": "Razzi che ritornano",
+          "words": 1554,
+          "estimated_minutes": 13,
+          "reduction_percent": 43.2,
+          "sha256": "e7f5c7cc97a25a6dd926d48d92fbced6b516b7228550d0d311b387a6cdd44a7c",
+          "humanizer_review": "completed",
+          "factual_audit": "core_milestones_checked_historical_cutoff_2026_06_12",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_05.txt",
+          "title": "Raketter som vender tilbake",
+          "words": 1457,
+          "estimated_minutes": 13,
+          "reduction_percent": 46.8,
+          "sha256": "8d0810b150b2976cd668aa480d733bb38bdd6449d39e7da79e8179d0e60ee5f5",
+          "humanizer_review": "completed",
+          "factual_audit": "core_milestones_checked_historical_cutoff_2026_06_12",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_05.txt",
+          "title": "Foguetes que voltam",
+          "words": 1638,
+          "estimated_minutes": 14,
+          "reduction_percent": 40.2,
+          "sha256": "deab9546a9a9d48f934febed26d3d07b99f796addecb3bd5518432ae72d9d7b4",
+          "humanizer_review": "completed",
+          "factual_audit": "core_milestones_checked_historical_cutoff_2026_06_12",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "historical_cutoff": "2026-06-12",
+        "references": [
+          "https://ir.spacex.com/updates/releases-details/2026/Space-Exploration-Technologies-Corp--Announces-Pricing-of-Initial-Public-Offering/default.aspx",
+          "https://www.nasdaq.com/newsroom/spacex-ipo-rocket-company-launches-historic-ipo",
+          "https://x.ai/news/xai-joins-spacex",
+          "https://www.nasa.gov/wp-content/uploads/2018/07/spacex_nasa_crs-7_presskit.pdf",
+          "https://www.sec.gov/Archives/edgar/data/1065088/000089161802004533/f84762exv99w1.htm",
+          "https://science.nasa.gov/image-article/apod-2015-december-28-falcon-9-first-stage-landing/"
+        ],
+        "corrections": [
+          "Removed sponsor copy, invented dialogue, unverifiable personal thoughts and sensational first trillionaire claim",
+          "Corrected Compaq, Confinity and Omelek names; omitted erroneous 37 million Zip2 price",
+          "Separated first stage recovery from an orbital round trip and whole rocket reuse",
+          "Removed unsupported immediate launch price collapse and single founder explanations",
+          "Confirmed September 2008 orbit, December 2008 1.6 billion NASA cargo contract, May 2012 Dragon milestone",
+          "Confirmed February 2026 xAI acquisition and June 2026 IPO; distinguished initial gross proceeds before underwriter option from company valuation",
+          "Orbital computing and Mars plans explicitly remain prospective",
+          "Omitted claimed political motive, donation amount, personal insolvency anecdotes and launch day whereabouts"
+        ],
+        "remaining": "Core milestones checked against primary releases; early biography and general business chronology also retain material from supplied transcript. No claim of full independent verification of every detail."
+      }
+    },
+    {
+      "id": "video_06",
+      "source_number": 6,
+      "source_file": "sources/video_06.txt",
+      "source_words": 2948,
+      "source_sha256": "0557eef0802083c6a17cc0023f663f0c7dee426ddfac59052686fe9036fd5e96",
+      "opening": "\"Right now, somewhere in Taiwan, a machine the size of a school bus is printing circuits thinner than a strand of DNA. It costs $200 million. There are only a h",
+      "target_words_after_reduction": [
+        1474,
+        2358
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Technik",
+      "outputs": {
+        "en": {
+          "file": "en/video_06.txt",
+          "title": "Making other people's chips",
+          "words": 1607,
+          "estimated_minutes": 14,
+          "reduction_percent": 45.5,
+          "sha256": "ee35d79dfb9c610946b6653f6ad6d76e42bd5d41e009c162e51b71e7959bcbbc",
+          "humanizer_review": "completed",
+          "factual_audit": "core_foundry_history_and_2025_reporting_checked",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_06.txt",
+          "title": "Chips para otros",
+          "words": 1686,
+          "estimated_minutes": 15,
+          "reduction_percent": 42.8,
+          "sha256": "bd9978e8eab42d507281e47d0c6b4b81ea29b64872fbe52620765755f99936ae",
+          "humanizer_review": "completed",
+          "factual_audit": "core_foundry_history_and_2025_reporting_checked",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_06.txt",
+          "title": "Chip per gli altri",
+          "words": 1638,
+          "estimated_minutes": 14,
+          "reduction_percent": 44.4,
+          "sha256": "68382aa864c0f15d7823cbc5ea689d6ebd4725cf03049596093e7cb59cd80b14",
+          "humanizer_review": "completed",
+          "factual_audit": "core_foundry_history_and_2025_reporting_checked",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_06.txt",
+          "title": "Brikker for andre",
+          "words": 1542,
+          "estimated_minutes": 13,
+          "reduction_percent": 47.7,
+          "sha256": "b00e37a409874afb4fe101ff998cdc0be6c2068118c40ca7cbeb5c3dcef363d4",
+          "humanizer_review": "completed",
+          "factual_audit": "core_foundry_history_and_2025_reporting_checked",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_06.txt",
+          "title": "Chips para os outros",
+          "words": 1691,
+          "estimated_minutes": 15,
+          "reduction_percent": 42.6,
+          "sha256": "cb08643b244814f96120786284f3671b46bbc6b36673365ae43c5521360e3001",
+          "humanizer_review": "completed",
+          "factual_audit": "core_foundry_history_and_2025_reporting_checked",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://investor.tsmc.com/static/annualReports/1998/html/intro.htm",
+          "https://www.semi.org/en/Oral-History-Interview-Morris-Chang",
+          "https://investor.tsmc.com/static/annualReports/2025/english/index.html",
+          "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+          "https://prpoc.cld.tsmc.com/english/news/3210",
+          "https://www.commerce.gov/news/blog/2022/01/results-semiconductor-supply-chain-request-information",
+          "https://www.annualreports.com/HostedData/AnnualReportArchive/a/NASDAQ_ASML_2021.pdf"
+        ],
+        "corrections": [
+          "Removed advertisements, fabricated dialogue, insults and unsupported personal motives",
+          "Removed all chips/one building monopoly claims and unqualified foundry market shares",
+          "Distinguished process generation labels from physical dimensions and whole chip size",
+          "Removed dubious Apple transition dates, customer spending totals and automatic competitive superiority claims",
+          "Pandemic shortage described across supply chain, inventory figures scoped to responding buyers and highlighted products",
+          "No prediction that semiconductor importance prevents invasion or that occupation transfers manufacturing capability",
+          "Updated dated Arizona 65 billion plan to March 2025 announced total 165 billion, clearly a plan rather than completed spending",
+          "Dated two nanometre volume production to company 2025 reporting, not an undated current claim"
+        ],
+        "remaining": "Core company history and selected production claims supported by primary material. Biographical outline also follows supplied transcript. No exhaustive independent performance, market share or geopolitical forecast verification claimed."
+      }
+    },
+    {
+      "id": "video_07",
+      "source_number": 7,
+      "source_file": "sources/video_07.txt",
+      "source_words": 1336,
+      "source_sha256": "04681049d5325e65ee6be92b5ffbbd2e0908f37b6acc903bab7b6fed793788ce",
+      "opening": "\"It's 2008. The financial system was imploding. Sir, Lemon Brothers just collapsed. The Fed's emergency line is busy. Relax, people. My bonus is guaranteed. Sir",
+      "target_words_after_reduction": [
+        668,
+        1069
+      ],
+      "ten_minutes_at_120wpm_possible": false,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Wirtschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_07.txt",
+          "title": "Money without a bank",
+          "words": 977,
+          "estimated_minutes": 9,
+          "reduction_percent": 26.9,
+          "sha256": "d4a932d34c63b67bcb58b9ceb7584989914d60da79bdf74990517eabc27402b3",
+          "humanizer_review": "completed",
+          "factual_audit": "core_protocol_and_2025_policy_corrections_checked",
+          "app_integration": "pending",
+          "length_note": "Source only 1336 words. A reduction of at least 20 percent caps adaptation at 1068 words, below 1200 words for ten minutes at 120 wpm. Preserve real reduction and report actual shorter duration; generic validator still flags the conflict."
+        },
+        "es": {
+          "file": "es/video_07.txt",
+          "title": "Dinero sin un banco",
+          "words": 983,
+          "estimated_minutes": 9,
+          "reduction_percent": 26.4,
+          "sha256": "429f90018f0cef1e3a8125bda930035f4a0f83a3ab760b70bd1ac4570aa6c88e",
+          "humanizer_review": "completed",
+          "factual_audit": "core_protocol_and_2025_policy_corrections_checked",
+          "app_integration": "pending",
+          "length_note": "Source only 1336 words. A reduction of at least 20 percent caps adaptation at 1068 words, below 1200 words for ten minutes at 120 wpm. Preserve real reduction and report actual shorter duration; generic validator still flags the conflict."
+        },
+        "it": {
+          "file": "it/video_07.txt",
+          "title": "Denaro senza una banca",
+          "words": 961,
+          "estimated_minutes": 9,
+          "reduction_percent": 28.1,
+          "sha256": "802c26f740f4ec0b053ac28b20ff56f21ff79429f78d8d27d5b158042edd0708",
+          "humanizer_review": "completed",
+          "factual_audit": "core_protocol_and_2025_policy_corrections_checked",
+          "app_integration": "pending",
+          "length_note": "Source only 1336 words. A reduction of at least 20 percent caps adaptation at 1068 words, below 1200 words for ten minutes at 120 wpm. Preserve real reduction and report actual shorter duration; generic validator still flags the conflict."
+        },
+        "nb": {
+          "file": "nb/video_07.txt",
+          "title": "Penger uten en bank",
+          "words": 922,
+          "estimated_minutes": 8,
+          "reduction_percent": 31.0,
+          "sha256": "cf9a2be3af3d8bf43a7ad7c872da4ef1dac0e50505cc4dc53fcce9bbce7edb84",
+          "humanizer_review": "completed",
+          "factual_audit": "core_protocol_and_2025_policy_corrections_checked",
+          "app_integration": "pending",
+          "length_note": "Source only 1336 words. A reduction of at least 20 percent caps adaptation at 1068 words, below 1200 words for ten minutes at 120 wpm. Preserve real reduction and report actual shorter duration; generic validator still flags the conflict."
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_07.txt",
+          "title": "Dinheiro sem um banco",
+          "words": 973,
+          "estimated_minutes": 9,
+          "reduction_percent": 27.2,
+          "sha256": "2d2c616747e7845bfb5c5a5da3ed2a3484afd275c7cb8f3552c0c68a4ecd9c8b",
+          "humanizer_review": "completed",
+          "factual_audit": "core_protocol_and_2025_policy_corrections_checked",
+          "app_integration": "pending",
+          "length_note": "Source only 1336 words. A reduction of at least 20 percent caps adaptation at 1068 words, below 1200 words for ten minutes at 120 wpm. Preserve real reduction and report actual shorter duration; generic validator still flags the conflict."
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://bitcoin.org/bitcoin.pdf",
+          "https://bitcoin.org/en/faq",
+          "https://www.imf.org/en/news/articles/2025/02/26/pr25043-el-salvador-imf-approves-new-40-month-us1-bn-eff-arr"
+        ],
+        "corrections": [
+          "Removed fictional dialogue, investment promises, price targets and stale pizza valuation",
+          "Ledger is costly to rewrite, not unhackable; consensus attacks distinguished from theft of arbitrary coins",
+          "Mining subsidy distinct from transaction fees; halvings occur by block height, approximately every four years",
+          "Supply cap does not guarantee stable purchasing power or returns",
+          "El Salvador 2021 adoption distinguished from 2025 voluntary acceptance reforms",
+          "No claim of universally instant free remittances or completed Bitcoin city",
+          "Founder has no unilateral control; governance not unanimous worldwide voting",
+          "Removed exaggerated quantum claims and unsupported cryptocurrency user totals"
+        ]
+      }
+    },
+    {
+      "id": "video_08",
+      "source_number": 8,
+      "source_file": "sources/video_08.txt",
+      "source_words": 2186,
+      "source_sha256": "f5cfccd6453c55a5d75f6148f6606a44b2bf3b3a7a1a019caff7e36c2b1ed870",
+      "opening": "\"Harry Potter, Game of Thrones, Batman, Superman, Bugs Bunny, and CNN all just got a new owner. And the company that bought them was worth about a tenth of the ",
+      "target_words_after_reduction": [
+        1093,
+        1749
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "outputs": {
+        "en": {
+          "file": "en/video_08.txt",
+          "title": "Buying Hollywood",
+          "words": 1300,
+          "estimated_minutes": 11,
+          "reduction_percent": 40.5,
+          "sha256": "0a92b56b8aa74b3578f1260d3fb84e3cf3a3cd68a21ac704d0528abf569e07c9",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_08.txt",
+          "title": "La compra de Hollywood",
+          "words": 1399,
+          "estimated_minutes": 12,
+          "reduction_percent": 36.0,
+          "sha256": "4b736725be34badfd8f5b7c787cc1c8166210781eca3bfbbff807f3c7128e7e1",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_08.txt",
+          "title": "Comprare Hollywood",
+          "words": 1379,
+          "estimated_minutes": 12,
+          "reduction_percent": 36.9,
+          "sha256": "86efdf76337660e3d2a7ad30183911f8fc8aa12ab9a3b72965d7e2c3768b7606",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_08.txt",
+          "title": "Kjøpet av Hollywood",
+          "words": 1311,
+          "estimated_minutes": 11,
+          "reduction_percent": 40.0,
+          "sha256": "bcf81a676b64e37d7a09675e353ef52cdb4c34663c79d0e64f7a5789844bf62b",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_08.txt",
+          "title": "A compra de Hollywood",
+          "words": 1412,
+          "estimated_minutes": 12,
+          "reduction_percent": 35.4,
+          "sha256": "c1f3bb868587772cb18e4db130c88cd65d39337d257b52433a35d1249f42bd0a",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "historical_cutoff": "2026-10-06",
+        "status": "partial_primary_sources",
+        "corrections": [
+          "Corrected equity financing from 4.7 billion to 47 billion dollars.",
+          "Distinguished enterprise value, equity purchase price, financing commitments and existing debt.",
+          "Confirmed October 6 closing separately from February signing and September anticipated date.",
+          "Removed unverified detailed court settlement, voting ownership percentages, investor allocations, compensation and awards claims.",
+          "Corrected absolute claims that nobody buys with own funds and that only the target repays the loans.",
+          "Presented savings as management targets rather than guaranteed results."
+        ],
+        "references": [
+          "https://ir.paramount.com/news-releases/news-release-details/paramount-completes-acquisition-warner-bros-discovery-creating",
+          "https://www.sec.gov/Archives/edgar/data/2041610/000110465926113913/tm2626659d7_8k.htm",
+          "https://ir.paramount.com/news-releases/news-release-details/paramount-acquire-warner-bros-discovery-form-next-generation/",
+          "https://about.netflix.com/en/news/netflix-declines-to-raise-offer-for-warner-bros",
+          "https://www.wbd.com/news/warner-bros-discovery-separate-two-leading-media-companies"
+        ]
+      }
+    },
+    {
+      "id": "video_09",
+      "source_number": 9,
+      "source_file": "sources/video_09.txt",
+      "source_words": 1986,
+      "source_sha256": "e0484abfb38f6ba40f6b74c7704cb891703202e13729a68ca116fb90cd40e71e",
+      "opening": "\"In April 2026, a barrel of jet fuel cost 188 dollars, almost twice what it had cost five months earlier. Within weeks, Spirit Airlines, the American budget air",
+      "target_words_after_reduction": [
+        993,
+        1589
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "outputs": {
+        "en": {
+          "file": "en/video_09.txt",
+          "title": "Full planes, thin profits",
+          "words": 1324,
+          "estimated_minutes": 12,
+          "reduction_percent": 33.3,
+          "sha256": "c19173184bb4db0460455160113c673cb4d1d53a28c26171b0e42d0b98719970",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_09.txt",
+          "title": "Volar con poco margen",
+          "words": 1388,
+          "estimated_minutes": 12,
+          "reduction_percent": 30.1,
+          "sha256": "954c92e4790af3e1a8ed1d7d9e3020fcb2264b6623e9c9ca481d3b286425c6fe",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_09.txt",
+          "title": "Volare con poco margine",
+          "words": 1348,
+          "estimated_minutes": 12,
+          "reduction_percent": 32.1,
+          "sha256": "73438209e96f03d92ec317499281c7a576e5c821e935acfded6b35cabaafeb51",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_09.txt",
+          "title": "Fulle fly, små marginer",
+          "words": 1260,
+          "estimated_minutes": 11,
+          "reduction_percent": 36.6,
+          "sha256": "0dcdbae8da2721a18d1772f4270536f8afb2280285912cb45c9954ae1fb20a28",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_09.txt",
+          "title": "Voar com pouca margem",
+          "words": 1380,
+          "estimated_minutes": 12,
+          "reduction_percent": 30.5,
+          "sha256": "bbe746776d3d9ce343011cc1e10545c665067a6e57760ae875e4a4ccebc54dcf",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "historical_cutoff": "2026-06-30",
+        "status": "partial_primary_sources",
+        "corrections": [
+          "June IATA outlook is a forecast, not final annual results or every individual airline profit. Previous 2026 forecast was 41 billion, not 2025 estimate of 45 billion.",
+          "Total industry revenue per passenger is not average ticket price because cargo and ancillary income are included.",
+          "Omitted unverified individual airline bankruptcies, bailout negotiations, exact fuel quotes and airline failure totals.",
+          "Removed universal five percent maximum margin and claims that only state backed airlines survive.",
+          "Distinguished reorganisation from shutdown and fuel pressures from sole cause of Spirit failure.",
+          "Explained limits and downside of hedging and refinery ownership.",
+          "Deregulation was phased and retained safety regulation.",
+          "Government loans and equity are not necessarily permanent subsidies; included Lufthansa repayment and state exit."
+        ],
+        "references": [
+          "https://www.iata.org/en/pressroom/2026-releases/06-07-middle-east-disruptions-high-fuel-prices-halve-airline-industry-profitability",
+          "https://www.iata.org/en/publications/economics/reports/global-outlook-for-air-transport-june-2026/",
+          "https://www.spiritrestructuring.com/resources/Spirit-Airlines-Begins-Orderly-Wind-Down-of-Operations.pdf",
+          "https://investor.ryanair.com/wp-content/uploads/2026/06/20F-Statement-2026.pdf",
+          "https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/faa-h-8083-25c.pdf",
+          "https://www.monroe-energy.com/why-monroe-energy/",
+          "https://newsroom.lufthansagroup.com/en/stabilization-of-deutsche-lufthansa-ag-successfully-completed/"
+        ]
+      }
+    },
+    {
+      "id": "video_10",
+      "source_number": 10,
+      "source_file": "sources/video_10.txt",
+      "source_words": 5391,
+      "source_sha256": "2db43b6367cb3ba11a638f96ef72a8f09409817b5b541c2f8281a0d4202a5ab3",
+      "opening": "\"- Watch what happens if you take a credit card and stick it in a beaker of acetone. - Nail polish remover basically? - Nail polish remover. - Okay. - [Henry] I",
+      "target_words_after_reduction": [
+        2696,
+        4313
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "outputs": {
+        "en": {
+          "file": "en/video_10.txt",
+          "title": "Inside a payment card",
+          "words": 2716,
+          "estimated_minutes": 23,
+          "reduction_percent": 49.6,
+          "sha256": "7b8057699fd8929d9cbb76074c485b1b5e0d3883764d3e023d28e4df0c781168",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_10.txt",
+          "title": "Dentro de una tarjeta",
+          "words": 2732,
+          "estimated_minutes": 23,
+          "reduction_percent": 49.3,
+          "sha256": "b9f0602d4c0357ef1022fc594af732d1dfc15d9cc95a193e66dc624de266b67c",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_10.txt",
+          "title": "Dentro una carta",
+          "words": 2698,
+          "estimated_minutes": 23,
+          "reduction_percent": 50.0,
+          "sha256": "e1c2e8e702756b5ac30917251bf051df243775bece1eb14219bae09201cb01e9",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_10.txt",
+          "title": "Inne i et betalingskort",
+          "words": 2700,
+          "estimated_minutes": 23,
+          "reduction_percent": 49.9,
+          "sha256": "c9511ef071acd76f9a86c3862667794594b10729c2285249796b2c0e8d74ab1a",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_10.txt",
+          "title": "Dentro de um cartão",
+          "words": 2755,
+          "estimated_minutes": 23,
+          "reduction_percent": 48.9,
+          "sha256": "857e1df9ea687ebd821bec54a44f7bb77554d748134b7d48c2f697678b50cd28",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "category": "Technik",
+      "fact_check": {
+        "status": "partial_primary_sources",
+        "corrections": [
+          "Topic is payment cards, not plastic chemistry; opening solvent demonstration retained only as descriptive context.",
+          "Removed sponsor, invented dialogue, operational fraud demonstrations, unverified crime anecdote and cliffhanger outcome claim.",
+          "Distinguished radio near field magnetic coupling from claim NFC is not radio.",
+          "Distinguished chip authentication, cardholder verification, bank authorization, online and offline possibilities.",
+          "Avoided claims all chip payments use PIN or cryptogram means guaranteed authorization.",
+          "Readable card details do not clone chip secrets but are not universally harmless; CVV not presented as mandatory for all online payments.",
+          "Country and issuer verification limits vary; removed unlimited US theft claim.",
+          "Mobile tokenisation and ordinary authentication distinguished from Express Mode exceptions.",
+          "Great Seal dates and magnetic stripe history checked; avoided absolute direct CIA to modern card invention chain."
+        ],
+        "references": [
+          "https://www.nsa.gov/History/National-Cryptologic-Museum/Exhibits-Artifacts/Exhibit-View/article/2718563/cold-war-great-seal/",
+          "https://www.ibm.com/history/magnetic-stripe",
+          "https://www.federalreservehistory.org/essays/electronic-point-of-sale-payments",
+          "https://www.emvco.com/emv-technologies/emv-contactless-chip/",
+          "https://nfc-forum.org/learn/nfc-technology/",
+          "https://support.apple.com/en-ie/101554",
+          "https://www.uspaymentsforum.org/wp-content/uploads/2023/03/FINAL-Device-Authentication-and-Consumer-Verification-Techniques-for-Mobile-In-App-and-Remote-Payments.pdf"
+        ]
+      }
+    },
+    {
+      "id": "video_11",
+      "source_number": 11,
+      "source_file": "sources/video_11.txt",
+      "source_words": 2130,
+      "source_sha256": "0b5796648e95db7d339909646334c254b3c834186b84d46c50fc58892a1a6937",
+      "opening": "\"The largest things in the universe are black holes. In contrast to things like planets or stars they have no physical size limit, and can literally grow endles",
+      "target_words_after_reduction": [
+        1065,
+        1704
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "outputs": {
+        "en": {
+          "file": "en/video_11.txt",
+          "title": "How black holes grow",
+          "words": 1430,
+          "estimated_minutes": 12,
+          "reduction_percent": 32.9,
+          "sha256": "7f47a835dfb3a19e4d1b06f46936ce0ab9b3a0b637d0206e792181d33802ddfe",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_11.txt",
+          "title": "Gigantes oscuros",
+          "words": 1460,
+          "estimated_minutes": 13,
+          "reduction_percent": 31.5,
+          "sha256": "f3b3969551a3addbb64b79daf0acbf3a5758835979713c0aa09ad969a4d004e8",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_11.txt",
+          "title": "Giganti oscuri",
+          "words": 1416,
+          "estimated_minutes": 12,
+          "reduction_percent": 33.5,
+          "sha256": "7d53b9760b3b3e1696a71c5976d7bda59363085b995a7b0f765d9c76a3b89689",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_11.txt",
+          "title": "Mørke kjemper",
+          "words": 1343,
+          "estimated_minutes": 12,
+          "reduction_percent": 36.9,
+          "sha256": "f58b1c69bba869ead7517d31111c1d31107fb948fedc37bb7a74c8d253caeae7",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_11.txt",
+          "title": "Gigantes escuros",
+          "words": 1440,
+          "estimated_minutes": 12,
+          "reduction_percent": 32.4,
+          "sha256": "623355e11171c4d04fcab45e429a50acd990efec93e7980a631034f613bc65e2",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "category": "Wissenschaft",
+      "fact_check": {
+        "status": "partial_primary_sources",
+        "corrections": [
+          "Removed largest object in universe claim and permanent record rankings.",
+          "Distinguished mass, idealised horizon size, shadow and accretion emission.",
+          "Primordial black holes and quasi stars explicitly hypothetical; Hawking evaporation theoretical for astrophysical objects.",
+          "Removed claimed confirmed Unicorn black hole and smallest 2.7 solar mass ranking; follow-up research supports stellar interpretation of V723 Mon.",
+          "Intermediate mass range not empty; GW190521 masses stated as uncertain 2020 analysis.",
+          "Early growth is an open research problem with multiple routes, not proof of quasi stars.",
+          "Galaxy gravity includes stars, gas and dark matter, not central hole alone or dark matter exclusively.",
+          "Removed ambiguous Solar System size comparisons and claim of a universal one-week light journey to singularity."
+        ],
+        "references": [
+          "https://science.nasa.gov/universe/black-holes/types/",
+          "https://science.nasa.gov/universe/black-holes/",
+          "https://ligo.org/detections/gw190521/",
+          "https://dcc.ligo.org/LIGO-P2000021/public",
+          "https://www.eso.org/public/images/eso1907a/",
+          "https://arxiv.org/abs/1906.11238",
+          "https://arxiv.org/abs/2203.06348"
+        ]
+      }
+    },
+    {
+      "id": "video_12",
+      "source_number": 12,
+      "source_file": "sources/video_12.txt",
+      "source_words": 2494,
+      "source_sha256": "fe9ca3d15a1612f82cbb52c8c79f03e8538202679c37b2367c18305c9fb1ee5a",
+      "opening": "\"magine you were alive back in the 1980's, and were told that computers would soon take over everything: from shopping, to dating, and the stock market, that bi",
+      "target_words_after_reduction": [
+        1247,
+        1995
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "outputs": {
+        "en": {
+          "file": "en/video_12.txt",
+          "title": "Editing life's instructions",
+          "words": 1472,
+          "estimated_minutes": 13,
+          "reduction_percent": 41.0,
+          "sha256": "5d46867ff2ac9ac9a76815eec440e1779928395f1474187f812df4e1e6386e92",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_12.txt",
+          "title": "Editar la vida",
+          "words": 1568,
+          "estimated_minutes": 14,
+          "reduction_percent": 37.1,
+          "sha256": "881296ede99f8704b44283926d0a955a1282441dcf3b147b6426c6ec6ada051b",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_12.txt",
+          "title": "Riscrivere la vita",
+          "words": 1523,
+          "estimated_minutes": 13,
+          "reduction_percent": 38.9,
+          "sha256": "9a7cb4577c9c97be033318203b18a1035ed670058c2cd74c79bba996435d100f",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_12.txt",
+          "title": "Å redigere livet",
+          "words": 1432,
+          "estimated_minutes": 12,
+          "reduction_percent": 42.6,
+          "sha256": "4bba28957197a05a471d81dba875cbe37a3c6c79425e709ce63495b305f73e58",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_12.txt",
+          "title": "Editar as instruções da vida",
+          "words": 1556,
+          "estimated_minutes": 13,
+          "reduction_percent": 37.6,
+          "sha256": "92cc6e91fd9081d00d888ae8aa3f40217c5bb1b4cc57603265fda0df6c6c638a",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "category": "Wissenschaft",
+      "fact_check": {
+        "status": "partial_primary_sources",
+        "corrections": [
+          "Actual subject is genome editing, not quantum computing.",
+          "Updated 2016 viewpoint with dated 2018 embryo-editing controversy, 2021 WHO recommendations and December 2023 FDA Casgevy milestone.",
+          "Removed universal 99 percent cost reduction, perfect-match precision and every-cell-type claims.",
+          "Explained guide RNA, repair dependence, delivery, somatic versus heritable editing and unintended outcomes.",
+          "Casgevy increases fetal haemoglobin through edited blood stem cells, not direct correction in every cell; intensive preparation and defined indication preserved.",
+          "Removed HIV/herpes confusion, unsupported cure timelines, guaranteed cancer cures and millennial lifespan predictions.",
+          "Removed unsupported prenatal termination percentage, simplistic designer-trait menu and coercive super-soldier extrapolation; disability dignity and consent preserved."
+        ],
+        "references": [
+          "https://www.nobelprize.org/uploads/2020/10/popular-chemistryprize2020.pdf",
+          "https://www.fda.gov/news-events/press-announcements/fda-approves-first-gene-therapies-treat-patients-sickle-cell-disease",
+          "https://www.fda.gov/media/175179/download",
+          "https://www.who.int/news/item/12-07-2021-who-issues-new-recommendations-on-human-genome-editing-for-the-advancement-of-public-health",
+          "https://www.unesco.org/en/articles/unesco-cautions-against-reckless-application-gene-editing"
+        ]
+      }
+    },
+    {
+      "id": "video_13",
+      "source_number": 13,
+      "source_file": "sources/video_13.txt",
+      "source_words": 1406,
+      "source_sha256": "2a1a9291823645b9b9bd43303f12129dc22765e958ce8cd35c8d944002d3bf3b",
+      "opening": "\"Playing around with nuclear weapons in videos is fun. There's a visceral joy in blowing things up, and a horrifying fascination with things like fireballs, sho",
+      "target_words_after_reduction": [
+        703,
+        1125
+      ],
+      "ten_minutes_at_120wpm_possible": false,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Wissenschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_13.txt",
+          "title": "A city after the flash",
+          "words": 1047,
+          "estimated_minutes": 9,
+          "reduction_percent": 25.5,
+          "sha256": "71b39451408c13be767e321a5ee55ee224ecb48841c94b7b59b086b8907937c2",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1406 words. At least 20 percent reduction permits at most 1124 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "es": {
+          "file": "es/video_13.txt",
+          "title": "Una ciudad tras el destello",
+          "words": 1109,
+          "estimated_minutes": 10,
+          "reduction_percent": 21.1,
+          "sha256": "ee37b4c30e397650d04d52bae4e6ecf74ec8fdc65f31c9dae87ef68f0f9b85e9",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1406 words. At least 20 percent reduction permits at most 1124 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "it": {
+          "file": "it/video_13.txt",
+          "title": "Una città dopo il lampo",
+          "words": 1075,
+          "estimated_minutes": 9,
+          "reduction_percent": 23.5,
+          "sha256": "c4c045b8c29a3593977048a3b64ab91360b5e4a824bd8110cfc55b2d59667792",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1406 words. At least 20 percent reduction permits at most 1124 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "nb": {
+          "file": "nb/video_13.txt",
+          "title": "En by etter lysglimtet",
+          "words": 1021,
+          "estimated_minutes": 9,
+          "reduction_percent": 27.4,
+          "sha256": "bec4b38899277875e94274af4255e2119fe0c34555e55dcb09a504ecbc37565e",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1406 words. At least 20 percent reduction permits at most 1124 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_13.txt",
+          "title": "Uma cidade após o clarão",
+          "words": 1088,
+          "estimated_minutes": 10,
+          "reduction_percent": 22.6,
+          "sha256": "0f57bf8f2a8e3d3cd445d0a8903575a6cb97c80a6c8ce71802a7840b1122c408",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1406 words. At least 20 percent reduction permits at most 1124 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://www.icrc.org/en/article/faq-nuclear-weapons",
+          "https://www.cdc.gov/radiation-emergencies/safety/",
+          "https://treaties.un.org/pages/ViewDetails.aspx?chapter=26&clang=_en&mtdsg_no=XXVI-9&src=TREATY"
+        ],
+        "corrections": [
+          "Removed universal blast, heat and window damage radii without specified yield and detonation conditions",
+          "Distinguished temporary vision impairment, eye injury, immediate radiation and fallout",
+          "Firestorm and black rain not inevitable in every scenario; removed universal cancer and death predictions",
+          "Inadequate humanitarian capacity does not mean no assistance or protective action is possible; included limited CDC shelter guidance",
+          "Treaty adoption in 2017 distinguished from 2021 entry into force and universal participation or completed disarmament",
+          "Removed claims about every government hiding consequences, sponsorship and direct advocacy commands"
+        ]
+      }
+    },
+    {
+      "id": "video_14",
+      "source_number": 14,
+      "source_file": "sources/video_14.txt",
+      "source_words": 1406,
+      "source_sha256": "0eea134ab7ad2bec94793d63cdc0428d5ce62599f57719164abe3f89fd6f71cd",
+      "opening": "\"Sometimes the world feels...hmm, boring. We've visited all the remote islands, conquered the Arctic, and penetrated the deepest jungles. But there is still one",
+      "target_words_after_reduction": [
+        703,
+        1125
+      ],
+      "ten_minutes_at_120wpm_possible": false,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Wissenschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_14.txt",
+          "title": "Below the last sunlight",
+          "words": 1053,
+          "estimated_minutes": 9,
+          "reduction_percent": 25.1,
+          "sha256": "d9e24d97aed520f015a5d3d4a9d2a90d58522fc7f274219e9cacd089945fc57d",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1406 words. At least 20 percent reduction permits at most 1124 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "es": {
+          "file": "es/video_14.txt",
+          "title": "Donde termina la luz",
+          "words": 1090,
+          "estimated_minutes": 10,
+          "reduction_percent": 22.5,
+          "sha256": "30fd3c36e10fd3f2a61b6ab8f43c146ec323eecaae23953028c7fda95dcbc94e",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1406 words. At least 20 percent reduction permits at most 1124 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "it": {
+          "file": "it/video_14.txt",
+          "title": "Dove finisce la luce",
+          "words": 1059,
+          "estimated_minutes": 9,
+          "reduction_percent": 24.7,
+          "sha256": "c5a8a69c7854a455d9796ec35b679a789395bd1c4fee776df22e9ba787716b51",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1406 words. At least 20 percent reduction permits at most 1124 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "nb": {
+          "file": "nb/video_14.txt",
+          "title": "Der sollyset tar slutt",
+          "words": 1041,
+          "estimated_minutes": 9,
+          "reduction_percent": 26.0,
+          "sha256": "a3e72a65637651207d92148038be2567c5a14bdf65b94209f19a5510404c0542",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1406 words. At least 20 percent reduction permits at most 1124 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_14.txt",
+          "title": "Onde termina a luz",
+          "words": 1065,
+          "estimated_minutes": 9,
+          "reduction_percent": 24.3,
+          "sha256": "ad288799209d8b00efc86ada5db9724ffd9d397392b192eb36e5f991ed54ba6f",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1406 words. At least 20 percent reduction permits at most 1124 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://oceanservice.noaa.gov/facts/light_travel.html",
+          "https://www.whoi.edu/ocean-learning-hub/ocean-topics/how-the-ocean-works/ocean-zones/",
+          "https://www.mbari.org/animal/vampire-squid/",
+          "https://www.uwa.edu.au/news/Article/2023/April/Scientists-break-new-record-after-finding-worlds-deepest-fish",
+          "https://repository.library.noaa.gov/view/noaa/33477",
+          "https://www.whoi.edu/ocean-learning-hub/ocean-topics/how-the-ocean-works/seafloor-below/hydrothermal-vents/",
+          "https://g20mpl.org/wp-content/uploads/2020/09/13_Chiba_Sanae.pdf"
+        ],
+        "corrections": [
+          "Removed unsupported universal biomass and bioluminescence percentages and pressure expressed as stacks of cars or elephants",
+          "Light zones and depth boundaries presented as approximate, not a universal route or uniform habitat",
+          "Vampire squid described as detritus feeder with filaments, not predatory catching arms",
+          "Removed claim all abyssal animals only move fast to escape danger and siphonophores kill anything nearby",
+          "Vent chemosynthesis distinguished from all animals living in hottest fluid",
+          "Snailfish observation dated to 2023 at 8336 metres; not claimed current permanent record",
+          "Challenger Deep study estimate 10935 metres dated and uncertainty acknowledged",
+          "Plastic debris evidence retained without mistaking 2018 reporting for first observation date"
+        ]
+      }
+    },
+    {
+      "id": "video_15",
+      "source_number": 15,
+      "source_file": "sources/video_15.txt",
+      "source_words": 1111,
+      "source_sha256": "d21534961c311454d5e179df213c81b8e6b90dc983537e9be9bdb66bb9a9af64",
+      "opening": "\"Neutron stars are one of the most extreme and violent things in the universe. Giant atomic nuclei, only a few kilometers in diameter, but as massive as stars. ",
+      "target_words_after_reduction": [
+        556,
+        889
+      ],
+      "ten_minutes_at_120wpm_possible": false,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Wissenschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_15.txt",
+          "title": "A star inside a city",
+          "words": 879,
+          "estimated_minutes": 8,
+          "reduction_percent": 20.9,
+          "sha256": "4cf7d5bd69e67f47922644ee374be3270eaa7b02d4c529befe173d935d187add",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1111 words. At least 20 percent reduction permits at most 888 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "es": {
+          "file": "es/video_15.txt",
+          "title": "Una estrella en una ciudad",
+          "words": 849,
+          "estimated_minutes": 8,
+          "reduction_percent": 23.6,
+          "sha256": "16ee53023539f687d906507c4b92ba8cc40e7fe6eca65c9e85d7c31e38bcdb68",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1111 words. At least 20 percent reduction permits at most 888 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "it": {
+          "file": "it/video_15.txt",
+          "title": "Una stella in una città",
+          "words": 821,
+          "estimated_minutes": 7,
+          "reduction_percent": 26.1,
+          "sha256": "9a29b1c3543fb06d99bafb5f26ead4cf531e9077ecc89cebd2fc6ff902d384e3",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1111 words. At least 20 percent reduction permits at most 888 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "nb": {
+          "file": "nb/video_15.txt",
+          "title": "En stjerne i en by",
+          "words": 792,
+          "estimated_minutes": 7,
+          "reduction_percent": 28.7,
+          "sha256": "6ccd96da9b6394972dfe6fa3c529538803bbdd5b1de2398df2e38834f174cd2d",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1111 words. At least 20 percent reduction permits at most 888 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_15.txt",
+          "title": "Uma estrela numa cidade",
+          "words": 839,
+          "estimated_minutes": 7,
+          "reduction_percent": 24.5,
+          "sha256": "1c4dd0772aed8223aea29fdb825debccd9dcb60bba66ff1e8a9eaa8f2c62c04b",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1111 words. At least 20 percent reduction permits at most 888 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://imagine.gsfc.nasa.gov/science/objects/neutron_stars1.html",
+          "https://www.esa.int/Science_Exploration/Space_Science/Neutron_stars_pulsars_and_magnetars",
+          "https://academic.oup.com/mnras/article/418/4/2343/1025648",
+          "https://doi.org/10.1103/qyqv-ldbd",
+          "https://ligo.org/science-summaries/GW170817BNS/",
+          "https://ligo.org/science-summaries/GW170817PostMerger/",
+          "https://www.eso.org/public/news/eso1917/"
+        ],
+        "corrections": [
+          "Iron fusion not energetically supportive rather than impossible; removed universal burning stage timetable",
+          "Electron capture produces neutrons and neutrinos; removed claim electrons and protons repel each other",
+          "Supernova not simply entire star bouncing off unchanged iron core; remnant composition not pure uniform neutrons",
+          "Nuclear pasta and exotic core states distinguished as theoretical models; removed unbreakable material assertion",
+          "Magnetars not mandatory young phase of all neutron stars; pulsar visibility depends on beam geometry",
+          "GW170817 dated to August 2017 and strontium evidence distinguished from all heavy elements being individually observed",
+          "Merger remnant may be prompt black hole, temporary or longer lived neutron star; not universal immediate collapse",
+          "Removed claim all technological elements originate from neutron star mergers and have identical thirteen billion year history"
+        ]
+      }
+    },
+    {
+      "id": "video_16",
+      "source_number": 16,
+      "source_file": "sources/video_16.txt",
+      "source_words": 1654,
+      "source_sha256": "f009fda471432b01f17d491e2463b92449be85e469334ea66c0869452c661834",
+      "opening": "\"today we are answering an age-old very scientific and important question what if the moon crashes into Earth it's more interesting and weird than you probably ",
+      "target_words_after_reduction": [
+        827,
+        1323
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Wissenschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_16.txt",
+          "title": "If the Moon came closer",
+          "words": 1233,
+          "estimated_minutes": 11,
+          "reduction_percent": 25.5,
+          "sha256": "2c853c60ec1e17d729163681cb2b53e95bfebfff7c5924388c44f7d332f55349",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_16.txt",
+          "title": "Si la Luna se acercara",
+          "words": 1257,
+          "estimated_minutes": 11,
+          "reduction_percent": 24.0,
+          "sha256": "64dd8d810923f10325c4f423d77ae239a0ce0dcc5065bba74f822c5dcdc38686",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_16.txt",
+          "title": "Se la Luna si avvicinasse",
+          "words": 1202,
+          "estimated_minutes": 11,
+          "reduction_percent": 27.3,
+          "sha256": "f15f3a073f07444e29ed851f01efb03cd8005b516f40d4f79a4ad141fab7ffd4",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_16.txt",
+          "title": "Hvis månen kom nærmere",
+          "words": 1216,
+          "estimated_minutes": 11,
+          "reduction_percent": 26.5,
+          "sha256": "c37c523d7efe3399e71ede585e46ed98995def40cc8f7e3439f913dfc98dc799",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_16.txt",
+          "title": "Se a Lua chegasse mais perto",
+          "words": 1260,
+          "estimated_minutes": 11,
+          "reduction_percent": 23.8,
+          "sha256": "ac88b386cbf07eff40f63a36083c07825be8a463e89c348383096f63dc706cf6",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html",
+          "https://science.nasa.gov/moon/top-moon-questions/",
+          "https://oceanservice.noaa.gov/education/tutorial_tides/tides02_cause.html",
+          "https://oceanservice.noaa.gov/facts/highesttide.html",
+          "https://science.nasa.gov/learn/basics-of-space-flight/chapter5-1/",
+          "https://science.nasa.gov/mission/cassini/faq/"
+        ],
+        "corrections": [
+          "Explicit thought experiment; real Moon recedes about 3.8 cm yearly",
+          "One speed change does not imply prescribed one-year inward spiral; sustained energy and angular momentum changes required",
+          "Removed unsupported monthly distances, universal tide heights, displacement totals and satellite failure dates",
+          "Inverse cube tidal approximation distinguished from local water levels; solid Earth tides not delayed until oceans reach maximum",
+          "No fixed list of volcano eruptions or guaranteed global climate trajectory",
+          "Geosynchronous period distinguished from geostationary circular equatorial geometry; rotation feedback acknowledged",
+          "Roche disruption described through differential gravity, structure and strength rather than total Earth pull exceeding lunar gravity",
+          "Lunar fragmentation does not eliminate debris gravity or impact hazard; rings and final survival not guaranteed"
+        ]
+      }
+    },
+    {
+      "id": "video_17",
+      "source_number": 17,
+      "source_file": "sources/video_17.txt",
+      "source_words": 1923,
+      "source_sha256": "05c145c757f7c163e1af1ac71c2854557768f1f32db9bd09411fd4ee137126f3",
+      "opening": "\"Walmart in den USA reihenweise schließt, eröffnet all die 150 neue Filialen im Jahr. Wie kann das sein? Wie kann das deutsche Kultunternehmen aus Essen die USA",
+      "target_words_after_reduction": [
+        962,
+        1538
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Wirtschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_17.txt",
+          "title": "Why a smaller shop can win",
+          "words": 1281,
+          "estimated_minutes": 11,
+          "reduction_percent": 33.4,
+          "sha256": "4c0e5050ba11bcf66f0208a8f705fea3ca130ada6829fb7e54ca0d3ec1688c6f",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_17.txt",
+          "title": "La ventaja de una tienda pequeña",
+          "words": 1265,
+          "estimated_minutes": 11,
+          "reduction_percent": 34.2,
+          "sha256": "866565ba7f77f82f2e845479cc0020a77132dd8f9a7116eb496cb4270c123ffc",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_17.txt",
+          "title": "La forza del negozio piccolo",
+          "words": 1240,
+          "estimated_minutes": 11,
+          "reduction_percent": 35.5,
+          "sha256": "dec932d148844a834b0884dc186f509de86c2bb0808e199fe89e70bbc5b95e34",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_17.txt",
+          "title": "Fordelen med en liten butikk",
+          "words": 1237,
+          "estimated_minutes": 11,
+          "reduction_percent": 35.7,
+          "sha256": "068a907a8d90a1308abda175806886c5e118cc02e759c2bbe9aa05ec89c29a70",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_17.txt",
+          "title": "A força de uma loja pequena",
+          "words": 1276,
+          "estimated_minutes": 11,
+          "reduction_percent": 33.6,
+          "sha256": "3c520ab2eeadaad5c0928fcfb91a43b6858598a9f21847a59a13d06e976eab32",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://www.hofer.at/ueber-hofer/unternehmen/hofer-geschichte",
+          "https://corporate.aldi.us/about-us/aldi-history",
+          "https://corporate.aldi.us/suppliers/become-a-supplier",
+          "https://help.aldi.us/faqs/article/About-ALDI-U-S---FAQs",
+          "https://corporate.aldi.us/newsroom/news/aldi-us-doubles-down-on-growth-in-2026",
+          "https://corporate.walmart.com/news/2024/01/31/investing-in-america-walmart-announces-new-stores-more-jobs",
+          "https://www.prnewswire.com/news-releases/mark-your-calendar-lidl-to-open-first-us-stores-on-thursday-june-15-300459202.html",
+          "https://www.traderjoes.com/home/FAQ/general-faqs"
+        ],
+        "corrections": [
+          "Hofer entry corrected to 1968; unsupported Benner acquisition details and exact warehouse impact omitted",
+          "Cigarette dispute presented as repeated anecdote rather than sole proven cause of division",
+          "Removed unsupported historical revenue estimates and all-store fixed price advantage",
+          "Private label does not mean retailer manufactures everything or every supply chain loses one intermediary",
+          "Lidl 100 stores was a future target, not opening-day total",
+          "Walmart expansion plans contradict framing that it only closes while Aldi expands",
+          "January 2026 Aldi target nearly 2800 by year end distinguished from claimed April completed count; 3200 by 2028 remains plan",
+          "Trader Joes independent family ownership connection to Aldi Nord distinguished from Aldi Sud US business",
+          "Inflation rate distinguished from price level; economic pressure not sole proven expansion cause"
+        ]
+      }
+    },
+    {
+      "id": "video_18",
+      "source_number": 18,
+      "source_file": "sources/video_18.txt",
+      "source_words": 1245,
+      "source_sha256": "4a06288ce14fdc58480727c8e8de1491c4fed00a6956990804eef45511e8b6de",
+      "opening": "\"Für dich und mich ist es eine ganz normale Pizza für 20 €. Kan aber wird ein brutales Geschäft. Für diese Pizza könntest du ja nur 8 € bezahlen. Für den Moment",
+      "target_words_after_reduction": [
+        622,
+        996
+      ],
+      "ten_minutes_at_120wpm_possible": false,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Wirtschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_18.txt",
+          "title": "The price after checkout",
+          "words": 931,
+          "estimated_minutes": 8,
+          "reduction_percent": 25.2,
+          "sha256": "341c5733d9a01e3eace17e52626d80d844f7ca2dba08f370ee948c67273797dc",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1245 words. At least 20 percent reduction permits at most 996 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "es": {
+          "file": "es/video_18.txt",
+          "title": "El precio después de comprar",
+          "words": 931,
+          "estimated_minutes": 8,
+          "reduction_percent": 25.2,
+          "sha256": "73cab7c81d1c6e74f7517ce64e82b65b5484d84afa7f2394291504a9921e4708",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1245 words. At least 20 percent reduction permits at most 996 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "it": {
+          "file": "it/video_18.txt",
+          "title": "Il prezzo dopo l'acquisto",
+          "words": 902,
+          "estimated_minutes": 8,
+          "reduction_percent": 27.6,
+          "sha256": "68bd0ef678ca5a6bf488c0fb4f58535e8fb6d4d58cbffd0d40a3a3c9c67bbae9",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1245 words. At least 20 percent reduction permits at most 996 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "nb": {
+          "file": "nb/video_18.txt",
+          "title": "Prisen etter kjøpet",
+          "words": 861,
+          "estimated_minutes": 8,
+          "reduction_percent": 30.8,
+          "sha256": "781cfb629572e591a5f652f9b1c61f88b1dbeed984b2be25213a7c7de1080ab4",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1245 words. At least 20 percent reduction permits at most 996 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_18.txt",
+          "title": "O preço depois da compra",
+          "words": 928,
+          "estimated_minutes": 8,
+          "reduction_percent": 25.5,
+          "sha256": "9c517d66bc05b23610929f1bcf08dde1104fca8c1e1848a71f90a600b2fb96e3",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 1245 words. At least 20 percent reduction permits at most 996 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://www.klarna.com/international/about-us/",
+          "https://owp.klarna.com/legacy/assets/2020/04/Klarna_Bank_AB_publ_Annual_Report_2019_EN.pdf",
+          "https://www.sec.gov/Archives/edgar/data/2003292/000200329226000007/klar-20251231.htm",
+          "https://www.consumerfinance.gov/data-research/research-reports/consumer-use-of-buy-now-pay-later-and-other-unsecured-debt/",
+          "https://www.federalreserve.gov/econres/notes/feds-notes/buy-now-pay-later-beyond-pay-in-4-a-comprehensive-product-overview-20260605.html",
+          "https://docs.klarna.com/assets/objects/50b29802-9a14-4cd1-9f9c-fe78381d744a/FAQ_%20Financing%202_FiSC.pdf",
+          "https://www.schufa.de/faq/privatpersonen/scoring/welche-daten-nutzt-die-schufa-zur-berechnung-von-scores.jsp"
+        ],
+        "corrections": [
+          "Corrected company name and Sofort acquisition year to 2014; banking licence dated 2017",
+          "Payment processing, transaction volume, loan balances and revenue distinguished",
+          "No universal interest rate, credit-check scope or credit-score consequence across markets/products",
+          "Removed gendered borrower caricatures and claims viral debt posts establish broad default trend",
+          "Credit loss provision distinguished from final realised defaults; annualisation not forecast",
+          "Consumer deposits acknowledged in funding; unsupported 380 million insolvency claim removed",
+          "No claim payment-processing popularity guarantees solvency; liquidity and capital need separate evidence"
+        ]
+      }
+    },
+    {
+      "id": "video_19",
+      "source_number": 19,
+      "source_file": "sources/video_19.txt",
+      "source_words": 955,
+      "source_sha256": "4781206de0ddf98ecd8679ad58f72eb82a503a7556222afd6cf6debeee0683d9",
+      "opening": "\"Bundesbank Deutsche Postbank der DZ Bank. Wieder ein lehrer Tatort. Keine Diebe, keine Beute. Nur noch ein weiterer zerstörter Geldautomat. Scheinbar Alltag in",
+      "target_words_after_reduction": [
+        478,
+        764
+      ],
+      "ten_minutes_at_120wpm_possible": false,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Gesellschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_19.txt",
+          "title": "When the cash machine disappears",
+          "words": 678,
+          "estimated_minutes": 6,
+          "reduction_percent": 29.0,
+          "sha256": "75ef2c3a64259aa14c9cc3e1a4a2de2f6cca32f117cef20baa4c778d038008ac",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 955 words. At least 20 percent reduction permits at most 764 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "es": {
+          "file": "es/video_19.txt",
+          "title": "Cuando desaparece el cajero",
+          "words": 699,
+          "estimated_minutes": 6,
+          "reduction_percent": 26.8,
+          "sha256": "f1bbf619f0a653fdb9f4bfb28f2b32817f965ae3f0a605123fde8ee9ca797a60",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 955 words. At least 20 percent reduction permits at most 764 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "it": {
+          "file": "it/video_19.txt",
+          "title": "Quando scompare il bancomat",
+          "words": 678,
+          "estimated_minutes": 6,
+          "reduction_percent": 29.0,
+          "sha256": "cd62701db8b78f70e18b1f775f068776de9765c107936a708f4590f4846108a9",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 955 words. At least 20 percent reduction permits at most 764 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "nb": {
+          "file": "nb/video_19.txt",
+          "title": "Når minibanken forsvinner",
+          "words": 645,
+          "estimated_minutes": 6,
+          "reduction_percent": 32.5,
+          "sha256": "e13ce05912ce214ed9525dab05889670c86af606f9477b43fa7d7da9b7932041",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 955 words. At least 20 percent reduction permits at most 764 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_19.txt",
+          "title": "Quando o caixa desaparece",
+          "words": 689,
+          "estimated_minutes": 6,
+          "reduction_percent": 27.9,
+          "sha256": "185fb95cad5af5ad7286248e27e8188dc155604b8abd61d37141fa398253d18c",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source only 955 words. At least 20 percent reduction permits at most 764 words, below 1200 for ten minutes at 120 wpm. Preserve real reduction and report shorter duration; generic validator retains conflict."
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://www.presseportal.de/blaulicht/pm/7/5556149",
+          "https://www.bka.de/SharedDocs/Kurzmeldungen/DE/Kurzmeldungen/240828_BLBGeldautomaten2023.html",
+          "https://www.bundesbank.de/resource/blob/934826/cf30c0491030c0c6eab3d341d1990e12/mL/zahlungsverhalten-in-deutschland-2023-data.pdf",
+          "https://www.justiz.bayern.de/presse-und-medien/pressemitteilungen/archiv/2023/23.php",
+          "https://dserver.bundestag.de/btd/20/126/2012677.pdf"
+        ],
+        "corrections": [
+          "Actual topic is ATM explosive attacks, not ordinary branch closures",
+          "2022 total 496 includes attempted and completed attacks; 2023 total 461, no assertion of uninterrupted growth",
+          "2023 cash transaction share distinguished from value share, explicitly historical",
+          "Removed operational attack and evasion sequence, unsupported equipment percentage and universal theft proceeds",
+          "Removed nationality, poverty and youth stereotypes and Netherlands safe-haven claim; cross-border enforcement acknowledged",
+          "Cash protection does not guarantee physical safety; site-specific combined prevention and cash access tradeoff explained"
+        ]
+      }
+    },
+    {
+      "id": "video_20",
+      "source_number": 20,
+      "source_file": "sources/video_20.txt",
+      "source_words": 2823,
+      "source_sha256": "089375ce8a4885c8422255740d37d12d49edecf5393161bab5470f9d54772bc2",
+      "opening": "\"$500,000. That's what Marvel paid Robert Downey Jr. to play Iron Man in 2008. 11 years later, Marvel gave him one of the greatest endings in cinema history, an",
+      "target_words_after_reduction": [
+        1412,
+        2258
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Kultur",
+      "outputs": {
+        "en": {
+          "file": "en/video_20.txt",
+          "title": "The price of a comeback",
+          "words": 1546,
+          "estimated_minutes": 13,
+          "reduction_percent": 45.2,
+          "sha256": "bf59578cf347aa4d456eca1a8c9a79ea153699bb2555e6f0374c32a1ca3a64d4",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_20.txt",
+          "title": "El precio de volver",
+          "words": 1571,
+          "estimated_minutes": 14,
+          "reduction_percent": 44.3,
+          "sha256": "54fec9183eee4f08cd18fb62d08a0787eb945a689d408e1e1bad22e65a7d60e7",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_20.txt",
+          "title": "Il prezzo di un ritorno",
+          "words": 1520,
+          "estimated_minutes": 13,
+          "reduction_percent": 46.2,
+          "sha256": "5d9efe6da775513025c92b22aa33fecc6fb656d048269c735f2dfd1454d31337",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_20.txt",
+          "title": "Prisen for å komme tilbake",
+          "words": 1514,
+          "estimated_minutes": 13,
+          "reduction_percent": 46.4,
+          "sha256": "a4478234afb909da00ff75226d750309b93903460d6d1c189697bf5734f54f35",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_20.txt",
+          "title": "O preço de uma volta",
+          "words": 1544,
+          "estimated_minutes": 13,
+          "reduction_percent": 45.3,
+          "sha256": "d344f61f2aad2421d957ddb7a54050d16d1bee8afe0d3c119efa0c08456c9c22",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://thewaltdisneycompany.com/news/marvel-studios-announces-robert-downey-jr-and-the-russo-brothers-to-return-for-avengers-doomsday/",
+          "https://www.bafta.org/awards/film/?award-year=1993",
+          "https://www.sec.gov/Archives/edgar/data/933730/000111667905002263/m8k.htm",
+          "https://thewaltdisneycompany.com/press-releases/disney-to-acquire-marvel-entertainment/",
+          "https://www.gq.com/story/robert-downey-jr-profile-may-2013",
+          "https://www.oscars.org/oscars/ceremonies/2024",
+          "https://www.televisionacademy.com/shows/sympathizer"
+        ],
+        "corrections": [
+          "Doom casting and Russo return dated to July 2024 official announcement; casting alone does not establish Tony Stark multiverse theory",
+          "Removed unverified 100 million guarantee and exact salary comparisons; GQ direct interview supports approximate Avengers 50 million only",
+          "No universal first-dollar gross claim, ownership of Iron Man claim, or assertion every production loss covered by insurance",
+          "2005 financing distinguished from simple corporate loan secured on all Marvel characters; 2009 acquisition announcement valued approximately four billion",
+          "Removed ten-billion personal climate investment, net-worth estimates and speculative asset arithmetic",
+          "Removed unverified 2026 film grosses, trailer view records, changed dialogue conspiracy and release schedule claims",
+          "Awards checked: Chaplin BAFTA 1993, Oppenheimer supporting actor Oscar 2024, Sympathizer Emmy nomination 2024",
+          "No exact sobriety date or current-health guarantee; addiction and employment history presented without sensational detail",
+          "Reported actor compensation, worldwide box office, studio receipts and estimated profit distinguished"
+        ]
+      }
+    },
+    {
+      "id": "video_21",
+      "source_number": 21,
+      "source_file": "sources/video_21.txt",
+      "source_words": 3081,
+      "source_sha256": "dbd05439baf096442a17853623d23319f002ff2e0176bb520531c41100eaef4f",
+      "opening": "\"Jeff Bezos is back. [music] After a near 5-year hiatus, he's trying to tackle one single problem. The global manufacturing market is $16.8 [music] trillion, bu",
+      "target_words_after_reduction": [
+        1540,
+        2465
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Technik",
+      "outputs": {
+        "en": {
+          "file": "en/video_21.txt",
+          "title": "Can AI shorten invention?",
+          "words": 1627,
+          "estimated_minutes": 14,
+          "reduction_percent": 47.2,
+          "sha256": "4e1732bc50d4001299498bd6326c92bb18a5093d18d0eba5094ae7d76571a3a1",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_21.txt",
+          "title": "Inventar con ayuda de la IA",
+          "words": 1658,
+          "estimated_minutes": 14,
+          "reduction_percent": 46.2,
+          "sha256": "ccde94771e2cfc2f3a548d615b97e2a12662c1a6314f4ac4b566c4a1885ccc8a",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_21.txt",
+          "title": "Inventare con l'IA",
+          "words": 1601,
+          "estimated_minutes": 14,
+          "reduction_percent": 48.0,
+          "sha256": "9cacf054907c418ee88b19e41ba15edea24d0b8d11c698a4f1ae85f16a8da238",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_21.txt",
+          "title": "Oppfinnelser med KI",
+          "words": 1570,
+          "estimated_minutes": 14,
+          "reduction_percent": 49.0,
+          "sha256": "05319fa32c871185a63ed26f52efb7c1efb689550d2f37aaa848502d587c42c1",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_21.txt",
+          "title": "Inventar com ajuda da IA",
+          "words": 1655,
+          "estimated_minutes": 14,
+          "reduction_percent": 46.3,
+          "sha256": "5575b0d49414c9fbdd39e99aded241313abf8dd61469c509f41944826bdf753b",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://pressroom.versantmedia.com/cnbc/press-releases/cnbc-exclusive-transcript-prometheus-co-founders-and-co-ceos-jeff-bezos-and-vik",
+          "https://www.axios.com/newsletters/axios-pro-rata-c007d2f6-d2d2-41cc-96e2-ea8c5b760f11",
+          "https://materialsdata.nist.gov/",
+          "https://www.nist.gov/publications/credibility-consideration-digital-twins-manufacturing",
+          "https://www.jpmorganchase.com/newsroom/press-releases/2025/jpmc-security-resiliency-initiative",
+          "https://www.jpmorgan.com/about-us/security-and-resiliency",
+          "https://www.faa.gov/newsroom/how-it-works-aircraft-certification",
+          "https://www.worldlabs.ai/blog/funding-2026"
+        ],
+        "corrections": [
+          "Bezos explicitly rejected robots/world-model description in CNBC June 11 2026 interview; do not invent undisclosed technical architecture",
+          "Name corrected to Vik Bajaj; engineering ambition distinguished from verified performance",
+          "June 2026 financing and valuation separated; reported 100 billion acquisition vehicle remains separate unconfirmed target, not completed funding or purchases",
+          "Removed unverified global market size/AI penetration and no-product therefore no-revenue inference",
+          "Public materials datasets exist; proprietary manufacturing records still require context, rights and preparation",
+          "Simulation is assumption-dependent, not data from nothing; validation and uncertainty required",
+          "Partnerships need not conceal all failures; factory ownership not automatic access to clean useful data or guaranteed profitability",
+          "JPMorgan 1.5 trillion ten-year initiative is mixed financing/facilitation/investment, not cash fund for Prometheus; 10 billion equity subset and advisory link distinguished",
+          "Certification protects safety rather than existing to move slowly; AI design does not waive compliance evidence",
+          "World Labs February funding and Marble product presented as related but not identical approach; removed unsupported competitor valuation race",
+          "No guaranteed AI scaling returns, tenfold project improvement or universal job creation via Jevons paradox"
+        ]
+      }
+    },
+    {
+      "id": "video_22",
+      "source_number": 22,
+      "source_file": "sources/video_22.txt",
+      "source_words": 4479,
+      "source_sha256": "aa1ef3e69a9646e1cda277c09534af590521afc0a82506708739ccee8bc13271",
+      "opening": "\"(Düstere Klänge) \"Der bayerische Innenminister hat hier schon gesagt, es seien durchaus harte Strafen gegen diejenigen zu erwarten, die sich hier am Drogenhand",
+      "target_words_after_reduction": [
+        2240,
+        3583
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Gesellschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_22.txt",
+          "title": "When police became suspects",
+          "words": 2398,
+          "estimated_minutes": 20,
+          "reduction_percent": 46.5,
+          "sha256": "fb7b28c5d179fa8e75f6cbe2df6a87bfb240926f12e2ce1bf6044cfd503db721",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_22.txt",
+          "title": "Policías bajo sospecha",
+          "words": 2413,
+          "estimated_minutes": 21,
+          "reduction_percent": 46.1,
+          "sha256": "e4e0e8e91433d5b9de3416f47f9f787c8f33ef639130c238df127c1efec8b396",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_22.txt",
+          "title": "Poliziotti sotto sospetto",
+          "words": 2458,
+          "estimated_minutes": 21,
+          "reduction_percent": 45.1,
+          "sha256": "f39e1b4868453c3377ed5be59349cf714916cf312e606e35603d7666b11808bb",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_22.txt",
+          "title": "Da politiet ble mistenkt",
+          "words": 2505,
+          "estimated_minutes": 21,
+          "reduction_percent": 44.1,
+          "sha256": "b2dac47b97adb2679f56a890aa899861e0d008027da52ed6f8f8d8205aa39c75",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_22.txt",
+          "title": "Policiais sob suspeita",
+          "words": 2597,
+          "estimated_minutes": 22,
+          "reduction_percent": 42.0,
+          "sha256": "2b709efcc1000219776225f65111dbaedfa31e73f2369ce1588e4a810174682d",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://www.justiz.bayern.de/gerichte-und-behoerden/staatsanwaltschaft/muenchen-1/presse/2021/3.php",
+          "https://www1.bayern.landtag.de/www/ElanTextAblage_WP18/Drucksachen/Schriftliche%20Anfragen/18_0020013.pdf",
+          "https://www.gesetze-im-internet.de/btmg_1981/BJNR106810981.html",
+          "https://www.gesetze-im-internet.de/stpo/__160.html",
+          "https://www.gesetze-im-internet.de/stpo/__153a.html",
+          "https://www.tz.de/muenchen/stadt/verurteilungen-in-muenchen-drogen-skandal-bei-muenchner-polizei-beamte-begingen-insgesamt-271-delikte-13-93301554.html"
+        ],
+        "review_file": "sources/video_22_review.md",
+        "corrections": [
+          "Dealer alias explicitly retained as documentary alias, not independently verified identity; no invented dialogue",
+          "Witness accounts, allegations and court outcomes distinguished; no implication every club attendee or police contact guilty",
+          "Official investigation chronology corrected: July 2020 group, October 2020 special commission, regular organisation from October 5 2021",
+          "Digital file totals are examined material not offence counts; accused not a closed group with universal mutual knowledge",
+          "37 police investigated and 16 discontinued cases distinguished from convictions; 25 disciplinary proceedings not dismissals",
+          "Later thirteen convictions attributed to dated tz report quoting prosecution spokeswoman, one appeal pending then; no unsupported blanket finality",
+          "Cooperation under BtMG31 not automatic immunity or witness protection; conditional discontinuance not conviction",
+          "Unsupported suicide/health comparisons, universal loss of benefits and unrelated 2025 guilt inference omitted",
+          "No operational drug sale prices or evasion sequence, and no unsupported precise club closure causation"
+        ]
+      }
+    },
+    {
+      "id": "video_23",
+      "source_number": 23,
+      "source_file": "sources/video_23.txt",
+      "source_words": 3487,
+      "source_sha256": "52113cc8a4e03969370e6ebaf82385acb39b4f376e86897d384dd720857e8755",
+      "opening": "\"es ist der 4 april 2009 kurz nach 9 Uhr morgens die Hansa starwanger ein deutsches Containerschiff durchquert die Gewässer Somalias zwischen dem Arabischen Mee",
+      "target_words_after_reduction": [
+        1744,
+        2790
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Gesellschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_23.txt",
+          "title": "Four months aboard a prison",
+          "words": 1877,
+          "estimated_minutes": 16,
+          "reduction_percent": 46.2,
+          "sha256": "502c911ea84edb937d5005e3fa37bab9ba4e23f8578c068165ceb5ff706cc55e",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_23.txt",
+          "title": "Cuatro meses de cautiverio",
+          "words": 1958,
+          "estimated_minutes": 17,
+          "reduction_percent": 43.8,
+          "sha256": "1d5ac81eae5ccb26bcdc4a81bd09961d98aa3ec84bd452ab801dda8b37f9d3e9",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_23.txt",
+          "title": "Quattro mesi prigionieri",
+          "words": 1913,
+          "estimated_minutes": 16,
+          "reduction_percent": 45.1,
+          "sha256": "7bf8eead77fa1fb398ab9eb01d284b92170a13ec4f3a73a3c5fe7b0c2e6769ce",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_23.txt",
+          "title": "Fire måneder i fangenskap",
+          "words": 1864,
+          "estimated_minutes": 16,
+          "reduction_percent": 46.5,
+          "sha256": "e1bd84e6ebceebc3928fa79a5e847f1e1a6d7a10b93544fd5d4040a5dc29a7e7",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_23.txt",
+          "title": "Quatro meses em cativeiro",
+          "words": 1943,
+          "estimated_minutes": 17,
+          "reduction_percent": 44.3,
+          "sha256": "6e916ea6613150685e138847abc70e11852d4d7524bbfc93f40db6183ad4a8ae",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://eunavfor.eu/index.php/news/german-ship-has-been-released",
+          "https://eunavfor.eu/index.php/news/update-eu-navfor-ship-brandenburg-escorts-mv-hansa-stavanger",
+          "https://eunavfor.eu/node/18175",
+          "https://dserver.bundestag.de/btp/16/16219.pdf",
+          "https://dserver.bundestag.de/btd/17/108/1710877.pdf",
+          "https://www.ndr.de/der_ndr/presse/mitteilungen/gsg-9-lange-befehlswege-gefaehrden-auslandseinsaetze-wiefelspuetz-einsaetze-drohen-zu-scheitern%2Cpressemeldungndr7965.html",
+          "https://www.ndr.de/fernsehen/sendungen/panorama/archiv/2009/Hansa-Stavanger-Der-Sieg-der-Piraten%2Cpanoramahansastavanger104.html",
+          "https://www.unodc.org/documents/data-and-analysis/tocta/9.Maritime_piracy.pdf",
+          "https://www.un.org/depts/los/piracy/piracy_legal_framework.htm",
+          "https://www.eeas.europa.eu/eeas/missions-and-operations_en",
+          "https://www.consilium.europa.eu/en/press/press-releases/2026/03/30/maritime-security-council-updates-mandates-of-eu-naval-operations-aspides-and-atalanta/"
+        ],
+        "review_file": "sources/video_23_review.md",
+        "corrections": [
+          "Correct ship name and dated capture/release chronology; approximately four months rather than conflicting exact duration counts",
+          "Cancelled rescue preparation distinguished from an assault defeated aboard; official assessment and later criticism attributed separately",
+          "Flag-state responsibilities not exclusive high-seas anti-piracy authority",
+          "Atalanta started in December 2008 before this hijacking; no claim it was first EU security activity",
+          "Ransom amount qualified as reported and varying; no universal insurance coverage or automatic exoneration of owner",
+          "Captivity scenes and conflicting survivor perspectives attributed; no emotional reaction treated as proof of collaboration",
+          "No permanent piracy solution, simple geographic displacement, unsupported medical diagnoses or erroneous speed conversion"
+        ]
+      }
+    },
+    {
+      "id": "video_24",
+      "source_number": 24,
+      "source_file": "sources/video_24.txt",
+      "source_words": 3039,
+      "source_sha256": "582356d1e50d4096d5da4d25a12209dcba8a56b4e41dc3c30a0f3668e2a6ed98",
+      "opening": "\"(Rauschen) (Radio:) \"Liebe Zuhörer und Zuhörerinnen, wir unterbrechen die Sendung mit einer wichtigen Nachricht.\" \"In den vergangenen Wochen kam es vermehrt zu",
+      "target_words_after_reduction": [
+        1520,
+        2431
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Gesellschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_24.txt",
+          "title": "The letters of Monsieur X",
+          "words": 1678,
+          "estimated_minutes": 14,
+          "reduction_percent": 44.8,
+          "sha256": "45370fa69f39d18b2faa28ed8b099b2a1ce92de87114036af6fc9b3a766d48c7",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_24.txt",
+          "title": "Las cartas de Monsieur X",
+          "words": 1757,
+          "estimated_minutes": 15,
+          "reduction_percent": 42.2,
+          "sha256": "4decf0456274e003f45ddab65dca67aeaa87640b5f57d4065b8622f8015eaee7",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_24.txt",
+          "title": "Le lettere di Monsieur X",
+          "words": 1698,
+          "estimated_minutes": 15,
+          "reduction_percent": 44.1,
+          "sha256": "2aa1b4eaaa056899cfcc4346d662dd8ef39e643616e713359a0b4f9ca2034ce5",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_24.txt",
+          "title": "Brevene fra Monsieur X",
+          "words": 1683,
+          "estimated_minutes": 15,
+          "reduction_percent": 44.6,
+          "sha256": "cc57889501996f37bf03b17d6bad9fd7ba36024033ce03b96001e2df26a2be53",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_24.txt",
+          "title": "As cartas de Monsieur X",
+          "words": 1761,
+          "estimated_minutes": 15,
+          "reduction_percent": 42.1,
+          "sha256": "2ba7cdb8fb987b95f0b8da663676a14a29a0200027540a8151190a26fc1f4025",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://www.leo-bw.de/fr/detail/-/Detail/details/DOKUMENT/wlbblb_labi/1611681960/Der%2BEisenbahnattenta%CC%88ter%2BMonsieur%2BX%2Bvon%2Bd%2BSpur%2Bzum%2BBeweis",
+          "https://www.zeit.de/1979/08/noch-viele-raetsel-um-monsieur-x/seite-2",
+          "https://www.zeit.de/1979/12/knallharte-beweise",
+          "https://sdd9a3c45deeeb7bd.jimcontent.com/download/version/1242460474/module/527027009/name/ext1_16.10.2007.pdf",
+          "https://www.polizei.bayern.de/kriminalitaet/kriminaltechnik/003767/index.html",
+          "https://polizei.brandenburg.de/seite/sprecher-erkennung-identifizierung-von-p/60613",
+          "https://ssl.bverwg.de/190608U1D2.07.0",
+          "https://www.bundestag.de/webarchiv/presse/hib/2013_10/04-260066"
+        ],
+        "review_file": "sources/video_24_review.md",
+        "corrections": [
+          "Actual railway extortion topic retained, Deutsche Bundesbahn named for the historical period",
+          "Conflicting casualty totals not conflated; injuries and serious injuries described without unsupported precise count",
+          "Author claims about illness, family and debt distinguished from verified biography",
+          "Voice, language, handwriting and typewriter examination distinguished; dialect resemblance not unique identification",
+          "Strasbourg lead attributed to documentary account, no unsupported precise intelligence-agency motive",
+          "1979 life sentence and continuing denial distinguished; prosecution source perspective disclosed, no claim original judgment inspected",
+          "Operational sabotage instructions, patrol schedules, invented dialogue and song lyrics omitted"
+        ]
+      }
+    },
+    {
+      "id": "video_25",
+      "source_number": 25,
+      "source_file": "sources/video_25.txt",
+      "source_words": 4517,
+      "source_sha256": "8b65f95c4ec211c73c30a5bdd9370eca0efcc2c19fe4f6bbb6e98176692ef25c",
+      "opening": "\"Vielleicht bin ich da immer gutgläubig und naiv, aber dass es so schlimm sein könnt, weil das für mich so unvorstellbar ist, wie man so sein kann. Also, ich we",
+      "target_words_after_reduction": [
+        2258,
+        3614
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Gesellschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_25.txt",
+          "title": "Behind the prison doors",
+          "words": 2282,
+          "estimated_minutes": 20,
+          "reduction_percent": 49.5,
+          "sha256": "007ad848795efc361aab8eb13466ed4904d75171dcfa42eda341b09366d351a0",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_25.txt",
+          "title": "Tras las puertas de la prisión",
+          "words": 2374,
+          "estimated_minutes": 20,
+          "reduction_percent": 47.4,
+          "sha256": "89e1f98df2262ef7f72ee8e6846f1d1469e03a494b9449aa39ac6d959d29bc2c",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_25.txt",
+          "title": "Dietro le porte del carcere",
+          "words": 2325,
+          "estimated_minutes": 20,
+          "reduction_percent": 48.5,
+          "sha256": "5f86b81fbc568afe4071ea43a9798db78e9768260851ec6f2c2bb14125689a01",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_25.txt",
+          "title": "Bak fengselsdørene",
+          "words": 2260,
+          "estimated_minutes": 19,
+          "reduction_percent": 50.0,
+          "sha256": "679362ccca0f1e8f8609766d3dd0dd51676129c14c02e473771a48a50b27b154",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_25.txt",
+          "title": "Atrás das portas da prisão",
+          "words": 2329,
+          "estimated_minutes": 20,
+          "reduction_percent": 48.4,
+          "sha256": "4791fb1fe6dd71ebb42d40eb71d3d3f9f36537279e0b82752d4955cbc2cc50c3",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://www.justiz.bayern.de/gerichte-und-behoerden/landgericht/augsburg/presse/2026/4.php",
+          "https://www.justiz.bayern.de/gerichte-und-behoerden/landgericht/augsburg/presse/2026/6.php",
+          "https://www.justiz.bayern.de/gerichte-und-behoerden/landgericht/augsburg/presse/2026/8.php",
+          "https://www.justiz.bayern.de/media/images/behoerden-und-gerichte/staatsanwaltschaften/augsburg/01_2026_jva_gablingen_4_anklage.pdf",
+          "https://www.justiz.bayern.de/media/images/behoerden-und-gerichte/staatsanwaltschaften/augsburg/02_2026_jva_gablingen_5_anklage.pdf",
+          "https://www.nationale-stelle.de/besuche/laenderkommission/2024.html",
+          "https://www.nationale-stelle.de/fileadmin/dateiablage/Dokumente/Berichte/Besuchsberichte/20240809_-_JVA_Augsburg-Gablingen/20240809_Bericht_JVA_Augsburg-Gablingen_nach_Stellungnahme_Web.pdf",
+          "https://www.br.de/presse/inhalt/pressemitteilungen/recherche-jva-gablingen-br-kontraste-chatnachrichten-zu-misshandlungen-100.html",
+          "https://www.bayern.landtag.de/www/ElanTextAblage_WP19/Drucksachen/Schriftliche%20Anfragen/19_0005760.pdf"
+        ],
+        "review_file": "sources/video_25_review.md",
+        "corrections": [
+          "Thirteen defendants across two indictments, not thirteen indictments or convictions",
+          "Overlapping case and victim counts not added as distinct totals",
+          "Director and deputy allegations distinguished, no attribution of charged physical assaults to director",
+          "September 2026 admission and January 2027 trial schedule replace outdated documentary ending",
+          "Inspection observations, documentary testimony and suspected equipment staging distinguished",
+          "Preliminary review not equated with acquittal, institutional receipt not personal ministerial knowledge",
+          "Ordinary single cells distinguished from exceptional secure confinement",
+          "Graphic assault mechanics and self harm methods omitted, defence denial retained"
+        ]
+      }
+    },
+    {
+      "id": "video_26",
+      "source_number": 26,
+      "source_file": "sources/video_26.txt",
+      "source_words": 2279,
+      "source_sha256": "bfc5a1d23ab884c5bd2d74dbe2b0c969a5e26901a35cad87512be8dc0abbeee4",
+      "opening": "(Ruhige Musik) (Lautes Atmen) (Dramatische Musik) (englisch:) (Quietschen, Klappern) (Unheimliche Geräusche) (Ruhige, ernste Musik) Es ist Mittwoch, der 26. Sep",
+      "target_words_after_reduction": [
+        1140,
+        1823
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Gesellschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_26.txt",
+          "title": "The letters that spread fear",
+          "words": 1366,
+          "estimated_minutes": 12,
+          "reduction_percent": 40.1,
+          "sha256": "f9392356bd861a9cf73b8cd10672953a76b30027bef8f82b52ada56a7b8e2996",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_26.txt",
+          "title": "Las cartas que sembraron miedo",
+          "words": 1456,
+          "estimated_minutes": 13,
+          "reduction_percent": 36.1,
+          "sha256": "8d07b1e8763eac326c2439dba2fdec7b35a5db032b4c566266e19e210003f86a",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_26.txt",
+          "title": "Le lettere della paura",
+          "words": 1390,
+          "estimated_minutes": 12,
+          "reduction_percent": 39.0,
+          "sha256": "8d2cbd426595c65115225c7f7a80378710c7ccf0147d4a651e2a8a53b7f6a53b",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_26.txt",
+          "title": "Brevene som spredte frykt",
+          "words": 1322,
+          "estimated_minutes": 12,
+          "reduction_percent": 42.0,
+          "sha256": "e95d4a2bc736ce5b0a205a5caa8fa4ac48e0decd38a87fa2b009edff3bce8884",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_26.txt",
+          "title": "As cartas que espalharam medo",
+          "words": 1452,
+          "estimated_minutes": 13,
+          "reduction_percent": 36.3,
+          "sha256": "c0449f718fb2cb39e394244021119b8874b87dda1f1945b75dd3a1a8017f6cd1",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "references": [
+          "https://www.fbi.gov/history/cases-and-criminals/amerithrax-or-anthrax-investigation",
+          "https://wwwnc.cdc.gov/eid/article/8/10/02-0353_article",
+          "https://www.nationalacademies.org/news/science-alone-does-not-establish-source-of-anthrax-used-in-2001-mailings",
+          "https://www.govinfo.gov/content/pkg/USCOURTS-dcd-1_08-mc-00576/pdf/USCOURTS-dcd-1_08-mc-00576-1.pdf",
+          "https://wwwnc.cdc.gov/eid/article/9/5/02-0388-t3",
+          "https://www.cdc.gov/anthrax/hcp/antibiotics/index.html"
+        ],
+        "review_file": "sources/video_26_review.md",
+        "corrections": [
+          "2001 not first US biological attack",
+          "Twenty two cases not all laboratory confirmed, exposure distinguished from illness",
+          "Al Qaeda not conflated with Islamic State, no proven September 11 operational connection asserted",
+          "Hatfill ruled out, no unsupported single test explanation",
+          "Ivins official investigative attribution distinguished from conviction; no trial took place",
+          "Independent scientific review limits retained without claiming exoneration or alternative perpetrator",
+          "Operational biological details, lyrics, suicide method and speculative psychiatric claims omitted"
+        ]
+      }
+    },
+    {
+      "id": "video_27",
+      "source_number": 27,
+      "source_file": "sources/video_27.txt",
+      "source_words": 1306,
+      "source_sha256": "4cee69a8e2a975f7f474c220c59dd2fb2acb8bebb893ed671a2ae398bb97ec42",
+      "opening": "\"7 April 1994 ein Flugzeug fliegt mit einer bisher nie erreichten Geschwindigkeit im stallflug auf dem Boden zu gesteuert wird das Flugzeug von einem halbseitig",
+      "target_words_after_reduction": [
+        653,
+        1045
+      ],
+      "ten_minutes_at_120wpm_possible": false,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Gesellschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_27.txt",
+          "title": "The return of Flight 705",
+          "words": 935,
+          "estimated_minutes": 8,
+          "reduction_percent": 28.4,
+          "sha256": "4536e021e393cb14ce1b638f6552b9839c2cb600dce105afcc607f2d141a6a83",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source too short to satisfy both minimum ten minutes at 120 words per minute and at least 20 percent reduction. Reduction preserved, minimum duration unresolved."
+        },
+        "es": {
+          "file": "es/video_27.txt",
+          "title": "El regreso del vuelo 705",
+          "words": 923,
+          "estimated_minutes": 8,
+          "reduction_percent": 29.3,
+          "sha256": "c778a5257b0e0a18cd834e29ad3879d9ab900a5ae651f0b9fdeaf87c50176c9f",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source too short to satisfy both minimum ten minutes at 120 words per minute and at least 20 percent reduction. Reduction preserved, minimum duration unresolved."
+        },
+        "it": {
+          "file": "it/video_27.txt",
+          "title": "Il ritorno del volo 705",
+          "words": 904,
+          "estimated_minutes": 8,
+          "reduction_percent": 30.8,
+          "sha256": "67bd06dfd748bcd4b565d47b8aa1f969ba1d010fe40c2184b8419cf2724e8965",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source too short to satisfy both minimum ten minutes at 120 words per minute and at least 20 percent reduction. Reduction preserved, minimum duration unresolved."
+        },
+        "nb": {
+          "file": "nb/video_27.txt",
+          "title": "Flight 705 vender tilbake",
+          "words": 874,
+          "estimated_minutes": 8,
+          "reduction_percent": 33.1,
+          "sha256": "3d2b6be478e22a39ab44816005c6f42326183020eee634ed37ceeb477291a73b",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source too short to satisfy both minimum ten minutes at 120 words per minute and at least 20 percent reduction. Reduction preserved, minimum duration unresolved."
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_27.txt",
+          "title": "A volta do voo 705",
+          "words": 938,
+          "estimated_minutes": 8,
+          "reduction_percent": 28.2,
+          "sha256": "d3423af3db2679505d8e12bb0e3a2fffc49ab59b54539818dd9dbd3f519931e1",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source too short to satisfy both minimum ten minutes at 120 words per minute and at least 20 percent reduction. Reduction preserved, minimum duration unresolved."
+        }
+      },
+      "fact_check": {
+        "review_file": "sources/video_27_review.md",
+        "references": [
+          "https://law.justia.com/cases/federal/appellate-courts/F3/116/1129/610984/",
+          "https://vault.fbi.gov/fedex-flight-705-incident-on-april-7-1994/FedEx%20Flight%20705%20Incident%20on%20April%207%2C%201994%20Part%2001",
+          "https://www.linkedin.com/posts/scot-struminger-2943965_occasionally-you-come-across-acts-of-bravery-activity-6866137028640153600-uT4V"
+        ],
+        "corrections": [
+          "April 7 without incorrect Easter reference",
+          "Crew roles and names corrected",
+          "No unsupported speed record, crash destination or ground casualty projection",
+          "1997 appeal vacated interference conviction, attempted piracy life sentence affirmed",
+          "2021 recognition replaces impossible 1924 medal date",
+          "No current prison location, operational concealment detail or guaranteed insurance payout"
+        ]
+      }
+    },
+    {
+      "id": "video_28",
+      "source_number": 28,
+      "source_file": "sources/video_28.txt",
+      "source_words": 2404,
+      "source_sha256": "4fd0bb28ed263ee9dab23f6185dcd64b536e08923faccb6af951d4a626d51b9d",
+      "opening": "\"(Starre Klänge) (Angestrengtes Atmen) \"Der Entführer hat eine Vorrichtung gebaut, die bei lauten Geräuschen schmerzhafte Stromstöße auslöst und mehrere Volt du",
+      "target_words_after_reduction": [
+        1202,
+        1923
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Gesellschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_28.txt",
+          "title": "After the ransom",
+          "words": 1357,
+          "estimated_minutes": 12,
+          "reduction_percent": 43.6,
+          "sha256": "05d99a2623195da7fe693bc3b2de5f51879a6edb26d28a40fd82a8b3bd9d0bd0",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_28.txt",
+          "title": "Después del rescate",
+          "words": 1369,
+          "estimated_minutes": 12,
+          "reduction_percent": 43.1,
+          "sha256": "338fbdce94f4bbf8b47b53a4aae4e99e6930b2e61bcd1dc858980710fb6a0b56",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_28.txt",
+          "title": "Dopo il riscatto",
+          "words": 1330,
+          "estimated_minutes": 12,
+          "reduction_percent": 44.7,
+          "sha256": "51dae2a149d723a1f6a8fe0fcd5c598af753e9d40f557b3042682693e3e92aff",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_28.txt",
+          "title": "Etter løsepengene",
+          "words": 1326,
+          "estimated_minutes": 12,
+          "reduction_percent": 44.8,
+          "sha256": "b724bbcd525160362907e0075a564208411b537e054adee7b67b761bb2b5d01f",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_28.txt",
+          "title": "Depois do resgate",
+          "words": 1351,
+          "estimated_minutes": 12,
+          "reduction_percent": 43.8,
+          "sha256": "ad96b24bb71888cd29aacdadda6a0a21f334b607ac7cbb4f27f95fc5c0cbc7b1",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "review_file": "sources/video_28_review.md",
+        "references": [
+          "https://www.polizei.bayern.de/wir-ueber-uns/geschichte/003626/index.html",
+          "https://www.polizei.bayern.de/mam/wir-uber-uns/210922_blka_amtsgeschichte.pdf",
+          "https://www1.wdr.de/freizeit/true-crime/richard-oetker-entfuehrung-interview-100.html",
+          "https://weisser-ring-stiftung.de/media-news/news-pressemitteilungen/14-03-2016-1",
+          "https://www.gesetze-im-internet.de/stpo/__261.html"
+        ],
+        "corrections": [
+          "Severe lasting injury described without erroneous vertebra count",
+          "Multiple voice tips and evidence categories replace oversimplified identification chronology",
+          "Fifteen year sentence not described as universal maximum punishment",
+          "Partial ransom recovery distinguished from complete recovery",
+          "Later sole-offender claim not equated with judicial fact",
+          "No current age or unverified current organizational role",
+          "No operational electrical abuse, handover evasion or laundering detail",
+          "Survivor perspective retained without imposing psychiatric diagnosis"
+        ]
+      }
+    },
+    {
+      "id": "video_29",
+      "source_number": 29,
+      "source_file": "sources/video_29.txt",
+      "source_words": 1418,
+      "source_sha256": "2038b29ef59e66faa5e68dd7d12293ebabcb095891a9c25b2d41115769816085",
+      "opening": "\"februar 2001 Rotenburg Wüstefeld ein Mann namens Army Marvel 12 in Darknet er hat es vor kurzer Zeit für sich entdeckt und findet dort Menschen die seine Gedan",
+      "target_words_after_reduction": [
+        709,
+        1134
+      ],
+      "ten_minutes_at_120wpm_possible": false,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Gesellschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_29.txt",
+          "title": "The limits of consent",
+          "words": 992,
+          "estimated_minutes": 9,
+          "reduction_percent": 30.0,
+          "sha256": "21660679146de0eed1a613b92eb75ec33415aec54bd1532af7fd87831767c1d3",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source too short to satisfy both ten minutes at 120 words per minute and at least 20 percent reduction. Reduction preserved, minimum duration unresolved."
+        },
+        "es": {
+          "file": "es/video_29.txt",
+          "title": "Los límites del consentimiento",
+          "words": 1006,
+          "estimated_minutes": 9,
+          "reduction_percent": 29.1,
+          "sha256": "41baa944f0549b82f9097b1d0f45d0158ed31d72b66ce530ebdeb91e9e00af85",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source too short to satisfy both ten minutes at 120 words per minute and at least 20 percent reduction. Reduction preserved, minimum duration unresolved."
+        },
+        "it": {
+          "file": "it/video_29.txt",
+          "title": "I limiti del consenso",
+          "words": 970,
+          "estimated_minutes": 9,
+          "reduction_percent": 31.6,
+          "sha256": "917e1bdaae1131d3c46c65ae35780fc65b0ba5daaa879538a98fb56c71c1ea9f",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source too short to satisfy both ten minutes at 120 words per minute and at least 20 percent reduction. Reduction preserved, minimum duration unresolved."
+        },
+        "nb": {
+          "file": "nb/video_29.txt",
+          "title": "Grensene for samtykke",
+          "words": 945,
+          "estimated_minutes": 8,
+          "reduction_percent": 33.4,
+          "sha256": "dbfe267e56933221c1e0a9cc681a6d0b20d28e5be2559d17ea377d856f1b2599",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source too short to satisfy both ten minutes at 120 words per minute and at least 20 percent reduction. Reduction preserved, minimum duration unresolved."
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_29.txt",
+          "title": "Os limites do consentimento",
+          "words": 989,
+          "estimated_minutes": 9,
+          "reduction_percent": 30.3,
+          "sha256": "3769be5e3c4270a0e0945cc5b30821c771df2868c27f845ba1dc4e3137096428",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending",
+          "length_note": "Source too short to satisfy both ten minutes at 120 words per minute and at least 20 percent reduction. Reduction preserved, minimum duration unresolved."
+        }
+      },
+      "fact_check": {
+        "review_file": "sources/video_29_review.md",
+        "references": [
+          "https://www.bundesverfassungsgericht.de/SharedDocs/Entscheidungen/DE/2009/06/qk20090617_1bvq002609.html",
+          "https://www.schleswig-holstein.de/DE/justiz/themen/service/justizministerialblatt/Teil_A/_documents/Vollversion/2008/200806-neu.pdf?__blob=publicationFile&v=2",
+          "https://www.gesetze-im-internet.de/stgb/BJNR001270871.html",
+          "https://zis-online.com/dat/artikel/2007_4_130.pdf"
+        ],
+        "corrections": [
+          "Final 2006 murder life sentence and 2007 finality distinguished from 2004 manslaughter sentence",
+          "Internet forums not asserted to be darknet",
+          "Consent not treated as legal permission to kill",
+          "Childhood narrative not claimed as proven cause or diagnosis",
+          "No graphic sexual violence, methods or operational detail",
+          "Undated fire item and current status omitted"
+        ]
+      }
+    },
+    {
+      "id": "video_30",
+      "source_number": 30,
+      "source_file": "sources/video_30.txt",
+      "source_words": 1824,
+      "source_sha256": "2d4edfa8054d345e433fd94383dde7ec0dde568c941799f400936d88948a2f2b",
+      "opening": "\"(Knallen, nachdenkliche Musik) Und auch wenn viele friedlich demonstrierten, kippte Wut allzu oft in blanke Gewalt. Wenn sich vermummte Randalierer Auseinander",
+      "target_words_after_reduction": [
+        912,
+        1459
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Gesellschaft",
+      "outputs": {
+        "en": {
+          "file": "en/video_30.txt",
+          "title": "Beyond the burning streets",
+          "words": 1293,
+          "estimated_minutes": 11,
+          "reduction_percent": 29.1,
+          "sha256": "33899cab7945245590510863389dbf714e4d1d94f5354e5bb618ae7512849c77",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_30.txt",
+          "title": "Más allá de los incendios",
+          "words": 1345,
+          "estimated_minutes": 12,
+          "reduction_percent": 26.3,
+          "sha256": "4de7554153aa378f84d650d24e87cb9e1506a54633d042a929bb4c8d66d9db0a",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_30.txt",
+          "title": "Oltre le strade in fiamme",
+          "words": 1307,
+          "estimated_minutes": 11,
+          "reduction_percent": 28.3,
+          "sha256": "e3e7e743c99c01c1bc2e23a513055d6a0c0fa2fc75a685605c19e586332e351d",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_30.txt",
+          "title": "Bak bildene av brennende gater",
+          "words": 1261,
+          "estimated_minutes": 11,
+          "reduction_percent": 30.9,
+          "sha256": "d93f1310fa49b1e3e2822a06f5155d322f81d6d630a828dd5bfb00248b46d988",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_30.txt",
+          "title": "Além das ruas em chamas",
+          "words": 1304,
+          "estimated_minutes": 11,
+          "reduction_percent": 28.5,
+          "sha256": "df0b76443f9caf05ee17799e8d32894bd1dd20c73bbc8052a60e4b6e5c81ef4b",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      },
+      "fact_check": {
+        "review_file": "sources/video_30_review.md",
+        "references": [
+          "https://www.education.gouv.fr/construire-des-solutions-avec-les-lyceens-506143",
+          "https://www.info.gouv.fr/actualite/declaration-du-premier-ministre-a-l-assemblee-nationale",
+          "https://www.fcpe.asso.fr/actualite/les-revendications-de-la-jeunesse-doivent-etre-entendues",
+          "https://lessurligneurs.eu/mobilisation-lyceenne-non-cette-video-ne-prouve-pas-que-bally-bagayoko-a-mis-le-feu-a-une-poubelle/"
+        ],
+        "corrections": [
+          "Burning bin scene dated to September 28 and longer footage context preserved",
+          "Unverified school totals, injury intentions and weapon classifications omitted",
+          "Peaceful participants distinguished from violent actors",
+          "Government announcements distinguished from delivered improvements",
+          "Future German demonstrations not described as completed events"
+        ]
+      }
+    },
+    {
+      "id": "video_31",
+      "source_number": 31,
+      "source_file": "sources/video_31.txt",
+      "source_words": 5185,
+      "source_sha256": "261417e68878d6eb672ac2a2ffbb46b4bdf529ad3924b679e50887f905dd5c75",
+      "opening": "\"Kevin Mitnick ist einer der bekanntesten Hacker der Welt und einer der ersten. Seine Geschichte hat das öffentliche Bild von Hackern maßgeblich mitgeprägt. Med",
+      "target_words_after_reduction": [
+        2592,
+        4148
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Technik",
+      "fact_check": {
+        "review_file": "sources/video_31_review.md",
+        "status": "five_languages_reviewed_integration_pending",
+        "references": [
+          "https://www.justice.gov/archive/opa/pr/Pre_96/February95/89.txt.html",
+          "https://www.fjc.gov/sites/default/files/2012/SNOBull5.pdf",
+          "https://www.justice.gov/sites/default/files/usao/legacy/2006/06/30/usab4903.pdf",
+          "https://www.govinfo.gov/content/pkg/CHRG-106shrg63639/pdf/CHRG-106shrg63639.pdf",
+          "https://www.knowbe4.com/press/knowbe4-and-the-mitnick-family-honor-the-life-and-legacy-of-kevin-mitnick"
+        ],
+        "corrections": [
+          "Autobiographical episodes require attribution",
+          "Restitution amount is not total damage finding",
+          "1999 sentence distinguished from combined sentences and actual detention",
+          "Computer restrictions had approval exceptions, not universal television ban",
+          "No unsupported first hacker, first spoofing or FBI top ten claim",
+          "No operational intrusion or evidence destruction instructions"
+        ]
+      },
+      "outputs": {
+        "en": {
+          "file": "en/video_31.txt",
+          "title": "The difference was permission",
+          "words": 2618,
+          "estimated_minutes": 22,
+          "reduction_percent": 49.5,
+          "sha256": "e18cd596f8b13cb3a9270240c70bff9648566060bb629d75625ff9edf5b95313",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_31.txt",
+          "title": "La diferencia era el permiso",
+          "words": 2766,
+          "estimated_minutes": 24,
+          "reduction_percent": 46.7,
+          "sha256": "b95bc8742ca9b28070722790ae4d38fe0db63a637cee2c6f204fffa26be4aa23",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_31.txt",
+          "title": "La differenza era il permesso",
+          "words": 2640,
+          "estimated_minutes": 22,
+          "reduction_percent": 49.1,
+          "sha256": "3f71c60f8ee72713695d11e9dc5c09f555df818de6e8be5c4fba9790da9ff472",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_31.txt",
+          "title": "Forskjellen var tillatelse",
+          "words": 2617,
+          "estimated_minutes": 22,
+          "reduction_percent": 49.5,
+          "sha256": "82fee95a14b266984a223e8c9429b0d9156ef23784a5bd9177d88b2d67156ab9",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_31.txt",
+          "title": "A diferença era a permissão",
+          "words": 2713,
+          "estimated_minutes": 23,
+          "reduction_percent": 47.7,
+          "sha256": "d8e378fa9c14732a3940191284a1bfdbc9d07790d278e5ff7aa74b09a8a0ae4f",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      }
+    },
+    {
+      "id": "video_32",
+      "source_number": 32,
+      "source_file": "sources/video_32.txt",
+      "source_words": 2317,
+      "source_sha256": "788d7a86293e08d90f72c93c3ddc1577cf14840dd208f5aa1489e29e5883b6c1",
+      "opening": "\"Der Bundeskanzler sitzt auf der Rückbank einer schwarzen S-Klasse. Er ist gerade auf dem Weg nach Berlin. Vier Personenschützer des BKAs begleiten ihn. Während",
+      "target_words_after_reduction": [
+        1158,
+        1854
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Technik",
+      "fact_check": {
+        "review_file": "sources/video_32_review.md",
+        "status": "five_languages_reviewed_integration_pending",
+        "references": [
+          "https://www.bka.de/DE/UnsereAufgaben/Aufgabenbereiche/Schutzaufgaben/schutzaufgaben.html",
+          "https://schleyer-stiftung.de/5-september-2017-koeln/",
+          "https://www.mercedes-benz.com/documents/guard/mercedes-benz-s-680-guard-4matic-technical-data.pdf",
+          "https://www.bundeswehr.de/de/organisation/luftwaffe/organisation-/luftwaffentruppenkommando/flugbereitschaft-des-bundesministeriums-der-verteidigung",
+          "https://www.hrr-strafrecht.de/hrr/3/21/3-359-21-1.pdf",
+          "https://www.bpb.de/kurz-knapp/taegliche-dosis-politik/578846/bericht-des-bka-zur-politisch-motivierten-kriminalitaet/"
+        ],
+        "corrections": [
+          "Attack and evacuation are fictional, not a reported real incident",
+          "Public vehicle certification not universal invulnerability",
+          "Correct 1977 victim names",
+          "Remove false general first right wing political murder since 1945 claim",
+          "Separate politically motivated offences from violent subset",
+          "No unsupported present operational protective details"
+        ]
+      },
+      "outputs": {
+        "en": {
+          "file": "en/video_32.txt",
+          "title": "Behind the armoured glass",
+          "words": 1406,
+          "estimated_minutes": 12,
+          "reduction_percent": 39.3,
+          "sha256": "50cd7beb301f66fe6af2f50b4e484e53ea6126def9499ad8a491667587934c9f",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_32.txt",
+          "title": "Tras el cristal blindado",
+          "words": 1473,
+          "estimated_minutes": 13,
+          "reduction_percent": 36.4,
+          "sha256": "05987af44652e4d6627e04982107f00774176e75eefc3a32fd0ba163c33b3b00",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_32.txt",
+          "title": "Dietro il vetro blindato",
+          "words": 1420,
+          "estimated_minutes": 12,
+          "reduction_percent": 38.7,
+          "sha256": "d49b689ff85c6509e1c4cd63a9e0e133bfec0b17af37ba7a45e222254e4873ef",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_32.txt",
+          "title": "Bak det pansrede glasset",
+          "words": 1327,
+          "estimated_minutes": 12,
+          "reduction_percent": 42.7,
+          "sha256": "5028447f07f9c52f9fdc0d12b629d9c6e9a230de63aab8299c236dcc1dc5fce9",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_32.txt",
+          "title": "Por trás do vidro blindado",
+          "words": 1446,
+          "estimated_minutes": 13,
+          "reduction_percent": 37.6,
+          "sha256": "72fc530a309f7158ada7bfaef0e81b7af1839b6a9c2e3d671c834fb7ef301da1",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      }
+    },
+    {
+      "id": "video_33",
+      "source_number": 33,
+      "source_file": "sources/video_33.txt",
+      "source_words": 3666,
+      "source_sha256": "c015414112b6b9b8327f749d38ac8193b535dbfb477a12482fcd7a0ebe4051f5",
+      "opening": "\"Was Jan G, einem früheren Mitarbeiter des AfD Politikers Kram vorgeworfen wird erinnert an einen [musik] Agententriller. Der Verdacht, dass mehrfach fünfstelli",
+      "target_words_after_reduction": [
+        1833,
+        2933
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "category": "Gesellschaft",
+      "fact_check": {
+        "review_file": "sources/video_33_review.md",
+        "status": "five_languages_reviewed_integration_pending",
+        "references": [
+          "https://www.medienservice.sachsen.de/medien/news/1090967",
+          "https://www.presseportal.de/blaulicht/pm/14981/6022777",
+          "https://www.bundestag.de/dokumente/textarchiv/2026/kw09-de-immunitaet-1139504",
+          "https://www.diesachsen.de/justiz/ermittlungsverfahren-gegen-afd-politiker-krah-3017019",
+          "https://www.diesachsen.de/politik/ermittler-durchsuchen-weitere-objekte-im-verfahren-gegen-afd-politiker-krah-3108262"
+        ],
+        "corrections": [
+          "Indictment allegations distinguished from September 2025 trial findings",
+          "Current revision outcome not established by search",
+          "Krah investigation separate from assistant conviction and denial retained",
+          "February 2026 searches reported at third parties",
+          "Unnecessary disputed intimate family rumours omitted",
+          "Political contacts and ethnicity not treated as evidence of guilt"
+        ]
+      },
+      "outputs": {
+        "en": {
+          "file": "en/video_33.txt",
+          "title": "The assistant and the secrets",
+          "words": 1892,
+          "estimated_minutes": 16,
+          "reduction_percent": 48.4,
+          "sha256": "1cb870a305bd685f17dbcaa2676d5ea209b60e717900c34df45eb3eb01ab9227",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_33.txt",
+          "title": "El asistente y los secretos",
+          "words": 2055,
+          "estimated_minutes": 18,
+          "reduction_percent": 43.9,
+          "sha256": "ef5609b37b36e101f7cdd4b42b8bb1b6a325435d65efca8c8de0f51c65fba053",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_33.txt",
+          "title": "L'assistente e i segreti",
+          "words": 1941,
+          "estimated_minutes": 17,
+          "reduction_percent": 47.1,
+          "sha256": "3395c5be2cd82d0908dddd5d2ea9ce0948ad2ed201b9076d73382753825dfd5c",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_33.txt",
+          "title": "Assistenten og hemmelighetene",
+          "words": 1889,
+          "estimated_minutes": 16,
+          "reduction_percent": 48.5,
+          "sha256": "878eed96f5cd800cd9f5e886e6c1c117705575a5572319243947309a60d4ef44",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_33.txt",
+          "title": "O assistente e os segredos",
+          "words": 2019,
+          "estimated_minutes": 17,
+          "reduction_percent": 44.9,
+          "sha256": "429aff62d67fb430fb2cfb313aaa03362ac661c6e0c60bd816497f913942b8eb",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      }
+    },
+    {
+      "id": "video_34",
+      "source_number": 34,
+      "source_file": "sources/video_34.txt",
+      "source_words": 3763,
+      "source_sha256": "afed28860a6233b3b53e776d4a59caa8b3ff20a4ec77638e9ad147305af6ab3c",
+      "opening": "\"Jade ist gerade aufgewacht. Es ist 4 Uhr morgens. Sie ist in ihrer Wohnung irgendwo in England. Hier wohnt sie mit ihrem Freund Owen. Eigentlich sollte er nebe",
+      "target_words_after_reduction": [
+        1882,
+        3010
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "fact_check": {
+        "review_file": "sources/video_34_review.md",
+        "status": "five_languages_reviewed_integration_pending",
+        "corrections": [
+          "Naloxone can reverse nitazene overdose; repeat doses may be needed",
+          "Potency is substance specific; omit lethal dose calculations",
+          "Ahmed is a fictional illustrative figure",
+          "Afghan supply collapse is historical, not proof of permanent disappearance",
+          "Latest October 2026 UN survey needs durable primary source before exact figures",
+          "Omit drug purchasing walkthrough and unverified personal medical details"
+        ]
+      },
+      "outputs": {
+        "en": {
+          "file": "en/video_34.txt",
+          "title": "Hidden in a tablet",
+          "words": 1947,
+          "estimated_minutes": 17,
+          "reduction_percent": 48.3,
+          "sha256": "1761624eb4dc49872228a265731d26e039f2fde85176814a019de141e00561b5",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_34.txt",
+          "title": "Oculto en una pastilla",
+          "words": 2134,
+          "estimated_minutes": 18,
+          "reduction_percent": 43.3,
+          "sha256": "a239b7478d342dc3331241d7f65742a836738f81f1cde36045a5ae259ae131ff",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_34.txt",
+          "title": "Nascosto in una pillola",
+          "words": 2018,
+          "estimated_minutes": 17,
+          "reduction_percent": 46.4,
+          "sha256": "6198442183e85fc23538421d65ba71188d24016faba6e1e6eca27c030210541f",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_34.txt",
+          "title": "Skjult i en tablett",
+          "words": 1908,
+          "estimated_minutes": 16,
+          "reduction_percent": 49.3,
+          "sha256": "73fde67c4e2c300875dee708f051cb26d278110800f948569cf0e83f448f4ac3",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_34.txt",
+          "title": "Escondido num comprimido",
+          "words": 2084,
+          "estimated_minutes": 18,
+          "reduction_percent": 44.6,
+          "sha256": "695586fcda1ab676503ef7155927a683ccb4d7e556069fad722d1105cd53499d",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      }
+    },
+    {
+      "id": "video_35",
+      "source_number": 35,
+      "source_file": "sources/video_35.txt",
+      "source_words": 3244,
+      "source_sha256": "2c17ddddf99948772a1848b946aea0a7c96419609218a409fcdca9e11b3ee711",
+      "opening": "\"Es gibt da diesen Konzern CNTC. Er taucht nicht in den Nachrichten auf. Er wird nicht an der Börse gehandelt. Der entsprechende Wikipediaartikel würde gerade m",
+      "target_words_after_reduction": [
+        1622,
+        2595
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "fact_check": {
+        "review_file": "sources/video_35_review.md",
+        "status": "five_languages_reviewed_integration_pending",
+        "corrections": [
+          "57.3 million is The Examination modeled attribution using IHME GBD, not WHO corporate death count",
+          "China adult smoking prevalence declined in 2018 to 2024 national surveys",
+          "Taxes plus profit and fiscal contribution are different accounting totals",
+          "China is FCTC treaty party, not CNTC",
+          "Low tar machine readings do not establish lower health risk"
+        ]
+      },
+      "outputs": {
+        "en": {
+          "file": "en/video_35.txt",
+          "title": "The state sells cigarettes",
+          "words": 1781,
+          "estimated_minutes": 15,
+          "reduction_percent": 45.1,
+          "sha256": "a56446c4e9abe17bc29778246dd13e05540e7df2cf3e3f72938418b8c99e934f",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_35.txt",
+          "title": "El Estado vende cigarrillos",
+          "words": 1946,
+          "estimated_minutes": 17,
+          "reduction_percent": 40.0,
+          "sha256": "feee7ab7d20b92fbfd347093f16b3c74db9b4025929bf5ca4a358626a77ac172",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_35.txt",
+          "title": "Lo Stato vende sigarette",
+          "words": 1828,
+          "estimated_minutes": 16,
+          "reduction_percent": 43.6,
+          "sha256": "02b51acc44dc843098a3cb012af4332564dfec9dd5871714079c7afdc4888479",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_35.txt",
+          "title": "Staten selger sigaretter",
+          "words": 1692,
+          "estimated_minutes": 15,
+          "reduction_percent": 47.8,
+          "sha256": "e265c21e0dea4c2a1ea0a323416e522712799037c7e0bc407e9362669f861a7d",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_35.txt",
+          "title": "O Estado vende cigarros",
+          "words": 1887,
+          "estimated_minutes": 16,
+          "reduction_percent": 41.8,
+          "sha256": "d7ca0081911a37c348e1d5a9efe43cf3e3e33ec9dbbcb53d1d26d40ff025e205",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      }
+    },
+    {
+      "id": "video_36",
+      "source_number": 36,
+      "source_file": "sources/video_36.txt",
+      "source_words": 3992,
+      "source_sha256": "a516ade05acf8befdf7d57da5fb1dbc866e44d01910e2a8bca8b966332ad800a",
+      "opening": "\"Eine Drohne beobachtet eine Villa in der Nähe eines Waldes. Plötzlich erfasst ihre Infrarotkamera einen Mann. Er umarmt zwei Kinder, dann eine Frau. Es ist ein",
+      "target_words_after_reduction": [
+        1996,
+        3194
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "fact_check": {
+        "review_file": "sources/video_36_review.md",
+        "status": "five_languages_reviewed_integration_pending",
+        "corrections": [
+          "Dated February 2026 death distinguished from provisional identification",
+          "July 2026 Treasury successor assessment supersedes source ending",
+          "Unverified 80 percent cartel death attribution omitted",
+          "Project Python indictments not convictions",
+          "2015 helicopter military and son specific evidence distinguished",
+          "Timeshare owner fraud not generic holiday rental fraud"
+        ]
+      },
+      "outputs": {
+        "en": {
+          "file": "en/video_36.txt",
+          "title": "After the cartel leader",
+          "words": 2057,
+          "estimated_minutes": 18,
+          "reduction_percent": 48.5,
+          "sha256": "eb1469f259254368bd5ccdd61433641d023466c28f95cbd51569ee1f96564278",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_36.txt",
+          "title": "Después del jefe del cartel",
+          "words": 2304,
+          "estimated_minutes": 20,
+          "reduction_percent": 42.3,
+          "sha256": "b96406029eca591ccd67144ccff6bbe89f3b80e55b4f233b33ee10689345e71e",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_36.txt",
+          "title": "Dopo il capo del cartello",
+          "words": 2159,
+          "estimated_minutes": 18,
+          "reduction_percent": 45.9,
+          "sha256": "ca41451605c5d353ed2f216a0a67f8bce1dea119c54a3a1ebebc56d5792e0307",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_36.txt",
+          "title": "Etter kartellsjefen",
+          "words": 2091,
+          "estimated_minutes": 18,
+          "reduction_percent": 47.6,
+          "sha256": "af8d24baa5cb95c448862482d55fcb90e608bc9817ff0a6c2a9cd54c9b9fbeae",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_36.txt",
+          "title": "Depois do chefe do cartel",
+          "words": 2242,
+          "estimated_minutes": 19,
+          "reduction_percent": 43.8,
+          "sha256": "f07b3236d44e9e2c578c84b8d5291c0c72f7da7ce8298aeba19b9a7992ca2b54",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      }
+    },
+    {
+      "id": "video_38",
+      "source_number": 38,
+      "source_file": "sources/video_38.txt",
+      "source_words": 4926,
+      "source_sha256": "85d702a0e271d49a70c71deee893864881df6442e5972599ee09de5a1cd392d3",
+      "opening": "\"Das ist Peter er ist seit vielen Jahren einer der wichtigsten Männer im Silicon Valley. Tal ist Multimilliardär und hat PayPal und Palantin mitgegründet. Er wa",
+      "target_words_after_reduction": [
+        2463,
+        3941
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "fact_check": {
+        "review_file": "sources/video_38_review.md",
+        "status": "five_languages_reviewed_integration_pending",
+        "corrections": [
+          "Thiel suffrage clarification retained alongside democracy critique",
+          "Gawker jury award distinguished from later settlement",
+          "Palantir capability claims and company denials distinguished",
+          "Erebor regulated banking approvals distinguished from unregulated crypto project",
+          "Prospera arbitration pending as of October 2026",
+          "Super PAC support not direct candidate contribution; Vance elected not appointed"
+        ]
+      },
+      "outputs": {
+        "en": {
+          "file": "en/video_38.txt",
+          "title": "Peter Thiel and power",
+          "words": 2540,
+          "estimated_minutes": 22,
+          "reduction_percent": 48.4,
+          "sha256": "6d8e12afbbda2328ad5ae9dcb6ec02c38658ec2500253bc76a4d4d9bcc9c0f2a",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_38.txt",
+          "title": "Peter Thiel y el poder",
+          "words": 2828,
+          "estimated_minutes": 24,
+          "reduction_percent": 42.6,
+          "sha256": "61e779e13256e9f15e6761fae431a6258c20f4b7d1d5d4f3202df57739137bcd",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_38.txt",
+          "title": "Peter Thiel e il potere",
+          "words": 2670,
+          "estimated_minutes": 23,
+          "reduction_percent": 45.8,
+          "sha256": "1899e3ef0c47c59e997c787ddde5f4f00769c1af03cf6902d0f19a71a7c3693f",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_38.txt",
+          "title": "Peter Thiel og makten",
+          "words": 2564,
+          "estimated_minutes": 22,
+          "reduction_percent": 47.9,
+          "sha256": "ad1b6efde608e467effdda18529a2262bac711a480ab7a6410c90956dc1976b5",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_38.txt",
+          "title": "Peter Thiel e o poder",
+          "words": 2716,
+          "estimated_minutes": 23,
+          "reduction_percent": 44.9,
+          "sha256": "b8055e5101a614add3a363eafa7aad75d424b1320494f2415b0e4d2e753322e5",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      }
+    },
+    {
+      "id": "video_39",
+      "source_number": 39,
+      "source_file": "sources/video_39.txt",
+      "source_words": 6619,
+      "source_sha256": "2d08b11b3a489f47c7c38794afce5a2f947555fdcc527082071d5d240ed23f52",
+      "opening": "\"Man kann wirklich sagen, ein Tsunami bewegt sich auf uns zu Zucker, Diabetes und das sind Kosten, die das ganze Land tragen muss. Seit Jahrzehnten ist sich die",
+      "target_words_after_reduction": [
+        3310,
+        5295
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "fact_check": {
+        "review_file": "sources/video_39_review.md",
+        "status": "five_languages_reviewed_integration_pending",
+        "corrections": [
+          "WHO free sugar and energy percentages not universal total-sugar maximum",
+          "Type 2 diabetes multifactorial; avoid direct blanket cancer claims",
+          "1980 US guidelines did advise limiting sugar",
+          "Project 259 animal and enzyme evidence not human cancer proof",
+          "October 2026 German cabinet tax plan supersedes source ending",
+          "UK beverage concentration reduction not all dietary sugar reduction",
+          "83 percent figures are conclusions in a small review sample, not all experiments",
+          "German October cabinet action was formulation aid for parliamentary amendment",
+          "Germany UK comparison uses matched 2015 to 2021 concentration data",
+          "Chile result concerns high-in household beverage purchases versus counterfactual"
+        ]
+      },
+      "outputs": {
+        "en": {
+          "file": "en/video_39.txt",
+          "title": "Who shapes our sweet tooth?",
+          "words": 3321,
+          "estimated_minutes": 28,
+          "reduction_percent": 49.8,
+          "sha256": "8036f1a3e9b33c249f6402889b98c86c3b1ae8cc3e3473dde6f7d90c55689b4c",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_39.txt",
+          "title": "¿Quién decide cuánto endulzamos?",
+          "words": 3325,
+          "estimated_minutes": 28,
+          "reduction_percent": 49.8,
+          "sha256": "4696be21e0b3ddc7a273c4ff119bf8a435b89e830a58d355d1b28a914db0478e",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_39.txt",
+          "title": "Chi decide quanto zucchero?",
+          "words": 3352,
+          "estimated_minutes": 28,
+          "reduction_percent": 49.4,
+          "sha256": "dd1c61ba04c3a4234ac66d405601476bf951515508f63a7d4f413ca4c3f89496",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_39.txt",
+          "title": "Hvem former søtsuget vårt?",
+          "words": 3375,
+          "estimated_minutes": 29,
+          "reduction_percent": 49.0,
+          "sha256": "2bf32e8b37fa6fa9e0ace685c57a0ed3582babcb53a5672ad8bb95d4bd113024",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_39.txt",
+          "title": "Quem decide quanto adoçamos?",
+          "words": 3498,
+          "estimated_minutes": 30,
+          "reduction_percent": 47.2,
+          "sha256": "7d74b4a889087fc9032b2996a69c296096944669bd4275c461a09e670ac80e5b",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      }
+    },
+    {
+      "id": "video_40",
+      "source_number": 40,
+      "source_file": "sources/video_40.txt",
+      "source_words": 4553,
+      "source_sha256": "c655cf2613b9e5eaf0dfc102d5325db2d2e817a0768c684d2f6107c4d78fc4d8",
+      "opening": "\"Das hier ist Propande Nummer 34. Ihr wurde gerade eine Substanz verabreicht, die [musik] als stärkste psychedelische Droge der Welt gilt. Die Substanz katapult",
+      "target_words_after_reduction": [
+        2276,
+        3642
+      ],
+      "ten_minutes_at_120wpm_possible": true,
+      "thirty_minutes_at_120wpm_possible": true,
+      "status": "source_extracted",
+      "languages": {
+        "en": "rewritten_reviewed",
+        "pt-BR": "rewritten_reviewed",
+        "es": "rewritten_reviewed",
+        "it": "rewritten_reviewed",
+        "nb": "rewritten_reviewed"
+      },
+      "fact_check": {
+        "review_file": "sources/video_40_review.md",
+        "status": "five_languages_reviewed_integration_pending",
+        "corrections": [
+          "Correct DMT chemical name and separate 5-MeO-DMT",
+          "Ayahuasca vine has pharmacological role",
+          "UN treaty adopted 1971 and effective 1976",
+          "Entity survey selected encounters, not all users",
+          "Rat DMT measurements do not prove human near-death cause",
+          "Connectivity findings not literal brain burnout",
+          "February 2026 small randomized depression study updates outlook"
+        ]
+      },
+      "outputs": {
+        "en": {
+          "file": "en/video_40.txt",
+          "title": "DMT and the feeling of reality",
+          "words": 2372,
+          "estimated_minutes": 20,
+          "reduction_percent": 47.9,
+          "sha256": "d9fe2ca3dad8616e8042b510ac2df31020be5f488683ce2ed0f6af9644f68a50",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "es": {
+          "file": "es/video_40.txt",
+          "title": "DMT y la sensación de realidad",
+          "words": 2415,
+          "estimated_minutes": 21,
+          "reduction_percent": 47.0,
+          "sha256": "559089eb4fac110a4932611c35032b38dacbebd543149c4eec8ab4c0afc4a289",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "it": {
+          "file": "it/video_40.txt",
+          "title": "DMT e il senso della realtà",
+          "words": 2325,
+          "estimated_minutes": 20,
+          "reduction_percent": 48.9,
+          "sha256": "2f818529951811c10649c66842b1d130aaf3da48b16413e31d40295cbc1d3369",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "nb": {
+          "file": "nb/video_40.txt",
+          "title": "DMT og følelsen av virkelighet",
+          "words": 2305,
+          "estimated_minutes": 20,
+          "reduction_percent": 49.4,
+          "sha256": "fa0e05b1a8b883b6f1bccd557763e11837e07ce070c981d722c44d5c2a1648f5",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        },
+        "pt-BR": {
+          "file": "pt-BR/video_40.txt",
+          "title": "DMT e a sensação de realidade",
+          "words": 2376,
+          "estimated_minutes": 20,
+          "reduction_percent": 47.8,
+          "sha256": "9b0d1d0a6195d109a5625cd480426e94e82242140452438d2988ee3a5bcdadbb",
+          "humanizer_review": "completed",
+          "factual_audit": "partial_primary_sources",
+          "app_integration": "pending"
+        }
+      }
+    }
+  ]
+}

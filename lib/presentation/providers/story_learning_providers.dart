@@ -9,6 +9,7 @@ import '../../models/home_models.dart';
 import '../../data/learning/practice_item_resolver.dart';
 import 'database_providers.dart';
 import 'deck_providers.dart';
+import 'bundled_stories_provider.dart';
 
 final practiceCatalogProvider = FutureProvider<PracticeCatalog>((ref) async {
   return PracticeCatalog.load(await ref.watch(contentRepositoryProvider.future));
@@ -88,9 +89,7 @@ class StoryLearningService {
         if (!result.canAdd || result.message != null) return result;
         final availability = storyAvailability(c);
         return StoryAddResult(result.state, cardId: result.cardId, message:
-          availability == StoryLearningAvailability.existingCard
-              ? 'Die vorhandene Lernkarte wird mit deiner Sammlung verknüpft.'
-              : availability == StoryLearningAvailability.approvedContext
+          availability == StoryLearningAvailability.approvedContext
               ? 'Ein geprüfter Übungssatz ist vorhanden.' : null);
 
       });
@@ -130,11 +129,15 @@ class StoryLearningService {
 
 }
 
-final libraryStoriesProvider = Provider<AsyncValue<List<Story>>>(
-  (ref) => ref
-      .watch(storySummariesProvider)
+final libraryStoriesProvider = Provider<AsyncValue<List<Story>>>((ref) {
+  final bundled = ref.watch(bundledStoriesProvider);
+  return bundled.when(
+    loading: () => const AsyncLoading(),
+    error: (e, s) => AsyncError(e, s),
+    data: (stories) => ref.watch(storySummariesProvider)
       .whenData(
         (values) => [
+          ...stories.map((s) => s.story),
           for (final s in values)
             Story(
               id: s.id,
@@ -145,4 +148,5 @@ final libraryStoriesProvider = Provider<AsyncValue<List<Story>>>(
             ),
         ],
       ),
-);
+  );
+});

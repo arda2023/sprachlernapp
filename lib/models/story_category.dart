@@ -49,16 +49,43 @@ class StoryCategory {
   );
   static const tech = StoryCategory('Technik', Color(0xFF1F6C8C), Icons.memory);
 
+  // Topics of the bundled stories in every language (31.10.2026); each
+  // gets its own colour so no shelf falls back to grey.
+  static const society = StoryCategory(
+    'Gesellschaft',
+    Color(0xFF8A3D99),
+    Icons.groups_outlined,
+  );
+  static const economy = StoryCategory(
+    'Wirtschaft',
+    Color(0xFF2F7D46),
+    Icons.trending_up,
+  );
+  static const crime = StoryCategory(
+    'Kriminalfälle',
+    Color(0xFF7A1F2E),
+    Icons.search,
+  );
+  static const job = StoryCategory(
+    'Arbeit',
+    Color(0xFF256B5A),
+    Icons.work_outline,
+  );
+
   /// Display order on the Stories tab.
   static const all = [
+    society,
     science,
-    restaurant,
-    work,
+    economy,
+    tech,
     travel,
+    restaurant,
     everyday,
+    job,
+    work,
     health,
     culture,
-    tech,
+    crime,
   ];
 
   static const _aliases = {'Küche': restaurant, 'Medizin': health};

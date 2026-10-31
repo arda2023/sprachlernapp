@@ -1,0 +1,67 @@
+Foguetes que voltam
+
+Antes da plataforma de lançamento
+
+Em 12 de junho de 2026, as ações da SpaceX começaram a ser negociadas na Nasdaq. O preço da oferta era de 135 dólares por ação. A oferta inicial levantou 75 bilhões de dólares, sem contar as ações adicionais previstas na opção concedida aos bancos coordenadores. A empresa reunia lançamentos espaciais, comunicações por satélite e, depois de uma aquisição, inteligência artificial. Sua história havia começado com um foguete bem menor.
+
+Elon Musk fundou a SpaceX em 2002, depois de ganhar dinheiro com negócios de internet. Ele havia crescido na África do Sul, se mudado para o Canadá e continuado os estudos nos Estados Unidos. A computação despertou seu interesse cedo. Antes de tentar enviar máquinas ao espaço, trabalhou para movimentar informações e pagamentos por redes de computadores.
+
+Nos anos noventa, Musk e seu irmão Kimbal ajudaram a construir a Zip2, que fornecia informações comerciais e guias digitais de cidades para jornais. A ideia ligava dados locais conhecidos a uma nova maneira de alcançar leitores. Um jornal podia oferecer mais do que páginas impressas, enquanto os negócios apareciam num diretório acessível pelo computador.
+
+Fazer uma empresa crescer também significava lidar com investidores e mudanças na direção. Musk não manteve o controle completo do negócio que havia ajudado a fundar. A Compaq adquiriu a Zip2 em 1999, dando a ele dinheiro para investir em outros projetos. Sua próxima grande iniciativa, a X.com, tinha como foco os serviços financeiros pela internet.
+
+A X.com se fundiu com a Confinity, e o negócio resultante acabou se tornando o PayPal. Musk perdeu o cargo de diretor executivo, mas continuou como acionista. Em 2002, o eBay adquiriu o PayPal numa operação avaliada em cerca de 1,5 bilhão de dólares. A venda forneceu recursos para projetos com riscos bem diferentes dos de um serviço de pagamentos digitais.
+
+Construir uma empresa espacial
+
+A SpaceX precisava de engenheiros, equipamentos e lugares para testar o que construía. Um erro de software podia ser corrigido antes da distribuição de outra versão. Um lançamento fracassado podia destruir o veículo e sua carga em segundos. Cada tentativa dependia do funcionamento conjunto de motores, estruturas e sistemas de controle, com pouca margem para erros depois que o foguete deixava o chão.
+
+O primeiro veículo foi o Falcon 1. A equipe trabalhava na ilha de Omelek, nas Ilhas Marshall, longe dos escritórios e fábricas associados à indústria de tecnologia dos Estados Unidos. Transportar equipamentos e preparar lançamentos naquele lugar acrescentava dificuldades práticas ao trabalho de engenharia. A decolagem era a parte visível de uma longa sequência de tarefas.
+
+O primeiro voo do Falcon 1, em março de 2006, fracassou. A segunda tentativa também não chegou à órbita. Um terceiro voo, em agosto de 2008, terminou após um problema na separação dos estágios. Cada falha produzia informação, mas era caro aprender dessa maneira. A empresa ainda precisava construir outro veículo e preparar tudo para mais um lançamento.
+
+Em 2008, Musk também estava bastante envolvido com a Tesla, fabricante de carros elétricos. Os dois negócios precisavam de dinheiro enquanto tentavam resolver problemas difíceis de produção. A crise financeira complicou a busca por recursos. Os investidores tinham motivos para ser cautelosos, e uma promessa de sucesso futuro não pagava as contas daquele mês.
+
+O quarto lançamento do Falcon 1 aconteceu em 28 de setembro de 2008. Dessa vez, o foguete alcançou a órbita. Foi o primeiro foguete de combustível líquido desenvolvido de forma privada a conseguir isso. Para a SpaceX, o resultado demonstrava algo que as tentativas anteriores não haviam provado: o veículo podia completar a tarefa principal para a qual tinha sido construído.
+
+O sucesso não apagava o custo dos voos que deram errado. Mas oferecia uma base mais sólida para conseguir trabalho. Em dezembro de 2008, a NASA concedeu à SpaceX um contrato de 1,6 bilhão de dólares para doze missões de abastecimento da Estação Espacial Internacional. O futuro da empresa ficava ligado a entregas das quais outras pessoas dependeriam.
+
+Entregar e voltar
+
+A SpaceX desenvolveu o foguete maior Falcon 9 e a nave Dragon. Seu trabalho passou da demonstração de que um veículo podia alcançar a órbita para a prestação de um serviço de transporte. Um cliente que pagava por uma missão precisava de mais do que uma apresentação impressionante. A carga tinha de chegar, e o fornecedor precisava preparar o próximo voo também.
+
+Em maio de 2012, a Dragon foi a primeira nave comercial a se conectar à Estação Espacial Internacional, entregar carga e retornar à Terra. A missão fazia parte de uma mudança mais ampla na contratação de transporte pela NASA. A SpaceX já tinha experiência perto de um destino habitado, com exigências que iam muito além do lançamento.
+
+Outro problema era o destino dos componentes caros depois de sua primeira utilização. Um foguete convencional descartava estágios durante a subida. Grande parte do veículo se perdia após um único voo. A SpaceX queria recuperar o primeiro estágio do Falcon 9 e, mais adiante, utilizar os propulsores recuperados em novas missões.
+
+Trazer um propulsor de volta era difícil. Ele precisava se separar, mudar a trajetória e controlar a descida. O pouso exigia precisão e combustível restante em quantidade suficiente. Várias tentativas terminaram em colisões ou explosões. O vídeo de um pouso fracassado mostrava apenas os últimos segundos de um trabalho que incluía cálculos, fabricação e ajustes repetidos.
+
+Em dezembro de 2015, um primeiro estágio do Falcon 9 retornou a uma plataforma na Flórida e ficou em pé. Acima dele, o segundo estágio continuava a missão de colocar satélites de comunicação em órbita. O propulsor que voltou não tinha dado uma volta completa na Terra. Era uma parte de um veículo de lançamento orbital que regressava depois de cumprir sua função na subida.
+
+A recuperação abriu caminho para usar componentes caros em outras missões. A vantagem financeira dependia das inspeções e dos reparos necessários, além da quantidade de voos que um propulsor conseguiria realizar. Um pouso isolado não estabelecia um preço novo para todos os lançamentos. A reutilização precisava virar um processo repetível e confiável para os clientes.
+
+Satélites e um veículo maior
+
+A Starlink dava à SpaceX um motivo contínuo para lançar muitos satélites. A rede oferecia conexões de internet por meio de satélites em órbita, inclusive em lugares onde as conexões convencionais eram limitadas. Ela ligava os lançamentos espaciais a um serviço de comunicação utilizado por clientes em terra.
+
+Lançar satélites para uma rede própria era diferente de transportar uma carga para um cliente externo. A SpaceX precisava considerar o sistema inteiro, com veículos trabalhando juntos para prestar o serviço. A capacidade de lançamento era só uma parte da operação. Os equipamentos dos assinantes e os enlaces de comunicação também tinham de funcionar.
+
+A empresa desenvolvia ainda a Starship, um veículo muito maior destinado a transportar pessoas e carga em missões ambiciosas. Os planos de Musk incluíam viagens a Marte. Esses objetivos exigiam soluções de engenharia difíceis, mas um destino proposto ainda não era uma viagem realizada. O desenvolvimento continuava dependendo de testes, infraestrutura e autorização dos órgãos reguladores.
+
+A diferença importava ao falar sobre a empresa. As missões Falcon, a internet por satélite e as futuras viagens a Marte pertenciam à SpaceX, mas estavam em etapas diferentes. Um usuário de internet comprava um serviço existente. Um investidor que considerava uma missão distante avaliava uma possibilidade com dificuldades ainda sem solução.
+
+Enquanto isso, Musk passou a atuar em outros negócios. Comprou o Twitter em 2022, depois mudou o nome da plataforma para X e fundou a xAI em 2023. Suas atividades já incluíam uma rede social e o desenvolvimento de inteligência artificial, além de veículos elétricos e transporte espacial. Cada negócio envolvia clientes, custos e concorrentes diferentes.
+
+Vários negócios na mesma empresa
+
+Em fevereiro de 2026, a SpaceX anunciou a aquisição da xAI. A operação trouxe inteligência artificial para a organização da empresa espacial. Também reuniu atividades que os investidores teriam de examinar em conjunto, em vez de tratar a SpaceX apenas como uma fornecedora de lançamentos de foguetes.
+
+Uma das conexões propostas envolvia computação em órbita. A inteligência artificial precisava de grande capacidade de processamento, que exigia energia e refrigeração. A visão de Musk ligava veículos de lançamento, comunicações por satélite e infraestrutura de computação no espaço. Era uma proposta sobre o que esses negócios poderiam tornar possível juntos no futuro.
+
+A proposta ainda precisava de respostas técnicas e econômicas. Lançar equipamentos era só uma parte da operação de um serviço de computação. Os investidores tinham de considerar se a combinação de negócios entregaria as vantagens prometidas e quanto custaria construir os sistemas necessários. Ser dono de várias tecnologias não resolvia, por si só, se um projeto específico funcionaria.
+
+A oferta pública levou essas perguntas a um grupo maior de investidores. A SpaceX anunciou o preço das ações em 11 de junho de 2026, com o início das negociações no dia seguinte. A Nasdaq informou uma avaliação aproximada de 1,77 trilhão de dólares na oferta inicial. O número descrevia o valor da empresa pelo preço das ações, e não o dinheiro disponível numa conta bancária.
+
+A riqueza pessoal de Musk era uma questão diferente. As estimativas do patrimônio de um proprietário dependem em parte do valor atribuído às suas participações, que pode mudar. O valor de mercado de uma empresa não é igual à fortuna de seu fundador. Uma alta no preço das ações também não significa que ele tenha recebido aquele valor em dinheiro.
+
+Na época da oferta, a SpaceX havia passado das repetidas falhas do Falcon 1 à operação de serviços de lançamento e comunicação por satélite. Também havia incorporado novas atividades por meio de uma aquisição. Os investidores compravam uma participação nessa mistura de serviços em funcionamento e planos futuros. O capital captado podia financiar mais trabalho, enquanto a empresa continuava fabricando equipamentos, atendendo clientes e preparando a próxima missão.

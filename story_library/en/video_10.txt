@@ -1,0 +1,109 @@
+Inside a payment card
+
+A payment card looks like a small piece of plastic with a name and some numbers on it. In a demonstration, researchers remove much of that plastic and reveal a thin loop of metal connected to a tiny chip. The remains barely resemble a card. Yet when the antenna and chip are intact, the device can still communicate with a payment terminal. The printed surface was never the part doing the calculation.
+
+The experiment makes an everyday object unfamiliar. A card has no visible battery, screen or buttons. It cannot ask the user what to do. Somehow, when brought close to a reader, it receives energy, exchanges information and participates in a payment. Understanding that brief exchange leads through magnetic recording, miniature computers and a listening device once hidden in a diplomatic gift.
+
+These technologies share useful physical ideas, but their histories are not a single straight line. A modern payment system combines inventions from many people and organisations. The connection between a spy device and a bank card is especially revealing because both show that a small object can respond to an outside signal without carrying its own battery.
+
+A gift that listened
+
+In 1945, Soviet children presented the American ambassador in Moscow with a wooden carving of the Great Seal of the United States. It was displayed in his residence. Inside the carving was a hidden listening device that remained undiscovered until 1952. American investigators came to call it the Thing.
+
+The device was unusual because it did not continuously transmit. It had an antenna and a resonant cavity with a thin membrane. Radio energy directed towards it from outside made it respond. Speech near the carving moved the membrane, altering that response. A receiver outside could recover the sound from changes in the returning signal.
+
+When the outside transmitter was switched off, the device became much harder to find through a search for active radio signals. There was no battery inside that needed regular replacement. The energy used for the radio response came from elsewhere. Its silence between listening sessions was part of what made it effective.
+
+The essential idea is resonance. A physical system can respond much more strongly at some frequencies than at others. A tuning fork provides a familiar example with sound. An electrical structure also has properties that determine how it responds to an alternating signal. Change those properties and its response changes too.
+
+In the hidden microphone, sound moved a flexible surface in the cavity. That movement changed the electrical behaviour of the structure and modulated the returned radio signal. The radio signal carried the conversation because its properties varied with the sound. The membrane did not need to generate all the energy required to reach the receiver. It altered energy supplied by the external transmitter.
+
+This is a useful distinction between providing power and carrying information. A relatively small physical change can encode information in a much larger energy flow. The same general principle appears in many electronic systems, although the exact circuits, frequencies and methods differ. A modern card does not contain a secret microphone, but it also uses an externally supplied field to help communicate.
+
+Paper before electronics
+
+While intelligence agencies explored radio devices, banks were trying to make ordinary purchases easier. Paying with cash required carrying enough money. Cheques introduced their own delays and uncertainties. Cards offered a way to connect a purchase with an account, but the early payment process still depended heavily on paper.
+
+Bank of America launched BankAmericard in 1958. It became an important general purpose bank card programme and later developed into Visa. It was not the beginning of every form of consumer credit or payment card. Retailers and other businesses had already offered different ways to buy now and pay later. BankAmericard helped expand a model that could be used across many participating merchants.
+
+The raised letters and numbers on older cards served a practical purpose. A merchant could place the card in an imprinter and transfer its details onto a paper form. Copies created a record for the parties involved. Processing those records took work, and a transaction did not become electronically verified simply because the numbers had been copied clearly.
+
+The problem involved both speed and trust. A merchant needed to know whether to accept the payment. A bank needed to recognise the account and eventually settle the transaction. A stolen card or a convincing copy could exploit delays between a purchase and the discovery of fraud. Making information easier for machines to read offered one way to improve the process.
+
+A strip of recorded data
+
+IBM engineer Forrest Parry worked on attaching magnetic tape to plastic identity cards in the early 1960s. According to IBM's account, he struggled to find a reliable attachment method until his wife suggested using the iron she was holding. Heat helped solve a practical manufacturing problem. The story is memorable because a small detail stood between a workable concept and a useful object.
+
+A magnetic stripe stores data through patterns of magnetisation. As the card moves past a suitable reading head, those patterns produce signals that electronics can interpret. The stripe does not think about a purchase or decide whether the person holding it is entitled to use it. It supplies recorded information.
+
+That machine readable record helped card systems become faster. A reader could capture details without someone typing every character. Combined with terminals, communications networks and bank computers, it supported quicker checks. The stripe alone did not perform those checks. Its importance came from making the card a convenient part of a larger electronic system.
+
+The weakness was that its information was largely static. Reading the same stripe again produced the same stored data. If criminals captured that data, they could sometimes reproduce it on another stripe and present the copy where such transactions were accepted. The copied card did not need to know anything secret beyond the information it had reproduced.
+
+This helps explain why copying and authentication are different problems. A reader may receive perfectly legible data while still being unable to tell whether it came from the original card. Faster communication can help a bank detect suspicious behaviour, but speed alone does not make a static record impossible to duplicate.
+
+Historical demonstrations of magnetic stripes make this weakness visible. They should not be confused with proof that every modern payment can be copied in the same way. Payment systems have changed, and acceptance rules differ. The important lesson is the limitation of using an unchanging record as evidence that a physical object is genuine.
+
+A computer in the card
+
+The chip changed what a payment card could do. Instead of only presenting stored information, it could carry out calculations using protected secret material. The EMV standards describe how chips and terminals interact in payment systems. Their name comes from the original participating organisations, Europay, Mastercard and Visa.
+
+In a simplified online transaction, the terminal supplies information about the purchase. The card uses selected transaction data and internal information to calculate a cryptographic value, often called a cryptogram. The issuer can check the result using its corresponding secret material. This provides evidence that the transaction came from a card able to perform the required calculation.
+
+The process is not simply a matter of hiding the account number. Some data can remain readable while the secret used to generate the cryptographic response stays inside the chip. The security benefit comes from producing a response tied to the transaction, rather than merely repeating a fixed record that anyone could replay.
+
+Capturing one valid exchange therefore does not normally provide everything needed to create arbitrary future chip transactions. A copy of visible card data lacks the protected secret. Modern chips also incorporate measures intended to resist attempts to read sensitive internal information directly. These protections make copying much harder than duplicating a magnetic stripe, without turning the system into something beyond all possible attack.
+
+The full payment process contains more than this simplified exchange. Different transaction types and card configurations use different checks. Some decisions can involve offline capabilities. A valid cryptographic response also does not automatically mean that the bank will approve the purchase. Available funds, risk controls and other rules still matter.
+
+Checking the card and checking its holder are separate tasks. A chip can help establish that a genuine card is present. A PIN or another verification method can help establish that the person using it is authorised. Not every chip payment requires a PIN, and PIN rules vary. Treating chip technology and PIN entry as the same thing hides an important part of the design.
+
+The change reduced an easy route to counterfeit fraud, but criminals could look elsewhere. Stealing a genuine card, obtaining personal information or deceiving a customer involves different weaknesses. A successful improvement in one part of the system can shift fraud towards another part. It does not remove the need to protect the rest of the payment process.
+
+Power without a battery
+
+A card inserted into a terminal can use its metal contacts for communication and power. Contactless cards must achieve the exchange without those contacts. The reader supplies a changing electromagnetic field, and a loop inside the card couples to that field. Electrical current can be induced in the loop and converted into a form the chip can use.
+
+This is why the loop revealed in the opening experiment matters. The tiny chip cannot perform the same contactless exchange by itself after its antenna connection has been broken. The antenna is part of the path through which the card obtains energy and communicates. The plastic normally keeps these delicate components in the right position and protects them from damage.
+
+The chip can vary the electrical load presented by its circuit. Those variations affect the coupled system in a way the reader can detect. In this manner, the card sends information back while relying on power supplied from outside. It is not broadcasting like a large radio station with its own substantial power supply.
+
+Contactless payment operates within the wider family of radio identification technologies. RFID covers several approaches, with different frequencies, ranges and uses. A warehouse label and a payment card do not necessarily behave alike merely because both can be read without a wire. The details of their design determine how they receive energy and return data.
+
+NFC, or near field communication, operates at a base frequency of 13.56 megahertz. At the short distances used by ordinary payment readers, magnetic coupling is central to the exchange. This remains radio technology governed by electromagnetism. Saying that contactless cards abandoned radio and use something entirely separate would give the wrong picture.
+
+The usual operating distance is short, which makes an intentional tap convenient and reduces accidental interactions. But a short normal range should not be mistaken for a universal security boundary. Equipment, antenna arrangements and the kind of interaction affect what is possible. The payment's cryptographic checks remain important even when the card is very close to the terminal.
+
+The move to contactless payment also required coordination. A customer needed a suitable card, and a shop needed a compatible terminal. Neither side gained much from upgrading if the other could not use the new feature. Banks, merchants and customers therefore adopted the technology at different speeds. The visible act of tapping was simple, but making it widely available involved equipment, software, testing and decisions about cost. This helps explain why a technically possible payment method did not immediately replace every older one.
+
+What a reader can learn
+
+Seeing a contactless reader display a card number can feel alarming. Depending on the card and application, some information may indeed be readable during contactless communication. That observation needs to be interpreted carefully. Reading a number is not the same as extracting the chip's secret or producing a functional copy of its cryptographic abilities.
+
+At the same time, readable information should not be dismissed as completely harmless. A card number and expiry date are personal financial information. Their misuse depends on what other information an attacker obtains and which checks a merchant or payment system applies. Security is not well explained by claiming that every online purchase always requires the same printed code.
+
+The code printed on a physical card is also different from the changing cryptographic value produced by a chip. These are separate mechanisms serving different parts of the payment system. Calling both of them a security code without explaining the difference can make it sound as though reading one must reveal the other.
+
+An unauthorised charge, a copied magnetic stripe and a relayed contactless exchange are different kinds of problem. They do not require identical access or fail for identical reasons. A demonstration of one should not be presented as proof of all the others. In particular, obtaining a response from a genuine card is different from manufacturing a second card that can independently generate future valid responses.
+
+Claims about payment limits also require context. Rules can depend on the country, issuer, payment network, merchant, terminal and method of verifying the customer. There is no single worldwide amount that defines every contactless purchase. The lack of one universal legal ceiling does not mean every terminal will accept any amount from any card without checks.
+
+Notifications can help a customer notice an unexpected payment sooner. They are a way to observe activity, not a mechanism that prevents every unauthorised transaction. The account provider remains the appropriate place to report a suspicious charge or block a lost card. Physical shielding may reduce some radio interactions, but it does not address every way payment information can be misused.
+
+The card inside a phone
+
+A mobile wallet adds another arrangement of hardware, software and payment credentials. Apple Pay, for example, uses a device account number and a dynamic security value for supported purchases instead of sending the merchant the actual payment card number. This is a form of tokenisation. Replacing the account identifier used in a particular exchange can limit the usefulness of data exposed there.
+
+For an ordinary payment, the device can also require the user to authenticate with a face, fingerprint or passcode. This adds a check that a simple plastic card cannot perform by itself. The secure payment component and the phone's authentication features work together, but they are not a reason to assume that every wallet function follows exactly the same rules.
+
+Express travel features provide an important example. Some supported uses are deliberately designed to work without the usual authentication step. That can make passing through a station gate much easier. It also means that a statement such as a locked phone can never make a payment is too broad. The relevant question is which feature, credential and transaction are involved.
+
+The source demonstration ends by teasing an attempted payment with a locked phone. A dramatic ending is not enough to establish a general result. Without the full method, configuration and outcome, it cannot show that every locked phone or every mobile wallet is vulnerable in the same way. A useful explanation needs those boundaries as much as it needs the surprising moment.
+
+Several systems in one tap
+
+The speed of a tap can hide how many jobs are being performed. A field supplies power. Circuits exchange data. Cryptographic calculations help authenticate the payment. Separate rules decide whether the customer must verify their identity and whether the transaction should be authorised. Networks and institutions then handle the financial records and movement of funds.
+
+Each stage solves a different problem. Improving one stage can make another limitation more noticeable. A magnetic stripe made information easier to read, but its static data was easy to copy. A chip introduced calculations that were harder to reproduce. Contactless communication removed the need to insert the card while retaining cryptographic protection. Mobile wallets added different credentials and ways to verify the person paying.
+
+The card in a wallet is therefore more than its printed numbers, and less than the entire payment system. It is one carefully designed participant in a much larger exchange. The remarkable part is not that a small piece of plastic is perfectly secure. It is that a tiny powered circuit, a nearby reader and a chain of institutions can usually turn a brief gesture into an accepted payment.

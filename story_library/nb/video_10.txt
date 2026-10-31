@@ -1,0 +1,111 @@
+Inne i et betalingskort
+
+Et betalingskort ser ut som et lite stykke plast med et navn og noen tall på. I en demonstrasjon fjerner forskere mye av plasten og avdekker en tynn metallsløyfe som er koblet til en liten brikke. Restene ligner knapt på et kort. Likevel kan innretningen fortsatt kommunisere med en betalingsterminal når antennen og brikken er uskadd. Den trykte overflaten var aldri den delen som utførte beregningene.
+
+Forsøket gjør en hverdagslig gjenstand fremmed. Kortet har verken synlig batteri, skjerm eller knapper. Det kan ikke spørre brukeren hva som skal skje. Likevel mottar det energi, utveksler informasjon og deltar i en betaling når det holdes nær en leser. For å forstå dette korte møtet må vi innom magnetisk lagring, svært små datamaskiner og en lytteinnretning som en gang var skjult i en diplomatisk gave.
+
+Disse teknologiene deler nyttige fysiske ideer, men historiene deres følger ikke én rett linje. Et moderne betalingssystem kombinerer oppfinnelser fra mange mennesker og organisasjoner. Forbindelsen mellom en skjult mikrofon og et bankkort er interessant fordi begge viser at en liten gjenstand kan reagere på et signal utenfra uten å bære sitt eget batteri.
+
+En gave som lyttet
+
+I 1945 ga sovjetiske barn den amerikanske ambassadøren i Moskva en utskåret treutgave av USAs store segl. Den ble hengt opp i boligen hans. Inne i utskjæringen lå en skjult lytteinnretning som ikke ble oppdaget før i 1952. Amerikanske etterforskere ga den etter hvert navnet Tingen.
+
+Innretningen var uvanlig fordi den ikke sendte kontinuerlig. Den besto blant annet av en antenne og et resonant hulrom med en tynn membran. Radioenergi sendt mot den utenfra fikk den til å svare. Tale nær utskjæringen beveget membranen og endret svaret. En mottaker utenfor kunne gjenskape lyden fra endringene i signalet som kom tilbake.
+
+Når senderen utenfor ble slått av, var det langt vanskeligere å finne innretningen ved å lete etter aktive radiosignaler. Det fantes ikke noe batteri inni som måtte skiftes regelmessig. Energien til radioresponsen kom fra et annet sted. Stillheten mellom periodene med avlytting var en del av det som gjorde innretningen effektiv.
+
+Den sentrale ideen er resonans. Et fysisk system kan reagere mye sterkere på enkelte frekvenser enn på andre. En stemmegaffel er et kjent eksempel med lyd. En elektrisk struktur har også egenskaper som bestemmer hvordan den reagerer på et vekslende signal. Hvis disse egenskapene endres, endres responsen.
+
+I den skjulte mikrofonen beveget lyd en bøyelig overflate i hulrommet. Bevegelsen endret den elektriske oppførselen til strukturen og modulerte radiosignalet som ble sendt tilbake. Signalet bar samtalen fordi egenskapene varierte sammen med lyden. Membranen trengte ikke å produsere all energien som var nødvendig for å nå mottakeren. Den forandret energi som senderen utenfor allerede hadde tilført.
+
+Her er det nyttig å skille mellom å levere kraft og å formidle informasjon. En ganske liten fysisk forandring kan legge informasjon inn i en langt større strøm av energi. Det samme generelle prinsippet finnes i mange elektroniske systemer, selv om kretsene, frekvensene og metodene er forskjellige. Et moderne kort inneholder ingen hemmelig mikrofon, men bruker også et felt utenfra for å kunne kommunisere.
+
+Papir før elektronikk
+
+Mens etterretningstjenester undersøkte radioinnretninger, forsøkte banker å gjøre vanlige kjøp enklere. Kontant betaling krevde at folk hadde med seg nok penger. Sjekker ga andre forsinkelser og usikkerheter. Kort tilbød en måte å koble et kjøp til en konto på, men de tidlige betalingsprosessene var fortsatt i stor grad avhengige av papir.
+
+Bank of America lanserte BankAmericard i 1958. Det ble et viktig bankkort som kunne brukes hos mange ulike forhandlere, og utviklet seg senere til Visa. Det var ikke begynnelsen på alle former for forbrukerkreditt eller betalingskort. Butikker og andre virksomheter hadde allerede tilbudt ordninger der kunden kjøpte nå og betalte senere. BankAmericard bidro til å spre en modell som mange tilknyttede brukersteder kunne godta.
+
+De opphøyde bokstavene og tallene på eldre kort hadde en praktisk funksjon. Butikken kunne plassere kortet i en avtrykksmaskin og overføre opplysningene til et papirskjema. Kopier ga de involverte partene en registrering av kjøpet. Behandlingen av disse papirene krevde arbeid. At tallene var tydelig kopiert, betydde ikke at betalingen var kontrollert elektronisk.
+
+Problemet handlet både om hastighet og tillit. Butikken måtte vite om betalingen burde godtas. Banken måtte kjenne igjen kontoen og etter hvert gjøre opp transaksjonen. Et stjålet kort eller en overbevisende kopi kunne utnytte tiden mellom kjøpet og oppdagelsen av svindel. Å gjøre opplysningene lettere å lese med maskiner var én måte å forbedre prosessen på.
+
+En stripe med lagrede data
+
+Tidlig på sekstitallet arbeidet ingeniøren Forrest Parry hos IBM med å feste magnetbånd til identitetskort av plast. Ifølge IBMs egen fremstilling slet han med å finne en pålitelig festemetode. Kona foreslo å bruke strykejernet hun holdt i hånden. Varmen bidro til å løse et praktisk produksjonsproblem. Historien er minneverdig fordi en liten detalj sto mellom en god idé og en nyttig gjenstand.
+
+En magnetstripe lagrer data som mønstre av magnetisering. Når kortet beveges forbi et egnet lesehode, gir mønstrene signaler som elektronikken kan tolke. Stripen tenker ikke over kjøpet og avgjør ikke om personen som holder kortet, har rett til å bruke det. Den leverer bare informasjon som allerede er lagret.
+
+Denne registreringen gjorde kortsystemene raskere. En leser kunne hente opplysninger uten at noen skrev inn hvert tegn. Sammen med terminaler, kommunikasjonsnett og bankenes datamaskiner støttet den raskere kontroller. Stripen utførte ikke disse kontrollene alene. Betydningen lå i at den gjorde kortet til en praktisk del av et større elektronisk system.
+
+Svakheten var at opplysningene i stor grad var statiske. En ny lesing av den samme stripen ga de samme dataene. Dersom kriminelle fikk tak i dem, kunne de i noen tilfeller gjenskape dem på en annen stripe og bruke kopien der slike betalinger ble godtatt. Det kopierte kortet trengte ikke å kjenne noen hemmelighet utover informasjonen som var blitt gjengitt.
+
+Dette viser hvorfor kopiering og autentisering er forskjellige problemer. En leser kan motta helt lesbare data uten å vite om de kommer fra det opprinnelige kortet. Raskere kommunikasjon kan hjelpe banken med å oppdage mistenkelig aktivitet. Hastighet alene gjør likevel ikke en uforanderlig registrering umulig å kopiere.
+
+Historiske demonstrasjoner av magnetstriper gjør svakheten synlig. De er ikke bevis for at alle moderne betalinger kan kopieres på samme måte. Betalingssystemene har endret seg, og reglene for hva som godtas, varierer. Den viktige lærdommen er begrensningen ved å bruke en fast opplysning som bevis på at en fysisk gjenstand er ekte.
+
+En datamaskin i kortet
+
+Brikken endret hva et betalingskort kunne gjøre. I stedet for bare å vise lagret informasjon kunne det utføre beregninger med beskyttede hemmelige data. Standardene som kalles EMV, beskriver hvordan brikker og terminaler samhandler i betalingssystemer. Navnet kommer fra de opprinnelige deltakerne Europay, Mastercard og Visa.
+
+I en forenklet betaling med forbindelse til utstederen leverer terminalen opplysninger om kjøpet. Kortet bruker utvalgte transaksjonsdata og intern informasjon til å beregne en kryptografisk verdi, ofte kalt et kryptogram. Utstederen kan kontrollere resultatet ved hjelp av sine tilsvarende hemmelige data. Det gir grunnlag for å vurdere om transaksjonen kommer fra et kort som kan utføre den nødvendige beregningen.
+
+Prosessen handler ikke bare om å skjule kontonummeret. Noen opplysninger kan fortsatt være lesbare, mens hemmeligheten som brukes til å lage svaret, forblir inne i brikken. Sikkerhetsfordelen ligger i at svaret er knyttet til transaksjonen. Kortet gjentar ikke bare en fast registrering som hvem som helst kan sende inn på nytt.
+
+Å fange opp én gyldig utveksling gir derfor normalt ikke alt som trengs for å lage vilkårlige nye betalinger. En kopi av synlige kortdata mangler den beskyttede hemmeligheten. Moderne brikker har også tiltak som skal motstå forsøk på å lese følsom intern informasjon direkte. Dette gjør kopiering mye vanskeligere enn for en magnetstripe, uten at systemet dermed blir umulig å angripe.
+
+Hele betalingsprosessen inneholder mer enn dette forenklede eksemplet. Når vi vurderer et forsøk, må vi derfor vite hvilke opplysninger kortet mottok, hvilke kontroller terminalen utførte, og hvem som tok den endelige avgjørelsen. Et utslag på en leser forteller ikke alene at penger har skiftet eier. Det kan bare vise at kommunikasjonen startet eller at bestemte data ble lest. Dette er en viktig forskjell når korte demonstrasjoner brukes til å beskrive sikkerheten i et helt betalingsnettverk. Forskjellige transaksjoner og kortoppsett bruker ulike kontroller. Enkelte avgjørelser kan støtte seg på funksjoner som virker uten forbindelse til utstederen. Et gyldig kryptografisk svar betyr heller ikke automatisk at banken godkjenner kjøpet. Tilgjengelige penger, risikokontroller og andre regler har fortsatt betydning.
+
+Å kontrollere kortet og å kontrollere personen som bruker det, er to separate oppgaver. Brikken kan bidra til å vise at et ekte kort er til stede. En personlig kode eller en annen kontroll kan bidra til å vise at brukeren er autorisert. Ikke alle betalinger med brikke krever kode, og reglene varierer. Å behandle brikken og inntasting av kode som samme ting skjuler en viktig del av systemet.
+
+Endringen reduserte en enkel vei til svindel med falske kort, men kriminelle kunne lete andre steder. Å stjele et ekte kort, skaffe personopplysninger eller lure en kunde utnytter andre svakheter. En vellykket forbedring i én del kan flytte svindelen til en annen del. Behovet for å beskytte resten av betalingsprosessen forsvinner ikke.
+
+Strøm uten batteri
+
+Et kort som settes inn i en terminal, kan bruke metallkontaktene til både strøm og kommunikasjon. Et kontaktløst kort må få til utvekslingen uten disse kontaktene. Leseren lager et skiftende elektromagnetisk felt, og en sløyfe inne i kortet kobles til feltet. Det kan induseres elektrisk strøm i sløyfen, som deretter omformes til noe brikken kan bruke.
+
+Derfor er sløyfen i det første forsøket viktig. Den lille brikken kan ikke gjennomføre den samme kontaktløse utvekslingen alene hvis forbindelsen til antennen er brutt. Antennen er en del av veien kortet bruker for å få energi og kommunisere. Plasten holder vanligvis de skjøre delene på plass og beskytter dem mot skader.
+
+Brikken kan endre den elektriske belastningen kretsen presenterer. Endringene påvirker det koblede systemet på en måte leseren kan registrere. Slik sender kortet informasjon tilbake mens det bruker energi som er levert utenfra. Det sender ikke som en stor radiostasjon med en egen, kraftig strømforsyning.
+
+Kontaktløs betaling hører til den større familien av teknologier for identifisering med radio. RFID omfatter flere metoder med ulike frekvenser, rekkevidder og bruksområder. En merkelapp på et lager og et betalingskort virker ikke nødvendigvis likt bare fordi begge kan leses uten ledning. Detaljene i utformingen bestemmer hvordan de mottar energi og returnerer data.
+
+NFC, eller nærfeltskommunikasjon, bruker en grunnfrekvens på 13,56 megahertz. På de korte avstandene vanlige betalingslesere bruker, står magnetisk kobling sentralt. Dette er fortsatt radioteknologi som følger elektromagnetismens lover. Å si at kortene sluttet å bruke radio og gikk over til noe helt atskilt, ville gi et feil bilde.
+
+Den vanlige rekkevidden er kort. Det gjør et bevisst trykk mot leseren enkelt og reduserer utilsiktede møter mellom kort og terminal. Men normal rekkevidde er ikke en universell sikkerhetsgrense. Utstyret, plasseringen av antennene og typen utveksling påvirker hva som er mulig. Kryptografiske kontroller er viktige også når kortet ligger helt inntil terminalen.
+
+Overgangen krevde dessuten samordning. Kunden trengte et passende kort, og butikken trengte en kompatibel terminal. Den ene parten hadde liten nytte av å oppgradere hvis den andre ikke kunne bruke den nye funksjonen. Banker, butikker og kunder tok derfor teknologien i bruk i forskjellig tempo. Den synlige bevegelsen var enkel, men utbredelsen krevde utstyr, programvare, testing og beslutninger om kostnader.
+
+Det forklarer hvorfor en betalingsmåte ikke straks erstattet alle eldre løsninger bare fordi den var teknisk mulig. Kortet måtte fungere i en verden av eksisterende systemer. En butikk kunne ikke uten videre forvente at alle kunder hadde fått nye kort, og en bank kunne ikke forvente at alle butikker hadde skiftet terminal. Overgangen handlet om mer enn selve brikken.
+
+Hva en leser kan finne ut
+
+Det kan virke skremmende når en kontaktløs leser viser kortnummeret. Avhengig av kortet og betalingsapplikasjonen kan enkelte opplysninger faktisk leses under kommunikasjonen. Observasjonen må tolkes nøye. Å lese et nummer er ikke det samme som å hente ut brikkens hemmelighet eller lage en fungerende kopi av dens kryptografiske evner.
+
+Samtidig bør lesbare data ikke avfeies som helt ufarlige. Kortnummer og utløpsdato er personlige økonomiske opplysninger. Muligheten for misbruk avhenger av hvilke andre data en angriper får tak i, og hvilke kontroller butikken eller betalingssystemet utfører. Det er misvisende å forklare sikkerheten med at alle kjøp på nettet alltid krever den samme trykte kontrollkoden.
+
+Koden som står på det fysiske kortet, er dessuten forskjellig fra den skiftende kryptografiske verdien brikken lager. Dette er separate mekanismer som brukes i ulike deler av systemet. Hvis begge bare omtales som en sikkerhetskode, kan det høres ut som om den som leser den ene, også kjenner den andre. Slik er ikke sammenhengen.
+
+En uautorisert belastning, en kopiert magnetstripe og en kontaktløs utveksling som videresendes, er forskjellige problemer. De krever ikke samme tilgang og feiler ikke av samme grunn. En demonstrasjon av ett problem beviser ikke alle de andre. Å få et ekte kort til å svare er noe annet enn å fremstille et nytt kort som på egen hånd kan lage gyldige svar i fremtiden.
+
+Påstander om beløpsgrenser trenger også sammenheng. Reglene kan avhenge av land, kortutsteder, betalingsnettverk, butikk, terminal og hvordan kunden blir kontrollert. Det finnes ikke ett globalt beløp som definerer alle kontaktløse kjøp. Fraværet av én universell lovbestemt grense betyr ikke at enhver terminal godtar ethvert beløp fra ethvert kort uten kontroll.
+
+Varsler kan hjelpe en kunde med å legge merke til en uventet betaling tidligere. De viser aktivitet, men forhindrer ikke alle uautoriserte transaksjoner. Kontotilbyderen er fortsatt riktig sted å melde fra om en mistenkelig belastning eller sperre et mistet kort. Fysisk skjerming kan redusere noen radiointeraksjoner, men dekker ikke alle måter betalingsopplysninger kan misbrukes på.
+
+Kortet inne i telefonen
+
+En mobil lommebok tilfører en annen kombinasjon av maskinvare, programvare og betalingsopplysninger. Apple Pay bruker for eksempel et eget kontonummer for enheten og en dynamisk sikkerhetsverdi ved støttede kjøp, i stedet for å sende butikkterminalen det faktiske kortnummeret. Dette er en form for tokenisering. Å bytte identifikatoren i en bestemt utveksling kan begrense nytten av data som blir eksponert der.
+
+Ved en vanlig betaling kan enheten også kreve at brukeren bekrefter seg med ansikt, fingeravtrykk eller kode. Det legger til en kontroll som et enkelt plastkort ikke kan utføre alene. Den sikre betalingskomponenten og telefonens identitetskontroller arbeider sammen. Det er likevel ingen grunn til å anta at alle funksjoner i lommeboken følger nøyaktig de samme reglene.
+
+Ekspressfunksjoner for transport er et viktig eksempel. Noen støttede bruksmåter er bevisst laget for å virke uten det vanlige trinnet med autentisering. Det gjør det enklere å passere en sperre på en stasjon. Samtidig betyr det at utsagnet om at en låst telefon aldri kan betale, er for generelt. Spørsmålet er hvilken funksjon, betalingslegitimasjon og transaksjon som brukes.
+
+Den opprinnelige demonstrasjonen avsluttes med en smakebit på et betalingsforsøk med en låst telefon. En dramatisk avslutning er ikke nok til å fastslå et generelt resultat. Uten hele metoden, oppsettet og utfallet viser den ikke at alle låste telefoner eller alle mobile lommebøker er sårbare på samme måte. En nyttig forklaring trenger disse grensene like mye som det overraskende øyeblikket.
+
+Flere systemer i én bevegelse
+
+Hastigheten i en kontaktløs betaling kan skjule hvor mange oppgaver som blir utført. Et felt leverer energi. Kretsene utveksler data. Kryptografiske beregninger bidrar til å autentisere betalingen. Separate regler avgjør om kunden må bekrefte identiteten sin, og om transaksjonen skal godkjennes. Nettverk og institusjoner håndterer deretter registreringene og flyttingen av penger.
+
+Hvert trinn løser et annet problem. En forbedring i ett trinn kan gjøre en annen begrensning tydeligere. Magnetstripen gjorde opplysninger enklere å lese, men de faste dataene var lette å kopiere. Brikken innførte beregninger som var vanskeligere å gjenskape. Kontaktløs kommunikasjon fjernet behovet for å sette inn kortet og beholdt kryptografisk beskyttelse. Mobile lommebøker la til andre identifikatorer og måter å kontrollere den som betaler på.
+
+Kortet i lommeboken er dermed mer enn tallene på overflaten, men mindre enn hele betalingssystemet. Det er én gjennomtenkt deltaker i en mye større utveksling. Det bemerkelsesverdige er ikke at et lite plaststykke er fullkomment sikkert. Det er at en liten krets, en leser i nærheten og en kjede av institusjoner vanligvis kan gjøre en kort bevegelse om til en godkjent betaling.

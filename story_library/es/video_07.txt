@@ -1,0 +1,47 @@
+Dinero sin un banco
+
+Una propuesta durante la crisis
+
+En 2008, la crisis financiera dañó la confianza en los bancos y en las instituciones encargadas de supervisarlos. Lehman Brothers quebró, los gobiernos organizaron ayudas de emergencia y muchas familias afrontaron la pérdida de sus viviendas. En ese contexto, una persona o grupo bajo el nombre de Satoshi Nakamoto publicó una propuesta para un sistema diferente de pagos electrónicos.
+
+El documento de Bitcoin apareció en octubre de 2008. Describía pagos sin una institución financiera encargada del registro central. El problema era conocido: si la información digital puede copiarse, ¿cómo impedir que alguien gaste dos veces el mismo dinero? Bitcoin proponía un historial compartido de transacciones, sostenido por criptografía y trabajo informático.
+
+El primer bloque se creó en enero de 2009. Incluía un titular de prensa sobre otro posible rescate bancario. El mensaje conectaba el nacimiento de Bitcoin con los acontecimientos financieros, aunque no explicaba todas las intenciones de su creador anónimo. Al principio, la red era un pequeño experimento seguido por personas interesadas en informática y dinero digital.
+
+En 2010, una transacción de diez mil bitcoins por dos pizzas pasó a formar parte de su historia. Mostraba que alguien aceptaba cambiar la nueva moneda por una compra corriente. Las posteriores subidas de precio hicieron que aquella cantidad pareciera extraordinaria. Entonces, los participantes todavía exploraban para qué podía servir el sistema.
+
+Un registro compartido
+
+Bitcoin agrupa transacciones en bloques conectados con bloques anteriores. Quienes ejecutan programas de validación comprueban que las transacciones y los bloques propuestos respeten las reglas. No necesitan aceptar un registro modificado simplemente porque alguien afirme que es correcto. Esas comprobaciones son esenciales para el funcionamiento de la red.
+
+Los mineros compiten para producir una prueba de trabajo válida. Realizan cálculos repetidos y consumen electricidad. El ganador puede proponer el siguiente bloque y recibir nuevas monedas y comisiones cuando este pasa a la cadena aceptada. Los demás participantes siguen comprobando su validez. La potencia informática no convierte un pago inválido en válido.
+
+El sistema hace costoso modificar un historial establecido, sin volverlo literalmente imposible. Un atacante con suficiente potencia de minería podría intentar reorganizar transacciones recientes o gastar dos veces los mismos fondos. Eso no le permitiría tomar libremente monedas de cualquier dirección. Describir el registro como imposible de atacar oculta las condiciones de su protección.
+
+La red también es distinta de los servicios empleados para acceder a ella. Una plataforma puede custodiar activos de sus clientes, mientras quien gestiona su propia cartera controla las claves necesarias. Robos, pérdida de credenciales o servicios deshonestos pueden causar pérdidas aunque las reglas de las transacciones sigan funcionando.
+
+Escasez y precio
+
+La emisión de Bitcoin sigue un calendario establecido en sus reglas actuales. La recompensa comenzó en cincuenta bitcoins por bloque y se reduce a la mitad cada 210.000 bloques, aproximadamente cada cuatro años. El calendario se acerca a un límite de veintiún millones de bitcoins. Es diferente de una moneda cuya oferta gestiona un banco central.
+
+Una oferta limitada no establece un precio estable. El interés por comprar puede aumentar o disminuir, y las cantidades que la gente acepta pagar pueden cambiar mucho. La escasez es uno de los motivos por los que sus partidarios lo valoran, pero no garantiza poder adquisitivo ni beneficios futuros. Conservar bitcoins puede generar pérdidas importantes, además de ganancias.
+
+Sus defensores suelen compararlo con el oro. Destacan la oferta limitada y la posibilidad de transferir valor sin transportar un objeto físico. Los críticos señalan que Bitcoin no produce alquileres, beneficios empresariales ni dividendos. El desacuerdo trata sobre qué da valor a un activo y cuánto deberían pagar sus compradores.
+
+Una subida pasada no resuelve esa discusión. Quien compró en un momento puede haber vivido una experiencia muy distinta de quien compró después. Las expectativas sobre la demanda futura influyen en el precio y pueden cambiar. Una tecnología puede seguir funcionando mientras cae su valor de mercado.
+
+Experimentos fuera de la pantalla
+
+Bitcoin atrajo a personas interesadas en pagos internacionales y alternativas a los servicios financieros existentes. Enviar valor entre países parecía una posibilidad atractiva. El resultado dependía del acceso, las comisiones y la forma de convertir o gastar lo recibido. No era automáticamente instantáneo ni gratuito en todas las situaciones.
+
+El Salvador adoptó Bitcoin como moneda de curso legal en 2021 y apoyó una cartera pública. El experimento llamó la atención porque un gobierno promovía su uso más allá de un pequeño grupo de aficionados. Anunciar una política era distinto de conseguir una adopción cotidiana amplia. Las personas todavía necesitaban motivos para utilizar el sistema.
+
+En 2025, unas reformas hicieron voluntaria la aceptación por el sector privado y exigieron pagar impuestos en dólares estadounidenses. El Fondo Monetario Internacional describió esos cambios como parte de los esfuerzos para abordar los riesgos del proyecto. La historia incluía revisiones de la política, en lugar de un avance continuo hacia el uso universal.
+
+¿Quién cambia las reglas?
+
+Satoshi acabó dejando de participar públicamente. Bitcoin continuó sin un fundador identificable que dirigiera cada decisión. Su código podía examinarse y las propuestas de cambios podían discutirse. Pero una propuesta necesitaba que los participantes la adoptaran. Haber creado el sistema no otorgaba una contraseña especial para cambiar las reglas de todos.
+
+Llegar a acuerdos podía ser difícil porque los usuarios tenían intereses distintos. Desarrolladores, mineros y empresas podían discrepar sobre una modificación. El proceso no era una votación mundial única que exigiera la aprobación de cada persona para cada actualización. El programa elegido por los participantes ayudaba a determinar qué reglas aceptaban.
+
+Los gobiernos también podían influir en las empresas mineras, las plataformas de intercambio y el acceso a servicios financieros. Una red distribuida no prometía inmunidad frente a regulaciones o interrupciones. El funcionamiento de Bitcoin, su tratamiento legal y su precio seguían siendo cuestiones separadas. Un pago todavía dependía de una autorización válida, de la aceptación de la red y de alguien dispuesto a recibirlo.

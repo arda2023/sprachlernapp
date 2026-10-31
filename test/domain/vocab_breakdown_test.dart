@@ -137,7 +137,8 @@ void main() {
         kind: DeckSessionKind.learn,
         now: now,
       );
-      expect(q.map((e) => e.cardId), ['b', 'd', 'c', 'f', 'g']);
+      expect(q.take(2).map((e) => e.cardId), ['b', 'd']);
+      expect(q.skip(2).map((e) => e.cardId), unorderedEquals(['c', 'f', 'g']));
       expect(q.every((e) => !e.repeat), isTrue);
     });
 
@@ -161,7 +162,9 @@ void main() {
         now: now,
         size: 3,
       );
-      expect(q.map((e) => e.cardId), ['b', 'd', 'c']);
+      expect(q.length, 3);
+      expect(q.take(2).map((e) => e.cardId), ['b', 'd']);
+      expect(['c', 'f', 'g'], contains(q.last.cardId));
     });
 
     test('revue: seen cards only, soonest due first', () {

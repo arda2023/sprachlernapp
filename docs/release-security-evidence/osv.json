@@ -1,0 +1,6 @@
+{
+  "ecosystem": "Pub",
+  "queried": 154,
+  "findings": [],
+  "scope": "Resolved hosted Dart packages only; excludes Flutter engine, CocoaPods, native transitive libraries and Python tooling"
+}

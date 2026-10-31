@@ -709,9 +709,9 @@ void main() {
       );
       await t.tapAt(p.localToGlobal(boxes.first.toRect().center));
       await t.pumpAndSettle();
-      await t.tap(find.text('Zum Lernen hinzufügen'));
+      await t.tap(find.bySemanticsLabel('Zum Lernen hinzufügen'));
       await t.pumpAndSettle();
-      expect(find.text('Zum Lernen hinzugefügt'), findsOneWidget);
+      expect(find.bySemanticsLabel('Hinzugefügt, in Wortliste ansehen'), findsOneWidget);
       // Close via navigator, then give the former follow-up path time to run.
       Navigator.of(t.element(find.byType(WordPopover))).pop();
       await t.pumpAndSettle();

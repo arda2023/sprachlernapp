@@ -25,7 +25,6 @@ import 'widgets/practice_empty_state.dart';
 import 'widgets/translation_bubble.dart';
 export 'widgets/practice_chrome.dart' show SessionTrack;
 import '../../widgets/popover_content.dart';
-import '../../widgets/success_feedback_card.dart';
 import '../words/widgets/memory_level_indicator.dart';
 import '../words/widgets/memory_level_legend_sheet.dart';
 import '../settings/settings_screen.dart';
@@ -541,7 +540,10 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                     : !canShow
                                     ? state.total == 0
                                           ? _nothingOpen()
-                                          : _summary(state)
+                                          // Finished: the completion screen
+                                          // replaces this page; no summary
+                                          // flashes first (31.10.2026).
+                                          : const SizedBox.shrink()
                                     : Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.stretch,
@@ -756,17 +758,24 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     return TranslationBubble(anchor: rect, text: word.translation, language: ref.read(deckSessionControllerProvider(_args)).pass?.item.card.lang, spokenText: token == null ? '' : sentence!.text.substring(token.start, token.end));
   }
 
-  /// A finished session that reached the daily goal ends on the completion
-  /// screen instead of the summary (docs/redesign/design-system.md ›
-  /// Abschluss). Goal and streak are read fresh, after the last review.
+  /// Every finished session ends on the completion screen (streak and the
+  /// words practised; docs/redesign/design-system.md › Abschluss; the old
+  /// summary is gone, user request 31.10.2026). Goal and streak are read
+  /// fresh, after the last review.
   Future<void> _maybeComplete(DeckSessionState state) async {
-    if (_completing || state.records.isEmpty) return;
+    if (_completing) return;
+    if (state.records.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) Navigator.of(context).maybePop();
+      });
+      return;
+    }
     _completing = true;
     try {
       ref.invalidate(learningProgressProvider);
       ref.invalidate(streakProvider);
       final progress = await ref.read(learningProgressProvider.future);
-      if (!mounted || progress.goal.done < progress.goal.target) return;
+      if (!mounted) return;
       final streak = await ref.read(streakProvider.future);
       if (!mounted) return;
       final seen = <String>{};
@@ -789,7 +798,8 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
         ),
       );
     } catch (_) {
-      // The summary stays; the completion screen is a bonus.
+      // Without goal or streak there is nothing to celebrate: back.
+      if (mounted) Navigator.of(context).maybePop();
     } finally {
       _completing = false;
     }
@@ -833,35 +843,6 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
             : () => open(DeckPracticeMode.learn),
       ),
     };
-  }
-
-  Widget _summary(DeckSessionState state) {
-    final records = state.records;
-    final first = records.where((r) => r.firstAttemptCorrect).length;
-    final reset = records
-        .where((r) => r.hintUsed || r.revealed || r.errorCount > 0)
-        .length;
-    final afterTypo = records.length - first - reset;
-    return SuccessFeedbackCard(
-      title:
-          '${records.length} ${records.length == 1 ? 'Übung' : 'Übungen'} geübt',
-      subtitle:
-          '$first auf Anhieb richtig · $reset zurück auf Stufe 1${afterTypo > 0 ? ' · $afterTypo nach Schreibkorrektur' : ''}',
-      explanation: switch (widget.mode) {
-        DeckPracticeMode.review =>
-          'In der Stapel-Revue bleiben saubere Antworten auf ihrer Stufe. Fehler und „Wort erfahren“ führen zu Stufe 1.',
-        DeckPracticeMode.early =>
-          'Beim Vorab-Üben bleiben saubere Antworten auf ihrer Stufe. Fehler und „Wort erfahren“ führen zu Stufe 1.',
-        DeckPracticeMode.mixed =>
-          'Fällige Wiederholungen kommen zuerst, danach neue Wörter. Ein neues Wort startet nach einer sauberen ersten Antwort auf Stufe 3. Fehler und „Wort erfahren“ führen zu Stufe 1.',
-        DeckPracticeMode.learn =>
-          'Ein neues Wort startet nach einer sauberen ersten Antwort auf Stufe 3. Saubere Wiederholungen rücken eine Stufe auf. Fehler und „Wort erfahren“ führen zu Stufe 1.',
-      },
-      actionLabel: widget.mode == DeckPracticeMode.mixed
-          ? 'Zurück zur Startseite'
-          : 'Zurück zum Stapel',
-      onAction: () => Navigator.of(context).maybePop(),
-    );
   }
 }
 

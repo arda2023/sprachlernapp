@@ -32,6 +32,7 @@ Future<T?> showAnchoredPopoverAt<T>({
   required WidgetBuilder builder,
   String barrierLabel = 'Schließen',
   double maxWidth = 440,
+  EdgeInsets padding = const EdgeInsets.all(20),
 }) => Navigator.of(context).push(
   _PopoverRoute<T>(
     anchor: anchor,
@@ -39,6 +40,7 @@ Future<T?> showAnchoredPopoverAt<T>({
     builder: builder,
     barrierLabel: barrierLabel,
     maxWidth: maxWidth,
+    padding: padding,
   ),
 );
 
@@ -49,6 +51,7 @@ class _PopoverRoute<T> extends PopupRoute<T> {
     required this.builder,
     required this.barrierLabel,
     required this.maxWidth,
+    required this.padding,
   });
 
   final Rect anchor;
@@ -57,6 +60,7 @@ class _PopoverRoute<T> extends PopupRoute<T> {
 
   /// Menus stay narrow; info bubbles may use the full phone width.
   final double maxWidth;
+  final EdgeInsets padding;
 
   @override
   final String barrierLabel;
@@ -84,6 +88,7 @@ class _PopoverRoute<T> extends PopupRoute<T> {
       color: color,
       builder: builder,
       maxWidth: maxWidth,
+      padding: padding,
     );
   }
 
@@ -119,6 +124,7 @@ class _PopoverLayout extends StatelessWidget {
     required this.color,
     required this.builder,
     required this.maxWidth,
+    required this.padding,
   });
 
   static const gutter = 16.0;
@@ -128,6 +134,7 @@ class _PopoverLayout extends StatelessWidget {
   final Color color;
   final WidgetBuilder builder;
   final double maxWidth;
+  final EdgeInsets padding;
 
   static bool _below(BuildContext context, Rect anchor) {
     final media = MediaQuery.of(context);
@@ -175,7 +182,7 @@ class _PopoverLayout extends StatelessWidget {
         arrowX: arrowX,
         arrowUp: below,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+          padding: padding,
           child: DefaultTextStyle.merge(
             style: const TextStyle(color: Colors.white),
             child: IconTheme.merge(

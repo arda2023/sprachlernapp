@@ -47,7 +47,6 @@ function fixture({ invalid = false, failSave = false, hang = false } = {}) {
               : { status: "busy" },
           );
         }
-        budget++;
         rows.set(key, { status: "pending", ticket: actor });
         return Response.json({ status: "claimed", ticket: actor });
       }
@@ -57,6 +56,7 @@ function fixture({ invalid = false, failSave = false, hang = false } = {}) {
         const stored = old?.status === "pending" &&
           old.ticket === body.p_ticket;
         if (stored) {
+          budget++;
           rows.set(key, {
             status: "ready",
             ticket: actor,
@@ -64,6 +64,13 @@ function fixture({ invalid = false, failSave = false, hang = false } = {}) {
           });
         }
         return Response.json({ stored });
+      }
+      if (String(url).endsWith("/release_translation")) {
+        const old = rows.get(key);
+        if (old?.status === "pending" && old.ticket === body.p_ticket) {
+          old.status = "uncertain";
+        }
+        return Response.json({ released: true });
       }
       if (String(url).endsWith("/clear_translation_cache")) {
         for (const [key, row] of rows) {
@@ -234,7 +241,7 @@ for (const options of [{ invalid: true }, { failSave: true }, { hang: true }]) {
     const second = await f.run();
     assert.equal(second.status, 409);
     assert.equal(f.generations, 1);
-    assert.equal(f.budget, 1);
+    assert.equal(f.budget, 0);
     assert([...f.rows.values()].every((row) => !row.response));
     await f.run({}, "actor", "translate-sentence", "DELETE");
     assert.equal((await f.run()).status, 409);

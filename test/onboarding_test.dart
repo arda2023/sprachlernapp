@@ -1,9 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sprachapp/main.dart';
+import 'package:sprachapp/data/billing/purchase_gateway.dart';
+import 'package:sprachapp/presentation/providers/account_provider.dart';
+import 'package:sprachapp/presentation/providers/purchase_provider.dart';
 import 'package:sprachapp/presentation/onboarding_sounds.dart';
 import 'package:sprachapp/presentation/providers/onboarding_provider.dart';
 import 'package:sprachapp/presentation/providers/preferences_provider.dart';
@@ -26,14 +31,88 @@ class RecordingOnboardingSounds implements OnboardingSounds {
   void paywall() => calls.add('paywall');
 }
 
+class _AccountActions implements AccountActions {
+  @override
+  Future<void> signIn(AccountIdentityProvider provider) async {}
+  @override
+  Future<void> sendCode(String email) async {}
+  @override
+  Future<void> verifyCode(String email, String code) async {}
+  @override
+  Future<void> signOut() async {}
+}
+
+class _FakePurchaseController extends PurchaseController {
+  _FakePurchaseController({this.initialState, this.restoreError});
+
+  final PurchaseState? initialState;
+  final String? restoreError;
+
+  static const _products = [
+    PurchaseProduct(
+      productId: 'yearly-test',
+      plan: PurchasePlan.yearly,
+      localizedPrice: '49,99 €',
+      localizedPeriod: 'pro Jahr',
+      isRecommended: true,
+    ),
+    PurchaseProduct(
+      productId: 'monthly-test',
+      plan: PurchasePlan.monthly,
+      localizedPrice: '9,99 €',
+      localizedPeriod: 'pro Monat',
+      isRecommended: false,
+    ),
+  ];
+
+  @override
+  PurchaseState build() =>
+      initialState ??
+      const PurchaseState(
+        phase: PurchasePhase.ready,
+        products: _products,
+        selectedProductId: 'yearly-test',
+        billingReady: true,
+        hasVerifiedAccount: false,
+        purchaseAllowed: false,
+      );
+
+  @override
+  Future<void> load() async {}
+
+  @override
+  Future<void> restore() async {
+    final error = restoreError;
+    if (error == null) return;
+    state = state.copyWith(phase: PurchasePhase.failed, errorMessage: error);
+  }
+
+  @override
+  void selectProduct(String productId) {
+    state = state.copyWith(selectedProductId: productId);
+  }
+}
+
 void main() {
   setUpAll(() => GoogleFonts.config.allowRuntimeFetching = false);
 
-  Widget app(JsonStore store, {OnboardingSounds? sounds}) => testScope(
+  Widget app(
+    JsonStore store, {
+    OnboardingSounds? sounds,
+    PurchaseState? purchaseState,
+    String? restoreError,
+  }) => testScope(
     const SprachApp(),
     library: true,
     overrides: [
       onboardingStoreProvider.overrideWithValue(store),
+      accountActionsProvider.overrideWithValue(_AccountActions()),
+      purchaseProvider.overrideWith(
+        () => _FakePurchaseController(
+          initialState: purchaseState,
+          restoreError: restoreError,
+        ),
+      ),
       if (sounds != null) onboardingSoundsProvider.overrideWithValue(sounds),
     ],
   );
@@ -87,7 +166,7 @@ void main() {
     await tester.pumpWidget(app(store, sounds: sounds));
     await tester.pumpAndSettle();
     expect(find.byType(OnboardingScreen), findsOneWidget);
-    expect(find.byType(LingvistMark), findsOneWidget);
+    expect(find.byType(LinglossaMark), findsOneWidget);
     expect(find.bySemanticsLabel('Schritt 1 von 5'), findsOneWidget);
 
     await tapLabel(tester, 'Los geht’s');
@@ -109,11 +188,11 @@ void main() {
     // The sample sentence comes from the picked topic.
     await tapLabel(tester, 'train, Übersetzung anzeigen');
     expect(find.bySemanticsLabel('train: der Zug'), findsOneWidget);
-    // The only AI-translation consent: shown here, off until switched on.
-    expect(find.text('Fehlende Wörter mit KI übersetzen'), findsOneWidget);
+    // The only AI switch: shown here, on unless switched off (31.10.2026).
+    expect(find.text('KI-Übersetzungen und Lernkarten'), findsOneWidget);
     expect(
       tester.widget<CupertinoSwitch>(find.byType(CupertinoSwitch)).value,
-      isFalse,
+      isTrue,
     );
     await tapLabel(tester, 'Weiter');
 
@@ -140,21 +219,23 @@ void main() {
       find.bySemanticsLabel(RegExp('^Lies, was dich interessiert.*Reisen')),
       findsOneWidget,
     );
-    // Yearly is preselected; its terms sit under the button.
+    // Yearly is preselected and uses the Store-localized price and period.
     expect(
-      tester.getSemantics(find.bySemanticsLabel(RegExp('^Jährlich, 49,99 €'))),
+      tester.getSemantics(
+        find.bySemanticsLabel(RegExp('^Jährlich, 49,99 € pro Jahr')),
+      ),
       isSemantics(isButton: true, isSelected: true, hasTapAction: true),
     );
     expect(
       find.text(
-        '49,99 € jährlich. Automatische Verlängerung, im Store kündbar.',
+        '49,99 € pro Jahr. Automatische Verlängerung, im Store kündbar.',
       ),
       findsOneWidget,
     );
-    await tapLabel(tester, RegExp('^Monatlich, 9,99 €'));
+    await tapLabel(tester, RegExp('^Monatlich, 9,99 € pro Monat'));
     expect(
       find.text(
-        '9,99 € monatlich. Automatische Verlängerung, im Store kündbar.',
+        '9,99 € pro Monat. Automatische Verlängerung, im Store kündbar.',
       ),
       findsOneWidget,
     );
@@ -174,20 +255,277 @@ void main() {
     expect(haptics, contains('HapticFeedbackType.lightImpact'));
   });
 
-  testWidgets('Subscribing asks for an account first; the purchase is a '
-      'placeholder and the app continues for free', (tester) async {
+  testWidgets('Purchase stays disabled until its legal and account gates pass; '
+      'restore requires a verified account', (tester) async {
     final store = MemoryJsonStore();
     await tester.pumpWidget(app(store));
     await tester.pumpAndSettle();
     await toPlanPage(tester);
     await tapLabel(tester, 'Weiter');
-    await tapLabel(tester, 'Premium abonnieren');
+    expect(
+      tester.getSemantics(find.bySemanticsLabel('Premium abonnieren')),
+      isSemantics(isButton: true, isEnabled: false),
+    );
+    expect(
+      find.textContaining('Käufe sind in diesem Build noch nicht verfügbar'),
+      findsOneWidget,
+    );
+    await tapLabel(tester, 'Wiederherstellen');
     expect(find.byType(AccountSheet), findsOneWidget);
     expect(find.text('Konto für dein Abo'), findsOneWidget);
     await tapLabel(tester, 'Mit Apple fortfahren');
+    expect(find.byType(PaywallScreen), findsOneWidget);
+    expect(find.byType(AppShell), findsNothing);
+    expect(await store.read(), isNull);
+  });
+
+  testWidgets('A failed Store catalog shows its error once', (tester) async {
+    const error =
+        'Der Store konnte die Anfrage nicht abschließen. Bitte erneut versuchen.';
+    final state = const PurchaseState(
+      phase: PurchasePhase.failed,
+      billingReady: true,
+      errorMessage: error,
+    );
+    await tester.pumpWidget(app(MemoryJsonStore(), purchaseState: state));
+    await tester.pumpAndSettle();
+    await toPlanPage(tester);
+    await tapLabel(tester, 'Weiter');
+    expect(find.text(error), findsOneWidget);
+  });
+
+  testWidgets('Paywall reports pending and cancelled Store outcomes without '
+      'granting Premium', (tester) async {
+    final state = const PurchaseState(
+      phase: PurchasePhase.ready,
+      products: _FakePurchaseController._products,
+      selectedProductId: 'yearly-test',
+      billingReady: true,
+      lastOutcome: PurchaseResult.pending,
+    );
+    await tester.pumpWidget(app(MemoryJsonStore(), purchaseState: state));
+    await tester.pumpAndSettle();
+    await toPlanPage(tester);
+    await tapLabel(tester, 'Weiter');
+    expect(
+      find.text(
+        'Der Store bestätigt den Kauf noch. Premium wird nach der Bestätigung freigeschaltet.',
+      ),
+      findsOneWidget,
+    );
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(PaywallScreen)),
+    );
+    final controller = container.read(purchaseProvider.notifier);
+    controller.state = controller.state.copyWith(
+      lastOutcome: PurchaseResult.cancelled,
+    );
+    await tester.pump();
+    expect(
+      find.text('Der Kauf wurde abgebrochen. Es wurde nichts berechnet.'),
+      findsOneWidget,
+    );
+    expect(find.byType(AppShell), findsNothing);
+  });
+
+  testWidgets('Paywall shows the server-confirmed expiry and management '
+      'action for active Premium', (tester) async {
+    final state = PurchaseState(
+      phase: PurchasePhase.ready,
+      products: _FakePurchaseController._products,
+      selectedProductId: 'yearly-test',
+      billingReady: true,
+      hasVerifiedAccount: true,
+      premiumActive: true,
+      expiresAt: DateTime(2027, 3, 12),
+      willRenew: true,
+    );
+    await tester.pumpWidget(app(MemoryJsonStore(), purchaseState: state));
+    await tester.pumpAndSettle();
+    await toPlanPage(tester);
+    await tapLabel(tester, 'Weiter');
+    expect(
+      find.text('Premium ist aktiv und verlängert sich am 12. März 2027.'),
+      findsOneWidget,
+    );
+    expect(find.text('Abo verwalten'), findsOneWidget);
+    expect(find.text('Premium abonnieren'), findsNothing);
+  });
+
+  testWidgets(
+    'restore failure stays visible while verified Premium remains active',
+    (tester) async {
+      const error = 'Store restore failed.';
+      final state = PurchaseState(
+        phase: PurchasePhase.ready,
+        products: _FakePurchaseController._products,
+        selectedProductId: 'yearly-test',
+        billingReady: true,
+        hasVerifiedAccount: true,
+        premiumActive: true,
+        expiresAt: DateTime(2027, 3, 12),
+        willRenew: true,
+      );
+      await tester.pumpWidget(
+        app(MemoryJsonStore(), purchaseState: state, restoreError: error),
+      );
+      await tester.pumpAndSettle();
+      await toPlanPage(tester);
+      await tapLabel(tester, 'Weiter');
+
+      await tapLabel(tester, 'Wiederherstellen');
+
+      expect(find.byType(PaywallScreen), findsOneWidget);
+      expect(find.text(error), findsOneWidget);
+      expect(
+        find.text(
+          'Käufe wurden geprüft; für dieses Konto wurde kein aktives Abo gefunden.',
+        ),
+        findsNothing,
+      );
+      final container = ProviderScope.containerOf(
+        tester.element(find.byType(PaywallScreen)),
+      );
+      expect(container.read(purchaseProvider).premiumActive, isTrue);
+      expect(container.read(purchaseProvider).phase, PurchasePhase.failed);
+    },
+  );
+
+  testWidgets('Paywall unlocks only the explicitly labeled sandbox test UI', (
+    tester,
+  ) async {
+    final state = PurchaseState(
+      phase: PurchasePhase.ready,
+      products: _FakePurchaseController._products,
+      selectedProductId: 'yearly-test',
+      billingReady: true,
+      hasVerifiedAccount: true,
+      premiumActive: false,
+      sandboxTestActive: true,
+      environment: 'Sandbox',
+      purchaseEnvironment: 'Sandbox',
+      expiresAt: DateTime(2027, 3, 12),
+    );
+    await tester.pumpWidget(app(MemoryJsonStore(), purchaseState: state));
+    await tester.pumpAndSettle();
+    await toPlanPage(tester);
+    await tapLabel(tester, 'Weiter');
+
+    expect(find.text('Abo verwalten'), findsOneWidget);
+    expect(find.text('Premium abonnieren'), findsNothing);
+    expect(
+      find.text('Premium-Testabo aktiv (Sandbox) bis 12. März 2027.'),
+      findsOneWidget,
+    );
+    expect(find.byType(AppShell), findsNothing);
+  });
+
+  testWidgets('An already active sandbox abo can still close the paywall', (
+    tester,
+  ) async {
+    final store = MemoryJsonStore();
+    final state = PurchaseState(
+      phase: PurchasePhase.ready,
+      products: _FakePurchaseController._products,
+      selectedProductId: 'yearly-test',
+      billingReady: true,
+      hasVerifiedAccount: true,
+      sandboxTestActive: true,
+      environment: 'Sandbox',
+      purchaseEnvironment: 'Sandbox',
+      expiresAt: DateTime(2027, 3, 12),
+    );
+    await tester.pumpWidget(app(store, purchaseState: state));
+    await tester.pumpAndSettle();
+    await toPlanPage(tester);
+    await tapLabel(tester, 'Weiter');
+    expect(find.byType(PaywallScreen), findsOneWidget);
+    await tapLabel(tester, 'Schließen');
+    expect(find.byType(PaywallScreen), findsNothing);
     expect(find.byType(AppShell), findsOneWidget);
-    expect(find.textContaining('noch nicht freigeschaltet'), findsOneWidget);
-    expect(await store.read(), {'done': true, 'interest': 'Reisen'});
+  });
+
+  testWidgets('Premium found while the paywall is open closes it once', (
+    tester,
+  ) async {
+    final store = MemoryJsonStore();
+    await tester.pumpWidget(app(store));
+    await tester.pumpAndSettle();
+    await toPlanPage(tester);
+    await tapLabel(tester, 'Weiter');
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(PaywallScreen)),
+    );
+    final controller = container.read(purchaseProvider.notifier);
+    controller.state = controller.state.copyWith(
+      hasVerifiedAccount: true,
+      sandboxTestActive: true,
+      environment: 'Sandbox',
+      purchaseEnvironment: 'Sandbox',
+      expiresAt: DateTime(2027, 3, 12),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(PaywallScreen), findsNothing);
+    expect(find.byType(AppShell), findsOneWidget);
+  });
+
+  testWidgets('Premium found during the paywall entrance still closes it', (
+    tester,
+  ) async {
+    await tester.pumpWidget(app(MemoryJsonStore()));
+    await tester.pumpAndSettle();
+    await toPlanPage(tester);
+    final next = find.bySemanticsLabel('Weiter');
+    await tester.ensureVisible(next);
+    await tester.pumpAndSettle();
+    await tester.tap(next);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(PaywallScreen)),
+    );
+    final controller = container.read(purchaseProvider.notifier);
+    controller.state = controller.state.copyWith(
+      hasVerifiedAccount: true,
+      sandboxTestActive: true,
+      environment: 'Sandbox',
+      purchaseEnvironment: 'Sandbox',
+      expiresAt: DateTime(2027, 3, 12),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(PaywallScreen), findsNothing);
+    expect(find.byType(AppShell), findsOneWidget);
+  });
+
+  testWidgets('Premium found under an open sheet closes the paywall too', (
+    tester,
+  ) async {
+    await tester.pumpWidget(app(MemoryJsonStore()));
+    await tester.pumpAndSettle();
+    await toPlanPage(tester);
+    await tapLabel(tester, 'Weiter');
+    final paywall = tester.element(find.byType(PaywallScreen));
+    unawaited(
+      showCupertinoModalPopup<void>(
+        context: paywall,
+        builder: (_) => const SizedBox(height: 200, child: Text('Sheet')),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Sheet'), findsOneWidget);
+    final controller = ProviderScope.containerOf(paywall)
+        .read(purchaseProvider.notifier);
+    controller.state = controller.state.copyWith(
+      hasVerifiedAccount: true,
+      sandboxTestActive: true,
+      environment: 'Sandbox',
+      purchaseEnvironment: 'Sandbox',
+      expiresAt: DateTime(2027, 3, 12),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Sheet'), findsNothing);
+    expect(find.byType(PaywallScreen), findsNothing);
+    expect(find.byType(AppShell), findsOneWidget);
   });
 
   testWidgets('Back from the paywall returns to "Dein Start steht"', (
@@ -239,7 +577,7 @@ void main() {
     expect(find.text('Wofür lernst du Englisch?'), findsOneWidget);
   });
 
-  testWidgets('"Ich habe schon ein Konto" signs in (placeholder) and opens '
+  testWidgets('"Ich habe schon ein Konto" confirms sign in and opens '
       'the app', (tester) async {
     final store = MemoryJsonStore();
     await tester.pumpWidget(app(store));
@@ -248,7 +586,7 @@ void main() {
     expect(find.text('Willkommen zurück'), findsOneWidget);
     await tapLabel(tester, 'Mit Google fortfahren');
     expect(find.byType(AppShell), findsOneWidget);
-    expect(find.textContaining('Anmeldung mit Google kommt bald'), findsOne);
+    expect(find.textContaining('Du bist angemeldet.'), findsOne);
   });
 
   testWidgets('A finished onboarding is not shown again', (tester) async {
@@ -276,8 +614,10 @@ void main() {
     await tapLabel(tester, 'Weiter');
     expect(find.byType(PaywallScreen), findsOneWidget);
     expect(tester.takeException(), isNull);
-    await tapLabel(tester, 'Premium abonnieren');
-    expect(find.byType(AccountSheet), findsOneWidget);
+    expect(
+      tester.getSemantics(find.bySemanticsLabel('Premium abonnieren')),
+      isSemantics(isButton: true, isEnabled: false),
+    );
     expect(tester.takeException(), isNull);
   });
 }

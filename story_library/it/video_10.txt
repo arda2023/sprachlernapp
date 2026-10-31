@@ -1,0 +1,109 @@
+Dentro una carta
+
+Una carta di pagamento sembra un piccolo pezzo di plastica con un nome e alcuni numeri. Durante una dimostrazione, i ricercatori rimuovono gran parte della plastica e scoprono un sottile anello metallico collegato a un chip minuscolo. Ciò che rimane assomiglia appena a una carta. Eppure, se antenna e chip sono intatti, il dispositivo può ancora comunicare con un terminale di pagamento. La superficie stampata non era la parte che eseguiva i calcoli.
+
+L'esperimento rende insolito un oggetto quotidiano. La carta non ha una batteria visibile, uno schermo o pulsanti. Non può chiedere alla persona che cosa desideri fare. Tuttavia, quando viene avvicinata a un lettore, riceve energia, scambia informazioni e partecipa a un pagamento. Capire questo breve scambio significa attraversare la registrazione magnetica, i computer in miniatura e un dispositivo di ascolto nascosto un tempo in un regalo diplomatico.
+
+Queste tecnologie condividono idee fisiche utili, ma le loro storie non formano una linea unica e diretta. Un sistema moderno di pagamento combina invenzioni di molte persone e organizzazioni. Il collegamento tra una microspia e una carta bancaria è interessante perché entrambe mostrano che un oggetto piccolo può rispondere a un segnale esterno senza avere una batteria propria.
+
+Un regalo che ascoltava
+
+Nel 1945, alcuni bambini sovietici regalarono all'ambasciatore americano a Mosca una riproduzione in legno del Grande Sigillo degli Stati Uniti. La scultura venne esposta nella sua residenza. Al suo interno si trovava un dispositivo di ascolto che rimase nascosto fino al 1952. Gli investigatori americani finirono per chiamarlo la Cosa.
+
+L'apparecchio era particolare perché non trasmetteva continuamente. Conteneva un'antenna e una cavità risonante con una membrana sottile. L'energia radio diretta verso di esso dall'esterno lo faceva rispondere. Le conversazioni vicino alla scultura muovevano la membrana, modificando quella risposta. Un ricevitore all'esterno poteva ricostruire il suono attraverso le variazioni del segnale restituito.
+
+Quando il trasmettitore esterno veniva spento, trovare il dispositivo cercando segnali radio attivi diventava molto più difficile. Non c'era una batteria interna da sostituire periodicamente. L'energia necessaria alla risposta radio arrivava da un altro luogo. Il silenzio tra una sessione di ascolto e l'altra contribuiva alla sua efficacia.
+
+L'idea fondamentale è la risonanza. Un sistema fisico può rispondere con molta più intensità ad alcune frequenze che ad altre. Un diapason offre un esempio familiare nel campo del suono. Anche una struttura elettrica possiede caratteristiche che determinano la sua risposta a un segnale alternato. Se quelle caratteristiche cambiano, cambia anche la risposta.
+
+Nel microfono nascosto, il suono muoveva una superficie flessibile della cavità. Il movimento alterava il comportamento elettrico della struttura e modulava il segnale radio restituito. La conversazione veniva trasportata perché le proprietà del segnale variavano insieme al suono. La membrana non doveva produrre tutta l'energia necessaria per raggiungere il ricevitore. Modificava quella fornita dal trasmettitore esterno.
+
+È utile distinguere tra fornire energia e trasportare informazioni. Una variazione fisica relativamente piccola può codificare informazioni in un flusso energetico molto maggiore. Lo stesso principio generale compare in numerosi sistemi elettronici, anche se circuiti, frequenze e metodi sono diversi. Una carta moderna non contiene un microfono segreto, ma utilizza anch'essa un campo esterno per contribuire alla comunicazione.
+
+La carta prima dell'elettronica
+
+Mentre i servizi di intelligence studiavano dispositivi radio, le banche cercavano di rendere più semplici gli acquisti ordinari. Pagare in contanti richiedeva di portare con sé abbastanza denaro. Gli assegni introducevano altri ritardi e incertezze. Le carte offrivano un modo per collegare un acquisto a un conto, ma i primi sistemi dipendevano ancora molto dai documenti cartacei.
+
+Bank of America lanciò BankAmericard nel 1958. Divenne un importante programma di carte bancarie utilizzabili presso molti esercizi e in seguito si sviluppò nella rete Visa. Non rappresentava l'origine di tutte le forme di credito al consumo o di ogni carta di pagamento. Negozi e altre imprese avevano già offerto modi per comprare subito e pagare in seguito. BankAmericard contribuì ad ampliare un modello accettato da numerosi commercianti aderenti.
+
+Le lettere e i numeri in rilievo sulle vecchie carte avevano una funzione pratica. Il commerciante poteva inserire la carta in un apparecchio e trasferire i dati su un modulo. Le copie creavano una registrazione per le parti coinvolte. Elaborare quei documenti richiedeva lavoro. Aver copiato chiaramente i numeri non significava che la transazione fosse stata verificata elettronicamente.
+
+Il problema riguardava sia la velocità sia la fiducia. Il commerciante doveva sapere se accettare il pagamento. La banca doveva riconoscere il conto e successivamente regolare l'operazione. Una carta rubata o una copia convincente potevano sfruttare il ritardo tra l'acquisto e la scoperta della frode. Rendere le informazioni leggibili dalle macchine offriva una possibilità di miglioramento.
+
+Una striscia di dati registrati
+
+All'inizio degli anni Sessanta, l'ingegnere IBM Forrest Parry lavorava all'applicazione di nastro magnetico su tessere di identificazione in plastica. Secondo il racconto di IBM, non riusciva a trovare un metodo affidabile per fissarlo finché sua moglie suggerì di usare il ferro da stiro che aveva in mano. Il calore aiutò a risolvere un problema di fabbricazione. L'episodio si ricorda perché un piccolo dettaglio separava un'idea funzionante da un oggetto davvero utile.
+
+Una banda magnetica conserva dati attraverso schemi di magnetizzazione. Quando la carta passa davanti a una testina di lettura adatta, quegli schemi producono segnali interpretabili dall'elettronica. La banda non ragiona sull'acquisto e non decide se chi la tiene in mano sia autorizzato a usarla. Fornisce soltanto informazioni registrate.
+
+Quel registro leggibile dalle macchine rese più veloci i sistemi di pagamento. Un lettore poteva acquisire i dati senza che qualcuno digitasse ogni carattere. Insieme a terminali, reti di comunicazione e computer bancari, permetteva controlli più rapidi. La banda da sola non eseguiva quei controlli. La sua importanza derivava dalla capacità di inserire comodamente la carta in un sistema elettronico più grande.
+
+La debolezza consisteva nel carattere sostanzialmente fisso delle informazioni. Leggere nuovamente la stessa banda produceva gli stessi dati. Se i criminali li acquisivano, in determinate circostanze potevano riprodurli su un'altra banda e presentare la copia dove quel tipo di pagamento veniva accettato. La carta copiata non doveva conoscere segreti ulteriori rispetto alle informazioni riprodotte.
+
+Questo chiarisce perché copiare e autenticare siano problemi diversi. Un lettore può ricevere dati perfettamente leggibili senza sapere se provengano dalla carta originale. Una comunicazione più rapida aiuta la banca a individuare comportamenti sospetti, ma la velocità da sola non rende impossibile duplicare un registro fisso.
+
+Le dimostrazioni storiche con le bande magnetiche rendono visibile questo limite. Non provano che ogni pagamento moderno possa essere copiato nello stesso modo. I sistemi sono cambiati e le regole di accettazione variano. La lezione importante riguarda la debolezza di un'informazione invariabile usata come prova che un oggetto fisico sia autentico.
+
+Un computer nella carta
+
+Il chip cambiò ciò che una carta poteva fare. Invece di limitarsi a presentare informazioni memorizzate, poteva eseguire calcoli usando dati segreti protetti. Gli standard EMV descrivono l'interazione tra chip e terminali nei sistemi di pagamento. Il nome deriva dalle organizzazioni originariamente coinvolte, Europay, Mastercard e Visa.
+
+In una transazione online semplificata, il terminale fornisce informazioni sull'acquisto. La carta utilizza determinati dati della transazione e informazioni interne per calcolare un valore crittografico, spesso chiamato crittogramma. L'emittente può controllare il risultato usando i corrispondenti dati segreti. Questo offre una prova che l'operazione provenga da una carta capace di eseguire il calcolo richiesto.
+
+Il procedimento non consiste semplicemente nel nascondere il numero del conto. Alcuni dati possono restare leggibili mentre il segreto usato per generare la risposta rimane dentro il chip. Il vantaggio consiste nel produrre una risposta legata alla transazione, invece di ripetere un registro fisso che chiunque potrebbe presentare di nuovo.
+
+Registrare uno scambio valido, quindi, normalmente non fornisce tutto ciò che serve per creare altre transazioni arbitrarie. Una copia dei dati visibili non contiene il segreto protetto. I chip moderni includono anche misure pensate per resistere ai tentativi di leggere direttamente informazioni interne sensibili. Queste protezioni rendono la copia molto più difficile rispetto a una banda magnetica, senza rendere il sistema immune a qualsiasi attacco.
+
+Il pagamento completo comprende più passaggi di questo esempio. Per capire una singola dimostrazione bisogna quindi sapere quali controlli sono stati eseguiti, chi ha preso la decisione finale e quali dati erano disponibili a ciascun partecipante. Tipi diversi di operazione e configurazioni differenti impiegano controlli diversi. Alcune decisioni possono utilizzare funzioni offline. Una risposta crittografica valida, inoltre, non significa automaticamente che la banca approverà l'acquisto. Contano anche i fondi disponibili, i controlli sul rischio e altre regole.
+
+Verificare la carta e verificare chi la usa sono compiti separati. Il chip può contribuire a dimostrare la presenza di una carta autentica. Un PIN o un altro metodo può aiutare a stabilire che la persona sia autorizzata. Non tutti i pagamenti con chip richiedono un PIN, e le regole variano. Considerare il chip e l'inserimento del PIN come la stessa cosa nasconde una parte importante del progetto.
+
+Il cambiamento ridusse una via semplice alla contraffazione, ma i criminali potevano cercarne altre. Rubare una carta autentica, ottenere informazioni personali o ingannare un cliente sfrutta debolezze differenti. Migliorare un punto del sistema può spostare le frodi verso un altro. Non elimina il bisogno di proteggere il resto del processo.
+
+Energia senza batteria
+
+Una carta inserita in un terminale può utilizzare i contatti metallici per ricevere energia e comunicare. Una carta senza contatto deve ottenere lo stesso scambio senza quelle connessioni. Il lettore produce un campo elettromagnetico variabile, al quale si accoppia una spira all'interno della carta. Nella spira può essere indotta una corrente elettrica, poi convertita in una forma utilizzabile dal chip.
+
+Ecco perché la spira mostrata nell'esperimento iniziale è importante. Il piccolo chip non può compiere da solo lo stesso scambio senza contatto dopo la rottura del collegamento con l'antenna. Quest'ultima fa parte del percorso attraverso cui la carta riceve energia e comunica. La plastica normalmente mantiene in posizione questi componenti delicati e li protegge dai danni.
+
+Il chip può variare il carico elettrico presentato dal proprio circuito. Le variazioni influenzano il sistema accoppiato in un modo che il lettore riesce a rilevare. La carta restituisce così informazioni usando energia ricevuta dall'esterno. Non trasmette come una grande stazione radio dotata di una propria fonte di alimentazione potente.
+
+I pagamenti senza contatto appartengono alla famiglia più ampia delle tecnologie di identificazione a radiofrequenza. RFID comprende diversi metodi, frequenze, distanze e impieghi. Un'etichetta di magazzino e una carta bancaria non funzionano necessariamente allo stesso modo soltanto perché entrambe si possono leggere senza fili. Sono i dettagli del progetto a determinare come ricevano energia e restituiscano dati.
+
+NFC, cioè comunicazione in campo vicino, opera a una frequenza base di 13,56 megahertz. Alle brevi distanze dei comuni lettori di pagamento, l'accoppiamento magnetico è essenziale nello scambio. Rimane una tecnologia radio regolata dall'elettromagnetismo. Dire che queste carte abbiano abbandonato la radio per usare qualcosa di completamente diverso darebbe un'immagine sbagliata.
+
+La distanza operativa normale è breve. Ciò rende comodo un gesto intenzionale e riduce le interazioni accidentali. Ma quel raggio abituale non deve essere scambiato per un confine universale di sicurezza. Apparecchiature, disposizione delle antenne e tipo di interazione influiscono su ciò che è possibile. I controlli crittografici restano importanti anche quando la carta è molto vicina al terminale.
+
+L'adozione richiedeva inoltre coordinamento. Il cliente aveva bisogno di una carta adatta e il negozio di un terminale compatibile. Una parte guadagnava poco dall'aggiornamento se l'altra non poteva ancora usare la nuova funzione. Banche, commercianti e clienti avanzarono quindi a velocità diverse. Il gesto visibile era semplice, ma renderlo comune richiedeva apparecchiature, software, prove e decisioni sui costi. Una tecnologia possibile non sostituisce immediatamente tutti i metodi precedenti.
+
+Che cosa può sapere un lettore
+
+Vedere un lettore mostrare il numero di una carta può allarmare. A seconda della carta e dell'applicazione, alcune informazioni possono effettivamente essere lette durante la comunicazione senza contatto. Bisogna interpretare l'osservazione con attenzione. Leggere un numero non equivale a estrarre il segreto del chip o a costruire una copia funzionante delle sue capacità crittografiche.
+
+Allo stesso tempo, non bisogna trattare i dati leggibili come del tutto innocui. Numero e scadenza della carta sono informazioni finanziarie personali. Il loro possibile abuso dipende dagli altri dati ottenuti dall'aggressore e dai controlli applicati dal commerciante o dal sistema. Affermare che ogni acquisto online richieda sempre lo stesso codice stampato non spiega correttamente la sicurezza.
+
+Il codice stampato sulla carta fisica è diverso dal valore crittografico variabile prodotto dal chip. Si tratta di meccanismi separati, destinati a parti differenti del sistema. Chiamarli entrambi codici di sicurezza senza spiegare la distinzione può far pensare che leggere uno significhi necessariamente conoscere l'altro.
+
+Un addebito non autorizzato, una banda copiata e uno scambio senza contatto ritrasmesso sono problemi differenti. Non richiedono lo stesso accesso e non falliscono per gli stessi motivi. La dimostrazione di uno non prova tutti gli altri. Ottenere una risposta da una carta autentica è diverso dal fabbricare una seconda carta capace di generare autonomamente risposte valide in futuro.
+
+Anche le affermazioni sui limiti di pagamento hanno bisogno di contesto. Le regole possono dipendere da paese, emittente, rete, commerciante, terminale e metodo di verifica della persona. Non esiste un'unica cifra mondiale che definisca tutti gli acquisti senza contatto. L'assenza di un tetto legale universale non significa che ogni terminale accetti qualsiasi importo da qualsiasi carta senza controlli.
+
+Le notifiche possono aiutare il cliente a notare prima un pagamento inatteso. Servono a osservare l'attività, non impediscono ogni transazione non autorizzata. Il fornitore del conto resta il referente appropriato per segnalare un addebito sospetto o bloccare una carta smarrita. Una schermatura fisica può ridurre alcune interazioni radio, ma non affronta tutti i modi in cui i dati possono essere usati impropriamente.
+
+La carta dentro il telefono
+
+Un portafoglio mobile aggiunge un'altra combinazione di componenti, programmi e credenziali. Apple Pay, per esempio, usa un numero di conto del dispositivo e un valore di sicurezza dinamico negli acquisti supportati, invece di inviare al commerciante il vero numero della carta. È una forma di tokenizzazione. Sostituire l'identificativo utilizzato in uno scambio può limitare l'utilità dei dati eventualmente esposti in quel punto.
+
+Per un pagamento ordinario, il dispositivo può anche chiedere l'autenticazione tramite volto, impronta o codice di accesso. Questo aggiunge una verifica che una semplice carta di plastica non può eseguire da sola. Il componente sicuro di pagamento e le funzioni di autenticazione del telefono lavorano insieme. Non significa, però, che tutte le funzioni del portafoglio seguano esattamente le stesse regole.
+
+Le funzioni rapide per i trasporti offrono un esempio importante. Alcuni utilizzi supportati sono progettati appositamente per funzionare senza il normale passaggio di autenticazione. Questo rende più semplice attraversare un tornello. Significa anche che la frase un telefono bloccato non può mai pagare è troppo generale. Occorre chiedersi quale funzione, credenziale e operazione siano coinvolte.
+
+La dimostrazione originale termina annunciando un tentativo di pagamento con un telefono bloccato. Un finale spettacolare non basta per stabilire un risultato generale. Senza conoscere metodo completo, configurazione ed esito, non dimostra che ogni telefono bloccato o ogni portafoglio abbia la stessa vulnerabilità. Una spiegazione utile ha bisogno di questi limiti quanto del momento sorprendente.
+
+Molti sistemi in un gesto
+
+La rapidità del gesto può nascondere quanti compiti vengano svolti. Un campo fornisce energia. I circuiti scambiano dati. I calcoli crittografici aiutano ad autenticare il pagamento. Regole separate decidono se il cliente debba verificare la propria identità e se la transazione vada autorizzata. Reti e istituzioni gestiscono poi le registrazioni finanziarie e il movimento dei fondi.
+
+Ogni fase risolve un problema diverso. Migliorarne una può rendere più evidente un altro limite. La banda magnetica rese più semplice leggere informazioni, ma i suoi dati fissi erano facili da copiare. Il chip introdusse calcoli più difficili da riprodurre. La comunicazione senza contatto eliminò la necessità di inserire la carta mantenendo la protezione crittografica. I portafogli mobili aggiunsero credenziali differenti e altri modi per verificare chi paga.
+
+La carta nel portafoglio è dunque più dei suoi numeri stampati, ma non coincide con l'intero sistema di pagamento. È un partecipante progettato con cura all'interno di uno scambio molto più ampio. La cosa notevole non è che un piccolo pezzo di plastica sia perfettamente sicuro. È che un circuito minuscolo, un lettore vicino e una catena di istituzioni riescano normalmente a trasformare un breve gesto in un pagamento accettato.

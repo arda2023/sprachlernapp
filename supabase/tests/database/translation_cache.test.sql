@@ -6,6 +6,7 @@ declare
   actor uuid := '00000000-0000-4000-8000-0000000000d1';
   stranger uuid := '00000000-0000-4000-8000-0000000000d2';
   forbidden uuid := '00000000-0000-4000-8000-0000000000d3';
+  public_customer uuid := '00000000-0000-4000-8000-0000000000d4';
   key text := repeat('a',64);
   r jsonb; ticket uuid; units_before integer; snapshot jsonb;
   answer jsonb := jsonb_build_object('provider','anthropic','model','claude-haiku-5-5','contract',2,'prompt','translation-v2','usage',jsonb_build_object('input_tokens',20,'output_tokens',8),'translation_de','Synthetischer Satz.');
@@ -21,14 +22,24 @@ begin
     assert has_function_privilege('service_role',key,'EXECUTE');
   end loop;
   key := repeat('a',64);
-  insert into auth.users(id,email) values(actor,'cache-a@example.test'),(stranger,'cache-b@example.test'),(forbidden,'cache-c@example.test');
+  insert into auth.users(id,email,email_confirmed_at,is_anonymous) values
+    (actor,'cache-a@example.test',now(),false),
+    (stranger,'cache-b@example.test',now(),false),
+    (forbidden,'cache-c@example.test',null,false),
+    (public_customer,'cache-d@example.test',now(),false);
   insert into public.content_readers(user_id,channel,lang) values(actor,'internal','en'),(actor,'internal','pt-BR'),(stranger,'internal','en');
   insert into app.user_cards(user_id,card_id,lang,box,origin) values(actor,'synthetic-story-card','en',3,'story');
   insert into app.review_log(user_id,card_id,mode,first_attempt_correct,error_count,revealed,box_before,box_after,due_at_after)
     values(actor,'synthetic-story-card','mixed',true,0,false,2,3,now()+interval '1 day');
   select jsonb_build_array((select jsonb_agg(to_jsonb(c)) from app.user_cards c),(select jsonb_agg(to_jsonb(review_row)) from app.review_log review_row)) into snapshot;
-  assert public.claim_translation(forbidden,'en',key)->>'status'='forbidden';
+  assert public.claim_translation(forbidden,'en',key)->>'status'='account_unverified';
   assert public.claim_translation(actor,'fr',key)->>'status'='forbidden';
+  -- A verified public customer can use the display feature without an
+  -- editorial content_readers row or any role grant.
+  r := public.claim_translation(public_customer,'en',repeat('d',64));
+  assert r->>'status'='claimed';ticket := (r->>'ticket')::uuid;
+  assert public.finish_translation(public_customer,repeat('d',64),ticket,answer)->>'stored'='true';
+  assert not exists(select 1 from public.content_readers where user_id=public_customer);
   r := public.claim_translation(actor,'en',key); assert r->>'status'='claimed';ticket := (r->>'ticket')::uuid;
   assert public.claim_translation(actor,'en',key)->>'status'='busy';
   assert (select units=1 from app.usage where user_id=actor and kind='runtime-translation');
@@ -36,16 +47,19 @@ begin
   assert public.finish_translation(actor,key,gen_random_uuid(),answer)->>'stored'='false';
   assert public.finish_translation(actor,key,ticket,answer)->>'stored'='true';
   -- A cache hit remains available even if all generation budget is spent.
-  update app.usage set units=20 where user_id=actor and kind='runtime-translation';
+  insert into app.usage(user_id,day,kind,units)
+    values(actor,(clock_timestamp() at time zone 'UTC')::date,
+      'translation-minute:'||to_char(clock_timestamp() at time zone 'UTC','YYYYMMDDHH24MI'),5)
+    on conflict(user_id,day,kind) do update set units=5;
   assert public.claim_translation(actor,'en',key)->>'status'='hit';
-  assert (select units=20 from app.usage where user_id=actor and kind='runtime-translation');
+  assert (select units=1 from app.usage where user_id=actor and kind='runtime-translation');
   assert public.claim_translation(actor,'en',repeat('b',64))->>'status'='limit';
   assert public.claim_translation(stranger,'en',key)->>'status'='claimed';
   assert public.clear_translation_cache(actor)->>'deleted'='true';
   assert not exists(select 1 from app.translation_cache where user_id=actor);
   assert exists(select 1 from app.translation_cache where user_id=stranger);
   -- Late completions after clear cannot resurrect private output; no budget reset.
-  update app.usage set units=1 where user_id=actor and kind='runtime-translation';
+  delete from app.usage where user_id=actor and kind like 'translation-minute:%';
   r := public.claim_translation(actor,'en',key);ticket := (r->>'ticket')::uuid;
   perform public.clear_translation_cache(actor);
   assert public.finish_translation(actor,key,ticket,answer)->>'stored'='false';

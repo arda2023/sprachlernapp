@@ -29,9 +29,17 @@ final languageInstallationProvider = FutureProvider.family<String, String>((
 }, retry: (_, _) => null);
 
 class LanguageSelectionState {
-  const LanguageSelectionState({this.switching = false, this.message});
+  const LanguageSelectionState({
+    this.switching = false,
+    this.message,
+    this.target,
+  });
   final bool switching;
   final String? message;
+
+  /// The language being switched to while [switching]; the launch curtain
+  /// shows words of it.
+  final String? target;
 }
 
 final languageSelectionProvider =
@@ -58,7 +66,7 @@ class LanguageSelectionController extends Notifier<LanguageSelectionState> {
     }
     try {
       return await contentTransitionGate.transition(() async {
-        state = const LanguageSelectionState(switching: true);
+        state = LanguageSelectionState(switching: true, target: lang);
         final previous = await ref.read(selectedContentLanguageProvider.future);
         if (previous == lang) {
           state = const LanguageSelectionState();

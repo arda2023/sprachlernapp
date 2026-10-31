@@ -57,6 +57,7 @@ void main() {
     user = DriftUserRepository(
       UserDatabase.file(File('${dir.path}/user.db')),
       lang: 'en',
+      defaultActiveDeckIds: () async => {for (final d in await content.decks()) d.id},
     );
     now = DateTime(2026, 10, 4, 12);
     container = scope();
@@ -83,8 +84,8 @@ void main() {
       await settle();
     }
     final controller = container.read(provider.notifier);
-    expect(container.read(provider).pass!.item.card.id, 'card-went');
-    controller.submit('went');
+    final chosen = container.read(provider).pass!.item.card;
+    controller.submit(chosen.form);
     for (var i = 0; i < 30 && !container.read(provider).saved; i++) {
       await settle();
     }
@@ -92,7 +93,7 @@ void main() {
     await settle();
     expect((await container.read(vocabBreakdownProvider.future)).building, 1);
     final word = (await container.read(wordListProvider.future)).single;
-    expect([word.id, word.box, word.reviewCount], ['card-went', 3, 1]);
+    expect([word.id, word.box, word.reviewCount], [chosen.id, 3, 1]);
     expect(
       (await container.read(learningProgressProvider.future)).goal.done,
       1,
@@ -116,7 +117,7 @@ void main() {
       await settle();
     }
     final pass = container.read(early).pass!;
-    expect(pass.item.card.id, 'card-went');
+    expect(pass.item.card.id, chosen.id);
     expect(pass.boxBefore, 3);
     expect(pass.mode, ReviewMode.early);
     esub.close();
@@ -141,6 +142,7 @@ void main() {
     user = DriftUserRepository(
       UserDatabase.file(File('${dir.path}/user.db')),
       lang: 'en',
+      defaultActiveDeckIds: () async => {for (final d in await content.decks()) d.id},
     );
     container = scope();
     final restarted = (await container.read(wordListProvider.future)).single;

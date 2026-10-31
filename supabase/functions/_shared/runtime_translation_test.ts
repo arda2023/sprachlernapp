@@ -41,12 +41,15 @@ function fixture(
       const allowed = options.allowed as { reason?: string } | undefined;
       return Response.json(
         allowed
-          ? { status: allowed.reason }
+          ? { status: allowed.reason, ...allowed }
           : { status: "claimed", ticket: uid },
       );
     }
     if (String(url).endsWith("/rpc/finish_translation")) {
       return Response.json({ stored: true });
+    }
+    if (String(url).endsWith("/rpc/release_translation")) {
+      return Response.json({ released: true });
     }
     if (options.hang) {
       return await new Promise((_, reject) =>
@@ -167,6 +170,22 @@ for (const [reason, status] of [["forbidden", 403], ["limit", 429]] as const) {
     assert.equal(f.calls.length, 2);
   });
 }
+test("monthly premium quota returns a distinct non-sales error and reset date", async () => {
+  const f = fixture({
+    allowed: {
+      reason: "quota",
+      quota_kind: "premium",
+      resets_at: "2026-11-30T12:00:00.000Z",
+    },
+  });
+  const r = await f.run();
+  assert.equal(r.status, 429);
+  assert.equal(r.body.error, "TRANSLATION_QUOTA_EXHAUSTED");
+  assert.equal(r.body.quota_kind, "premium");
+  assert.equal(r.body.resets_at, "2026-11-30T12:00:00.000Z");
+  assert(!/Premium ansehen|abonnieren/i.test(r.body.message));
+  assert.equal(f.calls.length, 2);
+});
 for (
   const input of [
     { ...sentence, lang: "fr" },
@@ -196,7 +215,7 @@ test("provider rate limit has no retry or fallback", async () => {
   const r = await f.run();
   assert.equal(r.status, 429);
   assert.equal(r.body.error, "PROVIDER_RATE_LIMIT");
-  assert.equal(f.calls.length, 3);
+  assert.equal(f.calls.length, 4); // failed provider request releases its reservation
 });
 for (
   const model of [{ model: "gemini" }, {
@@ -212,7 +231,7 @@ for (
   test(`reject invalid model result ${JSON.stringify(model)}`, async () => {
     const f = fixture({ model });
     assert.equal((await f.run()).status, 502);
-    assert.equal(f.calls.length, 3);
+    assert.equal(f.calls.length, 4); // failed/invalid output releases its reservation
   });
 }
 test("provider timeout fails safely, no retry", async () => {
@@ -220,7 +239,7 @@ test("provider timeout fails safely, no retry", async () => {
   const r = await f.run();
   assert.equal(r.status, 504);
   assert.equal(r.body.error, "TIMEOUT");
-  assert.equal(f.calls.length, 3);
+  assert.equal(f.calls.length, 4); // timeout cleanup uses an independent signal
 });
 test("stalled input body is cancelled on deadline", async () => {
   const f = fixture({ timeout: 15 });

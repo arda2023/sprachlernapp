@@ -1,0 +1,226 @@
+{
+  "processes": [
+    {
+      "id": "proc_113_main",
+      "summary": "Main → ContentUnavailable",
+      "priority": 0.097,
+      "symbol_count": 2,
+      "process_type": "cross_community",
+      "step_count": 5
+    },
+    {
+      "id": "proc_25_main",
+      "summary": "Main → ContentUnavailable",
+      "priority": 0.097,
+      "symbol_count": 2,
+      "process_type": "cross_community",
+      "step_count": 5
+    },
+    {
+      "id": "proc_114_main",
+      "summary": "Main → ContentFormNorm",
+      "priority": 0.082,
+      "symbol_count": 1,
+      "process_type": "cross_community",
+      "step_count": 5
+    },
+    {
+      "id": "proc_26_main",
+      "summary": "Main → ContentFormNorm",
+      "priority": 0.082,
+      "symbol_count": 1,
+      "process_type": "cross_community",
+      "step_count": 5
+    },
+    {
+      "id": "proc_13_selectlanguage",
+      "summary": "SelectLanguage → InstalledContentState",
+      "priority": 0.075,
+      "symbol_count": 1,
+      "process_type": "cross_community",
+      "step_count": 6
+    }
+  ],
+  "process_symbols": [
+    {
+      "id": "Class:lib/domain/content.dart:ContentUnavailable",
+      "name": "ContentUnavailable",
+      "filePath": "lib/domain/content.dart",
+      "startLine": 25,
+      "endLine": 33,
+      "module": "Content",
+      "process_id": "proc_113_main",
+      "step_index": 5
+    },
+    {
+      "id": "Function:lib/data/content/content_database.dart:validateSingleSentenceContent",
+      "name": "validateSingleSentenceContent",
+      "filePath": "lib/data/content/content_database.dart",
+      "startLine": 233,
+      "endLine": 233,
+      "module": "Data",
+      "process_id": "proc_113_main",
+      "step_index": 4
+    },
+    {
+      "id": "Function:lib/presentation/providers/database_providers.dart:contentKeyFor",
+      "name": "contentKeyFor",
+      "filePath": "lib/presentation/providers/database_providers.dart",
+      "startLine": 175,
+      "endLine": 175,
+      "module": "Content",
+      "process_id": "proc_13_selectlanguage",
+      "step_index": 3
+    }
+  ],
+  "definitions": [
+    {
+      "id": "File:lib/presentation/providers/database_providers.dart",
+      "name": "interest",
+      "filePath": "Dateiabgleich und offener SchrittUnregelmäßige V",
+      "startLine": 813,
+      "endLine": 813
+    },
+    {
+      "name": "flutterSdkPath",
+      "type": "File"
+    },
+    {
+      "id": "comm_102",
+      "name": "languages",
+      "startLine": 3,
+      "endLine": 3
+    },
+    {
+      "id": "comm_110",
+      "name": "page",
+      "startLine": 3,
+      "endLine": 3
+    },
+    {
+      "id": "Enum:lib/domain/content.dart:ContentUnavailableReason",
+      "name": "ContentUnavailableReason",
+      "filePath": "lib/domain/content.dart",
+      "startLine": 13,
+      "endLine": 22
+    },
+    {
+      "id": "Class:lib/domain/content.dart:ContentInfo",
+      "name": "ContentInfo",
+      "filePath": "lib/domain/content.dart",
+      "startLine": 36,
+      "endLine": 53,
+      "module": "Data"
+    },
+    {
+      "id": "Class:lib/data/content/content_database.dart:ContentManifest",
+      "name": "ContentManifest",
+      "filePath": "lib/data/content/content_database.dart",
+      "startLine": 344,
+      "endLine": 425,
+      "module": "Content"
+    },
+    {
+      "id": "File:lib/data/content/content_database.dart",
+      "name": "content_database.dart",
+      "filePath": "lib/data/content/content_database.dart"
+    },
+    {
+      "id": "Constructor:lib/data/learning/practice_item_resolver.dart:PracticeItemResolver.PracticeItemResolver#9",
+      "name": "PracticeItemResolver",
+      "filePath": "lib/data/learning/practice_item_resolver.dart",
+      "startLine": 10,
+      "endLine": 20
+    },
+    {
+      "id": "Constructor:lib/data/learning/practice_item_resolver.dart:PracticeItemResolver._",
+      "name": "_",
+      "filePath": "lib/data/learning/practice_item_resolver.dart",
+      "startLine": 10,
+      "endLine": 20
+    },
+    {
+      "id": "Class:lib/data/learning/practice_item_resolver.dart:PracticeCatalog",
+      "name": "PracticeCatalog",
+      "filePath": "lib/data/learning/practice_item_resolver.dart",
+      "startLine": 224,
+      "endLine": 239,
+      "module": "Domain"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:validate",
+      "name": "validate",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "startLine": 129,
+      "endLine": 129,
+      "module": "Web"
+    },
+    {
+      "id": "Function:pipeline/src/sprachpipe/editor/web/app.js:download",
+      "name": "download",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "startLine": 131,
+      "endLine": 131,
+      "module": "Web"
+    },
+    {
+      "id": "Const:pipeline/src/sprachpipe/editor/web/app.js:renderImport.stats@135:164",
+      "name": "stats",
+      "filePath": "pipeline/src/sprachpipe/editor/web/app.js",
+      "startLine": 136,
+      "endLine": 136
+    },
+    {
+      "id": "Class:lib/data/user/user_database.dart:UserCards",
+      "name": "UserCards",
+      "filePath": "lib/data/user/user_database.dart",
+      "startLine": 13,
+      "endLine": 48,
+      "module": "User"
+    },
+    {
+      "id": "Class:lib/data/user/user_database.dart:UserDatabase",
+      "name": "UserDatabase",
+      "filePath": "lib/data/user/user_database.dart",
+      "startLine": 210,
+      "endLine": 339,
+      "module": "Test"
+    },
+    {
+      "id": "File:lib/data/user/user_database.dart",
+      "name": "user_database.dart",
+      "filePath": "lib/data/user/user_database.dart"
+    },
+    {
+      "id": "Class:lib/screens/stories/story_library_screen.dart:StoryLibraryScreen",
+      "name": "StoryLibraryScreen",
+      "filePath": "lib/screens/stories/story_library_screen.dart",
+      "startLine": 18,
+      "endLine": 259,
+      "module": "Stories"
+    },
+    {
+      "id": "Class:lib/screens/stories/story_library_screen.dart:_ImportPrompt",
+      "name": "_ImportPrompt",
+      "filePath": "lib/screens/stories/story_library_screen.dart",
+      "startLine": 349,
+      "endLine": 429
+    },
+    {
+      "id": "Class:lib/screens/stories/story_library_screen.dart:_ImportedCard",
+      "name": "_ImportedCard",
+      "filePath": "lib/screens/stories/story_library_screen.dart",
+      "startLine": 480,
+      "endLine": 592
+    }
+  ],
+  "timing": {
+    "vector": 3.3,
+    "bm25": 121.5,
+    "merge": 0.1,
+    "symbol_lookup": 11.9,
+    "ranking": 0,
+    "formatting": 0,
+    "wall": 134
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "status": "in_progress",
+  "skill": "/Users/ardasayar/.codex/skills/humanizer/SKILL.md",
+  "languages": [
+    "en",
+    "pt-BR",
+    "es",
+    "it",
+    "nb"
+  ],
+  "categories": [
+    "Wirtschaft",
+    "Wissenschaft",
+    "Technik",
+    "Geschichte",
+    "Gesellschaft",
+    "Kriminalfälle",
+    "Gesundheit",
+    "Alltag",
+    "Reisen",
+    "Restaurant",
+    "Arbeit"
+  ],
+  "original_stories": {
+    "Alltag": [
+      "Der fremde Brief",
+      "Das Regal im Flur",
+      "Ein Samstag ohne Strom",
+      "Der neue Nachbar",
+      "Die verschwundene Katze"
+    ],
+    "Reisen": [
+      "Der falsche Koffer",
+      "Das letzte Zimmer",
+      "Ein Halt am Meer",
+      "Der verpasste Zug",
+      "Eine Karte aus Papier"
+    ],
+    "Restaurant": [
+      "Ein Tisch am Fenster",
+      "Die vergessene Bestellung",
+      "Das Familienrezept",
+      "Ein Gast zum Schluss",
+      "Der erste Abend"
+    ],
+    "Arbeit": [
+      "Der erste Auftrag",
+      "Die falsche Datei",
+      "Eine schwierige Übergabe",
+      "Der leere Konferenzraum",
+      "Die letzte Schicht"
+    ]
+  },
+  "requirements": {
+    "original_count_per_category": 5,
+    "original_reading_minutes": [
+      5,
+      15
+    ],
+    "transcript_reading_minutes": [
+      10,
+      30
+    ],
+    "transcript_reduction_percent": [
+      20,
+      50
+    ],
+    "reading_words_per_minute": 120,
+    "forbidden_prose_characters": [
+      "-",
+      "–",
+      "—",
+      ";"
+    ],
+    "titles": "short enough for story cards",
+    "resume_reading": "persistent per user, language and story",
+    "learning_sentence": "remove quotation delimiters without damaging apostrophes or meaning",
+    "reader_selection": "rounded orange word and sentence highlights",
+    "remove_copy": "Die vorhandene Lernkarte wird mit deiner Sammlung verknüpft"
+  },
+  "remaining": [
+    "Rewrite and translate every transcript with Humanizer review",
+    "Resolve short transcript length conflicts transparently without padding",
+    "Write and translate twenty original stories",
+    "Integrate categories and stories into actual content loading",
+    "Verify reading persistence including background and restart",
+    "Normalize quotation marks in sentence learning",
+    "Rounded orange selections and remove redundant linking copy",
+    "Run content audits, tests and device verification"
+  ]
+}

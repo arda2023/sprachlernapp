@@ -1,0 +1,121 @@
+Forskjellen var tillatelse
+
+En gutt som likte triks
+
+Før Kevin Mitnick ble et kjent navn i historier om datakriminalitet, ville han bli tryllekunstner. Han likte øyeblikket da publikum så i feil retning og gikk glipp av det som skjedde rett foran dem. Et vellykket triks krevde at han forsto hva folk forventet å se.
+
+Mye av dokumentarens fortelling om oppveksten bygger på selvbiografien hans. Minnene gir oss hans perspektiv, ikke en uavhengig dokumentasjon av hver samtale. Ifølge ham selv handlet et tidlig eventyr om bussene i Los Angeles. Som gutt fant han ut hvordan overgangsbillettene fungerte, og oppdaget en måte å reise på uten å betale den riktige prisen.
+
+Han husket opplevelsen som en gåte det var tilfredsstillende å løse. Et vanlig system hadde regler, og han hadde funnet ut hvordan han kunne komme rundt dem. Busselskapet ville nok ha beskrevet saken annerledes. Gleden hans endret ikke at han brukte en tjeneste uten å betale for den.
+
+På skolen møtte han mennesker som var fascinert av telefonnettet. De tilhørte et løst miljø som ofte ble kalt phone phreaks. Noen undersøkte utstyr og signaler. Andre fant måter å ringe på uten å bli belastet. Atter andre ville ha informasjon som telefonselskapene holdt unna offentligheten.
+
+For Mitnick kunne personen som svarte i telefonen, være like interessant som maskinene bak. En sikker stemme og en troverdig historie åpnet noen ganger en dør som teknisk kunnskap alene ikke kunne åpne. Han begynte å lære både hvordan systemene fungerte, og hvordan menneskene med ansvar for dem tok avgjørelser.
+
+Personen i den andre enden
+
+Bedrifter trengte ansatte som delte informasjon og hjalp hverandre. Samarbeidet ga muligheter til noen som bare lot som om de hørte til. Mitnick beskrev hvordan han studerte avdelinger, stillingstitler og vanlige rutiner til han kunne høres kjent ut for personen han ringte.
+
+Denne formen for bedrag kalles ofte sosial manipulering. Offeret trenger ikke å være dumt. En travel ansatt kan høre en forespørsel som ligner mange lovlige forespørsler samme dag. Hvis innringeren virker kjent med bedriften, kan den ansatte godta en identitet som ingen faktisk har kontrollert.
+
+Dokumentaren forteller at Mitnick brukte denne metoden til å skaffe private telefonopplysninger. Numre som eierne bevisst hadde holdt utenfor offentlige kataloger, ble gjenstander for nysgjerrigheten hans. For ham viste det ferdigheter å finne dem. For personene som fikk opplysningene sine avslørt, var det et tap av privatliv.
+
+I hans egen fortelling klarte ikke advarsler fra telefonselskaper og etterforskere å stoppe ham. Han ble redd når myndighetene sto ved døren. Så gikk han tilbake til de samme aktivitetene når den umiddelbare faren var over. Spenningen ved å lykkes var lettere å forestille seg enn konsekvensene av enda en pågripelse.
+
+En episode handlet om at han gikk inn i en bygning hos et telefonselskap sammen med noen venner og tok med seg tekniske håndbøker. Dokumentene beskrev systemer gruppen ville forstå. Kunnskapen deres om bedriften hjalp dem med å virke som om de hørte hjemme der. Men kjennskap var ikke tillatelse. Hendelsen fikk rettslige følger mens Mitnick fortsatt var tenåring.
+
+Han hadde flere møter med rettssystemet i ungdommen. Mønsteret var viktigere enn legenden om ett genialt triks. En advarsel eller en dom avbrøt aktivitetene. Senere begynte han igjen. Hver gang ble det vanskeligere å beskrive problemet som én enkelt ungdomsfeil som han hadde lagt bak seg.
+
+En jobb og et nytt innbrudd
+
+Mitnick forsøkte også å gjøre interessen for datamaskiner til lovlig arbeid. Dokumentaren beskriver en jobb som programmerer i et telefonselskap som tok slutt kort tid etter at den begynte. Ifølge ham selv førte spørsmål om bakgrunnen hans til at muligheten brått forsvant. Han hadde funnet en jobb han ønsket seg, og så mistet den.
+
+Fortiden kompliserte også senere jobbsøking. Arbeidsgivere kunne være skeptiske til å gi tilgang til noen som var kjent for å overskride grensene for slik tilgang. Det var frustrerende for en person som hadde sine sterkeste ferdigheter innen data. Det fjernet likevel ikke ansvaret hans for valgene han tok etterpå.
+
+I løpet av 1980 årene rettet han og en samarbeidspartner oppmerksomheten mot Digital Equipment Corporation, vanligvis kalt DEC. Selskapet var en viktig datamaskinprodusent. Maskinene i VAX serien brukte operativsystemet VMS. Mitnick ville ha kildekoden, de menneskelesbare instruksjonene som ble brukt til å bygge programvaren.
+
+Å lese kildekode kunne vise hvordan et program fungerte og hvor svakhetene befant seg. Men koden tilhørte bedriften og var ikke fritt tilgjengelig. For å få tak i den måtte de krysse en grense DEC hadde satt med vilje. Dokumentaren beskriver bedrag og uautorisert tilgang til utviklingssystemene.
+
+Målet forklarer også hvorfor dette var annerledes enn å stjele en ferdig datamaskin. Kildekode kunne kopieres mens originalen ble liggende. Utviklerne hadde fortsatt filene sine, men kontrollerte ikke lenger hvem som kunne studere dem. For Mitnick ga en kopi tid til å undersøke programvaren uten å være inne på selskapets maskiner. For DEC betydde den samme kopien at en utenforstående hadde fått materiale bedriften ville beskytte. Ingen tom hylle var nødvendig for at et reelt innbrudd skulle ha funnet sted.
+
+Inntrengningen dreide seg om mer enn å se på en skjerm. Mitnick og samarbeidspartneren forsøkte å beholde tilgangen og kopierte materiale bort fra systemene der det hørte hjemme. Fortellingen beskriver at kopier til slutt ble lagret på magnetbånd, et medium som ble brukt til å oppbevare store mengder data.
+
+Mitnick framstilte selve utfordringen som en viktig motivasjon. Han ville skaffe noe som var vanskelig å nå, og forstå det andre ikke kunne se. Forklaringen sier noe om interessen hans. Den betyr ikke at aktiviteten var harmløs. En bedrift som oppdaget en inntrenger, måtte undersøke hva vedkommende hadde sett, hva som var endret, og om personen kunne komme tilbake.
+
+Dokumentaren forteller også om rivalisering mellom samarbeidspartnerne og en personlig konflikt som førte til samarbeid med etterforskerne. De nøyaktige samtalene tilhører den selvbiografiske fortellingen. Det overordnede utfallet er tydeligere: Innbruddet hos Digital ble en føderal straffesak, og Mitnick fikk en fengselsstraff etterfulgt av et behandlingsprogram.
+
+En ny og skremmende figur
+
+Datakriminalitet fikk oppmerksomhet i en verden som fortsatt var i ferd med å bli kjent med maskiner i nettverk. Mange lesere brukte sjelden en datamaskin, eller aldri. Noen som kunne ta seg inn i et system langt unna, så ut til å ha evner som var vanskelige å forstå og måle.
+
+Filmen WarGames fra 1983 ga publikum et særlig dramatisk bilde. En ung databruker kommer ved et uhell inn i et militært system, og handlingen nærmer seg en atomkrise. Historien var oppdiktet, men ga et minneverdig bilde av hva en person ved et tastatur kunne gjøre.
+
+Mitnicks offentlige rykte vokste i denne atmosfæren. Beretninger om virkelige innbrudd sto sammen med skremmende påstander om evnene hans. Et sammensatt menneske ble enklere å framstille som en farlig person med nesten ubegrenset rekkevidde. Senere skulle tilhengere skape det motsatte bildet av en misforstått utforsker som ble straffet for å være for smart.
+
+Ingen av bildene var tilstrekkelige. Dommene hans var virkelige. Det var også rimelig å stille spørsmål ved hvordan anklager ble omtalt og saken håndtert. Å forstå det ene krevde ikke at man ignorerte det andre. En person kunne begå lovbrudd uten å ha alle de ekstraordinære evnene han ble tillagt.
+
+Påstanden om at oppførselen hans lignet en avhengighet, ble også en del av fortellingen. Advokater og Mitnick brukte ord om tvang for å forklare at han stadig vendte tilbake til hacking. Dette ga ingen generell medisinsk forklaring på hackere og gjorde ikke teknisk nysgjerrighet til en diagnose. Det var én måte handlingene hans ble diskutert på den gangen.
+
+En ny sjanse, så flukt
+
+Etter den tidligere dommen måtte Mitnick følge begrensninger som skulle hindre flere lovbrudd. Tilgangen til datamaskiner og aktivitetene hans var underlagt tilsyn. Vilkårene endret seg over tid, men utgangspunktet var klart: Et nytt innbrudd uten tillatelse kunne få alvorlige konsekvenser for ham.
+
+Dokumentaren beskriver at han gjenopptok kontakten med hackermiljøet og ble involvert i nye aktiviteter i telefonsystemer. I hans egen fortelling virket en kontakt både kunnskapsrik og mistenkelig. Han begynte å lure på om noen som kjente til samtalene, ga opplysninger videre til etterforskerne.
+
+Denne delen av historien ligner en jakt der alle overvåker alle. Den handler samtidig om virkelige krenkelser av privatlivet. Å lytte til kommunikasjon og hente private opplysninger var ikke bare smarte trekk i et spill mellom rivaler. Andre menneskers informasjon var involvert, enten de kjente navnet Mitnick eller ikke.
+
+I 1992 var føderale etterforskere igjen på sporet av ham. Det kom en arrestordre knyttet til brudd på vilkårene etter løslatelsen. Han unngikk myndighetene og var på flukt i mer enn to år. I denne perioden ble navnet hans stadig mer kjent for dem som leste avisenes historier om datakriminalitet.
+
+Å leve med en annen identitet ga ham ikke et stabilt nytt liv. Dokumentaren beskriver mislykkede forsøk på å finne arbeid og fortsatt inntrengning i datasystemer. Han holdt fast ved aktiviteten som hadde bidratt til å gjøre vanlig arbeid vanskelig å få. En ny by kunne endre adressen uten å endre dette mønsteret.
+
+Publikum så ikke det meste av dette direkte. Folk møtte overskrifter, anklager og beskrivelser fra personer som var involvert i jakten. Avstanden mellom privatpersonen og den offentlige figuren vokste. Etter hvert kunne navnet hans antyde en hel type trussel uten at noen bestemt handling ble forklart.
+
+En etterforsker følger bevisene
+
+I desember 1994 ble datasystemene til sikkerhetsforskeren Tsutomu Shimomura utsatt for et innbrudd. Han arbeidet ved San Diego Supercomputer Center. Hendelsen berørte personlige opplysninger og teknisk materiale. Dermed hadde han både faglige og personlige grunner til å undersøke det som hadde skjedd.
+
+Dokumentaren beskriver også hånlige beskjeder han mottok. Hvem stemmen tilhørte, ble en del av striden rundt saken. Beskjedene bør ikke behandles som bevis for at Mitnick personlig utførte hver handling knyttet til innbruddet. Et dramatisk taleopptak og en dokumentert dataforbindelse er forskjellige typer bevis.
+
+Shimomura undersøkte hendelsen og samarbeidet med andre spesialister. Ett spørsmål gjaldt falsk identitet i nettverket, ofte omtalt som IP spoofing. Enkelt forklart kunne informasjon som kom over nettverket, se ut til å komme fra en kilde systemet stolte på. Tillit basert på dette inntrykket kunne være feilplassert.
+
+En sikkerhetsadvarsel fra CERT i januar 1995 omtalte rapporterte angrep med falske avsenderadresser og kaprede forbindelser. Advarselen hjalp administratorer med å forstå en teknisk risiko. Den fastslo ikke at én bestemt person hadde oppfunnet metoden eller sto bak alle angrep der den ble brukt.
+
+Etterforskningen utviklet seg gjennom flere organisasjoner. Opplysninger på nettjenester, registre hos tjenesteleverandører og observasjoner av aktivitet bidro til å snevre inn søket. Shimomura kom med viktig ekspertise, men jakten var ikke bare en privat konkurranse mellom to menn. Etterforskere og ansatte ved andre organisasjoner spilte også viktige roller.
+
+Sporet førte til Raleigh i North Carolina. Den 15. februar 1995 pågrep FBI og den lokale gruppen som lette etter ettersøkte personer, Mitnick i en leilighet der. Justisdepartementet kunngjorde pågripelsen samme dag. Mer enn to år på flukt var slutt da tjenestemenn sto ved døren hans.
+
+Pågripelsen førte til en ny bølge av overskrifter. Beretninger om møtet mellom Mitnick og Shimomura i retten bidro til å gjøre jakten til en minneverdig rivalisering. Men en pågripelse var starten på videre rettslige prosesser, ikke en fullstendig avgjørelse om hver historie som hadde stått på trykk.
+
+Saken og kampanjen
+
+Mitnick forble i fengsel mens forskjellige saker ble behandlet. Det var en egen dom for svindel knyttet til mobiltelefoni, i tillegg til senere anklager og spørsmål om vilkårene etter den tidligere løslatelsen. Å beskrive hele perioden som ren varetekt før én rettssak ville utelate deler av den rettslige historien.
+
+Anklagene gjaldt uautorisert tilgang og informasjon hentet fra store teknologiselskaper. Tilhengerne hans stilte spørsmål ved størrelsen på tapskravene og måten saken ble presentert på. Kampanjen Free Kevin ble en synlig sak i deler av datamiljøet og samlet mennesker med ulike oppfatninger av ham.
+
+Noen mente han var blitt et beleilig symbol på offentlig frykt. Andre var opptatt av lengden og forholdene under fengslingen. Bøker og planer om en film skapte flere diskusjoner om hvem som kontrollerte historien om livet hans. De som fortalte den, var ikke alltid enige om fakta eller om hva hendelsene betydde.
+
+Det forekom også angrep på nettsteder i hans navn. Handlingene beviste ikke at han var uskyldig og ga ikke noe svar på anklagene. Å støtte en tiltalt og å ha tillatelse til å gripe inn i andres systemer var separate spørsmål, selv når deltakerne sa at de kjempet for en felles sak.
+
+I 1999 erklærte Mitnick seg skyldig i lovbrudd i føderale saker. Samtidig rapportering beskrev sju punkter fordelt på to tiltaler og en straff på førtiseks måneder i sakene fra 1999. En senere offisiell oversikt oppga en samlet straff på sekstiåtte måneder på tvers av de aktuelle dommene. Tallene gjelder forskjellige avgrensninger og skal ikke behandles som konkurrerende versjoner av ett enkelt tall.
+
+Beløpet han ble pålagt å betale i erstatning, var 4 125 dollar. Den lave summen ble en slående detalj i en sak forbundet med langt større krav. Den betydde ikke at en domstol hadde fastsatt den samlede skaden til bare noen tusen dollar. Rapporteringen fra straffeutmålingen forklarte at hans begrensede betalingsevne var sentral for avgjørelsen.
+
+Det var fortsatt verdt å spørre hvordan selskapene beregnet tapene sine. Kostnaden ved å undersøke et innbrudd, reparere systemer og miste kontroll over beskyttet informasjon kunne være noe annet enn den kommersielle verdien av kopiert programvare. Ingen av disse spørsmålene kunne avgjøres ved bare å sammenligne et stort tall i en overskrift med en liten betaling.
+
+Livet etter fengselet
+
+Mitnick forlot fengselet i januar 2000 etter nesten fem år i forvaring siden pågripelsen i Raleigh. Løslatelsen kom med betydelige begrensninger. Bruk av datamaskiner og kommunikasjonsutstyr, og arbeid med slike systemer, var fortsatt underlagt strenge vilkår og særskilt godkjente unntak.
+
+Dette hadde praktiske følger. Ferdighetene han var mest kjent for, var tett knyttet til utstyr han ikke bare kunne bruke når han ønsket. Å finne lovlig arbeid krevde mer enn å bestemme seg for å forandre seg. Han måtte også følge tilsynsvilkårene og overbevise andre om at de kunne stole på ham.
+
+I mars 2000 møtte han for en komité i det amerikanske senatet som diskuterte datasikkerhet. En mann som tidligere var jaget av føderale myndigheter, ble nå spurt om hva organisasjoner burde forstå om datainnbrudd. Han snakket om tiltrekningen ved tekniske utfordringer og betydningen av mennesker når sikkerheten sviktet.
+
+Vitneforklaringen var en beretning fra noen med erfaring i å bryte regler. Den beviste ikke hver påstand han kom med om fortiden. Likevel viste opptredenen en mulig ny rolle. Kunnskap opparbeidet gjennom lovbrudd kunne brukes til å forklare risiko uten at de samme lovbruddene ble gjentatt.
+
+Med tiden bygde Mitnick en karriere som sikkerhetskonsulent, foredragsholder og forfatter. Bedrifter betalte for godkjente undersøkelser. Senere fikk han stillingen Chief Hacking Officer i sikkerhetsopplæringsselskapet KnowBe4. Ryktet som en gang hindret ham i å få jobb, ble også en grunn til at publikum ønsket å høre ham snakke.
+
+Endringen innebar en konkret betingelse: tillatelse. En bedrift kunne godta at noen testet forsvaret og fastsette grensene for arbeidet. Personen som gjennomførte testen, hadde da et ansvar overfor kunden og alle som kunne få opplysningene sine berørt. Teknisk dyktighet var ikke i seg selv en slik avtale.
+
+Mitnick døde 16. juli 2023, femtini år gammel, etter kreft i bukspyttkjertelen. Minnetekster trakk fram kunnskapen, humoren og det senere arbeidet hans. Livet etterlot også dokumenterte lovbrudd, omstridte fortellinger og en offentlig fascinasjon for skikkelsen som ble kalt en hacker.
+
+Historiene om trylling gir én måte å forstå interessene hans på. De forklarer ikke bort menneskene som ble skadet av bedrag. Et publikum velger å se en tryllekunstner. En ansatt som blir lurt til å avsløre private opplysninger, har ikke tatt det valget. I Mitnicks senere karriere endret det forholdet seg da han ba om tillatelse. Det skrev ikke om fortiden, men gjorde en annen type arbeid mulig.

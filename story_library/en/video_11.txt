@@ -1,0 +1,63 @@
+How black holes grow
+
+A black hole can contain several times the mass of the Sun within a region smaller than a city. Another can contain billions of solar masses and have a boundary wider than the orbits of the planets. Both belong to the same broad family of objects. Their enormous range raises a question: how does nature build something so massive in such a compact form?
+
+Calling a black hole the largest thing in the universe is misleading. Galaxies and larger cosmic structures extend much farther. What makes black holes remarkable is the amount of mass concentrated within their boundaries. Comparing them requires deciding whether we mean mass, the size of the event horizon, or the bright material around them. Those are different measurements.
+
+The event horizon is the boundary beyond which light cannot escape to distant observers. It is not a solid surface like the ground beneath our feet. For a simple black hole that does not rotate, the horizon radius grows directly with mass. Rotation changes the geometry, so the neat circles used in size comparisons are useful models rather than complete portraits.
+
+The smallest possibilities
+
+Some of the smallest proposed black holes may also be among the oldest. These hypothetical primordial black holes would have formed in the early universe, before ordinary stars existed. In certain models, sufficiently dense regions could collapse under their own gravity. This requires appropriate conditions, not merely any tiny difference in density.
+
+Their possible masses cover a wide range. A black hole with the mass of Earth would have a horizon radius of roughly nine millimetres in the simple model. An enormous amount of matter could therefore be associated with a boundary small enough to compare with an everyday object. Small in size does not mean light in weight.
+
+There is no definitive observational proof that primordial black holes exist. They have been considered as possible contributors to dark matter, but that idea faces observational constraints. A proposed explanation is not the same as a confirmed discovery. Scientists look for effects such objects might have on light, surrounding matter or the evolution of the universe.
+
+Theory also predicts that black holes can lose mass through Hawking radiation. Smaller ones would evaporate faster than larger ones. Whether a primordial black hole could survive until today depends partly on its initial mass. This remains a theoretical prediction for astrophysical black holes, not a process directly observed from one in space.
+
+When a star collapses
+
+Black holes formed from stars have much stronger observational support. A massive star can reach the end of its life with a core that can no longer resist collapse. Under suitable conditions, the remnant becomes a black hole. The outcome depends on the star's evolution and remaining core, rather than on a single universal mass threshold applied to every star.
+
+Astronomers often express black hole masses in solar masses, with one solar mass equal to the mass of our Sun. For a nonrotating black hole, each solar mass corresponds to roughly three kilometres of horizon radius. A remnant containing ten solar masses would therefore have a horizon diameter of about sixty kilometres in this model.
+
+Its surroundings can be much larger and brighter. Gas drawn from a companion star may form a disk around the black hole. As that gas moves inward, processes within the disk convert energy into heat and radiation. The bright light comes from material outside the horizon. It is not light escaping from within the black hole itself.
+
+Such a system allows scientists to estimate the unseen object's mass from the companion's motion and other observations. But the interpretation must be checked. A proposed black hole can turn out to have another explanation if the companion star or the system's geometry was misunderstood. This is one reason rankings of the smallest known examples change.
+
+Growing through collisions
+
+Black holes can gain mass by accreting matter or merging with other black holes. A merger also sends energy away as gravitational waves, so the final mass is smaller than the sum of the initial masses. The missing mass has not simply vanished. It has contributed to energy carried away from the system.
+
+The gravitational wave event GW190521 provided an important example. In the analysis announced in 2020, two black holes with estimated masses of about 85 and 66 solar masses combined to form a remnant of roughly 142 solar masses. The measurements carry uncertainty, but the result gave strong evidence for a black hole in the intermediate mass range.
+
+These intermediate objects sit between typical stellar remnants and the giants at galactic centres. They are difficult to find and confirm. That difficulty does not mean there is a completely empty stretch with no black holes between hundreds and millions of solar masses. Observations and candidate identifications continue to fill in a complicated picture.
+
+The race to become enormous
+
+The existence of very massive black holes early in cosmic history presents a demanding growth problem. Starting with a small stellar remnant and feeding it slowly does not always provide enough time. Gas must reach the object, and radiation from the feeding process can push material away. Growth depends on the environment as well as on how much matter is available.
+
+Researchers study several possible routes. Some models begin with more massive seeds formed through the collapse of large gas concentrations. Others explore periods of unusually rapid feeding or repeated mergers. A related proposal involves a black hole inside a huge envelope of gas, sometimes called a quasi star. Energy released by material falling towards the black hole could help support the envelope while the hole grows.
+
+Quasi stars remain theoretical objects. They offer a possible mechanism, not a complete observed history of every large black hole. Different routes may matter in different circumstances. The scientific challenge is to find observations that distinguish these possibilities and explain both the early giants and the populations seen later.
+
+At the centre of a galaxy
+
+The Milky Way contains a central black hole, Sagittarius A*, with about four million solar masses. The motions of nearby stars provide important evidence for this concentrated mass. Their orbits reveal a powerful gravitational influence in a small region that cannot be explained by an ordinary visible star.
+
+That does not make the black hole the equivalent of the Sun for the entire galaxy. The Sun contains most of the Solar System's mass. A galactic central black hole represents only a small fraction of the galaxy's total mass. Stars, gas and dark matter collectively shape the gravitational field of the wider galaxy. The central black hole dominates only much closer to its own location.
+
+Nor is a black hole a vacuum cleaner pulling everything into it from any distance. Far away, its gravitational influence resembles that of another object with the same mass. Matter can remain in orbit. To fall inward, it generally must follow a suitable path or lose enough orbital angular momentum through interactions.
+
+Some galactic centres are extremely active. Gas feeding a supermassive black hole can release vast amounts of energy, and powerful jets may emerge from its surrounding environment. These jets do not escape from inside the event horizon. Their formation involves matter and magnetic fields outside it. The resulting radiation can make a distant galactic nucleus visible across enormous distances.
+
+An image and its limits
+
+In 2019, the Event Horizon Telescope collaboration released an image of the region around the central black hole in Messier 87. Its estimated mass was about 6.5 billion solar masses. The image showed bright emission surrounding a dark central shadow, giving an extraordinary view of gravity at work near a black hole.
+
+The shadow is not simply a photograph of the horizon's surface. Gravity bends the paths of light, and the observed dark region is larger than the horizon itself. Comparing the image directly with a simple physical diameter would therefore confuse two related but different quantities.
+
+Still larger mass estimates have been reported for other systems, reaching tens of billions of solar masses. But declaring one object the permanent champion goes beyond the evidence. Methods differ, uncertainties can be substantial, and distant objects are seen as they were when their light began its journey. We do not directly observe their present condition.
+
+A useful comparison therefore includes how the mass was inferred and how uncertain it is. The greatest value of these objects is not their position in a record table. Each one helps test how gravity behaves, how matter reaches galactic centres and how the universe managed to build its most massive compact objects.

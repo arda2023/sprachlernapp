@@ -21,7 +21,7 @@ ContentCard c(
 );
 
 void main() {
-  test('mixed keeps due reviews ahead of new cards in content order, filters disabled, never fills with early', () {
+  test('mixed keeps due reviews ahead of new cards in mixed order, filters disabled, never fills with early', () {
     final now = DateTime(2026, 10, 4);
     final cards = [
       c('due1', lemma: 'same'),
@@ -68,16 +68,9 @@ void main() {
     );
     // Due first (longest overdue), then new in content order once each;
     // the seat left over is not filled with the not-yet-due card.
-    expect(queue.map((e) => e.cardId), [
-      'due1',
-      'due2',
-      'function',
-      'n0',
-      'n1',
-      'n2',
-      'n3',
-      'n4',
-    ]);
+    expect(queue.take(2).map((e) => e.cardId), ['due1', 'due2']);
+    expect(queue.skip(2).map((e) => e.cardId),
+      unorderedEquals(['function', 'n0', 'n1', 'n2', 'n3', 'n4']));
     expect(queue.every((e) => e.mode == ReviewMode.mixed), isTrue);
     final repeated = withRepeat(queue, 0);
     expect(repeated.where((e) => e.repeat).single.mode, ReviewMode.mixed);

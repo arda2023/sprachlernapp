@@ -140,11 +140,16 @@ void main() {
           ),
         ),
       );
-      expect(find.text('In Wortliste ansehen'), findsNothing);
-      await tester.tap(find.text('Zum Lernen hinzufügen'));
+      expect(
+        find.bySemanticsLabel('Hinzugefügt, in Wortliste ansehen'),
+        findsNothing,
+      );
+      await tester.tap(find.bySemanticsLabel('Zum Lernen hinzufügen'));
       await tester.pumpAndSettle();
-      expect(find.text('Zum Lernen hinzugefügt'), findsOneWidget);
-      await tester.tap(find.text('In Wortliste ansehen'));
+      expect(find.bySemanticsLabel('Hinzugefügt, in Wortliste ansehen'), findsOneWidget);
+      await tester.tap(
+        find.bySemanticsLabel('Hinzugefügt, in Wortliste ansehen'),
+      );
       await tester.pumpAndSettle();
       final rows = tester.widgetList<WordListItem>(find.byType(WordListItem));
       expect(rows.map((w) => w.word.id), ['saved']);

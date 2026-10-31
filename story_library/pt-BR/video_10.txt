@@ -1,0 +1,109 @@
+Dentro de um cartão
+
+Um cartão de pagamento parece um pequeno pedaço de plástico com um nome e alguns números. Em uma demonstração, pesquisadores retiram boa parte desse plástico e revelam uma fina volta de metal ligada a um chip minúsculo. Os restos mal lembram um cartão. Mesmo assim, quando a antena e o chip permanecem intactos, o dispositivo ainda consegue se comunicar com um terminal de pagamento. A superfície impressa nunca foi a parte responsável pelos cálculos.
+
+O experimento transforma um objeto cotidiano em algo estranho. O cartão não tem bateria visível, tela nem botões. Não pode perguntar ao usuário o que fazer. Ainda assim, ao chegar perto de um leitor, recebe energia, troca informações e participa de um pagamento. Entender esse breve encontro exige passar pela gravação magnética, por computadores minúsculos e por um aparelho de escuta que esteve escondido em um presente diplomático.
+
+Essas tecnologias compartilham ideias físicas úteis, mas suas histórias não formam uma única linha reta. Um sistema moderno de pagamento combina invenções de muitas pessoas e organizações. A relação entre um aparelho de espionagem e um cartão bancário é reveladora porque ambos mostram que um objeto pequeno pode responder a um sinal externo sem carregar sua própria bateria.
+
+Um presente que escutava
+
+Em 1945, crianças soviéticas entregaram ao embaixador americano em Moscou uma escultura de madeira do Grande Selo dos Estados Unidos. A peça foi exposta em sua residência. Dentro dela havia um dispositivo de escuta que só foi descoberto em 1952. Os investigadores americanos passaram a chamar o aparelho de a Coisa.
+
+O dispositivo era incomum porque não transmitia continuamente. Tinha uma antena e uma cavidade ressonante com uma membrana fina. A energia de rádio enviada de fora fazia o aparelho responder. As conversas perto da escultura moviam a membrana, alterando essa resposta. Um receptor externo conseguia recuperar o som a partir das mudanças no sinal que voltava.
+
+Quando o transmissor externo era desligado, encontrar o aparelho por meio de uma busca por sinais ativos se tornava muito mais difícil. Não havia uma bateria interna que precisasse de troca regular. A energia usada na resposta de rádio vinha de outro lugar. O silêncio entre as sessões de escuta fazia parte da eficácia do dispositivo.
+
+A ideia essencial é a ressonância. Um sistema físico pode responder com muito mais intensidade a determinadas frequências do que a outras. Um diapasão oferece um exemplo conhecido com o som. Uma estrutura elétrica também possui características que determinam sua resposta a um sinal alternado. Quando essas características mudam, a resposta também muda.
+
+No microfone escondido, o som movia uma superfície flexível dentro da cavidade. Esse movimento alterava o comportamento elétrico da estrutura e modulava o sinal de rádio devolvido. O sinal carregava a conversa porque suas propriedades variavam com o som. A membrana não precisava gerar toda a energia necessária para alcançar o receptor. Ela modificava a energia fornecida pelo transmissor externo.
+
+Essa é uma distinção útil entre fornecer energia e transportar informação. Uma mudança física relativamente pequena pode inserir informações em um fluxo de energia muito maior. O mesmo princípio geral aparece em vários sistemas eletrônicos, embora os circuitos, as frequências e os métodos sejam diferentes. Um cartão moderno não contém um microfone secreto, mas também usa um campo externo para ajudar na comunicação.
+
+O papel antes da eletrônica
+
+Enquanto os serviços de inteligência exploravam aparelhos de rádio, os bancos tentavam facilitar as compras comuns. Pagar em dinheiro exigia carregar uma quantia suficiente. Os cheques traziam outros atrasos e incertezas. Os cartões ofereciam uma forma de ligar uma compra a uma conta, mas os primeiros processos de pagamento ainda dependiam bastante do papel.
+
+O Bank of America lançou o BankAmericard em 1958. O programa se tornou uma importante forma de cartão bancário aceito em diferentes estabelecimentos e depois deu origem à Visa. Isso não representou o começo de todas as formas de crédito ao consumidor nem de todos os cartões. Lojas e outras empresas já haviam oferecido maneiras de comprar agora e pagar depois. O BankAmericard ajudou a ampliar um modelo que podia ser usado em muitos comércios participantes.
+
+As letras e os números em relevo dos cartões antigos tinham uma função prática. O comerciante podia colocar o cartão em uma máquina e transferir seus dados para um formulário de papel. As cópias criavam um registro para as partes envolvidas. Processar esses documentos dava trabalho. Copiar os números com clareza não significava que a transação tivesse sido verificada eletronicamente.
+
+O problema envolvia tanto velocidade quanto confiança. O comerciante precisava saber se deveria aceitar o pagamento. O banco precisava reconhecer a conta e depois liquidar a operação. Um cartão roubado ou uma cópia convincente podiam aproveitar o intervalo entre a compra e a descoberta da fraude. Facilitar a leitura dos dados por máquinas oferecia uma maneira de melhorar o processo.
+
+Uma faixa de dados gravados
+
+No início dos anos sessenta, o engenheiro Forrest Parry, da IBM, trabalhava na fixação de fita magnética em cartões de identificação de plástico. Segundo o relato da empresa, ele não encontrava um método confiável até que sua esposa sugeriu usar o ferro de passar que estava segurando. O calor ajudou a resolver um problema de fabricação. A história chama atenção porque um detalhe pequeno separava uma ideia funcional de um objeto útil.
+
+Uma tarja magnética guarda dados em padrões de magnetização. Quando o cartão passa por uma cabeça de leitura adequada, esses padrões produzem sinais que a eletrônica consegue interpretar. A tarja não pensa sobre uma compra nem decide se a pessoa que a segura tem autorização para usar o cartão. Ela apenas fornece informações gravadas.
+
+Esse registro legível por máquinas tornou os sistemas de cartões mais rápidos. Um leitor podia capturar os dados sem que alguém digitasse cada caractere. Combinado com terminais, redes de comunicação e computadores bancários, permitia verificações mais ágeis. A tarja sozinha não realizava essas verificações. Sua importância vinha de integrar o cartão de forma prática a um sistema eletrônico maior.
+
+A fraqueza era que a informação permanecia praticamente fixa. Ler a mesma tarja de novo produzia os mesmos dados armazenados. Se criminosos capturassem esses dados, em certas circunstâncias poderiam reproduzir o conteúdo em outra tarja e apresentar a cópia onde esse tipo de transação fosse aceito. O cartão copiado não precisava conhecer outro segredo além da informação reproduzida.
+
+Isso ajuda a explicar por que copiar e autenticar são problemas diferentes. Um leitor pode receber dados perfeitamente legíveis sem conseguir saber se vieram do cartão original. Uma comunicação mais rápida ajuda o banco a identificar comportamentos suspeitos, mas velocidade sozinha não torna impossível duplicar um registro fixo.
+
+Demonstrações históricas com tarjas magnéticas deixam essa fraqueza visível. Elas não provam que todo pagamento moderno possa ser copiado da mesma forma. Os sistemas mudaram e as regras de aceitação variam. A lição importante é a limitação de usar um registro que não muda como prova de que um objeto físico é autêntico.
+
+Um computador no cartão
+
+O chip mudou o que um cartão podia fazer. Em vez de apenas apresentar informações armazenadas, ele podia realizar cálculos com dados secretos protegidos. Os padrões EMV descrevem como chips e terminais interagem nos sistemas de pagamento. O nome vem das organizações participantes originais, Europay, Mastercard e Visa.
+
+Em uma transação online simplificada, o terminal fornece informações sobre a compra. O cartão utiliza determinados dados da operação e informações internas para calcular um valor criptográfico, frequentemente chamado de criptograma. O emissor pode verificar o resultado usando seus dados secretos correspondentes. Isso oferece evidência de que a transação veio de um cartão capaz de executar o cálculo necessário.
+
+O processo não consiste apenas em esconder o número da conta. Alguns dados podem continuar legíveis enquanto o segredo utilizado para gerar a resposta fica dentro do chip. O ganho de segurança vem de produzir uma resposta ligada à transação, em vez de repetir um registro fixo que qualquer pessoa poderia apresentar novamente.
+
+Capturar uma troca válida, portanto, normalmente não fornece tudo o que seria necessário para criar outras transações arbitrárias. Uma cópia dos dados visíveis não contém o segredo protegido. Chips modernos também incorporam medidas para resistir a tentativas de leitura direta de informações internas sensíveis. Essas proteções tornam a cópia muito mais difícil do que em uma tarja magnética, sem deixar o sistema imune a qualquer ataque.
+
+O pagamento completo contém mais etapas que esse exemplo. Tipos diferentes de transação e configurações de cartão usam verificações distintas. Algumas decisões podem envolver funções que operam sem conexão com o emissor. Uma resposta criptográfica válida também não significa automaticamente que o banco aprovará a compra. Saldo disponível, controles de risco e outras regras continuam importantes.
+
+Verificar o cartão e verificar seu portador são tarefas separadas. O chip pode ajudar a demonstrar que um cartão autêntico está presente. Uma senha ou outro método pode ajudar a estabelecer que a pessoa está autorizada. Nem todo pagamento com chip exige senha, e as regras variam. Tratar a tecnologia do chip e a digitação da senha como a mesma coisa esconde uma parte importante do projeto.
+
+A mudança reduziu um caminho fácil para fraudes com cartões falsos, mas criminosos podiam procurar outros. Roubar um cartão verdadeiro, obter informações pessoais ou enganar um cliente explora fraquezas diferentes. Melhorar uma parte do sistema pode deslocar a fraude para outra. Isso não elimina a necessidade de proteger o restante do processo de pagamento.
+
+Energia sem bateria
+
+Um cartão inserido em um terminal pode usar os contatos metálicos para comunicação e energia. Cartões por aproximação precisam conseguir essa troca sem os contatos. O leitor fornece um campo eletromagnético variável, e uma espira dentro do cartão se acopla a ele. Uma corrente elétrica pode ser induzida nessa espira e convertida em uma forma utilizável pelo chip.
+
+Por isso a espira revelada no experimento inicial importa. O chip minúsculo não consegue fazer sozinho a mesma troca por aproximação depois que sua ligação com a antena é rompida. A antena participa do caminho pelo qual o cartão recebe energia e comunica informações. O plástico normalmente mantém esses componentes delicados na posição correta e os protege contra danos.
+
+O chip pode variar a carga elétrica apresentada por seu circuito. Essas variações afetam o sistema acoplado de um modo que o leitor consegue detectar. Assim, o cartão devolve informação usando energia recebida de fora. Ele não transmite como uma grande estação de rádio com sua própria fonte potente de alimentação.
+
+O pagamento por aproximação faz parte da família mais ampla de tecnologias de identificação por rádio. RFID engloba diferentes métodos, frequências, alcances e aplicações. Uma etiqueta de depósito e um cartão bancário não funcionam necessariamente da mesma maneira só porque ambos podem ser lidos sem fio. Os detalhes do projeto determinam como recebem energia e devolvem dados.
+
+NFC, ou comunicação por campo próximo, opera com uma frequência base de 13,56 megahertz. Nas curtas distâncias dos leitores comuns de pagamento, o acoplamento magnético é central para a troca. Isso continua sendo tecnologia de rádio regida pelo eletromagnetismo. Dizer que os cartões abandonaram o rádio para usar algo totalmente separado daria uma imagem errada.
+
+A distância normal de operação é curta. Isso facilita uma aproximação intencional e reduz interações acidentais. Mas o alcance habitual não deve ser confundido com uma fronteira universal de segurança. Equipamentos, disposição das antenas e tipo de interação influenciam o que é possível. As verificações criptográficas continuam importantes mesmo quando o cartão está muito perto do terminal.
+
+A adoção também exigia coordenação. O cliente precisava de um cartão adequado e a loja de um terminal compatível. Uma parte ganhava pouco com a atualização se a outra ainda não pudesse usar o recurso. Bancos, comerciantes e clientes adotaram a tecnologia em ritmos diferentes. O gesto visível era simples, mas sua expansão exigia equipamentos, programas, testes e decisões sobre custos. Ser tecnicamente possível não fazia o método substituir imediatamente todas as soluções anteriores.
+
+O que um leitor pode descobrir
+
+Ver um leitor mostrar o número de um cartão pode assustar. Dependendo do cartão e da aplicação, algumas informações realmente podem ser lidas durante a comunicação por aproximação. Essa observação precisa ser interpretada com cuidado. Ler um número não equivale a extrair o segredo do chip nem a produzir uma cópia funcional de sua capacidade criptográfica.
+
+Ao mesmo tempo, dados legíveis não devem ser considerados completamente inofensivos. O número e a validade do cartão são informações financeiras pessoais. O possível abuso depende de outros dados obtidos pelo criminoso e das verificações aplicadas pelo comerciante ou pelo sistema. Afirmar que toda compra online sempre exige o mesmo código impresso não explica bem a segurança.
+
+O código impresso no cartão físico também é diferente do valor criptográfico variável produzido pelo chip. São mecanismos separados que atendem a partes diferentes do sistema. Chamar ambos apenas de código de segurança, sem explicar a diferença, pode fazer parecer que ler um revela necessariamente o outro.
+
+Uma cobrança não autorizada, uma tarja copiada e uma troca por aproximação retransmitida são problemas distintos. Não exigem o mesmo acesso nem falham pelos mesmos motivos. Uma demonstração de um deles não prova todos os outros. Obter uma resposta de um cartão verdadeiro é diferente de fabricar outro cartão capaz de gerar respostas futuras válidas por conta própria.
+
+Afirmações sobre limites de pagamento também precisam de contexto. As regras podem depender do país, emissor, rede, comerciante, terminal e método de verificação do cliente. Não existe um valor mundial único que defina toda compra por aproximação. A ausência de um teto legal universal não significa que qualquer terminal aceite qualquer quantia de qualquer cartão sem verificações.
+
+Notificações podem ajudar o cliente a perceber uma compra inesperada mais cedo. Elas servem para observar atividade, não para impedir toda transação não autorizada. A instituição responsável pela conta continua sendo o lugar adequado para comunicar uma cobrança suspeita ou bloquear um cartão perdido. A blindagem física pode reduzir algumas interações de rádio, mas não resolve todas as formas de uso indevido dos dados.
+
+O cartão dentro do celular
+
+Uma carteira digital acrescenta outra combinação de componentes, programas e credenciais de pagamento. O Apple Pay, por exemplo, usa um número de conta do dispositivo e um valor de segurança dinâmico nas compras compatíveis, em vez de enviar ao comerciante o número real do cartão. Isso é uma forma de tokenização. Substituir o identificador usado em determinada troca pode limitar a utilidade dos dados expostos ali.
+
+Em um pagamento comum, o aparelho também pode exigir autenticação por rosto, impressão digital ou código de acesso. Essa é uma verificação que um cartão simples de plástico não consegue fazer sozinho. O componente seguro de pagamento e os recursos de autenticação trabalham juntos. Ainda assim, isso não permite concluir que todas as funções da carteira sigam exatamente as mesmas regras.
+
+Os recursos expressos para transporte oferecem um exemplo importante. Alguns usos compatíveis são projetados deliberadamente para funcionar sem a etapa habitual de autenticação. Isso facilita passar por uma catraca. Também significa que dizer que um celular bloqueado nunca pode pagar é uma afirmação ampla demais. A pergunta relevante é qual função, credencial e transação estão envolvidas.
+
+A demonstração original termina anunciando uma tentativa de pagamento com um celular bloqueado. Um final dramático não basta para estabelecer um resultado geral. Sem o método completo, a configuração e o desfecho, não demonstra que todos os aparelhos bloqueados ou todas as carteiras sejam vulneráveis da mesma maneira. Uma explicação útil precisa desses limites tanto quanto do momento surpreendente.
+
+Vários sistemas em um gesto
+
+A rapidez da aproximação pode esconder quantas tarefas acontecem. Um campo fornece energia. Os circuitos trocam dados. Cálculos criptográficos ajudam a autenticar o pagamento. Regras separadas decidem se o cliente precisa verificar a identidade e se a transação deve ser autorizada. Redes e instituições depois cuidam dos registros financeiros e da movimentação dos recursos.
+
+Cada etapa resolve um problema diferente. Melhorar uma delas pode tornar outra limitação mais visível. A tarja facilitou a leitura de informações, mas seus dados fixos eram fáceis de copiar. O chip introduziu cálculos mais difíceis de reproduzir. A comunicação por aproximação eliminou a necessidade de inserir o cartão e manteve a proteção criptográfica. As carteiras digitais acrescentaram outras credenciais e maneiras de verificar quem está pagando.
+
+O cartão na carteira é, portanto, mais que seus números impressos, mas não contém todo o sistema de pagamentos. Ele é um participante cuidadosamente projetado dentro de uma troca muito maior. O extraordinário não é que um pequeno plástico seja perfeitamente seguro. É que um circuito minúsculo, um leitor próximo e uma cadeia de instituições normalmente consigam transformar um gesto breve em um pagamento aceito.

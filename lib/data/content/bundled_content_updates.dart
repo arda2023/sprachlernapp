@@ -65,7 +65,8 @@ class BundledContentTransport implements ContentReleaseTransport {
   }
 }
 
-/// Cold-start only: call before runApp and before any content reader is opened.
+/// Call before any reader of [languages] is opened in this process;
+/// `ContentPackInstaller.forApp` does this once per language on first use.
 /// Runs the existing full history validation and journalled activation without
 /// touching user.db. A failed candidate leaves the previous generation usable.
 /// The caller can display returned failures after starting the app.

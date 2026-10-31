@@ -84,7 +84,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(service.calls, 0);
-      await tester.tap(find.text('Zum Lernen hinzufügen'));
+      await tester.tap(find.bySemanticsLabel('Zum Lernen hinzufügen'));
       await tester.pumpAndSettle();
       expect(find.text('Erneut versuchen'), findsOneWidget);
       expect(find.text('Hinzugefügt'), findsNothing);

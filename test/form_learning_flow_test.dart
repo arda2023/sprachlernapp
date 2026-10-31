@@ -20,6 +20,7 @@ void main() {
     var user = DriftUserRepository(
       UserDatabase.file(File('${dir.path}/synthetic.sqlite')),
       lang: 'en',
+      defaultActiveDeckIds: () async => {for (final d in await content.decks()) d.id},
     );
     final now = DateTime(2026, 10, 10, 12);
     ProviderContainer scope() => ProviderContainer(
@@ -138,6 +139,7 @@ void main() {
     user = DriftUserRepository(
       UserDatabase.file(File('${dir.path}/synthetic.sqlite')),
       lang: 'en',
+      defaultActiveDeckIds: () async => {for (final d in await content.decks()) d.id},
     );
     container = scope();
     final restored = await container.read(wordListProvider.future);

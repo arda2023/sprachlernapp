@@ -1,0 +1,73 @@
+Making other people's chips
+
+A factory without its own product
+
+In 1987, Morris Chang helped establish a semiconductor company with an unusual promise. It would manufacture chips for other businesses without selling its own competing brand of chips. Taiwan Semiconductor Manufacturing Company, usually called TSMC, offered customers a place to turn their designs into physical products. A designer could concentrate on what a chip should do while another company handled its production.
+
+Chang had spent much of his career in the American semiconductor industry. Born in China in 1931, he moved to the United States as a young man and studied engineering. His work included many years at Texas Instruments. By the time he arrived in Taiwan in 1985, he understood the difficulties of manufacturing chips as well as the commercial decisions surrounding that work.
+
+Taiwan's government wanted to develop a strong semiconductor industry. The Industrial Technology Research Institute provided part of the foundation for that effort. Chang's proposal gave it a particular direction: build a business around manufacturing for customers rather than trying to sell another line of finished chips. Government support and investment from Philips helped make TSMC possible.
+
+Many important semiconductor companies combined design and manufacturing. They decided how their chips would work and operated the factories that made them. This arrangement gave them control, but it also required enormous investment. A promising design did not pay for a fabrication plant, and a new company could struggle to afford both.
+
+There was also a question of trust. A designer giving sensitive plans to another manufacturer wanted to know how those plans would be treated. If the manufacturer sold a competing product, the relationship could be uncomfortable. TSMC's commitment to manufacturing services gave customers a reason to consider handing over their designs.
+
+Customers arrive slowly
+
+The early years did not immediately prove that the idea would transform the industry. Chang later described the first customers as established manufacturers providing work that was not always stable. Small companies also placed orders, initially in Taiwan and later in the United States. Filling a factory required a steady flow of work, not simply interest in a new business model.
+
+Growth became stronger as more companies chose to design chips without owning fabrication plants. These businesses became known as fabless companies. They still needed someone to manufacture their products, but they could devote more of their own resources to design and sales. The foundry model gave them a way to enter markets without building every part of the production chain themselves.
+
+TSMC's opportunity expanded with that change. A customer might have an idea for a communications chip or a graphics processor and need a factory capable of making it reliably. The two companies had different responsibilities, but the final product depended on their cooperation. A design had to work with the manufacturing process chosen for it.
+
+This division did not make manufacturing a simple service anyone could copy. Producing chips involved many precise steps. A factory had to control its processes closely and keep improving the proportion of products that worked correctly. Customers cared about the number of usable chips they received, as well as the capabilities promised on paper.
+
+That proportion is often called yield. A process that could make a remarkable chip occasionally might still be too expensive for a mass market product. Reliable output mattered because failed chips consumed materials, equipment time and money. Learning how to reduce defects was part of the expertise a foundry sold.
+
+Building for the next generation
+
+The business also required investment before demand was certain. Equipment and new facilities could take years to prepare. Waiting until every order was confirmed could leave a manufacturer without enough capacity when customers needed it. Building too much could leave expensive equipment underused when sales slowed.
+
+Technology downturns made those choices harder. The collapse of the internet boom and the financial crisis of 2008 affected demand across the industry. Customers adjusted plans, and manufacturers had to decide what spending they could sustain. Research and capacity investments might support future work even while current orders weakened.
+
+TSMC's development was therefore more complicated than a sequence of smaller numbers on a technology chart. It involved funding, production experience and relationships with customers. A new process had to become useful at commercial scale. The company needed to deliver what it had promised while preparing for products customers had not yet released.
+
+Smartphones increased the importance of that preparation. A successful device could require huge quantities of chips within a demanding schedule. Apple became a major TSMC customer, while other designers also needed advanced manufacturing. A large order offered revenue, but fulfilling it required capacity and consistent results across many units.
+
+The relationship mattered to both sides. Designers wanted chips suited to their products, and the manufacturer needed information that helped it plan. Neither side could treat the other as an interchangeable detail. Changing a design or moving production could involve substantial work rather than a quick switch between suppliers.
+
+What the small numbers mean
+
+Semiconductor manufacturing generations are often described using numbers measured in nanometres. These names help distinguish processes, but they should not be read as a direct measurement of an entire chip or every feature inside it. Comparing manufacturers requires more than choosing the smallest number in an announcement.
+
+Performance, energy use and the amount of circuitry that fits into a given area all matter. So do cost and suitability for the job. A processor used for demanding computation has different needs from a component controlling a simple function. Not every useful chip requires the newest manufacturing generation.
+
+This is one reason it is misleading to describe TSMC as the maker of all the world's chips. Semiconductor production includes many kinds of products and many manufacturers. Memory, logic and specialised components serve different purposes. TSMC is especially important in contract manufacturing, but that market is not identical to the entire semiconductor industry.
+
+Market share figures also depend on what is being counted. A percentage for foundry revenue cannot automatically be treated as the share of all chips produced. TSMC itself has used a broader definition called Foundry 2.0 that includes additional manufacturing services and activities. Numbers based on different definitions can describe different markets even when they appear side by side.
+
+In its report on 2025, TSMC said its technology known as two nanometres had entered volume production in the final quarter of the year. This was a manufacturing milestone, rather than a claim that every customer had already moved to that process. Older generations continued to have uses, and demand came from several kinds of devices.
+
+When chips were missing
+
+During the pandemic, shortages made the dependence on semiconductors visible outside the technology industry. Car production could be interrupted because a necessary component was unavailable. A vehicle contained electronics for many different functions, and missing one required part could prevent completion of the whole product.
+
+Demand changed quickly. People bought equipment for working and studying at home, while manufacturers in other sectors revised their orders. When demand returned or shifted again, chip production could not instantly follow. Factories already had customers waiting, and increasing capacity took time.
+
+The problem was broader than one company choosing between cars and games consoles. Production capacity, materials and later stages such as assembly and testing could all become constraints. A supply chain had to deliver the right component, not simply a large number of some other chip.
+
+In January 2022, the United States Department of Commerce published findings from a supply chain inquiry. For the difficult semiconductor products identified by responding buyers, median inventories had fallen from forty days in 2019 to fewer than five days in 2021. With so little stock, even a brief interruption could stop production elsewhere.
+
+Governments and companies began paying closer attention to where essential components were made. A low purchase price was only one consideration. Dependence on distant suppliers could leave a factory exposed to events it could not control. Building more capacity looked attractive, but it could not solve an immediate shortage overnight.
+
+More factories, more dependencies
+
+Taiwan's importance in advanced semiconductor manufacturing also raised concerns about conflict and disruption. A concentration of important factories meant that trouble in one region could affect customers far away. Some observers described this importance as a possible deterrent to conflict. It was not a guarantee that political or military risks would disappear.
+
+Nor would taking control of a building automatically give someone a functioning chip industry. Manufacturing depended on trained people, equipment, materials and continuing relationships with suppliers. These connections crossed borders. The value of a factory rested partly in work and knowledge that could not be reduced to the ownership of its walls.
+
+Expanding production abroad was one response to concerns about concentration. TSMC developed manufacturing operations in Arizona. In March 2025, it announced plans to add 100 billion dollars to its earlier 65 billion dollar investment programme in the United States. The planned expansion included more fabrication plants, advanced packaging facilities and research activity.
+
+Announced investment was not the same as completed capacity. A new site needed workers, suppliers and processes that functioned together. Experience from existing operations could help, but construction alone did not reproduce every part of an established industrial network. Customers needed reliable output from the new facilities, not merely new buildings.
+
+TSMC's customers might put their own names on the devices people bought, leaving the manufacturer's role less visible. Yet the separation between design and production remained central to the business. Each new product still required a design that could be manufactured, a process that worked consistently and enough capacity to deliver the chips when they were needed.

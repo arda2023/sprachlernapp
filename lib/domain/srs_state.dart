@@ -4,6 +4,7 @@ import 'new_card_selection.dart';
 // Pure Dart: no Flutter imports (see CLAUDE.md, domain layer).
 
 import 'dart:math';
+import 'mixed_introduction_order.dart';
 
 /// Where a card came from (`user_cards.origin`).
 enum CardOrigin {
@@ -307,18 +308,17 @@ List<NewTarget> selectNewTargets({
       owner.putIfAbsent(id, () => source.id);
     }
   }
+  List<String> candidates(NewWordSource source) {
+    final ids = [for (final id in source.cardIds)
+      if (owner[id] == source.id && cards.containsKey(id) &&
+          (states[id]?.isActive ?? true) && (states[id]?.box ?? 0) == 0) id];
+    return source.id == storySourceId ? ids : mixedIntroductionOrder(ids, cards, source.id);
+  }
   final queues = [
     for (final source in ranked)
       (
         id: source.id,
-        ids: [
-          for (final id in source.cardIds)
-            if (owner[id] == source.id &&
-                cards.containsKey(id) &&
-                (states[id]?.isActive ?? true) &&
-                (states[id]?.box ?? 0) == 0)
-              id,
-        ],
+        ids: candidates(source),
       ),
   ];
   if (queues.isEmpty) return [];

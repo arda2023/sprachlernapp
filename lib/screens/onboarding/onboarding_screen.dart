@@ -22,10 +22,9 @@ import 'widgets/onboarding_motion.dart';
 /// What switching AI translations on in the onboarding agrees to: the
 /// facts of the full disclosure in Settings, short.
 const onboardingAiDisclosure =
-    'Fehlt eine Übersetzung, schicken wir beim Antippen das Wort mit seinem '
-    'Satz über unseren Server an Anthropic. Keine rein europäische '
-    'Verarbeitung, 30 Tage privat gespeichert, in den Einstellungen '
-    'jederzeit abschaltbar.';
+    'Für fehlende Übersetzungen und eigene Lernkarten schicken wir das Wort '
+    'mit seinem Satz über unseren Server an Anthropic. Keine rein '
+    'europäische Verarbeitung, in den Einstellungen jederzeit abschaltbar.';
 
 typedef OnboardingResult = ({
   String interest,
@@ -69,7 +68,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
   _Interest? _interest;
   int _goal = 10;
   int? _tapped;
-  bool _aiTranslations = false;
+  // On unless switched off here (user decision 31.10.2026): the app
+  // never asks again.
+  bool _aiTranslations = true;
   bool _planReady = false;
 
   _Interest get _topic => _interest ?? _Interest.everyday;
@@ -125,6 +126,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
     await Navigator.of(context).push(
       PaywallScreen.route(
         plan: (interest: _topic.label, dailyGoal: _goal),
+        onboarding: true,
         onContinue: () {
           finished = true;
           widget.onDone(result);
@@ -135,16 +137,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
     if (mounted && !finished) unawaited(_handoff.reverse());
   }
 
-  /// "Ich habe schon ein Konto": the sign-in is a placeholder, so the app
-  /// says so and starts without an account.
+  /// Continue only when the account sheet has confirmed a Supabase session.
   Future<void> _signIn() async {
     final provider = await AccountSheet.show(context, AccountReason.signIn);
     if (provider == null || !mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'Anmeldung mit ${provider.label} kommt bald. '
-          'Du startest erst einmal ohne Konto.',
+          'Du bist angemeldet. Dein Lernstand bleibt auf diesem Gerät.',
         ),
       ),
     );
@@ -442,7 +442,7 @@ class _WelcomePage extends StatelessWidget {
                 const SizedBox(width: 6),
                 Flexible(
                   child: Text(
-                    'Lingvist',
+                    'Linglossa',
                     style: AppType.editorial(
                       color: context.appColors.textPrimary,
                       size: 26,
@@ -928,9 +928,9 @@ class _TryPage extends StatelessWidget {
   }
 }
 
-/// The one place that asks about AI translations (user decision
-/// 29.10.2026): the reader's bubble no longer interrupts with a consent
-/// text. Off until switched on; Settings can change it any time.
+/// The one place that shows the AI features (user decisions 29.10. and
+/// 31.10.2026): translations and private learning cards. On by default;
+/// the reader never asks or explains again; Settings can switch it off.
 class _AiConsentCard extends StatelessWidget {
   const _AiConsentCard({required this.value, required this.onChanged});
 
@@ -959,7 +959,7 @@ class _AiConsentCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Fehlende Wörter mit KI übersetzen',
+                      'KI-Übersetzungen und Lernkarten',
                       style: AppType.chrome(
                         size: 16,
                         weight: FontWeight.w700,

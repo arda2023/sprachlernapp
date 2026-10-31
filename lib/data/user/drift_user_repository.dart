@@ -18,7 +18,8 @@ import 'user_database.dart';
 
 /// [UserRepository] on the Drift user.db of one language.
 class DriftUserRepository implements PersonalLearningStore, UserRepository, StoryLearningRepository, ReviewActivityRepository, StoryContextCorrectionStore, NewWordRotationStore {
-  DriftUserRepository(this._db, {required this.lang, this.ownsDatabase = true, this.contentIds});
+  DriftUserRepository(this._db, {required this.lang, this.ownsDatabase = true, this.contentIds, this.defaultActiveDeckIds});
+  final Future<Set<String>> Function()? defaultActiveDeckIds;
   final bool ownsDatabase;
   final Future<Set<String>> Function(String kind)? contentIds;
 
@@ -267,10 +268,11 @@ class DriftUserRepository implements PersonalLearningStore, UserRepository, Stor
   Future<Set<String>> activeDeckIds(Iterable<String> deckIds) async {
     await _guardDecks(deckIds);
     final ids = deckIds.toSet();
-    final off = await (_db.select(
-      _db.deckSettings,
-    )..where((t) => t.deckId.isIn(ids) & t.active.equals(false))).get();
-    return ids.difference({for (final r in off) r.deckId});
+    final defaults = await defaultActiveDeckIds?.call() ?? <String>{};
+    final rows = await (_db.select(_db.deckSettings)
+      ..where((t) => t.deckId.isIn(ids))).get();
+    final saved = {for (final row in rows) row.deckId: row.active};
+    return {for (final id in ids) if (saved[id] ?? defaults.contains(id)) id};
   }
 
   @override

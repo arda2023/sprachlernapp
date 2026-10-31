@@ -1,13 +1,20 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 
+import '../../../domain/content_access_policy.dart';
+import '../../../domain/preferences.dart';
+import '../../../presentation/providers/content_access_provider.dart';
+import '../../../presentation/providers/preferences_provider.dart';
+import '../../onboarding/paywall_screen.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/popover_content.dart';
 
 /// Popover content behind "Importieren": where a text can come from. Pasting
 /// works on the device; files, YouTube transcripts and web pages need a file
-/// picker or the import backend and are shown as "Bald" until then.
-class ImportPanel extends StatefulWidget {
+/// picker or the import backend and are shown as "Bald" until then. Without
+/// Premium every source carries a lock and opens the paywall.
+class ImportPanel extends ConsumerStatefulWidget {
   const ImportPanel({super.key, required this.onImportText});
 
   /// Stores [text]; returns an error message for the learner, or null.
@@ -15,11 +22,10 @@ class ImportPanel extends StatefulWidget {
   final String? Function(String text)? onImportText;
 
   @override
-  State<ImportPanel> createState() => _ImportPanelState();
+  ConsumerState<ImportPanel> createState() => _ImportPanelState();
 }
 
-class _ImportPanelState extends State<ImportPanel> {
-  static const _white = Color(0xFFFFFFFF);
+class _ImportPanelState extends ConsumerState<ImportPanel> {
   String? _message;
 
   Future<void> _paste() async {
@@ -27,11 +33,7 @@ class _ImportPanelState extends State<ImportPanel> {
     final text = data?.text?.trim() ?? '';
     if (!mounted) return;
     if (text.isEmpty) {
-      setState(
-        () => _message =
-            'Die Zwischenablage ist leer. Kopiere zuerst einen Text, '
-            'zum Beispiel ein YouTube-Transkript.',
-      );
+      setState(() => _message = 'Die Zwischenablage ist leer.');
       return;
     }
     final error = widget.onImportText!(text);
@@ -43,52 +45,60 @@ class _ImportPanelState extends State<ImportPanel> {
     Navigator.of(context).pop(true);
   }
 
+  Future<void> _viewPremium() async {
+    final preferences =
+        ref.read(preferencesProvider).asData?.value ??
+        const PracticePreferences();
+    await Navigator.of(context).push<void>(
+      PaywallScreen.route(
+        plan: (interest: 'Eigene Texte', dailyGoal: preferences.dailyGoal),
+        onContinue: () {},
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Without confirmed Premium every source is shown, marked and leads to
+    // the paywall, so learners still see what is possible (31.10.2026).
+    final locked = ref.watch(contentAccessProvider) !=
+        ContentAccessDecision.allowed;
+    VoidCallback? tap(VoidCallback? available) =>
+        locked ? _viewPremium : available;
     final options = [
       _Option(
         icon: CupertinoIcons.doc_on_clipboard,
         title: 'Text einfügen',
         detail: 'Aus der Zwischenablage',
-        onTap: widget.onImportText == null ? null : _paste,
+        locked: locked,
+        onTap: tap(widget.onImportText == null ? null : _paste),
       ),
-      const _Option(
+      _Option(
         icon: CupertinoIcons.doc_text,
         title: 'Datei',
         detail: 'TXT, EPUB, PDF, SRT',
+        locked: locked,
+        onTap: tap(null),
       ),
-      const _Option(
+      _Option(
         icon: CupertinoIcons.play_rectangle,
         title: 'YouTube',
         detail: 'Transkript per Link',
+        locked: locked,
+        onTap: tap(null),
       ),
-      const _Option(
+      _Option(
         icon: CupertinoIcons.globe,
         title: 'Webseite',
         detail: 'Artikel per Link',
+        locked: locked,
+        onTap: tap(null),
       ),
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Semantics(
-          header: true,
-          child: Text(
-            'Eigene Texte importieren',
-            style: AppType.chrome(
-              size: 20,
-              weight: FontWeight.w800,
-              color: _white,
-            ),
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          'Lies Transkripte, E-Books oder Artikel mit Wort-Übersetzung.',
-          style: PopoverText.small(),
-        ),
-        const SizedBox(height: 16),
         LayoutBuilder(
           builder: (context, constraints) {
             final columns = constraints.maxWidth < 280 ? 1 : 2;
@@ -107,17 +117,9 @@ class _ImportPanelState extends State<ImportPanel> {
           const SizedBox(height: 12),
           Semantics(
             liveRegion: true,
-            child: Text(
-              _message!,
-              style: PopoverText.small(),
-            ),
+            child: Text(_message!, style: PopoverText.small()),
           ),
         ],
-        const SizedBox(height: 12),
-        Text(
-          'Importierte Texte bleiben auf diesem Gerät. Höchstens 5.000 Wörter.',
-          style: PopoverText.caption().copyWith(fontSize: 12),
-        ),
       ],
     );
   }
@@ -128,12 +130,16 @@ class _Option extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.detail,
+    this.locked = false,
     this.onTap,
   });
 
   final IconData icon;
   final String title;
   final String detail;
+
+  /// Needs Premium: shown with a crown mark; [onTap] opens the paywall.
+  final bool locked;
 
   /// Null: not available yet ("Bald").
   final VoidCallback? onTap;
@@ -149,7 +155,11 @@ class _Option extends StatelessWidget {
         minimumSize: const Size(44, 44),
         pressedOpacity: 0.75,
         child: Semantics(
-          label: available ? '$title, $detail' : '$title, bald verfügbar',
+          label: locked
+              ? '$title, $detail, mit Premium'
+              : available
+              ? '$title, $detail'
+              : '$title, bald verfügbar',
           excludeSemantics: true,
           child: Container(
             constraints: const BoxConstraints(minHeight: 96),
@@ -169,7 +179,23 @@ class _Option extends StatelessWidget {
                       color: available ? context.appColors.popover : white,
                     ),
                     const Spacer(),
-                    if (!available)
+                    if (locked)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 7,
+                          vertical: 3,
+                        ),
+                        decoration: BoxDecoration(
+                          color: context.appColors.popover,
+                          borderRadius: BorderRadius.circular(99),
+                        ),
+                        child: const Icon(
+                          CupertinoIcons.lock_fill,
+                          size: 11,
+                          color: white,
+                        ),
+                      )
+                    else if (!available)
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 7,
