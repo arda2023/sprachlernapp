@@ -263,7 +263,6 @@ class _PracticeCompletionScreenState
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -315,24 +314,6 @@ class _PracticeCompletionScreenState
                           ),
                         ),
                         if (widget.words.isNotEmpty) ...[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 24, 20, 12),
-                            child: _Rise(
-                              animation: _part(0.2, 0.65),
-                              child: Semantics(
-                                header: true,
-                                child: Text(
-                                  widget.words.any((w) => w.isNew)
-                                      ? 'Neue Wörter'
-                                      : 'Heute geübt',
-                                  style: AppType.editorial(
-                                    color: colors.textPrimary,
-                                    size: 24,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
                           Expanded(
                             child: _Rise(
                               animation: _part(0.35, 1),
@@ -354,7 +335,7 @@ class _PracticeCompletionScreenState
                                           child: Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                               20,
-                                              12,
+                                              32,
                                               20,
                                               0,
                                             ),

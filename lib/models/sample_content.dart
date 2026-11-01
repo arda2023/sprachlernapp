@@ -326,6 +326,13 @@ const sampleExerciseTexts = [
           'minutes to midnight.',
       'She {looked|look|verb} at her ticket again. The last train to '
           'Seville was {late|late|adjective}, but nobody seemed to know why.',
+      'A man behind the {counter|counter|noun} {shrugged|shrug|verb} and '
+          'went back to his newspaper. Clara {sat|sit|verb} down on a '
+          '{bench|bench|noun} and {opened|open|verb} her book.',
+      'She had waited three years for this journey. Ten more minutes '
+          'would not change anything. At last, the '
+          '{familiar|familiar|adjective} {announcement|announcement|noun} '
+          '{filled|fill|verb} the hall.',
     ],
   ),
   ExerciseText(
@@ -341,6 +348,9 @@ const sampleExerciseTexts = [
       'On Saturdays, the {market|market|noun} {opens|open|verb} early. '
           'People {buy|buy|verb} fresh {bread|bread|noun} and '
           '{talk|talk|verb} with their neighbours.',
+      'A {friendly|friendly|adjective} woman {sells|sell|verb} apples. '
+          'I {choose|choose|verb} three {red|red|adjective} ones and pay '
+          'for them.',
     ],
   ),
   ExerciseText(
@@ -358,6 +368,11 @@ const sampleExerciseTexts = [
           'on the window.',
       'After breakfast, he {called|call|verb} his sister. They '
           '{talked|talk|verb} about their {plans|plan|noun} for the summer.',
+      'His sister {wanted|want|verb} to visit a {small|small|adjective} '
+          'village near the sea. Tom {liked|like|verb} the idea and '
+          '{wrote|write|verb} the name in his {notebook|notebook|noun}.',
+      'When the rain {stopped|stop|verb}, he put on his {coat|coat|noun} '
+          'and went outside for a {short|short|adjective} walk.',
     ],
   ),
   ExerciseText(
@@ -373,6 +388,10 @@ const sampleExerciseTexts = [
           '{platform|platform|noun}, but the doors were already closed. She '
           '{bought|buy|verb} a new {ticket|ticket|noun} and '
           '{waited|wait|verb} for the next one.',
+      'A {helpful|helpful|adjective} member of staff {showed|show|verb} '
+          'her the timetable. The next train was due in twenty minutes. '
+          'Anna {found|find|verb} a {seat|seat|noun} near the '
+          '{busy|busy|adjective} cafe.',
     ],
   ),
   ExerciseText(
@@ -388,6 +407,10 @@ const sampleExerciseTexts = [
           '{booked|book|verb} an {appointment|appointment|noun}. The doctor '
           '{listened|listen|verb} {carefully|careful|adverb} and '
           '{wrote|write|verb} a {prescription|prescription|noun}.',
+      'Before she {left|leave|verb}, Maria {asked|ask|verb} a few '
+          '{important|important|adjective} questions. She wanted to '
+          'understand the {instructions|instruction|noun} before taking '
+          'her medicine.',
     ],
   ),
 ];
@@ -471,10 +494,15 @@ const _sentenceTranslations = {
       'Sie hatte drei Jahre auf diese Reise gewartet.',
   'Ten more minutes would not change anything.':
       'Zehn Minuten mehr würden nichts ändern.',
+  'At last, the familiar announcement filled the hall.':
+      'Endlich erfüllte die vertraute Durchsage die Halle.',
   'On Saturdays, the market opens early.': 'Samstags öffnet der Markt früh.',
   'People buy fresh bread and talk with their neighbours.':
       'Die Leute kaufen frisches Brot und unterhalten sich mit ihren '
       'Nachbarn.',
+  'A friendly woman sells apples.': 'Eine freundliche Frau verkauft Äpfel.',
+  'I choose three red ones and pay for them.':
+      'Ich suche mir drei rote aus und bezahle sie.',
   'Tom woke up late on Sunday.': 'Tom wachte am Sonntag spät auf.',
   'He dressed slowly and made a cup of tea.':
       'Er zog sich langsam an und machte sich eine Tasse Tee.',
@@ -484,15 +512,29 @@ const _sentenceTranslations = {
       'Nach dem Frühstück rief er seine Schwester an.',
   'They talked about their plans for the summer.':
       'Sie sprachen über ihre Pläne für den Sommer.',
+  'His sister wanted to visit a small village near the sea.': 'Seine Schwester wollte ein kleines Dorf in der Nähe des Meeres besuchen.',
+  'Tom liked the idea and wrote the name in his notebook.':
+      'Tom gefiel die Idee und er schrieb den Namen in sein Notizbuch.',
+  'When the rain stopped, he put on his coat and went outside for a short walk.': 'Als der Regen aufhörte, zog er seinen Mantel an und ging für einen kurzen Spaziergang nach draußen.',
   'The train left at nine.': 'Der Zug fuhr um neun ab.',
   'Anna ran to the platform, but the doors were already closed.':
       'Anna rannte zum Bahnsteig, aber die Türen waren schon geschlossen.',
   'She bought a new ticket and waited for the next one.':
       'Sie kaufte eine neue Fahrkarte und wartete auf den nächsten.',
+  'A helpful member of staff showed her the timetable.':
+      'Ein hilfsbereiter Mitarbeiter zeigte ihr den Fahrplan.',
+  'The next train was due in twenty minutes.':
+      'Der nächste Zug sollte in zwanzig Minuten kommen.',
+  'Anna found a seat near the busy cafe.':
+      'Anna fand einen Sitzplatz in der Nähe des gut besuchten Cafés.',
   'Maria felt tired for a whole week, so she booked an appointment.':
       'Maria war eine ganze Woche lang müde, also machte sie einen Termin.',
   'The doctor listened carefully and wrote a prescription.':
       'Die Ärztin hörte aufmerksam zu und schrieb ein Rezept.',
+  'Before she left, Maria asked a few important questions.':
+      'Bevor sie ging, stellte Maria ein paar wichtige Fragen.',
+  'She wanted to understand the instructions before taking her medicine.':
+      'Sie wollte die Anweisungen verstehen, bevor sie ihr Medikament einnahm.',
 };
 
 String sampleTranslateSentence(String sentence) =>

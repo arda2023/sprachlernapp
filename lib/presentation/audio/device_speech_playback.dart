@@ -235,6 +235,14 @@ class DeviceSpeechPlayback extends SpeechPlayback with WidgetsBindingObserver {
     _owner?.stop();
   }
 
+  /// Speech recognition changes the shared iOS audio session. Wait until
+  /// playback is silent, and configure playback again on its next use.
+  static Future<void> prepareForRecording() async {
+    stopAll();
+    await _commands;
+    _configuredLanguage = null;
+  }
+
   @visibleForTesting
   static Future<void> resetForTest() async {
     stopAll();

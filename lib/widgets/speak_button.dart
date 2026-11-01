@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../presentation/audio/device_speech_playback.dart';
 import '../presentation/providers/database_providers.dart';
 import '../theme/app_theme.dart';
+import 'speaker_icon.dart';
 
 /// Native pronunciation, shared with the other speech surfaces.
 class SpeakButton extends ConsumerStatefulWidget {
@@ -67,11 +68,13 @@ class _SpeakButtonState extends ConsumerState<SpeakButton> {
                 shape: BoxShape.circle,
                 color: on ? white : const Color(0x33FFFFFF),
               ),
-              child: Icon(
-                on ? CupertinoIcons.stop_fill : CupertinoIcons.speaker_2_fill,
-                size: widget.diameter * 0.45,
-                color: on ? context.appColors.popover : white,
-              ),
+              child: on
+                  ? Icon(
+                      CupertinoIcons.stop_fill,
+                      size: widget.diameter * 0.45,
+                      color: context.appColors.popover,
+                    )
+                  : SpeakerIcon(size: widget.diameter * 0.5, color: white),
             ),
           ),
         ),

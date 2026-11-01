@@ -1,4 +1,5 @@
 import '../../presentation/audio/device_speech_playback.dart';
+import '../../presentation/audio/device_dictation.dart';
 import 'dart:async';
 import 'dart:math' as math;
 
@@ -69,6 +70,61 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     with WidgetsBindingObserver, SingleTickerProviderStateMixin {
   String? _speechLanguage;
   late final _speech = DeviceSpeechPlayback(language: () => _speechLanguage, onError: (message) => showSpeechError(context, message));
+  late final _dictation = ref.read(deviceDictationProvider);
+  bool _ownsDictation = false, _applyingDictation = false, _startingDictation = false;
+  int _dictationRevision = 0;
+
+  Future<void> _cancelDictation() async {
+    ++_dictationRevision;
+    _startingDictation = false;
+    if (!_ownsDictation) return;
+    _ownsDictation = false;
+    await _dictation.cancel();
+  }
+
+  Future<void> _dictate() async {
+    if (_ownsDictation && _dictation.active) {
+      await _dictation.finish();
+      return;
+    }
+    final pass = ref.read(deckSessionControllerProvider(_args)).pass;
+    if (pass == null || pass.solved || _historyIndex != null || _overlay || _word != null) return;
+    final revision = ++_dictationRevision;
+    final passId = pass.id;
+    _ownsDictation = true;
+    _startingDictation = true;
+    _autoTimer?.cancel();
+    _focus.unfocus();
+    await DeviceSpeechPlayback.prepareForRecording();
+    if (!mounted || revision != _dictationRevision) return;
+    await _dictation.start(
+      language: pass.item.card.lang,
+      onText: (text) {
+        if (!mounted || revision != _dictationRevision ||
+            _historyIndex != null || _overlay ||
+            ModalRoute.of(context)?.isCurrent == false) {
+          return;
+        }
+        final current = ref.read(deckSessionControllerProvider(_args)).pass;
+        if (current?.id != passId || current?.solved != false) return;
+        _applyingDictation = true;
+        try {
+          _input.replaceFromDictation(text);
+          _controller.clearWrongFormHint();
+        } finally {
+          _applyingDictation = false;
+        }
+      },
+      onError: (message) {
+        if (mounted && revision == _dictationRevision) showSpeechError(context, message);
+      },
+    );
+    if (revision == _dictationRevision) {
+      _startingDictation = false;
+      if (!_foreground) unawaited(_cancelDictation());
+    }
+  }
+
   final _input = PracticeInputController();
   final _focus = FocusNode();
   bool _completing = false;
@@ -121,6 +177,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
   void _inputEdited() {
     if (_textRevision == _input.textRevision) return;
     _textRevision = _input.textRevision;
+    if (!_applyingDictation) unawaited(_cancelDictation());
     _clearError();
   }
 
@@ -181,7 +238,13 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     _foreground = state == AppLifecycleState.resumed;
     _autoTimer?.cancel();
-    if (!_foreground) _clearError(clearField: false);
+    if (!_foreground) {
+      _clearError(clearField: false);
+      // Permission sheets briefly make the app inactive on the first tap.
+      if (!_startingDictation || state != AppLifecycleState.inactive) {
+        unawaited(_cancelDictation());
+      }
+    }
     if (_foreground) _schedule();
   }
 
@@ -192,6 +255,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
 
   @override
   void dispose() {
+    unawaited(_cancelDictation());
     _speech.dispose();
     WidgetsBinding.instance.removeObserver(this);
     _autoTimer?.cancel();
@@ -212,6 +276,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     if (_historyIndex != null || _overlay || _word != null) {
       return;
     }
+    unawaited(_cancelDictation());
     final attempt = _input.text;
     // Solved: the keyboard stays up and its Done key moves on.
     if (ref.read(deckSessionControllerProvider(_args)).pass?.solved == true) {
@@ -245,6 +310,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
   }
 
   void _reveal() {
+    unawaited(_cancelDictation());
     _clearError();
     _controller.reveal();
     final pass = ref.read(deckSessionControllerProvider(_args)).pass!;
@@ -257,6 +323,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     if (_overlay || _word != null || _historyIndex != null) return;
     final s = ref.read(deckSessionControllerProvider(_args));
     if (!s.saved || s.committing) return;
+    unawaited(_cancelDictation());
     _autoTimer?.cancel();
     _clearError();
     await _controller.next();
@@ -295,6 +362,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
   }
 
   Future<void> _withOverlay(Future<void> Function() action) async {
+    unawaited(_cancelDictation());
     _autoTimer?.cancel();
     _clearError(clearField: false);
     final hadFocus = _focus.hasFocus;
@@ -329,6 +397,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final index = _historyIndex ?? past.length;
     final next = (index + direction).clamp(0, past.length);
     if (next == index) return;
+    unawaited(_cancelDictation());
     _clearError();
     _autoTimer?.cancel();
     _focus.unfocus();
@@ -432,6 +501,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
       if (previous?.pass?.id != next.pass?.id ||
           next.pass?.solved == true ||
           next.finished) {
+        unawaited(_cancelDictation());
         _clearError();
       }
       if (next.saved && previous?.saved != true) {
@@ -626,6 +696,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                                   onChanged: _controller
                                                       .clearWrongFormHint,
                                                   onWord: (word) {
+                                                    unawaited(_cancelDictation());
                                                     _autoTimer?.cancel();
                                                     // Tapping the open word
                                                     // again closes its bubble.
@@ -685,17 +756,23 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                 ),
                 if (canShow && snapshot == null)
                   ListenableBuilder(
-                    listenable: Listenable.merge([_input, _speech]),
+                    listenable: Listenable.merge([_input, _speech, _dictation]),
                     builder: (context, _) => PracticeAnswerToolbar(
                       error: _buttonError,
                       errorOffset: _errorOffset,
                       speakerEnabled: true,
                       playing: _speech.playing != null,
-                      onSpeak: () {
+                      onSpeak: () async {
+                        await _cancelDictation();
+                        if (!mounted) return;
                         _speechLanguage = contentCard?.lang;
                         _speech.play(sentence.sentenceId, solved ? sentence.text : sentence.text.replaceRange(sentence.gapStart, sentence.gapEnd, ' … '));
                       },
-                      message:
+                      onDictate: solved ? null : _dictate,
+                      dictating: _ownsDictation && _dictation.active,
+                      message: _ownsDictation && _dictation.active
+                          ? 'Sprich das Wort … System-Spracherkennung, ggf. online.'
+                          :
                           state.saved ||
                               state.message == 'Falsch' ||
                               state.message ==

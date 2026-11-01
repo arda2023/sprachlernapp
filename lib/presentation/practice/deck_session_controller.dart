@@ -153,6 +153,7 @@ class DeckSessionController extends Notifier<DeckSessionState> {
                 : remaining;
         if (args.kind != DeckSessionKind.mixed &&
             _resolver.content == null && args.deckId != storyCollectionId &&
+            args.deckId != _resolver.generatedDeckId &&
             args.deckId.isNotEmpty) {
           throw _resolver.contentError ?? StateError('Inhaltspaket fehlt');
         }

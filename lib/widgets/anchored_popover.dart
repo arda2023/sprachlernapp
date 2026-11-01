@@ -44,23 +44,60 @@ Future<T?> showAnchoredPopoverAt<T>({
   ),
 );
 
+typedef _PopoverGeometry = ({double maxWidth, EdgeInsets padding});
+
+/// Lets the content of an open popover change the bubble's width and inner
+/// padding, e.g. a sentence bubble that turns into the small Premium card
+/// or a menu that opens a wider page. The bubble animates to the new size.
+abstract final class PopoverResize {
+  static void to(
+    BuildContext context, {
+    required double maxWidth,
+    required EdgeInsets padding,
+  }) {
+    context
+        .getInheritedWidgetOfExactType<_PopoverGeometryScope>()
+        ?.geometry
+        .value = (
+      maxWidth: maxWidth,
+      padding: padding,
+    );
+  }
+}
+
+class _PopoverGeometryScope extends InheritedWidget {
+  const _PopoverGeometryScope({required this.geometry, required super.child});
+
+  final ValueNotifier<_PopoverGeometry> geometry;
+
+  @override
+  bool updateShouldNotify(_PopoverGeometryScope oldWidget) =>
+      geometry != oldWidget.geometry;
+}
+
 class _PopoverRoute<T> extends PopupRoute<T> {
   _PopoverRoute({
     required this.anchor,
     required this.color,
     required this.builder,
     required this.barrierLabel,
-    required this.maxWidth,
-    required this.padding,
-  });
+    required double maxWidth,
+    required EdgeInsets padding,
+  }) : _geometry = ValueNotifier((maxWidth: maxWidth, padding: padding));
 
   final Rect anchor;
   final Color color;
   final WidgetBuilder builder;
 
-  /// Menus stay narrow; info bubbles may use the full phone width.
-  final double maxWidth;
-  final EdgeInsets padding;
+  /// Menus stay narrow; info bubbles may use the full phone width. The
+  /// content may change both while the popover shows ([PopoverResize]).
+  final ValueNotifier<_PopoverGeometry> _geometry;
+
+  @override
+  void dispose() {
+    _geometry.dispose();
+    super.dispose();
+  }
 
   @override
   final String barrierLabel;
@@ -83,12 +120,31 @@ class _PopoverRoute<T> extends PopupRoute<T> {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
-    return _PopoverLayout(
-      anchor: anchor,
-      color: color,
-      builder: builder,
-      maxWidth: maxWidth,
-      padding: padding,
+    final duration = MediaQuery.disableAnimationsOf(context)
+        ? Duration.zero
+        : const Duration(milliseconds: 340);
+    return ValueListenableBuilder<_PopoverGeometry>(
+      valueListenable: _geometry,
+      builder: (context, geometry, _) => TweenAnimationBuilder<double>(
+        tween: Tween(end: geometry.maxWidth),
+        duration: duration,
+        curve: Curves.easeOutCubic,
+        builder: (context, width, _) => TweenAnimationBuilder<EdgeInsets>(
+          tween: EdgeInsetsTween(end: geometry.padding),
+          duration: duration,
+          curve: Curves.easeOutCubic,
+          builder: (context, padding, _) => _PopoverLayout(
+            anchor: anchor,
+            color: color,
+            builder: (context) => _PopoverGeometryScope(
+              geometry: _geometry,
+              child: Builder(builder: builder),
+            ),
+            maxWidth: width,
+            padding: padding,
+          ),
+        ),
+      ),
     );
   }
 
@@ -165,14 +221,16 @@ class _PopoverLayout extends StatelessWidget {
     final arrowX = (anchor.center.dx - left)
         .clamp(minArrow, math.max(minArrow, width - minArrow))
         .toDouble();
+    // A text field inside (the word note) brings up the keyboard: the
+    // bubble then ends above it, so the focused field can scroll into view.
+    final floor = math.max(media.padding.bottom, media.viewInsets.bottom);
+    final bottom = below
+        ? null
+        : math.max(screen.height - anchor.top + gap, floor + gutter);
     final maxHeight =
         (below
-                ? screen.height -
-                      media.padding.bottom -
-                      anchor.bottom -
-                      gap -
-                      gutter
-                : anchor.top - media.padding.top - gap - gutter)
+                ? screen.height - floor - anchor.bottom - gap - gutter
+                : screen.height - bottom! - media.padding.top - gutter)
             .clamp(0.0, double.infinity);
 
     final bubble = ConstrainedBox(
@@ -200,7 +258,7 @@ class _PopoverLayout extends StatelessWidget {
           left: left,
           width: width,
           top: below ? anchor.bottom + gap : null,
-          bottom: below ? null : screen.height - anchor.top + gap,
+          bottom: bottom,
           child: Material(type: MaterialType.transparency, child: bubble),
         ),
       ],
@@ -240,7 +298,11 @@ class PopoverBubble extends StatelessWidget {
       color: color,
       shape: _BubbleBorder(arrowX: arrowX, arrowUp: arrowUp, radius: radius),
       shadows: const [
-        BoxShadow(color: Color(0x33000000), blurRadius: 24, offset: Offset(0, 8)),
+        BoxShadow(
+          color: Color(0x33000000),
+          blurRadius: 24,
+          offset: Offset(0, 8),
+        ),
       ],
     ),
     child: Padding(

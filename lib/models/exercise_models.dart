@@ -37,10 +37,12 @@ class ExerciseText {
     required this.info,
     required this.paragraphs,
     this.sourceStoryId,
+    this.language = 'en',
   });
 
   /// Title, topic, level and reading time, shared with story cards.
   final Story info;
+  final String language;
   final List<String> paragraphs;
 
   /// Set when the text was built from a story ("Aus deinen Stories").

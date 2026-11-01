@@ -6,6 +6,7 @@ import '../../../models/home_models.dart';
 import '../../../models/story_category.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/press_scale.dart';
+import '../../../widgets/story_cover.dart';
 
 /// Level and reading time are no longer shown on covers or in the reader
 /// (user decision 29.10.2026); VoiceOver still hears them.
@@ -484,81 +485,13 @@ class _Cover extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const white = Color(0xFFFFFFFF);
-    const black = Color(0xFF000000);
-    final category = StoryCategory.of(story.topic);
-    final word = story.title.split(RegExp(r'\s+')).first;
-    final mast = math.min(height * 0.9, 150.0);
-    return SizedBox(
+    return StoryCover(
+      story: story,
       width: width,
       height: height,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(radius),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            if (story.cover case final cover?)
-              Image(image: cover, fit: BoxFit.cover)
-            else ...[
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color.lerp(category.color, white, 0.14)!,
-                      Color.lerp(category.color, black, 0.38)!,
-                    ],
-                  ),
-                ),
-              ),
-              if (texture)
-                Positioned(
-                  left: -mast * 0.06,
-                  top: -mast * 0.12,
-                  child: Text(
-                    word,
-                    maxLines: 1,
-                    softWrap: false,
-                    overflow: TextOverflow.visible,
-                    textScaler: TextScaler.noScaling,
-                    style: AppType.editorial(
-                      size: mast,
-                      weight: FontWeight.w700,
-                      height: 1,
-                      letterSpacing: -mast / 30,
-                      color: white.withValues(alpha: 0.11),
-                    ),
-                  ),
-                ),
-            ],
-            if (texture)
-              const DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: [0.3, 1],
-                    colors: [Color(0x00000000), Color(0xA6000000)],
-                  ),
-                ),
-              ),
-            if (story.cover == null)
-              Align(
-                alignment: texture ? Alignment.topLeft : Alignment.center,
-                child: Padding(
-                  padding: EdgeInsets.all(texture ? 12 : 0),
-                  child: Icon(
-                    category.icon,
-                    size: texture ? 18 : 24,
-                    color: white.withValues(alpha: texture ? 0.75 : 0.85),
-                  ),
-                ),
-              ),
-            if (finished) const ColoredBox(color: Color(0x59000000)),
-          ],
-        ),
-      ),
+      radius: radius,
+      texture: texture,
+      finished: finished,
     );
   }
 }

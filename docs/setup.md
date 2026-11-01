@@ -26,6 +26,32 @@ supabase login
 Windows (PowerShell): `gcloud auth application-default print-access-token | Out-Null; $?`
 macOS: `gcloud auth application-default print-access-token >/dev/null && echo ok`
 
+## Bestehende iPhone-Testinstallation aktualisieren
+
+Für das bereits eingerichtete Testgerät den vorhandenen Zahlungs-Buildhelfer mit
+der lokalen, nicht versionierten `config/adapty.local.json` verwenden. Ein bloßes
+`flutter build ios --release` übernimmt diese Datei nicht: Es würde die Kauf-,
+Anmelde- und Serverkonfiguration aus der aktualisierten App entfernen.
+
+macOS (Terminal, iOS-Build erfordert Xcode):
+
+```sh
+python3 tool/payment_build.py check
+python3 tool/payment_build.py ios-profile --device <geraete-id>
+```
+
+Windows (PowerShell, nur Konfiguration prüfen; iOS auf dem Mac bauen):
+
+```powershell
+python tool/payment_build.py check
+```
+
+Profile bleibt eine eigenständig startbare Sandbox-Testversion. Die vorhandene
+serverseitige Testerfreigabe bleibt erforderlich. `LEGAL_DOCUMENTS_APPROVED`
+nicht für einen Gerätetest auf `true` setzen. Vor Auslieferung die effektiven
+Build-Flags und das Vorhandensein der öffentlichen Konfigurationsfelder prüfen,
+ohne deren Werte auszugeben. Keine Deinstallation zum Aktualisieren.
+
 ## Geheim (nie ins Repo, nie in die App)
 
 - Dienstkonto-Schlüssel (Supabase-Secret `GCP_SA_KEY`)

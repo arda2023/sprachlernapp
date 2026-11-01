@@ -1,3 +1,5 @@
+import '../models/localized_practice_content.dart';
+import 'content/topic_vocabulary_composer.dart';
 import '../domain/language_profile.dart';
 import '../presentation/providers/database_providers.dart';
 import '../presentation/providers/language_selection_provider.dart';
@@ -53,15 +55,37 @@ class _AppShellState extends ConsumerState<AppShell> {
   final _history = ReadingHistory(sampleReadStoryIds);
   final _practice = PracticeProgress(sampleCompletedPracticeIds);
   AppTab _tab = AppTab.home;
+  final _scroll = {for (final t in _tabs) t: ScrollController()};
 
   @override
   void dispose() {
+    for (final c in _scroll.values) {
+      c.dispose();
+    }
     _history.dispose();
     _practice.dispose();
     super.dispose();
   }
 
-  void _select(AppTab tab) => setState(() => _tab = tab);
+  /// Re-tapping the active tab scrolls it to the top; other tabs keep
+  /// their position.
+  void _select(AppTab tab) {
+    if (tab != _tab) {
+      setState(() => _tab = tab);
+      return;
+    }
+    final c = _scroll[tab]!;
+    if (!c.hasClients || c.offset <= c.position.minScrollExtent) return;
+    if (MediaQuery.disableAnimationsOf(context)) {
+      c.jumpTo(0);
+    } else {
+      c.animateTo(
+        0,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeOutCubic,
+      );
+    }
+  }
 
   void _openStory(Story story) {
     _history.markRead(story.id);
@@ -189,7 +213,8 @@ class _AppShellState extends ConsumerState<AppShell> {
         ref.watch(languageSelectionProvider).switching ||
         selected.isLoading && selected.hasValue;
     final info = !hasEnglishSamples ? ref.watch(contentInfoProvider) : null;
-    final unavailable = !hasEnglishSamples && (info!.isLoading || info.hasError);
+    final unavailable =
+        !hasEnglishSamples && (info!.isLoading || info.hasError);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value:
           (context.appColors.light
@@ -250,9 +275,11 @@ class _AppShellState extends ConsumerState<AppShell> {
                       onBrowseDecks: _browseDecks,
                       onSetGoal: _setGoal,
                       onSettings: () => SettingsScreen.open(context),
+                      scrollController: _scroll[AppTab.home],
                     ),
                   ),
                   StoryLibraryScreen(
+                    scrollController: _scroll[AppTab.stories],
                     collection: const StoryCollectionEntry(),
                     stories: ref.watch(libraryStoriesProvider).isLoading
                         ? []
@@ -295,25 +322,37 @@ class _AppShellState extends ConsumerState<AppShell> {
                   ),
                   TickerMode(
                     enabled: _tab == AppTab.words,
-                    child: const WordListScreen(),
+                    child: WordListScreen(
+                      scrollController: _scroll[AppTab.words],
+                    ),
                   ),
-                  !hasEnglishSamples
-                      ? Center(
-                          child: Text(
-                            'Für ${ContentLanguageProfile.forLanguage(lang)!.displayName} sind noch keine weiteren Inhalte verfügbar.',
-                          ),
-                        )
-                      : ContentDashboardScreen(
-                          texts: sampleExerciseTexts,
-                          history: _history,
-                          listening: sampleListeningExercises,
-                          grammar: sampleGrammarExercises,
-                          progress: _practice,
-                          rules: sampleGrammarRules,
-                        ),
+                  ContentDashboardScreen(
+                    scrollController: _scroll[AppTab.content],
+                    texts: hasEnglishSamples
+                        ? sampleExerciseTexts
+                        : localizedPracticeContent[lang]!.texts,
+                    history: _history,
+                    listening: hasEnglishSamples
+                        ? sampleListeningExercises
+                        : localizedPracticeContent[lang]!.listening,
+                    grammar: hasEnglishSamples
+                        ? sampleGrammarExercises
+                        : localizedPracticeContent[lang]!.grammar,
+                    progress: _practice,
+                    rules: hasEnglishSamples
+                        ? sampleGrammarRules
+                        : localizedPracticeContent[lang]!.rules,
+                    generator: TopicVocabularyComposer(
+                      key: ValueKey('generate:$lang'),
+                      lang: lang,
+                    ),
+                  ),
                 ],
               ),
-        floatingActionButton: switching || unavailable
+        floatingActionButton:
+            switching ||
+                unavailable ||
+                MediaQuery.viewInsetsOf(context).bottom > 0
             ? null
             : ref
                   .watch(learningProgressProvider)

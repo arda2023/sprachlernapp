@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../theme/app_theme.dart';
+import 'speaker_icon.dart';
 
 /// Bottom toolbar of the reader and text exercises. Holds the translation
 /// toggle and, while it is on, the hint telling the learner what to do. The
@@ -10,6 +11,7 @@ class ReadingToolbar extends StatelessWidget {
     super.key,
     required this.translating,
     required this.onToggleTranslate,
+    this.showHint,
     this.listening = false,
     this.onToggleListen,
   });
@@ -18,6 +20,10 @@ class ReadingToolbar extends StatelessWidget {
 
   final bool translating;
   final VoidCallback onToggleTranslate;
+
+  /// Whether the hint shows; defaults to [translating]. Callers hide it
+  /// once a sentence was tapped.
+  final bool? showHint;
 
   /// Whether the narration panel is open.
   final bool listening;
@@ -42,7 +48,7 @@ class ReadingToolbar extends StatelessWidget {
               builder: (context, constraints) => Row(
                 children: [
                   Expanded(
-                    child: translating
+                    child: showHint ?? translating
                         ? Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: Text(
@@ -152,8 +158,8 @@ class _ListenToggle extends StatelessWidget {
                   : context.appColors.hairline,
               shape: BoxShape.circle,
             ),
-            child: Icon(
-              on ? CupertinoIcons.speaker_2_fill : CupertinoIcons.speaker_2,
+            child: SpeakerIcon(
+              filled: on,
               size: 20,
               color: on ? const Color(0xFFFFFFFF) : context.appColors.textMuted,
             ),

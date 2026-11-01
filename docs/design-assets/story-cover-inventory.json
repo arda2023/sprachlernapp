@@ -1,0 +1,2395 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-31",
+  "status": "inventory_only_no_art_generated",
+  "reference_asset": "docs/design-assets/story-cover-reference/rocket-preferred.png",
+  "asset_path_pattern": "assets/story_covers/<asset_key>.png",
+  "languages": [
+    "en",
+    "es",
+    "it",
+    "nb",
+    "pt-BR"
+  ],
+  "category_exclusions": [
+    "Alltag",
+    "Wirtschaft"
+  ],
+  "counts": {
+    "bundled_story_variants": 285,
+    "included_variants": 220,
+    "unique_motifs": 44,
+    "excluded_bundled_variants": 65,
+    "excluded_legacy_sqlite_stories": 1,
+    "new_images_required": 43,
+    "existing_reference_reusable_motifs": 1
+  },
+  "source_files": [
+    {
+      "path": "assets/content/en/stories.json",
+      "sha256": "d13f3f74010d65c66490ec308c50923efb0bf151cc6584ab96ab89e618329d8d"
+    },
+    {
+      "path": "assets/content/es/stories.json",
+      "sha256": "9ae4aa5623e1ab68868a34dd7030556c234643992abbd20e2dce0c75714126f7"
+    },
+    {
+      "path": "assets/content/it/stories.json",
+      "sha256": "09086bf5dfa5431b69c92ba43cf1f6cc3a412401e2470857ebb627ac9c22b397"
+    },
+    {
+      "path": "assets/content/nb/stories.json",
+      "sha256": "ca6a1d77ff2a166ed5df38a620590a673b106d4733a94cbd61b58062d33b879c"
+    },
+    {
+      "path": "assets/content/pt-BR/stories.json",
+      "sha256": "42f5a2c32054a137e3d98daa764c544431632b5939671731149bebf5b4bccf6b"
+    }
+  ],
+  "motifs": [
+    {
+      "asset_key": "video_04",
+      "asset_path": "assets/story_covers/video_04.png",
+      "category": "Technik",
+      "title_de": "Claude entsteht",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein beleuchteter Arbeitsplatz mit mehreren verbundenen abstrakten Dialogfenstern und einer menschlichen Hand am Kontrollregler; Entwicklung einer steuerbaren KI, kein Roboterportrait.",
+      "variants": [
+        {
+          "story_id": "library:en:video_04",
+          "language": "en",
+          "title_original": "Building Claude",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:es:video_04",
+          "language": "es",
+          "title_original": "La creación de Claude",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:it:video_04",
+          "language": "it",
+          "title_original": "La nascita di Claude",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:nb:video_04",
+          "language": "nb",
+          "title_original": "Veien til Claude",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:pt-BR:video_04",
+          "language": "pt-BR",
+          "title_original": "A criação do Claude",
+          "category": "Technik"
+        }
+      ],
+      "source_suffix": "video_04",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_05",
+      "asset_path": "assets/story_covers/video_05.png",
+      "category": "Technik",
+      "title_de": "Raketen, die zurückkehren",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Eine einzelne schlanke Raketenstufe mit ausgefahrenen Landebeinen und senkrechtem Triebwerksstrahl über einer Plattform im Meer; genau das Motiv der bevorzugten Raketenreferenz.",
+      "variants": [
+        {
+          "story_id": "library:en:video_05",
+          "language": "en",
+          "title_original": "Rockets that return",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:es:video_05",
+          "language": "es",
+          "title_original": "Cohetes que regresan",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:it:video_05",
+          "language": "it",
+          "title_original": "Razzi che ritornano",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:nb:video_05",
+          "language": "nb",
+          "title_original": "Raketter som vender tilbake",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:pt-BR:video_05",
+          "language": "pt-BR",
+          "title_original": "Foguetes que voltam",
+          "category": "Technik"
+        }
+      ],
+      "source_suffix": "video_05",
+      "new_image_required": false,
+      "existing_reference": "docs/design-assets/story-cover-reference/rocket-preferred.png"
+    },
+    {
+      "asset_key": "video_06",
+      "asset_path": "assets/story_covers/video_06.png",
+      "category": "Technik",
+      "title_de": "Chips für andere herstellen",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Siliziumwafer mit irisierenden rechteckigen Chips in einem Reinraum unter einer präzisen Fertigungsanlage; Auftragsfertigung statt fertiger Elektronik.",
+      "variants": [
+        {
+          "story_id": "library:en:video_06",
+          "language": "en",
+          "title_original": "Making other people's chips",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:es:video_06",
+          "language": "es",
+          "title_original": "Chips para otros",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:it:video_06",
+          "language": "it",
+          "title_original": "Chip per gli altri",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:nb:video_06",
+          "language": "nb",
+          "title_original": "Brikker for andre",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:pt-BR:video_06",
+          "language": "pt-BR",
+          "title_original": "Chips para os outros",
+          "category": "Technik"
+        }
+      ],
+      "source_suffix": "video_06",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_10",
+      "asset_path": "assets/story_covers/video_10.png",
+      "category": "Technik",
+      "title_de": "Im Inneren einer Bezahlkarte",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Freigelegte kontaktlose Karte mit großer sichtbarer Antennenschleife und winzigem Chip neben einem Bezahlterminal; technische Innenansicht ohne Kontonummern.",
+      "variants": [
+        {
+          "story_id": "library:en:video_10",
+          "language": "en",
+          "title_original": "Inside a payment card",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:es:video_10",
+          "language": "es",
+          "title_original": "Dentro de una tarjeta",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:it:video_10",
+          "language": "it",
+          "title_original": "Dentro una carta",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:nb:video_10",
+          "language": "nb",
+          "title_original": "Inne i et betalingskort",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:pt-BR:video_10",
+          "language": "pt-BR",
+          "title_original": "Dentro de um cartão",
+          "category": "Technik"
+        }
+      ],
+      "source_suffix": "video_10",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_11",
+      "asset_path": "assets/story_covers/video_11.png",
+      "category": "Wissenschaft",
+      "title_de": "Wie Schwarze Löcher wachsen",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Dunkles Schwarzes Loch mit heller rotierender Akkretionsscheibe, seitlichem Materiestrom und gebogenem Licht; klar von Neutronenstern und Mond unterscheiden.",
+      "variants": [
+        {
+          "story_id": "library:en:video_11",
+          "language": "en",
+          "title_original": "How black holes grow",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:es:video_11",
+          "language": "es",
+          "title_original": "Gigantes oscuros",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:it:video_11",
+          "language": "it",
+          "title_original": "Giganti oscuri",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:nb:video_11",
+          "language": "nb",
+          "title_original": "Mørke kjemper",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_11",
+          "language": "pt-BR",
+          "title_original": "Gigantes escuros",
+          "category": "Wissenschaft"
+        }
+      ],
+      "source_suffix": "video_11",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_12",
+      "asset_path": "assets/story_covers/video_12.png",
+      "category": "Wissenschaft",
+      "title_de": "Die Anleitung des Lebens bearbeiten",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Eine große DNA-Doppelhelix, bei der ein kurzer Abschnitt gezielt ausgetauscht wird; Laborlicht und präzise molekulare Form statt allgemeinem Wissenschaftssymbol.",
+      "variants": [
+        {
+          "story_id": "library:en:video_12",
+          "language": "en",
+          "title_original": "Editing life's instructions",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:es:video_12",
+          "language": "es",
+          "title_original": "Editar la vida",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:it:video_12",
+          "language": "it",
+          "title_original": "Riscrivere la vita",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:nb:video_12",
+          "language": "nb",
+          "title_original": "Å redigere livet",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_12",
+          "language": "pt-BR",
+          "title_original": "Editar as instruções da vida",
+          "category": "Wissenschaft"
+        }
+      ],
+      "source_suffix": "video_12",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_13",
+      "asset_path": "assets/story_covers/video_13.png",
+      "category": "Wissenschaft",
+      "title_de": "Eine Stadt nach dem Lichtblitz",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Entfernte Stadtsilhouette unter einem überwältigenden weißen Lichtblitz und einer ankommenden Druckwelle; keine Verletzten oder detailreiche Zerstörungsbilder.",
+      "variants": [
+        {
+          "story_id": "library:en:video_13",
+          "language": "en",
+          "title_original": "A city after the flash",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:es:video_13",
+          "language": "es",
+          "title_original": "Una ciudad tras el destello",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:it:video_13",
+          "language": "it",
+          "title_original": "Una città dopo il lampo",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:nb:video_13",
+          "language": "nb",
+          "title_original": "En by etter lysglimtet",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_13",
+          "language": "pt-BR",
+          "title_original": "Uma cidade após o clarão",
+          "category": "Wissenschaft"
+        }
+      ],
+      "source_suffix": "video_13",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_14",
+      "asset_path": "assets/story_covers/video_14.png",
+      "category": "Wissenschaft",
+      "title_de": "Unter dem letzten Sonnenlicht",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein kleines Forschungstauchboot sinkt entlang eines dunklen Tiefseeabhangs; schmaler Lichtkegel trifft ein einzelnes biolumineszentes Tiefseetier.",
+      "variants": [
+        {
+          "story_id": "library:en:video_14",
+          "language": "en",
+          "title_original": "Below the last sunlight",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:es:video_14",
+          "language": "es",
+          "title_original": "Donde termina la luz",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:it:video_14",
+          "language": "it",
+          "title_original": "Dove finisce la luce",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:nb:video_14",
+          "language": "nb",
+          "title_original": "Der sollyset tar slutt",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_14",
+          "language": "pt-BR",
+          "title_original": "Onde termina a luz",
+          "category": "Wissenschaft"
+        }
+      ],
+      "source_suffix": "video_14",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_15",
+      "asset_path": "assets/story_covers/video_15.png",
+      "category": "Wissenschaft",
+      "title_de": "Ein Stern von der Größe einer Stadt",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein extrem kompakter heller Neutronenstern mit kräftigen symmetrischen Magnetfeldbögen und polaren Strahlen; keine schwarze Akkretionsscheibe.",
+      "variants": [
+        {
+          "story_id": "library:en:video_15",
+          "language": "en",
+          "title_original": "A star inside a city",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:es:video_15",
+          "language": "es",
+          "title_original": "Una estrella en una ciudad",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:it:video_15",
+          "language": "it",
+          "title_original": "Una stella in una città",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:nb:video_15",
+          "language": "nb",
+          "title_original": "En stjerne i en by",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_15",
+          "language": "pt-BR",
+          "title_original": "Uma estrela numa cidade",
+          "category": "Wissenschaft"
+        }
+      ],
+      "source_suffix": "video_15",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_16",
+      "asset_path": "assets/story_covers/video_16.png",
+      "category": "Wissenschaft",
+      "title_de": "Wenn der Mond näher käme",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein ungewöhnlich großer naher Mond über der Erdküste und sichtbar erhöhtem Meer; Bild macht das im Text erklärte Gedankenexperiment erkennbar.",
+      "variants": [
+        {
+          "story_id": "library:en:video_16",
+          "language": "en",
+          "title_original": "If the Moon came closer",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:es:video_16",
+          "language": "es",
+          "title_original": "Si la Luna se acercara",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:it:video_16",
+          "language": "it",
+          "title_original": "Se la Luna si avvicinasse",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:nb:video_16",
+          "language": "nb",
+          "title_original": "Hvis månen kom nærmere",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_16",
+          "language": "pt-BR",
+          "title_original": "Se a Lua chegasse mais perto",
+          "category": "Wissenschaft"
+        }
+      ],
+      "source_suffix": "video_16",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_19",
+      "asset_path": "assets/story_covers/video_19.png",
+      "category": "Gesellschaft",
+      "title_de": "Wenn der Geldautomat verschwindet",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Aufgebrochene Geldautomatennische in einer Hauswand mit abgesperrtem Gehweg und wenigen Glassplittern; Folgen für die Nachbarschaft, keine Explosion als Spektakel.",
+      "variants": [
+        {
+          "story_id": "library:en:video_19",
+          "language": "en",
+          "title_original": "When the cash machine disappears",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:es:video_19",
+          "language": "es",
+          "title_original": "Cuando desaparece el cajero",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:it:video_19",
+          "language": "it",
+          "title_original": "Quando scompare il bancomat",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:nb:video_19",
+          "language": "nb",
+          "title_original": "Når minibanken forsvinner",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_19",
+          "language": "pt-BR",
+          "title_original": "Quando o caixa desaparece",
+          "category": "Gesellschaft"
+        }
+      ],
+      "source_suffix": "video_19",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_20",
+      "asset_path": "assets/story_covers/video_20.png",
+      "category": "Kultur",
+      "title_de": "Der Preis eines Comebacks",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Eine silberne Bühnenmaske in einer Hand vor warmen Scheinwerfern und einer dunklen Filmkulisse; Rollenwechsel und Rückkehr, ohne Markenlogo oder vorgetäuschtes Schauspielerportrait.",
+      "variants": [
+        {
+          "story_id": "library:en:video_20",
+          "language": "en",
+          "title_original": "The price of a comeback",
+          "category": "Kultur"
+        },
+        {
+          "story_id": "library:es:video_20",
+          "language": "es",
+          "title_original": "El precio de volver",
+          "category": "Kultur"
+        },
+        {
+          "story_id": "library:it:video_20",
+          "language": "it",
+          "title_original": "Il prezzo di un ritorno",
+          "category": "Kultur"
+        },
+        {
+          "story_id": "library:nb:video_20",
+          "language": "nb",
+          "title_original": "Prisen for å komme tilbake",
+          "category": "Kultur"
+        },
+        {
+          "story_id": "library:pt-BR:video_20",
+          "language": "pt-BR",
+          "title_original": "O preço de uma volta",
+          "category": "Kultur"
+        }
+      ],
+      "source_suffix": "video_20",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_21",
+      "asset_path": "assets/story_covers/video_21.png",
+      "category": "Technik",
+      "title_de": "Kann KI Erfindungen beschleunigen?",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Eine digitale Konstruktionszeichnung geht in ein reales technisches Bauteil auf einem Prüfstand über; sichtbar der Weg vom KI-Entwurf zur Fertigung.",
+      "variants": [
+        {
+          "story_id": "library:en:video_21",
+          "language": "en",
+          "title_original": "Can AI shorten invention?",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:es:video_21",
+          "language": "es",
+          "title_original": "Inventar con ayuda de la IA",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:it:video_21",
+          "language": "it",
+          "title_original": "Inventare con l'IA",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:nb:video_21",
+          "language": "nb",
+          "title_original": "Oppfinnelser med KI",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:pt-BR:video_21",
+          "language": "pt-BR",
+          "title_original": "Inventar com ajuda da IA",
+          "category": "Technik"
+        }
+      ],
+      "source_suffix": "video_21",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_22",
+      "asset_path": "assets/story_covers/video_22.png",
+      "category": "Gesellschaft",
+      "title_de": "Als Polizisten verdächtig wurden",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein dunkler Polizeiausweis auf einem Beweistisch neben versiegelten Ermittlungsunterlagen; Korruptionsverdacht innerhalb der Polizei, keine allgemeine Straßenpolizei.",
+      "variants": [
+        {
+          "story_id": "library:en:video_22",
+          "language": "en",
+          "title_original": "When police became suspects",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:es:video_22",
+          "language": "es",
+          "title_original": "Policías bajo sospecha",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:it:video_22",
+          "language": "it",
+          "title_original": "Poliziotti sotto sospetto",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:nb:video_22",
+          "language": "nb",
+          "title_original": "Da politiet ble mistenkt",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_22",
+          "language": "pt-BR",
+          "title_original": "Policiais sob suspeita",
+          "category": "Gesellschaft"
+        }
+      ],
+      "source_suffix": "video_22",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_23",
+      "asset_path": "assets/story_covers/video_23.png",
+      "category": "Gesellschaft",
+      "title_de": "Vier Monate auf einem schwimmenden Gefängnis",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein großes Containerschiff auf leerem Meer, seitlich ein viel kleineres Piratenboot und abgeschottete Brücke; Gefangenschaft auf der Hansa Stavanger ohne Gewaltszene.",
+      "variants": [
+        {
+          "story_id": "library:en:video_23",
+          "language": "en",
+          "title_original": "Four months aboard a prison",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:es:video_23",
+          "language": "es",
+          "title_original": "Cuatro meses de cautiverio",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:it:video_23",
+          "language": "it",
+          "title_original": "Quattro mesi prigionieri",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:nb:video_23",
+          "language": "nb",
+          "title_original": "Fire måneder i fangenskap",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_23",
+          "language": "pt-BR",
+          "title_original": "Quatro meses em cativeiro",
+          "category": "Gesellschaft"
+        }
+      ],
+      "source_suffix": "video_23",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_24",
+      "asset_path": "assets/story_covers/video_24.png",
+      "category": "Gesellschaft",
+      "title_de": "Die Briefe des Monsieur X",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein geöffnetes anonymes Briefkuvert im Vordergrund, im Hintergrund nächtliche verbogene Eisenbahnschienen; Verbindung von Erpresserbriefen und Zuganschlag.",
+      "variants": [
+        {
+          "story_id": "library:en:video_24",
+          "language": "en",
+          "title_original": "The letters of Monsieur X",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:es:video_24",
+          "language": "es",
+          "title_original": "Las cartas de Monsieur X",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:it:video_24",
+          "language": "it",
+          "title_original": "Le lettere di Monsieur X",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:nb:video_24",
+          "language": "nb",
+          "title_original": "Brevene fra Monsieur X",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_24",
+          "language": "pt-BR",
+          "title_original": "As cartas de Monsieur X",
+          "category": "Gesellschaft"
+        }
+      ],
+      "source_suffix": "video_24",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_25",
+      "asset_path": "assets/story_covers/video_25.png",
+      "category": "Gesellschaft",
+      "title_de": "Hinter den Gefängnistüren",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Eine schwere Gefängnistür mit schmalem Fenster, davor ein ärztlicher Bericht und Stethoskop; Hinweis einer Gefängnisärztin auf mutmaßliche Misshandlung.",
+      "variants": [
+        {
+          "story_id": "library:en:video_25",
+          "language": "en",
+          "title_original": "Behind the prison doors",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:es:video_25",
+          "language": "es",
+          "title_original": "Tras las puertas de la prisión",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:it:video_25",
+          "language": "it",
+          "title_original": "Dietro le porte del carcere",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:nb:video_25",
+          "language": "nb",
+          "title_original": "Bak fengselsdørene",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_25",
+          "language": "pt-BR",
+          "title_original": "Atrás das portas da prisão",
+          "category": "Gesellschaft"
+        }
+      ],
+      "source_suffix": "video_25",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_26",
+      "asset_path": "assets/story_covers/video_26.png",
+      "category": "Gesellschaft",
+      "title_de": "Briefe, die Angst verbreiteten",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein einzelner versiegelter Brief auf einem Labortablett hinter transparentem Schutzglas, daneben Schutzhandschuhe; Anthrax-Ermittlung ohne Herstellungsdarstellung.",
+      "variants": [
+        {
+          "story_id": "library:en:video_26",
+          "language": "en",
+          "title_original": "The letters that spread fear",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:es:video_26",
+          "language": "es",
+          "title_original": "Las cartas que sembraron miedo",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:it:video_26",
+          "language": "it",
+          "title_original": "Le lettere della paura",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:nb:video_26",
+          "language": "nb",
+          "title_original": "Brevene som spredte frykt",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_26",
+          "language": "pt-BR",
+          "title_original": "As cartas que espalharam medo",
+          "category": "Gesellschaft"
+        }
+      ],
+      "source_suffix": "video_26",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_27",
+      "asset_path": "assets/story_covers/video_27.png",
+      "category": "Gesellschaft",
+      "title_de": "Die Rückkehr von Flug 705",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein dreistrahliges Frachtflugzeug auf steilem Rückflug in dunklem Himmel mit sichtbarer Flughafenlandebahn; Notrückkehr von FedEx705, keine Passagiermaschine.",
+      "variants": [
+        {
+          "story_id": "library:en:video_27",
+          "language": "en",
+          "title_original": "The return of Flight 705",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:es:video_27",
+          "language": "es",
+          "title_original": "El regreso del vuelo 705",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:it:video_27",
+          "language": "it",
+          "title_original": "Il ritorno del volo 705",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:nb:video_27",
+          "language": "nb",
+          "title_original": "Flight 705 vender tilbake",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_27",
+          "language": "pt-BR",
+          "title_original": "A volta do voo 705",
+          "category": "Gesellschaft"
+        }
+      ],
+      "source_suffix": "video_27",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_28",
+      "asset_path": "assets/story_covers/video_28.png",
+      "category": "Gesellschaft",
+      "title_de": "Nach dem Lösegeld",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Eine geöffnete große Transportkiste in einem dunklen leeren Lagerraum, daneben ein Aktenordner mit einem einzelnen Schlüssel; Oetker-Entführung ohne gefangene Person.",
+      "variants": [
+        {
+          "story_id": "library:en:video_28",
+          "language": "en",
+          "title_original": "After the ransom",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:es:video_28",
+          "language": "es",
+          "title_original": "Después del rescate",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:it:video_28",
+          "language": "it",
+          "title_original": "Dopo il riscatto",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:nb:video_28",
+          "language": "nb",
+          "title_original": "Etter løsepengene",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_28",
+          "language": "pt-BR",
+          "title_original": "Depois do resgate",
+          "category": "Gesellschaft"
+        }
+      ],
+      "source_suffix": "video_28",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_29",
+      "asset_path": "assets/story_covers/video_29.png",
+      "category": "Gesellschaft",
+      "title_de": "Die Grenzen der Einwilligung",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Zwei einander zugewandte leere Stühle an einem Tisch, dazwischen eine deutlich unterbrochene Linie und ein geschlossenes juristisches Aktenbuch; Grenze zwischen Einwilligung und Gewalt, ohne Essen oder explizite Tatdarstellung.",
+      "variants": [
+        {
+          "story_id": "library:en:video_29",
+          "language": "en",
+          "title_original": "The limits of consent",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:es:video_29",
+          "language": "es",
+          "title_original": "Los límites del consentimiento",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:it:video_29",
+          "language": "it",
+          "title_original": "I limiti del consenso",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:nb:video_29",
+          "language": "nb",
+          "title_original": "Grensene for samtykke",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_29",
+          "language": "pt-BR",
+          "title_original": "Os limites do consentimento",
+          "category": "Gesellschaft"
+        }
+      ],
+      "source_suffix": "video_29",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_30",
+      "asset_path": "assets/story_covers/video_30.png",
+      "category": "Gesellschaft",
+      "title_de": "Jenseits der brennenden Straßen",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein leerer Klassenraum mit beschädigtem Dach und offenen Schulheften, durch das Fenster entfernte protestierende Silhouetten; Schulbedingungen und gesellschaftlicher Konflikt statt generischer Flammen.",
+      "variants": [
+        {
+          "story_id": "library:en:video_30",
+          "language": "en",
+          "title_original": "Beyond the burning streets",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:es:video_30",
+          "language": "es",
+          "title_original": "Más allá de los incendios",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:it:video_30",
+          "language": "it",
+          "title_original": "Oltre le strade in fiamme",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:nb:video_30",
+          "language": "nb",
+          "title_original": "Bak bildene av brennende gater",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_30",
+          "language": "pt-BR",
+          "title_original": "Além das ruas em chamas",
+          "category": "Gesellschaft"
+        }
+      ],
+      "source_suffix": "video_30",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_31",
+      "asset_path": "assets/story_covers/video_31.png",
+      "category": "Technik",
+      "title_de": "Der Unterschied war die Erlaubnis",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Eine Hand an einem älteren Computerterminal, daneben ein physischer Schlüssel und zwei getrennte Zugangswege; Kevin Mitnicks Thema von Täuschung, Zugriff und Erlaubnis.",
+      "variants": [
+        {
+          "story_id": "library:en:video_31",
+          "language": "en",
+          "title_original": "The difference was permission",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:es:video_31",
+          "language": "es",
+          "title_original": "La diferencia era el permiso",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:it:video_31",
+          "language": "it",
+          "title_original": "La differenza era il permesso",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:nb:video_31",
+          "language": "nb",
+          "title_original": "Forskjellen var tillatelse",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:pt-BR:video_31",
+          "language": "pt-BR",
+          "title_original": "A diferença era a permissão",
+          "category": "Technik"
+        }
+      ],
+      "source_suffix": "video_31",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_32",
+      "asset_path": "assets/story_covers/video_32.png",
+      "category": "Technik",
+      "title_de": "Hinter Panzerglas",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Nahansicht der sehr dicken Seitenscheibe einer dunklen gepanzerten Staatslimousine vor weichem Berliner Stadthintergrund; Fahrzeugschutz, keine nachgestellte reale Attacke.",
+      "variants": [
+        {
+          "story_id": "library:en:video_32",
+          "language": "en",
+          "title_original": "Behind the armoured glass",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:es:video_32",
+          "language": "es",
+          "title_original": "Tras el cristal blindado",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:it:video_32",
+          "language": "it",
+          "title_original": "Dietro il vetro blindato",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:nb:video_32",
+          "language": "nb",
+          "title_original": "Bak det pansrede glasset",
+          "category": "Technik"
+        },
+        {
+          "story_id": "library:pt-BR:video_32",
+          "language": "pt-BR",
+          "title_original": "Por trás do vidro blindado",
+          "category": "Technik"
+        }
+      ],
+      "source_suffix": "video_32",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_33",
+      "asset_path": "assets/story_covers/video_33.png",
+      "category": "Gesellschaft",
+      "title_de": "Der Assistent und die Geheimnisse",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein geöffnetes politisches Büro mit vertraulichem Aktenstapel und einer zweiten langen Schattenfigur am Türspalt; Insiderzugang und mutmaßliche Spionage, keine als schuldig markierte Person.",
+      "variants": [
+        {
+          "story_id": "library:en:video_33",
+          "language": "en",
+          "title_original": "The assistant and the secrets",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:es:video_33",
+          "language": "es",
+          "title_original": "El asistente y los secretos",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:it:video_33",
+          "language": "it",
+          "title_original": "L'assistente e i segreti",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:nb:video_33",
+          "language": "nb",
+          "title_original": "Assistenten og hemmelighetene",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_33",
+          "language": "pt-BR",
+          "title_original": "O assistente e os segredos",
+          "category": "Gesellschaft"
+        }
+      ],
+      "source_suffix": "video_33",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_34",
+      "asset_path": "assets/story_covers/video_34.png",
+      "category": "Gesundheit",
+      "title_de": "In einer Tablette verborgen",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Eine einzelne Tablette mit kleiner Bruchkante neben einer neutralen Blisterpackung und unscharfer Warnleuchte; unbekannter Inhalt gefälschter Arznei, keine Konsumanleitung.",
+      "variants": [
+        {
+          "story_id": "library:en:video_34",
+          "language": "en",
+          "title_original": "Hidden in a tablet",
+          "category": "Gesundheit"
+        },
+        {
+          "story_id": "library:es:video_34",
+          "language": "es",
+          "title_original": "Oculto en una pastilla",
+          "category": "Gesundheit"
+        },
+        {
+          "story_id": "library:it:video_34",
+          "language": "it",
+          "title_original": "Nascosto in una pillola",
+          "category": "Gesundheit"
+        },
+        {
+          "story_id": "library:nb:video_34",
+          "language": "nb",
+          "title_original": "Skjult i en tablett",
+          "category": "Gesundheit"
+        },
+        {
+          "story_id": "library:pt-BR:video_34",
+          "language": "pt-BR",
+          "title_original": "Escondido num comprimido",
+          "category": "Gesundheit"
+        }
+      ],
+      "source_suffix": "video_34",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_35",
+      "asset_path": "assets/story_covers/video_35.png",
+      "category": "Gesundheit",
+      "title_de": "Der Staat verkauft Zigaretten",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein Zigarettenpaket ohne Marke vor einer großen Fabriksilhouette und amtlicher Gebäudefassade; staatliches Tabakgeschäft in China statt Raucherportrait.",
+      "variants": [
+        {
+          "story_id": "library:en:video_35",
+          "language": "en",
+          "title_original": "The state sells cigarettes",
+          "category": "Gesundheit"
+        },
+        {
+          "story_id": "library:es:video_35",
+          "language": "es",
+          "title_original": "El Estado vende cigarrillos",
+          "category": "Gesundheit"
+        },
+        {
+          "story_id": "library:it:video_35",
+          "language": "it",
+          "title_original": "Lo Stato vende sigarette",
+          "category": "Gesundheit"
+        },
+        {
+          "story_id": "library:nb:video_35",
+          "language": "nb",
+          "title_original": "Staten selger sigaretter",
+          "category": "Gesundheit"
+        },
+        {
+          "story_id": "library:pt-BR:video_35",
+          "language": "pt-BR",
+          "title_original": "O Estado vende cigarros",
+          "category": "Gesundheit"
+        }
+      ],
+      "source_suffix": "video_35",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_36",
+      "asset_path": "assets/story_covers/video_36.png",
+      "category": "Kriminalfälle",
+      "title_de": "Nach dem Kartellchef",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Eine leere kurvige Straße durch die Hügel von Jalisco, darüber ein entfernter Hubschrauber und eine geschlossene Straßensperre; Folgen der Operation in Tapalpa ohne Waffenpose oder Täterverehrung.",
+      "variants": [
+        {
+          "story_id": "library:en:video_36",
+          "language": "en",
+          "title_original": "After the cartel leader",
+          "category": "Kriminalfälle"
+        },
+        {
+          "story_id": "library:es:video_36",
+          "language": "es",
+          "title_original": "Después del jefe del cartel",
+          "category": "Kriminalfälle"
+        },
+        {
+          "story_id": "library:it:video_36",
+          "language": "it",
+          "title_original": "Dopo il capo del cartello",
+          "category": "Kriminalfälle"
+        },
+        {
+          "story_id": "library:nb:video_36",
+          "language": "nb",
+          "title_original": "Etter kartellsjefen",
+          "category": "Kriminalfälle"
+        },
+        {
+          "story_id": "library:pt-BR:video_36",
+          "language": "pt-BR",
+          "title_original": "Depois do chefe do cartel",
+          "category": "Kriminalfälle"
+        }
+      ],
+      "source_suffix": "video_36",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_38",
+      "asset_path": "assets/story_covers/video_38.png",
+      "category": "Gesellschaft",
+      "title_de": "Peter Thiel und die Macht",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein einzelner großer Schachkönig zwischen Serverracks und einem parlamentarischen Gebäudebogen; Verhältnis von Technologiemacht und politischem Einfluss, kein beliebiges Geldmotiv.",
+      "variants": [
+        {
+          "story_id": "library:en:video_38",
+          "language": "en",
+          "title_original": "Peter Thiel and power",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:es:video_38",
+          "language": "es",
+          "title_original": "Peter Thiel y el poder",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:it:video_38",
+          "language": "it",
+          "title_original": "Peter Thiel e il potere",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:nb:video_38",
+          "language": "nb",
+          "title_original": "Peter Thiel og makten",
+          "category": "Gesellschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_38",
+          "language": "pt-BR",
+          "title_original": "Peter Thiel e o poder",
+          "category": "Gesellschaft"
+        }
+      ],
+      "source_suffix": "video_38",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_39",
+      "asset_path": "assets/story_covers/video_39.png",
+      "category": "Gesundheit",
+      "title_de": "Wer prägt unsere Lust auf Süßes?",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Frühstücksschale mit Cerealien, Brot und Saft, deren Schatten in eine deutlich sichtbare Anhäufung von Zuckerwürfeln übergehen; versteckter Zucker im Alltag.",
+      "variants": [
+        {
+          "story_id": "library:en:video_39",
+          "language": "en",
+          "title_original": "Who shapes our sweet tooth?",
+          "category": "Gesundheit"
+        },
+        {
+          "story_id": "library:es:video_39",
+          "language": "es",
+          "title_original": "¿Quién decide cuánto endulzamos?",
+          "category": "Gesundheit"
+        },
+        {
+          "story_id": "library:it:video_39",
+          "language": "it",
+          "title_original": "Chi decide quanto zucchero?",
+          "category": "Gesundheit"
+        },
+        {
+          "story_id": "library:nb:video_39",
+          "language": "nb",
+          "title_original": "Hvem former søtsuget vårt?",
+          "category": "Gesundheit"
+        },
+        {
+          "story_id": "library:pt-BR:video_39",
+          "language": "pt-BR",
+          "title_original": "Quem decide quanto adoçamos?",
+          "category": "Gesundheit"
+        }
+      ],
+      "source_suffix": "video_39",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "video_40",
+      "asset_path": "assets/story_covers/video_40.png",
+      "category": "Wissenschaft",
+      "title_de": "DMT und das Gefühl von Wirklichkeit",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Eine ruhige Liege im Forschungsraum geht am Bildrand in verschachtelte farbige geometrische Räume über; Wahrnehmungsforschung, keine Substanz oder Konsumszene.",
+      "variants": [
+        {
+          "story_id": "library:en:video_40",
+          "language": "en",
+          "title_original": "DMT and the feeling of reality",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:es:video_40",
+          "language": "es",
+          "title_original": "DMT y la sensación de realidad",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:it:video_40",
+          "language": "it",
+          "title_original": "DMT e il senso della realtà",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:nb:video_40",
+          "language": "nb",
+          "title_original": "DMT og følelsen av virkelighet",
+          "category": "Wissenschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_40",
+          "language": "pt-BR",
+          "title_original": "DMT e a sensação de realidade",
+          "category": "Wissenschaft"
+        }
+      ],
+      "source_suffix": "video_40",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "travel_01",
+      "asset_path": "assets/story_covers/travel_01.png",
+      "category": "Reisen",
+      "title_de": "Der falsche Koffer",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Zwei nahezu identische Reisekoffer vor einer kleinen Gästehausrezeption, einer mit gut sichtbarem blauem Band; die Verwechslung ist das Hauptmotiv.",
+      "variants": [
+        {
+          "story_id": "library:en:travel_01",
+          "language": "en",
+          "title_original": "The wrong suitcase",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:es:travel_01",
+          "language": "es",
+          "title_original": "La maleta equivocada",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:it:travel_01",
+          "language": "it",
+          "title_original": "La valigia sbagliata",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:nb:travel_01",
+          "language": "nb",
+          "title_original": "Feil koffert",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:pt-BR:travel_01",
+          "language": "pt-BR",
+          "title_original": "A mala trocada",
+          "category": "Reisen"
+        }
+      ],
+      "source_suffix": "travel_01",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "travel_02",
+      "asset_path": "assets/story_covers/travel_02.png",
+      "category": "Reisen",
+      "title_de": "Das letzte Zimmer",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein einzelner Zimmerschlüssel hinter einer Hotelrezeption, davor ein nasser Reisekoffer und eine Buchungsbestätigung; Ankunft bei falschem Reservierungsdatum.",
+      "variants": [
+        {
+          "story_id": "library:en:travel_02",
+          "language": "en",
+          "title_original": "The last room",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:es:travel_02",
+          "language": "es",
+          "title_original": "La última habitación",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:it:travel_02",
+          "language": "it",
+          "title_original": "L'ultima camera",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:nb:travel_02",
+          "language": "nb",
+          "title_original": "Det siste rommet",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:pt-BR:travel_02",
+          "language": "pt-BR",
+          "title_original": "O último quarto",
+          "category": "Reisen"
+        }
+      ],
+      "source_suffix": "travel_02",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "travel_03",
+      "asset_path": "assets/story_covers/travel_03.png",
+      "category": "Reisen",
+      "title_de": "Ein Halt am Meer",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein abfahrender Linienbus neben einer kleinen Küstenhaltestelle, dahinter ein enger Durchblick auf Hafen und Möwen; spontaner Zwischenstopp am Meer.",
+      "variants": [
+        {
+          "story_id": "library:en:travel_03",
+          "language": "en",
+          "title_original": "A stop by the sea",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:es:travel_03",
+          "language": "es",
+          "title_original": "Una parada junto al mar",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:it:travel_03",
+          "language": "it",
+          "title_original": "Una sosta al mare",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:nb:travel_03",
+          "language": "nb",
+          "title_original": "Et stopp ved sjøen",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:pt-BR:travel_03",
+          "language": "pt-BR",
+          "title_original": "Uma parada à beira do mar",
+          "category": "Reisen"
+        }
+      ],
+      "source_suffix": "travel_03",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "travel_04",
+      "asset_path": "assets/story_covers/travel_04.png",
+      "category": "Reisen",
+      "title_de": "Der verpasste Zug",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Zwei volle Kaffeebecher und zwei Koffer auf einem Bahnsteig, im Hintergrund das letzte Wagenende des abfahrenden Zuges; eigener Schwerpunkt statt allgemeinem Reisebild.",
+      "variants": [
+        {
+          "story_id": "library:en:travel_04",
+          "language": "en",
+          "title_original": "The missed train",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:es:travel_04",
+          "language": "es",
+          "title_original": "El tren perdido",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:it:travel_04",
+          "language": "it",
+          "title_original": "Il treno perso",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:nb:travel_04",
+          "language": "nb",
+          "title_original": "Toget de mistet",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:pt-BR:travel_04",
+          "language": "pt-BR",
+          "title_original": "O trem perdido",
+          "category": "Reisen"
+        }
+      ],
+      "source_suffix": "travel_04",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "travel_05",
+      "asset_path": "assets/story_covers/travel_05.png",
+      "category": "Reisen",
+      "title_de": "Eine Karte aus Papier",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Eine aufgefaltete alte Papierkarte neben einer leicht vergilbten Urlaubsfotografie vor einer blauen Haustür mit Nummer17; Suche nach Familienerinnerungen.",
+      "variants": [
+        {
+          "story_id": "library:en:travel_05",
+          "language": "en",
+          "title_original": "A paper map",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:es:travel_05",
+          "language": "es",
+          "title_original": "Un mapa de papel",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:it:travel_05",
+          "language": "it",
+          "title_original": "Una mappa di carta",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:nb:travel_05",
+          "language": "nb",
+          "title_original": "Et kart av papir",
+          "category": "Reisen"
+        },
+        {
+          "story_id": "library:pt-BR:travel_05",
+          "language": "pt-BR",
+          "title_original": "Um mapa de papel",
+          "category": "Reisen"
+        }
+      ],
+      "source_suffix": "travel_05",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "restaurant_01",
+      "asset_path": "assets/story_covers/restaurant_01.png",
+      "category": "Restaurant",
+      "title_de": "Ein Tisch am Fenster",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein reservierter Zweiertisch direkt am Restaurantfenster, ein Platz noch leer, im Vordergrund ein wartendes Mobiltelefon; Ankunft und Reservierung.",
+      "variants": [
+        {
+          "story_id": "library:en:restaurant_01",
+          "language": "en",
+          "title_original": "A table by the window",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:es:restaurant_01",
+          "language": "es",
+          "title_original": "Una mesa junto a la ventana",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:it:restaurant_01",
+          "language": "it",
+          "title_original": "Un tavolo alla finestra",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:nb:restaurant_01",
+          "language": "nb",
+          "title_original": "Et bord ved vinduet",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:pt-BR:restaurant_01",
+          "language": "pt-BR",
+          "title_original": "Uma mesa junto à janela",
+          "category": "Restaurant"
+        }
+      ],
+      "source_suffix": "restaurant_01",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "restaurant_02",
+      "asset_path": "assets/story_covers/restaurant_02.png",
+      "category": "Restaurant",
+      "title_de": "Die fehlende Bestellung",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein Restauranttisch mit Kinokarten unter einem Salzstreuer, einer Uhr und einem noch leeren Tellerplatz; vergessene Bestellung vor dem Film.",
+      "variants": [
+        {
+          "story_id": "library:en:restaurant_02",
+          "language": "en",
+          "title_original": "The missing order",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:es:restaurant_02",
+          "language": "es",
+          "title_original": "El pedido olvidado",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:it:restaurant_02",
+          "language": "it",
+          "title_original": "L'ordine dimenticato",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:nb:restaurant_02",
+          "language": "nb",
+          "title_original": "Den glemte bestillingen",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:pt-BR:restaurant_02",
+          "language": "pt-BR",
+          "title_original": "O pedido esquecido",
+          "category": "Restaurant"
+        }
+      ],
+      "source_suffix": "restaurant_02",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "restaurant_03",
+      "asset_path": "assets/story_covers/restaurant_03.png",
+      "category": "Restaurant",
+      "title_de": "Das Familienrezept",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein altes handschriftliches Rezeptbuch neben weißen Bohnen, Tomaten und Zwiebeln auf einer warmen Küchentheke; überliefertes Familiengericht.",
+      "variants": [
+        {
+          "story_id": "library:en:restaurant_03",
+          "language": "en",
+          "title_original": "The family recipe",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:es:restaurant_03",
+          "language": "es",
+          "title_original": "La receta de familia",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:it:restaurant_03",
+          "language": "it",
+          "title_original": "La ricetta di famiglia",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:nb:restaurant_03",
+          "language": "nb",
+          "title_original": "Familieoppskriften",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:pt-BR:restaurant_03",
+          "language": "pt-BR",
+          "title_original": "A receita da família",
+          "category": "Restaurant"
+        }
+      ],
+      "source_suffix": "restaurant_03",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "restaurant_04",
+      "asset_path": "assets/story_covers/restaurant_04.png",
+      "category": "Restaurant",
+      "title_de": "Der letzte Gast",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Restauranttür im Abendlicht, davor eine Person mit geschlossenem Geigenkasten; innen eine einzelne noch gedeckte Sitzgelegenheit kurz vor Küchenschluss.",
+      "variants": [
+        {
+          "story_id": "library:en:restaurant_04",
+          "language": "en",
+          "title_original": "The last guest",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:es:restaurant_04",
+          "language": "es",
+          "title_original": "La última clienta",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:it:restaurant_04",
+          "language": "it",
+          "title_original": "L'ultima cliente",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:nb:restaurant_04",
+          "language": "nb",
+          "title_original": "Den siste gjesten",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:pt-BR:restaurant_04",
+          "language": "pt-BR",
+          "title_original": "A última cliente",
+          "category": "Restaurant"
+        }
+      ],
+      "source_suffix": "restaurant_04",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "restaurant_05",
+      "asset_path": "assets/story_covers/restaurant_05.png",
+      "category": "Restaurant",
+      "title_de": "Der erste Abend",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Eine nervös gebundene Kellnerschürze, vier Speisekarten und frisch gedeckte Tische kurz vor dem Öffnen; erster Dienst als Bedienung.",
+      "variants": [
+        {
+          "story_id": "library:en:restaurant_05",
+          "language": "en",
+          "title_original": "The first evening",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:es:restaurant_05",
+          "language": "es",
+          "title_original": "La primera noche",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:it:restaurant_05",
+          "language": "it",
+          "title_original": "La prima sera",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:nb:restaurant_05",
+          "language": "nb",
+          "title_original": "Den første kvelden",
+          "category": "Restaurant"
+        },
+        {
+          "story_id": "library:pt-BR:restaurant_05",
+          "language": "pt-BR",
+          "title_original": "A primeira noite",
+          "category": "Restaurant"
+        }
+      ],
+      "source_suffix": "restaurant_05",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "work_01",
+      "asset_path": "assets/story_covers/work_01.png",
+      "category": "Arbeit",
+      "title_de": "Der erste Auftrag",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein kleiner Grafikarbeitsplatz mit Preisetiketten und Farbausdrucken, daneben Blumen für den ersten Auftrag eines Blumenladens; eigener gestalterischer Kundenauftrag.",
+      "variants": [
+        {
+          "story_id": "library:en:work_01",
+          "language": "en",
+          "title_original": "The first order",
+          "category": "Arbeit"
+        },
+        {
+          "story_id": "library:es:work_01",
+          "language": "es",
+          "title_original": "El primer encargo",
+          "category": "Arbeit"
+        },
+        {
+          "story_id": "library:it:work_01",
+          "language": "it",
+          "title_original": "Il primo incarico",
+          "category": "Arbeit"
+        },
+        {
+          "story_id": "library:nb:work_01",
+          "language": "nb",
+          "title_original": "Det første oppdraget",
+          "category": "Arbeit"
+        },
+        {
+          "story_id": "library:pt-BR:work_01",
+          "language": "pt-BR",
+          "title_original": "O primeiro trabalho",
+          "category": "Arbeit"
+        }
+      ],
+      "source_suffix": "work_01",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "work_02",
+      "asset_path": "assets/story_covers/work_02.png",
+      "category": "Arbeit",
+      "title_de": "Die falsche Datei",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Ein Laptop mit zwei deutlich unterschiedlichen Dateivorschaubildern, daneben eine Uhr und bereitliegende Jacke; falscher E-Mail-Anhang kurz vor der Besprechung, ohne lesbare Privatdaten.",
+      "variants": [
+        {
+          "story_id": "library:en:work_02",
+          "language": "en",
+          "title_original": "The wrong file",
+          "category": "Arbeit"
+        },
+        {
+          "story_id": "library:es:work_02",
+          "language": "es",
+          "title_original": "El archivo equivocado",
+          "category": "Arbeit"
+        },
+        {
+          "story_id": "library:it:work_02",
+          "language": "it",
+          "title_original": "Il file sbagliato",
+          "category": "Arbeit"
+        },
+        {
+          "story_id": "library:nb:work_02",
+          "language": "nb",
+          "title_original": "Feil fil",
+          "category": "Arbeit"
+        },
+        {
+          "story_id": "library:pt-BR:work_02",
+          "language": "pt-BR",
+          "title_original": "O arquivo errado",
+          "category": "Arbeit"
+        }
+      ],
+      "source_suffix": "work_02",
+      "new_image_required": true
+    },
+    {
+      "asset_key": "work_03",
+      "asset_path": "assets/story_covers/work_03.png",
+      "category": "Arbeit",
+      "title_de": "Eine schwierige Übergabe",
+      "title_de_status": "Arbeitstitel für das Inventar; kein deutscher Packtitel",
+      "main_motif": "Zwei Mitarbeitende an einer Fahrradwerkstatt-Theke mit blauem und rotem Fahrrad und einer knappen Übergabeliste; Schichtwechsel und fehlende Information.",
+      "variants": [
+        {
+          "story_id": "library:en:work_03",
+          "language": "en",
+          "title_original": "A difficult handover",
+          "category": "Arbeit"
+        },
+        {
+          "story_id": "library:es:work_03",
+          "language": "es",
+          "title_original": "Un cambio de turno difícil",
+          "category": "Arbeit"
+        },
+        {
+          "story_id": "library:it:work_03",
+          "language": "it",
+          "title_original": "Un passaggio difficile",
+          "category": "Arbeit"
+        },
+        {
+          "story_id": "library:nb:work_03",
+          "language": "nb",
+          "title_original": "Et vanskelig vaktskifte",
+          "category": "Arbeit"
+        },
+        {
+          "story_id": "library:pt-BR:work_03",
+          "language": "pt-BR",
+          "title_original": "Uma troca de turno difícil",
+          "category": "Arbeit"
+        }
+      ],
+      "source_suffix": "work_03",
+      "new_image_required": true
+    }
+  ],
+  "excluded_groups": [
+    {
+      "story_key": "video_01",
+      "category": "Wirtschaft",
+      "reason": "category_excluded_by_user",
+      "variants": [
+        {
+          "story_id": "library:en:video_01",
+          "language": "en",
+          "title_original": "Selling the dream",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:es:video_01",
+          "language": "es",
+          "title_original": "Vender un sueño",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:it:video_01",
+          "language": "it",
+          "title_original": "Vendere un sogno",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:nb:video_01",
+          "language": "nb",
+          "title_original": "Å selge en drøm",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_01",
+          "language": "pt-BR",
+          "title_original": "Vendendo um sonho",
+          "category": "Wirtschaft"
+        }
+      ]
+    },
+    {
+      "story_key": "video_02",
+      "category": "Wirtschaft",
+      "reason": "category_excluded_by_user",
+      "variants": [
+        {
+          "story_id": "library:en:video_02",
+          "language": "en",
+          "title_original": "When the boom ended",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:es:video_02",
+          "language": "es",
+          "title_original": "El fin de la prosperidad",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:it:video_02",
+          "language": "it",
+          "title_original": "La fine della prosperità",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:nb:video_02",
+          "language": "nb",
+          "title_original": "Da oppgangen tok slutt",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_02",
+          "language": "pt-BR",
+          "title_original": "O fim da prosperidade",
+          "category": "Wirtschaft"
+        }
+      ]
+    },
+    {
+      "story_key": "video_03",
+      "category": "Wirtschaft",
+      "reason": "category_excluded_by_user",
+      "variants": [
+        {
+          "story_id": "library:en:video_03",
+          "language": "en",
+          "title_original": "Beyond the bookstore",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:es:video_03",
+          "language": "es",
+          "title_original": "Más allá de los libros",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:it:video_03",
+          "language": "it",
+          "title_original": "Oltre la libreria",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:nb:video_03",
+          "language": "nb",
+          "title_original": "Mer enn en bokhandel",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_03",
+          "language": "pt-BR",
+          "title_original": "Além da livraria",
+          "category": "Wirtschaft"
+        }
+      ]
+    },
+    {
+      "story_key": "video_07",
+      "category": "Wirtschaft",
+      "reason": "category_excluded_by_user",
+      "variants": [
+        {
+          "story_id": "library:en:video_07",
+          "language": "en",
+          "title_original": "Money without a bank",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:es:video_07",
+          "language": "es",
+          "title_original": "Dinero sin un banco",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:it:video_07",
+          "language": "it",
+          "title_original": "Denaro senza una banca",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:nb:video_07",
+          "language": "nb",
+          "title_original": "Penger uten en bank",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_07",
+          "language": "pt-BR",
+          "title_original": "Dinheiro sem um banco",
+          "category": "Wirtschaft"
+        }
+      ]
+    },
+    {
+      "story_key": "video_08",
+      "category": "Wirtschaft",
+      "reason": "category_excluded_by_user",
+      "variants": [
+        {
+          "story_id": "library:en:video_08",
+          "language": "en",
+          "title_original": "Buying Hollywood",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:es:video_08",
+          "language": "es",
+          "title_original": "La compra de Hollywood",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:it:video_08",
+          "language": "it",
+          "title_original": "Comprare Hollywood",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:nb:video_08",
+          "language": "nb",
+          "title_original": "Kjøpet av Hollywood",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_08",
+          "language": "pt-BR",
+          "title_original": "A compra de Hollywood",
+          "category": "Wirtschaft"
+        }
+      ]
+    },
+    {
+      "story_key": "video_09",
+      "category": "Wirtschaft",
+      "reason": "category_excluded_by_user",
+      "variants": [
+        {
+          "story_id": "library:en:video_09",
+          "language": "en",
+          "title_original": "Full planes, thin profits",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:es:video_09",
+          "language": "es",
+          "title_original": "Volar con poco margen",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:it:video_09",
+          "language": "it",
+          "title_original": "Volare con poco margine",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:nb:video_09",
+          "language": "nb",
+          "title_original": "Fulle fly, små marginer",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_09",
+          "language": "pt-BR",
+          "title_original": "Voar com pouca margem",
+          "category": "Wirtschaft"
+        }
+      ]
+    },
+    {
+      "story_key": "video_17",
+      "category": "Wirtschaft",
+      "reason": "category_excluded_by_user",
+      "variants": [
+        {
+          "story_id": "library:en:video_17",
+          "language": "en",
+          "title_original": "Why a smaller shop can win",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:es:video_17",
+          "language": "es",
+          "title_original": "La ventaja de una tienda pequeña",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:it:video_17",
+          "language": "it",
+          "title_original": "La forza del negozio piccolo",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:nb:video_17",
+          "language": "nb",
+          "title_original": "Fordelen med en liten butikk",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_17",
+          "language": "pt-BR",
+          "title_original": "A força de uma loja pequena",
+          "category": "Wirtschaft"
+        }
+      ]
+    },
+    {
+      "story_key": "video_18",
+      "category": "Wirtschaft",
+      "reason": "category_excluded_by_user",
+      "variants": [
+        {
+          "story_id": "library:en:video_18",
+          "language": "en",
+          "title_original": "The price after checkout",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:es:video_18",
+          "language": "es",
+          "title_original": "El precio después de comprar",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:it:video_18",
+          "language": "it",
+          "title_original": "Il prezzo dopo l'acquisto",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:nb:video_18",
+          "language": "nb",
+          "title_original": "Prisen etter kjøpet",
+          "category": "Wirtschaft"
+        },
+        {
+          "story_id": "library:pt-BR:video_18",
+          "language": "pt-BR",
+          "title_original": "O preço depois da compra",
+          "category": "Wirtschaft"
+        }
+      ]
+    },
+    {
+      "story_key": "everyday_01",
+      "category": "Alltag",
+      "reason": "category_excluded_by_user",
+      "variants": [
+        {
+          "story_id": "library:en:everyday_01",
+          "language": "en",
+          "title_original": "Someone else's letter",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:es:everyday_01",
+          "language": "es",
+          "title_original": "Una carta ajena",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:it:everyday_01",
+          "language": "it",
+          "title_original": "La lettera di un'altra",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:nb:everyday_01",
+          "language": "nb",
+          "title_original": "En annens brev",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:pt-BR:everyday_01",
+          "language": "pt-BR",
+          "title_original": "A carta de outra pessoa",
+          "category": "Alltag"
+        }
+      ]
+    },
+    {
+      "story_key": "everyday_02",
+      "category": "Alltag",
+      "reason": "category_excluded_by_user",
+      "variants": [
+        {
+          "story_id": "library:en:everyday_02",
+          "language": "en",
+          "title_original": "The shelf in the hall",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:es:everyday_02",
+          "language": "es",
+          "title_original": "La estantería del pasillo",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:it:everyday_02",
+          "language": "it",
+          "title_original": "Lo scaffale in corridoio",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:nb:everyday_02",
+          "language": "nb",
+          "title_original": "Hyllen i gangen",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:pt-BR:everyday_02",
+          "language": "pt-BR",
+          "title_original": "A estante no corredor",
+          "category": "Alltag"
+        }
+      ]
+    },
+    {
+      "story_key": "everyday_03",
+      "category": "Alltag",
+      "reason": "category_excluded_by_user",
+      "variants": [
+        {
+          "story_id": "library:en:everyday_03",
+          "language": "en",
+          "title_original": "Saturday without power",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:es:everyday_03",
+          "language": "es",
+          "title_original": "Un sábado sin luz",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:it:everyday_03",
+          "language": "it",
+          "title_original": "Un sabato senza corrente",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:nb:everyday_03",
+          "language": "nb",
+          "title_original": "En lørdag uten strøm",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:pt-BR:everyday_03",
+          "language": "pt-BR",
+          "title_original": "Um sábado sem energia",
+          "category": "Alltag"
+        }
+      ]
+    },
+    {
+      "story_key": "everyday_04",
+      "category": "Alltag",
+      "reason": "category_excluded_by_user",
+      "variants": [
+        {
+          "story_id": "library:en:everyday_04",
+          "language": "en",
+          "title_original": "The new neighbour",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:es:everyday_04",
+          "language": "es",
+          "title_original": "El nuevo vecino",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:it:everyday_04",
+          "language": "it",
+          "title_original": "Il nuovo vicino",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:nb:everyday_04",
+          "language": "nb",
+          "title_original": "Den nye naboen",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:pt-BR:everyday_04",
+          "language": "pt-BR",
+          "title_original": "O novo vizinho",
+          "category": "Alltag"
+        }
+      ]
+    },
+    {
+      "story_key": "everyday_05",
+      "category": "Alltag",
+      "reason": "category_excluded_by_user",
+      "variants": [
+        {
+          "story_id": "library:en:everyday_05",
+          "language": "en",
+          "title_original": "The missing cat",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:es:everyday_05",
+          "language": "es",
+          "title_original": "El gato desaparecido",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:it:everyday_05",
+          "language": "it",
+          "title_original": "Il gatto scomparso",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:nb:everyday_05",
+          "language": "nb",
+          "title_original": "Katten som forsvant",
+          "category": "Alltag"
+        },
+        {
+          "story_id": "library:pt-BR:everyday_05",
+          "language": "pt-BR",
+          "title_original": "O gato desaparecido",
+          "category": "Alltag"
+        }
+      ]
+    }
+  ],
+  "excluded_legacy_sqlite": [
+    {
+      "story_id": "1fe9baf1b1a199b5bfb116e320a679b9",
+      "language": "en",
+      "title_original": "The Open Pocket",
+      "database_topic": null,
+      "effective_category": "Alltag",
+      "reason": "libraryStoriesProvider maps annotated pack stories to Alltag",
+      "source": "assets/content/en/content.sqlite"
+    }
+  ],
+  "style_brief": "Detaillierte zweidimensionale Editorial-Gouache mit Papiergrain, filmischem Warm-Kalt-Licht und realistischen Formen; kein Clipart, keine eingebauten Titel oder UI. Quadratisches Master mit sicherem vollständigem Hauptmotiv für contain und mehrere Kartenformate."
+}

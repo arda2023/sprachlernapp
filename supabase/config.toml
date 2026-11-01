@@ -434,6 +434,9 @@ verify_jwt = true
 [functions.create-learning-card]
 verify_jwt = true
 
+[functions.generate-vocabulary]
+verify_jwt = true
+
 # Billing sync derives the account from the authenticated Supabase session.
 [functions.billing-sync]
 verify_jwt = true

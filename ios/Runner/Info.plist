@@ -39,6 +39,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Linglossa nutzt das Mikrofon, damit du deine Antworten in Stapelübungen diktieren kannst.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Linglossa wandelt deine diktierten Antworten in Text um. Je nach Gerät und Sprache verarbeitet Apples Spracherkennung deine Aufnahme auf dem Gerät oder auf Apple-Servern.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

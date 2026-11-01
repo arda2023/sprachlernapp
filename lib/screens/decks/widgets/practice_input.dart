@@ -70,6 +70,22 @@ class PracticeInputController extends TextEditingController {
     notifyListeners();
   }
 
+  /// A recognizer replaces the whole answer, rather than applying an IME diff.
+  /// In particular, repeated letters after a wrong answer must not be stripped.
+  void replaceFromDictation(String text) {
+    if (feedback != InputFeedback.ghost) {
+      feedback = InputFeedback.typing;
+      hint = '';
+    }
+    textRevision++;
+    final previous = super.value;
+    super.value = TextEditingValue(
+      text: text,
+      selection: TextSelection.collapsed(offset: text.length),
+    );
+    if (super.value == previous) notifyListeners();
+  }
+
   @override
   set value(TextEditingValue next) {
     final previous = super.value;

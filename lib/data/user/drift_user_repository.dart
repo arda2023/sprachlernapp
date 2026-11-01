@@ -1,5 +1,7 @@
 import 'dart:convert';
 import '../../domain/personal_learning.dart';
+import '../../domain/generated_vocabulary_repository.dart';
+import 'generated_vocabulary_store.dart';
 
 import 'package:drift/drift.dart';
 
@@ -17,7 +19,7 @@ import '../../domain/srs_state.dart';
 import 'user_database.dart';
 
 /// [UserRepository] on the Drift user.db of one language.
-class DriftUserRepository implements PersonalLearningStore, UserRepository, StoryLearningRepository, ReviewActivityRepository, StoryContextCorrectionStore, NewWordRotationStore {
+class DriftUserRepository implements GeneratedVocabularyRepository, PersonalLearningStore, UserRepository, StoryLearningRepository, ReviewActivityRepository, StoryContextCorrectionStore, NewWordRotationStore {
   DriftUserRepository(this._db, {required this.lang, this.ownsDatabase = true, this.contentIds, this.defaultActiveDeckIds});
   final Future<Set<String>> Function()? defaultActiveDeckIds;
   final bool ownsDatabase;
@@ -45,8 +47,17 @@ class DriftUserRepository implements PersonalLearningStore, UserRepository, Stor
     return missing;
   }
 
+  @override
+  Future<Map<String, DateTime>> generatedVocabularyAdditions() =>
+      GeneratedVocabularyStore(_db, lang: lang).additions();
+
   Future<void> _guardDecks(Iterable<String> ids) async {
-    if (contentIds != null && !(await contentIds!('decks')).containsAll(ids)) {
+    final requested = ids.toSet();
+    final generated = generatedVocabularyDeckId(lang);
+    if (requested.contains(generated) && (await generatedVocabularyAdditions()).isNotEmpty) {
+      requested.remove(generated);
+    }
+    if (contentIds != null && !(await contentIds!('decks')).containsAll(requested)) {
       throw StateError('Stapel gehört nicht zur gewählten Sprache.');
     }
   }
@@ -324,6 +335,7 @@ class DriftUserRepository implements PersonalLearningStore, UserRepository, Stor
           _db.languageLearningPreferences,
           _db.cardContexts,
           _db.storyLearningAdditions,
+          _db.generatedVocabularyAdditions,
           _db.storyWordSources,
           _db.learningIdentityBindings,
           _db.formIdentityBindings,

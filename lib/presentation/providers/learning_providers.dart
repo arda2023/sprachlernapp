@@ -93,6 +93,7 @@ final wordListProvider = FutureProvider<List<VocabWord>>((ref) async {
     for (final s in states.values)
       if ((s.box >= 1 ||
               resolver.additions.containsKey(s.cardId) ||
+              resolver.generatedAdditions.containsKey(s.cardId) ||
               s.origin == CardOrigin.story) &&
           (s.box >= 1 || projected.contains(s.cardId)) &&
           !s.retired &&

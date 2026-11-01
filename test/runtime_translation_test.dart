@@ -325,11 +325,14 @@ void main() {
       await expectLater(
         client.translate(lang: 'en', text: 'A sentence.'),
         throwsA(
-          isA<TranslationFailure>().having(
-            (e) => e.message,
-            'free quota message',
-            'Die fünf kostenlosen KI-Übersetzungen sind aufgebraucht.',
-          ),
+          isA<TranslationFailure>()
+              .having(
+                (e) => e.message,
+                'free quota message',
+                'Die fünf kostenlosen KI-Übersetzungen sind aufgebraucht.',
+              )
+              // The bubble shows the Premium card instead of this message.
+              .having((e) => e.freeQuotaUsedUp, 'free quota flag', isTrue),
         ),
       );
     },

@@ -33,7 +33,11 @@ class HomeScreen extends ConsumerWidget {
     required this.onBrowseDecks,
     required this.onSetGoal,
     required this.onSettings,
+    this.scrollController,
   });
+  /// Main vertical scroll view; the tab bar scrolls it to the top on re-tap.
+  final ScrollController? scrollController;
+
 
   static const _gutter = EdgeInsets.symmetric(horizontal: 20);
 
@@ -74,6 +78,7 @@ class HomeScreen extends ConsumerWidget {
     return SafeArea(
       bottom: false,
       child: ListView(
+        controller: scrollController,
         physics: const BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics(),
         ),

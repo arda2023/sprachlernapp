@@ -207,20 +207,26 @@ class _ChoiceExerciseScreenState extends State<ChoiceExerciseScreen> {
                                 ),
                               ),
                             ] else
-                              Column(
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  _GapSentence(
-                                    prompt: _exercise.prompt,
-                                    answer: _solved ? _exercise.answer : null,
-                                  ),
-                                  SpeakButton(
-                                    text: _exercise.prompt.replaceAll(
-                                      ChoiceExercise.gap,
-                                      _solved ? _exercise.answer : ' … ',
+                                  Expanded(
+                                    child: _GapSentence(
+                                      prompt: _exercise.prompt,
+                                      answer: _solved ? _exercise.answer : null,
                                     ),
-                                    language: _exercise.targetLanguage,
-                                    label: 'Satz vorlesen',
                                   ),
+                                  if (_solved) ...[
+                                    const SizedBox(width: 12),
+                                    SpeakButton(
+                                      text: _exercise.prompt.replaceAll(
+                                        ChoiceExercise.gap,
+                                        _exercise.answer,
+                                      ),
+                                      language: _exercise.targetLanguage,
+                                      label: 'Satz vorlesen',
+                                    ),
+                                  ],
                                 ],
                               ),
                             const SizedBox(height: 24),
@@ -288,8 +294,7 @@ class _ChoiceExerciseScreenState extends State<ChoiceExerciseScreen> {
   }
 }
 
-/// Placeholder for the clip: a large play button over the position track.
-/// The clock runs, nothing sounds yet (TTS comes with the audio layer).
+/// A standalone playback control with space around the listening action.
 class _ClipPlayer extends StatelessWidget {
   const _ClipPlayer({required this.clip});
 
@@ -299,22 +304,14 @@ class _ClipPlayer extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListenableBuilder(
       listenable: clip,
-      builder: (context, _) => Container(
-        padding: const EdgeInsets.fromLTRB(12, 20, 12, 8),
-        decoration: BoxDecoration(
-          color: context.appColors.raisedInk,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Column(
-          children: [
-            PlayPauseButton(
-              playing: clip.playing,
-              onPressed: clip.toggle,
-              size: 72,
-            ),
-            const SizedBox(height: 12),
-            PlaybackTrack(clock: clip),
-          ],
+      builder: (context, _) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Center(
+          child: PlayPauseButton(
+            playing: clip.playing,
+            onPressed: clip.toggle,
+            size: 72,
+          ),
         ),
       ),
     );
@@ -325,9 +322,6 @@ class _ClipPlayer extends StatelessWidget {
 /// stands in the gap in Quiet Sage w600, like a placed chip.
 class _GapSentence extends StatelessWidget {
   const _GapSentence({required this.prompt, required this.answer});
-
-  /// Non-breaking spaces, so the underline keeps its length.
-  static final _blank = '\u00A0' * 10;
 
   final String prompt;
   final String? answer;
@@ -354,12 +348,18 @@ class _GapSentence extends StatelessWidget {
             for (final (i, part) in parts.indexed) ...[
               if (i > 0)
                 answer == null
-                    ? TextSpan(
-                        text: _blank,
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          decorationColor: context.appColors.textMuted,
-                          decorationThickness: 2,
+                    ? WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: Container(
+                          key: const ValueKey('grammar-gap'),
+                          constraints: const BoxConstraints(minWidth: 64),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: AppColors.memoryLevel2.withValues(alpha: .12),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text('…', textAlign: TextAlign.center,
+                            style: style.copyWith(color: context.appColors.textMuted)),
                         ),
                       )
                     : TextSpan(
@@ -380,7 +380,7 @@ class _GapSentence extends StatelessWidget {
 
 enum _OptionState { idle, wrong, right, retired }
 
-/// An answer card: Raised Ink, Hairline, `12pt` radius. Wrong flashes Brick
+/// An answer card: Raised Ink and the shared large rounded surface. Wrong flashes Brick
 /// Tint with a Muted Brick edge; right stays Sage Tint with a Quiet Sage
 /// edge and a check; the others retire to a muted label.
 class _OptionCard extends StatelessWidget {
@@ -439,7 +439,7 @@ class _OptionCard extends StatelessWidget {
             decoration: BoxDecoration(
               color: fill,
               border: Border.all(color: edge),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(20),
             ),
             child: Row(
               children: [

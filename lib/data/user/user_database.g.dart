@@ -4677,6 +4677,278 @@ class StoryLearningAdditionsCompanion
   }
 }
 
+class $GeneratedVocabularyAdditionsTable extends GeneratedVocabularyAdditions
+    with TableInfo<$GeneratedVocabularyAdditionsTable, GeneratedAdditionRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GeneratedVocabularyAdditionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _cardIdMeta = const VerificationMeta('cardId');
+  @override
+  late final GeneratedColumn<String> cardId = GeneratedColumn<String>(
+    'card_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES user_cards (card_id)',
+    ),
+  );
+  static const VerificationMeta _langMeta = const VerificationMeta('lang');
+  @override
+  late final GeneratedColumn<String> lang = GeneratedColumn<String>(
+    'lang',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _addedAtMeta = const VerificationMeta(
+    'addedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> addedAt = GeneratedColumn<DateTime>(
+    'added_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [cardId, lang, addedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'generated_vocabulary_additions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<GeneratedAdditionRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('card_id')) {
+      context.handle(
+        _cardIdMeta,
+        cardId.isAcceptableOrUnknown(data['card_id']!, _cardIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_cardIdMeta);
+    }
+    if (data.containsKey('lang')) {
+      context.handle(
+        _langMeta,
+        lang.isAcceptableOrUnknown(data['lang']!, _langMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_langMeta);
+    }
+    if (data.containsKey('added_at')) {
+      context.handle(
+        _addedAtMeta,
+        addedAt.isAcceptableOrUnknown(data['added_at']!, _addedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_addedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {cardId};
+  @override
+  GeneratedAdditionRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GeneratedAdditionRow(
+      cardId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}card_id'],
+      )!,
+      lang: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lang'],
+      )!,
+      addedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}added_at'],
+      )!,
+    );
+  }
+
+  @override
+  $GeneratedVocabularyAdditionsTable createAlias(String alias) {
+    return $GeneratedVocabularyAdditionsTable(attachedDatabase, alias);
+  }
+}
+
+class GeneratedAdditionRow extends DataClass
+    implements Insertable<GeneratedAdditionRow> {
+  final String cardId;
+  final String lang;
+  final DateTime addedAt;
+  const GeneratedAdditionRow({
+    required this.cardId,
+    required this.lang,
+    required this.addedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['card_id'] = Variable<String>(cardId);
+    map['lang'] = Variable<String>(lang);
+    map['added_at'] = Variable<DateTime>(addedAt);
+    return map;
+  }
+
+  GeneratedVocabularyAdditionsCompanion toCompanion(bool nullToAbsent) {
+    return GeneratedVocabularyAdditionsCompanion(
+      cardId: Value(cardId),
+      lang: Value(lang),
+      addedAt: Value(addedAt),
+    );
+  }
+
+  factory GeneratedAdditionRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GeneratedAdditionRow(
+      cardId: serializer.fromJson<String>(json['cardId']),
+      lang: serializer.fromJson<String>(json['lang']),
+      addedAt: serializer.fromJson<DateTime>(json['addedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'cardId': serializer.toJson<String>(cardId),
+      'lang': serializer.toJson<String>(lang),
+      'addedAt': serializer.toJson<DateTime>(addedAt),
+    };
+  }
+
+  GeneratedAdditionRow copyWith({
+    String? cardId,
+    String? lang,
+    DateTime? addedAt,
+  }) => GeneratedAdditionRow(
+    cardId: cardId ?? this.cardId,
+    lang: lang ?? this.lang,
+    addedAt: addedAt ?? this.addedAt,
+  );
+  GeneratedAdditionRow copyWithCompanion(
+    GeneratedVocabularyAdditionsCompanion data,
+  ) {
+    return GeneratedAdditionRow(
+      cardId: data.cardId.present ? data.cardId.value : this.cardId,
+      lang: data.lang.present ? data.lang.value : this.lang,
+      addedAt: data.addedAt.present ? data.addedAt.value : this.addedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GeneratedAdditionRow(')
+          ..write('cardId: $cardId, ')
+          ..write('lang: $lang, ')
+          ..write('addedAt: $addedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(cardId, lang, addedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GeneratedAdditionRow &&
+          other.cardId == this.cardId &&
+          other.lang == this.lang &&
+          other.addedAt == this.addedAt);
+}
+
+class GeneratedVocabularyAdditionsCompanion
+    extends UpdateCompanion<GeneratedAdditionRow> {
+  final Value<String> cardId;
+  final Value<String> lang;
+  final Value<DateTime> addedAt;
+  final Value<int> rowid;
+  const GeneratedVocabularyAdditionsCompanion({
+    this.cardId = const Value.absent(),
+    this.lang = const Value.absent(),
+    this.addedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  GeneratedVocabularyAdditionsCompanion.insert({
+    required String cardId,
+    required String lang,
+    required DateTime addedAt,
+    this.rowid = const Value.absent(),
+  }) : cardId = Value(cardId),
+       lang = Value(lang),
+       addedAt = Value(addedAt);
+  static Insertable<GeneratedAdditionRow> custom({
+    Expression<String>? cardId,
+    Expression<String>? lang,
+    Expression<DateTime>? addedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (cardId != null) 'card_id': cardId,
+      if (lang != null) 'lang': lang,
+      if (addedAt != null) 'added_at': addedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  GeneratedVocabularyAdditionsCompanion copyWith({
+    Value<String>? cardId,
+    Value<String>? lang,
+    Value<DateTime>? addedAt,
+    Value<int>? rowid,
+  }) {
+    return GeneratedVocabularyAdditionsCompanion(
+      cardId: cardId ?? this.cardId,
+      lang: lang ?? this.lang,
+      addedAt: addedAt ?? this.addedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (cardId.present) {
+      map['card_id'] = Variable<String>(cardId.value);
+    }
+    if (lang.present) {
+      map['lang'] = Variable<String>(lang.value);
+    }
+    if (addedAt.present) {
+      map['added_at'] = Variable<DateTime>(addedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GeneratedVocabularyAdditionsCompanion(')
+          ..write('cardId: $cardId, ')
+          ..write('lang: $lang, ')
+          ..write('addedAt: $addedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $StoryWordSourcesTable extends StoryWordSources
     with TableInfo<$StoryWordSourcesTable, StorySourceRow> {
   @override
@@ -6378,6 +6650,8 @@ abstract class _$UserDatabase extends GeneratedDatabase {
   late final $CardContextsTable cardContexts = $CardContextsTable(this);
   late final $StoryLearningAdditionsTable storyLearningAdditions =
       $StoryLearningAdditionsTable(this);
+  late final $GeneratedVocabularyAdditionsTable generatedVocabularyAdditions =
+      $GeneratedVocabularyAdditionsTable(this);
   late final $StoryWordSourcesTable storyWordSources = $StoryWordSourcesTable(
     this,
   );
@@ -6403,6 +6677,7 @@ abstract class _$UserDatabase extends GeneratedDatabase {
     localSubmissions,
     cardContexts,
     storyLearningAdditions,
+    generatedVocabularyAdditions,
     storyWordSources,
     learningIdentityBindings,
     formIdentityBindings,

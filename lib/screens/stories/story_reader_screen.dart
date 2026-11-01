@@ -177,6 +177,10 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
   int? _selected;
   int? _selectedSentence;
   bool _translating = false;
+
+  /// "Tippe auf einen Satz …" shows when translation mode turns on and
+  /// leaves after the first sentence was tapped.
+  bool _hint = false;
   bool _listening = false;
 
   final _scroll = ScrollController();
@@ -383,7 +387,10 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
       : null;
 
   void _toggleTranslate() {
-    setState(() => _translating = !_translating);
+    setState(() {
+      _translating = !_translating;
+      _hint = _translating;
+    });
     if (_translating) {
       SemanticsService.sendAnnouncement(
         View.of(context),
@@ -396,7 +403,10 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
   Future<void> _translate(int index) async {
     final sentence = _sentences[index].text;
     HapticFeedback.lightImpact();
-    setState(() => _selectedSentence = index);
+    setState(() {
+      _selectedSentence = index;
+      _hint = false;
+    });
     final translation =
         widget.document?.sentences[index].translation ??
         widget.translate(sentence);
@@ -820,11 +830,17 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (_translating)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: _HintChip(text: ReadingToolbar.hint),
-                    ),
+                  AnimatedSwitcher(
+                    duration: MediaQuery.disableAnimationsOf(context)
+                        ? Duration.zero
+                        : const Duration(milliseconds: 200),
+                    child: _translating && _hint
+                        ? const Padding(
+                            padding: EdgeInsets.only(bottom: 8),
+                            child: _HintChip(text: ReadingToolbar.hint),
+                          )
+                        : const SizedBox(width: double.infinity),
+                  ),
                   if (_listening)
                     Padding(
                       padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),

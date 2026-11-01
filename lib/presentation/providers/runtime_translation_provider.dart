@@ -31,3 +31,23 @@ final runtimeTranslationProvider = Provider<RuntimeTranslationClient>((ref) {
   ref.onDispose(() => unawaited(client.close()));
   return client;
 });
+
+/// Set once the server reports the free AI translations as used up, so the
+/// next tap shows the Premium card at once instead of a request that can
+/// only fail. Memory only; an account or storage change clears it.
+final freeTranslationsUsedUpProvider =
+    NotifierProvider<FreeTranslationsUsedUp, bool>(FreeTranslationsUsedUp.new);
+
+class FreeTranslationsUsedUp extends Notifier<bool> {
+  @override
+  bool build() {
+    final changes = ref
+        .watch(runtimeTranslationProvider)
+        .changes
+        .listen((_) => state = false);
+    ref.onDispose(changes.cancel);
+    return false;
+  }
+
+  void markUsedUp() => state = true;
+}

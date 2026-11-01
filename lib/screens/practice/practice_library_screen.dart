@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Scaffold;
 
 import '../../models/practice_models.dart';
+import '../../models/practice_order.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/back_bar.dart';
 import '../../widgets/chevron_row.dart';
 import 'choice_exercise_screen.dart';
 
 /// A practice library ("Mehr anzeigen" on the Inhalte tab): title, then
-/// every exercise in content order. Solved ones carry a green check.
+/// open exercises first, then solved exercises with a green check.
 class PracticeLibraryScreen extends StatelessWidget {
   const PracticeLibraryScreen({
     super.key,
@@ -51,6 +52,7 @@ class PracticeLibraryScreen extends StatelessWidget {
         child: ListenableBuilder(
           listenable: progress,
           builder: (context, _) {
+            final ordered = unfinishedPracticeFirst(exercises, progress);
             return ListView(
               physics: const BouncingScrollPhysics(
                 parent: AlwaysScrollableScrollPhysics(),
@@ -73,7 +75,7 @@ class PracticeLibraryScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-                for (final exercise in exercises)
+                for (final exercise in ordered)
                   Padding(
                     padding: _gutter,
                     child: ChevronRow(
@@ -84,7 +86,7 @@ class PracticeLibraryScreen extends StatelessWidget {
                       onTap: () => ChoiceExerciseScreen.open(
                         context,
                         exercise: exercise,
-                        queue: exercises,
+                        queue: ordered,
                         progress: progress,
                       ),
                     ),

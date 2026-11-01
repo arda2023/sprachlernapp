@@ -61,15 +61,21 @@ begin
   assert public.claim_translation(free_user,'en',lpad(to_hex(1),64,'0'))->>'status'='hit';
   assert (select count(*)=5 from app.translation_budget_reservations where user_id=free_user and state='charged');
 
-  -- Sandbox never activates the public paid pool: this account gets only free quota.
+  -- A tester's Sandbox Premium uses the Premium pool, not the five free
+  -- translations (user decision 01.11.2026).
   for i in 1..5 loop
     key := lpad(to_hex(100+i),64,'0');
     r := public.claim_translation(sandbox_user,'en',key);
     assert r->>'status'='claimed'; current_ticket := (r->>'ticket')::uuid;
-    assert (select b.quota_kind='free' from app.translation_budget_reservations b where b.ticket=current_ticket);
+    assert (select b.quota_kind='premium' from app.translation_budget_reservations b where b.ticket=current_ticket);
     assert public.finish_translation(sandbox_user,key,current_ticket,answer)->>'stored'='true';
   end loop;
-  assert public.claim_translation(sandbox_user,'en',repeat('b',64))->>'status'='quota';
+  delete from app.usage where user_id=sandbox_user and kind like 'translation-minute:%';
+  r := public.claim_translation(sandbox_user,'en',repeat('b',64));
+  assert r->>'status'='claimed';
+  assert (select b.quota_kind='premium' from app.translation_budget_reservations b
+    where b.ticket=(r->>'ticket')::uuid);
+  perform public.release_translation(sandbox_user,repeat('b',64),(r->>'ticket')::uuid);
 
   -- Production annual subscription allocates 500 per anchored month (not 6000).
   -- Clear only abuse counters between synthetic calls so the separate monthly

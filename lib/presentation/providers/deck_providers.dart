@@ -1,3 +1,4 @@
+import '../../domain/content.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -70,8 +71,17 @@ DeckDifficulty deckDifficulty(String slug, String? cefrBand) => switch (slug) {
 final decksProvider = FutureProvider<List<Deck>>((ref) async {
   ref.watch(userChangesProvider);
   final user = await ref.watch(userRepositoryProvider.future);
-  final summaries = (await ref.watch(practiceCatalogProvider.future)).decks;
   final resolver = await ref.watch(practiceResolverProvider.future);
+  if (resolver.content == null && resolver.generatedDeckId == null) {
+    throw resolver.contentError ?? StateError('Inhaltspaket fehlt');
+  }
+  final summaries = [
+    ...(resolver.catalog?.decks ?? await resolver.content?.decks() ?? <DeckSummary>[]),
+    if (resolver.generatedDeckId case final id?)
+      DeckSummary(id: id, slug: 'generated-vocabulary', titleDe: 'Generierte Vokabeln',
+        descriptionDe: 'Deine Themen, mit festen Beispielsätzen',
+        cardCount: resolver.generatedPracticeIds.length),
+  ];
   final active = await user.activeDeckIds(summaries.map((d) => d.id));
   final lastReviews = await user.lastReviewTimes();
   final result = <Deck>[];
@@ -83,7 +93,7 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
           (s) =>
               s.isActive &&
               s.box >= 1 &&
-              (s.localOnly ||
+              ((s.localOnly && !resolver.generatedAdditions.containsKey(s.cardId)) ||
                   s.origin == CardOrigin.story ||
                   resolver.additions.containsKey(s.cardId)),
         )

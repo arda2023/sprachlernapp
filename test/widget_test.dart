@@ -66,7 +66,7 @@ import 'package:sprachapp/screens/stories/widgets/sentence_popover.dart';
 import 'package:sprachapp/screens/stories/widgets/word_popover.dart';
 import 'package:sprachapp/presentation/providers/reading_providers.dart';
 import 'package:sprachapp/screens/words/widgets/memory_level_legend_sheet.dart';
-import 'package:sprachapp/screens/words/widgets/word_details_sheet.dart';
+import 'package:sprachapp/screens/words/widgets/word_details_page.dart';
 import 'package:sprachapp/screens/words/widgets/word_list_item.dart';
 import 'package:sprachapp/screens/words/word_list_screen.dart';
 import 'package:sprachapp/theme/app_theme.dart';
@@ -77,6 +77,7 @@ import 'package:sprachapp/widgets/progress_ring.dart';
 import 'package:sprachapp/widgets/reading_toolbar.dart';
 import 'package:sprachapp/widgets/runtime_translation_sheet.dart';
 import 'package:sprachapp/widgets/section_heading.dart';
+import 'package:sprachapp/widgets/speaker_icon.dart';
 
 void main() {
   setUp(
@@ -782,7 +783,13 @@ void main() {
     await completeSpeech();
     debugDefaultTargetPlatformOverride = null;
     await tester.pumpAndSettle();
-    expect(inPopover(CupertinoIcons.speaker_2_fill), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(WordPopover),
+        matching: find.byType(SpeakerIcon),
+      ),
+      findsOneWidget,
+    );
 
     // Tapping outside closes it.
     await tester.tapAt(const Offset(5, 400));
@@ -1069,7 +1076,14 @@ void main() {
     await tester.tap(find.text('Beliebige Wortart'));
     await tester.pumpAndSettle();
     expect(find.byType(TextExerciseScreen), findsOneWidget);
-    expect(find.text('0 von 9'), findsOneWidget);
+    expect(
+      tester
+          .widget<LinearProgressIndicator>(
+            find.byKey(const ValueKey('cloze-progress')),
+          )
+          .value,
+      0,
+    );
   });
 
   // ------------------------------------------------------------- exercises
@@ -1098,7 +1112,8 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(exercise('slow-morning', ExerciseMode.verbs));
-    expect(find.byType(TextField), findsNWidgets(6));
+    final total = exerciseText('slow-morning').gapCount(ExerciseMode.verbs);
+    expect(find.byType(TextField), findsNWidgets(total));
     expect(hintColor(tester), AppColors.textMuted);
 
     await typeAnswer(tester, 'xyz');
@@ -1125,8 +1140,15 @@ void main() {
     expect(find.textContaining('Fast richtig'), findsOneWidget);
 
     await typeAnswer(tester, 'woke');
-    expect(find.byType(TextField), findsNWidgets(5));
-    expect(find.text('1 von 6'), findsOneWidget);
+    expect(find.byType(TextField), findsNWidgets(total - 1));
+    expect(
+      tester
+          .widget<LinearProgressIndicator>(
+            find.byKey(const ValueKey('cloze-progress')),
+          )
+          .value,
+      1 / total,
+    );
     final solved = tester
         .widgetList<RichText>(find.byType(RichText))
         .expand((r) => [r.text])
@@ -1163,6 +1185,9 @@ void main() {
     await tester.pumpWidget(
       exercise('at-the-station', ExerciseMode.anyWordClass),
     );
+    final total = exerciseText(
+      'at-the-station',
+    ).gapCount(ExerciseMode.anyWordClass);
     expect(find.byType(TextField), findsNothing);
     // Chips hug their word instead of stretching across the panel.
     final panel = tester.getSize(find.byType(Wrap)).width;
@@ -1191,7 +1216,14 @@ void main() {
     await tester.pump(const Duration(milliseconds: 200));
     expect(chipBox(tester, 'left').color, AppColors.successTint);
     await tester.pumpAndSettle();
-    expect(find.text('1 von 6'), findsOneWidget);
+    expect(
+      tester
+          .widget<LinearProgressIndicator>(
+            find.byKey(const ValueKey('cloze-progress')),
+          )
+          .value,
+      1 / total,
+    );
 
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
@@ -1246,6 +1278,8 @@ void main() {
       find.text('Der Bahnhof war fast leer, als Clara ankam.'),
       findsOneWidget,
     );
+    // The hint has done its job once a sentence was tapped.
+    expect(find.text(ReadingToolbar.hint), findsNothing);
   });
 
   testWidgets('Exercise translation hides unsolved answers', (tester) async {
@@ -1254,7 +1288,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(TextField), findsNothing);
 
+    expect(find.text(ReadingToolbar.hint), findsOneWidget);
     await tapWord(tester, 'Sunday');
+    expect(find.text(ReadingToolbar.hint), findsNothing);
     expect(find.text('Tom … up late on Sunday.'), findsOneWidget);
     expect(find.text('Tom wachte am Sonntag spät auf.'), findsOneWidget);
   });
@@ -1414,18 +1450,18 @@ void main() {
           (w.decoration as BoxDecoration?)?.color == AppColors.playback,
     );
     expect(marks(), findsNothing);
-    expect(find.byIcon(CupertinoIcons.speaker_2_fill), findsNothing);
+    expect(find.byWidgetPredicate((w) => w is SpeakerIcon && w.filled), findsNothing);
 
     await tester.tap(find.bySemanticsLabel('platform anhören'));
     await tester.pump();
     expect(marks(), findsOneWidget);
-    expect(find.byIcon(CupertinoIcons.speaker_2_fill), findsOneWidget);
+    expect(find.byWidgetPredicate((w) => w is SpeakerIcon && w.filled), findsOneWidget);
 
     // Starting the sentence stops the word: one mark at a time.
     await tester.tap(find.bySemanticsLabel(RegExp('^Satz anhören: Anna ran')));
     await tester.pump();
     expect(marks(), findsOneWidget);
-    expect(find.byIcon(CupertinoIcons.speaker_2_fill), findsNothing);
+    expect(find.byWidgetPredicate((w) => w is SpeakerIcon && w.filled), findsNothing);
 
     await drainTimers(tester);
     expect(marks(), findsNothing);
@@ -1508,7 +1544,7 @@ void main() {
     expect(find.textContaining('Jede richtige Wiederholung'), findsNothing);
   });
 
-  testWidgets('Chevron opens the details sheet; notes are kept', (
+  testWidgets('Details open as a second page in the Mehr bubble; notes kept', (
     tester,
   ) async {
     phoneView(tester);
@@ -1518,31 +1554,42 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.bySemanticsLabel('Details zu platform'));
     await tester.pumpAndSettle();
-    final sheet = find.byType(WordDetailsSheet);
-    expect(sheet, findsOneWidget);
-    Finder inSheet(Finder f) => find.descendant(of: sheet, matching: f);
-    expect(inSheet(find.text('der Bahnsteig')), findsOneWidget);
-    expect(inSheet(find.text('Substantiv')), findsOneWidget);
-    expect(inSheet(find.text('vor 2 Tagen')), findsOneWidget);
-    expect(inSheet(find.text('5 Mal')), findsOneWidget);
-    expect(inSheet(find.text('Zeit zwischen Wiederholungen')), findsOneWidget);
-    expect(inSheet(find.text('14 Tage')), findsOneWidget);
+    // No bottom sheet: the menu slid away inside the same bubble.
+    expect(find.byType(BottomSheet), findsNothing);
+    expect(find.bySemanticsLabel('Details zu platform'), findsNothing);
+    final page = find.byType(WordDetailsPage);
+    expect(page, findsOneWidget);
+    Finder inPage(Finder f) => find.descendant(of: page, matching: f);
+    expect(inPage(find.text('der Bahnsteig')), findsOneWidget);
+    expect(inPage(find.text('Substantiv')), findsOneWidget);
+    expect(inPage(find.text('vor 2 Tagen')), findsOneWidget);
+    expect(inPage(find.text('5 Mal')), findsOneWidget);
+    // Less text: no heading, no field labels, no interval row.
+    expect(inPage(find.text('Wortinfos')), findsNothing);
+    expect(inPage(find.text('Deutsch')), findsNothing);
+    expect(inPage(find.text('Beispielsatz')), findsNothing);
+    expect(inPage(find.text('Zeit zwischen Wiederholungen')), findsNothing);
     expect(
-      inSheet(
+      inPage(
         find.text(
           'Anna rannte zum Bahnsteig, aber die Türen waren schon geschlossen.',
         ),
       ),
       findsOneWidget,
     );
+    expect(inPage(find.bySemanticsLabel('platform anhören')), findsOneWidget);
 
-    await tester.tap(inSheet(find.bySemanticsLabel('platform anhören')));
-    await tester.pump();
-    expect(inSheet(find.byIcon(CupertinoIcons.speaker_2_fill)), findsOneWidget);
-
-    await tester.ensureVisible(inSheet(find.byType(TextField)));
-    await tester.enterText(inSheet(find.byType(TextField)), 'Gleis = track');
+    await tester.ensureVisible(inPage(find.byType(CupertinoTextField)));
+    await tester.enterText(
+      inPage(find.byType(CupertinoTextField)),
+      'Gleis = track',
+    );
     expect(store.byId('platform').note, 'Gleis = track');
+
+    await tester.tap(inPage(find.bySemanticsLabel('Zurück')));
+    await tester.pumpAndSettle();
+    expect(find.byType(WordDetailsPage), findsNothing);
+    expect(find.bySemanticsLabel('Details zu platform'), findsOneWidget);
     await drainTimers(tester);
   });
 
@@ -1567,7 +1614,7 @@ void main() {
     await tester.tap(find.bySemanticsLabel(RegExp('^Details zu')).first);
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
-    Navigator.of(tester.element(find.byType(WordDetailsSheet))).pop();
+    Navigator.of(tester.element(find.byType(WordDetailsPage))).pop();
     await tester.pumpAndSettle();
 
     await tester.tap(
@@ -2019,8 +2066,8 @@ void main() {
       find.text('Hör zu und wähle die Antwort, die du hörst.'),
       findsNothing,
     );
-    expect(find.text('0:00'), findsOneWidget);
-    expect(find.textContaining('ca. '), findsOneWidget);
+    expect(find.text('0:00'), findsNothing);
+    expect(find.textContaining('ca. '), findsNothing);
     expect(optionBox(tester, 'sink').color, AppColors.raisedInk);
 
     // The native completion event, not elapsed wall time, ends playback.
@@ -2088,7 +2135,9 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         theme: buildAppTheme(),
-        home: GrammarExerciseScreen(exercise: exercise, progress: progress),
+        home: ProviderScope(
+          child: GrammarExerciseScreen(exercise: exercise, progress: progress),
+        ),
       ),
     );
     expect(find.byType(Slider), findsNothing);

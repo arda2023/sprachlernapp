@@ -7,14 +7,16 @@ import '../../../theme/app_theme.dart';
 import 'memory_level_indicator.dart';
 import 'memory_level_legend_sheet.dart';
 import 'playback_highlight.dart';
+import 'word_details_page.dart';
+import '../../../widgets/anchored_popover.dart';
 import '../../../widgets/popover_content.dart';
 import '../../../widgets/popover_trigger.dart';
 
 /// One word in the Wortliste (Redesign 20.10.2026): a card without outline.
 /// Memory level, headword and example sentence (both read aloud on tap) and
 /// metadata; on the right only the favourite heart and "Mehr", which opens
-/// a popover with playlist, deactivation and details (REDESIGN_BERICHTE.md:
-/// not every action permanently on every row).
+/// a popover with playlist, deactivation and the word's details as a second
+/// page (REDESIGN_BERICHTE.md: not every action permanently on every row).
 class WordListItem extends StatelessWidget {
   const WordListItem({
     super.key,
@@ -27,7 +29,6 @@ class WordListItem extends StatelessWidget {
     required this.onToggleDisabled,
     required this.onTogglePlaylist,
     required this.onToggleFavorite,
-    required this.onOpenDetails,
   });
 
   static const listPadding = EdgeInsets.fromLTRB(20, 0, 20, 40);
@@ -41,7 +42,6 @@ class WordListItem extends StatelessWidget {
   final VoidCallback onToggleDisabled;
   final VoidCallback onTogglePlaylist;
   final VoidCallback onToggleFavorite;
-  final VoidCallback onOpenDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -167,9 +167,9 @@ class WordListItem extends StatelessWidget {
                     maxWidth: menuPopoverWidth,
                     popover: (_) => _WordMenu(
                       word: word,
+                      now: now,
                       onTogglePlaylist: onTogglePlaylist,
                       onToggleDisabled: onToggleDisabled,
-                      onOpenDetails: onOpenDetails,
                     ),
                     // Run the chosen action after the popover has closed.
                     onClosed: (action) => action?.call(),
@@ -231,23 +231,45 @@ class _MoreButton extends StatelessWidget {
   }
 }
 
-/// "Mehr" popover: playlist and deactivation as toggles, then details. It
-/// closes with the chosen action, which the row runs afterwards.
-class _WordMenu extends StatelessWidget {
+/// "Mehr" popover: playlist and deactivation as toggles (the popover closes
+/// with the chosen action, which the row runs afterwards), then the word
+/// info, which opens as a second page inside the same bubble: the bubble
+/// widens while the menu slides out to the left and the details slide in
+/// from the right (user request 01.11.2026).
+class _WordMenu extends StatefulWidget {
   const _WordMenu({
     required this.word,
+    required this.now,
     required this.onTogglePlaylist,
     required this.onToggleDisabled,
-    required this.onOpenDetails,
   });
 
   final VocabWord word;
+  final DateTime now;
   final VoidCallback onTogglePlaylist;
   final VoidCallback onToggleDisabled;
-  final VoidCallback onOpenDetails;
+
+  static const _detailsPadding = EdgeInsets.fromLTRB(16, 8, 18, 20);
 
   @override
-  Widget build(BuildContext context) {
+  State<_WordMenu> createState() => _WordMenuState();
+}
+
+class _WordMenuState extends State<_WordMenu> {
+  bool _details = false;
+
+  void _show(bool details) {
+    HapticFeedback.selectionClick();
+    setState(() => _details = details);
+    PopoverResize.to(
+      context,
+      maxWidth: details ? 440 : menuPopoverWidth,
+      padding: details ? _WordMenu._detailsPadding : const EdgeInsets.all(20),
+    );
+  }
+
+  Widget _menu(BuildContext context) {
+    final word = widget.word;
     void choose(VoidCallback action) => Navigator.of(context).pop(action);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -262,20 +284,73 @@ class _WordMenu extends StatelessWidget {
           label: 'In der Playlist',
           icon: CupertinoIcons.music_note,
           toggled: word.inPlaylist,
-          onTap: () => choose(onTogglePlaylist),
+          onTap: () => choose(widget.onTogglePlaylist),
         ),
         PopoverMenuRow(
           label: 'Deaktiviert',
           icon: CupertinoIcons.nosign,
           toggled: word.isDisabled,
-          onTap: () => choose(onToggleDisabled),
+          onTap: () => choose(widget.onToggleDisabled),
         ),
         PopoverMenuRow(
           label: 'Details zu ${word.entry.headword}',
           icon: CupertinoIcons.info_circle,
-          onTap: () => choose(onOpenDetails),
+          onTap: () => _show(true),
         ),
       ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    final page = _details
+        ? WordDetailsPage(
+            key: const ValueKey('details'),
+            initialWord: widget.word,
+            now: widget.now,
+            onBack: () => _show(false),
+          )
+        : KeyedSubtree(key: const ValueKey('menu'), child: _menu(context));
+    final switcher = AnimatedSwitcher(
+      duration: reduceMotion
+          ? Duration.zero
+          : const Duration(milliseconds: 300),
+      switchInCurve: Curves.easeOutCubic,
+      switchOutCurve: Curves.easeInCubic,
+      // The details come in from the right and leave to it, the menu
+      // from and to the left: a push and a pop, both ways.
+      transitionBuilder: (child, animation) {
+        final details = child.key == const ValueKey('details');
+        return FadeTransition(
+          opacity: animation,
+          child: SlideTransition(
+            position: Tween(
+              begin: Offset(details ? 0.18 : -0.18, 0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          ),
+        );
+      },
+      layoutBuilder: (current, previous) => Stack(
+        alignment: Alignment.topLeft,
+        children: [
+          for (final child in previous)
+            Positioned(left: 0, right: 0, top: 0, child: child),
+          ?current,
+        ],
+      ),
+      child: page,
+    );
+    // AnimatedSize with a zero duration re-dirties itself during layout,
+    // so reduced motion simply goes without it.
+    if (reduceMotion) return switcher;
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 340),
+      curve: Curves.easeOutCubic,
+      alignment: Alignment.topLeft,
+      child: switcher,
     );
   }
 }

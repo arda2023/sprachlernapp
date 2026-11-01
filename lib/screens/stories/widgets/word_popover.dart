@@ -61,7 +61,7 @@ class WordPopover extends StatefulWidget {
     context: context,
     anchor: anchor,
     color: context.appColors.popover,
-    maxWidth: wordBubbleWidth(context),
+    maxWidth: wordBubbleWidth(context, word: entry.headword),
     padding: wordBubblePadding,
     builder: (_) => WordPopover(
       surface: surface,

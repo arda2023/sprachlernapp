@@ -55,6 +55,7 @@ dependencies:
   google_sign_in: ^7.2.0
   google_sign_in_platform_interface: ^3.1.0
   sign_in_with_apple: ^8.2.0
+  speech_to_text: ^7.5.0
 
 dev_dependencies:
   flutter_test:
@@ -92,6 +93,7 @@ flutter:
     - assets/rive/
     - assets/sounds/
     - assets/offline_dictionary/
+    - assets/story_covers/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

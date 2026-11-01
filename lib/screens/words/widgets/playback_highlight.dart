@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../../widgets/speaker_icon.dart';
 
 /// Audio Playback Exception (DESIGN.md): a slate-blue background behind text
 /// while it is read aloud. The horizontal [inset] pads the text inside the
@@ -104,8 +105,8 @@ class HeadwordWithSpeaker extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 8),
-        Icon(
-          playing ? CupertinoIcons.speaker_2_fill : CupertinoIcons.speaker_2,
+        SpeakerIcon(
+          filled: playing,
           size: size * 0.85,
           color: playing
               ? context.appColors.textPrimary

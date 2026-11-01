@@ -11,11 +11,13 @@ import '../data/offline_translation/offline_dictionary.dart';
 import '../data/offline_translation/dictionary_selection.dart';
 import '../data/runtime_translation_client.dart';
 import '../presentation/providers/offline_translation_provider.dart';
+import '../presentation/providers/purchase_provider.dart';
 import '../presentation/providers/runtime_translation_provider.dart';
 import '../theme/app_theme.dart';
 import 'anchored_popover.dart';
 import 'popover_content.dart';
 import 'dictionary_sources_sheet.dart' show showDictionarySources;
+import 'translation_paywall_card.dart';
 import 'word_bubble.dart';
 
 /// The reader has already checked its exact pack/context translation.
@@ -36,12 +38,28 @@ class RuntimeTranslationSheet extends ConsumerStatefulWidget {
     this.formRef,
     this.wordTap = false,
     this.learningTarget,
+    this.paywallFirst = false,
   });
   final PersonalTarget? learningTarget;
   final String lang, text;
   final String? form, displayText, senseRef, formRef;
   final int? start;
   final bool wordTap;
+
+  /// The free AI translations are known to be used up: the bubble opens at
+  /// the Premium card's size and only grows back for a saved translation.
+  final bool paywallFirst;
+
+  /// A word gets the small bubble, a sentence the full width.
+  static double _width(BuildContext context, String? form, String? shown) =>
+      form != null ? wordBubbleWidth(context, word: shown ?? form) : 440;
+  static EdgeInsets _padding(String? form) =>
+      form != null ? wordBubblePadding : const EdgeInsets.all(20);
+
+  static bool _freeUsedUp(ProviderContainer container) =>
+      container.read(freeTranslationsUsedUpProvider) &&
+      !container.read(purchaseProvider).hasPremiumUiAccess;
+
   static Future<void> show(
     BuildContext context, {
     required Rect anchor,
@@ -54,25 +72,33 @@ class RuntimeTranslationSheet extends ConsumerStatefulWidget {
     String? formRef,
     bool wordTap = false,
     PersonalTarget? learningTarget,
-  }) => showAnchoredPopoverAt<void>(
-    context: context,
-    anchor: anchor,
-    color: context.appColors.popover,
-    // A word gets the small bubble, a sentence the full width.
-    maxWidth: form != null ? wordBubbleWidth(context) : 440,
-    padding: form != null ? wordBubblePadding : const EdgeInsets.all(20),
-    builder: (_) => RuntimeTranslationSheet(
-      lang: lang,
-      text: text,
-      form: form,
-      displayText: displayText,
-      start: start,
-      senseRef: senseRef,
-      formRef: formRef,
-      wordTap: wordTap,
-      learningTarget: learningTarget,
-    ),
-  );
+  }) {
+    final paywallFirst = _freeUsedUp(
+      ProviderScope.containerOf(context, listen: false),
+    );
+    return showAnchoredPopoverAt<void>(
+      context: context,
+      anchor: anchor,
+      color: context.appColors.popover,
+      maxWidth: paywallFirst
+          ? wordBubbleWidth(context)
+          : _width(context, form, displayText),
+      padding: paywallFirst ? translationPaywallPadding : _padding(form),
+      builder: (_) => RuntimeTranslationSheet(
+        lang: lang,
+        text: text,
+        form: form,
+        displayText: displayText,
+        start: start,
+        senseRef: senseRef,
+        formRef: formRef,
+        wordTap: wordTap,
+        learningTarget: learningTarget,
+        paywallFirst: paywallFirst,
+      ),
+    );
+  }
+
   @override
   ConsumerState<RuntimeTranslationSheet> createState() =>
       _RuntimeTranslationSheetState();
@@ -83,6 +109,12 @@ class _RuntimeTranslationSheetState
   StreamSubscription<void>? _changes;
   int _epoch = 0;
   bool checking = true, loading = false, started = false;
+
+  /// Shows [TranslationPaywallCard] instead of the source text.
+  bool usedUp = false;
+
+  /// Opened at the Premium card's size, not yet grown back.
+  late bool _compact = widget.paywallFirst;
   WordCloudConsent? consent;
   RuntimeTranslation? result;
   String? dictionaryText, error;
@@ -106,9 +138,11 @@ class _RuntimeTranslationSheetState
         started = true;
         loading = false;
         checking = false;
+        usedUp = false;
         error =
             'Konto oder Übersetzungsspeicher geändert. Bitte erneut öffnen.';
       });
+      _grow();
     });
     _load();
   }
@@ -133,8 +167,45 @@ class _RuntimeTranslationSheetState
     started = false;
     loading = false;
     checking = true;
+    usedUp = false;
     error = null;
     _load();
+  }
+
+  /// Back from the Premium card's size to the normal word or sentence
+  /// bubble (a saved translation, an error, a word without AI).
+  void _grow() {
+    if (!_compact || !mounted) return;
+    _compact = false;
+    PopoverResize.to(
+      context,
+      maxWidth: RuntimeTranslationSheet._width(
+        context,
+        widget.form,
+        widget.displayText,
+      ),
+      padding: RuntimeTranslationSheet._padding(widget.form),
+    );
+  }
+
+  /// The free translations are gone: the bubble shrinks to the word
+  /// bubble's size and turns into the Premium card.
+  void _showPaywall() {
+    if (!mounted) return;
+    setState(() {
+      usedUp = true;
+      started = true;
+      checking = false;
+      loading = false;
+      error = null;
+    });
+    if (_compact) return;
+    _compact = true;
+    PopoverResize.to(
+      context,
+      maxWidth: wordBubbleWidth(context),
+      padding: translationPaywallPadding,
+    );
   }
 
   Future<void> _load() async {
@@ -155,6 +226,7 @@ class _RuntimeTranslationSheetState
           result = saved;
           checking = false;
         });
+        _grow();
         return;
       }
       final form = widget.form;
@@ -179,6 +251,11 @@ class _RuntimeTranslationSheetState
       if (consent == WordCloudConsent.enabled &&
           (form == null || widget.wordTap && dictionaryText == null)) {
         await request();
+      } else if (widget.paywallFirst && form == null) {
+        // "Übersetzen" could only fail now.
+        _showPaywall();
+      } else {
+        _grow();
       }
     } on TranslationFailure catch (e) {
       if (_current(epoch)) {
@@ -187,6 +264,7 @@ class _RuntimeTranslationSheetState
           started = true;
           checking = false;
         });
+        _grow();
       }
     } catch (_) {
       if (_current(epoch)) {
@@ -195,6 +273,7 @@ class _RuntimeTranslationSheetState
           started = true;
           checking = false;
         });
+        _grow();
       }
     }
   }
@@ -203,6 +282,12 @@ class _RuntimeTranslationSheetState
     if (started || checking || loading) return;
     if (widget.form != null &&
         (!widget.wordTap || consent != WordCloudConsent.enabled)) {
+      return;
+    }
+    if (RuntimeTranslationSheet._freeUsedUp(
+      ProviderScope.containerOf(context),
+    )) {
+      _showPaywall();
       return;
     }
     final epoch = _epoch;
@@ -222,12 +307,33 @@ class _RuntimeTranslationSheetState
               senseRef: widget.senseRef,
               formRef: widget.formRef,
             );
-      if (_current(epoch)) setState(() => result = value);
+      if (_current(epoch)) {
+        setState(() => result = value);
+        _grow();
+      }
     } on TranslationFailure catch (e) {
-      if (_current(epoch)) setState(() => error = e.message);
+      final premium =
+          e.freeQuotaUsedUp && ref.read(purchaseProvider).hasPremiumUiAccess;
+      if (e.freeQuotaUsedUp && !premium) {
+        ref.read(freeTranslationsUsedUpProvider.notifier).markUsedUp();
+        if (_current(epoch)) _showPaywall();
+      } else if (premium) {
+        // The app already knows Premium, the server not yet (entitlement
+        // still syncing): no paywall and no free-quota sentence.
+        if (_current(epoch)) {
+          setState(
+            () => error = 'Dein Premium wird noch bestätigt. Bitte gleich erneut versuchen.',
+          );
+          _grow();
+        }
+      } else if (_current(epoch)) {
+        setState(() => error = e.message);
+        _grow();
+      }
     } catch (_) {
       if (_current(epoch)) {
         setState(() => error = 'Übersetzung derzeit nicht verfügbar.');
+        _grow();
       }
     } finally {
       if (_current(epoch)) setState(() => loading = false);
@@ -242,8 +348,47 @@ class _RuntimeTranslationSheetState
   }
 
   @override
-  Widget build(BuildContext context) =>
-      widget.form != null ? _word(context) : _sentence(context);
+  Widget build(BuildContext context) {
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    final Widget content = usedUp
+        ? const TranslationPaywallCard(key: ValueKey('paywall'))
+        : _compact
+        ? const SizedBox(
+            key: ValueKey('wait'),
+            height: 56,
+            child: Center(child: CupertinoActivityIndicator(color: popoverInk)),
+          )
+        : KeyedSubtree(
+            key: const ValueKey('translation'),
+            child: widget.form != null ? _word(context) : _sentence(context),
+          );
+    // The old face fades out on top while the bubble resizes to the new.
+    final switcher = AnimatedSwitcher(
+      duration: reduceMotion
+          ? Duration.zero
+          : const Duration(milliseconds: 240),
+      switchInCurve: Curves.easeOut,
+      switchOutCurve: Curves.easeIn,
+      layoutBuilder: (current, previous) => Stack(
+        alignment: Alignment.topLeft,
+        children: [
+          for (final child in previous)
+            Positioned(left: 0, right: 0, top: 0, child: child),
+          ?current,
+        ],
+      ),
+      child: content,
+    );
+    // AnimatedSize with a zero duration re-dirties itself during layout,
+    // so reduced motion simply goes without it.
+    if (reduceMotion) return switcher;
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 340),
+      curve: Curves.easeOutCubic,
+      alignment: Alignment.topLeft,
+      child: switcher,
+    );
+  }
 
   /// The small word bubble: word and speaker (and the add button) on one
   /// line, the translation below; nothing else unless something failed.
@@ -325,7 +470,7 @@ class _RuntimeTranslationSheetState
             letterSpacing: 0,
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 4),
         Align(
           alignment: Alignment.centerRight,
           child: SpeakButton(
@@ -333,6 +478,7 @@ class _RuntimeTranslationSheetState
             language: widget.lang,
           ),
         ),
+        const SizedBox(height: 12),
         const PopoverDivider(),
         const SizedBox(height: 12),
         if (checking || loading)

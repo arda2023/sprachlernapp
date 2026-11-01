@@ -1,0 +1,77 @@
+# Storycover-Inventar · 31.10.2026
+
+Bestandsaufnahme ohne Bildgenerierung oder Codeänderung. Maßgeblich sind die fünf tatsächlich gebündelten `assets/content/<lang>/stories.json`, nicht die historische `story_library/manifest.json` mit teilweise älterem Integrationsstatus. Das maschinenlesbare [Inventar](story-cover-inventory.json) enthält für jede Variante die exakte stabile Story-ID, Sprache, den Originaltitel, die Kategorie und den gemeinsam verwendeten Asset-Key. Deutsche Titel sind ausdrücklich eigene Arbeitstitel, keine vorhandenen deutschen Packdaten.
+
+**44 unterschiedliche Motive für 220 Sprachvarianten: 43 neue Bilder und die vorhandene bevorzugte Raketelandung für `video_05`.** Jede JSON-Bibliothek enthält 57 Geschichten. Ausgeschlossen sind jeweils 5 Alltag- und 8 Wirtschaftstitel, insgesamt 65 Varianten. Die zusätzliche annotierte EN-Packstory „The Open Pocket“ (`1fe9baf1b1a199b5bfb116e320a679b9`) hat im SQLite-Pack keinen Topic; `libraryStoriesProvider` ordnet sie Alltag zu, daher ist auch sie ausgeschlossen. Die anderen vier SQLite-Packs enthalten keine annotierten Storyzeilen.
+
+## Gemeinsame Assets und Stil
+
+Nur die fünf Fassungen desselben Story-Suffixes teilen ein Motiv. Zum Beispiel verwenden `library:en:video_05` und `library:pt-BR:video_05` gemeinsam `assets/story_covers/video_05.png`. Verschiedene `video_XX`-/Reise-/Restaurant-/Arbeitsthemen erhalten jeweils ein eigenes Bild, auch innerhalb derselben Kategorie. Weder Kategorie-Sammelbilder noch Titeltext-Hashes bestimmen die Zuordnung.
+
+Stilreferenz ist [die bevorzugte erste Rakete](story-cover-reference/rocket-preferred.png), visuell geprüft: detaillierte zweidimensionale Editorial-Gouache mit Papiergrain, filmischem Warm-Kalt-Licht, realistischen Formen, klarer Silhouette und warmem Creme gegen kühles Blau und dunkles Marine; kein Clipart, keine eingebauten Titel oder UI. Das konkrete Raketenmotiv passt nur `video_05`; andere Geschichten übernehmen den Stil und erhalten ihr eigenes Hauptmotiv. Ein quadratisches Master hält das vollständige Hauptmotiv für `contain` und mehrere Kartenformate sicher im Bild.
+
+## Motivliste
+
+| Asset-Key | Kategorie | Deutscher Arbeitstitel | Hauptmotiv |
+|---|---|---|---|
+| `video_04` | Technik | Claude entsteht | Ein beleuchteter Arbeitsplatz mit mehreren verbundenen abstrakten Dialogfenstern und einer menschlichen Hand am Kontrollregler; Entwicklung einer steuerbaren KI, kein Roboterportrait. |
+| `video_05` | Technik | Raketen, die zurückkehren | Eine einzelne schlanke Raketenstufe mit ausgefahrenen Landebeinen und senkrechtem Triebwerksstrahl über einer Plattform im Meer; genau das Motiv der bevorzugten Raketenreferenz. |
+| `video_06` | Technik | Chips für andere herstellen | Siliziumwafer mit irisierenden rechteckigen Chips in einem Reinraum unter einer präzisen Fertigungsanlage; Auftragsfertigung statt fertiger Elektronik. |
+| `video_10` | Technik | Im Inneren einer Bezahlkarte | Freigelegte kontaktlose Karte mit großer sichtbarer Antennenschleife und winzigem Chip neben einem Bezahlterminal; technische Innenansicht ohne Kontonummern. |
+| `video_11` | Wissenschaft | Wie Schwarze Löcher wachsen | Dunkles Schwarzes Loch mit heller rotierender Akkretionsscheibe, seitlichem Materiestrom und gebogenem Licht; klar von Neutronenstern und Mond unterscheiden. |
+| `video_12` | Wissenschaft | Die Anleitung des Lebens bearbeiten | Eine große DNA-Doppelhelix, bei der ein kurzer Abschnitt gezielt ausgetauscht wird; Laborlicht und präzise molekulare Form statt allgemeinem Wissenschaftssymbol. |
+| `video_13` | Wissenschaft | Eine Stadt nach dem Lichtblitz | Entfernte Stadtsilhouette unter einem überwältigenden weißen Lichtblitz und einer ankommenden Druckwelle; keine Verletzten oder detailreiche Zerstörungsbilder. |
+| `video_14` | Wissenschaft | Unter dem letzten Sonnenlicht | Ein kleines Forschungstauchboot sinkt entlang eines dunklen Tiefseeabhangs; schmaler Lichtkegel trifft ein einzelnes biolumineszentes Tiefseetier. |
+| `video_15` | Wissenschaft | Ein Stern von der Größe einer Stadt | Ein extrem kompakter heller Neutronenstern mit kräftigen symmetrischen Magnetfeldbögen und polaren Strahlen; keine schwarze Akkretionsscheibe. |
+| `video_16` | Wissenschaft | Wenn der Mond näher käme | Ein ungewöhnlich großer naher Mond über der Erdküste und sichtbar erhöhtem Meer; Bild macht das im Text erklärte Gedankenexperiment erkennbar. |
+| `video_19` | Gesellschaft | Wenn der Geldautomat verschwindet | Aufgebrochene Geldautomatennische in einer Hauswand mit abgesperrtem Gehweg und wenigen Glassplittern; Folgen für die Nachbarschaft, keine Explosion als Spektakel. |
+| `video_20` | Kultur | Der Preis eines Comebacks | Eine silberne Bühnenmaske in einer Hand vor warmen Scheinwerfern und einer dunklen Filmkulisse; Rollenwechsel und Rückkehr, ohne Markenlogo oder vorgetäuschtes Schauspielerportrait. |
+| `video_21` | Technik | Kann KI Erfindungen beschleunigen? | Eine digitale Konstruktionszeichnung geht in ein reales technisches Bauteil auf einem Prüfstand über; sichtbar der Weg vom KI-Entwurf zur Fertigung. |
+| `video_22` | Gesellschaft | Als Polizisten verdächtig wurden | Ein dunkler Polizeiausweis auf einem Beweistisch neben versiegelten Ermittlungsunterlagen; Korruptionsverdacht innerhalb der Polizei, keine allgemeine Straßenpolizei. |
+| `video_23` | Gesellschaft | Vier Monate auf einem schwimmenden Gefängnis | Ein großes Containerschiff auf leerem Meer, seitlich ein viel kleineres Piratenboot und abgeschottete Brücke; Gefangenschaft auf der Hansa Stavanger ohne Gewaltszene. |
+| `video_24` | Gesellschaft | Die Briefe des Monsieur X | Ein geöffnetes anonymes Briefkuvert im Vordergrund, im Hintergrund nächtliche verbogene Eisenbahnschienen; Verbindung von Erpresserbriefen und Zuganschlag. |
+| `video_25` | Gesellschaft | Hinter den Gefängnistüren | Eine schwere Gefängnistür mit schmalem Fenster, davor ein ärztlicher Bericht und Stethoskop; Hinweis einer Gefängnisärztin auf mutmaßliche Misshandlung. |
+| `video_26` | Gesellschaft | Briefe, die Angst verbreiteten | Ein einzelner versiegelter Brief auf einem Labortablett hinter transparentem Schutzglas, daneben Schutzhandschuhe; Anthrax-Ermittlung ohne Herstellungsdarstellung. |
+| `video_27` | Gesellschaft | Die Rückkehr von Flug 705 | Ein dreistrahliges Frachtflugzeug auf steilem Rückflug in dunklem Himmel mit sichtbarer Flughafenlandebahn; Notrückkehr von FedEx705, keine Passagiermaschine. |
+| `video_28` | Gesellschaft | Nach dem Lösegeld | Eine geöffnete große Transportkiste in einem dunklen leeren Lagerraum, daneben ein Aktenordner mit einem einzelnen Schlüssel; Oetker-Entführung ohne gefangene Person. |
+| `video_29` | Gesellschaft | Die Grenzen der Einwilligung | Zwei einander zugewandte leere Stühle an einem Tisch, dazwischen eine deutlich unterbrochene Linie und ein geschlossenes juristisches Aktenbuch; Grenze zwischen Einwilligung und Gewalt, ohne Essen oder explizite Tatdarstellung. |
+| `video_30` | Gesellschaft | Jenseits der brennenden Straßen | Ein leerer Klassenraum mit beschädigtem Dach und offenen Schulheften, durch das Fenster entfernte protestierende Silhouetten; Schulbedingungen und gesellschaftlicher Konflikt statt generischer Flammen. |
+| `video_31` | Technik | Der Unterschied war die Erlaubnis | Eine Hand an einem älteren Computerterminal, daneben ein physischer Schlüssel und zwei getrennte Zugangswege; Kevin Mitnicks Thema von Täuschung, Zugriff und Erlaubnis. |
+| `video_32` | Technik | Hinter Panzerglas | Nahansicht der sehr dicken Seitenscheibe einer dunklen gepanzerten Staatslimousine vor weichem Berliner Stadthintergrund; Fahrzeugschutz, keine nachgestellte reale Attacke. |
+| `video_33` | Gesellschaft | Der Assistent und die Geheimnisse | Ein geöffnetes politisches Büro mit vertraulichem Aktenstapel und einer zweiten langen Schattenfigur am Türspalt; Insiderzugang und mutmaßliche Spionage, keine als schuldig markierte Person. |
+| `video_34` | Gesundheit | In einer Tablette verborgen | Eine einzelne Tablette mit kleiner Bruchkante neben einer neutralen Blisterpackung und unscharfer Warnleuchte; unbekannter Inhalt gefälschter Arznei, keine Konsumanleitung. |
+| `video_35` | Gesundheit | Der Staat verkauft Zigaretten | Ein Zigarettenpaket ohne Marke vor einer großen Fabriksilhouette und amtlicher Gebäudefassade; staatliches Tabakgeschäft in China statt Raucherportrait. |
+| `video_36` | Kriminalfälle | Nach dem Kartellchef | Eine leere kurvige Straße durch die Hügel von Jalisco, darüber ein entfernter Hubschrauber und eine geschlossene Straßensperre; Folgen der Operation in Tapalpa ohne Waffenpose oder Täterverehrung. |
+| `video_38` | Gesellschaft | Peter Thiel und die Macht | Ein einzelner großer Schachkönig zwischen Serverracks und einem parlamentarischen Gebäudebogen; Verhältnis von Technologiemacht und politischem Einfluss, kein beliebiges Geldmotiv. |
+| `video_39` | Gesundheit | Wer prägt unsere Lust auf Süßes? | Frühstücksschale mit Cerealien, Brot und Saft, deren Schatten in eine deutlich sichtbare Anhäufung von Zuckerwürfeln übergehen; versteckter Zucker im Alltag. |
+| `video_40` | Wissenschaft | DMT und das Gefühl von Wirklichkeit | Eine ruhige Liege im Forschungsraum geht am Bildrand in verschachtelte farbige geometrische Räume über; Wahrnehmungsforschung, keine Substanz oder Konsumszene. |
+| `travel_01` | Reisen | Der falsche Koffer | Zwei nahezu identische Reisekoffer vor einer kleinen Gästehausrezeption, einer mit gut sichtbarem blauem Band; die Verwechslung ist das Hauptmotiv. |
+| `travel_02` | Reisen | Das letzte Zimmer | Ein einzelner Zimmerschlüssel hinter einer Hotelrezeption, davor ein nasser Reisekoffer und eine Buchungsbestätigung; Ankunft bei falschem Reservierungsdatum. |
+| `travel_03` | Reisen | Ein Halt am Meer | Ein abfahrender Linienbus neben einer kleinen Küstenhaltestelle, dahinter ein enger Durchblick auf Hafen und Möwen; spontaner Zwischenstopp am Meer. |
+| `travel_04` | Reisen | Der verpasste Zug | Zwei volle Kaffeebecher und zwei Koffer auf einem Bahnsteig, im Hintergrund das letzte Wagenende des abfahrenden Zuges; eigener Schwerpunkt statt allgemeinem Reisebild. |
+| `travel_05` | Reisen | Eine Karte aus Papier | Eine aufgefaltete alte Papierkarte neben einer leicht vergilbten Urlaubsfotografie vor einer blauen Haustür mit Nummer17; Suche nach Familienerinnerungen. |
+| `restaurant_01` | Restaurant | Ein Tisch am Fenster | Ein reservierter Zweiertisch direkt am Restaurantfenster, ein Platz noch leer, im Vordergrund ein wartendes Mobiltelefon; Ankunft und Reservierung. |
+| `restaurant_02` | Restaurant | Die fehlende Bestellung | Ein Restauranttisch mit Kinokarten unter einem Salzstreuer, einer Uhr und einem noch leeren Tellerplatz; vergessene Bestellung vor dem Film. |
+| `restaurant_03` | Restaurant | Das Familienrezept | Ein altes handschriftliches Rezeptbuch neben weißen Bohnen, Tomaten und Zwiebeln auf einer warmen Küchentheke; überliefertes Familiengericht. |
+| `restaurant_04` | Restaurant | Der letzte Gast | Restauranttür im Abendlicht, davor eine Person mit geschlossenem Geigenkasten; innen eine einzelne noch gedeckte Sitzgelegenheit kurz vor Küchenschluss. |
+| `restaurant_05` | Restaurant | Der erste Abend | Eine nervös gebundene Kellnerschürze, vier Speisekarten und frisch gedeckte Tische kurz vor dem Öffnen; erster Dienst als Bedienung. |
+| `work_01` | Arbeit | Der erste Auftrag | Ein kleiner Grafikarbeitsplatz mit Preisetiketten und Farbausdrucken, daneben Blumen für den ersten Auftrag eines Blumenladens; eigener gestalterischer Kundenauftrag. |
+| `work_02` | Arbeit | Die falsche Datei | Ein Laptop mit zwei deutlich unterschiedlichen Dateivorschaubildern, daneben eine Uhr und bereitliegende Jacke; falscher E-Mail-Anhang kurz vor der Besprechung, ohne lesbare Privatdaten. |
+| `work_03` | Arbeit | Eine schwierige Übergabe | Zwei Mitarbeitende an einer Fahrradwerkstatt-Theke mit blauem und rotem Fahrrad und einer knappen Übergabeliste; Schichtwechsel und fehlende Information. |
+
+## Integrationsstellen (nur lesend ermittelt)
+
+- `lib/models/home_models.dart`: `Story.id`, `title`, `topic` und nullable `ImageProvider cover` sind vorhanden; kein neues Pack-/Domänenschema nötig.
+- `lib/presentation/providers/bundled_stories_provider.dart`: `BundledStory.decode` bildet die realen JSON-Zeilen auf `Story` ab; Originaltitel und stabile Sprach-ID bleiben erhalten.
+- `lib/presentation/providers/story_learning_providers.dart`: `libraryStoriesProvider` vereinigt gebündelte Bibliothek und annotierte Packstorys; letztere werden aktuell als Alltag angezeigt.
+- `lib/screens/home/widgets/story_carousel.dart`: `StoryCard`, privates `_Cover`, `StoryCarousel`, `StoryFeatureShelf`, `StoryListShelf`, `TypeCover`; `_Cover` liest bereits `story.cover` und verwendet derzeit einen typografischen Fallback.
+- `lib/screens/stories/story_library_screen.dart`: Kategorienregale, `ContinueReadingTile` und deren Coverdarstellung; die verschiedenen Kartenformate müssen denselben Bildschlüssel verwenden.
+- `lib/screens/home/home_screen.dart`, `lib/screens/content/content_dashboard_screen.dart`, `lib/screens/content/text_library_screen.dart`, `lib/screens/stories/story_reader_screen.dart`: Verbraucher der gemeinsamen Storydarstellung; nach zentraler Integration auf konsistente Bilder prüfen.
+- `lib/models/story_category.dart`: exakte Kategoriezuordnung und Aliasse; Ausschlüsse betreffen Alltag/Wirtschaft, nicht Gesellschaft/Arbeit.
+- `pubspec.yaml`: neue Bildassets bei späterer Integration registrieren; das Inventar legt keine Bilder im Assetverzeichnis an.
+
+## Nachweis und Grenzen
+
+GitNexus zuerst: Konzeptabfrage zu Storycovern und Kontexte für `StoryCard`/`_Cover` lieferten die vorhandenen Widgets und Verbraucher. Die angefragten Namen `StoryCover`/`StoryTile` existierten zum Inventarstart nicht im Index; Textsuche bestätigte stattdessen die tatsächlichen Namen. Repository/Checkout: `/Users/ardasayar/Documents/FlutterProjekte/sprachapp`, HEAD-basierter Index vom 31.10.2026; gleichzeitig laufende neue Assethook-Arbeit kann später zusätzliche Dateien anlegen. Kein Integrationscode wurde für dieses Inventar verändert.
+
+Die Zuordnung zwischen Sprachen wurde über den stabilen Suffix, gleiche Kategorie und vorhandene Fassungen geprüft. Titel und Motive beruhen auf den gebündelten Texten; sie sind keine neue Faktenprüfung der darin geschilderten aktuellen Ereignisse. Im JSON stehen SHA-256-Werte der fünf eingelesenen Quelldateien. Nicht erzeugte Zielassets sind geplant, nicht als vorhanden behauptet.

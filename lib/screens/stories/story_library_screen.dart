@@ -8,6 +8,7 @@ import '../../presentation/providers/reading_providers.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/popover_trigger.dart';
 import '../../widgets/section_heading.dart';
+import '../../widgets/story_cover.dart';
 import '../home/widgets/story_carousel.dart';
 import 'widgets/import_panel.dart';
 import 'widgets/news_carousel.dart';
@@ -30,7 +31,11 @@ class StoryLibraryScreen extends StatelessWidget {
     this.onDeleteImported,
     this.onImportText,
     this.onImported,
+    this.scrollController,
   });
+  /// Main vertical scroll view; the tab bar scrolls it to the top on re-tap.
+  final ScrollController? scrollController;
+
 
   static const _gutter = EdgeInsets.symmetric(horizontal: 20);
   static const newsSubheading =
@@ -135,6 +140,7 @@ class StoryLibraryScreen extends StatelessWidget {
     return SafeArea(
       bottom: false,
       child: ListView(
+        controller: scrollController,
         physics: const BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics(),
         ),
@@ -205,6 +211,7 @@ class StoryLibraryScreen extends StatelessWidget {
                 padding: _gutter.copyWith(top: i == 0 ? 0 : 10),
                 child: switch (item) {
                   Story story => ContinueReadingTile(
+                    story: story,
                     title: story.title,
                     meta: story.topic,
                     category: StoryCategory.of(story.topic),
@@ -639,8 +646,10 @@ class ContinueReadingTile extends StatelessWidget {
     required this.category,
     required this.fraction,
     required this.onTap,
+    this.story,
   });
 
+  final Story? story;
   final String title;
   final String meta;
   final StoryCategory category;
@@ -668,7 +677,10 @@ class ContinueReadingTile extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Container(
+                if (story case final story?)
+                  StoryCover(story: story, width: 56, height: 72,
+                    radius: 12, texture: false)
+                else Container(
                   width: 56,
                   height: 72,
                   decoration: BoxDecoration(

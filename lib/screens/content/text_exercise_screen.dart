@@ -1,3 +1,4 @@
+import '../../models/localized_practice_content.dart';
 import '../../presentation/audio/speech_narration.dart';
 import '../../presentation/audio/device_speech_playback.dart';
 import '../../data/runtime_translation_client.dart';
@@ -9,7 +10,7 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart'
-    show Colors, InputDecoration, Scaffold, TextField, UnderlineInputBorder;
+    show Colors, InputDecoration, Scaffold, TextField, OutlineInputBorder, LinearProgressIndicator;
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 
@@ -34,11 +35,12 @@ class TextExerciseScreen extends StatefulWidget {
     required this.mode,
     this.translate = sampleTranslateSentence,
     this.chipSeed = 7,
-    this.sourceLanguage = 'en',
+    this.sourceLanguage,
   });
 
   final ExerciseText text;
-  final String sourceLanguage;
+  final String? sourceLanguage;
+  String get effectiveSourceLanguage => sourceLanguage ?? text.language;
   final ExerciseMode mode;
   final String Function(String sentence) translate;
 
@@ -51,7 +53,10 @@ class TextExerciseScreen extends StatefulWidget {
     ExerciseMode mode,
   ) => Navigator.of(context).push(
     CupertinoPageRoute<void>(
-      builder: (_) => TextExerciseScreen(text: text, mode: mode),
+      builder: (_) => TextExerciseScreen(text: text, mode: mode,
+        translate: text.language == 'en' ? sampleTranslateSentence
+            : (sentence) => localizedPracticeContent[text.language]?.translations[sentence.trim()]
+                ?? 'Übersetzung nicht verfügbar.'),
     ),
   );
 
@@ -104,7 +109,7 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
     if (_speech?.playing == true) { _speech!.pause(); return; }
     _speech?.removeListener(_onSpeech);
     _speech?.dispose();
-    _speech = SpeechNarration(text: _spokenText, language: widget.sourceLanguage,
+    _speech = SpeechNarration(text: _spokenText, language: widget.effectiveSourceLanguage,
       onError: (message) => showSpeechError(context, message))..addListener(_onSpeech);
     _speech!.play();
   }
@@ -124,6 +129,9 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
   final _timers = <Timer>[];
   OverlayEntry? _flight;
   bool _translating = false;
+
+  /// The toolbar hint leaves after the first tapped sentence.
+  bool _hint = false;
   int? _selectedSentence;
 
   /// Where the last sentence tap landed; its translation points there.
@@ -336,7 +344,10 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
 
   void _toggleTranslate() {
     FocusScope.of(context).unfocus();
-    setState(() => _translating = !_translating);
+    setState(() {
+      _translating = !_translating;
+      _hint = _translating;
+    });
     if (_translating) _announce(ReadingToolbar.hint);
   }
 
@@ -369,6 +380,7 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
   }
 
   Future<void> _translate(int index) async {
+    if (_hint) setState(() => _hint = false);
     final s = _sentences[index];
     final pieces = _piecesIn(s.paragraph, s.range);
     final key = [for (final p in pieces) p is _Gap ? p.gap.answer : p as String]
@@ -388,7 +400,7 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
     if (hasStoredTranslation(translation)) {
       await SentencePopover.show(
         context,
-        language: widget.sourceLanguage,
+        language: widget.effectiveSourceLanguage,
         anchor: anchor,
         original: original,
         translation: translation,
@@ -397,7 +409,7 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
       await RuntimeTranslationSheet.show(
         context,
         anchor: anchor,
-        lang: widget.sourceLanguage,
+        lang: widget.effectiveSourceLanguage,
         text: key,
         displayText: original,
       );
@@ -491,6 +503,7 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
           listening: _speech?.playing == true,
           onToggleListen: _readText,
           translating: _translating,
+          showHint: _translating && _hint,
           onToggleTranslate: _toggleTranslate,
         ),
         body: SafeArea(
@@ -503,12 +516,16 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
                   liveRegion: true,
                   label: '$_solvedCount von ${_gaps.length} Lücken gelöst',
                   excludeSemantics: true,
-                  child: Text(
-                    '$_solvedCount von ${_gaps.length}',
-                    style: AppType.meta(color: context.appColors.textMuted)
-                        .copyWith(
-                          fontFeatures: const [FontFeature.tabularFigures()],
-                        ),
+                  child: SizedBox(
+                    width: math.min(240, MediaQuery.sizeOf(context).width - 100),
+                    child: LinearProgressIndicator(
+                      key: const ValueKey('cloze-progress'),
+                      value: _gaps.isEmpty ? 1 : _solvedCount / _gaps.length,
+                      minHeight: 6,
+                      borderRadius: BorderRadius.circular(99),
+                      color: context.appColors.active,
+                      backgroundColor: context.appColors.raisedInk,
+                    ),
                   ),
                 ),
               ),
@@ -525,13 +542,6 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text(
-                              widget.mode.title,
-                              style: AppType.meta(
-                                color: context.appColors.textMuted,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
                             Semantics(
                               header: true,
                               child: Text(
@@ -632,7 +642,10 @@ class _TypedGap extends StatelessWidget {
       textDirection: TextDirection.ltr,
       textScaler: MediaQuery.textScalerOf(context),
     )..layout();
-    final width = math.max(48.0, painter.width + 16);
+    final width = math.min(
+      math.min(600.0, MediaQuery.sizeOf(context).width - 40),
+      math.max(64.0, painter.width + 20),
+    );
     painter.dispose();
 
     return Semantics(
@@ -644,6 +657,7 @@ class _TypedGap extends StatelessWidget {
           focusNode: gap.focus,
           style: style,
           textAlign: TextAlign.center,
+          maxLines: null,
           cursorColor: context.appColors.textPrimary,
           autocorrect: false,
           enableSuggestions: false,
@@ -653,25 +667,27 @@ class _TypedGap extends StatelessWidget {
           onEditingComplete: onSubmit,
           decoration: InputDecoration(
             isDense: true,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 2),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            filled: true,
+            fillColor: gap.flashError
+                ? context.appColors.errorTint
+                : context.appColors.memoryLevel2.withValues(alpha: .12),
             hintText: gap.gap.base,
             hintStyle: style.copyWith(
               color: gap.flashError
                   ? context.appColors.error
                   : context.appColors.textMuted,
             ),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: gap.flashError
-                    ? context.appColors.error
-                    : context.appColors.hairline,
-              ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide.none,
             ),
-            focusedBorder: UnderlineInputBorder(
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
                 color: gap.flashError
                     ? context.appColors.error
-                    : context.appColors.textPrimary,
+                    : context.appColors.memoryLevel2,
               ),
             ),
           ),
@@ -681,8 +697,8 @@ class _TypedGap extends StatelessWidget {
   }
 }
 
-/// Choice mode gap: the base word over an underline; the active gap's
-/// underline is textPrimary.
+/// Choice mode uses the same rounded surface as typed and deck gaps.
+/// The active gap also has an outline and a spoken state label.
 class _ChoiceGap extends StatelessWidget {
   const _ChoiceGap({
     super.key,
@@ -705,16 +721,13 @@ class _ChoiceGap extends StatelessWidget {
           '${current ? ', aktuelle Lücke' : ''}',
       excludeSemantics: true,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: current
-                  ? context.appColors.textPrimary
-                  : context.appColors.hairline,
-              width: current ? 1.5 : 1,
-            ),
-          ),
+          color: context.appColors.memoryLevel2.withValues(alpha: .12),
+          borderRadius: BorderRadius.circular(8),
+          border: current
+              ? Border.all(color: context.appColors.memoryLevel2)
+              : null,
         ),
         child: Text(
           gap.gap.base,

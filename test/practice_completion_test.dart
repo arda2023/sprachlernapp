@@ -156,7 +156,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('12/10'), findsOneWidget);
-    expect(find.text('Neue Wörter'), findsOneWidget);
+    expect(find.text('Neue Wörter'), findsNothing);
     expect(find.bySemanticsLabel(RegExp(r'^walks, geht, neu')), findsOneWidget);
     expect(tester.widget<Opacity>(weiter.first).opacity, 1);
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
@@ -213,6 +213,69 @@ void main() {
     expect(tester.getTopLeft(walks).dy, lessThan(viewportTop + 60));
   });
 
+  testWidgets(
+    'Long recaps keep two rear cards and the final word at full contrast',
+    (tester) async {
+      final controller = ScrollController();
+      addTearDown(controller.dispose);
+      final recap = [
+        for (var i = 0; i < 30; i++)
+          CompletionWord(
+            form: 'word $i',
+            translation: 'Übersetzung $i',
+            sentence: 'A complete sentence for word $i.',
+            isNew: i.isEven,
+          ),
+      ];
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: buildAppTheme(),
+          home: Scaffold(
+            body: SingleChildScrollView(
+              controller: controller,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 32, 20, 0),
+                child: Column(
+                  children: [
+                    StackedWordCards(words: recap),
+                    const SizedBox(height: 600),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      controller.jumpTo(controller.position.maxScrollExtent);
+      await tester.pump();
+      final opacities = find.descendant(
+        of: find.byType(StackedWordCards),
+        matching: find.byType(Opacity),
+      );
+      expect(
+        tester.widgetList<Opacity>(opacities).where((o) => o.opacity > 0),
+        hasLength(3),
+      );
+      final lastOpacity = find.ancestor(
+        of: find.text('word 29'),
+        matching: find.byType(Opacity),
+      );
+      expect(tester.widget<Opacity>(lastOpacity).opacity, 1);
+      final lastScale = find.ancestor(
+        of: find.text('word 29'),
+        matching: find.byType(Transform),
+      );
+      expect(
+        tester.widget<Transform>(lastScale.first).transform.entry(0, 0),
+        1,
+      );
+      controller.jumpTo(0);
+      await tester.pump();
+      expect(find.text('word 0').hitTestable(), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
   testWidgets('Completion survives large Dynamic Type', (tester) async {
     tester.platformDispatcher.textScaleFactorTestValue = 2;
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
@@ -261,7 +324,7 @@ void main() {
       await tester.pumpAndSettle();
     }
     expect(find.byType(PracticeCompletionScreen), findsOneWidget);
-    expect(find.text('Neue Wörter'), findsOneWidget);
+    expect(find.text('Neue Wörter'), findsNothing);
     expect(find.text('walks'), findsOneWidget);
     expect(find.text('2/2'), findsOneWidget);
     await tester.tap(find.text('Weiter'));

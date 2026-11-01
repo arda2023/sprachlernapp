@@ -143,6 +143,16 @@ class CardContexts extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Explicit membership in the language's private generated-vocabulary deck.
+@DataClassName('GeneratedAdditionRow')
+class GeneratedVocabularyAdditions extends Table {
+  TextColumn get cardId => text().references(UserCards, #cardId)();
+  TextColumn get lang => text()();
+  DateTimeColumn get addedAt => dateTime()();
+  @override
+  Set<Column> get primaryKey => {cardId};
+}
+
 @DataClassName('StoryAdditionRow')
 class StoryLearningAdditions extends Table {
   TextColumn get cardId => text()();
@@ -216,6 +226,7 @@ class LanguageLearningPreferences extends Table {
     LocalSubmissions,
     CardContexts,
     StoryLearningAdditions,
+    GeneratedVocabularyAdditions,
     StoryWordSources,
     LearningIdentityBindings,
     FormIdentityBindings,
@@ -265,12 +276,15 @@ class UserDatabase extends _$UserDatabase {
   }
 
   @override
-  int get schemaVersion => 7;
+  int get schemaVersion => 8;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onUpgrade: (m, from, to) async {
       await transaction(() async {
+      if (from < 8) {
+        await m.createTable(generatedVocabularyAdditions);
+      }
       if (from < 5) {
         await m.addColumn(userCards, userCards.formFunction);
         await m.addColumn(userCards, userCards.lexicalTargetId);

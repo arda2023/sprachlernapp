@@ -171,6 +171,10 @@ class RuntimeTranslation {
 }
 
 class TranslationFailure implements Exception {
-  const TranslationFailure(this.message);
+  const TranslationFailure(this.message, {this.freeQuotaUsedUp = false});
   final String message;
+
+  /// The five free AI translations are gone; the bubble offers Premium
+  /// instead of showing [message].
+  final bool freeQuotaUsedUp;
 }

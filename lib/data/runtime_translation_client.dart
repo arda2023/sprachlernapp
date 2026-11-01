@@ -164,7 +164,12 @@ class RuntimeTranslationClient {
               _ => 'Übersetzung derzeit nicht verfügbar.',
             },
           };
-          throw TranslationFailure(message);
+          throw TranslationFailure(
+            message,
+            freeQuotaUsedUp:
+                error['error'] == 'TRANSLATION_QUOTA_EXHAUSTED' &&
+                error['quota_kind'] != 'premium',
+          );
         }
         final bytes = <int>[];
         await for (final part in response) {

@@ -1,4 +1,5 @@
 import '../../domain/content.dart';
+import '../../domain/generated_vocabulary_repository.dart';
 import '../../domain/learning_groups.dart';
 import '../../domain/repositories.dart';
 import '../../domain/story_learning.dart';
@@ -17,6 +18,7 @@ class PracticeItemResolver {
     this.states,
     this.contentError,
     this.catalog,
+    this.generatedAdditions,
   );
   final ContentRepository? content;
   final PracticeCatalog? catalog;
@@ -27,6 +29,7 @@ class PracticeItemResolver {
   final Map<String, String> bindings;
   final Map<String, UserCardState> states;
   final Object? contentError;
+  final Map<String, DateTime> generatedAdditions;
   late final _groups = LearningGroups(cards, states);
   static Future<PracticeItemResolver> load(
     UserRepository user,
@@ -73,6 +76,9 @@ class PracticeItemResolver {
       await user.allCardStates(),
       contentError,
       catalog,
+      user is GeneratedVocabularyRepository
+          ? await (user as GeneratedVocabularyRepository).generatedVocabularyAdditions()
+          : const {},
     );
   }
 
@@ -153,31 +159,39 @@ class PracticeItemResolver {
     return ids;
   }
 
-  Future<List<String>> deckPracticeIds(String deckId) async =>
-      deckId == storyCollectionId ? storyCollectionIds.where(cards.containsKey).toList() : resolveTargets(catalog?.targets[deckId] ?? await content!.deckPracticeTargets(deckId));
-
-  Future<List<String>> activePrimaryIds() async {
-    if (content == null) return [];
-    final decks = catalog?.decks ?? await content!.decks();
-    final active = await user.activeDeckIds(decks.map((d) => d.id));
-    return resolveTargets([
-      for (final d in decks)
-        if (active.contains(d.id)) ...(catalog?.targets[d.id] ?? await content!.deckPracticeTargets(d.id)),
-    ]);
+  String? get generatedDeckId {
+    if (generatedAdditions.isEmpty) return null;
+    final lang = content?.info.lang ?? cards[generatedAdditions.keys.first]?.lang;
+    if (lang == null) throw StateError('Gespeicherter generierter Übungskontext fehlt.');
+    return generatedVocabularyDeckId(lang);
   }
 
-  /// Active decks as separate new-word sources in catalog order; [order] lists
-  /// every deck so the rotation continues past a deactivated one.
+  List<String> get generatedPracticeIds => generatedAdditions.keys.where(cards.containsKey).toList();
+
+  Future<List<String>> deckPracticeIds(String deckId) async =>
+      deckId == generatedDeckId ? generatedPracticeIds
+      : deckId == storyCollectionId ? storyCollectionIds.where(cards.containsKey).toList()
+      : resolveTargets(catalog?.targets[deckId] ?? await content!.deckPracticeTargets(deckId));
+
+  Future<List<String>> activePrimaryIds() async {
+    final sources = await newWordSources();
+    return sources.active.expand((source) => source.cardIds).toSet().toList();
+  }
+
+  /// Active decks as separate new-word sources, including the private deck.
   Future<({List<String> order, List<NewWordSource> active})> newWordSources() async {
-    if (content == null) return (order: const <String>[], active: const <NewWordSource>[]);
-    final decks = catalog?.decks ?? await content!.decks();
-    final active = await user.activeDeckIds(decks.map((d) => d.id));
+    final decks = catalog?.decks ?? await content?.decks() ?? <DeckSummary>[];
+    final generated = generatedDeckId;
+    final order = [for (final d in decks) d.id, ?generated];
+    final active = await user.activeDeckIds(order);
     return (
-      order: [for (final d in decks) d.id],
+      order: order,
       active: [
         for (final d in decks)
           if (active.contains(d.id))
             NewWordSource(d.id, resolveTargets(catalog?.targets[d.id] ?? await content!.deckPracticeTargets(d.id))),
+        if (generated != null && active.contains(generated))
+          NewWordSource(generated, generatedPracticeIds),
       ],
     );
   }

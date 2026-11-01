@@ -1,4 +1,5 @@
 import '../../presentation/audio/speech_narration.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show Scaffold, ScaffoldMessenger, SnackBar;
@@ -16,7 +17,6 @@ import '../../presentation/content_unavailable_view.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/back_bar.dart';
 import 'widgets/playback_highlight.dart';
-import 'widgets/word_details_sheet.dart';
 import 'widgets/word_list_item.dart';
 
 /// The Wortliste tab: every word the learner has seen, most recent first,
@@ -28,7 +28,12 @@ class WordListScreen extends ConsumerStatefulWidget {
     this.clock = DateTime.now,
     this.targetCardId,
     this.playbackFactory,
+    this.scrollController,
   });
+
+  /// Main vertical scroll view; the tab bar scrolls it to the top on re-tap.
+  final ScrollController? scrollController;
+
   final String? targetCardId;
 
   /// Allows widget tests to supply deterministic playback.
@@ -74,7 +79,10 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (!TickerMode.valuesOf(context).enabled) { _playback.stop(); _playlist?.pause(); }
+    if (!TickerMode.valuesOf(context).enabled) {
+      _playback.stop();
+      _playlist?.pause();
+    }
   }
 
   _Filter _filter = _Filter.all;
@@ -142,26 +150,29 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
   );
 
   void _openPlaylist() {
-    if (_playlist?.playing == true) { _playlist!.pause(); return; }
+    if (_playlist?.playing == true) {
+      _playlist!.pause();
+      return;
+    }
     final words = (ref.read(wordListProvider).value ?? [])
-        .where((w) => w.inPlaylist && !w.isDisabled).toList();
-    if (words.isEmpty) { _toast('Deine Playlist ist noch leer'); return; }
+        .where((w) => w.inPlaylist && !w.isDisabled)
+        .toList();
+    if (words.isEmpty) {
+      _toast('Deine Playlist ist noch leer');
+      return;
+    }
     final language = ref.read(selectedContentLanguageProvider).asData?.value;
     if (language == null) return;
     _playlist?.dispose();
     _playlist = SpeechNarration(
       text: words.map((w) => '${w.entry.headword}. ${w.sentence}').join('\n'),
       language: language,
-      onError: (message) { if (mounted) _toast(message); });
+      onError: (message) {
+        if (mounted) _toast(message);
+      },
+    );
     _playlist!.play();
   }
-
-  void _openDetails(VocabWord word) => WordDetailsSheet.show(
-    context,
-    initialWord: word,
-    playback: _playback,
-    now: widget.clock(),
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -281,6 +292,7 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
                         ),
                       )
                     : ListView.builder(
+                        controller: widget.scrollController,
                         physics: const BouncingScrollPhysics(
                           parent: AlwaysScrollableScrollPhysics(),
                         ),
@@ -311,7 +323,6 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
                             onToggleDisabled: () => _toggleDisabled(word),
                             onTogglePlaylist: () => _togglePlaylist(word),
                             onToggleFavorite: () => _toggleFavorite(word),
-                            onOpenDetails: () => _openDetails(word),
                           );
                         },
                       ),

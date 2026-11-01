@@ -4,6 +4,7 @@ import '../../models/exercise_models.dart';
 import '../../models/grammar_models.dart';
 import '../../models/home_models.dart';
 import '../../models/practice_models.dart';
+import '../../models/practice_order.dart';
 import '../../models/reading_history.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/difficulty_bolts.dart';
@@ -15,6 +16,7 @@ import '../home/widgets/story_carousel.dart';
 import '../practice/choice_exercise_screen.dart';
 import '../practice/practice_library_screen.dart';
 import 'text_library_screen.dart';
+import '../../widgets/speaker_icon.dart';
 
 /// The "Inhalte" tab (docs/redesign/design-system.md): one section per
 /// category, each showing its content right away and "Mehr anzeigen" for
@@ -31,7 +33,12 @@ class ContentDashboardScreen extends StatelessWidget {
     required this.grammar,
     required this.progress,
     required this.rules,
+    this.generator,
+    this.scrollController,
   });
+  /// Main vertical scroll view; the tab bar scrolls it to the top on re-tap.
+  final ScrollController? scrollController;
+
 
   static const _gutter = EdgeInsets.symmetric(horizontal: 20);
 
@@ -47,6 +54,7 @@ class ContentDashboardScreen extends StatelessWidget {
   final List<ChoiceExercise> grammar;
   final PracticeProgress progress;
   final List<GrammarRule> rules;
+  final Widget? generator;
 
   void _openExercise(
     BuildContext context,
@@ -74,6 +82,7 @@ class ContentDashboardScreen extends StatelessWidget {
       child: ListenableBuilder(
         listenable: Listenable.merge([history, progress]),
         builder: (context, _) => ListView(
+          controller: scrollController,
           physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics(),
           ),
@@ -92,6 +101,7 @@ class ContentDashboardScreen extends StatelessWidget {
                 ),
               ),
             ),
+            if (generator != null) Padding(padding: _gutter, child: generator),
             if (texts.isNotEmpty) ..._texts(context),
             if (listening.isNotEmpty) ..._listening(context),
             if (grammar.isNotEmpty) ..._grammar(context),
@@ -135,12 +145,10 @@ class ContentDashboardScreen extends StatelessWidget {
   List<Widget> _listening(BuildContext context) {
     final done = listening.where((e) => progress.isDone(e.id)).length;
     // The first open exercise is "next up"; once all are solved, the first.
-    final next = listening.firstWhere(
-      (e) => !progress.isDone(e.id),
-      orElse: () => listening.first,
-    );
+    final ordered = unfinishedPracticeFirst(listening, progress);
+    final next = ordered.first;
     final rest = [
-      for (final e in listening)
+      for (final e in ordered)
         if (e != next) e,
     ].take(_maxTiles).toList();
     return [
@@ -176,7 +184,9 @@ class ContentDashboardScreen extends StatelessWidget {
   }
 
   List<Widget> _grammar(BuildContext context) {
-    final shown = grammar.take(_maxGrammar).toList();
+    final shown = unfinishedPracticeFirst(
+      grammar, progress,
+    ).take(_maxGrammar).toList();
     return [
       const SizedBox(height: 36),
       _SectionHeader(
@@ -447,8 +457,7 @@ class _ListeningTile extends StatelessWidget {
                         shape: BoxShape.circle,
                         color: colors.playback,
                       ),
-                      child: Icon(
-                        CupertinoIcons.speaker_2_fill,
+                      child: SpeakerIcon(
                         size: 17,
                         color: colors.textPrimary,
                       ),
@@ -663,7 +672,7 @@ class _RuleGrid extends StatelessWidget {
   }
 }
 
-/// A rule as an index card: level bolts and reading time, right below the
+/// A rule as an index card: level bolts, right below the
 /// rule name in serif and its one-line summary.
 class _RuleCard extends StatelessWidget {
   const _RuleCard({required this.rule, required this.onTap});
@@ -681,9 +690,7 @@ class _RuleCard extends StatelessWidget {
         pressedOpacity: 0.7,
         minimumSize: const Size(44, 44),
         child: Semantics(
-          label:
-              '${rule.title}, ${rule.summary}, ${rule.level.label}, '
-              '${rule.minutes} Minuten Lesezeit',
+          label: '${rule.title}, ${rule.summary}, ${rule.level.label}',
           excludeSemantics: true,
           child: Container(
             width: double.infinity,
@@ -695,22 +702,9 @@ class _RuleCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    DifficultyBolts(
-                      difficulty: _difficulty(rule.level.index + 1),
-                      size: 12,
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        '${rule.minutes} Min',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppType.meta(color: colors.textMuted),
-                      ),
-                    ),
-                  ],
+                DifficultyBolts(
+                  difficulty: _difficulty(rule.level.index + 1),
+                  size: 12,
                 ),
                 const SizedBox(height: 12),
                 Text(

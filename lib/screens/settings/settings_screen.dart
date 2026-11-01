@@ -239,10 +239,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 CupertinoIcons.speaker_slash,
                 'Ton aus',
               ),
-              (
-                CupertinoIcons.mic,
-                'Spracheingabe aktivieren',
-              ),
             ])
               _Row(
                 icon: icon,

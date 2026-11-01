@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../../widgets/speaker_icon.dart';
 
 /// Close (ends the session), the session's progress as orange segments
 /// (the count only for screen readers), and the word menu (Redesign 20.10.2026).
@@ -363,7 +364,11 @@ class PracticeAnswerToolbar extends StatelessWidget {
     required this.nextLabel,
     this.error = false,
     this.errorOffset = 0,
+    this.onDictate,
+    this.dictating = false,
   });
+  final VoidCallback? onDictate;
+  final bool dictating;
   final bool speakerEnabled, playing, solved, revealed, saved, hasInput;
   final String? message;
   final String nextLabel;
@@ -412,10 +417,29 @@ class PracticeAnswerToolbar extends StatelessWidget {
                 child: Semantics(
                   label: playing ? 'Vorlesen stoppen' : 'Satz vorlesen',
                   excludeSemantics: true,
-                  child: Icon(playing ? CupertinoIcons.stop_fill : CupertinoIcons.speaker_2,
-                    color: speakerEnabled ? context.appColors.textPrimary : context.appColors.iconOff),
+                  child: playing
+                      ? Icon(CupertinoIcons.stop_fill,
+                          color: speakerEnabled ? context.appColors.textPrimary : context.appColors.iconOff)
+                      : SpeakerIcon(filled: false,
+                          color: speakerEnabled ? context.appColors.textPrimary : context.appColors.iconOff),
                 ),
               ),
+              if (onDictate != null)
+                CupertinoButton(
+                  key: const ValueKey('practice-dictation'),
+                  onPressed: onDictate,
+                  padding: EdgeInsets.zero,
+                  minimumSize: const Size(44, 44),
+                  child: Semantics(
+                    label: dictating ? 'Spracheingabe beenden' : 'Antwort sprechen',
+                    hint: 'System-Spracherkennung, je nach Gerät auch online',
+                    excludeSemantics: true,
+                    child: Icon(
+                      dictating ? CupertinoIcons.stop_circle_fill : CupertinoIcons.mic,
+                      color: dictating ? context.appColors.active : context.appColors.textPrimary,
+                    ),
+                  ),
+                ),
               Expanded(
                 child: LayoutBuilder(
                   builder: (context, constraints) {

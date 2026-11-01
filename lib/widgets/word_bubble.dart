@@ -7,9 +7,32 @@ import 'popover_content.dart';
 import 'speak_button.dart';
 
 /// The orange word bubble in the reader covers at most half the screen
-/// width (user request 31.10.2026); long translations wrap instead.
-double wordBubbleWidth(BuildContext context) =>
-    math.max(208, MediaQuery.sizeOf(context).width * 0.5);
+/// width (user request 31.10.2026); long translations wrap instead. A
+/// headword that does not fit on one line widens the bubble just enough,
+/// up to the screen width minus the 16 pt gutters (user request 01.11.2026).
+double wordBubbleWidth(BuildContext context, {String? word}) {
+  final screen = MediaQuery.sizeOf(context).width;
+  final base = math.max(208.0, screen * 0.5);
+  if (word == null || word.isEmpty) return base;
+  final painter = TextPainter(
+    text: TextSpan(text: word, style: wordBubbleHeadword()),
+    textDirection: TextDirection.ltr,
+    textScaler: MediaQuery.textScalerOf(context),
+    maxLines: 1,
+  )..layout();
+  final needed = painter.width + 44 + 44 + wordBubblePadding.horizontal + 4;
+  painter.dispose();
+  return math.min(math.max(base, needed), math.max(base, screen - 32));
+}
+
+/// The headword style of [WordBubbleHeader].
+TextStyle wordBubbleHeadword() => AppType.editorial(
+  color: popoverInk,
+  size: 21,
+  weight: FontWeight.w600,
+  height: 1.2,
+  letterSpacing: 0,
+);
 
 /// Tighter than the info bubbles, so the word stays the main thing.
 const wordBubblePadding = EdgeInsets.fromLTRB(16, 12, 10, 14);
@@ -44,18 +67,11 @@ class WordBubbleHeader extends StatelessWidget {
       Expanded(
         child: Text(
           word,
-          style:
-              AppType.editorial(
-                color: popoverInk,
-                size: 21,
-                weight: FontWeight.w600,
-                height: 1.2,
-                letterSpacing: 0,
-              ).copyWith(
-                decoration: underline ? TextDecoration.underline : null,
-                decorationColor: popoverInk,
-                decorationThickness: 2,
-              ),
+          style: wordBubbleHeadword().copyWith(
+            decoration: underline ? TextDecoration.underline : null,
+            decorationColor: popoverInk,
+            decorationThickness: 2,
+          ),
         ),
       ),
       SpeakButton(text: speak, language: language, diameter: 32),
