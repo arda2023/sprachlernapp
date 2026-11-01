@@ -4,6 +4,8 @@ const PRODUCTS = new Set([
   "com.ardasayar.linglossa.premium.monthly",
   "com.ardasayar.linglossa.premium.yearly",
 ]);
+const COMPLIMENTARY_PRODUCT =
+  "com.ardasayar.linglossa.premium.complimentary";
 const WEBHOOK_EVENTS = new Set([
   "subscription_started",
   "subscription_active",
@@ -132,38 +134,52 @@ export function deriveEntitlement(
     : [];
 
   const candidates = accessLevels.flatMap((access) => {
+    // Only a profile fetched with the server API key reaches this function.
+    // Manual grants have these provider markers and no store subscription;
+    // never accept the app's synthetic product as a purchased store SKU.
+    const complimentary = expectedEnvironment === "Production" &&
+      access.store === "adapty" &&
+      access.store_product_id === "adapty_server_side_product";
     if (
       access.access_level_id !== "premium" ||
       typeof access.store_product_id !== "string" ||
-      !PRODUCTS.has(access.store_product_id)
+      !complimentary && !PRODUCTS.has(access.store_product_id)
     ) return [];
     const subscription = subscriptions.find((item) =>
       item.store_transaction_id === access.store_transaction_id &&
       item.store_product_id === access.store_product_id &&
       item.environment === expectedEnvironment
     );
-    if (!subscription) return [];
+    if (!complimentary && !subscription) return [];
 
     // A renewal may arrive before its purchased_at timestamp (sandbox does
     // this in practice). Keep the original continuous subscription start;
     // an explicit starts_at still takes precedence for scheduled access.
-    const startsAt = iso(access.starts_at) ??
-      iso(access.originally_purchased_at) ??
-      iso(subscription.originally_purchased_at) ?? iso(access.purchased_at) ??
-      iso(subscription.purchased_at);
+    const startsAt = complimentary
+      ? iso(access.starts_at === null || access.starts_at === undefined
+        ? access.purchased_at
+        : access.starts_at)
+      : iso(access.starts_at) ?? iso(access.originally_purchased_at) ??
+        iso(subscription?.originally_purchased_at) ?? iso(access.purchased_at) ??
+        iso(subscription?.purchased_at);
     const expiresAt = iso(access.expires_at);
     const startTime = date(startsAt);
     const expiryTime = date(expiresAt);
+    if (
+      complimentary && (startTime === null || expiryTime === null ||
+        expiryTime <= startTime)
+    ) return [];
     const active = startTime !== null && expiryTime !== null &&
       startTime <= now && expiryTime > now;
-    const renew = typeof access.renewal_cancelled_at === "string" ||
-        typeof subscription.renewal_cancelled_at === "string"
+    const renew = complimentary ||
+        typeof access.renewal_cancelled_at === "string" ||
+        typeof subscription?.renewal_cancelled_at === "string"
       ? false
       : true;
     return [{
       entitlement: "premium" as const,
       is_active: active,
-      product_id: access.store_product_id,
+      product_id: complimentary ? COMPLIMENTARY_PRODUCT : access.store_product_id,
       starts_at: startsAt,
       expires_at: expiresAt,
       will_renew: renew,
@@ -420,9 +436,20 @@ function snapshot(value: Record<string, unknown>): EntitlementSnapshot {
   );
   check(
     value.product_id === null ||
-      typeof value.product_id === "string" && PRODUCTS.has(value.product_id),
+      typeof value.product_id === "string" &&
+        (PRODUCTS.has(value.product_id) ||
+          value.product_id === COMPLIMENTARY_PRODUCT),
     "BILLING_STORAGE_UNAVAILABLE",
   );
+  if (value.product_id === COMPLIMENTARY_PRODUCT) {
+    const startsAt = date(value.starts_at);
+    const expiresAt = date(value.expires_at);
+    check(
+      value.environment === "Production" && value.will_renew === false &&
+        startsAt !== null && expiresAt !== null && expiresAt > startsAt,
+      "BILLING_STORAGE_UNAVAILABLE",
+    );
+  }
   check(
     value.starts_at === null || typeof value.starts_at === "string",
     "BILLING_STORAGE_UNAVAILABLE",

@@ -279,6 +279,71 @@ void main() {
     expect(await store.read(), isNull);
   });
 
+  testWidgets(
+    'Android without store offers account access rather than disabled purchase',
+    (tester) async {
+      const state = PurchaseState(
+        phase: PurchasePhase.failed,
+        billingReady: false,
+        errorMessage: 'Premium-Käufe sind auf diesem Gerät nicht verfügbar.',
+      );
+      await tester.pumpWidget(app(MemoryJsonStore(), purchaseState: state));
+      await tester.pumpAndSettle();
+      await toPlanPage(tester);
+      await tapLabel(tester, 'Weiter');
+      expect(find.text('Mit Konto freischalten'), findsOneWidget);
+      expect(find.text('Premium abonnieren'), findsNothing);
+      expect(
+        find.text('Premium-Käufe sind auf diesem Gerät nicht verfügbar.'),
+        findsNothing,
+      );
+      await tapLabel(tester, 'Mit Konto freischalten');
+      expect(find.byType(AccountSheet), findsOneWidget);
+      expect(find.text('Mit E-Mail fortfahren'), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'Android without store names a signed-in account without Premium',
+    (tester) async {
+      const state = PurchaseState(
+        phase: PurchasePhase.failed,
+        billingReady: false,
+        hasVerifiedAccount: true,
+        premiumActive: false,
+        errorMessage: 'Premium-Käufe sind auf diesem Gerät nicht verfügbar.',
+      );
+      await tester.pumpWidget(app(MemoryJsonStore(), purchaseState: state));
+      await tester.pumpAndSettle();
+      await toPlanPage(tester);
+      await tapLabel(tester, 'Weiter');
+      expect(
+        find.text('Für dieses Konto ist kein Premium freigeschaltet.'),
+        findsOneWidget,
+      );
+    },
+  );
+
+  testWidgets('A failed account check is not hidden behind the store message', (
+    tester,
+  ) async {
+    const error =
+        'Dein Premium-Zugang konnte gerade nicht geprüft werden. '
+        'Bitte später erneut versuchen.';
+    const state = PurchaseState(
+      phase: PurchasePhase.failed,
+      billingReady: false,
+      hasVerifiedAccount: true,
+      errorMessage: 'Premium-Käufe sind auf diesem Gerät nicht verfügbar.',
+      accountSyncError: error,
+    );
+    await tester.pumpWidget(app(MemoryJsonStore(), purchaseState: state));
+    await tester.pumpAndSettle();
+    await toPlanPage(tester);
+    await tapLabel(tester, 'Weiter');
+    expect(find.text(error), findsOneWidget);
+  });
+
   testWidgets('A failed Store catalog shows its error once', (tester) async {
     const error =
         'Der Store konnte die Anfrage nicht abschließen. Bitte erneut versuchen.';

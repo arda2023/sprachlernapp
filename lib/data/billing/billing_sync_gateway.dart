@@ -6,6 +6,9 @@ import '../content/content_auth_repository.dart';
 /// Server-verified subscription state returned by the authenticated billing
 /// sync function. Client SDK profiles are not authorization evidence.
 class ServerBillingSnapshot {
+  static const complimentaryProductId =
+      'com.ardasayar.linglossa.premium.complimentary';
+
   const ServerBillingSnapshot({
     required this.premiumActive,
     this.sandboxActive = false,
@@ -72,18 +75,32 @@ class ServerBillingSnapshot {
     const supportedProducts = {
       'com.ardasayar.linglossa.premium.monthly',
       'com.ardasayar.linglossa.premium.yearly',
+      complimentaryProductId,
     };
     if (productId != null && !supportedProducts.contains(productId)) {
       throw const FormatException('Unsupported billing product.');
     }
+    final complimentary = productId == complimentaryProductId;
+    if (complimentary &&
+        (environment != 'Production' ||
+            willRenew != false ||
+            startsAt == null ||
+            expiresAt == null ||
+            !expiresAt.isAfter(startsAt))) {
+      throw const FormatException('Invalid complimentary entitlement.');
+    }
+    final checkedAt = now ?? DateTime.now();
+    final hasStarted = !complimentary || !startsAt!.isAfter(checkedAt);
     final isActive = value['is_active'] == true;
-    final notExpired =
-        expiresAt == null || expiresAt.isAfter(now ?? DateTime.now());
+    final notExpired = expiresAt == null || expiresAt.isAfter(checkedAt);
     if (isActive && productId == null) {
       throw const FormatException('Active entitlement has no product.');
     }
     final verifiedActive =
-        isActive && notExpired && supportedProducts.contains(productId);
+        isActive &&
+        hasStarted &&
+        notExpired &&
+        supportedProducts.contains(productId);
     return ServerBillingSnapshot(
       premiumActive: verifiedActive && environment == 'Production',
       sandboxActive: verifiedActive && environment == 'Sandbox',

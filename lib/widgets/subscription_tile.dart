@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' show ScaffoldMessenger, SnackBar;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../presentation/providers/account_provider.dart';
+import '../data/billing/billing_sync_gateway.dart';
 import '../presentation/providers/purchase_provider.dart';
 import '../screens/onboarding/paywall_screen.dart';
 import '../screens/onboarding/widgets/account_sheet.dart';
@@ -117,6 +118,10 @@ class _SubscriptionTileState extends ConsumerState<SubscriptionTile> {
       final expiry = state.expiresAt;
       if (expiry == null) return 'Premium ist aktiv.';
       final date = formatDateDe(expiry);
+      if (state.activeProductId ==
+          ServerBillingSnapshot.complimentaryProductId) {
+        return 'Kostenlos freigeschaltet bis $date · endet automatisch';
+      }
       return state.willRenew == false
           ? 'Aktiv bis $date · keine weitere Verlängerung'
           : 'Aktiv · nächste Verlängerung am $date';
@@ -125,6 +130,7 @@ class _SubscriptionTileState extends ConsumerState<SubscriptionTile> {
       return 'Storeabo gefunden · Kontoabgleich läuft';
     }
     if (state.premiumActive == false) return 'Kein aktives Premium-Abo';
+    if (state.accountSyncError != null) return 'Premium-Status nicht geprüft';
     if (state.hasVerifiedAccount) return 'Abostatus wird geprüft';
     return 'Melde dich an, um dein Abo zu prüfen';
   }
@@ -134,6 +140,9 @@ class _SubscriptionTileState extends ConsumerState<SubscriptionTile> {
     final state = ref.watch(purchaseProvider);
     final colors = context.appColors;
     final active = state.hasPremiumUiAccess;
+    final complimentary =
+        active &&
+        state.activeProductId == ServerBillingSnapshot.complimentaryProductId;
     final busy = _actionLocked || state.phase.isBusy || state.isSyncing;
     final status = _status(state);
     final action = _PillButton(
@@ -202,10 +211,13 @@ class _SubscriptionTileState extends ConsumerState<SubscriptionTile> {
                       ),
                     ),
                   ),
-                  if (!stacked) ...[const SizedBox(width: 10), action],
+                  if (!stacked && !complimentary) ...[
+                    const SizedBox(width: 10),
+                    action,
+                  ],
                 ],
               ),
-              if (stacked)
+              if (stacked && !complimentary)
                 Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Align(alignment: Alignment.centerRight, child: action),
@@ -219,7 +231,9 @@ class _SubscriptionTileState extends ConsumerState<SubscriptionTile> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         card,
-        if (state.errorMessage case final error? when error.isNotEmpty)
+        // A store that this device lacks says nothing about active Premium.
+        if ((state.accountSyncError ?? (active ? null : state.errorMessage))
+            case final error? when error.isNotEmpty)
           Padding(
             padding: const EdgeInsets.fromLTRB(4, 8, 4, 0),
             child: Semantics(

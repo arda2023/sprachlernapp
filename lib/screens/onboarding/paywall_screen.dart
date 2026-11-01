@@ -3,6 +3,7 @@ import 'package:flutter/material.dart'
     show Scaffold, ScaffoldMessenger, SnackBar;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../data/billing/billing_sync_gateway.dart';
 import '../../data/billing/purchase_gateway.dart'
     show PurchasePlan, PurchaseProduct;
 import '../../presentation/onboarding_sounds.dart';
@@ -124,7 +125,10 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   Future<bool> _ensureVerifiedAccount() async {
     var purchase = ref.read(purchaseProvider);
     if (purchase.hasVerifiedAccount) return true;
-    final provider = await AccountSheet.show(context, AccountReason.purchase);
+    final provider = await AccountSheet.show(
+      context,
+      purchase.billingReady ? AccountReason.purchase : AccountReason.signIn,
+    );
     if (provider == null || !mounted) return false;
     try {
       await ref.read(accountSessionProvider.future);
@@ -141,6 +145,17 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       return false;
     }
     return true;
+  }
+
+  Future<void> _checkAccountAccess() async {
+    if (_actionLocked) return;
+    setState(() => _actionLocked = true);
+    try {
+      if (!await _ensureVerifiedAccount() || !mounted) return;
+      await ref.read(purchaseProvider.notifier).load();
+    } finally {
+      if (mounted) setState(() => _actionLocked = false);
+    }
   }
 
   Future<void> _subscribe() async {
@@ -275,12 +290,27 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       final expiry = purchase.expiresAt;
       if (expiry == null) return 'Premium ist aktiv.';
       final date = formatDateDe(expiry);
+      if (purchase.activeProductId ==
+          ServerBillingSnapshot.complimentaryProductId) {
+        return 'Premium ist kostenlos bis $date freigeschaltet und endet automatisch.';
+      }
       return purchase.willRenew == false
           ? 'Premium ist bis $date aktiv. Die Verlängerung ist beendet.'
           : 'Premium ist aktiv und verlängert sich am $date.';
     }
     if (purchase.isSyncing) {
-      return 'Storekauf bestätigt. Premium wird überprüft.';
+      return 'Dein Premium-Zugang wird überprüft.';
+    }
+    if (purchase.accountSyncError case final error?) return error;
+    // Without a store the account is the only way in: name it, so a sign-in
+    // with another address is visible.
+    if (purchase.premiumActive == false &&
+        !purchase.billingReady &&
+        purchase.products.isEmpty) {
+      final email = ref.read(accountSessionProvider).value?.email;
+      return email == null
+          ? 'Für dieses Konto ist kein Premium freigeschaltet.'
+          : 'Für $email ist kein Premium freigeschaltet.';
     }
     if (purchase.clientPremiumActive == true && !purchase.hasPremiumUiAccess) {
       return 'Ein Storeabo wurde gefunden. Der Kontostatus wird abgeglichen.';
@@ -388,9 +418,15 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
               }
             },
           );
+    final needsAccount =
+        !purchase.billingReady &&
+        purchase.products.isEmpty &&
+        !purchase.hasVerifiedAccount;
     final actions = _PaywallActions(
       active: active,
-      plans: trial ? null : plans,
+      plans: trial || needsAccount || purchase.hasPremiumUiAccess
+          ? null
+          : plans,
       purchase: purchase,
       selectedProduct: selectedProduct,
       busy: busy,
@@ -398,13 +434,16 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       canStartPurchase: _canStartPurchase(purchase),
       onContinue: _finish,
       onSubscribe: _subscribe,
+      onSignIn: _checkAccountAccess,
       onManage: _manageSubscriptions,
       onAllPlans: trialDays != null && !_showPlans
           ? () => setState(() => _showPlans = true)
           : null,
       statusMessage: _statusMessage(purchase),
-      terms: _termsFor(selectedProduct),
-      gateMessage: _purchaseGateMessage(purchase),
+      terms: needsAccount
+          ? 'Melde dich mit deinem Konto an, um eine vorhandene Premium-Freischaltung zu nutzen.'
+          : _termsFor(selectedProduct),
+      gateMessage: needsAccount ? null : _purchaseGateMessage(purchase),
       openTerms: () => _openLegal(LegalDocument.terms),
       openPrivacy: () => _openLegal(LegalDocument.privacy),
       openImprint: () => _openLegal(LegalDocument.imprint),
@@ -528,8 +567,14 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                         ),
                         Flexible(
                           child: TextAction(
-                            label: 'Wiederherstellen',
-                            onTap: _restore,
+                            label: purchase.billingReady
+                                ? 'Wiederherstellen'
+                                : purchase.hasVerifiedAccount
+                                ? 'Zugang prüfen'
+                                : 'Anmelden',
+                            onTap: purchase.billingReady
+                                ? _restore
+                                : _checkAccountAccess,
                             size: 14,
                           ),
                         ),
@@ -584,6 +629,7 @@ class _PaywallActions extends StatelessWidget {
     required this.canStartPurchase,
     required this.onContinue,
     required this.onSubscribe,
+    required this.onSignIn,
     required this.onManage,
     required this.onAllPlans,
     required this.statusMessage,
@@ -605,6 +651,7 @@ class _PaywallActions extends StatelessWidget {
   final bool canStartPurchase;
   final VoidCallback onContinue;
   final VoidCallback onSubscribe;
+  final VoidCallback onSignIn;
   final VoidCallback onManage;
   final VoidCallback? onAllPlans;
   final String? statusMessage;
@@ -617,6 +664,14 @@ class _PaywallActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.appColors;
+    final needsAccount =
+        !purchase.billingReady &&
+        purchase.products.isEmpty &&
+        !purchase.hasVerifiedAccount;
+    final complimentary =
+        purchase.hasPremiumUiAccess &&
+        purchase.activeProductId ==
+            ServerBillingSnapshot.complimentaryProductId;
     return Reveal(
       active: active,
       order: 8,
@@ -645,7 +700,11 @@ class _PaywallActions extends StatelessWidget {
               const SizedBox(height: 10),
             ],
             GlowButton(
-              label: purchase.hasPremiumUiAccess
+              label: complimentary
+                  ? 'Weiterlernen'
+                  : needsAccount
+                  ? 'Mit Konto freischalten'
+                  : purchase.hasPremiumUiAccess
                   ? 'Abo verwalten'
                   : purchase.phase == PurchasePhase.loading
                   ? 'Preise werden geladen …'
@@ -661,6 +720,10 @@ class _PaywallActions extends StatelessWidget {
                   : 'Premium abonnieren',
               onPressed: busy
                   ? null
+                  : complimentary
+                  ? onContinue
+                  : needsAccount
+                  ? onSignIn
                   : purchase.hasPremiumUiAccess
                   ? onManage
                   : canStartPurchase &&

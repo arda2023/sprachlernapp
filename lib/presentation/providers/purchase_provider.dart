@@ -117,6 +117,7 @@ class PurchaseState {
     this.isSyncing = false,
     this.serverStoreAllowed = false,
     this.purchaseAllowed = false,
+    this.accountSyncError,
   });
 
   final PurchasePhase phase;
@@ -151,6 +152,10 @@ class PurchaseState {
   /// True only when the current environment, legal configuration and server
   /// policy all permit a store operation for this authenticated account.
   final bool purchaseAllowed;
+
+  /// The last server check of this account's Premium failed. Kept apart from
+  /// [errorMessage] so a missing native store cannot hide it.
+  final String? accountSyncError;
 
   bool get hasPremiumUiAccess => premiumActive == true || sandboxTestActive;
 
@@ -187,6 +192,8 @@ class PurchaseState {
     bool? isSyncing,
     bool? serverStoreAllowed,
     bool? purchaseAllowed,
+    String? accountSyncError,
+    bool clearAccountSyncError = false,
   }) => PurchaseState(
     phase: phase ?? this.phase,
     products: products ?? this.products,
@@ -218,6 +225,9 @@ class PurchaseState {
     isSyncing: isSyncing ?? this.isSyncing,
     serverStoreAllowed: serverStoreAllowed ?? this.serverStoreAllowed,
     purchaseAllowed: purchaseAllowed ?? this.purchaseAllowed,
+    accountSyncError: clearAccountSyncError
+        ? null
+        : accountSyncError ?? this.accountSyncError,
   );
 }
 
@@ -242,6 +252,7 @@ class PurchaseController extends Notifier<PurchaseState> {
   late PurchaseClock _clock;
   (bool?, String?, DateTime?)? _lastObservedSdkProfile;
   bool _sdkReconciliationPending = false;
+  Future<void>? _serverSyncInFlight;
 
   @override
   PurchaseState build() {
@@ -263,6 +274,7 @@ class PurchaseController extends Notifier<PurchaseState> {
       billing.expiresAt,
     );
     _sdkReconciliationPending = false;
+    _serverSyncInFlight = null;
     ref.listen(billingProvider, (previous, next) {
       if (!ref.mounted || generation != _generation) return;
       final nextSdkProfile = (
@@ -285,6 +297,18 @@ class PurchaseController extends Notifier<PurchaseState> {
       }
     });
     ref.onDispose(() => _expiryTimer?.cancel());
+    if (accountId != null) {
+      // Account access is independent of native store support. Wait until the
+      // provider has returned its initial state before starting reconciliation.
+      unawaited(
+        Future<void>(() async {
+          if (_isCurrentAccount(generation, accountId) &&
+              state.syncedAt == null) {
+            await _syncForAccount(accountId, generation);
+          }
+        }),
+      );
+    }
     return PurchaseState(
       hasVerifiedAccount: accountId != null,
       billingReady: billingPhase == BillingPhase.ready,
@@ -314,24 +338,20 @@ class PurchaseController extends Notifier<PurchaseState> {
     return id;
   }
 
-  bool _isCurrent(int generation, String? accountId) {
+  bool _isCurrentAccount(int generation, String? accountId) {
     if (!ref.mounted || generation != _generation) return false;
     final session = ref.read(accountSessionProvider);
     if (session.isLoading || session.hasError) return false;
     final current = _accountId(ref.read(accountSessionProvider));
-    return current == accountId &&
-        ref.read(billingProvider).phase == BillingPhase.ready;
+    return current == accountId;
   }
+
+  bool _isCurrent(int generation, String? accountId) =>
+      _isCurrentAccount(generation, accountId) &&
+      ref.read(billingProvider).phase == BillingPhase.ready;
 
   Future<void> load() async {
     final gateway = ref.read(purchaseGatewayProvider);
-    if (gateway == null) {
-      state = state.copyWith(
-        phase: PurchasePhase.failed,
-        errorMessage: 'Premium-Käufe sind auf diesem Gerät nicht verfügbar.',
-      );
-      return;
-    }
     late final String? accountId;
     try {
       final session = ref.read(accountSessionProvider);
@@ -339,9 +359,6 @@ class PurchaseController extends Notifier<PurchaseState> {
         throw StateError('Anmeldestatus konnte nicht bestätigt werden.');
       }
       accountId = _accountId(session);
-      if (ref.read(billingProvider).phase != BillingPhase.ready) {
-        throw StateError('Der Store ist noch nicht bereit.');
-      }
     } catch (error) {
       _fail(error);
       return;
@@ -353,9 +370,24 @@ class PurchaseController extends Notifier<PurchaseState> {
       clearError: true,
       clearOutcome: true,
       hasVerifiedAccount: accountId != null,
-      billingReady: true,
+      billingReady: ref.read(billingProvider).phase == BillingPhase.ready,
       purchaseAllowed: false,
     );
+    if (gateway == null || !state.billingReady) {
+      _fail(
+        StateError(
+          gateway == null
+              ? 'Premium-Käufe sind auf diesem Gerät nicht verfügbar.'
+              : 'Der Store ist noch nicht bereit.',
+        ),
+        products: const [],
+      );
+      if (accountId != null) {
+        await _syncForAccount(accountId, generation, keepCatalogError: true);
+        _flushPendingSdkReconciliation(accountId, generation);
+      }
+      return;
+    }
     try {
       final products = await gateway.loadCatalog(customerUserId: accountId);
       if (!_isCurrent(generation, accountId)) return;
@@ -377,14 +409,14 @@ class PurchaseController extends Notifier<PurchaseState> {
                         .productId),
         clearSelectedProductId: products.isEmpty,
       );
-      // The backend is also the purchase-environment gate. Failure keeps the
-      // localized catalog visible, but disables store operations.
-      if (accountId != null) {
-        await _syncForAccount(accountId, generation, keepCatalogError: true);
-        _flushPendingSdkReconciliation(accountId, generation);
-      }
     } catch (error) {
       if (_isCurrent(generation, accountId)) _fail(error, products: const []);
+    }
+    // A catalog failure cannot prevent a server-verified gift or subscription
+    // from restoring access. Store operations still require a ready catalog.
+    if (accountId != null) {
+      await _syncForAccount(accountId, generation, keepCatalogError: true);
+      _flushPendingSdkReconciliation(accountId, generation);
     }
   }
 
@@ -470,7 +502,7 @@ class PurchaseController extends Notifier<PurchaseState> {
   Future<void> restore() async {
     final gateway = ref.read(purchaseGatewayProvider);
     if (gateway == null) {
-      _fail(StateError('Premium-Käufe sind auf diesem Gerät nicht verfügbar.'));
+      await _restoreAccountAccess();
       return;
     }
     late final String accountId;
@@ -508,14 +540,111 @@ class PurchaseController extends Notifier<PurchaseState> {
     }
   }
 
+  /// Without a native store there are no store purchases to restore; the
+  /// account's server-verified access is all "Wiederherstellen" can check.
+  Future<void> _restoreAccountAccess() async {
+    late final String accountId;
+    try {
+      accountId = _requireAccount(requireReadyBilling: false);
+      if (state.phase.isBusy) return;
+    } catch (error) {
+      _fail(error);
+      return;
+    }
+    final generation = _generation;
+    await _syncForAccount(accountId, generation);
+    if (!_isCurrentAccount(generation, accountId)) return;
+    final active = state.hasPremiumUiAccess;
+    state = state.copyWith(
+      lastOutcome: active ? PurchaseResult.restored : PurchaseResult.noPurchases,
+      clearError: active,
+    );
+  }
+
   Future<void> _syncForAccount(
     String accountId,
     int generation, {
     bool keepCatalogError = false,
   }) async {
-    final gateway = ref.read(billingSyncGatewayProvider);
-    if (gateway == null) {
-      if (_isCurrent(generation, accountId)) {
+    if (!_isCurrentAccount(generation, accountId)) return;
+    final inFlight = _serverSyncInFlight;
+    if (inFlight != null) {
+      state = state.copyWith(isSyncing: true, purchaseAllowed: false);
+      await inFlight;
+      return;
+    }
+    final completion = Completer<void>();
+    final pending = completion.future;
+    _serverSyncInFlight = pending;
+    try {
+      final gateway = ref.read(billingSyncGatewayProvider);
+      if (gateway == null) {
+        if (_isCurrentAccount(generation, accountId)) {
+          state = state.copyWith(
+            clearPremiumActive: true,
+            sandboxTestActive: false,
+            clearActiveProductId: true,
+            clearExpiresAt: true,
+            clearStartsAt: true,
+            clearWillRenew: true,
+            clearEnvironment: true,
+            clearPurchaseEnvironment: true,
+            clearSyncedAt: true,
+            serverStoreAllowed: false,
+            purchaseAllowed: false,
+            isSyncing: false,
+          );
+        }
+        return;
+      }
+      if (!_isCurrentAccount(generation, accountId)) return;
+      state = state.copyWith(
+        isSyncing: true,
+        purchaseAllowed: false,
+        clearAccountSyncError: true,
+      );
+      try {
+        final result = await gateway.sync();
+        if (!_isCurrentAccount(generation, accountId)) return;
+        state = state.copyWith(
+          premiumActive: result.premiumActive,
+          sandboxTestActive: sandboxTestAccessAllowed(
+            isDebug: ref.read(purchaseConfigurationProvider).isDebug,
+            isProfile: ref.read(purchaseConfigurationProvider).isProfile,
+            legalDocumentsApproved: ref
+                .read(purchaseConfigurationProvider)
+                .legalDocumentsApproved,
+            sandboxPurchasesEnabled: ref
+                .read(purchaseConfigurationProvider)
+                .sandboxPurchasesEnabled,
+            purchaseAllowed: result.purchaseAllowed,
+            purchaseEnvironment: result.purchaseEnvironment,
+            environment: result.environment,
+            verifiedSandboxActive: result.sandboxActive,
+            expiresAt: result.expiresAt,
+            now: _clock.now(),
+          ),
+          activeProductId: result.productId,
+          clearActiveProductId: result.productId == null,
+          expiresAt: result.expiresAt,
+          clearExpiresAt: result.expiresAt == null,
+          startsAt: result.startsAt,
+          clearStartsAt: result.startsAt == null,
+          willRenew: result.willRenew,
+          clearWillRenew: result.willRenew == null,
+          environment: result.environment,
+          purchaseEnvironment: result.purchaseEnvironment,
+          syncedAt: result.syncedAt,
+          isSyncing: false,
+          serverStoreAllowed: _serverAllows(result),
+          purchaseAllowed:
+              _storeReadyForPurchase &&
+              _purchaseConfigurationAllowsAttempt &&
+              _serverAllows(result),
+        );
+        _scheduleExpiryReconciliation(accountId, generation, result);
+      } catch (error) {
+        if (!_isCurrentAccount(generation, accountId)) return;
         state = state.copyWith(
           clearPremiumActive: true,
           sandboxTestActive: false,
@@ -526,76 +655,26 @@ class PurchaseController extends Notifier<PurchaseState> {
           clearEnvironment: true,
           clearPurchaseEnvironment: true,
           clearSyncedAt: true,
+          isSyncing: false,
           serverStoreAllowed: false,
           purchaseAllowed: false,
-          isSyncing: false,
+          errorMessage: keepCatalogError ? null : _message(error),
+          accountSyncError:
+              'Dein Premium-Zugang konnte gerade nicht geprüft werden. '
+              'Bitte später erneut versuchen.',
         );
       }
-      return;
+    } finally {
+      if (identical(_serverSyncInFlight, pending)) {
+        _serverSyncInFlight = null;
+      }
+      completion.complete();
+      _flushPendingSdkReconciliation(accountId, generation);
     }
-    if (!_isCurrent(generation, accountId)) return;
-    state = state.copyWith(isSyncing: true, purchaseAllowed: false);
-    try {
-      final result = await gateway.sync();
-      if (!_isCurrent(generation, accountId)) return;
-      state = state.copyWith(
-        premiumActive: result.premiumActive,
-        sandboxTestActive: sandboxTestAccessAllowed(
-          isDebug: ref.read(purchaseConfigurationProvider).isDebug,
-          isProfile: ref.read(purchaseConfigurationProvider).isProfile,
-          legalDocumentsApproved: ref
-              .read(purchaseConfigurationProvider)
-              .legalDocumentsApproved,
-          sandboxPurchasesEnabled: ref
-              .read(purchaseConfigurationProvider)
-              .sandboxPurchasesEnabled,
-          purchaseAllowed: result.purchaseAllowed,
-          purchaseEnvironment: result.purchaseEnvironment,
-          environment: result.environment,
-          verifiedSandboxActive: result.sandboxActive,
-          expiresAt: result.expiresAt,
-          now: _clock.now(),
-        ),
-        activeProductId: result.productId,
-        clearActiveProductId: result.productId == null,
-        expiresAt: result.expiresAt,
-        clearExpiresAt: result.expiresAt == null,
-        startsAt: result.startsAt,
-        clearStartsAt: result.startsAt == null,
-        willRenew: result.willRenew,
-        clearWillRenew: result.willRenew == null,
-        environment: result.environment,
-        purchaseEnvironment: result.purchaseEnvironment,
-        syncedAt: result.syncedAt,
-        isSyncing: false,
-        serverStoreAllowed: _serverAllows(result),
-        purchaseAllowed:
-            _purchaseConfigurationAllowsAttempt && _serverAllows(result),
-      );
-      _scheduleExpiryReconciliation(accountId, generation, result);
-    } catch (error) {
-      if (!_isCurrent(generation, accountId)) return;
-      state = state.copyWith(
-        clearPremiumActive: true,
-        sandboxTestActive: false,
-        clearActiveProductId: true,
-        clearExpiresAt: true,
-        clearStartsAt: true,
-        clearWillRenew: true,
-        clearEnvironment: true,
-        clearPurchaseEnvironment: true,
-        clearSyncedAt: true,
-        isSyncing: false,
-        serverStoreAllowed: false,
-        purchaseAllowed: false,
-        errorMessage: keepCatalogError ? null : _message(error),
-      );
-    }
-    _flushPendingSdkReconciliation(accountId, generation);
   }
 
   void _requestServerReconciliation(String accountId, int generation) {
-    if (!_isCurrent(generation, accountId)) return;
+    if (!_isCurrentAccount(generation, accountId)) return;
     if (state.phase.isBusy || state.isSyncing) {
       _sdkReconciliationPending = true;
       return;
@@ -608,7 +687,7 @@ class PurchaseController extends Notifier<PurchaseState> {
     if (!_sdkReconciliationPending ||
         state.phase.isBusy ||
         state.isSyncing ||
-        !_isCurrent(generation, accountId)) {
+        !_isCurrentAccount(generation, accountId)) {
       return;
     }
     _sdkReconciliationPending = false;
@@ -628,18 +707,19 @@ class PurchaseController extends Notifier<PurchaseState> {
     }
     final delay = expiresAt.difference(_clock.now());
     if (delay <= Duration.zero) {
-      if (_isCurrent(generation, accountId)) {
+      if (_isCurrentAccount(generation, accountId)) {
         state = state.copyWith(
           premiumActive: false,
           sandboxTestActive: false,
           purchaseAllowed: false,
         );
-        _requestServerReconciliation(accountId, generation);
+        // This response has already expired in transit. Keep access closed;
+        // immediately retrying the same server check can loop indefinitely.
       }
       return;
     }
     _expiryTimer = _clock.schedule(delay, () {
-      if (!_isCurrent(generation, accountId) ||
+      if (!_isCurrentAccount(generation, accountId) ||
           state.expiresAt != expiresAt ||
           !state.hasPremiumUiAccess) {
         return;
@@ -654,6 +734,11 @@ class PurchaseController extends Notifier<PurchaseState> {
       _requestServerReconciliation(accountId, generation);
     });
   }
+
+  bool get _storeReadyForPurchase =>
+      ref.read(purchaseGatewayProvider) != null &&
+      ref.read(billingProvider).phase == BillingPhase.ready &&
+      state.products.isNotEmpty;
 
   bool get _purchaseConfigurationAllowsAttempt {
     final config = ref.read(purchaseConfigurationProvider);

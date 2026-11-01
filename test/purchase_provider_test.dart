@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sprachapp/data/billing/adapty_billing_gateway.dart';
@@ -39,6 +41,22 @@ class _BillingGateway implements BillingGateway {
   Stream<BillingProfileSnapshot> get profileUpdates => updates.stream;
 }
 
+class _ConnectingBillingGateway implements BillingGateway {
+  final activation = Completer<void>();
+
+  @override
+  Future<void> activate() => activation.future;
+
+  @override
+  Future<void> bindCustomerUserId(String? customerUserId) async {}
+
+  @override
+  Future<BillingProfileSnapshot> readProfile() async => _profile('account-a');
+
+  @override
+  Stream<BillingProfileSnapshot> get profileUpdates => const Stream.empty();
+}
+
 class _PurchaseGateway implements PurchaseGateway {
   final products = const [
     PurchaseProduct(
@@ -61,12 +79,14 @@ class _PurchaseGateway implements PurchaseGateway {
   var purchaseCalls = 0;
   var restoreCalls = 0;
   Object? restoreFailure;
+  Object? catalogFailure;
 
   @override
   Future<List<PurchaseProduct>> loadCatalog({
     required String? customerUserId,
   }) async {
     accounts.add(customerUserId);
+    if (catalogFailure case final error?) throw error;
     return products;
   }
 
@@ -209,11 +229,24 @@ ServerBillingSnapshot _server({
   purchaseEnvironment: purchaseEnvironment,
 );
 
+ServerBillingSnapshot _gift({DateTime? expiresAt}) => ServerBillingSnapshot(
+  premiumActive: true,
+  sandboxActive: false,
+  environment: 'Production',
+  productId: 'com.ardasayar.linglossa.premium.complimentary',
+  startsAt: DateTime.utc(2026, 11),
+  expiresAt: expiresAt ?? DateTime.utc(2026, 12),
+  willRenew: false,
+  syncedAt: DateTime.utc(2026, 11),
+  purchaseAllowed: true,
+  purchaseEnvironment: 'Production',
+);
+
 Future<void> _flush() => Future<void>.delayed(const Duration(milliseconds: 20));
 
 ProviderContainer _container({
-  required _BillingGateway billing,
-  required _PurchaseGateway purchases,
+  required BillingGateway? billing,
+  required PurchaseGateway? purchases,
   required BillingSyncGateway sync,
   required Stream<AccountSession?> sessions,
   PurchaseConfiguration? configuration,
@@ -244,6 +277,323 @@ ProviderContainer _container({
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  for (final hasPurchaseGateway in [false, true]) {
+    test(
+      'Android gift loads automatically without ready billing (gateway: $hasPurchaseGateway)',
+      () async {
+        debugDefaultTargetPlatformOverride = TargetPlatform.android;
+        addTearDown(() => debugDefaultTargetPlatformOverride = null);
+        final purchases = _PurchaseGateway();
+        final sync = _BillingSync(_gift());
+        final container = _container(
+          billing: null,
+          purchases: hasPurchaseGateway ? purchases : null,
+          sync: sync,
+          sessions: Stream<AccountSession?>.value((
+            id: 'account-a',
+            email: null,
+          )),
+        );
+        addTearDown(container.dispose);
+        await _flush();
+
+        final initial = container.read(purchaseProvider);
+        expect(container.read(billingProvider).phase, BillingPhase.disabled);
+        expect(initial.premiumActive, isTrue);
+        expect(
+          initial.activeProductId,
+          'com.ardasayar.linglossa.premium.complimentary',
+        );
+        expect(initial.willRenew, isFalse);
+        expect(initial.purchaseAllowed, isFalse);
+        expect(initial.billingReady, isFalse);
+        expect(initial.phase, PurchasePhase.idle);
+        expect(
+          sync.calls,
+          1,
+          reason: 'Home access must not require loading the paywall.',
+        );
+
+        await container.read(purchaseProvider.notifier).load();
+        expect(container.read(purchaseProvider).premiumActive, isTrue);
+        expect(container.read(purchaseProvider).purchaseAllowed, isFalse);
+        expect(
+          purchases.accounts,
+          isEmpty,
+          reason: 'An unsupported store must not load a catalog.',
+        );
+        await container.read(purchaseProvider.notifier).purchaseSelected();
+        await container.read(purchaseProvider.notifier).restore();
+        expect(purchases.purchaseCalls, 0);
+        expect(purchases.restoreCalls, 0);
+        expect(container.read(purchaseProvider).premiumActive, isTrue);
+      },
+    );
+  }
+
+  test(
+    'server gift loads while the native billing SDK is still connecting',
+    () async {
+      final billing = _ConnectingBillingGateway();
+      final purchases = _PurchaseGateway();
+      final sync = _BillingSync(_gift());
+      final container = _container(
+        billing: billing,
+        purchases: purchases,
+        sync: sync,
+        sessions: Stream<AccountSession?>.value((id: 'account-a', email: null)),
+      );
+      addTearDown(container.dispose);
+      await _flush();
+      expect(container.read(billingProvider).phase, BillingPhase.connecting);
+      expect(container.read(purchaseProvider).premiumActive, isTrue);
+      expect(container.read(purchaseProvider).purchaseAllowed, isFalse);
+      await container.read(purchaseProvider.notifier).load();
+      expect(container.read(purchaseProvider).premiumActive, isTrue);
+      expect(purchases.accounts, isEmpty);
+    },
+  );
+
+  test('a missing account never requests or inherits server Premium without a store', () async {
+    final sync = _BillingSync(_gift());
+    final container = _container(
+      billing: null,
+      purchases: null,
+      sync: sync,
+      sessions: Stream<AccountSession?>.value(null),
+    );
+    addTearDown(container.dispose);
+    await _flush();
+    await container.read(purchaseProvider.notifier).load();
+    expect(sync.calls, 0);
+    expect(container.read(purchaseProvider).premiumActive, isNull);
+    expect(container.read(purchaseProvider).hasVerifiedAccount, isFalse);
+    expect(container.read(purchaseProvider).purchaseAllowed, isFalse);
+  });
+
+  test('restore without a store re-checks the account on the server', () async {
+    final sync = _BillingSync(_server(environment: 'Production'));
+    final container = _container(
+      billing: null,
+      purchases: null,
+      sync: sync,
+      sessions: Stream<AccountSession?>.value((id: 'account-a', email: null)),
+    );
+    addTearDown(container.dispose);
+    await _flush();
+    await container.read(purchaseProvider.notifier).load();
+    expect(container.read(purchaseProvider).premiumActive, isFalse);
+    final before = sync.calls;
+
+    sync.snapshot = _gift();
+    await container.read(purchaseProvider.notifier).restore();
+    final state = container.read(purchaseProvider);
+    expect(sync.calls, before + 1);
+    expect(state.premiumActive, isTrue);
+    expect(state.lastOutcome, PurchaseResult.restored);
+    expect(
+      state.errorMessage,
+      isNull,
+      reason: 'A missing store must not read as a failed restore of Premium.',
+    );
+  });
+
+  test('restore without a store and without an account asks for sign-in', () async {
+    final sync = _BillingSync(_gift());
+    final container = _container(
+      billing: null,
+      purchases: null,
+      sync: sync,
+      sessions: Stream<AccountSession?>.value(null),
+    );
+    addTearDown(container.dispose);
+    await _flush();
+    await container.read(purchaseProvider.notifier).restore();
+    expect(sync.calls, 0);
+    expect(container.read(purchaseProvider).premiumActive, isNull);
+    expect(
+      container.read(purchaseProvider).errorMessage,
+      'Bitte zuerst mit einem bestätigten Konto anmelden.',
+    );
+  });
+
+  test('a failed server check stays visible next to a missing store', () async {
+    final sync = _BillingSync(_gift())
+      ..failure = const HttpException('Billing sync failed with HTTP 503.');
+    final container = _container(
+      billing: null,
+      purchases: null,
+      sync: sync,
+      sessions: Stream<AccountSession?>.value((id: 'account-a', email: null)),
+    );
+    addTearDown(container.dispose);
+    await _flush();
+    await container.read(purchaseProvider.notifier).load();
+    var state = container.read(purchaseProvider);
+    expect(state.premiumActive, isNull);
+    expect(state.hasPremiumUiAccess, isFalse);
+    expect(state.errorMessage, 'Premium-Käufe sind auf diesem Gerät nicht verfügbar.');
+    expect(state.accountSyncError, isNotNull);
+
+    sync.failure = null;
+    await container.read(purchaseProvider.notifier).load();
+    state = container.read(purchaseProvider);
+    expect(state.premiumActive, isTrue);
+    expect(state.accountSyncError, isNull);
+  });
+
+  test('a failed store catalog still reconciles gifted Premium and keeps purchases disabled', () async {
+    final billing = _BillingGateway('account-a');
+    final purchases = _PurchaseGateway()
+      ..catalogFailure = StateError('Catalog unavailable.');
+    final sync = _BillingSync(_server());
+    final container = _container(
+      billing: billing,
+      purchases: purchases,
+      sync: sync,
+      sessions: Stream<AccountSession?>.value((id: 'account-a', email: null)),
+    );
+    addTearDown(() async {
+      container.dispose();
+      await billing.updates.close();
+    });
+    await _flush();
+    expect(container.read(purchaseProvider).premiumActive, isFalse);
+    sync.snapshot = _gift();
+    await container.read(purchaseProvider.notifier).load();
+    final state = container.read(purchaseProvider);
+    expect(state.phase, PurchasePhase.failed);
+    expect(state.premiumActive, isTrue);
+    expect(state.products, isEmpty);
+    expect(state.purchaseAllowed, isFalse);
+    expect(state.errorMessage, 'Catalog unavailable.');
+    expect(sync.calls, 2);
+  });
+
+  test('initial and explicit server checks share an in-flight request without a store', () async {
+    final reply = Completer<ServerBillingSnapshot>();
+    final sync = _BillingSync(_server())..nextReply = reply;
+    final container = _container(
+      billing: null,
+      purchases: null,
+      sync: sync,
+      sessions: Stream<AccountSession?>.value((id: 'account-a', email: null)),
+    );
+    addTearDown(container.dispose);
+    await _flush();
+    final load = container.read(purchaseProvider.notifier).load();
+    await _flush();
+    expect(sync.calls, 1);
+    expect(container.read(purchaseProvider).isSyncing, isTrue);
+    reply.complete(_gift());
+    await load;
+    expect(container.read(purchaseProvider).premiumActive, isTrue);
+    expect(container.read(purchaseProvider).isSyncing, isFalse);
+  });
+
+  test(
+    'store-independent gift expires immediately and rechecks the server',
+    () async {
+      final now = DateTime.utc(2026, 11, 1, 12);
+      final clock = _FakePurchaseClock(now);
+      final sync = _BillingSync(
+        _gift(expiresAt: now.add(const Duration(hours: 1))),
+      );
+      final container = _container(
+        billing: null,
+        purchases: null,
+        sync: sync,
+        sessions: Stream<AccountSession?>.value((id: 'account-a', email: null)),
+        clock: clock,
+      );
+      addTearDown(container.dispose);
+      await _flush();
+      expect(container.read(purchaseProvider).premiumActive, isTrue);
+      final reply = Completer<ServerBillingSnapshot>();
+      sync.nextReply = reply;
+      clock.advance(const Duration(hours: 1));
+      await _flush();
+      expect(container.read(purchaseProvider).premiumActive, isFalse);
+      expect(container.read(purchaseProvider).isSyncing, isTrue);
+      expect(sync.calls, 2);
+      reply.complete(
+        _server(environment: 'Production', purchaseEnvironment: 'Production'),
+      );
+      await _flush();
+      expect(container.read(purchaseProvider).premiumActive, isFalse);
+      expect(container.read(purchaseProvider).purchaseAllowed, isFalse);
+    },
+  );
+
+  test('store-independent account changes discard old gifts and late server replies', () async {
+    final accountChanges = StreamController<AccountSession?>.broadcast(
+      sync: true,
+    );
+    var currentAccount = 'account-a';
+    final sessions = Stream<AccountSession?>.multi((sink) {
+      sink.add((id: currentAccount, email: null));
+      final sub = accountChanges.stream.listen(sink.add);
+      sink.onCancel = sub.cancel;
+    });
+    final oldReply = Completer<ServerBillingSnapshot>();
+    final sync = _AccountBillingSync(() => currentAccount, {
+      'account-a': _gift(),
+      'account-b': _server(
+        environment: 'Production',
+        purchaseEnvironment: 'Production',
+      ),
+    })..delayed['account-a'] = oldReply;
+    final container = _container(
+      billing: null,
+      purchases: null,
+      sync: sync,
+      sessions: sessions,
+    );
+    addTearDown(() async {
+      container.dispose();
+      await accountChanges.close();
+    });
+    await _flush();
+    expect(container.read(purchaseProvider).isSyncing, isTrue);
+    currentAccount = 'account-b';
+    accountChanges.add((id: 'account-b', email: null));
+    await _flush();
+    expect(container.read(purchaseProvider).premiumActive, isFalse);
+    oldReply.complete(_gift());
+    await _flush();
+    expect(container.read(purchaseProvider).premiumActive, isFalse);
+    expect(sync.accounts, ['account-a', 'account-b']);
+
+    currentAccount = 'account-a';
+    accountChanges.add((id: 'account-a', email: null));
+    await _flush();
+    expect(container.read(purchaseProvider).premiumActive, isTrue);
+    accountChanges.add(null);
+    await _flush();
+    expect(container.read(purchaseProvider).hasVerifiedAccount, isFalse);
+    expect(container.read(purchaseProvider).premiumActive, isNull);
+    expect(container.read(purchaseProvider).activeProductId, isNull);
+    expect(sync.accounts, ['account-a', 'account-b', 'account-a']);
+  });
+
+  test('a gift that expires in transit stays inactive without a reconciliation loop', () async {
+    final now = DateTime.utc(2026, 11, 1, 12);
+    final sync = _BillingSync(_gift(expiresAt: now));
+    final container = _container(
+      billing: null,
+      purchases: null,
+      sync: sync,
+      sessions: Stream<AccountSession?>.value((id: 'account-a', email: null)),
+      clock: _FakePurchaseClock(now),
+    );
+    addTearDown(container.dispose);
+    await _flush();
+    expect(container.read(purchaseProvider).premiumActive, isFalse);
+    expect(container.read(purchaseProvider).isSyncing, isFalse);
+    expect(container.read(purchaseProvider).purchaseAllowed, isFalse);
+    expect(sync.calls, 1);
+  });
 
   test(
     'sandbox test access requires build, legal, server, and expiry gates',
@@ -514,8 +864,8 @@ void main() {
         expect(state.purchaseAllowed, isTrue);
         expect(
           sync.calls,
-          2,
-        ); // catalog preflight and pre-purchase policy check
+          3,
+        ); // automatic account check, catalog preflight, pre-purchase policy
       },
     );
   }
@@ -542,7 +892,7 @@ void main() {
           .read(purchaseProvider.notifier)
           .purchaseSelected();
       await _flush();
-      expect(sync.calls, 2);
+      expect(sync.calls, 3);
 
       sync.snapshot = _server(
         active: true,
@@ -553,7 +903,7 @@ void main() {
       await _flush();
       expect(
         sync.calls,
-        2,
+        3,
         reason:
             'Do not start reconciliation while the native purchase is open.',
       );
@@ -565,7 +915,7 @@ void main() {
       expect(state.lastOutcome, PurchaseResult.pending);
       expect(state.premiumActive, isTrue);
       expect(state.activeProductId, 'yearly');
-      expect(sync.calls, 3);
+      expect(sync.calls, 4);
     },
   );
 
@@ -687,8 +1037,8 @@ void main() {
       expect(state.activeProductId, 'yearly');
       expect(
         sync.calls,
-        3,
-      ); // catalog preflight, purchase preflight, post-purchase sync
+        4,
+      ); // automatic account check, catalog, purchase preflight, post-purchase
     },
   );
 
@@ -751,7 +1101,7 @@ void main() {
         isTrue,
       ); // backend entitlement itself is Production
       expect(state.expiresAt, DateTime.utc(2027));
-      expect(sync.calls, 2);
+      expect(sync.calls, 3);
     },
   );
 
@@ -852,14 +1202,17 @@ void main() {
     expect(purchases.purchaseCalls, 1);
     accountChanges.add((id: 'account-b', email: null));
     await _flush();
+    final callsBeforePurchaseReply = sync.calls;
     purchases.purchaseReplies.single.complete(PurchaseOutcome.success);
     await pending;
 
     final state = container.read(purchaseProvider);
     expect(state.hasVerifiedAccount, isTrue);
     expect(state.lastOutcome, isNull);
-    expect(state.premiumActive, isNull);
-    expect(sync.calls, 2); // No post-result sync is sent using account B's JWT.
+    expect(state.premiumActive, isFalse);
+    // The new account is reconciled automatically. The old native result must
+    // not send another synchronization using account B's JWT.
+    expect(sync.calls, callsBeforePurchaseReply);
   });
 
   test('active Production entitlement follows A to B to A and ignores B stale sync', () async {
@@ -902,18 +1255,17 @@ void main() {
     });
     await _flush();
 
-    await container.read(purchaseProvider.notifier).load();
     expect(container.read(purchaseProvider).premiumActive, isTrue);
     expect(sync.accounts, ['account-a']);
 
+    final staleBReply = Completer<ServerBillingSnapshot>();
+    sync.delayed['account-b'] = staleBReply;
     currentAccount = 'account-b';
     accountChanges.add((id: 'account-b', email: null));
     await _flush();
     expect(container.read(purchaseProvider).premiumActive, isNull);
     expect(container.read(purchaseProvider).clientPremiumActive, isFalse);
 
-    final staleBReply = Completer<ServerBillingSnapshot>();
-    sync.delayed['account-b'] = staleBReply;
     final loadB = container.read(purchaseProvider.notifier).load();
     await _flush();
     expect(sync.accounts, ['account-a', 'account-b']);
@@ -922,8 +1274,6 @@ void main() {
     currentAccount = 'account-a';
     accountChanges.add((id: 'account-a', email: null));
     await _flush();
-    expect(container.read(purchaseProvider).premiumActive, isNull);
-    await container.read(purchaseProvider.notifier).load();
     expect(container.read(purchaseProvider).premiumActive, isTrue);
     expect(sync.accounts, ['account-a', 'account-b', 'account-a']);
 

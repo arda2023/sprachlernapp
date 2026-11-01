@@ -49,6 +49,49 @@ void main() {
   });
 
   test(
+    'complimentary grant has a finite, non-renewing Production lifetime',
+    () {
+      final response = _response(
+        productId: ServerBillingSnapshot.complimentaryProductId,
+        expiresAt: '2026-11-30T12:00:00Z',
+      )..['will_renew'] = false;
+      expect(
+        ServerBillingSnapshot.fromJson(
+          response,
+          now: DateTime.utc(2026, 11, 1),
+        ).premiumActive,
+        isTrue,
+      );
+      expect(
+        ServerBillingSnapshot.fromJson(
+          response,
+          now: DateTime.utc(2026, 12, 1),
+        ).premiumActive,
+        isFalse,
+      );
+      expect(
+        ServerBillingSnapshot.fromJson(
+          response,
+          now: DateTime.utc(2026, 9, 1),
+        ).premiumActive,
+        isFalse,
+      );
+      for (final patch in [
+        {'environment': 'Sandbox'},
+        {'will_renew': true},
+        {'expires_at': null},
+        {'starts_at': null},
+        {'starts_at': '2026-12-30T12:00:00Z'},
+      ]) {
+        expect(
+          () => ServerBillingSnapshot.fromJson({...response, ...patch}),
+          throwsFormatException,
+        );
+      }
+    },
+  );
+
+  test(
     'rejects unknown environments, products, and active products missing an ID',
     () {
       for (final response in [
