@@ -5,6 +5,9 @@ import 'package:sqlite3/sqlite3.dart';
 
 import 'runtime_translation_client.dart';
 
+/// Expiry of a stored translation: never (latest date Dart can represent).
+const keepForever = 8640000000000000;
+
 /// Independent from content.sqlite and the learner database. The owner column
 /// is mandatory on every read/write. Hashes alone never authorize access.
 class TranslationCache {
@@ -21,8 +24,11 @@ class TranslationCache {
     db.execute(
       'CREATE TABLE IF NOT EXISTS word_cloud_consent (owner TEXT PRIMARY KEY, version INTEGER NOT NULL, enabled INTEGER NOT NULL, decided_at INTEGER NOT NULL)',
     );
-    db.execute('DELETE FROM translations WHERE expires <= ?', [
-      DateTime.now().millisecondsSinceEpoch,
+    // Kept for good (user decision 01.11.2026); rows from the former
+    // 30-day rule are extended. Deleting stays possible in Settings.
+    db.execute('UPDATE translations SET expires=? WHERE expires<?', [
+      keepForever,
+      keepForever,
     ]);
     return db;
   })();
@@ -49,14 +55,11 @@ class TranslationCache {
     if (db.select('SELECT 1 FROM deletion WHERE owner=?', [owner]).isNotEmpty) {
       return;
     }
-    final expires = DateTime.parse(response['created_at'] as String)
-        .add(const Duration(days: 30));
-    if (expires.isBefore(DateTime.now())) return;
     db.execute('INSERT OR REPLACE INTO translations VALUES(?,?,?,?)', [
       owner,
       key,
       jsonEncode(response),
-      expires.millisecondsSinceEpoch,
+      keepForever,
     ]);
   }
 

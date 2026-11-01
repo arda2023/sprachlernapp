@@ -58,7 +58,7 @@ const legalDocuments = <LegalDocument, LegalDocumentContent>{
       ),
       LegalSection(
         'Übersetzungsspeicher und Löschung',
-        'Übersetzungsantworten können konto- und anfragebezogen zwischengespeichert werden. Die lokale App hält passende Antworten höchstens 30 Tage vor; die serverseitige Übersetzungsantwort wird ebenfalls mit einer Höchstfrist von 30 Tagen gespeichert und danach bei der nächsten passenden Bereinigung entfernt. Du kannst den gespeicherten Übersetzungscache über die dafür vorgesehene Funktion in der App löschen. Eine Cache-Löschung löscht keine lokalen Lernkarten, Wiederholungen oder Leselisten. Technische Sperr- und Wiederholungsmarker können zur Vermeidung doppelter Anfragen länger erforderlich sein; sie enthalten keine fertige Übersetzungsantwort.',
+        'Übersetzungsantworten können konto- und anfragebezogen zwischengespeichert werden. Die lokale App und der Server bewahren passende Antworten ohne Ablaufdatum auf, damit dieselbe Übersetzung später ohne neue Anfrage sofort erscheint. Du kannst den gespeicherten Übersetzungscache jederzeit über die dafür vorgesehene Funktion in der App löschen; mit deinem Konto wird er ebenfalls gelöscht. Eine Cache-Löschung löscht keine lokalen Lernkarten, Wiederholungen oder Leselisten. Technische Sperr- und Wiederholungsmarker können zur Vermeidung doppelter Anfragen länger erforderlich sein; sie enthalten keine fertige Übersetzungsantwort.',
       ),
       LegalSection(
         'Abonnement und Abrechnung',

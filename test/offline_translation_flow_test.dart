@@ -198,22 +198,39 @@ void main() {
       contains('CC BY-SA 4.0'),
     );
   });
+  // Dictionary first (user decision 01.11.2026): the first sense answers,
+  // whatever the context; no AI request.
   for (final context in ['I work at the bank.', 'I walk by the bank.']) {
-    testWidgets('ambiguous bank invokes one automatic request: $context', (
+    testWidgets('bank comes from the dictionary without a request: $context', (
       tester,
     ) async {
       dictionary.values = ambiguous;
       await mount(tester, text: context);
-      expect(remote.calls, 1);
-      expect(find.text('Bank'), findsNothing);
-      expect(find.text('Ufer'), findsNothing);
-      expect(find.text('Im Kontext übersetzen'), findsNothing);
-      expect(find.text('Mit KI übersetzen'), findsNothing);
-      expect(find.text('kommt an'), findsOneWidget);
+      expect(find.text('Bank'), findsOneWidget);
+      expect(remote.calls, 0);
       await tester.pump(const Duration(seconds: 30));
-      expect(remote.calls, 1);
+      expect(remote.calls, 0);
     });
   }
+  testWidgets('a definition instead of a translation asks the AI once', (
+    tester,
+  ) async {
+    dictionary.values = const [
+      DictionaryCandidate(
+        'bank',
+        'Substantiv',
+        'Stelle am Rand eines Flusses, an der man steht',
+        '',
+        '',
+        '',
+      ),
+    ];
+    await mount(tester, text: 'I walk by the bank.');
+    expect(remote.calls, 1);
+    expect(find.text('kommt an'), findsOneWidget);
+    await tester.pump(const Duration(seconds: 30));
+    expect(remote.calls, 1);
+  });
   for (final consent in [WordCloudConsent.unknown, WordCloudConsent.disabled]) {
     testWidgets('no automatic upload and no opt-in text for $consent', (
       tester,

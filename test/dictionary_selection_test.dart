@@ -18,10 +18,18 @@ void main() {
         ('en', 'cat', 'Katze'),
         ('pt-BR', 'coração', 'Herz'),
         ('pt-BR', 'oxigênio', 'Sauerstoff'),
-        ('en', 'bank', null),
-        ('en', 'arrives', null),
-        ('en', 'went', null),
-        ('pt-BR', 'fui', null),
+        // Dictionary first (01.11.2026): the first sense's short terms.
+        ('en', 'bank', 'Bank'),
+        ('en', 'arrived', 'ankommen, eintreffen'),
+        ('en', 'destroyed', 'zerstören'),
+        ('en', 'wall', 'die Mauer, die Wand'),
+        ('en', 'glass', 'Glas'),
+        ('en', 'neighbourhood', 'Nachbarschaft'),
+        ('en', 'serious', 'ernst'),
+        // A definition instead of a translation, a name, nothing: the AI.
+        ('en', 'hole', null),
+        ('en', 'machine', null),
+        ('en', 'cash', null),
         ('pt-BR', 'do', null),
         ('pt-BR', 'na', null),
         ('en', 'banana', null),
@@ -45,7 +53,7 @@ void main() {
       );
     },
   );
-  test('one entry alone is insufficient; embedded alternatives, restrictions and forms rejected', () {
+  test('short leading terms only; names, restricted senses and definitions abstain', () {
     DictionaryCandidate candidate(
       String gloss, {
       String pos = 'Substantiv',
@@ -53,16 +61,52 @@ void main() {
       String tags = '',
     }) => DictionaryCandidate('sample', pos, gloss, tags, '', via);
     for (final item in [
-      candidate('Bank, Ufer'),
       candidate('mit mehreren Bedeutungen; Bank'),
-      candidate('gehen', pos: 'Verb'),
-      candidate('Katze', via: 'form'),
+      candidate('Stelle in einer Masse, an der Substanz fehlt'),
       candidate('Katze', tags: 'slang'),
+      candidate('Katze', tags: 'Kalender'),
+      candidate('englischer Familienname', pos: 'Nachname'),
+      candidate('3 Uhr'),
     ]) {
       expect(singleDictionaryTranslation('sample', [item]), isNull);
     }
+    expect(
+      singleDictionaryTranslation('sample', [candidate('Bank, Ufer')]),
+      'Bank, Ufer',
+    );
+    expect(
+      singleDictionaryTranslation('sample', [
+        candidate('gehen, fahren, laufen'),
+      ]),
+      'gehen, fahren',
+    );
+    expect(
+      singleDictionaryTranslation('sample', [
+        candidate('Glas (das Material), Becher'),
+      ]),
+      'Glas, Becher',
+    );
+    expect(
+      singleDictionaryTranslation('sample', [candidate('Katze', via: 'form')]),
+      'Katze',
+    );
+    // The article wins over the homonymous adverb.
+    expect(
+      singleDictionaryTranslation('the', [
+        candidate('desto, umso', pos: 'Adverb'),
+        candidate('der, die, das', pos: 'Artikel'),
+      ]),
+      'der, die',
+    );
+    // A restricted first sense is skipped, the next plain one decides.
+    expect(
+      singleDictionaryTranslation('sample', [
+        candidate('Kater', tags: 'colloquial'),
+        candidate('Katze'),
+      ]),
+      'Katze',
+    );
     final item = candidate('Katze');
-    expect(singleDictionaryTranslation('sample', [item, item]), 'Katze');
     expect(
       singleDictionaryTranslation('sample', List.filled(80, item)),
       isNull,

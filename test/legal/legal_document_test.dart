@@ -30,7 +30,7 @@ void main() {
     'privacy notice describes actual processing without unsupported promises',
     () {
       final privacy = textFor(LegalDocument.privacy);
-      expect(privacy, contains('höchstens 30 Tage'));
+      expect(privacy, contains('ohne Ablaufdatum'));
       expect(
         privacy,
         contains('nicht mit einem Linglossa-Konto synchronisiert'),

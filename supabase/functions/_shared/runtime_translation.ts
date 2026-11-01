@@ -490,8 +490,8 @@ export function validateCached(kind: Kind, input: Json, value: Json): void {
       text(value.request_id, 80) &&
       typeof value.created_at === "string" &&
       Number.isFinite(Date.parse(value.created_at)) &&
+      // Any age: cached translations are kept for good (01.11.2026).
       Date.parse(value.created_at) <= Date.now() + 60000 &&
-      Date.parse(value.created_at) > Date.now() - 30 * 86400000 &&
       typeof value.cached === "boolean",
     "CACHE_INVALID",
     503,

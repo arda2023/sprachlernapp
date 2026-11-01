@@ -118,10 +118,9 @@ class RuntimeTranslation {
         !_valid(v['request_id'], 80) ||
         v['created_at'] is! String ||
         DateTime.tryParse(v['created_at']) == null ||
+        // Any age: translations are kept for good (01.11.2026).
         DateTime.parse(v['created_at'])
             .isAfter(DateTime.now().add(const Duration(minutes: 1))) ||
-        DateTime.parse(v['created_at'])
-            .isBefore(DateTime.now().subtract(const Duration(days: 30))) ||
         v['cached'] is! bool) {
       throw const FormatException('translation response');
     }

@@ -425,8 +425,18 @@ void main() {
       ),
     );
   });
-  test('invalid provenance, incomplete sense and expired results rejected', () {
+  test('invalid provenance, incomplete sense and future results rejected', () {
     final req = TranslationRequest(lang: 'en', text: 'The bank.', form: 'bank');
+    // Kept for good (01.11.2026): an old answer stays valid.
+    expect(
+      RuntimeTranslation.parse({
+        ...response(req),
+        'created_at': DateTime.now()
+            .subtract(const Duration(days: 400))
+            .toIso8601String(),
+      }, req).text,
+      isNotEmpty,
+    );
     for (final edit in <Map<String, dynamic>>[
       {'prompt': 'old'},
       {'contract': 1},
@@ -434,7 +444,7 @@ void main() {
       {'model': 'other'},
       {
         'created_at': DateTime.now()
-            .subtract(const Duration(days: 31))
+            .add(const Duration(days: 1))
             .toIso8601String(),
       },
       {

@@ -6,7 +6,7 @@ Aktualisiert durch [Paket-2B-Änderungsvertrag](offline-translation-revision.md)
 
 Identität: Konto + Supabase-Projekt, Operation, en/pt-BR → de, exakter vollständiger Satz, exakte Wortform und UTF-16-Start/Ende, optionale Sense-/Formreferenzen, Vertragsversion 2. Keine Unicode-/Case-/Whitespace-Normalisierung. Promptversion `translation-v2`, Anbieter Anthropic, Modell `claude-haiku-5-5` als Herkunft. Vertrags-/Promptänderung invalidiert gezielt; Neustart/Refresh nicht.
 
-Lokaler separater SQLite-Speicher im Application-Support-Verzeichnis; maximal 30 Tage ab ursprünglichem Servererfolg. Kein Zugriff ohne lokal wiederhergestellte nicht-anonyme Sitzung; keine Tokenauffrischung für Offline-Treffer. Kontowechsel/Abmeldung invalidieren laufende Anzeigen. Serverzugriff ausschließlich nach JWT-Prüfung und privater Owner-Zuordnung; Service-only RPCs und RLS ohne Clientpolicies.
+Lokaler separater SQLite-Speicher im Application-Support-Verzeichnis; ohne Ablaufdatum (Nutzerentscheidung 01.11.2026, vorher 30 Tage); löschbar in den Einstellungen. Kein Zugriff ohne lokal wiederhergestellte nicht-anonyme Sitzung; keine Tokenauffrischung für Offline-Treffer. Kontowechsel/Abmeldung invalidieren laufende Anzeigen. Serverzugriff ausschließlich nach JWT-Prüfung und privater Owner-Zuordnung; Service-only RPCs und RLS ohne Clientpolicies.
 
 Atomare Serverreservierung vor Modellaufruf, vorhandene Generierungslimits unverändert. Gleichzeitige Misses erhalten einen begrenzten Busy-Status, keine wartenden Jobs. Unklarer Ausgang bleibt 24 Stunden gesperrt, danach nur neuer ausdrücklicher Versuch. Keine Exactly-once-Zusage. Löschung entfernt Ergebnisse und verhindert späte Speicherung; Unsicherheitsmarker ohne Originaltext bleiben bis zum Ablauf bestehen.
 
@@ -29,7 +29,7 @@ Lokal implementiert und mit synthetischen Antworten geprüft. Kein Push, Deploym
 
 ## Aufbewahrung und Invalidierung
 
-30 Tage Wiederverwendung ab ursprünglichem Servererfolg, nicht gleitend verlängert durch Treffer. Abgelaufene lokale Einträge werden beim Öffnen der DB physisch bereinigt; serverseitige Einträge beim nächsten Claim. Inaktive Geräte/Server können die abgelaufenen Bytes bis zur nächsten Nutzung oder expliziten Löschung behalten. Das ist eine Nutzungsfrist mit verzögerter Bereinigung, keine Zusage taggenauer physischer Löschung. Accountlöschung in `auth.users` entfernt Servereinträge per FK-Cascade. Bestehende weitere Fremdschlüssel der App können eine Accountlöschung unabhängig davon einschränken.
+Seit 01.11.2026 (Nutzerentscheidung) ohne Ablaufdatum, lokal und auf dem Server (`20261101000002_keep_translations.sql`); bestehende Einträge werden verlängert. Löschen über Einstellungen oder Kontolöschung.
 
 Vertrags- oder Promptrevision, Sprache, Operation, exakter Text/Offset sowie vorhandene Sense-/Formreferenz ändern den Schlüssel; keine aggressive Normalisierung. Bei künftigem Modellwechsel muss zugleich die Prompt-/Vertragsrevision erhöht werden; die Antwortprüfung akzeptiert aktuell nur den festen Modellnamen. Normale App-Neustarts, UI-Refresh und Sprachauswahl löschen den Cache nicht. Ein inhaltlich identischer Kontext bleibt über einen Packwechsel gültig; geänderte Texte/Referenzen treffen nicht mehr. Alte ungültige Cache-Daten werden nicht als neuer Inhalt ausgegeben und nicht automatisch neu generiert.
 

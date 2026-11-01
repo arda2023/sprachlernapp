@@ -10,7 +10,8 @@ const wordCloudDisclosure =
     'Wenn eine lokale Übersetzung fehlt oder unklar ist, werden beim Antippen '
     'eines Wortes das Wort und der vollständige Satzkontext über unseren '
     'Übersetzungsserver an Anthropic gesendet. Keine ausschließlich europäische '
-    'Verarbeitung. Die Übersetzung wird bis zu 30 Tage privat wiederverwendet. '
+    'Verarbeitung. Die Übersetzung wird privat gespeichert und wiederverwendet, '
+    'bis du sie in den Einstellungen löschst. '
     'Die Freigabe gilt für dieses Konto auf diesem Gerät und lässt sich in den '
     'Einstellungen jederzeit ausschalten. Bereits gesendete Anfragen lassen '
     'sich dadurch nicht zurückholen.';
