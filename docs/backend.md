@@ -102,6 +102,10 @@ Nach 30 Tagen seit Reservierung entfernt ein späterer Claim gespeicherte Antwor
 
 Stand 31.10.2026: Die Migration ist remote angewandt und die Function `generate-vocabulary` ist deployed. Synthetische Liveproben aller fünf Sprachen mit je bis zu 50 Karten und identischem Status-Replay waren erfolgreich; Details und akzeptierte Anzahlen stehen im Arbeitsbericht. Deployment, lokale Regressionstests, sprachliche Qualität und Geräteabnahme sind getrennte Nachweise.
 
+## Tägliche Nachrichten (vorbereitet, nicht veröffentlicht)
+
+Auf Nutzerwunsch vom 01.11.2026 vorerst ausgeblendet. Migrationen und Function liegen in `supabase/drafts/daily-news/` und sind weder angewandt noch deployt. Geplant: `refresh-news` (ohne Nutzer-JWT, mit gemeinsamem Geheimnis `NEWS_CRON_SECRET` aus Vault) wird täglich je Ressort von `pg_cron` aufgerufen. Claude Haiku 5.5 sucht mit dem Websuche-Tool und schreibt B1-Artikel mit deutschen Satzübersetzungen für alle Lernsprachen. Die Artikel liegen in `app.news_articles`, schreibbar nur über `store_news` (service_role). Lesbar sind sie öffentlich über `latest_news(p_lang)`. Einrichtung, Kosten und Prüfungen: [daily-news.md](daily-news.md).
+
 ## Weiterhin Entwurf: `sentence-check`
 
 Story-Satzprüfung/Umschreiben ist nicht implementiert und wird durch diesen Auftrag nicht aktiviert. SRS, Antwortbewertung, Produktionspacks, redaktionelle Übersetzungen und bestehende Lernstände bleiben unverändert.

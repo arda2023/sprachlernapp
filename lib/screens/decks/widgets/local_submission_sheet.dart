@@ -140,7 +140,7 @@ class _LocalSubmissionSheetState extends ConsumerState<LocalSubmissionSheet> {
             widget.category!,
             style: AppType.chrome(
               color: context.appColors.textPrimary,
-              size: 18,
+              size: 17,
             ),
           )
         else ...[

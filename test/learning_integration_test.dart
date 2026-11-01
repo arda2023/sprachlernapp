@@ -1,3 +1,4 @@
+import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -24,6 +25,7 @@ void main() {
   late DateTime now;
   ProviderContainer scope() => ProviderContainer(
     overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
       contentRepositoryProvider.overrideWith((ref) async => content),
       userRepositoryProvider.overrideWith((ref) async => user),
       clockProvider.overrideWithValue(() => now),
@@ -189,6 +191,7 @@ void main() {
     expect((await user.allCardStates()).containsKey('legacy-missing'), isTrue);
     final failed = ProviderContainer(
       overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
         userRepositoryProvider.overrideWith((ref) async => user),
         contentRepositoryProvider.overrideWith(
           (ref) async => throw const ContentUnavailable(
@@ -222,6 +225,7 @@ void main() {
       subscription.close();
       final failed = ProviderContainer(
         overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
           contentRepositoryProvider.overrideWith((ref) async => content),
           userRepositoryProvider.overrideWith(
             (ref) async => throw StateError('DB unavailable'),

@@ -37,7 +37,7 @@ class PracticeEmptyState extends StatelessWidget {
           child: Text(
             title,
             textAlign: TextAlign.center,
-            style: AppType.editorial(color: colors.textPrimary, size: 26),
+            style: AppType.editorial(color: colors.textPrimary, size: 24),
           ),
         ),
         const SizedBox(height: 8),
@@ -218,7 +218,7 @@ class _SleepyCardStackState extends State<SleepyCardStack>
           'z',
           style: AppType.editorial(
             color: color,
-            size: 14 + 8 * p,
+            size: 17 + 8 * p,
             weight: FontWeight.w600,
           ),
         ),

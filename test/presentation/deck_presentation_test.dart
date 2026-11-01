@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sprachapp/models/home_models.dart';
+import 'package:sprachapp/presentation/deck_visuals.dart';
 import 'package:sprachapp/presentation/providers/deck_providers.dart';
 
 /// Deck names and bolts as the decks screens show them, checked against the
@@ -19,6 +20,7 @@ void main() {
       expect(rows, isNotEmpty);
       final names = <String>{};
       final levels = <DeckDifficulty>{};
+      final icons = <Object>{};
       for (final row in rows) {
         final name = deckDisplayName(
           row['slug'] as String,
@@ -26,6 +28,11 @@ void main() {
         );
         expect(name, isNot(contains('&')), reason: row['slug'] as String);
         expect(names.add(name), isTrue, reason: 'duplicate name $name');
+        expect(
+          icons.add(deckTopicIcon(row['slug'] as String)),
+          isTrue,
+          reason: 'duplicate topic icon for ${row['slug']}',
+        );
         levels.add(
           deckDifficulty(row['slug'] as String, row['cefr_band'] as String?),
         );

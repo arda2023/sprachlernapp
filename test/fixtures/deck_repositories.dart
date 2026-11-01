@@ -12,6 +12,7 @@ import 'package:sprachapp/domain/content.dart';
 import 'package:sprachapp/domain/repositories.dart';
 import 'package:sprachapp/domain/srs_state.dart';
 import 'package:sprachapp/presentation/providers/database_providers.dart';
+import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
 
 final testNow = DateTime(2026, 10, 4, 12);
 
@@ -317,9 +318,13 @@ Widget testScope(
   ContentRepository? content,
   UserRepository? user,
   bool library = false,
+  bool premium = true,
   List<Override> overrides = const [],
 }) => ProviderScope(
   overrides: [
+    // These fixtures exercise learning/UI behavior using synthetic deck IDs.
+    // Freemium tests explicitly override this access with false.
+    premiumContentAccessProvider.overrideWithValue(premium),
     ...overrides,
     contentRepositoryProvider.overrideWith(
       (ref) => content ?? TestContent(library: library),

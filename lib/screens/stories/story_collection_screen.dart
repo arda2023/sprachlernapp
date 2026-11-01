@@ -1,3 +1,5 @@
+import '../../presentation/providers/premium_access_provider.dart';
+import '../../widgets/premium_content_gate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Scaffold;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,6 +28,7 @@ class StoryCollectionScreen extends ConsumerWidget {
         ? ref.watch(storyCollectionProvider)
         : AsyncData(preview!);
     final colors = context.appColors;
+    final premium = ref.watch(premiumContentAccessProvider);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -83,13 +86,15 @@ class StoryCollectionScreen extends ConsumerWidget {
                     const SizedBox(height: 20),
                     if (words.isNotEmpty)
                       PrimaryActionButton(
-                        label: 'Mit diesen Wörtern lernen',
+                        label: premium ? 'Mit diesen Wörtern lernen' : 'Mit Premium lernen',
                         onPressed:
                             preview != null ||
                                 !words.any(
                                   (w) => w.state.isActive && w.item != null,
                                 )
                             ? null
+                            : !premium
+                            ? () => showPremiumContentPaywall(context, interest: 'Wörter aus Stories')
                             : () => DeckPracticeScreen.open(
                                 context,
                                 deckId: storyCollectionId,

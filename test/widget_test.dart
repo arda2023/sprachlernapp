@@ -27,6 +27,7 @@ import 'package:sprachapp/models/grammar_models.dart';
 import 'package:sprachapp/models/practice_models.dart';
 import 'package:sprachapp/models/reading_history.dart';
 import 'package:sprachapp/screens/content/content_dashboard_screen.dart';
+import 'package:sprachapp/screens/content/widgets/text_exercise_shelf.dart';
 import 'package:sprachapp/screens/content/text_exercise_screen.dart';
 import 'package:sprachapp/screens/content/text_library_screen.dart';
 import 'package:sprachapp/screens/content/widgets/exercise_choice_sheet.dart';
@@ -34,6 +35,7 @@ import 'package:sprachapp/widgets/more_button.dart';
 import 'package:sprachapp/screens/home/widgets/story_carousel.dart';
 import 'package:sprachapp/models/home_models.dart';
 import 'package:sprachapp/models/news_models.dart';
+import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
 import 'package:sprachapp/models/sample_content.dart';
 import 'package:sprachapp/models/story_models.dart';
 import 'package:sprachapp/models/playback_clock.dart';
@@ -522,7 +524,7 @@ void main() {
     await tester.tap(find.text('Mehr ansehen'));
     await tester.pumpAndSettle();
     expect(find.byType(DeckLibraryScreen), findsOneWidget);
-    expect(find.text('2 aktiv · 6 Stapel'), findsOneWidget);
+    expect(find.text('2 aktiv · 6 Stapel'), findsNothing);
     expect(find.widgetWithText(SectionHeading, 'Aktiv'), findsOneWidget);
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
   });
@@ -892,13 +894,13 @@ void main() {
     );
     expect(find.textContaining('Bald verfügbar'), findsNothing);
 
-    // Texte: the exercise texts as covers right under the title.
+    // Texte: compact numbered rows, without image backgrounds.
     expect(find.text('Texte'), findsOneWidget);
     expect(
-      find.descendant(of: dashboard, matching: find.byType(StoryCarousel)),
+      find.descendant(of: dashboard, matching: find.byType(TextExerciseShelf)),
       findsOneWidget,
     );
-    expect(tester.getTopLeft(find.byType(StoryCarousel)).dy, lessThan(220));
+    expect(tester.getTopLeft(find.byType(TextExerciseShelf)).dy, lessThan(600));
 
     // Hören: the first open exercise as a wide card, the rest as tiles.
     final feature = find.bySemanticsLabel(
@@ -975,8 +977,12 @@ void main() {
   });
 
   testWidgets('Dashboard cards open their exercise directly', (tester) async {
+    stillStage(tester);
     await openContentTab(tester);
-    await tester.tap(find.bySemanticsLabel(RegExp(r'^A Slow Morning\.')));
+    final slowMorning = find.bySemanticsLabel(RegExp(r'^A Slow Morning\.'));
+    await tester.ensureVisible(slowMorning);
+    await tester.pumpAndSettle();
+    await tester.tap(slowMorning);
     await tester.pumpAndSettle();
     expect(find.byType(ExerciseChoiceSheet), findsOneWidget);
     await tester.tapAt(const Offset(20, 40));
@@ -1002,10 +1008,10 @@ void main() {
 
   // ----------------------------------------------------------- text library
 
-  Widget textLibrary(ReadingHistory history) => MaterialApp(
+  Widget textLibrary(ReadingHistory history) => testScope(MaterialApp(
     theme: buildAppTheme(),
     home: TextLibraryScreen(texts: sampleExerciseTexts, history: history),
-  );
+  ));
 
   testWidgets('"Aus deinen Stories" follows the reading history', (
     tester,
@@ -1063,7 +1069,10 @@ void main() {
 
   testWidgets('A text card opens the exercise choice sheet', (tester) async {
     await tester.pumpWidget(textLibrary(ReadingHistory()));
-    await tester.tap(find.bySemanticsLabel(RegExp(r'^A Slow Morning\.')));
+    final slowMorning = find.bySemanticsLabel(RegExp(r'^A Slow Morning\.'));
+    await tester.ensureVisible(slowMorning);
+    await tester.pumpAndSettle();
+    await tester.tap(slowMorning);
     await tester.pumpAndSettle();
     expect(find.byType(ExerciseChoiceSheet), findsOneWidget);
     expect(
@@ -1544,11 +1553,12 @@ void main() {
     expect(find.textContaining('Jede richtige Wiederholung'), findsNothing);
   });
 
-  testWidgets('Details open as a second page in the Mehr bubble; notes kept', (
+  testWidgets('Details keep review facts without duplicate sentence or note', (
     tester,
   ) async {
     phoneView(tester);
     final store = WordListStore(sampleVocabulary(wordListNow));
+    store.setNote('platform', 'Gleis = track');
     await tester.pumpWidget(wordList(store));
     await tester.tap(find.bySemanticsLabel('Mehr zu platform'));
     await tester.pumpAndSettle();
@@ -1575,21 +1585,22 @@ void main() {
           'Anna rannte zum Bahnsteig, aber die Türen waren schon geschlossen.',
         ),
       ),
-      findsOneWidget,
+      findsNothing,
     );
     expect(inPage(find.bySemanticsLabel('platform anhören')), findsOneWidget);
-
-    await tester.ensureVisible(inPage(find.byType(CupertinoTextField)));
-    await tester.enterText(
-      inPage(find.byType(CupertinoTextField)),
-      'Gleis = track',
+    expect(inPage(find.text(store.byId('platform').sentence)), findsNothing);
+    expect(
+      inPage(find.bySemanticsLabel(RegExp('^Satz anhören:'))),
+      findsNothing,
     );
+    expect(inPage(find.byType(CupertinoTextField)), findsNothing);
     expect(store.byId('platform').note, 'Gleis = track');
 
     await tester.tap(inPage(find.bySemanticsLabel('Zurück')));
     await tester.pumpAndSettle();
     expect(find.byType(WordDetailsPage), findsNothing);
     expect(find.bySemanticsLabel('Details zu platform'), findsOneWidget);
+    expect(store.byId('platform').note, 'Gleis = track');
     await drainTimers(tester);
   });
 
@@ -1725,6 +1736,8 @@ void main() {
       200,
       scrollable: dashboardScrollable(),
     );
+    await tester.ensureVisible(more);
+    await tester.pumpAndSettle();
     await tester.tap(more);
     await tester.pumpAndSettle();
     expect(find.byType(GrammarRulesScreen), findsOneWidget);
@@ -1987,18 +2000,22 @@ void main() {
     expect(ids.toSet(), hasLength(ids.length));
   });
 
+  // Exercises are Premium content: opening one checks access.
   Widget practiceLibrary(PracticeKind kind, PracticeProgress progress) =>
-      MaterialApp(
-        theme: buildAppTheme(),
-        home: kind == PracticeKind.listening
-            ? ListeningLibraryScreen(
-                exercises: sampleListeningExercises,
-                progress: progress,
-              )
-            : GrammarLibraryScreen(
-                exercises: sampleGrammarExercises,
-                progress: progress,
-              ),
+      ProviderScope(
+        overrides: [premiumContentAccessProvider.overrideWithValue(true)],
+        child: MaterialApp(
+          theme: buildAppTheme(),
+          home: kind == PracticeKind.listening
+              ? ListeningLibraryScreen(
+                  exercises: sampleListeningExercises,
+                  progress: progress,
+                )
+              : GrammarLibraryScreen(
+                  exercises: sampleGrammarExercises,
+                  progress: progress,
+                ),
+        ),
       );
 
   testWidgets('Practice library lists every exercise, solved ones marked', (
@@ -2038,14 +2055,9 @@ void main() {
   });
 
   /// The answer card labelled [option].
-  Finder option(String option) => find.byWidgetPredicate(
-    (w) =>
-        w is AnimatedContainer &&
-        w.child is Row &&
-        ((w.child! as Row).children.first as Expanded).child is Text &&
-        (((w.child! as Row).children.first as Expanded).child as Text).data ==
-            option,
-  );
+  Finder option(String option) => find
+      .ancestor(of: find.text(option), matching: find.byType(AnimatedContainer))
+      .first;
 
   BoxDecoration optionBox(WidgetTester tester, String label) =>
       tester.widget<AnimatedContainer>(option(label)).decoration!
@@ -2055,6 +2067,7 @@ void main() {
     tester,
   ) async {
     await mockNativeSpeech(tester);
+    stillStage(tester);
     final progress = PracticeProgress();
     addTearDown(progress.dispose);
     await tester.pumpWidget(practiceLibrary(PracticeKind.listening, progress));
@@ -2068,7 +2081,9 @@ void main() {
     );
     expect(find.text('0:00'), findsNothing);
     expect(find.textContaining('ca. '), findsNothing);
-    expect(optionBox(tester, 'sink').color, AppColors.raisedInk);
+    // Answers rest on the stage's veil (user request 01.11.2026).
+    final idle = optionBox(tester, 'sink').color;
+    expect(idle!.a, lessThan(0.2));
 
     // The native completion event, not elapsed wall time, ends playback.
     await tester.tap(find.bySemanticsLabel('Abspielen'));
@@ -2081,52 +2096,56 @@ void main() {
 
     await tester.tap(find.text('sink'));
     await tester.pump(const Duration(milliseconds: 200));
-    expect(optionBox(tester, 'sink').color, AppColors.errorTint);
+    expect(
+      optionBox(tester, 'sink').color,
+      AppColors.error.withValues(alpha: 0.26),
+    );
     expect(
       (optionBox(tester, 'sink').border! as Border).top.color,
       AppColors.error,
     );
     await tester.pump(const Duration(milliseconds: 600));
     await tester.pumpAndSettle();
-    expect(optionBox(tester, 'sink').color, AppColors.raisedInk);
-    expect(find.byType(SuccessFeedbackCard), findsNothing);
+    expect(optionBox(tester, 'sink').color, idle);
+    expect(find.text('Nächste Übung'), findsNothing);
     expect(progress.isDone('listen-th-think'), isFalse);
 
     await tester.tap(find.text('think'));
-    await tester.pump();
-    expect(find.byType(SuccessFeedbackCard), findsOneWidget);
     await tester.pumpAndSettle();
-    expect(optionBox(tester, 'think').color, AppColors.successTint);
+    expect(
+      optionBox(tester, 'think').color,
+      AppColors.success.withValues(alpha: 0.24),
+    );
     expect(
       (optionBox(tester, 'think').border! as Border).top.color,
       AppColors.success,
     );
     expect(find.byIcon(CupertinoIcons.checkmark_alt), findsOneWidget);
-    // The card doesn't cover the answer it confirms.
     expect(
       find.byIcon(CupertinoIcons.checkmark_alt).hitTestable(),
       findsOneWidget,
     );
+    // What was said, with its meaning; the other answers fold away.
     expect(find.text('Zu hören war: „think“'), findsOneWidget);
+    expect(find.text('denken'), findsOneWidget);
     expect(progress.isDone('listen-th-think'), isTrue);
-    // The others retire.
-    expect(
-      tester.getSemantics(find.bySemanticsLabel('fink')),
-      isSemantics(isButton: true, isEnabled: false),
-    );
+    expect(find.text('fink'), findsNothing);
+    expect(find.text('sink'), findsNothing);
+    expect(find.textContaining('Zungenspitze', findRichText: true), findsOneWidget);
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
 
     // "Nächste Übung" replaces the screen with the next open exercise.
     await tester.tap(find.text('Nächste Übung'));
     await tester.pumpAndSettle();
     expect(find.text('w oder v'), findsWidgets);
-    expect(find.byType(SuccessFeedbackCard), findsNothing);
+    expect(find.text('Nächste Übung'), findsNothing);
     await tester.tap(find.bySemanticsLabel('Zurück'));
     await tester.pumpAndSettle();
     expect(find.byType(ListeningLibraryScreen), findsOneWidget);
   });
 
   testWidgets('Grammar: no player, the answer fills the gap', (tester) async {
+    stillStage(tester);
     final progress = PracticeProgress();
     addTearDown(progress.dispose);
     final exercise = sampleGrammarExercises.firstWhere(
@@ -2149,7 +2168,10 @@ void main() {
 
     await tester.tap(find.text('live'));
     await tester.pump(const Duration(milliseconds: 200));
-    expect(optionBox(tester, 'live').color, AppColors.errorTint);
+    expect(
+      optionBox(tester, 'live').color,
+      AppColors.error.withValues(alpha: 0.26),
+    );
     await tester.pump(const Duration(milliseconds: 600));
 
     await tester.tap(find.text('have lived'));
@@ -2158,14 +2180,11 @@ void main() {
       find.bySemanticsLabel('I have lived in Hamburg since 2010.'),
       findsOneWidget,
     );
-    final card = find.byType(SuccessFeedbackCard);
-    expect(card, findsOneWidget);
+    // German translation under the sentence, then the explanation.
+    expect(find.text('Ich wohne seit 2010 in Hamburg.'), findsOneWidget);
     expect(
-      find.descendant(
-        of: card,
-        matching: find.textContaining('Present Perfect', findRichText: true),
-      ),
-      findsOneWidget,
+      find.textContaining('Present Perfect', findRichText: true),
+      findsWidgets,
     );
     // No next exercise in an empty queue: back to the overview.
     expect(find.text('Zurück zur Übersicht'), findsOneWidget);
@@ -2196,6 +2215,7 @@ void main() {
   });
 
   testWidgets('Practice screens survive large Dynamic Type', (tester) async {
+    stillStage(tester);
     tester.platformDispatcher.textScaleFactorTestValue = 2;
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
     final progress = PracticeProgress();
@@ -2210,11 +2230,16 @@ void main() {
     await tester.tap(find.text('-teen oder -ty'));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
-    await tester.drag(find.byType(ListView).last, const Offset(0, -600));
+    // Large text scrolls the stage instead of overflowing it.
+    await tester.dragUntilVisible(
+      find.text('15'),
+      find.byType(SingleChildScrollView).last,
+      const Offset(0, -300),
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.text('15'));
     await tester.pumpAndSettle();
-    expect(find.byType(SuccessFeedbackCard), findsOneWidget);
+    expect(find.text('Nächste Übung'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -2301,7 +2326,7 @@ void main() {
     expect(sampleStoryText('last-train-to-seville').headingBefore(0), isNull);
   });
 
-  Widget storyLibrary() => MaterialApp(
+  Widget storyLibrary() => testScope(MaterialApp(
     theme: buildAppTheme(),
     home: Scaffold(
       body: StoryLibraryScreen(
@@ -2317,7 +2342,7 @@ void main() {
         onOpenNews: (_) {},
       ),
     ),
-  );
+  ));
 
   testWidgets('Nachrichten lead, then "Weiterlesen", own texts, categories', (
     tester,
@@ -2346,83 +2371,100 @@ void main() {
       findsOneWidget,
     );
 
-    // Endless paging over five desks; the focused card starts on the 20pt
-    // gutter, fills most of the width, and the next one peeks in.
-    final pager = tester.widget<PageView>(find.byType(PageView));
-    expect(pager.childrenDelegate.estimatedChildCount, isNull);
-    expect(pager.padEnds, isFalse);
-    expect(pager.controller!.viewportFraction, NewsCarousel.viewportFraction);
+    // One heading and one sideways row per desk (user request 01.11.2026);
+    // the first card starts on the 20pt gutter.
+    for (final desk in NewsCategory.values) {
+      expect(find.text(desk.label), findsWidgets);
+    }
     final first = find.widgetWithText(NewsCard, 'Politik in 100 Sekunden');
     expect(tester.getTopLeft(first).dx, 20);
     expect(
       tester.getTopLeft(first).dx,
       tester.getTopLeft(find.text(StoryLibraryScreen.newsSubheading)).dx,
     );
-    expect(tester.getSize(first).width / 390, inInclusiveRange(0.84, 0.9));
-    expect(tester.getSize(first).height, NewsCard.height);
+    expect(tester.getSize(first), const Size(NewsCard.width, NewsCard.height));
     final second = find.widgetWithText(NewsCard, 'Wirtschaft in 100 Sekunden');
-    expect(tester.getTopLeft(second).dx, lessThan(390 - 12));
+    expect(
+      tester.getTopLeft(second).dy,
+      greaterThan(tester.getBottomLeft(first).dy),
+    );
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
   });
 
-  testWidgets('News card: image on top, only the title below', (
+  NewsArticle daily(NewsCategory desk, int rank, String site) => NewsArticle(
+    id: '2026-11-01-en-${desk.name}-$rank',
+    category: desk,
+    title: '${desk.label} $rank',
+    level: 'B1',
+    readingMinutes: 2,
+    edition: DateTime.now(),
+    sections: const [
+      NewsSection(heading: 'First', paragraph: 'One thing. Two things.'),
+    ],
+    sources: [NewsSource(title: 'Report', url: Uri.parse('https://www.$site/a'))],
+  );
+
+  testWidgets('Daily news: desks with several articles, source as kicker', (
     tester,
   ) async {
+    phoneView(tester);
+    await tester.pumpWidget(testScope(MaterialApp(
+      theme: buildAppTheme(),
+      home: Scaffold(
+        body: StoryLibraryScreen(
+          stories: sampleStories,
+          onOpenStory: (_) {},
+          news: [
+            for (var rank = 1; rank <= 4; rank++)
+              daily(NewsCategory.politics, rank, 'reuters.com'),
+            for (var rank = 1; rank <= 3; rank++)
+              daily(NewsCategory.medicine, rank, 'bbc.com'),
+          ],
+          onOpenNews: (_) {},
+        ),
+      ),
+    )));
+    // Real news need no demo label; the day stands beside the heading.
+    expect(find.text('Demo'), findsNothing);
+    expect(find.text(StoryLibraryScreen.newsSubheading), findsNothing);
+    expect(find.text('Heute'), findsOneWidget);
+    expect(find.text('Wirtschaft'), findsNothing);
+    final first = find.widgetWithText(NewsCard, 'Politik 1');
+    final second = find.widgetWithText(NewsCard, 'Politik 2');
+    expect(tester.getTopLeft(second).dy, tester.getTopLeft(first).dy);
+    expect(tester.getTopLeft(second).dx, tester.getTopRight(first).dx + 12);
+    expect(
+      find.descendant(of: first, matching: find.text('REUTERS.COM')),
+      findsOneWidget,
+    );
+    expect(
+      find.bySemanticsLabel(
+        'Politik 1. Nachrichten, Politik, 2 Minuten Lesezeit, Niveau B1, '
+        'Quelle reuters.com',
+      ),
+      findsOneWidget,
+    );
+    expect(
+      tester.getTopLeft(find.widgetWithText(NewsCard, 'Medizin 1')).dy,
+      greaterThan(tester.getBottomLeft(first).dy),
+    );
+  });
+
+  testWidgets('News card: title and reading time, no image', (tester) async {
     phoneView(tester);
     await tester.pumpWidget(storyLibrary());
     final card = find.widgetWithText(NewsCard, 'Politik in 100 Sekunden');
     expect(card, findsOneWidget);
-    final cover = find.descendant(of: card, matching: find.byType(TypeCover));
-    expect(tester.getSize(cover).height, NewsCard.imageHeight);
-    // Desk, level and reading time are only in the semantics label.
+    expect(find.descendant(of: card, matching: find.byType(Image)), findsNothing);
+    // Samples have no source: no kicker repeating the desk.
     expect(find.descendant(of: card, matching: find.text('POLITIK')), findsNothing);
-    expect(
-      find.descendant(of: card, matching: find.text('A2 · 2 Min')),
-      findsNothing,
-    );
+    expect(find.descendant(of: card, matching: find.text('2 Min.')), findsOneWidget);
     expect(
       find.bySemanticsLabel(
         'Politik in 100 Sekunden. Nachrichten, Politik, 2 Minuten '
         'Lesezeit, Niveau A2',
       ),
       findsOneWidget,
-    );
-
-    // Swiping brings the next desk onto the gutter …
-    await tester.fling(find.byType(PageView), const Offset(-200, 0), 800);
-    await tester.pumpAndSettle();
-    expect(
-      tester
-          .getTopLeft(
-            find.widgetWithText(NewsCard, 'Wirtschaft in 100 Sekunden'),
-          )
-          .dx,
-      20,
-    );
-    // … and the carousel wraps around in both directions.
-    for (var i = 0; i < 2; i++) {
-      await tester.fling(find.byType(PageView), const Offset(200, 0), 800);
-      await tester.pumpAndSettle();
-    }
-    expect(
-      tester
-          .getTopLeft(
-            find.widgetWithText(NewsCard, 'Unterhaltung in 100 Sekunden'),
-          )
-          .dx,
-      20,
-    );
-    for (var i = 0; i < 5; i++) {
-      await tester.fling(find.byType(PageView), const Offset(-200, 0), 800);
-      await tester.pumpAndSettle();
-    }
-    expect(
-      tester
-          .getTopLeft(
-            find.widgetWithText(NewsCard, 'Unterhaltung in 100 Sekunden'),
-          )
-          .dx,
-      20,
     );
   });
 
@@ -2495,17 +2537,79 @@ void main() {
     await tester.pump();
   });
 
-  testWidgets('Opening a news card pushes the reader', (tester) async {
+  testWidgets('Daily news read with their own translations and sources', (
+    tester,
+  ) async {
+    final article = NewsArticle.fromJson({
+      'id': '2026-11-01-en-politics-1',
+      'edition': '2026-11-01',
+      'category': 'politics',
+      'rank': 1,
+      'title': 'Talks in Geneva',
+      'level': 'B1',
+      'reading_minutes': 1,
+      'sections': [
+        {
+          'heading': 'The meeting',
+          'sentences': [
+            {'text': 'Leaders meet today.', 'de': 'Die Spitzen treffen sich heute.'},
+            {'text': 'They talk about trade.', 'de': 'Sie sprechen über Handel.'},
+          ],
+        },
+      ],
+      'sources': [
+        {'title': 'Talks open', 'url': 'https://www.reuters.com/world/talks'},
+      ],
+    }, 'en');
+    expect(article.text.paragraphs, ['Leaders meet today. They talk about trade.']);
+    await tester.pumpWidget(ProviderScope(
+      overrides: [
+        offlineDictionaryProvider.overrideWithValue(EmptyDictionary()),
+        runtimeTranslationProvider.overrideWithValue(
+          RuntimeTranslationClient(
+            'https://unused.invalid',
+            'public',
+            () async => 'synthetic',
+          ),
+        ),
+      ],
+      child: MaterialApp(
+        theme: buildAppTheme(),
+        home: Builder(
+          builder: (context) => CupertinoButton(
+            onPressed: () => StoryReaderScreen.openNews(context, article),
+            child: const Text('open'),
+          ),
+        ),
+      ),
+    ));
+    await tester.tap(find.text('open'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.bySemanticsLabel('Übersetzen'));
+    await tester.pumpAndSettle();
+    await tapWord(tester, 'trade');
+    // The stored German sentence, no AI request.
+    expect(find.byType(SentencePopover), findsOneWidget);
+    expect(find.text('Sie sprechen über Handel.'), findsOneWidget);
+    Navigator.of(tester.element(find.byType(SentencePopover))).pop();
+    await tester.pumpAndSettle();
+    final sources = find.text('Quellen');
+    await tester.scrollUntilVisible(sources, 200,
+        scrollable: find.byType(Scrollable).first);
+    expect(sources, findsOneWidget);
+    expect(find.bySemanticsLabel('Talks open, reuters.com'), findsOneWidget);
+  });
+
+  testWidgets('The app shows no "Nachrichten" until the daily news return', (
+    tester,
+  ) async {
+    // User decision 01.11.2026: hidden for now, back later with real news.
     await tester.pumpWidget(testScope(const SprachApp(), library: true));
     await tester.pumpAndSettle();
     await openStoriesTab(tester);
-    final card = find.widgetWithText(NewsCard, 'Politik in 100 Sekunden');
-    await tester.ensureVisible(card);
-    await tester.pumpAndSettle();
-    await tester.tap(card);
-    await tester.pumpAndSettle();
-    expect(find.byType(StoryReaderScreen), findsOneWidget);
-    expect(find.text('A new plan for city buses'), findsOneWidget);
+    expect(find.widgetWithText(SectionHeading, 'Nachrichten'), findsNothing);
+    expect(find.byType(NewsCard), findsNothing);
+    expect(find.text('Demo'), findsNothing);
   });
 
   testWidgets('Stories tab with news survives large Dynamic Type', (
@@ -2518,7 +2622,15 @@ void main() {
     await tester.drag(find.byType(ListView).first, const Offset(0, -500));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
+    await tester.pumpWidget(const SizedBox.shrink());
     await tester.pumpWidget(newsReader());
     expect(tester.takeException(), isNull);
   });
+}
+
+/// The exercise stage drifts while open; settling needs reduced motion.
+void stillStage(WidgetTester tester) {
+  tester.platformDispatcher.accessibilityFeaturesTestValue =
+      const FakeAccessibilityFeatures(disableAnimations: true);
+  addTearDown(tester.platformDispatcher.clearAccessibilityFeaturesTestValue);
 }

@@ -11,6 +11,8 @@ import 'package:sprachapp/data/personal_learning_client.dart';
 import 'package:sprachapp/data/user/generated_vocabulary_store.dart';
 import 'package:sprachapp/domain/generated_vocabulary.dart';
 import 'package:sprachapp/presentation/providers/generated_vocabulary_provider.dart';
+import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
+import 'package:sprachapp/widgets/premium_content_gate.dart';
 import 'package:sprachapp/screens/content/generated_vocabulary_selection_screen.dart';
 import 'package:sprachapp/screens/content/topic_vocabulary_composer.dart';
 import 'package:sprachapp/widgets/action_buttons.dart';
@@ -169,8 +171,10 @@ Widget _host(
   GeneratedVocabularyService service, {
   Widget? screen,
   double textScale = 1,
+  bool premium = true,
 }) => ProviderScope(
   overrides: [
+    premiumContentAccessProvider.overrideWithValue(premium),
     generatedVocabularyServiceProvider.overrideWith((ref) async => service),
   ],
   child: MaterialApp(
@@ -211,6 +215,36 @@ Future<void> _begin(WidgetTester tester) async {
 }
 
 void main() {
+  testWidgets('free topic field opens paywall without keyboard or generation', (
+    tester,
+  ) async {
+    final service = _GeneratedUiService();
+    await tester.pumpWidget(_host(service, premium: false));
+    final field = find.byKey(const ValueKey('generation-topic'));
+    expect(find.byType(PremiumLockBadge), findsOneWidget);
+    expect(find.text('Generieren'), findsNothing);
+    expect(find.text('Mit Premium erstellen'), findsNothing);
+    final badge = tester.getRect(find.byType(PremiumLockBadge));
+    final box = tester.getRect(
+      find.ancestor(of: field, matching: find.byType(DecoratedBox)).first,
+    );
+    expect(badge.right, lessThan(box.right));
+    expect(badge.left, greaterThan(box.center.dx));
+    expect(badge.top, greaterThan(box.top));
+    await tester.tap(field);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(tester.testTextInput.isVisible, isFalse);
+    expect(service.requests, isEmpty);
+    expect(service.saves, isEmpty);
+    final nav = tester.state<NavigatorState>(find.byType(Navigator).first);
+    expect(nav.canPop(), isTrue);
+    nav.pop();
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(field, findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   setUpAll(() => GoogleFonts.config.allowRuntimeFetching = false);
 
   testWidgets(
@@ -234,7 +268,9 @@ void main() {
         await tester.pump(const Duration(milliseconds: 200));
         expect(count(), n);
       }
-      final field = tester.getRect(find.byKey(const ValueKey('generation-topic')));
+      final field = tester.getRect(
+        find.byKey(const ValueKey('generation-topic')),
+      );
       await tester.enterText(find.byType(CupertinoTextField), 'Reise');
       await tester.pump(const Duration(milliseconds: 200));
       expect(find.text('Generieren'), findsOneWidget);

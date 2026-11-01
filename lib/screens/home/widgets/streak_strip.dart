@@ -488,7 +488,7 @@ class _WordOfWeek extends StatelessWidget {
                         TextSpan(
                           text: word.entry.headword,
                           style: AppType.editorial(
-                            size: 19,
+                            size: 20,
                             color: colors.textPrimary,
                           ),
                         ),

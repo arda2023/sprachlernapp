@@ -104,7 +104,19 @@ abstract final class AppColors {
 
 /// The Story-Voice Rule: [editorial] for content the learner reads,
 /// [chrome] for everything that is interface.
+///
+/// Sizes come from two short scales (user request 01.11.2026: too many
+/// font sizes): [chromeScale] and [editorialScale], plus [storyBody] for
+/// long reading text. Computed sizes (animations, Dynamic Type) are the
+/// only exception; `test/type_scale_test.dart` guards literal sizes.
 abstract final class AppType {
+  /// Figtree: tab labels, captions and chips, body, row titles, small
+  /// headings, prices, large numbers.
+  static const chromeScale = [11.0, 13.0, 15.0, 17.0, 20.0, 24.0, 28.0];
+
+  /// Source Serif 4: card titles, headings, section titles, screen titles.
+  static const editorialScale = [17.0, 20.0, 24.0, 28.0, 32.0];
+
   static TextStyle chrome({
     double size = 15,
     FontWeight weight = FontWeight.w500,

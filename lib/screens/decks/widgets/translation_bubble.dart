@@ -72,7 +72,7 @@ class _TranslationBubbleState extends State<TranslationBubble>
     );
     final style = AppType.editorial(
       color: white,
-      size: 19,
+      size: 20,
       height: 1.3,
       letterSpacing: 0,
     );

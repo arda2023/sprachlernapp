@@ -14,6 +14,7 @@ import 'package:sprachapp/screens/decks/widgets/form_info_sheet.dart';
 import 'package:sprachapp/theme/app_theme.dart';
 
 import 'fixtures/deck_repositories.dart';
+import 'fixtures/practice_session.dart';
 
 void main() {
   setUpAll(() => GoogleFonts.config.allowRuntimeFetching = false);
@@ -188,7 +189,7 @@ void main() {
         t.widget<TextField>(find.byType(TextField)).controller!.text,
         isEmpty,
       );
-      await t.enterText(find.byType(TextField), 'walks');
+      await t.enterText(find.byType(TextField), shownPracticeItem(t).card.form);
       await t.pumpAndSettle();
       final before = t.getRect(find.byType(TextField));
       await t.tap(find.text('Eingeben'));
@@ -199,7 +200,7 @@ void main() {
       expect(field.focusNode!.hasFocus, isTrue);
       expect(field.inputFormatters, isNotEmpty);
       expect(field.showCursor, isFalse);
-      expect(field.controller!.text, 'walks');
+      expect(field.controller!.text, shownPracticeItem(t).card.form);
       expect(
         field.decoration!.fillColor,
         AppColors.successTint,
@@ -250,11 +251,12 @@ void main() {
       final u = TestUser();
       addTearDown(u.close);
       await open(t, u);
+      final item = shownPracticeItem(t);
       await t.tap(find.bySemanticsLabel('Mehr'));
       await t.pumpAndSettle();
       await t.tap(find.text('Zu Favoriten hinzufügen'));
       await t.pumpAndSettle();
-      expect(u.states['deck-0/0']!.favorite, isTrue);
+      expect(u.states[item.card.id]!.favorite, isTrue);
       await t.tap(find.bySemanticsLabel('Mehr'));
       await t.pumpAndSettle();
       expect(find.text('Aus Favoriten entfernen'), findsOneWidget);
@@ -266,8 +268,8 @@ void main() {
       await t.enterText(find.byType(TextField), 'Bitte prüfen.');
       await t.tap(find.text('Lokal speichern'));
       await t.pumpAndSettle();
-      expect(u.localEntries.single.cardId, 'deck-0/0');
-      expect(u.localEntries.single.sentenceId, 'deck-0/0/s1');
+      expect(u.localEntries.single.cardId, item.card.id);
+      expect(u.localEntries.single.sentenceId, item.practiceSentence.sentenceId);
       expect(u.localEntries.single.packVersion, 'fixture');
       expect(
         find.text('Lokal gespeichert. Es wurde nichts versendet.'),
@@ -279,9 +281,9 @@ void main() {
       await t.pumpAndSettle();
       await t.tap(find.text('Wort deaktivieren'));
       await t.pumpAndSettle();
-      expect(u.states['deck-0/0']!.disabled, isTrue);
+      expect(u.states[item.card.id]!.disabled, isTrue);
       expect(u.records, isEmpty);
-      expect(find.text('ungefähr'), findsOneWidget);
+      expect(shownPracticeItem(t).card.id, isNot(item.card.id));
     },
   );
   testWidgets('Motif switches the app without remounting the settings route', (
@@ -389,19 +391,20 @@ void main() {
       final c =
           t.widget<TextField>(find.byType(TextField)).controller!
               as PracticeInputController;
-      expect(c.hint, 'wa…');
+      expect(c.hint, targetPrefix(shownPracticeItem(t).card.form));
       expect(c.text, isEmpty);
-      await answer(t, 'walks');
+      await answer(t, shownPracticeItem(t).card.form);
       await t.pumpAndSettle();
       await t.tap(find.text('Weiter'));
       await t.pumpAndSettle();
+      final translation = shownPracticeItem(t).card.translationDe!;
       await t.enterText(find.byType(TextField), 'current text');
       final current = t.widget<TextField>(find.byType(TextField)).controller!;
       current.selection = const TextSelection.collapsed(offset: 3);
-      await t.fling(find.text('ungefähr'), const Offset(-240, 0), 700);
+      await t.fling(find.text(translation), const Offset(-240, 0), 700);
       await t.pumpAndSettle();
       expect(find.byType(TextField), findsOneWidget);
-      await t.fling(find.text('ungefähr'), const Offset(240, 0), 700);
+      await t.fling(find.text(translation), const Offset(240, 0), 700);
       await t.pumpAndSettle();
       expect(find.textContaining('Rückblick · Richtig nach 2'), findsOneWidget);
       expect(t.widget<TextField>(find.byType(TextField)).readOnly, isTrue);
@@ -420,7 +423,7 @@ void main() {
       expect(current.text, 'current text');
       expect(current.selection.baseOffset, 3);
       expect(u.records, hasLength(1));
-      await t.fling(find.text('ungefähr'), const Offset(240, 0), 700);
+      await t.fling(find.text(translation), const Offset(240, 0), 700);
       await t.pumpAndSettle();
       await t.fling(
         find.textContaining('Rückblick · Richtig nach 2'),
@@ -462,9 +465,9 @@ void main() {
       final u = TestUser();
       addTearDown(u.close);
       await open(t, u);
-      await t.enterText(find.byType(TextField), 'walks');
+      await t.enterText(find.byType(TextField), shownPracticeItem(t).card.form);
       await t.pumpAndSettle();
-      await t.tap(find.text('Mia'));
+      await t.tap(find.bySemanticsLabel(RegExp(r', Übersetzung anzeigen$')).first);
       await t.pump();
       expect(find.text('Übersetzung nicht verfügbar'), findsOneWidget);
       await t.tap(find.text('Eingeben'), warnIfMissed: false);
@@ -484,20 +487,21 @@ void main() {
         ..writeGate = Completer<void>();
       addTearDown(u.close);
       await open(t, u);
-      await answer(t, 'walks');
+      final firstId = shownPracticeItem(t).card.id;
+      await answer(t, shownPracticeItem(t).card.form);
       await t.pump(const Duration(seconds: 3));
       expect(find.text('Wird gespeichert …'), findsWidgets);
-      expect(find.text('ungefähr'), findsNothing);
+      expect(shownPracticeItem(t).card.id, firstId);
       u.writeGate!.complete();
       await t.pumpAndSettle();
       expect(find.byType(FormInfoSheet), findsOneWidget);
       await t.pump(const Duration(seconds: 3));
-      expect(find.text('ungefähr'), findsNothing);
+      expect(shownPracticeItem(t).card.id, firstId);
       Navigator.pop(t.element(find.byType(FormInfoSheet)));
       await t.pumpAndSettle();
       await t.pump(const Duration(milliseconds: 1500));
       await t.pumpAndSettle();
-      expect(find.text('ungefähr'), findsOneWidget);
+      expect(shownPracticeItem(t).card.id, isNot(firstId));
       expect(u.records, hasLength(1));
     },
   );

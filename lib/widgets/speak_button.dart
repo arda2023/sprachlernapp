@@ -14,10 +14,19 @@ class SpeakButton extends ConsumerStatefulWidget {
     this.label = 'Aussprechen',
     this.text = '',
     this.language,
+    this.ink = const Color(0xFFFFFFFF),
+    this.fill = const Color(0x33FFFFFF),
   });
   final double diameter;
   final String label, text;
   final String? language;
+
+  /// Symbol and, while speaking, the disc. White on the orange bubbles by
+  /// default; exercises pass their stage's ink.
+  final Color ink;
+
+  /// The resting disc behind the symbol.
+  final Color fill;
   @override
   ConsumerState<SpeakButton> createState() => _SpeakButtonState();
 }
@@ -49,7 +58,6 @@ class _SpeakButtonState extends ConsumerState<SpeakButton> {
     listenable: _speech,
     builder: (context, _) {
       final on = _speech.playing != null;
-      const white = Color(0xFFFFFFFF);
       return MergeSemantics(
         child: CupertinoButton(
           onPressed: widget.text.trim().isEmpty
@@ -66,7 +74,7 @@ class _SpeakButtonState extends ConsumerState<SpeakButton> {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: on ? white : const Color(0x33FFFFFF),
+                color: on ? widget.ink : widget.fill,
               ),
               child: on
                   ? Icon(
@@ -74,7 +82,7 @@ class _SpeakButtonState extends ConsumerState<SpeakButton> {
                       size: widget.diameter * 0.45,
                       color: context.appColors.popover,
                     )
-                  : SpeakerIcon(size: widget.diameter * 0.5, color: white),
+                  : SpeakerIcon(size: widget.diameter * 0.5, color: widget.ink),
             ),
           ),
         ),

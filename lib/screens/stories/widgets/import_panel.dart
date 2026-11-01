@@ -9,6 +9,7 @@ import '../../../presentation/providers/preferences_provider.dart';
 import '../../onboarding/paywall_screen.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/popover_content.dart';
+import '../../../widgets/premium_content_gate.dart';
 
 /// Popover content behind "Importieren": where a text can come from. Pasting
 /// works on the device; files, YouTube transcripts and web pages need a file
@@ -61,8 +62,8 @@ class _ImportPanelState extends ConsumerState<ImportPanel> {
   Widget build(BuildContext context) {
     // Without confirmed Premium every source is shown, marked and leads to
     // the paywall, so learners still see what is possible (31.10.2026).
-    final locked = ref.watch(contentAccessProvider) !=
-        ContentAccessDecision.allowed;
+    final locked =
+        ref.watch(contentAccessProvider) != ContentAccessDecision.allowed;
     VoidCallback? tap(VoidCallback? available) =>
         locked ? _viewPremium : available;
     final options = [
@@ -180,21 +181,7 @@ class _Option extends StatelessWidget {
                     ),
                     const Spacer(),
                     if (locked)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 7,
-                          vertical: 3,
-                        ),
-                        decoration: BoxDecoration(
-                          color: context.appColors.popover,
-                          borderRadius: BorderRadius.circular(99),
-                        ),
-                        child: const Icon(
-                          CupertinoIcons.lock_fill,
-                          size: 11,
-                          color: white,
-                        ),
-                      )
+                      const PremiumLockBadge(size: 24)
                     else if (!available)
                       Container(
                         padding: const EdgeInsets.symmetric(
@@ -230,7 +217,7 @@ class _Option extends StatelessWidget {
                   detail,
                   // Orange on white is 3.3:1 as well: bold, full strength.
                   style: PopoverText.caption().copyWith(
-                    fontSize: 12,
+                    fontSize: 13,
                     color: available ? context.appColors.popover : white,
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/foundation.dart';
@@ -73,6 +74,7 @@ void main() {
       await seed.close();
       final c = ProviderContainer(
         overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
           userRepositoryProvider.overrideWith((_) => user),
           clockProvider.overrideWithValue(() => testNow),
         ],
@@ -97,6 +99,7 @@ void main() {
     await seed.close();
     final c = ProviderContainer(
       overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
         contentRepositoryProvider.overrideWith((_) => content),
         userRepositoryProvider.overrideWith((_) => user),
         clockProvider.overrideWithValue(() => testNow),

@@ -112,7 +112,7 @@ class _DraftBanner extends StatelessWidget {
     child: Text(
       legalDocumentDraftBanner,
       style: AppType.chrome(
-        size: 14,
+        size: 15,
         weight: FontWeight.w600,
         color: colors.textPrimary,
         height: 1.4,

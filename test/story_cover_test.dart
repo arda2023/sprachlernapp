@@ -101,76 +101,71 @@ List<Map<String, dynamic>> _libraryStories() => [
 
 Set<String> _expectedArtwork() => {
   for (final story in _libraryStories())
-    if (story['topic'] != 'Alltag' && story['topic'] != 'Wirtschaft')
-      'assets/story_covers/${(story['id'] as String).split(':').last}.png',
+    'assets/story_covers/${(story['id'] as String).split(':').last}.png',
+  'assets/story_covers/pack_en_open_pocket.png',
 };
 
 void main() {
   setUpAll(() => GoogleFonts.config.allowRuntimeFetching = false);
 
-  test(
-    'only inventoried IDs map to language-shared art, exclusions stay plain',
-    () {
-      for (final language in ['en', 'es', 'it', 'nb', 'pt-BR']) {
-        expect(
-          storyCoverAssetKey('library:$language:video_04', 'Wissenschaft'),
-          _asset,
-        );
-        expect(
-          storyCoverAssetKey('library:$language:video_04', 'Alltag'),
-          isNull,
-        );
-        expect(
-          storyCoverAssetKey('library:$language:video_04', 'Wirtschaft'),
-          isNull,
-        );
-      }
-      for (final id in [
-        'unknown',
-        'library:de:video_04',
-        'library:en:video_99',
-        'library:en:video_01',
-        'news:video_04',
-      ]) {
-        expect(storyCoverAssetKey(id, 'Wissenschaft'), isNull);
-      }
-    },
-  );
+  test('only inventoried stable IDs map to language-shared art', () {
+    for (final language in ['en', 'es', 'it', 'nb', 'pt-BR']) {
+      expect(
+        storyCoverAssetKey('library:$language:video_04', 'Wissenschaft'),
+        _asset,
+      );
+      expect(
+        storyCoverAssetKey('library:$language:video_04', 'Alltag'),
+        _asset,
+      );
+      expect(
+        storyCoverAssetKey('library:$language:video_04', 'Wirtschaft'),
+        _asset,
+      );
+    }
+    for (final id in [
+      'unknown',
+      'library:de:video_04',
+      'library:en:video_99',
+      'library:en:everyday_99',
+      '1fe9baf1b1a199b5bfb116e320a679b0',
+      'news:video_04',
+    ]) {
+      expect(storyCoverAssetKey(id, 'Wissenschaft'), isNull);
+    }
+  });
 
-  test('all 220 real story variants map to 44 shared images, exclusions stay plain', () {
-    final stories = _libraryStories();
-    var illustrated = 0, excluded = 0;
-    final artwork = <String>{};
-    for (final story in stories) {
-      final id = story['id'] as String;
-      final topic = story['topic'] as String;
-      final mapped = storyCoverAssetKey(id, topic);
-      if (topic == 'Alltag' || topic == 'Wirtschaft') {
-        expect(mapped, isNull, reason: id);
-        excluded++;
-      } else {
+  test(
+    'all 285 library variants and the annotated pack story map to 58 images',
+    () {
+      final stories = _libraryStories();
+      final artwork = <String>{};
+      for (final story in stories) {
+        final id = story['id'] as String;
+        final topic = story['topic'] as String;
+        final mapped = storyCoverAssetKey(id, topic);
         final expected = 'assets/story_covers/${id.split(':').last}.png';
         expect(mapped, expected, reason: id);
         expect(_libraryLanguages, contains(id.split(':')[1]), reason: id);
         artwork.add(mapped!);
-        illustrated++;
       }
-    }
-    expect(stories, hasLength(285));
-    expect(illustrated, 220);
-    expect(excluded, 65);
-    expect(artwork, hasLength(44));
-    expect(
-      storyCoverAssetKey('1fe9baf1b1a199b5bfb116e320a679b9', 'Alltag'),
-      isNull,
-    );
-  });
+      expect(stories, hasLength(285));
+      expect(artwork, hasLength(57));
+      final pack = storyCoverAssetKey(
+        '1fe9baf1b1a199b5bfb116e320a679b9',
+        'Alltag',
+      );
+      expect(pack, 'assets/story_covers/pack_en_open_pocket.png');
+      artwork.add(pack!);
+      expect(artwork, hasLength(58));
+    },
+  );
 
   testWidgets(
-    'all 44 shipping PNGs are registered and decode from the real asset bundle',
+    'all 58 shipping PNGs are registered and decode from the real asset bundle',
     (tester) async {
       final expected = _expectedArtwork();
-      expect(expected, hasLength(44));
+      expect(expected, hasLength(58));
       final manifest = (await tester.runAsync(
         () => AssetManifest.loadFromAssetBundle(rootBundle),
       ))!;

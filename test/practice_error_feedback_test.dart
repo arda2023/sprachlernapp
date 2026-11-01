@@ -9,11 +9,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sprachapp/screens/decks/widgets/practice_chrome.dart';
 import 'package:sprachapp/presentation/practice/deck_session_controller.dart';
 import 'package:sprachapp/domain/srs_state.dart';
+import 'package:sprachapp/screens/decks/widgets/practice_input.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sprachapp/screens/decks/deck_practice_screen.dart';
 import 'package:sprachapp/theme/app_theme.dart';
 
 import 'fixtures/deck_repositories.dart';
+import 'fixtures/practice_session.dart';
 
 void main() {
   setUpAll(() async {
@@ -138,7 +140,7 @@ void main() {
       );
       expect(
         tester.widget<TextField>(find.byType(TextField)).decoration!.hintText,
-        'wa…',
+        targetPrefix(session(tester).pass!.item.card.form),
       );
       await tester.pump(const Duration(milliseconds: 1100)); // old deadline
       expect(toolbar(tester).error, isTrue);
@@ -160,7 +162,10 @@ void main() {
       await tester.pump();
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pump();
-      await tester.enterText(find.byType(TextField), 'walks');
+      await tester.enterText(
+        find.byType(TextField),
+        shownPracticeItem(tester).card.form,
+      );
       await tester.pump();
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
@@ -189,7 +194,7 @@ void main() {
   testWidgets(
     'neutral retries stay neutral; wrong form is red and retains its hint',
     (tester) async {
-      final user = await mount(tester);
+      final user = await mount(tester, singleTarget: true);
       for (final answer in ['waljs', 'strolls']) {
         await tester.enterText(find.byType(TextField), answer);
         await tester.pump();
@@ -211,58 +216,55 @@ void main() {
     },
   );
 
-  testWidgets(
-    'reduced motion, reveal and disposal cancel obsolete feedback; '
-    'each wrong answer vibrates once',
-    (tester) async {
-      final calls = <String>[];
-      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+  testWidgets('reduced motion, reveal and disposal cancel obsolete feedback; '
+      'each wrong answer vibrates once', (tester) async {
+    final calls = <String>[];
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+      SystemChannels.platform,
+      (call) async {
+        calls.add('${call.method}:${call.arguments}');
+        return null;
+      },
+    );
+    addTearDown(
+      () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
         SystemChannels.platform,
-        (call) async {
-          calls.add('${call.method}:${call.arguments}');
-          return null;
-        },
-      );
-      addTearDown(
-        () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
-          SystemChannels.platform,
-          null,
-        ),
-      );
-      final user = await mount(tester, reduced: true);
-      await tester.enterText(find.byType(TextField), 'zzzzz');
-      await tester.pump();
-      await tester.testTextInput.receiveAction(TextInputAction.done);
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-      expect(offset(tester, 'button'), 0);
-      expect(offset(tester, 'field'), 0);
-      expect(toolbar(tester).error, isTrue);
-      expect(fieldIsRed(tester), isTrue);
-      toolbar(tester).onReveal();
-      await tester.pump();
-      expect(toolbar(tester).error, isFalse);
-      expect(fieldIsRed(tester), isFalse);
-      expect(session(tester).pass!.revealed, isTrue);
-      await tester.enterText(find.byType(TextField), 'zzzzz');
-      await tester.pump();
-      await tester.testTextInput.receiveAction(TextInputAction.done);
-      await tester.pump();
-      expect(toolbar(tester).error, isTrue);
-      await close(tester, user);
-      await tester.pump(const Duration(seconds: 2));
-      expect(tester.takeException(), isNull);
-      // Haptics are not motion: the error haptic stays with reduced motion
-      // (user decision 28.10.2026), one per wrong answer, and no sound.
-      expect(
-        calls.where((c) => c.contains('Haptic') || c.contains('SystemSound')),
-        [
-          'HapticFeedback.vibrate:HapticFeedbackType.errorNotification',
-          'HapticFeedback.vibrate:HapticFeedbackType.errorNotification',
-        ],
-      );
-    },
-  );
+        null,
+      ),
+    );
+    final user = await mount(tester, reduced: true);
+    await tester.enterText(find.byType(TextField), 'zzzzz');
+    await tester.pump();
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(offset(tester, 'button'), 0);
+    expect(offset(tester, 'field'), 0);
+    expect(toolbar(tester).error, isTrue);
+    expect(fieldIsRed(tester), isTrue);
+    toolbar(tester).onReveal();
+    await tester.pump();
+    expect(toolbar(tester).error, isFalse);
+    expect(fieldIsRed(tester), isFalse);
+    expect(session(tester).pass!.revealed, isTrue);
+    await tester.enterText(find.byType(TextField), 'zzzzz');
+    await tester.pump();
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+    expect(toolbar(tester).error, isTrue);
+    await close(tester, user);
+    await tester.pump(const Duration(seconds: 2));
+    expect(tester.takeException(), isNull);
+    // Haptics are not motion: the error haptic stays with reduced motion
+    // (user decision 28.10.2026), one per wrong answer, and no sound.
+    expect(
+      calls.where((c) => c.contains('Haptic') || c.contains('SystemSound')),
+      [
+        'HapticFeedback.vibrate:HapticFeedbackType.errorNotification',
+        'HapticFeedback.vibrate:HapticFeedbackType.errorNotification',
+      ],
+    );
+  });
 
   testWidgets('keyboard-inset visual evidence', (tester) async {
     final user = TestUser();
@@ -282,9 +284,8 @@ void main() {
             child: ValueListenableBuilder<double>(
               valueListenable: scale,
               builder: (context, value, child) => MediaQuery(
-                data: MediaQuery.of(context).copyWith(
-                  textScaler: TextScaler.linear(value),
-                ),
+                data: MediaQuery.of(context)
+                    .copyWith(textScaler: TextScaler.linear(value)),
                 child: child!,
               ),
               child: const DeckPracticeScreen(deckId: 'deck-0', sessionSize: 2),
@@ -297,35 +298,57 @@ void main() {
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), 'zzzzz');
     await tester.pumpAndSettle();
-    expect(tester.getTopRight(find.bySemanticsLabel('Eingeben')).dx, closeTo(378, 1));
+    expect(
+      tester.getTopRight(find.bySemanticsLabel('Eingeben')).dx,
+      closeTo(378, 1),
+    );
     await capture(tester, key, 'ready');
     await tester.tap(find.text('Eingeben'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
     await capture(tester, key, 'wrong');
     await tester.pump(const Duration(milliseconds: 300));
-    expect(tester.getTopRight(find.bySemanticsLabel('Falsch')).dx, closeTo(378, 1));
+    expect(
+      tester.getTopRight(find.bySemanticsLabel('Falsch')).dx,
+      closeTo(378, 1),
+    );
     await capture(tester, key, '400ms');
     await tester.pump(const Duration(milliseconds: 1100));
-    expect(tester.getTopRight(find.bySemanticsLabel('Eingeben')).dx, closeTo(378, 1));
+    expect(
+      tester.getTopRight(find.bySemanticsLabel('Eingeben')).dx,
+      closeTo(378, 1),
+    );
     await capture(tester, key, '1500ms');
-    await tester.enterText(find.byType(TextField), 'walks');
+    await tester.enterText(
+      find.byType(TextField),
+      shownPracticeItem(tester).card.form,
+    );
     await tester.pump();
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pumpAndSettle();
     expect(user.records, hasLength(1));
     final check = find.byKey(const ValueKey('practice-success'));
     expect(check, findsOneWidget);
-    expect(tester.getTopRight(find.bySemanticsLabel('Weiter')).dx, closeTo(378, 1));
-    expect(tester.getTopRight(check).dx,
-        lessThan(tester.getTopLeft(find.text('Weiter')).dx));
+    expect(
+      tester.getTopRight(find.bySemanticsLabel('Weiter')).dx,
+      closeTo(378, 1),
+    );
+    expect(
+      tester.getTopRight(check).dx,
+      lessThan(tester.getTopLeft(find.text('Weiter')).dx),
+    );
     await capture(tester, key, 'success');
     scale.value = 2;
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
-    expect(tester.getTopRight(find.bySemanticsLabel('Weiter')).dx, closeTo(378, 1));
-    expect(tester.getBottomLeft(find.bySemanticsLabel('Weiter')).dy,
-        lessThanOrEqualTo(544));
+    expect(
+      tester.getTopRight(find.bySemanticsLabel('Weiter')).dx,
+      closeTo(378, 1),
+    );
+    expect(
+      tester.getBottomLeft(find.bySemanticsLabel('Weiter')).dy,
+      lessThanOrEqualTo(544),
+    );
     await capture(tester, key, 'large-keyboard');
     await tester.pumpWidget(const SizedBox());
     await user.close();
@@ -348,7 +371,11 @@ Future<void> capture(WidgetTester tester, GlobalKey key, String state) async {
   });
 }
 
-Future<TestUser> mount(WidgetTester tester, {bool reduced = false}) async {
+Future<TestUser> mount(
+  WidgetTester tester, {
+  bool reduced = false,
+  bool singleTarget = false,
+}) async {
   final user = TestUser();
   await tester.pumpWidget(
     testScope(
@@ -361,6 +388,7 @@ Future<TestUser> mount(WidgetTester tester, {bool reduced = false}) async {
         home: const DeckPracticeScreen(deckId: 'deck-0', sessionSize: 2),
       ),
       user: user,
+      content: singleTarget ? WalksOnlyContent() : null,
     ),
   );
   await tester.pumpAndSettle();

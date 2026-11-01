@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+
 import '../models/home_models.dart';
 import '../models/practice_models.dart';
 import '../models/reading_history.dart';
@@ -19,6 +20,8 @@ import '../models/sample_content.dart';
 import '../models/story_models.dart';
 import '../presentation/providers/reading_providers.dart';
 import '../presentation/providers/content_access_provider.dart';
+import '../presentation/providers/premium_access_provider.dart';
+import '../widgets/premium_content_gate.dart';
 import '../domain/content_access_policy.dart';
 import '../presentation/providers/learning_providers.dart';
 import '../presentation/providers/story_learning_providers.dart';
@@ -88,6 +91,10 @@ class _AppShellState extends ConsumerState<AppShell> {
   }
 
   void _openStory(Story story) {
+    if (!ref.read(premiumContentAccessProvider)) {
+      showPremiumContentPaywall(context, interest: 'Stories');
+      return;
+    }
     _history.markRead(story.id);
     final progress = ref.read(readingProgressProvider.notifier);
     final language = ref.read(selectedContentLanguageProvider).asData?.value;
@@ -108,6 +115,10 @@ class _AppShellState extends ConsumerState<AppShell> {
   }
 
   void _openImported(ImportedText text) {
+    if (!ref.read(premiumContentAccessProvider)) {
+      showPremiumContentPaywall(context, interest: 'Eigene Texte');
+      return;
+    }
     final language = ref.read(selectedContentLanguageProvider).asData?.value;
     final progress = ref.read(readingProgressProvider.notifier);
     StoryReaderScreen.openText(
@@ -316,9 +327,9 @@ class _AppShellState extends ConsumerState<AppShell> {
                           ),
                         ),
                     onOpenStory: _openStory,
-                    news: hasEnglishSamples ? sampleNews : [],
-                    onOpenNews: (article) =>
-                        StoryReaderScreen.openNews(context, article),
+                    // No "Nachrichten" for now: the section returns later
+                    // with the daily news (user decision 01.11.2026,
+                    // docs/daily-news.md).
                   ),
                   TickerMode(
                     enabled: _tab == AppTab.words,

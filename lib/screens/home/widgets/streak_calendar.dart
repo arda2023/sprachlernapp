@@ -216,7 +216,7 @@ class _Stat extends StatelessWidget {
                   Text(
                     value,
                     style: AppType.chrome(
-                      size: 18,
+                      size: 17,
                       weight: FontWeight.w800,
                       color: _ink,
                     ),
@@ -384,7 +384,7 @@ class _DayCell extends StatelessWidget {
                   Text(
                     '$day',
                     style: AppType.chrome(
-                      size: 14,
+                      size: 13,
                       weight: on || today ? FontWeight.w800 : FontWeight.w600,
                       color: star
                           ? context.appColors.popover

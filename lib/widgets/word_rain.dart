@@ -8,14 +8,13 @@ import 'launch_splash.dart';
 /// "Hello" in every learning language, for the paywall's header.
 const greetings = ['Hello', 'Olá', 'Hei', 'Ciao', 'Hola'];
 
-/// A few warm words per learning language for the language switch
-/// (user request 31.10.2026: like Babbel's "Hello", with more words).
+/// Four words per learning language for the language switch.
 List<String> wordsFor(String lang) => switch (lang) {
-  'pt-BR' => ['Olá', 'História', 'Ler', 'Palavras', 'Viagem', 'Aprender'],
-  'nb' => ['Hei', 'Historie', 'Lese', 'Ord', 'Reise', 'Lære'],
-  'it' => ['Ciao', 'Storia', 'Leggere', 'Parole', 'Viaggio', 'Imparare'],
-  'es' => ['Hola', 'Historia', 'Leer', 'Palabras', 'Viaje', 'Aprender'],
-  _ => ['Hello', 'Story', 'Read', 'Words', 'Journey', 'Learn'],
+  'pt-BR' => ['Olá', 'História', 'Ler', 'Aprender'],
+  'nb' => ['Hei', 'Historie', 'Lese', 'Lære'],
+  'it' => ['Ciao', 'Storia', 'Leggere', 'Imparare'],
+  'es' => ['Hola', 'Historia', 'Leer', 'Aprender'],
+  _ => ['Hello', 'Story', 'Read', 'Learn'],
 };
 
 /// The dim ember tone of the big words: the popover orange sunk into the
@@ -138,41 +137,54 @@ class _WordCycleState extends State<WordCycle>
   }
 }
 
-/// A full screen of big words in [lang]: each row's word travels in from
-/// the bottom or top edge (alternating), one after another, until the wall
-/// stands. Used over the app while another learning language loads.
+/// Four large, light words in [lang] enter in sequence from alternating
+/// edges. Two are cropped at the side; all keep drifting while content loads.
 class WordWall extends StatefulWidget {
   const WordWall({super.key, required this.lang});
 
   final String lang;
 
-  /// Until the last word has landed.
-  static const settle = Duration(milliseconds: 1250);
+  /// Until the last word has entered; the gentle drift continues.
+  static const settle = Duration(milliseconds: 1070);
 
   @override
   State<WordWall> createState() => _WordWallState();
 }
 
-class _WordWallState extends State<WordWall>
-    with SingleTickerProviderStateMixin {
-  late final _clock = AnimationController(
+class _WordWallState extends State<WordWall> with TickerProviderStateMixin {
+  late final _entrance = AnimationController(
     vsync: this,
     duration: WordWall.settle,
   );
+  late final _drift = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 14),
+  );
+  late final _motion = Listenable.merge([_entrance, _drift]);
+  static const _easeOut = Cubic(0.23, 1, 0.32, 1);
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (MediaQuery.disableAnimationsOf(context)) {
-      _clock.value = 1;
-    } else if (_clock.value == 0 && !_clock.isAnimating) {
-      _clock.forward();
+      _entrance
+        ..stop()
+        ..value = 1;
+      _drift
+        ..stop()
+        ..value = 0;
+    } else {
+      if (_entrance.value == 0 && !_entrance.isAnimating) {
+        _entrance.forward();
+      }
+      if (!_drift.isAnimating) _drift.repeat();
     }
   }
 
   @override
   void dispose() {
-    _clock.dispose();
+    _entrance.dispose();
+    _drift.dispose();
     super.dispose();
   }
 
@@ -194,30 +206,29 @@ class _WordWallState extends State<WordWall>
               final pad = MediaQuery.paddingOf(context);
               final rows = words.length;
               final rowHeight = (screen.height - pad.top - pad.bottom) / rows;
-              final size = math.min(rowHeight * 0.92, screen.width * 0.42);
+              final size = math.min(
+                148.0,
+                math.min(rowHeight * 0.64, screen.width * 0.34),
+              );
               return ClipRect(
-                child: AnimatedBuilder(
-                  animation: _clock,
-                  builder: (context, _) => Stack(
-                    children: [
-                      for (var i = 0; i < rows; i++)
-                        _row(
-                          words[i],
-                          index: i,
-                          rows: rows,
-                          top: pad.top + i * rowHeight,
-                          rowHeight: rowHeight,
-                          screenHeight: screen.height,
-                          size: size,
-                          // The greeting glows, the rest stays ember.
-                          color: i == 0
-                              ? colors.popover
-                              : i.isOdd
-                              ? ember
-                              : Color.lerp(ember, colors.popover, 0.35)!,
-                        ),
-                    ],
-                  ),
+                child: Stack(
+                  children: [
+                    for (var i = 0; i < rows; i++)
+                      _row(
+                        words[i],
+                        index: i,
+                        top: pad.top + i * rowHeight,
+                        rowHeight: rowHeight,
+                        screenWidth: screen.width,
+                        size: size,
+                        // The greeting glows, the rest stays ember.
+                        color: i == 0
+                            ? colors.popover
+                            : i.isOdd
+                            ? ember
+                            : Color.lerp(ember, colors.popover, 0.35)!,
+                      ),
+                  ],
                 ),
               );
             },
@@ -230,26 +241,93 @@ class _WordWallState extends State<WordWall>
   Widget _row(
     String word, {
     required int index,
-    required int rows,
     required double top,
     required double rowHeight,
-    required double screenHeight,
+    required double screenWidth,
     required double size,
     required Color color,
   }) {
-    // Rows start 90 ms apart; each travel takes 60 % of the clock.
-    const travel = 0.6;
-    final start = rows == 1 ? 0.0 : index * (1 - travel) / (rows - 1);
-    final p = ((_clock.value - start) / travel).clamp(0.0, 1.0);
-    final e = Curves.easeOutCubic.transform(p);
     final fromBelow = index.isOdd;
-    final distance = fromBelow ? screenHeight - top : -(top + rowHeight);
-    // Odd rows lean right so the words do not line up like a list.
-    final left = index.isOdd ? size * 0.35 : -size * 0.05;
+    final distance = fromBelow ? rowHeight : -rowHeight;
+    final cropped = index.isOdd;
+    final alignment = !cropped
+        ? Alignment.center
+        : index == 1
+        ? Alignment.centerRight
+        : Alignment.centerLeft;
+    final style = AppType.chrome(
+      color: color,
+      size: size,
+      weight: FontWeight.w400,
+      height: 1.1,
+    );
+    final measure = TextPainter(
+      text: TextSpan(text: word, style: style),
+      textDirection: TextDirection.ltr,
+      textScaler: TextScaler.noScaling,
+      maxLines: 1,
+    )..layout();
+    final width = math.min(
+      measure.width,
+      cropped ? screenWidth / 0.7 : screenWidth - 56,
+    );
+    measure.dispose();
     return Positioned(
-      left: left,
-      top: top + (rowHeight - size * 1.05) / 2 + distance * (1 - e),
-      child: _BigWord(text: word, size: size, color: color),
+      left: 0,
+      right: 0,
+      top: top,
+      height: rowHeight,
+      child: ClipRect(
+        child: AnimatedBuilder(
+          animation: _motion,
+          // The words are laid out once; only their transform changes per frame.
+          child: OverflowBox(
+            alignment: alignment,
+            maxWidth: double.infinity,
+            child: FractionalTranslation(
+              translation: Offset(
+                !cropped
+                    ? 0
+                    : index == 1
+                    ? 0.3
+                    : -0.3,
+                0,
+              ),
+              child: SizedBox(
+                width: width,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    word,
+                    maxLines: 1,
+                    softWrap: false,
+                    textScaler: TextScaler.noScaling,
+                    style: style,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          builder: (context, child) {
+            // Each 650 ms entry starts 140 ms after the previous one.
+            final elapsed = _entrance.value * WordWall.settle.inMilliseconds;
+            final p = ((elapsed - index * 140) / 650).clamp(0.0, 1.0);
+            final entryY = distance * (1 - _easeOut.transform(p));
+            final angle = _drift.value * 2 * math.pi;
+            // Add the drift during entry too, so arriving never freezes.
+            final driftY =
+                math.sin(angle) *
+                math.min(36.0, rowHeight * 0.14) *
+                (fromBelow ? -1 : 1);
+            final phase = index * 0.8;
+            final driftX = (math.sin(angle + phase) - math.sin(phase)) * 12;
+            return Transform.translate(
+              offset: Offset(driftX, entryY + driftY),
+              child: child,
+            );
+          },
+        ),
+      ),
     );
   }
 }

@@ -136,67 +136,83 @@ class _SubscriptionTileState extends ConsumerState<SubscriptionTile> {
     final active = state.hasPremiumUiAccess;
     final busy = _actionLocked || state.phase.isBusy || state.isSyncing;
     final status = _status(state);
+    final action = _PillButton(
+      label: active ? 'Verwalten' : 'Upgrade',
+      semanticsLabel: active ? 'Abo verwalten' : 'Premium ansehen',
+      onPressed: active ? (busy ? null : _manageSubscriptions) : _openPaywall,
+    );
     final card = Container(
       padding: const EdgeInsets.fromLTRB(14, 14, 12, 14),
       decoration: BoxDecoration(
         color: colors.raisedInk,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: colors.popover.withValues(alpha: 0.15),
-            ),
-            child: Icon(
-              CupertinoIcons.star_fill,
-              size: 20,
-              color: colors.popover,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Semantics(
-              label: 'Linglossa Premium. $status',
-              liveRegion: state.isSyncing,
-              excludeSemantics: true,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final stacked =
+              constraints.maxWidth < 280 ||
+              MediaQuery.textScalerOf(context).scale(1) > 1.3;
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
                 children: [
-                  Text(
-                    'Linglossa Premium',
-                    style: AppType.chrome(
-                      size: 16,
-                      weight: FontWeight.w700,
-                      color: colors.textPrimary,
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: colors.popover.withValues(alpha: 0.15),
+                    ),
+                    child: Icon(
+                      CupertinoIcons.star_fill,
+                      size: 20,
+                      color: colors.popover,
                     ),
                   ),
-                  const SizedBox(height: 2),
-                  Text(
-                    status,
-                    style: AppType.chrome(
-                      size: 13,
-                      weight: FontWeight.w500,
-                      color: colors.textMuted,
-                      height: 1.3,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Semantics(
+                      label: 'Linglossa Premium. $status',
+                      liveRegion: state.isSyncing,
+                      excludeSemantics: true,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Linglossa Premium',
+                            style: AppType.chrome(
+                              size: 17,
+                              weight: FontWeight.w700,
+                              color: colors.textPrimary,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            status,
+                            style: AppType.chrome(
+                              size: 13,
+                              weight: FontWeight.w500,
+                              color: colors.textMuted,
+                              height: 1.3,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
+                  if (!stacked) ...[const SizedBox(width: 10), action],
                 ],
               ),
-            ),
-          ),
-          const SizedBox(width: 10),
-          _PillButton(
-            label: active ? 'Verwalten' : 'Upgrade',
-            semanticsLabel: active ? 'Abo verwalten' : 'Premium ansehen',
-            onPressed: active
-                ? (busy ? null : _manageSubscriptions)
-                : _openPaywall,
-          ),
-        ],
+              if (stacked)
+                Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: Align(alignment: Alignment.centerRight, child: action),
+                ),
+            ],
+          );
+        },
       ),
     );
     return Column(
@@ -222,7 +238,7 @@ class _SubscriptionTileState extends ConsumerState<SubscriptionTile> {
                   ? 'Wird wiederhergestellt …'
                   : 'Käufe wiederherstellen',
               style: AppType.chrome(
-                size: 14,
+                size: 15,
                 weight: FontWeight.w500,
                 color: busy ? colors.iconOff : colors.textMuted,
               ),
@@ -270,7 +286,7 @@ class _PillButton extends StatelessWidget {
             child: Text(
               label,
               style: AppType.chrome(
-                size: 14,
+                size: 15,
                 weight: FontWeight.w700,
                 color: const Color(0xFFFFFFFF),
               ),

@@ -48,7 +48,7 @@ class SentencePopover extends StatelessWidget {
           original,
           style: AppType.editorial(
             color: white,
-            size: 19,
+            size: 20,
             weight: FontWeight.w600,
             height: 1.4,
             letterSpacing: 0,
@@ -71,7 +71,7 @@ class SentencePopover extends StatelessWidget {
           translation,
           style: AppType.editorial(
             color: white,
-            size: 19,
+            size: 20,
             weight: FontWeight.w400,
             height: 1.4,
             letterSpacing: 0,

@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/semantics.dart' show CustomSemanticsAction;
 
 import '../../models/home_models.dart';
 import '../../models/news_models.dart';
 import '../../models/story_category.dart';
 import '../../presentation/providers/reading_providers.dart';
+import '../../presentation/providers/premium_access_provider.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/popover_trigger.dart';
+import '../../widgets/premium_content_gate.dart';
 import '../../widgets/section_heading.dart';
 import '../../widgets/story_cover.dart';
 import '../home/widgets/story_carousel.dart';
@@ -16,7 +19,7 @@ import 'widgets/news_carousel.dart';
 /// The Stories tab: news on top, then "Weiterlesen" (started stories with
 /// their progress), the learner's own imported texts, and one carousel per
 /// category. "Importieren" opens a popover with the import sources.
-class StoryLibraryScreen extends StatelessWidget {
+class StoryLibraryScreen extends ConsumerWidget {
   const StoryLibraryScreen({
     super.key,
     required this.stories,
@@ -33,9 +36,9 @@ class StoryLibraryScreen extends StatelessWidget {
     this.onImported,
     this.scrollController,
   });
+
   /// Main vertical scroll view; the tab bar scrolls it to the top on re-tap.
   final ScrollController? scrollController;
-
 
   static const _gutter = EdgeInsets.symmetric(horizontal: 20);
   static const newsSubheading =
@@ -63,6 +66,24 @@ class StoryLibraryScreen extends StatelessWidget {
   /// Called after a successful import (e.g. to open the new text).
   final VoidCallback? onImported;
 
+  /// The newest day among daily articles; null for the bundled samples.
+  DateTime? get _edition => news
+      .map((a) => a.edition)
+      .whereType<DateTime>()
+      .fold<DateTime?>(null, (a, b) => a == null || b.isAfter(a) ? b : a);
+
+  /// "Heute", "Gestern" or "30.10.".
+  String _editionLabel(DateTime day) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final days = today.difference(DateTime(day.year, day.month, day.day)).inDays;
+    return switch (days) {
+      0 => 'Heute',
+      1 => 'Gestern',
+      _ => '${day.day}.${day.month}.',
+    };
+  }
+
   /// Any import entry: opens the import popover and turns orange meanwhile.
   Widget _importTrigger(
     Widget Function(bool open, VoidCallback onPressed) builder,
@@ -74,30 +95,38 @@ class StoryLibraryScreen extends StatelessWidget {
     builder: (context, open, show) => builder(open, show),
   );
 
-  /// Feature + wide row, tall covers, numbered list, wide row – in turn.
+  /// Feature and image covers, with tall cards replacing the former ranked list.
   Widget _shelf(
     int index,
     List<Story> stories,
     Map<String, double> started,
     Set<String> finished,
+    bool premiumLocked,
+    VoidCallback onUpgrade,
   ) => switch (stories.length < 3 ? 1 : index % 4) {
     0 => StoryFeatureShelf(
       stories: stories,
       onOpen: onOpenStory,
       progress: started,
       finished: finished,
+      premiumLocked: premiumLocked,
+      onUpgrade: onUpgrade,
     ),
-    2 => StoryListShelf(
+    2 => StoryCarousel(
       stories: stories,
       onOpen: onOpenStory,
       progress: started,
       finished: finished,
+      premiumLocked: premiumLocked,
+      onUpgrade: onUpgrade,
     ),
     3 => StoryCarousel(
       stories: stories,
       onOpen: onOpenStory,
       progress: started,
       finished: finished,
+      premiumLocked: premiumLocked,
+      onUpgrade: onUpgrade,
       width: 232,
       height: 132,
     ),
@@ -106,11 +135,15 @@ class StoryLibraryScreen extends StatelessWidget {
       onOpen: onOpenStory,
       progress: started,
       finished: finished,
+      premiumLocked: premiumLocked,
+      onUpgrade: onUpgrade,
     ),
   };
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final premiumLocked = !ref.watch(premiumContentAccessProvider);
+    void upgrade() => showPremiumContentPaywall(context, interest: 'Stories');
     final groups = <String, List<Story>>{};
     for (final category in StoryCategory.all) {
       groups[category.name] = [];
@@ -170,7 +203,7 @@ class StoryLibraryScreen extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: _importTrigger(
                       (open, onPressed) =>
-                          _ImportButton(open: open, onPressed: onPressed),
+                          _ImportPill(open: open, onPressed: onPressed),
                     ),
                   ),
                 ),
@@ -181,23 +214,29 @@ class StoryLibraryScreen extends StatelessWidget {
           if (status != null) Padding(padding: _gutter, child: status!),
           if (news.isNotEmpty) ...[
             const SizedBox(height: 18),
-            const Padding(
+            Padding(
               padding: _gutter,
               child: SectionHeading(
                 title: 'Nachrichten',
-                trailing: _DemoChip(),
+                trailing: switch (_edition) {
+                  null => const _DemoChip(),
+                  final day => _Count(_editionLabel(day)),
+                },
               ),
             ),
-            const SizedBox(height: 4),
-            Padding(
-              padding: _gutter,
-              child: Text(
-                newsSubheading,
-                style: AppType.meta(color: context.appColors.textMuted),
+            // Only the bundled samples need saying so.
+            if (_edition == null) ...[
+              const SizedBox(height: 4),
+              Padding(
+                padding: _gutter,
+                child: Text(
+                  newsSubheading,
+                  style: AppType.meta(color: context.appColors.textMuted),
+                ),
               ),
-            ),
+            ],
             const SizedBox(height: 14),
-            NewsCarousel(articles: news, onOpen: (a) => onOpenNews?.call(a)),
+            NewsDesks(articles: news, onOpen: (a) => onOpenNews?.call(a)),
           ],
           if (resume.isNotEmpty) ...[
             const SizedBox(height: 28),
@@ -206,28 +245,33 @@ class StoryLibraryScreen extends StatelessWidget {
               child: SectionHeading(title: 'Weiterlesen'),
             ),
             const SizedBox(height: 12),
-            for (final (i, (item, entry)) in resume.take(3).indexed)
-              Padding(
-                padding: _gutter.copyWith(top: i == 0 ? 0 : 10),
-                child: switch (item) {
-                  Story story => ContinueReadingTile(
-                    story: story,
-                    title: story.title,
-                    meta: story.topic,
-                    category: StoryCategory.of(story.topic),
-                    fraction: entry.fraction,
-                    onTap: () => onOpenStory(story),
-                  ),
-                  ImportedText text => ContinueReadingTile(
-                    title: text.title,
-                    meta: 'Eigener Text',
-                    category: _importCategory,
-                    fraction: entry.fraction,
-                    onTap: () => onOpenImported?.call(text),
-                  ),
-                  _ => const SizedBox.shrink(),
-                },
-              ),
+            ContinueReadingPages(
+              children: [
+                for (final (item, entry) in resume)
+                  switch (item) {
+                    Story story => ContinueReadingTile(
+                      story: story,
+                      title: story.title,
+                      meta: story.topic,
+                      category: StoryCategory.of(story.topic),
+                      fraction: entry.fraction,
+                      onTap: () => onOpenStory(story),
+                      premiumLocked: premiumLocked,
+                      onUpgrade: upgrade,
+                    ),
+                    ImportedText text => ContinueReadingTile(
+                      title: text.title,
+                      meta: 'Eigener Text',
+                      category: _importCategory,
+                      fraction: entry.fraction,
+                      onTap: () => onOpenImported?.call(text),
+                      premiumLocked: premiumLocked,
+                      onUpgrade: upgrade,
+                    ),
+                    _ => const SizedBox.shrink(),
+                  },
+              ],
+            ),
           ],
           const SizedBox(height: 28),
           Padding(
@@ -267,6 +311,8 @@ class StoryLibraryScreen extends StatelessWidget {
                       text: text,
                       progress: progress[text.id],
                       onTap: () => onOpenImported?.call(text),
+                      premiumLocked: premiumLocked,
+                      onUpgrade: upgrade,
                       onDelete: onDeleteImported == null
                           ? null
                           : () => onDeleteImported!(text),
@@ -275,8 +321,8 @@ class StoryLibraryScreen extends StatelessWidget {
                 ],
               ),
             ),
-          // Each category takes another shape, so the page does not read
-          // as one carousel after another (user request 31.10.2026).
+          // Categories keep their image-led shelves; compact ranked rows belong
+          // to the text exercises under Inhalte (01.11.2026).
           for (final (i, MapEntry(key: topic, value: group))
               in groups.entries.indexed) ...[
             const SizedBox(height: 28),
@@ -295,6 +341,8 @@ class StoryLibraryScreen extends StatelessWidget {
               shelfOrder(group, progress: started, finished: finished),
               started,
               finished,
+              premiumLocked,
+              upgrade,
             ),
           ],
         ],
@@ -335,50 +383,48 @@ class _DemoChip extends StatelessWidget {
   );
 }
 
-class _ImportButton extends StatelessWidget {
-  const _ImportButton({required this.onPressed, this.open = false});
+/// "Text importieren": the same pill at the top of the tab and in the
+/// empty "Deine Texte" (user request 01.11.2026). Orange text on Active
+/// Tint; popover orange with white text while the import popover is open.
+class _ImportPill extends StatelessWidget {
+  const _ImportPill({required this.onPressed, this.open = false});
   final VoidCallback onPressed;
   final bool open;
+
+  static const height = 40.0;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.appColors;
-    const white = Color(0xFFFFFFFF);
+    final ink = open ? const Color(0xFFFFFFFF) : colors.active;
     return MergeSemantics(
       child: CupertinoButton(
         onPressed: onPressed,
         padding: EdgeInsets.zero,
         minimumSize: const Size(44, 44),
         child: Semantics(
-          label: 'Eigene Texte importieren',
+          label: 'Text importieren',
           excludeSemantics: true,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 160),
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+            constraints: const BoxConstraints(minHeight: height),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
-              color: open ? colors.popover : colors.raisedInk,
+              color: open ? colors.popover : colors.activeTint,
               borderRadius: BorderRadius.circular(99),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  CupertinoIcons.plus,
-                  size: 16,
-                  color: open ? white : colors.active,
-                ),
+                Icon(CupertinoIcons.plus, size: 16, color: ink),
                 const SizedBox(width: 6),
                 // Large Dynamic Type shortens the label; semantics stay whole.
                 Flexible(
                   child: Text(
-                    'Importieren',
+                    'Text importieren',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppType.chrome(
-                      size: 14,
-                      weight: FontWeight.w700,
-                      color: open ? white : colors.textPrimary,
-                    ),
+                    style: AppType.chrome(weight: FontWeight.w700, color: ink),
                   ),
                 ),
               ],
@@ -390,7 +436,8 @@ class _ImportButton extends StatelessWidget {
   }
 }
 
-/// Empty "Deine Texte": what importing is for, and one button.
+/// Empty "Deine Texte": a small import symbol as tall as the pill beside it;
+/// no explanation, the pill says it (user request 01.11.2026).
 class _ImportPrompt extends StatelessWidget {
   const _ImportPrompt({required this.trigger});
   final Widget Function(Widget Function(bool open, VoidCallback onPressed))
@@ -400,71 +447,34 @@ class _ImportPrompt extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.appColors;
     return Container(
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
         color: colors.raisedInk,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
         children: [
-          Container(
-            width: 52,
-            height: 52,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: colors.activeTint,
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: Icon(
-              CupertinoIcons.square_arrow_down,
-              size: 26,
-              color: colors.active,
+          ExcludeSemantics(
+            child: Container(
+              width: _ImportPill.height,
+              height: _ImportPill.height,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: colors.nightPage,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                CupertinoIcons.square_arrow_down,
+                size: 20,
+                color: colors.active,
+              ),
             ),
           ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Lies, was dich interessiert',
-                  style: AppType.chrome(
-                    size: 16,
-                    weight: FontWeight.w800,
-                    color: colors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                trigger(
-                  (open, onPressed) => MergeSemantics(
-                    child: CupertinoButton(
-                      onPressed: onPressed,
-                      padding: EdgeInsets.zero,
-                      minimumSize: const Size(44, 40),
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 160),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 14,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: open ? colors.popover : colors.activeTint,
-                          borderRadius: BorderRadius.circular(99),
-                        ),
-                        child: Text(
-                          'Text importieren',
-                          style: AppType.chrome(
-                            weight: FontWeight.w800,
-                            color: open
-                                ? const Color(0xFFFFFFFF)
-                                : colors.active,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+          const SizedBox(width: 12),
+          Flexible(
+            child: trigger(
+              (open, onPressed) =>
+                  _ImportPill(open: open, onPressed: onPressed),
             ),
           ),
         ],
@@ -528,6 +538,8 @@ class _ImportedCard extends StatelessWidget {
     required this.onTap,
     this.progress,
     this.onDelete,
+    this.premiumLocked = false,
+    this.onUpgrade,
   });
 
   static const height = 168.0;
@@ -538,6 +550,8 @@ class _ImportedCard extends StatelessWidget {
   final ReadingEntry? progress;
   final VoidCallback onTap;
   final VoidCallback? onDelete;
+  final bool premiumLocked;
+  final VoidCallback? onUpgrade;
 
   Future<void> _confirmDelete(BuildContext context) async {
     final delete = await showCupertinoModalPopup<bool>(
@@ -579,14 +593,15 @@ class _ImportedCard extends StatelessWidget {
         onLongPress: onDelete == null ? null : () => _confirmDelete(context),
         child: MergeSemantics(
           child: CupertinoButton(
-            onPressed: onTap,
+            onPressed: premiumLocked ? onUpgrade : onTap,
             padding: EdgeInsets.zero,
             minimumSize: const Size(44, 44),
             pressedOpacity: 0.8,
             child: Semantics(
               label:
                   'Eigener Text: ${text.title}, ${text.wordCount} Wörter'
-                  '${started ? ', ${(entry.fraction * 100).round()} Prozent gelesen' : ''}',
+                  '${started ? ', ${(entry.fraction * 100).round()} Prozent gelesen' : ''}'
+                  '${premiumLocked ? ', mit Premium freischalten' : ''}',
               excludeSemantics: true,
               child: Container(
                 width: 150,
@@ -599,7 +614,13 @@ class _ImportedCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(icon, size: 22, color: const Color(0xFF8A6E4B)),
+                    Row(
+                      children: [
+                        Icon(icon, size: 22, color: const Color(0xFF8A6E4B)),
+                        const Spacer(),
+                        if (premiumLocked) const PremiumLockBadge(),
+                      ],
+                    ),
                     const SizedBox(height: 10),
                     Expanded(
                       child: Text(
@@ -608,7 +629,7 @@ class _ImportedCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppType.editorial(
                           color: _ink,
-                          size: 16,
+                          size: 17,
                           height: 1.25,
                         ),
                       ),
@@ -636,6 +657,129 @@ class _ImportedCard extends StatelessWidget {
   }
 }
 
+/// "Weiterlesen": up to three tiles stacked. More scroll sideways in pages
+/// of at most three, spread evenly so no page stands half empty: 4 → 2 + 2,
+/// 5 → 3 + 2, 7 → 3 + 2 + 2 (user request 01.11.2026). The next page peeks
+/// in from the right; the row is as tall as its fullest page.
+class ContinueReadingPages extends StatefulWidget {
+  const ContinueReadingPages({super.key, required this.children});
+
+  final List<Widget> children;
+
+  static const perPage = 3;
+  static const _gap = 10.0;
+  static const _gutter = 20.0;
+  static const _viewportFraction = 0.9;
+
+  /// How many tiles each page holds, earlier pages first.
+  static List<int> pageSizes(int count) {
+    if (count <= 0) return const [];
+    final pages = (count + perPage - 1) ~/ perPage;
+    return [
+      for (var i = 0; i < pages; i++)
+        count ~/ pages + (i < count % pages ? 1 : 0),
+    ];
+  }
+
+  @override
+  State<ContinueReadingPages> createState() => _ContinueReadingPagesState();
+}
+
+class _ContinueReadingPagesState extends State<ContinueReadingPages> {
+  final _pages = PageController(
+    viewportFraction: ContinueReadingPages._viewportFraction,
+  );
+
+  @override
+  void dispose() {
+    _pages.dispose();
+    super.dispose();
+  }
+
+  Widget _column(List<Widget> tiles) => Column(
+    mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      for (final (i, tile) in tiles.indexed)
+        Padding(
+          padding: EdgeInsets.only(top: i == 0 ? 0 : ContinueReadingPages._gap),
+          child: tile,
+        ),
+    ],
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    final tiles = widget.children;
+    final sizes = ContinueReadingPages.pageSizes(tiles.length);
+    if (sizes.length <= 1) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: ContinueReadingPages._gutter,
+        ),
+        child: _column(tiles),
+      );
+    }
+    final pages = <List<Widget>>[];
+    var start = 0;
+    for (final size in sizes) {
+      pages.add(tiles.sublist(start, start + size));
+      start += size;
+    }
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width =
+            constraints.maxWidth * ContinueReadingPages._viewportFraction -
+            ContinueReadingPages._gutter;
+        // An invisible copy of every page sets the height: the tallest
+        // page wins, whatever its titles wrap to.
+        return Stack(
+          children: [
+            ExcludeSemantics(
+              child: Visibility(
+                visible: false,
+                maintainSize: true,
+                maintainAnimation: true,
+                maintainState: true,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: ContinueReadingPages._gutter,
+                  ),
+                  child: IndexedStack(
+                    children: [
+                      for (final page in pages)
+                        SizedBox(width: width, child: _column(page)),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Positioned.fill(
+              child: PageView(
+                controller: _pages,
+                padEnds: false,
+                physics: const BouncingScrollPhysics(),
+                children: [
+                  for (final page in pages)
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: ContinueReadingPages._gutter,
+                      ),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: SizedBox(width: width, child: _column(page)),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
 /// Started story or text: small cover, title, category and the reading
 /// position as a bar with percent.
 class ContinueReadingTile extends StatelessWidget {
@@ -647,6 +791,8 @@ class ContinueReadingTile extends StatelessWidget {
     required this.fraction,
     required this.onTap,
     this.story,
+    this.premiumLocked = false,
+    this.onUpgrade,
   });
 
   final Story? story;
@@ -655,6 +801,8 @@ class ContinueReadingTile extends StatelessWidget {
   final StoryCategory category;
   final double fraction;
   final VoidCallback onTap;
+  final bool premiumLocked;
+  final VoidCallback? onUpgrade;
 
   @override
   Widget build(BuildContext context) {
@@ -662,12 +810,14 @@ class ContinueReadingTile extends StatelessWidget {
     final percent = (fraction * 100).round();
     return MergeSemantics(
       child: CupertinoButton(
-        onPressed: onTap,
+        onPressed: premiumLocked ? onUpgrade : onTap,
         padding: EdgeInsets.zero,
         pressedOpacity: 0.75,
         minimumSize: const Size(44, 44),
         child: Semantics(
-          label: 'Weiterlesen: $title, $meta, $percent Prozent gelesen',
+          label:
+              'Weiterlesen: $title, $meta, $percent Prozent gelesen'
+              '${premiumLocked ? ', mit Premium freischalten' : ''}',
           excludeSemantics: true,
           child: Container(
             padding: const EdgeInsets.all(12),
@@ -678,32 +828,38 @@ class ContinueReadingTile extends StatelessWidget {
             child: Row(
               children: [
                 if (story case final story?)
-                  StoryCover(story: story, width: 56, height: 72,
-                    radius: 12, texture: false)
-                else Container(
-                  width: 56,
-                  height: 72,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        category.color,
-                        Color.lerp(
+                  StoryCover(
+                    story: story,
+                    width: 56,
+                    height: 72,
+                    radius: 12,
+                    texture: false,
+                  )
+                else
+                  Container(
+                    width: 56,
+                    height: 72,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
                           category.color,
-                          const Color(0xFF000000),
-                          0.35,
-                        )!,
-                      ],
+                          Color.lerp(
+                            category.color,
+                            const Color(0xFF000000),
+                            0.35,
+                          )!,
+                        ],
+                      ),
+                    ),
+                    child: Icon(
+                      category.icon,
+                      size: 28,
+                      color: const Color(0xCCFFFFFF),
                     ),
                   ),
-                  child: Icon(
-                    category.icon,
-                    size: 28,
-                    color: const Color(0xCCFFFFFF),
-                  ),
-                ),
                 const SizedBox(width: 14),
                 Expanded(
                   child: Column(
@@ -742,11 +898,14 @@ class ContinueReadingTile extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 6),
-                Icon(
-                  CupertinoIcons.play_circle_fill,
-                  size: 32,
-                  color: colors.active,
-                ),
+                if (premiumLocked)
+                  const PremiumLockBadge()
+                else
+                  Icon(
+                    CupertinoIcons.play_circle_fill,
+                    size: 32,
+                    color: colors.active,
+                  ),
               ],
             ),
           ),

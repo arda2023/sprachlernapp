@@ -134,8 +134,24 @@ void main() {
         ),
       ),
     );
-    expect(find.text('Lies, was dich interessiert'), findsOneWidget);
-    await tester.tap(find.bySemanticsLabel('Eigene Texte importieren'));
+    // The empty "Deine Texte" needs no explanation; its pill is the same as
+    // the one at the top of the tab (user request 01.11.2026).
+    expect(find.text('Lies, was dich interessiert'), findsNothing);
+    final pills = find.bySemanticsLabel('Text importieren');
+    expect(pills, findsNWidgets(2));
+    Finder pill(Finder label) => find
+        .ancestor(of: label, matching: find.byType(AnimatedContainer))
+        .first;
+    final top = pill(find.text('Text importieren').first);
+    final empty = pill(find.text('Text importieren').last);
+    // The test font is far wider than Figtree, so the header pill may
+    // shorten its label; height and look are the same.
+    expect(tester.getSize(top).height, tester.getSize(empty).height);
+    expect(
+      tester.widget<AnimatedContainer>(top).decoration,
+      tester.widget<AnimatedContainer>(empty).decoration,
+    );
+    await tester.tap(pills.first);
     await tester.pumpAndSettle();
     expect(find.byType(ImportPanel), findsOneWidget);
     // Sources that need a picker or backend say so.
@@ -156,6 +172,7 @@ void main() {
     final story = sampleStories.first;
     await tester.pumpWidget(
       MaterialApp(
+        builder: (context, child) => ProviderScope(child: child!),
         theme: buildAppTheme(),
         home: Scaffold(
           body: StoryLibraryScreen(
@@ -195,6 +212,7 @@ void main() {
     final story = sampleStories.first;
     await tester.pumpWidget(
       MaterialApp(
+        builder: (context, child) => ProviderScope(child: child!),
         theme: buildAppTheme(),
         home: StoryReaderScreen(
           story: story,
@@ -215,6 +233,7 @@ void main() {
     phone(tester);
     await tester.pumpWidget(
       MaterialApp(
+        builder: (context, child) => ProviderScope(child: child!),
         theme: buildAppTheme(),
         home: StoryReaderScreen(
           story: const Story(
@@ -231,5 +250,22 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('50 %'), findsOneWidget);
+  });
+
+  test('"Weiterlesen" spreads stories evenly over pages of three', () {
+    expect(ContinueReadingPages.pageSizes(0), isEmpty);
+    expect(ContinueReadingPages.pageSizes(3), [3]);
+    expect(ContinueReadingPages.pageSizes(4), [2, 2]);
+    expect(ContinueReadingPages.pageSizes(5), [3, 2]);
+    expect(ContinueReadingPages.pageSizes(6), [3, 3]);
+    expect(ContinueReadingPages.pageSizes(7), [3, 2, 2]);
+    expect(ContinueReadingPages.pageSizes(10), [3, 3, 2, 2]);
+    for (var n = 1; n <= 30; n++) {
+      final sizes = ContinueReadingPages.pageSizes(n);
+      expect(sizes.reduce((a, b) => a + b), n);
+      expect(sizes.reduce((a, b) => a > b ? a : b), lessThanOrEqualTo(3));
+      // No page holds more than one tile fewer than another.
+      expect(sizes.first - sizes.last, lessThanOrEqualTo(1));
+    }
   });
 }

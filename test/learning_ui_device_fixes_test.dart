@@ -1,3 +1,4 @@
+import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui' as ui;
@@ -26,6 +27,7 @@ import 'package:sprachapp/screens/decks/widgets/translation_bubble.dart';
 import 'package:sprachapp/theme/app_theme.dart';
 
 import 'fixtures/deck_repositories.dart';
+import 'fixtures/practice_session.dart';
 
 class GoalContent extends TestContent {
   GoalContent() : super(library: true);
@@ -99,6 +101,9 @@ void main() {
     var user = DriftUserRepository(UserDatabase.file(file), lang: 'en');
     var now = DateTime(2026, 10, 25, 12);
     final content = GoalContent();
+    for (final deck in await content.decks()) {
+      await user.setDeckActive(deck.id, true, now: now);
+    }
     Future<void> record(
       String id,
       String pass, {
@@ -136,6 +141,7 @@ void main() {
     await record(ids[12], 'revue', mode: ReviewMode.revue);
     ProviderContainer scope() => ProviderContainer(
       overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
         contentRepositoryProvider.overrideWith((_) => content),
         userRepositoryProvider.overrideWith((_) => user),
         clockProvider.overrideWithValue(() => now),
@@ -224,6 +230,7 @@ void main() {
     var now = testNow;
     final c = ProviderContainer(
       overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
         contentRepositoryProvider.overrideWith((_) => TestContent()),
         userRepositoryProvider.overrideWith((_) => user),
         clockProvider.overrideWithValue(() => now),
@@ -336,7 +343,9 @@ void main() {
       }
       await tester.tap(find.text('Wort erfahren'));
       await tester.pumpAndSettle();
-      await tester.enterText(find.byType(TextField), 'walks');
+      await tester.enterText(
+        find.byType(TextField), shownPracticeItem(tester).card.form,
+      );
       await tester.pumpAndSettle();
       await tester.tap(find.text('Eingeben'));
       await tester.pumpAndSettle();

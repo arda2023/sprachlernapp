@@ -13,11 +13,11 @@ const popoverInk = Color(0xFFFFFFFF);
 /// on #E26C00 reaches 3.3:1, so small print stays medium, never regular.
 abstract final class PopoverText {
   static TextStyle body({FontWeight weight = FontWeight.w500}) =>
-      AppType.chrome(size: 18, weight: weight, color: popoverInk, height: 1.35);
+      AppType.chrome(size: 17, weight: weight, color: popoverInk, height: 1.35);
 
   /// Short notes (14 pt, medium).
   static TextStyle small() => AppType.chrome(
-    size: 14,
+    size: 15,
     weight: FontWeight.w500,
     color: popoverInk,
     height: 1.35,

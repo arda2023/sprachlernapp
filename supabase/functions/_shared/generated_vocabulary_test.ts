@@ -151,6 +151,18 @@ test('auth, confirmation, quotas and conflicts deny before provider', async () =
   assert.equal(config.stats().claims, 0);
 });
 
+test('Premium denial blocks generation and status reads before any model or storage write', async () => {
+  const f = fixture({ claim: 'premium_required' });
+  for (const status of [false, true]) {
+    const response = await f.run(input, status);
+    assert.equal(response.status, 403);
+    assert.deepEqual(await response.json(), { error: 'PREMIUM_REQUIRED' });
+  }
+  assert.equal(f.stats().models, 0);
+  assert.equal(f.stats().finishes, 0);
+  assert.equal(f.stats().failures, 0);
+});
+
 test('request boundaries reject unsupported fields, missing consent and excessive text', async () => {
   const f = fixture();
   for (const invalid of [{ ...input, count: 51 }, { ...input, consent: 0 },

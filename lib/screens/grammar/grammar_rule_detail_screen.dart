@@ -116,7 +116,7 @@ class _Section extends StatelessWidget {
             section.heading,
             style: AppType.editorial(
               color: context.appColors.textPrimary,
-              size: 22,
+              size: 24,
             ),
           ),
         ),
@@ -172,7 +172,7 @@ class _Example extends StatelessWidget {
                 example.english,
                 AppType.editorial(
                   color: context.appColors.textPrimary,
-                  size: 19,
+                  size: 20,
                   weight: FontWeight.w400,
                   height: 1.45,
                   letterSpacing: 0,
@@ -183,7 +183,7 @@ class _Example extends StatelessWidget {
             Text(
               example.german,
               style: AppType.editorial(
-                size: 16,
+                size: 17,
                 weight: FontWeight.w400,
                 color: context.appColors.textMuted,
                 height: 1.45,

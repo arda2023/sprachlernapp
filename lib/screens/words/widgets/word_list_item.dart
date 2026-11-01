@@ -138,7 +138,7 @@ class WordListItem extends StatelessWidget {
                           word.sentence,
                           style: AppType.editorial(
                             color: colors.textPrimary,
-                            size: 16,
+                            size: 17,
                             weight: FontWeight.w400,
                             height: 1.45,
                             letterSpacing: 0,
@@ -277,7 +277,7 @@ class _WordMenuState extends State<_WordMenu> {
       children: [
         Text(
           word.entry.headword,
-          style: AppType.editorial(color: const Color(0xFFFFFFFF), size: 22),
+          style: AppType.editorial(color: const Color(0xFFFFFFFF), size: 20),
         ),
         const SizedBox(height: 8),
         PopoverMenuRow(

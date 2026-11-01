@@ -286,7 +286,7 @@ class PracticeTranslationCard extends StatelessWidget {
                             translation,
                             style: AppType.editorial(
                               color: context.appColors.textPrimary,
-                              size: 18,
+                              size: 17,
                             ),
                           ),
                         ],
@@ -327,7 +327,7 @@ class PracticeTranslationCard extends StatelessWidget {
                         child: Text(
                           sentence,
                           style: AppType.editorial(
-                            size: 16,
+                            size: 17,
                             weight: FontWeight.w400,
                             color: context.appColors.textMuted,
                             height: 1.45,
@@ -465,7 +465,7 @@ class PracticeAnswerToolbar extends StatelessWidget {
                         text: TextSpan(
                           text: text,
                           style: AppType.chrome(
-                            size: 14,
+                            size: 15,
                             weight: FontWeight.w800,
                           ),
                         ),
@@ -604,7 +604,7 @@ class _ToolbarButton extends StatelessWidget {
                           maxLines: null,
                           textAlign: TextAlign.center,
                           style: AppType.chrome(
-                            size: 14,
+                            size: 15,
                             weight: FontWeight.w800,
                             color: foreground,
                           ),
@@ -615,7 +615,7 @@ class _ToolbarButton extends StatelessWidget {
                           'Falsch',
                           textAlign: TextAlign.center,
                           style: AppType.chrome(
-                            size: 14,
+                            size: 15,
                             weight: FontWeight.w600,
                             color: foreground,
                           ),

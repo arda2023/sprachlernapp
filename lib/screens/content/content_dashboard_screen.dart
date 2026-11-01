@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/exercise_models.dart';
 import '../../models/grammar_models.dart';
@@ -7,12 +8,14 @@ import '../../models/practice_models.dart';
 import '../../models/practice_order.dart';
 import '../../models/reading_history.dart';
 import '../../theme/app_theme.dart';
+import '../../presentation/providers/premium_access_provider.dart';
+import '../../widgets/premium_content_gate.dart';
 import '../../widgets/difficulty_bolts.dart';
 import '../../widgets/more_button.dart';
 import '../../widgets/section_heading.dart';
 import '../grammar/grammar_rule_detail_screen.dart';
 import '../grammar/grammar_rules_screen.dart';
-import '../home/widgets/story_carousel.dart';
+import 'widgets/text_exercise_shelf.dart';
 import '../practice/choice_exercise_screen.dart';
 import '../practice/practice_library_screen.dart';
 import 'text_library_screen.dart';
@@ -21,10 +24,10 @@ import '../../widgets/speaker_icon.dart';
 /// The "Inhalte" tab (docs/redesign/design-system.md): one section per
 /// category, each showing its content right away and "Mehr anzeigen" for
 /// the full list. Every section has its own shape so the page doesn't read
-/// as four identical carousels: Texte as covers, Hören as a wide "next up"
+/// as four identical carousels: Texte as numbered rows, Hören as a wide "next up"
 /// card over a row of tiles, Grammatik as paged columns of rows,
 /// Grammatikregeln as a two-column grid.
-class ContentDashboardScreen extends StatelessWidget {
+class ContentDashboardScreen extends ConsumerWidget {
   const ContentDashboardScreen({
     super.key,
     required this.texts,
@@ -36,9 +39,9 @@ class ContentDashboardScreen extends StatelessWidget {
     this.generator,
     this.scrollController,
   });
+
   /// Main vertical scroll view; the tab bar scrolls it to the top on re-tap.
   final ScrollController? scrollController;
-
 
   static const _gutter = EdgeInsets.symmetric(horizontal: 20);
 
@@ -60,23 +63,40 @@ class ContentDashboardScreen extends StatelessWidget {
     BuildContext context,
     ChoiceExercise exercise,
     List<ChoiceExercise> queue,
-  ) => ChoiceExerciseScreen.open(
-    context,
-    exercise: exercise,
-    queue: queue,
-    progress: progress,
-  );
+  ) {
+    final container = ProviderScope.containerOf(context, listen: false);
+    if (!container.read(premiumContentAccessProvider)) {
+      showPremiumContentPaywall(context, interest: 'Übungen');
+      return;
+    }
+    ChoiceExerciseScreen.open(
+      context,
+      exercise: exercise,
+      queue: queue,
+      progress: progress,
+    );
+  }
 
-  void _openLibrary(BuildContext context, PracticeKind kind) =>
-      PracticeLibraryScreen.open(
+  void _openLibrary(BuildContext context, PracticeKind kind) {
+    final container = ProviderScope.containerOf(context, listen: false);
+    if (!container.read(premiumContentAccessProvider)) {
+      showPremiumContentPaywall(
         context,
-        kind: kind,
-        exercises: kind == PracticeKind.listening ? listening : grammar,
-        progress: progress,
+        interest: kind == PracticeKind.listening ? 'Hören' : 'Grammatik',
       );
+      return;
+    }
+    PracticeLibraryScreen.open(
+      context,
+      kind: kind,
+      exercises: kind == PracticeKind.listening ? listening : grammar,
+      progress: progress,
+    );
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final premiumLocked = !ref.watch(premiumContentAccessProvider);
     return SafeArea(
       bottom: false,
       child: ListenableBuilder(
@@ -102,9 +122,9 @@ class ContentDashboardScreen extends StatelessWidget {
               ),
             ),
             if (generator != null) Padding(padding: _gutter, child: generator),
-            if (texts.isNotEmpty) ..._texts(context),
-            if (listening.isNotEmpty) ..._listening(context),
-            if (grammar.isNotEmpty) ..._grammar(context),
+            if (texts.isNotEmpty) ..._texts(context, premiumLocked),
+            if (listening.isNotEmpty) ..._listening(context, premiumLocked),
+            if (grammar.isNotEmpty) ..._grammar(context, premiumLocked),
             if (rules.isNotEmpty) ..._rules(context),
           ],
         ),
@@ -112,7 +132,7 @@ class ContentDashboardScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> _texts(BuildContext context) {
+  List<Widget> _texts(BuildContext context, bool premiumLocked) {
     // Texts from stories the learner has opened come first.
     final read = history.storyIds;
     final ordered = [
@@ -128,21 +148,16 @@ class ContentDashboardScreen extends StatelessWidget {
             TextLibraryScreen.open(context, texts: texts, history: history),
       ),
       const SizedBox(height: 12),
-      StoryCarousel(
-        stories: [for (final t in ordered) t.info],
-        onOpen: (story) => TextLibraryScreen.start(
-          context,
-          ordered.firstWhere((t) => t.info.id == story.id),
-        ),
-        onOpenFrom: (story, card) => TextLibraryScreen.start(
-          card,
-          ordered.firstWhere((t) => t.info.id == story.id),
-        ),
+      TextExerciseShelf(
+        texts: ordered,
+        premiumLocked: premiumLocked,
+        onUpgrade: () => showPremiumContentPaywall(context, interest: 'Texte'),
+        onOpen: (text, anchor) => TextLibraryScreen.start(anchor, text),
       ),
     ];
   }
 
-  List<Widget> _listening(BuildContext context) {
+  List<Widget> _listening(BuildContext context, bool premiumLocked) {
     final done = listening.where((e) => progress.isDone(e.id)).length;
     // The first open exercise is "next up"; once all are solved, the first.
     final ordered = unfinishedPracticeFirst(listening, progress);
@@ -164,6 +179,7 @@ class ContentDashboardScreen extends StatelessWidget {
         child: _ListeningFeature(
           exercise: next,
           allDone: done == listening.length,
+          premiumLocked: premiumLocked,
           onTap: () => _openExercise(context, next, listening),
         ),
       ),
@@ -175,6 +191,7 @@ class ContentDashboardScreen extends StatelessWidget {
               _ListeningTile(
                 exercise: e,
                 done: progress.isDone(e.id),
+                premiumLocked: premiumLocked,
                 onTap: () => _openExercise(context, e, listening),
               ),
           ],
@@ -183,9 +200,10 @@ class ContentDashboardScreen extends StatelessWidget {
     ];
   }
 
-  List<Widget> _grammar(BuildContext context) {
+  List<Widget> _grammar(BuildContext context, bool premiumLocked) {
     final shown = unfinishedPracticeFirst(
-      grammar, progress,
+      grammar,
+      progress,
     ).take(_maxGrammar).toList();
     return [
       const SizedBox(height: 36),
@@ -198,6 +216,7 @@ class ContentDashboardScreen extends StatelessWidget {
       _GrammarColumns(
         exercises: shown,
         isDone: progress.isDone,
+        premiumLocked: premiumLocked,
         onOpen: (e) => _openExercise(context, e, grammar),
       ),
     ];
@@ -241,16 +260,55 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final largeText = MediaQuery.textScalerOf(context).scale(15) > 20;
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 8),
-      child: SectionHeading(
-        title: title,
-        trailing: MoreButton(
-          label: 'Mehr anzeigen',
-          semanticLabel: moreLabel,
-          onPressed: onMore,
-        ),
-      ),
+      child: largeText
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SectionHeading(title: title),
+                Semantics(
+                  label: moreLabel,
+                  button: true,
+                  excludeSemantics: true,
+                  child: CupertinoButton(
+                    onPressed: onMore,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    minimumSize: const Size(44, 44),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            'Mehr anzeigen',
+                            style: AppType.chrome(
+                              size: 15,
+                              weight: FontWeight.w600,
+                              color: context.appColors.textPrimary,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 2),
+                        Icon(
+                          CupertinoIcons.chevron_right,
+                          size: 14,
+                          color: context.appColors.textMuted,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : SectionHeading(
+              title: title,
+              trailing: MoreButton(
+                label: 'Mehr anzeigen',
+                semanticLabel: moreLabel,
+                onPressed: onMore,
+              ),
+            ),
     );
   }
 }
@@ -291,9 +349,11 @@ class _ListeningFeature extends StatelessWidget {
     required this.exercise,
     required this.allDone,
     required this.onTap,
+    this.premiumLocked = false,
   });
 
   final ChoiceExercise exercise;
+  final bool premiumLocked;
   final bool allDone;
   final VoidCallback onTap;
 
@@ -310,7 +370,8 @@ class _ListeningFeature extends StatelessWidget {
         child: Semantics(
           label:
               '$kicker: ${exercise.title}. ${exercise.summary}. '
-              '${exercise.meta}',
+              '${exercise.meta}'
+              '${premiumLocked ? ', mit Premium freischalten' : ''}',
           excludeSemantics: true,
           child: Container(
             width: double.infinity,
@@ -322,11 +383,11 @@ class _ListeningFeature extends StatelessWidget {
             child: Stack(
               children: [
                 Positioned(
-                  right: -24,
-                  top: -20,
+                  right: 18,
+                  top: 18,
                   child: Icon(
                     CupertinoIcons.waveform,
-                    size: 150,
+                    size: 68,
                     color: colors.textPrimary.withValues(alpha: 0.07),
                   ),
                 ),
@@ -356,7 +417,7 @@ class _ListeningFeature extends StatelessWidget {
                         exercise.title,
                         style: AppType.editorial(
                           color: colors.textPrimary,
-                          size: 26,
+                          size: 24,
                           height: 1.15,
                         ),
                       ),
@@ -381,16 +442,18 @@ class _ListeningFeature extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 12),
-                          Container(
-                            width: 48,
-                            height: 48,
+                          if (premiumLocked)
+                            const PremiumLockBadge(size: 44)
+                          else Container(
+                            width: 44,
+                            height: 44,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: colors.active,
                             ),
-                            child: const Icon(
+                            child: Icon(
                               CupertinoIcons.play_fill,
-                              size: 22,
+                              size: 18,
                               color: Color(0xFFFFFFFF),
                             ),
                           ),
@@ -415,11 +478,13 @@ class _ListeningTile extends StatelessWidget {
     required this.exercise,
     required this.done,
     required this.onTap,
+    this.premiumLocked = false,
   });
 
   static const width = 156.0;
 
   final ChoiceExercise exercise;
+  final bool premiumLocked;
   final bool done;
   final VoidCallback onTap;
 
@@ -435,7 +500,8 @@ class _ListeningTile extends StatelessWidget {
         child: Semantics(
           label:
               '${exercise.title}. ${exercise.summary}. ${exercise.meta}'
-              '${done ? ', fertig' : ''}',
+              '${done ? ', fertig' : ''}'
+              '${premiumLocked ? ', mit Premium freischalten' : ''}',
           excludeSemantics: true,
           child: Container(
             width: width,
@@ -457,13 +523,14 @@ class _ListeningTile extends StatelessWidget {
                         shape: BoxShape.circle,
                         color: colors.playback,
                       ),
-                      child: SpeakerIcon(
-                        size: 17,
-                        color: colors.textPrimary,
+                      child: Center(
+                        child: SpeakerIcon(size: 17, color: colors.textPrimary),
                       ),
                     ),
                     const Spacer(),
-                    if (done)
+                    if (premiumLocked)
+                      const PremiumLockBadge()
+                    else if (done)
                       Icon(
                         CupertinoIcons.checkmark_alt_circle_fill,
                         size: 22,
@@ -479,7 +546,7 @@ class _ListeningTile extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppType.chrome(
                     color: colors.textPrimary,
-                    size: 16,
+                    size: 17,
                     weight: FontWeight.w600,
                   ),
                 ),
@@ -512,11 +579,13 @@ class _GrammarColumns extends StatelessWidget {
     required this.exercises,
     required this.isDone,
     required this.onOpen,
+    this.premiumLocked = false,
   });
 
   static const _perColumn = 3;
 
   final List<ChoiceExercise> exercises;
+  final bool premiumLocked;
   final bool Function(String id) isDone;
   final ValueChanged<ChoiceExercise> onOpen;
 
@@ -537,6 +606,7 @@ class _GrammarColumns extends StatelessWidget {
                   _GrammarRow(
                     exercise: e,
                     done: isDone(e.id),
+                    premiumLocked: premiumLocked,
                     onTap: () => onOpen(e),
                   ),
               ],
@@ -552,9 +622,11 @@ class _GrammarRow extends StatelessWidget {
     required this.exercise,
     required this.done,
     required this.onTap,
+    this.premiumLocked = false,
   });
 
   final ChoiceExercise exercise;
+  final bool premiumLocked;
   final bool done;
   final VoidCallback onTap;
 
@@ -570,7 +642,8 @@ class _GrammarRow extends StatelessWidget {
         child: Semantics(
           label:
               '${exercise.title}, ${exercise.summary}, ${exercise.meta}'
-              '${done ? ', fertig' : ''}',
+              '${done ? ', fertig' : ''}'
+              '${premiumLocked ? ', mit Premium freischalten' : ''}',
           excludeSemantics: true,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
@@ -602,7 +675,7 @@ class _GrammarRow extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppType.chrome(
                           color: colors.textPrimary,
-                          size: 16,
+                          size: 17,
                           weight: FontWeight.w600,
                         ),
                       ),
@@ -617,10 +690,13 @@ class _GrammarRow extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 10),
-                DifficultyBolts(
-                  difficulty: _difficulty(exercise.level),
-                  size: 12,
-                ),
+                if (premiumLocked)
+                  const PremiumLockBadge()
+                else
+                  DifficultyBolts(
+                    difficulty: _difficulty(exercise.level),
+                    size: 12,
+                  ),
               ],
             ),
           ),

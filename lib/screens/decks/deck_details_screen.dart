@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../presentation/providers/deck_providers.dart';
+import '../../presentation/providers/premium_access_provider.dart';
 import '../../presentation/providers/database_providers.dart';
 import '../../presentation/content_unavailable_view.dart';
 
@@ -14,6 +15,8 @@ import '../../widgets/action_buttons.dart';
 import '../../widgets/back_bar.dart';
 import '../../widgets/difficulty_bolts.dart';
 import '../../widgets/count_format.dart';
+import '../../widgets/deck_premium_badge.dart';
+import '../onboarding/paywall_screen.dart';
 import '../home/widgets/deck_tile.dart';
 import 'deck_practice_screen.dart';
 
@@ -78,6 +81,9 @@ class DeckDetailsScreen extends ConsumerWidget {
                   ],
                 );
               }
+              final locked =
+                  !isFreeDeckId(deck.id) &&
+                  !ref.watch(premiumContentAccessProvider);
               final activation = ref.watch(deckActiveControllerProvider);
               return Column(
                 children: [
@@ -93,36 +99,40 @@ class DeckDetailsScreen extends ConsumerWidget {
                         const SizedBox(height: 22),
                         _ProgressLegend(deck: deck),
                         const SizedBox(height: 20),
-                        PrimaryActionButton(
-                          label: 'Mit diesem Stapel üben',
-                          onPressed: () =>
-                              _practise(context, DeckPracticeMode.learn),
-                        ),
-                        const SizedBox(height: 12),
-                        _ToggleRow(
-                          label: 'Stapel aktivieren',
-                          value: activation.values[deck.id] ?? deck.isActive,
-                          onChanged: (v) => ref
-                              .read(deckActiveControllerProvider.notifier)
-                              .setActive(deck.id, v),
-                        ),
-                        if (activation.errors.containsKey(deck.id))
-                          CupertinoButton(
-                            onPressed: () => ref
+                        if (locked)
+                          _PremiumDeckPanel(deck: deck)
+                        else ...[
+                          PrimaryActionButton(
+                            label: 'Mit diesem Stapel üben',
+                            onPressed: () =>
+                                _practise(context, DeckPracticeMode.learn),
+                          ),
+                          const SizedBox(height: 12),
+                          _ToggleRow(
+                            label: 'Stapel aktivieren',
+                            value: activation.values[deck.id] ?? deck.isActive,
+                            onChanged: (v) => ref
                                 .read(deckActiveControllerProvider.notifier)
-                                .setActive(deck.id, !deck.isActive),
-                            child: Text(
-                              'Aktivierung nicht gespeichert. Wiederholen',
-                              style: AppType.chrome(
-                                color: context.appColors.textPrimary,
+                                .setActive(deck.id, v),
+                          ),
+                          if (activation.errors.containsKey(deck.id))
+                            CupertinoButton(
+                              onPressed: () => ref
+                                  .read(deckActiveControllerProvider.notifier)
+                                  .setActive(deck.id, !deck.isActive),
+                              child: Text(
+                                'Aktivierung nicht gespeichert. Wiederholen',
+                                style: AppType.chrome(
+                                  color: context.appColors.textPrimary,
+                                ),
                               ),
                             ),
+                          const SizedBox(height: 12),
+                          _ReviewCard(
+                            onReview: () =>
+                                _practise(context, DeckPracticeMode.review),
                           ),
-                        const SizedBox(height: 12),
-                        _ReviewCard(
-                          onReview: () =>
-                              _practise(context, DeckPracticeMode.review),
-                        ),
+                        ],
                         if (deck.recentWords.isNotEmpty) ...[
                           const SizedBox(height: 12),
                           _RecentWords(
@@ -155,6 +165,61 @@ class DeckDetailsScreen extends ConsumerWidget {
   }
 }
 
+/// A locked deck stays explorable, with a single route to unlock practice.
+class _PremiumDeckPanel extends StatelessWidget {
+  const _PremiumDeckPanel({required this.deck});
+
+  final Deck deck;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.appColors;
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: colors.raisedInk,
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const DeckPremiumBadge(size: 40),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Semantics(
+                  header: true,
+                  child: Text(
+                    'Mit Premium freischalten',
+                    style: AppType.chrome(
+                      color: colors.textPrimary,
+                      size: 20,
+                      weight: FontWeight.w700,
+                      height: 1.25,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          PrimaryActionButton(
+            label: 'Premium holen',
+            onPressed: () => Navigator.of(context).push(
+              PaywallScreen.route(
+                plan: (interest: deck.name, dailyGoal: 10),
+                onContinue: () {},
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _Masthead extends StatelessWidget {
   const _Masthead({required this.deck});
 
@@ -167,29 +232,40 @@ class _Masthead extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             DeckGauge(deck: deck, size: 84),
-            const Spacer(),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              decoration: BoxDecoration(
-                color: colors.raisedInk,
-                borderRadius: BorderRadius.circular(99),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // The visible level name is the label; bolts repeat it.
-                  Text(
-                    deck.difficulty.label,
-                    style: AppType.meta(color: colors.textMuted),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  key: const ValueKey('deck-difficulty-chip'),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
                   ),
-                  const SizedBox(width: 6),
-                  ExcludeSemantics(
-                    child: DifficultyBolts(difficulty: deck.difficulty),
+                  decoration: BoxDecoration(
+                    color: colors.raisedInk,
+                    borderRadius: BorderRadius.circular(99),
                   ),
-                ],
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // The visible level name is the label; bolts repeat it.
+                      Flexible(
+                        child: Text(
+                          deck.difficulty.label,
+                          style: AppType.meta(color: colors.textMuted),
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      ExcludeSemantics(
+                        child: DifficultyBolts(difficulty: deck.difficulty),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
@@ -365,7 +441,7 @@ class _ToggleRow extends StatelessWidget {
                   label,
                   style: AppType.chrome(
                     color: colors.textPrimary,
-                    size: 16,
+                    size: 17,
                     weight: FontWeight.w700,
                   ),
                 ),
@@ -580,7 +656,7 @@ class _ReviewCard extends StatelessWidget {
                         'Stapel-Revue',
                         style: AppType.chrome(
                           color: colors.textPrimary,
-                          size: 16,
+                          size: 17,
                           weight: FontWeight.w700,
                         ),
                       ),

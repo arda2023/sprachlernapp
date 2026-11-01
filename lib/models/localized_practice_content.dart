@@ -568,6 +568,7 @@ const _esListening = [
     audioDuration: Duration(seconds: 5),
     options: ["Um acht Uhr", "Um neun Uhr", "Um zehn Uhr"],
     answer: "Um neun Uhr",
+    translation: "Der Zug fährt um neun Uhr ab.",
     explanation: "*A las nueve* bedeutet „um neun Uhr“.",
   ),
   ChoiceExercise(
@@ -583,6 +584,7 @@ const _esListening = [
     audioDuration: Duration(seconds: 5),
     options: ["Ein Kilo", "Zwei Kilo", "Drei Kilo"],
     answer: "Zwei Kilo",
+    translation: "Ich möchte zwei Kilo Äpfel, bitte.",
     explanation: "*Dos kilos de manzanas* bedeutet „zwei Kilo Äpfel“.",
   ),
   ChoiceExercise(
@@ -598,6 +600,7 @@ const _esListening = [
     audioDuration: Duration(seconds: 5),
     options: ["Neben dem Park", "Gegenüber dem Bahnhof", "Hinter dem Markt"],
     answer: "Neben dem Park",
+    translation: "Die Bibliothek ist neben dem Park.",
     explanation: "*Al lado del parque* bedeutet „neben dem Park“.",
   ),
 ];
@@ -616,6 +619,7 @@ const _itListening = [
     audioDuration: Duration(seconds: 5),
     options: ["Um neun Uhr", "Um zehn Uhr", "Um elf Uhr"],
     answer: "Um zehn Uhr",
+    translation: "Der Zug fährt um zehn Uhr ab.",
     explanation: "*Alle dieci* bedeutet „um zehn Uhr“.",
   ),
   ChoiceExercise(
@@ -631,6 +635,7 @@ const _itListening = [
     audioDuration: Duration(seconds: 5),
     options: ["Zwei Birnen", "Drei Äpfel", "Vier Orangen"],
     answer: "Drei Äpfel",
+    translation: "Ich hätte gern drei Äpfel, bitte.",
     explanation: "*Tre mele* bedeutet „drei Äpfel“.",
   ),
   ChoiceExercise(
@@ -646,6 +651,7 @@ const _itListening = [
     audioDuration: Duration(seconds: 5),
     options: ["Vor dem Bahnhof", "Neben dem Park", "Hinter dem Café"],
     answer: "Vor dem Bahnhof",
+    translation: "Die Apotheke ist vor dem Bahnhof.",
     explanation: "*Davanti alla stazione* bedeutet „vor dem Bahnhof“.",
   ),
 ];
@@ -664,6 +670,7 @@ const _nbListening = [
     audioDuration: Duration(seconds: 5),
     options: ["Um sieben Uhr", "Um acht Uhr", "Um neun Uhr"],
     answer: "Um acht Uhr",
+    translation: "Der Zug fährt um acht Uhr ab.",
     explanation: "*Klokka åtte* bedeutet „um acht Uhr“.",
   ),
   ChoiceExercise(
@@ -679,6 +686,7 @@ const _nbListening = [
     audioDuration: Duration(seconds: 5),
     options: ["Ein Brot", "Zwei Brote", "Drei Äpfel"],
     answer: "Zwei Brote",
+    translation: "Ich hätte gern zwei Brote.",
     explanation: "*To brød* bedeutet „zwei Brote“; *brød* bleibt hier im Plural unverändert.",
   ),
   ChoiceExercise(
@@ -694,6 +702,7 @@ const _nbListening = [
     audioDuration: Duration(seconds: 5),
     options: ["Neben der Schule", "Vor dem Markt", "Hinter dem Bahnhof"],
     answer: "Neben der Schule",
+    translation: "Die Bibliothek liegt neben der Schule.",
     explanation: "*Ved siden av skolen* bedeutet „neben der Schule“.",
   ),
 ];
@@ -712,6 +721,7 @@ const _ptBRListening = [
     audioDuration: Duration(seconds: 5),
     options: ["Um sieben Uhr", "Um acht Uhr", "Um neun Uhr"],
     answer: "Um acht Uhr",
+    translation: "Der Zug fährt um acht Uhr ab.",
     explanation: "*Às oito horas* bedeutet „um acht Uhr“.",
   ),
   ChoiceExercise(
@@ -731,6 +741,7 @@ const _ptBRListening = [
       "Eine Flasche Saft",
     ],
     answer: "Zwei Flaschen Wasser",
+    translation: "Ich möchte zwei Flaschen Wasser, bitte.",
     explanation: "*Duas garrafas de água* bedeutet „zwei Flaschen Wasser“.",
   ),
   ChoiceExercise(
@@ -746,6 +757,7 @@ const _ptBRListening = [
     audioDuration: Duration(seconds: 5),
     options: ["Neben der Schule", "Vor dem Park", "Hinter dem Bahnhof"],
     answer: "Neben der Schule",
+    translation: "Der Markt ist neben der Schule.",
     explanation: "*Ao lado da escola* bedeutet „neben der Schule“.",
   ),
 ];
@@ -762,6 +774,7 @@ const _esGrammar = [
     prompt: "Yo ___ español cada día.",
     options: ["hablo", "hablas", "hablan"],
     answer: "hablo",
+    translation: "Ich spreche jeden Tag Spanisch.",
     explanation: "Bei regelmäßigen Verben auf *-ar* endet die Form mit *yo* auf *-o*: *hablar → hablo*.",
   ),
   ChoiceExercise(
@@ -775,6 +788,7 @@ const _esGrammar = [
     prompt: "Las casas son ___.",
     options: ["blanco", "blanca", "blancas"],
     answer: "blancas",
+    translation: "Die Häuser sind weiß.",
     explanation: "*Casas* ist weiblich und steht im Plural. Das Adjektiv passt sich an: *blancas*.",
   ),
   ChoiceExercise(
@@ -788,6 +802,7 @@ const _esGrammar = [
     prompt: "Nosotros ___ estudiantes.",
     options: ["soy", "somos", "son"],
     answer: "somos",
+    translation: "Wir sind Studenten.",
     explanation: "Zu *nosotros* gehört die Form *somos* von *ser*: *Nosotros somos estudiantes*.",
   ),
 ];
@@ -804,6 +819,7 @@ const _itGrammar = [
     prompt: "Io ___ italiano ogni giorno.",
     options: ["parlo", "parli", "parlano"],
     answer: "parlo",
+    translation: "Ich spreche jeden Tag Italienisch.",
     explanation: "Bei regelmäßigen Verben auf *-are* endet die Form mit *io* auf *-o*: *parlare → parlo*.",
   ),
   ChoiceExercise(
@@ -817,6 +833,7 @@ const _itGrammar = [
     prompt: "Le borse sono ___.",
     options: ["rosso", "rossa", "rosse"],
     answer: "rosse",
+    translation: "Die Taschen sind rot.",
     explanation: "*Borse* ist weiblich und steht im Plural. Aus *rossa* wird deshalb *rosse*.",
   ),
   ChoiceExercise(
@@ -830,6 +847,7 @@ const _itGrammar = [
     prompt: "Noi ___ studenti.",
     options: ["sono", "siamo", "siete"],
     answer: "siamo",
+    translation: "Wir sind Studenten.",
     explanation:
         "Zu *noi* gehört die Form *siamo* von *essere*: *Noi siamo studenti*.",
   ),
@@ -847,6 +865,7 @@ const _nbGrammar = [
     prompt: "Hun ___ norsk hver dag.",
     options: ["snakker", "snakke", "snakket"],
     answer: "snakker",
+    translation: "Sie spricht jeden Tag Norwegisch.",
     explanation: "Das Präsens von *å snakke* lautet *snakker*. Diese Form gilt für alle Personen.",
   ),
   ChoiceExercise(
@@ -860,6 +879,7 @@ const _nbGrammar = [
     prompt: "Husene er ___.",
     options: ["rød", "rødt", "røde"],
     answer: "røde",
+    translation: "Die Häuser sind rot.",
     explanation: "Im Plural bekommt *rød* die Endung *-e*: *Husene er røde*.",
   ),
   ChoiceExercise(
@@ -873,6 +893,7 @@ const _nbGrammar = [
     prompt: "I dag ___ jeg på skolen.",
     options: ["er", "å være", "være"],
     answer: "er",
+    translation: "Heute bin ich in der Schule.",
     explanation: "Im Aussagesatz steht das gebeugte Verb an zweiter Satzgliedposition: *I dag er jeg på skolen*.",
   ),
 ];
@@ -889,6 +910,7 @@ const _ptBRGrammar = [
     prompt: "Eu ___ português todos os dias.",
     options: ["falo", "fala", "falam"],
     answer: "falo",
+    translation: "Ich spreche jeden Tag Portugiesisch.",
     explanation: "Bei regelmäßigen Verben auf *-ar* endet die Form mit *eu* auf *-o*: *falar → falo*.",
   ),
   ChoiceExercise(
@@ -902,6 +924,7 @@ const _ptBRGrammar = [
     prompt: "As casas são ___.",
     options: ["branco", "branca", "brancas"],
     answer: "brancas",
+    translation: "Die Häuser sind weiß.",
     explanation: "*Casas* ist weiblich und steht im Plural. Das Adjektiv passt sich an: *brancas*.",
   ),
   ChoiceExercise(
@@ -915,6 +938,7 @@ const _ptBRGrammar = [
     prompt: "Nós ___ estudantes.",
     options: ["sou", "somos", "são"],
     answer: "somos",
+    translation: "Wir sind Studenten.",
     explanation:
         "Zu *nós* gehört die Form *somos* von *ser*: *Nós somos estudantes*.",
   ),

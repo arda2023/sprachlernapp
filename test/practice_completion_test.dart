@@ -14,6 +14,7 @@ import 'package:sprachapp/screens/decks/deck_practice_screen.dart';
 import 'package:sprachapp/theme/app_theme.dart';
 
 import 'fixtures/deck_repositories.dart';
+import 'fixtures/practice_session.dart';
 
 class RecordingSounds implements CelebrationSounds {
   final calls = <String>[];
@@ -316,7 +317,10 @@ void main() {
     );
     await tester.tap(find.text('Start'));
     await tester.pumpAndSettle();
-    for (final form in ['walks', 'about']) {
+    final forms = <String>[];
+    for (var i = 0; i < 2; i++) {
+      final form = shownPracticeItem(tester).card.form;
+      forms.add(form);
       await tester.enterText(find.byType(TextField), form);
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
@@ -325,7 +329,7 @@ void main() {
     }
     expect(find.byType(PracticeCompletionScreen), findsOneWidget);
     expect(find.text('Neue Wörter'), findsNothing);
-    expect(find.text('walks'), findsOneWidget);
+    expect(find.text(forms.first), findsOneWidget);
     expect(find.text('2/2'), findsOneWidget);
     await tester.tap(find.text('Weiter'));
     await tester.pumpAndSettle();

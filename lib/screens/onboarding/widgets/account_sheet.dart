@@ -196,7 +196,7 @@ class _AccountSheetState extends ConsumerState<AccountSheet> {
                 header: true,
                 child: Text(
                   title,
-                  style: AppType.editorial(color: colors.textPrimary, size: 26),
+                  style: AppType.editorial(color: colors.textPrimary, size: 24),
                 ),
               ),
               const SizedBox(height: 6),
@@ -223,7 +223,7 @@ class _AccountSheetState extends ConsumerState<AccountSheet> {
                   icon: Text(
                     'G',
                     style: AppType.chrome(
-                      size: 19,
+                      size: 20,
                       weight: FontWeight.w800,
                       color: colors.textPrimary,
                     ),

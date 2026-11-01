@@ -1,3 +1,4 @@
+import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -25,6 +26,7 @@ void main() {
     final now = DateTime(2026, 10, 10, 12);
     ProviderContainer scope() => ProviderContainer(
       overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
         contentRepositoryProvider.overrideWith((ref) async => content),
         userRepositoryProvider.overrideWith((ref) async => user),
         clockProvider.overrideWithValue(() => now),

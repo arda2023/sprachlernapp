@@ -15,6 +15,8 @@ import 'package:sprachapp/domain/streak.dart';
 import 'package:sprachapp/domain/srs_state.dart';
 import 'package:sprachapp/models/home_models.dart';
 import 'package:sprachapp/presentation/providers/bundled_stories_provider.dart';
+import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
+import 'package:sprachapp/presentation/story_cover_art.dart';
 import 'package:sprachapp/presentation/providers/database_providers.dart';
 import 'package:sprachapp/presentation/providers/deck_providers.dart';
 import 'package:sprachapp/presentation/providers/learning_providers.dart';
@@ -42,6 +44,7 @@ class _ShippingAssetBundle extends CachingAssetBundle {
 ProviderContainer _container(String language, DriftContentRepository content) =>
     ProviderContainer(
       overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
         selectedContentLanguageProvider.overrideWith((ref) async => language),
         contentRepositoryProvider.overrideWith((ref) async => content),
         activeContentKeyProvider.overrideWith(
@@ -216,7 +219,14 @@ void main() {
         await container.read(storySummariesProvider.future);
       });
       final stories = container.read(libraryStoriesProvider).requireValue;
-      expect(stories.length, greaterThanOrEqualTo(57));
+      expect(stories.length, language == 'en' ? 58 : 57);
+      for (final story in stories) {
+        expect(
+          storyCoverAssetKey(story.id, story.topic),
+          isNotNull,
+          reason: story.id,
+        );
+      }
 
       await tester.pumpWidget(
         _host(

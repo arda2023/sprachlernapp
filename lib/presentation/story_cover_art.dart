@@ -2,7 +2,9 @@
 /// Only inventoried stories may use generated artwork; no category-wide image
 /// or guessed title match is used for unknown stories.
 String? storyCoverAssetKey(String storyId, String topic) {
-  if (topic == 'Alltag' || topic == 'Wirtschaft') return null;
+  if (_packArtwork[storyId] case final key?) {
+    return 'assets/story_covers/$key.png';
+  }
   final parts = storyId.split(':');
   if (parts.length != 3 ||
       parts[0] != 'library' ||
@@ -13,8 +15,25 @@ String? storyCoverAssetKey(String storyId, String topic) {
   return 'assets/story_covers/${parts[2]}.png';
 }
 
+const _packArtwork = {
+  '1fe9baf1b1a199b5bfb116e320a679b9': 'pack_en_open_pocket',
+};
+
 const _languages = {'en', 'es', 'it', 'nb', 'pt-BR'};
 const _artwork = {
+  'video_01',
+  'video_02',
+  'video_03',
+  'video_07',
+  'video_08',
+  'video_09',
+  'video_17',
+  'video_18',
+  'everyday_01',
+  'everyday_02',
+  'everyday_03',
+  'everyday_04',
+  'everyday_05',
   'video_04',
   'video_05',
   'video_06',

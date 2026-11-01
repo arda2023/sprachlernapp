@@ -411,7 +411,7 @@ class _Title extends StatelessWidget {
       textAlign: center ? TextAlign.center : TextAlign.start,
       style: AppType.editorial(
         color: context.appColors.textPrimary,
-        size: 30,
+        size: 32,
         height: 1.15,
       ),
     ),
@@ -445,7 +445,7 @@ class _WelcomePage extends StatelessWidget {
                     'Linglossa',
                     style: AppType.editorial(
                       color: context.appColors.textPrimary,
-                      size: 26,
+                      size: 28,
                     ),
                   ),
                 ),
@@ -474,7 +474,7 @@ class _WelcomePage extends StatelessWidget {
           child: Text(
             'Tippe ein Wort an, verstehe den Satz und übe ihn später wieder.',
             textAlign: TextAlign.center,
-            style: AppType.chrome(size: 16, color: context.appColors.textMuted),
+            style: AppType.chrome(size: 15, color: context.appColors.textMuted),
           ),
         ),
       ],
@@ -961,7 +961,7 @@ class _AiConsentCard extends StatelessWidget {
                     child: Text(
                       'KI-Übersetzungen und Lernkarten',
                       style: AppType.chrome(
-                        size: 16,
+                        size: 17,
                         weight: FontWeight.w700,
                         color: colors.textPrimary,
                       ),
@@ -1127,7 +1127,7 @@ class _MeaningBubble extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(word, style: AppType.editorial(color: white, size: 22)),
+            Text(word, style: AppType.editorial(color: white, size: 20)),
             const SizedBox(height: 2),
             Text(
               meaning,
@@ -1334,7 +1334,7 @@ class _PlanRow extends StatelessWidget {
               child: AnimatedDefaultTextStyle(
                 duration: const Duration(milliseconds: 220),
                 style: AppType.chrome(
-                  size: 16,
+                  size: 17,
                   weight: FontWeight.w600,
                   color: done ? colors.textPrimary : colors.textMuted,
                 ),

@@ -8,9 +8,9 @@ import 'package:sprachapp/models/practice_models.dart';
 import 'package:sprachapp/presentation/audio/device_speech_playback.dart';
 import 'package:sprachapp/screens/practice/choice_exercise_screen.dart';
 import 'package:sprachapp/theme/app_theme.dart';
+import 'package:sprachapp/screens/practice/widgets/exercise_stage.dart';
 import 'package:sprachapp/widgets/playback_controls.dart';
 import 'package:sprachapp/widgets/speak_button.dart';
-import 'package:sprachapp/widgets/success_feedback_card.dart';
 
 void main() {
   const channel = MethodChannel('flutter_tts');
@@ -66,11 +66,20 @@ void main() {
   Future<void> showExercise(
     WidgetTester tester,
     ChoiceExercise exercise,
-    PracticeProgress progress,
-  ) => tester.pumpWidget(
+    PracticeProgress progress, {
+    bool reduceMotion = true,
+  }) => tester.pumpWidget(
     ProviderScope(
       child: MaterialApp(
         theme: buildAppTheme(),
+        // The stage's discs drift for as long as the screen is open; tests
+        // that settle run with reduced motion.
+        builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(
+            context,
+          ).copyWith(disableAnimations: reduceMotion),
+          child: child!,
+        ),
         home: ChoiceExerciseScreen(exercise: exercise, progress: progress),
       ),
     ),
@@ -84,8 +93,12 @@ void main() {
       addTearDown(progress.dispose);
       await showExercise(tester, exercise(PracticeKind.listening), progress);
 
-      final play = find.byType(PlayPauseButton);
+      // A white 96pt disc on the stage (user request 01.11.2026), a little
+      // above the middle, with the discs centred on it.
+      final play = find.bySemanticsLabel('Abspielen');
       expect(play, findsOneWidget);
+      expect(find.byType(ExerciseStage), findsOneWidget);
+      expect(find.byType(PlayPauseButton), findsNothing);
       expect(find.byType(PlaybackTrack), findsNothing);
       expect(find.byType(Slider), findsNothing);
       expect(find.textContaining(RegExp(r'\d+:\d\d')), findsNothing);
@@ -94,17 +107,17 @@ void main() {
         tester.getCenter(play).dx,
         tester.view.physicalSize.width / tester.view.devicePixelRatio / 2,
       );
-      expect(tester.getSize(play), const Size(72, 72));
+      expect(tester.getSize(play).shortestSide, greaterThanOrEqualTo(96));
+      final height =
+          tester.view.physicalSize.height / tester.view.devicePixelRatio;
+      expect(tester.getCenter(play).dy, lessThan(height / 2));
+      expect(tester.getCenter(play).dy, greaterThan(height * 0.25));
+      // The answers rest at the bottom, below the button and the question.
       expect(
-        find.ancestor(
-          of: play,
-          matching: find.byWidgetPredicate(
-            (widget) => widget is Container && widget.decoration != null,
-          ),
-        ),
-        findsNothing,
+        tester.getTopLeft(find.text('live')).dy,
+        greaterThan(tester.getBottomLeft(find.text('Was hörst du?')).dy),
       );
-      expect(find.bySemanticsLabel('Abspielen'), findsOneWidget);
+      expect(tester.getBottomLeft(find.text('lives')).dy, greaterThan(height * 0.8));
 
       await tester.tap(find.bySemanticsLabel('Abspielen'));
       await tester.pump();
@@ -128,7 +141,10 @@ void main() {
       await tester.tap(find.text('live'));
       await tester.pumpAndSettle();
       expect(find.bySemanticsLabel('Abspielen'), findsOneWidget);
-      expect(find.byType(SuccessFeedbackCard), findsOneWidget);
+      // The other answer folds away; explanation and one orange action follow.
+      expect(find.text('lives'), findsNothing);
+      expect(find.text('Die passende Form.'), findsOneWidget);
+      expect(find.text('Zurück zur Übersicht'), findsOneWidget);
       expect(
         calls.where((call) => call.method == 'stop').length,
         greaterThan(stopsBeforeCorrect),
@@ -169,11 +185,11 @@ void main() {
         expect(button.text, isNot(contains(ChoiceExercise.gap)));
         expect(button.language, language);
         expect(progress.isDone(item.id), isTrue);
+        // The speaker sits under the sentence, beside its translation.
         final sentence = find.bySemanticsLabel('I live here.');
-        expect(tester.getTopLeft(speak).dy, tester.getTopLeft(sentence).dy);
         expect(
-          tester.getTopLeft(speak).dx,
-          greaterThanOrEqualTo(tester.getTopRight(sentence).dx),
+          tester.getTopLeft(speak).dy,
+          greaterThanOrEqualTo(tester.getBottomLeft(sentence).dy),
         );
         expect(tester.getSize(speak).shortestSide, greaterThanOrEqualTo(44));
 
@@ -195,4 +211,49 @@ void main() {
       },
     );
   }
+
+  testWidgets('the stage drifts on its own and stays still with reduced motion', (
+    tester,
+  ) async {
+    final progress = PracticeProgress();
+    addTearDown(progress.dispose);
+    await showExercise(
+      tester,
+      exercise(PracticeKind.grammar),
+      progress,
+      reduceMotion: false,
+    );
+    await tester.pump(const Duration(seconds: 2));
+    expect(tester.binding.hasScheduledFrame, isTrue);
+    await showExercise(tester, exercise(PracticeKind.grammar), progress);
+    await tester.pumpAndSettle();
+    expect(tester.binding.hasScheduledFrame, isFalse);
+    debugDefaultTargetPlatformOverride = null;
+  });
+
+  testWidgets('grammar shows the German translation once solved', (
+    tester,
+  ) async {
+    final progress = PracticeProgress();
+    addTearDown(progress.dispose);
+    final item = ChoiceExercise(
+      id: 'g',
+      kind: PracticeKind.grammar,
+      title: 'Eine Übung',
+      summary: '',
+      topic: 'Alltag',
+      level: 1,
+      prompt: 'I ___ here.',
+      options: const ['live', 'lives'],
+      answer: 'live',
+      explanation: 'Die passende Form.',
+      translation: 'Ich wohne hier.',
+    );
+    await showExercise(tester, item, progress);
+    expect(find.text('Ich wohne hier.'), findsNothing);
+    await tester.tap(find.text('live'));
+    await tester.pumpAndSettle();
+    expect(find.text('Ich wohne hier.'), findsOneWidget);
+    debugDefaultTargetPlatformOverride = null;
+  });
 }

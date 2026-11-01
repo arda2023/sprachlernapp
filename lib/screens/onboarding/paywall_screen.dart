@@ -448,7 +448,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                         : 'Mehr lesen. Deine eigenen Wörter lernen.',
                     style: AppType.editorial(
                       color: colors.textPrimary,
-                      size: 30,
+                      size: 28,
                       height: 1.15,
                     ),
                   ),
@@ -637,7 +637,7 @@ class _PaywallActions extends StatelessWidget {
                 terms,
                 textAlign: TextAlign.center,
                 style: AppType.chrome(
-                  size: 14,
+                  size: 13,
                   weight: FontWeight.w600,
                   color: colors.textPrimary,
                 ),
@@ -824,7 +824,7 @@ class _TrialTimeline extends StatelessWidget {
                               Text(
                                 stop.detail,
                                 style: AppType.chrome(
-                                  size: 14,
+                                  size: 13,
                                   weight: FontWeight.w400,
                                   color: colors.textMuted,
                                   height: 1.35,
@@ -910,7 +910,7 @@ class _BenefitRow extends StatelessWidget {
                   Text(
                     benefit.detail,
                     style: AppType.chrome(
-                      size: 14,
+                      size: 13,
                       weight: FontWeight.w400,
                       color: colors.textMuted,
                       height: 1.35,
@@ -1071,7 +1071,7 @@ class _PlanCard extends StatelessWidget {
                 Text(
                   product.localizedPrice,
                   style: AppType.chrome(
-                    size: 22,
+                    size: 24,
                     weight: FontWeight.w800,
                     color: colors.textPrimary,
                     tabular: true,
@@ -1095,7 +1095,7 @@ class _PlanCard extends StatelessWidget {
                 child: Text(
                   badge,
                   style: AppType.chrome(
-                    size: 12,
+                    size: 13,
                     weight: FontWeight.w800,
                     color: const Color(0xFFFFFFFF),
                   ),

@@ -7,6 +7,7 @@ import '../../widgets/runtime_translation_sheet.dart';
 import '../../presentation/providers/database_providers.dart';
 
 import 'package:flutter/cupertino.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/story_learning.dart';
@@ -58,9 +59,13 @@ class StoryReaderScreen extends StatefulWidget {
     this.initialProgress,
     this.onProgress,
     this.narrationFactory,
+    this.sources = const [],
   });
 
   final PlaybackClock Function()? narrationFactory;
+
+  /// Web pages a daily news article is based on, listed under the text.
+  final List<NewsSource> sources;
   final Story story;
   final String sourceLanguage;
   final StoryDocument? document;
@@ -118,12 +123,25 @@ class StoryReaderScreen extends StatefulWidget {
   );
 
   /// News read like stories: same lookup, translation and narration, plus
-  /// the article's subheadings.
+  /// the article's subheadings. Daily articles bring their own sentence
+  /// translations (no AI request) and their sources; words are looked up
+  /// like in an imported text.
   static Future<void> openNews(BuildContext context, NewsArticle article) =>
       Navigator.of(context).push(
         CupertinoPageRoute<void>(
-          builder: (_) =>
-              StoryReaderScreen(story: article.asStory, text: article.text),
+          builder: (_) => article.edition == null
+              ? StoryReaderScreen(story: article.asStory, text: article.text)
+              : StoryReaderScreen(
+                  story: article.asStory,
+                  text: article.text,
+                  sourceLanguage: article.sourceLanguage,
+                  lookup: WordEntry.unknown,
+                  initialMarks: const {},
+                  translate: (sentence) =>
+                      article.translations[sentence.trim()] ??
+                      'Übersetzung folgt.',
+                  sources: article.sources,
+                ),
         ),
       );
 
@@ -761,7 +779,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
                                     heading,
                                     style: AppType.editorial(
                                       color: colors.textPrimary,
-                                      size: 22,
+                                      size: 20,
                                       weight: FontWeight.w700,
                                       height: 1.3,
                                     ),
@@ -793,6 +811,10 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
                               ),
                               ),
                             ),
+                          ],
+                          if (widget.sources.isNotEmpty) ...[
+                            _Sources(sources: widget.sources),
+                            const SizedBox(height: 22),
                           ],
                           const SizedBox(height: 12),
                           _EndCard(
@@ -1285,5 +1307,69 @@ class _StoredStoryReader extends ConsumerWidget {
           ),
         ),
       );
+  }
+}
+
+/// "Quellen": the sites a daily article is based on, each opening in the
+/// browser (citation rule of the web search it was written from).
+class _Sources extends StatelessWidget {
+  const _Sources({required this.sources});
+
+  final List<NewsSource> sources;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.appColors;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Semantics(
+          header: true,
+          child: Text(
+            'Quellen',
+            style: AppType.chrome(
+              size: 13,
+              weight: FontWeight.w700,
+              color: colors.textMuted,
+            ),
+          ),
+        ),
+        const SizedBox(height: 2),
+        for (final source in sources)
+          MergeSemantics(
+            child: CupertinoButton(
+              onPressed: () =>
+                  launchUrl(source.url, mode: LaunchMode.externalApplication),
+              padding: EdgeInsets.zero,
+              minimumSize: const Size(44, 44),
+              alignment: Alignment.centerLeft,
+              child: Semantics(
+                link: true,
+                label: '${source.title}, ${source.site}',
+                excludeSemantics: true,
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: source.site,
+                        style: AppType.chrome(
+                          weight: FontWeight.w600,
+                          color: colors.textPrimary,
+                        ),
+                      ),
+                      TextSpan(
+                        text: '  ${source.title}',
+                        style: AppType.chrome(color: colors.textMuted),
+                      ),
+                    ],
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ),
+      ],
+    );
   }
 }

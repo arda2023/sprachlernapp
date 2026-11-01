@@ -74,7 +74,7 @@ class _GeneratedVocabularySelectionScreenState extends State<GeneratedVocabulary
           BackBar(onBack: () { if (!_saving) Navigator.of(context).maybePop(); }),
           Expanded(child: ListView(padding: const EdgeInsets.fromLTRB(20, 12, 20, 24), children: [
             Semantics(header: true, child: Text('Wähle deine Wörter',
-              style: AppType.editorial(size: 30, color: colors.textPrimary))),
+              style: AppType.editorial(size: 32, color: colors.textPrimary))),
             const SizedBox(height: 20),
             // Small chips side by side (user request 01.11.2026, like the
             // Jenzi word picker): word and German only; tap to (de)select.
@@ -150,7 +150,7 @@ class GeneratedWordChip extends StatelessWidget {
           child: Column(mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start, children: [
               AnimatedDefaultTextStyle(duration: duration,
-                style: AppType.editorial(size: 18, height: 1.25,
+                style: AppType.editorial(size: 17, height: 1.25,
                   color: selected ? colors.textPrimary : colors.iconOff),
                 child: Text(word)),
               const SizedBox(height: 1),

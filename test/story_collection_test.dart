@@ -1,3 +1,4 @@
+import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -194,6 +195,7 @@ void main() {
       final user = FaultUser(), content = StoryFixture(storyCandidate());
       final scope = ProviderContainer(
         overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
           userRepositoryProvider.overrideWith((_) => user),
           contentRepositoryProvider.overrideWith((_) => content),
         ],
@@ -237,6 +239,7 @@ void main() {
     final user = FaultUser()..failLocalOnce = true;
     final scope = ProviderContainer(
       overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
         userRepositoryProvider.overrideWith((_) => user),
         contentRepositoryProvider.overrideWith(
           (_) => StoryFixture(storyCandidate()),
@@ -305,6 +308,7 @@ void main() {
     );
     final scope = ProviderContainer(
       overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
         userRepositoryProvider.overrideWith((_) => user),
         contentRepositoryProvider.overrideWith((_) => after),
       ],
@@ -343,6 +347,7 @@ void main() {
     var user = DriftUserRepository(UserDatabase.file(file), lang: 'en');
     var scope = ProviderContainer(
       overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
         userRepositoryProvider.overrideWith((_) => user),
         contentRepositoryProvider.overrideWith((_) => content),
       ],
@@ -409,6 +414,7 @@ void main() {
     user = DriftUserRepository(UserDatabase.file(file), lang: 'en');
     scope = ProviderContainer(
       overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
         userRepositoryProvider.overrideWith((_) => user),
         contentRepositoryProvider.overrideWith((_) => content),
       ],
@@ -524,6 +530,7 @@ void main() {
       await user.addStoryWord(c, now: now);
       final scope = ProviderContainer(
         overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
           userRepositoryProvider.overrideWith((_) => user),
           contentRepositoryProvider.overrideWith(
             (_) async => throw StateError('offline'),
@@ -566,6 +573,7 @@ void main() {
       sub.close();
       final restart = ProviderContainer(
         overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
           userRepositoryProvider.overrideWith((_) => user),
           contentRepositoryProvider.overrideWith(
             (_) async => throw StateError('offline'),
@@ -642,6 +650,7 @@ void main() {
       await user.addStoryWord(c, now: now);
       final scope = ProviderContainer(
         overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
           userRepositoryProvider.overrideWith((_) => user),
           contentRepositoryProvider.overrideWith((_) => content),
         ],
@@ -685,6 +694,7 @@ void main() {
       late StatusOnceService service;
       final scope = ProviderContainer(
         overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
           userRepositoryProvider.overrideWith((_) => user),
           contentRepositoryProvider.overrideWith((_) => content),
           storyLearningServiceProvider.overrideWith(
@@ -734,6 +744,7 @@ void main() {
       final user = FaultUser()..failStatus = step == StoryLearningStep.status;
       final scope = ProviderContainer(
         overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
           userRepositoryProvider.overrideWith((_) => user),
           contentRepositoryProvider.overrideWith((_) => content),
         ],
@@ -831,6 +842,7 @@ void main() {
       );
       final scope = ProviderContainer(
         overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
           userRepositoryProvider.overrideWith((_) => user),
           contentRepositoryProvider.overrideWith(
             (_) => StoryFixture(storyCandidate()),

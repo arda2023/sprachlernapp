@@ -1,3 +1,4 @@
+import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -199,6 +200,7 @@ void main() {
     final content = RulesContent();
     ProviderContainer scope() => ProviderContainer(
       overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
         contentRepositoryProvider.overrideWith((_) => content),
         userRepositoryProvider.overrideWith((_) => user),
         clockProvider.overrideWithValue(() => now),

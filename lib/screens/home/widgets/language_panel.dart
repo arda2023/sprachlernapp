@@ -135,7 +135,7 @@ class _LanguagePanelState extends ConsumerState<LanguagePanel> {
                 child: Text(
                   'Auswählen',
                   style: AppType.chrome(
-                    size: 16,
+                    size: 17,
                     weight: FontWeight.w800,
                     color: context.appColors.popover,
                   ),

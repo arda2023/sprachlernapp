@@ -23,7 +23,7 @@ class ContentUnavailableView extends StatelessWidget {
           'Inhalte nicht verfügbar',
           style: AppType.editorial(
             color: context.appColors.textPrimary,
-            size: 22,
+            size: 24,
           ),
         ),
         const SizedBox(height: 8),

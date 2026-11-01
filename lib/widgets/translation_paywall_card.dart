@@ -111,7 +111,7 @@ class _TranslationPaywallCardState extends ConsumerState<TranslationPaywallCard>
                         child: Text(
                           TranslationPaywallCard.title,
                           style: AppType.chrome(
-                            size: 26,
+                            size: 24,
                             weight: FontWeight.w800,
                             color: popoverInk,
                             height: 1.1,
@@ -184,7 +184,7 @@ class _PremiumButton extends StatelessWidget {
               label,
               textAlign: TextAlign.center,
               style: AppType.chrome(
-                size: 16,
+                size: 17,
                 weight: FontWeight.w800,
                 color: popoverInk,
               ),

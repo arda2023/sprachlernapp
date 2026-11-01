@@ -122,7 +122,8 @@ export class GeneratedVocabularyBackend {
       p_count: request.count, p_status_only: statusOnly }, signal);
     if (claim.status === 'hit') return generatedResponse(claim.response, request);
     const errors: Record<string, [string, number]> = {
-      account_unverified: ['ACCOUNT_UNVERIFIED', 403], limit: ['RATE_LIMIT', 429],
+      account_unverified: ['ACCOUNT_UNVERIFIED', 403], premium_required: ['PREMIUM_REQUIRED', 403],
+      limit: ['RATE_LIMIT', 429],
       conflict: ['REQUEST_CONFLICT', 409], busy: ['REQUEST_PENDING', 409],
       uncertain: ['REQUEST_UNCERTAIN', 409], failed: ['REQUEST_FAILED', 409],
       expired: ['REQUEST_EXPIRED', 410], missing: ['REQUEST_MISSING', 404],

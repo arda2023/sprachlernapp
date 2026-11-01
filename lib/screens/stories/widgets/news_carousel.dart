@@ -2,149 +2,142 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../models/news_models.dart';
 import '../../../theme/app_theme.dart';
-import '../../home/widgets/story_carousel.dart';
+import '../../../widgets/press_scale.dart';
 
-/// "Nachrichten": one large card per desk, paged without end in both
-/// directions. The focused card's left edge sits on the 20pt screen gutter
-/// and the next card peeks in from the right.
-class NewsCarousel extends StatefulWidget {
-  const NewsCarousel({super.key, required this.articles, required this.onOpen});
-
-  static const viewportFraction = 0.9;
+/// "Nachrichten" by desk (user request 01.11.2026): every desk with news
+/// gets its own heading and a sideways row of its 3 to 6 articles, most
+/// important first. Desks without articles are left out.
+class NewsDesks extends StatelessWidget {
+  const NewsDesks({super.key, required this.articles, required this.onOpen});
 
   /// Matches the screen gutter; also the gap between two cards.
   static const gutter = 20.0;
-
-  /// Far enough from 0 that nobody swipes back to the start.
-  static const _loops = 1000;
 
   final List<NewsArticle> articles;
   final ValueChanged<NewsArticle> onOpen;
 
   @override
-  State<NewsCarousel> createState() => _NewsCarouselState();
-}
-
-class _NewsCarouselState extends State<NewsCarousel> {
-  // Starts on a multiple of the article count, so the first desk shows
-  // first; the page index wraps with modulo.
-  late final _pages = PageController(
-    viewportFraction: NewsCarousel.viewportFraction,
-    initialPage: NewsCarousel._loops * widget.articles.length,
-  );
-
-  @override
-  void dispose() {
-    _pages.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final articles = widget.articles;
-    if (articles.isEmpty) return const SizedBox.shrink();
-    return SizedBox(
-      height: NewsCard.height,
-      child: PageView.builder(
-        controller: _pages,
-        // The focused page starts at the screen edge; each card brings its
-        // own gutter on the left.
-        padEnds: false,
-        physics: const BouncingScrollPhysics(),
-        // No itemCount: endless in both directions.
-        itemBuilder: (context, page) {
-          final i = page % articles.length;
-          return Padding(
-            padding: const EdgeInsets.only(left: NewsCarousel.gutter),
-            child: NewsCard(
-              article: articles[i],
-              tone: i,
-              onTap: () => widget.onOpen(articles[i]),
+    final desks = <NewsCategory, List<NewsArticle>>{
+      for (final category in NewsCategory.values)
+        category: [
+          for (final a in articles)
+            if (a.category == category) a,
+        ],
+    }..removeWhere((_, list) => list.isEmpty);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (final (i, MapEntry(key: desk, value: list))
+            in desks.entries.indexed) ...[
+          if (i > 0) const SizedBox(height: 22),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: gutter),
+            child: Semantics(
+              header: true,
+              child: Text(
+                desk.label,
+                style: AppType.editorial(
+                  color: context.appColors.textPrimary,
+                  size: 20,
+                ),
+              ),
             ),
-          );
-        },
-      ),
+          ),
+          const SizedBox(height: 10),
+          SizedBox(
+            height: NewsCard.height,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: gutter),
+              itemCount: list.length,
+              separatorBuilder: (_, _) => const SizedBox(width: 12),
+              itemBuilder: (context, index) => NewsCard(
+                article: list[index],
+                onTap: () => onOpen(list[index]),
+              ),
+            ),
+          ),
+        ],
+      ],
     );
   }
 }
 
-/// A news card: the article image on top, then on Raised Ink only the
-/// title. Desk, level and reading time stay in the semantics label.
+/// A news card set like a newspaper column: the source site as a small
+/// kicker (daily articles only), the serif title, and the reading time. No image: daily articles
+/// carry none, and a stock picture would say nothing.
 class NewsCard extends StatelessWidget {
-  const NewsCard({
-    super.key,
-    required this.article,
-    required this.onTap,
-    this.tone = 0,
-  });
+  const NewsCard({super.key, required this.article, required this.onTap});
 
-  static const height = 290.0;
-  static const imageHeight = 204.0;
+  static const height = 140.0;
+  static const width = 264.0;
 
   final NewsArticle article;
   final VoidCallback onTap;
 
-  /// Picks a neutral cover tone when the article has no image.
-  final int tone;
-
   @override
   Widget build(BuildContext context) {
-    final radius = BorderRadius.circular(12);
+    final colors = context.appColors;
+    final source = article.sources.firstOrNull?.site;
     return MergeSemantics(
-      child: CupertinoButton(
-        onPressed: onTap,
-        padding: EdgeInsets.zero,
-        pressedOpacity: 0.7,
-        minimumSize: const Size(44, 44),
-        child: Semantics(
-          label:
-              '${article.title}. Nachrichten, ${article.category.label}, '
-              '${article.readingMinutes} Minuten Lesezeit, '
-              'Niveau ${article.level}',
-          excludeSemantics: true,
-          child: SizedBox(
-            height: height,
-            child: ClipRRect(
-              borderRadius: radius,
+      child: PressScale(
+        child: CupertinoButton(
+          onPressed: onTap,
+          padding: EdgeInsets.zero,
+          pressedOpacity: 0.85,
+          minimumSize: const Size(44, 44),
+          child: Semantics(
+            label:
+                '${article.title}. Nachrichten, ${article.category.label}, '
+                '${article.readingMinutes} Minuten Lesezeit, '
+                'Niveau ${article.level}'
+                '${source == null ? '' : ', Quelle $source'}',
+            excludeSemantics: true,
+            child: Container(
+              width: width,
+              height: height,
+              padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+              decoration: BoxDecoration(
+                color: colors.raisedInk,
+                borderRadius: BorderRadius.circular(18),
+              ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: imageHeight,
-                    child: switch (article.cover) {
-                      final cover? => Image(image: cover, fit: BoxFit.cover),
-                      null => TypeCover(
-                        topic: article.category.label,
-                        tone: tone,
-                        size: 96,
-                      ),
-                    },
-                  ),
-                  Expanded(
-                    child: ColoredBox(
-                      color: context.appColors.raisedInk,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 14, 16, 12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Shrinks first at large Dynamic Type; the
-                            // card keeps its height.
-                            Flexible(
-                              child: Text(
-                                article.title,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppType.editorial(
-                                  color: context.appColors.textPrimary,
-                                  size: 22,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                  if (source != null) ...[
+                    Text(
+                      source.toUpperCase(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppType.chrome(
+                        size: 11,
+                        weight: FontWeight.w700,
+                        color: colors.newsKicker,
                       ),
                     ),
+                    const SizedBox(height: 8),
+                  ],
+                  // Shrinks first at large Dynamic Type; the card keeps
+                  // its height.
+                  Flexible(
+                    child: Text(
+                      article.title,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppType.editorial(
+                        color: colors.textPrimary,
+                        size: 20,
+                        height: 1.2,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    '${article.readingMinutes} Min.',
+                    maxLines: 1,
+                    style: AppType.meta(color: colors.textMuted),
                   ),
                 ],
               ),

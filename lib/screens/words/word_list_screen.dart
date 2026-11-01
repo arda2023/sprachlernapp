@@ -345,13 +345,13 @@ class _SearchField extends StatelessWidget {
     return CupertinoSearchTextField(
       controller: controller,
       placeholder: 'Wörter suchen',
-      style: AppType.chrome(color: context.appColors.textPrimary, size: 16),
+      style: AppType.chrome(color: context.appColors.textPrimary, size: 15),
       placeholderStyle: AppType.chrome(
-        size: 16,
+        size: 15,
         color: context.appColors.textMuted,
       ),
       itemColor: context.appColors.textMuted,
-      padding: const EdgeInsetsDirectional.fromSTEB(6, 14, 8, 14),
+      padding: const EdgeInsetsDirectional.fromSTEB(6, 15, 8, 15),
       decoration: BoxDecoration(
         color: context.appColors.raisedInk,
         borderRadius: BorderRadius.circular(14),
@@ -470,7 +470,7 @@ class _FilterChip extends StatelessWidget {
                 ],
               ),
               style: AppType.chrome(
-                size: 14,
+                size: 13,
                 weight: FontWeight.w700,
                 color: selected ? white : colors.textPrimary,
                 tabular: true,

@@ -241,7 +241,7 @@ class _WordCard extends StatelessWidget {
                     word.form,
                     style: AppType.editorial(
                       color: colors.textPrimary,
-                      size: 26,
+                      size: 24,
                     ),
                   ),
                 ),

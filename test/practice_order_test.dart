@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sprachapp/models/grammar_models.dart';
@@ -26,9 +28,12 @@ List<ChoiceExercise> exercises(String language, PracticeKind kind) => [
     ),
 ];
 
-Widget host(Widget child) => MaterialApp(
-  theme: buildAppTheme(),
-  home: Scaffold(body: child),
+Widget host(Widget child) => ProviderScope(
+  overrides: [premiumContentAccessProvider.overrideWithValue(true)],
+  child: MaterialApp(
+    theme: buildAppTheme(),
+    home: Scaffold(body: child),
+  ),
 );
 
 List<String> renderedTitles(WidgetTester tester, List<ChoiceExercise> items) {

@@ -1,6 +1,19 @@
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(7);
+select plan(10);
+
+-- Explicit Premium fixtures keep replay, CAS and quota checks independent of
+-- entitlement setup. Real callers cannot write this service-only snapshot.
+create function pg_temp.generation_premium(actor uuid, env text default 'Production')
+returns void language sql as $seed$
+  insert into app.verified_entitlements(
+    user_id,entitlement_id,environment,is_active,product_id,starts_at,expires_at,observed_at
+  ) values(actor,'premium',env,true,'com.ardasayar.linglossa.premium.monthly',
+    clock_timestamp()-interval '1 day',clock_timestamp()+interval '30 days',clock_timestamp())
+  on conflict(user_id,entitlement_id,environment) do update set
+    is_active=true,starts_at=excluded.starts_at,expires_at=excluded.expires_at,
+    observed_at=excluded.observed_at;
+$seed$;
 
 do $$
 begin
@@ -34,6 +47,8 @@ begin
   assert public.claim_generated_vocabulary('4a100000-0000-4000-8000-000000000099',req,'en',k,10)->>'status'='account_unverified';
   assert not exists(select 1 from app.generated_vocabulary_requests where user_id in(actor,anonymous_actor));
   update auth.users set email_confirmed_at=clock_timestamp() where id=actor;
+  assert public.claim_generated_vocabulary(actor,req,'en',k,10)->>'status'='premium_required';
+  perform pg_temp.generation_premium(actor);
   assert public.claim_generated_vocabulary(actor,req,'en',k,10,true)->>'status'='missing';
   assert not exists(select 1 from app.generated_vocabulary_requests where user_id=actor);
   assert public.claim_generated_vocabulary(actor,req,'en',k,10)->>'status'='claimed';
@@ -51,6 +66,8 @@ begin
   insert into auth.users(id,email,email_confirmed_at) values
     (actor,'generation-cas@example.test',clock_timestamp()),
     (other_actor,'generation-other@example.test',clock_timestamp());
+  perform pg_temp.generation_premium(actor);
+  perform pg_temp.generation_premium(other_actor);
   r:=public.claim_generated_vocabulary(actor,req,'es',k,5);
   assert r->>'status'='claimed'; ticket:=(r->>'ticket')::uuid;
   assert public.claim_generated_vocabulary(actor,req,'es',k,5)->>'status'='busy';
@@ -99,6 +116,7 @@ declare
 begin
   insert into auth.users(id,email,email_confirmed_at)
     values(actor,'generation-failure@example.test',clock_timestamp());
+  perform pg_temp.generation_premium(actor);
   r:=public.claim_generated_vocabulary(actor,req,'nb',k,50); ticket:=(r->>'ticket')::uuid;
   perform public.fail_generated_vocabulary(actor,req,ticket);
   failed_ticket:=ticket;
@@ -122,6 +140,7 @@ declare
 begin
   insert into auth.users(id,email,email_confirmed_at)
     values(actor,'generation-quota@example.test',clock_timestamp());
+  perform pg_temp.generation_premium(actor);
   for i in 1..5 loop
     req:=gen_random_uuid();
     r:=public.claim_generated_vocabulary(actor,req,'it',k,50);
@@ -145,6 +164,7 @@ declare
 begin
   insert into auth.users(id,email,email_confirmed_at)
     values(actor,'generation-retention@example.test',clock_timestamp());
+  perform pg_temp.generation_premium(actor);
   r:=public.claim_generated_vocabulary(actor,req,'pt-BR',k,1); ticket:=(r->>'ticket')::uuid;
   payload:=jsonb_build_object('contract',1,'request_id',req,'lang','pt-BR','items','[{}]'::jsonb);
   assert public.finish_generated_vocabulary(actor,req,ticket,payload)->>'status'='saved';
@@ -159,6 +179,73 @@ begin
 end $$;
 select pass('30-day payload expiry retains a replay tombstone until account deletion');
 
+
+do $$
+declare
+  actor uuid:='4a700000-0000-4000-8000-000000000001';
+  other_actor uuid:='4a700000-0000-4000-8000-000000000002';
+  req uuid:='4a700000-0000-4000-8000-000000000003';
+  k text:=repeat('b',64);
+begin
+  insert into auth.users(id,email,email_confirmed_at) values
+    (actor,'generation-free@example.test',clock_timestamp()),
+    (other_actor,'generation-paid-other@example.test',clock_timestamp());
+  perform pg_temp.generation_premium(other_actor);
+  assert public.claim_generated_vocabulary(actor,req,'en',k,10)->>'status'='premium_required';
+  assert public.claim_generated_vocabulary(actor,req,'en',k,10,true)->>'status'='premium_required';
+  perform pg_temp.generation_premium(actor);
+  update app.verified_entitlements set is_active=false where user_id=actor;
+  assert public.claim_generated_vocabulary(actor,req,'en',k,10)->>'status'='premium_required';
+  update app.verified_entitlements set is_active=true,expires_at=clock_timestamp()-interval '1 second'
+    where user_id=actor;
+  assert public.claim_generated_vocabulary(actor,req,'en',k,10)->>'status'='premium_required';
+  update app.verified_entitlements set starts_at=clock_timestamp()+interval '1 day',
+    expires_at=clock_timestamp()+interval '30 days' where user_id=actor;
+  assert public.claim_generated_vocabulary(actor,req,'en',k,10)->>'status'='premium_required';
+  assert not exists(select 1 from app.generated_vocabulary_requests where user_id=actor);
+end $$;
+select pass('missing, foreign, inactive, expired and future Premium reserve no generation attempts');
+
+do $$
+declare
+  actor uuid:='4a800000-0000-4000-8000-000000000001';
+  req uuid:='4a800000-0000-4000-8000-000000000002';
+  k text:=repeat('c',64); claim jsonb;
+begin
+  insert into auth.users(id,email,email_confirmed_at)
+    values(actor,'generation-sandbox@example.test',clock_timestamp());
+  perform pg_temp.generation_premium(actor,'Sandbox');
+  assert not exists(select 1 from app.verified_entitlements where user_id=actor and environment='Production');
+  assert public.claim_generated_vocabulary(actor,req,'en',k,10,true)->>'status'='missing';
+  claim:=public.claim_generated_vocabulary(actor,req,'en',k,10);
+  assert claim->>'status'='claimed';
+  perform public.fail_generated_vocabulary(actor,req,(claim->>'ticket')::uuid);
+end $$;
+select pass('active server-verified Sandbox Premium authorizes tester generation');
+
+do $$
+declare
+  actor uuid:='4a900000-0000-4000-8000-000000000001';
+  req uuid:='4a900000-0000-4000-8000-000000000002';
+  k text:=repeat('d',64); claim jsonb; payload jsonb;
+begin
+  insert into auth.users(id,email,email_confirmed_at)
+    values(actor,'generation-revoked@example.test',clock_timestamp());
+  perform pg_temp.generation_premium(actor);
+  claim:=public.claim_generated_vocabulary(actor,req,'en',k,1);
+  payload:=jsonb_build_object('contract',1,'request_id',req,'lang','en','items','[{}]'::jsonb);
+  assert public.finish_generated_vocabulary(actor,req,(claim->>'ticket')::uuid,payload)->>'status'='saved';
+  update app.verified_entitlements set is_active=false where user_id=actor;
+  assert public.claim_generated_vocabulary(actor,req,'en',k,1,true)->>'status'='premium_required';
+  assert public.claim_generated_vocabulary(actor,req,'en',k,1)->>'status'='premium_required';
+  assert (select count(*)=1 from app.generated_vocabulary_requests where user_id=actor);
+  assert (select state='ready' and response=payload from app.generated_vocabulary_requests where user_id=actor and request_id=req);
+  perform pg_temp.generation_premium(actor);
+  claim:=public.claim_generated_vocabulary(actor,req,'en',k,1,true);
+  assert claim->>'status'='hit' and claim->'response'=payload;
+end $$;
+select pass('revoked Premium blocks stored-result reads while retaining replay-safe data');
+
 do $$
 declare
   actor uuid:='4a600000-0000-4000-8000-000000000001';
@@ -168,6 +255,7 @@ begin
   insert into auth.users(id,email,email_confirmed_at) values
     (actor,'generation-global@example.test',clock_timestamp()),
     (seed_actor,'generation-global-seed@example.test',clock_timestamp());
+  perform pg_temp.generation_premium(actor);
   select 20000-coalesce(sum(item_count),0)::integer into remaining
     from app.generated_vocabulary_requests where created_at>clock_timestamp()-interval '24 hours';
   assert remaining>0;

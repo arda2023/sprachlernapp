@@ -456,7 +456,7 @@ class _Header extends StatelessWidget {
                 subtitle,
                 textAlign: TextAlign.center,
                 style: AppType.chrome(
-                  size: 16,
+                  size: 15,
                   color: colors.textMuted,
                   height: 1.35,
                 ),

@@ -228,7 +228,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         ),
         _Section(
           title: 'Audio und Erinnerungen',
-          footer: 'Noch nicht verfügbar – diese Funktionen kommen mit einem späteren Update.',
           children: [
             for (final (icon, title) in const [
               (
@@ -324,10 +323,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 /// A heading, one rounded group on `raisedInk` and an optional footnote.
 /// Rows inside are separated by an inset hairline, never framed.
 class _Section extends StatelessWidget {
-  const _Section({required this.title, required this.children, this.footer});
+  const _Section({required this.title, required this.children});
 
   final String title;
-  final String? footer;
   final List<Widget> children;
 
   @override
@@ -345,7 +343,7 @@ class _Section extends StatelessWidget {
               child: Text(
                 title,
                 style: AppType.chrome(
-                  size: 14,
+                  size: 13,
                   weight: FontWeight.w700,
                   color: colors.textMuted,
                 ),
@@ -375,18 +373,6 @@ class _Section extends StatelessWidget {
               ),
             ),
           ),
-          if (footer case final footer?)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(4, 8, 4, 0),
-              child: Text(
-                footer,
-                style: AppType.chrome(
-                  size: 13,
-                  color: colors.textMuted,
-                  height: 1.35,
-                ),
-              ),
-            ),
         ],
       ),
     );
@@ -472,7 +458,7 @@ class _Row extends StatelessWidget {
                 Text(
                   title,
                   style: AppType.chrome(
-                    size: 16,
+                    size: 17,
                     weight: FontWeight.w600,
                     color: ink,
                   ),
@@ -574,7 +560,7 @@ class _SoonChip extends StatelessWidget {
     child: Text(
       'Bald',
       style: AppType.chrome(
-        size: 12,
+        size: 13,
         weight: FontWeight.w700,
         color: context.appColors.textMuted,
       ),
@@ -685,7 +671,7 @@ class _MotifTile extends StatelessWidget {
       label,
       textAlign: wide ? TextAlign.start : TextAlign.center,
       style: AppType.chrome(
-        size: 14,
+        size: 13,
         weight: selected ? FontWeight.w700 : FontWeight.w500,
         color: selected ? colors.textPrimary : colors.textMuted,
       ),

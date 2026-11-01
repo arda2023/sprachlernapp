@@ -13,6 +13,7 @@ import '../providers/story_learning_providers.dart';
 import '../../data/learning/practice_item_resolver.dart';
 import '../../domain/review_activity.dart';
 import '../providers/preferences_provider.dart';
+import '../providers/premium_access_provider.dart';
 import '../../domain/preferences.dart';
 
 class SessionSnapshot {
@@ -90,6 +91,17 @@ class DeckSessionController extends Notifier<DeckSessionState> {
   bool _initialized = false;
   bool _goalReached = false;
   int _sessionLimit = 0;
+  Set<String>? _freePracticeIds;
+
+  Future<Set<String>> _freeIds() async {
+    if (_freePracticeIds case final ids?) return ids;
+    final decks = _resolver.catalog?.decks ??
+        await _resolver.content?.decks() ?? <DeckSummary>[];
+    return _freePracticeIds = {
+      for (final deck in decks)
+        if (isFreeDeckId(deck.id)) ...await _resolver.deckPracticeIds(deck.id),
+    };
+  }
 
   @override
   DeckSessionState build() {
@@ -129,6 +141,10 @@ class DeckSessionController extends Notifier<DeckSessionState> {
     _emit(loading: true);
     try {
       if (!_initialized) {
+        if (args.deckId.isNotEmpty && !isFreeDeckId(args.deckId) &&
+            !ref.read(premiumContentAccessProvider)) {
+          throw StateError('Für diesen Stapel brauchst du Premium.');
+        }
         _resolver = await ref.read(practiceResolverProvider.future);
         if (!ref.mounted) return;
         _user = await ref.read(userRepositoryProvider.future);
@@ -160,7 +176,13 @@ class DeckSessionController extends Notifier<DeckSessionState> {
         final scope = args.deckId == storyCollectionId
             ? _resolver.storyPracticeIds
             : args.deckId.isEmpty ? null : await _resolver.deckPracticeIds(args.deckId);
-        final states = await _user.allCardStates();
+        final premium = ref.read(premiumContentAccessProvider);
+        final freeIds = premium ? null : await _freeIds();
+        final allStates = await _user.allCardStates();
+        final states = freeIds == null ? allStates : {
+          for (final entry in allStates.entries)
+            if (freeIds.contains(entry.key)) entry.key: entry.value,
+        };
         final cards = _resolver.cards;
         if (args.kind == DeckSessionKind.mixed) {
           final sources = await _resolver.newWordSources();
@@ -170,10 +192,19 @@ class DeckSessionController extends Notifier<DeckSessionState> {
           _queue = buildMixedQueue(
             targetsResolved: true,
             activeDeckCardIds: const [],
-            deckSources: sources.active,
-            sourceOrder: [...sources.order, storySourceId],
+            deckSources: freeIds == null ? sources.active : [
+              for (final source in sources.active)
+                if (isFreeDeckId(source.id))
+                  NewWordSource(source.id,
+                    source.cardIds.where(freeIds.contains).toList()),
+            ],
+            sourceOrder: [
+              for (final id in sources.order)
+                if (premium || isFreeDeckId(id)) id,
+              if (premium) storySourceId,
+            ],
             lastSource: rotation,
-            storyAdditions: _resolver.additions,
+            storyAdditions: premium ? _resolver.additions : const {},
             cards: cards,
             states: states,
             now: _clock(),
@@ -210,6 +241,19 @@ class DeckSessionController extends Notifier<DeckSessionState> {
   }
 
   Future<void> _showCurrent() async {
+    if (!ref.mounted) return;
+    if (!ref.read(premiumContentAccessProvider)) {
+      final freeIds = await _freeIds();
+      if (!ref.mounted) return;
+      final directLocked = args.deckId.isNotEmpty && !isFreeDeckId(args.deckId);
+      // Keep completed entries and their history. Entitlement changes only
+      // remove future choices; the current answer is always allowed to commit.
+      _queue = [
+        ..._queue.take(_index),
+        if (!directLocked)
+          ..._queue.skip(_index).where((entry) => freeIds.contains(entry.cardId)),
+      ];
+    }
     if (_index >= _queue.length) {
       _emit();
       return;

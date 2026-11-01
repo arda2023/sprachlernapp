@@ -6,6 +6,7 @@ import '../../../models/home_models.dart';
 import '../../../models/story_category.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/press_scale.dart';
+import '../../../widgets/premium_content_gate.dart';
 import '../../../widgets/story_cover.dart';
 
 /// Level and reading time are no longer shown on covers or in the reader
@@ -70,6 +71,8 @@ class StoryCarousel extends StatelessWidget {
     required this.onOpen,
     this.progress = const {},
     this.finished = const {},
+    this.premiumLocked = false,
+    this.onUpgrade,
     this.onOpenFrom,
     this.width = cardWidth,
     this.height = cardHeight,
@@ -86,6 +89,8 @@ class StoryCarousel extends StatelessWidget {
   final void Function(Story story, BuildContext card)? onOpenFrom;
   final Map<String, double> progress;
   final Set<String> finished;
+  final bool premiumLocked;
+  final VoidCallback? onUpgrade;
 
   /// Card size: tall covers by default, wide and short for a shelf row.
   final double width;
@@ -107,6 +112,8 @@ class StoryCarousel extends StatelessWidget {
               story: stories[i],
               progress: progress[stories[i].id],
               finished: finished.contains(stories[i].id),
+              premiumLocked: premiumLocked,
+              onUpgrade: onUpgrade,
               width: width,
               height: height,
               onTap: () => onOpenFrom != null
@@ -129,12 +136,16 @@ class StoryFeatureShelf extends StatelessWidget {
     required this.onOpen,
     this.progress = const {},
     this.finished = const {},
+    this.premiumLocked = false,
+    this.onUpgrade,
   });
 
   final List<Story> stories;
   final ValueChanged<Story> onOpen;
   final Map<String, double> progress;
   final Set<String> finished;
+  final bool premiumLocked;
+  final VoidCallback? onUpgrade;
 
   @override
   Widget build(BuildContext context) {
@@ -150,6 +161,8 @@ class StoryFeatureShelf extends StatelessWidget {
               story: lead,
               progress: progress[lead.id],
               finished: finished.contains(lead.id),
+              premiumLocked: premiumLocked,
+              onUpgrade: onUpgrade,
               width: constraints.maxWidth,
               height: 196,
               onTap: () => onOpen(lead),
@@ -163,6 +176,8 @@ class StoryFeatureShelf extends StatelessWidget {
             onOpen: onOpen,
             progress: progress,
             finished: finished,
+            premiumLocked: premiumLocked,
+            onUpgrade: onUpgrade,
             width: 232,
             height: 124,
           ),
@@ -181,6 +196,8 @@ class StoryListShelf extends StatelessWidget {
     required this.onOpen,
     this.progress = const {},
     this.finished = const {},
+    this.premiumLocked = false,
+    this.onUpgrade,
   });
 
   static const rowHeight = 84.0;
@@ -190,6 +207,8 @@ class StoryListShelf extends StatelessWidget {
   final ValueChanged<Story> onOpen;
   final Map<String, double> progress;
   final Set<String> finished;
+  final bool premiumLocked;
+  final VoidCallback? onUpgrade;
 
   @override
   Widget build(BuildContext context) {
@@ -219,6 +238,8 @@ class StoryListShelf extends StatelessWidget {
                   story: story,
                   progress: progress[story.id],
                   finished: finished.contains(story.id),
+                  premiumLocked: premiumLocked,
+                  onUpgrade: onUpgrade,
                   onTap: () => onOpen(story),
                 ),
               ],
@@ -237,6 +258,8 @@ class _StoryListRow extends StatelessWidget {
     required this.progress,
     required this.finished,
     required this.onTap,
+    this.premiumLocked = false,
+    this.onUpgrade,
   });
 
   final int rank;
@@ -244,6 +267,8 @@ class _StoryListRow extends StatelessWidget {
   final double? progress;
   final bool finished;
   final VoidCallback onTap;
+  final bool premiumLocked;
+  final VoidCallback? onUpgrade;
 
   @override
   Widget build(BuildContext context) {
@@ -252,12 +277,14 @@ class _StoryListRow extends StatelessWidget {
     return MergeSemantics(
       child: PressScale(
         child: CupertinoButton(
-          onPressed: onTap,
+          onPressed: premiumLocked ? onUpgrade : onTap,
           padding: EdgeInsets.zero,
           pressedOpacity: 0.85,
           minimumSize: const Size(44, 44),
           child: Semantics(
-            label: _semantics(story, progress, finished),
+            label:
+                '${_semantics(story, progress, finished)}'
+                '${premiumLocked ? ', mit Premium freischalten' : ''}',
             excludeSemantics: true,
             child: SizedBox(
               height: StoryListShelf.rowHeight,
@@ -309,7 +336,10 @@ class _StoryListRow extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (finished) ...[
+                  if (premiumLocked) ...[
+                    const SizedBox(width: 8),
+                    const PremiumLockBadge(),
+                  ] else if (finished) ...[
                     const SizedBox(width: 8),
                     Icon(
                       CupertinoIcons.checkmark_circle_fill,
@@ -350,6 +380,8 @@ class StoryCard extends StatelessWidget {
     required this.onTap,
     this.progress,
     this.finished = false,
+    this.premiumLocked = false,
+    this.onUpgrade,
     this.width = StoryCarousel.cardWidth,
     this.height = StoryCarousel.cardHeight,
   });
@@ -360,6 +392,8 @@ class StoryCard extends StatelessWidget {
   /// Reading position; shown as a bar when the story is started.
   final double? progress;
   final bool finished;
+  final bool premiumLocked;
+  final VoidCallback? onUpgrade;
   final double width;
   final double height;
 
@@ -370,20 +404,22 @@ class StoryCard extends StatelessWidget {
     final wide = width > height * 1.4;
     final featured = width >= 300 && height >= 180;
     final titleSize = featured
-        ? 26.0
+        ? 24.0
         : wide
-        ? 18.0
+        ? 17.0
         : 17.0;
     return MergeSemantics(
       // Cards sink slightly under the finger (press feedback).
       child: PressScale(
         child: CupertinoButton(
-          onPressed: onTap,
+          onPressed: premiumLocked ? onUpgrade : onTap,
           padding: EdgeInsets.zero,
           pressedOpacity: 0.9,
           minimumSize: const Size(44, 44),
           child: Semantics(
-            label: _semantics(story, progress, finished),
+            label:
+                '${_semantics(story, progress, finished)}'
+                '${premiumLocked ? ', mit Premium freischalten' : ''}',
             excludeSemantics: true,
             child: SizedBox(
               width: width,
@@ -399,7 +435,13 @@ class StoryCard extends StatelessWidget {
                     texture: true,
                     finished: finished,
                   ),
-                  if (finished)
+                  if (premiumLocked)
+                    const Positioned(
+                      top: 10,
+                      right: 10,
+                      child: PremiumLockBadge(onDark: true),
+                    )
+                  else if (finished)
                     const Positioned(
                       top: 10,
                       right: 10,
@@ -438,20 +480,20 @@ class StoryCard extends StatelessWidget {
                     ),
                   ),
                   // Reading position along the bottom edge.
+                  // Clipped to the card's own outline, so the bar follows
+                  // its rounded corners instead of sticking out of them.
                   if (started)
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
+                    Positioned.fill(
                       child: ClipRRect(
-                        borderRadius: const BorderRadius.vertical(
-                          bottom: Radius.circular(18),
-                        ),
-                        child: ReadingBar(
-                          fraction: progress!,
-                          onDark: true,
-                          height: 5,
-                          square: true,
+                        borderRadius: BorderRadius.circular(18),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: ReadingBar(
+                            fraction: progress!,
+                            onDark: true,
+                            height: 5,
+                            square: true,
+                          ),
                         ),
                       ),
                     ),

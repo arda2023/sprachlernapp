@@ -5,6 +5,8 @@ import '../../models/home_models.dart';
 import '../../presentation/content_unavailable_view.dart';
 import '../../presentation/providers/database_providers.dart';
 import '../../presentation/providers/deck_providers.dart';
+import '../../presentation/providers/premium_access_provider.dart';
+import '../../widgets/premium_content_gate.dart';
 import '../../domain/language_profile.dart';
 import '../../presentation/providers/learning_providers.dart';
 import '../../presentation/providers/reading_providers.dart';
@@ -176,6 +178,8 @@ class HomeScreen extends ConsumerWidget {
                   ).take(6).toList();
                   return StoryCarousel(
                     stories: shown,
+                    premiumLocked: !ref.watch(premiumContentAccessProvider),
+                    onUpgrade: () => showPremiumContentPaywall(context, interest: 'Stories'),
                     onOpen: onOpenStory,
                     progress: progress,
                     finished: finished,

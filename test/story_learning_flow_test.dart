@@ -1,3 +1,4 @@
+import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
 import 'dart:async';
 import 'dart:io';
 
@@ -86,6 +87,7 @@ void main() {
     await user.addStoryWord(c, now: DateTime(2026, 10, 4));
     final scope = ProviderContainer(
       overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
         userRepositoryProvider.overrideWith((ref) async => user),
         contentRepositoryProvider.overrideWith(
           (ref) async => throw StateError('Missing content'),
@@ -142,6 +144,7 @@ void main() {
       }
       final scope = ProviderContainer(
         overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
           learningNowProvider.overrideWith((ref) => DateTime(2026, 10, 4)),
           userRepositoryProvider.overrideWith((ref) async => user),
           contentRepositoryProvider.overrideWith((ref) async => content),

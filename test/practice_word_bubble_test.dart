@@ -56,7 +56,7 @@ void main() {
       final user = TestUser();
       addTearDown(user.close);
       final haptics = await mount(t, user);
-      final word = find.bySemanticsLabel(RegExp(r'^home\..*Übersetzung'));
+      final word = find.bySemanticsLabel(RegExp(r', Übersetzung anzeigen$')).first;
       final wordRect = t.getRect(word);
       await t.tap(word);
       await t.pumpAndSettle();

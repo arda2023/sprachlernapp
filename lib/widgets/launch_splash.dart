@@ -124,7 +124,7 @@ class _LaunchSplashState extends State<LaunchSplash>
                         'Linglossa',
                         style: AppType.editorial(
                           color: colors.textPrimary,
-                          size: 30,
+                          size: 32,
                         ),
                       ),
                     ),
@@ -139,7 +139,7 @@ class _LaunchSplashState extends State<LaunchSplash>
                       widget.caption ?? '',
                       textAlign: TextAlign.center,
                       style: AppType.chrome(
-                        size: 14,
+                        size: 13,
                         weight: FontWeight.w400,
                         color: colors.textMuted,
                       ),

@@ -131,7 +131,7 @@ class _GoalChip extends StatelessWidget {
               '$target',
               textAlign: TextAlign.center,
               style: AppType.chrome(
-                size: 16,
+                size: 17,
                 weight: FontWeight.w800,
                 color: selected
                     ? context.appColors.popover

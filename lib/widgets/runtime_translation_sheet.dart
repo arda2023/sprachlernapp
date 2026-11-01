@@ -464,7 +464,7 @@ class _RuntimeTranslationSheetState
           widget.displayText ?? widget.text,
           style: AppType.editorial(
             color: popoverInk,
-            size: 19,
+            size: 20,
             weight: FontWeight.w600,
             height: 1.35,
             letterSpacing: 0,

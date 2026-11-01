@@ -1,19 +1,22 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart' show Colors, Scaffold;
 import 'package:flutter/services.dart';
 
 import '../../models/exercise_models.dart';
 import '../../models/reading_history.dart';
 import '../../theme/app_theme.dart';
+import '../../presentation/providers/premium_access_provider.dart';
+import '../../widgets/premium_content_gate.dart';
 import '../../widgets/back_bar.dart';
 import '../../widgets/section_heading.dart';
-import '../home/widgets/story_carousel.dart';
+import 'widgets/text_exercise_shelf.dart';
 import 'text_exercise_screen.dart';
 import 'widgets/exercise_choice_sheet.dart';
 
-/// Exercise texts as carousels: first those built from stories the learner
+/// Exercise texts as compact coloured rows: first those from stories the learner
 /// has opened, then by level.
-class TextLibraryScreen extends StatelessWidget {
+class TextLibraryScreen extends ConsumerWidget {
   const TextLibraryScreen({
     super.key,
     required this.texts,
@@ -27,18 +30,32 @@ class TextLibraryScreen extends StatelessWidget {
     BuildContext context, {
     required List<ExerciseText> texts,
     required ReadingHistory history,
-  }) => Navigator.of(context).push(
-    CupertinoPageRoute<void>(
-      builder: (_) => TextLibraryScreen(texts: texts, history: history),
-    ),
-  );
+  }) async {
+    final container = ProviderScope.containerOf(context, listen: false);
+    if (!container.read(premiumContentAccessProvider)) {
+      await showPremiumContentPaywall(context, interest: 'Texte');
+      return;
+    }
+    await Navigator.of(context).push(
+      CupertinoPageRoute<void>(
+        builder: (_) => TextLibraryScreen(texts: texts, history: history),
+      ),
+    );
+  }
 
   /// Asks for the exercise mode, then opens [text] in it. Shared with the
   /// Inhalte dashboard. [context] is the tapped card: the mode popover
   /// points at it.
   static Future<void> start(BuildContext context, ExerciseText text) async {
+    final container = ProviderScope.containerOf(context, listen: false);
+    if (!container.read(premiumContentAccessProvider)) {
+      await showPremiumContentPaywall(context, interest: 'Texte');
+      return;
+    }
     final mode = await ExerciseChoiceSheet.show(context, text);
-    if (mode != null && context.mounted) {
+    if (mode != null &&
+        context.mounted &&
+        container.read(premiumContentAccessProvider)) {
       await TextExerciseScreen.open(context, text, mode);
     }
   }
@@ -47,7 +64,8 @@ class TextLibraryScreen extends StatelessWidget {
       start(context, texts.firstWhere((t) => t.id == id));
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final premiumLocked = !ref.watch(premiumContentAccessProvider);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value:
           (context.appColors.light
@@ -106,6 +124,19 @@ class TextLibraryScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        if (premiumLocked)
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
+                            child: PremiumUnlockCard(
+                              title: 'Alle Texte üben',
+                              detail:
+                                  'Schalte die Textübungen mit Premium frei.',
+                              onPressed: () => showPremiumContentPaywall(
+                                context,
+                                interest: 'Texte',
+                              ),
+                            ),
+                          ),
                         const SizedBox(height: 8),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -134,10 +165,15 @@ class TextLibraryScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            StoryCarousel(
-                              stories: [for (final t in group) t.info],
-                              onOpen: (s) => _choose(context, s.id),
-                              onOpenFrom: (s, card) => _choose(card, s.id),
+                            TextExerciseShelf(
+                              texts: group,
+                              premiumLocked: premiumLocked,
+                              onUpgrade: () => showPremiumContentPaywall(
+                                context,
+                                interest: 'Texte',
+                              ),
+                              onOpen: (text, anchor) =>
+                                  _choose(anchor, text.id),
                             ),
                           ],
                       ],

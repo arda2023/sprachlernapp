@@ -34,10 +34,16 @@ void main() {
       );
       // Paid intro prices, promotions and multi-phase offers are no trial.
       expect(
-        freeTrialDays(introductory: true, phases: [phase('day', 3, free: false)]),
+        freeTrialDays(
+          introductory: true,
+          phases: [phase('day', 3, free: false)],
+        ),
         isNull,
       );
-      expect(freeTrialDays(introductory: false, phases: [phase('day', 3)]), isNull);
+      expect(
+        freeTrialDays(introductory: false, phases: [phase('day', 3)]),
+        isNull,
+      );
       expect(
         freeTrialDays(
           introductory: true,
@@ -45,7 +51,10 @@ void main() {
         ),
         isNull,
       );
-      expect(freeTrialDays(introductory: true, phases: [phase('month', 1)]), isNull);
+      expect(
+        freeTrialDays(introductory: true, phases: [phase('month', 1)]),
+        isNull,
+      );
     });
 
     test('per-month price written like the store price', () {
@@ -151,17 +160,124 @@ void main() {
     });
   });
 
-  testWidgets('word wall builds the target language words', (tester) async {
+  testWidgets(
+    'word wall shows four larger light words with selective side crops',
+    (tester) async {
+      tester.view.physicalSize = const Size(320, 568);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      for (final language in ['en', 'pt-BR', 'nb', 'it', 'es']) {
+        await tester.pumpWidget(
+          MaterialApp(
+            theme: buildAppTheme(),
+            home: MediaQuery(
+              data: const MediaQueryData(disableAnimations: true),
+              child: WordWall(key: ValueKey(language), lang: language),
+            ),
+          ),
+        );
+        await tester.pump(WordWall.settle);
+        expect(wordsFor(language), hasLength(4));
+        for (final (index, word) in wordsFor(language).indexed) {
+          final finder = find.text(word);
+          expect(finder, findsOneWidget);
+          final text = tester.widget<Text>(finder);
+          expect(text.style!.fontFamily, contains('Figtree'));
+          expect(text.style!.fontWeight, FontWeight.w400);
+          expect(text.style!.fontSize, greaterThan(90));
+          final rect = tester.getRect(finder);
+          if (index.isOdd) {
+            final visible = rect.intersect(const Rect.fromLTWH(0, 0, 320, 568));
+            expect(visible.width / rect.width, closeTo(0.7, 0.025));
+            expect(index == 1 ? rect.right > 320 : rect.left < 0, isTrue);
+          } else {
+            expect(rect.left, greaterThanOrEqualTo(0));
+            expect(rect.right, lessThanOrEqualTo(320));
+          }
+          expect(rect.top, greaterThanOrEqualTo(0));
+          expect(rect.bottom, lessThanOrEqualTo(568));
+        }
+        expect(tester.takeException(), isNull);
+      }
+      expect(
+        find.bySemanticsLabel('Lernsprache wird gewechselt'),
+        findsOneWidget,
+      );
+    },
+  );
+
+  testWidgets(
+    'word wall enters in sequence before all four words reach the center',
+    (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: buildAppTheme(),
+          home: const WordWall(lang: 'es'),
+        ),
+      );
+      final firstBefore = tester.getTopLeft(find.text('Hola')).dy;
+      final height = tester.getSize(find.byType(WordWall)).height;
+      await tester.pump(const Duration(milliseconds: 120));
+      expect(tester.getTopLeft(find.text('Hola')).dy, greaterThan(firstBefore));
+      expect(find.text('Historia').hitTestable(), findsNothing);
+      await tester.pump(const Duration(milliseconds: 260));
+      expect(find.text('Aprender').hitTestable(), findsNothing);
+      await tester.pump(WordWall.settle - const Duration(milliseconds: 380));
+      for (final word in wordsFor('es')) {
+        expect(
+          tester.getCenter(find.text(word)).dy,
+          inExclusiveRange(0, height),
+        );
+      }
+    },
+  );
+
+  testWidgets('word wall keeps a visible flowing drift after entry', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(
         theme: buildAppTheme(),
         home: const WordWall(lang: 'es'),
       ),
     );
-    await tester.pumpAndSettle();
-    for (final word in wordsFor('es')) {
-      expect(find.text(word), findsOneWidget);
-    }
-    expect(find.bySemanticsLabel('Lernsprache wird gewechselt'), findsOneWidget);
+    await tester.pump(WordWall.settle);
+    final first = tester.getTopLeft(find.text('Hola'));
+    await tester.pump(const Duration(seconds: 1));
+    final second = tester.getTopLeft(find.text('Hola'));
+    await tester.pump(const Duration(seconds: 1));
+    final third = tester.getTopLeft(find.text('Hola'));
+    expect((second - first).distance, inExclusiveRange(3, 25));
+    expect((third - second).distance, inExclusiveRange(3, 25));
+
+    // The slow loop also has no jump when its clock wraps around.
+    await tester.pump(const Duration(milliseconds: 10910));
+    final beforeWrap = tester.getTopLeft(find.text('Hola'));
+    await tester.pump(const Duration(milliseconds: 40));
+    final afterWrap = tester.getTopLeft(find.text('Hola'));
+    expect((afterWrap - beforeWrap).distance, lessThan(1));
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('word wall is still when motion is reduced', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildAppTheme(),
+        home: const MediaQuery(
+          data: MediaQueryData(disableAnimations: true),
+          child: WordWall(lang: 'es'),
+        ),
+      ),
+    );
+    final before = [
+      for (final word in wordsFor('es')) tester.getTopLeft(find.text(word)),
+    ];
+    await tester.pump(const Duration(seconds: 2));
+    final after = [
+      for (final word in wordsFor('es')) tester.getTopLeft(find.text(word)),
+    ];
+    expect(after, before);
+    expect(tester.binding.hasScheduledFrame, isFalse);
   });
 }

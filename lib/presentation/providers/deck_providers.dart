@@ -1,11 +1,12 @@
 import '../../domain/content.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/srs_state.dart';
 import '../../domain/review_activity.dart';
 import '../../models/home_models.dart';
+import '../deck_visuals.dart';
 import 'database_providers.dart';
+import 'premium_access_provider.dart';
 import 'learning_providers.dart';
 import 'story_learning_providers.dart';
 
@@ -114,7 +115,7 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
         name: deckDisplayName(deck.slug, deck.titleDe),
         description:
             '${deck.descriptionDe ?? ''}${viaStory > 0 ? ' · $viaStory über Story gelernt' : ''}',
-        icon: CupertinoIcons.square_stack,
+        icon: deckTopicIcon(deck.slug),
         difficulty: deckDifficulty(deck.slug, deck.cefrBand),
         totalWords: ids
             .where((id) => resolver.states[id]?.isActive ?? true)
@@ -180,6 +181,12 @@ class DeckActiveController extends Notifier<DeckActivationState> {
   }
 
   Future<void> setActive(String id, bool active) {
+    if (active && !isFreeDeckId(id) && !ref.read(premiumContentAccessProvider)) {
+      state = DeckActivationState(values: state.values, errors: {
+        ...state.errors, id: StateError('Dieser Stapel benötigt Premium.'),
+      });
+      return Future<void>.value();
+    }
     final release = contentTransitionGate.acquire();
     final version = (_versions[id] ?? 0) + 1;
     _versions[id] = version;
@@ -190,6 +197,9 @@ class DeckActiveController extends Notifier<DeckActivationState> {
       try {
         final user = await ref.read(userRepositoryProvider.future);
         _persisted[id] ??= (await user.activeDeckIds([id])).contains(id);
+        if (active && !isFreeDeckId(id) && !ref.read(premiumContentAccessProvider)) {
+          throw StateError('Dieser Stapel benötigt Premium.');
+        }
         await user.setDeckActive(id, active, now: ref.read(clockProvider)());
         _persisted[id] = active;
       } catch (error) {

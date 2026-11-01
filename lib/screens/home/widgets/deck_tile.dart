@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/home_models.dart';
+import '../../../presentation/providers/premium_access_provider.dart';
+import '../../../widgets/deck_premium_badge.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/press_scale.dart';
 import '../../../widgets/count_format.dart';
@@ -53,7 +56,7 @@ class DeckGauge extends StatelessWidget {
 /// count. In the deck library active decks are filled orange (with an
 /// "Aktiv" label, so colour is never the only cue); on Home, where every
 /// deck shown is active, cards stay neutral ([highlightActive] false).
-class DeckTile extends StatelessWidget {
+class DeckTile extends ConsumerWidget {
   const DeckTile({
     super.key,
     required this.deck,
@@ -66,12 +69,14 @@ class DeckTile extends StatelessWidget {
   final bool highlightActive;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final colors = context.appColors;
     const white = Color(0xFFFFFFFF);
+    final locked =
+        !isFreeDeckId(deck.id) && !ref.watch(premiumContentAccessProvider);
     final practised = (DeckGauge.fractionOf(deck) * 100).round();
     final active = deck.isActive;
-    final accent = active && highlightActive;
+    final accent = active && highlightActive && !locked;
     return MergeSemantics(
       // Cards sink slightly under the finger (press feedback).
       child: PressScale(
@@ -85,7 +90,11 @@ class DeckTile extends StatelessWidget {
                 '${deck.name}, $practised Prozent geübt, '
                 'Schwierigkeit ${deck.difficulty.label}, '
                 '${formatCountDe(deck.totalWords)} Wörter'
-                '${active ? ', aktiv' : ''}',
+                '${locked
+                    ? ', Premium erforderlich'
+                    : active
+                    ? ', aktiv'
+                    : ''}',
             excludeSemantics: true,
             child: Container(
               padding: const EdgeInsets.fromLTRB(12, 12, 14, 12),
@@ -142,7 +151,9 @@ class DeckTile extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  if (accent)
+                  if (locked)
+                    const DeckPremiumBadge()
+                  else if (accent)
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 8,

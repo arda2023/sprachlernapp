@@ -1,3 +1,4 @@
+import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
 // Synthetic isolated installation and user-data harness. No app support path.
 import 'dart:io';
 
@@ -29,6 +30,7 @@ class LanguageHarness {
       lang == 'en' ? english : portuguese ?? installerFor(root, lang: 'pt-BR');
   ProviderContainer scope() => ProviderContainer(
     overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
       if (auth != null) contentAuthProvider.overrideWithValue(auth!),
       if (transports.isNotEmpty)
         contentReleaseTransportProvider.overrideWith(

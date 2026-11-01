@@ -1028,6 +1028,7 @@ const sampleListeningExercises = [
     audioText: 'think',
     options: ['sink', 'think', 'fink'],
     answer: 'think',
+    translation: 'denken',
     explanation:
         'Beim stimmlosen th liegt die Zungenspitze zwischen den Zähnen. '
         'Ein deutsches s macht aus *think* schnell *sink*.',
@@ -1043,6 +1044,7 @@ const sampleListeningExercises = [
     audioText: 'vest',
     options: ['west', 'vest'],
     answer: 'vest',
+    translation: 'Weste',
     explanation:
         'Das englische *v* klingt wie das deutsche w. Das englische *w* '
         'bildest du mit gerundeten Lippen, ohne die Zähne zu berühren.',
@@ -1058,6 +1060,7 @@ const sampleListeningExercises = [
     audioText: 'sheep',
     options: ['ship', 'sheep'],
     answer: 'sheep',
+    translation: 'Schaf',
     explanation:
         '*sheep* hat ein langes, gespanntes i, *ship* ein kurzes, '
         'offenes. Die Länge allein unterscheidet die Bedeutung.',
@@ -1074,6 +1077,7 @@ const sampleListeningExercises = [
     audioDuration: Duration(seconds: 3),
     options: ['15', '50'],
     answer: '15',
+    translation: 'Der Zug fährt in fünfzehn Minuten ab.',
     explanation:
         'Bei *fifteen* liegt die Betonung am Ende und das t ist deutlich. '
         'Bei *fifty* liegt sie vorne, das t klingt oft weich.',
@@ -1089,6 +1093,7 @@ const sampleListeningExercises = [
     audioText: 'I can swim.',
     options: ['I can swim.', 'I can’t swim.'],
     answer: 'I can swim.',
+    translation: 'Ich kann schwimmen.',
     explanation:
         'Im Satz wird *can* meist unbetont und kurz gesprochen, fast wie '
         '„kn“. *can’t* bleibt betont und hat einen vollen Vokal.',
@@ -1105,6 +1110,7 @@ const sampleListeningExercises = [
     audioDuration: Duration(seconds: 3),
     options: ['Frage', 'Aussage'],
     answer: 'Frage',
+    translation: 'Du kommst heute Abend?',
     explanation:
         'Die Stimme geht am Ende nach oben. So wird aus einer Aussage wie '
         '*You’re coming tonight* eine Frage, ganz ohne Umstellung.',
@@ -1123,6 +1129,7 @@ const sampleGrammarExercises = [
     prompt: 'We waited for ___ hour at the station.',
     options: ['a', 'an', 'the'],
     answer: 'an',
+    translation: 'Wir haben eine Stunde am Bahnhof gewartet.',
     explanation:
         '*hour* beginnt mit einem Vokallaut, weil das h stumm ist. Darum '
         'steht *an*, wie bei *an apple*.',
@@ -1137,6 +1144,7 @@ const sampleGrammarExercises = [
     prompt: 'Clara ___ every evening before bed.',
     options: ['read', 'reads', 'reading'],
     answer: 'reads',
+    translation: 'Clara liest jeden Abend vor dem Schlafengehen.',
     explanation:
         'Im Simple Present bekommt das Verb in der 3. Person Einzahl ein '
         '*-s*: *I read*, aber *she reads*.',
@@ -1151,6 +1159,7 @@ const sampleGrammarExercises = [
     prompt: 'The people in the village ___ very friendly.',
     options: ['is', 'are', 'be'],
     answer: 'are',
+    translation: 'Die Leute im Dorf sind sehr freundlich.',
     explanation:
         '*people* ist die Mehrzahl von *person* und steht immer mit einem '
         'Verb in der Mehrzahl.',
@@ -1165,6 +1174,7 @@ const sampleGrammarExercises = [
     prompt: 'I ___ in Hamburg since 2010.',
     options: ['live', 'have lived', 'lived'],
     answer: 'have lived',
+    translation: 'Ich wohne seit 2010 in Hamburg.',
     explanation:
         'Mit *since* beschreibst du etwas, das in der Vergangenheit begann '
         'und bis jetzt andauert. Dafür steht das Present Perfect, wo das '
@@ -1180,6 +1190,7 @@ const sampleGrammarExercises = [
     prompt: 'The night was ___ than we expected.',
     options: ['more cold', 'colder', 'coldest'],
     answer: 'colder',
+    translation: 'Die Nacht war kälter, als wir erwartet hatten.',
     explanation:
         'Einsilbige Adjektive steigerst du mit *-er*: *cold* → *colder*. '
         '*more* steht erst bei langen Adjektiven.',
@@ -1194,6 +1205,7 @@ const sampleGrammarExercises = [
     prompt: 'If I ___ more time, I would read more.',
     options: ['would have', 'had', 'have'],
     answer: 'had',
+    translation: 'Wenn ich mehr Zeit hätte, würde ich mehr lesen.',
     explanation:
         'Im if-Satz von Typ 2 steht das Simple Past (*had*), das *would* '
         'gehört nur in den Hauptsatz.',
@@ -1208,6 +1220,7 @@ const sampleGrammarExercises = [
     prompt: 'The new bridge ___ next year.',
     options: ['will built', 'will be built', 'is building'],
     answer: 'will be built',
+    translation: 'Die neue Brücke wird nächstes Jahr gebaut.',
     explanation:
         'Das Passiv braucht immer eine Form von *be*: *will be built*. Das '
         'deutsche „wird gebaut“ verleitet leicht zu *will built*.',

@@ -15,6 +15,7 @@ import 'package:sprachapp/screens/decks/widgets/practice_chrome.dart';
 import 'package:sprachapp/theme/app_theme.dart';
 
 import 'fixtures/deck_repositories.dart';
+import 'fixtures/practice_session.dart';
 
 class SlowNextUser extends TestUser {
   Completer<void>? gate;
@@ -47,7 +48,7 @@ void main() {
       ),
     );
     await t.pumpAndSettle();
-    await t.enterText(find.byType(TextField), 'walks');
+    await t.enterText(find.byType(TextField), shownPracticeItem(t).card.form);
     await t.testTextInput.receiveAction(TextInputAction.done);
     await t.pumpAndSettle();
     final editor = t.state(find.byType(EditableText));
@@ -165,7 +166,8 @@ void main() {
     );
     await t.pumpAndSettle();
     final title = t.getTopLeft(find.text('Sehr gut!'));
-    final heading = t.getTopLeft(find.text('Neue Wörter'));
+    final viewport = find.byKey(const ValueKey('completion-word-scroll'));
+    final viewportTop = t.getTopLeft(viewport).dy;
     haptics.clear();
     await t.drag(
       find.byKey(const ValueKey('completion-word-scroll')),
@@ -173,8 +175,8 @@ void main() {
     );
     await t.pumpAndSettle();
     expect(t.getTopLeft(find.text('Sehr gut!')), title);
-    expect(t.getTopLeft(find.text('Neue Wörter')), heading);
-    expect(t.getTopLeft(find.text('word 0')).dy, greaterThan(heading.dy));
+    expect(t.getTopLeft(viewport).dy, viewportTop);
+    expect(t.getTopLeft(find.text('word 0')).dy, greaterThanOrEqualTo(viewportTop));
     expect(haptics, contains('HapticFeedbackType.selectionClick'));
     expect(t.takeException(), isNull);
   });

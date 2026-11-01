@@ -1,3 +1,4 @@
+import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -121,6 +122,7 @@ void main() {
     user = openUser();
     scope = ProviderContainer(
       overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
         contentRepositoryProvider.overrideWith((ref) async => content),
         userRepositoryProvider.overrideWith((ref) async => user),
         clockProvider.overrideWithValue(() => now),

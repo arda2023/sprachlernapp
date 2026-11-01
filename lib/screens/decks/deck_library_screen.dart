@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../presentation/providers/deck_providers.dart';
+import '../../presentation/providers/premium_access_provider.dart';
 import '../../presentation/providers/database_providers.dart';
 import '../../presentation/content_unavailable_view.dart';
 
@@ -44,6 +45,7 @@ class DeckLibraryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final premium = ref.watch(premiumContentAccessProvider);
     return SafeArea(
       bottom: false,
       child: watchContentStable(ref, decksProvider)
@@ -60,19 +62,15 @@ class DeckLibraryScreen extends ConsumerWidget {
               },
             ),
             data: (decks) {
-              final active = decks.where((d) => d.isActive).toList();
-              final others = decks.where((d) => !d.isActive).toList();
+              bool activeDeck(Deck deck) =>
+                  deck.isActive && (premium || isFreeDeckId(deck.id));
+              final active = decks.where(activeDeck).toList();
+              final others = decks.where((deck) => !activeDeck(deck)).toList();
               List<Widget> section(String title, List<Deck> group) => [
                 const SizedBox(height: 22),
                 Padding(
                   padding: _gutter,
-                  child: SectionHeading(
-                    title: title,
-                    trailing: Text(
-                      '${group.length}',
-                      style: AppType.meta(color: context.appColors.textMuted),
-                    ),
-                  ),
+                  child: SectionHeading(title: title),
                 ),
                 const SizedBox(height: 14),
                 for (final (i, deck) in group.indexed)
@@ -99,14 +97,6 @@ class DeckLibraryScreen extends ConsumerWidget {
                           size: 32,
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Padding(
-                    padding: _gutter,
-                    child: Text(
-                      '${active.length} aktiv · ${decks.length} Stapel',
-                      style: AppType.meta(color: context.appColors.textMuted),
                     ),
                   ),
                   const StoryCollectionEntry(),

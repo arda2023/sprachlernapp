@@ -1,3 +1,4 @@
+import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
 // Regressions for content loading: owner lifecycle, single pack opening per
 // language switch, change-free session start and identity-bound Home data.
 // Synthetic packs and temporary user data only.
@@ -389,6 +390,7 @@ void main() {
       final revisionProvider = NotifierProvider<_Revision, int>(_Revision.new);
       final container = ProviderContainer(
         overrides: [
+        premiumContentAccessProvider.overrideWithValue(true),
           selectedContentLanguageProvider.overrideWith((ref) async => lang),
           activeContentKeyProvider.overrideWith(
             (ref) async => (
@@ -412,7 +414,7 @@ void main() {
             ),
           ),
           lexicalBreakdownProvider.overrideWith(
-            (ref) => Completer<LexicalBreakdown>().future,
+            (ref) async => const LexicalBreakdown(total: 0, practiced: 0),
           ),
           learningNowProvider.overrideWith((ref) => DateTime(2026, 10, 20)),
           learningProgressProvider.overrideWith(
@@ -425,6 +427,7 @@ void main() {
             (ref) async => summarizeStreak({}, DateTime(2026, 10, 20)),
           ),
           storySummariesProvider.overrideWith((ref) async => []),
+          libraryStoriesProvider.overrideWith((ref) => const AsyncData([])),
         ],
       );
       addTearDown(container.dispose);

@@ -28,7 +28,7 @@ double wordBubbleWidth(BuildContext context, {String? word}) {
 /// The headword style of [WordBubbleHeader].
 TextStyle wordBubbleHeadword() => AppType.editorial(
   color: popoverInk,
-  size: 21,
+  size: 20,
   weight: FontWeight.w600,
   height: 1.2,
   letterSpacing: 0,
@@ -83,7 +83,7 @@ class WordBubbleHeader extends StatelessWidget {
 /// The translation line under the header.
 TextStyle wordBubbleTranslation() => AppType.editorial(
   color: popoverInk,
-  size: 18,
+  size: 17,
   weight: FontWeight.w400,
   height: 1.3,
   letterSpacing: 0,

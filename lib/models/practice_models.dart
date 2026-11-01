@@ -29,6 +29,7 @@ class ChoiceExercise {
     required this.options,
     required this.answer,
     required this.explanation,
+    this.translation,
     this.audioText,
     this.audioDuration = const Duration(seconds: 2),
     this.sourceLanguage = 'de',
@@ -55,6 +56,10 @@ class ChoiceExercise {
   /// Why the answer is right; shown once it is chosen. English forms in
   /// `*…*`, like the grammar rules.
   final String explanation;
+
+  /// German translation of the solved sentence, or of what is heard;
+  /// shown once the answer is found.
+  final String? translation;
   final String? audioText;
   final Duration audioDuration;
   final String sourceLanguage;
