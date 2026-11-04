@@ -350,4 +350,31 @@ void main() {
       }
     },
   );
+  test('monthly limit and off-topic denial have actionable messages without a retry', () async {
+    for (final code in ['AI_MONTHLY_LIMIT', 'TOPIC_NOT_ALLOWED']) {
+      final h = Harness();
+      addTearDown(h.access.close);
+      h.respond = () async => FakeResponse([
+        utf8.encode(
+          jsonEncode({'error': code, 'message': 'secret provider details'}),
+        ),
+      ], statusCode: code == 'AI_MONTHLY_LIMIT' ? 429 : 422);
+      await expectLater(
+        h.client.generate(request()),
+        throwsA(
+          failure(code)
+              .having((e) => e.uncertain, 'uncertain', false)
+              .having(
+                (e) => e.message.contains(
+                  code == 'AI_MONTHLY_LIMIT' ? 'Monat' : 'Vokabelthema',
+                ),
+                'actionable',
+                true,
+              )
+              .having((e) => e.message.contains('secret'), 'safe', false),
+        ),
+      );
+      expect(h.http.requests, hasLength(1));
+    }
+  });
 }

@@ -1,0 +1,190 @@
+{
+  "collected_at": "2026-11-01T17:05:27.088093+00:00",
+  "results": [
+    {
+      "check": "Client denied reserve_ai_spend",
+      "pass": true
+    },
+    {
+      "check": "Client denied settle_ai_spend",
+      "pass": true
+    },
+    {
+      "check": "Client cannot read budget ledger",
+      "pass": true
+    },
+    {
+      "check": "Twelve concurrent live reservations admit four under EUR 5",
+      "pass": true
+    },
+    {
+      "check": "Unsettled live holds total EUR 4.32",
+      "pass": true
+    },
+    {
+      "check": "Cache deletion does not reset money balance",
+      "pass": true
+    },
+    {
+      "check": "Deployed generate-vocabulary rejects exhausted budget",
+      "pass": true,
+      "http": 429
+    },
+    {
+      "check": "Deployed translate-sentence rejects exhausted budget",
+      "pass": true,
+      "http": 429
+    },
+    {
+      "check": "Deployed lookup-word rejects exhausted budget",
+      "pass": true,
+      "http": 429
+    },
+    {
+      "check": "Denied endpoints incur no new provider reservation",
+      "pass": true
+    },
+    {
+      "check": "Live theme case 1 blocked",
+      "pass": true,
+      "http": 422,
+      "language": "en"
+    },
+    {
+      "check": "Provider usage settles conservatively, case 1",
+      "pass": true,
+      "features": [
+        "topic-check"
+      ]
+    },
+    {
+      "check": "Live theme case 2 blocked",
+      "pass": true,
+      "http": 422,
+      "language": "en"
+    },
+    {
+      "check": "Provider usage settles conservatively, case 2",
+      "pass": true,
+      "features": [
+        "topic-check",
+        "topic-check"
+      ]
+    },
+    {
+      "check": "Live theme case 3 blocked",
+      "pass": true,
+      "http": 422,
+      "language": "en"
+    },
+    {
+      "check": "Provider usage settles conservatively, case 3",
+      "pass": true,
+      "features": [
+        "topic-check",
+        "topic-check",
+        "topic-check"
+      ]
+    },
+    {
+      "check": "Live theme case 4 allowed",
+      "pass": true,
+      "http": 200,
+      "language": "en"
+    },
+    {
+      "check": "Provider usage settles conservatively, case 4",
+      "pass": true,
+      "features": [
+        "topic-check",
+        "topic-check",
+        "topic-check",
+        "topic-check",
+        "generated-vocabulary"
+      ]
+    },
+    {
+      "check": "Status recovery reuses result, case 4",
+      "pass": true
+    },
+    {
+      "check": "Live theme case 5 allowed",
+      "pass": true,
+      "http": 200,
+      "language": "pt-BR"
+    },
+    {
+      "check": "Provider usage settles conservatively, case 5",
+      "pass": true,
+      "features": [
+        "topic-check",
+        "topic-check",
+        "topic-check",
+        "topic-check",
+        "generated-vocabulary",
+        "topic-check",
+        "generated-vocabulary"
+      ]
+    },
+    {
+      "check": "Status recovery reuses result, case 5",
+      "pass": true
+    },
+    {
+      "check": "Live theme case 6 blocked",
+      "pass": true,
+      "http": 422,
+      "language": "en"
+    },
+    {
+      "check": "Provider usage settles conservatively, case 6",
+      "pass": true,
+      "features": [
+        "topic-check"
+      ]
+    },
+    {
+      "check": "Live theme case 7 blocked",
+      "pass": true,
+      "http": 422,
+      "language": "en"
+    },
+    {
+      "check": "Provider usage settles conservatively, case 7",
+      "pass": true,
+      "features": [
+        "topic-check",
+        "topic-check"
+      ]
+    },
+    {
+      "check": "Live theme case 8 allowed",
+      "pass": true,
+      "http": 200,
+      "language": "es"
+    },
+    {
+      "check": "Provider usage settles conservatively, case 8",
+      "pass": true,
+      "features": [
+        "topic-check",
+        "topic-check",
+        "topic-check",
+        "generated-vocabulary"
+      ]
+    },
+    {
+      "check": "Status recovery reuses result, case 8",
+      "pass": true
+    },
+    {
+      "check": "Scheduled retention is enabled",
+      "pass": true
+    },
+    {
+      "check": "Administrative event trigger no longer callable by clients",
+      "pass": true
+    }
+  ],
+  "all_fixture_accounts_deleted": true
+}

@@ -201,6 +201,10 @@ GeneratedVocabularyFailure _serverFailure(int status, Object? json) {
     'ACCOUNT_UNVERIFIED',
     'AUTH_REQUIRED',
     'RATE_LIMIT',
+    'PREMIUM_REQUIRED',
+    'AI_MONTHLY_LIMIT',
+    'AI_BUDGET_UNAVAILABLE',
+    'TOPIC_NOT_ALLOWED',
     'REQUEST_CONFLICT',
     'REQUEST_PENDING',
     'REQUEST_UNCERTAIN',
@@ -227,6 +231,9 @@ GeneratedVocabularyFailure _serverFailure(int status, Object? json) {
   final message = switch (code) {
     'ACCOUNT_UNVERIFIED' => 'Bitte zuerst die E-Mail-Adresse bestätigen.',
     'AUTH_REQUIRED' => 'Bitte zuerst anmelden.',
+    'AI_MONTHLY_LIMIT' => 'Dein monatliches KI-Limit ist erreicht. Neue Anfragen sind ab dem nächsten Monat wieder möglich.',
+    'TOPIC_NOT_ALLOWED' => 'Bitte nenne nur ein Vokabelthema, zum Beispiel „Urlaub am Meer“. Fragen und andere Aufgaben sind hier nicht möglich.',
+    'PREMIUM_REQUIRED' => 'Eigene Vokabelthemen benötigen Premium.',
     'RATE_LIMIT' => 'Das Tageslimit ist erreicht. Bitte später versuchen.',
     'REQUEST_PENDING' => 'Diese Anfrage wird noch bearbeitet.',
     'REQUEST_UNCERTAIN' || 'TIMEOUT' =>

@@ -29,6 +29,7 @@ class PersonalConsentStore {
     );
     return db;
   })();
+
   /// Device-wide answer from the onboarding's AI switch; an account's own
   /// choice in Settings wins over it.
   static const deviceOwner = 'device:onboarding';
@@ -204,6 +205,7 @@ class PersonalLearningClient {
           // Only a fixed server-code allowlist can reach the UI. Never display
           // raw errors, provider messages, URLs or arbitrary response fields.
           var detail = '';
+          var monthlyLimit = false;
           String? retryTicket;
           try {
             final errorBytes = <int>[];
@@ -212,6 +214,7 @@ class PersonalLearningClient {
               errorBytes.addAll(chunk);
             }
             final value = jsonDecode(utf8.decode(errorBytes));
+            monthlyLimit = value is Map && value['error'] == 'AI_MONTHLY_LIMIT';
             const safeCodes = {
               'MODEL_FAILED',
               'MODEL_INVALID',
@@ -239,20 +242,21 @@ class PersonalLearningClient {
           } catch (_) {
             /* Keep the original HTTP failure if diagnostics fail. */
           }
-          final message = switch (response.statusCode) {
-            401 || 403 => 'Anmeldung oder Sprachfreigabe erforderlich.',
-            429 => 'Tages- oder Minutenlimit erreicht. Bitte später versuchen.',
-            409 => 'Erstellung läuft bereits oder ihr Ausgang ist unklar. Keine automatische Wiederholung.',
-            422 =>
-              'Wortstelle oder Packreferenz passt nicht. Bitte Inhalte prüfen.',
-            504 => 'Erstellung hat zu lange gedauert. Keine automatische Wiederholung.',
-            _ =>
-              'Lernkarte derzeit nicht verfügbar. Kein Hinzufügen bestätigt.',
-          };
+          final message = monthlyLimit
+              ? 'Dein monatliches KI-Limit ist erreicht. Neue Anfragen sind ab dem nächsten Monat wieder möglich.'
+              : switch (response.statusCode) {
+                  401 || 403 => 'Anmeldung oder Sprachfreigabe erforderlich.',
+                  429 => 'Tages- oder Minutenlimit erreicht. Bitte später versuchen.',
+                  409 => 'Erstellung läuft bereits oder ihr Ausgang ist unklar. Keine automatische Wiederholung.',
+                  422 => 'Wortstelle oder Packreferenz passt nicht. Bitte Inhalte prüfen.',
+                  504 => 'Erstellung hat zu lange gedauert. Keine automatische Wiederholung.',
+                  _ => 'Lernkarte derzeit nicht verfügbar. Kein Hinzufügen bestätigt.',
+                };
           throw PersonalLearningFailure(
             '$message$detail',
             retryTicket: retryTicket,
-            retryable: ![401, 403, 422].contains(response.statusCode),
+            retryable:
+                !monthlyLimit && ![401, 403, 422].contains(response.statusCode),
           );
         }
         final bytes = <int>[];

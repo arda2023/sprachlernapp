@@ -153,6 +153,7 @@ class RuntimeTranslationClient {
             error = jsonDecode(utf8.decode(errorBytes)) as Map<String, dynamic>;
           } catch (_) {}
           final message = switch (error['error']) {
+            'AI_MONTHLY_LIMIT' => 'Dein monatliches KI-Limit ist erreicht. Neue Anfragen sind ab dem nächsten Monat wieder möglich.',
             'TRANSLATION_QUOTA_EXHAUSTED' => _quotaMessage(error),
             'EMAIL_VERIFICATION_REQUIRED' =>
               'Bitte bestätige zuerst die E-Mail-Adresse deines Kontos.',

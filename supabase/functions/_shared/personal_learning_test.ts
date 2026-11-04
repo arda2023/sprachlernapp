@@ -13,6 +13,8 @@ function fixture(options:any={}){
  let models=0,claims=0,body:any,ready:any,pending=false;
  let allDone!:()=>void; const allClaims=new Promise<void>(resolve=>allDone=resolve);
  const fetcher:typeof fetch=async(url,init:any)=>{
+    if (String(url).endsWith('/reserve_ai_spend')) return Response.json({ status: options.budget ?? 'reserved' });
+    if (String(url).endsWith('/settle_ai_spend')) return Response.json({ status: 'settled' });
   const path=String(url);const payload=init.body?JSON.parse(init.body):null;
   if(path.endsWith('/auth/v1/user'))return Response.json({id:'12345678-1234-4234-8234-123456789abc',is_anonymous:false},{status:options.auth??200});
   if(path.endsWith('/personal_learning_release'))return Response.json({status:options.refs??'ok',release:{...release,lang:'en',manifest:{sha256:release.sqlite_sha256,version:'1',pack_json_sha256:packHash},objects:{'pack.json':{sha256:packHash,size_bytes:Buffer.byteLength(packBytes)}}}});
@@ -295,4 +297,13 @@ test('provider rejection category survives without private body, no storage or r
  assert.ok(!lines.join('').includes('PRIVATE_SENTINEL'));assert.ok(!lines.join('').includes('SECRET_SENTINEL'));
  assert.ok(!lines.some(s=>JSON.parse(s).stage==='storage'));
  assert.equal((await f.run()).status,409);assert.equal(f.stats().models,1);
+});
+
+
+test('personal cards share the monthly money limit and cannot dispatch when exhausted', async () => {
+  const f = fixture({ budget: 'limit' });
+  const response = await f.run();
+  assert.equal(response.status, 429);
+  assert.equal((await response.json()).error, 'AI_MONTHLY_LIMIT');
+  assert.equal(f.stats().models, 0);
 });

@@ -1,0 +1,5 @@
+iOS simulator: Xcode build succeeded (61.5s); Runner.app installed and launched on iPhone 17 Pro simulator.
+Foundation URLResourceValues read of Application Support: isExcludedFromBackup == true.
+Android debug APK: assembleDebug succeeded (30.0s).
+Neither artifact is a signed production release. Physical backup/restore was not tested.
+Final iOS rebuild after legal text updates: Xcode build succeeded (24.0s).

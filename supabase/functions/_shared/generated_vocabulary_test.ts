@@ -13,13 +13,15 @@ const item = { form: 'brain', lemma: 'brain', pos: 'NOUN', gloss_de: 'Gehirn',
 const { start: _start, ...providerItem } = item;
 
 type Options = { claim?: string; auth?: number; provider?: unknown; providerStatus?: number;
-  wait?: Promise<void>; finish?: 'lost' | 'stale'; hang?: boolean; apiKey?: string };
+  budget?: string; admitted?: boolean; wait?: Promise<void>; finish?: 'lost' | 'stale'; hang?: boolean; apiKey?: string };
 function fixture(options: Options = {}) {
   let models = 0, claims = 0, failures = 0, finishes = 0;
   let ready: unknown, pending = false, failed = false;
   let modelBody: Record<string, unknown> | undefined;
   const bodies: Record<string, unknown>[] = [];
   const fetcher: typeof fetch = async (url, init) => {
+    if (String(url).endsWith('/reserve_ai_spend')) return Response.json({ status: options.budget ?? 'reserved' });
+    if (String(url).endsWith('/settle_ai_spend')) return Response.json({ status: 'settled' });
     const path = String(url);
     const body = init?.body ? JSON.parse(String(init.body)) : null;
     if (path.endsWith('/auth/v1/user')) return Response.json({ id: requestId,
@@ -47,6 +49,9 @@ function fixture(options: Options = {}) {
     assert.equal(path, 'https://api.anthropic.com/v1/messages');
     assert.equal(new Headers(init?.headers).get('x-api-key'), 'server-only');
     assert.equal(init?.redirect, 'error');
+    if (body.max_tokens === 128) return Response.json({ model: MODEL, stop_reason: 'end_turn',
+      usage: { input_tokens: 100, output_tokens: 4 },
+      content: [{ type: 'text', text: JSON.stringify({ allowed: options.admitted ?? true }) }] });
     models++; modelBody = body;
     await options.wait;
     if (options.hang) return await new Promise<Response>((_, reject) => {
@@ -54,6 +59,7 @@ function fixture(options: Options = {}) {
       init?.signal?.addEventListener('abort', () => reject(Error('aborted')), { once: true });
     });
     return Response.json(options.provider ?? { model: MODEL, stop_reason: 'end_turn',
+      usage: { input_tokens: 100, output_tokens: 100 },
       content: [{ type: 'text', text: JSON.stringify({ items: [providerItem] }) }] },
       { status: options.providerStatus ?? 200 });
   };
@@ -230,4 +236,25 @@ test('accepted batch is capped to requested count without extra model calls', as
   assert.equal(response.status, 200);
   assert.deepEqual((await response.json()).items, [item]);
   assert.equal(f.stats().models, 1);
+});
+
+
+test('off-task classification blocks generation and consumes no retry automatically', async () => {
+  const f = fixture({ admitted: false });
+  const response = await f.run({ ...input, prompt: 'Erkläre mir Diabetes' });
+  assert.equal(response.status, 422);
+  assert.deepEqual(await response.json(), { error: 'TOPIC_NOT_ALLOWED' });
+  assert.equal(f.stats().models, 0);
+  assert.equal(f.stats().failures, 1);
+});
+test('questions are refused before reservation or provider; monthly limit blocks both AI stages', async () => {
+  const question = fixture();
+  assert.equal((await question.run({ ...input, prompt: 'Was ist Diabetes?' })).status, 422);
+  assert.equal(question.stats().claims, 0);
+  assert.equal(question.stats().models, 0);
+  const f = fixture({ budget: 'limit' });
+  const response = await f.run();
+  assert.equal(response.status, 429);
+  assert.deepEqual(await response.json(), { error: 'AI_MONTHLY_LIMIT' });
+  assert.equal(f.stats().models, 0);
 });

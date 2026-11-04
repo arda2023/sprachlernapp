@@ -1,0 +1,684 @@
+{
+  "summary": {
+    "changed_count": 64,
+    "affected_count": 17,
+    "changed_files": 27,
+    "risk_level": "critical"
+  },
+  "changed_symbols": [
+    {
+      "id": "rasen-authorin",
+      "name": "Product",
+      "type": "Section",
+      "filePath": "PRODUCT.md",
+      "change_type": "touched"
+    },
+    {
+      "id": ":docs/verbalph",
+      "name": "Paywall und Testphase (Nutzerentscheidung 31.10.2026)",
+      "type": "Section",
+      "filePath": "PRODUCT.md",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:ios/Runner/AppDelegate.swift:AppDelegate",
+      "name": "AppDelegate",
+      "type": "Class",
+      "filePath": "ios/Runner/AppDelegate.swift",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:ios/Runner/AppDelegate.swift:AppDelegate.application#2",
+      "name": "application",
+      "type": "Function",
+      "filePath": "ios/Runner/AppDelegate.swift",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:ios/Runner/AppDelegate.swift:AppDelegate.application.support@12:6",
+      "name": "support",
+      "type": "Property",
+      "filePath": "ios/Runner/AppDelegate.swift",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:ios/Runner/AppDelegate.swift:AppDelegate.application.values@16:6",
+      "name": "values",
+      "type": "Property",
+      "filePath": "ios/Runner/AppDelegate.swift",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/data/billing/billing_sync_gateway.dart:ServerBillingSnapshot",
+      "name": "ServerBillingSnapshot",
+      "type": "Class",
+      "filePath": "lib/data/billing/billing_sync_gateway.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/data/billing/billing_sync_gateway.dart:ServerBillingSnapshot.complimentaryProductId",
+      "name": "complimentaryProductId",
+      "type": "Property",
+      "filePath": "lib/data/billing/billing_sync_gateway.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/data/personal_learning_client.dart:PersonalConsentStore",
+      "name": "PersonalConsentStore",
+      "type": "Class",
+      "filePath": "lib/data/personal_learning_client.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/data/personal_learning_client.dart:PersonalLearningClient",
+      "name": "PersonalLearningClient",
+      "type": "Class",
+      "filePath": "lib/data/personal_learning_client.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/data/runtime_translation_client.dart:RuntimeTranslationClient",
+      "name": "RuntimeTranslationClient",
+      "type": "Class",
+      "filePath": "lib/data/runtime_translation_client.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/presentation/providers/purchase_provider.dart:PurchaseController",
+      "name": "PurchaseController",
+      "type": "Class",
+      "filePath": "lib/presentation/providers/purchase_provider.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/presentation/providers/purchase_provider.dart:PurchaseController._serverSyncInFlight",
+      "name": "_serverSyncInFlight",
+      "type": "Property",
+      "filePath": "lib/presentation/providers/purchase_provider.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:lib/presentation/providers/purchase_provider.dart:PurchaseController._isCurrentAccount#2",
+      "name": "_isCurrentAccount",
+      "type": "Method",
+      "filePath": "lib/presentation/providers/purchase_provider.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:lib/presentation/providers/purchase_provider.dart:PurchaseController._isCurrent#2",
+      "name": "_isCurrent",
+      "type": "Method",
+      "filePath": "lib/presentation/providers/purchase_provider.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/presentation/providers/purchase_provider.dart:PurchaseController._storeReadyForPurchase",
+      "name": "_storeReadyForPurchase",
+      "type": "Property",
+      "filePath": "lib/presentation/providers/purchase_provider.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/screens/content/topic_vocabulary_composer.dart:_TopicVocabularyComposerState",
+      "name": "_TopicVocabularyComposerState",
+      "type": "Class",
+      "filePath": "lib/screens/content/topic_vocabulary_composer.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Variable:lib/screens/legal/legal_document.dart:legalDocuments",
+      "name": "legalDocuments",
+      "type": "Variable",
+      "filePath": "lib/screens/legal/legal_document.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/screens/onboarding/paywall_screen.dart:_PaywallScreenState",
+      "name": "_PaywallScreenState",
+      "type": "Class",
+      "filePath": "lib/screens/onboarding/paywall_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:lib/screens/onboarding/paywall_screen.dart:_PaywallScreenState._checkAccountAccess#0",
+      "name": "_checkAccountAccess",
+      "type": "Method",
+      "filePath": "lib/screens/onboarding/paywall_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/screens/onboarding/paywall_screen.dart:_PaywallActions",
+      "name": "_PaywallActions",
+      "type": "Class",
+      "filePath": "lib/screens/onboarding/paywall_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:lib/screens/onboarding/paywall_screen.dart:_PaywallActions.onSignIn",
+      "name": "onSignIn",
+      "type": "Property",
+      "filePath": "lib/screens/onboarding/paywall_screen.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:lib/widgets/subscription_tile.dart:_SubscriptionTileState",
+      "name": "_SubscriptionTileState",
+      "type": "Class",
+      "filePath": "lib/widgets/subscription_tile.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:supabase/functions/_shared/account_deletion.ts:readJson",
+      "name": "readJson",
+      "type": "Function",
+      "filePath": "supabase/functions/_shared/account_deletion.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:supabase/functions/_shared/account_deletion.ts:readJson.abort@41:2",
+      "name": "abort",
+      "type": "Function",
+      "filePath": "supabase/functions/_shared/account_deletion.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:supabase/functions/_shared/account_deletion.ts:accountDeletionHandler",
+      "name": "accountDeletionHandler",
+      "type": "Function",
+      "filePath": "supabase/functions/_shared/account_deletion.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:supabase/functions/_shared/account_deletion.ts:SupabaseAccountDeletionBackend",
+      "name": "SupabaseAccountDeletionBackend",
+      "type": "Class",
+      "filePath": "supabase/functions/_shared/account_deletion.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:supabase/functions/_shared/account_deletion.ts:SupabaseAccountDeletionBackend.authenticate#2",
+      "name": "authenticate",
+      "type": "Method",
+      "filePath": "supabase/functions/_shared/account_deletion.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:supabase/functions/_shared/account_deletion_test.ts:fn@215:84.cancel@218:48#0",
+      "name": "cancel",
+      "type": "Method",
+      "filePath": "supabase/functions/_shared/account_deletion_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:supabase/functions/_shared/adapty_billing.ts:COMPLIMENTARY_PRODUCT",
+      "name": "COMPLIMENTARY_PRODUCT",
+      "type": "Const",
+      "filePath": "supabase/functions/_shared/adapty_billing.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:supabase/functions/_shared/adapty_billing.ts:deriveEntitlement",
+      "name": "deriveEntitlement",
+      "type": "Function",
+      "filePath": "supabase/functions/_shared/adapty_billing.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:supabase/functions/_shared/adapty_billing.ts:snapshot",
+      "name": "snapshot",
+      "type": "Function",
+      "filePath": "supabase/functions/_shared/adapty_billing.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Const:supabase/functions/_shared/generated_vocabulary.ts:system",
+      "name": "system",
+      "type": "Const",
+      "filePath": "supabase/functions/_shared/generated_vocabulary.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:supabase/functions/_shared/generated_vocabulary.ts:GeneratedVocabularyBackend",
+      "name": "GeneratedVocabularyBackend",
+      "type": "Class",
+      "filePath": "supabase/functions/_shared/generated_vocabulary.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:supabase/functions/_shared/generated_vocabulary.ts:GeneratedVocabularyBackend.perform#4",
+      "name": "perform",
+      "type": "Method",
+      "filePath": "supabase/functions/_shared/generated_vocabulary.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "TypeAlias:supabase/functions/_shared/generated_vocabulary_test.ts:Options",
+      "name": "Options",
+      "type": "TypeAlias",
+      "filePath": "supabase/functions/_shared/generated_vocabulary_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:supabase/functions/_shared/generated_vocabulary_test.ts:Options.admitted",
+      "name": "admitted",
+      "type": "Property",
+      "filePath": "supabase/functions/_shared/generated_vocabulary_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:supabase/functions/_shared/generated_vocabulary_test.ts:Options.apiKey",
+      "name": "apiKey",
+      "type": "Property",
+      "filePath": "supabase/functions/_shared/generated_vocabulary_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:supabase/functions/_shared/generated_vocabulary_test.ts:Options.budget",
+      "name": "budget",
+      "type": "Property",
+      "filePath": "supabase/functions/_shared/generated_vocabulary_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:supabase/functions/_shared/generated_vocabulary_test.ts:Options.finish",
+      "name": "finish",
+      "type": "Property",
+      "filePath": "supabase/functions/_shared/generated_vocabulary_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:supabase/functions/_shared/generated_vocabulary_test.ts:Options.hang",
+      "name": "hang",
+      "type": "Property",
+      "filePath": "supabase/functions/_shared/generated_vocabulary_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:supabase/functions/_shared/generated_vocabulary_test.ts:Options.wait",
+      "name": "wait",
+      "type": "Property",
+      "filePath": "supabase/functions/_shared/generated_vocabulary_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:supabase/functions/_shared/generated_vocabulary_test.ts:fixture",
+      "name": "fixture",
+      "type": "Function",
+      "filePath": "supabase/functions/_shared/generated_vocabulary_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:supabase/functions/_shared/generated_vocabulary_test.ts:fixture.fetcher@21:2",
+      "name": "fetcher",
+      "type": "Function",
+      "filePath": "supabase/functions/_shared/generated_vocabulary_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:supabase/functions/_shared/personal_learning.ts:PersonalLearningBackend",
+      "name": "PersonalLearningBackend",
+      "type": "Class",
+      "filePath": "supabase/functions/_shared/personal_learning.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:supabase/functions/_shared/personal_learning.ts:PersonalLearningBackend.perform#4",
+      "name": "perform",
+      "type": "Method",
+      "filePath": "supabase/functions/_shared/personal_learning.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:supabase/functions/_shared/personal_learning_test.ts:fixture",
+      "name": "fixture",
+      "type": "Function",
+      "filePath": "supabase/functions/_shared/personal_learning_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:supabase/functions/_shared/personal_learning_test.ts:fixture.fetcher@14:1",
+      "name": "fetcher",
+      "type": "Function",
+      "filePath": "supabase/functions/_shared/personal_learning_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "TypeAlias:supabase/functions/_shared/runtime_translation.ts:Json",
+      "name": "Json",
+      "type": "TypeAlias",
+      "filePath": "supabase/functions/_shared/runtime_translation.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:supabase/functions/_shared/runtime_translation.ts:TranslationBackend",
+      "name": "TranslationBackend",
+      "type": "Class",
+      "filePath": "supabase/functions/_shared/runtime_translation.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:supabase/functions/_shared/runtime_translation.ts:TranslationBackend.perform#4",
+      "name": "perform",
+      "type": "Method",
+      "filePath": "supabase/functions/_shared/runtime_translation.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:supabase/functions/_shared/runtime_translation_test.ts:fixture",
+      "name": "fixture",
+      "type": "Function",
+      "filePath": "supabase/functions/_shared/runtime_translation_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:supabase/functions/_shared/runtime_translation_test.ts:fixture.fetcher@35:2",
+      "name": "fetcher",
+      "type": "Function",
+      "filePath": "supabase/functions/_shared/runtime_translation_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:supabase/functions/_shared/translation_cache_test.ts:fixture",
+      "name": "fixture",
+      "type": "Function",
+      "filePath": "supabase/functions/_shared/translation_cache_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:supabase/functions/_shared/translation_cache_test.ts:fixture.fetcher@28:2",
+      "name": "fetcher",
+      "type": "Function",
+      "filePath": "supabase/functions/_shared/translation_cache_test.ts",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:test/purchase_provider_test.dart:_ConnectingBillingGateway",
+      "name": "_ConnectingBillingGateway",
+      "type": "Class",
+      "filePath": "test/purchase_provider_test.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:test/purchase_provider_test.dart:_ConnectingBillingGateway.activate#0",
+      "name": "activate",
+      "type": "Method",
+      "filePath": "test/purchase_provider_test.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:test/purchase_provider_test.dart:_ConnectingBillingGateway.bindCustomerUserId#1",
+      "name": "bindCustomerUserId",
+      "type": "Method",
+      "filePath": "test/purchase_provider_test.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Method:test/purchase_provider_test.dart:_ConnectingBillingGateway.readProfile#0",
+      "name": "readProfile",
+      "type": "Method",
+      "filePath": "test/purchase_provider_test.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:test/purchase_provider_test.dart:_ConnectingBillingGateway.profileUpdates",
+      "name": "profileUpdates",
+      "type": "Property",
+      "filePath": "test/purchase_provider_test.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Class:test/purchase_provider_test.dart:_PurchaseGateway",
+      "name": "_PurchaseGateway",
+      "type": "Class",
+      "filePath": "test/purchase_provider_test.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Property:test/purchase_provider_test.dart:_PurchaseGateway.catalogFailure",
+      "name": "catalogFailure",
+      "type": "Property",
+      "filePath": "test/purchase_provider_test.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:test/purchase_provider_test.dart:_gift",
+      "name": "_gift",
+      "type": "Function",
+      "filePath": "test/purchase_provider_test.dart",
+      "change_type": "touched"
+    },
+    {
+      "id": "Function:test/purchase_provider_test.dart:_container",
+      "name": "_container",
+      "type": "Function",
+      "filePath": "test/purchase_provider_test.dart",
+      "change_type": "touched"
+    }
+  ],
+  "affected_processes": [
+    {
+      "id": "proc_7_accountdeletionhandl",
+      "name": "AccountDeletionHandler → AccountDeletionError",
+      "process_type": "cross_community",
+      "step_count": 6,
+      "changed_steps": [
+        {
+          "symbol": "accountDeletionHandler",
+          "step": 1
+        },
+        {
+          "symbol": "authenticate",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_18_build",
+      "name": "Build → _accountId",
+      "process_type": "intra_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "_isCurrentAccount",
+          "step": 4
+        }
+      ]
+    },
+    {
+      "id": "proc_26_perform",
+      "name": "Perform → TranslationError",
+      "process_type": "intra_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "perform",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_38_accountdeletionhandl",
+      "name": "AccountDeletionHandler → Fetcher",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "accountDeletionHandler",
+          "step": 1
+        },
+        {
+          "symbol": "authenticate",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_90_perform",
+      "name": "Perform → Fetcher",
+      "process_type": "cross_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "perform",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_91_perform",
+      "name": "Perform → Fetcher",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "perform",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_103_perform",
+      "name": "Perform → Emit",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "perform",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_107_purchaseselected",
+      "name": "PurchaseSelected → _accountId",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "_isCurrent",
+          "step": 2
+        },
+        {
+          "symbol": "_isCurrentAccount",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_108_perform",
+      "name": "Perform → TranslationError",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "perform",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_133_perform",
+      "name": "Perform → Fetcher",
+      "process_type": "cross_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "perform",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_141_accountdeletionhandl",
+      "name": "AccountDeletionHandler → Fetcher",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "accountDeletionHandler",
+          "step": 1
+        },
+        {
+          "symbol": "authenticate",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "id": "proc_143_restore",
+      "name": "Restore → _accountId",
+      "process_type": "cross_community",
+      "step_count": 4,
+      "changed_steps": [
+        {
+          "symbol": "_isCurrent",
+          "step": 2
+        },
+        {
+          "symbol": "_isCurrentAccount",
+          "step": 3
+        }
+      ]
+    },
+    {
+      "id": "proc_144_perform",
+      "name": "Perform → TranslationError",
+      "process_type": "cross_community",
+      "step_count": 5,
+      "changed_steps": [
+        {
+          "symbol": "perform",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_151_perform",
+      "name": "Perform → Fetcher",
+      "process_type": "intra_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "perform",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_156_perform",
+      "name": "Perform → Fetcher",
+      "process_type": "cross_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "perform",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_165_perform",
+      "name": "Perform → Fetcher",
+      "process_type": "cross_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "perform",
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "proc_170_perform",
+      "name": "Perform → Fetcher",
+      "process_type": "cross_community",
+      "step_count": 3,
+      "changed_steps": [
+        {
+          "symbol": "perform",
+          "step": 1
+        }
+      ]
+    }
+  ]
+}

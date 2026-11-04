@@ -1,18 +1,12 @@
+import { TranslationError } from './runtime_errors.ts';
+export { TranslationError } from './runtime_errors.ts';
+import { budgetedAnthropicFetch } from './ai_budget.ts';
 // Fixed direct provider. No prompts, responses, credentials or user IDs are logged.
 export const MODEL = "claude-haiku-5-5";
 export const CONTRACT = 2;
 export const PROMPT = "translation-v2";
 export type Kind = "lookup-word" | "translate-sentence";
 type Json = Record<string, any>;
-export class TranslationError extends Error {
-  constructor(
-    public code: string,
-    public status: number,
-    public details: Json = {},
-  ) {
-    super(code);
-  }
-}
 function requireValue(
   ok: unknown,
   code = "INPUT_INVALID",
@@ -268,8 +262,8 @@ export class TranslationBackend {
     );
     try {
       requireValue(this.apiKey, "NOT_CONFIGURED", 503);
-      const response = await this.fetcher(
-        "https://api.anthropic.com/v1/messages",
+      const response = await budgetedAnthropicFetch(
+        user, kind, this.rpc.bind(this), this.fetcher,
         {
           method: "POST",
           headers: {

@@ -27,6 +27,8 @@ function fixture({ invalid = false, failSave = false, hang = false } = {}) {
   let generations = 0, budget = 0;
   const keys: string[] = [];
   const fetcher: typeof fetch = async (url, init = {}) => {
+    if (String(url).endsWith('/reserve_ai_spend')) return Response.json({ status: 'reserved' });
+    if (String(url).endsWith('/settle_ai_spend')) return Response.json({ status: 'settled' });
     if (String(url).endsWith("/auth/v1/user")) {
       const token = (init.headers as any).Authorization;
       return Response.json({

@@ -207,7 +207,7 @@ class _TopicVocabularyComposerState
                             maxLength: 400,
                             maxLengthEnforcement: MaxLengthEnforcement.enforced,
                             textCapitalization: TextCapitalization.sentences,
-                            placeholder: 'Zum Beispiel: Medizin, besonders Gehirn, Arme und Krankheiten.',
+                            placeholder: 'Nur ein Vokabelthema, z. B. Medizin, Gehirn und Arme. Keine Fragen oder anderen Aufgaben.',
                             placeholderStyle: AppType.chrome(
                               color: colors.textMuted,
                               height: 1.45,

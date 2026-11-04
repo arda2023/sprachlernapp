@@ -23,6 +23,7 @@ const sense = {
 };
 function fixture(
   options: {
+    budget?: string;
     auth?: number;
     allowed?: object;
     model?: object;
@@ -33,6 +34,8 @@ function fixture(
 ) {
   const calls: { url: string; init: RequestInit }[] = [];
   const fetcher: typeof fetch = async (url, init = {}) => {
+    if (String(url).endsWith('/reserve_ai_spend')) return Response.json({ status: options.budget ?? 'reserved' });
+    if (String(url).endsWith('/settle_ai_spend')) return Response.json({ status: 'settled' });
     calls.push({ url: String(url), init });
     if (String(url).endsWith("/auth/v1/user")) {
       return Response.json({ id: uid }, { status: options.auth ?? 200 });
@@ -263,4 +266,15 @@ test("oversized request is rejected before auth", async () => {
     413,
   );
   assert.equal(f.calls.length, 0);
+});
+
+
+test('monthly money limit blocks translation before provider and is not a free-tier paywall', async () => {
+  for (const kind of ['lookup-word', 'translate-sentence'] as const) {
+    const f = fixture({ budget: 'limit' });
+    const result = await f.run(kind === 'lookup-word' ? word : sentence, 'user-token', kind);
+    assert.equal(result.status, 429);
+    assert.equal(result.body.error, 'AI_MONTHLY_LIMIT');
+    assert.equal(f.calls.some(c => c.url.includes('api.anthropic.com')), false);
+  }
 });

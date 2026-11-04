@@ -1,0 +1,24 @@
+{
+  "collected_at": "2026-11-01T17:13:36.076081+00:00",
+  "sha256": {
+    "supabase/functions/_shared/ai_budget.ts": "28c3f989162507a6d17f2264df09da5cc9240adfd1149be0d5a8d335e60f4301",
+    "supabase/functions/_shared/runtime_errors.ts": "a2f51a889163943a3913ee414576fc59a7ae9b37541adb709e461301e18dd8f9",
+    "supabase/functions/_shared/runtime_translation.ts": "fb9cd0239dc1d2685240b2ca28689245a7107e1c07118da8d7d5e7f6beffb578",
+    "supabase/functions/_shared/personal_learning.ts": "c4e2b23cae23e954876880415bcb732e7abf63af93156ab4128999c3e68ce86c",
+    "supabase/functions/_shared/generated_vocabulary.ts": "35506f9b10b82707699242d02937cc7e1aa5e03e8cdb159e43f6cb65ff3b8f9b",
+    "supabase/functions/_shared/vocabulary_topic_policy.ts": "34b1950cd77f12b29375cb79c3689037a0eb50ff9bdeb4d37eddb45b1469009b",
+    "supabase/functions/_shared/account_deletion.ts": "810c4c0f5b99a1d025f5e60e08c4ba5e8fed2e9fb3d51298fde8beac427e7822",
+    "supabase/migrations/20261101000005_ai_monthly_spend.sql": "283fd8e1da2c732206ba49e823777963c1a07f70b62435ed629d21127a9508b7",
+    "supabase/migrations/20261101000006_private_ai_retention.sql": "74fecf814fbfa4a2493028a9662e896b3b16822f35f22ea7ab17fa88361a648f",
+    "supabase/migrations/20261101000007_internal_trigger_permissions.sql": "262ecaec46062f3a7d0b012dbc25a0974e095bc4b5ec6120f8dfb0ea7e744d2b",
+    "ios/Runner/AppDelegate.swift": "cd701d6771a5fc686e1f740cd53e5a387f2478e1b77a462ef1449f5f98eb8985",
+    "android/app/src/main/res/xml/backup_rules.xml": "e6ca5c256ce20e941a4f4e0a2d36a076ef2691e542bbc65943ab34dedf50e31e",
+    "android/app/src/main/res/xml/data_extraction_rules.xml": "53a6600327b39e715c7964faa675deeead86bfcb96a4adde5b57323979d38e47",
+    "lib/data/generated_vocabulary_client.dart": "6b5a9908c22683d958f6e9db5c1e7dfafea28e89d997908dbff9329098307cad",
+    "lib/data/personal_learning_client.dart": "0df94496d738f542f9ceb5717b517df7dd210af784ae70d7a04decfd589ba3a6",
+    "lib/data/runtime_translation_client.dart": "285c57148ec0bad76c320c8a81a70a6e9189f2b16cfa2c422620815b846892ed",
+    "lib/screens/content/topic_vocabulary_composer.dart": "e6c934c4b73666d1f5528c81ad64747a7d2f8713e6109f5eeb1f54d7053a1918",
+    "lib/screens/legal/legal_document.dart": "8c517f2a075b0709558b1479530e9b8a2c67da413864f658497c1f39d7b04c02",
+    "pubspec.lock": "cd55bc839e87bf94acb1eb98bb69ec4afd4c5d490b710f1020b7a6e02ade459a"
+  }
+}

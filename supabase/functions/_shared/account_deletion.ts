@@ -33,38 +33,35 @@ function requireValue(
   if (!condition) throw new AccountDeletionError(code, status);
 }
 
-async function readJson(request: Request, maxBytes = 1024): Promise<Json> {
-  const reader = request.body?.getReader();
+async function readJson(body: ReadableStream<Uint8Array> | null,
+  maxBytes: number, signal: AbortSignal): Promise<Json> {
+  const reader = body?.getReader();
   requireValue(reader, "JSON_INVALID", 422);
   const chunks: Uint8Array[] = [];
   let length = 0;
+  const abort = () => { void reader.cancel().catch(() => {}); };
+  signal.addEventListener('abort', abort, { once: true });
   try {
+    signal.throwIfAborted();
     while (true) {
       const { done, value } = await reader.read();
+      signal.throwIfAborted();
       if (done) break;
       length += value.length;
       requireValue(length <= maxBytes, "BODY_LIMIT", 413);
       chunks.push(value);
     }
   } finally {
+    signal.removeEventListener('abort', abort);
     void reader.cancel().catch(() => {});
     reader.releaseLock();
   }
   const bytes = new Uint8Array(length);
   let offset = 0;
-  for (const chunk of chunks) {
-    bytes.set(chunk, offset);
-    offset += chunk.length;
-  }
+  for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.length; }
   try {
-    const result = JSON.parse(
-      new TextDecoder("utf-8", { fatal: true }).decode(bytes),
-    );
-    requireValue(
-      result && typeof result === "object" && !Array.isArray(result),
-      "JSON_INVALID",
-      422,
-    );
+    const result = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes));
+    requireValue(result && typeof result === "object" && !Array.isArray(result), "JSON_INVALID", 422);
     return result as Json;
   } catch (error) {
     if (error instanceof AccountDeletionError) throw error;
@@ -85,7 +82,7 @@ export function accountDeletionHandler(
       const authorization = request.headers.get("authorization") ?? "";
       const match = /^Bearer ([A-Za-z0-9._~-]{20,8192})$/.exec(authorization);
       requireValue(match, "AUTH_REQUIRED", 401);
-      const input = await readJson(request);
+      const input = await readJson(request.body, 1024, controller.signal);
       requireValue(Object.keys(input).length === 1, "INPUT_INVALID", 422);
       requireValue(
         input.confirmation === "DELETE",
@@ -136,28 +133,6 @@ export function accountDeletionHandler(
       clearTimeout(timer);
     }
   };
-}
-
-async function boundedJson(
-  response: Response,
-  maxBytes = 32768,
-): Promise<Json> {
-  const bytes = new Uint8Array(await response.arrayBuffer());
-  requireValue(bytes.length <= maxBytes, "BACKEND_UNAVAILABLE", 503);
-  try {
-    const value = JSON.parse(
-      new TextDecoder("utf-8", { fatal: true }).decode(bytes),
-    );
-    requireValue(
-      value && typeof value === "object" && !Array.isArray(value),
-      "BACKEND_UNAVAILABLE",
-      503,
-    );
-    return value as Json;
-  } catch (error) {
-    if (error instanceof AccountDeletionError) throw error;
-    throw new AccountDeletionError("BACKEND_UNAVAILABLE", 503);
-  }
 }
 
 export class SupabaseAccountDeletionBackend implements AccountDeletionBackend {
@@ -214,7 +189,7 @@ export class SupabaseAccountDeletionBackend implements AccountDeletionBackend {
   ): Promise<AuthenticatedAccount> {
     const response = await this.request("/auth/v1/user", { signal }, token);
     requireValue(response.ok, "AUTH_REQUIRED", 401);
-    const user = await boundedJson(response, 32768);
+    const user = await readJson(response.body, 32768, signal);
     requireValue(
       typeof user.id === "string" && /^[0-9a-f-]{36}$/i.test(user.id),
       "AUTH_REQUIRED",

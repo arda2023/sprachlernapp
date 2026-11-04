@@ -29,7 +29,7 @@ const legalDocuments = <LegalDocument, LegalDocumentContent>{
     sections: [
       LegalSection(
         'Entwurf und Geltungsbereich',
-        'Stand: 31. Oktober 2026. Diese Hinweise beschreiben die derzeit im Code erkennbare Verarbeitung in Linglossa. Sie sind ein Entwurf und noch nicht für eine öffentliche Veröffentlichung freigegeben.',
+        'Stand: 1. November 2026. Diese Hinweise beschreiben die derzeit im Code erkennbare Verarbeitung in Linglossa. Sie sind ein Entwurf und noch nicht für eine öffentliche Veröffentlichung freigegeben.',
         draftOnly: true,
       ),
       LegalSection(
@@ -38,7 +38,11 @@ const legalDocuments = <LegalDocument, LegalDocumentContent>{
       ),
       LegalSection(
         'Daten auf deinem Gerät',
-        'Linglossa speichert Lernkarten, Wiederholungen, Lernfortschritt, Einstellungen, Leselisten, lokal angelegte Inhalte und heruntergeladene Lerninhalte in einer SQLite-Datenbank auf deinem Gerät. Diese Lernstände werden nicht mit einem Linglossa-Konto synchronisiert. Sie bleiben grundsätzlich auf dem Gerät, bis du App-Daten löschst oder die App entfernst; eine Sicherung durch Betriebssystem oder Gerätehersteller kann davon unabhängig sein. Zugangstoken für die Anmeldung werden im sicheren Speicher des Betriebssystems abgelegt.',
+        'Linglossa speichert Lernkarten, Wiederholungen, Lernfortschritt, Einstellungen, Leselisten, lokal angelegte Inhalte und heruntergeladene Lerninhalte in einer SQLite-Datenbank auf deinem Gerät. Diese Lernstände werden nicht mit einem Linglossa-Konto synchronisiert. Sie bleiben grundsätzlich auf dem Gerät, bis du App-Daten löschst oder die App entfernst; der private App-Speicher wird von neuen regulären iOS- und Android-Systembackups und Android-Geräteübertragungen ausgeschlossen. Damit werden auch diese lokalen Lernstände nicht über ein solches Backup wiederhergestellt. Bereits bestehende ältere Backups können unabhängig davon fortbestehen. Zugangstoken für die Anmeldung werden im sicheren Speicher des Betriebssystems abgelegt.',
+      ),
+      LegalSection(
+        'Themenvokabeln und KI-Nutzungslimit',
+        'Bei der Funktion „Vokabeln zu deinem Thema“ werden das eingegebene Thema, die gewählte Sprache und die gewünschte Wortzahl nach deiner KI-Freigabe über den authentifizierten Server an Anthropic übermittelt. Eine vorgeschaltete KI-Prüfung bewertet, ob die Eingabe ein Vokabelthema ist. Fragen und andere Aufgaben sind nicht vorgesehen. Antworten auf Themen- und Lernkartenanfragen werden nach 30 Tagen beim nächsten stündlichen Bereinigungslauf entfernt; technische Wiederholungsmarker bleiben bis zur Kontolöschung erhalten. Für ein gemeinsames monatliches KI-Limit speichern wir Konto-ID, technische Anfragenkennung, Funktionsart, Zeitpunkte und Tokenverbrauch beziehungsweise Sicherheitsreservierungen. Diese Kostenaufzeichnungen enthalten keine Themen oder Antworten und werden nach Ende des zweiten Folgemonats beim nächsten stündlichen Lauf gelöscht, bei Kontolöschung sofort. Gespeicherte Übersetzungen haben die unten beschriebene gesonderte Aufbewahrung.',
       ),
       LegalSection(
         'Konto und Anmeldung',
@@ -95,7 +99,7 @@ const legalDocuments = <LegalDocument, LegalDocumentContent>{
     sections: [
       LegalSection(
         'Entwurf und Geltungsbereich',
-        'Stand: 31. Oktober 2026. Diese Bedingungen sind ein prüfbarer Entwurf und noch nicht für eine öffentliche Veröffentlichung freigegeben. Sie beschreiben die Nutzung der Sprachlern-App Linglossa durch Verbraucherinnen und Verbraucher.',
+        'Stand: 1. November 2026. Diese Bedingungen sind ein prüfbarer Entwurf und noch nicht für eine öffentliche Veröffentlichung freigegeben. Sie beschreiben die Nutzung der Sprachlern-App Linglossa durch Verbraucherinnen und Verbraucher.',
         draftOnly: true,
       ),
       LegalSection(
@@ -149,7 +153,7 @@ const legalDocuments = <LegalDocument, LegalDocumentContent>{
     sections: [
       LegalSection(
         'Entwurf und Geltungsbereich',
-        'Stand: 31. Oktober 2026. Dieses Impressum ist ein Entwurf und noch nicht für eine öffentliche Veröffentlichung freigegeben.',
+        'Stand: 1. November 2026. Dieses Impressum ist ein Entwurf und noch nicht für eine öffentliche Veröffentlichung freigegeben.',
         draftOnly: true,
       ),
       LegalSection(

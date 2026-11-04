@@ -211,3 +211,27 @@ Deno.test("stale JWT rejected by Supabase get-user adapter fails closed", async 
     }
   }
 });
+
+
+Deno.test('an endless deletion request body is cancelled by the endpoint deadline', async () => {
+  const backend = new FakeBackend();
+  let cancelled = false;
+  const body = new ReadableStream<Uint8Array>({ cancel() { cancelled = true; } });
+  const response = await accountDeletionHandler(backend, Date.now, 20)(
+    new Request('https://example.test/delete-account', {
+      method: 'POST', headers: { Authorization: 'Bearer test-access-token-123456789' },
+      body, duplex: 'half',
+    } as RequestInit),
+  );
+  if (response.status !== 504 || !cancelled || backend.calls.length !== 0) {
+    throw Error('Slow request body bypassed deadline');
+  }
+});
+Deno.test('oversized deletion input is stopped before authentication', async () => {
+  const backend = new FakeBackend();
+  const response = await accountDeletionHandler(backend)(new Request('https://example.test', {
+    method: 'POST', headers: { Authorization: 'Bearer test-access-token-123456789' },
+    body: JSON.stringify({ confirmation: 'x'.repeat(2000) }),
+  }));
+  if (response.status !== 413 || backend.calls.length !== 0) throw Error('Body limit missing');
+});
