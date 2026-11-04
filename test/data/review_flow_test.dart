@@ -22,6 +22,8 @@ void main() {
   DriftUserRepository openUser() => DriftUserRepository(
     UserDatabase.file(File('${support.path}/user.db')),
     lang: 'en',
+    // Like the app: only the free "Allgemeine Sprache" starts active.
+    defaultActiveDeckIds: () async => {'deck-allg'},
   );
 
   setUp(() async {
@@ -50,11 +52,17 @@ void main() {
         now: start,
         size: 3,
       );
-      // New targets keep the deck's content order; no function-word quota.
-      expect(queue.map((e) => e.cardId), ['card-went', 'card-about', 'card-a']);
+      // New targets follow the stable mixed introduction order (user
+      // decision 31.10.2026), one per lemma; no function-word quota.
+      expect(queue.map((e) => e.cardId), ['card-goes', 'card-a', 'card-about']);
+      // The passes below book "went" (same lemma as "goes") instead.
+      final planned = [
+        for (final id in ['card-went', 'card-about', 'card-a'])
+          SessionEntry(id, mode: ReviewMode.deck),
+      ];
       final items = {
         for (final i in await content.practiceItems([
-          for (final e in queue) e.cardId,
+          for (final e in planned) e.cardId,
           'card-a', // Introduced in a separate short session below.
         ]))
           i.card.id: i,
@@ -84,7 +92,7 @@ void main() {
       went.submit('went', start);
       expect(await book(went), isTrue);
       expect(await book(went), isFalse); // second completion: nothing
-      final session = went.needsRepeat ? withRepeat(queue, 0) : queue;
+      final session = went.needsRepeat ? withRepeat(planned, 0) : planned;
       expect(went.needsRepeat, isFalse);
 
       // about: typo, then exact → clean first contact, box 3, no repeat.

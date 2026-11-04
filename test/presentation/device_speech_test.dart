@@ -4,6 +4,7 @@ import 'package:sprachapp/screens/decks/deck_practice_screen.dart';
 import 'package:sprachapp/theme/app_theme.dart';
 
 import '../fixtures/deck_repositories.dart';
+import '../fixtures/practice_session.dart';
 
 import 'dart:async';
 
@@ -200,6 +201,8 @@ void main() {
             theme: buildAppTheme(),
             home: const DeckPracticeScreen(deckId: 'deck-0'),
           ),
+          // One card, so the new-word order cannot pick another sentence.
+          content: WalksOnlyContent(),
           user: user,
         ),
       );

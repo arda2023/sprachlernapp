@@ -96,7 +96,9 @@ void main() {
               (await h.db
                       .customSelect(
                         'SELECT * FROM "${table.actualTableName}" '
-                        '${table.actualTableName == 'language_learning_preferences' ? "WHERE lang = 'en'" : ''} ORDER BY rowid',
+                        '${table.actualTableName == 'language_learning_preferences' ? "WHERE lang = 'en'" : ''}'
+                        // The Portuguese test deck the learner switches on.
+                        '${table.actualTableName == 'deck_settings' ? "WHERE deck_id <> '2968f3cf759ca30011a5ace1dc46df9c'" : ''} ORDER BY rowid',
                       )
                       .get())
                   .map((row) => row.data)
@@ -241,6 +243,13 @@ void main() {
       );
       c = h.scope();
       await t.runAsync(() async {
+        // Only "Allgemeine Sprache" starts active; Home lists active decks,
+        // so the learner switches the installed test deck on first.
+        await (await c.read(userRepositoryProvider.future)).setDeckActive(
+          '2968f3cf759ca30011a5ace1dc46df9c',
+          true,
+          now: DateTime(2026, 11, 4),
+        );
         await c.read(contentInfoProvider.future);
         await c.read(learningProgressProvider.future);
         await c.read(decksProvider.future);
@@ -265,20 +274,20 @@ void main() {
         scrollable: find.byType(Scrollable).first,
       );
       expect(find.text('SYNTHETISCH – NICHT VERÖFFENTLICHEN'), findsWidgets);
-      await t.scrollUntilVisible(
-        find.text(
-          'Für Portugiesisch (Brasilien) sind noch keine Stories verfügbar.',
-        ),
-        -200,
-        scrollable: find.byType(Scrollable).first,
-      );
+      // Portuguese ships its own bundled stories now: the Stories tab shows
+      // that library instead of the empty-library note.
+      await t.tap(find.bySemanticsLabel('Stories').last);
+      await t.pump(const Duration(milliseconds: 400));
       expect(
         find.text(
           'Für Portugiesisch (Brasilien) sind noch keine Stories verfügbar.',
         ),
-        findsWidgets,
+        findsNothing,
       );
-      await capture('empty-stories');
+      expect(find.text('Text importieren'), findsWidgets);
+      await capture('stories');
+      await t.tap(find.bySemanticsLabel('Home').last);
+      await t.pump(const Duration(milliseconds: 400));
       await t.runAsync(() async {
         // Pack IO runs in the real event loop. Riverpod's Flutter vsync still
         // needs test frames while the command awaits rebuilt repositories.

@@ -842,8 +842,9 @@ void main() {
     final text = sampleExerciseTexts.firstWhere(
       (t) => t.id == 'text-slow-morning',
     );
-    expect(text.gapCount(ExerciseMode.verbs), 6);
-    expect(text.gapCount(ExerciseMode.anyWordClass), 9);
+    // Ten verbs and 17 gaps since the text continues on "Weiterlesen" pages.
+    expect(text.gapCount(ExerciseMode.verbs), 10);
+    expect(text.gapCount(ExerciseMode.anyWordClass), 17);
   });
 
   // ------------------------------------------------------- content dashboard

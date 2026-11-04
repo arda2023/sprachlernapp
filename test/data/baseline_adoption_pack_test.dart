@@ -40,6 +40,7 @@ void main() {
       expect(sha256.convert(file.readAsBytesSync()).toString(), offer.sha);
       validateDownloadedContent(file.path, offer.toJson(), asset.path);
       expect(sha256.convert(asset.readAsBytesSync()).toString(), assetHash);
+      // ignore: avoid_print
       print(
         'Schema-5 adoption manifest and all-table inventory accepted; schema-4 history preserved; asset unchanged.',
       );

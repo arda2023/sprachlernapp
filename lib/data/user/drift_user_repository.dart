@@ -277,6 +277,8 @@ class DriftUserRepository implements GeneratedVocabularyRepository, PersonalLear
 
   @override
   Future<Set<String>> activeDeckIds(Iterable<String> deckIds) async {
+    // No decks, nothing active: a language without a pack must not need one.
+    if (deckIds.isEmpty) return {};
     await _guardDecks(deckIds);
     final ids = deckIds.toSet();
     final defaults = await defaultActiveDeckIds?.call() ?? <String>{};

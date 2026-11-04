@@ -34,6 +34,9 @@ void main() {
   DriftUserRepository openUser() => DriftUserRepository(
     UserDatabase.file(File('${tmp.path}/test-user.sqlite')),
     lang: 'en',
+    // Decks start inactive except the app's free default; these tests need
+    // the fixture decks active.
+    defaultActiveDeckIds: () async => {for (final d in await content.decks()) d.id},
   );
   setUp(() async {
     tmp = Directory.systemTemp.createTempSync('learning-groups-test-');

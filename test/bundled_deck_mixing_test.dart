@@ -26,6 +26,7 @@ void main() {
         }
         expect(changed, greaterThan(decks.length ~/ 2));
         // Informational measurement across all decks, not a flaky speed gate.
+        // ignore: avoid_print
         print('$lang: ${decks.length} decks checked, ${watch.elapsedMilliseconds} ms');
       } finally {
         await repo.close();

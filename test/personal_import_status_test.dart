@@ -30,6 +30,7 @@ import 'package:sprachapp/presentation/providers/database_providers.dart';
 import 'package:sprachapp/presentation/providers/personal_learning_provider.dart';
 import 'package:sprachapp/screens/stories/story_reader_screen.dart';
 import 'package:sprachapp/widgets/personal_learning_button.dart';
+import 'package:sprachapp/widgets/word_bubble.dart';
 
 import 'data/support.dart';
 
@@ -223,6 +224,8 @@ void main() {
           store: PersonalConsentStore(() async => sql.sqlite3.openInMemory()),
         );
         addTearDown(client.close);
+        // The AI switch decides; without it the reader hides the button.
+        await tester.runAsync(() => client.setDeviceConsent(true));
         final scope = ProviderContainer(
           overrides: [
             contentRepositoryProvider.overrideWith((_) => content),
@@ -277,6 +280,12 @@ void main() {
         }
         expect(target.form, text.contains('-') ? 'return-hamster' : 'hamster');
         expect(target.text.substring(target.start, target.end), target.form);
+        // Let the button's own status query finish before reading the same
+        // database from the real event loop.
+        for (var i = 0; i < 20; i++) {
+          await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 5)));
+          await tester.pump();
+        }
         final service = (await tester.runAsync(
           () => scope.read(personalLearningServiceProvider.future),
         ))!;
@@ -288,14 +297,10 @@ void main() {
           find.text('Lernstatus nicht lesbar. Bitte erneut öffnen.'),
           findsNothing,
         );
-        expect(
-          tester
-              .widget<TextButton>(
-                find.widgetWithText(TextButton, 'Zum Lernen hinzufügen'),
-              )
-              .onPressed,
-          isNotNull,
-        );
+        // The reader's compact add button in the word bubble.
+        final add = tester.widget<AddWordButton>(find.byType(AddWordButton));
+        expect(add.label, 'Zum Lernen hinzufügen');
+        expect(add.onPressed, isNotNull);
         await tester.pumpWidget(const SizedBox());
       },
     );

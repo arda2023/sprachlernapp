@@ -25,11 +25,14 @@ void main() {
   late DriftUserRepository user;
   late Map<String, ContentCard> cards;
   final now = DateTime(2026, 10, 10, 12);
+  // Decks start inactive except the app's free default; these exercises
+  // need their test decks active.
+  Future<Set<String>> allDecks() async => {for (final d in await content.decks()) d.id};
   setUp(() async {
     dir = Directory.systemTemp.createTempSync('form-learning-');
     content = formContent(dir);
     db = UserDatabase.file(File('${dir.path}/synthetic-user.sqlite'));
-    user = DriftUserRepository(db, lang: 'en');
+    user = DriftUserRepository(db, lang: 'en', defaultActiveDeckIds: allDecks);
     cards = {
       for (final c in await content.selectionCards(await content.allCardIds()))
         '${c.lemma}/${c.formFunction}': c,
@@ -219,7 +222,7 @@ void main() {
         (await db.customSelect('SELECT * FROM user_cards').getSingle()).data;
     await user.close();
     db = UserDatabase.file(File('${dir.path}/synthetic-user.sqlite'));
-    user = DriftUserRepository(db, lang: 'en');
+    user = DriftUserRepository(db, lang: 'en', defaultActiveDeckIds: allDecks);
     expect(
       (await user.addStoryWord(formCandidate(card), now: now)).cardId,
       add.cardId,
