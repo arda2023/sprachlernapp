@@ -85,6 +85,10 @@ void main() {
             row['primary_card_id'] as String,
         ];
       }
+      // The app shows "Business & E-Mail" as part of "Beruf" (04.11.2026).
+      if (expectedDeckCardIds.remove('business-email') case final business?) {
+        expectedDeckCardIds['arbeit-bildung']!.addAll(business);
+      }
       for (final row in raw.select(
         'SELECT card_id, sentence_id FROM card_sentences WHERE removed_in IS NULL',
       )) {

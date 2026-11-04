@@ -229,12 +229,16 @@ class PracticeSentenceState extends State<PracticeSentence> {
             textScaler: MediaQuery.textScalerOf(context),
           )..layout();
           final scale = MediaQuery.textScalerOf(context).scale(style.fontSize!);
+          // A solved or shaking field keeps its width but never gets narrower
+          // than what it shows ("Draw" after typing "draw", a hint after a
+          // short wrong answer); otherwise the field would wrap.
+          final needed = math.max(64.0, painter.width + 22);
           final width = math.min(
             math.max(1.0, constraints.maxWidth - punctuationWidth),
             (widget.solved || widget.error) && _editingWidth != null &&
                 _editingScale == scale && _editingAvailableWidth == constraints.maxWidth
-                ? _editingWidth!
-                : math.max(64.0, painter.width + 22),
+                ? math.max(_editingWidth!, needed)
+                : needed,
           );
           painter.dispose();
           if (!widget.solved) {
@@ -302,6 +306,9 @@ class PracticeSentenceState extends State<PracticeSentence> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                             borderSide: BorderSide.none,
+                            // The outline's label gap would shift the typed
+                            // letters off the ghost word drawn over them.
+                            gapPadding: 0,
                           ),
                         ),
                       ),

@@ -165,10 +165,12 @@ VocabBreakdown deriveVocabBreakdown({
   required Map<String, UserCardState> cards,
   required Set<String> knownCardIds,
   required DateTime now,
+  Set<String> hiddenIds = const {},
 }) {
   final ids = eligiblePracticeIds(activeDeckCardIds: activeDeckCardIds,
     states: cards, contentCards: contentCards, knownCardIds: knownCardIds,
-    explicitStoryIds: explicitStoryIds, targetsResolved: targetsResolved);
+    explicitStoryIds: explicitStoryIds, targetsResolved: targetsResolved,
+    hiddenIds: hiddenIds);
   var due = 0, building = 0, mastered = 0, unseen = 0;
   for (final id in ids) {
     final card = cards[id];
@@ -188,6 +190,8 @@ Set<String> eligiblePracticeIds({
   Map<String, ContentCard> contentCards = const {},
   Set<String> explicitStoryIds = const {},
   bool targetsResolved = false,
+  // Cards only deactivated decks lead to count nowhere (04.11.2026).
+  Set<String> hiddenIds = const {},
 }) {
   final story = [for (final s in states.values)
     if (s.box == 0 && (s.origin == CardOrigin.story || explicitStoryIds.contains(s.cardId))) s.cardId];
@@ -196,7 +200,8 @@ Set<String> eligiblePracticeIds({
       : targetsResolved ? {...activeDeckCardIds, ...groups.project(story, exactForms: true)}
       : groups.project([...activeDeckCardIds, ...story], exactForms: true).toSet();
   return {for (final id in {...newIds, ...states.values.where((s) => s.box >= 1).map((s) => s.cardId)})
-    if ((knownCardIds.contains(id) || (!states.containsKey(id) && newIds.contains(id))) && (states[id]?.isActive ?? true)) id};
+    if ((knownCardIds.contains(id) || (!states.containsKey(id) && newIds.contains(id))) && (states[id]?.isActive ?? true) &&
+        !hiddenIds.contains(id)) id};
 }
 
 class LexicalBreakdown {
@@ -465,9 +470,10 @@ List<SessionEntry> buildDeckQueue({
   };
 }
 
-/// Mixed: due cards of every origin (deck activation never hides seen
-/// cards), then new targets taking turns between [deckSources] (active
-/// decks) and "Aus Storys" (explicit story additions, oldest first).
+/// Mixed: due cards of every origin except [hiddenIds] (cards only
+/// deactivated decks lead to, user decision 04.11.2026), then new targets
+/// taking turns between [deckSources] (active decks) and "Aus Storys"
+/// (explicit story additions, oldest first).
 /// Without [deckSources], [activeDeckCardIds] form one deck source.
 List<SessionEntry> buildMixedQueue({
   bool targetsResolved = false,
@@ -480,6 +486,7 @@ List<SessionEntry> buildMixedQueue({
   required Map<String, UserCardState> states,
   required DateTime now,
   int size = 10,
+  Set<String> hiddenIds = const {},
 }) {
   final groups = LearningGroups(cards, states);
   final storyNew = states.values
@@ -503,7 +510,8 @@ List<SessionEntry> buildMixedQueue({
               : groups.project(activeDeckCardIds, exactForms: true),
         ),
       ];
-  final reviewIds = states.keys.toList()..sort();
+  final reviewIds = states.keys.where((id) => !hiddenIds.contains(id)).toList()
+    ..sort();
   return buildPracticeQueue(
     reviewIds: reviewIds,
     sources: [...decks, NewWordSource(storySourceId, story)],

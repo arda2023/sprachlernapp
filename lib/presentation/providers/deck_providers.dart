@@ -148,6 +148,7 @@ final vocabBreakdownProvider = FutureProvider<VocabBreakdown>((ref) async {
     knownCardIds: resolver.knownIds,
     explicitStoryIds: resolver.additions.keys.toSet(),
     now: now,
+    hiddenIds: await resolver.deactivatedDeckIds(),
   );
 }, retry: (_, _) => null);
 
@@ -156,7 +157,8 @@ final lexicalBreakdownProvider = FutureProvider<LexicalBreakdown>((ref) async {
   final resolver = await ref.watch(practiceResolverProvider.future);
   final ids = eligiblePracticeIds(activeDeckCardIds: (await resolver.activePrimaryIds()).toSet(),
     states: resolver.states, contentCards: resolver.cards, knownCardIds: resolver.knownIds,
-    explicitStoryIds: resolver.additions.keys.toSet(), targetsResolved: true);
+    explicitStoryIds: resolver.additions.keys.toSet(), targetsResolved: true,
+    hiddenIds: await resolver.deactivatedDeckIds());
   return deriveLexicalBreakdown(ids, resolver.cards, resolver.states);
 }, retry: (_, _) => null);
 

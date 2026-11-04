@@ -209,9 +209,12 @@ class DeckSessionController extends Notifier<DeckSessionState> {
             states: states,
             now: _clock(),
             size: _sessionLimit,
+            hiddenIds: await _resolver.deactivatedDeckIds(),
           );
         } else if (args.kind == DeckSessionKind.early && scope == null) {
-          _queue = buildEarlyQueue(scopeIds: states.keys.toList()..sort(),
+          final hidden = await _resolver.deactivatedDeckIds();
+          _queue = buildEarlyQueue(
+              scopeIds: states.keys.where((id) => !hidden.contains(id)).toList()..sort(),
               cards: cards, states: states, now: _clock(), size: _sessionLimit);
         } else {
           _queue = buildDeckQueue(

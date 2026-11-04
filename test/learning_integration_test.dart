@@ -111,6 +111,17 @@ void main() {
     // Nothing due, no new words from active decks: no silent Vorab-Üben.
     expect(container.read(mixed).total, 0);
     expect(container.read(mixed).pass, isNull);
+    // Deactivated means none of the deck's words, Vorab üben included
+    // (user decision 04.11.2026).
+    const hiddenArgs = (deckId: '', kind: DeckSessionKind.early, size: 1);
+    final hidden = deckSessionControllerProvider(hiddenArgs);
+    final hsub = container.listen(hidden, (_, _) {});
+    for (var i = 0; i < 30 && container.read(hidden).loading; i++) {
+      await settle();
+    }
+    expect(container.read(hidden).pass, isNull);
+    hsub.close();
+    await user.setDeckActive('deck-allg', true, now: now);
     // Vorab üben is an explicit session on the same learning state.
     const earlyArgs = (deckId: '', kind: DeckSessionKind.early, size: 0);
     final early = deckSessionControllerProvider(earlyArgs);
@@ -123,6 +134,7 @@ void main() {
     expect(pass.boxBefore, 3);
     expect(pass.mode, ReviewMode.early);
     esub.close();
+    await user.setDeckActive('deck-allg', false, now: now);
     await container
         .read(wordActionsProvider)
         .save(

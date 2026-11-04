@@ -35,6 +35,24 @@ class DriftContentRepository
   ContentUnavailable _broken(String message) =>
       ContentUnavailable(ContentUnavailableReason.incompatible, message);
 
+  /// "Business" folds into "Beruf" (user decision 04.11.2026): the packs keep
+  /// both decks, the app shows one under the work deck's id.
+  static const _mergedDecks = {'business-email': 'arbeit-bildung'};
+
+  /// [deckId] and the pack decks folded into it.
+  Future<Set<String>> _deckMembers(String deckId) async {
+    final rows = await _select(
+      'SELECT id, slug FROM decks WHERE lang = ? AND removed_in IS NULL',
+      [_lang],
+    );
+    final slugs = {for (final r in rows) r.read<String>('id'): r.read<String>('slug')};
+    return {
+      deckId,
+      for (final e in slugs.entries)
+        if (slugs[deckId] case final slug? when _mergedDecks[e.value] == slug) e.key,
+    };
+  }
+
   @override
   Future<List<DeckSummary>> decks() async {
     final rows = await _select(
@@ -47,8 +65,10 @@ class DriftContentRepository
       'ORDER BY d.sort, d.slug',
       [_lang],
     );
+    final slugs = {for (final r in rows) r.read<String>('slug')};
     return [
       for (final r in rows)
+        if (!slugs.contains(_mergedDecks[r.read<String>('slug')]))
         DeckSummary(
           id: r.read<String>('id'),
           practiceKind: r.read<String>('practice_kind'),
@@ -73,12 +93,13 @@ class DriftContentRepository
       [_lang],
     );
     // Schema 1 has no ownership table: deterministic read-only projection.
-    final seen = <String>{};
+    final seen = <String>{}, members = await _deckMembers(deckId), ids = <String>{};
     return [
       for (final r in rows)
         if ((_db.info.schemaVersion >= 2 ||
                 seen.add(contentFormNorm(r.read<String>('form')))) &&
-            r.read<String>('deck_id') == deckId)
+            members.contains(r.read<String>('deck_id')) &&
+            ids.add(r.read<String>('card_id')))
           r.read<String>('card_id'),
     ];
   }

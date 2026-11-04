@@ -196,6 +196,20 @@ class PracticeItemResolver {
     );
   }
 
+  /// Cards that only deactivated decks lead to (user decision 04.11.2026):
+  /// Mixed and the counters leave them out, due or not. Cards an active deck
+  /// or "Aus Storys" also reaches stay; the deck's own session still has them.
+  Future<Set<String>> deactivatedDeckIds() async {
+    final decks = catalog?.decks ?? await content?.decks() ?? <DeckSummary>[];
+    final order = [for (final d in decks) d.id, ?generatedDeckId];
+    final active = await user.activeDeckIds(order);
+    final hidden = <String>{}, kept = <String>{...storyCollectionIds};
+    for (final id in order) {
+      (active.contains(id) ? kept : hidden).addAll(await deckPracticeIds(id));
+    }
+    return hidden.difference(kept);
+  }
+
   /// Saved story targets for practice, oldest addition first.
   List<String> get storyPracticeIds => storyCollectionIds.reversed.where(cards.containsKey).toList();
 

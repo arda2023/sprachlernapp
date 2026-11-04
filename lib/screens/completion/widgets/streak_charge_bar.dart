@@ -120,6 +120,23 @@ class _BarPainter extends CustomPainter {
   static const _white = Color(0xFFFFFFFF);
   static const _r = StreakChargeBar.size / 2;
 
+  /// Start along the pill, height in it, radius, laps per shimmer loop and
+  /// strength of each energy speck.
+  static const _specks = [
+    (seed: 0.02, y: 0.30, r: 1.4, speed: 1, alpha: 0.75),
+    (seed: 0.11, y: 0.62, r: 1.0, speed: 2, alpha: 0.55),
+    (seed: 0.19, y: 0.44, r: 1.8, speed: 1, alpha: 0.6),
+    (seed: 0.27, y: 0.72, r: 1.2, speed: 1, alpha: 0.7),
+    (seed: 0.36, y: 0.24, r: 0.9, speed: 2, alpha: 0.5),
+    (seed: 0.45, y: 0.55, r: 1.5, speed: 1, alpha: 0.8),
+    (seed: 0.53, y: 0.35, r: 1.1, speed: 2, alpha: 0.55),
+    (seed: 0.61, y: 0.68, r: 1.6, speed: 1, alpha: 0.65),
+    (seed: 0.70, y: 0.48, r: 0.9, speed: 1, alpha: 0.6),
+    (seed: 0.78, y: 0.28, r: 1.3, speed: 1, alpha: 0.7),
+    (seed: 0.86, y: 0.60, r: 1.0, speed: 2, alpha: 0.5),
+    (seed: 0.94, y: 0.40, r: 1.7, speed: 1, alpha: 0.6),
+  ];
+
   double _centre(int i) => slot * (i + 0.5);
 
   /// Right edge of the pill in pixels for a fill in days.
@@ -169,6 +186,29 @@ class _BarPainter extends CustomPainter {
             stops: _monotonic(stops),
           ).createShader(rect),
       );
+      // Energy specks streaming left through the pill while it charges
+      // (user request 04.11.2026). Whole-number speeds keep each speck's
+      // path seamless when the shimmer loop wraps.
+      if (charging > 0 && rect.width > StreakChargeBar.size) {
+        canvas.save();
+        canvas.clipRRect(rrect);
+        final paint = Paint();
+        for (final s in _specks) {
+          final p = (shimmer * s.speed + s.seed) % 1.0;
+          paint.color = _white.withValues(
+            alpha: charging * s.alpha * math.sin(p * math.pi),
+          );
+          canvas.drawCircle(
+            Offset(
+              rect.right - 8 - p * (rect.width - 16),
+              rect.top + rect.height * s.y,
+            ),
+            s.r,
+            paint,
+          );
+        }
+        canvas.restore();
+      }
     }
 
     for (var i = 0; i < math.min(target, streakBarDays); i++) {
