@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -184,6 +185,10 @@ class ContentUpdateController extends Notifier<ContentUpdateState> {
   }
 
   Future<void> check({bool automatic = false}) async {
+    if (kIsWeb) {
+      if (!automatic) _notice('current', 'Neue Inhalte werden mit einem Update der Webversion bereitgestellt.');
+      return;
+    }
     final auth = ref.read(contentAuthProvider);
     if (!auth.configured) {
       if (!automatic) {

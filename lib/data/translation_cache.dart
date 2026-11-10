@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:sqlite3/sqlite3.dart';
+import 'platform/sqlite_platform.dart';
 
 import 'runtime_translation_client.dart';
 
@@ -61,6 +61,7 @@ class TranslationCache {
       jsonEncode(response),
       keepForever,
     ]);
+    await flushSqlitePlatform();
   }
 
   Future<void> markDeletion(String owner) async {
@@ -74,14 +75,17 @@ class TranslationCache {
       db.execute('ROLLBACK');
       rethrow;
     }
+    await flushSqlitePlatform();
   }
 
   Future<bool> deletionPending(String owner) async => (await _db()).select(
     'SELECT 1 FROM deletion WHERE owner=?',
     [owner],
   ).isNotEmpty;
-  Future<void> deletionDone(String owner) async =>
-      (await _db()).execute('DELETE FROM deletion WHERE owner=?', [owner]);
+  Future<void> deletionDone(String owner) async {
+    (await _db()).execute('DELETE FROM deletion WHERE owner=?', [owner]);
+    await flushSqlitePlatform();
+  }
   Future<WordCloudConsent> readWordConsent(String owner) async {
     final rows = (await _db()).select(
       'SELECT version,enabled FROM word_cloud_consent WHERE owner=?',
@@ -100,6 +104,7 @@ class TranslationCache {
       'INSERT OR REPLACE INTO word_cloud_consent VALUES(?,?,?,?)',
       [owner, 1, enabled ? 1 : 0, DateTime.now().millisecondsSinceEpoch],
     );
+    await flushSqlitePlatform();
   }
 
   Future<void> close() async {

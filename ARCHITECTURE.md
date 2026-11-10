@@ -79,3 +79,18 @@ Content-Schema 4 und user.db v5 bleiben getrennt. `PracticeItemResolver` verbind
 Der bestehende Offline-Wrapper nutzt `claude-haiku-5-5`, Projekt `sprachlernapp-510508`, EU-Multiregion `eu`, Thinking aus und Effort low. Kein Fallback. SDK-Retries aus; maximal drei kontrollierte Versuche, feste Request-/Gesamtdeadline, vollständige ursprüngliche JSON-Schema-Prüfung lokal. Keine neue Runtime-KI oder Appänderung. Cloudfreischaltung und Modellqualität bleiben ungeprüft; Offline-Nachweise: [Umsetzung](docs/haiku-migration-implementation.md). Die Stapelphase ist beendet; keine neuen Produktionsläufe aus dieser Änderung.
 
 Paket 2C: ausdrückliches Add → PersonalLearningService → bestehende Karte oder separater privater Erstellungs-Claim (`create-learning-card`) → streng validierter PersonalLearningCandidate → bestehende atomare user.db-Karten-/Kontexttransaktion und „Aus Storys“. Eigene Konto-/Gerätefreigabe in private_learning_consent.sqlite; Übersetzungscache und Kartenspeicher getrennt. Keine Scheduleränderung. Cloud und Geräteabnahme noch offen: docs/story-import-learning-package-2c.md.
+
+## Web und Kontosynchronisierung (07.11.2026)
+
+Die Flutter-Weboberfläche verwendet dieselben Reader-, Stapel-, Domain- und
+Repository-Pfade. SQLite wird über bedingte Plattformadapter mit WASM ausgeführt;
+Lerndaten liegen dauerhaft und kontogetrennt in OPFS/IndexedDB, gebündelte Inhalte
+bleiben prüfsummengeprüft und schreibgeschützt. Native Dateispeicherung bleibt
+erhalten. Das erste angemeldete Konto übernimmt die ursprüngliche user.db;
+andere Konten und der spätere Gast haben getrennte Datenbanken.
+
+Ein gemeinsamer Syncdienst überträgt Karten, Reviews, Quellen, Lesepositionen
+und Importtexte über authentifizierte Supabase-RPCs. Er berechnet keine Zähler
+und führt keine KI-Aufrufe aus. Die neue Migration und ein aktualisierter
+Handyclient sind Voraussetzung für den Liveabgleich. Details:
+`docs/learning-sync.md`, Build und Cloudflare: `docs/web.md`.

@@ -1,3 +1,4 @@
+import '../web/web_reading_viewport.dart';
 import '../../presentation/audio/device_speech_playback.dart';
 import '../../presentation/audio/device_dictation.dart';
 import 'dart:async';
@@ -59,7 +60,7 @@ class DeckPracticeScreen extends ConsumerStatefulWidget {
   }) => Navigator.of(context).push(
     CupertinoPageRoute<void>(
       fullscreenDialog: true,
-      builder: (_) => DeckPracticeScreen(deckId: deckId, mode: mode),
+      builder: (_) => WebReadingViewport(child: DeckPracticeScreen(deckId: deckId, mode: mode)),
     ),
   );
   @override
@@ -126,7 +127,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
   }
 
   final _input = PracticeInputController();
-  final _focus = FocusNode();
+  late final _focus = FocusNode(onKeyEvent: _handleInputKey);
   bool _completing = false;
   final _sentenceKey = GlobalKey<PracticeSentenceState>();
   final _rootKey = GlobalKey();
@@ -307,6 +308,27 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
       }
       _announce(result.message ?? 'Fast richtig – prüf die Schreibweise.');
     }
+  }
+
+  KeyEventResult _handleInputKey(FocusNode node, KeyEvent event) {
+    final enter = event.logicalKey == LogicalKeyboardKey.enter ||
+        event.logicalKey == LogicalKeyboardKey.numpadEnter;
+    if (!enter || !HardwareKeyboard.instance.isShiftPressed) {
+      return KeyEventResult.ignored;
+    }
+    // Consume repeats and unavailable actions so Shift+Enter never submits
+    // an answer or advances a solved card through the text field.
+    if (event is KeyDownEvent &&
+        _historyIndex == null && !_overlay && _word == null &&
+        ModalRoute.of(context)?.isCurrent != false) {
+      final session = ref.read(deckSessionControllerProvider(_args));
+      final pass = session.pass;
+      if (!session.committing && pass != null &&
+          !pass.solved && !pass.revealed) {
+        _reveal();
+      }
+    }
+    return KeyEventResult.handled;
   }
 
   void _reveal() {
@@ -889,7 +911,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final story = widget.deckId == storyCollectionId;
     void open(DeckPracticeMode mode) => Navigator.of(context).pushReplacement(
       CupertinoPageRoute<void>(
-        builder: (_) => DeckPracticeScreen(deckId: widget.deckId, mode: mode),
+        builder: (_) => WebReadingViewport(child: DeckPracticeScreen(deckId: widget.deckId, mode: mode)),
       ),
     );
     void early() => open(DeckPracticeMode.early);

@@ -2,7 +2,7 @@
 
 ## Platform
 
-iOS and Android (Flutter). Targeted for release on the Apple App Store and Google Play; no web application. One unified custom design system across both platforms — the brand sets the visual language, not the OS (not Cupertino/Material-adaptive).
+iOS, Android and a Flutter web version (user decision 07.11.2026). The web version requires account sign-in and initially exposes only Reader and Decks, without the Inhalte or word-list destinations. Web deployment is prepared for Cloudflare Pages; see `docs/web.md`. Native releases target the Apple App Store and Google Play; One unified custom design system across both platforms — the brand sets the visual language, not the OS (not Cupertino/Material-adaptive).
 
 ## Stack
 
@@ -113,9 +113,9 @@ Three core learning surfaces:
   - Content is produced offline through the existing pipeline, either with optional AI or a fully annotated, reviewed editorial Create import. Gemini/ADC is not required for editorial production.
   - Sentences are AI-generated with automated QA (linter, blind gap test by a second model, 5 % manual sample). Alternatives proposed by the blind test are only candidates; each must pass a full-sentence check in the gap before it becomes a valid alternative (`docs/pipeline.md`). Frequency comes from the wordfreq word forms; BNC/COCA serves only as an English cross-check.
   - The client never calls AI providers directly. Curated content is generated before release. Runtime translation uses direct Anthropic `claude-haiku-5-5` only through authenticated Supabase Edge Functions with server-only Secrets and explicit opt-in for missing word/sentence translations. No EU-only guarantee or Gemini/Vertex fallback. Package 2C adds private learning-card creation only after explicit Add, covered by the revocable AI switch (31.10.2026; previously a separate consent dialog), through `create-learning-card`: reuse an exact existing meaning/form, otherwise preserve the original exercise sentence, with justified replacement for unsuitable contexts (mandatory for new cards from 1–2 words). Private AI provenance never counts as editorial approval. No AI for SRS, grading or public content generation; the prepared daily news job (server-side, never from the client) would be the one exception once the news return. Deployment and device/linguistic acceptance are separate; see `docs/story-import-learning-package-2c.md`.
-- **Accounts**: Learning works offline without an account. An email account is needed only for online features (import, AI checks); Google/Apple sign-in before release.
+- **Accounts**: Native learning works offline without an account; the web workspace requires account sign-in. An email account is needed only for online features (import, AI checks); Google/Apple sign-in before release.
 - **Storage**:
-  - Local-first (Drift SQLite `user.db`, read-only `content.sqlite`). Cross-device synchronization is deferred; its timing is an open decision.
+  - Local-first (Drift SQLite `user.db`, read-only `content.sqlite`). Account learning-state synchronization is implemented for mobile and web (07.11.2026); server migration and an updated phone client are required before live use. See `docs/learning-sync.md`.
   - **Internal test pack** (decided 04.10.2026): a technically finalized internal content pack may run on the developer's own devices and for selected testers, release builds included; there is no blanket release-build lock. It is not a public content release.
 
 ## Open Decisions
@@ -123,7 +123,7 @@ Three core learning surfaces:
 - **Pricing Model**: Subscription, one-time purchase, or tiered access.
 - **Runtime AI free vs. premium**: Which Edge Function features are free, which premium, and the daily limits.
 - **Voice for imported stories**: device TTS vs. online TTS.
-- **Sync timing**: When cross-device sync arrives; backend and conflict resolution strategy.
+- **Sync scaling**: Measure the initial paginated full-account download before broad release; contract and conflict strategy: `docs/learning-sync.md`.
 - **Licences**: wordfreq (CC BY-SA) and BNC/COCA — commercial usage rights to be clarified before public release.
 - **FSRS Algorithm Adoption**: Evaluating FSRS against the 5-box Leitner system once empirical review logs exist.
 - **Daily news**: When the prepared daily news are switched on (`docs/daily-news.md`).

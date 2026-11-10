@@ -1,3 +1,4 @@
+import '../web/web_reading_viewport.dart';
 import '../../models/playback_clock.dart';
 import '../../domain/personal_learning.dart';
 import '../../widgets/personal_learning_button.dart';
@@ -91,10 +92,12 @@ class StoryReaderScreen extends StatefulWidget {
     ValueChanged<double>? onProgress,
   }) => Navigator.of(context).push(
     CupertinoPageRoute<void>(
-      builder: (_) => _StoredStoryReader(
-        story: story,
-        initialProgress: initialProgress,
-        onProgress: onProgress,
+      builder: (_) => WebReadingViewport(
+        child: _StoredStoryReader(
+          story: story,
+          initialProgress: initialProgress,
+          onProgress: onProgress,
+        ),
       ),
     ),
   );
@@ -110,7 +113,8 @@ class StoryReaderScreen extends StatefulWidget {
     ValueChanged<double>? onProgress,
   }) => Navigator.of(context).push(
     CupertinoPageRoute<void>(
-      builder: (_) => StoryReaderScreen(
+      builder: (_) => WebReadingViewport(
+        child: StoryReaderScreen(
         story: story,
         text: text,
         lookup: lookup,
@@ -118,6 +122,7 @@ class StoryReaderScreen extends StatefulWidget {
         initialMarks: const {},
         initialProgress: initialProgress,
         onProgress: onProgress,
+        ),
       ),
     ),
   );

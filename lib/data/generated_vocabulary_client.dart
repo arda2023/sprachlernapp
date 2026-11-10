@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'http/platform_http_client.dart';
+
 import '../domain/generated_vocabulary.dart';
 import 'personal_learning_client.dart';
 
@@ -23,7 +25,7 @@ class GeneratedVocabularyClient {
   GeneratedVocabularyClient({
     required this.access,
     HttpClient Function()? createClient,
-  }) : createClient = createClient ?? HttpClient.new;
+  }) : createClient = createClient ?? createPlatformHttpClient;
 
   final PersonalLearningClient access;
   final HttpClient Function() createClient;

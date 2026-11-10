@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:sqlite3/sqlite3.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import '../../data/content/bundled_content_updates.dart';
+import '../../data/platform/sqlite_platform.dart';
 
 import '../../data/personal_learning_client.dart';
 import '../../data/learning/personal_learning_service.dart';
@@ -15,10 +16,7 @@ import '../../data/learning/personal_translation_hints.dart';
 
 final personalLearningClientProvider = Provider<PersonalLearningClient>((ref) {
   final auth = ref.watch(contentAuthProvider);
-  final store = PersonalConsentStore(() async {
-    final dir = await getApplicationSupportDirectory();
-    return sqlite3.open('${dir.path}/private_learning_consent.sqlite');
-  });
+  final store = PersonalConsentStore(() => openPrivateDatabase('private_learning_consent.sqlite'));
   final client = PersonalLearningClient(
     url: auth.url,
     publicKey: auth.publicKey,
@@ -64,13 +62,17 @@ final personalReleaseReferenceProvider = FutureProvider<Map<String, dynamic>>((
   final installer = await ref.watch(
     contentInstallerProvider(content.info.lang).future,
   );
-  final offer = await ContentInstallJournal(
-    installer.supportDirectory,
-    content.info.lang,
-  ).active();
+  final offer = kIsWeb
+      ? await BundledContentTransport(installer.loadAsset, content.info.lang)
+          .latest(content.info.lang, 0)
+      : await ContentInstallJournal(
+          installer.supportDirectory,
+          content.info.lang,
+        ).active();
   if (offer == null ||
       offer.contentManifest.version != content.info.version ||
-      GenerationIdentity.fromOffer(offer).fingerprint != key.fingerprint) {
+      (kIsWeb ? offer.sha : GenerationIdentity.fromOffer(offer).fingerprint) !=
+          key.fingerprint) {
     throw const PersonalLearningFailure(
       'Inhaltspack geändert oder noch nicht veröffentlicht. Bitte Inhalte aktualisieren.',
     );

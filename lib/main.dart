@@ -1,5 +1,11 @@
 import 'presentation/audio/device_speech_playback.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'data/platform/json_store.dart';
+import 'data/sync/sync_json_store.dart';
+import 'presentation/providers/account_provider.dart';
+import 'presentation/providers/learning_sync_provider.dart';
+import 'screens/web/web_app_gate.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show ProviderListenable;
@@ -30,12 +36,14 @@ import 'widgets/launch_splash.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // The animated launch screen and the curtain over the first screen.
-  LaunchSplash.enabled = true;
+  LaunchSplash.enabled = !kIsWeb;
   // Onboarding animations only; without the native runtime they fall back
   // to stills.
   try {
-    await RiveNative.init();
-    OnboardingArt.riveReady = true;
+    if (!kIsWeb) {
+      await RiveNative.init();
+      OnboardingArt.riveReady = true;
+    }
   } catch (_) {}
   runApp(
     ProviderScope(
@@ -47,7 +55,7 @@ Future<void> main() async {
           (ref) => AudioOnboardingSounds(),
         ),
         onboardingStoreProvider.overrideWith(
-          (ref) => FileJsonStore('onboarding'),
+          (ref) => platformJsonStore('onboarding'),
         ),
         celebrationMarksProvider.overrideWith(
           (ref) => FileCelebrationMarks(
@@ -55,14 +63,10 @@ Future<void> main() async {
           ),
         ),
         readingStoreProvider.overrideWith(
-          (ref) => FileJsonStore(
-            'reading_progress_${ref.watch(selectedContentLanguageProvider).asData?.value ?? 'en'}',
-          ),
+          (ref) => _accountStore(ref, 'reading_progress'),
         ),
         importStoreProvider.overrideWith(
-          (ref) => FileJsonStore(
-            'imported_texts_${ref.watch(selectedContentLanguageProvider).asData?.value ?? 'en'}',
-          ),
+          (ref) => _accountStore(ref, 'imported_texts', list: true),
         ),
       ],
       child: const SprachApp(),
@@ -70,11 +74,24 @@ Future<void> main() async {
   );
 }
 
+JsonStore _accountStore(Ref ref, String prefix, {bool list = false}) {
+  ref.watch(accountSessionProvider);
+  final database = ref.watch(userDatabaseProvider.future);
+  final language = ref.watch(selectedContentLanguageProvider).asData?.value ?? 'en';
+  final name = '${prefix}_$language';
+  final owner = ref.read(contentAuthProvider).localOwner;
+  return SyncJsonStore(database, name, list: list,
+      legacy: AccountLegacyJsonStore(name, owner),
+      isCurrent: () => ref.mounted && ref.read(contentAuthProvider).localOwner == owner);
+}
+
 class SprachApp extends ConsumerWidget {
   const SprachApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(learningSyncProvider);
+    final account = ref.watch(accountSessionProvider).value;
     ref.watch(billingProvider);
     ref.watch(contentUpdateProvider);
     // Keeps the account's Premium check alive from launch and after any
@@ -83,8 +100,9 @@ class SprachApp extends ConsumerWidget {
     final motif =
         ref.watch(preferencesProvider).value?.motif ?? AppMotif.automatic;
     return MaterialApp(
+      key: ValueKey(account?.id),
       navigatorObservers: [SpeechNavigationObserver()],
-      title: 'Sprachapp',
+      title: 'Linglossa',
       debugShowCheckedModeBanner: false,
       theme: buildAppTheme(brightness: Brightness.light),
       darkTheme: buildAppTheme(),
@@ -93,7 +111,14 @@ class SprachApp extends ConsumerWidget {
         AppMotif.light => ThemeMode.light,
         AppMotif.dark => ThemeMode.dark,
       },
-      home: const _Start(),
+      builder: kIsWeb ? (context, child) => LayoutBuilder(builder: (context, constraints) {
+        final width = constraints.maxWidth.clamp(0.0, 1440.0);
+        return Center(child: SizedBox(width: width, child: MediaQuery(
+          data: MediaQuery.of(context).copyWith(size: Size(width, constraints.maxHeight)),
+          child: child ?? const SizedBox.shrink(),
+        )));
+      }) : null,
+      home: kIsWeb ? const WebAppGate() : const _Start(),
     );
   }
 }

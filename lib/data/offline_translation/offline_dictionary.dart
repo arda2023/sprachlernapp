@@ -4,7 +4,9 @@ import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
-import 'package:sqlite3/sqlite3.dart';
+import 'package:archive/archive.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import '../platform/sqlite_platform.dart';
 import 'package:unorm_dart/unorm_dart.dart' as unicode;
 
 /// Display candidates only. Never contains a learning card ID or pack sense ID.
@@ -25,6 +27,27 @@ class OfflineDictionary {
   final Future<Directory> Function() directory;
   final Future<Uint8List> Function(String name) asset;
   Future<String>? _opening;
+  Future<Database>? _browserOpening;
+
+  Future<Database> _openBrowser() async {
+    final manifest = jsonDecode(utf8.decode(await asset('manifest.json'))) as Map<String, dynamic>;
+    final packed = await asset('dictionary.sqlite.gz');
+    if (manifest['contract'] != 1 || packed.length != manifest['compressed_bytes'] ||
+        sha256.convert(packed).toString() != manifest['compressed_sha256']) {
+      throw const FormatException('dictionary archive integrity');
+    }
+    final bytes = GZipDecoder().decodeBytes(packed);
+    if (bytes.length != manifest['bytes'] || sha256.convert(bytes).toString() != manifest['sha256']) {
+      throw const FormatException('dictionary integrity');
+    }
+    final db = await openBundledDatabase(Uint8List.fromList(bytes), 'dictionary_${manifest['sha256']}');
+    if (db.select('PRAGMA user_version').single.values.single != 1 ||
+        db.select('PRAGMA quick_check').single.values.single != 'ok') {
+      db.close();
+      throw const FormatException('dictionary schema');
+    }
+    return db;
+  }
 
   Future<String> _path() => _opening ??= _install().catchError((Object error) {
     _opening = null;
@@ -59,9 +82,13 @@ class OfflineDictionary {
         form.length > 160) {
       return const [];
     }
-    final file = await _path();
     final key = unicode.nfc(form).toLowerCase();
-    return Isolate.run(() => lookupDictionary(file, lang, key));
+    if (kIsWeb) {
+      final db = await (_browserOpening ??= _openBrowser().catchError((Object e) { _browserOpening = null; throw e; }));
+      return _lookupRows(db, lang, key);
+    }
+    final file = await _path();
+    return _lookupInBackground(file, lang, key);
   }
 }
 
@@ -109,6 +136,13 @@ List<DictionaryCandidate> lookupDictionary(
 ) {
   final db = sqlite3.open(filename, mode: OpenMode.readOnly);
   try {
+    return _lookupRows(db, lang, key);
+  } finally {
+    db.close();
+  }
+}
+
+List<DictionaryCandidate> _lookupRows(Database db, String lang, String key) {
     // Exact indexed lookup, capped for malformed/very ambiguous external entries.
     final rows = db.select(
       '''SELECT DISTINCT e.lemma,e.pos,e.gloss,e.tags,e.source,l.via
@@ -127,7 +161,9 @@ List<DictionaryCandidate> lookupDictionary(
           r['via'] as String,
         ),
     ];
-  } finally {
-    db.close();
-  }
 }
+
+// A top-level closure avoids capturing the browser connection/futures from the
+// OfflineDictionary instance when sending work to a native isolate.
+Future<List<DictionaryCandidate>> _lookupInBackground(String file, String lang, String key) =>
+    Isolate.run(() => lookupDictionary(file, lang, key));

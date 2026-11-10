@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'http/platform_http_client.dart';
+
 import 'translation_request.dart';
 export 'translation_request.dart';
 
@@ -22,7 +24,7 @@ class RuntimeTranslationClient {
     this.token, {
     HttpClient Function()? createClient,
     this.identityRevision,
-  }) : _createClient = createClient ?? HttpClient.new;
+  }) : _createClient = createClient ?? createPlatformHttpClient;
   final HttpClient Function() _createClient;
   final int Function()? identityRevision;
   final String url, publicKey;

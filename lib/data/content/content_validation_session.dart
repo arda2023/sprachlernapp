@@ -474,7 +474,7 @@ Future<QueryExecutor> _prepareBoundExecutor(
     }
     await _sessionEvent(events, 'info', [info, proofInfo == null]);
     await _sessionEvent(events, ValidationStage.beforeHandshake.index);
-    return NativeDatabase.opened(raw, enableMigrations: false);
+    return openedDatabase(raw, enableMigrations: false);
   } catch (_) {
     raw.close();
     rethrow;

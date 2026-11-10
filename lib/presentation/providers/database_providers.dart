@@ -11,6 +11,8 @@ import '../../data/content/content_update_service.dart';
 import '../../data/user/drift_user_repository.dart';
 import '../../data/user/user_database.dart';
 import '../../domain/repositories.dart';
+import 'account_provider.dart';
+import 'content_update_provider.dart' show contentAuthProvider;
 import '../../domain/content.dart';
 
 /// Leases share one connection. Reopening waits for its asynchronous close,
@@ -159,8 +161,15 @@ Future<({ContentRepositoryKey key, ContentRepository repository, void Function()
   }
   throw StateError('Inhaltsgeneration wiederholt geändert.');
 }
-final _userDatabaseOwner = RepositoryOwner<UserDatabase>(UserDatabase.openForApp, (db)=>db.close());
-final userDatabaseProvider = FutureProvider<UserDatabase>(_userDatabaseOwner.acquire,retry:(_,_)=>null);
+final _userDatabaseOwners = <String?, RepositoryOwner<UserDatabase>>{};
+final userDatabaseProvider = FutureProvider<UserDatabase>((ref) async {
+  await ref.watch(accountSessionProvider.future);
+  if (!ref.mounted) throw StateError('Lernkonto hat sich geändert.');
+  final owner = ref.read(contentAuthProvider).localOwner;
+  return _userDatabaseOwners.putIfAbsent(owner, () => RepositoryOwner<UserDatabase>(
+    () => UserDatabase.openForApp(accountId: owner), (db) => db.close(),
+  )).acquire(ref);
+}, retry: (_, _) => null);
 final selectedContentLanguageProvider=FutureProvider<String>((ref) async {
   final db=await ref.watch(userDatabaseProvider.future);
   final settings=await db.select(db.settings).getSingleOrNull();

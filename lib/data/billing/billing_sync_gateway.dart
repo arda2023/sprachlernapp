@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import '../http/platform_http_client.dart';
+
 import '../content/content_auth_repository.dart';
 
 /// Server-verified subscription state returned by the authenticated billing
@@ -122,7 +124,7 @@ abstract interface class BillingSyncGateway {
 
 class SupabaseBillingSyncGateway implements BillingSyncGateway {
   SupabaseBillingSyncGateway(this.auth, {HttpClient? client})
-    : _client = client ?? (HttpClient()..connectionTimeout = _requestTimeout);
+    : _client = client ?? (createPlatformHttpClient()..connectionTimeout = _requestTimeout);
 
   static const _requestTimeout = Duration(seconds: 15);
 

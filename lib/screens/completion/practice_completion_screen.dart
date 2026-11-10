@@ -1,3 +1,4 @@
+import '../web/web_reading_viewport.dart';
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
@@ -40,7 +41,7 @@ class PracticeCompletionScreen extends ConsumerStatefulWidget {
     required List<CompletionWord> words,
   }) => CupertinoPageRoute<void>(
     builder: (_) =>
-        PracticeCompletionScreen(streak: streak, goal: goal, words: words),
+        WebReadingViewport(child: PracticeCompletionScreen(streak: streak, goal: goal, words: words)),
   );
 
   @override

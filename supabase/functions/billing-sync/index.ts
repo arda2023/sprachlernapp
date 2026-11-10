@@ -1,3 +1,4 @@
+import { withBrowserCors } from "../_shared/browser_cors.ts";
 import {
   AdaptyBillingBackend,
   billingSyncHandler,
@@ -10,7 +11,7 @@ const testerIds = new Set(
     .filter(Boolean),
 );
 
-Deno.serve(billingSyncHandler(
+Deno.serve(withBrowserCors(billingSyncHandler(
   new AdaptyBillingBackend(
     Deno.env.get("SUPABASE_URL") ?? "",
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
@@ -19,4 +20,4 @@ Deno.serve(billingSyncHandler(
     Deno.env.get("ADAPTY_SANDBOX_ENABLED") === "true",
     testerIds,
   ),
-));
+)));

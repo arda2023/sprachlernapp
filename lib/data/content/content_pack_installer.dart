@@ -4,7 +4,7 @@ import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
-import 'package:flutter/foundation.dart' show FlutterError, debugPrint;
+import 'package:flutter/foundation.dart' show FlutterError, debugPrint, kIsWeb;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -25,15 +25,20 @@ typedef AssetLoader = Future<Uint8List?> Function(String key);
 /// must never replace a newer installed release or its historical identities.
 /// All files stay under `<support>/content/<lang>/`; user.db is untouched.
 class ContentPackInstaller {
+  // Public named argument is retained for existing tools and tests.
   ContentPackInstaller({
     required this.loadAsset,
-    required this.supportDirectory,
+    required Directory supportDirectory,
     this.lang = 'en',
     this.validationRegistry,
-  });
+  // ignore: prefer_initializing_formals
+  }) : _supportDirectory = supportDirectory;
+
+  ContentPackInstaller._browser(this.lang) : loadAsset = _loadBundled, _supportDirectory = null, validationRegistry = null;
 
   final AssetLoader loadAsset;
-  final Directory supportDirectory;
+  final Directory? _supportDirectory;
+  Directory get supportDirectory => _supportDirectory ?? (throw UnsupportedError('Browser content has no native directory.'));
   final String lang;
   final ProcessValidationRegistry? validationRegistry;
 
@@ -47,6 +52,7 @@ class ContentPackInstaller {
   /// The installer of the running app: assets from the bundle, files under
   /// the application support directory.
   static Future<ContentPackInstaller> forApp({String lang = 'en'}) async {
+    if (kIsWeb) return ContentPackInstaller._browser(lang);
     final support = await getApplicationSupportDirectory();
     // A language's bundled release is activated the first time that language
     // is opened in this process, before any of its readers exists, instead of
@@ -58,9 +64,34 @@ class ContentPackInstaller {
     );
   }
 
+  /// Browser bundles use the release validator for format-2 multilingual packs.
+  /// Only legacy bootstrap packs (English) use the format-1 manifest parser.
+  Future<ContentManifest?> browserManifest() async {
+    final bytes = await loadAsset(manifestAsset);
+    if (bytes == null) return null;
+    final text = utf8.decode(bytes);
+    final value = jsonDecode(text);
+    // Never probe an absent optional release: SPA hosts can return index.html
+    // with HTTP 200 for a missing asset. English is a valid format-1 bundle.
+    if (value is! Map<String, dynamic> || value['format'] != 2) {
+      return ContentManifest.parse(text, lang: lang);
+    }
+    final release = await BundledContentTransport(loadAsset, lang).latest(lang, 0);
+    if (release == null) {
+      throw const ContentUnavailable(ContentUnavailableReason.corrupt,
+          'Gebündelte Versionsfreigabe fehlt.');
+    }
+    return release.contentManifest;
+  }
+
   /// Complete routing identity without opening any database. An uninstalled
   /// bundled pack uses its manifest identity so its first install keeps the key.
   Future<({int generation, String fingerprint})> routingIdentity() async {
+    if (kIsWeb) {
+      final manifest = await browserManifest();
+      if (manifest == null) return (generation: 0, fingerprint: 'missing:$lang');
+      return (generation: 0, fingerprint: manifest.sha256);
+    }
     final state = await resolveInstalledState(ContentInstallJournal(supportDirectory, lang));
     if (state.offer != null) return (generation: state.offer!.generation, fingerprint: state.fingerprint!);
     final String? text;
@@ -77,6 +108,10 @@ class ContentPackInstaller {
 
   /// Metadata only: never install, hash, recover or open a content reader here.
   Future<String> readInstallationMetadata() async {
+    if (kIsWeb) {
+      final manifest = await browserManifest();
+      return manifest == null ? 'Noch nicht installiert' : 'Installiert · ${manifest.version}';
+    }
     final journal = ContentInstallJournal(supportDirectory, lang);
     final state = await resolveInstalledState(journal);
     if (state.prepared) return 'Wiederherstellung beim Öffnen erforderlich';
@@ -207,6 +242,20 @@ class ContentPackInstaller {
     ReadCancellation? cancellation,
     bool Function()? isCurrent,
   }) async {
+    if (kIsWeb) {
+      final manifest = await browserManifest();
+      final bytes = await loadAsset(databaseAsset);
+      if (manifest == null || bytes == null) {
+        throw const ContentUnavailable(ContentUnavailableReason.missing, 'Für diese Sprache ist kein Inhaltspaket enthalten.');
+      }
+      if (expectedFingerprint != null && manifest.sha256 != expectedFingerprint) throw const RecoveredGenerationChanged();
+      final db = await ContentDatabase.fromBytes(bytes, manifest);
+      if (cancellation?.isCancelled == true || isCurrent?.call() == false) {
+        await db.close();
+        throw StateError('Inhaltsöffnung abgebrochen.');
+      }
+      return DriftContentRepository(db);
+    }
     final registry = validationRegistry;
     if (registry == null) return DriftContentRepository(await _openLegacyDatabase());
     final cancel = cancellation ?? ReadCancellation();

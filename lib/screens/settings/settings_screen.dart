@@ -1,3 +1,4 @@
+import '../web/web_reading_viewport.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show Colors, LinearProgressIndicator, Material, MaterialPageRoute, Scaffold;
@@ -30,7 +31,7 @@ import 'content_updates_screen.dart';
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
   static Future<void> open(BuildContext context) => Navigator.of(context)
-      .push(MaterialPageRoute<void>(builder: (_) => const SettingsScreen()));
+      .push(MaterialPageRoute<void>(builder: (_) => const WebReadingViewport(child: SettingsScreen())));
   @override
   ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
 }
@@ -94,7 +95,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   void _push(Widget screen) =>
       Navigator.of(context)
-          .push(MaterialPageRoute<void>(builder: (_) => screen));
+          .push(MaterialPageRoute<void>(builder: (_) => WebReadingViewport(child: screen)));
 
   @override
   Widget build(BuildContext context) {

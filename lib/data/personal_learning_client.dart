@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:sqlite3/sqlite3.dart';
+import 'http/platform_http_client.dart';
+
+import 'platform/sqlite_platform.dart';
 
 import '../domain/personal_learning.dart';
 
@@ -46,10 +48,11 @@ class PersonalConsentStore {
     return false;
   }
 
-  Future<void> write(String owner, bool enabled) async => (await db()).execute(
-    'INSERT OR REPLACE INTO consent VALUES(?,1,?)',
-    [owner, enabled ? 1 : 0],
-  );
+  Future<void> write(String owner, bool enabled) async {
+    (await db()).execute('INSERT OR REPLACE INTO consent VALUES(?,1,?)',
+      [owner, enabled ? 1 : 0]);
+    await flushSqlitePlatform();
+  }
   Future<void> close() async {
     if (_pending != null) (await _pending!).close();
   }
@@ -65,7 +68,7 @@ class PersonalLearningClient {
     required this.store,
     Stream<void> identityChanges = const Stream.empty(),
     HttpClient Function()? createClient,
-  }) : createClient = createClient ?? HttpClient.new {
+  }) : createClient = createClient ?? createPlatformHttpClient {
     _identities = identityChanges.listen((_) {
       _changes.add(null);
     });

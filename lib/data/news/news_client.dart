@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import '../http/platform_http_client.dart';
+
 import 'package:path_provider/path_provider.dart';
 
 import '../../models/news_models.dart';
@@ -15,7 +17,7 @@ class NewsClient {
     Future<Directory> Function()? directory,
     HttpClient Function()? createClient,
   }) : _directory = directory ?? getApplicationSupportDirectory,
-       _createClient = createClient ?? HttpClient.new;
+       _createClient = createClient ?? createPlatformHttpClient;
 
   final Uri? projectUri;
   final String publicKey;

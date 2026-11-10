@@ -1,0 +1,13 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: credentialless
+  Permissions-Policy: camera=(), geolocation=()
+  Cache-Control: no-cache
+
+/sqlite3.wasm
+  Content-Type: application/wasm
+
+/canvaskit/*
+  Cache-Control: public, max-age=86400

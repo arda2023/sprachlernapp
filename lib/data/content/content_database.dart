@@ -7,8 +7,7 @@ import 'dart:isolate';
 import 'package:drift/isolate.dart';
 
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
-import 'package:sqlite3/sqlite3.dart';
+import '../platform/sqlite_platform.dart';
 
 import '../../domain/content.dart';
 
@@ -431,12 +430,28 @@ class ContentManifest {
 class ContentDatabase extends _$ContentDatabase {
   ContentDatabase._(Database raw, this.info)
     : _raw = raw,
-      super(NativeDatabase.opened(raw, enableMigrations: false));
+      super(openedDatabase(raw, enableMigrations: false));
 
   ContentDatabase._remote(super.executor, this.info) : _raw = null;
 
   /// Isolated test executors only; production must use the validated openers.
   ContentDatabase.forTesting(super.executor, this.info) : _raw = null;
+
+  /// Validated immutable browser bundle; never receives learner writes.
+  static Future<ContentDatabase> fromBytes(Uint8List bytes, ContentManifest manifest) async {
+    if (bytes.length != manifest.sizeBytes || sha256.convert(bytes).toString() != manifest.sha256) {
+      throw const ContentUnavailable(ContentUnavailableReason.corrupt, 'Inhaltspaket passt nicht zur Prüfsumme.');
+    }
+    final raw = await openBundledDatabase(bytes, manifest.sha256);
+    try {
+      raw.execute('PRAGMA query_only=ON');
+      final info = validateContentSchema(raw, lang: manifest.lang);
+      if (info.version != manifest.version || info.schemaVersion != manifest.schemaVersion) {
+        throw const ContentUnavailable(ContentUnavailableReason.incompatible, 'Inhaltsversion stimmt nicht mit dem Manifest überein.');
+      }
+      return ContentDatabase._(raw, info);
+    } catch (_) { raw.close(); rethrow; }
+  }
 
   /// Only a successfully handshaken session can construct a BoundReader.
   static ContentDatabase fromBoundReader(BoundReader reader) => reader._take();
@@ -498,7 +513,7 @@ class ContentDatabase extends _$ContentDatabase {
         final release=raw.select('SELECT lang, version, schema_version FROM content_releases');
         if(check.length!=1||check.first.values.first!='ok'||release.length!=1||release.first['lang']!=lang
             ||release.first['version']!=info.version||release.first['schema_version']!=info.schemaVersion){throw StateError('Inhalt während Öffnung geändert.');}
-        return NativeDatabase.opened(raw,enableMigrations:false);
+        return openedDatabase(raw,enableMigrations:false);
       }catch(_){raw.close();rethrow;}
     })));
     try {

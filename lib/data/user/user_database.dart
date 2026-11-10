@@ -1,10 +1,8 @@
 import 'dart:io';
-import 'package:sqlite3/sqlite3.dart' as sqlite;
+import '../platform/sqlite_platform.dart' as sqlite;
 
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
-import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
+import '../platform/sqlite_platform.dart' show openUserExecutor, fileDatabase;
 
 part 'user_database.g.dart';
 
@@ -239,7 +237,7 @@ class UserDatabase extends _$UserDatabase {
   /// user.db at [file], created on first open.
   factory UserDatabase.file(File file) {
     backupBeforeMigration(file);
-    return UserDatabase(NativeDatabase(file));
+    return UserDatabase(fileDatabase(file));
   }
 
   static void backupBeforeMigration(File file) {
@@ -258,14 +256,10 @@ class UserDatabase extends _$UserDatabase {
   }
 
   /// `<application support>/user.db`, opened on a background isolate.
-  static Future<UserDatabase> openForApp() async {
-    final dir = await getApplicationSupportDirectory();
-    final file = File(p.join(dir.path, 'user.db'));
-    backupBeforeMigration(file);
-    return UserDatabase(
-      NativeDatabase.createInBackground(file),
-    );
-  }
+  static Future<UserDatabase> openForApp({String? accountId}) async =>
+      UserDatabase(await openUserExecutor(
+        accountId: accountId, beforeOpen: backupBeforeMigration,
+      ));
 
   Future<void> _contextTriggers() async {
     for (final op in ['UPDATE', 'DELETE']) {
