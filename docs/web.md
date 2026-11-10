@@ -127,11 +127,49 @@ Systemen nach dem Build:
 npx wrangler pages deploy build/web --project-name linglossa
 ```
 
-Den Projektnamen gegebenenfalls an das eigene Pages-Projekt anpassen. Für einen
-späteren Git-Build muss die Buildumgebung Flutter und die nicht versionierten
-Inhaltspakete bereitstellen; allein `flutter build web` aus einem frischen
-Cloudflare-Checkout reicht deshalb nicht. Keine Zugangsdaten oder internen
-Packarchive zu Git hinzufügen, um das zu umgehen.
+Den Projektnamen gegebenenfalls an das eigene Pages-Projekt anpassen.
+
+### Automatische Builds aus GitHub
+
+Cloudflare Pages verwendet den Produktionsbranch `ui-polish-launch-screen`,
+das Repository-Hauptverzeichnis als Arbeitsverzeichnis, den Buildbefehl
+`python3 tool/cloudflare_build.py` und das Ausgabeverzeichnis **`build/web`**.
+In der Cloudflare-Buildumgebung müssen `SUPABASE_URL` und der öffentliche
+`SUPABASE_ANON_KEY` gesetzt sein. Keine Server-Schlüssel hinterlegen.
+
+Der Bootstrap installiert Flutter **3.47.2** aus dem offiziellen Git-Repository
+und prüft die vollständige Revision
+`d3b14c876900e553bc736ca19295fc09e3853e8e`. Anschließend lädt er die nicht
+versionierten Pakete der fünf Sprachen aus dem bestehenden unveränderlichen
+Deployment `https://f192a6a3.linglossa.pages.dev`. Dateiliste, Größen und SHA-256
+stehen in `tool/cloudflare_assets.lock.json`. Downloads haben Zeitlimits und
+Wiederholungsversuche; nur vollständig geprüfte Dateien ersetzen lokale Dateien.
+Danach übernimmt der bestehende Produktionshelper `tool/build_web.py` den Build.
+
+**Dieses Quelldeployment muss erhalten und öffentlich abrufbar bleiben.**
+Es darf nicht gelöscht werden, solange der Lock darauf verweist. Neue freigegebene
+Pakete benötigen ein neues dauerhaft erhaltenes Deployment und eine gemeinsam
+geprüfte Aktualisierung der Lock-Datei. Eine veränderliche Produktions-URL ist
+keine geeignete Paketquelle. Inhaltsdateien und Zugangsdaten bleiben außerhalb
+von Git.
+
+Lokale Prüfung ohne Releasebuild und ohne Installation eines weiteren SDKs:
+
+macOS Terminal:
+
+```sh
+python3 tool/cloudflare_build.py --prepare-only --use-installed-flutter
+```
+
+Windows PowerShell:
+
+```powershell
+py -3 tool/cloudflare_build.py --prepare-only --use-installed-flutter
+```
+
+Auch das vorhandene Flutter-SDK muss dabei exakt der festgelegten Revision
+entsprechen. Die automatische SDK-Installation ist für die Linux-Buildumgebung
+von Cloudflare vorgesehen.
 
 Die ausgelieferten Header aktivieren die Browserisolierung für SQLite und
 deklarieren `.wasm` korrekt. Die Anwendung wird unter der HTTPS-Pages-URL am

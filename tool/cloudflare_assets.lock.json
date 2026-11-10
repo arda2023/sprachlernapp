@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "base_url": "https://f192a6a3.linglossa.pages.dev/assets",
+  "assets": [
+    {
+      "path": "assets/content/en/content.sqlite",
+      "bytes": 26198016,
+      "sha256": "b85793932825a22e92ac744a42255e9f333acd35809aaba46edb5a395f099bdb"
+    },
+    {
+      "path": "assets/content/en/content.manifest.json",
+      "bytes": 1068,
+      "sha256": "74a0bce4d16bb3084f762dd6afc69accc44c80db545dba9871b21d0b8c7adbfe"
+    },
+    {
+      "path": "assets/content/pt-BR/content.sqlite",
+      "bytes": 21540864,
+      "sha256": "15fafd1bd2e57dff97fb92c413cc8024fe202ae8aad5793cc0f5a20b3517b830"
+    },
+    {
+      "path": "assets/content/pt-BR/content.manifest.json",
+      "bytes": 924,
+      "sha256": "b2c46f916f969375e9ad3558bd45f07fcdddd572a42c9048377cf532db41e26b"
+    },
+    {
+      "path": "assets/content/pt-BR/bundled-release.json",
+      "bytes": 1900,
+      "sha256": "0bec6987ddd0673308de1a763a4a734b7433694fc52f2b185376bba52cfccea0"
+    },
+    {
+      "path": "assets/content/pt-BR/history_inventory.json",
+      "bytes": 8181601,
+      "sha256": "d058f6c6481eed662a1578e1d549f1fdbab967776eedf7b437fa9c1ee95e6b3c"
+    },
+    {
+      "path": "assets/content/nb/content.sqlite",
+      "bytes": 19804160,
+      "sha256": "7a657dd2f170b4355a4a3b6012dd9512bd2a0d9c1da832f01956c63a168ccb7e"
+    },
+    {
+      "path": "assets/content/nb/content.manifest.json",
+      "bytes": 892,
+      "sha256": "4b5a890af6bc885f2c78d53f410866d5b4ed7b551e3047c2c3d79d6440d34c05"
+    },
+    {
+      "path": "assets/content/nb/bundled-release.json",
+      "bytes": 1734,
+      "sha256": "490491467d20a71e12da425b960cb1314db0ec9c5162afd3dc8f98ad3448dbbe"
+    },
+    {
+      "path": "assets/content/nb/history_inventory.json",
+      "bytes": 7663275,
+      "sha256": "b83b3876918ed0057c41fb057fbc54be8d9180802a61dae4961eb91b8e6dd930"
+    },
+    {
+      "path": "assets/content/it/content.sqlite",
+      "bytes": 20643840,
+      "sha256": "6465c7cd9d9a8ffad231dd377844cc8c85506599be39d480314b28e9859281f9"
+    },
+    {
+      "path": "assets/content/it/content.manifest.json",
+      "bytes": 892,
+      "sha256": "89db75aae0a9f1d3cdadd45a5bfd8a8566768b821fde1136b5e0fdcc4c9b2a77"
+    },
+    {
+      "path": "assets/content/it/bundled-release.json",
+      "bytes": 1734,
+      "sha256": "bd6a8811dc2c08d114c06c490e4eb14472f31ede5740e9c339baf43d38a64df7"
+    },
+    {
+      "path": "assets/content/it/history_inventory.json",
+      "bytes": 7929365,
+      "sha256": "6ec6c873ce9c5b578312242cb73e0ea881f8933297d73e67d6d6d8780e2230a8"
+    },
+    {
+      "path": "assets/content/es/content.sqlite",
+      "bytes": 20852736,
+      "sha256": "ec00227f14cdd05266acceae97c325587c586e4bc9877b9362261d4ff7f849c1"
+    },
+    {
+      "path": "assets/content/es/content.manifest.json",
+      "bytes": 892,
+      "sha256": "96a8f2b9f3e06157e0b189aaa03138438b6ec77014cb681b2285cd11c579a08b"
+    },
+    {
+      "path": "assets/content/es/bundled-release.json",
+      "bytes": 1734,
+      "sha256": "ed9e7d323255a07fddae656a7654bc01189e0a6097339d4614ce19b9b64240ed"
+    },
+    {
+      "path": "assets/content/es/history_inventory.json",
+      "bytes": 7936845,
+      "sha256": "649490a91488e0276bb85f57467ea8bf35e64e6a65d3662bd4daae99989a48c2"
+    }
+  ]
+}
