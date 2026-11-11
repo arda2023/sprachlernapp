@@ -1,4 +1,5 @@
 import '../web/web_reading_viewport.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../presentation/providers/deck_providers.dart';
@@ -32,7 +33,8 @@ class DeckDetailsScreen extends ConsumerWidget {
   static Future<void> open(BuildContext context, String deckId) =>
       Navigator.of(context).push(
         CupertinoPageRoute<void>(
-          builder: (_) => WebReadingViewport(child: DeckDetailsScreen(deckId: deckId)),
+          builder: (_) =>
+              WebReadingViewport(child: DeckDetailsScreen(deckId: deckId)),
         ),
       );
 

@@ -124,7 +124,9 @@ abstract interface class BillingSyncGateway {
 
 class SupabaseBillingSyncGateway implements BillingSyncGateway {
   SupabaseBillingSyncGateway(this.auth, {HttpClient? client})
-    : _client = client ?? (createPlatformHttpClient()..connectionTimeout = _requestTimeout);
+    : _client =
+          client ??
+          (createPlatformHttpClient()..connectionTimeout = _requestTimeout);
 
   static const _requestTimeout = Duration(seconds: 15);
 

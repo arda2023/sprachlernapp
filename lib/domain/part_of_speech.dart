@@ -25,12 +25,10 @@ String germanPartOfSpeech(String tag) => switch (tag.trim().toUpperCase()) {
 /// One sentence on what the word class does, for the form info. Null for
 /// tags without a short, safe explanation.
 String? partOfSpeechRole(String tag) => switch (tag.trim().toUpperCase()) {
-  'NOUN' =>
-    'Ein Substantiv benennt eine Person, ein Ding, einen Ort oder einen Begriff.',
+  'NOUN' => 'Ein Substantiv benennt eine Person, ein Ding, einen Ort oder einen Begriff.',
   'PROPN' => 'Ein Eigenname bezeichnet eine bestimmte Person, einen Ort oder eine Marke.',
   'VERB' => 'Ein Verb beschreibt, was jemand tut oder was geschieht.',
-  'AUX' =>
-    'Ein Hilfsverb bildet zusammen mit einem anderen Verb Zeiten oder das Passiv.',
+  'AUX' => 'Ein Hilfsverb bildet zusammen mit einem anderen Verb Zeiten oder das Passiv.',
   'ADJ' => 'Ein Adjektiv beschreibt, wie jemand oder etwas ist.',
   'ADV' => 'Ein Adverb sagt, wie, wann, wo oder wie oft etwas geschieht.',
   'PRON' => 'Ein Pronomen steht für ein Substantiv, etwa ich, sie oder das.',

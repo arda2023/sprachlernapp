@@ -444,19 +444,20 @@ class _ListeningFeature extends StatelessWidget {
                           const SizedBox(width: 12),
                           if (premiumLocked)
                             const PremiumLockBadge(size: 44)
-                          else Container(
-                            width: 44,
-                            height: 44,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: colors.active,
+                          else
+                            Container(
+                              width: 44,
+                              height: 44,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: colors.active,
+                              ),
+                              child: Icon(
+                                CupertinoIcons.play_fill,
+                                size: 18,
+                                color: Color(0xFFFFFFFF),
+                              ),
                             ),
-                            child: Icon(
-                              CupertinoIcons.play_fill,
-                              size: 18,
-                              color: Color(0xFFFFFFFF),
-                            ),
-                          ),
                         ],
                       ),
                     ],

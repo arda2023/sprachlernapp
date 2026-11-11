@@ -5,14 +5,7 @@ import '../../../widgets/anchored_popover.dart';
 import '../../../widgets/popover_content.dart';
 import 'local_submission_sheet.dart';
 
-enum PracticeAction {
-  share,
-  disable,
-  favorite,
-  report,
-  feedback,
-  settings,
-}
+enum PracticeAction { share, disable, favorite, report, feedback, settings }
 
 /// The practice menu ("Mehr"): a popover pointing at [context], the menu
 /// button. It closes with the chosen action.
@@ -30,11 +23,7 @@ Future<PracticeAction?> showPracticeMenu(
     children: [
       for (final item in [
         (PracticeAction.share, CupertinoIcons.share, 'Teilen'),
-        (
-          PracticeAction.disable,
-          CupertinoIcons.eye_slash,
-          'Wort deaktivieren',
-        ),
+        (PracticeAction.disable, CupertinoIcons.eye_slash, 'Wort deaktivieren'),
         (
           PracticeAction.favorite,
           favorite ? CupertinoIcons.heart_fill : CupertinoIcons.heart,

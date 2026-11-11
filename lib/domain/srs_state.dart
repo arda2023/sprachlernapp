@@ -4,6 +4,7 @@ import 'new_card_selection.dart';
 // Pure Dart: no Flutter imports (see CLAUDE.md, domain layer).
 
 import 'dart:math';
+
 import 'mixed_introduction_order.dart';
 
 /// Where a card came from (`user_cards.origin`).
@@ -167,19 +168,34 @@ VocabBreakdown deriveVocabBreakdown({
   required DateTime now,
   Set<String> hiddenIds = const {},
 }) {
-  final ids = eligiblePracticeIds(activeDeckCardIds: activeDeckCardIds,
-    states: cards, contentCards: contentCards, knownCardIds: knownCardIds,
-    explicitStoryIds: explicitStoryIds, targetsResolved: targetsResolved,
-    hiddenIds: hiddenIds);
+  final ids = eligiblePracticeIds(
+    activeDeckCardIds: activeDeckCardIds,
+    states: cards,
+    contentCards: contentCards,
+    knownCardIds: knownCardIds,
+    explicitStoryIds: explicitStoryIds,
+    targetsResolved: targetsResolved,
+    hiddenIds: hiddenIds,
+  );
   var due = 0, building = 0, mastered = 0, unseen = 0;
   for (final id in ids) {
     final card = cards[id];
-    if (card == null || card.box == 0) { unseen++; }
-    else if (card.isDue(now)) { due++; }
-    else if (card.box == 5) { mastered++; }
-    else { building++; }
+    if (card == null || card.box == 0) {
+      unseen++;
+    } else if (card.isDue(now)) {
+      due++;
+    } else if (card.box == 5) {
+      mastered++;
+    } else {
+      building++;
+    }
   }
-  return VocabBreakdown(due: due, building: building, mastered: mastered, unseen: unseen);
+  return VocabBreakdown(
+    due: due,
+    building: building,
+    mastered: mastered,
+    unseen: unseen,
+  );
 }
 
 /// One eligible exercise inventory for state counters and lexical counts.
@@ -193,15 +209,32 @@ Set<String> eligiblePracticeIds({
   // Cards only deactivated decks lead to count nowhere (04.11.2026).
   Set<String> hiddenIds = const {},
 }) {
-  final story = [for (final s in states.values)
-    if (s.box == 0 && (s.origin == CardOrigin.story || explicitStoryIds.contains(s.cardId))) s.cardId];
+  final story = [
+    for (final s in states.values)
+      if (s.box == 0 &&
+          (s.origin == CardOrigin.story || explicitStoryIds.contains(s.cardId)))
+        s.cardId,
+  ];
   final groups = LearningGroups(contentCards, states);
-  final newIds = contentCards.isEmpty ? {...activeDeckCardIds, ...story}
-      : targetsResolved ? {...activeDeckCardIds, ...groups.project(story, exactForms: true)}
-      : groups.project([...activeDeckCardIds, ...story], exactForms: true).toSet();
-  return {for (final id in {...newIds, ...states.values.where((s) => s.box >= 1).map((s) => s.cardId)})
-    if ((knownCardIds.contains(id) || (!states.containsKey(id) && newIds.contains(id))) && (states[id]?.isActive ?? true) &&
-        !hiddenIds.contains(id)) id};
+  final newIds = contentCards.isEmpty
+      ? {...activeDeckCardIds, ...story}
+      : targetsResolved
+      ? {...activeDeckCardIds, ...groups.project(story, exactForms: true)}
+      : groups.project([
+          ...activeDeckCardIds,
+          ...story,
+        ], exactForms: true).toSet();
+  return {
+    for (final id in {
+      ...newIds,
+      ...states.values.where((s) => s.box >= 1).map((s) => s.cardId),
+    })
+      if ((knownCardIds.contains(id) ||
+              (!states.containsKey(id) && newIds.contains(id))) &&
+          (states[id]?.isActive ?? true) &&
+          !hiddenIds.contains(id))
+        id,
+  };
 }
 
 class LexicalBreakdown {
@@ -209,8 +242,11 @@ class LexicalBreakdown {
   final int total, practiced;
 }
 
-LexicalBreakdown deriveLexicalBreakdown(Set<String> eligibleIds,
-    Map<String, ContentCard> cards, Map<String, UserCardState> states) {
+LexicalBreakdown deriveLexicalBreakdown(
+  Set<String> eligibleIds,
+  Map<String, ContentCard> cards,
+  Map<String, UserCardState> states,
+) {
   final total = <String>{}, practiced = <String>{};
   final keys = lexicalCountingKeys(cards);
   for (final id in eligibleIds) {
@@ -242,7 +278,12 @@ enum DeckSessionKind {
 /// One place in a session queue. A [repeat] is the in-session repeat of a
 /// card: it is practised again but never logged and never changes the box.
 class SessionEntry {
-  const SessionEntry(this.cardId, {this.repeat = false, this.mode, this.source});
+  const SessionEntry(
+    this.cardId, {
+    this.repeat = false,
+    this.mode,
+    this.source,
+  });
 
   final String cardId;
   final bool repeat;
@@ -314,17 +355,21 @@ List<NewTarget> selectNewTargets({
     }
   }
   List<String> candidates(NewWordSource source) {
-    final ids = [for (final id in source.cardIds)
-      if (owner[id] == source.id && cards.containsKey(id) &&
-          (states[id]?.isActive ?? true) && (states[id]?.box ?? 0) == 0) id];
-    return source.id == storySourceId ? ids : mixedIntroductionOrder(ids, cards, source.id);
+    final ids = [
+      for (final id in source.cardIds)
+        if (owner[id] == source.id &&
+            cards.containsKey(id) &&
+            (states[id]?.isActive ?? true) &&
+            (states[id]?.box ?? 0) == 0)
+          id,
+    ];
+    return source.id == storySourceId
+        ? ids
+        : mixedIntroductionOrder(ids, cards, source.id);
   }
+
   final queues = [
-    for (final source in ranked)
-      (
-        id: source.id,
-        ids: candidates(source),
-      ),
+    for (final source in ranked) (id: source.id, ids: candidates(source)),
   ];
   if (queues.isEmpty) return [];
   final last = lastSource == null ? -1 : order.indexOf(lastSource);
@@ -379,18 +424,19 @@ List<SessionEntry> buildPracticeQueue({
   for (final id in reviewIds) {
     position.putIfAbsent(id, () => position.length);
   }
-  final due = [
-    for (final id in position.keys)
-      if (cards.containsKey(id) &&
-          (states[id]?.isActive ?? false) &&
-          states[id]!.isDue(now))
-        id,
-  ]..sort((a, b) {
-      final d = states[a]!.dueAt == null || states[b]!.dueAt == null
-          ? 0
-          : states[a]!.dueAt!.compareTo(states[b]!.dueAt!);
-      return d != 0 ? d : position[a]!.compareTo(position[b]!);
-    });
+  final due =
+      [
+        for (final id in position.keys)
+          if (cards.containsKey(id) &&
+              (states[id]?.isActive ?? false) &&
+              states[id]!.isDue(now))
+            id,
+      ]..sort((a, b) {
+        final d = states[a]!.dueAt == null || states[b]!.dueAt == null
+            ? 0
+            : states[a]!.dueAt!.compareTo(states[b]!.dueAt!);
+        return d != 0 ? d : position[a]!.compareTo(position[b]!);
+      });
   final fresh = selectNewTargets(
     sources: sources,
     cards: cards,
@@ -423,16 +469,17 @@ List<SessionEntry> buildEarlyQueue({
         id,
   }.toList();
   final order = {for (final (i, id) in ids.indexed) id: i};
-  final picked = (mode == ReviewMode.early
-      ? ids.where((id) => !states[id]!.isDue(now)).toList()
-      : ids)
-    ..sort((a, b) {
-      final da = states[a]!.dueAt, db = states[b]!.dueAt;
-      final c = da == null || db == null
-          ? (da == null ? (db == null ? 0 : -1) : 1)
-          : da.compareTo(db);
-      return c != 0 ? c : order[a]!.compareTo(order[b]!);
-    });
+  final picked =
+      (mode == ReviewMode.early
+            ? ids.where((id) => !states[id]!.isDue(now)).toList()
+            : ids)
+        ..sort((a, b) {
+          final da = states[a]!.dueAt, db = states[b]!.dueAt;
+          final c = da == null || db == null
+              ? (da == null ? (db == null ? 0 : -1) : 1)
+              : da.compareTo(db);
+          return c != 0 ? c : order[a]!.compareTo(order[b]!);
+        });
   return [for (final id in picked.take(size)) SessionEntry(id, mode: mode)];
 }
 
@@ -453,20 +500,32 @@ List<SessionEntry> buildDeckQueue({
       : LearningGroups(cards, states).project(deckCardIds, exactForms: true);
   return switch (kind) {
     DeckSessionKind.learn => buildPracticeQueue(
-        reviewIds: ids,
-        sources: [NewWordSource('deck', ids)],
-        cards: cards,
-        states: states,
-        now: now,
-        size: size,
-        mode: ReviewMode.deck,
-      ),
-    DeckSessionKind.revue => buildEarlyQueue(scopeIds: ids, cards: cards,
-        states: states, now: now, size: size, mode: ReviewMode.revue),
-    DeckSessionKind.early => buildEarlyQueue(scopeIds: ids, cards: cards,
-        states: states, now: now, size: size),
-    DeckSessionKind.mixed =>
-      throw ArgumentError('Use buildMixedQueue for all-source sessions'),
+      reviewIds: ids,
+      sources: [NewWordSource('deck', ids)],
+      cards: cards,
+      states: states,
+      now: now,
+      size: size,
+      mode: ReviewMode.deck,
+    ),
+    DeckSessionKind.revue => buildEarlyQueue(
+      scopeIds: ids,
+      cards: cards,
+      states: states,
+      now: now,
+      size: size,
+      mode: ReviewMode.revue,
+    ),
+    DeckSessionKind.early => buildEarlyQueue(
+      scopeIds: ids,
+      cards: cards,
+      states: states,
+      now: now,
+      size: size,
+    ),
+    DeckSessionKind.mixed => throw ArgumentError(
+      'Use buildMixedQueue for all-source sessions',
+    ),
   };
 }
 
@@ -489,19 +548,26 @@ List<SessionEntry> buildMixedQueue({
   Set<String> hiddenIds = const {},
 }) {
   final groups = LearningGroups(cards, states);
-  final storyNew = states.values
-      .where((s) =>
-          s.isActive &&
-          s.box == 0 &&
-          (storyAdditions.containsKey(s.cardId) || s.origin == CardOrigin.story))
-      .toList()
-    ..sort((a, b) {
-      final d = (storyAdditions[a.cardId] ?? a.createdAt ?? DateTime(1970))
-          .compareTo(storyAdditions[b.cardId] ?? b.createdAt ?? DateTime(1970));
-      return d != 0 ? d : a.cardId.compareTo(b.cardId);
-    });
+  final storyNew =
+      states.values
+          .where(
+            (s) =>
+                s.isActive &&
+                s.box == 0 &&
+                (storyAdditions.containsKey(s.cardId) ||
+                    s.origin == CardOrigin.story),
+          )
+          .toList()
+        ..sort((a, b) {
+          final d = (storyAdditions[a.cardId] ?? a.createdAt ?? DateTime(1970))
+              .compareTo(
+                storyAdditions[b.cardId] ?? b.createdAt ?? DateTime(1970),
+              );
+          return d != 0 ? d : a.cardId.compareTo(b.cardId);
+        });
   final story = groups.project(storyNew.map((s) => s.cardId), exactForms: true);
-  final decks = deckSources ??
+  final decks =
+      deckSources ??
       [
         NewWordSource(
           'decks',

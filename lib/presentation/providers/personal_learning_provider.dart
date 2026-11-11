@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+
 import '../../data/content/bundled_content_updates.dart';
 import '../../data/platform/sqlite_platform.dart';
 
@@ -16,7 +17,9 @@ import '../../data/learning/personal_translation_hints.dart';
 
 final personalLearningClientProvider = Provider<PersonalLearningClient>((ref) {
   final auth = ref.watch(contentAuthProvider);
-  final store = PersonalConsentStore(() => openPrivateDatabase('private_learning_consent.sqlite'));
+  final store = PersonalConsentStore(
+    () => openPrivateDatabase('private_learning_consent.sqlite'),
+  );
   final client = PersonalLearningClient(
     url: auth.url,
     publicKey: auth.publicKey,
@@ -63,8 +66,10 @@ final personalReleaseReferenceProvider = FutureProvider<Map<String, dynamic>>((
     contentInstallerProvider(content.info.lang).future,
   );
   final offer = kIsWeb
-      ? await BundledContentTransport(installer.loadAsset, content.info.lang)
-          .latest(content.info.lang, 0)
+      ? await BundledContentTransport(
+          installer.loadAsset,
+          content.info.lang,
+        ).latest(content.info.lang, 0)
       : await ContentInstallJournal(
           installer.supportDirectory,
           content.info.lang,

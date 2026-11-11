@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import '../platform/sqlite_platform.dart';
+
 import 'package:crypto/crypto.dart';
 
 import 'content_database.dart';

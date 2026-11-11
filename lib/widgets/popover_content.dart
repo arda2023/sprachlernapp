@@ -48,7 +48,11 @@ class PopoverTitle extends StatelessWidget {
       text,
       style: editorial
           ? AppType.editorial(color: popoverInk, size: 24)
-          : AppType.chrome(size: 20, weight: FontWeight.w800, color: popoverInk),
+          : AppType.chrome(
+              size: 20,
+              weight: FontWeight.w800,
+              color: popoverInk,
+            ),
     ),
   );
 }
@@ -58,10 +62,8 @@ class PopoverDivider extends StatelessWidget {
   const PopoverDivider({super.key});
 
   @override
-  Widget build(BuildContext context) => Container(
-    height: 1,
-    color: popoverInk.withValues(alpha: 0.25),
-  );
+  Widget build(BuildContext context) =>
+      Container(height: 1, color: popoverInk.withValues(alpha: 0.25));
 }
 
 /// One row in a popover menu: white icon, label and a chevron, or a round

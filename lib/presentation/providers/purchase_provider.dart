@@ -556,7 +556,9 @@ class PurchaseController extends Notifier<PurchaseState> {
     if (!_isCurrentAccount(generation, accountId)) return;
     final active = state.hasPremiumUiAccess;
     state = state.copyWith(
-      lastOutcome: active ? PurchaseResult.restored : PurchaseResult.noPurchases,
+      lastOutcome: active
+          ? PurchaseResult.restored
+          : PurchaseResult.noPurchases,
       clearError: active,
     );
   }

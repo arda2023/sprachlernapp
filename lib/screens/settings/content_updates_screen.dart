@@ -1,5 +1,6 @@
 import '../../domain/language_profile.dart';
 import '../../domain/content.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -33,7 +34,9 @@ class _ContentUpdatesScreenState extends ConsumerState<ContentUpdatesScreen> {
     final info = content.isLoading ? null : content.asData?.value;
     final selected = ref.watch(selectedContentLanguageProvider);
     final lang = selected.asData?.value ?? info?.lang;
-    final name = ContentLanguageProfile.forLanguage(lang ?? 'en')?.displayName ?? 'Lernsprache';
+    final name =
+        ContentLanguageProfile.forLanguage(lang ?? 'en')?.displayName ??
+        'Lernsprache';
     final busy = {
       'signing_in',
       'checking',
@@ -49,7 +52,11 @@ class _ContentUpdatesScreenState extends ConsumerState<ContentUpdatesScreen> {
         children: [
           Text(
             info == null
-                ? '$name · ${content.isLoading ? 'Installation prüfen …' : content.error is ContentUnavailable && (content.error as ContentUnavailable).reason == ContentUnavailableReason.missing ? 'Noch nicht installiert' : 'Installation nicht verfügbar'}'
+                ? '$name · ${content.isLoading
+                      ? 'Installation prüfen …'
+                      : content.error is ContentUnavailable && (content.error as ContentUnavailable).reason == ContentUnavailableReason.missing
+                      ? 'Noch nicht installiert'
+                      : 'Installation nicht verfügbar'}'
                 : '$name · ${info.version}',
             style: Theme.of(context).textTheme.titleLarge,
           ),

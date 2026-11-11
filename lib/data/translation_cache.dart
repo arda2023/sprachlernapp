@@ -86,6 +86,7 @@ class TranslationCache {
     (await _db()).execute('DELETE FROM deletion WHERE owner=?', [owner]);
     await flushSqlitePlatform();
   }
+
   Future<WordCloudConsent> readWordConsent(String owner) async {
     final rows = (await _db()).select(
       'SELECT version,enabled FROM word_cloud_consent WHERE owner=?',

@@ -8,11 +8,25 @@ String learningHash(List<Object?> values) =>
     sha256.convert(utf8.encode(jsonEncode(values))).toString();
 
 class LearningIdentity {
-  const LearningIdentity(this.lang, this.formNorm, this.semanticAnchor, {this.function});
+  const LearningIdentity(
+    this.lang,
+    this.formNorm,
+    this.semanticAnchor, {
+    this.function,
+  });
   final String? function;
   final String lang, formNorm, semanticAnchor;
-  String get key =>
-      learningHash(function == null ? ['learning-identity-v1', lang, formNorm, semanticAnchor] : ['form-learning-identity-v1', lang, formNorm, semanticAnchor, function]);
+  String get key => learningHash(
+    function == null
+        ? ['learning-identity-v1', lang, formNorm, semanticAnchor]
+        : [
+            'form-learning-identity-v1',
+            lang,
+            formNorm,
+            semanticAnchor,
+            function,
+          ],
+  );
   String get localId =>
       'u:${learningHash(function == null ? ['local-card-v1', lang, formNorm, semanticAnchor] : ['local-form-card-v1', lang, formNorm, semanticAnchor, function])}';
 }
@@ -160,15 +174,22 @@ class StoryLearningCandidate {
     }
     if (token.function != null &&
         (!{'base', 'past', 'past_participle'}.contains(token.function) ||
-         !{'VERB', 'AUX'}.contains(token.pos) ||
-         token.lexicalId == null || token.lexicalId!.trim().isEmpty)) {
+            !{'VERB', 'AUX'}.contains(token.pos) ||
+            token.lexicalId == null ||
+            token.lexicalId!.trim().isEmpty)) {
       return 'Form und Bedeutung sind nicht vollständig belegt.';
     }
     final form = token.formTarget;
-    if (form != null && (form.cardId != token.cardId || form.senseId != token.senseId || contentFormNorm(form.form) != identity.formNorm)) {
+    if (form != null &&
+        (form.cardId != token.cardId ||
+            form.senseId != token.senseId ||
+            contentFormNorm(form.form) != identity.formNorm)) {
       return 'Die Formreferenz passt nicht zum angetippten Wort.';
     }
-    if (card != null && token.function != null && (card!.formFunction != token.function || card!.lexicalTargetId != token.lexicalId)) {
+    if (card != null &&
+        token.function != null &&
+        (card!.formFunction != token.function ||
+            card!.lexicalTargetId != token.lexicalId)) {
       return 'Die Lernkarte gehört zu einer anderen Form.';
     }
     if (card != null &&
@@ -189,18 +210,23 @@ class StoryLearningCandidate {
     }
     if (needsContext && card == null && token.function != null) {
       var cursor = 0;
-      final ordered = [...sentence.tokens]..sort((a,b) => a.start.compareTo(b.start));
+      final ordered = [...sentence.tokens]
+        ..sort((a, b) => a.start.compareTo(b.start));
       for (var i = 0; i < ordered.length; i++) {
         final t = ordered[i];
-        if (t.index != i || t.start < cursor || t.end <= t.start || t.end > sentence.text.length ||
-            sentence.text.substring(cursor,t.start).trim().isNotEmpty ||
-            sentence.text.substring(t.start,t.end) != t.surface ||
+        if (t.index != i ||
+            t.start < cursor ||
+            t.end <= t.start ||
+            t.end > sentence.text.length ||
+            sentence.text.substring(cursor, t.start).trim().isNotEmpty ||
+            sentence.text.substring(t.start, t.end) != t.surface ||
             (RegExp(r'[a-zA-Z]').hasMatch(t.surface) && !t.annotated)) {
           return 'Für diese Form fehlt eine vollständige Satzannotation.';
         }
         cursor = t.end;
       }
-      if (sentence.text.substring(cursor).trim().isNotEmpty || !ordered.contains(token)) {
+      if (sentence.text.substring(cursor).trim().isNotEmpty ||
+          !ordered.contains(token)) {
         return 'Für diese Form fehlt eine vollständige Satzannotation.';
       }
     }
@@ -269,17 +295,25 @@ class StoryPracticeContext {
   final StorySentence sentence;
   final StoryToken token;
   String get fingerprint => learningHash([
-    sentence.id, sentence.text, sentence.translation, token.index,
+    sentence.id,
+    sentence.text,
+    sentence.translation,
+    token.index,
     for (final t in sentence.tokens)
       [t.start, t.end, t.surface, t.lemmaId, t.senseId, t.gloss, t.function],
   ]);
 
   String? validationProblem(StoryToken source) {
-    const invalid = 'Der geprüfte Storykontext ist unvollständig oder passt nicht zur Wortstelle.';
-    if (!source.annotated || !token.annotated ||
-        token.surface != source.surface || token.senseId != source.senseId ||
-        token.lemmaId != source.lemmaId || token.function != source.function ||
-        token.lexicalId != source.lexicalId || sentence.translation.trim().isEmpty ||
+    const invalid =
+        'Der geprüfte Storykontext ist unvollständig oder passt nicht zur Wortstelle.';
+    if (!source.annotated ||
+        !token.annotated ||
+        token.surface != source.surface ||
+        token.senseId != source.senseId ||
+        token.lemmaId != source.lemmaId ||
+        token.function != source.function ||
+        token.lexicalId != source.lexicalId ||
+        sentence.translation.trim().isEmpty ||
         sentence.tokens.where((t) => t.lemmaId != null).length > 20 ||
         !sentence.tokens.contains(token)) {
       return invalid;
@@ -287,11 +321,14 @@ class StoryPracticeContext {
     var cursor = 0;
     for (var i = 0; i < sentence.tokens.length; i++) {
       final t = sentence.tokens[i];
-      if (t.index != i || t.start < cursor || t.end <= t.start ||
+      if (t.index != i ||
+          t.start < cursor ||
+          t.end <= t.start ||
           t.end > sentence.text.length ||
           sentence.text.substring(cursor, t.start).trim().isNotEmpty ||
           sentence.text.substring(t.start, t.end) != t.surface ||
-          (RegExp(r'[\p{L}]', unicode: true).hasMatch(t.surface) && !t.annotated)) {
+          (RegExp(r'[\p{L}]', unicode: true).hasMatch(t.surface) &&
+              !t.annotated)) {
         return invalid;
       }
       cursor = t.end;
@@ -312,5 +349,7 @@ abstract interface class StoryContextCorrectionSource {
 }
 
 abstract interface class StoryContextCorrectionStore {
-  Future<void> applyStoryContextCorrections(List<StoryContextCorrection> corrections);
+  Future<void> applyStoryContextCorrections(
+    List<StoryContextCorrection> corrections,
+  );
 }

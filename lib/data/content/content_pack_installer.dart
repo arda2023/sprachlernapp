@@ -31,14 +31,19 @@ class ContentPackInstaller {
     required Directory supportDirectory,
     this.lang = 'en',
     this.validationRegistry,
-  // ignore: prefer_initializing_formals
+    // ignore: prefer_initializing_formals
   }) : _supportDirectory = supportDirectory;
 
-  ContentPackInstaller._browser(this.lang) : loadAsset = _loadBundled, _supportDirectory = null, validationRegistry = null;
+  ContentPackInstaller._browser(this.lang)
+    : loadAsset = _loadBundled,
+      _supportDirectory = null,
+      validationRegistry = null;
 
   final AssetLoader loadAsset;
   final Directory? _supportDirectory;
-  Directory get supportDirectory => _supportDirectory ?? (throw UnsupportedError('Browser content has no native directory.'));
+  Directory get supportDirectory =>
+      _supportDirectory ??
+      (throw UnsupportedError('Browser content has no native directory.'));
   final String lang;
   final ProcessValidationRegistry? validationRegistry;
 
@@ -59,8 +64,12 @@ class ContentPackInstaller {
     // every bundled language on the first app start (about 7 s each).
     await (_bundledActivations[lang] ??= _activateBundled(lang, support));
     return ContentPackInstaller(
-      loadAsset: _loadBundled, supportDirectory: support, lang: lang,
-      validationRegistry: await ProcessValidationRegistry.forAppSupport(support),
+      loadAsset: _loadBundled,
+      supportDirectory: support,
+      lang: lang,
+      validationRegistry: await ProcessValidationRegistry.forAppSupport(
+        support,
+      ),
     );
   }
 
@@ -76,10 +85,15 @@ class ContentPackInstaller {
     if (value is! Map<String, dynamic> || value['format'] != 2) {
       return ContentManifest.parse(text, lang: lang);
     }
-    final release = await BundledContentTransport(loadAsset, lang).latest(lang, 0);
+    final release = await BundledContentTransport(
+      loadAsset,
+      lang,
+    ).latest(lang, 0);
     if (release == null) {
-      throw const ContentUnavailable(ContentUnavailableReason.corrupt,
-          'Gebündelte Versionsfreigabe fehlt.');
+      throw const ContentUnavailable(
+        ContentUnavailableReason.corrupt,
+        'Gebündelte Versionsfreigabe fehlt.',
+      );
     }
     return release.contentManifest;
   }
@@ -89,11 +103,18 @@ class ContentPackInstaller {
   Future<({int generation, String fingerprint})> routingIdentity() async {
     if (kIsWeb) {
       final manifest = await browserManifest();
-      if (manifest == null) return (generation: 0, fingerprint: 'missing:$lang');
+      if (manifest == null)
+        return (generation: 0, fingerprint: 'missing:$lang');
       return (generation: 0, fingerprint: manifest.sha256);
     }
-    final state = await resolveInstalledState(ContentInstallJournal(supportDirectory, lang));
-    if (state.offer != null) return (generation: state.offer!.generation, fingerprint: state.fingerprint!);
+    final state = await resolveInstalledState(
+      ContentInstallJournal(supportDirectory, lang),
+    );
+    if (state.offer != null)
+      return (
+        generation: state.offer!.generation,
+        fingerprint: state.fingerprint!,
+      );
     final String? text;
     if (state.pointer != null) {
       text = jsonEncode(state.pointer!['manifest']);
@@ -103,14 +124,19 @@ class ContentPackInstaller {
     }
     if (text == null) return (generation: 0, fingerprint: 'missing:$lang');
     final manifest = ContentManifest.parse(text, lang: lang);
-    return (generation: 0, fingerprint: contextCanonicalHash(jsonDecode(manifest.toJson())));
+    return (
+      generation: 0,
+      fingerprint: contextCanonicalHash(jsonDecode(manifest.toJson())),
+    );
   }
 
   /// Metadata only: never install, hash, recover or open a content reader here.
   Future<String> readInstallationMetadata() async {
     if (kIsWeb) {
       final manifest = await browserManifest();
-      return manifest == null ? 'Noch nicht installiert' : 'Installiert · ${manifest.version}';
+      return manifest == null
+          ? 'Noch nicht installiert'
+          : 'Installiert · ${manifest.version}';
     }
     final journal = ContentInstallJournal(supportDirectory, lang);
     final state = await resolveInstalledState(journal);
@@ -118,11 +144,18 @@ class ContentPackInstaller {
     if (state.pointer == null) return 'Noch nicht installiert';
     final file = await journal.currentFile();
     if (file == null || !await file.exists()) return 'Installation beschädigt';
-    if (state.offer != null && !await File('${journal.generation(state.offer!.id).path}/history_inventory.json').exists()) {
+    if (state.offer != null &&
+        !await File(
+          '${journal.generation(state.offer!.id).path}/history_inventory.json',
+        ).exists()) {
       return 'Installation beschädigt';
     }
-    final version = state.offer?.manifest['version'] ??
-      ContentManifest.parse(jsonEncode(state.pointer!['manifest']), lang: lang).version;
+    final version =
+        state.offer?.manifest['version'] ??
+        ContentManifest.parse(
+          jsonEncode(state.pointer!['manifest']),
+          lang: lang,
+        ).version;
     return 'Installiert · $version · Prüfung beim Öffnen';
   }
 
@@ -153,18 +186,25 @@ class ContentPackInstaller {
     final journal = ContentInstallJournal(supportDirectory, lang);
     final active = await recoverContentInstallation(journal);
     if (active != null) {
-      return (file: File('${journal.generation(active.id).path}/content.sqlite'), manifest: active.contentManifest);
+      return (
+        file: File('${journal.generation(active.id).path}/content.sqlite'),
+        manifest: active.contentManifest,
+      );
     }
-    final pointer=await journal.read('active');
-    final pinned=pointer?['bootstrap']==true
-        ? ContentManifest.parse(jsonEncode(pointer!['manifest']),lang:lang) : null;
-    if(pinned!=null && await _matches(journal.bootstrapFile(pinned),pinned.sha256)) {
-      return (file:journal.bootstrapFile(pinned),manifest:pinned);
+    final pointer = await journal.read('active');
+    final pinned = pointer?['bootstrap'] == true
+        ? ContentManifest.parse(jsonEncode(pointer!['manifest']), lang: lang)
+        : null;
+    if (pinned != null &&
+        await _matches(journal.bootstrapFile(pinned), pinned.sha256)) {
+      return (file: journal.bootstrapFile(pinned), manifest: pinned);
     }
     final manifestBytes = await loadAsset(manifestAsset);
     if (manifestBytes == null && pointer != null) {
-      throw const ContentUnavailable(ContentUnavailableReason.corrupt,
-        'Installierter Inhaltsbestand beschädigt. Reparatur erforderlich.');
+      throw const ContentUnavailable(
+        ContentUnavailableReason.corrupt,
+        'Installierter Inhaltsbestand beschädigt. Reparatur erforderlich.',
+      );
     }
     if (manifestBytes == null) {
       throw ContentUnavailable(
@@ -198,8 +238,11 @@ class ContentPackInstaller {
         'Inhaltspaket passt nicht zur Prüfsumme im Manifest',
       );
     }
-    if(pinned!=null && pinned.sha256!=manifest.sha256) {
-      throw const ContentUnavailable(ContentUnavailableReason.corrupt,'Bootstrap beschädigt; vorhandene Historie erfordert eine kompatible Reparatur.');
+    if (pinned != null && pinned.sha256 != manifest.sha256) {
+      throw const ContentUnavailable(
+        ContentUnavailableReason.corrupt,
+        'Bootstrap beschädigt; vorhandene Historie erfordert eine kompatible Reparatur.',
+      );
     }
     final target = journal.bootstrapFile(manifest);
     if (!await _matches(target, manifest.sha256)) {
@@ -221,7 +264,11 @@ class ContentPackInstaller {
       }
       await tmp.rename(target.path);
     }
-    await journal.write('active',{'bootstrap':true,'generation':0,'manifest':jsonDecode(manifest.toJson())});
+    await journal.write('active', {
+      'bootstrap': true,
+      'generation': 0,
+      'manifest': jsonDecode(manifest.toJson()),
+    });
     return (file: target, manifest: manifest);
   }
 
@@ -230,7 +277,8 @@ class ContentPackInstaller {
     if (!await file.exists()) return false;
     final path = file.path;
     return await Isolate.run(
-          () async => (await sha256.bind(File(path).openRead()).first).toString(),
+          () async =>
+              (await sha256.bind(File(path).openRead()).first).toString(),
         ) ==
         sha;
   }
@@ -246,9 +294,13 @@ class ContentPackInstaller {
       final manifest = await browserManifest();
       final bytes = await loadAsset(databaseAsset);
       if (manifest == null || bytes == null) {
-        throw const ContentUnavailable(ContentUnavailableReason.missing, 'Für diese Sprache ist kein Inhaltspaket enthalten.');
+        throw const ContentUnavailable(
+          ContentUnavailableReason.missing,
+          'Für diese Sprache ist kein Inhaltspaket enthalten.',
+        );
       }
-      if (expectedFingerprint != null && manifest.sha256 != expectedFingerprint) throw const RecoveredGenerationChanged();
+      if (expectedFingerprint != null && manifest.sha256 != expectedFingerprint)
+        throw const RecoveredGenerationChanged();
       final db = await ContentDatabase.fromBytes(bytes, manifest);
       if (cancellation?.isCancelled == true || isCurrent?.call() == false) {
         await db.close();
@@ -257,26 +309,33 @@ class ContentPackInstaller {
       return DriftContentRepository(db);
     }
     final registry = validationRegistry;
-    if (registry == null) return DriftContentRepository(await _openLegacyDatabase());
+    if (registry == null)
+      return DriftContentRepository(await _openLegacyDatabase());
     final cancel = cancellation ?? ReadCancellation();
     final current = isCurrent ?? () => true;
     for (var attempt = 0; attempt < 2; attempt++) {
       try {
         final bound = await openRecoveredContent(
-          ContentInstallJournal(supportDirectory, lang), registry,
+          ContentInstallJournal(supportDirectory, lang),
+          registry,
           expectedFingerprint: expectedFingerprint,
-          cancellation: cancel, isCurrent: current,
+          cancellation: cancel,
+          isCurrent: current,
         );
-        if (bound != null) return DriftContentRepository(ContentDatabase.fromBoundReader(bound));
+        if (bound != null)
+          return DriftContentRepository(ContentDatabase.fromBoundReader(bound));
         final reservation = registry.reserveExternalReader();
         ContentDatabase? db;
         try {
           db = await _openLegacyDatabase(reservation: reservation);
-          if (cancel.isCancelled || !current()) throw StateError('Inhaltsöffnung abgebrochen.');
-          if (expectedFingerprint != null && (await routingIdentity()).fingerprint != expectedFingerprint) {
+          if (cancel.isCancelled || !current())
+            throw StateError('Inhaltsöffnung abgebrochen.');
+          if (expectedFingerprint != null &&
+              (await routingIdentity()).fingerprint != expectedFingerprint) {
             throw const RecoveredGenerationChanged();
           }
-          if (cancel.isCancelled || !current()) throw StateError('Inhaltsöffnung abgebrochen.');
+          if (cancel.isCancelled || !current())
+            throw StateError('Inhaltsöffnung abgebrochen.');
           return DriftContentRepository(db);
         } catch (_) {
           await db?.close();
@@ -285,15 +344,24 @@ class ContentPackInstaller {
         }
       } on RecoveredGenerationChanged {
         // Product owners must re-resolve their key outside this installer.
-        if (expectedFingerprint != null || attempt == 1 || cancel.isCancelled || !current()) rethrow;
+        if (expectedFingerprint != null ||
+            attempt == 1 ||
+            cancel.isCancelled ||
+            !current())
+          rethrow;
       }
     }
     throw StateError('Inhaltsgeneration wiederholt geändert.');
   }
 
-  Future<ContentDatabase> _openLegacyDatabase({ReaderReservation? reservation}) async {
+  Future<ContentDatabase> _openLegacyDatabase({
+    ReaderReservation? reservation,
+  }) async {
     final installed = await install();
-    final db = await ContentDatabase.openInBackground(installed.file, lang: lang);
+    final db = await ContentDatabase.openInBackground(
+      installed.file,
+      lang: lang,
+    );
     if (reservation != null) db.bindExternalReservation(reservation);
     if (db.info.version != installed.manifest.version ||
         db.info.schemaVersion != installed.manifest.schemaVersion) {

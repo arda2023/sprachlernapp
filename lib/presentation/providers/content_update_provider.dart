@@ -186,7 +186,11 @@ class ContentUpdateController extends Notifier<ContentUpdateState> {
 
   Future<void> check({bool automatic = false}) async {
     if (kIsWeb) {
-      if (!automatic) _notice('current', 'Neue Inhalte werden mit einem Update der Webversion bereitgestellt.');
+      if (!automatic)
+        _notice(
+          'current',
+          'Neue Inhalte werden mit einem Update der Webversion bereitgestellt.',
+        );
       return;
     }
     final auth = ref.read(contentAuthProvider);

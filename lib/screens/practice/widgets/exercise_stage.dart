@@ -111,12 +111,13 @@ class _ExerciseStageState extends State<ExerciseStage>
   );
 
   /// How strongly the discs breathe: eases in and out with [pulse].
-  late final _level = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 500),
-  )..addStatusListener((status) {
-      if (status == AnimationStatus.dismissed) _breath.stop();
-    });
+  late final _level =
+      AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 500),
+      )..addStatusListener((status) {
+        if (status == AnimationStatus.dismissed) _breath.stop();
+      });
   final _self = GlobalKey();
   bool _reduceMotion = false;
 

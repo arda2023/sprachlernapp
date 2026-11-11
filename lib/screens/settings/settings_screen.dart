@@ -1,4 +1,5 @@
 import '../web/web_reading_viewport.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show Colors, LinearProgressIndicator, Material, MaterialPageRoute, Scaffold;
@@ -30,8 +31,11 @@ import 'content_updates_screen.dart';
 /// switches, features that are not available yet, content and help.
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
-  static Future<void> open(BuildContext context) => Navigator.of(context)
-      .push(MaterialPageRoute<void>(builder: (_) => const WebReadingViewport(child: SettingsScreen())));
+  static Future<void> open(BuildContext context) => Navigator.of(context).push(
+    MaterialPageRoute<void>(
+      builder: (_) => const WebReadingViewport(child: SettingsScreen()),
+    ),
+  );
   @override
   ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
 }
@@ -93,9 +97,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     }
   }
 
-  void _push(Widget screen) =>
-      Navigator.of(context)
-          .push(MaterialPageRoute<void>(builder: (_) => WebReadingViewport(child: screen)));
+  void _push(Widget screen) => Navigator.of(context).push(
+    MaterialPageRoute<void>(builder: (_) => WebReadingViewport(child: screen)),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -231,14 +235,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           title: 'Audio und Erinnerungen',
           children: [
             for (final (icon, title) in const [
-              (
-                CupertinoIcons.bell,
-                'Lern-Benachrichtigungen',
-              ),
-              (
-                CupertinoIcons.speaker_slash,
-                'Ton aus',
-              ),
+              (CupertinoIcons.bell, 'Lern-Benachrichtigungen'),
+              (CupertinoIcons.speaker_slash, 'Ton aus'),
             ])
               _Row(
                 icon: icon,

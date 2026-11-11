@@ -40,30 +40,49 @@ class PracticeItemResolver {
     final story = user is StoryLearningRepository
         ? user as StoryLearningRepository
         : null;
-    if (user is StoryContextCorrectionStore && content is StoryContextCorrectionSource) {
+    if (user is StoryContextCorrectionStore &&
+        content is StoryContextCorrectionSource) {
       await (user as StoryContextCorrectionStore).applyStoryContextCorrections(
-        await (content as StoryContextCorrectionSource).storyContextCorrections());
+        await (content as StoryContextCorrectionSource)
+            .storyContextCorrections(),
+      );
     }
     final locals = {
       for (final i in await story?.localPracticeItems() ?? <PracticeItem>[])
         i.card.id: i,
     };
-    final retired = catalog?.retired ?? (content is RetiredLearningContentRepository
-        ? await (content as RetiredLearningContentRepository).retiredLearningIdentities()
-        : <String, LearningIdentity>{});
+    final retired =
+        catalog?.retired ??
+        (content is RetiredLearningContentRepository
+            ? await (content as RetiredLearningContentRepository)
+                  .retiredLearningIdentities()
+            : <String, LearningIdentity>{});
     final bindings = await story?.identityBindings() ?? <String, String>{};
     final retiredKeys = retired.values.map((i) => i.key).toSet();
-    final blocked = <String>{...retired.keys,
+    final blocked = <String>{
+      ...retired.keys,
       ...retired.values.map((i) => i.localId),
-      for (final e in bindings.entries) if (retiredKeys.contains(e.key)) e.value};
-    locals.removeWhere((id, item) => blocked.contains(id) ||
-      (item.card.senseId != null && retiredKeys.contains(LearningIdentity(
-        item.card.lang, item.card.formNorm, item.card.senseId!,
-        function: item.card.formFunction).key)));
+      for (final e in bindings.entries)
+        if (retiredKeys.contains(e.key)) e.value,
+    };
+    locals.removeWhere(
+      (id, item) =>
+          blocked.contains(id) ||
+          (item.card.senseId != null &&
+              retiredKeys.contains(
+                LearningIdentity(
+                  item.card.lang,
+                  item.card.formNorm,
+                  item.card.senseId!,
+                  function: item.card.formFunction,
+                ).key,
+              )),
+    );
     final cards = attachLocalLearning(
       content == null
           ? <ContentCard>[]
-          : catalog?.cards ?? await content.selectionCards(await content.allCardIds()),
+          : catalog?.cards ??
+                await content.selectionCards(await content.allCardIds()),
       locals.values.map((i) => i.card),
     );
     return PracticeItemResolver._(
@@ -72,20 +91,33 @@ class PracticeItemResolver {
       cards,
       locals,
       await story?.explicitStoryAdditions() ?? {},
-      {for (final e in bindings.entries) if (!blocked.contains(e.value)) e.key: e.value},
+      {
+        for (final e in bindings.entries)
+          if (!blocked.contains(e.value)) e.key: e.value,
+      },
       await user.allCardStates(),
       contentError,
       catalog,
       user is GeneratedVocabularyRepository
-          ? await (user as GeneratedVocabularyRepository).generatedVocabularyAdditions()
+          ? await (user as GeneratedVocabularyRepository)
+                .generatedVocabularyAdditions()
           : const {},
     );
   }
 
   bool hasUnclassifiedBinding(ContentCard c) {
-    final old = bindingFor(c, form: false) ?? (c.senseId == null ? null : LearningIdentity(c.lang, c.formNorm, c.senseId!).localId);
-    return c.formFunction != null && old != null && old != c.id && states.containsKey(old) && cards[old]?.formFunction == null;
+    final old =
+        bindingFor(c, form: false) ??
+        (c.senseId == null
+            ? null
+            : LearningIdentity(c.lang, c.formNorm, c.senseId!).localId);
+    return c.formFunction != null &&
+        old != null &&
+        old != c.id &&
+        states.containsKey(old) &&
+        cards[old]?.formFunction == null;
   }
+
   List<String> get notices => [
     for (final c in cards.values)
       if (hasUnclassifiedBinding(c))
@@ -104,21 +136,49 @@ class PracticeItemResolver {
   Set<String> get knownIds => cards.keys.toSet();
   String? bindingFor(ContentCard card, {bool? form}) => card.senseId == null
       ? null
-      : bindings[LearningIdentity(card.lang, card.formNorm, card.senseId!,
-          function: (form ?? card.formFunction != null) ? card.formFunction : null).key];
-  List<String> eligiblePrimaries(Iterable<String> ids) =>
-      _groups.project([
-        for (final id in ids)
-          if (cards.containsKey(id)) states.containsKey(id) ? id : bindingFor(cards[id]!, form: false) ?? bindingFor(cards[id]!, form: true) ?? id,
-      ]);
+      : bindings[LearningIdentity(
+          card.lang,
+          card.formNorm,
+          card.senseId!,
+          function: (form ?? card.formFunction != null)
+              ? card.formFunction
+              : null,
+        ).key];
+  List<String> eligiblePrimaries(Iterable<String> ids) => _groups.project([
+    for (final id in ids)
+      if (cards.containsKey(id))
+        states.containsKey(id)
+            ? id
+            : bindingFor(cards[id]!, form: false) ??
+                  bindingFor(cards[id]!, form: true) ??
+                  id,
+  ]);
   String? storyStateId(String lang, StoryToken token) {
     if (token.senseId == null) return null;
-    final identity = LearningIdentity(lang, contentFormNorm(token.surface), token.senseId!, function: token.function);
+    final identity = LearningIdentity(
+      lang,
+      contentFormNorm(token.surface),
+      token.senseId!,
+      function: token.function,
+    );
     final bound = bindings[identity.key];
     if (bound != null && cards.containsKey(bound)) return bound;
-    if (token.formTarget != null) return cards.containsKey(token.formTarget!.cardId) ? token.formTarget!.cardId : null;
-    if (token.cardId != null && cards[token.cardId]?.introductionScope == 'ordinary') return token.cardId;
-    final matches = cards.values.where((c) => c.lang == lang && c.formNorm == identity.formNorm && c.senseId == identity.semanticAnchor && c.formFunction == null).toList();
+    if (token.formTarget != null)
+      return cards.containsKey(token.formTarget!.cardId)
+          ? token.formTarget!.cardId
+          : null;
+    if (token.cardId != null &&
+        cards[token.cardId]?.introductionScope == 'ordinary')
+      return token.cardId;
+    final matches = cards.values
+        .where(
+          (c) =>
+              c.lang == lang &&
+              c.formNorm == identity.formNorm &&
+              c.senseId == identity.semanticAnchor &&
+              c.formFunction == null,
+        )
+        .toList();
     return matches.length == 1 ? matches.single.id : null;
   }
 
@@ -139,7 +199,10 @@ class PracticeItemResolver {
         continue;
       }
       final bound = bindingFor(card, form: true);
-      final exact = {card.id, if (bound != null && cards.containsKey(bound)) bound};
+      final exact = {
+        card.id,
+        if (bound != null && cards.containsKey(bound)) bound,
+      };
       final existing = exact.where(states.containsKey).toList();
       result.addAll(existing.isNotEmpty ? existing : [card.id]);
     }
@@ -149,8 +212,13 @@ class PracticeItemResolver {
   /// Stable persisted identities, including old story-origin cards. No projection
   /// that could silently replace a saved card with another group member.
   List<String> get storyCollectionIds {
-    final ids = states.keys.where((id) => additions.containsKey(id) ||
-        states[id]!.origin == CardOrigin.story).toList();
+    final ids = states.keys
+        .where(
+          (id) =>
+              additions.containsKey(id) ||
+              states[id]!.origin == CardOrigin.story,
+        )
+        .toList();
     ids.sort((a, b) {
       final date = (additions[b] ?? states[b]!.createdAt ?? DateTime(1970))
           .compareTo(additions[a] ?? states[a]!.createdAt ?? DateTime(1970));
@@ -161,17 +229,25 @@ class PracticeItemResolver {
 
   String? get generatedDeckId {
     if (generatedAdditions.isEmpty) return null;
-    final lang = content?.info.lang ?? cards[generatedAdditions.keys.first]?.lang;
-    if (lang == null) throw StateError('Gespeicherter generierter Übungskontext fehlt.');
+    final lang =
+        content?.info.lang ?? cards[generatedAdditions.keys.first]?.lang;
+    if (lang == null)
+      throw StateError('Gespeicherter generierter Übungskontext fehlt.');
     return generatedVocabularyDeckId(lang);
   }
 
-  List<String> get generatedPracticeIds => generatedAdditions.keys.where(cards.containsKey).toList();
+  List<String> get generatedPracticeIds =>
+      generatedAdditions.keys.where(cards.containsKey).toList();
 
   Future<List<String>> deckPracticeIds(String deckId) async =>
-      deckId == generatedDeckId ? generatedPracticeIds
-      : deckId == storyCollectionId ? storyCollectionIds.where(cards.containsKey).toList()
-      : resolveTargets(catalog?.targets[deckId] ?? await content!.deckPracticeTargets(deckId));
+      deckId == generatedDeckId
+      ? generatedPracticeIds
+      : deckId == storyCollectionId
+      ? storyCollectionIds.where(cards.containsKey).toList()
+      : resolveTargets(
+          catalog?.targets[deckId] ??
+              await content!.deckPracticeTargets(deckId),
+        );
 
   Future<List<String>> activePrimaryIds() async {
     final sources = await newWordSources();
@@ -179,7 +255,8 @@ class PracticeItemResolver {
   }
 
   /// Active decks as separate new-word sources, including the private deck.
-  Future<({List<String> order, List<NewWordSource> active})> newWordSources() async {
+  Future<({List<String> order, List<NewWordSource> active})>
+  newWordSources() async {
     final decks = catalog?.decks ?? await content?.decks() ?? <DeckSummary>[];
     final generated = generatedDeckId;
     final order = [for (final d in decks) d.id, ?generated];
@@ -189,7 +266,13 @@ class PracticeItemResolver {
       active: [
         for (final d in decks)
           if (active.contains(d.id))
-            NewWordSource(d.id, resolveTargets(catalog?.targets[d.id] ?? await content!.deckPracticeTargets(d.id))),
+            NewWordSource(
+              d.id,
+              resolveTargets(
+                catalog?.targets[d.id] ??
+                    await content!.deckPracticeTargets(d.id),
+              ),
+            ),
         if (generated != null && active.contains(generated))
           NewWordSource(generated, generatedPracticeIds),
       ],
@@ -211,7 +294,8 @@ class PracticeItemResolver {
   }
 
   /// Saved story targets for practice, oldest addition first.
-  List<String> get storyPracticeIds => storyCollectionIds.reversed.where(cards.containsKey).toList();
+  List<String> get storyPracticeIds =>
+      storyCollectionIds.reversed.where(cards.containsKey).toList();
 
   Future<List<PracticeItem>> practiceItems(List<String> ids) async {
     final remote = ids.where((id) => !locals.containsKey(id)).toList();
@@ -250,7 +334,12 @@ class PracticeItemResolver {
 
 /// Immutable pack metadata, scoped to the content repository, never user state.
 class PracticeCatalog {
-  PracticeCatalog(this.cards, this.decks, this.targets, {this.retired = const {}});
+  PracticeCatalog(
+    this.cards,
+    this.decks,
+    this.targets, {
+    this.retired = const {},
+  });
   final Map<String, LearningIdentity> retired;
   final List<ContentCard> cards;
   final List<DeckSummary> decks;
@@ -258,10 +347,14 @@ class PracticeCatalog {
   static Future<PracticeCatalog> load(ContentRepository content) async {
     final decks = await content.decks();
     final cards = await content.selectionCards(await content.allCardIds());
-    return PracticeCatalog(cards, decks, {
-      for (final d in decks) d.id: await content.deckPracticeTargets(d.id),
-    }, retired: content is RetiredLearningContentRepository
-        ? await (content as RetiredLearningContentRepository).retiredLearningIdentities()
-        : const {});
+    return PracticeCatalog(
+      cards,
+      decks,
+      {for (final d in decks) d.id: await content.deckPracticeTargets(d.id)},
+      retired: content is RetiredLearningContentRepository
+          ? await (content as RetiredLearningContentRepository)
+                .retiredLearningIdentities()
+          : const {},
+    );
   }
 }

@@ -1,5 +1,6 @@
 import '../../presentation/providers/premium_access_provider.dart';
 import '../../widgets/premium_content_gate.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Scaffold;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -86,7 +87,9 @@ class StoryCollectionScreen extends ConsumerWidget {
                     const SizedBox(height: 20),
                     if (words.isNotEmpty)
                       PrimaryActionButton(
-                        label: premium ? 'Mit diesen Wörtern lernen' : 'Mit Premium lernen',
+                        label: premium
+                            ? 'Mit diesen Wörtern lernen'
+                            : 'Mit Premium lernen',
                         onPressed:
                             preview != null ||
                                 !words.any(
@@ -94,7 +97,10 @@ class StoryCollectionScreen extends ConsumerWidget {
                                 )
                             ? null
                             : !premium
-                            ? () => showPremiumContentPaywall(context, interest: 'Wörter aus Stories')
+                            ? () => showPremiumContentPaywall(
+                                context,
+                                interest: 'Wörter aus Stories',
+                              )
                             : () => DeckPracticeScreen.open(
                                 context,
                                 deckId: storyCollectionId,

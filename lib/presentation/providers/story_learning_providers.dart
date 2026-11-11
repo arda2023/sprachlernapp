@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
+
 import '../../domain/story_failure_trace.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/story_learning.dart';
@@ -12,7 +14,9 @@ import 'deck_providers.dart';
 import 'bundled_stories_provider.dart';
 
 final practiceCatalogProvider = FutureProvider<PracticeCatalog>((ref) async {
-  return PracticeCatalog.load(await ref.watch(contentRepositoryProvider.future));
+  return PracticeCatalog.load(
+    await ref.watch(contentRepositoryProvider.future),
+  );
 }, retry: (_, _) => null);
 
 final practiceResolverProvider = FutureProvider<PracticeItemResolver>((
@@ -32,8 +36,12 @@ final practiceResolverProvider = FutureProvider<PracticeItemResolver>((
   }
   // A broken user read/correction is not a missing pack. Do not retry it via
   // the offline fallback and accidentally hide a technical failure.
-  return PracticeItemResolver.load(user, content,
-    catalog: catalog, contentError: contentError);
+  return PracticeItemResolver.load(
+    user,
+    content,
+    catalog: catalog,
+    contentError: contentError,
+  );
 }, retry: (_, _) => null);
 final storySummariesProvider = FutureProvider<List<StorySummary>>((ref) async {
   final content = await ref.watch(contentRepositoryProvider.future);
@@ -70,14 +78,21 @@ class StoryLearningService {
     }
   }
 
-  Future<StoryLearningCandidate> candidate(String story, String sentence, int token) =>
-      _at(StoryLearningStep.context, () async {
-        final content = await ref.read(contentRepositoryProvider.future);
-        if (content is! StoryContentRepository) {
-          throw const StoryLearningFailure(StoryLearningStep.context);
-        }
-        return (content as StoryContentRepository).resolveStoryWord(story, sentence, token);
-      });
+  Future<StoryLearningCandidate> candidate(
+    String story,
+    String sentence,
+    int token,
+  ) => _at(StoryLearningStep.context, () async {
+    final content = await ref.read(contentRepositoryProvider.future);
+    if (content is! StoryContentRepository) {
+      throw const StoryLearningFailure(StoryLearningStep.context);
+    }
+    return (content as StoryContentRepository).resolveStoryWord(
+      story,
+      sentence,
+      token,
+    );
+  });
 
   Future<StoryAddResult> status(StoryLearningCandidate c) =>
       _at(StoryLearningStep.status, () async {
@@ -85,21 +100,32 @@ class StoryLearningService {
         if (user is! StoryLearningRepository) {
           throw const StoryLearningFailure(StoryLearningStep.status);
         }
-        final result = await (user as StoryLearningRepository).storyLearningStatus(c);
+        final result = await (user as StoryLearningRepository)
+            .storyLearningStatus(c);
         if (!result.canAdd || result.message != null) return result;
         final availability = storyAvailability(c);
-        return StoryAddResult(result.state, cardId: result.cardId, message:
-          availability == StoryLearningAvailability.approvedContext
-              ? 'Ein geprüfter Übungssatz ist vorhanden.' : null);
-
+        return StoryAddResult(
+          result.state,
+          cardId: result.cardId,
+          message: availability == StoryLearningAvailability.approvedContext
+              ? 'Ein geprüfter Übungssatz ist vorhanden.'
+              : null,
+        );
       });
 
   Future<StoryAddResult> add(StoryLearningCandidate old) async {
-    final current = await candidate(old.storyId, old.sentence.id, old.token.index);
+    final current = await candidate(
+      old.storyId,
+      old.sentence.id,
+      old.token.index,
+    );
     if (current.retired) return status(current);
     if (current.sourceFingerprint != old.sourceFingerprint) {
-      return const StoryAddResult(StoryAddState.unavailable,
-        message: 'Der Story-Inhalt hat sich geändert. Bitte das Wort erneut öffnen.');
+      return const StoryAddResult(
+        StoryAddState.unavailable,
+        message:
+            'Der Story-Inhalt hat sich geändert. Bitte das Wort erneut öffnen.',
+      );
     }
     return _at(StoryLearningStep.save, () async {
       final user = await ref.read(userRepositoryProvider.future);
@@ -107,7 +133,10 @@ class StoryLearningService {
         throw const StoryLearningFailure(StoryLearningStep.save);
       }
       // This committed result is authoritative; no fallible post-save status read.
-      return (user as StoryLearningRepository).addStoryWord(current, now: ref.read(clockProvider)());
+      return (user as StoryLearningRepository).addStoryWord(
+        current,
+        now: ref.read(clockProvider)(),
+      );
     });
   }
 
@@ -115,8 +144,11 @@ class StoryLearningService {
     final fresh = await candidate(c.storyId, c.sentence.id, c.token.index);
     if (fresh.retired) return status(fresh);
     if (fresh.sourceFingerprint != c.sourceFingerprint) {
-      return const StoryAddResult(StoryAddState.unavailable,
-        message: 'Der Story-Inhalt hat sich geändert. Bitte das Wort erneut öffnen.');
+      return const StoryAddResult(
+        StoryAddState.unavailable,
+        message:
+            'Der Story-Inhalt hat sich geändert. Bitte das Wort erneut öffnen.',
+      );
     }
     final current = await status(fresh);
     if (current.state != StoryAddState.disabled) return current;
@@ -126,7 +158,6 @@ class StoryLearningService {
     });
     return add(fresh);
   }
-
 }
 
 final libraryStoriesProvider = Provider<AsyncValue<List<Story>>>((ref) {
@@ -134,19 +165,20 @@ final libraryStoriesProvider = Provider<AsyncValue<List<Story>>>((ref) {
   return bundled.when(
     loading: () => const AsyncLoading(),
     error: (e, s) => AsyncError(e, s),
-    data: (stories) => ref.watch(storySummariesProvider)
-      .whenData(
-        (values) => [
-          ...stories.map((s) => s.story),
-          for (final s in values)
-            Story(
-              id: s.id,
-              title: s.title,
-              topic: 'Alltag',
-              level: s.level == 'anfaenger' ? 'A2' : s.level,
-              readingMinutes: s.minutes,
-            ),
-        ],
-      ),
+    data: (stories) => ref
+        .watch(storySummariesProvider)
+        .whenData(
+          (values) => [
+            ...stories.map((s) => s.story),
+            for (final s in values)
+              Story(
+                id: s.id,
+                title: s.title,
+                topic: 'Alltag',
+                level: s.level == 'anfaenger' ? 'A2' : s.level,
+                readingMinutes: s.minutes,
+              ),
+          ],
+        ),
   );
 });

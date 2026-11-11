@@ -18,7 +18,7 @@ String memoryLevelTitle(int level) =>
 
 /// "Wiederholung nach 14 Tagen"-style line, derived from the box interval.
 String memoryLevelDetail(int level) {
-  if(level==0) return 'Noch nicht geübt';
+  if (level == 0) return 'Noch nicht geübt';
   final interval = intervalLabel(leitnerInterval(level));
   final next = 'Nächste Wiederholung nach $interval';
   return level == leitnerBoxCount ? 'Gemeistert · $next' : next;
@@ -52,8 +52,8 @@ class MemoryLevelIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final off = offColor ?? context.appColors.hairline;
-    final lit = litColor ??
-        (level == 0 ? off : context.appColors.memoryLevel(level));
+    final lit =
+        litColor ?? (level == 0 ? off : context.appColors.memoryLevel(level));
     return ExcludeSemantics(
       child: Row(
         mainAxisSize: MainAxisSize.min,

@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 import '../models/home_models.dart';
 import '../models/practice_models.dart';
 import '../models/reading_history.dart';

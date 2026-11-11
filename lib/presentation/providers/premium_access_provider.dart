@@ -5,8 +5,9 @@ import 'content_access_provider.dart';
 
 /// Uses verified entitlement state, including the authorized sandbox test.
 /// Unknown or expired access never unlocks paid content.
-final premiumContentAccessProvider = Provider<bool>((ref) =>
-    ref.watch(contentAccessProvider) == ContentAccessDecision.allowed);
+final premiumContentAccessProvider = Provider<bool>(
+  (ref) => ref.watch(contentAccessProvider) == ContentAccessDecision.allowed,
+);
 
 /// Stable IDs of the Allgemeine Sprache deck in each bundled language pack.
 /// Unknown and user-generated decks fail closed; labels are not authorization.

@@ -49,10 +49,13 @@ class PersonalConsentStore {
   }
 
   Future<void> write(String owner, bool enabled) async {
-    (await db()).execute('INSERT OR REPLACE INTO consent VALUES(?,1,?)',
-      [owner, enabled ? 1 : 0]);
+    (await db()).execute('INSERT OR REPLACE INTO consent VALUES(?,1,?)', [
+      owner,
+      enabled ? 1 : 0,
+    ]);
     await flushSqlitePlatform();
   }
+
   Future<void> close() async {
     if (_pending != null) (await _pending!).close();
   }

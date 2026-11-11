@@ -112,8 +112,10 @@ AnswerVerdict evaluateAnswer(
   bool includeDiacritics = true,
   ContentLanguageProfile profile = ContentLanguageProfile.english,
 }) {
-  String normalize(String value) =>
-      normalizeAnswer(value, includeDiacritics: profile.requiresDiacritics || includeDiacritics);
+  String normalize(String value) => normalizeAnswer(
+    value,
+    includeDiacritics: profile.requiresDiacritics || includeDiacritics,
+  );
   final given = normalize(input);
   final goal = normalize(target);
   if (given == goal) return AnswerVerdict.target;

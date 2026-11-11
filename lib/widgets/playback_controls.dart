@@ -1,4 +1,5 @@
 import '../presentation/audio/speech_narration.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
     show RoundSliderThumbShape, Slider, SliderTheme, SliderThemeData;
@@ -103,7 +104,10 @@ class PlaybackTrack extends StatelessWidget {
               children: [
                 Text(clockLabel(clock.position), style: times),
                 const Spacer(),
-                Text('${clock is SpeechNarration ? 'ca. ' : ''}${clockLabel(total)}', style: times),
+                Text(
+                  '${clock is SpeechNarration ? 'ca. ' : ''}${clockLabel(total)}',
+                  style: times,
+                ),
               ],
             ),
           ),

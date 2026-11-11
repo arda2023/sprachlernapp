@@ -76,7 +76,9 @@ class StoryLibraryScreen extends ConsumerWidget {
   String _editionLabel(DateTime day) {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    final days = today.difference(DateTime(day.year, day.month, day.day)).inDays;
+    final days = today
+        .difference(DateTime(day.year, day.month, day.day))
+        .inDays;
     return switch (days) {
       0 => 'Heute',
       1 => 'Gestern',

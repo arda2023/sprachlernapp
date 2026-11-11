@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../data/platform/sqlite_platform.dart';
 
 import '../../data/runtime_translation_client.dart';
@@ -15,7 +16,9 @@ final runtimeTranslationProvider = Provider<RuntimeTranslationClient>((ref) {
       auth.publicKey,
       auth.accessToken,
     ),
-    store: TranslationCache(() => openPrivateDatabase('private_translations.sqlite')),
+    store: TranslationCache(
+      () => openPrivateDatabase('private_translations.sqlite'),
+    ),
     owner: auth.cacheOwner,
     revision: () => auth.identityRevision,
     identityChanges: auth.identityChanges,

@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+
 import '../platform/sqlite_platform.dart';
+
 import 'package:unorm_dart/unorm_dart.dart' as unicode;
 
 import '../../domain/content.dart';

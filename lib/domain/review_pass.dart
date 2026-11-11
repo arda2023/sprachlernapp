@@ -35,8 +35,11 @@ class ReviewPass {
     required this.mode,
     required this.startedAt,
     this.logged = true,
-  }) : profile = ContentLanguageProfile.forLanguage(item.card.lang) ??
-           (throw ArgumentError('Nicht unterstützte Lernsprache: ${item.card.lang}')),
+  }) : profile =
+           ContentLanguageProfile.forLanguage(item.card.lang) ??
+           (throw ArgumentError(
+             'Nicht unterstützte Lernsprache: ${item.card.lang}',
+           )),
        boxBefore = state?.box ?? 0,
        dueAtBefore = state?.dueAt {
     if (sentence.cardId != item.card.id) {
@@ -117,7 +120,10 @@ class ReviewPass {
         _errorCount++;
         return PassFeedback(
           verdict,
-          message: wrongFormHint(card.lemma, card.formFunction == null ? card.formLabelDe : card.exerciseLabel),
+          message: wrongFormHint(
+            card.lemma,
+            card.formFunction == null ? card.formLabelDe : card.exerciseLabel,
+          ),
         );
       case AnswerVerdict.wrong:
         _errorCount++;

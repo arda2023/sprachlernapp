@@ -113,8 +113,11 @@ class ContentCard {
   final String? identityFunction, lexicalTargetId;
   final String introductionScope;
   String? get formFunction => formTarget?.function ?? identityFunction;
-  String get introductionKey => formFunction == null ? learningGroup : 'form:$id';
-  String get lexicalKey => lexicalTargetId == null ? 'group:$learningGroup' : 'lexical:$lexicalTargetId';
+  String get introductionKey =>
+      formFunction == null ? learningGroup : 'form:$id';
+  String get lexicalKey => lexicalTargetId == null
+      ? 'group:$learningGroup'
+      : 'lexical:$lexicalTargetId';
   String get exerciseLabel => switch (formFunction) {
     'base' => 'Grundform',
     'past' => 'Präteritum',
@@ -225,8 +228,14 @@ class LearningTarget {
 
 /// Read-only form transport. State and review still belong to cardId.
 class FormTarget {
-  const FormTarget({required this.id, required this.cardId, required this.senseId,
-    required this.form, required this.function, required this.lexicalTargetId});
+  const FormTarget({
+    required this.id,
+    required this.cardId,
+    required this.senseId,
+    required this.form,
+    required this.function,
+    required this.lexicalTargetId,
+  });
   final String id, cardId, senseId, form, function, lexicalTargetId;
 }
 

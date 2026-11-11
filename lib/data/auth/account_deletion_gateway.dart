@@ -25,7 +25,9 @@ abstract interface class AccountDeletionGateway {
 
 class SupabaseAccountDeletionGateway implements AccountDeletionGateway {
   SupabaseAccountDeletionGateway(this.auth, {HttpClient? client})
-    : _client = client ?? (createPlatformHttpClient()..connectionTimeout = _requestTimeout);
+    : _client =
+          client ??
+          (createPlatformHttpClient()..connectionTimeout = _requestTimeout);
 
   static const _requestTimeout = Duration(seconds: 20);
   static const _maximumResponseBytes = 4096;

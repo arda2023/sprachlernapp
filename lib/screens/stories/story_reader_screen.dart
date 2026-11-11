@@ -2,7 +2,9 @@ import '../web/web_reading_viewport.dart';
 import '../../models/playback_clock.dart';
 import '../../domain/personal_learning.dart';
 import '../../widgets/personal_learning_button.dart';
+
 import 'dart:convert';
+
 import '../../data/runtime_translation_client.dart';
 import '../../widgets/runtime_translation_sheet.dart';
 import '../../presentation/providers/database_providers.dart';
@@ -115,13 +117,13 @@ class StoryReaderScreen extends StatefulWidget {
     CupertinoPageRoute<void>(
       builder: (_) => WebReadingViewport(
         child: StoryReaderScreen(
-        story: story,
-        text: text,
-        lookup: lookup,
-        sourceLanguage: sourceLanguage,
-        initialMarks: const {},
-        initialProgress: initialProgress,
-        onProgress: onProgress,
+          story: story,
+          text: text,
+          lookup: lookup,
+          sourceLanguage: sourceLanguage,
+          initialMarks: const {},
+          initialProgress: initialProgress,
+          onProgress: onProgress,
         ),
       ),
     ),
@@ -196,7 +198,13 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
   final _sentences = <_Sentence>[];
 
   late final Map<String, WordMark> _marks = Map.of(widget.initialMarks);
-  late final _narration = widget.narrationFactory?.call() ?? SpeechNarration(text: widget.text.paragraphs.join('\n\n'), language: widget.sourceLanguage, onError: (message) => showSpeechError(context, message));
+  late final _narration =
+      widget.narrationFactory?.call() ??
+      SpeechNarration(
+        text: widget.text.paragraphs.join('\n\n'),
+        language: widget.sourceLanguage,
+        onError: (message) => showSpeechError(context, message),
+      );
   int? _selected;
   int? _selectedSentence;
   bool _translating = false;
@@ -303,7 +311,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
       if (t.start > cursor) {
         sentence.tokens.add(source.text.substring(cursor, t.start));
       }
-      if (t.lemmaId == null && !RegExp(r'[\p{L}]', unicode: true).hasMatch(t.surface)) {
+      if (t.lemmaId == null &&
+          !RegExp(r'[\p{L}]', unicode: true).hasMatch(t.surface)) {
         sentence.tokens.add(t.surface);
       } else {
         final word = _words.length;
@@ -465,7 +474,9 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
   TextSpan _sentenceSpan(int index, {required bool narrated}) {
     final sentence = _sentences[index];
     final selected = index == _selectedSentence;
-    final background = !selected && narrated ? context.appColors.playback : null;
+    final background = !selected && narrated
+        ? context.appColors.playback
+        : null;
     final children = <InlineSpan>[
       for (final token in sentence.tokens)
         if (token is String)
@@ -474,14 +485,17 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
           TextSpan(
             text: _words[token as int].text,
             recognizer: sentence.recognizer,
-            style: _wordSpan(token).style
-                ?.copyWith(backgroundColor: background,
-                    color: selected ? const Color(0xFFFFFFFF) : null),
+            style: _wordSpan(token).style?.copyWith(
+              backgroundColor: background,
+              color: selected ? const Color(0xFFFFFFFF) : null,
+            ),
           ),
     ];
     return TextSpan(
-      style: TextStyle(backgroundColor: background,
-          color: selected ? const Color(0xFFFFFFFF) : null),
+      style: TextStyle(
+        backgroundColor: background,
+        color: selected ? const Color(0xFFFFFFFF) : null,
+      ),
       children: children,
     );
   }
@@ -492,19 +506,35 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
     HapticFeedback.lightImpact();
     PersonalTarget? personal;
     if (widget.document == null) {
-      personal = PersonalTarget(lang: widget.sourceLanguage,
+      personal = PersonalTarget(
+        lang: widget.sourceLanguage,
         text: _sentences.firstWhere((s) => s.tokens.contains(index)).text,
-        form: word.text, start: word.start!, source: widget.story.id);
+        form: word.text,
+        start: word.start!,
+        source: widget.story.id,
+      );
     } else if (word.sentenceId != null) {
       try {
-        final candidate = await ProviderScope.containerOf(context, listen: false)
-          .read(storyLearningServiceProvider).candidate(widget.story.id, word.sentenceId!, word.tokenIndex!);
-        if (!candidate.retired && candidate.problem == null && candidate.card == null &&
-            !candidate.token.annotated && candidate.token.pos != 'PROPN') {
-          personal = PersonalTarget(lang: widget.sourceLanguage, text: candidate.sentence.text,
-            form: word.text, start: word.start!, source: widget.story.id);
+        final candidate =
+            await ProviderScope.containerOf(context, listen: false)
+                .read(storyLearningServiceProvider)
+                .candidate(widget.story.id, word.sentenceId!, word.tokenIndex!);
+        if (!candidate.retired &&
+            candidate.problem == null &&
+            candidate.card == null &&
+            !candidate.token.annotated &&
+            candidate.token.pos != 'PROPN') {
+          personal = PersonalTarget(
+            lang: widget.sourceLanguage,
+            text: candidate.sentence.text,
+            form: word.text,
+            start: word.start!,
+            source: widget.story.id,
+          );
         }
-      } catch (_) { /* No creation fallback for a technical context failure. */ }
+      } catch (_) {
+        /* No creation fallback for a technical context failure. */
+      }
       if (!mounted) return;
     }
     if (!hasStoredTranslation(word.entry.translation)) {
@@ -551,12 +581,21 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
           entry: word.entry,
           mark: status.state == StoryAddState.added ? WordMark.active : null,
           status: status,
-          personalAction: personal == null ? null : PersonalLearningButton(target: personal, foregroundColor: const Color(0xFFFFFFFF), compact: true),
+          personalAction: personal == null
+              ? null
+              : PersonalLearningButton(
+                  target: personal,
+                  foregroundColor: const Color(0xFFFFFFFF),
+                  compact: true,
+                ),
           onAdd: () => service.add(candidate),
           onReactivate: () => service.reactivate(candidate),
           onSaved: (result) {
             if (mounted && result.state == StoryAddState.added) {
-              setState(() => _marks['${word.sentenceId}/${word.tokenIndex}'] = WordMark.active);
+              setState(
+                () => _marks['${word.sentenceId}/${word.tokenIndex}'] =
+                    WordMark.active,
+              );
             }
           },
         );
@@ -566,12 +605,13 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
             context,
             anchor: _anchor,
             surface: word.text,
-          language: widget.sourceLanguage,
+            language: widget.sourceLanguage,
             entry: word.entry,
             mark: null,
             learningAvailable: false,
             failure: error is StoryLearningFailure
-                ? error : const StoryLearningFailure(StoryLearningStep.context),
+                ? error
+                : const StoryLearningFailure(StoryLearningStep.context),
             onAdd: () async => const StoryAddResult(StoryAddState.unavailable),
           );
         }
@@ -581,11 +621,17 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
         context,
         anchor: _anchor,
         surface: word.text,
-          language: widget.sourceLanguage,
+        language: widget.sourceLanguage,
         entry: word.entry,
         mark: _marks[headword],
         learningAvailable: false,
-        personalAction: personal == null ? null : PersonalLearningButton(target: personal, foregroundColor: const Color(0xFFFFFFFF), compact: true),
+        personalAction: personal == null
+            ? null
+            : PersonalLearningButton(
+                target: personal,
+                foregroundColor: const Color(0xFFFFFFFF),
+                compact: true,
+              ),
         onAdd: () async => const StoryAddResult(StoryAddState.unavailable),
       );
     }
@@ -620,8 +666,10 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
   TextSpan _wordModeSentenceSpan(int index, {required bool narrated}) =>
       TextSpan(
         style: TextStyle(
-          backgroundColor: narrated && !_sentences[index].tokens.contains(_selected)
-              ? context.appColors.playback : null,
+          backgroundColor:
+              narrated && !_sentences[index].tokens.contains(_selected)
+              ? context.appColors.playback
+              : null,
         ),
         children: [
           for (final token in _sentences[index].tokens)
@@ -634,9 +682,14 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
     for (final index in sentences) {
       final start = offset;
       for (final token in _sentences[index].tokens) {
-        final length = token is String ? token.length : _words[token as int].text.length;
+        final length = token is String
+            ? token.length
+            : _words[token as int].text.length;
         if (!_translating && token is int && token == _selected) {
-          return TextSelection(baseOffset: offset, extentOffset: offset + length);
+          return TextSelection(
+            baseOffset: offset,
+            extentOffset: offset + length,
+          );
         }
         offset += length;
       }
@@ -797,23 +850,23 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
                                 selection: _selectionFor(sentences),
                                 color: colors.popover,
                                 child: Text.rich(
-                                key: _paragraphKeys[i],
-                                TextSpan(
-                                  style: AppType.storyBody(),
-                                  children: [
-                                    for (final s in sentences)
-                                      _translating
-                                          ? _sentenceSpan(
-                                              s,
-                                              narrated: s == narrated,
-                                            )
-                                          : _wordModeSentenceSpan(
-                                              s,
-                                              narrated: s == narrated,
-                                            ),
-                                  ],
+                                  key: _paragraphKeys[i],
+                                  TextSpan(
+                                    style: AppType.storyBody(),
+                                    children: [
+                                      for (final s in sentences)
+                                        _translating
+                                            ? _sentenceSpan(
+                                                s,
+                                                narrated: s == narrated,
+                                              )
+                                            : _wordModeSentenceSpan(
+                                                s,
+                                                narrated: s == narrated,
+                                              ),
+                                    ],
+                                  ),
                                 ),
-                              ),
                               ),
                             ),
                           ],
@@ -1244,74 +1297,110 @@ class _StoredStoryReader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (story.id.startsWith('library:')) {
-      return ref.watch(bundledStoriesProvider).when(
-        data: (stories) {
-          final item = stories.where((s) => s.story.id == story.id).firstOrNull;
-          if (item == null) return const Scaffold(body: Center(child: Text('Story nicht verfügbar.')));
-          return StoryReaderScreen(
-            story: story, text: item.text, sourceLanguage: item.language,
-            lookup: (surface) => WordEntry(headword: surface, partOfSpeech: '',
-              translation: '', sourceLanguage: item.language),
-            initialMarks: const {}, translate: (_) => '',
-            initialProgress: initialProgress, onProgress: onProgress,
-          );
-        },
-        loading: () => const Scaffold(body: Center(child: CupertinoActivityIndicator())),
-        error: (_, _) => Scaffold(body: SafeArea(child: Column(children: [
-          BackBar(onBack: () => Navigator.of(context).maybePop()),
-          const Text('Story-Inhalt nicht verfügbar.'),
-          CupertinoButton(onPressed: () => ref.invalidate(bundledStoriesProvider), child: const Text('Erneut versuchen')),
-        ]))),
-      );
-    }
-    return ref.watch(storyDocumentProvider(story.id))
-      .when(
-        data: (doc) => StoryReaderScreen(
-          story: story,
-          document: doc,
-          sourceLanguage: ref
-              .watch(contentRepositoryProvider)
-              .requireValue
-              .info
-              .lang,
-          initialProgress: initialProgress,
-          onProgress: onProgress,
-          text: StoryText(
-            storyId: story.id,
-            paragraphs: doc.sentences.map((s) => s.text).toList(),
-          ),
-          initialMarks: {
-            for (final sentence in doc.sentences)
-              for (final token in sentence.tokens)
-                if (token.senseId != null)
-                  if (ref.watch(practiceResolverProvider).value
-                      case final resolver?)
-                    if (resolver.storyStateId(ref.watch(contentRepositoryProvider).requireValue.info.lang, token) case final id?)
-                      if (resolver.states[id] case final state?)
-                        if (state.box > 0 || resolver.additions.containsKey(id))
-                          '${sentence.id}/${token.index}': state.box == 5
-                              ? WordMark.mastered
-                              : WordMark.active,
-          },
-        ),
-        loading: () =>
-            const Scaffold(body: Center(child: CupertinoActivityIndicator())),
-        error: (_, _) => Scaffold(
-          body: SafeArea(
-            child: Column(
-              children: [
-                BackBar(onBack: () => Navigator.of(context).maybePop()),
-                const Text('Story-Inhalt nicht verfügbar.'),
-                CupertinoButton(
-                  onPressed: () =>
-                      ref.invalidate(storyDocumentProvider(story.id)),
-                  child: const Text('Erneut versuchen'),
+      return ref
+          .watch(bundledStoriesProvider)
+          .when(
+            data: (stories) {
+              final item = stories
+                  .where((s) => s.story.id == story.id)
+                  .firstOrNull;
+              if (item == null)
+                return const Scaffold(
+                  body: Center(child: Text('Story nicht verfügbar.')),
+                );
+              return StoryReaderScreen(
+                story: story,
+                text: item.text,
+                sourceLanguage: item.language,
+                lookup: (surface) => WordEntry(
+                  headword: surface,
+                  partOfSpeech: '',
+                  translation: '',
+                  sourceLanguage: item.language,
                 ),
-              ],
+                initialMarks: const {},
+                translate: (_) => '',
+                initialProgress: initialProgress,
+                onProgress: onProgress,
+              );
+            },
+            loading: () => const Scaffold(
+              body: Center(child: CupertinoActivityIndicator()),
+            ),
+            error: (_, _) => Scaffold(
+              body: SafeArea(
+                child: Column(
+                  children: [
+                    BackBar(onBack: () => Navigator.of(context).maybePop()),
+                    const Text('Story-Inhalt nicht verfügbar.'),
+                    CupertinoButton(
+                      onPressed: () => ref.invalidate(bundledStoriesProvider),
+                      child: const Text('Erneut versuchen'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+    }
+    return ref
+        .watch(storyDocumentProvider(story.id))
+        .when(
+          data: (doc) => StoryReaderScreen(
+            story: story,
+            document: doc,
+            sourceLanguage: ref
+                .watch(contentRepositoryProvider)
+                .requireValue
+                .info
+                .lang,
+            initialProgress: initialProgress,
+            onProgress: onProgress,
+            text: StoryText(
+              storyId: story.id,
+              paragraphs: doc.sentences.map((s) => s.text).toList(),
+            ),
+            initialMarks: {
+              for (final sentence in doc.sentences)
+                for (final token in sentence.tokens)
+                  if (token.senseId != null)
+                    if (ref.watch(practiceResolverProvider).value
+                        case final resolver?)
+                      if (resolver.storyStateId(
+                            ref
+                                .watch(contentRepositoryProvider)
+                                .requireValue
+                                .info
+                                .lang,
+                            token,
+                          )
+                          case final id?)
+                        if (resolver.states[id] case final state?)
+                          if (state.box > 0 ||
+                              resolver.additions.containsKey(id))
+                            '${sentence.id}/${token.index}': state.box == 5
+                                ? WordMark.mastered
+                                : WordMark.active,
+            },
+          ),
+          loading: () =>
+              const Scaffold(body: Center(child: CupertinoActivityIndicator())),
+          error: (_, _) => Scaffold(
+            body: SafeArea(
+              child: Column(
+                children: [
+                  BackBar(onBack: () => Navigator.of(context).maybePop()),
+                  const Text('Story-Inhalt nicht verfügbar.'),
+                  CupertinoButton(
+                    onPressed: () =>
+                        ref.invalidate(storyDocumentProvider(story.id)),
+                    child: const Text('Erneut versuchen'),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      );
+        );
   }
 }
 

@@ -37,9 +37,9 @@ class HomeScreen extends ConsumerWidget {
     required this.onSettings,
     this.scrollController,
   });
+
   /// Main vertical scroll view; the tab bar scrolls it to the top on re-tap.
   final ScrollController? scrollController;
-
 
   static const _gutter = EdgeInsets.symmetric(horizontal: 20);
 
@@ -179,7 +179,8 @@ class HomeScreen extends ConsumerWidget {
                   return StoryCarousel(
                     stories: shown,
                     premiumLocked: !ref.watch(premiumContentAccessProvider),
-                    onUpgrade: () => showPremiumContentPaywall(context, interest: 'Stories'),
+                    onUpgrade: () =>
+                        showPremiumContentPaywall(context, interest: 'Stories'),
                     onOpen: onOpenStory,
                     progress: progress,
                     finished: finished,

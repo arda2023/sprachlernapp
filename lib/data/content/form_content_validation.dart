@@ -374,9 +374,8 @@ void validateFormContent(Database db) {
   }
   for (final sentence in active('sentences')) {
     require(text(sentence['translation_de']), 'Satzübersetzung fehlt');
-    final tokens =
-        (tokensBySentence[sentence['id']] ?? []).toList()
-          ..sort((a, b) => (a['idx'] as int).compareTo(b['idx'] as int));
+    final tokens = (tokensBySentence[sentence['id']] ?? []).toList()
+      ..sort((a, b) => (a['idx'] as int).compareTo(b['idx'] as int));
     final points = (sentence['text'] as String).runes.toList();
     var previous = 0;
     for (var i = 0; i < tokens.length; i++) {

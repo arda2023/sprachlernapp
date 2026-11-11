@@ -56,18 +56,29 @@ Map<String, ContentCard> attachLocalLearning(
   Iterable<ContentCard> content,
   Iterable<ContentCard> locals,
 ) {
-  String identity(ContentCard c) => '${c.lang}|${c.formNorm}|${c.senseId}|${c.formFunction}';
+  String identity(ContentCard c) =>
+      '${c.lang}|${c.formNorm}|${c.senseId}|${c.formFunction}';
   final byIdentity = <String, List<ContentCard>>{};
-  for (final c in content) { (byIdentity[identity(c)] ??= []).add(c); }
+  for (final c in content) {
+    (byIdentity[identity(c)] ??= []).add(c);
+  }
   ContentCard? counterpart(ContentCard c) {
     final values = byIdentity[identity(c)] ?? [];
     return values.length == 1 ? values.single : null;
   }
+
   String? lexical(ContentCard c) {
-    final ids = content.where((v) => v.lang == c.lang && v.senseId != null && v.senseId == c.senseId)
-        .map((v) => v.lexicalTargetId).whereType<String>().toSet();
+    final ids = content
+        .where(
+          (v) =>
+              v.lang == c.lang && v.senseId != null && v.senseId == c.senseId,
+        )
+        .map((v) => v.lexicalTargetId)
+        .whereType<String>()
+        .toSet();
     return ids.length == 1 ? ids.single : c.lexicalTargetId;
   }
+
   return {
     for (final c in content) c.id: c,
     for (final c in locals)
@@ -102,9 +113,13 @@ Map<String, String> lexicalCountingKeys(Map<String, ContentCard> cards) {
     if (parent[id] != id) parent[id] = root(parent[id]!);
     return parent[id]!;
   }
+
   final groups = <String, String>{}, senses = <String, String>{};
   for (final c in cards.values) {
-    final group = groups.putIfAbsent('${c.lang}|${c.learningGroup}', () => c.id);
+    final group = groups.putIfAbsent(
+      '${c.lang}|${c.learningGroup}',
+      () => c.id,
+    );
     parent[root(c.id)] = root(group);
     if (c.senseId != null) {
       final sense = senses.putIfAbsent('${c.lang}|${c.senseId}', () => c.id);
@@ -113,13 +128,19 @@ Map<String, String> lexicalCountingKeys(Map<String, ContentCard> cards) {
   }
   final explicit = <String, Set<String>>{};
   for (final c in cards.values) {
-    if (c.lexicalTargetId != null) (explicit[root(c.id)] ??= {}).add(c.lexicalTargetId!);
+    if (c.lexicalTargetId != null)
+      (explicit[root(c.id)] ??= {}).add(c.lexicalTargetId!);
   }
-  final result = <String,String>{};
+  final result = <String, String>{};
   for (final c in cards.values) {
     final keys = explicit[root(c.id)] ?? {};
-    if (keys.length > 1) throw StateError('Widersprüchliche Wortzuordnung für ${c.form}; Lernstände bleiben erhalten.');
-    result[c.id] = keys.isEmpty ? 'group:${c.lang}:${c.learningGroup}' : 'lexical:${c.lang}:${keys.single}';
+    if (keys.length > 1)
+      throw StateError(
+        'Widersprüchliche Wortzuordnung für ${c.form}; Lernstände bleiben erhalten.',
+      );
+    result[c.id] = keys.isEmpty
+        ? 'group:${c.lang}:${c.learningGroup}'
+        : 'lexical:${c.lang}:${keys.single}';
   }
   return result;
 }

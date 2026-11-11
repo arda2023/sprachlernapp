@@ -28,19 +28,37 @@ class ScreenPreviewsScreen extends StatelessWidget {
         (
           title: 'Aus Storys',
           detail: 'Persönliche Sammlung · Vorschau ohne Speicherung',
-          build: (_) => StoryCollectionScreen(preview: [
-            StoryCollectionWord(
-              const UserCardState(cardId: 'preview', box: 0, dueAt: null),
-              PracticeItem(otherFormsOfLemma: const {}, card: const ContentCard(
-                id: 'preview', lang: 'en', form: 'pocket', formNorm: 'pocket',
-                lemmaId: 'pocket', lemma: 'pocket', pos: 'NOUN', translationDe: 'Tasche',
-              ), sentences: const [CardSentence(
-                cardId: 'preview', position: 1, sentenceId: 'preview', text: 'My keys are in my pocket.',
-                translationDe: 'Meine Schlüssel sind in meiner Tasche.',
-                gapStart: 18, gapEnd: 24,
-              )]),
-            ),
-          ]),
+          build: (_) => StoryCollectionScreen(
+            preview: [
+              StoryCollectionWord(
+                const UserCardState(cardId: 'preview', box: 0, dueAt: null),
+                PracticeItem(
+                  otherFormsOfLemma: const {},
+                  card: const ContentCard(
+                    id: 'preview',
+                    lang: 'en',
+                    form: 'pocket',
+                    formNorm: 'pocket',
+                    lemmaId: 'pocket',
+                    lemma: 'pocket',
+                    pos: 'NOUN',
+                    translationDe: 'Tasche',
+                  ),
+                  sentences: const [
+                    CardSentence(
+                      cardId: 'preview',
+                      position: 1,
+                      sentenceId: 'preview',
+                      text: 'My keys are in my pocket.',
+                      translationDe: 'Meine Schlüssel sind in meiner Tasche.',
+                      gapStart: 18,
+                      gapEnd: 24,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
         (
           title: 'Onboarding',

@@ -285,9 +285,7 @@ class _MonthGrid extends StatelessWidget {
           children: [
             for (final name in _weekdays)
               Expanded(
-                child: Center(
-                  child: Text(name, style: PopoverText.caption()),
-                ),
+                child: Center(child: Text(name, style: PopoverText.caption())),
               ),
           ],
         ),
@@ -396,11 +394,7 @@ class _DayCell extends StatelessWidget {
                     ),
                   ),
                   if (on && !star)
-                    const Icon(
-                      CupertinoIcons.flame_fill,
-                      size: 9,
-                      color: _ink,
-                    ),
+                    const Icon(CupertinoIcons.flame_fill, size: 9, color: _ink),
                 ],
               ),
             ),

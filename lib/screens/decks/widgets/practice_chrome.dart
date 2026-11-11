@@ -71,8 +71,10 @@ class PracticeSessionBar extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     ContinuousSessionTrack(
-                      done: done, total: total,
-                      repeatIndices: repeatIndices, activeRepeat: activeRepeat,
+                      done: done,
+                      total: total,
+                      repeatIndices: repeatIndices,
+                      activeRepeat: activeRepeat,
                     ),
                     // The bar shows what's left; only states it can't show
                     // get a line. An empty scope says so on the page.
@@ -109,8 +111,13 @@ class PracticeSessionBar extends StatelessWidget {
 
 /// A continuous timeline. Completed repeat phases keep their colour.
 class ContinuousSessionTrack extends StatelessWidget {
-  const ContinuousSessionTrack({super.key, required this.done,
-    required this.total, this.repeatIndices = const {}, this.activeRepeat = false});
+  const ContinuousSessionTrack({
+    super.key,
+    required this.done,
+    required this.total,
+    this.repeatIndices = const {},
+    this.activeRepeat = false,
+  });
   final int done, total;
   final Set<int> repeatIndices;
   final bool activeRepeat;
@@ -121,19 +128,33 @@ class ContinuousSessionTrack extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ClipRRect(
     borderRadius: BorderRadius.circular(99),
-    child: SizedBox(height: 6, child: LayoutBuilder(
-      builder: (context, constraints) => Stack(
-        fit: StackFit.expand,
-        children: [
-          ColoredBox(color: context.appColors.hairline),
-          for (var i = 0; i < (done + (activeRepeat ? 1 : 0)).clamp(0, total); i++)
-            Positioned(left: constraints.maxWidth * i / total,
-              width: constraints.maxWidth / total, top: 0, bottom: 0,
-              child: ColoredBox(color: repeatIndices.contains(i)
-                ? repeatColor : context.appColors.active)),
-        ],
+    child: SizedBox(
+      height: 6,
+      child: LayoutBuilder(
+        builder: (context, constraints) => Stack(
+          fit: StackFit.expand,
+          children: [
+            ColoredBox(color: context.appColors.hairline),
+            for (
+              var i = 0;
+              i < (done + (activeRepeat ? 1 : 0)).clamp(0, total);
+              i++
+            )
+              Positioned(
+                left: constraints.maxWidth * i / total,
+                width: constraints.maxWidth / total,
+                top: 0,
+                bottom: 0,
+                child: ColoredBox(
+                  color: repeatIndices.contains(i)
+                      ? repeatColor
+                      : context.appColors.active,
+                ),
+              ),
+          ],
+        ),
       ),
-    )),
+    ),
   );
 }
 
@@ -418,10 +439,18 @@ class PracticeAnswerToolbar extends StatelessWidget {
                   label: playing ? 'Vorlesen stoppen' : 'Satz vorlesen',
                   excludeSemantics: true,
                   child: playing
-                      ? Icon(CupertinoIcons.stop_fill,
-                          color: speakerEnabled ? context.appColors.textPrimary : context.appColors.iconOff)
-                      : SpeakerIcon(filled: false,
-                          color: speakerEnabled ? context.appColors.textPrimary : context.appColors.iconOff),
+                      ? Icon(
+                          CupertinoIcons.stop_fill,
+                          color: speakerEnabled
+                              ? context.appColors.textPrimary
+                              : context.appColors.iconOff,
+                        )
+                      : SpeakerIcon(
+                          filled: false,
+                          color: speakerEnabled
+                              ? context.appColors.textPrimary
+                              : context.appColors.iconOff,
+                        ),
                 ),
               ),
               if (onDictate != null)
@@ -431,12 +460,18 @@ class PracticeAnswerToolbar extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   minimumSize: const Size(44, 44),
                   child: Semantics(
-                    label: dictating ? 'Spracheingabe beenden' : 'Antwort sprechen',
+                    label: dictating
+                        ? 'Spracheingabe beenden'
+                        : 'Antwort sprechen',
                     hint: 'System-Spracherkennung, je nach Gerät auch online',
                     excludeSemantics: true,
                     child: Icon(
-                      dictating ? CupertinoIcons.stop_circle_fill : CupertinoIcons.mic,
-                      color: dictating ? context.appColors.active : context.appColors.textPrimary,
+                      dictating
+                          ? CupertinoIcons.stop_circle_fill
+                          : CupertinoIcons.mic,
+                      color: dictating
+                          ? context.appColors.active
+                          : context.appColors.textPrimary,
                     ),
                   ),
                 ),
@@ -493,26 +528,27 @@ class PracticeAnswerToolbar extends StatelessWidget {
                                         label: 'Richtig gespeichert',
                                         // Pops in with the success haptic.
                                         child: _PopIn(
-                                        child: Container(
-                                          key: const ValueKey(
-                                            'practice-success',
+                                          child: Container(
+                                            key: const ValueKey(
+                                              'practice-success',
+                                            ),
+                                            width: 28,
+                                            height: 28,
+                                            margin: const EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: context
+                                                  .appColors
+                                                  .progressWords,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Icon(
+                                              CupertinoIcons.check_mark,
+                                              size: 20,
+                                              color: Color(0xFFFFFFFF),
+                                            ),
                                           ),
-                                          width: 28,
-                                          height: 28,
-                                          margin: const EdgeInsets.symmetric(
-                                            horizontal: 8,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color:
-                                                context.appColors.progressWords,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: const Icon(
-                                            CupertinoIcons.check_mark,
-                                            size: 20,
-                                            color: Color(0xFFFFFFFF),
-                                          ),
-                                        ),
                                         ),
                                       )
                                     : null,
@@ -648,7 +684,10 @@ class _PopIn extends StatelessWidget {
       curve: Curves.easeOutBack,
       builder: (context, scale, child) => Transform.scale(
         scale: scale,
-        child: Opacity(opacity: ((scale - 0.6) / 0.4).clamp(0, 1), child: child),
+        child: Opacity(
+          opacity: ((scale - 0.6) / 0.4).clamp(0, 1),
+          child: child,
+        ),
       ),
       child: child,
     );

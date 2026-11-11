@@ -118,8 +118,7 @@ class ProgressMeasure {
     value: b.mastered,
     total: b.total,
     unit: 'Übungen',
-    explanation:
-        'Sitzt sicher und kommt nur noch selten zur Kontrolle.',
+    explanation: 'Sitzt sicher und kommt nur noch selten zur Kontrolle.',
   );
 
   factory ProgressMeasure.words(LexicalBreakdown l, VocabBreakdown b) =>
@@ -129,8 +128,7 @@ class ProgressMeasure {
         value: l.practiced,
         total: l.total,
         unit: 'Wörtern',
-        explanation:
-            'Mindestens eine Form davon hast du schon beantwortet.',
+        explanation: 'Mindestens eine Form davon hast du schon beantwortet.',
       );
 
   final ProgressKind kind;

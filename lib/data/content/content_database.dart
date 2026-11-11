@@ -1,12 +1,16 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:convert';
+
 import 'package:crypto/crypto.dart';
+
 import 'dart:io';
 import 'dart:isolate';
+
 import 'package:drift/isolate.dart';
 
 import 'package:drift/drift.dart';
+
 import '../platform/sqlite_platform.dart';
 
 import '../../domain/content.dart';
@@ -129,15 +133,26 @@ ContentInfo validateContentSchema(Database db, {required String lang}) {
       );
     }
     if ((release['schema_version'] as int) >= 2) {
-      validateSingleSentenceContent(db, schemaVersion: release['schema_version'] as int);
+      validateSingleSentenceContent(
+        db,
+        schemaVersion: release['schema_version'] as int,
+      );
     }
     if ((release['schema_version'] as int) >= 3) validateLearningGroups(db);
     if ((release['schema_version'] as int) >= 4) {
-      try { validateFormContent(db); } on ContentUnavailable { rethrow; } catch (e) {
-        throw ContentUnavailable(ContentUnavailableReason.incompatible, 'Schema 4: ungültige Formmetadaten ($e)');
+      try {
+        validateFormContent(db);
+      } on ContentUnavailable {
+        rethrow;
+      } catch (e) {
+        throw ContentUnavailable(
+          ContentUnavailableReason.incompatible,
+          'Schema 4: ungültige Formmetadaten ($e)',
+        );
       }
     }
-    if (release['schema_version'] == 5) validateContextRevisions(db, lang: lang);
+    if (release['schema_version'] == 5)
+      validateContextRevisions(db, lang: lang);
     final languages = db.select('SELECT code FROM languages WHERE code = ?', [
       lang,
     ]);
@@ -207,14 +222,20 @@ void validateLearningGroups(Database db) {
     final groupHeads = <String, String>{};
     for (final r in rows.values) {
       final m = metadata[r['id']]!;
-      final previousHead = groupHeads.putIfAbsent(m['group_id'] as String, () => m['primary_card_id'] as String);
+      final previousHead = groupHeads.putIfAbsent(
+        m['group_id'] as String,
+        () => m['primary_card_id'] as String,
+      );
       if (previousHead != m['primary_card_id']) reject();
       final head = rows[m['primary_card_id']];
       final hm = metadata[m['primary_card_id']];
-      final historicalSingleton = head?['id'] == r['id'] &&
-          r['removed_in'] is String && (r['removed_in'] as String).isNotEmpty &&
+      final historicalSingleton =
+          head?['id'] == r['id'] &&
+          r['removed_in'] is String &&
+          (r['removed_in'] as String).isNotEmpty &&
           r['replaced_by'] == null &&
-          metadata.values.where((v) => v['group_id'] == m['group_id']).length == 1;
+          metadata.values.where((v) => v['group_id'] == m['group_id']).length ==
+              1;
       if (head == null ||
           (head['removed_in'] != null && !historicalSingleton) ||
           head['lang'] != r['lang'] ||
@@ -271,9 +292,7 @@ void validateSingleSentenceContent(Database db, {int schemaVersion = 2}) {
       (linksByCard[link['card_id']] ??= []).add(link);
     }
   }
-  final wordIdentities = {
-    for (final word in words) (word['id'], word['lang']),
-  };
+  final wordIdentities = {for (final word in words) (word['id'], word['lang'])};
   final keys = <String>{};
   final primaries = <String>{};
   final positions = <String, List<int>>{};
@@ -326,7 +345,10 @@ void validateSingleSentenceContent(Database db, {int schemaVersion = 2}) {
         (c['form'] as String).trim() != c['form']) {
       reject('ungültige Wortnormalisierung');
     }
-    if (!keys.contains('${c['lang']}/${c['form_norm']}') && !(schemaVersion >= 4 && c['introduction_scope'] == 'form_only' && aliasKeys.contains('${c['lang']}/${c['form_norm']}'))) {
+    if (!keys.contains('${c['lang']}/${c['form_norm']}') &&
+        !(schemaVersion >= 4 &&
+            c['introduction_scope'] == 'form_only' &&
+            aliasKeys.contains('${c['lang']}/${c['form_norm']}'))) {
       reject('Wort ohne Eigentümer ${c['form']}');
     }
     final links = linksByCard[c['id']] ?? const <Row>[];
@@ -438,19 +460,33 @@ class ContentDatabase extends _$ContentDatabase {
   ContentDatabase.forTesting(super.executor, this.info) : _raw = null;
 
   /// Validated immutable browser bundle; never receives learner writes.
-  static Future<ContentDatabase> fromBytes(Uint8List bytes, ContentManifest manifest) async {
-    if (bytes.length != manifest.sizeBytes || sha256.convert(bytes).toString() != manifest.sha256) {
-      throw const ContentUnavailable(ContentUnavailableReason.corrupt, 'Inhaltspaket passt nicht zur Prüfsumme.');
+  static Future<ContentDatabase> fromBytes(
+    Uint8List bytes,
+    ContentManifest manifest,
+  ) async {
+    if (bytes.length != manifest.sizeBytes ||
+        sha256.convert(bytes).toString() != manifest.sha256) {
+      throw const ContentUnavailable(
+        ContentUnavailableReason.corrupt,
+        'Inhaltspaket passt nicht zur Prüfsumme.',
+      );
     }
     final raw = await openBundledDatabase(bytes, manifest.sha256);
     try {
       raw.execute('PRAGMA query_only=ON');
       final info = validateContentSchema(raw, lang: manifest.lang);
-      if (info.version != manifest.version || info.schemaVersion != manifest.schemaVersion) {
-        throw const ContentUnavailable(ContentUnavailableReason.incompatible, 'Inhaltsversion stimmt nicht mit dem Manifest überein.');
+      if (info.version != manifest.version ||
+          info.schemaVersion != manifest.schemaVersion) {
+        throw const ContentUnavailable(
+          ContentUnavailableReason.incompatible,
+          'Inhaltsversion stimmt nicht mit dem Manifest überein.',
+        );
       }
       return ContentDatabase._(raw, info);
-    } catch (_) { raw.close(); rethrow; }
+    } catch (_) {
+      raw.close();
+      rethrow;
+    }
   }
 
   /// Only a successfully handshaken session can construct a BoundReader.
@@ -496,32 +532,57 @@ class ContentDatabase extends _$ContentDatabase {
 
   /// App connections validate and execute queries off the UI isolate. Tools
   /// retain the synchronous read-only opener below.
-  static Future<ContentDatabase> openInBackground(File file, {required String lang}) async {
-    final path=file.path;
-    final info=await Isolate.run(() {
-      final raw=sqlite3.open(path,mode:OpenMode.readOnly);
-      try {raw.execute('PRAGMA query_only=ON');return validateContentSchema(raw,lang:lang);}
-      finally {raw.close();}
-    });
-    final isolate=await DriftIsolate.spawn(()=>DatabaseConnection(LazyDatabase(() async {
-      final raw=sqlite3.open(path,mode:OpenMode.readOnly);
+  static Future<ContentDatabase> openInBackground(
+    File file, {
+    required String lang,
+  }) async {
+    final path = file.path;
+    final info = await Isolate.run(() {
+      final raw = sqlite3.open(path, mode: OpenMode.readOnly);
       try {
         raw.execute('PRAGMA query_only=ON');
-        // The full validation above ran on these hash-checked, content-addressed
-        // bytes; this connection re-checks integrity and release identity only.
-        final check=raw.select('PRAGMA quick_check');
-        final release=raw.select('SELECT lang, version, schema_version FROM content_releases');
-        if(check.length!=1||check.first.values.first!='ok'||release.length!=1||release.first['lang']!=lang
-            ||release.first['version']!=info.version||release.first['schema_version']!=info.schemaVersion){throw StateError('Inhalt während Öffnung geändert.');}
-        return openedDatabase(raw,enableMigrations:false);
-      }catch(_){raw.close();rethrow;}
-    })));
+        return validateContentSchema(raw, lang: lang);
+      } finally {
+        raw.close();
+      }
+    });
+    final isolate = await DriftIsolate.spawn(
+      () => DatabaseConnection(
+        LazyDatabase(() async {
+          final raw = sqlite3.open(path, mode: OpenMode.readOnly);
+          try {
+            raw.execute('PRAGMA query_only=ON');
+            // The full validation above ran on these hash-checked, content-addressed
+            // bytes; this connection re-checks integrity and release identity only.
+            final check = raw.select('PRAGMA quick_check');
+            final release = raw.select(
+              'SELECT lang, version, schema_version FROM content_releases',
+            );
+            if (check.length != 1 ||
+                check.first.values.first != 'ok' ||
+                release.length != 1 ||
+                release.first['lang'] != lang ||
+                release.first['version'] != info.version ||
+                release.first['schema_version'] != info.schemaVersion) {
+              throw StateError('Inhalt während Öffnung geändert.');
+            }
+            return openedDatabase(raw, enableMigrations: false);
+          } catch (_) {
+            raw.close();
+            rethrow;
+          }
+        }),
+      ),
+    );
     try {
-      final connection=await isolate.connect(singleClientMode:true);
-      final database=ContentDatabase._remote(connection.executor,info);
+      final connection = await isolate.connect(singleClientMode: true);
+      final database = ContentDatabase._remote(connection.executor, info);
       await database.customSelect('SELECT 1').getSingle();
       return database;
-    }catch(_){await isolate.shutdownAll();rethrow;}
+    } catch (_) {
+      await isolate.shutdownAll();
+      rethrow;
+    }
   }
 
   /// Opens [file] read-only and validates it ([validateContentSchema]).

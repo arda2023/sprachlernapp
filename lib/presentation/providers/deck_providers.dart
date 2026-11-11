@@ -1,4 +1,5 @@
 import '../../domain/content.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/srs_state.dart';
@@ -77,24 +78,34 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
     throw resolver.contentError ?? StateError('Inhaltspaket fehlt');
   }
   final summaries = [
-    ...(resolver.catalog?.decks ?? await resolver.content?.decks() ?? <DeckSummary>[]),
+    ...(resolver.catalog?.decks ??
+        await resolver.content?.decks() ??
+        <DeckSummary>[]),
     if (resolver.generatedDeckId case final id?)
-      DeckSummary(id: id, slug: 'generated-vocabulary', titleDe: 'Generierte Vokabeln',
+      DeckSummary(
+        id: id,
+        slug: 'generated-vocabulary',
+        titleDe: 'Generierte Vokabeln',
         descriptionDe: 'Deine Themen, mit festen Beispielsätzen',
-        cardCount: resolver.generatedPracticeIds.length),
+        cardCount: resolver.generatedPracticeIds.length,
+      ),
   ];
   final active = await user.activeDeckIds(summaries.map((d) => d.id));
   final lastReviews = await user.lastReviewTimes();
   final result = <Deck>[];
   for (final deck in summaries) {
     final ids = await resolver.deckPracticeIds(deck.id);
-    final states = {for (final id in ids) if (resolver.states.containsKey(id)) id: resolver.states[id]!};
+    final states = {
+      for (final id in ids)
+        if (resolver.states.containsKey(id)) id: resolver.states[id]!,
+    };
     final viaStory = states.values
         .where(
           (s) =>
               s.isActive &&
               s.box >= 1 &&
-              ((s.localOnly && !resolver.generatedAdditions.containsKey(s.cardId)) ||
+              ((s.localOnly &&
+                      !resolver.generatedAdditions.containsKey(s.cardId)) ||
                   s.origin == CardOrigin.story ||
                   resolver.additions.containsKey(s.cardId)),
         )
@@ -125,10 +136,7 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
         isActive: active.contains(deck.id),
         recentWords: [
           for (final item in words)
-            SeenWord(
-              word: item.form,
-              translation: item.translationDe ?? '',
-            ),
+            SeenWord(word: item.form, translation: item.translationDe ?? ''),
         ],
       ),
     );
@@ -155,15 +163,22 @@ final vocabBreakdownProvider = FutureProvider<VocabBreakdown>((ref) async {
 final lexicalBreakdownProvider = FutureProvider<LexicalBreakdown>((ref) async {
   ref.watch(userChangesProvider);
   final resolver = await ref.watch(practiceResolverProvider.future);
-  final ids = eligiblePracticeIds(activeDeckCardIds: (await resolver.activePrimaryIds()).toSet(),
-    states: resolver.states, contentCards: resolver.cards, knownCardIds: resolver.knownIds,
-    explicitStoryIds: resolver.additions.keys.toSet(), targetsResolved: true,
-    hiddenIds: await resolver.deactivatedDeckIds());
+  final ids = eligiblePracticeIds(
+    activeDeckCardIds: (await resolver.activePrimaryIds()).toSet(),
+    states: resolver.states,
+    contentCards: resolver.cards,
+    knownCardIds: resolver.knownIds,
+    explicitStoryIds: resolver.additions.keys.toSet(),
+    targetsResolved: true,
+    hiddenIds: await resolver.deactivatedDeckIds(),
+  );
   return deriveLexicalBreakdown(ids, resolver.cards, resolver.states);
 }, retry: (_, _) => null);
 
 final deckActiveControllerProvider =
-    NotifierProvider<DeckActiveController, DeckActivationState>(DeckActiveController.new);
+    NotifierProvider<DeckActiveController, DeckActivationState>(
+      DeckActiveController.new,
+    );
 
 class DeckActivationState {
   const DeckActivationState({this.values = const {}, this.errors = const {}});
@@ -178,28 +193,40 @@ class DeckActiveController extends Notifier<DeckActivationState> {
   @override
   DeckActivationState build() {
     ref.watch(selectedContentLanguageProvider);
-    _tails.clear(); _versions.clear(); _persisted.clear();
+    _tails.clear();
+    _versions.clear();
+    _persisted.clear();
     return const DeckActivationState();
   }
 
   Future<void> setActive(String id, bool active) {
-    if (active && !isFreeDeckId(id) && !ref.read(premiumContentAccessProvider)) {
-      state = DeckActivationState(values: state.values, errors: {
-        ...state.errors, id: StateError('Dieser Stapel benötigt Premium.'),
-      });
+    if (active &&
+        !isFreeDeckId(id) &&
+        !ref.read(premiumContentAccessProvider)) {
+      state = DeckActivationState(
+        values: state.values,
+        errors: {
+          ...state.errors,
+          id: StateError('Dieser Stapel benötigt Premium.'),
+        },
+      );
       return Future<void>.value();
     }
     final release = contentTransitionGate.acquire();
     final version = (_versions[id] ?? 0) + 1;
     _versions[id] = version;
-    state = DeckActivationState(values: {...state.values, id: active},
-      errors: {...state.errors}..remove(id));
+    state = DeckActivationState(
+      values: {...state.values, id: active},
+      errors: {...state.errors}..remove(id),
+    );
     final previous = _tails[id] ?? Future<void>.value();
     final operation = previous.then((_) async {
       try {
         final user = await ref.read(userRepositoryProvider.future);
         _persisted[id] ??= (await user.activeDeckIds([id])).contains(id);
-        if (active && !isFreeDeckId(id) && !ref.read(premiumContentAccessProvider)) {
+        if (active &&
+            !isFreeDeckId(id) &&
+            !ref.read(premiumContentAccessProvider)) {
           throw StateError('Dieser Stapel benötigt Premium.');
         }
         await user.setDeckActive(id, active, now: ref.read(clockProvider)());
@@ -208,7 +235,10 @@ class DeckActiveController extends Notifier<DeckActivationState> {
         if (ref.mounted && _versions[id] == version) {
           final values = {...state.values}..remove(id);
           if (_persisted.containsKey(id)) values[id] = _persisted[id]!;
-          state = DeckActivationState(values: values, errors: {...state.errors, id: error});
+          state = DeckActivationState(
+            values: values,
+            errors: {...state.errors, id: error},
+          );
         }
       }
     });

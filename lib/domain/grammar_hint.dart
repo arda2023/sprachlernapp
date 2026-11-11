@@ -54,8 +54,10 @@ String _cardHint(ContentCard card, {required bool solved}) {
   final pos = germanPartOfSpeech(card.pos);
   final known = pos != card.pos;
   final function = card.formFunction ?? card.formKind;
-  final base = function == 'base' ||
-      (function == null && contentFormNorm(card.form) == contentFormNorm(card.lemma));
+  final base =
+      function == 'base' ||
+      (function == null &&
+          contentFormNorm(card.form) == contentFormNorm(card.lemma));
   final label = card.formLabelDe;
   // An editorial label names the form after the word class:
   // "Verb, Vergangenheit" → "Vergangenheit".
@@ -76,7 +78,8 @@ String _cardHint(ContentCard card, {required bool solved}) {
     'third_person' => ' in der 3. Person Singular',
     'comparative' => ' im Komparativ',
     'superlative' => ' im Superlativ',
-    _ when labelled != null && labelled.isNotEmpty => ' in der Form „$labelled“',
+    _ when labelled != null && labelled.isNotEmpty =>
+      ' in der Form „$labelled“',
     _ when base => switch (card.pos.toUpperCase()) {
       'NOUN' => ' in der Einzahl',
       'VERB' || 'AUX' => ' in der Grundform (Infinitiv)',
@@ -84,7 +87,13 @@ String _cardHint(ContentCard card, {required bool solved}) {
     },
     _ => ' in einer gebeugten Form',
   };
-  final article = const {'Präposition', 'Konjunktion', 'Subjunktion', 'Partikel'}.contains(pos)
+  final article =
+      const {
+        'Präposition',
+        'Konjunktion',
+        'Subjunktion',
+        'Partikel',
+      }.contains(pos)
       ? 'eine'
       : 'ein';
   final parts = [
@@ -109,7 +118,8 @@ String? _letters(String lang) {
     _ => null,
   };
   if (letters == null) return null;
-  final required = ContentLanguageProfile.forLanguage(lang)?.requiresDiacritics ?? true;
+  final required =
+      ContentLanguageProfile.forLanguage(lang)?.requiresDiacritics ?? true;
   return required
       ? 'Akzente und Sonderzeichen gehören zur richtigen Antwort: $letters.'
       : 'Achte auf Akzente und Sonderzeichen: $letters.';

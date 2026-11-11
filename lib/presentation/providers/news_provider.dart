@@ -32,7 +32,9 @@ class NewsNotifier extends AsyncNotifier<List<NewsArticle>> {
 
   /// News change once a day: opening the Stories tab reloads them after a
   /// few hours. Keeps what is shown when the new answer is empty.
-  Future<void> refreshIfStale({Duration after = const Duration(hours: 2)}) async {
+  Future<void> refreshIfStale({
+    Duration after = const Duration(hours: 2),
+  }) async {
     final loaded = _loaded;
     if (loaded != null && DateTime.now().difference(loaded) < after) return;
     _loaded = DateTime.now();

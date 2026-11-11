@@ -122,8 +122,10 @@ class _WebLearningShellState extends ConsumerState<WebLearningShell> {
     _startingPractice = true;
     try {
       await ref.read(contentInfoProvider.future);
-      if (!mounted || ref.read(languageSelectionProvider).switching ||
-          ref.read(selectedContentLanguageProvider).asData?.value != selectedLanguage) {
+      if (!mounted ||
+          ref.read(languageSelectionProvider).switching ||
+          ref.read(selectedContentLanguageProvider).asData?.value !=
+              selectedLanguage) {
         return;
       }
       await DeckPracticeScreen.open(
@@ -132,11 +134,17 @@ class _WebLearningShellState extends ConsumerState<WebLearningShell> {
         mode: DeckPracticeMode.mixed,
       );
     } catch (_) {
-      if (mounted && !ref.read(languageSelectionProvider).switching &&
-          ref.read(selectedContentLanguageProvider).asData?.value == selectedLanguage) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Übung konnte nicht geöffnet werden. Bitte erneut versuchen.'),
-        ));
+      if (mounted &&
+          !ref.read(languageSelectionProvider).switching &&
+          ref.read(selectedContentLanguageProvider).asData?.value ==
+              selectedLanguage) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Übung konnte nicht geöffnet werden. Bitte erneut versuchen.',
+            ),
+          ),
+        );
       }
     } finally {
       _startingPractice = false;

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import '../../domain/language_profile.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +20,13 @@ import '../../domain/content.dart';
 /// including when a scope is disposed while opening. Thus an installer never
 /// replaces a pack still owned by another provider scope.
 class RepositoryOwner<T> {
-  RepositoryOwner(this.open, this.close, {this.onEmpty, this.onIdle, this.revive});
+  RepositoryOwner(
+    this.open,
+    this.close, {
+    this.onEmpty,
+    this.onIdle,
+    this.revive,
+  });
   final void Function()? onEmpty, onIdle;
   final RepositoryOwner<T> Function()? revive;
   bool _retired = false;
@@ -34,12 +41,23 @@ class RepositoryOwner<T> {
   bool _closeFailed = false;
   Completer<void>? _paused;
   Future<T>? _pausedCurrent;
-  void pause() { _pausedCurrent=_current;_paused ??= Completer<void>(); }
-  void resume() { final paused=_paused;_paused=null;paused?.complete(); }
+  void pause() {
+    _pausedCurrent = _current;
+    _paused ??= Completer<void>();
+  }
+
+  void resume() {
+    final paused = _paused;
+    _paused = null;
+    paused?.complete();
+  }
+
   Future<void> closed() async {
-    if (_pausedCurrent != null && identical(_current,_pausedCurrent)) throw StateError('Inhaltsansichten sind noch geöffnet.');
+    if (_pausedCurrent != null && identical(_current, _pausedCurrent))
+      throw StateError('Inhaltsansichten sind noch geöffnet.');
     await _closing;
-    if (_closeFailed) throw StateError('Inhaltsverbindung konnte nicht geschlossen werden.');
+    if (_closeFailed)
+      throw StateError('Inhaltsverbindung konnte nicht geschlossen werden.');
   }
 
   Future<T> acquire(Ref ref) {
@@ -91,53 +109,89 @@ class RepositoryOwner<T> {
       // unsafe. Attach an error handler to avoid an unhandled async error.
       unawaited(
         _closing.then<void>((_) {
-          if (_current == null && _leases == 0 && !_closeFailed && onIdle != null) {
+          if (_current == null &&
+              _leases == 0 &&
+              !_closeFailed &&
+              onIdle != null) {
             _retired = true;
             onIdle!();
           }
         }, onError: (Object _, StackTrace _) {}),
       );
     }
+
     return (future: future, release: release);
   }
 }
 
-final contentInstallerProvider = FutureProvider.family<ContentPackInstaller, String>(
-  (ref, lang) => ContentPackInstaller.forApp(lang: lang), retry: (_, _) => null);
+final contentInstallerProvider =
+    FutureProvider.family<ContentPackInstaller, String>(
+      (ref, lang) => ContentPackInstaller.forApp(lang: lang),
+      retry: (_, _) => null,
+    );
 
 final contentTransitionGate = ContentTransitionGate();
-typedef ContentRepositoryKey = ({String lang, int generation, String fingerprint});
-final _contentOwners = <ContentRepositoryKey,RepositoryOwner<ContentRepository>>{};
+typedef ContentRepositoryKey = ({
+  String lang,
+  int generation,
+  String fingerprint,
+});
+final _contentOwners =
+    <ContentRepositoryKey, RepositoryOwner<ContentRepository>>{};
 RepositoryOwner<ContentRepository> contentOwnerFor(ContentRepositoryKey key) =>
-  _contentOwners.putIfAbsent(key, () => createContentOwner(
-    key, () => ContentPackInstaller.forApp(lang: key.lang),
-    onIdle: () => _contentOwners.remove(key), revive: () => contentOwnerFor(key),
-  ));
+    _contentOwners.putIfAbsent(
+      key,
+      () => createContentOwner(
+        key,
+        () => ContentPackInstaller.forApp(lang: key.lang),
+        onIdle: () => _contentOwners.remove(key),
+        revive: () => contentOwnerFor(key),
+      ),
+    );
 
 /// Shared by the app registry and synthetic integration harnesses.
 RepositoryOwner<ContentRepository> createContentOwner(
-  ContentRepositoryKey key, Future<ContentPackInstaller> Function() installer, {
-  void Function()? onIdle, RepositoryOwner<ContentRepository> Function()? revive,
+  ContentRepositoryKey key,
+  Future<ContentPackInstaller> Function() installer, {
+  void Function()? onIdle,
+  RepositoryOwner<ContentRepository> Function()? revive,
 }) {
   ReadCancellation? cancellation;
   late final RepositoryOwner<ContentRepository> owner;
-  owner = RepositoryOwner(() async {
-    final token = cancellation = ReadCancellation();
-    final pack = await installer();
-    return pack.open(expectedFingerprint: key.fingerprint, cancellation: token,
-      isCurrent: () => owner.hasInterest && identical(cancellation, token));
-  }, (repository) => repository.close(), onEmpty: () => cancellation?.cancel(),
-    onIdle: onIdle, revive: revive);
+  owner = RepositoryOwner(
+    () async {
+      final token = cancellation = ReadCancellation();
+      final pack = await installer();
+      return pack.open(
+        expectedFingerprint: key.fingerprint,
+        cancellation: token,
+        isCurrent: () => owner.hasInterest && identical(cancellation, token),
+      );
+    },
+    (repository) => repository.close(),
+    onEmpty: () => cancellation?.cancel(),
+    onIdle: onIdle,
+    revive: revive,
+  );
   return owner;
 }
 
-ContentRepository? peekContentOwner(ContentRepositoryKey key) => _contentOwners[key]?.peek;
-final contentOwnerProvider = Provider.autoDispose.family<RepositoryOwner<ContentRepository>, ContentRepositoryKey>((ref, key) => contentOwnerFor(key));
+ContentRepository? peekContentOwner(ContentRepositoryKey key) =>
+    _contentOwners[key]?.peek;
+final contentOwnerProvider = Provider.autoDispose
+    .family<RepositoryOwner<ContentRepository>, ContentRepositoryKey>(
+      (ref, key) => contentOwnerFor(key),
+    );
 
 /// Retry a changed recovery key once, always releasing the failed owner first.
-Future<({ContentRepositoryKey key, ContentRepository repository, void Function() release})> acquireInstalledContent(
-  Ref ref, ContentPackInstaller installer,
-) async {
+Future<
+  ({
+    ContentRepositoryKey key,
+    ContentRepository repository,
+    void Function() release,
+  })
+>
+acquireInstalledContent(Ref ref, ContentPackInstaller installer) async {
   for (var attempt = 0; attempt < 2; attempt++) {
     if (!ref.mounted) throw StateError('Inhaltsansicht bereits geschlossen.');
     final key = await contentKeyFor(installer);
@@ -145,7 +199,11 @@ Future<({ContentRepositoryKey key, ContentRepository repository, void Function()
     final lease = ref.read(contentOwnerProvider(key)).lease();
     // Safe even for the explicit target lease: release is idempotent.
     final detach = ref.onDispose(lease.release);
-    void release() { detach(); lease.release(); }
+    void release() {
+      detach();
+      lease.release();
+    }
+
     try {
       final repository = await lease.future;
       if (!ref.mounted) throw StateError('Inhaltsansicht bereits geschlossen.');
@@ -161,36 +219,62 @@ Future<({ContentRepositoryKey key, ContentRepository repository, void Function()
   }
   throw StateError('Inhaltsgeneration wiederholt geändert.');
 }
+
 final _userDatabaseOwners = <String?, RepositoryOwner<UserDatabase>>{};
 final userDatabaseProvider = FutureProvider<UserDatabase>((ref) async {
   await ref.watch(accountSessionProvider.future);
   if (!ref.mounted) throw StateError('Lernkonto hat sich geändert.');
   final owner = ref.read(contentAuthProvider).localOwner;
-  return _userDatabaseOwners.putIfAbsent(owner, () => RepositoryOwner<UserDatabase>(
-    () => UserDatabase.openForApp(accountId: owner), (db) => db.close(),
-  )).acquire(ref);
+  return _userDatabaseOwners
+      .putIfAbsent(
+        owner,
+        () => RepositoryOwner<UserDatabase>(
+          () => UserDatabase.openForApp(accountId: owner),
+          (db) => db.close(),
+        ),
+      )
+      .acquire(ref);
 }, retry: (_, _) => null);
-final selectedContentLanguageProvider=FutureProvider<String>((ref) async {
-  final db=await ref.watch(userDatabaseProvider.future);
-  final settings=await db.select(db.settings).getSingleOrNull();
-  final lang=settings?.targetLang??'en';
-  if(ContentLanguageProfile.forLanguage(lang)==null)throw const ContentUnavailable(ContentUnavailableReason.incompatible,'Gewähltes Sprachprofil wird von dieser App noch nicht unterstützt.');
+final selectedContentLanguageProvider = FutureProvider<String>((ref) async {
+  final db = await ref.watch(userDatabaseProvider.future);
+  final settings = await db.select(db.settings).getSingleOrNull();
+  final lang = settings?.targetLang ?? 'en';
+  if (ContentLanguageProfile.forLanguage(lang) == null)
+    throw const ContentUnavailable(
+      ContentUnavailableReason.incompatible,
+      'Gewähltes Sprachprofil wird von dieser App noch nicht unterstützt.',
+    );
   return lang;
-},retry:(_,_)=>null);
-final activeContentKeyProvider=FutureProvider<ContentRepositoryKey>((ref) async {
-  final lang=await ref.watch(selectedContentLanguageProvider.future);
+}, retry: (_, _) => null);
+final activeContentKeyProvider = FutureProvider<ContentRepositoryKey>((
+  ref,
+) async {
+  final lang = await ref.watch(selectedContentLanguageProvider.future);
   return contentKeyFor(await ref.watch(contentInstallerProvider(lang).future));
-},retry:(_,_)=>null);
-Future<ContentRepositoryKey> contentKeyFor(ContentPackInstaller installer) async {
+}, retry: (_, _) => null);
+Future<ContentRepositoryKey> contentKeyFor(
+  ContentPackInstaller installer,
+) async {
   final identity = await installer.routingIdentity();
-  return (lang: installer.lang, generation: identity.generation, fingerprint: identity.fingerprint);
+  return (
+    lang: installer.lang,
+    generation: identity.generation,
+    fingerprint: identity.fingerprint,
+  );
 }
-final _settledViews = Provider<Map<Object, ({ContentRepositoryKey key, Object? value})>>((ref) => {});
+
+final _settledViews =
+    Provider<Map<Object, ({ContentRepositoryKey key, Object? value})>>(
+      (ref) => {},
+    );
 
 /// Keeps the value a view already showed while the same language and pack
 /// generation recomputes (review, resume). Another identity, or a previous
 /// value this view never showed, keeps the loading state.
-AsyncValue<T> watchContentStable<T>(WidgetRef ref, ProviderListenable<AsyncValue<T>> provider) {
+AsyncValue<T> watchContentStable<T>(
+  WidgetRef ref,
+  ProviderListenable<AsyncValue<T>> provider,
+) {
   final key = ref.watch(activeContentKeyProvider);
   final value = ref.watch(provider);
   final current = key is AsyncData<ContentRepositoryKey> ? key.value : null;
@@ -205,29 +289,45 @@ AsyncValue<T> watchContentStable<T>(WidgetRef ref, ProviderListenable<AsyncValue
   }
   return value;
 }
-final contentRepositoryProvider = FutureProvider<ContentRepository>((ref) async {
+
+final contentRepositoryProvider = FutureProvider<ContentRepository>((
+  ref,
+) async {
   final lang = await ref.watch(selectedContentLanguageProvider.future);
   final installer = await ref.watch(contentInstallerProvider(lang).future);
   // Deliberately do not depend on activeContentKeyProvider: recovery can update
   // that routing view without disposing its own newly validated reader.
   return (await acquireInstalledContent(ref, installer)).repository;
-},retry:(_,_)=>null);
+}, retry: (_, _) => null);
 final userRepositoryProvider = FutureProvider<UserRepository>((ref) async {
-  final db=await ref.watch(userDatabaseProvider.future);
-  final lang=await ref.watch(selectedContentLanguageProvider.future);
-  final repository=DriftUserRepository(db,lang:lang,ownsDatabase:false,defaultActiveDeckIds:() async {
-    final content = await ref.read(contentRepositoryProvider.future);
-    if (content.info.lang != lang) throw StateError('Sprachansicht hat sich geändert.');
-    return {for (final deck in await content.decks())
-      if (deck.titleDe == 'Allgemeine Sprache') deck.id};
-  },contentIds:(kind) async {
-    if (!ref.mounted) throw StateError('Sprachansicht wurde geschlossen.');
-    final content=await ref.read(contentRepositoryProvider.future);
-    if (content.info.lang != lang) throw StateError('Sprachansicht hat sich geändert.');
-    return kind=='cards'?content.allCardIds():{for(final deck in await content.decks())deck.id};
-  });
-  await repository.deviceId();return repository;
-},retry:(_,_)=>null);
+  final db = await ref.watch(userDatabaseProvider.future);
+  final lang = await ref.watch(selectedContentLanguageProvider.future);
+  final repository = DriftUserRepository(
+    db,
+    lang: lang,
+    ownsDatabase: false,
+    defaultActiveDeckIds: () async {
+      final content = await ref.read(contentRepositoryProvider.future);
+      if (content.info.lang != lang)
+        throw StateError('Sprachansicht hat sich geändert.');
+      return {
+        for (final deck in await content.decks())
+          if (deck.titleDe == 'Allgemeine Sprache') deck.id,
+      };
+    },
+    contentIds: (kind) async {
+      if (!ref.mounted) throw StateError('Sprachansicht wurde geschlossen.');
+      final content = await ref.read(contentRepositoryProvider.future);
+      if (content.info.lang != lang)
+        throw StateError('Sprachansicht hat sich geändert.');
+      return kind == 'cards'
+          ? content.allCardIds()
+          : {for (final deck in await content.decks()) deck.id};
+    },
+  );
+  await repository.deviceId();
+  return repository;
+}, retry: (_, _) => null);
 final contentInfoProvider = FutureProvider<ContentInfo>(
   (ref) async => (await ref.watch(contentRepositoryProvider.future)).info,
   retry: (_, _) => null,

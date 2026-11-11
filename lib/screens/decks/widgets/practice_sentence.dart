@@ -235,8 +235,10 @@ class PracticeSentenceState extends State<PracticeSentence> {
           final needed = math.max(64.0, painter.width + 22);
           final width = math.min(
             math.max(1.0, constraints.maxWidth - punctuationWidth),
-            (widget.solved || widget.error) && _editingWidth != null &&
-                _editingScale == scale && _editingAvailableWidth == constraints.maxWidth
+            (widget.solved || widget.error) &&
+                    _editingWidth != null &&
+                    _editingScale == scale &&
+                    _editingAvailableWidth == constraints.maxWidth
                 ? math.max(_editingWidth!, needed)
                 : needed,
           );
@@ -268,54 +270,69 @@ class PracticeSentenceState extends State<PracticeSentence> {
                         child: Stack(
                           children: [
                             TextField(
-                        key: const ValueKey('practice-input'),
-                        controller: widget.solved ? _solution : input,
-                        focusNode: widget.solved && !widget.keepFocus
-                            ? null
-                            : widget.focus,
-                        readOnly: widget.solved && !widget.keepFocus,
-                        canRequestFocus: !widget.solved || widget.keepFocus,
-                        inputFormatters: widget.solved ? const [_Locked()] : null,
-                        showCursor: false,
-                        cursorWidth: 0,
-                        textAlign: ghost.isEmpty ? TextAlign.center : TextAlign.start,
-                        enableInteractiveSelection: !widget.solved,
-                        autofocus: !widget.solved,
-                        maxLines: null,
-                        keyboardType: TextInputType.text,
-                        style: widget.solved ? style.copyWith(color: colors.success) : style,
-                        cursorColor: colors.memoryLevel2,
-                        autocorrect: false,
-                        enableSuggestions: false,
-                        textInputAction: TextInputAction.done,
-                        onEditingComplete: widget.onSubmit,
-                        onChanged: (_) => widget.onChanged(),
-                        decoration: InputDecoration(
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: ghost.isEmpty ? 5 : ghostPadding,
-                            vertical: 0,
-                          ),
-                          filled: true,
-                          fillColor: widget.solved ? colors.successTint : widget.error ? colors.errorTint : colors.memoryLevel2.withValues(alpha: .12),
-                          hintText:
-                              widget.solved ||
-                                  input.hint.isEmpty ||
-                                  ghost.isNotEmpty
-                              ? null
-                              : input.hint,
-                          hintStyle: style.copyWith(
-                            color: colors.memoryLevel2.withValues(alpha: .5),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide: BorderSide.none,
-                            // The outline's label gap would shift the typed
-                            // letters off the ghost word drawn over them.
-                            gapPadding: 0,
-                          ),
-                        ),
-                      ),
+                              key: const ValueKey('practice-input'),
+                              controller: widget.solved ? _solution : input,
+                              focusNode: widget.solved && !widget.keepFocus
+                                  ? null
+                                  : widget.focus,
+                              readOnly: widget.solved && !widget.keepFocus,
+                              canRequestFocus:
+                                  !widget.solved || widget.keepFocus,
+                              inputFormatters: widget.solved
+                                  ? const [_Locked()]
+                                  : null,
+                              showCursor: false,
+                              cursorWidth: 0,
+                              textAlign: ghost.isEmpty
+                                  ? TextAlign.center
+                                  : TextAlign.start,
+                              enableInteractiveSelection: !widget.solved,
+                              autofocus: !widget.solved,
+                              maxLines: null,
+                              keyboardType: TextInputType.text,
+                              style: widget.solved
+                                  ? style.copyWith(color: colors.success)
+                                  : style,
+                              cursorColor: colors.memoryLevel2,
+                              autocorrect: false,
+                              enableSuggestions: false,
+                              textInputAction: TextInputAction.done,
+                              onEditingComplete: widget.onSubmit,
+                              onChanged: (_) => widget.onChanged(),
+                              decoration: InputDecoration(
+                                isDense: true,
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: ghost.isEmpty ? 5 : ghostPadding,
+                                  vertical: 0,
+                                ),
+                                filled: true,
+                                fillColor: widget.solved
+                                    ? colors.successTint
+                                    : widget.error
+                                    ? colors.errorTint
+                                    : colors.memoryLevel2.withValues(
+                                        alpha: .12,
+                                      ),
+                                hintText:
+                                    widget.solved ||
+                                        input.hint.isEmpty ||
+                                        ghost.isNotEmpty
+                                    ? null
+                                    : input.hint,
+                                hintStyle: style.copyWith(
+                                  color: colors.memoryLevel2.withValues(
+                                    alpha: .5,
+                                  ),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide.none,
+                                  // The outline's label gap would shift the typed
+                                  // letters off the ghost word drawn over them.
+                                  gapPadding: 0,
+                                ),
+                              ),
+                            ),
                             // The whole word, faint, over the field (its fill would hide
                             // it); the typed part of it stays transparent.
                             if (ghost.isNotEmpty)
@@ -331,7 +348,9 @@ class PracticeSentenceState extends State<PracticeSentence> {
                                         children: [
                                           TextSpan(
                                             text: ghost.characters
-                                                .take(input.text.characters.length)
+                                                .take(
+                                                  input.text.characters.length,
+                                                )
                                                 .toString(),
                                             style: style.copyWith(
                                               color: const Color(0x00000000),
@@ -339,7 +358,9 @@ class PracticeSentenceState extends State<PracticeSentence> {
                                           ),
                                           TextSpan(
                                             text: ghost.characters
-                                                .skip(input.text.characters.length)
+                                                .skip(
+                                                  input.text.characters.length,
+                                                )
                                                 .toString(),
                                             style: style.copyWith(
                                               color: colors.memoryLevel2
@@ -357,7 +378,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
                               ),
                           ],
                         ),
-                    ),
+                      ),
                     ),
                     if (punctuation.isNotEmpty) Text(punctuation, style: style),
                   ],

@@ -95,8 +95,10 @@ class DeckSessionController extends Notifier<DeckSessionState> {
 
   Future<Set<String>> _freeIds() async {
     if (_freePracticeIds case final ids?) return ids;
-    final decks = _resolver.catalog?.decks ??
-        await _resolver.content?.decks() ?? <DeckSummary>[];
+    final decks =
+        _resolver.catalog?.decks ??
+        await _resolver.content?.decks() ??
+        <DeckSummary>[];
     return _freePracticeIds = {
       for (final deck in decks)
         if (isFreeDeckId(deck.id)) ...await _resolver.deckPracticeIds(deck.id),
@@ -105,7 +107,9 @@ class DeckSessionController extends Notifier<DeckSessionState> {
 
   @override
   DeckSessionState build() {
-    final releaseContentLease = contentTransitionGate.acquire(reason: 'practice');
+    final releaseContentLease = contentTransitionGate.acquire(
+      reason: 'practice',
+    );
     ref.onDispose(releaseContentLease);
     _clock = ref.read(clockProvider);
     Future.microtask(start);
@@ -141,7 +145,8 @@ class DeckSessionController extends Notifier<DeckSessionState> {
     _emit(loading: true);
     try {
       if (!_initialized) {
-        if (args.deckId.isNotEmpty && !isFreeDeckId(args.deckId) &&
+        if (args.deckId.isNotEmpty &&
+            !isFreeDeckId(args.deckId) &&
             !ref.read(premiumContentAccessProvider)) {
           throw StateError('Für diesen Stapel brauchst du Premium.');
         }
@@ -154,35 +159,51 @@ class DeckSessionController extends Notifier<DeckSessionState> {
         _preferences = await _user.preferences();
         final now = _clock().toLocal();
         final today = DateTime(now.year, now.month, now.day);
-        final completed = completedTargetsByDay(await _user.activityBetween(
-          today, DateTime(now.year, now.month, now.day + 1),
-        ))[today] ?? <String>{};
-        final remaining = (_preferences.dailyGoal - completed.length).clamp(0, _preferences.dailyGoal);
+        final completed =
+            completedTargetsByDay(
+              await _user.activityBetween(
+                today,
+                DateTime(now.year, now.month, now.day + 1),
+              ),
+            )[today] ??
+            <String>{};
+        final remaining = (_preferences.dailyGoal - completed.length).clamp(
+          0,
+          _preferences.dailyGoal,
+        );
         _goalReached = remaining == 0;
         // The goal is a recommendation: once reached, a normal start is the
         // voluntary continuation. Cards done today are not due or new any
         // more; Revue/Vorab keep due dates, so such cards stay due.
-        _sessionLimit = args.size > 0 ? args.size
-            : args.size < 0 || remaining == 0 || args.kind == DeckSessionKind.revue ||
-                    args.kind == DeckSessionKind.early
-                ? _preferences.dailyGoal
-                : remaining;
+        _sessionLimit = args.size > 0
+            ? args.size
+            : args.size < 0 ||
+                  remaining == 0 ||
+                  args.kind == DeckSessionKind.revue ||
+                  args.kind == DeckSessionKind.early
+            ? _preferences.dailyGoal
+            : remaining;
         if (args.kind != DeckSessionKind.mixed &&
-            _resolver.content == null && args.deckId != storyCollectionId &&
+            _resolver.content == null &&
+            args.deckId != storyCollectionId &&
             args.deckId != _resolver.generatedDeckId &&
             args.deckId.isNotEmpty) {
           throw _resolver.contentError ?? StateError('Inhaltspaket fehlt');
         }
         final scope = args.deckId == storyCollectionId
             ? _resolver.storyPracticeIds
-            : args.deckId.isEmpty ? null : await _resolver.deckPracticeIds(args.deckId);
+            : args.deckId.isEmpty
+            ? null
+            : await _resolver.deckPracticeIds(args.deckId);
         final premium = ref.read(premiumContentAccessProvider);
         final freeIds = premium ? null : await _freeIds();
         final allStates = await _user.allCardStates();
-        final states = freeIds == null ? allStates : {
-          for (final entry in allStates.entries)
-            if (freeIds.contains(entry.key)) entry.key: entry.value,
-        };
+        final states = freeIds == null
+            ? allStates
+            : {
+                for (final entry in allStates.entries)
+                  if (freeIds.contains(entry.key)) entry.key: entry.value,
+              };
         final cards = _resolver.cards;
         if (args.kind == DeckSessionKind.mixed) {
           final sources = await _resolver.newWordSources();
@@ -192,12 +213,16 @@ class DeckSessionController extends Notifier<DeckSessionState> {
           _queue = buildMixedQueue(
             targetsResolved: true,
             activeDeckCardIds: const [],
-            deckSources: freeIds == null ? sources.active : [
-              for (final source in sources.active)
-                if (isFreeDeckId(source.id))
-                  NewWordSource(source.id,
-                    source.cardIds.where(freeIds.contains).toList()),
-            ],
+            deckSources: freeIds == null
+                ? sources.active
+                : [
+                    for (final source in sources.active)
+                      if (isFreeDeckId(source.id))
+                        NewWordSource(
+                          source.id,
+                          source.cardIds.where(freeIds.contains).toList(),
+                        ),
+                  ],
             sourceOrder: [
               for (final id in sources.order)
                 if (premium || isFreeDeckId(id)) id,
@@ -214,8 +239,13 @@ class DeckSessionController extends Notifier<DeckSessionState> {
         } else if (args.kind == DeckSessionKind.early && scope == null) {
           final hidden = await _resolver.deactivatedDeckIds();
           _queue = buildEarlyQueue(
-              scopeIds: states.keys.where((id) => !hidden.contains(id)).toList()..sort(),
-              cards: cards, states: states, now: _clock(), size: _sessionLimit);
+            scopeIds: states.keys.where((id) => !hidden.contains(id)).toList()
+              ..sort(),
+            cards: cards,
+            states: states,
+            now: _clock(),
+            size: _sessionLimit,
+          );
         } else {
           _queue = buildDeckQueue(
             targetsResolved: true,
@@ -254,7 +284,9 @@ class DeckSessionController extends Notifier<DeckSessionState> {
       _queue = [
         ..._queue.take(_index),
         if (!directLocked)
-          ..._queue.skip(_index).where((entry) => freeIds.contains(entry.cardId)),
+          ..._queue
+              .skip(_index)
+              .where((entry) => freeIds.contains(entry.cardId)),
       ];
     }
     if (_index >= _queue.length) {
@@ -289,12 +321,14 @@ class DeckSessionController extends Notifier<DeckSessionState> {
     _saved = false;
     _emit(
       message:
-          _index == 0 && _goalReached && args.kind != DeckSessionKind.revue &&
+          _index == 0 &&
+              _goalReached &&
+              args.kind != DeckSessionKind.revue &&
               args.kind != DeckSessionKind.early
           ? 'Tagesziel erreicht – du lernst freiwillig weiter.'
           : _index == 0 &&
-              args.kind == DeckSessionKind.learn &&
-              _queue.length < _sessionLimit
+                args.kind == DeckSessionKind.learn &&
+                _queue.length < _sessionLimit
           ? 'Für diese Sitzung sind ${_queue.length} unterschiedliche Karten verfügbar.'
           : entry.mode == ReviewMode.early
           ? 'Vorab-Üben: Eine saubere Antwort lässt Stufe und Fälligkeit unverändert.'
@@ -349,7 +383,9 @@ class DeckSessionController extends Notifier<DeckSessionState> {
         await _user.recordReview(record);
         _records.add(record);
         final source = _queue[_index].source;
-        if (args.kind == DeckSessionKind.mixed && record.boxBefore == 0 && source != null &&
+        if (args.kind == DeckSessionKind.mixed &&
+            record.boxBefore == 0 &&
+            source != null &&
             _user is NewWordRotationStore) {
           // Only a completed new target moves the rotation. It is advisory
           // metadata: a failed write must not undo or hide the saved review.

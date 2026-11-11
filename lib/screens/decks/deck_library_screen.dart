@@ -48,64 +48,63 @@ class DeckLibraryScreen extends ConsumerWidget {
     final premium = ref.watch(premiumContentAccessProvider);
     return SafeArea(
       bottom: false,
-      child: watchContentStable(ref, decksProvider)
-          .when(
-                skipLoadingOnReload: false,
-                skipLoadingOnRefresh: false,
-                skipError: false,
-            loading: () => const Center(child: CupertinoActivityIndicator()),
-            error: (error, _) => ContentUnavailableView(
-              error: error,
-              onRetry: () {
-                retryDatabases(ref);
-                ref.invalidate(decksProvider);
-              },
+      child: watchContentStable(ref, decksProvider).when(
+        skipLoadingOnReload: false,
+        skipLoadingOnRefresh: false,
+        skipError: false,
+        loading: () => const Center(child: CupertinoActivityIndicator()),
+        error: (error, _) => ContentUnavailableView(
+          error: error,
+          onRetry: () {
+            retryDatabases(ref);
+            ref.invalidate(decksProvider);
+          },
+        ),
+        data: (decks) {
+          bool activeDeck(Deck deck) =>
+              deck.isActive && (premium || isFreeDeckId(deck.id));
+          final active = decks.where(activeDeck).toList();
+          final others = decks.where((deck) => !activeDeck(deck)).toList();
+          List<Widget> section(String title, List<Deck> group) => [
+            const SizedBox(height: 22),
+            Padding(
+              padding: _gutter,
+              child: SectionHeading(title: title),
             ),
-            data: (decks) {
-              bool activeDeck(Deck deck) =>
-                  deck.isActive && (premium || isFreeDeckId(deck.id));
-              final active = decks.where(activeDeck).toList();
-              final others = decks.where((deck) => !activeDeck(deck)).toList();
-              List<Widget> section(String title, List<Deck> group) => [
-                const SizedBox(height: 22),
-                Padding(
-                  padding: _gutter,
-                  child: SectionHeading(title: title),
-                ),
-                const SizedBox(height: 14),
-                for (final (i, deck) in group.indexed)
-                  Padding(
-                    padding: _gutter.copyWith(top: i == 0 ? 0 : 12),
-                    child: DeckTile(deck: deck, onTap: () => onOpenDeck(deck)),
-                  ),
-              ];
+            const SizedBox(height: 14),
+            for (final (i, deck) in group.indexed)
+              Padding(
+                padding: _gutter.copyWith(top: i == 0 ? 0 : 12),
+                child: DeckTile(deck: deck, onTap: () => onOpenDeck(deck)),
+              ),
+          ];
 
-              return ListView(
-                physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics(),
-                ),
-                padding: const EdgeInsets.only(top: 8, bottom: 32),
-                children: [
-                  Padding(
-                    padding: _gutter,
-                    child: Semantics(
-                      header: true,
-                      child: Text(
-                        'Stapel',
-                        style: AppType.editorial(
-                          color: context.appColors.textPrimary,
-                          size: 32,
-                        ),
-                      ),
+          return ListView(
+            physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
+            padding: const EdgeInsets.only(top: 8, bottom: 32),
+            children: [
+              Padding(
+                padding: _gutter,
+                child: Semantics(
+                  header: true,
+                  child: Text(
+                    'Stapel',
+                    style: AppType.editorial(
+                      color: context.appColors.textPrimary,
+                      size: 32,
                     ),
                   ),
-                  const StoryCollectionEntry(),
-                  if (active.isNotEmpty) ...section('Aktiv', active),
-                  if (others.isNotEmpty) ...section('Weitere Stapel', others),
-                ],
-              );
-            },
-          ),
+                ),
+              ),
+              const StoryCollectionEntry(),
+              if (active.isNotEmpty) ...section('Aktiv', active),
+              if (others.isNotEmpty) ...section('Weitere Stapel', others),
+            ],
+          );
+        },
+      ),
     );
   }
 }

@@ -1,7 +1,9 @@
 import 'dart:io';
+
 import '../platform/sqlite_platform.dart' as sqlite;
 
 import 'package:drift/drift.dart';
+
 import '../platform/sqlite_platform.dart' show openUserExecutor, fileDatabase;
 
 part 'user_database.g.dart';
@@ -10,7 +12,11 @@ part 'user_database.g.dart';
 /// creation + `review_log`. Curated content is referenced; local cards own metadata.
 @DataClassName('UserCardRow')
 class UserCards extends Table {
-  TextColumn get formFunction => text().nullable().check(const CustomExpression("form_function IS NULL OR length(trim(form_function)) > 0"))();
+  TextColumn get formFunction => text().nullable().check(
+    const CustomExpression(
+      "form_function IS NULL OR length(trim(form_function)) > 0",
+    ),
+  )();
   // Local form concepts remain countable when the content pack is unavailable.
   TextColumn get lexicalTargetId => text().nullable()();
   TextColumn get form => text().nullable()();
@@ -193,20 +199,25 @@ class FormIdentityBindings extends Table {
   TextColumn get lang => text()();
   TextColumn get formNorm => text()();
   TextColumn get semanticAnchor => text()();
-  TextColumn get function => text().check(const CustomExpression("length(trim(function)) > 0"))();
+  TextColumn get function =>
+      text().check(const CustomExpression("length(trim(function)) > 0"))();
   TextColumn get cardId => text().references(UserCards, #cardId)();
   @override
   Set<Column> get primaryKey => {identityKey};
   @override
-  List<Set<Column>> get uniqueKeys => [{lang, formNorm, semanticAnchor, function}];
+  List<Set<Column>> get uniqueKeys => [
+    {lang, formNorm, semanticAnchor, function},
+  ];
 }
 
 @DataClassName('LanguagePreferenceRow')
 class LanguageLearningPreferences extends Table {
   TextColumn get lang => text()();
   IntColumn get dailyGoal => integer().withDefault(const Constant(10))();
-  BoolColumn get includeDiacritics => boolean().withDefault(const Constant(true))();
+  BoolColumn get includeDiacritics =>
+      boolean().withDefault(const Constant(true))();
   BoolColumn get showGrammar => boolean().withDefault(const Constant(false))();
+
   /// Rotation metadata only: source of the last completed new target.
   TextColumn get newWordSource => text().nullable()();
   @override
@@ -244,7 +255,8 @@ class UserDatabase extends _$UserDatabase {
     if (!file.existsSync()) return;
     final db = sqlite.sqlite3.open(file.path, mode: sqlite.OpenMode.readOnly);
     try {
-      final version = db.select('PRAGMA user_version').first.values.first as int;
+      final version =
+          db.select('PRAGMA user_version').first.values.first as int;
       if (version <= 0 || version >= 6) return;
       final backup = File('${file.path}.pre-v6.sqlite');
       if (backup.existsSync()) return; // Preserve the first recovery snapshot.
@@ -252,14 +264,19 @@ class UserDatabase extends _$UserDatabase {
       if (temporary.existsSync()) temporary.deleteSync();
       db.execute('VACUUM INTO ?', [temporary.path]);
       temporary.renameSync(backup.path);
-    } finally { db.close(); }
+    } finally {
+      db.close();
+    }
   }
 
   /// `<application support>/user.db`, opened on a background isolate.
   static Future<UserDatabase> openForApp({String? accountId}) async =>
-      UserDatabase(await openUserExecutor(
-        accountId: accountId, beforeOpen: backupBeforeMigration,
-      ));
+      UserDatabase(
+        await openUserExecutor(
+          accountId: accountId,
+          beforeOpen: backupBeforeMigration,
+        ),
+      );
 
   Future<void> _contextTriggers() async {
     for (final op in ['UPDATE', 'DELETE']) {
@@ -276,58 +293,65 @@ class UserDatabase extends _$UserDatabase {
   MigrationStrategy get migration => MigrationStrategy(
     onUpgrade: (m, from, to) async {
       await transaction(() async {
-      if (from < 8) {
-        await m.createTable(generatedVocabularyAdditions);
-      }
-      if (from < 5) {
-        await m.addColumn(userCards, userCards.formFunction);
-        await m.addColumn(userCards, userCards.lexicalTargetId);
-        await m.createTable(formIdentityBindings);
-      }
-      if (from < 4) {
-        for (final column in [
-          userCards.form,
-          userCards.formNorm,
-          userCards.glossDe,
-          userCards.lemma,
-          userCards.pos,
-          userCards.lemmaIdentity,
-          userCards.senseIdentity,
-          userCards.senseKey,
-          userCards.primaryContextId,
-        ]) {
-          await m.addColumn(userCards, column);
+        if (from < 8) {
+          await m.createTable(generatedVocabularyAdditions);
         }
-        await m.createTable(cardContexts);
-        await m.createTable(storyLearningAdditions);
-        await m.createTable(storyWordSources);
-        await m.createTable(learningIdentityBindings);
-        await _contextTriggers();
-      }
-      if (from < 3) {
-        await m.addColumn(userCards, userCards.note);
-        await m.addColumn(userCards, userCards.inPlaylist);
-        await m.addColumn(settings, settings.dailyGoal);
-      }
-      if (from < 2) {
-        await m.addColumn(userCards, userCards.favorite);
-        await m.addColumn(settings, settings.motif);
-        await m.addColumn(settings, settings.includeDiacritics);
-        await m.addColumn(settings, settings.autoNext);
-        await m.addColumn(settings, settings.showGrammar);
-        await m.createTable(localSubmissions);
-      }
-      if (from == 6) {
-        await m.addColumn(languageLearningPreferences, languageLearningPreferences.newWordSource);
-      }
-      if (from < 6) {
-        await m.createTable(languageLearningPreferences);
-        await customStatement("INSERT INTO language_learning_preferences (lang, daily_goal, include_diacritics, show_grammar) SELECT 'en', daily_goal, include_diacritics, show_grammar FROM settings WHERE id = 1");
-        await m.alterTable(TableMigration(userCards));
-        await m.alterTable(TableMigration(formIdentityBindings));
-        final violations = await customSelect('PRAGMA foreign_key_check').get();
-        if (violations.isNotEmpty) throw StateError('Migration verletzt Datenreferenzen.');
-      }
+        if (from < 5) {
+          await m.addColumn(userCards, userCards.formFunction);
+          await m.addColumn(userCards, userCards.lexicalTargetId);
+          await m.createTable(formIdentityBindings);
+        }
+        if (from < 4) {
+          for (final column in [
+            userCards.form,
+            userCards.formNorm,
+            userCards.glossDe,
+            userCards.lemma,
+            userCards.pos,
+            userCards.lemmaIdentity,
+            userCards.senseIdentity,
+            userCards.senseKey,
+            userCards.primaryContextId,
+          ]) {
+            await m.addColumn(userCards, column);
+          }
+          await m.createTable(cardContexts);
+          await m.createTable(storyLearningAdditions);
+          await m.createTable(storyWordSources);
+          await m.createTable(learningIdentityBindings);
+          await _contextTriggers();
+        }
+        if (from < 3) {
+          await m.addColumn(userCards, userCards.note);
+          await m.addColumn(userCards, userCards.inPlaylist);
+          await m.addColumn(settings, settings.dailyGoal);
+        }
+        if (from < 2) {
+          await m.addColumn(userCards, userCards.favorite);
+          await m.addColumn(settings, settings.motif);
+          await m.addColumn(settings, settings.includeDiacritics);
+          await m.addColumn(settings, settings.autoNext);
+          await m.addColumn(settings, settings.showGrammar);
+          await m.createTable(localSubmissions);
+        }
+        if (from == 6) {
+          await m.addColumn(
+            languageLearningPreferences,
+            languageLearningPreferences.newWordSource,
+          );
+        }
+        if (from < 6) {
+          await m.createTable(languageLearningPreferences);
+          await customStatement(
+            "INSERT INTO language_learning_preferences (lang, daily_goal, include_diacritics, show_grammar) SELECT 'en', daily_goal, include_diacritics, show_grammar FROM settings WHERE id = 1",
+          );
+          await m.alterTable(TableMigration(userCards));
+          await m.alterTable(TableMigration(formIdentityBindings));
+          final violations = await customSelect('PRAGMA foreign_key_check')
+              .get();
+          if (violations.isNotEmpty)
+            throw StateError('Migration verletzt Datenreferenzen.');
+        }
       });
     },
     onCreate: (m) async {

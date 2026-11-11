@@ -70,10 +70,7 @@ class GoalPanel extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 20),
-        Text(
-          'Tagesziel anpassen',
-          style: PopoverText.small(),
-        ),
+        Text('Tagesziel anpassen', style: PopoverText.small()),
         const SizedBox(height: 8),
         Wrap(
           spacing: 8,

@@ -10,7 +10,13 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart'
-    show Colors, InputDecoration, Scaffold, TextField, OutlineInputBorder, LinearProgressIndicator;
+    show
+        Colors,
+        InputDecoration,
+        Scaffold,
+        TextField,
+        OutlineInputBorder,
+        LinearProgressIndicator;
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 
@@ -53,10 +59,16 @@ class TextExerciseScreen extends StatefulWidget {
     ExerciseMode mode,
   ) => Navigator.of(context).push(
     CupertinoPageRoute<void>(
-      builder: (_) => TextExerciseScreen(text: text, mode: mode,
-        translate: text.language == 'en' ? sampleTranslateSentence
-            : (sentence) => localizedPracticeContent[text.language]?.translations[sentence.trim()]
-                ?? 'Übersetzung nicht verfügbar.'),
+      builder: (_) => TextExerciseScreen(
+        text: text,
+        mode: mode,
+        translate: text.language == 'en'
+            ? sampleTranslateSentence
+            : (sentence) =>
+                  localizedPracticeContent[text.language]?.translations[sentence
+                      .trim()] ??
+                  'Übersetzung nicht verfügbar.',
+      ),
     ),
   );
 
@@ -104,16 +116,34 @@ class _Sentence {
 
 class _TextExerciseScreenState extends State<TextExerciseScreen> {
   SpeechNarration? _speech;
-  void _onSpeech() { if (mounted) setState(() {}); }
+  void _onSpeech() {
+    if (mounted) setState(() {});
+  }
+
   void _readText() {
-    if (_speech?.playing == true) { _speech!.pause(); return; }
+    if (_speech?.playing == true) {
+      _speech!.pause();
+      return;
+    }
     _speech?.removeListener(_onSpeech);
     _speech?.dispose();
-    _speech = SpeechNarration(text: _spokenText, language: widget.effectiveSourceLanguage,
-      onError: (message) => showSpeechError(context, message))..addListener(_onSpeech);
+    _speech = SpeechNarration(
+      text: _spokenText,
+      language: widget.effectiveSourceLanguage,
+      onError: (message) => showSpeechError(context, message),
+    )..addListener(_onSpeech);
     _speech!.play();
   }
-  String get _spokenText => [for (final paragraph in _paragraphs) [for (final part in paragraph) part is _Gap ? (part.solved ? part.gap.answer : ' … ') : part as String].join()].join('\n');
+
+  String get _spokenText => [
+    for (final paragraph in _paragraphs)
+      [
+        for (final part in paragraph)
+          part is _Gap
+              ? (part.solved ? part.gap.answer : ' … ')
+              : part as String,
+      ].join(),
+  ].join('\n');
 
   static const _flashDuration = Duration(milliseconds: 600);
   static const _flightDuration = Duration(milliseconds: 350);
@@ -517,7 +547,10 @@ class _TextExerciseScreenState extends State<TextExerciseScreen> {
                   label: '$_solvedCount von ${_gaps.length} Lücken gelöst',
                   excludeSemantics: true,
                   child: SizedBox(
-                    width: math.min(240, MediaQuery.sizeOf(context).width - 100),
+                    width: math.min(
+                      240,
+                      MediaQuery.sizeOf(context).width - 100,
+                    ),
                     child: LinearProgressIndicator(
                       key: const ValueKey('cloze-progress'),
                       value: _gaps.isEmpty ? 1 : _solvedCount / _gaps.length,
@@ -667,7 +700,10 @@ class _TypedGap extends StatelessWidget {
           onEditingComplete: onSubmit,
           decoration: InputDecoration(
             isDense: true,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 6,
+            ),
             filled: true,
             fillColor: gap.flashError
                 ? context.appColors.errorTint

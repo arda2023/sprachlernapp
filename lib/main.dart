@@ -1,6 +1,8 @@
 import 'presentation/audio/device_speech_playback.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+
 import 'data/platform/json_store.dart';
 import 'data/sync/sync_json_store.dart';
 import 'presentation/providers/account_provider.dart';
@@ -51,9 +53,7 @@ Future<void> main() async {
         celebrationSoundsProvider.overrideWith(
           (ref) => AudioCelebrationSounds(),
         ),
-        onboardingSoundsProvider.overrideWith(
-          (ref) => AudioOnboardingSounds(),
-        ),
+        onboardingSoundsProvider.overrideWith((ref) => AudioOnboardingSounds()),
         onboardingStoreProvider.overrideWith(
           (ref) => platformJsonStore('onboarding'),
         ),
@@ -77,12 +77,18 @@ Future<void> main() async {
 JsonStore _accountStore(Ref ref, String prefix, {bool list = false}) {
   ref.watch(accountSessionProvider);
   final database = ref.watch(userDatabaseProvider.future);
-  final language = ref.watch(selectedContentLanguageProvider).asData?.value ?? 'en';
+  final language =
+      ref.watch(selectedContentLanguageProvider).asData?.value ?? 'en';
   final name = '${prefix}_$language';
   final owner = ref.read(contentAuthProvider).localOwner;
-  return SyncJsonStore(database, name, list: list,
-      legacy: AccountLegacyJsonStore(name, owner),
-      isCurrent: () => ref.mounted && ref.read(contentAuthProvider).localOwner == owner);
+  return SyncJsonStore(
+    database,
+    name,
+    list: list,
+    legacy: AccountLegacyJsonStore(name, owner),
+    isCurrent: () =>
+        ref.mounted && ref.read(contentAuthProvider).localOwner == owner,
+  );
 }
 
 class SprachApp extends ConsumerWidget {
@@ -112,13 +118,23 @@ class SprachApp extends ConsumerWidget {
         AppMotif.light => ThemeMode.light,
         AppMotif.dark => ThemeMode.dark,
       },
-      builder: kIsWeb ? (context, child) => LayoutBuilder(builder: (context, constraints) {
-        final width = constraints.maxWidth.clamp(0.0, 1440.0);
-        return Center(child: SizedBox(width: width, child: MediaQuery(
-          data: MediaQuery.of(context).copyWith(size: Size(width, constraints.maxHeight)),
-          child: child ?? const SizedBox.shrink(),
-        )));
-      }) : null,
+      builder: kIsWeb
+          ? (context, child) => LayoutBuilder(
+              builder: (context, constraints) {
+                final width = constraints.maxWidth.clamp(0.0, 1440.0);
+                return Center(
+                  child: SizedBox(
+                    width: width,
+                    child: MediaQuery(
+                      data: MediaQuery.of(context)
+                          .copyWith(size: Size(width, constraints.maxHeight)),
+                      child: child ?? const SizedBox.shrink(),
+                    ),
+                  ),
+                );
+              },
+            )
+          : null,
       home: kIsWeb ? const WebAppGate() : const _Start(),
     );
   }

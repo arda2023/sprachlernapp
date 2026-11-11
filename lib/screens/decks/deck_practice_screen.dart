@@ -1,6 +1,7 @@
 import '../web/web_reading_viewport.dart';
 import '../../presentation/audio/device_speech_playback.dart';
 import '../../presentation/audio/device_dictation.dart';
+
 import 'dart:async';
 import 'dart:math' as math;
 import 'dart:ui' show ViewFocusEvent, ViewFocusState;
@@ -61,7 +62,9 @@ class DeckPracticeScreen extends ConsumerStatefulWidget {
   }) => Navigator.of(context).push(
     CupertinoPageRoute<void>(
       fullscreenDialog: true,
-      builder: (_) => WebReadingViewport(child: DeckPracticeScreen(deckId: deckId, mode: mode)),
+      builder: (_) => WebReadingViewport(
+        child: DeckPracticeScreen(deckId: deckId, mode: mode),
+      ),
     ),
   );
   @override
@@ -71,9 +74,14 @@ class DeckPracticeScreen extends ConsumerStatefulWidget {
 class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     with WidgetsBindingObserver, SingleTickerProviderStateMixin {
   String? _speechLanguage;
-  late final _speech = DeviceSpeechPlayback(language: () => _speechLanguage, onError: (message) => showSpeechError(context, message));
+  late final _speech = DeviceSpeechPlayback(
+    language: () => _speechLanguage,
+    onError: (message) => showSpeechError(context, message),
+  );
   late final _dictation = ref.read(deviceDictationProvider);
-  bool _ownsDictation = false, _applyingDictation = false, _startingDictation = false;
+  bool _ownsDictation = false,
+      _applyingDictation = false,
+      _startingDictation = false;
   int _dictationRevision = 0;
 
   Future<void> _cancelDictation() async {
@@ -90,7 +98,12 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
       return;
     }
     final pass = ref.read(deckSessionControllerProvider(_args)).pass;
-    if (pass == null || pass.solved || _historyIndex != null || _overlay || _word != null) return;
+    if (pass == null ||
+        pass.solved ||
+        _historyIndex != null ||
+        _overlay ||
+        _word != null)
+      return;
     final revision = ++_dictationRevision;
     final passId = pass.id;
     _ownsDictation = true;
@@ -102,8 +115,10 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     await _dictation.start(
       language: pass.item.card.lang,
       onText: (text) {
-        if (!mounted || revision != _dictationRevision ||
-            _historyIndex != null || _overlay ||
+        if (!mounted ||
+            revision != _dictationRevision ||
+            _historyIndex != null ||
+            _overlay ||
             ModalRoute.of(context)?.isCurrent == false) {
           return;
         }
@@ -118,7 +133,8 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
         }
       },
       onError: (message) {
-        if (mounted && revision == _dictationRevision) showSpeechError(context, message);
+        if (mounted && revision == _dictationRevision)
+          showSpeechError(context, message);
       },
     );
     if (revision == _dictationRevision) {
@@ -262,8 +278,12 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
   }
 
   void _restorePracticeInput() {
-    if (!mounted || _overlay || _word != null || _historyIndex != null ||
-        _ownsDictation || _startingDictation ||
+    if (!mounted ||
+        _overlay ||
+        _word != null ||
+        _historyIndex != null ||
+        _ownsDictation ||
+        _startingDictation ||
         ModalRoute.of(context)?.isCurrent != true) {
       return;
     }
@@ -271,7 +291,8 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     if (session.pass == null || session.finished) return;
     final primary = FocusManager.instance.primaryFocus;
     // Respect another editor or an explicitly focused control in this view.
-    if (primary != null && primary != _focus && primary is! FocusScopeNode) return;
+    if (primary != null && primary != _focus && primary is! FocusScopeNode)
+      return;
     final editor = _focus.context?.findAncestorStateOfType<EditableTextState>();
     if (editor != null) {
       // Reconnect the platform input even if Flutter still considers it focused.
@@ -343,7 +364,8 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
   }
 
   KeyEventResult _handleInputKey(FocusNode node, KeyEvent event) {
-    final enter = event.logicalKey == LogicalKeyboardKey.enter ||
+    final enter =
+        event.logicalKey == LogicalKeyboardKey.enter ||
         event.logicalKey == LogicalKeyboardKey.numpadEnter;
     if (!enter || !HardwareKeyboard.instance.isShiftPressed) {
       return KeyEventResult.ignored;
@@ -351,12 +373,16 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     // Consume repeats and unavailable actions so Shift+Enter never submits
     // an answer or advances a solved card through the text field.
     if (event is KeyDownEvent &&
-        _historyIndex == null && !_overlay && _word == null &&
+        _historyIndex == null &&
+        !_overlay &&
+        _word == null &&
         ModalRoute.of(context)?.isCurrent != false) {
       final session = ref.read(deckSessionControllerProvider(_args));
       final pass = session.pass;
-      if (!session.committing && pass != null &&
-          !pass.solved && !pass.revealed) {
+      if (!session.committing &&
+          pass != null &&
+          !pass.solved &&
+          !pass.revealed) {
         _reveal();
       }
     }
@@ -468,15 +494,18 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final card = snapshot?.card ?? s.pass!.item.card;
     final solved = snapshot != null || s.pass!.solved;
     final hint = grammarHint(card, solved: solved);
-    await _popover(_Trigger.info, (anchor) => FormInfoSheet.show(
-      anchor,
-      label: card.exerciseLabel,
-      explanation: hint.explanation,
-      examples: hint.examples,
-      forms: solved && snapshot == null
-          ? ([card.form, ...s.pass!.item.otherFormsOfLemma]..sort())
-          : const [],
-    ));
+    await _popover(
+      _Trigger.info,
+      (anchor) => FormInfoSheet.show(
+        anchor,
+        label: card.exerciseLabel,
+        explanation: hint.explanation,
+        examples: hint.examples,
+        forms: solved && snapshot == null
+            ? ([card.form, ...s.pass!.item.otherFormsOfLemma]..sort())
+            : const [],
+      ),
+    );
   });
   Future<void> _menu() => _withOverlay(() async {
     final s = ref.read(deckSessionControllerProvider(_args));
@@ -511,10 +540,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
             favorite: !(flags?.favorite ?? false),
           );
         case PracticeAction.report:
-          final category = await _popover(
-            _Trigger.menu,
-            showProblemCategories,
-          );
+          final category = await _popover(_Trigger.menu, showProblemCategories);
           if (!mounted || category == null) return;
           final pack = (await ref.read(contentRepositoryProvider.future))
               .info
@@ -707,7 +733,9 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                                   alignment:
                                                       Alignment.centerLeft,
                                                   child: _LevelTrigger(
-                                                    key: _triggerKeys[_Trigger.level],
+                                                    key:
+                                                        _triggerKeys[_Trigger
+                                                            .level],
                                                     level:
                                                         snapshot?.box ??
                                                         pass!.boxBefore,
@@ -717,16 +745,16 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                                     onPressed: () => _withOverlay(
                                                       () => _popover(
                                                         _Trigger.level,
-                                                        (anchor) =>
-                                                            MemoryLevelLegendSheet.show(
-                                                              anchor,
-                                                              current: math.max(
-                                                                1,
-                                                                snapshot?.box ??
-                                                                    pass!
-                                                                        .boxBefore,
-                                                              ),
-                                                            ),
+                                                        (
+                                                          anchor,
+                                                        ) => MemoryLevelLegendSheet.show(
+                                                          anchor,
+                                                          current: math.max(
+                                                            1,
+                                                            snapshot?.box ??
+                                                                pass!.boxBefore,
+                                                          ),
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
@@ -750,7 +778,9 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                                   onChanged: _controller
                                                       .clearWrongFormHint,
                                                   onWord: (word) {
-                                                    unawaited(_cancelDictation());
+                                                    unawaited(
+                                                      _cancelDictation(),
+                                                    );
                                                     _autoTimer?.cancel();
                                                     // Tapping the open word
                                                     // again closes its bubble.
@@ -774,7 +804,9 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                                   alignment:
                                                       Alignment.centerLeft,
                                                   child: _InfoChip(
-                                                    key: _triggerKeys[_Trigger.info],
+                                                    key:
+                                                        _triggerKeys[_Trigger
+                                                            .info],
                                                     label: contentCard!
                                                         .exerciseLabel,
                                                     open:
@@ -820,17 +852,25 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                         await _cancelDictation();
                         if (!mounted) return;
                         _speechLanguage = contentCard?.lang;
-                        _speech.play(sentence.sentenceId, solved ? sentence.text : sentence.text.replaceRange(sentence.gapStart, sentence.gapEnd, ' … '));
+                        _speech.play(
+                          sentence.sentenceId,
+                          solved
+                              ? sentence.text
+                              : sentence.text.replaceRange(
+                                  sentence.gapStart,
+                                  sentence.gapEnd,
+                                  ' … ',
+                                ),
+                        );
                       },
                       onDictate: solved ? null : _dictate,
                       dictating: _ownsDictation && _dictation.active,
                       message: _ownsDictation && _dictation.active
                           ? 'Sprich das Wort … System-Spracherkennung, ggf. online.'
-                          :
-                          state.saved ||
-                              state.message == 'Falsch' ||
-                              state.message ==
-                                  'Tippe das Wort ab, um weiterzumachen.'
+                          : state.saved ||
+                                state.message == 'Falsch' ||
+                                state.message ==
+                                    'Tippe das Wort ab, um weiterzumachen.'
                           ? null
                           : state.message,
                       hasInput: _input.text.trim().isNotEmpty,
@@ -885,8 +925,22 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
         ? word.rect
         : word.rect.shift(-box.localToGlobal(Offset.zero));
     final sentence = _sentenceKey.currentState?.widget.sentence;
-    final token = sentence?.tokens.where((w) => w.start == word.start).firstOrNull;
-    return TranslationBubble(anchor: rect, text: word.translation, language: ref.read(deckSessionControllerProvider(_args)).pass?.item.card.lang, spokenText: token == null ? '' : sentence!.text.substring(token.start, token.end));
+    final token = sentence?.tokens
+        .where((w) => w.start == word.start)
+        .firstOrNull;
+    return TranslationBubble(
+      anchor: rect,
+      text: word.translation,
+      language: ref
+          .read(deckSessionControllerProvider(_args))
+          .pass
+          ?.item
+          .card
+          .lang,
+      spokenText: token == null
+          ? ''
+          : sentence!.text.substring(token.start, token.end),
+    );
   }
 
   /// Every finished session ends on the completion screen (streak and the
@@ -943,7 +997,9 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     final story = widget.deckId == storyCollectionId;
     void open(DeckPracticeMode mode) => Navigator.of(context).pushReplacement(
       CupertinoPageRoute<void>(
-        builder: (_) => WebReadingViewport(child: DeckPracticeScreen(deckId: widget.deckId, mode: mode)),
+        builder: (_) => WebReadingViewport(
+          child: DeckPracticeScreen(deckId: widget.deckId, mode: mode),
+        ),
       ),
     );
     void early() => open(DeckPracticeMode.early);
@@ -966,7 +1022,8 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
       ),
       _ => PracticeEmptyState(
         title: 'Ups, hier gibt’s noch nichts zu üben',
-        message: 'Lerne zuerst ein paar Wörter, dann kannst du sie hier '
+        message:
+            'Lerne zuerst ein paar Wörter, dann kannst du sie hier '
             'wiederholen.',
         actionLabel: widget.deckId.isEmpty ? null : 'Wörter lernen',
         onAction: widget.deckId.isEmpty

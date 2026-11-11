@@ -44,10 +44,12 @@ final learningProgressProvider =
       final now = ref.watch(learningNowProvider);
       final user = await ref.watch(userRepositoryProvider.future);
       final prefs = await user.preferences();
-      final days = completedTargetsByDay(await user.activityBetween(
-        DateTime(now.year, now.month, now.day - now.weekday + 1),
-        DateTime(now.year, now.month, now.day + 1),
-      ));
+      final days = completedTargetsByDay(
+        await user.activityBetween(
+          DateTime(now.year, now.month, now.day - now.weekday + 1),
+          DateTime(now.year, now.month, now.day + 1),
+        ),
+      );
       final today = DateTime(now.year, now.month, now.day);
       final monday = DateTime(now.year, now.month, now.day - now.weekday + 1);
       return (
@@ -156,14 +158,16 @@ class WordActions {
   }) async {
     final release = contentTransitionGate.acquire();
     try {
-    final user = await ref.read(userRepositoryProvider.future);
-    await user.setCardFlags(
-      id,
-      favorite: favorite,
-      disabled: disabled,
-      inPlaylist: inPlaylist,
-      note: note,
-    );
-    } finally { release(); }
+      final user = await ref.read(userRepositoryProvider.future);
+      await user.setCardFlags(
+        id,
+        favorite: favorite,
+        disabled: disabled,
+        inPlaylist: inPlaylist,
+        note: note,
+      );
+    } finally {
+      release();
+    }
   }
 }
