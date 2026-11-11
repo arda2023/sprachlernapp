@@ -151,8 +151,9 @@ ContentInfo validateContentSchema(Database db, {required String lang}) {
         );
       }
     }
-    if (release['schema_version'] == 5)
+    if (release['schema_version'] == 5) {
       validateContextRevisions(db, lang: lang);
+    }
     final languages = db.select('SELECT code FROM languages WHERE code = ?', [
       lang,
     ]);

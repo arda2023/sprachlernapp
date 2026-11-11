@@ -102,8 +102,9 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
         pass.solved ||
         _historyIndex != null ||
         _overlay ||
-        _word != null)
+        _word != null) {
       return;
+    }
     final revision = ++_dictationRevision;
     final passId = pass.id;
     _ownsDictation = true;
@@ -133,8 +134,9 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
         }
       },
       onError: (message) {
-        if (mounted && revision == _dictationRevision)
+        if (mounted && revision == _dictationRevision) {
           showSpeechError(context, message);
+        }
       },
     );
     if (revision == _dictationRevision) {
@@ -291,8 +293,9 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
     if (session.pass == null || session.finished) return;
     final primary = FocusManager.instance.primaryFocus;
     // Respect another editor or an explicitly focused control in this view.
-    if (primary != null && primary != _focus && primary is! FocusScopeNode)
+    if (primary != null && primary != _focus && primary is! FocusScopeNode) {
       return;
+    }
     final editor = _focus.context?.findAncestorStateOfType<EditableTextState>();
     if (editor != null) {
       // Reconnect the platform input even if Flutter still considers it focused.

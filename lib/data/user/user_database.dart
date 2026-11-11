@@ -349,8 +349,9 @@ class UserDatabase extends _$UserDatabase {
           await m.alterTable(TableMigration(formIdentityBindings));
           final violations = await customSelect('PRAGMA foreign_key_check')
               .get();
-          if (violations.isNotEmpty)
+          if (violations.isNotEmpty) {
             throw StateError('Migration verletzt Datenreferenzen.');
+          }
         }
       });
     },

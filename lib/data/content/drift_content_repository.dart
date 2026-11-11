@@ -898,12 +898,14 @@ class DriftContentRepository
           b['token_index'] as int,
         );
         // A correction never converts a global or retired target into a local one.
-        if (current.card != null || current.validationProblem() != null)
+        if (current.card != null || current.validationProblem() != null) {
           continue;
+        }
         if (coveredSources.contains(
           encodeStoryCandidate(current)['source_key'],
-        ))
+        )) {
           continue;
+        }
         if ((correction['version'] as String).isEmpty ||
             (correction['revision'] as String).isEmpty) {
           throw _broken('Ungültige Storykontext-Korrekturversion.');

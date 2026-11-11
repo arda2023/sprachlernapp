@@ -163,13 +163,15 @@ class PracticeItemResolver {
     );
     final bound = bindings[identity.key];
     if (bound != null && cards.containsKey(bound)) return bound;
-    if (token.formTarget != null)
+    if (token.formTarget != null) {
       return cards.containsKey(token.formTarget!.cardId)
           ? token.formTarget!.cardId
           : null;
+    }
     if (token.cardId != null &&
-        cards[token.cardId]?.introductionScope == 'ordinary')
+        cards[token.cardId]?.introductionScope == 'ordinary') {
       return token.cardId;
+    }
     final matches = cards.values
         .where(
           (c) =>
@@ -231,8 +233,9 @@ class PracticeItemResolver {
     if (generatedAdditions.isEmpty) return null;
     final lang =
         content?.info.lang ?? cards[generatedAdditions.keys.first]?.lang;
-    if (lang == null)
+    if (lang == null) {
       throw StateError('Gespeicherter generierter Übungskontext fehlt.');
+    }
     return generatedVocabularyDeckId(lang);
   }
 

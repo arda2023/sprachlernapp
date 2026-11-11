@@ -53,11 +53,13 @@ class RepositoryOwner<T> {
   }
 
   Future<void> closed() async {
-    if (_pausedCurrent != null && identical(_current, _pausedCurrent))
+    if (_pausedCurrent != null && identical(_current, _pausedCurrent)) {
       throw StateError('Inhaltsansichten sind noch geöffnet.');
+    }
     await _closing;
-    if (_closeFailed)
+    if (_closeFailed) {
       throw StateError('Inhaltsverbindung konnte nicht geschlossen werden.');
+    }
   }
 
   Future<T> acquire(Ref ref) {
@@ -239,11 +241,12 @@ final selectedContentLanguageProvider = FutureProvider<String>((ref) async {
   final db = await ref.watch(userDatabaseProvider.future);
   final settings = await db.select(db.settings).getSingleOrNull();
   final lang = settings?.targetLang ?? 'en';
-  if (ContentLanguageProfile.forLanguage(lang) == null)
+  if (ContentLanguageProfile.forLanguage(lang) == null) {
     throw const ContentUnavailable(
       ContentUnavailableReason.incompatible,
       'Gewähltes Sprachprofil wird von dieser App noch nicht unterstützt.',
     );
+  }
   return lang;
 }, retry: (_, _) => null);
 final activeContentKeyProvider = FutureProvider<ContentRepositoryKey>((
@@ -308,8 +311,9 @@ final userRepositoryProvider = FutureProvider<UserRepository>((ref) async {
     ownsDatabase: false,
     defaultActiveDeckIds: () async {
       final content = await ref.read(contentRepositoryProvider.future);
-      if (content.info.lang != lang)
+      if (content.info.lang != lang) {
         throw StateError('Sprachansicht hat sich geändert.');
+      }
       return {
         for (final deck in await content.decks())
           if (deck.titleDe == 'Allgemeine Sprache') deck.id,
@@ -318,8 +322,9 @@ final userRepositoryProvider = FutureProvider<UserRepository>((ref) async {
     contentIds: (kind) async {
       if (!ref.mounted) throw StateError('Sprachansicht wurde geschlossen.');
       final content = await ref.read(contentRepositoryProvider.future);
-      if (content.info.lang != lang)
+      if (content.info.lang != lang) {
         throw StateError('Sprachansicht hat sich geändert.');
+      }
       return kind == 'cards'
           ? content.allCardIds()
           : {for (final deck in await content.decks()) deck.id};

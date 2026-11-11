@@ -128,16 +128,18 @@ Map<String, String> lexicalCountingKeys(Map<String, ContentCard> cards) {
   }
   final explicit = <String, Set<String>>{};
   for (final c in cards.values) {
-    if (c.lexicalTargetId != null)
+    if (c.lexicalTargetId != null) {
       (explicit[root(c.id)] ??= {}).add(c.lexicalTargetId!);
+    }
   }
   final result = <String, String>{};
   for (final c in cards.values) {
     final keys = explicit[root(c.id)] ?? {};
-    if (keys.length > 1)
+    if (keys.length > 1) {
       throw StateError(
         'Widersprüchliche Wortzuordnung für ${c.form}; Lernstände bleiben erhalten.',
       );
+    }
     result[c.id] = keys.isEmpty
         ? 'group:${c.lang}:${c.learningGroup}'
         : 'lexical:${c.lang}:${keys.single}';

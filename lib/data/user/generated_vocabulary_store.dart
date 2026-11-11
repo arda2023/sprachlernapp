@@ -80,8 +80,9 @@ class GeneratedVocabularyStore {
                       t.lang.equals(lang),
                 ))
                 .getSingleOrNull();
-        if (context == null)
+        if (context == null) {
           throw StateError('Gespeicherter Übungssatz fehlt.');
+        }
         existing.add(prior.cardId);
         continue;
       }

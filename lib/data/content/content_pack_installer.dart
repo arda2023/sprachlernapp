@@ -103,18 +103,20 @@ class ContentPackInstaller {
   Future<({int generation, String fingerprint})> routingIdentity() async {
     if (kIsWeb) {
       final manifest = await browserManifest();
-      if (manifest == null)
+      if (manifest == null) {
         return (generation: 0, fingerprint: 'missing:$lang');
+      }
       return (generation: 0, fingerprint: manifest.sha256);
     }
     final state = await resolveInstalledState(
       ContentInstallJournal(supportDirectory, lang),
     );
-    if (state.offer != null)
+    if (state.offer != null) {
       return (
         generation: state.offer!.generation,
         fingerprint: state.fingerprint!,
       );
+    }
     final String? text;
     if (state.pointer != null) {
       text = jsonEncode(state.pointer!['manifest']);
@@ -299,8 +301,10 @@ class ContentPackInstaller {
           'Für diese Sprache ist kein Inhaltspaket enthalten.',
         );
       }
-      if (expectedFingerprint != null && manifest.sha256 != expectedFingerprint)
+      if (expectedFingerprint != null &&
+          manifest.sha256 != expectedFingerprint) {
         throw const RecoveredGenerationChanged();
+      }
       final db = await ContentDatabase.fromBytes(bytes, manifest);
       if (cancellation?.isCancelled == true || isCurrent?.call() == false) {
         await db.close();
@@ -309,8 +313,9 @@ class ContentPackInstaller {
       return DriftContentRepository(db);
     }
     final registry = validationRegistry;
-    if (registry == null)
+    if (registry == null) {
       return DriftContentRepository(await _openLegacyDatabase());
+    }
     final cancel = cancellation ?? ReadCancellation();
     final current = isCurrent ?? () => true;
     for (var attempt = 0; attempt < 2; attempt++) {
@@ -322,20 +327,23 @@ class ContentPackInstaller {
           cancellation: cancel,
           isCurrent: current,
         );
-        if (bound != null)
+        if (bound != null) {
           return DriftContentRepository(ContentDatabase.fromBoundReader(bound));
+        }
         final reservation = registry.reserveExternalReader();
         ContentDatabase? db;
         try {
           db = await _openLegacyDatabase(reservation: reservation);
-          if (cancel.isCancelled || !current())
+          if (cancel.isCancelled || !current()) {
             throw StateError('Inhaltsöffnung abgebrochen.');
+          }
           if (expectedFingerprint != null &&
               (await routingIdentity()).fingerprint != expectedFingerprint) {
             throw const RecoveredGenerationChanged();
           }
-          if (cancel.isCancelled || !current())
+          if (cancel.isCancelled || !current()) {
             throw StateError('Inhaltsöffnung abgebrochen.');
+          }
           return DriftContentRepository(db);
         } catch (_) {
           await db?.close();
@@ -347,8 +355,9 @@ class ContentPackInstaller {
         if (expectedFingerprint != null ||
             attempt == 1 ||
             cancel.isCancelled ||
-            !current())
+            !current()) {
           rethrow;
+        }
       }
     }
     throw StateError('Inhaltsgeneration wiederholt geändert.');

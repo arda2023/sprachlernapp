@@ -82,10 +82,11 @@ class _GeneratedVocabularySelectionScreenState
     } on GeneratedVocabularyFailure catch (e) {
       if (mounted) setState(() => _error = e.message);
     } catch (_) {
-      if (mounted)
+      if (mounted) {
         setState(
           () => _error = 'Speichern nicht bestätigt. Bitte erneut versuchen.',
         );
+      }
     } finally {
       if (mounted) setState(() => _saving = false);
     }

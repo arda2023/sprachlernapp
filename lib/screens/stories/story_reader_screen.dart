@@ -1304,10 +1304,11 @@ class _StoredStoryReader extends ConsumerWidget {
               final item = stories
                   .where((s) => s.story.id == story.id)
                   .firstOrNull;
-              if (item == null)
+              if (item == null) {
                 return const Scaffold(
                   body: Center(child: Text('Story nicht verfügbar.')),
                 );
+              }
               return StoryReaderScreen(
                 story: story,
                 text: item.text,

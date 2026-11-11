@@ -55,14 +55,16 @@ class DriftUserRepository
         _db.userCards,
       )..where((t) => t.cardId.isIn(chunk))).get();
       for (final row in rows) {
-        if (row.lang != lang)
+        if (row.lang != lang) {
           throw StateError('Karte gehört zu einer anderen Sprache.');
+        }
         found.add(row.cardId);
       }
     }
     final missing = requested.difference(found);
-    if (requireExisting && missing.isNotEmpty)
+    if (requireExisting && missing.isNotEmpty) {
       throw StateError('Karte nicht vorhanden.');
+    }
     if (contentIds != null &&
         missing.isNotEmpty &&
         !(await contentIds!('cards')).containsAll(missing)) {
@@ -176,8 +178,9 @@ class DriftUserRepository
     )..where((t) => t.id.equals(r.id))).getSingleOrNull();
     if (existing != null) {
       await _guardCards([existing.cardId], requireExisting: true);
-      if (existing.cardId != r.cardId)
+      if (existing.cardId != r.cardId) {
         throw StateError('Review-ID bereits anders gebunden.');
+      }
       return false;
     }
     // The primary key on review_log.id guards duplicates at database level;
@@ -825,10 +828,11 @@ class DriftUserRepository
       final binding = await (_db.select(
         _db.formIdentityBindings,
       )..where((t) => t.identityKey.equals(c.identity.key))).getSingle();
-      if (binding.cardId != id)
+      if (binding.cardId != id) {
         throw StateError(
           'Form wurde parallel anders zugeordnet; bitte erneut öffnen.',
         );
+      }
     } else if (c.groupMembers.isEmpty ||
         id == c.card?.id ||
         id == c.identity.localId) {
@@ -904,8 +908,9 @@ class DriftUserRepository
       final bound = await (_db.select(
         _db.learningIdentityBindings,
       )..where((t) => t.identityKey.equals(source.identity.key))).getSingle();
-      if (bound.cardId != result.cardId)
+      if (bound.cardId != result.cardId) {
         throw StateError('Parallel anders zugeordnet');
+      }
     }
     verify(); // A changed account/scope rolls the complete transaction back.
     return result;
