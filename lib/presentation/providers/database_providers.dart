@@ -19,6 +19,11 @@ import '../../domain/content.dart';
 /// Leases share one connection. Reopening waits for its asynchronous close,
 /// including when a scope is disposed while opening. Thus an installer never
 /// replaces a pack still owned by another provider scope.
+/// The first lease creates _current; overlapping leases reuse its single open.
+/// The last release clears _current and arranges asynchronous close once that
+/// open succeeds. A new lease waits for _closing before it can open again.
+/// A close failure stays in that barrier and sets _closeFailed: this owner
+/// must never open another connection after a failed close.
 class RepositoryOwner<T> {
   RepositoryOwner(
     this.open,
@@ -41,6 +46,12 @@ class RepositoryOwner<T> {
   bool _closeFailed = false;
   Completer<void>? _paused;
   Future<T>? _pausedCurrent;
+  // ContentUpdateController and LanguageSelectionController pause before
+  // invalidating contentRepositoryProvider, await closed() before replacing
+  // a pack or persisting a language, and resume after rebuilding the reader
+  // scope (also on failure). pause blocks new opens, not existing leases.
+  // closed rejects a still-held paused reader and awaits asynchronous close;
+  // neither pause nor closed releases another scope's lease for it.
   void pause() {
     _pausedCurrent = _current;
     _paused ??= Completer<void>();
@@ -115,6 +126,11 @@ class RepositoryOwner<T> {
               _leases == 0 &&
               !_closeFailed &&
               onIdle != null) {
+            // Retire after the closing barrier settles without a close
+            // failure, with no leases or new open. An open that failed needs
+            // no close. Content owners use onIdle to remove their entry. A
+            // later lease on this old reference delegates through revive to
+            // the registered replacement (or a newly created owner).
             _retired = true;
             onIdle!();
           }
@@ -266,6 +282,12 @@ Future<ContentRepositoryKey> contentKeyFor(
   );
 }
 
+// Mutable memo per ProviderContainer, keyed by provider rather than widget.
+// _Start, HomeScreen and the deck screens call watchContentStable in build.
+// Recording the AsyncData consumed by that build must be synchronous: a later
+// refresh may reuse it only with the same language/generation/fingerprint.
+// Updating this map emits no provider notification or extra build; the watched
+// key and value still drive rebuilds. No provider state is assigned here.
 final _settledViews =
     Provider<Map<Object, ({ContentRepositoryKey key, Object? value})>>(
       (ref) => {},
@@ -286,6 +308,8 @@ AsyncValue<T> watchContentStable<T>(
     settled[provider] = (key: current, value: value.value);
   } else if (current != null && value.isLoading && value.hasValue) {
     final last = settled[provider];
+    // Reuse only the same previously consumed value, not an unseen cached
+    // value or a value from another content identity.
     if (last != null && last.key == current && last.value == value.value) {
       return AsyncData<T>(value.requireValue);
     }

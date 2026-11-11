@@ -4,6 +4,27 @@ import 'content.dart';
 import 'srs_state.dart';
 import 'preferences.dart';
 
+// Additional repository capabilities are separate contracts, not members of
+// the two base interfaces below. Their runtime checks are distributed:
+// - story_learning.dart: PracticeItemResolver checks StoryLearningRepository,
+//   StoryContextCorrectionStore/Source and RetiredLearningContentRepository;
+//   PracticeCatalog and PersonalLearningService also check retired content.
+//   story_learning_providers.dart checks StoryContentRepository for reading
+//   and StoryLearningRepository for status/add (missing support is an error).
+// - generated_vocabulary_repository.dart: PracticeItemResolver checks
+//   GeneratedVocabularyRepository, otherwise using empty memberships.
+// - review_activity.dart: ReviewActivityReads checks ReviewActivityRepository,
+//   otherwise reading reviewsFor each card through UserRepository.
+// - NewWordRotationStore below: DeckSessionController checks it at start/commit;
+//   without it there is no persisted last-source rotation.
+// - personal_learning.dart: PersonalLearningStore is required by a direct as
+//   cast in PersonalLearningService, not an is check with a fallback. That
+//   service also directly casts StoryLearningRepository.
+// DriftUserRepository implements the user capabilities; DriftContentRepository
+// implements the story-content, correction-source and retired-content ones.
+// TestUser in test/fixtures/deck_repositories.dart implements only UserRepository:
+// guarded paths take their fallbacks; services with direct casts need a richer
+// fake. Passing a base-fake test does not exercise a Drift capability path.
 /// Read-only access to the content pack of one language. Failures are
 /// [ContentUnavailable]; there is no placeholder fallback.
 abstract interface class ContentRepository {

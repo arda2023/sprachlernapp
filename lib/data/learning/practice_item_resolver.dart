@@ -31,6 +31,10 @@ class PracticeItemResolver {
   final Object? contentError;
   final Map<String, DateTime> generatedAdditions;
   late final _groups = LearningGroups(cards, states);
+  // practiceResolverProvider calls load while constructing derived read views.
+  // If both correction capabilities exist, this path also writes editorial
+  // context corrections before reading local items and states. Those write
+  // failures propagate; they are not treated as a missing content pack.
   static Future<PracticeItemResolver> load(
     UserRepository user,
     ContentRepository? content, {

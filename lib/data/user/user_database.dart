@@ -289,6 +289,24 @@ class UserDatabase extends _$UserDatabase {
   @override
   int get schemaVersion => 8;
 
+  // Upgrade guards below introduce the following schema changes:
+  // Version | Additions / transformations
+  // v2      | userCards.favorite; settings.motif/includeDiacritics/autoNext/
+  //         | showGrammar; localSubmissions.
+  // v3      | userCards.note/inPlaylist; settings.dailyGoal.
+  // v4      | Local card metadata; cardContexts, storyLearningAdditions,
+  //         | storyWordSources, learningIdentityBindings; context triggers.
+  // v5      | userCards.formFunction/lexicalTargetId; formIdentityBindings.
+  // v6      | languageLearningPreferences (copy English settings), rebuild
+  //         | userCards/formIdentityBindings, then foreign_key_check.
+  // v7      | languageLearningPreferences.newWordSource (from == 6).
+  // v8      | generatedVocabularyAdditions.
+  // Keep the nonchronological block order below; do not sort it by version.
+  // Every guard sees the original from, not a version advanced per block.
+  // The v6 copy needs earlier settings columns; its TableMigration calls copy
+  // current columns, so the legacy card columns and form table must exist.
+  // Older databases create languageLearningPreferences in its current shape,
+  // already including newWordSource; only an existing v6 table adds it.
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onUpgrade: (m, from, to) async {

@@ -82,6 +82,9 @@ String _hash(Map<String, Object?> row) =>
     sha256.convert(utf8.encode(syncCanonicalJson(row))).toString();
 
 /// Sidecars are deliberately separate from the generated learning schema.
+// These learning_sync_* tables live in the same user database, but are not
+// in UserDatabase's @DriftDatabase table list or its schemaVersion migrations.
+// LearningSyncService and SyncJsonStore call this idempotent SQL setup.
 Future<void> prepareLearningSync(UserDatabase db) async {
   await db.customStatement(
     'CREATE TABLE IF NOT EXISTS learning_sync_owner (id INTEGER PRIMARY KEY CHECK(id=1), owner TEXT NOT NULL)',
