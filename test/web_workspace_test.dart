@@ -1,3 +1,8 @@
+import 'dart:async';
+import 'package:sprachapp/domain/content.dart';
+import 'package:sprachapp/presentation/providers/learning_sync_provider.dart';
+import 'package:sprachapp/screens/decks/deck_practice_screen.dart';
+import 'fixtures/deck_repositories.dart';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart' show CupertinoPicker;
@@ -33,8 +38,50 @@ class _Actions implements AccountActions {
   Future<void> signOut() async {}
 }
 
+class _IdleSync extends LearningSyncController {
+  @override
+  LearningSyncPhase build() => LearningSyncPhase.signedOut;
+}
+
 void main() {
   setUpAll(() => GoogleFonts.config.allowRuntimeFetching = false);
+
+  testWidgets('first mixed practice tap awaits cold content and opens one route', (tester) async {
+    tester.view.physicalSize = const Size(1200, 1000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final contentReady = Completer<ContentInfo>();
+    var contentReads = 0;
+    await tester.pumpWidget(testScope(
+      MaterialApp(theme: buildAppTheme(), home: const WebLearningShell()),
+      overrides: [
+        selectedContentLanguageProvider.overrideWith((ref) async => 'en'),
+        learningSyncProvider.overrideWith(_IdleSync.new),
+        contentInfoProvider.overrideWith((ref) {
+          contentReads++;
+          return contentReady.future;
+        }),
+      ],
+    ));
+    await tester.pumpAndSettle();
+    expect(contentReads, 0);
+    await tester.tap(find.text('Alle aktiven Stapel üben'));
+    await tester.pump();
+    expect(contentReads, 1);
+    expect(find.byType(DeckPracticeScreen), findsNothing);
+    // A second tap while loading must not create a second route.
+    await tester.tap(find.text('Alle aktiven Stapel üben'));
+    contentReady.complete(TestContent().info);
+    await tester.pumpAndSettle();
+    final screen = tester.widget<DeckPracticeScreen>(find.byType(DeckPracticeScreen));
+    expect(screen.mode, DeckPracticeMode.mixed);
+    expect(screen.deckId, '');
+    expect(contentReads, 1);
+    Navigator.of(tester.element(find.byType(DeckPracticeScreen))).pop();
+    await tester.pumpAndSettle();
+    expect(find.byType(DeckPracticeScreen), findsNothing);
+    expect(find.byType(WebLearningShell), findsOneWidget);
+  });
 
   testWidgets(
     'web language picker changes Reader and Decks and persists across scopes',
