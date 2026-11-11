@@ -58,6 +58,7 @@ Tool setup and logins: `docs/setup.md`.
 | Product rules, modes, answers, open decisions | `PRODUCT.md` |
 | Colors, typography, layout, accessibility | `DESIGN.md` |
 | Layers, data flow, folders | `ARCHITECTURE.md` |
+| Code map, provider locations, storage and capability interfaces | `docs/code-map.md` |
 | Boxes, intervals, queues, counters, review log | `docs/srs.md` |
 | Content tables, IDs, tombstones | `docs/content-schema.md` |
 | Supabase, Edge Functions, Vertex AI in the backend | `docs/backend.md` |
