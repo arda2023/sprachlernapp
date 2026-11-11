@@ -90,7 +90,8 @@ class SprachApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(learningSyncProvider);
+    // Keep background sync alive without rebuilding routes/themes for status.
+    ref.listen(learningSyncProvider, (_, _) {});
     final account = ref.watch(accountSessionProvider).value;
     ref.watch(billingProvider);
     ref.watch(contentUpdateProvider);

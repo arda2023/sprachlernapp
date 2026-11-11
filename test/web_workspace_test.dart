@@ -197,6 +197,7 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.reset);
       var selected = 0;
+      var practiceStarts = 0;
       await tester.pumpWidget(
         MaterialApp(
           theme: buildAppTheme(),
@@ -208,6 +209,7 @@ void main() {
           home: WebWorkspaceFrame(
             selectedIndex: 0,
             onSelect: (index) => selected = index,
+            onPractice: () => practiceStarts++,
             onSettings: () {},
             child: const Center(child: Text('Bibliothek')),
           ),
@@ -226,6 +228,13 @@ void main() {
       await tester.tap(find.text('Stapel'));
       await tester.pump();
       expect(selected, 1);
+      await tester.tap(
+        width >= 900
+            ? find.text('Alle aktiven Stapel üben')
+            : find.byTooltip('Alle aktiven Stapel üben'),
+      );
+      await tester.pump();
+      expect(practiceStarts, 1);
       expect(tester.takeException(), isNull);
     });
   }

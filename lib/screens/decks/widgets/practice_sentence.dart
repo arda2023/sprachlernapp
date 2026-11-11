@@ -240,6 +240,8 @@ class PracticeSentenceState extends State<PracticeSentence> {
                 ? math.max(_editingWidth!, needed)
                 : needed,
           );
+          // Align the ghost and its typed prefix to the same centered origin.
+          final ghostPadding = math.max(5.0, (width - painter.width) / 2);
           painter.dispose();
           if (!widget.solved) {
             _editingWidth = width;
@@ -274,7 +276,9 @@ class PracticeSentenceState extends State<PracticeSentence> {
                         readOnly: widget.solved && !widget.keepFocus,
                         canRequestFocus: !widget.solved || widget.keepFocus,
                         inputFormatters: widget.solved ? const [_Locked()] : null,
-                        showCursor: !widget.solved,
+                        showCursor: false,
+                        cursorWidth: 0,
+                        textAlign: ghost.isEmpty ? TextAlign.center : TextAlign.start,
                         enableInteractiveSelection: !widget.solved,
                         autofocus: !widget.solved,
                         maxLines: null,
@@ -288,8 +292,8 @@ class PracticeSentenceState extends State<PracticeSentence> {
                         onChanged: (_) => widget.onChanged(),
                         decoration: InputDecoration(
                           isDense: true,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 5,
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: ghost.isEmpty ? 5 : ghostPadding,
                             vertical: 0,
                           ),
                           filled: true,
@@ -318,8 +322,8 @@ class PracticeSentenceState extends State<PracticeSentence> {
                               Positioned.fill(
                                 child: IgnorePointer(
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 5,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: ghostPadding,
                                     ),
                                     child: Text.rich(
                                       key: const ValueKey('practice-ghost'),

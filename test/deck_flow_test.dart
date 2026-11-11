@@ -371,7 +371,7 @@ void main() {
       await practice(tester, content: _TargetContent(const ['deck-0/0', 'deck-0/1']));
       expect(
         tester.widget<TextField>(find.byType(TextField)).textAlign,
-        TextAlign.start,
+        TextAlign.center,
       );
       expect(
         tester.getTopRight(find.bySemanticsLabel('Wort erfahren')).dx,

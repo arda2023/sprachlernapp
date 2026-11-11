@@ -3,6 +3,7 @@ import '../../presentation/audio/device_speech_playback.dart';
 import '../../presentation/audio/device_dictation.dart';
 import 'dart:async';
 import 'dart:math' as math;
+import 'dart:ui' show ViewFocusEvent, ViewFocusState;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
@@ -246,7 +247,38 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
         unawaited(_cancelDictation());
       }
     }
-    if (_foreground) _schedule();
+    if (_foreground) {
+      _restorePracticeInput();
+      _schedule();
+    }
+  }
+
+  @override
+  void didChangeViewFocus(ViewFocusEvent event) {
+    if (event.viewId == View.of(context).viewId &&
+        event.state == ViewFocusState.focused) {
+      _restorePracticeInput();
+    }
+  }
+
+  void _restorePracticeInput() {
+    if (!mounted || _overlay || _word != null || _historyIndex != null ||
+        _ownsDictation || _startingDictation ||
+        ModalRoute.of(context)?.isCurrent != true) {
+      return;
+    }
+    final session = ref.read(deckSessionControllerProvider(_args));
+    if (session.pass == null || session.finished) return;
+    final primary = FocusManager.instance.primaryFocus;
+    // Respect another editor or an explicitly focused control in this view.
+    if (primary != null && primary != _focus && primary is! FocusScopeNode) return;
+    final editor = _focus.context?.findAncestorStateOfType<EditableTextState>();
+    if (editor != null) {
+      // Reconnect the platform input even if Flutter still considers it focused.
+      editor.requestKeyboard();
+    } else {
+      _focus.requestFocus();
+    }
   }
 
   @override

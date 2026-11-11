@@ -17,6 +17,7 @@ import '../../presentation/providers/story_learning_providers.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/premium_content_gate.dart';
 import '../decks/deck_details_screen.dart';
+import '../decks/deck_practice_screen.dart';
 import '../decks/deck_library_screen.dart';
 import '../settings/settings_screen.dart';
 import '../stories/story_library_screen.dart';
@@ -31,6 +32,7 @@ class WebLearningShell extends ConsumerStatefulWidget {
 
 class _WebLearningShellState extends ConsumerState<WebLearningShell> {
   int _selected = 0;
+  bool _startingPractice = false;
   final _readerScroll = ScrollController();
   @override
   void dispose() {
@@ -110,6 +112,26 @@ class _WebLearningShellState extends ConsumerState<WebLearningShell> {
     }
   }
 
+  Future<void> _startMixed() async {
+    if (_startingPractice || ref.read(languageSelectionProvider).switching) {
+      return;
+    }
+    final language = ref.read(selectedContentLanguageProvider);
+    if (language.isLoading || language.hasError) return;
+    final content = ref.read(contentInfoProvider);
+    if (content.isLoading || content.hasError) return;
+    _startingPractice = true;
+    try {
+      await DeckPracticeScreen.open(
+        context,
+        deckId: '',
+        mode: DeckPracticeMode.mixed,
+      );
+    } finally {
+      _startingPractice = false;
+    }
+  }
+
   void _openDeck(Deck deck) => DeckDetailsScreen.open(context, deck.id);
 
   @override
@@ -137,6 +159,7 @@ class _WebLearningShellState extends ConsumerState<WebLearningShell> {
     });
     return WebWorkspaceFrame(
       selectedIndex: _selected,
+      onPractice: selection.switching ? null : _startMixed,
       status: const _SyncStatus(),
       languageSelector: const WebLanguageSelector(),
       onSelect: (index) {
@@ -207,12 +230,14 @@ class WebWorkspaceFrame extends StatelessWidget {
     required this.onSelect,
     required this.onSettings,
     required this.child,
+    this.onPractice,
     this.status,
     this.languageSelector,
   });
   final int selectedIndex;
   final ValueChanged<int> onSelect;
   final VoidCallback onSettings;
+  final VoidCallback? onPractice;
   final Widget child;
   final Widget? status;
   final Widget? languageSelector;
@@ -259,6 +284,17 @@ class WebWorkspaceFrame extends StatelessWidget {
                         ?languageSelector,
                         const SizedBox(height: 20),
                         ...navigation,
+                        const SizedBox(height: 16),
+                        FilledButton.icon(
+                          onPressed: onPractice,
+                          icon: const Icon(Icons.play_arrow_rounded),
+                          label: const Text('Alle aktiven Stapel üben'),
+                          style: FilledButton.styleFrom(
+                            minimumSize: const Size(44, 52),
+                            backgroundColor: colors.active,
+                            foregroundColor: Colors.white,
+                          ),
+                        ),
                         const Spacer(),
                         ?status,
                         const SizedBox(height: 12),
@@ -336,7 +372,18 @@ class WebWorkspaceFrame extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        for (final item in navigation) Expanded(child: item),
+                        Expanded(child: navigation[0]),
+                        IconButton.filled(
+                          tooltip: 'Alle aktiven Stapel üben',
+                          onPressed: onPractice,
+                          icon: const Icon(Icons.play_arrow_rounded, size: 30),
+                          style: IconButton.styleFrom(
+                            minimumSize: const Size(52, 52),
+                            backgroundColor: colors.active,
+                            foregroundColor: Colors.white,
+                          ),
+                        ),
+                        Expanded(child: navigation[1]),
                       ],
                     ),
                   ),

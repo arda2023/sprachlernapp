@@ -1,4 +1,5 @@
 import '../web/web_reading_viewport.dart';
+
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
@@ -40,8 +41,9 @@ class PracticeCompletionScreen extends ConsumerStatefulWidget {
     required DailyGoal goal,
     required List<CompletionWord> words,
   }) => CupertinoPageRoute<void>(
-    builder: (_) =>
-        WebReadingViewport(child: PracticeCompletionScreen(streak: streak, goal: goal, words: words)),
+    builder: (_) => WebReadingViewport(
+      child: PracticeCompletionScreen(streak: streak, goal: goal, words: words),
+    ),
   );
 
   @override
@@ -93,10 +95,9 @@ class _PracticeCompletionScreenState
     vsync: this,
     duration: const Duration(milliseconds: 900),
   );
-  late final _glide = CurvedAnimation(
-    parent: _settle,
+  late final _glide = CurveTween(
     curve: const Interval(0.28, 1, curve: Curves.easeInOutCubic),
-  );
+  ).animate(_settle);
   late final _content = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 900),
@@ -257,10 +258,9 @@ class _PracticeCompletionScreenState
   }
 
   /// Staggered entrance for the parts below the header.
-  Animation<double> _part(double from, double to) => CurvedAnimation(
-    parent: _content,
-    curve: Interval(from, to, curve: Curves.easeOutCubic),
-  );
+  Animation<double> _part(double from, double to) =>
+      CurveTween(curve: Interval(from, to, curve: Curves.easeOutCubic))
+          .animate(_content);
 
   @override
   Widget build(BuildContext context) {
@@ -275,93 +275,94 @@ class _PracticeCompletionScreenState
                   final header = _headerHeight ?? 210;
                   // Starts in the middle of the screen, ends at the top.
                   final centred = (constraints.maxHeight - header) / 2 - top;
-                  return AnimatedBuilder(
-                    animation: _settle,
-                    builder: (context, _) => Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20, top, 20, 0),
-                          child: Transform.translate(
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, top, 20, 0),
+                        child: AnimatedBuilder(
+                          animation: _glide,
+                          builder: (context, child) => Transform.translate(
                             offset: Offset(0, centred * (1 - _glide.value)),
-                            child: _Header(
-                              key: _headerKey,
-                              appear: _appear,
-                              title: _title,
-                              headline: _headline,
-                              subtitle: _subtitle,
-                              semantics:
-                                  'Streak ${widget.streak.current} '
-                                  '${widget.streak.current == 1 ? 'Tag' : 'Tage'}'
-                                  '${widget.streak.starToday ? ', Wochenstern geholt' : ', ${widget.streak.barFilled} von 7 Tagen dieser Woche'}',
-                              bar: StreakChargeBar(
-                                target: _target,
-                                days: _days,
-                                shimmer: _shimmer,
-                                star: _star,
-                                charging: _glowOff,
-                              ),
+                            child: child,
+                          ),
+                          child: _Header(
+                            key: _headerKey,
+                            appear: _appear,
+                            title: _title,
+                            headline: _headline,
+                            subtitle: _subtitle,
+                            semantics:
+                                'Streak ${widget.streak.current} '
+                                '${widget.streak.current == 1 ? 'Tag' : 'Tage'}'
+                                '${widget.streak.starToday ? ', Wochenstern geholt' : ', ${widget.streak.barFilled} von 7 Tagen dieser Woche'}',
+                            bar: StreakChargeBar(
+                              target: _target,
+                              days: _days,
+                              shimmer: _shimmer,
+                              star: _star,
+                              charging: _glowOff,
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+                        child: _Rise(
+                          animation: _part(0, 0.45),
+                          child: _Stats(
+                            streak: widget.streak.current,
+                            goal: widget.goal,
+                          ),
+                        ),
+                      ),
+                      if (widget.words.isNotEmpty) ...[
+                        Expanded(
                           child: _Rise(
-                            animation: _part(0, 0.45),
-                            child: _Stats(
-                              streak: widget.streak.current,
-                              goal: widget.goal,
-                            ),
-                          ),
-                        ),
-                        if (widget.words.isNotEmpty) ...[
-                          Expanded(
-                            child: _Rise(
-                              animation: _part(0.35, 1),
-                              child: LayoutBuilder(
-                                builder: (context, cardConstraints) =>
-                                    CustomScrollView(
-                                      key: const ValueKey(
-                                        'completion-word-scroll',
-                                      ),
-                                      clipBehavior: Clip.hardEdge,
-                                      physics: _done
-                                          ? const BouncingScrollPhysics(
-                                              parent:
-                                                  AlwaysScrollableScrollPhysics(),
-                                            )
-                                          : const NeverScrollableScrollPhysics(),
-                                      slivers: [
-                                        SliverToBoxAdapter(
-                                          child: Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                              20,
-                                              32,
-                                              20,
-                                              0,
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                StackedWordCards(
-                                                  words: widget.words,
-                                                ),
-                                                SizedBox(
-                                                  height:
-                                                      cardConstraints.maxHeight,
-                                                ),
-                                              ],
-                                            ),
+                            animation: _part(0.35, 1),
+                            child: LayoutBuilder(
+                              builder: (context, cardConstraints) =>
+                                  CustomScrollView(
+                                    key: const ValueKey(
+                                      'completion-word-scroll',
+                                    ),
+                                    clipBehavior: Clip.hardEdge,
+                                    physics: _done
+                                        ? const BouncingScrollPhysics(
+                                            parent:
+                                                AlwaysScrollableScrollPhysics(),
+                                          )
+                                        : const NeverScrollableScrollPhysics(),
+                                    slivers: [
+                                      SliverToBoxAdapter(
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                            20,
+                                            32,
+                                            20,
+                                            0,
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              StackedWordCards(
+                                                words: widget.words,
+                                              ),
+                                              SizedBox(
+                                                height:
+                                                    cardConstraints.maxHeight,
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    ),
-                              ),
+                                      ),
+                                    ],
+                                  ),
                             ),
                           ),
-                        ] else
-                          const Spacer(),
-                      ],
-                    ),
+                        ),
+                      ] else
+                        const Spacer(),
+                    ],
                   );
                 },
               ),
@@ -429,7 +430,7 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.appColors;
-    final titleIn = CurvedAnimation(parent: title, curve: Curves.easeOutCubic);
+    final titleIn = CurveTween(curve: Curves.easeOutCubic).animate(title);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

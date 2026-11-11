@@ -142,6 +142,18 @@ class LearningSyncService {
 
   Future<List<LearningSyncRow>> _snapshot() async {
     final rows = <LearningSyncRow>[];
+    // Both callers run this within their snapshot transaction. Read the
+    // metadata once instead of holding the learner database for one worker
+    // round trip per card/review (twice on every periodic sync).
+    final versions = {
+      for (final row
+          in await db
+              .customSelect(
+                'SELECT kind,row_key,hash,changed_at FROM learning_sync_versions',
+              )
+              .get())
+        (row.read<String>('kind'), row.read<String>('row_key')): row,
+    };
     for (final entry in learningSyncTables.entries) {
       final data = await db.customSelect('SELECT * FROM "${entry.key}"').get();
       for (final raw in data) {
@@ -149,7 +161,9 @@ class LearningSyncService {
         final key = syncCanonicalJson([
           for (final field in entry.value) row[field],
         ]);
-        rows.add(await _version(entry.key, key, row));
+        rows.add(
+          await _version(entry.key, key, row, versions[(entry.key, key)]),
+        );
       }
     }
     return rows;
@@ -159,14 +173,9 @@ class LearningSyncService {
     String table,
     String key,
     Map<String, Object?> data,
+    QueryRow? previous,
   ) async {
     final hash = _hash(data);
-    final previous = await db
-        .customSelect(
-          'SELECT hash,changed_at FROM learning_sync_versions WHERE kind=? AND row_key=?',
-          variables: [Variable(table), Variable(key)],
-        )
-        .getSingleOrNull();
     if (previous?.read<String>('hash') == hash) {
       return LearningSyncRow(
         table,
