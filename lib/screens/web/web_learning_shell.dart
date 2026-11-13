@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/content_access_policy.dart';
 import '../../domain/language_profile.dart';
 import '../../presentation/providers/language_selection_provider.dart';
 import '../../widgets/popover_trigger.dart';
 import '../home/widgets/language_panel.dart';
 import '../../models/home_models.dart';
-import '../../models/story_models.dart';
-import '../../presentation/providers/content_access_provider.dart';
 import '../../presentation/providers/learning_sync_provider.dart';
 import '../../presentation/providers/database_providers.dart';
 import '../../presentation/providers/reading_providers.dart';
-import '../../presentation/providers/premium_access_provider.dart';
 import '../../presentation/providers/story_learning_providers.dart';
 import '../../theme/app_theme.dart';
-import '../../widgets/premium_content_gate.dart';
 import '../decks/deck_details_screen.dart';
 import '../decks/deck_practice_screen.dart';
 import '../decks/deck_library_screen.dart';
 import '../settings/settings_screen.dart';
 import '../stories/story_library_screen.dart';
-import '../stories/story_reader_screen.dart';
+import '../shell_reading_actions.dart';
 
 /// Browser workspace: existing learning screens and repositories, two destinations.
 class WebLearningShell extends ConsumerStatefulWidget {
@@ -40,77 +35,13 @@ class _WebLearningShellState extends ConsumerState<WebLearningShell> {
     super.dispose();
   }
 
-  void _openStory(Story story) {
-    if (!ref.read(premiumContentAccessProvider)) {
-      showPremiumContentPaywall(context, interest: 'Stories');
-      return;
-    }
-    final progress = ref.read(readingProgressProvider.notifier);
-    final language = ref.read(selectedContentLanguageProvider).asData?.value;
-    final start = ref.read(readingProgressProvider)[story.id]?.fraction;
-    void report(double f) {
-      if (mounted &&
-          ref.read(selectedContentLanguageProvider).asData?.value == language) {
-        progress.report(story.id, f);
-      }
-    }
+  void _openStory(Story story) =>
+      openStoryFromShell(context, ref, story, isMounted: () => mounted);
 
-    StoryReaderScreen.open(
-      context,
-      story,
-      initialProgress: start,
-      onProgress: report,
-    );
-  }
+  void _openImported(ImportedText text) =>
+      openImportedFromShell(context, ref, text, isMounted: () => mounted);
 
-  void _openImported(ImportedText text) {
-    if (!ref.read(premiumContentAccessProvider)) {
-      showPremiumContentPaywall(context, interest: 'Eigene Texte');
-      return;
-    }
-    final language = ref.read(selectedContentLanguageProvider).asData?.value;
-    final progress = ref.read(readingProgressProvider.notifier);
-    StoryReaderScreen.openText(
-      context,
-      story: Story(
-        id: text.id,
-        title: text.title,
-        topic: 'Import',
-        level: 'Eigener Text',
-        readingMinutes: text.readingMinutes,
-      ),
-      text: StoryText(storyId: text.id, paragraphs: text.paragraphs),
-      lookup: WordEntry.unknown,
-      sourceLanguage:
-          ref.read(selectedContentLanguageProvider).asData?.value ?? 'en',
-      initialProgress: ref.read(readingProgressProvider)[text.id]?.fraction,
-      onProgress: (f) {
-        if (mounted &&
-            ref.read(selectedContentLanguageProvider).asData?.value ==
-                language) {
-          progress.report(text.id, f);
-        }
-      },
-    );
-  }
-
-  String? _importText(String text) {
-    final access = ref.read(contentAccessProvider);
-    if (access == ContentAccessDecision.statusUnknown) {
-      return 'Dein Premium-Zugang konnte noch nicht geprüft werden. '
-          'Bitte prüfe ihn erneut.';
-    }
-    if (access == ContentAccessDecision.premiumRequired) {
-      return 'Neue eigene Texte kannst du mit Premium importieren. '
-          'Dein Text bleibt hier vorgemerkt.';
-    }
-    try {
-      ref.read(importedTextsProvider.notifier).add(text);
-      return null;
-    } on FormatException catch (e) {
-      return e.message;
-    }
-  }
+  String? _importText(String text) => importTextFromShell(ref, text);
 
   Future<void> _startMixed() async {
     if (_startingPractice || ref.read(languageSelectionProvider).switching) {
