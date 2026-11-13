@@ -8,6 +8,9 @@ import '../../data/billing/purchase_gateway.dart'
     show PurchasePlan, PurchaseProduct;
 import '../../presentation/onboarding_sounds.dart';
 import '../../presentation/providers/purchase_provider.dart';
+import '../../presentation/providers/notification_provider.dart';
+import '../../data/notifications/notification_gateway.dart';
+import '../../domain/trial_reminder.dart';
 import '../legal/legal_document.dart';
 import '../legal/legal_document_screen.dart';
 import '../legal/legal_release_gate.dart' show legalStoreOperationsEnabled;
@@ -368,6 +371,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       }
     });
     final purchase = ref.watch(purchaseProvider);
+    final notifications = ref.watch(notificationProvider);
     final selectedProduct = _productFor(purchase);
     final busy =
         _actionLocked ||
@@ -501,6 +505,16 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                   child: _TrialTimeline(
                     days: trialDays,
                     price: selectedProduct!,
+                    reminder:
+                        notifications.permission ==
+                                NotificationPermission.allowed &&
+                            notifications.scheduledTrial?.productId ==
+                                selectedProduct.productId &&
+                            notifications.scheduledTrial!.remindAt.isAfter(
+                              DateTime.now(),
+                            )
+                        ? notifications.scheduledTrial
+                        : null,
                   ),
                 )
               else
@@ -791,18 +805,25 @@ class _PaywallActions extends StatelessWidget {
 
 /// How the free trial runs, as a vertical track: today everything opens,
 /// on the shown date the plan starts (Refero: Unwind; Mobbin: Mimo,
-/// Vocabulary). No reminder stop: the app sends no trial reminder yet. The track fills orange up
-/// to today and fades out below the last stop.
+/// Vocabulary). The reminder stop requires an actual pending native schedule;
+/// a catalog offer or notification permission alone is not a promise.
 class _TrialTimeline extends StatelessWidget {
-  const _TrialTimeline({required this.days, required this.price});
+  const _TrialTimeline({
+    required this.days,
+    required this.price,
+    this.reminder,
+  });
 
   final int days;
   final PurchaseProduct price;
+  final TrialReminderPlan? reminder;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.appColors;
-    final start = DateTime.now().add(Duration(days: days));
+    final start =
+        reminder?.expiresAt.toLocal() ??
+        DateTime.now().add(Duration(days: days));
     final period =
         price.localizedPeriod ??
         (price.plan == PurchasePlan.yearly ? 'pro Jahr' : 'pro Monat');
@@ -812,6 +833,14 @@ class _TrialTimeline extends StatelessWidget {
         title: 'Heute',
         detail: 'Alle Stories, eigene Texte und KI-Übersetzungen.',
       ),
+      if (reminder case final planned?)
+        (
+          icon: CupertinoIcons.bell_fill,
+          title: 'Erinnerung',
+          detail: planned.isSandbox
+              ? 'Kurz vor Ablauf.'
+              : 'Einen Tag vor Ablauf.',
+        ),
       (
         icon: CupertinoIcons.star_fill,
         title: formatDateDe(start),
@@ -888,7 +917,7 @@ class _TrialTimeline extends StatelessWidget {
                                 stop.detail,
                                 style: AppType.chrome(
                                   size: 13,
-                                  weight: FontWeight.w400,
+                                  weight: FontWeight.w500,
                                   color: colors.textMuted,
                                   height: 1.35,
                                 ),

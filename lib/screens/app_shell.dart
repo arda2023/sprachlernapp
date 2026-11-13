@@ -1,4 +1,6 @@
 import '../models/localized_practice_content.dart';
+import '../domain/app_launch_intent.dart';
+import '../presentation/providers/app_launch_intent_provider.dart';
 import 'content/topic_vocabulary_composer.dart';
 import '../domain/language_profile.dart';
 import '../presentation/providers/database_providers.dart';
@@ -53,6 +55,43 @@ class _AppShellState extends ConsumerState<AppShell> {
   final _practice = PracticeProgress(sampleCompletedPracticeIds);
   AppTab _tab = AppTab.home;
   final _scroll = {for (final t in _tabs) t: ScrollController()};
+  bool _launchScheduled = false;
+
+  void _tryLaunch(PendingAppLaunch? launch) {
+    if (launch == null || !mounted) return;
+    final selected = ref.read(selectedContentLanguageProvider);
+    if (selected.isLoading || ref.read(languageSelectionProvider).switching) {
+      return;
+    }
+    final info = selected.asData?.value == 'en'
+        ? null
+        : ref.read(contentInfoProvider);
+    if (info?.isLoading == true) return;
+    _scheduleLaunch(
+      launch,
+      canPractice: !selected.hasError && info?.hasError != true,
+    );
+  }
+
+  void _scheduleLaunch(PendingAppLaunch launch, {required bool canPractice}) {
+    if (_launchScheduled) return;
+    _launchScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _launchScheduled = false;
+      if (!mounted) return;
+      if (!ref.read(appLaunchIntentProvider.notifier).consume(launch)) {
+        // A newer tap may have arrived after this frame was scheduled.
+        setState(() {});
+        return;
+      }
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      setState(() => _tab = AppTab.home);
+      if (launch.intent.target == AppLaunchTarget.practice && canPractice) {
+        _startMixed();
+      }
+    });
+    WidgetsBinding.instance.ensureVisualUpdate();
+  }
 
   @override
   void dispose() {
@@ -160,6 +199,19 @@ class _AppShellState extends ConsumerState<AppShell> {
     final info = !hasEnglishSamples ? ref.watch(contentInfoProvider) : null;
     final unavailable =
         !hasEnglishSamples && (info!.isLoading || info.hasError);
+    // Notification taps also need to reach the shell beneath a pushed route.
+    // Riverpod pauses watch subscriptions there, while listen stays active.
+    ref.listen(appLaunchIntentProvider, (_, launch) => _tryLaunch(launch));
+    ref.listen(selectedContentLanguageProvider, (_, _) {
+      _tryLaunch(ref.read(appLaunchIntentProvider));
+    });
+    ref.listen(languageSelectionProvider, (_, _) {
+      _tryLaunch(ref.read(appLaunchIntentProvider));
+    });
+    ref.listen(contentInfoProvider, (_, _) {
+      _tryLaunch(ref.read(appLaunchIntentProvider));
+    });
+    _tryLaunch(ref.read(appLaunchIntentProvider));
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value:
           (context.appColors.light

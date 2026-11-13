@@ -24,6 +24,7 @@ import 'presentation/providers/language_selection_provider.dart';
 import 'presentation/providers/learning_providers.dart';
 import 'presentation/providers/content_update_provider.dart';
 import 'presentation/providers/onboarding_provider.dart';
+import 'presentation/providers/notification_provider.dart';
 import 'presentation/providers/preferences_provider.dart';
 import 'presentation/providers/purchase_provider.dart';
 import 'presentation/providers/reading_providers.dart';
@@ -105,6 +106,7 @@ class SprachApp extends ConsumerWidget {
     // Keeps the account's Premium check alive from launch and after any
     // sign-in, not only while a Premium surface happens to be on screen.
     ref.listen(purchaseProvider, (_, _) {});
+    ref.listen(notificationProvider, (_, _) {});
     final motif =
         ref.watch(preferencesProvider).value?.motif ?? AppMotif.automatic;
     return MaterialApp(

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/billing/adapty_billing_gateway.dart';
+import '../../domain/trial_reminder.dart';
 import 'auth_providers.dart';
 
 /// Public client configuration is injected at build time, never checked in.
@@ -27,6 +28,7 @@ class BillingState {
     this.premiumActive,
     this.activeProductId,
     this.expiresAt,
+    this.trial,
   });
 
   final BillingPhase phase;
@@ -36,6 +38,7 @@ class BillingState {
   final bool? premiumActive;
   final String? activeProductId;
   final DateTime? expiresAt;
+  final TrialSubscription? trial;
 }
 
 final billingProvider = NotifierProvider<BillingController, BillingState>(
@@ -44,12 +47,14 @@ final billingProvider = NotifierProvider<BillingController, BillingState>(
 
 class BillingController extends Notifier<BillingState> {
   int _generation = 0;
+  int _profileRevision = 0;
 
   @override
   BillingState build() {
     final gateway = ref.watch(billingGatewayProvider);
     final account = ref.watch(accountSessionProvider);
     final generation = ++_generation;
+    _profileRevision = 0;
     StreamSubscription<BillingProfileSnapshot>? subscription;
     ref.onDispose(() {
       _generation++;
@@ -71,37 +76,38 @@ class BillingController extends Notifier<BillingState> {
           if (!current()) return;
           await gateway.bindCustomerUserId(customerUserId);
           if (!current()) return;
-          var profileRevision = 0;
           subscription = gateway.profileUpdates.listen(
             (profile) {
               if (!current()) return;
               // A late profile event from the identity Adapty just left must
               // never be shown as the current account's access.
               if (profile.customerUserId != customerUserId) return;
-              profileRevision++;
+              _profileRevision++;
               state = BillingState(
                 BillingPhase.ready,
                 premiumActive: profile.premiumActive,
                 activeProductId: profile.activeProductId,
                 expiresAt: profile.expiresAt,
+                trial: profile.trial,
               );
             },
             onError: (Object _, StackTrace _) {
               if (!current()) return;
-              profileRevision++;
+              _profileRevision++;
               state = const BillingState(BillingPhase.unknown);
             },
           );
-          final revision = profileRevision;
+          final revision = _profileRevision;
           try {
             final profile = await gateway.readProfile();
-            if (current() && revision == profileRevision) {
+            if (current() && revision == _profileRevision) {
               if (profile.customerUserId == customerUserId) {
                 state = BillingState(
                   BillingPhase.ready,
                   premiumActive: profile.premiumActive,
                   activeProductId: profile.activeProductId,
                   expiresAt: profile.expiresAt,
+                  trial: profile.trial,
                 );
               } else {
                 state = const BillingState(BillingPhase.unknown);
@@ -109,7 +115,7 @@ class BillingController extends Notifier<BillingState> {
             }
           } catch (_) {
             // A late failed read must not overwrite a newer stream result.
-            if (current() && revision == profileRevision) {
+            if (current() && revision == _profileRevision) {
               state = const BillingState(BillingPhase.unknown);
             }
           }
@@ -119,5 +125,48 @@ class BillingController extends Notifier<BillingState> {
       }),
     );
     return const BillingState(BillingPhase.connecting);
+  }
+
+  /// Refresh without rebuilding the identity-bound controller or interrupting
+  /// an in-flight purchase. Newer stream events always win over this read.
+  Future<void> refresh() async {
+    final gateway = ref.read(billingGatewayProvider);
+    final account = ref.read(accountSessionProvider);
+    if (gateway == null ||
+        account.isLoading ||
+        account.hasError ||
+        state.phase == BillingPhase.connecting ||
+        state.phase == BillingPhase.disabled) {
+      return;
+    }
+    if (state.phase == BillingPhase.unknown) {
+      // Recreate failed activation/subscription as well as retrying its read.
+      ref.invalidateSelf();
+      return;
+    }
+    final generation = _generation;
+    final revision = _profileRevision;
+    final customerUserId = account.value?.id;
+    bool current() =>
+        ref.mounted &&
+        generation == _generation &&
+        revision == _profileRevision;
+    try {
+      final profile = await gateway.readProfile();
+      if (!current()) return;
+      if (profile.customerUserId != customerUserId) {
+        state = const BillingState(BillingPhase.unknown);
+        return;
+      }
+      state = BillingState(
+        BillingPhase.ready,
+        premiumActive: profile.premiumActive,
+        activeProductId: profile.activeProductId,
+        expiresAt: profile.expiresAt,
+        trial: profile.trial,
+      );
+    } catch (_) {
+      if (current()) state = const BillingState(BillingPhase.unknown);
+    }
   }
 }

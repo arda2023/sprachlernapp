@@ -110,3 +110,14 @@ Die Basisschnittstellen stehen in `lib/domain/repositories.dart`. Zusatzverträg
 - `test/session_rules_characterization_test.dart`: Sitzungsgrößen, Tagesrest, Premiumfilter und Quellenrotation.
 - `test/reader_lookup_characterization_test.dart`: Wort-Popover, Runtimeübersetzung, Markierungen, Fehler und Bedingungen für persönliches Lernen.
 - `test/goldens/core_screens_golden_test.dart`, Bilder in `test/goldens/images/`: Home, Übung, Story-Reader und Wortliste, jeweils hell/dunkel. **Nur macOS**; ohne gebündelte Google Fonts wird Typografie nicht abgesichert.
+
+
+## Lokale Erinnerungen und externe Einstiege
+
+- `lib/domain/notification_schedule.dart`: reine Kalenderplanung mit IANA-Zeitzone, Sommerzeitlücken/-dopplungen, Tagesziel und begrenztem Vorschauhorizont; lokale Uhrzeitpräferenz.
+- `lib/domain/trial_reminder.dart`: prüft aktiven kostenlosen Trial, SDK-/Serverübereinstimmung, Verlängerung und exakten Erinnerungszeitpunkt (Sandbox gesondert).
+- `lib/data/notifications/notification_gateway.dart`, `local_notification_gateway.dart`: austauschbarer OS-Vertrag; Mitteilungsrechte, Zeitzone, native Termine, Aufräumen und Tap-Payloads. Web/Desktop bleiben inaktiv.
+- `lib/presentation/notifications/notification_service.dart`: serialisierte, kontogebundene Planung, lokale Einstellungen, Permission nur nach expliziter Aktion, Trialversprechen erst nach erfolgreichem Scheduling.
+- `P/notification_provider.dart`: langlebiger Controller über `main.dart`; Konto, Sprache, Lernziel, Adapty und Serverstatus liefern Eingaben. Resume aktualisiert Rechte und Kaufstatus. Einstellungen ändern Zustand/Uhrzeit; Paywall zeigt nur eine tatsächlich geplante Erinnerung.
+- `lib/domain/app_launch_intent.dart`, `P/app_launch_intent_provider.dart`, `lib/screens/app_shell.dart`: gepufferte und entdoppelte externe Navigation, auch bei verdeckter Shell; wartet auf Sprach-/Inhaltsbereitschaft, dann gemischte Übung oder Home.
+- `test/notification_*_test.dart`, `test/trial_reminder_test.dart`, `test/app_launch_intent_test.dart`: Kalender-, Identitäts-, Berechtigungs-, Race-, UI- und Navigationsregressionen mit Fakes.

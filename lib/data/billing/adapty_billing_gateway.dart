@@ -1,6 +1,8 @@
 import 'package:adapty_flutter/adapty_flutter.dart';
 import 'package:flutter/foundation.dart';
 
+import '../../domain/trial_reminder.dart';
+
 /// Kept behind an interface so startup and network failures can be tested
 /// without a store account or native purchase sheet.
 abstract interface class BillingGateway {
@@ -30,6 +32,7 @@ typedef BillingProfileSnapshot = ({
   bool premiumActive,
   String? activeProductId,
   DateTime? expiresAt,
+  TrialSubscription? trial,
 });
 
 class AdaptyBillingGateway implements BillingGateway, BillingIdentityRunner {
@@ -149,6 +152,7 @@ class AdaptyBillingGateway implements BillingGateway, BillingIdentityRunner {
 
   BillingProfileSnapshot _snapshot(AdaptyProfile profile) {
     final accessLevel = profile.accessLevels[accessLevelId];
+    final subscription = profile.subscriptions[accessLevel?.vendorProductId];
     return (
       customerUserId: profile.customerUserId,
       premiumActive: accessLevel?.isActive ?? false,
@@ -156,6 +160,34 @@ class AdaptyBillingGateway implements BillingGateway, BillingIdentityRunner {
           ? accessLevel!.vendorProductId
           : null,
       expiresAt: accessLevel?.expiresAt,
+      trial: accessLevel?.isActive != true
+          ? null
+          : (
+              productId: accessLevel!.vendorProductId,
+              introductoryOfferType: accessLevel.activeIntroductoryOfferType,
+              expiresAt: accessLevel.expiresAt,
+              willRenew:
+                  accessLevel.willRenew && (subscription?.willRenew ?? true),
+              isSandbox: subscription?.isSandbox,
+              isRefunded:
+                  accessLevel.isRefund || (subscription?.isRefund ?? false),
+              isInGracePeriod:
+                  accessLevel.isInGracePeriod ||
+                  (subscription?.isInGracePeriod ?? false),
+              isLifetime: accessLevel.isLifetime,
+              dataConsistent:
+                  subscription != null &&
+                  subscription.isActive &&
+                  subscription.vendorProductId == accessLevel.vendorProductId &&
+                  subscription.store == accessLevel.store &&
+                  subscription.activeIntroductoryOfferType ==
+                      accessLevel.activeIntroductoryOfferType &&
+                  subscription.expiresAt != null &&
+                  accessLevel.expiresAt != null &&
+                  subscription.expiresAt!.isAtSameMomentAs(
+                    accessLevel.expiresAt!,
+                  ),
+            ),
     );
   }
 }

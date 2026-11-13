@@ -2,7 +2,14 @@ import '../web/web_reading_viewport.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show Colors, LinearProgressIndicator, Material, MaterialPageRoute, Scaffold;
+    show
+        Colors,
+        LinearProgressIndicator,
+        Material,
+        MaterialPageRoute,
+        Scaffold,
+        TimeOfDay,
+        showTimePicker;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,6 +17,8 @@ import '../../domain/language_profile.dart';
 import '../../domain/preferences.dart';
 import '../../presentation/providers/database_providers.dart';
 import '../../presentation/providers/preferences_provider.dart';
+import '../../presentation/providers/notification_provider.dart';
+import '../../data/notifications/notification_gateway.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/anchored_popover.dart';
 import '../../widgets/account_tile.dart';
@@ -28,7 +37,7 @@ import 'content_updates_screen.dart';
 /// Settings as grouped, rounded sections on the page tone (Redesign
 /// 28.10.2026, references: CapWords, Uxcel Go, ChatGPT and Claude settings
 /// on Mobbin): learning language, appearance with live previews, practice
-/// switches, features that are not available yet, content and help.
+/// switches, local reminders, content and help.
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
   static Future<void> open(BuildContext context) => Navigator.of(context).push(
@@ -43,6 +52,7 @@ class SettingsScreen extends ConsumerStatefulWidget {
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   bool _saving = false;
   String? _error;
+  bool _notificationSaving = false;
 
   /// The large title scrolled away: the bar shows a small one (iOS large
   /// title behaviour).
@@ -95,6 +105,37 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     } finally {
       if (mounted) setState(() => _saving = false);
     }
+  }
+
+  Future<void> _saveNotifications(Future<void> Function() action) async {
+    if (_notificationSaving) return;
+    setState(() => _notificationSaving = true);
+    try {
+      await action();
+    } catch (_) {
+      if (mounted) {
+        setState(() => _error = 'Nicht gespeichert. Bitte erneut versuchen.');
+      }
+    } finally {
+      if (mounted) setState(() => _notificationSaving = false);
+    }
+  }
+
+  Future<void> _editReminderTime(NotificationState notifications) async {
+    final time = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay(
+        hour: notifications.settings.hour,
+        minute: notifications.settings.minute,
+      ),
+      helpText: 'Erinnerungszeit',
+    );
+    if (time == null || !mounted) return;
+    await _saveNotifications(
+      () => ref
+          .read(notificationProvider.notifier)
+          .setLearningTime(time.hour, time.minute),
+    );
   }
 
   void _push(Widget screen) => Navigator.of(context).push(
@@ -165,6 +206,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       language.asData?.value ?? 'en',
     );
     final version = ref.watch(appInfoProvider).asData?.value;
+    final notifications = ref.watch(notificationProvider);
     return ListView(
       controller: _scroll,
       padding: EdgeInsets.fromLTRB(
@@ -234,17 +276,56 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         _Section(
           title: 'Audio und Erinnerungen',
           children: [
-            for (final (icon, title) in const [
-              (CupertinoIcons.bell, 'Lern-Benachrichtigungen'),
-              (CupertinoIcons.speaker_slash, 'Ton aus'),
-            ])
+            if (notifications.supported)
+              _SwitchRow(
+                icon: CupertinoIcons.bell,
+                title: 'Lern-Benachrichtigungen',
+                value: notifications.learningEnabled,
+                onChanged: !notifications.ready || _notificationSaving
+                    ? null
+                    : (enabled) => _saveNotifications(
+                        () => ref
+                            .read(notificationProvider.notifier)
+                            .setLearningEnabled(enabled),
+                      ),
+              )
+            else
               _Row(
-                icon: icon,
-                title: title,
-                semanticsHint: 'Noch nicht verfügbar',
+                icon: CupertinoIcons.bell,
+                title: 'Lern-Benachrichtigungen',
+                value: 'Auf dem Smartphone',
                 enabled: false,
-                trailing: const _SoonChip(),
               ),
+            if (notifications.learningEnabled)
+              _Row(
+                icon: CupertinoIcons.clock,
+                title: 'Uhrzeit',
+                value:
+                    '${notifications.settings.hour.toString().padLeft(2, '0')}:'
+                    '${notifications.settings.minute.toString().padLeft(2, '0')}',
+                onTap: _notificationSaving
+                    ? null
+                    : () => _editReminderTime(notifications),
+              ),
+            if (notifications.error != null)
+              _Row(
+                icon: CupertinoIcons.bell_slash,
+                title: notifications.error!,
+                onTap: notifications.permission == NotificationPermission.denied
+                    ? () => _saveNotifications(
+                        ref.read(notificationProvider.notifier).openSettings,
+                      )
+                    : () => _saveNotifications(
+                        ref.read(notificationProvider.notifier).refresh,
+                      ),
+              ),
+            const _Row(
+              icon: CupertinoIcons.speaker_slash,
+              title: 'Ton aus',
+              semanticsHint: 'Noch nicht verfügbar',
+              enabled: false,
+              trailing: _SoonChip(),
+            ),
           ],
         ),
         const _Section(

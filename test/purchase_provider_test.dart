@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sprachapp/data/billing/adapty_billing_gateway.dart';
 import 'package:sprachapp/data/billing/billing_sync_gateway.dart';
 import 'package:sprachapp/data/billing/purchase_gateway.dart';
+import 'package:sprachapp/domain/trial_reminder.dart';
 import 'package:sprachapp/presentation/providers/auth_providers.dart';
 import 'package:sprachapp/presentation/providers/billing_provider.dart';
 import 'package:sprachapp/presentation/providers/purchase_provider.dart';
@@ -203,11 +204,16 @@ class _FakeTimer implements Timer {
   void cancel() => _isActive = false;
 }
 
-BillingProfileSnapshot _profile(String? id, {bool premium = false}) => (
+BillingProfileSnapshot _profile(
+  String? id, {
+  bool premium = false,
+  TrialSubscription? trial,
+}) => (
   customerUserId: id,
   premiumActive: premium,
   activeProductId: premium ? 'yearly' : null,
   expiresAt: premium ? DateTime.utc(2027) : null,
+  trial: trial,
 );
 
 ServerBillingSnapshot _server({
@@ -277,6 +283,60 @@ ProviderContainer _container({
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  for (final change in ['renewal', 'offer']) {
+    test(
+      'reconciles a $change-only profile update with unchanged product and expiry',
+      () async {
+        final billing = _BillingGateway('account-a');
+        final sync = _BillingSync(_server(active: true));
+        final container = _container(
+          billing: billing,
+          purchases: _PurchaseGateway(),
+          sync: sync,
+          sessions: Stream<AccountSession?>.value((
+            id: 'account-a',
+            email: null,
+          )),
+        );
+        addTearDown(() async {
+          container.dispose();
+          await billing.updates.close();
+        });
+        await _flush();
+        TrialSubscription trial({
+          bool renew = true,
+          String? offer = 'free_trial',
+        }) => (
+          productId: 'yearly',
+          introductoryOfferType: offer,
+          expiresAt: DateTime.utc(2027),
+          willRenew: renew,
+          isSandbox: true,
+          isRefunded: false,
+          isInGracePeriod: false,
+          isLifetime: false,
+          dataConsistent: true,
+        );
+        billing.updates.add(
+          _profile('account-a', premium: true, trial: trial()),
+        );
+        await _flush();
+        final before = sync.calls;
+        billing.updates.add(
+          _profile(
+            'account-a',
+            premium: true,
+            trial: change == 'renewal'
+                ? trial(renew: false)
+                : trial(offer: null),
+          ),
+        );
+        await _flush();
+        expect(sync.calls, before + 1);
+      },
+    );
+  }
 
   for (final hasPurchaseGateway in [false, true]) {
     test(
@@ -399,24 +459,27 @@ void main() {
     );
   });
 
-  test('restore without a store and without an account asks for sign-in', () async {
-    final sync = _BillingSync(_gift());
-    final container = _container(
-      billing: null,
-      purchases: null,
-      sync: sync,
-      sessions: Stream<AccountSession?>.value(null),
-    );
-    addTearDown(container.dispose);
-    await _flush();
-    await container.read(purchaseProvider.notifier).restore();
-    expect(sync.calls, 0);
-    expect(container.read(purchaseProvider).premiumActive, isNull);
-    expect(
-      container.read(purchaseProvider).errorMessage,
-      'Bitte zuerst mit einem bestätigten Konto anmelden.',
-    );
-  });
+  test(
+    'restore without a store and without an account asks for sign-in',
+    () async {
+      final sync = _BillingSync(_gift());
+      final container = _container(
+        billing: null,
+        purchases: null,
+        sync: sync,
+        sessions: Stream<AccountSession?>.value(null),
+      );
+      addTearDown(container.dispose);
+      await _flush();
+      await container.read(purchaseProvider.notifier).restore();
+      expect(sync.calls, 0);
+      expect(container.read(purchaseProvider).premiumActive, isNull);
+      expect(
+        container.read(purchaseProvider).errorMessage,
+        'Bitte zuerst mit einem bestätigten Konto anmelden.',
+      );
+    },
+  );
 
   test('a failed server check stays visible next to a missing store', () async {
     final sync = _BillingSync(_gift())
@@ -433,7 +496,10 @@ void main() {
     var state = container.read(purchaseProvider);
     expect(state.premiumActive, isNull);
     expect(state.hasPremiumUiAccess, isFalse);
-    expect(state.errorMessage, 'Premium-Käufe sind auf diesem Gerät nicht verfügbar.');
+    expect(
+      state.errorMessage,
+      'Premium-Käufe sind auf diesem Gerät nicht verfügbar.',
+    );
     expect(state.accountSyncError, isNotNull);
 
     sync.failure = null;

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sprachapp/data/billing/adapty_billing_gateway.dart';
+import 'package:sprachapp/domain/trial_reminder.dart';
 import 'package:sprachapp/presentation/providers/auth_providers.dart';
 import 'package:sprachapp/presentation/providers/billing_provider.dart';
 
@@ -64,15 +65,122 @@ ProviderContainer _container(
   return container;
 }
 
-BillingProfileSnapshot _profile(String? id, bool premium) => (
+BillingProfileSnapshot _profile(
+  String? id,
+  bool premium, {
+  TrialSubscription? trial,
+}) => (
   customerUserId: id,
   premiumActive: premium,
   activeProductId: null,
   expiresAt: null,
+  trial: trial,
 );
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  test(
+    'Adapty retains the matching active trial, renewal and sandbox fields',
+    () async {
+      const channel = MethodChannel('flutter.adapty.com/adapty');
+      const product = 'com.ardasayar.linglossa.premium.yearly';
+      final fields = <String, Object?>{
+        'is_active': true,
+        'vendor_product_id': product,
+        'store': 'app_store',
+        'activated_at': '2026-11-13T10:00:00Z',
+        'expires_at': '2026-11-13T10:03:00Z',
+        'is_lifetime': false,
+        'active_introductory_offer_type': 'free_trial',
+        'will_renew': true,
+        'is_in_grace_period': false,
+        'is_refund': false,
+      };
+      final access = <String, Object?>{'id': 'premium', ...fields};
+      final subscription = <String, Object?>{
+        ...fields,
+        'is_sandbox': true,
+        'vendor_transaction_id': 'transaction',
+        'vendor_original_transaction_id': 'original',
+      };
+      final messenger =
+          TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+      messenger.setMockMethodCallHandler(channel, (call) async {
+        expect(call.method, 'get_profile');
+        return jsonEncode({
+          'success': {
+            'profile_id': 'profile',
+            'segment_hash': 'segment',
+            'customer_user_id': 'account-a',
+            'timestamp': 0,
+            'is_test_user': false,
+            'paid_access_levels': {'premium': access},
+            'subscriptions': {product: subscription},
+          },
+        });
+      });
+      addTearDown(() => messenger.setMockMethodCallHandler(channel, null));
+      final gateway = AdaptyBillingGateway('public_test_key');
+      final trial = (await gateway.readProfile()).trial!;
+      expect(trial.introductoryOfferType, 'free_trial');
+      expect(trial.expiresAt, DateTime.utc(2026, 11, 13, 10, 3));
+      expect(trial.isSandbox, true);
+      expect(trial.willRenew, true);
+      expect(trial.dataConsistent, true);
+      subscription['will_renew'] = false;
+      expect((await gateway.readProfile()).trial!.willRenew, false);
+      subscription['will_renew'] = true;
+      subscription['expires_at'] = '2026-11-13T10:05:00Z';
+      expect((await gateway.readProfile()).trial!.dataConsistent, false);
+      access.remove('expires_at');
+      expect((await gateway.readProfile()).trial!.expiresAt, isNull);
+    },
+  );
+
+  test(
+    'a newer trial cancellation wins over a stale resume profile read',
+    () async {
+      final gateway = _Gateway();
+      final container = _container(gateway);
+      addTearDown(() async {
+        container.dispose();
+        await gateway.updates.close();
+      });
+      gateway.activation.complete();
+      await _flush();
+      final trial = (
+        productId: 'yearly',
+        introductoryOfferType: 'free_trial',
+        expiresAt: DateTime.utc(2027),
+        willRenew: true,
+        isSandbox: true,
+        isRefunded: false,
+        isInGracePeriod: false,
+        isLifetime: false,
+        dataConsistent: true,
+      );
+      gateway.profileReplies[0].complete(_profile(null, true, trial: trial));
+      await _flush();
+      expect(container.read(billingProvider).trial!.willRenew, true);
+      final refresh = container.read(billingProvider.notifier).refresh();
+      final cancelled = (
+        productId: trial.productId,
+        introductoryOfferType: trial.introductoryOfferType,
+        expiresAt: trial.expiresAt,
+        willRenew: false,
+        isSandbox: trial.isSandbox,
+        isRefunded: false,
+        isInGracePeriod: false,
+        isLifetime: false,
+        dataConsistent: true,
+      );
+      gateway.updates.add(_profile(null, true, trial: cancelled));
+      gateway.profileReplies[1].complete(_profile(null, true, trial: trial));
+      await refresh;
+      expect(container.read(billingProvider).trial!.willRenew, false);
+    },
+  );
 
   test('unconfigured installs do not initialize billing', () {
     final container = ProviderContainer(

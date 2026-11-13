@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../data/billing/adapty_billing_gateway.dart';
 import '../../data/billing/billing_sync_gateway.dart';
 import '../../data/billing/purchase_gateway.dart';
+import '../../domain/trial_reminder.dart';
 import '../../screens/legal/legal_release_gate.dart';
 import 'billing_provider.dart';
 import 'auth_providers.dart';
@@ -249,7 +250,7 @@ class PurchaseController extends Notifier<PurchaseState> {
   int _generation = 0;
   Timer? _expiryTimer;
   late PurchaseClock _clock;
-  (bool?, String?, DateTime?)? _lastObservedSdkProfile;
+  (bool?, String?, DateTime?, TrialSubscription?)? _lastObservedSdkProfile;
   bool _sdkReconciliationPending = false;
   Future<void>? _serverSyncInFlight;
 
@@ -271,6 +272,7 @@ class PurchaseController extends Notifier<PurchaseState> {
       billing.premiumActive,
       billing.activeProductId,
       billing.expiresAt,
+      billing.trial,
     );
     _sdkReconciliationPending = false;
     _serverSyncInFlight = null;
@@ -280,6 +282,7 @@ class PurchaseController extends Notifier<PurchaseState> {
         next.premiumActive,
         next.activeProductId,
         next.expiresAt,
+        next.trial,
       );
       final sdkProfileChanged = nextSdkProfile != _lastObservedSdkProfile;
       _lastObservedSdkProfile = nextSdkProfile;
@@ -560,6 +563,13 @@ class PurchaseController extends Notifier<PurchaseState> {
           : PurchaseResult.noPurchases,
       clearError: active,
     );
+  }
+
+  /// Resume checks do not initiate a purchase or show any native sheet.
+  Future<void> refresh() async {
+    final accountId = _accountId(ref.read(accountSessionProvider));
+    if (accountId == null || state.phase.isBusy) return;
+    await _syncForAccount(accountId, _generation);
   }
 
   Future<void> _syncForAccount(
