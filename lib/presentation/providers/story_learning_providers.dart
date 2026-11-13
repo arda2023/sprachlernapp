@@ -7,8 +7,6 @@ import '../../domain/story_learning_diagnostics.dart';
 import '../../models/home_models.dart';
 import 'database_providers.dart';
 import 'bundled_stories_provider.dart';
-export 'practice_resolver_providers.dart'
-    show practiceCatalogProvider, practiceResolverProvider;
 
 final storySummariesProvider = FutureProvider<List<StorySummary>>((ref) async {
   final content = await ref.watch(contentRepositoryProvider.future);

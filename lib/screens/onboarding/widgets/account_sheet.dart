@@ -3,8 +3,7 @@ import 'package:flutter/material.dart' show Icons, showModalBottomSheet;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
-import '../../../presentation/providers/account_provider.dart'
-    hide AccountSession, accountSessionProvider;
+import '../../../presentation/providers/account_provider.dart';
 import '../../../theme/app_theme.dart';
 import 'onboarding_motion.dart';
 import '../../../presentation/providers/auth_providers.dart';

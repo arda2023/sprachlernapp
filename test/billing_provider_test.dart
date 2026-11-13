@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sprachapp/data/billing/adapty_billing_gateway.dart';
-import 'package:sprachapp/presentation/providers/account_provider.dart';
+import 'package:sprachapp/presentation/providers/auth_providers.dart';
 import 'package:sprachapp/presentation/providers/billing_provider.dart';
 
 class _Gateway implements BillingGateway {

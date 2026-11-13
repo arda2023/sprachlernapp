@@ -11,7 +11,6 @@ import '../../data/content/content_update_diagnosis.dart';
 import '../../data/content/content_update_service.dart';
 import 'database_providers.dart';
 import 'auth_providers.dart';
-export 'auth_providers.dart' show contentAuthProvider;
 
 // Each language owns its HTTP client; authentication is shared deliberately.
 final contentReleaseTransportProvider =

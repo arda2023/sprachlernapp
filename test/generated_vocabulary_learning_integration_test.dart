@@ -14,7 +14,7 @@ import 'package:sprachapp/presentation/practice/deck_session_controller.dart';
 import 'package:sprachapp/presentation/providers/database_providers.dart';
 import 'package:sprachapp/presentation/providers/deck_providers.dart';
 import 'package:sprachapp/presentation/providers/learning_providers.dart';
-import 'package:sprachapp/presentation/providers/story_learning_providers.dart';
+import 'package:sprachapp/presentation/providers/practice_resolver_providers.dart';
 
 import 'data/generated_vocabulary_store_test.dart' show response, word;
 

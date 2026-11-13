@@ -24,6 +24,7 @@ import 'package:sprachapp/presentation/providers/streak_providers.dart';
 import 'package:sprachapp/models/home_models.dart';
 import 'package:sprachapp/presentation/practice/deck_session_controller.dart';
 import 'package:sprachapp/presentation/providers/database_providers.dart';
+import 'package:sprachapp/presentation/providers/user_changes_provider.dart';
 import 'package:sprachapp/presentation/providers/deck_providers.dart';
 import 'package:sprachapp/presentation/providers/learning_providers.dart';
 import 'package:sprachapp/presentation/providers/language_selection_provider.dart';

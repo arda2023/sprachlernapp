@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sprachapp/data/auth/account_deletion_gateway.dart';
+import 'package:sprachapp/presentation/providers/auth_providers.dart';
 import 'package:sprachapp/presentation/providers/account_provider.dart';
 import 'package:sprachapp/theme/app_theme.dart';
 import 'package:sprachapp/widgets/account_tile.dart';

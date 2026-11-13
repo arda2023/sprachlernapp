@@ -23,6 +23,7 @@ import 'package:sprachapp/models/home_models.dart';
 import 'package:sprachapp/presentation/practice/deck_session_controller.dart';
 import 'package:sprachapp/presentation/providers/database_providers.dart';
 import 'package:sprachapp/presentation/providers/story_collection_provider.dart';
+import 'package:sprachapp/presentation/providers/practice_resolver_providers.dart';
 import 'package:sprachapp/presentation/providers/story_learning_providers.dart';
 import 'package:sprachapp/screens/stories/story_collection_screen.dart';
 import 'package:sprachapp/screens/stories/story_reader_screen.dart';

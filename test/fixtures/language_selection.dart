@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sprachapp/data/content/content_pack_installer.dart';
 import 'package:sprachapp/data/content/content_auth_repository.dart';
 import 'package:sprachapp/data/content/content_release_client.dart';
+import 'package:sprachapp/presentation/providers/auth_providers.dart';
 import 'package:sprachapp/presentation/providers/content_update_provider.dart';
 import 'package:sprachapp/data/user/user_database.dart';
 import 'package:sprachapp/domain/repositories.dart';

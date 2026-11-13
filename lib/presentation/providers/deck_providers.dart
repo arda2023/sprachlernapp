@@ -10,7 +10,6 @@ import 'premium_access_provider.dart';
 import 'learning_providers.dart';
 import 'practice_resolver_providers.dart';
 import 'user_changes_provider.dart';
-export 'user_changes_provider.dart' show userChangesProvider;
 
 /// Short deck names without "&" (user decision 29.10.2026). The packs keep
 /// their titles; slugs are the same in every language, so one table covers

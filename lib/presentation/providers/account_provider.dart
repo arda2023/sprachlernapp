@@ -5,9 +5,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../data/auth/native_account_identity.dart';
 import '../../data/content/content_auth_repository.dart';
-import 'content_update_provider.dart' hide contentAuthProvider;
+import 'content_update_provider.dart';
 import 'auth_providers.dart';
-export 'auth_providers.dart' show AccountSession, accountSessionProvider;
 export '../../data/auth/native_account_identity.dart'
     show AccountIdentityProvider, AccountLoginCancelled;
 

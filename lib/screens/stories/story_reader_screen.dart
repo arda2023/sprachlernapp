@@ -15,8 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/story_learning.dart';
 import '../../domain/story_learning_diagnostics.dart';
-import '../../presentation/providers/story_learning_providers.dart'
-    hide practiceCatalogProvider, practiceResolverProvider;
+import '../../presentation/providers/story_learning_providers.dart';
 import '../../presentation/providers/bundled_stories_provider.dart';
 
 import 'package:flutter/foundation.dart';

@@ -11,7 +11,7 @@ import 'package:sprachapp/domain/review_pass.dart';
 import 'package:sprachapp/domain/srs_state.dart';
 import 'package:sprachapp/presentation/providers/database_providers.dart';
 import 'package:sprachapp/presentation/providers/learning_providers.dart';
-import 'package:sprachapp/presentation/providers/story_learning_providers.dart';
+import 'package:sprachapp/presentation/providers/practice_resolver_providers.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

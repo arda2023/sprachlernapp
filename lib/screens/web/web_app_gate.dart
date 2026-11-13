@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../presentation/providers/account_provider.dart'
-    hide AccountSession, accountSessionProvider;
+import '../../presentation/providers/account_provider.dart';
 import '../../theme/app_theme.dart';
 import 'web_learning_shell.dart';
 import '../../presentation/providers/auth_providers.dart';

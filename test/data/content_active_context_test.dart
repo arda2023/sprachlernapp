@@ -19,7 +19,7 @@ import 'package:sprachapp/domain/review_pass.dart';
 import 'package:sprachapp/domain/srs_state.dart';
 import 'package:sprachapp/presentation/providers/database_providers.dart';
 import 'package:sprachapp/presentation/providers/learning_providers.dart';
-import 'package:sprachapp/presentation/providers/story_learning_providers.dart';
+import 'package:sprachapp/presentation/providers/practice_resolver_providers.dart';
 
 class _LocalRelease implements ContentReleaseTransport {
   _LocalRelease(this.offer, this.bundle);

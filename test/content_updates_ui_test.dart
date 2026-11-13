@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sprachapp/domain/content.dart';
 import 'package:sprachapp/data/content/content_auth_repository.dart';
-import 'package:sprachapp/presentation/providers/content_update_provider.dart';
+import 'package:sprachapp/presentation/providers/auth_providers.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sprachapp/presentation/providers/database_providers.dart';

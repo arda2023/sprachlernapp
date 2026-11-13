@@ -17,7 +17,7 @@ import 'package:sprachapp/domain/srs_state.dart';
 import 'package:sprachapp/presentation/providers/database_providers.dart';
 import 'package:sprachapp/presentation/providers/deck_providers.dart';
 import 'package:sprachapp/presentation/providers/learning_providers.dart';
-import 'package:sprachapp/presentation/providers/story_learning_providers.dart';
+import 'package:sprachapp/presentation/providers/practice_resolver_providers.dart';
 import 'package:sprachapp/presentation/practice/deck_session_controller.dart';
 
 import 'support.dart';

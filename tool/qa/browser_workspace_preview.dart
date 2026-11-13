@@ -7,7 +7,7 @@ import 'package:sprachapp/data/user/user_database.dart';
 import 'package:sprachapp/data/sync/sync_json_store.dart';
 import 'package:sprachapp/domain/content_access_policy.dart';
 import 'package:sprachapp/main.dart';
-import 'package:sprachapp/presentation/providers/account_provider.dart';
+import 'package:sprachapp/presentation/providers/auth_providers.dart';
 import 'package:sprachapp/presentation/providers/content_access_provider.dart';
 import 'package:sprachapp/presentation/providers/database_providers.dart';
 import 'package:sprachapp/presentation/providers/learning_sync_provider.dart';

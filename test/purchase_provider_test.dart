@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sprachapp/data/billing/adapty_billing_gateway.dart';
 import 'package:sprachapp/data/billing/billing_sync_gateway.dart';
 import 'package:sprachapp/data/billing/purchase_gateway.dart';
-import 'package:sprachapp/presentation/providers/account_provider.dart';
+import 'package:sprachapp/presentation/providers/auth_providers.dart';
 import 'package:sprachapp/presentation/providers/billing_provider.dart';
 import 'package:sprachapp/presentation/providers/purchase_provider.dart';
 import 'package:sprachapp/screens/legal/legal_release_gate.dart';

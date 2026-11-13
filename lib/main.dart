@@ -21,8 +21,7 @@ import 'presentation/providers/billing_provider.dart';
 import 'presentation/providers/deck_providers.dart';
 import 'presentation/providers/language_selection_provider.dart';
 import 'presentation/providers/learning_providers.dart';
-import 'presentation/providers/content_update_provider.dart'
-    hide contentAuthProvider;
+import 'presentation/providers/content_update_provider.dart';
 import 'presentation/providers/onboarding_provider.dart';
 import 'presentation/providers/preferences_provider.dart';
 import 'presentation/providers/purchase_provider.dart';
