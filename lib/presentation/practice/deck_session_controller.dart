@@ -7,6 +7,7 @@ import '../../domain/content.dart';
 import '../../domain/repositories.dart';
 import '../../domain/review_pass.dart';
 import '../../domain/srs_state.dart';
+import '../../domain/session_rules.dart';
 import '../../domain/story_learning_diagnostics.dart';
 import '../providers/database_providers.dart';
 import '../../data/learning/practice_item_resolver.dart';
@@ -167,22 +168,14 @@ class DeckSessionController extends Notifier<DeckSessionState> {
               ),
             )[today] ??
             <String>{};
-        final remaining = (_preferences.dailyGoal - completed.length).clamp(
-          0,
-          _preferences.dailyGoal,
+        final sessionSize = resolveSessionSize(
+          requestedSize: args.size,
+          kind: args.kind,
+          dailyGoal: _preferences.dailyGoal,
+          completedToday: completed.length,
         );
-        _goalReached = remaining == 0;
-        // The goal is a recommendation: once reached, a normal start is the
-        // voluntary continuation. Cards done today are not due or new any
-        // more; Revue/Vorab keep due dates, so such cards stay due.
-        _sessionLimit = args.size > 0
-            ? args.size
-            : args.size < 0 ||
-                  remaining == 0 ||
-                  args.kind == DeckSessionKind.revue ||
-                  args.kind == DeckSessionKind.early
-            ? _preferences.dailyGoal
-            : remaining;
+        _goalReached = sessionSize.goalReached;
+        _sessionLimit = sessionSize.limit;
         if (args.kind != DeckSessionKind.mixed &&
             _resolver.content == null &&
             args.deckId != storyCollectionId &&
@@ -198,38 +191,28 @@ class DeckSessionController extends Notifier<DeckSessionState> {
         final premium = ref.read(premiumContentAccessProvider);
         final freeIds = premium ? null : await _freeIds();
         final allStates = await _user.allCardStates();
-        final states = freeIds == null
-            ? allStates
-            : {
-                for (final entry in allStates.entries)
-                  if (freeIds.contains(entry.key)) entry.key: entry.value,
-              };
+        final states = filterSessionCardStates(allStates, freeIds: freeIds);
         final cards = _resolver.cards;
         if (args.kind == DeckSessionKind.mixed) {
           final sources = await _resolver.newWordSources();
           final rotation = _user is NewWordRotationStore
               ? await (_user as NewWordRotationStore).lastNewWordSource()
               : null;
+          final filteredSources = filterMixedSessionSources(
+            premium: premium,
+            freeIds: freeIds,
+            isFreeDeck: isFreeDeckId,
+            activeSources: sources.active,
+            sourceOrder: sources.order,
+            storyAdditions: _resolver.additions,
+          );
           _queue = buildMixedQueue(
             targetsResolved: true,
             activeDeckCardIds: const [],
-            deckSources: freeIds == null
-                ? sources.active
-                : [
-                    for (final source in sources.active)
-                      if (isFreeDeckId(source.id))
-                        NewWordSource(
-                          source.id,
-                          source.cardIds.where(freeIds.contains).toList(),
-                        ),
-                  ],
-            sourceOrder: [
-              for (final id in sources.order)
-                if (premium || isFreeDeckId(id)) id,
-              if (premium) storySourceId,
-            ],
+            deckSources: filteredSources.deckSources,
+            sourceOrder: filteredSources.sourceOrder,
             lastSource: rotation,
-            storyAdditions: premium ? _resolver.additions : const {},
+            storyAdditions: filteredSources.storyAdditions,
             cards: cards,
             states: states,
             now: _clock(),
