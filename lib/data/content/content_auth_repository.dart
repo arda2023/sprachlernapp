@@ -6,6 +6,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Auth is optional and independent from offline learning. Only the public
 /// project key is configured in the app; tokens live in platform secure storage.
+/// App-wide Supabase account auth for account, purchase, runtime translation,
+/// learning sync, account deletion and content updates. The historical name
+/// comes from the invited-content reader login and is retained for existing
+/// documentation references.
 class ContentAuthRepository {
   ContentAuthRepository(
     this.url,
@@ -89,6 +93,8 @@ class ContentAuthRepository {
     _lastIdentity = localOwner;
   }
 
+  /// Email-code request without account creation, used by reauthentication
+  /// and the invited-content login.
   Future<void> requestCode(String email) async {
     await initialize();
     if (_client == null) {
@@ -102,6 +108,8 @@ class ContentAuthRepository {
 
   /// Public passwordless account flow. The invited-content login above keeps
   /// its original no-signup contract; creating an account grants no reader role.
+  /// AccountActions uses this signup-capable path; [requestCode] does not
+  /// create users.
   Future<void> requestAccountCode(String email) async {
     await initialize();
     if (_client == null) throw StateError('Anmeldung noch nicht eingerichtet.');

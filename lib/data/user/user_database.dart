@@ -224,7 +224,7 @@ class LanguageLearningPreferences extends Table {
   Set<Column> get primaryKey => {lang};
 }
 
-/// Learner database (schema v6). Content stays in read-only content.sqlite;
+/// Learner database (schema v8). Content stays in read-only content.sqlite;
 /// both databases are joined only by stable ids.
 @DriftDatabase(
   tables: [

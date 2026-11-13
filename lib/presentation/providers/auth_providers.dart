@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/content/content_auth_repository.dart';
 
+/// Shared Supabase account auth for account, purchase, translation, sync,
+/// account deletion and content updates. The name comes from the original
+/// invited-content login and is retained for existing documentation references.
 final contentAuthProvider = Provider<ContentAuthRepository>((ref) {
   final auth = ContentAuthRepository(
     const String.fromEnvironment('SUPABASE_URL'),

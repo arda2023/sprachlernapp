@@ -228,14 +228,17 @@ class ContentUpdateController extends Notifier<ContentUpdateState> {
     }
     await service.activate();
   }, lease: false);
+  // Email-code request for ContentUpdatesScreen, separate from AccountActions.
   Future<void> requestCode(String email) => _run(() async {
     await ref.read(contentAuthProvider).requestCode(email);
     _notice('code_sent', 'Code angefordert. Bitte E-Mail prüfen.');
   });
+  // Code confirmation for ContentUpdatesScreen, separate from AccountActions.
   Future<void> verifyCode(String email, String code) => _run(() async {
     await ref.read(contentAuthProvider).verifyCode(email, code);
     await check();
   });
+  // Password login for ContentUpdatesScreen, separate from AccountActions.
   Future<bool> signInWithPassword(String email, String password) async {
     final epoch = _epoch;
     if (contentTransitionGate.busy) return false;
@@ -270,6 +273,8 @@ class ContentUpdateController extends Notifier<ContentUpdateState> {
     return false;
   }
 
+  /// Signs out the shared account from ContentUpdatesScreen.
+  /// This screen-specific entry point is separate from AccountActions.signOut.
   Future<void> signOut() => _run(() async {
     await ref.read(contentAuthProvider).signOut();
     _notice(
