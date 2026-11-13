@@ -126,7 +126,7 @@ class WordListItem extends StatelessWidget {
                             style: AppType.chrome(
                               size: 15,
                               weight: FontWeight.w600,
-                              color: colors.active,
+                              color: colors.accentText,
                             ),
                           ),
                         ),
@@ -212,7 +212,9 @@ class _MoreButton extends StatelessWidget {
           label: 'Mehr zu $headword',
           excludeSemantics: true,
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 160),
+            duration: MediaQuery.disableAnimationsOf(context)
+                ? Duration.zero
+                : const Duration(milliseconds: 160),
             width: 34,
             height: 34,
             decoration: BoxDecoration(

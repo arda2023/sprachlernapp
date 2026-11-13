@@ -1,0 +1,146 @@
+00:00 +0: loading /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_ui_test.dart
+00:00 +0: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_ui_test.dart: (setUpAll)
+00:00 +0: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_word_bubble_test.dart: (setUpAll)
+00:00 +0: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_ui_test.dart: Accent option changes only accent equivalence; canonical Unicode matches
+00:00 +1: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_word_bubble_test.dart: a tapped word vibrates, gets the bubble with arrow and speaker, and closes on a second tap
+00:00 +2: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_word_bubble_test.dart: a tapped word vibrates, gets the bubble with arrow and speaker, and closes on a second tap
+00:00 +3: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_word_bubble_test.dart: a tapped word vibrates, gets the bubble with arrow and speaker, and closes on a second tap
+00:00 +4: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_word_bubble_test.dart: a tapped word vibrates, gets the bubble with arrow and speaker, and closes on a second tap
+
+Warning: A call to tap() with finder "Found 1 widget with a semantics label matching the pattern ", Übersetzung anzeigen$" (ignoring all but first): [
+  _GestureSemantics(renderObject: RenderSemanticsGestureHandler#b8ac0 relayoutBoundary=up15),
+]" derived an Offset (Offset(64.0, 134.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderSemanticsGestureHandler#b8ac0 relayoutBoundary=up15
+The hit test result at that offset is: HitTestResult(RenderPointerListener#2363a@Offset(64.0, 134.0), RenderSemanticsAnnotations#f496b@Offset(64.0, 134.0), RenderStack#b2cb5@Offset(64.0, 134.0), RenderCustomMultiChildLayoutBox#8079e@Offset(64.0, 134.0), _RenderInkFeatures#7b0ac@Offset(64.0, 134.0), RenderPhysicalModel#d3a12@Offset(64.0, 134.0), RenderSemanticsAnnotations#1e501@Offset(64.0, 134.0), RenderRepaintBoundary#c284c@Offset(64.0, 134.0), RenderIgnorePointer#81f7b@Offset(64.0, 134.0), RenderAnimatedOpacity#765b5@Offset(64.0, 134.0), RenderAnimatedOpacity#963f7@Offset(64.0, 134.0), _RenderColoredBox#00bd0@Offset(64.0, 134.0), RenderAnimatedOpacity#a9cbb@Offset(64.0, 134.0), RenderIgnorePointer#369a1@Offset(64.0, 134.0), RenderAnimatedOpacity#d8840@Offset(64.0, 134.0), RenderRepaintBoundary#06845@Offset(64.0, 134.0), RenderSemanticsAnnotations#61598@Offset(64.0, 134.0), RenderOffstage#f17ff@Offset(64.0, 134.0), RenderSemanticsAnnotations#be40b@Offset(64.0, 134.0), _RenderTheater#8d85a@Offset(64.0, 134.0), RenderAbsorbPointer#0769b@Offset(64.0, 134.0), RenderPointerListener#24880@Offset(64.0, 134.0), RenderSemanticsAnnotations#8ff2b@Offset(64.0, 134.0), RenderCustomPaint#085f0@Offset(64.0, 134.0), RenderSemanticsAnnotations#a4141@Offset(64.0, 134.0), RenderSemanticsAnnotations#a55b6@Offset(64.0, 134.0), RenderSemanticsAnnotations#1cb62@Offset(64.0, 134.0), RenderTapRegionSurface#a555b@Offset(64.0, 134.0), RenderSemanticsAnnotations#a70fe@Offset(64.0, 134.0), RenderSemanticsAnnotations#37abe@Offset(64.0, 134.0), HitTestEntry<HitTestTarget>#0ec55(_ReusableRenderView#d78db), HitTestEntry<HitTestTarget>#c303f(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure> (file:///Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_word_bubble_test.dart:73:15)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+00:01 +5: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_focus_alignment_test.dart: Returning to app restores answer focus and input connection
+00:01 +6: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_error_feedback_test.dart: 0/400/1500ms: synchronized transforms, stable geometry, persistent field
+00:01 +7: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_error_feedback_test.dart: 0/400/1500ms: synchronized transforms, stable geometry, persistent field
+00:01 +8: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_error_feedback_test.dart: 0/400/1500ms: synchronized transforms, stable geometry, persistent field
+00:01 +9: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_error_feedback_test.dart: 0/400/1500ms: synchronized transforms, stable geometry, persistent field
+00:01 +10: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_error_feedback_test.dart: 0/400/1500ms: synchronized transforms, stable geometry, persistent field
+00:01 +11: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_error_feedback_test.dart: 0/400/1500ms: synchronized transforms, stable geometry, persistent field
+00:01 +12: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_error_feedback_test.dart: 0/400/1500ms: synchronized transforms, stable geometry, persistent field
+00:01 +13: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_polish_test.dart: A slow next sentence preserves the editor and keyboard
+00:01 +14: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_polish_test.dart: A slow next sentence preserves the editor and keyboard
+00:02 +15: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_polish_test.dart: A slow next sentence preserves the editor and keyboard
+00:02 +16: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_ui_test.dart: Menu persists favorite, disables without review and stores report metadata
+00:02 +17: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_ui_test.dart: Menu persists favorite, disables without review and stores report metadata
+00:02 +18: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_ui_test.dart: Menu persists favorite, disables without review and stores report metadata
+00:02 +19: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_error_feedback_test.dart: selection/focus preserves red; replace, delete, paste and whitespace end it
+00:02 +20: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: practice field typed letters sit exactly on the ghost word (variant: TargetPlatform.iOS)
+00:02 +21: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: practice field typed letters sit exactly on the ghost word (variant: TargetPlatform.iOS)
+00:02 +22: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_ui_test.dart: Motif switches the app without remounting the settings route
+00:02 +23: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_ui_test.dart: Motif switches the app without remounting the settings route
+00:02 +24: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_ui_test.dart: Motif switches the app without remounting the settings route
+00:03 +25: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_ui_test.dart: Motif switches the app without remounting the settings route
+00:03 +26: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_ui_test.dart: Motif switches the app without remounting the settings route
+00:03 +27: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_ui_test.dart: Motif switches the app without remounting the settings route
+00:03 +28: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_ui_test.dart: Motif switches the app without remounting the settings route
+00:03 +29: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_ui_test.dart: Motif switches the app without remounting the settings route
+00:03 +30: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_ui_test.dart: Motif switches the app without remounting the settings route
+00:03 +31: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/deck_practice_shortcuts_test.dart: Shift+Enter reveals with focused input ""
+00:03 +32: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/deck_practice_shortcuts_test.dart: Shift+Enter reveals with focused input ""
+00:03 +33: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/deck_practice_shortcuts_test.dart: Shift+Enter reveals with focused input ""
+00:03 +34: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/deck_practice_shortcuts_test.dart: Shift+Enter reveals with focused input ""
+00:03 +35: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/deck_practice_shortcuts_test.dart: Shift+Enter reveals with focused input ""
+00:03 +36: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/deck_practice_shortcuts_test.dart: Shift+Enter reveals with focused input ""
+00:04 +37: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/deck_practice_shortcuts_test.dart: Shift+Enter reveals with focused input ""
+00:04 +38: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +39: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +40: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +41: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +42: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +43: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +44: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +45: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +46: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +47: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +48: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +49: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +50: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +51: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +52: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +53: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +54: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +55: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +56: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +57: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +58: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:04 +59: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:05 +60: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:05 +61: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:05 +62: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:05 +63: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:05 +64: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/practice_fixes_04_11_test.dart: Business is part of Beruf
+00:06 +65: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Five steps, then the plan pill flies into the paywall; "Kostenlos weiterlernen" opens the app
+00:06 +66: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Five steps, then the plan pill flies into the paywall; "Kostenlos weiterlernen" opens the app
+00:06 +67: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Five steps, then the plan pill flies into the paywall; "Kostenlos weiterlernen" opens the app
+00:06 +68: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Five steps, then the plan pill flies into the paywall; "Kostenlos weiterlernen" opens the app
+00:06 +69: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Five steps, then the plan pill flies into the paywall; "Kostenlos weiterlernen" opens the app
+00:06 +70: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Five steps, then the plan pill flies into the paywall; "Kostenlos weiterlernen" opens the app
+00:07 +71: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Five steps, then the plan pill flies into the paywall; "Kostenlos weiterlernen" opens the app
+00:07 +72: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Five steps, then the plan pill flies into the paywall; "Kostenlos weiterlernen" opens the app
+00:07 +73: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Five steps, then the plan pill flies into the paywall; "Kostenlos weiterlernen" opens the app
+00:07 +74: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Five steps, then the plan pill flies into the paywall; "Kostenlos weiterlernen" opens the app
+00:07 +75: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Five steps, then the plan pill flies into the paywall; "Kostenlos weiterlernen" opens the app
+00:07 +76: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Five steps, then the plan pill flies into the paywall; "Kostenlos weiterlernen" opens the app
+00:07 +77: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/launch_curtain_test.dart: The curtain comes back while content loads and keeps the app underneath
+00:07 +78: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/launch_curtain_test.dart: The curtain comes back while content loads and keeps the app underneath
+00:07 +79: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/launch_curtain_test.dart: The curtain comes back while content loads and keeps the app underneath
+00:07 +80: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/launch_curtain_test.dart: The curtain comes back while content loads and keeps the app underneath
+00:07 +81: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/launch_curtain_test.dart: The curtain comes back while content loads and keeps the app underneath
+00:07 +82: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/launch_curtain_test.dart: The curtain comes back while content loads and keeps the app underneath
+Error: google_fonts was unable to load font Figtree-Medium because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Medium was not found in the application assets. Ensure Figtree-Medium.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-SemiBold was not found in the application assets. Ensure SourceSerif4-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-Regular because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Regular was not found in the application assets. Ensure Figtree-Regular.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+00:08 +83: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/launch_curtain_test.dart: The curtain comes back while content loads and keeps the app underneath
+00:08 +84: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/learning_ui_device_fixes_test.dart: reveal type erase whitespace reveal preserves one assisted review
+00:08 +85: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/learning_ui_device_fixes_test.dart: reveal type erase whitespace reveal preserves one assisted review
+00:08 +86: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: A failed account check is not hidden behind the store message
+00:08 +87: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: A failed account check is not hidden behind the store message
+00:08 +88: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: A failed Store catalog shows its error once
+00:08 +89: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Paywall reports pending and cancelled Store outcomes without granting Premium
+00:08 +90: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Paywall shows the server-confirmed expiry and management action for active Premium
+00:08 +91: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: restore failure stays visible while verified Premium remains active
+00:09 +92: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Paywall unlocks only the explicitly labeled sandbox test UI
+00:09 +93: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: An already active sandbox abo can still close the paywall
+00:09 +94: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Premium found while the paywall is open closes it once
+00:09 +95: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Premium found during the paywall entrance still closes it
+00:09 +96: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Premium found under an open sheet closes the paywall too
+00:09 +97: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Back from the paywall returns to "Dein Start steht"
+00:09 +98: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Swiping: forward is blocked until a topic is picked
+00:10 +99: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: "Ich habe schon ein Konto" confirms sign in and opens the app
+00:10 +100: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: A finished onboarding is not shown again
+00:10 +101: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: Onboarding and paywall survive large Dynamic Type
+00:10 +102: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/onboarding_test.dart: (tearDownAll)
+00:10 +102: All tests passed!

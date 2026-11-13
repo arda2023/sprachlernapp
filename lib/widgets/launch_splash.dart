@@ -118,13 +118,15 @@ class _LaunchSplashState extends State<LaunchSplash>
                   opacity: word,
                   child: Transform.translate(
                     offset: Offset(0, 10 * (1 - word)),
-                    child: MediaQuery.withClampedTextScaling(
-                      maxScaleFactor: 1.3,
-                      child: Text(
-                        'Linglossa',
-                        style: AppType.editorial(
-                          color: colors.textPrimary,
-                          size: 32,
+                    child: ExcludeSemantics(
+                      child: MediaQuery.withClampedTextScaling(
+                        maxScaleFactor: 1.3,
+                        child: Text(
+                          'Linglossa',
+                          style: AppType.editorial(
+                            color: colors.textPrimary,
+                            size: 32,
+                          ),
                         ),
                       ),
                     ),
@@ -132,7 +134,9 @@ class _LaunchSplashState extends State<LaunchSplash>
                 ),
                 AnimatedOpacity(
                   opacity: widget.caption == null ? 0 : 1,
-                  duration: const Duration(milliseconds: 300),
+                  duration: MediaQuery.disableAnimationsOf(context)
+                      ? Duration.zero
+                      : const Duration(milliseconds: 300),
                   child: Padding(
                     padding: const EdgeInsets.only(top: 14),
                     child: Text(

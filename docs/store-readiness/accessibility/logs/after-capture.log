@@ -1,0 +1,60 @@
+00:00 +0: loading /tmp/sprachapp-accessibility-implementation/capture_accessibility_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: home dark 1.0
+CAPTURE /tmp/sprachapp-accessibility-implementation/screenshots/after/home_dark.png
+CAPTURE /tmp/sprachapp-accessibility-implementation/screenshots/after/home_dark_popover.png
+AUDIT home dark 1.0 overflow=none
+AUDIT home dark 1.0 MinimumTapTargetGuideline passed=true
+AUDIT home dark 1.0 LabeledTapTargetGuideline passed=true
+AUDIT home dark 1.0 MinimumTextContrastGuideline passed=true
+AUDIT home dark 1.0 story afterScroll overflow=none
+AUDIT home dark 1.0 story MinimumTapTargetGuideline passed=true
+AUDIT home dark 1.0 story LabeledTapTargetGuideline passed=true
+AUDIT home dark 1.0 story MinimumTextContrastGuideline passed=true
+00:00 +1: home light 1.0
+CAPTURE /tmp/sprachapp-accessibility-implementation/screenshots/after/home_light.png
+CAPTURE /tmp/sprachapp-accessibility-implementation/screenshots/after/home_light_popover.png
+AUDIT home light 1.0 overflow=none
+AUDIT home light 1.0 MinimumTapTargetGuideline passed=true
+AUDIT home light 1.0 LabeledTapTargetGuideline passed=true
+AUDIT home light 1.0 MinimumTextContrastGuideline passed=true
+AUDIT home light 1.0 story afterScroll overflow=none
+AUDIT home light 1.0 story MinimumTapTargetGuideline passed=true
+AUDIT home light 1.0 story LabeledTapTargetGuideline passed=true
+AUDIT home light 1.0 story MinimumTextContrastGuideline passed=true
+00:01 +2: practice dark 1.0
+CAPTURE /tmp/sprachapp-accessibility-implementation/screenshots/after/practice_dark.png
+CAPTURE /tmp/sprachapp-accessibility-implementation/screenshots/after/practice_dark_popover.png
+AUDIT practice dark 1.0 overflow=none
+AUDIT practice dark 1.0 MinimumTapTargetGuideline passed=true
+AUDIT practice dark 1.0 LabeledTapTargetGuideline passed=true
+AUDIT practice dark 1.0 MinimumTextContrastGuideline passed=true
+SCALE practice dark 1.0 paragraph=￼ ￼ ￼ scaler=no scaling box=Size(310.0, 44.0)
+SCALE practice dark 1.0 paragraph=Mia scaler=no scaling box=Size(43.3, 36.0)
+SCALE practice dark 1.0 paragraph=home scaler=no scaling box=Size(65.0, 36.0)
+SCALE practice dark 1.0 paragraph=. scaler=no scaling box=Size(7.2, 36.0)
+00:01 +3: practice light 1.0
+CAPTURE /tmp/sprachapp-accessibility-implementation/screenshots/after/practice_light.png
+CAPTURE /tmp/sprachapp-accessibility-implementation/screenshots/after/practice_light_popover.png
+AUDIT practice light 1.0 overflow=none
+AUDIT practice light 1.0 MinimumTapTargetGuideline passed=true
+AUDIT practice light 1.0 LabeledTapTargetGuideline passed=true
+AUDIT practice light 1.0 MinimumTextContrastGuideline passed=true
+SCALE practice light 1.0 paragraph=￼ ￼ ￼ scaler=no scaling box=Size(310.0, 44.0)
+SCALE practice light 1.0 paragraph=Mia scaler=no scaling box=Size(43.3, 36.0)
+SCALE practice light 1.0 paragraph=home scaler=no scaling box=Size(65.0, 36.0)
+SCALE practice light 1.0 paragraph=. scaler=no scaling box=Size(7.2, 36.0)
+00:01 +4: word_list dark 1.0
+CAPTURE /tmp/sprachapp-accessibility-implementation/screenshots/after/word_list_dark.png
+AUDIT word_list dark 1.0 overflow=none
+AUDIT word_list dark 1.0 MinimumTapTargetGuideline passed=true
+AUDIT word_list dark 1.0 LabeledTapTargetGuideline passed=true
+AUDIT word_list dark 1.0 MinimumTextContrastGuideline passed=true
+00:01 +5: word_list light 1.0
+CAPTURE /tmp/sprachapp-accessibility-implementation/screenshots/after/word_list_light.png
+AUDIT word_list light 1.0 overflow=none
+AUDIT word_list light 1.0 MinimumTapTargetGuideline passed=true
+AUDIT word_list light 1.0 LabeledTapTargetGuideline passed=true
+AUDIT word_list light 1.0 MinimumTextContrastGuideline passed=true
+00:01 +6: (tearDownAll)
+00:01 +6: All tests passed!

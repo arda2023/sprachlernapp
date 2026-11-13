@@ -69,6 +69,7 @@ class PaywallScreen extends ConsumerStatefulWidget {
       onboarding: onboarding,
     ),
     transitionsBuilder: (context, animation, _, child) {
+      if (MediaQuery.disableAnimationsOf(context)) return child;
       final curved = CurvedAnimation(
         parent: animation,
         curve: Curves.easeOutCubic,
@@ -557,43 +558,40 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
           SafeArea(
             child: Column(
               children: [
-                // Chrome row: capped like the app's other bars.
-                MediaQuery.withClampedTextScaling(
-                  maxScaleFactor: 1.3,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(6, 2, 6, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Pressable(
-                          label: 'Schließen',
-                          haptic: Haptic.light,
-                          onTap: _finish,
-                          child: SizedBox(
-                            width: 44,
-                            height: 44,
-                            child: Icon(
-                              CupertinoIcons.xmark,
-                              size: 22,
-                              color: colors.textMuted,
-                            ),
+                // Functional actions follow the user's preferred text size.
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(6, 2, 6, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Pressable(
+                        label: 'Schließen',
+                        haptic: Haptic.light,
+                        onTap: _finish,
+                        child: SizedBox(
+                          width: 44,
+                          height: 44,
+                          child: Icon(
+                            CupertinoIcons.xmark,
+                            size: 22,
+                            color: colors.textMuted,
                           ),
                         ),
-                        Flexible(
-                          child: TextAction(
-                            label: purchase.billingReady
-                                ? 'Wiederherstellen'
-                                : purchase.hasVerifiedAccount
-                                ? 'Zugang prüfen'
-                                : 'Anmelden',
-                            onTap: purchase.billingReady
-                                ? _restore
-                                : _checkAccountAccess,
-                            size: 14,
-                          ),
+                      ),
+                      Flexible(
+                        child: TextAction(
+                          label: purchase.billingReady
+                              ? 'Wiederherstellen'
+                              : purchase.hasVerifiedAccount
+                              ? 'Zugang prüfen'
+                              : 'Anmelden',
+                          onTap: purchase.billingReady
+                              ? _restore
+                              : _checkAccountAccess,
+                          size: 14,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 Expanded(
@@ -1128,7 +1126,9 @@ class _PlanCard extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
+            duration: MediaQuery.disableAnimationsOf(context)
+                ? Duration.zero
+                : const Duration(milliseconds: 200),
             curve: Curves.easeInOut,
             width: double.infinity,
             padding: const EdgeInsets.fromLTRB(14, 16, 14, 14),
@@ -1181,7 +1181,7 @@ class _PlanCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
                 decoration: BoxDecoration(
-                  color: colors.active,
+                  color: colors.popover,
                   borderRadius: BorderRadius.circular(99),
                 ),
                 child: Text(
@@ -1233,7 +1233,9 @@ class _PlanCheck extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.appColors;
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
+      duration: MediaQuery.disableAnimationsOf(context)
+          ? Duration.zero
+          : const Duration(milliseconds: 200),
       curve: Curves.easeInOut,
       width: 24,
       height: 24,
@@ -1247,7 +1249,9 @@ class _PlanCheck extends StatelessWidget {
       ),
       child: AnimatedScale(
         scale: selected ? 1 : 0,
-        duration: const Duration(milliseconds: 220),
+        duration: MediaQuery.disableAnimationsOf(context)
+            ? Duration.zero
+            : const Duration(milliseconds: 220),
         curve: selected ? Curves.easeOutBack : Curves.easeIn,
         child: const Icon(
           CupertinoIcons.checkmark_alt,

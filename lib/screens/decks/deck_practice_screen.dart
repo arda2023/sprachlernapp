@@ -900,16 +900,25 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
 
   List<Widget> _buildWordOverlay(WordAnchor word) => [
     Positioned.fill(
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onPanStart: (_) => setState(() => _word = null),
-        onTapDown: (e) {
-          if (!(_sentenceKey.currentState?.selectAt(e.globalPosition) ??
-              false)) {
-            setState(() => _word = null);
-            _schedule();
-          }
+      child: Semantics(
+        button: true,
+        label: 'Übersetzung schließen',
+        onTap: () {
+          setState(() => _word = null);
+          _schedule();
         },
+        child: GestureDetector(
+          excludeFromSemantics: true,
+          behavior: HitTestBehavior.opaque,
+          onPanStart: (_) => setState(() => _word = null),
+          onTapDown: (e) {
+            if (!(_sentenceKey.currentState?.selectAt(e.globalPosition) ??
+                false)) {
+              setState(() => _word = null);
+              _schedule();
+            }
+          },
+        ),
       ),
     ),
     _tooltip(word),

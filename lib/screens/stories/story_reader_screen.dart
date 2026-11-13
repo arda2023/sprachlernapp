@@ -831,36 +831,44 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
     ),
     // Tapping a word needs no hint; the translation
     // mode says that sentences now answer instead.
-    AnimatedSize(
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.easeOutCubic,
-      alignment: Alignment.topLeft,
-      child: !_translating
-          ? const SizedBox(width: double.infinity)
-          : Padding(
-              padding: const EdgeInsets.only(top: 14),
-              child: Row(
-                children: [
-                  Icon(
-                    CupertinoIcons.textformat_abc,
-                    size: 16,
-                    color: colors.active,
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Übersetzungsmodus: Tippe auf einen Satz.',
-                      style: AppType.chrome(size: 13, color: colors.textMuted),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-    ),
+    _translationModeHint(colors),
     const SizedBox(height: 22),
     Container(height: 1, color: colors.hairline.withValues(alpha: 0.6)),
     const SizedBox(height: 24),
   ];
+
+  Widget _translationModeHint(AppPalette colors) {
+    final child = !_translating
+        ? const SizedBox(width: double.infinity)
+        : Padding(
+            padding: const EdgeInsets.only(top: 14),
+            child: Row(
+              children: [
+                Icon(
+                  CupertinoIcons.textformat_abc,
+                  size: 16,
+                  color: colors.active,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'Übersetzungsmodus: Tippe auf einen Satz.',
+                    style: AppType.chrome(size: 13, color: colors.textMuted),
+                  ),
+                ),
+              ],
+            ),
+          );
+    // A zero-duration AnimatedSize can schedule a second layout. Without
+    // motion, show the final content directly.
+    if (MediaQuery.disableAnimationsOf(context)) return child;
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeOutCubic,
+      alignment: Alignment.topLeft,
+      child: child,
+    );
+  }
 
   List<Widget> _buildStoryParagraphs(int? narrated, AppPalette colors) => [
     for (final (i, sentences) in _paragraphSentences.indexed) ...[
@@ -1016,7 +1024,9 @@ class _TopBar extends StatelessWidget {
     return ValueListenableBuilder<bool>(
       valueListenable: scrolled,
       builder: (context, isScrolled, _) => AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
+        duration: MediaQuery.disableAnimationsOf(context)
+            ? Duration.zero
+            : const Duration(milliseconds: 180),
         padding: EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
         decoration: BoxDecoration(
           color: colors.nightPage.withValues(alpha: isScrolled ? 0.96 : 0),
@@ -1044,7 +1054,9 @@ class _TopBar extends StatelessWidget {
               ),
               Expanded(
                 child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 180),
+                  duration: MediaQuery.disableAnimationsOf(context)
+                      ? Duration.zero
+                      : const Duration(milliseconds: 180),
                   child: isScrolled
                       ? Text(
                           title,
@@ -1243,7 +1255,9 @@ class _DockToggle extends StatelessWidget {
           toggled: on,
           excludeSemantics: true,
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 160),
+            duration: MediaQuery.disableAnimationsOf(context)
+                ? Duration.zero
+                : const Duration(milliseconds: 160),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
             decoration: BoxDecoration(
               color: on ? colors.popover : null,

@@ -1,0 +1,443 @@
+00:00 +0: loading /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/core_screens_golden_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: home dark
+Error: google_fonts was unable to load font Figtree-Medium because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Medium was not found in the application assets. Ensure Figtree-Medium.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-SemiBold was not found in the application assets. Ensure Figtree-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-SemiBold was not found in the application assets. Ensure SourceSerif4-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-Bold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-Bold was not found in the application assets. Ensure SourceSerif4-Bold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-Bold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Bold was not found in the application assets. Ensure Figtree-Bold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-ExtraBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-ExtraBold was not found in the application assets. Ensure Figtree-ExtraBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+00:00 +1: home light
+Error: google_fonts was unable to load font Figtree-Medium because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Medium was not found in the application assets. Ensure Figtree-Medium.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-SemiBold was not found in the application assets. Ensure Figtree-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-SemiBold was not found in the application assets. Ensure SourceSerif4-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-Bold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-Bold was not found in the application assets. Ensure SourceSerif4-Bold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-Bold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Bold was not found in the application assets. Ensure Figtree-Bold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-ExtraBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-ExtraBold was not found in the application assets. Ensure Figtree-ExtraBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "images/home_light.png": Pixel test failed, 0.32%, 1068px diff detected.
+Failure feedback can be found at
+/Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/core_screens_golden_test.dart:88:9)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +1 -1: home light [E]
+  Test failed. See exception logs above.
+  The test description was: home light
+
+00:00 +1 -1: practice dark
+Error: google_fonts was unable to load font Figtree-Medium because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Medium was not found in the application assets. Ensure Figtree-Medium.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-SemiBold was not found in the application assets. Ensure Figtree-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-SemiBold was not found in the application assets. Ensure SourceSerif4-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-Regular because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-Regular was not found in the application assets. Ensure SourceSerif4-Regular.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-ExtraBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-ExtraBold was not found in the application assets. Ensure Figtree-ExtraBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "images/practice_dark.png": Pixel test failed, 7.96%, 26186px diff detected.
+Failure feedback can be found at
+/Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/core_screens_golden_test.dart:88:9)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +1 -2: practice dark [E]
+  Test failed. See exception logs above.
+  The test description was: practice dark
+
+00:01 +1 -2: practice light
+Error: google_fonts was unable to load font Figtree-Medium because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Medium was not found in the application assets. Ensure Figtree-Medium.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-SemiBold was not found in the application assets. Ensure Figtree-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-SemiBold was not found in the application assets. Ensure SourceSerif4-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-Regular because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-Regular was not found in the application assets. Ensure SourceSerif4-Regular.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-ExtraBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-ExtraBold was not found in the application assets. Ensure Figtree-ExtraBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "images/practice_light.png": Pixel test failed, 7.96%, 26187px diff detected.
+Failure feedback can be found at
+/Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/core_screens_golden_test.dart:88:9)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +1 -3: practice light [E]
+  Test failed. See exception logs above.
+  The test description was: practice light
+
+00:01 +1 -3: story_reader dark
+Error: google_fonts was unable to load font Figtree-Medium because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Medium was not found in the application assets. Ensure Figtree-Medium.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-SemiBold was not found in the application assets. Ensure Figtree-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-SemiBold was not found in the application assets. Ensure SourceSerif4-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-Regular because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-Regular was not found in the application assets. Ensure SourceSerif4-Regular.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-ExtraBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-ExtraBold was not found in the application assets. Ensure Figtree-ExtraBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-Bold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Bold was not found in the application assets. Ensure Figtree-Bold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+00:01 +2 -3: story_reader light
+Error: google_fonts was unable to load font Figtree-Medium because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Medium was not found in the application assets. Ensure Figtree-Medium.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-SemiBold was not found in the application assets. Ensure Figtree-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-SemiBold was not found in the application assets. Ensure SourceSerif4-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-Regular because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-Regular was not found in the application assets. Ensure SourceSerif4-Regular.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-ExtraBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-ExtraBold was not found in the application assets. Ensure Figtree-ExtraBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-Bold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Bold was not found in the application assets. Ensure Figtree-Bold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+00:01 +3 -3: word_list dark
+Error: google_fonts was unable to load font Figtree-Medium because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Medium was not found in the application assets. Ensure Figtree-Medium.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-SemiBold was not found in the application assets. Ensure SourceSerif4-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-SemiBold was not found in the application assets. Ensure Figtree-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-Bold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Bold was not found in the application assets. Ensure Figtree-Bold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-Regular because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-Regular was not found in the application assets. Ensure SourceSerif4-Regular.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "images/word_list_dark.png": Pixel test failed, 0.93%, 3048px diff detected.
+Failure feedback can be found at
+/Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/core_screens_golden_test.dart:88:9)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +3 -4: word_list dark [E]
+  Test failed. See exception logs above.
+  The test description was: word_list dark
+
+00:01 +3 -4: word_list light
+Error: google_fonts was unable to load font Figtree-Medium because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Medium was not found in the application assets. Ensure Figtree-Medium.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-SemiBold was not found in the application assets. Ensure SourceSerif4-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-SemiBold was not found in the application assets. Ensure Figtree-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font Figtree-Bold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font Figtree-Bold was not found in the application assets. Ensure Figtree-Bold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SourceSerif4-Regular because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SourceSerif4-Regular was not found in the application assets. Ensure SourceSerif4-Regular.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown while running async test code:
+Golden "images/word_list_light.png": Pixel test failed, 1.90%, 6254px diff detected.
+Failure feedback can be found at
+/Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/core_screens_golden_test.dart:88:9)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +3 -5: word_list light [E]
+  Test failed. See exception logs above.
+  The test description was: word_list light
+
+00:01 +3 -5: (tearDownAll)
+00:01 +3 -5: Some tests failed.
+
+Failing tests:
+  /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/core_screens_golden_test.dart: home light
+  /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/core_screens_golden_test.dart: practice dark
+  /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/core_screens_golden_test.dart: practice light
+  /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/core_screens_golden_test.dart: word_list dark
+  /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/goldens/core_screens_golden_test.dart: word_list light

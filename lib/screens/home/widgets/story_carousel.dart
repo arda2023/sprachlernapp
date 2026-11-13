@@ -219,8 +219,14 @@ class StoryListShelf extends StatelessWidget {
     }
     final width = MediaQuery.sizeOf(context).width - 72;
     final rows = math.min(3, stories.length);
+    // Two scaled title lines plus a reading-progress bar must fit together.
+    final scaledRowHeight = math.max(
+      rowHeight,
+      (MediaQuery.textScalerOf(context).scale(17) * 1.2 * 2).ceilToDouble() +
+          12,
+    );
     return SizedBox(
-      height: rows * rowHeight + (rows - 1) * rowGap,
+      height: rows * scaledRowHeight + (rows - 1) * rowGap,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
@@ -234,6 +240,7 @@ class StoryListShelf extends StatelessWidget {
               for (final (j, (rank, story)) in columns[c].indexed) ...[
                 if (j > 0) const SizedBox(height: rowGap),
                 _StoryListRow(
+                  height: scaledRowHeight,
                   rank: rank,
                   story: story,
                   progress: progress[story.id],
@@ -253,6 +260,7 @@ class StoryListShelf extends StatelessWidget {
 
 class _StoryListRow extends StatelessWidget {
   const _StoryListRow({
+    required this.height,
     required this.rank,
     required this.story,
     required this.progress,
@@ -262,6 +270,7 @@ class _StoryListRow extends StatelessWidget {
     this.onUpgrade,
   });
 
+  final double height;
   final int rank;
   final Story story;
   final double? progress;
@@ -287,13 +296,13 @@ class _StoryListRow extends StatelessWidget {
                 '${premiumLocked ? ', mit Premium freischalten' : ''}',
             excludeSemantics: true,
             child: SizedBox(
-              height: StoryListShelf.rowHeight,
+              height: height,
               child: Row(
                 children: [
                   _Cover(
                     story: story,
                     width: 62,
-                    height: StoryListShelf.rowHeight,
+                    height: height,
                     radius: 12,
                     texture: false,
                     finished: finished,
@@ -623,29 +632,31 @@ class TypeCover extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: _tones[tone % _tones.length],
-      child: Stack(
-        clipBehavior: Clip.hardEdge,
-        children: [
-          Positioned(
-            left: size * 0.2,
-            top: size * 0.58,
-            child: Text(
-              topic,
-              maxLines: 1,
-              softWrap: false,
-              textScaler: TextScaler.noScaling,
-              style: AppType.editorial(
-                size: size,
-                weight: FontWeight.w700,
-                height: 1,
-                letterSpacing: -size / 52,
-                color: AppColors.textPrimary.withValues(alpha: 0.09),
+    return ExcludeSemantics(
+      child: ColoredBox(
+        color: _tones[tone % _tones.length],
+        child: Stack(
+          clipBehavior: Clip.hardEdge,
+          children: [
+            Positioned(
+              left: size * 0.2,
+              top: size * 0.58,
+              child: Text(
+                topic,
+                maxLines: 1,
+                softWrap: false,
+                textScaler: TextScaler.noScaling,
+                style: AppType.editorial(
+                  size: size,
+                  weight: FontWeight.w700,
+                  height: 1,
+                  letterSpacing: -size / 52,
+                  color: AppColors.textPrimary.withValues(alpha: 0.09),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -20,6 +20,9 @@ class AppPalette {
   Color get textMuted => light ? const Color(0xFF596477) : AppColors.textMuted;
   Color get iconOff => light ? const Color(0xFF8992A1) : AppColors.iconOff;
   Color get active => AppColors.active;
+
+  /// Text on a neutral surface needs more contrast than a filled accent.
+  Color get accentText => light ? const Color(0xFFA94E00) : AppColors.active;
   Color get mastered => AppColors.mastered;
   Color get activeTint =>
       light ? const Color(0xFFFFF0E2) : AppColors.activeTint;
@@ -50,8 +53,8 @@ class AppPalette {
   Color get progressWords =>
       light ? const Color(0xFF1FA463) : const Color(0xFF34C77B);
 
-  /// Highlighted tile and its popover; deep enough for white text.
-  Color get popover => const Color(0xFFE26C00);
+  /// White text reaches 4.63:1, including small labels and captions.
+  Color get popover => const Color(0xFFBC5800);
 }
 
 abstract final class AppColors {

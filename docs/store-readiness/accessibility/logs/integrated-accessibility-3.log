@@ -1,0 +1,49 @@
+00:00 +0: loading /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart
+00:00 +0: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/text_scaling_regressions_test.dart: (setUpAll)
+00:00 +0: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/text_scaling_regressions_test.dart: practice words and editor scale exactly once
+00:00 +1: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/text_scaling_regressions_test.dart: practice words and editor scale exactly once
+00:00 +2: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/text_scaling_regressions_test.dart: practice words and editor scale exactly once
+00:00 +3: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 1.0, all guidelines
+00:00 +4: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 1.0, all guidelines
+00:00 +5: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 1.0, all guidelines
+00:00 +6: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 1.0, all guidelines
+00:00 +7: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 1.0, all guidelines
+00:00 +8: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 1.0, all guidelines
+00:00 +9: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 1.0, all guidelines
+00:00 +10: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 1.0, all guidelines
+00:00 +11: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 1.0, all guidelines
+00:00 +12: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 1.0, all guidelines
+00:00 +13: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 1.0, all guidelines
+00:00 +14: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 1.0, all guidelines
+00:01 +15: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 1.0, all guidelines
+00:01 +16: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 1.0, all guidelines
+00:01 +17: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 1.0, all guidelines
+00:01 +18: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/semantics_motion_regressions_test.dart: paywall restore action scales and reduced route does not slide
+00:01 +19: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: dark, text 2.0, all guidelines
+00:01 +20: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/semantics_motion_regressions_test.dart: reader translation hint reaches its final height without motion
+00:01 +21: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: light, text 1.0, all guidelines
+00:01 +22: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: home: light, text 2.0, all guidelines
+00:01 +23: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: practice: dark, text 1.0, all guidelines
+00:01 +24: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: practice: dark, text 2.0, all guidelines
+00:01 +25: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: practice: light, text 1.0, all guidelines
+00:02 +26: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: practice: light, text 2.0, all guidelines
+00:02 +27: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: reader: dark, text 1.0, all guidelines
+00:02 +28: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: reader: dark, text 2.0, all guidelines
+00:02 +29: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: reader: light, text 1.0, all guidelines
+00:02 +30: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: reader: light, text 2.0, all guidelines
+00:02 +31: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: words: dark, text 1.0, all guidelines
+00:02 +32: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: words: dark, text 2.0, all guidelines
+00:02 +33: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: words: light, text 1.0, all guidelines
+00:03 +34: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: words: light, text 2.0, all guidelines
+00:03 +35: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: settings: dark, text 1.0, all guidelines
+00:03 +36: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: settings: dark, text 2.0, all guidelines
+00:03 +37: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: settings: light, text 1.0, all guidelines
+00:03 +38: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: settings: light, text 2.0, all guidelines
+00:03 +39: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: paywall: dark, text 1.0, all guidelines
+00:03 +40: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: paywall: dark, text 2.0, all guidelines
+00:03 +41: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: paywall: light, text 1.0, all guidelines
+00:03 +42: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: paywall: light, text 2.0, all guidelines
+00:03 +43: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: paywall without trial: dark, large text
+00:03 +44: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: paywall without trial: light, large text
+00:03 +45: /Users/ardasayar/Documents/FlutterProjekte/sprachapp/test/accessibility/core_screens_accessibility_test.dart: (tearDownAll)
+00:03 +45: All tests passed!

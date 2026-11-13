@@ -10,7 +10,7 @@ const popoverInk = Color(0xFFFFFFFF);
 /// Text on the popover. Nothing is translucent; hierarchy comes from size
 /// and weight: headings and row titles bold, the line below them in medium
 /// weight (user decision 29.10.2026: no bold subtext under bold text). White
-/// on #E26C00 reaches 3.3:1, so small print stays medium, never regular.
+/// on #BC5800 reaches 4.63:1, including small captions.
 abstract final class PopoverText {
   static TextStyle body({FontWeight weight = FontWeight.w500}) =>
       AppType.chrome(size: 17, weight: weight, color: popoverInk, height: 1.35);

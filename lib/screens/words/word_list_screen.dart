@@ -449,7 +449,9 @@ class _FilterChip extends StatelessWidget {
           selected: selected,
           excludeSemantics: true,
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 150),
+            duration: MediaQuery.disableAnimationsOf(context)
+                ? Duration.zero
+                : const Duration(milliseconds: 150),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
               color: selected ? colors.popover : colors.raisedInk,
@@ -462,9 +464,7 @@ class _FilterChip extends StatelessWidget {
                   TextSpan(
                     text: '  $count',
                     style: TextStyle(
-                      color: selected
-                          ? white.withValues(alpha: 0.8)
-                          : colors.textMuted,
+                      color: selected ? white : colors.textMuted,
                     ),
                   ),
                 ],

@@ -116,6 +116,15 @@ class PracticeSentenceState extends State<PracticeSentence> {
           letterSpacing: 0,
           color: colors.memoryLevel2,
         );
+        // Preserve the visual line height at large text while giving normal
+        // text and its inline editor at least a 44 pt interaction height.
+        final verticalTapPadding = math.max(
+          0.0,
+          (44 -
+                  MediaQuery.textScalerOf(context).scale(style.fontSize!) *
+                      style.height!) /
+              2,
+        );
         widget.input.blue = colors.memoryLevel2;
         widget.input.red = colors.error;
         widget.input.neutral = colors.textMuted;
@@ -153,7 +162,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
                 ? style.copyWith(color: const Color(0xFFFFFFFF))
                 : style.copyWith(
                     color: colors.memoryLevel2.withValues(
-                      alpha: widget.selectedStart == null ? 1 : .5,
+                      alpha: widget.selectedStart == null ? 1 : .8,
                     ),
                     decoration: TextDecoration.underline,
                     decorationStyle: TextDecorationStyle.dotted,
@@ -164,35 +173,52 @@ class PracticeSentenceState extends State<PracticeSentence> {
                 alignment: PlaceholderAlignment.baseline,
                 baseline: TextBaseline.alphabetic,
                 child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
                   onTap: () => _select(offset),
                   child: Semantics(
                     button: true,
                     selected: selected,
                     label: '$text, Übersetzung anzeigen',
                     excludeSemantics: true,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
-                      children: [
-                        // The bubble's arrow points at the word itself, not
-                        // at its trailing punctuation.
-                        _WordHighlight(
-                          key: item.key,
-                          on: selected,
-                          color: colors.popover,
-                          child: Text(word, style: wordStyle),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minWidth: math.min(44.0, constraints.maxWidth),
+                        minHeight: 44,
+                        maxWidth: constraints.maxWidth,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: verticalTapPadding,
                         ),
-                        if (wordLength < text.length)
-                          Text(
-                            text.substring(wordLength),
-                            style: style.copyWith(
-                              color: colors.memoryLevel2.withValues(
-                                alpha: widget.selectedStart == null ? 1 : .5,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            // The bubble stays anchored to the glyphs even
+                            // when their tappable area is larger.
+                            Flexible(
+                              child: _WordHighlight(
+                                key: item.key,
+                                on: selected,
+                                color: colors.popover,
+                                child: Text(word, style: wordStyle),
                               ),
                             ),
-                          ),
-                      ],
+                            if (wordLength < text.length)
+                              Text(
+                                text.substring(wordLength),
+                                style: style.copyWith(
+                                  color: colors.memoryLevel2.withValues(
+                                    alpha: widget.selectedStart == null
+                                        ? 1
+                                        : .8,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -255,7 +281,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
               alignment: PlaceholderAlignment.baseline,
               baseline: TextBaseline.alphabetic,
               child: Opacity(
-                opacity: widget.selectedStart == null ? 1 : .5,
+                opacity: widget.selectedStart == null ? 1 : .8,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -303,7 +329,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
                                 isDense: true,
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: ghost.isEmpty ? 5 : ghostPadding,
-                                  vertical: 0,
+                                  vertical: verticalTapPadding,
                                 ),
                                 filled: true,
                                 fillColor: widget.solved
@@ -320,9 +346,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
                                     ? null
                                     : input.hint,
                                 hintStyle: style.copyWith(
-                                  color: colors.memoryLevel2.withValues(
-                                    alpha: .5,
-                                  ),
+                                  color: colors.textMuted,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5),
@@ -341,6 +365,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal: ghostPadding,
+                                      vertical: verticalTapPadding,
                                     ),
                                     child: Text.rich(
                                       key: const ValueKey('practice-ghost'),
@@ -363,8 +388,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
                                                 )
                                                 .toString(),
                                             style: style.copyWith(
-                                              color: colors.memoryLevel2
-                                                  .withValues(alpha: .5),
+                                              color: colors.textMuted,
                                             ),
                                           ),
                                         ],

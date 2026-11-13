@@ -12,7 +12,7 @@ No issues found! (ran in 7.4s)
 02:14 +1146 ~9: All tests passed!
 ```
 
-Die bestehende Testsuite gibt Warnungen über nicht gebündelte Google-Fonts aus; sie endet ohne Fehlschlag. Kein Golden wurde aktualisiert.
+Die bestehende Testsuite gibt Warnungen über nicht gebündelte Google-Fonts aus; sie endet ohne Fehlschlag. In der Ausgangsprüfung wurde kein Golden aktualisiert.
 
 ## Teil 1 – Deutsch als App-Sprache
 
@@ -101,6 +101,8 @@ Quellen: [Adapty-Flutter-Modelle](https://adapty.io/docs/flutter-sdk-models), [f
 
 ## Teil 4 – Drei native iOS-Widgets
 
+Commit: `12d1f1b` (`Add native iOS learning widgets with private snapshots`).
+
 Die Recherche mit 13 tatsächlich geöffneten Refero-Widgetbildern, Auswahl und drei Entwürfen wurde vor der Umsetzung dokumentiert: [Referenzen und Entwürfe](store-readiness-widget-research.md). Besonders übernommen wurden Imprints/ Clearfuls Kalenderkonturen, die konkrete Lesefortsetzung aus Apple Books/PocketShelf und die kurze Zahlenhierarchie von Train Fitness. Es gibt kein Maskottchen: große Figtree-Zahlen, Flamme, echte Cover und Source Serif 4 für Storytitel bilden die eigene Gestaltung.
 
 | Größe / Galerie-Name | Inhalt | Tap |
@@ -119,7 +121,7 @@ Das Target `LinglossaWidgetsExtension` wurde über Xcodes Oberfläche angelegt u
 
 `linglossa://…?homeWidget=1` wird ausschließlich über den Widget-Pluginpfad verarbeitet. Kalte und warme doppelte Callbacks werden entdoppelt. Ein Story-Tap wartet auf Sprache, Bibliothek und Kaufstatus; bei falscher Sprache, fehlendem Inhalt oder gesperrtem Zugang landet er auf Home. Eigene Importe sind kein Widget-Ziel. Die neue Abhängigkeit ist `home_widget 0.10.0`.
 
-Dateien: `ios/LinglossaWidgets/{LinglossaWidgets,WidgetSnapshot,WidgetViews}.swift`, zugehörige Plists/Entitlements/Fonts/Assets, Xcode-Projekt, Runner-Info/Entitlements und `ios/Flutter/Widget.xcconfig`; `lib/domain/widget_snapshot.dart`, `widget_launch_intent.dart`, `app_launch_intent.dart`; `lib/data/widgets/`; `lib/presentation/widgets/widget_snapshot_service.dart`, `P/widget_provider.dart`; App-Wurzel und Shell; drei neue Widget-Darttests und vier zusätzliche Story-Zielfälle im vorhandenen `app_launch_intent_test.dart`. Dessen bisherige Assertions bleiben erhalten. Swift-Modeltests liegen in `ios/WidgetTests/`, ihr isoliertes Package in `ios/Package.swift`. Reproduzierbares natives Rendering: `tool/widget_qa/`.
+Dateien: `ios/LinglossaWidgets/{LinglossaWidgets,WidgetSnapshot,WidgetViews}.swift`, zugehörige Plists/Entitlements/Fonts/Assets, Xcode-Projekt, Runner-Info/Entitlements und `ios/Flutter/Widget.xcconfig`; `lib/domain/widget_snapshot.dart`, `widget_launch_intent.dart`, `app_launch_intent.dart`; `lib/data/widgets/`; `lib/presentation/widgets/widget_snapshot_service.dart`, `lib/presentation/providers/widget_provider.dart`; App-Wurzel und Shell; drei neue Widget-Darttests und vier zusätzliche Story-Zielfälle im vorhandenen `app_launch_intent_test.dart`. Dessen bisherige Assertions bleiben erhalten. Swift-Modeltests liegen in `ios/WidgetTests/`, ihr isoliertes Package in `ios/Package.swift`. Reproduzierbares natives Rendering: `tool/widget_qa/`.
 
 ### Screenshots
 
@@ -158,6 +160,99 @@ Xcode build done.                                           95,9s
 
 Damit kommen gegenüber Teil 3 insgesamt 24 Flutter-Tests und zusätzlich 14 native Swift-Modeltests hinzu. Der finale GitNexus-Check ist ausdrücklich an den aktuellen Checkout-Pfad gebunden: 175 geänderte Symbole in 97 Dateien, LOW, `partial=false`, `truncated=false`. Es wurden keine zusätzlichen indexierten Prozesse zugeordnet; das ist keine Aussage über fehlende Laufzeitabhängigkeiten der Flutter/Swift-Brücke. Deren Snapshot-Vertrag, Timeline, Navigation, Bundle und Konto-/Speicherwechsel sind separat geprüft. Die vorangehende Lesestand-Auswirkungsanalyse war MEDIUM (Home, Reader, Sync, Onboarding und Widget als Verbraucher); der dynamische Notifier-Build war UNKNOWN und wurde zusätzlich über die Registrierung und konkrete Regressionstests geprüft.
 
-## Noch offen
+## Teil 5 – Barrierefreiheit
 
-Barrierefreiheit und Geräteinstallation folgen im letzten Teil.
+Das Audit wurde vor den UI-Änderungen auf sechs echten Screens, jeweils hell/dunkel und bei TextScaler 1.0/2.0, mit den tatsächlichen Figtree-/Source-Serif-4-Schriften durchgeführt. Alle 24 Ausgangsvarianten blieben ohne Overflow. Vier der 84 diagnostischen Guideline-Auswertungen meldeten Verstöße: Übungs-Tippflächen in beiden Motiven sowie heller Wortlistenkontrast bei beiden Schriftgrößen. Zusätzliche Quelltext-/Farbprüfungen fanden kleine weiße Labels auf zu hellem Orange und übergangene Reduced-Motion-Einstellungen. Der diagnostische Vorher-Lauf war ausdrücklich keine bestandene Accessibility-Abnahme.
+
+| Bildschirm | Problem vor dem Fix | Fix / Nachweis |
+| --- | --- | --- |
+| Home | Schwaches Orange für kleine hervorgehobene Texte; kleine weiße Popover-Labels nur 3,29:1; einzelne feste Übergänge | Getrennter Textakzent, dunklerer Popover-Ton, deckende weiße Labels, Reduced Motion; Vorher/Nachher plus Screen- und Farbtests |
+| Übung | Wörter und Eingabe bei normaler Schrift nur 36 pt hoch; gedimmter Fokus zu schwach; im geöffneten Popover unbeschrifteter Schließbereich | Echte 44-pt-Flächen, stärkere Fokus-/Hinweisfarben und „Übersetzung schließen“; tatsächliche Taps außerhalb der Glyphen und Ghost-/Baseline-Tests |
+| Reader | Übersetzungshinweis und kleine Chrome-Übergänge animieren trotz Reduced Motion | Sofortiger Endzustand, Screen-/Interaktionstest; vorhandene Wort-Link-Semantik bleibt erhalten |
+| Wortliste | Orange Übersetzung im hellen Motiv nur 2,63:1; Filterzähler transparent weiß | Lesbarer Textakzent, deckender Zähler, kontrastreicher Filterhintergrund, reduzierte Übergänge |
+| Einstellungen | Einzelne Opacity-/Farbwechsel ignorieren Reduced Motion | Dauer null bei reduzierter Bewegung; gefüllte Erinnerungseinstellungen in der Screen-Matrix |
+| Paywall | Echte Aktionen auf 1,3× begrenzt; Route, Planwechsel und Pressable animieren; Tarifbadge zu schwach | Volle Schriftgröße, angepasste Übergänge und Badge-Kontrast; Trial-/Nicht-Trial-Fälle bei 2× |
+| Ergänzend: Story-Shelf / Start | Feste Shelf-Höhe mit langen Titeln und Fortschritt; zusätzlich 0,4 px Rundungsüberlauf bei 2×; dekorative Cover-/Markentexte nicht eigenständig ausgeschlossen | Skalierende, auf ganze Pixel aufgerundete Shelf-Höhe, dekorative Semantik ausschließen; lange Titel und einmalige Statusansage prüfen |
+
+Der Übungssatz skaliert bereits genau einmal: seine äußere RichText-Fläche berechnet die Schriftgröße explizit, während die inneren Text-/Eingabewidgets den System-Scaler erben. Das äußere `noScaling` verhindert doppelte Skalierung. Es wird deshalb nicht blind entfernt; die tatsächliche 2×-Größe wird geprüft. Auch `TypeCover.noScaling` betrifft ausschließlich eine dekorative Textur, die künftig selbst `ExcludeSemantics` besitzt. Die lesbaren Storytitel skalieren regulär. Onboarding-/Start-Logos dürfen begrenzt bleiben, echte Aktionen und Statusinformationen nicht.
+
+Auswirkungen vor dem Eingriff: zentrale Palette und Paywall CRITICAL, Einstellungen HIGH, Pressable/GlowButton MEDIUM. Die wesentlichen Verbraucher sind Home, Übung, Reader, Wortliste, Onboarding und Einstellungen. Vorhandene Benachrichtigungs-/Kaufabläufe bleiben Bestandteil der Regressionstests. [Detailaudit mit Vorher/Nachher](store-readiness-accessibility.md).
+
+Die neue Testmatrix umfasst sechs Screens × zwei Motive × zwei Schriftgrößen sowie zwei Paywall-Fälle ohne Trial bei 2×: 26 Fälle. Alle drei Guidelines (`iOSTapTargetGuideline`, `labeledTapTargetGuideline`, `textContrastGuideline`) werden streng geprüft, auch in weiteren vertikalen Viewports und nach relevanten Popover-/Eingabeaktionen. 19 gezielte Regressionen ergänzen tatsächliche Textgrößen, Taps außerhalb der Glyphen, lange Wörter/Titel, Ghost-/Caret-Ausrichtung, Farbpaare, dekorative Semantik und reduzierte Bewegung. Acht lokale OFL-Fontdateien mit verifizierten SHA-256-Werten halten diese Prüfungen unabhängig vom Netzwerk. Es gibt keine neue globale Font-/Pubspec-Konfiguration.
+
+```text
+Accessibility: 00:03 +45: All tests passed!
+Bestehende UI-Regressionen: 00:10 +102: All tests passed!
+Golden-Vergleich: 00:01 +8: All tests passed!
+```
+
+Genau fünf Golden-Bilder wurden wegen beabsichtigter sichtbarer Änderungen aktualisiert: `home_light` (lesbarer Textakzent), `practice_light/dark` (echte 44-pt-Flächen und dadurch andere Zeilenhöhe), `word_list_light/dark` (Text-/Filterkontrast und deckende Zähler). `home_dark` und beide `story_reader`-Bilder sind bytegleich mit dem vorherigen Commit. Originale liegen unter `store-readiness/accessibility/goldens-before/`, dazu 20 echte Font-Renderings unter `before/after/`.
+
+Zwei bestehende Dart-Testdateien wurden in Teil 5 angepasst. In `test/goldens/core_screens_golden_test.dart` wird der Screen im Teardown vor dem Schließen des Test-Streams ausgehängt; so hängt ein fehlgeschlagener Bildvergleich nicht mehr beim Cleanup. Die acht Assertions und Plattformgrenzen bleiben gleich. In `test/deck_flow_test.dart` erwartet genau die Hinweis-Farbassertion nun `AppColors.textMuted` statt halbtransparentem Blau, entsprechend der beabsichtigten Kontrastkorrektur. Der erste Gesamtlauf deckte diese veraltete Erwartung auf; die 20 Übungsablauftests bestehen nach der Anpassung. Deren Lern-, Wiederholungs- und Speicherassertions bleiben unverändert; weitere Diffzeilen stammen ausschließlich von der angeforderten Formatierung. Die neuen Tests wurden während ihrer Entwicklung an tatsächlich gemessene Transform-/Semantikwerte angepasst; keine Guideline wurde deaktiviert oder abgeschwächt.
+
+Die Ahem-Goldens besitzen eine dokumentierte Grenze: Größere Übungs-Wortflächen machen im Testbild zusätzlich den schon vorhandenen Footer sichtbar. Ein isolierter Lauf nur mit der alten `PracticeSentence` bestand beide alten Goldens; mit echten Fonts war der komplette untere Bereich vor/nachher pixelgleich. Es wurde weder Footer-Produktlogik geändert noch eine neue Zeile eingeführt. Die sichtbaren echten Änderungen liegen in der Wortzeile und der nachfolgenden Karte.
+
+Geänderte UI-Dateien: `app_theme.dart`, `deck_practice_screen.dart`, `practice_sentence.dart`, `story_carousel.dart`, `streak_strip.dart`, `paywall_screen.dart`, `onboarding_motion.dart`, `settings_screen.dart`, `story_reader_screen.dart`, `word_list_screen.dart`, `word_list_item.dart`, `launch_splash.dart`, `popover_content.dart`. Aktuelle Designdokumente nennen die neuen Rollen/Farbwerte. Neue Tests liegen in `test/accessibility/`, ihr Fonthelper in `test/fixtures/accessibility_fonts.dart`. Der vollständige Dateinachweis ist zusätzlich über den jeweiligen Commit verfügbar.
+
+Abschließende vollständige Prüfung nach der Hinweis-Farbassertion:
+
+```text
+No issues found! (ran in 5.7s)
+01:32 +1275 ~9: All tests passed!
+Formatted 21 files (0 changed) in 0.14 seconds.
+```
+
+Die vollständige Suite enthält damit 129 zusätzliche bestandene Tests gegenüber dem Ausgangsstand; die neun bereits im Ausgangsstand ausgeschlossenen Tests bleiben unverändert. Die acht macOS-Goldens wurden tatsächlich ausgeführt. Der bekannte 20-ms-Purchase-Test schlug in diesen finalen Läufen nicht fehl. Der finale, frisch indizierte Änderungscheck erfasst 42 Symbole in 86 Dateien, 77 betroffene indexierte Prozesse, CRITICAL, `partial=false`, `truncated=false`. Die große Reichweite der Palette ist ausdrücklich keine niedrige Risikoeinstufung; die vollständige Suite und gezielten Screen-/Interaktionsprüfungen belegen den getesteten Umfang. Der bearbeitete Test-main in `deck_flow_test.dart` war als Framework-Einstieg UNKNOWN; Registrierung und Textverwendungen wurden zusätzlich geprüft.
+
+## Neue Abhängigkeiten
+
+| Bereich | Direkte neue Abhängigkeit |
+| --- | --- |
+| Deutsche Systemtexte | `flutter_localizations` aus dem Flutter-SDK |
+| Systembewertung | `in_app_review 2.0.12` |
+| Lokale Erinnerungen | `flutter_local_notifications 23.0.2`, `flutter_timezone 5.1.1`, `timezone 0.11.2` |
+| iOS-Widget-Brücke | `home_widget 0.10.0` |
+
+Die Accessibility-Fonts sind reine Testfixtures unter OFL. Die vier nativen Widget-Fonts sind ebenfalls mit ihrer OFL-Lizenz gebündelt. Es wurde keine weitere Laufzeitabhängigkeit für Barrierefreiheit ergänzt.
+
+## Handtest auf dem iPhone
+
+- [ ] In Einstellungen eine Lern-Erinnerung für wenige Minuten später aktivieren und Mitteilungen erlauben. App verlassen, Zustellung und Ton prüfen. Tap muss nach Bereitschaft die gemischte Übung öffnen. Nach erreichtem Tagesziel entfällt der heutige Termin. Aus-/Einschalten, Sprachwechsel und Logout/Kontowechsel prüfen. Bei verweigertem Recht den angebotenen Weg in die Systemeinstellungen prüfen.
+- [ ] Einen echten Sandbox-Gratis-Trial selbst starten. Erst nach sicher bestätigtem Trial fragen wir gegebenenfalls nach Mitteilungen; der Sandbox-Termin liegt 30 Sekunden vor dem bestätigten Ende. „Erinnerung“ erscheint nur bei erlaubten Mitteilungen und erfolgreich geplantem zukünftigen Termin. Kündigung/Umwandlung prüfen und danach die App wieder öffnen, damit sie den neuen Storestatus erhalten kann. Bereits verstrichene Termine erzeugen keine falsche Zusage.
+- [ ] Alle drei Widget-Größen hinzufügen: Streak, Diese Woche, Weiterlernen. Hell, dunkel, getönt und klar prüfen; offen/geschafft/0/abgemeldet vergleichen. Übungs-Tap, lesbare begonnene Story, kalten App-Start und Story-Fortsetzung am gespeicherten Lesestand prüfen. Bei gesperrter oder nicht mehr passender Story muss Home erscheinen. Nach Übung/Lesen, Sprachwechsel und Logout aktualisieren; um Mitternacht muss das Tagesziel zurücksetzen.
+- [ ] Nach etablierter Nutzung und einem erreichten Tagesziel bzw. Wochenstern die Bewertungsanfrage prüfen. Die App-Regeln verlangen eine frühere abgeschlossene Sitzung, mindestens drei aktive Tage und eingehaltene Zeitlimits. Der lokale Entwicklungsbuild kann bei einem zulässigen API-Aufruf den Testdialog zeigen; TestFlight zeigt ihn nicht. Das System kann produktive Anfragen unterdrücken.
+- [ ] VoiceOver einschalten: Home-Überschriften und Aktionen, Übungswörter/-eingabe, „Übersetzung schließen“ im Popover sowie Reader-Titel, Text und Bedienung prüfen. Dekorative Cover-/Markentexte sollen keine zusätzlichen Ansagen erzeugen; die Reihenfolge am echten Gerät beurteilen.
+- [ ] Größte iOS-Textgröße und „Bewegung reduzieren“ aktivieren. Home, Übung und Reader durchgehen, außerdem Einstellungen und Paywall öffnen. Wortflächen außerhalb der Glyphen, lange Storytitel, Eingabe-Caret und Wiederherstellen-Aktion prüfen. Danach gewünschte persönliche Systemeinstellungen wiederherstellen.
+
+## Grenzen und offene Geräteprüfungen
+
+Automatisierte Tests und native Simulator-Renderings ersetzen weder reale Mitteilungszustellung noch Live-VoiceOver. Getöntes/klares SpringBoard-Rendering, reale Widget-Taps/App-Group-Aktualisierungen, Store-Review-Anzeige und ein Sandbox-Kauf wurden noch nicht als erfolgreich auf dem Gerät bestätigt. Android wurde nicht auf einem Gerät gebaut oder durchlaufen. iPad war ausdrücklich nicht Teil des Auftrags. Fokusmodus, Nutzerrechte, WidgetKit-Refreshbudget und Storeentscheidung bleiben beim Betriebssystem; externe Trialänderungen werden von einer vollständig geschlossenen App erst beim nächsten Start/SDK-Update verarbeitet.
+
+Keine inhaltliche Produktentscheidung ist offen. Die genannten Handtests sind bewusst vom Kompilierungs-/Unit-Test-Nachweis getrennt. Es wurde kein Build hochgeladen und nichts in App Store Connect geändert.
+
+## Geräteinstallation – erfolgreich am 15. November 2026
+
+`flutter devices` hat das vorgesehene Gerät erneut gefunden: **iPhone von Claus (wireless), iOS 27.2.1**, ID `00008110-001651611E01401E`. Der erste Versuch am 13. November war wegen fehlender Xcode-Anmeldung und App-Group-Profile gescheitert. Am 15. November hat der Nutzer den Mac entsperrt und sich selbst in Xcode angemeldet. Anschließend zeigten Runner und Widget-Extension bei eingeschalteter automatischer Signierung ein Entwicklungszertifikat ohne Warnungen. Es wurden keine Passwörter oder Bestätigungscodes durch den Agenten eingegeben.
+
+Die lokale Konfigurationsprüfung und der unveränderte beauftragte Gerätebefehl waren erfolgreich:
+
+```text
+python3 tool/payment_build.py check
+Config valid. Status: build/payment/check-20261115T134101613346Z.json
+
+python3 tool/payment_build.py ios-profile --device 00008110-001651611E01401E
+Automatically signing iOS for device deployment using specified development team in Xcode project: W27Z6DNPT3
+Xcode build done.                                           257,5s
+Installing and launching...                                         8,9s
+Flutter run key commands.
+Application finished.
+Flutter exit code: 0. Status: build/payment/ios-profile-20261115T134754391360Z.json
+```
+
+Nach dem bestätigten Start wurde der Flutter-Prozess mit `d` getrennt. **Die neue Version ist auf dem iPhone installiert.** Der App-Code entspricht `32498df`; danach wurden ausschließlich dieser Bericht und der Installationsnachweis ergänzt. Host und eingebettete Extension bestehen `codesign --verify --deep --strict`. Beide signierten Entitlements und beide Provisioning-Profile enthalten `group.com.ardasayar.linglossa`, das vorhandene Team und das Ziel-iPhone. Beide Bundles melden Deutsch und dieselbe Version `1.0.0 (1)`. Der bereinigte Nachweis liegt unter [Geräteinstallation](store-readiness/device-install.txt); persönliche Kontodaten und temporäre VM-Service-Adressen wurden nicht übernommen.
+
+**Offene Laufzeitbeobachtung:** Beim Start erschienen 30 Impeller-Diagnosen zu `Contents::SetInheritedOpacity`/`CanAcceptOpacity`. Im aufgezeichneten Startfenster gab es keine ungefangene Dart-Exception und keine Flutter-Framework-Exception; Installation und Start waren erfolgreich. Daraus folgt jedoch weder, dass die Renderer-Meldung harmlos ist, noch dass die Darstellung auf dem Gerät vollständig geprüft wurde. Dieselbe Meldung wurde bereits im [Flutter-Issue #166830](https://github.com/flutter/flutter/issues/166830) berichtet; es wurde mangels Reproduktion geschlossen und liefert keinen belegten Fix für diesen Build. Sichtbare Auswirkungen und die Ursache sind noch nicht geklärt. Bei den Handtests besonders Startanimationen und Transparenzdarstellung prüfen. Es wurde weder der Renderer abgeschaltet noch das Flutter-SDK ungeprüft aktualisiert.
+
+Benachrichtigungszustellung, Sandbox-Kauf, Widget-Taps und Live-VoiceOver bleiben die oben ausdrücklich genannten Handtests. Es wurde kein Build hochgeladen und nichts in App Store Connect geändert. Die Anmeldung löste die bereits erlaubte automatische Signierung mit dem bestehenden Team; eine manuelle Änderung im Apple-Developer-Portal war nicht nötig.
+
+Der abschließende GitNexus-Check der Berichtsergänzung meldet CRITICAL für den Markdown-Abschnitt „App-Store-Vorbereitung“ mit verknüpften Prozessen. Der Git-Diff bestätigt ausschließlich Dokumentation und den bereinigten Installationsnachweis; kein Dart-, Swift-, Android- oder Xcode-Konfigurationscode wurde seit den erfolgreichen Prüfungen verändert. Die volle Testsuite wurde deshalb nicht ohne Codeänderung wiederholt.

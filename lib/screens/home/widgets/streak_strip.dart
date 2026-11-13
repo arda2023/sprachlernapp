@@ -187,9 +187,7 @@ class _StreakStripState extends ConsumerState<StreakStrip>
           popover: widget.calendar,
           builder: (context, open, show) {
             const white = Color(0xFFFFFFFF);
-            final text = base.copyWith(
-              color: open ? white.withValues(alpha: 0.9) : null,
-            );
+            final text = base.copyWith(color: open ? white : null);
             return MergeSemantics(
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
@@ -199,7 +197,9 @@ class _StreakStripState extends ConsumerState<StreakStrip>
                   label: _semantics,
                   excludeSemantics: true,
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 160),
+                    duration: MediaQuery.disableAnimationsOf(context)
+                        ? Duration.zero
+                        : const Duration(milliseconds: 160),
                     padding: const EdgeInsets.fromLTRB(16, 18, 16, 14),
                     decoration: BoxDecoration(
                       color: open ? colors.popover : colors.raisedInk,
@@ -230,7 +230,9 @@ class _StreakStripState extends ConsumerState<StreakStrip>
                                   text: part,
                                   style: strong
                                       ? text.copyWith(
-                                          color: open ? white : colors.active,
+                                          color: open
+                                              ? white
+                                              : colors.accentText,
                                           fontWeight: FontWeight.w800,
                                         )
                                       : null,

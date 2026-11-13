@@ -1,0 +1,36 @@
+Installation verified on 2026-11-15 (Europe/Berlin)
+Code commit: 32498df1c545cd2d84fd7ca114153bf7ae4f2dd1
+
+flutter devices
+iPhone von Claus (wireless) | 00008110-001651611E01401E | iOS 27.2.1
+
+python3 tool/payment_build.py check
+Config valid. Status: build/payment/check-20261115T134101613346Z.json
+
+python3 tool/payment_build.py ios-profile --device 00008110-001651611E01401E
+Automatically signing iOS for device deployment using specified development team in Xcode project: W27Z6DNPT3
+Xcode build done.                                           257,5s
+Installing and launching...                                         8,9s
+Flutter run key commands.
+Application finished.
+Flutter exit code: 0. Status: build/payment/ios-profile-20261115T134754391360Z.json
+
+Flutter detached with d after the run commands were shown.
+
+com.ardasayar.linglossa
+codesign --verify --deep --strict: valid
+Signed entitlements and provisioning profile: group.com.ardasayar.linglossa
+Provisioning profile matches W27Z6DNPT3 and the target iPhone.
+Version: 1.0.0 (1); localizations: de
+
+com.ardasayar.linglossa.LinglossaWidgets
+codesign --verify --deep --strict: valid
+Signed entitlements and provisioning profile: group.com.ardasayar.linglossa
+Provisioning profile matches W27Z6DNPT3 and the target iPhone.
+Version: 1.0.0 (1); localizations: de
+
+Observed Impeller opacity diagnostics: 30
+Unhandled Dart exception markers: 0
+Flutter framework exception markers: 0
+Rendering cause and visual impact remain unverified; see report.
+No TestFlight/App Store upload performed.

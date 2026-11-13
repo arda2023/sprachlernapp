@@ -1,0 +1,90 @@
+[
+  {
+    "file": "Figtree-Regular.ttf",
+    "family": "Figtree",
+    "weight": 400,
+    "sha256": "8423cfaccddf9a150fd350b6a4361dea3e902c1311def1c7d15214912810a6e3",
+    "bytes": 35952,
+    "source_url": "https://fonts.gstatic.com/s/a/8423cfaccddf9a150fd350b6a4361dea3e902c1311def1c7d15214912810a6e3.ttf",
+    "descriptor_source": "google_fonts 9.0.0/lib/src/google_fonts_parts/part_f.dart",
+    "license": "SIL Open Font License 1.1",
+    "license_source": "https://raw.githubusercontent.com/google/fonts/main/ofl/figtree/OFL.txt"
+  },
+  {
+    "file": "Figtree-Medium.ttf",
+    "family": "Figtree",
+    "weight": 500,
+    "sha256": "8c9862af17c0db8ae2183a3aecf89da684b88a63821c965ef346a54a967715a8",
+    "bytes": 35972,
+    "source_url": "https://fonts.gstatic.com/s/a/8c9862af17c0db8ae2183a3aecf89da684b88a63821c965ef346a54a967715a8.ttf",
+    "descriptor_source": "google_fonts 9.0.0/lib/src/google_fonts_parts/part_f.dart",
+    "license": "SIL Open Font License 1.1",
+    "license_source": "https://raw.githubusercontent.com/google/fonts/main/ofl/figtree/OFL.txt"
+  },
+  {
+    "file": "Figtree-SemiBold.ttf",
+    "family": "Figtree",
+    "weight": 600,
+    "sha256": "7a1bba78348bd3080acd2a7c3c2939a4c02950643ec1bdc256576862399a4438",
+    "bytes": 36192,
+    "source_url": "https://fonts.gstatic.com/s/a/7a1bba78348bd3080acd2a7c3c2939a4c02950643ec1bdc256576862399a4438.ttf",
+    "descriptor_source": "google_fonts 9.0.0/lib/src/google_fonts_parts/part_f.dart",
+    "license": "SIL Open Font License 1.1",
+    "license_source": "https://raw.githubusercontent.com/google/fonts/main/ofl/figtree/OFL.txt"
+  },
+  {
+    "file": "Figtree-Bold.ttf",
+    "family": "Figtree",
+    "weight": 700,
+    "sha256": "e18bc3968e0c25eb4925188cfa3447ccd50be785f2dc014323aaf36b4cb2bd1d",
+    "bytes": 36140,
+    "source_url": "https://fonts.gstatic.com/s/a/e18bc3968e0c25eb4925188cfa3447ccd50be785f2dc014323aaf36b4cb2bd1d.ttf",
+    "descriptor_source": "google_fonts 9.0.0/lib/src/google_fonts_parts/part_f.dart",
+    "license": "SIL Open Font License 1.1",
+    "license_source": "https://raw.githubusercontent.com/google/fonts/main/ofl/figtree/OFL.txt"
+  },
+  {
+    "file": "Figtree-ExtraBold.ttf",
+    "family": "Figtree",
+    "weight": 800,
+    "sha256": "d224449eee8431551400855e096615968293207ed35834bc188ee708edda82f5",
+    "bytes": 36212,
+    "source_url": "https://fonts.gstatic.com/s/a/d224449eee8431551400855e096615968293207ed35834bc188ee708edda82f5.ttf",
+    "descriptor_source": "google_fonts 9.0.0/lib/src/google_fonts_parts/part_f.dart",
+    "license": "SIL Open Font License 1.1",
+    "license_source": "https://raw.githubusercontent.com/google/fonts/main/ofl/figtree/OFL.txt"
+  },
+  {
+    "file": "SourceSerif4-Regular.ttf",
+    "family": "SourceSerif4",
+    "weight": 400,
+    "sha256": "444d1df62a9693f8ff54dcb9fca4da2d4da7ccbce5c39c91644d0d983cf4cd0d",
+    "bytes": 194440,
+    "source_url": "https://fonts.gstatic.com/s/a/444d1df62a9693f8ff54dcb9fca4da2d4da7ccbce5c39c91644d0d983cf4cd0d.ttf",
+    "descriptor_source": "google_fonts 9.0.0/lib/src/google_fonts_parts/part_s.dart",
+    "license": "SIL Open Font License 1.1",
+    "license_source": "https://raw.githubusercontent.com/google/fonts/main/ofl/sourceserif4/OFL.txt"
+  },
+  {
+    "file": "SourceSerif4-SemiBold.ttf",
+    "family": "SourceSerif4",
+    "weight": 600,
+    "sha256": "532158a64c3ff8cf4c71ea05ac5bdd9d3a067287061634f513aab275af942db1",
+    "bytes": 194776,
+    "source_url": "https://fonts.gstatic.com/s/a/532158a64c3ff8cf4c71ea05ac5bdd9d3a067287061634f513aab275af942db1.ttf",
+    "descriptor_source": "google_fonts 9.0.0/lib/src/google_fonts_parts/part_s.dart",
+    "license": "SIL Open Font License 1.1",
+    "license_source": "https://raw.githubusercontent.com/google/fonts/main/ofl/sourceserif4/OFL.txt"
+  },
+  {
+    "file": "SourceSerif4-Bold.ttf",
+    "family": "SourceSerif4",
+    "weight": 700,
+    "sha256": "bb37bf8029423d8045d0f4d39730f68297ef7167d9510f0eca7d7c6c111bc40b",
+    "bytes": 194736,
+    "source_url": "https://fonts.gstatic.com/s/a/bb37bf8029423d8045d0f4d39730f68297ef7167d9510f0eca7d7c6c111bc40b.ttf",
+    "descriptor_source": "google_fonts 9.0.0/lib/src/google_fonts_parts/part_s.dart",
+    "license": "SIL Open Font License 1.1",
+    "license_source": "https://raw.githubusercontent.com/google/fonts/main/ofl/sourceserif4/OFL.txt"
+  }
+]

@@ -161,7 +161,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   child: ValueListenableBuilder<bool>(
                     valueListenable: _titleGone,
                     builder: (context, gone, _) => AnimatedOpacity(
-                      duration: const Duration(milliseconds: 180),
+                      duration: MediaQuery.disableAnimationsOf(context)
+                          ? Duration.zero
+                          : const Duration(milliseconds: 180),
                       opacity: gone ? 1 : 0,
                       child: ExcludeSemantics(
                         child: Text(
@@ -497,7 +499,9 @@ class _Row extends StatelessWidget {
         ? null
         : AnimatedContainer(
             key: valueKey,
-            duration: const Duration(milliseconds: 160),
+            duration: MediaQuery.disableAnimationsOf(context)
+                ? Duration.zero
+                : const Duration(milliseconds: 160),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             // Pulls the pill's inset back so a stacked value keeps the
             // title's edge.
@@ -722,7 +726,9 @@ class _MotifTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.appColors;
     final preview = AnimatedContainer(
-      duration: const Duration(milliseconds: 180),
+      duration: MediaQuery.disableAnimationsOf(context)
+          ? Duration.zero
+          : const Duration(milliseconds: 180),
       padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
         // State ring only: the chosen motif.

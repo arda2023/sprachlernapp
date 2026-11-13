@@ -1,4 +1,5 @@
 import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
+
 import 'dart:async';
 import 'dart:io';
 
@@ -80,49 +81,60 @@ void main() {
   InputDecoration gap(WidgetTester tester) =>
       tester.widget<TextField>(find.byType(TextField)).decoration!;
 
-  testWidgets('Library → details → repository sentence → completion → progress', (
-    tester,
-  ) async {
-    await tester.pumpWidget(testScope(const SprachApp(), user: user));
-    await tester.pumpAndSettle();
-    await tester.scrollUntilVisible(
-      find.text('Mehr ansehen'),
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await tester.tap(find.text('Mehr ansehen'));
-    await tester.pumpAndSettle();
-    expect(find.byType(DeckLibraryScreen), findsOneWidget);
-    expect(find.text('1 aktiv · 1 Stapel'), findsNothing);
-    await tester.tap(find.text('Allgemeine Sprache'));
-    await tester.pumpAndSettle();
-    expect(find.byType(DeckDetailsScreen), findsOneWidget);
-    expect(
-      find.bySemanticsLabel('0 von 5 Übungen gesehen, 0 Übungen gemeistert'),
-      findsOneWidget,
-    );
-    await tester.tap(find.text('Mit diesem Stapel üben'));
-    await tester.pumpAndSettle();
-    expect(find.text('Es dauert ungefähr eine Stunde.'), findsOneWidget);
-    expect(find.text('Adverb'), findsOneWidget);
-    expect(find.text('Neues Wort'), findsOneWidget);
-    // Mixed source order; goes and went share one lemma per session.
-    for (final form in ['about', 'goes', 'a', 'walks']) {
-      await answer(tester, form);
-      await next(tester);
-    }
-    expect(find.byType(PracticeCompletionScreen), findsOneWidget);
-    expect(tester.widget<PracticeCompletionScreen>(find.byType(PracticeCompletionScreen)).words, hasLength(4));
-    expect(user.records.values.every((record) => record.firstAttemptCorrect), isTrue);
-    expect(user.records, hasLength(4));
-    expect(user.states.values.map((s) => s.box), everyElement(3));
-    await tester.tap(find.text('Weiter'));
-    await tester.pumpAndSettle();
-    expect(
-      find.bySemanticsLabel('4 von 5 Übungen gesehen, 0 Übungen gemeistert'),
-      findsOneWidget,
-    );
-  });
+  testWidgets(
+    'Library → details → repository sentence → completion → progress',
+    (tester) async {
+      await tester.pumpWidget(testScope(const SprachApp(), user: user));
+      await tester.pumpAndSettle();
+      await tester.scrollUntilVisible(
+        find.text('Mehr ansehen'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.tap(find.text('Mehr ansehen'));
+      await tester.pumpAndSettle();
+      expect(find.byType(DeckLibraryScreen), findsOneWidget);
+      expect(find.text('1 aktiv · 1 Stapel'), findsNothing);
+      await tester.tap(find.text('Allgemeine Sprache'));
+      await tester.pumpAndSettle();
+      expect(find.byType(DeckDetailsScreen), findsOneWidget);
+      expect(
+        find.bySemanticsLabel('0 von 5 Übungen gesehen, 0 Übungen gemeistert'),
+        findsOneWidget,
+      );
+      await tester.tap(find.text('Mit diesem Stapel üben'));
+      await tester.pumpAndSettle();
+      expect(find.text('Es dauert ungefähr eine Stunde.'), findsOneWidget);
+      expect(find.text('Adverb'), findsOneWidget);
+      expect(find.text('Neues Wort'), findsOneWidget);
+      // Mixed source order; goes and went share one lemma per session.
+      for (final form in ['about', 'goes', 'a', 'walks']) {
+        await answer(tester, form);
+        await next(tester);
+      }
+      expect(find.byType(PracticeCompletionScreen), findsOneWidget);
+      expect(
+        tester
+            .widget<PracticeCompletionScreen>(
+              find.byType(PracticeCompletionScreen),
+            )
+            .words,
+        hasLength(4),
+      );
+      expect(
+        user.records.values.every((record) => record.firstAttemptCorrect),
+        isTrue,
+      );
+      expect(user.records, hasLength(4));
+      expect(user.states.values.map((s) => s.box), everyElement(3));
+      await tester.tap(find.text('Weiter'));
+      await tester.pumpAndSettle();
+      expect(
+        find.bySemanticsLabel('4 von 5 Übungen gesehen, 0 Übungen gemeistert'),
+        findsOneWidget,
+      );
+    },
+  );
 
   testWidgets(
     'Wrong feedback persists; wrong form and typo keep text; exact saves once',
@@ -235,10 +247,7 @@ void main() {
         await tester.tap(find.text('Wort erfahren'));
         await tester.pump();
         expect(gap(tester).hintText, 'walks');
-        expect(
-          gap(tester).hintStyle!.color,
-          AppColors.memoryLevel2.withValues(alpha: 0.5),
-        );
+        expect(gap(tester).hintStyle!.color, AppColors.textMuted);
       }
       await answer(tester, 'walks');
       final record = user.records.values.single;
@@ -368,7 +377,10 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
-      await practice(tester, content: _TargetContent(const ['deck-0/0', 'deck-0/1']));
+      await practice(
+        tester,
+        content: _TargetContent(const ['deck-0/0', 'deck-0/1']),
+      );
       expect(
         tester.widget<TextField>(find.byType(TextField)).textAlign,
         TextAlign.center,
@@ -490,7 +502,7 @@ void main() {
         final repo = DriftUserRepository(UserDatabase.file(file), lang: 'en');
         final container = ProviderContainer(
           overrides: [
-        premiumContentAccessProvider.overrideWithValue(true),
+            premiumContentAccessProvider.overrideWithValue(true),
             contentRepositoryProvider.overrideWith((ref) => _TargetContent()),
             userRepositoryProvider.overrideWith((ref) => repo),
             clockProvider.overrideWithValue(() => testNow),

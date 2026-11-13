@@ -158,8 +158,10 @@ class _PressableState extends State<Pressable> {
             minHeight: widget.minSize.height,
           ),
           child: AnimatedScale(
-            scale: _down ? 0.97 : 1,
-            duration: const Duration(milliseconds: 120),
+            scale: _down && !MediaQuery.disableAnimationsOf(context) ? 0.97 : 1,
+            duration: MediaQuery.disableAnimationsOf(context)
+                ? Duration.zero
+                : const Duration(milliseconds: 120),
             curve: Curves.easeOut,
             child: widget.child,
           ),
@@ -188,10 +190,14 @@ class GlowButton extends StatelessWidget {
       haptic: Haptic.primary,
       minSize: const Size(44, 56),
       child: AnimatedOpacity(
-        duration: const Duration(milliseconds: 200),
+        duration: MediaQuery.disableAnimationsOf(context)
+            ? Duration.zero
+            : const Duration(milliseconds: 200),
         opacity: enabled ? 1 : 0.4,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+          duration: MediaQuery.disableAnimationsOf(context)
+              ? Duration.zero
+              : const Duration(milliseconds: 200),
           constraints: const BoxConstraints(minHeight: 56),
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
@@ -208,7 +214,9 @@ class GlowButton extends StatelessWidget {
             ],
           ),
           child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 200),
+            duration: MediaQuery.disableAnimationsOf(context)
+                ? Duration.zero
+                : const Duration(milliseconds: 200),
             child: Text(
               label,
               key: ValueKey(label),

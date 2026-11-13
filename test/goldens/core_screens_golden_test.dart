@@ -61,7 +61,11 @@ void main() {
         // The practice card must be new, so that fixture starts without
         // learning states; the other screens show the seeded library.
         final user = TestUser(library: name != 'practice');
-        addTearDown(user.close);
+        addTearDown(() async {
+          // Detach active stream listeners even when a golden comparison fails.
+          await tester.pumpWidget(const SizedBox.shrink());
+          await user.close();
+        });
         await tester.pumpWidget(
           // testScope fixes the clock (clockProvider) at testNow.
           testScope(

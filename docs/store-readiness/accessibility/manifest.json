@@ -1,0 +1,183 @@
+{
+  "before_commit": "c97a1f3",
+  "integration_base": "12d1f1b",
+  "viewport_points": [
+    390,
+    844
+  ],
+  "screenshot_pixels": [
+    780,
+    1688
+  ],
+  "content": "synthetic existing test fixtures",
+  "fonts": "test/fixtures/fonts/manifest.json",
+  "artifacts": [
+    {
+      "path": "before/home_dark.png",
+      "bytes": 309041,
+      "sha256": "2e99d75b4726a77b4e950c48d7d2cc36618c9eca7712c2bf80f70d84d90fec87"
+    },
+    {
+      "path": "before/home_dark_popover.png",
+      "bytes": 267055,
+      "sha256": "e1e0ab098e9e1d6f1beb38dd163589465dbb260bcc43f8780b1e39b68d644b73"
+    },
+    {
+      "path": "before/home_light.png",
+      "bytes": 316201,
+      "sha256": "25be75d77c1539e4abcde4db3716fb970a6bdfe5cd245fafc26c2f5b34cf717e"
+    },
+    {
+      "path": "before/home_light_popover.png",
+      "bytes": 274076,
+      "sha256": "9dee9ec07ad5e7e067b2a9293ea404618e9c69285e82ec5fdf841ed5f8f5396f"
+    },
+    {
+      "path": "before/practice_dark.png",
+      "bytes": 62393,
+      "sha256": "3cfe14004b9e5770b9d3c3b0ba128fede8787c81f6a7b8d6e944607238933d25"
+    },
+    {
+      "path": "before/practice_dark_popover.png",
+      "bytes": 76102,
+      "sha256": "d7d877df9e0d864cb9fda6d6f60ebe8b7366fe9002f14d003b02e006be5c9759"
+    },
+    {
+      "path": "before/practice_light.png",
+      "bytes": 62154,
+      "sha256": "db21f36dd07ee5162483dc0b7d7f7cb968c3d96da247f10f7dcf26cd4e9df4fc"
+    },
+    {
+      "path": "before/practice_light_popover.png",
+      "bytes": 76296,
+      "sha256": "ff4f8503aa772174f11b2ee4fc51320764e2614273c3fdbfb51e639b298ab7fc"
+    },
+    {
+      "path": "before/word_list_dark.png",
+      "bytes": 105752,
+      "sha256": "d92cb61e8c8c965f96783324126fbe8397e09d4e874fb530c280682f650964e2"
+    },
+    {
+      "path": "before/word_list_light.png",
+      "bytes": 105759,
+      "sha256": "4f9cc811898dac6348d01c16a9a2e41413e8d9e1f715dcfa26146b46d99dba1e"
+    },
+    {
+      "path": "after/home_dark.png",
+      "bytes": 309041,
+      "sha256": "2e99d75b4726a77b4e950c48d7d2cc36618c9eca7712c2bf80f70d84d90fec87"
+    },
+    {
+      "path": "after/home_dark_popover.png",
+      "bytes": 267554,
+      "sha256": "490516b7afbc2e0cf7102cf04d554580e5178caa66c43025d537c2449ca317a5"
+    },
+    {
+      "path": "after/home_light.png",
+      "bytes": 316357,
+      "sha256": "f1862fddaaaef30d34ddf51dd8f30becdc128e778624288291ffd5538bf2e240"
+    },
+    {
+      "path": "after/home_light_popover.png",
+      "bytes": 274837,
+      "sha256": "c5fff88be4a7139b626cf5bf47b31fca9136af5e2fd30b88f0660dc44474399b"
+    },
+    {
+      "path": "after/practice_dark.png",
+      "bytes": 62486,
+      "sha256": "df412ddd0844db05c562bc1fa77dc2481a6c54a28db7e4ac26a4a51fb7630bcd"
+    },
+    {
+      "path": "after/practice_dark_popover.png",
+      "bytes": 76919,
+      "sha256": "3b10fe0405806364aa8e963479f16e58e53d9c65a081f05c234f996464d7b765"
+    },
+    {
+      "path": "after/practice_light.png",
+      "bytes": 62242,
+      "sha256": "13dd1634550f978083746ef1e160f923a85fb1da8d67a713d64f5787a54de51c"
+    },
+    {
+      "path": "after/practice_light_popover.png",
+      "bytes": 77081,
+      "sha256": "20a6570c2248a2758a620301cedcf66cde6aa50720e19a327351c25f1235d413"
+    },
+    {
+      "path": "after/word_list_dark.png",
+      "bytes": 105761,
+      "sha256": "d8359bc6a79eccfbbf162ffe491fc0f933d2c405daeefaa45ebdfde67c94f106"
+    },
+    {
+      "path": "after/word_list_light.png",
+      "bytes": 106132,
+      "sha256": "cb021298da8e1cebe1231788b291a655603a70df86435dec9d8ec4bb959f626b"
+    },
+    {
+      "path": "goldens-before/home_light.png",
+      "bytes": 67542,
+      "sha256": "d84eaf0749f91fb908f17b0f634df06091225284836c740aad0decc0d6559b42"
+    },
+    {
+      "path": "goldens-before/practice_dark.png",
+      "bytes": 9697,
+      "sha256": "0652c6fed593872ef37a38bfb55a25b289df922dab38cad7168d699fbd01515b"
+    },
+    {
+      "path": "goldens-before/practice_light.png",
+      "bytes": 9565,
+      "sha256": "aace267308be227d4f3a42deb7543a4005b005e939396c8e9244077acbad2eaa"
+    },
+    {
+      "path": "goldens-before/word_list_dark.png",
+      "bytes": 13722,
+      "sha256": "f60928b25288c0cfcd1420515d390c9cd1df31422ae9dd57d03a8354a093523f"
+    },
+    {
+      "path": "goldens-before/word_list_light.png",
+      "bytes": 13516,
+      "sha256": "045381e243a16219d15afb659f0b5b66a4c67def353b5bad9d2ca687dcf4c5b7"
+    },
+    {
+      "path": "goldens-after/home_light.png",
+      "bytes": 67549,
+      "sha256": "ba3ded03a05e28209e3fe67d709140b732aa231f13462ce27bea95a564446fcf"
+    },
+    {
+      "path": "goldens-after/practice_dark.png",
+      "bytes": 9699,
+      "sha256": "15f82d4e28890c59d4ec61fa9d4495d0ed3ab9c1ad1a8612e431433531405b23"
+    },
+    {
+      "path": "goldens-after/practice_light.png",
+      "bytes": 9566,
+      "sha256": "347e63fabf79cae14b80c1e1587cdbc746d70a53f605003058ae88fa176c1f5c"
+    },
+    {
+      "path": "goldens-after/word_list_dark.png",
+      "bytes": 13702,
+      "sha256": "6633510ad33ee01a0b1eff4157d3e94ed370e1df97a39e19926b329246a8da7f"
+    },
+    {
+      "path": "goldens-after/word_list_light.png",
+      "bytes": 13575,
+      "sha256": "c303234a0e1a36e8709835b35e77c1056b984c67e4714ac59b544934e65bcd54"
+    }
+  ],
+  "golden_control_files_unchanged": [
+    "home_dark.png",
+    "story_reader_dark.png",
+    "story_reader_light.png"
+  ],
+  "real_font_practice_footer_identical": {
+    "pixels_region": [
+      0,
+      1400,
+      780,
+      1688
+    ],
+    "motifs": [
+      "dark",
+      "light"
+    ]
+  }
+}

@@ -1,0 +1,209 @@
+00:00 +0: loading /tmp/sprachapp-accessibility-probe_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: home dark 1.0
+AUDIT home dark 1.0 overflow=none
+AUDIT home dark 1.0 MinimumTapTargetGuideline passed=true
+AUDIT home dark 1.0 LabeledTapTargetGuideline passed=true
+AUDIT home dark 1.0 MinimumTextContrastGuideline passed=true
+AUDIT home dark 1.0 story afterScroll overflow=none
+AUDIT home dark 1.0 story MinimumTapTargetGuideline passed=true
+AUDIT home dark 1.0 story LabeledTapTargetGuideline passed=true
+AUDIT home dark 1.0 story MinimumTextContrastGuideline passed=true
+00:01 +1: home dark 2.0
+AUDIT home dark 2.0 overflow=none
+AUDIT home dark 2.0 MinimumTapTargetGuideline passed=true
+AUDIT home dark 2.0 LabeledTapTargetGuideline passed=true
+AUDIT home dark 2.0 MinimumTextContrastGuideline passed=true
+AUDIT home dark 2.0 story afterScroll overflow=none
+AUDIT home dark 2.0 story MinimumTapTargetGuideline passed=true
+AUDIT home dark 2.0 story LabeledTapTargetGuideline passed=true
+AUDIT home dark 2.0 story MinimumTextContrastGuideline passed=true
+00:01 +2: home light 1.0
+AUDIT home light 1.0 overflow=none
+AUDIT home light 1.0 MinimumTapTargetGuideline passed=true
+AUDIT home light 1.0 LabeledTapTargetGuideline passed=true
+AUDIT home light 1.0 MinimumTextContrastGuideline passed=true
+AUDIT home light 1.0 story afterScroll overflow=none
+AUDIT home light 1.0 story MinimumTapTargetGuideline passed=true
+AUDIT home light 1.0 story LabeledTapTargetGuideline passed=true
+AUDIT home light 1.0 story MinimumTextContrastGuideline passed=true
+00:01 +3: home light 2.0
+AUDIT home light 2.0 overflow=none
+AUDIT home light 2.0 MinimumTapTargetGuideline passed=true
+AUDIT home light 2.0 LabeledTapTargetGuideline passed=true
+AUDIT home light 2.0 MinimumTextContrastGuideline passed=true
+AUDIT home light 2.0 story afterScroll overflow=none
+AUDIT home light 2.0 story MinimumTapTargetGuideline passed=true
+AUDIT home light 2.0 story LabeledTapTargetGuideline passed=true
+AUDIT home light 2.0 story MinimumTextContrastGuideline passed=true
+00:01 +4: practice dark 1.0
+AUDIT practice dark 1.0 overflow=none
+AUDIT practice dark 1.0 MinimumTapTargetGuideline passed=false SemanticsNode#11(Rect.fromLTRB(20.0, 56.0, 63.3, 92.0), tags: [PlaceholderSpanIndexSemanticsTag(0)], actions: [tap], flags: [isButton, hasSelectedState], label: "Mia, Übersetzung anzeigen", textDirection: ltr): expected tap target size of at least Size(44.0, 44.0), but found Size(43.3, 36.0)
+See also: https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/
+SemanticsNode#12(Rect.fromLTRB(69.0, 56.0, 133.0, 92.0), tags: [PlaceholderSpanIndexSemanticsTag(1)], actions: [focus, setSelection, setText, tap], flags: [isTextField, isFocused, hasEnabledState, isEnabled, isMultiline, isFocusable], textDirection: ltr, text selection: [0, 0], currentValueLength: 0, inputType: text): expected tap target size of at least Size(44.0, 44.0), but found Size(64.0, 36.0)
+See also: https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/
+SemanticsNode#13(Rect.fromLTRB(138.7, 56.0, 210.9, 92.0), tags: [PlaceholderSpanIndexSemanticsTag(2)], actions: [tap], flags: [isButton, hasSelectedState], label: "home., Übersetzung anzeigen", textDirection: ltr): expected tap target size of at least Size(44.0, 44.0), but found Size(72.2, 36.0)
+See also: https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/
+
+
+
+
+
+
+AUDIT practice dark 1.0 LabeledTapTargetGuideline passed=true
+AUDIT practice dark 1.0 MinimumTextContrastGuideline passed=true
+SCALE practice dark 1.0 paragraph=￼ ￼ ￼ scaler=no scaling box=Size(310.0, 36.0)
+SCALE practice dark 1.0 paragraph=Mia scaler=no scaling box=Size(43.3, 36.0)
+SCALE practice dark 1.0 paragraph=home scaler=no scaling box=Size(65.0, 36.0)
+SCALE practice dark 1.0 paragraph=. scaler=no scaling box=Size(7.2, 36.0)
+00:02 +5: practice dark 2.0
+AUDIT practice dark 2.0 overflow=none
+AUDIT practice dark 2.0 MinimumTapTargetGuideline passed=true
+AUDIT practice dark 2.0 LabeledTapTargetGuideline passed=true
+AUDIT practice dark 2.0 MinimumTextContrastGuideline passed=true
+SCALE practice dark 2.0 paragraph=￼ ￼ ￼ scaler=no scaling box=Size(310.0, 144.0)
+SCALE practice dark 2.0 paragraph=Mia scaler=linear (2.0x) box=Size(86.6, 72.0)
+SCALE practice dark 2.0 paragraph=home scaler=linear (2.0x) box=Size(130.0, 72.0)
+SCALE practice dark 2.0 paragraph=. scaler=linear (2.0x) box=Size(14.5, 72.0)
+00:02 +6: practice light 1.0
+AUDIT practice light 1.0 overflow=none
+AUDIT practice light 1.0 MinimumTapTargetGuideline passed=false SemanticsNode#11(Rect.fromLTRB(20.0, 56.0, 63.3, 92.0), tags: [PlaceholderSpanIndexSemanticsTag(0)], actions: [tap], flags: [isButton, hasSelectedState], label: "Mia, Übersetzung anzeigen", textDirection: ltr): expected tap target size of at least Size(44.0, 44.0), but found Size(43.3, 36.0)
+See also: https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/
+SemanticsNode#12(Rect.fromLTRB(69.0, 56.0, 133.0, 92.0), tags: [PlaceholderSpanIndexSemanticsTag(1)], actions: [focus, setSelection, setText, tap], flags: [isTextField, isFocused, hasEnabledState, isEnabled, isMultiline, isFocusable], textDirection: ltr, text selection: [0, 0], currentValueLength: 0, inputType: text): expected tap target size of at least Size(44.0, 44.0), but found Size(64.0, 36.0)
+See also: https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/
+SemanticsNode#13(Rect.fromLTRB(138.7, 56.0, 210.9, 92.0), tags: [PlaceholderSpanIndexSemanticsTag(2)], actions: [tap], flags: [isButton, hasSelectedState], label: "home., Übersetzung anzeigen", textDirection: ltr): expected tap target size of at least Size(44.0, 44.0), but found Size(72.2, 36.0)
+See also: https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/
+
+
+
+
+
+
+AUDIT practice light 1.0 LabeledTapTargetGuideline passed=true
+AUDIT practice light 1.0 MinimumTextContrastGuideline passed=true
+SCALE practice light 1.0 paragraph=￼ ￼ ￼ scaler=no scaling box=Size(310.0, 36.0)
+SCALE practice light 1.0 paragraph=Mia scaler=no scaling box=Size(43.3, 36.0)
+SCALE practice light 1.0 paragraph=home scaler=no scaling box=Size(65.0, 36.0)
+SCALE practice light 1.0 paragraph=. scaler=no scaling box=Size(7.2, 36.0)
+00:02 +7: practice light 2.0
+AUDIT practice light 2.0 overflow=none
+AUDIT practice light 2.0 MinimumTapTargetGuideline passed=true
+AUDIT practice light 2.0 LabeledTapTargetGuideline passed=true
+AUDIT practice light 2.0 MinimumTextContrastGuideline passed=true
+SCALE practice light 2.0 paragraph=￼ ￼ ￼ scaler=no scaling box=Size(310.0, 144.0)
+SCALE practice light 2.0 paragraph=Mia scaler=linear (2.0x) box=Size(86.6, 72.0)
+SCALE practice light 2.0 paragraph=home scaler=linear (2.0x) box=Size(130.0, 72.0)
+SCALE practice light 2.0 paragraph=. scaler=linear (2.0x) box=Size(14.5, 72.0)
+00:02 +8: reader dark 1.0
+AUDIT reader dark 1.0 overflow=none
+AUDIT reader dark 1.0 MinimumTapTargetGuideline passed=true
+AUDIT reader dark 1.0 LabeledTapTargetGuideline passed=true
+AUDIT reader dark 1.0 MinimumTextContrastGuideline passed=true
+00:02 +9: reader dark 2.0
+AUDIT reader dark 2.0 overflow=none
+AUDIT reader dark 2.0 MinimumTapTargetGuideline passed=true
+AUDIT reader dark 2.0 LabeledTapTargetGuideline passed=true
+AUDIT reader dark 2.0 MinimumTextContrastGuideline passed=true
+00:02 +10: reader light 1.0
+AUDIT reader light 1.0 overflow=none
+AUDIT reader light 1.0 MinimumTapTargetGuideline passed=true
+AUDIT reader light 1.0 LabeledTapTargetGuideline passed=true
+AUDIT reader light 1.0 MinimumTextContrastGuideline passed=true
+00:02 +11: reader light 2.0
+AUDIT reader light 2.0 overflow=none
+AUDIT reader light 2.0 MinimumTapTargetGuideline passed=true
+AUDIT reader light 2.0 LabeledTapTargetGuideline passed=true
+AUDIT reader light 2.0 MinimumTextContrastGuideline passed=true
+00:02 +12: word_list dark 1.0
+AUDIT word_list dark 1.0 overflow=none
+AUDIT word_list dark 1.0 MinimumTapTargetGuideline passed=true
+AUDIT word_list dark 1.0 LabeledTapTargetGuideline passed=true
+AUDIT word_list dark 1.0 MinimumTextContrastGuideline passed=true
+00:02 +13: word_list dark 2.0
+AUDIT word_list dark 2.0 overflow=none
+AUDIT word_list dark 2.0 MinimumTapTargetGuideline passed=true
+AUDIT word_list dark 2.0 LabeledTapTargetGuideline passed=true
+AUDIT word_list dark 2.0 MinimumTextContrastGuideline passed=true
+00:02 +14: word_list light 1.0
+AUDIT word_list light 1.0 overflow=none
+AUDIT word_list light 1.0 MinimumTapTargetGuideline passed=true
+AUDIT word_list light 1.0 LabeledTapTargetGuideline passed=true
+AUDIT word_list light 1.0 MinimumTextContrastGuideline passed=false SemanticsNode#31(Rect.fromLTRB(20.0, 0.0, 370.0, 187.0), tags: [RenderViewport.twoPane], label: "geht", textDirection: ltr, indexInParent: 0):
+Expected contrast ratio of at least 4.5 but found 2.63 for a font size of 15.0.
+The computed colors was:
+light - Color(alpha: 1.0000, red: 1.0000, green: 1.0000, blue: 1.0000, colorSpace: ColorSpace.sRGB), dark - Color(alpha: 1.0000, red: 0.9686, green: 0.4980, blue: 0.0000, colorSpace: ColorSpace.sRGB)
+See also: https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html
+
+
+SemanticsNode#37(Rect.fromLTRB(20.0, 187.0, 370.0, 374.0), tags: [RenderViewport.twoPane], label: "geht", textDirection: ltr, indexInParent: 1):
+Expected contrast ratio of at least 4.5 but found 2.63 for a font size of 15.0.
+The computed colors was:
+light - Color(alpha: 1.0000, red: 1.0000, green: 1.0000, blue: 1.0000, colorSpace: ColorSpace.sRGB), dark - Color(alpha: 1.0000, red: 0.9686, green: 0.4980, blue: 0.0000, colorSpace: ColorSpace.sRGB)
+See also: https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html
+
+SemanticsNode#43(Rect.fromLTRB(20.0, 374.0, 370.0, 561.0), tags: [RenderViewport.twoPane], label: "geht", textDirection: ltr, indexInParent: 2):
+Expected contrast ratio of at least 4.5 but found 2.63 for a font size of 15.0.
+The computed colors was:
+light - Color(alpha: 1.0000, red: 1.0000, green: 1.0000, blue: 1.0000, colorSpace: ColorSpace.sRGB), dark - Color(alpha: 1.0000, red: 0.9686, green: 0.4980, blue: 0.0000, colorSpace: ColorSpace.sRGB)
+See also: https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html
+
+
+00:02 +15: word_list light 2.0
+AUDIT word_list light 2.0 overflow=none
+AUDIT word_list light 2.0 MinimumTapTargetGuideline passed=true
+AUDIT word_list light 2.0 LabeledTapTargetGuideline passed=true
+AUDIT word_list light 2.0 MinimumTextContrastGuideline passed=false SemanticsNode#22(Rect.fromLTRB(20.0, 0.0, 370.0, 231.0), tags: [RenderViewport.twoPane], label: "geht", textDirection: ltr, indexInParent: 0):
+Expected contrast ratio of at least 4.5 but found 2.63 for a font size of 15.0.
+The computed colors was:
+light - Color(alpha: 1.0000, red: 1.0000, green: 1.0000, blue: 1.0000, colorSpace: ColorSpace.sRGB), dark - Color(alpha: 1.0000, red: 0.9686, green: 0.4980, blue: 0.0000, colorSpace: ColorSpace.sRGB)
+See also: https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html
+
+SemanticsNode#28(Rect.fromLTRB(20.0, 231.0, 370.0, 462.0), tags: [RenderViewport.twoPane], label: "geht", textDirection: ltr, indexInParent: 1):
+Expected contrast ratio of at least 4.5 but found 2.63 for a font size of 15.0.
+The computed colors was:
+light - Color(alpha: 1.0000, red: 1.0000, green: 1.0000, blue: 1.0000, colorSpace: ColorSpace.sRGB), dark - Color(alpha: 1.0000, red: 0.9686, green: 0.4980, blue: 0.0000, colorSpace: ColorSpace.sRGB)
+See also: https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html
+
+
+00:02 +16: settings dark 1.0
+AUDIT settings dark 1.0 overflow=none
+AUDIT settings dark 1.0 MinimumTapTargetGuideline passed=true
+AUDIT settings dark 1.0 LabeledTapTargetGuideline passed=true
+AUDIT settings dark 1.0 MinimumTextContrastGuideline passed=true
+00:03 +17: settings dark 2.0
+AUDIT settings dark 2.0 overflow=none
+AUDIT settings dark 2.0 MinimumTapTargetGuideline passed=true
+AUDIT settings dark 2.0 LabeledTapTargetGuideline passed=true
+AUDIT settings dark 2.0 MinimumTextContrastGuideline passed=true
+00:03 +18: settings light 1.0
+AUDIT settings light 1.0 overflow=none
+AUDIT settings light 1.0 MinimumTapTargetGuideline passed=true
+AUDIT settings light 1.0 LabeledTapTargetGuideline passed=true
+AUDIT settings light 1.0 MinimumTextContrastGuideline passed=true
+00:03 +19: settings light 2.0
+AUDIT settings light 2.0 overflow=none
+AUDIT settings light 2.0 MinimumTapTargetGuideline passed=true
+AUDIT settings light 2.0 LabeledTapTargetGuideline passed=true
+AUDIT settings light 2.0 MinimumTextContrastGuideline passed=true
+00:03 +20: paywall dark 1.0
+AUDIT paywall dark 1.0 overflow=none
+AUDIT paywall dark 1.0 MinimumTapTargetGuideline passed=true
+AUDIT paywall dark 1.0 LabeledTapTargetGuideline passed=true
+AUDIT paywall dark 1.0 MinimumTextContrastGuideline passed=true
+00:03 +21: paywall dark 2.0
+AUDIT paywall dark 2.0 overflow=none
+AUDIT paywall dark 2.0 MinimumTapTargetGuideline passed=true
+AUDIT paywall dark 2.0 LabeledTapTargetGuideline passed=true
+AUDIT paywall dark 2.0 MinimumTextContrastGuideline passed=true
+00:03 +22: paywall light 1.0
+AUDIT paywall light 1.0 overflow=none
+AUDIT paywall light 1.0 MinimumTapTargetGuideline passed=true
+AUDIT paywall light 1.0 LabeledTapTargetGuideline passed=true
+AUDIT paywall light 1.0 MinimumTextContrastGuideline passed=true
+00:03 +23: paywall light 2.0
+AUDIT paywall light 2.0 overflow=none
+AUDIT paywall light 2.0 MinimumTapTargetGuideline passed=true
+AUDIT paywall light 2.0 LabeledTapTargetGuideline passed=true
+AUDIT paywall light 2.0 MinimumTextContrastGuideline passed=true
+00:03 +24: (tearDownAll)
+00:03 +24: All tests passed!
