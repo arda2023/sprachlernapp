@@ -8,9 +8,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/streak.dart';
+import '../../domain/review_request.dart';
 import '../../models/home_models.dart';
 import '../../presentation/celebration_sounds.dart';
 import '../../presentation/providers/streak_providers.dart';
+import '../../presentation/providers/auth_providers.dart';
+import '../../presentation/providers/review_request_provider.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/action_buttons.dart';
 import '../../widgets/svg_glyph.dart';
@@ -30,11 +33,14 @@ class PracticeCompletionScreen extends ConsumerStatefulWidget {
     required this.streak,
     required this.goal,
     required this.words,
+    this.offerReview = false,
   });
 
   final StreakSummary streak;
   final DailyGoal goal;
   final List<CompletionWord> words;
+  // Only the real practice route opts in; previews never request reviews.
+  final bool offerReview;
 
   static Route<void> route({
     required StreakSummary streak,
@@ -42,7 +48,12 @@ class PracticeCompletionScreen extends ConsumerStatefulWidget {
     required List<CompletionWord> words,
   }) => CupertinoPageRoute<void>(
     builder: (_) => WebReadingViewport(
-      child: PracticeCompletionScreen(streak: streak, goal: goal, words: words),
+      child: PracticeCompletionScreen(
+        streak: streak,
+        goal: goal,
+        words: words,
+        offerReview: true,
+      ),
     ),
   );
 
@@ -111,12 +122,18 @@ class _PracticeCompletionScreenState
   bool _started = false;
   bool _done = false;
   Future<void>? _starFlip;
+  final _reviewSession = Object();
+  bool _reviewScheduled = false;
+  String? _reviewOwner;
 
   CelebrationSounds get _sounds => ref.read(celebrationSoundsProvider);
 
   @override
   void initState() {
     super.initState();
+    if (widget.offerReview) {
+      _reviewOwner = ref.read(contentAuthProvider).localOwner;
+    }
     _charge.addListener(_onCharge);
     WidgetsBinding.instance.addPostFrameCallback((_) => _measure());
   }
@@ -152,6 +169,7 @@ class _PracticeCompletionScreenState
     _barFull = true;
     _popped = _target;
     HapticFeedback.mediumImpact();
+    _scheduleReview();
   }
 
   Future<void> _run() async {
@@ -175,7 +193,39 @@ class _PracticeCompletionScreenState
     await _settle.forward();
     if (!mounted) return;
     await _content.forward();
-    if (mounted) setState(() => _done = true);
+    if (mounted) {
+      setState(() => _done = true);
+      _scheduleReview();
+    }
+  }
+
+  void _scheduleReview() {
+    if (!widget.offerReview || _reviewScheduled) return;
+    _reviewScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      unawaited(
+        ref
+            .read(reviewRequestServiceProvider)
+            .completeSession(
+              session: _reviewSession,
+              opportunity: ReviewOpportunity(
+                successful:
+                    widget.words.isNotEmpty && widget.streak.practicedToday,
+                activeLearningDays: widget.streak.activeDays.length,
+                goalReached: widget.goal.done >= widget.goal.target,
+                streakMilestone: widget.streak.starToday,
+              ),
+              isCurrent: () =>
+                  mounted &&
+                  ModalRoute.of(context)?.isCurrent != false &&
+                  (WidgetsBinding.instance.lifecycleState == null ||
+                      WidgetsBinding.instance.lifecycleState ==
+                          AppLifecycleState.resumed) &&
+                  ref.read(contentAuthProvider).localOwner == _reviewOwner,
+            ),
+      );
+    });
   }
 
   /// Checks pop as the pill passes them; the buzz and the charge sound stop
