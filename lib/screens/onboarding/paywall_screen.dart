@@ -7,7 +7,6 @@ import '../../data/billing/billing_sync_gateway.dart';
 import '../../data/billing/purchase_gateway.dart'
     show PurchasePlan, PurchaseProduct;
 import '../../presentation/onboarding_sounds.dart';
-import '../../presentation/providers/account_provider.dart';
 import '../../presentation/providers/purchase_provider.dart';
 import '../legal/legal_document.dart';
 import '../legal/legal_document_screen.dart';
@@ -18,6 +17,7 @@ import '../../widgets/date_format.dart';
 import '../../widgets/word_rain.dart';
 import 'widgets/account_sheet.dart';
 import 'widgets/onboarding_motion.dart';
+import '../../presentation/providers/auth_providers.dart';
 
 bool get _purchasesEnabled => legalStoreOperationsEnabled;
 

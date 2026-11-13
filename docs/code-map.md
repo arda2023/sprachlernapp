@@ -39,15 +39,15 @@ practiceResolverProvider + userRepositoryProvider → DeckSessionController
 
 | Provider/Symbol | Datei und Besonderheit |
 | --- | --- |
-| `accountSessionProvider` | `P/account_provider.dart`; Stream der initialisierten Kontoidentität. |
-| `contentAuthProvider` | `P/content_update_provider.dart`; gemeinsame Kontoauthentifizierung auch für Kauf, Übersetzung und Sync, trotz des Dateinamens. |
+| `accountSessionProvider` | `P/auth_providers.dart`; Stream der initialisierten Kontoidentität. |
+| `contentAuthProvider` | `P/auth_providers.dart`; gemeinsame Kontoauthentifizierung auch für Kauf, Übersetzung und Sync. |
 | `userDatabaseProvider` | `P/database_providers.dart`; wartet auf das Konto und least die Datenbank des lokalen Owners. |
 | `selectedContentLanguageProvider` | `P/database_providers.dart`; Sprache aus den Einstellungen dieser Datenbank. |
 | `contentInstallerProvider` | `P/database_providers.dart`; Installer je Sprache. |
 | `activeContentKeyProvider`, `contentRepositoryProvider` | `P/database_providers.dart`; Identität aus Sprache/Generation/Fingerprint und geleaster Leser. Das Repository beobachtet den Key-Provider absichtlich nicht direkt, damit Recovery den gerade validierten Leser nicht entsorgt. |
 | `userRepositoryProvider` | `P/database_providers.dart`; Sprachansicht auf die Nutzer-DB, Packzugriff über Prüf-Callbacks. |
-| `userChangesProvider` | `P/deck_providers.dart`; nummeriert Änderungsereignisse des Nutzer-Repositories. |
-| `practiceResolverProvider`, `practiceCatalogProvider` | `P/story_learning_providers.dart`; Resolver reagiert auf Lernänderungen, Katalog liest Packmetadaten. |
+| `userChangesProvider` | `P/user_changes_provider.dart`; nummeriert Änderungsereignisse des Nutzer-Repositories. |
+| `practiceResolverProvider`, `practiceCatalogProvider` | `P/practice_resolver_providers.dart`; Resolver reagiert auf Lernänderungen, Katalog liest Packmetadaten. |
 | `decksProvider`, `vocabBreakdownProvider`, `lexicalBreakdownProvider` | `P/deck_providers.dart`; Stapel und aus Karten abgeleitete Zahlen. |
 | `wordListProvider` | `P/learning_providers.dart`; aufgelöste Karten, Kontext, Flags und Reviewhistorie. |
 | `DeckSessionController` | `lib/presentation/practice/deck_session_controller.dart`; nutzt Resolver und Nutzer-Repository direkt, baut Queues und verarbeitet `ReviewPass`. |

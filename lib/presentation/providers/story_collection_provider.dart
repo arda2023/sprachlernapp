@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/content.dart';
 import '../../domain/srs_state.dart';
 import '../../domain/story_learning_diagnostics.dart';
-import 'story_learning_providers.dart';
+import 'practice_resolver_providers.dart';
 
 class StoryCollectionWord {
   const StoryCollectionWord(this.state, this.item);

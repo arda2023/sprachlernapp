@@ -1,48 +1,15 @@
 import 'package:flutter/foundation.dart';
-
-import '../../domain/story_failure_trace.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/story_failure_trace.dart';
 import '../../domain/story_learning.dart';
-import '../../domain/repositories.dart';
 import '../../domain/story_learning_diagnostics.dart';
 import '../../models/home_models.dart';
-import '../../data/learning/practice_item_resolver.dart';
 import 'database_providers.dart';
-import 'deck_providers.dart';
 import 'bundled_stories_provider.dart';
+export 'practice_resolver_providers.dart'
+    show practiceCatalogProvider, practiceResolverProvider;
 
-final practiceCatalogProvider = FutureProvider<PracticeCatalog>((ref) async {
-  return PracticeCatalog.load(
-    await ref.watch(contentRepositoryProvider.future),
-  );
-}, retry: (_, _) => null);
-
-final practiceResolverProvider = FutureProvider<PracticeItemResolver>((
-  ref,
-) async {
-  ref.watch(userChangesProvider);
-  final user = await ref.watch(userRepositoryProvider.future);
-  ContentRepository? content;
-  PracticeCatalog? catalog;
-  Object? contentError;
-  try {
-    content = await ref.watch(contentRepositoryProvider.future);
-    catalog = await ref.watch(practiceCatalogProvider.future);
-  } catch (error) {
-    content = null;
-    contentError = error;
-  }
-  // A broken user read/correction is not a missing pack. Do not retry it via
-  // the offline fallback and accidentally hide a technical failure.
-  return PracticeItemResolver.load(
-    user,
-    content,
-    catalog: catalog,
-    contentError: contentError,
-  );
-}, retry: (_, _) => null);
 final storySummariesProvider = FutureProvider<List<StorySummary>>((ref) async {
   final content = await ref.watch(contentRepositoryProvider.future);
   if (content is! StoryContentRepository) return [];

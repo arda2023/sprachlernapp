@@ -15,7 +15,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/story_learning.dart';
 import '../../domain/story_learning_diagnostics.dart';
-import '../../presentation/providers/story_learning_providers.dart';
+import '../../presentation/providers/story_learning_providers.dart'
+    hide practiceCatalogProvider, practiceResolverProvider;
 import '../../presentation/providers/bundled_stories_provider.dart';
 
 import 'package:flutter/foundation.dart';
@@ -40,6 +41,7 @@ import '../home/widgets/story_carousel.dart';
 import 'widgets/narration_panel.dart';
 import 'widgets/sentence_popover.dart';
 import 'widgets/word_popover.dart';
+import '../../presentation/providers/practice_resolver_providers.dart';
 
 /// Reading view (Redesign 20.10.2026). One long page that only scrolls
 /// down; a rail on the left fills with the reading position. Every word is

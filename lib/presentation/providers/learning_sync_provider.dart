@@ -5,14 +5,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/sync/learning_sync.dart';
 import '../../data/sync/supabase_learning_sync_gateway.dart';
-import 'account_provider.dart';
-import 'content_update_provider.dart';
 import 'database_providers.dart';
 import 'learning_providers.dart';
 import 'reading_providers.dart';
 import 'streak_providers.dart';
 import 'deck_providers.dart';
 import 'preferences_provider.dart';
+import 'auth_providers.dart';
 
 /// Visible status can be used by both the web shell and mobile account screen.
 enum LearningSyncPhase { signedOut, syncing, current, offline, accountMismatch }

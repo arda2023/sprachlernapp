@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show ScaffoldMessenger, SnackBar;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../presentation/providers/account_provider.dart';
 import '../data/billing/billing_sync_gateway.dart';
 import '../presentation/providers/purchase_provider.dart';
 import '../screens/onboarding/paywall_screen.dart';
 import '../screens/onboarding/widgets/account_sheet.dart';
 import '../theme/app_theme.dart';
 import 'date_format.dart';
+import '../presentation/providers/auth_providers.dart';
 
 String subscriptionRestoreNotice(PurchaseState state) {
   if (state.errorMessage != null &&

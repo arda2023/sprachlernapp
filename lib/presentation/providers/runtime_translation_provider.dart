@@ -6,7 +6,7 @@ import '../../data/platform/sqlite_platform.dart';
 
 import '../../data/runtime_translation_client.dart';
 import '../../data/translation_cache.dart';
-import 'content_update_provider.dart';
+import 'auth_providers.dart';
 
 final runtimeTranslationProvider = Provider<RuntimeTranslationClient>((ref) {
   final auth = ref.watch(contentAuthProvider);

@@ -10,9 +10,9 @@ import '../../models/story_models.dart';
 import '../../domain/streak.dart';
 import '../../models/word_list_models.dart';
 import 'database_providers.dart';
-import 'deck_providers.dart';
 import 'learning_providers.dart';
-import 'story_learning_providers.dart';
+import 'practice_resolver_providers.dart';
+import 'user_changes_provider.dart';
 
 /// Streak and week stars from the review log's local calendar days.
 final streakProvider = FutureProvider<StreakSummary>((ref) async {

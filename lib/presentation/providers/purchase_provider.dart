@@ -9,9 +9,8 @@ import '../../data/billing/adapty_billing_gateway.dart';
 import '../../data/billing/billing_sync_gateway.dart';
 import '../../data/billing/purchase_gateway.dart';
 import '../../screens/legal/legal_release_gate.dart';
-import 'account_provider.dart';
 import 'billing_provider.dart';
-import 'content_update_provider.dart';
+import 'auth_providers.dart';
 
 final purchaseGatewayProvider = Provider<PurchaseGateway?>((ref) {
   final billingGateway = ref.watch(billingGatewayProvider);

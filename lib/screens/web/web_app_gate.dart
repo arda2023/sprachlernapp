@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../presentation/providers/account_provider.dart';
+import '../../presentation/providers/account_provider.dart'
+    hide AccountSession, accountSessionProvider;
 import '../../theme/app_theme.dart';
 import 'web_learning_shell.dart';
+import '../../presentation/providers/auth_providers.dart';
 
 /// A browser session always belongs to an account. The native app's existing
 /// email-code authentication is shared, including account identity and renewal.

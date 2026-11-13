@@ -1,20 +1,18 @@
 import 'dart:async';
 
-import '../../domain/language_profile.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show ProviderListenable;
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../../domain/language_profile.dart';
 import '../../data/content/content_pack_installer.dart';
 import '../../data/content/content_database.dart';
 import '../../data/content/content_update_service.dart';
 import '../../data/user/drift_user_repository.dart';
 import '../../data/user/user_database.dart';
 import '../../domain/repositories.dart';
-import 'account_provider.dart';
-import 'content_update_provider.dart' show contentAuthProvider;
 import '../../domain/content.dart';
+import 'auth_providers.dart';
 
 /// Leases share one connection. Reopening waits for its asynchronous close,
 /// including when a scope is disposed while opening. Thus an installer never

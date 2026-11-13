@@ -7,12 +7,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/story_learning_diagnostics.dart';
 import '../../presentation/providers/story_collection_provider.dart';
-import '../../presentation/providers/story_learning_providers.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/back_bar.dart';
 import '../../widgets/action_buttons.dart';
 import '../decks/deck_practice_screen.dart';
 import '../words/word_list_screen.dart';
+import '../../presentation/providers/practice_resolver_providers.dart';
 
 /// A personal view over existing card IDs; never a pack deck or a second SRS.
 class StoryCollectionScreen extends ConsumerWidget {

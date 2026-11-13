@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'data/platform/json_store.dart';
 import 'data/sync/sync_json_store.dart';
-import 'presentation/providers/account_provider.dart';
 import 'presentation/providers/learning_sync_provider.dart';
 import 'screens/web/web_app_gate.dart';
 
@@ -22,7 +21,8 @@ import 'presentation/providers/billing_provider.dart';
 import 'presentation/providers/deck_providers.dart';
 import 'presentation/providers/language_selection_provider.dart';
 import 'presentation/providers/learning_providers.dart';
-import 'presentation/providers/content_update_provider.dart';
+import 'presentation/providers/content_update_provider.dart'
+    hide contentAuthProvider;
 import 'presentation/providers/onboarding_provider.dart';
 import 'presentation/providers/preferences_provider.dart';
 import 'presentation/providers/purchase_provider.dart';
@@ -34,6 +34,7 @@ import 'screens/onboarding/onboarding_screen.dart';
 import 'screens/onboarding/widgets/onboarding_art.dart';
 import 'theme/app_theme.dart';
 import 'widgets/launch_splash.dart';
+import 'presentation/providers/auth_providers.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

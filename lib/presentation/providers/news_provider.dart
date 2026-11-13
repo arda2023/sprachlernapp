@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/news/news_client.dart';
 import '../../models/news_models.dart';
-import 'content_update_provider.dart';
+import 'auth_providers.dart';
 
 final newsClientProvider = Provider<NewsClient>((ref) {
   final auth = ref.read(contentAuthProvider);

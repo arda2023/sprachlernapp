@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/auth/account_deletion_gateway.dart';
-import '../presentation/providers/account_provider.dart';
-import '../presentation/providers/content_update_provider.dart';
+import '../presentation/providers/account_provider.dart'
+    hide AccountSession, accountSessionProvider;
 import '../screens/onboarding/widgets/account_sheet.dart';
 import '../theme/app_theme.dart';
+import '../presentation/providers/auth_providers.dart';
 
 final accountDeletionGatewayProvider = Provider<AccountDeletionGateway>((ref) {
   final gateway = SupabaseAccountDeletionGateway(

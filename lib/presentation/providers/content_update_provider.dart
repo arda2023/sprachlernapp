@@ -5,21 +5,13 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../data/content/content_auth_repository.dart';
 import '../../data/content/content_install_journal.dart';
 import '../../data/content/content_release_client.dart';
 import '../../data/content/content_update_diagnosis.dart';
 import '../../data/content/content_update_service.dart';
 import 'database_providers.dart';
-
-final contentAuthProvider = Provider<ContentAuthRepository>((ref) {
-  final auth = ContentAuthRepository(
-    const String.fromEnvironment('SUPABASE_URL'),
-    const String.fromEnvironment('SUPABASE_ANON_KEY'),
-  );
-  ref.onDispose(() => unawaited(auth.close()));
-  return auth;
-});
+import 'auth_providers.dart';
+export 'auth_providers.dart' show contentAuthProvider;
 
 // Each language owns its HTTP client; authentication is shared deliberately.
 final contentReleaseTransportProvider =

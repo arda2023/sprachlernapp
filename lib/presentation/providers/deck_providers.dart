@@ -1,7 +1,6 @@
-import '../../domain/content.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/content.dart';
 import '../../domain/srs_state.dart';
 import '../../domain/review_activity.dart';
 import '../../models/home_models.dart';
@@ -9,17 +8,9 @@ import '../deck_visuals.dart';
 import 'database_providers.dart';
 import 'premium_access_provider.dart';
 import 'learning_providers.dart';
-import 'story_learning_providers.dart';
-
-final userChangesProvider = StreamProvider<int>((ref) async* {
-  final user = await ref.watch(userRepositoryProvider.future);
-  var revision = 0;
-  // Every event needs a distinct value: repeated AsyncData<void>(null) can
-  // otherwise be coalesced and leave derived progress stale.
-  await for (final _ in user.changes()) {
-    yield ++revision;
-  }
-});
+import 'practice_resolver_providers.dart';
+import 'user_changes_provider.dart';
+export 'user_changes_provider.dart' show userChangesProvider;
 
 /// Short deck names without "&" (user decision 29.10.2026). The packs keep
 /// their titles; slugs are the same in every language, so one table covers

@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/billing/adapty_billing_gateway.dart';
-import 'account_provider.dart';
+import 'auth_providers.dart';
 
 /// Public client configuration is injected at build time, never checked in.
 /// Android remains disabled until its separate store connection is ready.

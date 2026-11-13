@@ -8,12 +8,12 @@ import '../../data/platform/sqlite_platform.dart';
 
 import '../../data/personal_learning_client.dart';
 import '../../data/learning/personal_learning_service.dart';
-import 'content_update_provider.dart';
 import 'database_providers.dart';
 import 'runtime_translation_provider.dart';
 import '../../data/content/content_install_journal.dart';
 import '../../data/content/content_database.dart';
 import '../../data/learning/personal_translation_hints.dart';
+import 'auth_providers.dart';
 
 final personalLearningClientProvider = Provider<PersonalLearningClient>((ref) {
   final auth = ref.watch(contentAuthProvider);

@@ -10,8 +10,8 @@ import '../../domain/srs_state.dart';
 import '../../domain/review_activity.dart';
 import '../../domain/learning_groups.dart';
 import 'database_providers.dart';
-import 'story_learning_providers.dart';
-import 'deck_providers.dart';
+import 'practice_resolver_providers.dart';
+import 'user_changes_provider.dart';
 
 /// Invalidate derived views at local midnight and after a background period.
 final learningNowProvider = Provider<DateTime>((ref) {

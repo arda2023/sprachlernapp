@@ -9,12 +9,12 @@ import '../../domain/review_pass.dart';
 import '../../domain/srs_state.dart';
 import '../../domain/story_learning_diagnostics.dart';
 import '../providers/database_providers.dart';
-import '../providers/story_learning_providers.dart';
 import '../../data/learning/practice_item_resolver.dart';
 import '../../domain/review_activity.dart';
 import '../providers/preferences_provider.dart';
 import '../providers/premium_access_provider.dart';
 import '../../domain/preferences.dart';
+import '../providers/practice_resolver_providers.dart';
 
 class SessionSnapshot {
   SessionSnapshot(ReviewPass pass)
