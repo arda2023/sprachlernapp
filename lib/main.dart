@@ -1,6 +1,7 @@
 import 'presentation/audio/device_speech_playback.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'data/platform/json_store.dart';
@@ -110,6 +111,9 @@ class SprachApp extends ConsumerWidget {
       key: ValueKey(account?.id),
       navigatorObservers: [SpeechNavigationObserver()],
       title: 'Linglossa',
+      locale: const Locale('de'),
+      supportedLocales: const [Locale('de')],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       debugShowCheckedModeBanner: false,
       theme: buildAppTheme(brightness: Brightness.light),
       darkTheme: buildAppTheme(),
