@@ -1,4 +1,4 @@
-import '../../presentation/providers/reading_providers.dart';
+import 'json_store_base.dart';
 import 'sqlite_platform.dart';
 import 'json_store_native.dart'
     if (dart.library.js_interop) 'json_store_web.dart'

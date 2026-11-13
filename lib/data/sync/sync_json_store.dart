@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:drift/drift.dart';
 
-import '../../presentation/providers/reading_providers.dart';
+import '../platform/json_store_base.dart';
 import '../user/user_database.dart';
 import 'learning_sync.dart';
 

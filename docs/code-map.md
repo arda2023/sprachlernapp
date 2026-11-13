@@ -72,7 +72,7 @@ practiceResolverProvider + userRepositoryProvider → DeckSessionController
 | `content.sqlite` je Sprache/Generation | `lib/data/content/content_database.dart` und `content_pack_installer.dart`; nur lesend, keine Appmigration dieses Inhaltsbestands. |
 | `private_translations.sqlite` | `TranslationCache` (`lib/data/translation_cache.dart`), verdrahtet in `P/runtime_translation_provider.dart`; kontogebundene Übersetzungen und Einwilligung. |
 | `private_learning_consent.sqlite` | `PersonalConsentStore` (`lib/data/personal_learning_client.dart`), verdrahtet in `P/personal_learning_provider.dart`. |
-| `reading_progress_<lang>`, `imported_texts_<lang>` | JSON-Dokumente hinter `JsonStore` (`P/reading_providers.dart`). `main.dart` setzt `SyncJsonStore` ein: Speicherung in `learning_sync_documents`, kontogetrennt über die DB. Frühere native `ui/<name>.json`-Dateien sind nur eine zugriffsbeschränkte Migrationsquelle (`AccountLegacyJsonStore`). |
+| `reading_progress_<lang>`, `imported_texts_<lang>` | JSON-Dokumente hinter `JsonStore` (`lib/data/platform/json_store_base.dart`). `main.dart` setzt `SyncJsonStore` ein: Speicherung in `learning_sync_documents`, kontogetrennt über die DB. Frühere native `ui/<name>.json`-Dateien sind nur eine zugriffsbeschränkte Migrationsquelle (`AccountLegacyJsonStore`). |
 
 ## Zusätzliche Repository-Fähigkeiten
 

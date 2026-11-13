@@ -1,3 +1,3 @@
-import '../../presentation/providers/reading_providers.dart';
+import 'json_store_base.dart';
 
 JsonStore createJsonStore(String name) => FileJsonStore(name);

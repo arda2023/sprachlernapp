@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:web/web.dart' as web;
 
-import '../../presentation/providers/reading_providers.dart';
+import 'json_store_base.dart';
 
 JsonStore createJsonStore(String name) => _BrowserJsonStore(name);
 
