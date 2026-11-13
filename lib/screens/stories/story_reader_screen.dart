@@ -507,55 +507,26 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
     HapticFeedback.lightImpact();
     PersonalTarget? personal;
     if (widget.document == null) {
-      personal = PersonalTarget(
-        lang: widget.sourceLanguage,
-        text: _sentences.firstWhere((s) => s.tokens.contains(index)).text,
-        form: word.text,
-        start: word.start!,
-        source: widget.story.id,
-      );
+      personal = _personalTargetForImportedWord(index, word);
     } else if (word.sentenceId != null) {
       try {
         final candidate =
             await ProviderScope.containerOf(context, listen: false)
                 .read(storyLearningServiceProvider)
                 .candidate(widget.story.id, word.sentenceId!, word.tokenIndex!);
-        if (!candidate.retired &&
-            candidate.problem == null &&
-            candidate.card == null &&
-            !candidate.token.annotated &&
-            candidate.token.pos != 'PROPN') {
-          personal = PersonalTarget(
-            lang: widget.sourceLanguage,
-            text: candidate.sentence.text,
-            form: word.text,
-            start: word.start!,
-            source: widget.story.id,
-          );
-        }
+        personal = _personalTargetForStoryWord(word, candidate);
       } catch (_) {
         /* No creation fallback for a technical context failure. */
       }
       if (!mounted) return;
     }
-    if (!hasStoredTranslation(word.entry.translation)) {
+    if (_needsRuntimeTranslation(word)) {
       final sentence = _sentences
           .firstWhere((s) => s.tokens.contains(index))
           .text;
       // The tapped word is marked here too, as with a stored translation.
       setState(() => _selected = index);
-      await RuntimeTranslationSheet.show(
-        context,
-        anchor: _anchor,
-        lang: widget.sourceLanguage,
-        text: sentence,
-        form: word.text,
-        wordTap: true,
-        learningTarget: personal,
-        start: word.start,
-        senseRef: word.senseRef,
-        formRef: word.formRef,
-      );
+      await _showRuntimeWordTranslation(word, personal, sentence);
       if (mounted) setState(() => _selected = null);
       return;
     }
@@ -574,70 +545,136 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
         );
         final status = await service.status(candidate);
         if (!mounted) return;
-        await WordPopover.show(
-          context,
-          anchor: _anchor,
-          surface: word.text,
-          language: widget.sourceLanguage,
-          entry: word.entry,
-          mark: status.state == StoryAddState.added ? WordMark.active : null,
-          status: status,
-          personalAction: personal == null
-              ? null
-              : PersonalLearningButton(
-                  target: personal,
-                  foregroundColor: const Color(0xFFFFFFFF),
-                  compact: true,
-                ),
-          onAdd: () => service.add(candidate),
-          onReactivate: () => service.reactivate(candidate),
-          onSaved: (result) {
-            if (mounted && result.state == StoryAddState.added) {
-              setState(
-                () => _marks['${word.sentenceId}/${word.tokenIndex}'] =
-                    WordMark.active,
-              );
-            }
-          },
-        );
+        await _showStoryWordPopover(word, personal, service, candidate, status);
       } catch (error) {
         if (mounted) {
-          await WordPopover.show(
-            context,
-            anchor: _anchor,
-            surface: word.text,
-            language: widget.sourceLanguage,
-            entry: word.entry,
-            mark: null,
-            learningAvailable: false,
-            failure: error is StoryLearningFailure
-                ? error
-                : const StoryLearningFailure(StoryLearningStep.context),
-            onAdd: () async => const StoryAddResult(StoryAddState.unavailable),
-          );
+          await _showWordLookupFailure(word, error);
         }
       }
     } else {
-      await WordPopover.show(
+      await _showOtherWordPopover(word, personal, headword);
+    }
+    if (mounted) setState(() => _selected = null);
+  }
+
+  PersonalTarget _personalTargetForImportedWord(int index, _Word word) =>
+      PersonalTarget(
+        lang: widget.sourceLanguage,
+        text: _sentences.firstWhere((s) => s.tokens.contains(index)).text,
+        form: word.text,
+        start: word.start!,
+        source: widget.story.id,
+      );
+
+  PersonalTarget? _personalTargetForStoryWord(
+    _Word word,
+    StoryLearningCandidate candidate,
+  ) {
+    if (!candidate.retired &&
+        candidate.problem == null &&
+        candidate.card == null &&
+        !candidate.token.annotated &&
+        candidate.token.pos != 'PROPN') {
+      return PersonalTarget(
+        lang: widget.sourceLanguage,
+        text: candidate.sentence.text,
+        form: word.text,
+        start: word.start!,
+        source: widget.story.id,
+      );
+    }
+    return null;
+  }
+
+  bool _needsRuntimeTranslation(_Word word) =>
+      !hasStoredTranslation(word.entry.translation);
+
+  Future<void> _showRuntimeWordTranslation(
+    _Word word,
+    PersonalTarget? personal,
+    String sentence,
+  ) => RuntimeTranslationSheet.show(
+    context,
+    anchor: _anchor,
+    lang: widget.sourceLanguage,
+    text: sentence,
+    form: word.text,
+    wordTap: true,
+    learningTarget: personal,
+    start: word.start,
+    senseRef: word.senseRef,
+    formRef: word.formRef,
+  );
+
+  Future<void> _showStoryWordPopover(
+    _Word word,
+    PersonalTarget? personal,
+    StoryLearningService service,
+    StoryLearningCandidate candidate,
+    StoryAddResult status,
+  ) => WordPopover.show(
+    context,
+    anchor: _anchor,
+    surface: word.text,
+    language: widget.sourceLanguage,
+    entry: word.entry,
+    mark: status.state == StoryAddState.added ? WordMark.active : null,
+    status: status,
+    personalAction: personal == null
+        ? null
+        : PersonalLearningButton(
+            target: personal,
+            foregroundColor: const Color(0xFFFFFFFF),
+            compact: true,
+          ),
+    onAdd: () => service.add(candidate),
+    onReactivate: () => service.reactivate(candidate),
+    onSaved: (result) {
+      if (mounted && result.state == StoryAddState.added) {
+        setState(
+          () =>
+              _marks['${word.sentenceId}/${word.tokenIndex}'] = WordMark.active,
+        );
+      }
+    },
+  );
+
+  Future<void> _showWordLookupFailure(_Word word, Object error) =>
+      WordPopover.show(
         context,
         anchor: _anchor,
         surface: word.text,
         language: widget.sourceLanguage,
         entry: word.entry,
-        mark: _marks[headword],
+        mark: null,
         learningAvailable: false,
-        personalAction: personal == null
-            ? null
-            : PersonalLearningButton(
-                target: personal,
-                foregroundColor: const Color(0xFFFFFFFF),
-                compact: true,
-              ),
+        failure: error is StoryLearningFailure
+            ? error
+            : const StoryLearningFailure(StoryLearningStep.context),
         onAdd: () async => const StoryAddResult(StoryAddState.unavailable),
       );
-    }
-    if (mounted) setState(() => _selected = null);
-  }
+
+  Future<void> _showOtherWordPopover(
+    _Word word,
+    PersonalTarget? personal,
+    String headword,
+  ) => WordPopover.show(
+    context,
+    anchor: _anchor,
+    surface: word.text,
+    language: widget.sourceLanguage,
+    entry: word.entry,
+    mark: _marks[headword],
+    learningAvailable: false,
+    personalAction: personal == null
+        ? null
+        : PersonalLearningButton(
+            target: personal,
+            foregroundColor: const Color(0xFFFFFFFF),
+            compact: true,
+          ),
+    onAdd: () async => const StoryAddResult(StoryAddState.unavailable),
+  );
 
   TextSpan _wordSpan(int index) {
     final word = _words[index];
@@ -717,175 +754,13 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
       child: Scaffold(
         body: Stack(
           children: [
-            NotificationListener<ScrollNotification>(
-              onNotification: (n) {
-                if (n is UserScrollNotification) _moved = true;
-                if (n is ScrollEndNotification) _report();
-                return false;
-              },
-              child: ListView(
-                controller: _scroll,
-                physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics(),
-                ),
-                padding: EdgeInsets.fromLTRB(
-                  36,
-                  padding.top + _TopBar.height + 16,
-                  24,
-                  padding.bottom + 150,
-                ),
-                children: [
-                  Center(
-                    // Keeps a readable measure on tablets.
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 600),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                width: 28,
-                                height: 28,
-                                decoration: BoxDecoration(
-                                  color: category.color,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Icon(
-                                  category.icon,
-                                  size: 16,
-                                  color: const Color(0xFFFFFFFF),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                // Only the topic shows; level and
-                                // reading time stay for VoiceOver.
-                                child: Semantics(
-                                  label: storySemanticsLabel(story),
-                                  excludeSemantics: true,
-                                  child: Text(
-                                    story.topic,
-                                    style: AppType.meta(
-                                      color: colors.textMuted,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 14),
-                          Semantics(
-                            header: true,
-                            child: Text(
-                              story.title,
-                              style: AppType.editorial(
-                                color: colors.textPrimary,
-                                size: 32,
-                                height: 1.15,
-                              ),
-                            ),
-                          ),
-                          // Tapping a word needs no hint; the translation
-                          // mode says that sentences now answer instead.
-                          AnimatedSize(
-                            duration: const Duration(milliseconds: 200),
-                            curve: Curves.easeOutCubic,
-                            alignment: Alignment.topLeft,
-                            child: !_translating
-                                ? const SizedBox(width: double.infinity)
-                                : Padding(
-                                    padding: const EdgeInsets.only(top: 14),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          CupertinoIcons.textformat_abc,
-                                          size: 16,
-                                          color: colors.active,
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Expanded(
-                                          child: Text(
-                                            'Übersetzungsmodus: Tippe auf einen Satz.',
-                                            style: AppType.chrome(
-                                              size: 13,
-                                              color: colors.textMuted,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                          ),
-                          const SizedBox(height: 22),
-                          Container(
-                            height: 1,
-                            color: colors.hairline.withValues(alpha: 0.6),
-                          ),
-                          const SizedBox(height: 24),
-                          for (final (i, sentences)
-                              in _paragraphSentences.indexed) ...[
-                            if (widget.text.headingBefore(i)
-                                case final heading?)
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: i == 0 ? 0 : 8,
-                                  bottom: 8,
-                                ),
-                                child: Semantics(
-                                  header: true,
-                                  child: Text(
-                                    heading,
-                                    style: AppType.editorial(
-                                      color: colors.textPrimary,
-                                      size: 20,
-                                      weight: FontWeight.w700,
-                                      height: 1.3,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 22),
-                              child: RoundedTextHighlight(
-                                selection: _selectionFor(sentences),
-                                color: colors.popover,
-                                child: Text.rich(
-                                  key: _paragraphKeys[i],
-                                  TextSpan(
-                                    style: AppType.storyBody(),
-                                    children: [
-                                      for (final s in sentences)
-                                        _translating
-                                            ? _sentenceSpan(
-                                                s,
-                                                narrated: s == narrated,
-                                              )
-                                            : _wordModeSentenceSpan(
-                                                s,
-                                                narrated: s == narrated,
-                                              ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                          if (widget.sources.isNotEmpty) ...[
-                            _Sources(sources: widget.sources),
-                            const SizedBox(height: 22),
-                          ],
-                          const SizedBox(height: 12),
-                          _EndCard(
-                            title: story.title,
-                            onDone: () => Navigator.of(context).maybePop(),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            _buildReaderContent(
+              context,
+              story,
+              narrated,
+              colors,
+              padding,
+              category,
             ),
             Positioned(
               top: 0,
@@ -904,49 +779,219 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
               bottom: padding.bottom + 112,
               child: _ProgressRail(progress: _progress),
             ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AnimatedSwitcher(
-                    duration: MediaQuery.disableAnimationsOf(context)
-                        ? Duration.zero
-                        : const Duration(milliseconds: 200),
-                    child: _translating && _hint
-                        ? const Padding(
-                            padding: EdgeInsets.only(bottom: 8),
-                            child: _HintChip(text: ReadingToolbar.hint),
-                          )
-                        : const SizedBox(width: double.infinity),
-                  ),
-                  if (_listening)
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: NarrationPanel(narration: _narration),
-                      ),
-                    ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: padding.bottom + 12),
-                    child: _ReaderDock(
-                      listening: _listening,
-                      translating: _translating,
-                      onToggleListen: _toggleListen,
-                      onToggleTranslate: _toggleTranslate,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildReaderControls(context, padding),
           ],
         ),
       ),
     );
   }
+
+  List<Widget> _buildStoryHeading(
+    Story story,
+    StoryCategory category,
+    AppPalette colors,
+  ) => [
+    Row(
+      children: [
+        Container(
+          width: 28,
+          height: 28,
+          decoration: BoxDecoration(
+            color: category.color,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(category.icon, size: 16, color: const Color(0xFFFFFFFF)),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          // Only the topic shows; level and
+          // reading time stay for VoiceOver.
+          child: Semantics(
+            label: storySemanticsLabel(story),
+            excludeSemantics: true,
+            child: Text(
+              story.topic,
+              style: AppType.meta(color: colors.textMuted),
+            ),
+          ),
+        ),
+      ],
+    ),
+    const SizedBox(height: 14),
+    Semantics(
+      header: true,
+      child: Text(
+        story.title,
+        style: AppType.editorial(
+          color: colors.textPrimary,
+          size: 32,
+          height: 1.15,
+        ),
+      ),
+    ),
+    // Tapping a word needs no hint; the translation
+    // mode says that sentences now answer instead.
+    AnimatedSize(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeOutCubic,
+      alignment: Alignment.topLeft,
+      child: !_translating
+          ? const SizedBox(width: double.infinity)
+          : Padding(
+              padding: const EdgeInsets.only(top: 14),
+              child: Row(
+                children: [
+                  Icon(
+                    CupertinoIcons.textformat_abc,
+                    size: 16,
+                    color: colors.active,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Übersetzungsmodus: Tippe auf einen Satz.',
+                      style: AppType.chrome(size: 13, color: colors.textMuted),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+    ),
+    const SizedBox(height: 22),
+    Container(height: 1, color: colors.hairline.withValues(alpha: 0.6)),
+    const SizedBox(height: 24),
+  ];
+
+  List<Widget> _buildStoryParagraphs(int? narrated, AppPalette colors) => [
+    for (final (i, sentences) in _paragraphSentences.indexed) ...[
+      if (widget.text.headingBefore(i) case final heading?)
+        Padding(
+          padding: EdgeInsets.only(top: i == 0 ? 0 : 8, bottom: 8),
+          child: Semantics(
+            header: true,
+            child: Text(
+              heading,
+              style: AppType.editorial(
+                color: colors.textPrimary,
+                size: 20,
+                weight: FontWeight.w700,
+                height: 1.3,
+              ),
+            ),
+          ),
+        ),
+      Padding(
+        padding: const EdgeInsets.only(bottom: 22),
+        child: RoundedTextHighlight(
+          selection: _selectionFor(sentences),
+          color: colors.popover,
+          child: Text.rich(
+            key: _paragraphKeys[i],
+            TextSpan(
+              style: AppType.storyBody(),
+              children: [
+                for (final s in sentences)
+                  _translating
+                      ? _sentenceSpan(s, narrated: s == narrated)
+                      : _wordModeSentenceSpan(s, narrated: s == narrated),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ],
+  ];
+
+  Widget _buildReaderContent(
+    BuildContext context,
+    Story story,
+    int? narrated,
+    AppPalette colors,
+    EdgeInsets padding,
+    StoryCategory category,
+  ) => NotificationListener<ScrollNotification>(
+    onNotification: (n) {
+      if (n is UserScrollNotification) _moved = true;
+      if (n is ScrollEndNotification) _report();
+      return false;
+    },
+    child: ListView(
+      controller: _scroll,
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
+      padding: EdgeInsets.fromLTRB(
+        36,
+        padding.top + _TopBar.height + 16,
+        24,
+        padding.bottom + 150,
+      ),
+      children: [
+        Center(
+          // Keeps a readable measure on tablets.
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ..._buildStoryHeading(story, category, colors),
+                ..._buildStoryParagraphs(narrated, colors),
+                if (widget.sources.isNotEmpty) ...[
+                  _Sources(sources: widget.sources),
+                  const SizedBox(height: 22),
+                ],
+                const SizedBox(height: 12),
+                _EndCard(
+                  title: story.title,
+                  onDone: () => Navigator.of(context).maybePop(),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+
+  Widget _buildReaderControls(BuildContext context, EdgeInsets padding) =>
+      Positioned(
+        left: 0,
+        right: 0,
+        bottom: 0,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedSwitcher(
+              duration: MediaQuery.disableAnimationsOf(context)
+                  ? Duration.zero
+                  : const Duration(milliseconds: 200),
+              child: _translating && _hint
+                  ? const Padding(
+                      padding: EdgeInsets.only(bottom: 8),
+                      child: _HintChip(text: ReadingToolbar.hint),
+                    )
+                  : const SizedBox(width: double.infinity),
+            ),
+            if (_listening)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: NarrationPanel(narration: _narration),
+                ),
+              ),
+            Padding(
+              padding: EdgeInsets.only(bottom: padding.bottom + 12),
+              child: _ReaderDock(
+                listening: _listening,
+                translating: _translating,
+                onToggleListen: _toggleListen,
+                onToggleTranslate: _toggleTranslate,
+              ),
+            ),
+          ],
+        ),
+      );
 }
 
 /// Back, the title once the heading has scrolled away, and the position.
