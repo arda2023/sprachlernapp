@@ -52,12 +52,16 @@ class ReadingProgressNotifier extends Notifier<Map<String, ReadingEntry>> {
   late Future<void> _loaded;
   late JsonStore _store;
 
+  /// Completes after the current account/language store has been read.
+  Future<void> get ready => _loaded;
+
   @override
   Map<String, ReadingEntry> build() {
     _store = ref.watch(readingStoreProvider);
     final generation = ++_generation;
     _loaded = _load(_store, generation);
-    return const {};
+    // A new map also signals a reload when the previous store was empty.
+    return {};
   }
 
   Future<void> _load(JsonStore store, int generation) async {
@@ -116,6 +120,13 @@ final readingProgressProvider =
     NotifierProvider<ReadingProgressNotifier, Map<String, ReadingEntry>>(
       ReadingProgressNotifier.new,
     );
+
+/// Empty progress is valid data; readiness must track the store separately.
+final readingProgressReadyProvider = FutureProvider<void>((ref) {
+  ref.watch(readingStoreProvider);
+  ref.watch(readingProgressProvider);
+  return ref.read(readingProgressProvider.notifier).ready;
+}, retry: (_, _) => null);
 
 // ----------------------------------------------------------------- imports
 

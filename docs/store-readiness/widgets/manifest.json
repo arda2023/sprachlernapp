@@ -1,0 +1,40 @@
+{
+  "count" : 24,
+  "note" : "Accented previews verify the rendering branch, not SpringBoard's clear\/tinted glass compositing.",
+  "renderer" : "SwiftUI ImageRenderer, iOS Simulator",
+  "requiredScreenshots" : [
+    "small-open-light.png",
+    "medium-open-light.png",
+    "large-open-light.png",
+    "small-complete-light.png",
+    "medium-complete-light.png",
+    "large-complete-light.png",
+    "small-zero-light.png",
+    "medium-zero-light.png",
+    "large-zero-light.png",
+    "small-unavailable-light.png",
+    "medium-unavailable-light.png",
+    "large-unavailable-light.png",
+    "small-open-dark.png",
+    "medium-open-dark.png",
+    "large-open-dark.png",
+    "small-complete-dark.png",
+    "medium-complete-dark.png",
+    "large-complete-dark.png",
+    "small-zero-dark.png",
+    "medium-zero-dark.png",
+    "large-zero-dark.png",
+    "small-unavailable-dark.png",
+    "medium-unavailable-dark.png",
+    "large-unavailable-dark.png"
+  ],
+  "runID" : "1794605553063911000",
+  "scale" : 2,
+  "states" : [
+    "open",
+    "complete",
+    "zero",
+    "unavailable"
+  ],
+  "timestamp" : "2026-11-13T21:32:37Z"
+}

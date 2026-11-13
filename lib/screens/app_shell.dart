@@ -1,6 +1,8 @@
 import '../models/localized_practice_content.dart';
 import '../domain/app_launch_intent.dart';
 import '../presentation/providers/app_launch_intent_provider.dart';
+import '../presentation/providers/premium_access_provider.dart';
+import '../presentation/providers/purchase_provider.dart';
 import 'content/topic_vocabulary_composer.dart';
 import '../domain/language_profile.dart';
 import '../presentation/providers/database_providers.dart';
@@ -58,36 +60,62 @@ class _AppShellState extends ConsumerState<AppShell> {
   bool _launchScheduled = false;
 
   void _tryLaunch(PendingAppLaunch? launch) {
-    if (launch == null || !mounted) return;
+    if (launch == null || !mounted || !_launchReady(launch)) return;
+    _scheduleLaunch();
+  }
+
+  bool _launchReady(PendingAppLaunch launch) {
     final selected = ref.read(selectedContentLanguageProvider);
     if (selected.isLoading || ref.read(languageSelectionProvider).switching) {
-      return;
+      return false;
     }
     final info = selected.asData?.value == 'en'
         ? null
         : ref.read(contentInfoProvider);
-    if (info?.isLoading == true) return;
-    _scheduleLaunch(
-      launch,
-      canPractice: !selected.hasError && info?.hasError != true,
-    );
+    if (info?.isLoading == true) return false;
+    if (launch.intent.target == AppLaunchTarget.story &&
+        launch.intent.language == selected.asData?.value) {
+      final purchase = ref.read(purchaseProvider);
+      if (purchase.phase.isBusy || purchase.isSyncing) return false;
+      if (ref.read(premiumContentAccessProvider) &&
+          (ref.read(libraryStoriesProvider).isLoading ||
+              ref.read(readingProgressReadyProvider).isLoading)) {
+        return false;
+      }
+    }
+    return true;
   }
 
-  void _scheduleLaunch(PendingAppLaunch launch, {required bool canPractice}) {
+  void _scheduleLaunch() {
     if (_launchScheduled) return;
     _launchScheduled = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _launchScheduled = false;
       if (!mounted) return;
-      if (!ref.read(appLaunchIntentProvider.notifier).consume(launch)) {
-        // A newer tap may have arrived after this frame was scheduled.
-        setState(() {});
-        return;
-      }
+      // Recheck the latest tap and store after a possible account/language change.
+      final launch = ref.read(appLaunchIntentProvider);
+      if (launch == null || !_launchReady(launch)) return;
+      if (!ref.read(appLaunchIntentProvider.notifier).consume(launch)) return;
       Navigator.of(context).popUntil((route) => route.isFirst);
       setState(() => _tab = AppTab.home);
+      final selected = ref.read(selectedContentLanguageProvider);
+      final info = selected.asData?.value == 'en'
+          ? null
+          : ref.read(contentInfoProvider);
+      final canPractice = !selected.hasError && info?.hasError != true;
       if (launch.intent.target == AppLaunchTarget.practice && canPractice) {
         _startMixed();
+      } else if (launch.intent.target == AppLaunchTarget.story &&
+          canPractice &&
+          launch.intent.language ==
+              ref.read(selectedContentLanguageProvider).asData?.value &&
+          ref.read(premiumContentAccessProvider) &&
+          ref.read(readingProgressReadyProvider).asData != null) {
+        final stories = ref.read(libraryStoriesProvider).asData?.value;
+        final story = stories
+            ?.where((story) => story.id == launch.intent.storyId)
+            .firstOrNull;
+        if (story != null) _openStory(story);
       }
     });
     WidgetsBinding.instance.ensureVisualUpdate();
@@ -209,6 +237,15 @@ class _AppShellState extends ConsumerState<AppShell> {
       _tryLaunch(ref.read(appLaunchIntentProvider));
     });
     ref.listen(contentInfoProvider, (_, _) {
+      _tryLaunch(ref.read(appLaunchIntentProvider));
+    });
+    ref.listen(libraryStoriesProvider, (_, _) {
+      _tryLaunch(ref.read(appLaunchIntentProvider));
+    });
+    ref.listen(readingProgressReadyProvider, (_, _) {
+      _tryLaunch(ref.read(appLaunchIntentProvider));
+    });
+    ref.listen(purchaseProvider, (_, _) {
       _tryLaunch(ref.read(appLaunchIntentProvider));
     });
     _tryLaunch(ref.read(appLaunchIntentProvider));

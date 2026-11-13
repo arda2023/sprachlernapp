@@ -69,6 +69,8 @@ GitNexus hatte vor dem Eingriff für `PracticeCompletionScreen` `HIGH` gemeldet:
 
 ## Teil 3 – Lokale Erinnerungen
 
+Commit: `c97a1f3` (`Add local learning and verified trial reminders`).
+
 Die Einstellungen enthalten jetzt einen Schalter und eine Uhrzeit für Lern-Erinnerungen. Die Systemfrage erscheint erst beim Einschalten oder nach einem erfolgreichen Kauf mit anschließend sicher bestätigtem Gratis-Trial. Startup, Wiederherstellen und bloße Trialberechtigung fragen nicht. Die kurze Mitteilung lautet „Zeit für ein paar Wörter / Deine nächste Runde wartet.“ Ein Tap wartet nötigenfalls auf Konto und Lernsprache und startet dann die gemischte Übung; veraltete oder nicht passende Payloads führen zu Home. Der „Bald“-Chip entfällt.
 
 `NotificationService` besitzt eine serialisierte Queue und prüft nach asynchronen Schritten erneut die Identität. Einstellungen liegen lokal je gehashter Kontoidentität, ohne E-Mail. Logout/Kontowechsel räumen die geplanten Termine des vorherigen Kontexts auf. Für heute wird bei erreichtem Tagesziel kein Lerntermin erzeugt; App-Öffnung, Übungen, Sprach- und Zeitzonenwechsel erneuern die Planung. Maximal 30 einzelne Lerntermine und ein Trialtermin bleiben unter iOS' Grenze von 64 ausstehenden lokalen Mitteilungen. Web/Desktop planen nichts. Android verwendet bewusst ungenaue OS-Alarme ohne Sonderrecht für exakte Alarme.
@@ -97,6 +99,65 @@ Der frisch neu aufgebaute GitNexus-Graph und MCP-Änderungscheck erfassen vollst
 
 Quellen: [Adapty-Flutter-Modelle](https://adapty.io/docs/flutter-sdk-models), [flutter_local_notifications](https://pub.dev/packages/flutter_local_notifications), [Zeitzonenpaket](https://pub.dev/packages/timezone).
 
+## Teil 4 – Drei native iOS-Widgets
+
+Die Recherche mit 13 tatsächlich geöffneten Refero-Widgetbildern, Auswahl und drei Entwürfen wurde vor der Umsetzung dokumentiert: [Referenzen und Entwürfe](store-readiness-widget-research.md). Besonders übernommen wurden Imprints/ Clearfuls Kalenderkonturen, die konkrete Lesefortsetzung aus Apple Books/PocketShelf und die kurze Zahlenhierarchie von Train Fitness. Es gibt kein Maskottchen: große Figtree-Zahlen, Flamme, echte Cover und Source Serif 4 für Storytitel bilden die eigene Gestaltung.
+
+| Größe / Galerie-Name | Inhalt | Tap |
+| --- | --- | --- |
+| Klein – Streak | Große Zahl, kurzer Tagesstand; Orange offen, Grün geschafft | Gemischte Übung |
+| Mittel – Diese Woche | Streak, Tagesziel und Mo–So mit echten aktiven Tagen | Gemischte Übung |
+| Groß – Weiterlernen | Woche, zuletzt begonnene redaktionelle Story samt Cover/Fortschritt, fällige Wiederholungen | Getrennte Links zu Story und Übung |
+
+Alle Größen zeigen bei fehlenden Daten „Linglossa / App öffnen“ ohne frühere Zahlen oder Story. Streak 0, heute offen und heute geschafft sind mit Text/Form und Farbe unterscheidbar. Titel-Folgezeilen stehen in Medium. Kleine Texte auf Orange/Grün sind dunkel, damit sie ausreichenden Kontrast haben. Die Extension übernimmt vier OFL-Schriften samt Lizenzen. Bei großen Textgrößen weicht sekundäre Dekoration; die vollständige Information bleibt per VoiceOver verfügbar. Es gibt keine Animation.
+
+Das Target `LinglossaWidgetsExtension` wurde über Xcodes Oberfläche angelegt und im Runner eingebettet. Beide Targets verwenden `group.com.ardasayar.linglossa`; Team und automatisches Signing entsprechen dem bestehenden Projekt. Die Version/Buildnummer der Extension kommt über `ios/Flutter/Widget.xcconfig` aus derselben Flutter-Konfiguration wie der Runner. iPad-Einstellungen des Runners sind unverändert. Die Extension unterstützt iOS 15+, Swift 6 mit vollständiger Concurrency-Prüfung; neuere Rendering-APIs sind entsprechend geschützt.
+
+`learningWidgetSnapshotProvider` projiziert Konto, aktive Sprache, Lernziel, Streak, lesbare redaktionelle Bibliothek, Lesestand und dieselbe Kartenmenge wie die Vokabelansicht. Die reine Domainfunktion speichert Fälligkeitszeitpunkte, keine abgeleiteten Vokabelzähler. Private Importtitel/-texte und Kontoidentifikatoren fehlen vollständig. Cover werden ausschließlich aus erlaubten eingebauten Assets kopiert, mit einem Dateinamen aus dem Inhalts-Hash; dadurch verweist eine ältere Timeline nicht versehentlich auf ein inzwischen anderes Bild.
+
+`WidgetSnapshotService` serialisiert App-Group-Schreibvorgänge. Logout-/Sprachwechsel-Tombstones werden auch dann geschrieben, wenn danach eine neue Projektion scheitert. Die App aktualisiert bei Lern-/Lesefortschritt, Konto-/Sprachwechsel und beim Öffnen/Verlassen. Die native Timeline berechnet Tagesziel, Serie, Woche und Fälligkeiten für jeden Eintrag neu; sie enthält sieben Mitternachts-Fallbacks und bis zu 48 weitere Fälligkeitszeitpunkte vor der nächsten Mitternacht. WidgetKit bestimmt den tatsächlichen Refresh-Zeitpunkt.
+
+`linglossa://…?homeWidget=1` wird ausschließlich über den Widget-Pluginpfad verarbeitet. Kalte und warme doppelte Callbacks werden entdoppelt. Ein Story-Tap wartet auf Sprache, Bibliothek und Kaufstatus; bei falscher Sprache, fehlendem Inhalt oder gesperrtem Zugang landet er auf Home. Eigene Importe sind kein Widget-Ziel. Die neue Abhängigkeit ist `home_widget 0.10.0`.
+
+Dateien: `ios/LinglossaWidgets/{LinglossaWidgets,WidgetSnapshot,WidgetViews}.swift`, zugehörige Plists/Entitlements/Fonts/Assets, Xcode-Projekt, Runner-Info/Entitlements und `ios/Flutter/Widget.xcconfig`; `lib/domain/widget_snapshot.dart`, `widget_launch_intent.dart`, `app_launch_intent.dart`; `lib/data/widgets/`; `lib/presentation/widgets/widget_snapshot_service.dart`, `P/widget_provider.dart`; App-Wurzel und Shell; drei neue Widget-Darttests und vier zusätzliche Story-Zielfälle im vorhandenen `app_launch_intent_test.dart`. Dessen bisherige Assertions bleiben erhalten. Swift-Modeltests liegen in `ios/WidgetTests/`, ihr isoliertes Package in `ios/Package.swift`. Reproduzierbares natives Rendering: `tool/widget_qa/`.
+
+### Screenshots
+
+Die 24 geforderten Einzelbilder sowie Übersichten, große Textgrößen und Vorschauen des akzentuierten Codezweigs liegen unter [Widgets](store-readiness/widgets/). Das Manifest benennt Renderlauf und Zustand. Sie stammen aus echten SwiftUI-Renderings auf einem iOS-Simulator mit synthetischen Daten und einem bestehenden Katalogcover.
+
+![Drei Größen und vier Zustände, hell](store-readiness/widgets/contact-sheet-light.png)
+
+![Drei Größen und vier Zustände, dunkel](store-readiness/widgets/contact-sheet-dark.png)
+
+Die getönten Vorschauen prüfen den entsprechenden SwiftUI-Codezweig. SpringBoards endgültige getönte/klare Glasdarstellung, die reale App-Group-Kommunikation und Widget-Taps auf dem iPhone sind damit noch nicht belegt.
+
+Die separaten Swift-Modeltests enden mit `Test run with 14 tests in 0 suites passed after 0.041 seconds.` Der produktive Swift-Code besteht außerdem den strikten Swift-6-Typcheck mit Deployment Target iOS 15. Keine bestehenden Goldens wurden geändert.
+
+Der vollständige Release-Build mit `flutter build ios --no-codesign` hat die native Extension tatsächlich in `Runner.app/PlugIns` eingebettet. Host und Extension melden dieselbe Version `1.0.0 (1)` und Deutsch; alle vier im Info.plist eingetragenen Fonts sind im Extension-Bundle vorhanden. Der erste Build deckte einen falschen relativen xcconfig-Pfad auf; der Pfad ist korrigiert. Der erfolgreiche Lauf endete mit:
+
+```text
+Xcode build done.                                           265,3s
+✓ Built build/ios/iphoneos/Runner.app (359.3MB)
+iPad orientations and all existing device families unchanged.
+Host and widget App Group match.
+```
+
+Flutter meldet für das bereits vorhandene `flutter_tts` die noch fehlende Swift-Package-Manager-Unterstützung; aktuell baut es erfolgreich über CocoaPods. Der unsignierte Build belegt Kompilierung und Einbettung, noch keine Gerätesignatur oder Zustellung.
+
+Ein zusätzlicher Review fand einen Kaltstartfall: Der Reader durfte erst nach dem asynchron geladenen lokalen Lesestand öffnen. `ReadingProgressNotifier.ready` und `readingProgressReadyProvider` in `reading_providers.dart` sowie verzögerte Speicher-Fakes sichern diesen Fall; Konto-, Sprach- und Sync-Neuladen setzen die Bereitschaft zurück, auch wenn der bisherige Store leer war. Acht zusätzliche Fälle prüfen Fortschritt, leeren Store, Fehler, Kontextwechsel und neueren Tap. Die bereits vorhandene Persistenz-, Merge- und Speicherlogik bleibt erhalten; vorhandene Tests wurden nicht abgeschwächt.
+
+Abschließende Prüfung des korrigierten Stands:
+
+```text
+No issues found! (ran in 7.2s)
+02:03 +1230 ~9: All tests passed!
+Formatted 14 files (0 changed) in 0.03 seconds.
+Xcode build done.                                           95,9s
+✓ Built build/ios/iphoneos/Runner.app (359.3MB)
+```
+
+Damit kommen gegenüber Teil 3 insgesamt 24 Flutter-Tests und zusätzlich 14 native Swift-Modeltests hinzu. Der finale GitNexus-Check ist ausdrücklich an den aktuellen Checkout-Pfad gebunden: 175 geänderte Symbole in 97 Dateien, LOW, `partial=false`, `truncated=false`. Es wurden keine zusätzlichen indexierten Prozesse zugeordnet; das ist keine Aussage über fehlende Laufzeitabhängigkeiten der Flutter/Swift-Brücke. Deren Snapshot-Vertrag, Timeline, Navigation, Bundle und Konto-/Speicherwechsel sind separat geprüft. Die vorangehende Lesestand-Auswirkungsanalyse war MEDIUM (Home, Reader, Sync, Onboarding und Widget als Verbraucher); der dynamische Notifier-Build war UNKNOWN und wurde zusätzlich über die Registrierung und konkrete Regressionstests geprüft.
+
 ## Noch offen
 
-Widgets, Barrierefreiheit und Geräteinstallation folgen in eigenen Teilen.
+Barrierefreiheit und Geräteinstallation folgen im letzten Teil.

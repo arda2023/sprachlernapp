@@ -1,0 +1,2 @@
+// Share the host version/build without linking Flutter or Runner pods.
+#include "Generated.xcconfig"
