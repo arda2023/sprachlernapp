@@ -14,6 +14,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/answer_check.dart';
+import '../../domain/content.dart';
+import '../../domain/review_pass.dart';
 import '../../domain/grammar_hint.dart';
 import '../../domain/srs_state.dart';
 import '../../domain/story_learning_diagnostics.dart' show storyCollectionId;
@@ -617,32 +619,7 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
           children: [
             Column(
               children: [
-                SafeArea(
-                  bottom: false,
-                  child: PracticeSessionBar(
-                    done: state.finished
-                        ? state.total
-                        : state.index + (state.saved ? 1 : 0),
-                    total: state.total,
-                    repeatIndices: {
-                      for (final (i, snapshot) in state.snapshots.indexed)
-                        if (snapshot.repeating) i,
-                      if (state.pass?.logged == false) state.index,
-                    },
-                    activeRepeat: state.pass?.logged == false && !state.saved,
-                    loading: state.loading,
-                    goalReached: state.goalReached,
-                    repeating: state.pass?.logged == false,
-                    onHome: () {
-                      _autoTimer?.cancel();
-                      _clearError();
-                      if (state.canLeave) Navigator.of(context).maybePop();
-                    },
-                    onMenu: canShow ? _menu : null,
-                    menuKey: _triggerKeys[_Trigger.menu],
-                    menuOpen: _openTrigger == _Trigger.menu,
-                  ),
-                ),
+                _buildSessionBar(context, state, canShow),
                 Expanded(
                   child: Semantics(
                     container: true,
@@ -697,143 +674,13 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                                           // replaces this page; no summary
                                           // flashes first (31.10.2026).
                                           : const SizedBox.shrink()
-                                    : Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          if (snapshot != null)
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                bottom: 12,
-                                              ),
-                                              child: Text(
-                                                'Rückblick · ${snapshot.feedback}',
-                                                style: AppType.chrome(
-                                                  color: context
-                                                      .appColors
-                                                      .textPrimary,
-                                                ),
-                                              ),
-                                            ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  context.appColors.raisedInk,
-                                              borderRadius:
-                                                  BorderRadius.circular(24),
-                                            ),
-                                            padding: const EdgeInsets.fromLTRB(
-                                              20,
-                                              6,
-                                              20,
-                                              10,
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.stretch,
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: _LevelTrigger(
-                                                    key:
-                                                        _triggerKeys[_Trigger
-                                                            .level],
-                                                    level:
-                                                        snapshot?.box ??
-                                                        pass!.boxBefore,
-                                                    open:
-                                                        _openTrigger ==
-                                                        _Trigger.level,
-                                                    onPressed: () => _withOverlay(
-                                                      () => _popover(
-                                                        _Trigger.level,
-                                                        (
-                                                          anchor,
-                                                        ) => MemoryLevelLegendSheet.show(
-                                                          anchor,
-                                                          current: math.max(
-                                                            1,
-                                                            snapshot?.box ??
-                                                                pass!.boxBefore,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 6),
-                                                PracticeSentence(
-                                                  key: _sentenceKey,
-                                                  sentence: sentence,
-                                                  input: _input,
-                                                  focus: _focus,
-                                                  solved: solved,
-                                                  keepFocus: snapshot == null,
-                                                  error:
-                                                      snapshot == null &&
-                                                      _fieldError,
-                                                  errorOffset: snapshot == null
-                                                      ? _errorOffset
-                                                      : 0,
-                                                  selectedStart: _word?.start,
-                                                  onSubmit: _submit,
-                                                  onChanged: _controller
-                                                      .clearWrongFormHint,
-                                                  onWord: (word) {
-                                                    unawaited(
-                                                      _cancelDictation(),
-                                                    );
-                                                    _autoTimer?.cancel();
-                                                    // Tapping the open word
-                                                    // again closes its bubble.
-                                                    if (_word?.start ==
-                                                        word.start) {
-                                                      setState(
-                                                        () => _word = null,
-                                                      );
-                                                      _schedule();
-                                                      return;
-                                                    }
-                                                    setState(
-                                                      () => _word = word,
-                                                    );
-                                                  },
-                                                ),
-                                                const SizedBox(height: 12),
-                                                // Exercise label as a chip that
-                                                // opens the grammar note.
-                                                Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: _InfoChip(
-                                                    key:
-                                                        _triggerKeys[_Trigger
-                                                            .info],
-                                                    label: contentCard!
-                                                        .exerciseLabel,
-                                                    open:
-                                                        _openTrigger ==
-                                                        _Trigger.info,
-                                                    onPressed: _grammar,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          const SizedBox(height: 12),
-                                          PracticeTranslationCard(
-                                            translation:
-                                                contentCard.translationDe ?? '',
-                                            sentence:
-                                                sentence.translationDe ?? '',
-                                            open: _translationOpen,
-                                            onToggle: () => setState(
-                                              () => _translationOpen =
-                                                  !_translationOpen,
-                                            ),
-                                          ),
-                                        ],
+                                    : _buildExercise(
+                                        context,
+                                        snapshot,
+                                        pass,
+                                        contentCard,
+                                        sentence,
+                                        solved,
                                       ),
                               ),
                             ),
@@ -844,83 +691,229 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
                   ),
                 ),
                 if (canShow && snapshot == null)
-                  ListenableBuilder(
-                    listenable: Listenable.merge([_input, _speech, _dictation]),
-                    builder: (context, _) => PracticeAnswerToolbar(
-                      error: _buttonError,
-                      errorOffset: _errorOffset,
-                      speakerEnabled: true,
-                      playing: _speech.playing != null,
-                      onSpeak: () async {
-                        await _cancelDictation();
-                        if (!mounted) return;
-                        _speechLanguage = contentCard?.lang;
-                        _speech.play(
-                          sentence.sentenceId,
-                          solved
-                              ? sentence.text
-                              : sentence.text.replaceRange(
-                                  sentence.gapStart,
-                                  sentence.gapEnd,
-                                  ' … ',
-                                ),
-                        );
-                      },
-                      onDictate: solved ? null : _dictate,
-                      dictating: _ownsDictation && _dictation.active,
-                      message: _ownsDictation && _dictation.active
-                          ? 'Sprich das Wort … System-Spracherkennung, ggf. online.'
-                          : state.saved ||
-                                state.message == 'Falsch' ||
-                                state.message ==
-                                    'Tippe das Wort ab, um weiterzumachen.'
-                          ? null
-                          : state.message,
-                      hasInput: _input.text.trim().isNotEmpty,
-                      saved: state.saved,
-                      solved: solved,
-                      revealed: pass!.revealed,
-                      onReveal: _reveal,
-                      onSubmit: _submit,
-                      onNext: state.saveFailed
-                          ? _controller.commit
-                          : state.saved
-                          ? _next
-                          : null,
-                      nextLabel: state.saveFailed
-                          ? 'Speichern wiederholen'
-                          : state.committing
-                          ? 'Wird gespeichert …'
-                          : 'Weiter',
-                    ),
+                  _buildAnswerToolbar(
+                    state,
+                    pass,
+                    contentCard,
+                    sentence,
+                    solved,
                   ),
                 if (snapshot != null)
                   const SafeArea(top: false, child: SizedBox(height: 12)),
               ],
             ),
-            if (_word case final word?) ...[
-              Positioned.fill(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onPanStart: (_) => setState(() => _word = null),
-                  onTapDown: (e) {
-                    if (!(_sentenceKey.currentState?.selectAt(
-                          e.globalPosition,
-                        ) ??
-                        false)) {
-                      setState(() => _word = null);
-                      _schedule();
-                    }
-                  },
-                ),
-              ),
-              _tooltip(word),
-            ],
+            if (_word case final word?) ..._buildWordOverlay(word),
           ],
         ),
       ),
     );
   }
+
+  Widget _buildSessionBar(
+    BuildContext context,
+    DeckSessionState state,
+    bool canShow,
+  ) => SafeArea(
+    bottom: false,
+    child: PracticeSessionBar(
+      done: state.finished ? state.total : state.index + (state.saved ? 1 : 0),
+      total: state.total,
+      repeatIndices: {
+        for (final (i, snapshot) in state.snapshots.indexed)
+          if (snapshot.repeating) i,
+        if (state.pass?.logged == false) state.index,
+      },
+      activeRepeat: state.pass?.logged == false && !state.saved,
+      loading: state.loading,
+      goalReached: state.goalReached,
+      repeating: state.pass?.logged == false,
+      onHome: () {
+        _autoTimer?.cancel();
+        _clearError();
+        if (state.canLeave) Navigator.of(context).maybePop();
+      },
+      onMenu: canShow ? _menu : null,
+      menuKey: _triggerKeys[_Trigger.menu],
+      menuOpen: _openTrigger == _Trigger.menu,
+    ),
+  );
+
+  Widget _buildMemoryLevel(SessionSnapshot? snapshot, ReviewPass? pass) =>
+      Align(
+        alignment: Alignment.centerLeft,
+        child: _LevelTrigger(
+          key: _triggerKeys[_Trigger.level],
+          level: snapshot?.box ?? pass!.boxBefore,
+          open: _openTrigger == _Trigger.level,
+          onPressed: () => _withOverlay(
+            () => _popover(
+              _Trigger.level,
+              (anchor) => MemoryLevelLegendSheet.show(
+                anchor,
+                current: math.max(1, snapshot?.box ?? pass!.boxBefore),
+              ),
+            ),
+          ),
+        ),
+      );
+
+  Widget _buildSentenceInput(
+    SessionSnapshot? snapshot,
+    CardSentence sentence,
+    bool solved,
+  ) => PracticeSentence(
+    key: _sentenceKey,
+    sentence: sentence,
+    input: _input,
+    focus: _focus,
+    solved: solved,
+    keepFocus: snapshot == null,
+    error: snapshot == null && _fieldError,
+    errorOffset: snapshot == null ? _errorOffset : 0,
+    selectedStart: _word?.start,
+    onSubmit: _submit,
+    onChanged: _controller.clearWrongFormHint,
+    onWord: (word) {
+      unawaited(_cancelDictation());
+      _autoTimer?.cancel();
+      // Tapping the open word
+      // again closes its bubble.
+      if (_word?.start == word.start) {
+        setState(() => _word = null);
+        _schedule();
+        return;
+      }
+      setState(() => _word = word);
+    },
+  );
+
+  Widget _buildExercise(
+    BuildContext context,
+    SessionSnapshot? snapshot,
+    ReviewPass? pass,
+    ContentCard? contentCard,
+    CardSentence sentence,
+    bool solved,
+  ) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      if (snapshot != null)
+        Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: Text(
+            'Rückblick · ${snapshot.feedback}',
+            style: AppType.chrome(color: context.appColors.textPrimary),
+          ),
+        ),
+      Container(
+        decoration: BoxDecoration(
+          color: context.appColors.raisedInk,
+          borderRadius: BorderRadius.circular(24),
+        ),
+        padding: const EdgeInsets.fromLTRB(20, 6, 20, 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildMemoryLevel(snapshot, pass),
+            const SizedBox(height: 6),
+            _buildSentenceInput(snapshot, sentence, solved),
+            const SizedBox(height: 12),
+            // Exercise label as a chip that
+            // opens the grammar note.
+            Align(
+              alignment: Alignment.centerLeft,
+              child: _InfoChip(
+                key: _triggerKeys[_Trigger.info],
+                label: contentCard!.exerciseLabel,
+                open: _openTrigger == _Trigger.info,
+                onPressed: _grammar,
+              ),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(height: 12),
+      PracticeTranslationCard(
+        translation: contentCard.translationDe ?? '',
+        sentence: sentence.translationDe ?? '',
+        open: _translationOpen,
+        onToggle: () => setState(() => _translationOpen = !_translationOpen),
+      ),
+    ],
+  );
+
+  Widget _buildAnswerToolbar(
+    DeckSessionState state,
+    ReviewPass? pass,
+    ContentCard? contentCard,
+    CardSentence sentence,
+    bool solved,
+  ) => ListenableBuilder(
+    listenable: Listenable.merge([_input, _speech, _dictation]),
+    builder: (context, _) => PracticeAnswerToolbar(
+      error: _buttonError,
+      errorOffset: _errorOffset,
+      speakerEnabled: true,
+      playing: _speech.playing != null,
+      onSpeak: () async {
+        await _cancelDictation();
+        if (!mounted) return;
+        _speechLanguage = contentCard?.lang;
+        _speech.play(
+          sentence.sentenceId,
+          solved
+              ? sentence.text
+              : sentence.text.replaceRange(
+                  sentence.gapStart,
+                  sentence.gapEnd,
+                  ' … ',
+                ),
+        );
+      },
+      onDictate: solved ? null : _dictate,
+      dictating: _ownsDictation && _dictation.active,
+      message: _ownsDictation && _dictation.active
+          ? 'Sprich das Wort … System-Spracherkennung, ggf. online.'
+          : state.saved ||
+                state.message == 'Falsch' ||
+                state.message == 'Tippe das Wort ab, um weiterzumachen.'
+          ? null
+          : state.message,
+      hasInput: _input.text.trim().isNotEmpty,
+      saved: state.saved,
+      solved: solved,
+      revealed: pass!.revealed,
+      onReveal: _reveal,
+      onSubmit: _submit,
+      onNext: state.saveFailed
+          ? _controller.commit
+          : state.saved
+          ? _next
+          : null,
+      nextLabel: state.saveFailed
+          ? 'Speichern wiederholen'
+          : state.committing
+          ? 'Wird gespeichert …'
+          : 'Weiter',
+    ),
+  );
+
+  List<Widget> _buildWordOverlay(WordAnchor word) => [
+    Positioned.fill(
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onPanStart: (_) => setState(() => _word = null),
+        onTapDown: (e) {
+          if (!(_sentenceKey.currentState?.selectAt(e.globalPosition) ??
+              false)) {
+            setState(() => _word = null);
+            _schedule();
+          }
+        },
+      ),
+    ),
+    _tooltip(word),
+  ];
 
   Widget _tooltip(WordAnchor word) {
     final box = _rootKey.currentContext?.findRenderObject() as RenderBox?;
