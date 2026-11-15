@@ -7,6 +7,7 @@ import 'package:sprachapp/screens/previews/screen_previews_screen.dart';
 import 'package:sprachapp/screens/onboarding/onboarding_screen.dart';
 import 'package:sprachapp/screens/completion/practice_completion_screen.dart';
 import 'package:sprachapp/screens/settings/settings_screen.dart';
+import 'package:sprachapp/screens/words/widgets/empty_word_panda.dart';
 import 'package:sprachapp/theme/app_theme.dart';
 
 import 'fixtures/deck_repositories.dart';
@@ -50,20 +51,26 @@ void main() {
     );
     for (final title in [
       'Onboarding',
+      'Leere Wortliste',
       'Übungsabschluss',
       'Abschluss nach 6 Tagen',
       'Wochenstern',
     ]) {
+      await t.ensureVisible(find.text(title));
       await t.tap(find.text(title));
       await t.pumpAndSettle();
       expect(
         find.byType(
-          title == 'Onboarding' ? OnboardingScreen : PracticeCompletionScreen,
+          switch (title) {
+            'Onboarding' => OnboardingScreen,
+            'Leere Wortliste' => EmptyWordPanda,
+            _ => PracticeCompletionScreen,
+          },
         ),
         findsOneWidget,
       );
       if (title == 'Wochenstern') {
-        expect(find.text('Wochenstern geholt!'), findsOneWidget);
+        expect(find.text('Dein Wochenstern!'), findsOneWidget);
         final now = DateTime.now();
         expect(
           await marks.celebrated(DateTime(now.year, now.month, now.day)),

@@ -165,7 +165,7 @@ void main() {
       ),
     );
     await t.pumpAndSettle();
-    final title = t.getTopLeft(find.text('Sehr gut!'));
+    final title = t.getTopLeft(find.text('Stark gemacht!'));
     final viewport = find.byKey(const ValueKey('completion-word-scroll'));
     final viewportTop = t.getTopLeft(viewport).dy;
     haptics.clear();
@@ -174,9 +174,12 @@ void main() {
       const Offset(0, -350),
     );
     await t.pumpAndSettle();
-    expect(t.getTopLeft(find.text('Sehr gut!')), title);
+    expect(t.getTopLeft(find.text('Stark gemacht!')), title);
     expect(t.getTopLeft(viewport).dy, viewportTop);
-    expect(t.getTopLeft(find.text('word 0')).dy, greaterThanOrEqualTo(viewportTop));
+    expect(
+      t.getTopLeft(find.text('word 0')).dy,
+      greaterThanOrEqualTo(viewportTop),
+    );
     expect(haptics, contains('HapticFeedbackType.selectionClick'));
     expect(t.takeException(), isNull);
   });

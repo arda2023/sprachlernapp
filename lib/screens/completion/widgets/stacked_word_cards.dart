@@ -210,12 +210,10 @@ class _WordCard extends StatelessWidget {
         word.form,
         if (word.translation.isNotEmpty) word.translation,
         if (word.isNew) 'neu',
-        if (word.sentence.isNotEmpty) word.sentence,
       ].join(', '),
       excludeSemantics: true,
       child: Container(
-        constraints: const BoxConstraints(minHeight: 116),
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 18),
+        padding: const EdgeInsets.fromLTRB(20, 12, 20, 14),
         decoration: BoxDecoration(
           color: colors.raisedInk,
           borderRadius: BorderRadius.circular(22),
@@ -257,7 +255,7 @@ class _WordCard extends StatelessWidget {
                     ),
                     child: Text(
                       'Neu',
-                      style: AppType.meta(color: colors.active),
+                      style: AppType.meta(color: colors.accentText),
                     ),
                   ),
               ],
@@ -269,17 +267,8 @@ class _WordCard extends StatelessWidget {
                 style: AppType.chrome(
                   size: 17,
                   weight: FontWeight.w600,
-                  color: colors.active,
+                  color: colors.accentText,
                 ),
-              ),
-            ],
-            if (word.sentence.isNotEmpty) ...[
-              const SizedBox(height: 10),
-              Text(
-                word.sentence,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: AppType.chrome(color: colors.textMuted, height: 1.35),
               ),
             ],
           ],

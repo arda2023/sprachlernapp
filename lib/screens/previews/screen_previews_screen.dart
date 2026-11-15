@@ -12,6 +12,7 @@ import '../../theme/app_theme.dart';
 import '../completion/practice_completion_screen.dart';
 import '../completion/widgets/stacked_word_cards.dart';
 import '../onboarding/onboarding_screen.dart';
+import '../words/widgets/empty_word_panda.dart';
 
 /// Manually replayable screens with presentation-only sample data.
 class ScreenPreviewsScreen extends StatelessWidget {
@@ -67,8 +68,13 @@ class ScreenPreviewsScreen extends StatelessWidget {
               OnboardingScreen(onDone: (_) => Navigator.of(context).pop()),
         ),
         (
+          title: 'Leere Wortliste',
+          detail: 'Panda am Bildschirmrand mit Übungshinweis',
+          build: (_) => const SafeArea(child: EmptyWordPanda()),
+        ),
+        (
           title: 'Übungsabschluss',
-          detail: 'Sehr gut! · Tag 4 · animierte Flamme und Wortkarten',
+          detail: 'Panda · Tag 4 · Streak und kompakte Wortkarten',
           build: (_) => _completion(4),
         ),
         (
@@ -152,7 +158,13 @@ class ScreenPreviewsScreen extends StatelessWidget {
                     ),
                   ],
                   child: Scaffold(
-                    appBar: AppBar(title: Text('Vorschau: ${preview.title}')),
+                    appBar: AppBar(
+                      title:
+                          preview.title == 'Onboarding' ||
+                              preview.title == 'Aus Storys'
+                          ? Text('Vorschau: ${preview.title}')
+                          : null,
+                    ),
                     body: Builder(builder: preview.build),
                   ),
                 ),

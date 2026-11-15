@@ -16,6 +16,7 @@ import '../../presentation/providers/database_providers.dart';
 import '../../presentation/content_unavailable_view.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/back_bar.dart';
+import 'widgets/empty_word_panda.dart';
 import 'widgets/playback_highlight.dart';
 import 'widgets/word_list_item.dart';
 
@@ -177,7 +178,7 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
   @override
   Widget build(BuildContext context) {
     final result = ref.watch(wordListProvider);
-    if (result.hasError && !result.hasValue) {
+    if (result.hasError && (result.value?.isEmpty ?? true)) {
       return SafeArea(
         child: ContentUnavailableView(
           error: result.error!,
@@ -188,10 +189,11 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
         ),
       );
     }
-    if (!result.hasValue) {
+    if (!result.hasValue || (result.isLoading && result.requireValue.isEmpty)) {
       return const SafeArea(child: Center(child: CupertinoActivityIndicator()));
     }
-    final all = result.requireValue
+    final vocabulary = result.requireValue;
+    final all = vocabulary
         .where(
           (w) => widget.targetCardId == null || w.id == widget.targetCardId,
         )
@@ -201,7 +203,13 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
       child: ListenableBuilder(
         listenable: Listenable.merge([_playback, _query]),
         builder: (context, _) {
-          final q = _query.text.trim().toLowerCase();
+          final search = _query.text.trim();
+          final q = search.toLowerCase();
+          final showPanda =
+              vocabulary.isEmpty &&
+              widget.targetCardId == null &&
+              _filter == _Filter.all &&
+              search.isEmpty;
           final filtered = all.where(_filter.matches).toList();
           final words = filtered
               .where(
@@ -276,15 +284,16 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
               ),
               const SizedBox(height: 12),
               Expanded(
-                child: words.isEmpty
+                child: showPanda
+                    ? const EmptyWordPanda()
+                    : words.isEmpty
                     ? Padding(
                         padding: _gutter,
                         child: Text(
-                          all.isEmpty
-                              ? 'Noch keine Wörter. Übe einen Stapel oder füge '
-                                    'in einer Story ein Wort zum Lernen hinzu.'
-                              : _query.text.trim().isNotEmpty
-                              ? 'Keine Wörter für „${_query.text.trim()}“'
+                          search.isNotEmpty
+                              ? 'Keine Wörter für „$search“'
+                              : all.isEmpty && widget.targetCardId != null
+                              ? 'Dieses Wort ist nicht in deiner Wortliste.'
                               : 'Keine Wörter unter „${_filter.label}“.',
                           style: AppType.chrome(
                             color: context.appColors.textMuted,

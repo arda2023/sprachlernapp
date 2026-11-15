@@ -5,12 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sprachapp/domain/streak.dart';
 import 'package:sprachapp/models/home_models.dart';
 import 'package:sprachapp/screens/completion/practice_completion_screen.dart';
+import 'package:sprachapp/screens/completion/widgets/completion_panda.dart';
 import 'package:sprachapp/screens/completion/widgets/stacked_word_cards.dart';
+import 'package:sprachapp/screens/completion/widgets/streak_charge_bar.dart';
 import 'package:sprachapp/theme/app_theme.dart';
 
 void main() {
   setUpAll(() => GoogleFonts.config.allowRuntimeFetching = false);
-  testWidgets('header glide does not reconstruct the word stack each frame', (
+  testWidgets('panda and bar glide together without rebuilding the word stack', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -41,13 +43,16 @@ void main() {
         ),
       ),
     );
-    for (var i = 0; i < 80; i++) {
+    for (var i = 0; i < 47; i++) {
       await tester.pump(const Duration(milliseconds: 16));
     }
     final cards = tester.widget<StackedWordCards>(
       find.byType(StackedWordCards),
     );
-    final before = tester.getTopLeft(find.text('Sehr gut!'));
+    final panda = find.byType(CompletionPanda);
+    final bar = find.byType(StreakChargeBar);
+    final pandaBefore = tester.getTopLeft(panda).dy;
+    final barBefore = tester.getTopLeft(bar).dy;
     var replaced = 0;
     for (var i = 0; i < 20; i++) {
       await tester.pump(const Duration(milliseconds: 16));
@@ -55,7 +60,10 @@ void main() {
         replaced++;
       }
     }
-    expect(tester.getTopLeft(find.text('Sehr gut!')).dy, lessThan(before.dy));
+    final pandaShift = tester.getTopLeft(panda).dy - pandaBefore;
+    final barShift = tester.getTopLeft(bar).dy - barBefore;
+    expect(pandaShift, isNegative);
+    expect(pandaShift, closeTo(barShift, 0.01));
     expect(replaced, 0);
     debugPrint(
       'COMPLETION MOTION: 20 moving-header frames, $replaced word-stack reconstructions',

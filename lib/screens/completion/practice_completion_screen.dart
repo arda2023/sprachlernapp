@@ -3,6 +3,7 @@ import '../web/web_reading_viewport.dart';
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart' show Scaffold;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,16 +18,15 @@ import '../../presentation/providers/review_request_provider.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/action_buttons.dart';
 import '../../widgets/svg_glyph.dart';
+import 'widgets/completion_panda.dart';
 import 'widgets/stacked_word_cards.dart';
 import 'widgets/streak_charge_bar.dart';
 
 /// Shown after a deck practice session once the daily goal is reached
 /// (docs/redesign/design-system.md › Abschluss). The streak bar appears in
-/// the middle and charges up to today – checks pop one after another, the
-/// phone buzzes while it charges, day seven flips the star – while the
-/// headline fades in above it. Then both glide to the top and the rest
-/// settles below: streak and daily goal side by side, the session's words as
-/// stacked cards, "Weiter".
+/// the middle, the panda climbs up to watch, and the bar charges to today.
+/// On day seven the star flips. The panda and bar glide upwards together,
+/// leaving room for the stats, stacked recap cards and "Weiter".
 class PracticeCompletionScreen extends ConsumerStatefulWidget {
   const PracticeCompletionScreen({
     super.key,
@@ -96,9 +96,9 @@ class _PracticeCompletionScreenState
     vsync: this,
     duration: const Duration(milliseconds: 1250),
   );
-  late final _title = AnimationController(
+  late final _pandaIntro = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 500),
+    duration: CompletionPanda.introDuration,
   );
 
   /// The first quarter is a pause before header and bar glide up.
@@ -114,8 +114,11 @@ class _PracticeCompletionScreenState
     duration: const Duration(milliseconds: 900),
   );
 
-  final _headerKey = GlobalKey();
-  double? _headerHeight;
+  final _celebrate = ValueNotifier(false);
+  final _pandaReady = Completer<bool>();
+  Timer? _pandaDeadline;
+  TickerFuture? _pandaEntering;
+  bool _stillPanda = false;
   Timer? _buzz;
   int _popped = 0;
   bool _barFull = false;
@@ -135,7 +138,6 @@ class _PracticeCompletionScreenState
       _reviewOwner = ref.read(contentAuthProvider).localOwner;
     }
     _charge.addListener(_onCharge);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _measure());
   }
 
   @override
@@ -143,26 +145,37 @@ class _PracticeCompletionScreenState
     super.didChangeDependencies();
     if (!_started) {
       _started = true;
-      if (MediaQuery.disableAnimationsOf(context)) {
-        _skipToEnd();
-      } else {
-        unawaited(_run());
-      }
+      _stillPanda = !CompletionPanda.hasNativeRuntime;
+      if (!MediaQuery.disableAnimationsOf(context)) unawaited(_run());
+    }
+    if (!_done && MediaQuery.disableAnimationsOf(context)) {
+      _skipToEnd();
     }
   }
 
-  void _measure() {
-    final box = _headerKey.currentContext?.findRenderObject() as RenderBox?;
-    if (box != null && box.hasSize && mounted) {
-      setState(() => _headerHeight = box.size.height);
-    }
+  void _onPandaIntro() {
+    if (_stillPanda || _pandaReady.isCompleted) return;
+    _pandaEntering = _pandaIntro.forward();
+    _finishPandaLoading(true);
+  }
+
+  void _finishPandaLoading(bool ready) {
+    _pandaDeadline?.cancel();
+    if (!_pandaReady.isCompleted) _pandaReady.complete(ready);
   }
 
   /// Reduced motion: final state at once, one confirming tap, no sound.
   void _skipToEnd() {
     _done = true;
+    _stillPanda = true;
+    _finishPandaLoading(false);
+    _pandaIntro.stop();
+    _buzz?.cancel();
+    if (_charge.isAnimating && !_barFull) _sounds.stopCharge();
+    _shimmer.stop();
+    _celebrate.value = true;
     _charge.removeListener(_onCharge);
-    for (final c in [_appear, _charge, _star, _title, _settle, _content]) {
+    for (final c in [_appear, _charge, _star, _settle, _content]) {
       c.value = 1;
     }
     _glowOff.value = 0;
@@ -173,8 +186,25 @@ class _PracticeCompletionScreenState
   }
 
   Future<void> _run() async {
+    if (!_stillPanda) {
+      _pandaDeadline = Timer(
+        const Duration(seconds: 2),
+        () => _finishPandaLoading(false),
+      );
+    }
     await _appear.forward();
-    if (!mounted) return;
+    if (!mounted || _done) return;
+    if (!_stillPanda) {
+      final ready = await _pandaReady.future;
+      if (!mounted || _done) return;
+      if (ready) {
+        await _pandaEntering;
+      } else {
+        // Continue the recap even if the native asset fails to start.
+        setState(() => _stillPanda = true);
+      }
+    }
+    if (!mounted || _done) return;
     if (_target > 0) {
       _sounds.charge();
       _shimmer.repeat();
@@ -184,14 +214,13 @@ class _PracticeCompletionScreenState
         (_) => HapticFeedback.lightImpact(),
       );
       await _charge.forward();
-    } else {
-      await _title.forward();
     }
     if (!mounted) return;
     if (widget.streak.starToday) await _starMoment();
     if (!mounted) return;
     await _settle.forward();
     if (!mounted) return;
+    _celebrate.value = true;
     await _content.forward();
     if (mounted) {
       setState(() => _done = true);
@@ -232,8 +261,6 @@ class _PracticeCompletionScreenState
   /// when the pill arrives; the star flips once it is reached.
   void _onCharge() {
     final days = _days.value;
-    // The headline follows shortly after the bar starts.
-    if (days >= 0.6 && _title.isDismissed) _title.forward();
     final checks = _target.clamp(0, streakBarDays);
     while (_popped < checks && days >= _popped + StreakChargeBar.popAt) {
       _popped++;
@@ -279,32 +306,22 @@ class _PracticeCompletionScreenState
   @override
   void dispose() {
     _buzz?.cancel();
+    _finishPandaLoading(false);
     _charge.removeListener(_onCharge);
+    _celebrate.dispose();
     for (final c in [
       _appear,
       _charge,
       _shimmer,
       _glowOff,
       _star,
-      _title,
+      _pandaIntro,
       _settle,
       _content,
     ]) {
       c.dispose();
     }
     super.dispose();
-  }
-
-  String get _headline =>
-      widget.streak.starToday ? 'Wochenstern geholt!' : 'Sehr gut!';
-
-  String get _subtitle {
-    final s = widget.streak;
-    if (s.starToday) return 'Sieben Tage am Stück – das ist dein Wochenstern.';
-    if (s.current <= 1) return 'Tagesziel geschafft – Tag 1 deiner Serie.';
-    final left = s.daysToStar;
-    return 'Tag ${s.current} in Folge. Noch $left '
-        '${left == 1 ? 'Tag' : 'Tage'} bis zum Wochenstern.';
   }
 
   /// Staggered entrance for the parts below the header.
@@ -321,27 +338,39 @@ class _PracticeCompletionScreenState
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  const top = 28.0;
-                  final header = _headerHeight ?? 210;
-                  // Starts in the middle of the screen, ends at the top.
-                  final centred = (constraints.maxHeight - header) / 2 - top;
+                  final height = constraints.maxHeight;
+                  final top = (height * 0.08).clamp(12.0, 58.0);
+                  final wordTop = (height * 0.08).clamp(16.0, 48.0);
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20, top, 20, 0),
+                        padding: EdgeInsets.fromLTRB(20, top, 20, 0),
                         child: AnimatedBuilder(
                           animation: _glide,
-                          builder: (context, child) => Transform.translate(
-                            offset: Offset(0, centred * (1 - _glide.value)),
-                            child: child,
-                          ),
+                          builder: (context, child) {
+                            final remaining = 1 - _glide.value;
+                            return Transform.translate(
+                              offset: Offset(0, (height / 2 - top) * remaining),
+                              child: FractionalTranslation(
+                                translation: Offset(0, -0.5 * remaining),
+                                child: child,
+                              ),
+                            );
+                          },
                           child: _Header(
-                            key: _headerKey,
                             appear: _appear,
-                            title: _title,
-                            headline: _headline,
-                            subtitle: _subtitle,
+                            celebrate: _celebrate,
+                            messageIn: _part(0.12, 0.6),
+                            message: widget.streak.starToday
+                                ? 'Dein Wochenstern!'
+                                : 'Stark gemacht!',
+                            pandaMaxHeight: (height * 0.26).clamp(32.0, 136.0),
+                            stillPanda:
+                                _stillPanda ||
+                                MediaQuery.disableAnimationsOf(context),
+                            onPandaIntro: _onPandaIntro,
+                            onPandaLoadFailed: () => _finishPandaLoading(false),
                             semantics:
                                 'Streak ${widget.streak.current} '
                                 '${widget.streak.current == 1 ? 'Tag' : 'Tage'}'
@@ -386,9 +415,9 @@ class _PracticeCompletionScreenState
                                     slivers: [
                                       SliverToBoxAdapter(
                                         child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
+                                          padding: EdgeInsets.fromLTRB(
                                             20,
-                                            32,
+                                            wordTop,
                                             20,
                                             0,
                                           ),
@@ -396,6 +425,7 @@ class _PracticeCompletionScreenState
                                             children: [
                                               StackedWordCards(
                                                 words: widget.words,
+                                                stickyTop: wordTop,
                                               ),
                                               SizedBox(
                                                 height:
@@ -461,69 +491,88 @@ class _Rise extends StatelessWidget {
 
 class _Header extends StatelessWidget {
   const _Header({
-    super.key,
     required this.appear,
-    required this.title,
-    required this.headline,
-    required this.subtitle,
+    required this.celebrate,
+    required this.messageIn,
+    required this.message,
+    required this.pandaMaxHeight,
+    required this.stillPanda,
+    required this.onPandaIntro,
+    required this.onPandaLoadFailed,
     required this.semantics,
     required this.bar,
   });
 
   final Animation<double> appear;
-  final Animation<double> title;
-  final String headline;
-  final String subtitle;
+  final ValueListenable<bool> celebrate;
+  final Animation<double> messageIn;
+  final String message;
+  final double pandaMaxHeight;
+  final bool stillPanda;
+  final VoidCallback onPandaIntro;
+  final VoidCallback onPandaLoadFailed;
   final String semantics;
   final Widget bar;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.appColors;
-    final titleIn = CurveTween(curve: Curves.easeOutCubic).animate(title);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        AnimatedBuilder(
-          animation: titleIn,
-          builder: (context, child) => Opacity(
-            opacity: titleIn.value,
-            child: Transform.translate(
-              offset: Offset(0, 14 * (1 - titleIn.value)),
-              child: child,
-            ),
-          ),
-          child: Column(
-            children: [
-              Semantics(
-                header: true,
-                child: Text(
-                  headline,
-                  textAlign: TextAlign.center,
-                  style: AppType.editorial(color: colors.textPrimary, size: 32),
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                subtitle,
-                textAlign: TextAlign.center,
-                style: AppType.chrome(
-                  size: 15,
-                  color: colors.textMuted,
-                  height: 1.35,
-                ),
-              ),
-            ],
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              const ratio = CompletionPanda.aspectRatio;
+              final messageScale = MediaQuery.textScalerOf(context).scale(17);
+              final pandaShare = messageScale > 25 ? 0.30 : 0.40;
+              final pandaWidth = (constraints.maxWidth * pandaShare).clamp(
+                0.0,
+                pandaMaxHeight * ratio,
+              );
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: pandaWidth,
+                    height: pandaWidth / ratio,
+                    child: ValueListenableBuilder(
+                      valueListenable: celebrate,
+                      builder: (context, celebrate, _) => CompletionPanda(
+                        celebrate: celebrate,
+                        still: stillPanda,
+                        onIntroStarted: onPandaIntro,
+                        onLoadFailed: onPandaLoadFailed,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: pandaWidth * 0.48),
+                      child: FadeTransition(
+                        opacity: messageIn,
+                        child: _CompletionMessage(message: message),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
-        const SizedBox(height: 22),
         AnimatedBuilder(
           animation: appear,
           builder: (context, child) {
             final t = Curves.easeOutBack.transform(appear.value);
             return Opacity(
               opacity: appear.value,
-              child: Transform.scale(scale: 0.9 + 0.1 * t, child: child),
+              child: Transform.scale(
+                scale: 0.9 + 0.1 * t,
+                alignment: Alignment.topCenter,
+                child: child,
+              ),
             );
           },
           child: Semantics(
@@ -544,6 +593,69 @@ class _Header extends StatelessWidget {
   }
 }
 
+class _CompletionMessage extends StatelessWidget {
+  const _CompletionMessage({required this.message});
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = context.appColors.popover;
+    return Semantics(
+      header: true,
+      child: CustomPaint(
+        painter: _SpeechTail(color),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: _SpeechTail.height),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+              child: Text(
+                message,
+                textAlign: TextAlign.center,
+                style: AppType.chrome(
+                  size: 17,
+                  weight: FontWeight.w700,
+                  color: const Color(0xFFFFFFFF),
+                  height: 1.15,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SpeechTail extends CustomPainter {
+  const _SpeechTail(this.color);
+
+  static const height = 8.0;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final bottom = size.height - height;
+    canvas.drawPath(
+      Path()
+        ..moveTo(16, bottom - 9)
+        ..lineTo(31, bottom - 3)
+        ..quadraticBezierTo(24, bottom + 3, 11, bottom + 7)
+        ..quadraticBezierTo(9, bottom + 8, 10, bottom + 5)
+        ..close(),
+      Paint()..color = color,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_SpeechTail oldDelegate) => oldDelegate.color != color;
+}
+
 /// Streak (flame) and daily goal side by side.
 class _Stats extends StatelessWidget {
   const _Stats({required this.streak, required this.goal});
@@ -560,7 +672,6 @@ class _Stats extends StatelessWidget {
         children: [
           Expanded(
             child: _StatTile(
-              label: streak == 1 ? 'Tag in Folge' : 'Tage in Folge',
               value: '$streak',
               semantics:
                   'Streak: $streak ${streak == 1 ? 'Tag' : 'Tage'} in Folge',
@@ -576,7 +687,6 @@ class _Stats extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: _StatTile(
-              label: 'Tagesziel',
               value: '${goal.done}/${goal.target}',
               semantics:
                   'Tagesziel: ${goal.done} von ${goal.target} Wörtern geübt',
@@ -595,13 +705,11 @@ class _Stats extends StatelessWidget {
 
 class _StatTile extends StatelessWidget {
   const _StatTile({
-    required this.label,
     required this.value,
     required this.semantics,
     required this.icon,
   });
 
-  final String label;
   final String value;
   final String semantics;
   final Widget icon;
@@ -619,27 +727,26 @@ class _StatTile extends StatelessWidget {
           color: colors.raisedInk,
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(label, style: AppType.meta(color: colors.textMuted)),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                icon,
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Text(
-                    value,
-                    style: AppType.chrome(
-                      size: 28,
-                      weight: FontWeight.w800,
-                      color: colors.textPrimary,
-                      tabular: true,
-                    ),
+            icon,
+            const SizedBox(width: 8),
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  value,
+                  maxLines: 1,
+                  softWrap: false,
+                  style: AppType.chrome(
+                    size: 28,
+                    weight: FontWeight.w800,
+                    color: colors.textPrimary,
+                    tabular: true,
                   ),
                 ),
-              ],
+              ),
             ),
           ],
         ),

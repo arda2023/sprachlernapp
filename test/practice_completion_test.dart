@@ -95,15 +95,15 @@ void main() {
     ],
     child: MaterialApp(
       theme: buildAppTheme(),
-      home: MediaQuery(
-        data: MediaQueryData(
-          size: const Size(390, 844),
-          disableAnimations: reduceMotion,
-        ),
-        child: PracticeCompletionScreen(
-          streak: streak,
-          goal: const DailyGoal(done: 12, target: 10),
-          words: words,
+      home: Builder(
+        builder: (context) => MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(disableAnimations: reduceMotion),
+          child: PracticeCompletionScreen(
+            streak: streak,
+            goal: const DailyGoal(done: 12, target: 10),
+            words: words,
+          ),
         ),
       ),
     ),
@@ -142,11 +142,7 @@ void main() {
       haptics.where((h) => h == 'HapticFeedbackType.mediumImpact'),
       hasLength(4),
     );
-    expect(find.text('Sehr gut!'), findsOneWidget);
-    expect(
-      find.text('Tag 4 in Folge. Noch 3 Tage bis zum Wochenstern.'),
-      findsOneWidget,
-    );
+    expect(find.text('Stark gemacht!'), findsOneWidget);
     expect(
       find.bySemanticsLabel('Streak 4 Tage, 4 von 7 Tagen dieser Woche'),
       findsOneWidget,
@@ -157,6 +153,9 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('12/10'), findsOneWidget);
+    expect(find.text('Tage in Folge'), findsNothing);
+    expect(find.text('Tagesziel'), findsNothing);
+    expect(find.text('A sentence with walks in it.'), findsNothing);
     expect(find.text('Neue Wörter'), findsNothing);
     expect(find.bySemanticsLabel(RegExp(r'^walks, geht, neu')), findsOneWidget);
     expect(tester.widget<Opacity>(weiter.first).opacity, 1);
@@ -176,7 +175,7 @@ void main() {
     expect(sounds.calls.where((c) => c == 'check'), hasLength(6));
     expect(sounds.calls.last, 'star');
     expect(haptics, contains('HapticFeedbackType.heavyImpact'));
-    expect(find.text('Wochenstern geholt!'), findsOneWidget);
+    expect(find.text('Dein Wochenstern!'), findsOneWidget);
     expect(await marks.celebrated(DateTime(2026, 10, 24)), isTrue);
   });
 
@@ -189,7 +188,7 @@ void main() {
     );
     await tester.pump();
     expect(sounds.calls, isEmpty);
-    expect(find.text('Sehr gut!'), findsOneWidget);
+    expect(find.text('Stark gemacht!'), findsOneWidget);
     final weiter = find.ancestor(
       of: find.text('Weiter'),
       matching: find.byType(Opacity),
@@ -211,7 +210,7 @@ void main() {
 
     // The first card stays pinned near the top instead of leaving.
     expect(tester.getTopLeft(walks).dy, greaterThanOrEqualTo(viewportTop));
-    expect(tester.getTopLeft(walks).dy, lessThan(viewportTop + 60));
+    expect(tester.getTopLeft(walks).dy, lessThan(viewportTop + 72));
   });
 
   testWidgets(
@@ -278,10 +277,15 @@ void main() {
   );
 
   testWidgets('Completion survives large Dynamic Type', (tester) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(320, 568);
     tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
-    await tester.pumpWidget(screen(summary(days: 5)));
+    await tester.pumpWidget(screen(summary(days: 7, star: true)));
     await tester.pumpAndSettle();
+    expect(find.text('Weiter').hitTestable(), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
