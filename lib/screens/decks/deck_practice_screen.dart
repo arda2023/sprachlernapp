@@ -34,6 +34,9 @@ import '../../widgets/popover_content.dart';
 import '../words/widgets/memory_level_indicator.dart';
 import '../words/widgets/memory_level_legend_sheet.dart';
 import '../settings/settings_screen.dart';
+import '../../presentation/providers/auth_providers.dart';
+import '../../domain/learning_milestone.dart';
+import '../../presentation/providers/learning_milestone_provider.dart';
 import '../completion/practice_completion_screen.dart';
 import '../completion/widgets/stacked_word_cards.dart';
 import 'widgets/form_info_sheet.dart';
@@ -53,10 +56,12 @@ class DeckPracticeScreen extends ConsumerStatefulWidget {
     required this.deckId,
     this.mode = DeckPracticeMode.learn,
     this.sessionSize = 0,
+    this.onSessionCompleted,
   });
   final String deckId;
   final DeckPracticeMode mode;
   final int sessionSize;
+  final VoidCallback? onSessionCompleted;
   static Future<void> open(
     BuildContext context, {
     required String deckId,
@@ -961,6 +966,8 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
       return;
     }
     _completing = true;
+    final auth = ref.read(contentAuthProvider);
+    final owner = auth.localOwner;
     try {
       ref.invalidate(learningProgressProvider);
       ref.invalidate(streakProvider);
@@ -980,11 +987,29 @@ class _DeckPracticeScreenState extends ConsumerState<DeckPracticeScreen>
             ),
       ];
       final fresh = words.where((w) => w.isNew).toList();
+      if (auth.localOwner != owner) return;
+      widget.onSessionCompleted?.call();
+      if (!mounted) return;
+      const noMilestone = (
+        successful: false,
+        milestones: <LearningMilestone>[],
+      );
+      final achievement = ref
+          .read(learningMilestoneStoreProvider.future)
+          .then(
+            (store) => auth.localOwner == owner
+                ? store.practice({
+                    for (final record in state.records) record.id,
+                  })
+                : Future.value(noMilestone),
+          )
+          .catchError((Object _) => noMilestone);
       await Navigator.of(context).pushReplacement(
         PracticeCompletionScreen.route(
           streak: streak,
           goal: progress.goal,
           words: fresh.isNotEmpty ? fresh : words,
+          achievement: achievement,
         ),
       );
     } catch (_) {
@@ -1056,7 +1081,7 @@ class _LevelTrigger extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const white = Color(0xFFFFFFFF);
+    const white = AppColors.onActive;
     final colors = context.appColors;
     return CupertinoButton(
       padding: EdgeInsets.zero,
@@ -1098,7 +1123,7 @@ class _InfoChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const white = Color(0xFFFFFFFF);
+    const white = AppColors.onActive;
     final colors = context.appColors;
     return CupertinoButton(
       padding: EdgeInsets.zero,

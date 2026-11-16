@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sprachapp/data/notifications/notification_gateway.dart';
 import 'package:sprachapp/data/platform/json_store_base.dart';
 import 'package:sprachapp/domain/app_launch_intent.dart';
-import 'package:sprachapp/domain/trial_reminder.dart';
 import 'package:sprachapp/presentation/notifications/notification_service.dart';
 import 'package:timezone/data/latest.dart' as tz_data;
 
@@ -93,36 +92,17 @@ class _Harness {
     bool? done = false,
     bool routingReady = true,
     bool foreground = true,
-    TrialReminderDecision? trial,
+    DateTime? latestReview,
+    bool hasDueReviews = false,
   }) => NotificationContext(
     ownerKey: notificationOwnerKey(owner),
     language: language,
     routingReady: routingReady,
     canRequestPermission: foreground,
     goalReachedToday: done,
-    trial: trial ?? const TrialReminderDecision(TrialReminderStatus.inactive),
+    latestReviewAt: latestReview,
+    hasDueReviews: hasDueReviews,
   );
-
-  TrialReminderDecision trial() => TrialReminderDecision(
-    TrialReminderStatus.ready,
-    TrialReminderPlan(
-      productId: 'yearly',
-      expiresAt: time.add(const Duration(days: 7)),
-      remindAt: time.add(const Duration(days: 6)),
-      isSandbox: false,
-    ),
-  );
-}
-
-class _DelayedStore extends MemoryJsonStore {
-  final writing = Completer<void>();
-  final release = Completer<void>();
-  @override
-  Future<void> write(Object? json) async {
-    if (!writing.isCompleted) writing.complete();
-    await release.future;
-    await super.write(json);
-  }
 }
 
 void main() {
@@ -138,7 +118,7 @@ void main() {
       await h.service.setLearningEnabled(true);
       expect(h.gateway.requests, 1);
       expect(h.state.learningEnabled, true);
-      expect(h.gateway.scheduled, hasLength(30));
+      expect(h.gateway.scheduled, hasLength(3));
       await h.service.refresh();
       expect(h.gateway.requests, 1);
       await h.service.setLearningEnabled(false);
@@ -169,10 +149,10 @@ void main() {
         DateTime.utc(2026, 11, 13, 19, 15),
       );
       await h.service.update(h.context(done: true));
-      expect(h.gateway.scheduled, hasLength(29));
+      expect(h.gateway.scheduled, hasLength(2));
       expect(
         h.gateway.scheduled.values.first.at,
-        DateTime.utc(2026, 11, 14, 19, 15),
+        DateTime.utc(2026, 11, 15, 19, 15),
       );
       await h.service.update(
         h.context(language: null, done: null, routingReady: false),
@@ -205,8 +185,52 @@ void main() {
       expect(h.gateway.scheduled, isEmpty);
       await h.service.update(h.context());
       expect(h.state.settings.hour, 18);
-      expect(h.gateway.scheduled, hasLength(30));
+      expect(h.gateway.scheduled, hasLength(3));
       expect((await h.store.read()).toString(), isNot(contains('account-a')));
+    },
+  );
+
+  test('the optional purpose stays with its account and language', () async {
+    final h = _Harness();
+    await h.service.update(h.context());
+    await h.service.setLearningPurpose('Reisen');
+    await h.service.setLearningEnabled(true);
+    expect(h.gateway.scheduled.values.first.title, contains('unterwegs'));
+
+    final reopened = _Harness(settingsStore: h.store);
+    reopened.gateway.permission = NotificationPermission.allowed;
+    await reopened.service.update(reopened.context(language: 'fr'));
+    expect(
+      reopened.gateway.scheduled.values.first.title,
+      isNot(contains('unterwegs')),
+    );
+
+    await reopened.service.update(reopened.context(owner: 'account-b'));
+    await reopened.service.setLearningEnabled(true);
+    expect(
+      reopened.gateway.scheduled.values.first.title,
+      isNot(contains('unterwegs')),
+    );
+
+    await reopened.service.update(reopened.context());
+    expect(
+      reopened.gateway.scheduled.values.first.title,
+      contains('unterwegs'),
+    );
+  });
+
+  test(
+    'a legacy reminder setting is treated as an existing decision',
+    () async {
+      final store = MemoryJsonStore();
+      await store.write({
+        notificationOwnerKey('account-a'): {'enabled': false, 'hour': 17},
+      });
+      final h = _Harness(settingsStore: store);
+      await h.service.update(h.context());
+      expect(h.state.canInvite, false);
+      expect(h.state.settings.hour, 17);
+      expect(h.gateway.requests, 0);
     },
   );
 
@@ -230,118 +254,124 @@ void main() {
   );
 
   test(
-    'restore/startup does not ask; explicit confirmed trial asks once',
+    'expired inactivity cycle stays quiet across refresh and restart',
     () async {
       final h = _Harness();
-      final context = h.context(trial: h.trial());
-      await h.service.update(context);
+      await h.service.update(h.context(hasDueReviews: true));
+      await h.service.setLearningEnabled(true);
+      final initial = h.gateway.scheduled.values.toList();
+      expect(initial.map((n) => n.at), [
+        DateTime.utc(2026, 11, 13, 18),
+        DateTime.utc(2026, 11, 15, 18),
+        DateTime.utc(2026, 11, 18, 18),
+      ]);
+      expect(initial.map((n) => n.title).toSet(), hasLength(3));
+      expect(
+        initial.first.title,
+        anyOf(
+          'Wörter zum Wiederholen',
+          'Zeit für eine Wiederholung',
+          'Schon im Kopf?',
+        ),
+      );
+      h.time = initial[0].at.add(const Duration(minutes: 1));
+      await h.service.setLearningTime(21, 0);
+      expect(h.gateway.scheduled.keys, hasLength(2));
+      expect(
+        h.gateway.scheduled.values.first.at,
+        DateTime.utc(2026, 11, 15, 20),
+      );
+
+      final reopened = _Harness(settingsStore: h.store);
+      reopened.gateway.permission = NotificationPermission.allowed;
+      reopened.time = h.time.add(const Duration(days: 7));
+      await reopened.service.update(reopened.context());
+      expect(reopened.state.learningEnabled, true);
+      expect(reopened.gateway.scheduled, isEmpty);
+      await reopened.service.refresh();
+      expect(reopened.gateway.scheduled, isEmpty);
+
+      final review = reopened.time.subtract(const Duration(minutes: 5));
+      await reopened.service.update(reopened.context(latestReview: review));
+      expect(reopened.gateway.scheduled, hasLength(3));
+      expect(
+        reopened.gateway.scheduled.values.first.at,
+        DateTime.utc(2026, 11, 21, 20),
+      );
+      await reopened.service.update(reopened.context(latestReview: review));
+      expect(reopened.gateway.scheduled, hasLength(3));
+    },
+  );
+
+  test(
+    'synced learning cancels the same-day reminder below the goal',
+    () async {
+      final h = _Harness();
+      await h.service.update(h.context());
+      await h.service.setLearningEnabled(true);
+      expect(
+        h.gateway.scheduled.values.first.at,
+        DateTime.utc(2026, 11, 13, 18),
+      );
+      await h.service.update(h.context(latestReview: h.time));
+      expect(
+        h.gateway.scheduled.values.first.at,
+        DateTime.utc(2026, 11, 14, 18),
+      );
+      expect(h.gateway.scheduled, hasLength(3));
+    },
+  );
+
+  test(
+    'an invitation is expended once per account and never prompts on claim',
+    () async {
+      final h = _Harness();
+      await h.service.update(h.context(foreground: false));
+      final scope = h.state.scope!;
+      expect(await h.service.claimLearningInvitation(scope), false);
+      await h.service.update(h.context());
+      expect(h.state.canInvite, true);
+      expect(await h.service.claimLearningInvitation(scope), true);
       expect(h.gateway.requests, 0);
-      expect(h.state.scheduledTrial, isNull);
-      await h.service.update(context, purchaseSucceeded: true);
-      expect(h.gateway.requests, 1);
-      expect(h.gateway.scheduled.keys, [trialNotificationId]);
-      expect(h.state.scheduledTrial, isNotNull);
-      await h.service.update(context, purchaseSucceeded: true);
-      expect(h.gateway.requests, 1);
+      expect(await h.service.claimLearningInvitation(scope), false);
+
+      final reopened = _Harness(settingsStore: h.store);
+      await reopened.service.update(reopened.context(language: 'fr'));
+      expect(reopened.state.canInvite, false);
+      await reopened.service.setLearningEnabled(true, invitationScope: scope);
+      expect(reopened.gateway.requests, 0);
+
+      await reopened.service.update(reopened.context(owner: 'account-b'));
+      expect(reopened.state.canInvite, true);
+      expect(await reopened.service.claimLearningInvitation(scope), false);
+      expect(reopened.gateway.requests, 0);
+    },
+  );
+
+  test(
+    'an old trial is canceled on launch and native failures clean up',
+    () async {
+      final h = _Harness();
+      h.gateway.scheduled[trialNotificationId] = ScheduledLocalNotification(
+        id: trialNotificationId,
+        at: h.time.add(const Duration(days: 1)),
+        timezone: h.gateway.zone,
+        title: 'Trial',
+        body: '',
+        payload: '',
+      );
       await h.service.update(h.context());
       expect(h.gateway.scheduled, isEmpty);
-      expect(h.state.scheduledTrial, isNull);
-    },
-  );
-
-  test(
-    'denied trial prompt is persisted and never repeated for that trial',
-    () async {
-      final h = _Harness();
-      h.gateway.requestResult = NotificationPermission.denied;
-      final context = h.context(trial: h.trial());
-      await h.service.update(context, purchaseSucceeded: true);
-      await h.service.update(context, purchaseSucceeded: true);
-      expect(h.gateway.requests, 1);
-      expect(h.state.scheduledTrial, isNull);
-      expect(h.gateway.scheduled, isEmpty);
-    },
-  );
-
-  test(
-    'late trial confirmation waits for foreground before asking permission',
-    () async {
-      final h = _Harness();
-      final trial = h.trial();
-      await h.service.update(
-        h.context(trial: trial, foreground: false),
-        purchaseSucceeded: true,
-      );
       expect(h.gateway.requests, 0);
-      expect(h.gateway.scheduled, isEmpty);
-      await h.service.update(h.context(trial: trial));
-      expect(h.gateway.requests, 1);
-      expect(h.gateway.scheduled.keys, [trialNotificationId]);
-    },
-  );
 
-  test(
-    'progress while saving a trial prompt marker never loses the prompt',
-    () async {
-      final store = _DelayedStore();
-      final h = _Harness(settingsStore: store);
-      final trial = h.trial();
-      final starting = h.service.update(
-        h.context(trial: trial),
-        purchaseSucceeded: true,
-      );
-      await store.writing.future;
-      final progress = h.service.update(h.context(trial: trial, done: true));
-      store.release.complete();
-      await starting;
-      await progress;
-      expect(h.gateway.requests, 1);
-      expect(h.state.scheduledTrial, isNotNull);
-      expect(h.gateway.scheduled.keys, [trialNotificationId]);
-    },
-  );
-
-  test(
-    'trial conversion, elapsed lead and revoked permission remove the promise',
-    () async {
-      final h = _Harness();
-      h.gateway.permission = NotificationPermission.allowed;
-      final context = h.context(trial: h.trial());
-      await h.service.update(context);
-      expect(h.state.scheduledTrial, isNotNull);
-      h.gateway.permission = NotificationPermission.denied;
-      await h.service.refresh();
-      expect(h.gateway.scheduled, isEmpty);
-      expect(h.state.scheduledTrial, isNull);
-      h.gateway.permission = NotificationPermission.allowed;
-      await h.service.refresh();
-      h.time = context.trial.plan!.remindAt;
-      await h.service.refresh();
-      expect(h.state.trialStatus, TrialReminderStatus.tooLate);
-      expect(h.gateway.scheduled, isEmpty);
-      expect(h.state.scheduledTrial, isNull);
-    },
-  );
-
-  test(
-    'unknown trial data and native failure never show a scheduled promise',
-    () async {
-      final h = _Harness();
-      h.gateway.permission = NotificationPermission.allowed;
-      await h.service.update(
-        h.context(
-          trial: const TrialReminderDecision(TrialReminderStatus.unavailable),
-        ),
-        purchaseSucceeded: true,
-      );
-      expect(h.gateway.scheduled, isEmpty);
-      expect(h.state.trialStatus, TrialReminderStatus.unavailable);
-      expect(h.gateway.requests, 0);
       h.gateway.failSchedule = true;
-      await h.service.update(h.context(trial: h.trial()));
-      expect(h.state.scheduledTrial, isNull);
+      await h.service.setLearningEnabled(true);
       expect(h.state.error, isNotNull);
       expect(h.gateway.scheduled, isEmpty);
+      h.gateway.failSchedule = false;
+      await h.service.refresh();
+      expect(h.gateway.scheduled, hasLength(3));
+      expect(h.state.error, isNull);
     },
   );
 
@@ -373,10 +403,7 @@ void main() {
   test('unsupported platform performs no native calls or navigation', () async {
     final h = _Harness();
     h.gateway.supported = false;
-    await h.service.update(
-      h.context(trial: h.trial()),
-      purchaseSucceeded: true,
-    );
+    await h.service.update(h.context());
     await h.service.setLearningEnabled(true);
     h.gateway.events.add('{}');
     expect(h.gateway.initializations, 0);

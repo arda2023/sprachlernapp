@@ -197,6 +197,23 @@ class ContentAuthRepository {
     return session.accessToken;
   }
 
+  Future<bool> freeVocabularyGenerationAvailable() async {
+    await accessToken();
+    final session = _client;
+    final revision = identityRevision;
+    if (session == null || localOwner == null) return false;
+    final available = await session
+        .rpc('free_vocabulary_generation_available')
+        .timeout(const Duration(seconds: 8));
+    if (!identical(session, _client) || revision != identityRevision) {
+      throw StateError('Konto geändert.');
+    }
+    if (available is! bool) {
+      throw const FormatException('Ungültiger Kontingentstatus.');
+    }
+    return available;
+  }
+
   Future<void> signOut() async {
     await initialize();
     final previous = _client;

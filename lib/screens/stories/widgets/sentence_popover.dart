@@ -39,7 +39,7 @@ class SentencePopover extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const white = Color(0xFFFFFFFF);
+    const white = AppColors.onActive;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -50,7 +50,7 @@ class SentencePopover extends StatelessWidget {
             color: white,
             size: 20,
             weight: FontWeight.w600,
-            height: 1.4,
+            height: 1.35,
             letterSpacing: 0,
           ),
         ),
@@ -73,7 +73,7 @@ class SentencePopover extends StatelessWidget {
             color: white,
             size: 20,
             weight: FontWeight.w400,
-            height: 1.4,
+            height: 1.35,
             letterSpacing: 0,
           ),
         ),

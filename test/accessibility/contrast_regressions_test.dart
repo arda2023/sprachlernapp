@@ -19,7 +19,9 @@ void main() {
         for (final foreground in [
           colors.textPrimary,
           colors.textMuted,
-          colors.accentText,
+          // Orange text in light mode is a deliberate exception (user
+          // decision 15.11.2026: one orange); dark mode still meets 4.5:1.
+          if (!colors.light) colors.accentText,
         ]) {
           expect(
             contrastRatio(foreground, background),
@@ -31,7 +33,7 @@ void main() {
       expect(
         contrastRatio(popoverInk, colors.popover),
         greaterThanOrEqualTo(4.5),
-        reason: 'Small popover captions and selected controls use white ink',
+        reason: 'Small popover captions and selected controls use dark ink',
       );
     });
 

@@ -150,6 +150,95 @@ void main() {
     },
   );
 
+  for (final (offerType, paymentMode, amount) in [
+    ('introductory', 'free_trial', 0.0),
+    ('promotional', 'pay_up_front', 2.99),
+  ]) {
+    test(
+      'blocks $offerType offers in the catalog and purchase cache',
+      () async {
+        final monthly = {
+          ...product(monthlyId),
+          'subscription': {
+            'period': {'unit': 'month', 'number_of_units': 1},
+            'localized_period': 'Monat',
+          },
+        };
+        final yearly = {
+          ...product(yearlyId),
+          'subscription': {
+            'period': {'unit': 'year', 'number_of_units': 1},
+            'localized_period': 'Jahr',
+          },
+        };
+        final products = [monthly, yearly];
+        await withSdk((calls) async {
+          final gateway = AdaptyPurchaseGateway(
+            _IdentityRunner(customerUserId),
+          );
+          final initial = await gateway.loadCatalog(
+            customerUserId: customerUserId,
+          );
+          expect(initial.map((item) => item.productId), [monthlyId, yearlyId]);
+
+          products[0] = {
+            ...monthly,
+            'subscription': {
+              ...monthly['subscription'] as Map<String, Object?>,
+              'offer': {
+                'offer_identifier': {
+                  'type': offerType,
+                  if (offerType == 'promotional') 'id': 'summer-offer',
+                },
+                'phases': [
+                  {
+                    'price': {'amount': amount, 'currency_code': 'EUR'},
+                    'number_of_periods': 1,
+                    'payment_mode': paymentMode,
+                    'subscription_period': {
+                      'unit': 'week',
+                      'number_of_units': 1,
+                    },
+                  },
+                ],
+              },
+            },
+          };
+
+          final paidCatalog = await gateway.loadCatalog(
+            customerUserId: customerUserId,
+          );
+          expect(paidCatalog.single.productId, yearlyId);
+          expect(paidCatalog.single.localizedPeriod, 'Jahr');
+          await expectLater(
+            gateway.purchase(
+              customerUserId: customerUserId,
+              productId: monthlyId,
+            ),
+            throwsStateError,
+          );
+          expect(
+            calls.where((call) => call.method == 'make_purchase'),
+            isEmpty,
+          );
+
+          expect(
+            await gateway.purchase(
+              customerUserId: customerUserId,
+              productId: yearlyId,
+            ),
+            PurchaseOutcome.cancelled,
+          );
+          final request = calls
+              .where((call) => call.method == 'make_purchase')
+              .single;
+          final args = jsonDecode(request.arguments as String);
+          expect(args['product']['vendor_product_id'], yearlyId);
+        }, products: products);
+      },
+    );
+  }
+
   test(
     'uses Adapty make_purchase result types and validates returned identity',
     () async {

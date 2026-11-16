@@ -1,0 +1,118 @@
+[
+  {
+    "id": "library:nb:linglossa",
+    "title": "Slik lærer du med Linglossa",
+    "topic": "Sprachenlernen",
+    "level": "A2",
+    "minutes": 1,
+    "body": "Du leter etter det rette ordet mens du forteller en venn om dagen din. I går kjente du det igjen i en historie, men i dag kommer du ikke på det.\n\nI Linglossa får du et hint på tysk og fullfører en setning på språket du lærer. Du prøver å huske ordet som mangler før du ser svaret.\n\nNår du leser en historie, kan du trykke på et ord for å sjekke hva det betyr og lese setningen på nytt. Resten av setningen kan hjelpe deg å forstå hvordan ordet brukes.\n\nNår du øver, kommer ord tilbake etter en pause, slik at du kan prøve å huske dem igjen. Prøv nå med ordet «dagen» i den første setningen.",
+    "translations": {
+      "Du leter etter det rette ordet mens du forteller en venn om dagen din.": "Du suchst nach dem richtigen Wort, während du einem Freund von deinem Tag erzählst.",
+      "I går kjente du det igjen i en historie, men i dag kommer du ikke på det.": "Gestern hast du es in einer Geschichte wiedererkannt, aber heute fällt es dir nicht ein.",
+      "I Linglossa får du et hint på tysk og fullfører en setning på språket du lærer.": "In Linglossa siehst du einen deutschen Hinweis und ergänzt einen Satz in der Sprache, die du lernst.",
+      "Du prøver å huske ordet som mangler før du ser svaret.": "Du versuchst, dich an das fehlende Wort zu erinnern, bevor du die Lösung siehst.",
+      "Når du leser en historie, kan du trykke på et ord for å sjekke hva det betyr og lese setningen på nytt.": "Wenn du eine Geschichte liest, kannst du auf ein Wort tippen, um seine Bedeutung nachzusehen, und den Satz noch einmal lesen.",
+      "Resten av setningen kan hjelpe deg å forstå hvordan ordet brukes.": "Der restliche Satz kann dir helfen zu verstehen, wie das Wort verwendet wird.",
+      "Når du øver, kommer ord tilbake etter en pause, slik at du kan prøve å huske dem igjen.": "Beim Üben kommen Wörter nach einer Pause wieder. So kannst du erneut versuchen, sie abzurufen.",
+      "Prøv nå med ordet «dagen» i den første setningen.": "Probiere es jetzt mit dem Wort „dagen“ im ersten Satz."
+    },
+    "sources": [
+      {
+        "title": "Webb (2005)",
+        "url": "https://www.cambridge.org/core/journals/studies-in-second-language-acquisition/article/receptive-and-productive-vocabulary-learning-the-effects-of-reading-and-writing-on-word-knowledge/DDF362AE7B13D1949B1CD591DA2F3414"
+      },
+      {
+        "title": "Yanagisawa, Webb & Uchihara (2020)",
+        "url": "https://www.cambridge.org/core/journals/studies-in-second-language-acquisition/article/abs/how-do-different-forms-of-glossing-contribute-to-l2-vocabulary-learning-from-reading/38124150D59DF3039EE1FF5AE88FE922"
+      },
+      {
+        "title": "Cepeda et al. (2006)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/16719566/"
+      }
+    ],
+    "glosses": {
+      "dagen": "Tag",
+      "ordet": "Wort",
+      "venn": "Freund",
+      "historie": "Geschichte",
+      "setning": "Satz",
+      "svaret": "Antwort",
+      "pause": "Pause",
+      "språket": "Sprache"
+    }
+  },
+  {
+    "id": "library:nb:language_spacing",
+    "title": "Et ord som kommer tilbake i morgen",
+    "topic": "Sprachenlernen",
+    "level": "B1",
+    "minutes": 1,
+    "body": "På mandag lærer Maya ordet «paraply» fordi det regner på vei til jobb. Hun husker det samme kveld, og på torsdag prøver hun igjen før hun sjekker svaret.\n\nDet andre forsøket er vanskeligere fordi hun har hatt tid til å glemme. Forsøk tyder på at det å fordele læringen over flere økter ofte hjelper oss å huske lenger.\n\nDen beste pausen kan avhenge av hvor lenge du trenger å huske noe. Uken etter prøver Maya ordet igjen mens hun planlegger en tur i regnet.",
+    "translations": {
+      "På mandag lærer Maya ordet «paraply» fordi det regner på vei til jobb.": "Am Montag lernt Maya das Wort „Regenschirm“, weil es auf ihrem Arbeitsweg regnet.",
+      "Hun husker det samme kveld, og på torsdag prøver hun igjen før hun sjekker svaret.": "Am Abend erinnert sie sich daran, und am Donnerstag versucht sie es erneut, bevor sie die Lösung nachsieht.",
+      "Det andre forsøket er vanskeligere fordi hun har hatt tid til å glemme.": "Der zweite Versuch fällt ihr schwerer, weil sie Zeit zum Vergessen hatte.",
+      "Forsøk tyder på at det å fordele læringen over flere økter ofte hjelper oss å huske lenger.": "Experimente deuten darauf hin, dass verteilte Lerneinheiten oft helfen, sich länger zu erinnern.",
+      "Den beste pausen kan avhenge av hvor lenge du trenger å huske noe.": "Wie viel Abstand am meisten hilft, kann davon abhängen, wie lange du dir etwas merken möchtest.",
+      "Uken etter prøver Maya ordet igjen mens hun planlegger en tur i regnet.": "In der nächsten Woche ruft Maya das Wort wieder ab, als sie einen Spaziergang im Regen plant."
+    },
+    "sources": [
+      {
+        "title": "Cepeda et al. (2006)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/16719566/"
+      },
+      {
+        "title": "Karpicke & Roediger (2008)",
+        "url": "https://learninglab.psych.purdue.edu/downloads/2008/2008_Karpicke_Roediger_Science.pdf"
+      }
+    ]
+  },
+  {
+    "id": "library:nb:language_retrieval",
+    "title": "Når du ser bort",
+    "topic": "Sprachenlernen",
+    "level": "B1",
+    "minutes": 1,
+    "body": "Noah leser et nytt ord på bussen og tror at han vil huske det senere. Hjemme lukker han notatboken og prøver å si ordet uten å se på notatene.\n\nHan nøler, sjekker svaret og prøver igjen litt senere. I et forsøk med fremmedord hjalp det å hente ordene frem fra hukommelsen flere ganger for å huske dem en uke senere.\n\nÅ lese et ord og å huske ordformen krever ulike typer øving. Noah legger til en kort setning, slik at han kan prøve å huske formen i en situasjon han forstår.",
+    "translations": {
+      "Noah leser et nytt ord på bussen og tror at han vil huske det senere.": "Noah liest im Bus ein neues Wort und denkt, dass er sich später daran erinnern wird.",
+      "Hjemme lukker han notatboken og prøver å si ordet uten å se på notatene.": "Zu Hause klappt er sein Heft zu und versucht, das Wort zu sagen, ohne nachzusehen.",
+      "Han nøler, sjekker svaret og prøver igjen litt senere.": "Er zögert, sieht die Lösung nach und versucht es etwas später noch einmal.",
+      "I et forsøk med fremmedord hjalp det å hente ordene frem fra hukommelsen flere ganger for å huske dem en uke senere.": "In einem Experiment mit fremdsprachigen Vokabeln half der wiederholte Abruf, sich eine Woche später an die Wörter zu erinnern.",
+      "Å lese et ord og å huske ordformen krever ulike typer øving.": "Ein Wort zu lesen und seine Form abzurufen erfordern unterschiedliche Arten der Übung.",
+      "Noah legger til en kort setning, slik at han kan prøve å huske formen i en situasjon han forstår.": "Noah ergänzt einen kurzen Satz, damit er die Form später in einer verständlichen Situation abrufen kann."
+    },
+    "sources": [
+      {
+        "title": "Karpicke & Roediger (2008)",
+        "url": "https://learninglab.psych.purdue.edu/downloads/2008/2008_Karpicke_Roediger_Science.pdf"
+      },
+      {
+        "title": "Webb (2005)",
+        "url": "https://www.cambridge.org/core/journals/studies-in-second-language-acquisition/article/receptive-and-productive-vocabulary-learning-the-effects-of-reading-and-writing-on-word-knowledge/DDF362AE7B13D1949B1CD591DA2F3414"
+      }
+    ]
+  },
+  {
+    "id": "library:nb:language_context",
+    "title": "Et spor i neste setning",
+    "topic": "Sprachenlernen",
+    "level": "B1",
+    "minutes": 1,
+    "body": "Lea leser om en baker som begynner å jobbe før solen står opp. Et ukjent ord stopper henne, så hun leser neste setning og leter etter spor.\n\nBakeren blander mel og vann, og snart skal han sette noe i ovnen. Lea sjekker en kort forklaring på ordet og leser avsnittet på nytt.\n\nI flere studier hadde lesere en tendens til å lære flere ord når tekstene ga korte ordforklaringer. Forklaringen gir Lea en betydning, og bakeriet gir henne et eksempel på hvordan ordet brukes.",
+    "translations": {
+      "Lea leser om en baker som begynner å jobbe før solen står opp.": "Lea liest über einen Bäcker, der vor Sonnenaufgang mit der Arbeit beginnt.",
+      "Et ukjent ord stopper henne, så hun leser neste setning og leter etter spor.": "Ein unbekanntes Wort hält sie auf. Sie liest den nächsten Satz und sucht nach Hinweisen.",
+      "Bakeren blander mel og vann, og snart skal han sette noe i ovnen.": "Der Bäcker mischt Mehl und Wasser, und bald schiebt er etwas in den Ofen.",
+      "Lea sjekker en kort forklaring på ordet og leser avsnittet på nytt.": "Lea sieht eine kurze Erklärung zum Wort nach und liest die Stelle erneut.",
+      "I flere studier hadde lesere en tendens til å lære flere ord når tekstene ga korte ordforklaringer.": "Über mehrere Studien hinweg lernten Lesende tendenziell mehr Wörter, wenn Texte kurze Worterklärungen boten.",
+      "Forklaringen gir Lea en betydning, og bakeriet gir henne et eksempel på hvordan ordet brukes.": "Die Erklärung gibt Lea eine Bedeutung, und die Bäckerei liefert ihr ein Beispiel dafür, wie das Wort verwendet wird."
+    },
+    "sources": [
+      {
+        "title": "Yanagisawa, Webb & Uchihara (2020)",
+        "url": "https://www.cambridge.org/core/journals/studies-in-second-language-acquisition/article/abs/how-do-different-forms-of-glossing-contribute-to-l2-vocabulary-learning-from-reading/38124150D59DF3039EE1FF5AE88FE922"
+      }
+    ]
+  }
+]

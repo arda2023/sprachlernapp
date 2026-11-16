@@ -97,9 +97,7 @@ class WordListItem extends StatelessWidget {
                                 ),
                                 child: MemoryLevelIndicator(
                                   level: word.box,
-                                  litColor: open
-                                      ? const Color(0xFFFFFFFF)
-                                      : null,
+                                  litColor: open ? AppColors.onActive : null,
                                   offColor: open
                                       ? const Color(0x59FFFFFF)
                                       : null,
@@ -224,7 +222,7 @@ class _MoreButton extends StatelessWidget {
             child: Icon(
               CupertinoIcons.ellipsis,
               size: 19,
-              color: open ? const Color(0xFFFFFFFF) : colors.textMuted,
+              color: open ? AppColors.onActive : colors.textMuted,
             ),
           ),
         ),
@@ -279,7 +277,7 @@ class _WordMenuState extends State<_WordMenu> {
       children: [
         Text(
           word.entry.headword,
-          style: AppType.editorial(color: const Color(0xFFFFFFFF), size: 20),
+          style: AppType.editorial(color: AppColors.onActive, size: 20),
         ),
         const SizedBox(height: 8),
         PopoverMenuRow(

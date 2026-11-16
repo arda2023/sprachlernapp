@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../presentation/providers/premium_access_provider.dart';
-import '../../widgets/premium_content_gate.dart';
+import '../../widgets/premium_action.dart';
 import '../../widgets/speak_button.dart';
 import '../../presentation/audio/speech_narration.dart';
 import '../../presentation/audio/device_speech_playback.dart';
@@ -50,13 +50,17 @@ class ChoiceExerciseScreen extends StatefulWidget {
     required PracticeProgress progress,
     List<ChoiceExercise> queue = const [],
     bool replace = false,
-  }) {
-    if (!ProviderScope.containerOf(
-      context,
-      listen: false,
-    ).read(premiumContentAccessProvider)) {
-      return showPremiumContentPaywall(context, interest: 'Übungen');
+  }) async {
+    final container = ProviderScope.containerOf(context, listen: false);
+    if (!container.read(premiumContentAccessProvider) &&
+        !await unlockPremiumAction(
+          context,
+          interest: 'Übungen',
+          allowGuestSignIn: true,
+        )) {
+      return;
     }
+    if (!context.mounted) return;
     final route = CupertinoPageRoute<void>(
       builder: (_) => switch (exercise.kind) {
         PracticeKind.listening => ListeningExerciseScreen(
@@ -72,7 +76,11 @@ class ChoiceExerciseScreen extends StatefulWidget {
       },
     );
     final navigator = Navigator.of(context);
-    return replace ? navigator.pushReplacement(route) : navigator.push(route);
+    if (replace) {
+      await navigator.pushReplacement<void, void>(route);
+    } else {
+      await navigator.push<void>(route);
+    }
   }
 
   @override

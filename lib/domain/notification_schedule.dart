@@ -1,6 +1,7 @@
 import 'package:timezone/timezone.dart' as tz;
 
 const learningReminderHorizon = 30;
+const learningReminderDayOffsets = [0, 2, 5];
 
 /// Some operating systems return UTC/GMT aliases that are not entries in the
 /// bundled IANA database. Unknown geographical zones must still fail closed.
@@ -65,29 +66,50 @@ DateTime? _firstLocalMinute(DateTime date, int minute, tz.Location location) {
   return null;
 }
 
+/// The three dates in an inactivity cycle, in the user's chosen wall time.
+/// Fixed offsets leave progressively more space between attempts.
+Iterable<(int, DateTime)> learningReminderAttempts({
+  required DateTime firstDay,
+  required tz.Location location,
+  required int hour,
+  required int minute,
+}) sync* {
+  for (final (attempt, offset) in learningReminderDayOffsets.indexed) {
+    final day = firstDay.add(Duration(days: offset));
+    final at = _firstLocalMinute(day, hour * 60 + minute, location);
+    if (at != null) yield (attempt, at);
+  }
+}
+
+/// A UTC date used for calendar arithmetic, independent of DST.
+DateTime reminderCalendarDay(DateTime at, tz.Location location) {
+  final local = tz.TZDateTime.from(at, location);
+  return DateTime.utc(local.year, local.month, local.day);
+}
+
 class LearningReminderSettings {
   const LearningReminderSettings({
     this.enabled = false,
     this.hour = 19,
     this.minute = 0,
-    this.askedTrial,
+    this.invitationSeen = false,
   });
 
   final bool enabled;
   final int hour;
   final int minute;
-  final String? askedTrial;
+  final bool invitationSeen;
 
   LearningReminderSettings copyWith({
     bool? enabled,
     int? hour,
     int? minute,
-    String? askedTrial,
+    bool? invitationSeen,
   }) => LearningReminderSettings(
     enabled: enabled ?? this.enabled,
     hour: hour ?? this.hour,
     minute: minute ?? this.minute,
-    askedTrial: askedTrial ?? this.askedTrial,
+    invitationSeen: invitationSeen ?? this.invitationSeen,
   );
 
   factory LearningReminderSettings.fromJson(Object? value) {
@@ -98,9 +120,9 @@ class LearningReminderSettings {
       enabled: value['enabled'] == true,
       hour: hour is int && hour >= 0 && hour <= 23 ? hour : 19,
       minute: minute is int && minute >= 0 && minute <= 59 ? minute : 0,
-      askedTrial: value['askedTrial'] is String
-          ? value['askedTrial'] as String
-          : null,
+      invitationSeen:
+          value['invitationSeen'] == true ||
+          (!value.containsKey('invitationSeen') && value['enabled'] is bool),
     );
   }
 
@@ -108,6 +130,6 @@ class LearningReminderSettings {
     'enabled': enabled,
     'hour': hour,
     'minute': minute,
-    'askedTrial': askedTrial,
+    'invitationSeen': invitationSeen,
   };
 }

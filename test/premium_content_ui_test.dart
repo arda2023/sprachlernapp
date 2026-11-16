@@ -105,7 +105,7 @@ void main() {
       await t.tap(find.byType(StoryCard));
       expect(reads, 0);
       expect(upgrades, 1);
-      expect(find.byType(PremiumLockBadge), findsOneWidget);
+      expect(find.byType(PremiumVeil), findsOneWidget);
       expect(
         find.bySemanticsLabel(RegExp('mit Premium freischalten')),
         findsOneWidget,
@@ -252,7 +252,7 @@ void main() {
         find.descendant(of: shelf, matching: find.byType(Image)),
         findsNothing,
       );
-      expect(find.byType(PremiumLockBadge), findsWidgets);
+      expect(find.byType(PremiumVeil), findsWidgets);
       expect(t.takeException(), isNull);
       final text = find.text(sampleExerciseTexts.first.info.title);
       await t.ensureVisible(text);

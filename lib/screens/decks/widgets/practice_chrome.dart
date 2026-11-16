@@ -250,9 +250,7 @@ class _BarButton extends StatelessWidget {
             child: Icon(
               icon,
               size: 22,
-              color: open
-                  ? const Color(0xFFFFFFFF)
-                  : context.appColors.textPrimary,
+              color: open ? AppColors.onActive : context.appColors.textPrimary,
             ),
           ),
         ),
@@ -601,7 +599,7 @@ class _ToolbarButton extends StatelessWidget {
     final foreground = error
         ? context.appColors.error
         : primary
-        ? const Color(0xFFFFFFFF)
+        ? AppColors.onActive
         : (enabled ? context.appColors.textPrimary : context.appColors.iconOff);
     return MergeSemantics(
       child: CupertinoButton(

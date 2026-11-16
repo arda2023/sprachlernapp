@@ -13,6 +13,7 @@ class LocalNotificationGateway implements NotificationGateway {
   final _plugin = FlutterLocalNotificationsPlugin();
   final _taps = StreamController<String>.broadcast();
   Future<void>? _initializing;
+  bool _clearedLegacySchedules = false;
 
   @override
   bool get supported =>
@@ -115,10 +116,16 @@ class LocalNotificationGateway implements NotificationGateway {
   Future<void> cancelOwned() async {
     if (!supported) return;
     // Cancel removes delivered notifications as well as pending requests.
-    for (var day = 0; day < learningReminderHorizon; day++) {
-      await _plugin.cancel(id: learningNotificationFirstId + day);
+    final count = _clearedLegacySchedules
+        ? learningReminderDayOffsets.length
+        : learningReminderHorizon;
+    for (var i = 0; i < count; i++) {
+      await _plugin.cancel(id: learningNotificationFirstId + i);
     }
-    await _plugin.cancel(id: trialNotificationId);
+    if (!_clearedLegacySchedules) {
+      await _plugin.cancel(id: trialNotificationId);
+      _clearedLegacySchedules = true;
+    }
   }
 
   @override
@@ -135,8 +142,8 @@ class LocalNotificationGateway implements NotificationGateway {
       notificationDetails: const NotificationDetails(
         android: AndroidNotificationDetails(
           'learning_reminders',
-          'Lernen und Testphase',
-          channelDescription: 'Lern-Erinnerungen und das Ende deiner Testphase',
+          'Lern-Erinnerungen',
+          channelDescription: 'Erinnerungen an deine nächste Übung',
           importance: Importance.defaultImportance,
           priority: Priority.defaultPriority,
           icon: 'ic_notification',

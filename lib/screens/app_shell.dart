@@ -304,6 +304,7 @@ class _AppShellState extends ConsumerState<AppShell> {
                     enabled: _tab == AppTab.home,
                     child: HomeScreen(
                       onOpenStory: _openStory,
+                      onUpgradeStory: _openStory,
                       onBrowseStories: () => _select(AppTab.stories),
                       onOpenDeck: _openDeck,
                       onBrowseDecks: _browseDecks,
@@ -321,6 +322,7 @@ class _AppShellState extends ConsumerState<AppShell> {
                     progress: ref.watch(readingProgressProvider),
                     imported: ref.watch(importedTextsProvider),
                     onOpenImported: _openImported,
+                    onUpgradeImported: _openImported,
                     onDeleteImported: (text) => ref
                         .read(importedTextsProvider.notifier)
                         .remove(text.id),
@@ -350,6 +352,7 @@ class _AppShellState extends ConsumerState<AppShell> {
                           ),
                         ),
                     onOpenStory: _openStory,
+                    onUpgradeStory: _openStory,
                     // No "Nachrichten" for now: the section returns later
                     // with the daily news (user decision 01.11.2026,
                     // docs/daily-news.md).

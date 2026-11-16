@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sprachapp/data/notifications/local_notification_gateway.dart';
 import 'package:sprachapp/data/notifications/notification_gateway.dart';
+import 'package:sprachapp/domain/notification_schedule.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +20,33 @@ void main() {
     messenger.setMockMethodCallHandler(channel, null);
     debugDefaultTargetPlatformOverride = null;
   });
+
+  test(
+    'legacy trial and reminders are cleaned once per native gateway',
+    () async {
+      final canceled = <int>[];
+      messenger.setMockMethodCallHandler(channel, (call) async {
+        if (call.method == 'initialize') return false;
+        if (call.method == 'cancel') canceled.add(call.arguments as int);
+        return null;
+      });
+      final gateway = LocalNotificationGateway();
+      addTearDown(gateway.dispose);
+      await gateway.initialize();
+      await gateway.cancelOwned();
+      expect(canceled, [
+        for (var i = 0; i < learningReminderHorizon; i++)
+          learningNotificationFirstId + i,
+        trialNotificationId,
+      ]);
+      canceled.clear();
+      await gateway.cancelOwned();
+      expect(canceled, [
+        for (var i = 0; i < learningReminderDayOffsets.length; i++)
+          learningNotificationFirstId + i,
+      ]);
+    },
+  );
 
   test('iOS initialization false is valid and never requests permission at startup', () async {
     final calls = <MethodCall>[];

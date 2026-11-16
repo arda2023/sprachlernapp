@@ -56,7 +56,7 @@ class _TranslationBubbleState extends State<TranslationBubble>
 
   @override
   Widget build(BuildContext context) {
-    const white = Color(0xFFFFFFFF);
+    const white = AppColors.onActive;
     const speaker = 34.0, tap = 44.0, start = 14.0, end = 4.0, gap = 8.0;
     const vertical = 4.0;
     final anchor = widget.anchor;
@@ -73,7 +73,7 @@ class _TranslationBubbleState extends State<TranslationBubble>
     final style = AppType.editorial(
       color: white,
       size: 20,
-      height: 1.3,
+      height: 1.35,
       letterSpacing: 0,
     );
     final painter = TextPainter(

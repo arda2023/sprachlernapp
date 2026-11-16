@@ -16,7 +16,8 @@ try {
       id uuid primary key, email text,
       email_confirmed_at timestamptz, is_anonymous boolean default false
     );
-    create function auth.uid() returns uuid language sql as $$select null::uuid$$;
+    create function auth.uid() returns uuid language sql as
+      $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
     create schema storage;
     create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint);
   `);
@@ -33,6 +34,7 @@ try {
     '20261101000002_keep_translations.sql',
     '20261101000003_generated_vocabulary_premium.sql',
     '20261101000004_complimentary_premium.sql',
+    '20261115000001_free_vocabulary_generation.sql',
   ]) {
     await db.exec(await readFile(new URL('../supabase/migrations/' + file, import.meta.url), 'utf8'));
   }

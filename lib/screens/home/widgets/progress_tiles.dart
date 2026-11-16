@@ -165,7 +165,7 @@ class _Tile extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.appColors;
     final m = measure;
-    const white = Color(0xFFFFFFFF);
+    const white = AppColors.onActive;
     final reduced = MediaQuery.disableAnimationsOf(context);
     final duration = Duration(milliseconds: reduced ? 0 : 180);
     return MergeSemantics(
@@ -292,7 +292,7 @@ class _ExplanationBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const white = Color(0xFFFFFFFF);
+    const white = AppColors.onActive;
     final m = measure;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

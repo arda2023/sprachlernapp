@@ -41,6 +41,7 @@ GeneratedVocabularyResponse response(
   String requestId = firstRequest,
   Map<String, Object?> changes = const {},
   bool twoItems = false,
+  bool freeSample = false,
 }) {
   final request = GeneratedVocabularyRequest(
     requestId: requestId,
@@ -52,6 +53,7 @@ GeneratedVocabularyResponse response(
     'contract': 1,
     'request_id': requestId,
     'lang': lang,
+    if (freeSample) 'free_sample': true,
     'items': [
       {...word(lang), ...changes},
       if (twoItems)
@@ -68,6 +70,93 @@ GeneratedVocabularyResponse response(
 }
 
 void main() {
+  test(
+    'pending free request survives reopen and stays with owner and language',
+    () async {
+      final dir = Directory.systemTemp.createTempSync('generated-pending-');
+      final file = File('${dir.path}/user.db');
+      addTearDown(() => dir.deleteSync(recursive: true));
+      const owner = 'test:alice';
+      final request = GeneratedVocabularyRequest(
+        requestId: firstRequest,
+        lang: 'en',
+        prompt: 'Reisen am Meer',
+        count: 50,
+      );
+      final original = UserDatabase(NativeDatabase(file));
+      await GeneratedVocabularyStore(
+        original,
+        lang: 'en',
+      ).stagePendingRequest(owner, request, verify: () {});
+      await original.close();
+
+      final reopened = UserDatabase(NativeDatabase(file));
+      addTearDown(reopened.close);
+      final store = GeneratedVocabularyStore(reopened, lang: 'en');
+      expect((await store.pendingRequest(owner))?.toJson(), request.toJson());
+      expect(await store.pendingRequest('test:bob'), isNull);
+      expect(
+        await GeneratedVocabularyStore(
+          reopened,
+          lang: 'es',
+        ).pendingRequest(owner),
+        isNull,
+      );
+      final competing = GeneratedVocabularyRequest(
+        requestId: nextRequest,
+        lang: 'en',
+        prompt: 'Musik',
+        count: 10,
+      );
+      final preserved = await store.stagePendingRequest(
+        owner,
+        competing,
+        verify: () {},
+      );
+      expect(preserved.toJson(), request.toJson());
+      await store.clearPendingRequest(owner, nextRequest);
+      expect((await store.pendingRequest(owner))?.requestId, firstRequest);
+      await store.clearPendingRequest(owner, firstRequest);
+      expect(await store.pendingRequest(owner), isNull);
+    },
+  );
+
+  test(
+    'v8 migration preserves generated words and defaults to no free marker',
+    () async {
+      final dir = Directory.systemTemp.createTempSync('generated-v8-');
+      final file = File('${dir.path}/user.db');
+      addTearDown(() => dir.deleteSync(recursive: true));
+      final original = UserDatabase(NativeDatabase(file));
+      final initial = await GeneratedVocabularyStore(
+        original,
+        lang: 'en',
+      ).save(response('en'), selected: {0}, now: now, verify: () {});
+      await original.close();
+
+      final raw = sqlite.sqlite3.open(file.path);
+      raw.execute('DROP TABLE pending_generated_vocabulary');
+      raw.execute('DROP TABLE free_generated_vocabulary');
+      raw.execute('PRAGMA user_version=8');
+      raw.close();
+
+      final migrated = UserDatabase(NativeDatabase(file));
+      addTearDown(migrated.close);
+      final store = GeneratedVocabularyStore(migrated, lang: 'en');
+      expect(await store.additions(), {initial.addedIds.single: now.toLocal()});
+      expect(await store.freeIds(), isEmpty);
+      expect(
+        (await migrated
+                .customSelect(
+                  'PRAGMA table_info(generated_vocabulary_additions)',
+                )
+                .get())
+            .map((row) => row.read<String>('name')),
+        ['card_id', 'lang', 'added_at'],
+      );
+    },
+  );
+
   for (final lang in GeneratedVocabularyRequest.languages) {
     test(
       '$lang saves selected words as fixed practice without story membership',
@@ -375,6 +464,8 @@ void main() {
           );
       await original.close();
       final raw = sqlite.sqlite3.open(file.path);
+      raw.execute('DROP TABLE pending_generated_vocabulary');
+      raw.execute('DROP TABLE free_generated_vocabulary');
       raw.execute('DROP TABLE generated_vocabulary_additions');
       raw.execute('PRAGMA user_version=7');
       final before = Map<String, Object?>.from(
@@ -390,7 +481,7 @@ void main() {
       expect(
         (await migrated.customSelect('PRAGMA user_version').getSingle())
             .read<int>('user_version'),
-        8,
+        9,
       );
       expect(
         (await migrated.customSelect('SELECT * FROM user_cards').getSingle())

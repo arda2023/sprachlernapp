@@ -64,10 +64,17 @@ void main() {
       final bubble = find.byKey(const ValueKey('translation-bubble'));
       expect(bubble, findsOneWidget);
       expect(find.byType(SpeakButton), findsOneWidget);
-      // Above the word (the keyboard sits below), centred on it as far as
-      // the screen allows.
+      // Above the word (the keyboard sits below) whenever it fits, else
+      // below it; centred on it as far as the screen allows. The wide test
+      // font wraps the translation, so on this short window it may not fit.
       final rect = t.getRect(bubble);
-      expect(rect.bottom, lessThanOrEqualTo(wordRect.top));
+      final fitsAbove =
+          wordRect.top - TranslationBubble.gap - rect.height >= 8;
+      if (fitsAbove) {
+        expect(rect.bottom, lessThanOrEqualTo(wordRect.top));
+      } else {
+        expect(rect.top, greaterThanOrEqualTo(wordRect.bottom));
+      }
       expect(rect.left, lessThan(wordRect.center.dx));
       expect(rect.right, greaterThan(wordRect.center.dx));
       await t.tap(word);

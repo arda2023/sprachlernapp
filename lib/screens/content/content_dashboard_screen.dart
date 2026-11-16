@@ -10,6 +10,7 @@ import '../../models/reading_history.dart';
 import '../../theme/app_theme.dart';
 import '../../presentation/providers/premium_access_provider.dart';
 import '../../widgets/premium_content_gate.dart';
+import '../../widgets/premium_action.dart';
 import '../../widgets/difficulty_bolts.dart';
 import '../../widgets/more_button.dart';
 import '../../widgets/section_heading.dart';
@@ -64,11 +65,6 @@ class ContentDashboardScreen extends ConsumerWidget {
     ChoiceExercise exercise,
     List<ChoiceExercise> queue,
   ) {
-    final container = ProviderScope.containerOf(context, listen: false);
-    if (!container.read(premiumContentAccessProvider)) {
-      showPremiumContentPaywall(context, interest: 'Übungen');
-      return;
-    }
     ChoiceExerciseScreen.open(
       context,
       exercise: exercise,
@@ -77,16 +73,18 @@ class ContentDashboardScreen extends ConsumerWidget {
     );
   }
 
-  void _openLibrary(BuildContext context, PracticeKind kind) {
+  Future<void> _openLibrary(BuildContext context, PracticeKind kind) async {
     final container = ProviderScope.containerOf(context, listen: false);
-    if (!container.read(premiumContentAccessProvider)) {
-      showPremiumContentPaywall(
-        context,
-        interest: kind == PracticeKind.listening ? 'Hören' : 'Grammatik',
-      );
+    if (!container.read(premiumContentAccessProvider) &&
+        !await unlockPremiumAction(
+          context,
+          interest: kind.title,
+          allowGuestSignIn: true,
+        )) {
       return;
     }
-    PracticeLibraryScreen.open(
+    if (!context.mounted) return;
+    await PracticeLibraryScreen.open(
       context,
       kind: kind,
       exercises: kind == PracticeKind.listening ? listening : grammar,
@@ -122,9 +120,11 @@ class ContentDashboardScreen extends ConsumerWidget {
               ),
             ),
             if (generator != null) Padding(padding: _gutter, child: generator),
-            if (texts.isNotEmpty) ..._texts(context, premiumLocked),
+            // Order (user request 15.11.2026): generator, Hören, Grammatik,
+            // Texte, Grammatikregeln.
             if (listening.isNotEmpty) ..._listening(context, premiumLocked),
             if (grammar.isNotEmpty) ..._grammar(context, premiumLocked),
+            if (texts.isNotEmpty) ..._texts(context, premiumLocked),
             if (rules.isNotEmpty) ..._rules(context),
           ],
         ),
@@ -140,7 +140,7 @@ class ContentDashboardScreen extends ConsumerWidget {
       ...texts.where((t) => !read.contains(t.sourceStoryId)),
     ].take(_maxTexts).toList();
     return [
-      const SizedBox(height: 20),
+      const SizedBox(height: 36),
       _SectionHeader(
         title: 'Texte',
         moreLabel: 'Alle Texte anzeigen',
@@ -151,8 +151,8 @@ class ContentDashboardScreen extends ConsumerWidget {
       TextExerciseShelf(
         texts: ordered,
         premiumLocked: premiumLocked,
-        onUpgrade: () => showPremiumContentPaywall(context, interest: 'Texte'),
         onOpen: (text, anchor) => TextLibraryScreen.start(anchor, text),
+        onUpgrade: (text, anchor) => TextLibraryScreen.start(anchor, text),
       ),
     ];
   }
@@ -167,7 +167,7 @@ class ContentDashboardScreen extends ConsumerWidget {
         if (e != next) e,
     ].take(_maxTiles).toList();
     return [
-      const SizedBox(height: 36),
+      SizedBox(height: generator == null ? 20 : 36),
       _SectionHeader(
         title: 'Hören',
         moreLabel: 'Alle Hörübungen anzeigen',
@@ -360,7 +360,6 @@ class _ListeningFeature extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.appColors;
-    final kicker = allDone ? 'Noch einmal hören' : 'Als Nächstes';
     return MergeSemantics(
       child: CupertinoButton(
         onPressed: onTap,
@@ -369,7 +368,7 @@ class _ListeningFeature extends StatelessWidget {
         minimumSize: const Size(44, 44),
         child: Semantics(
           label:
-              '$kicker: ${exercise.title}. ${exercise.summary}. '
+              '${exercise.title}. ${exercise.summary}. '
               '${exercise.meta}'
               '${premiumLocked ? ', mit Premium freischalten' : ''}',
           excludeSemantics: true,
@@ -396,29 +395,12 @@ class _ListeningFeature extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Icon(
-                            CupertinoIcons.headphones,
-                            size: 16,
-                            color: colors.textMuted,
-                          ),
-                          const SizedBox(width: 6),
-                          Flexible(
-                            child: Text(
-                              kicker,
-                              style: AppType.meta(color: colors.textMuted),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 14),
                       Text(
                         exercise.title,
                         style: AppType.editorial(
                           color: colors.textPrimary,
                           size: 24,
-                          height: 1.15,
+                          height: 1.2,
                         ),
                       ),
                       const SizedBox(height: 6),
@@ -432,19 +414,8 @@ class _ListeningFeature extends StatelessWidget {
                           DifficultyBolts(
                             difficulty: _difficulty(exercise.level),
                           ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              exercise.topic,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppType.meta(color: colors.textMuted),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          if (premiumLocked)
-                            const PremiumLockBadge(size: 44)
-                          else
+                          const Spacer(),
+                          if (!premiumLocked)
                             Container(
                               width: 44,
                               height: 44,
@@ -455,7 +426,7 @@ class _ListeningFeature extends StatelessWidget {
                               child: Icon(
                                 CupertinoIcons.play_fill,
                                 size: 18,
-                                color: Color(0xFFFFFFFF),
+                                color: AppColors.onActive,
                               ),
                             ),
                         ],
@@ -463,6 +434,8 @@ class _ListeningFeature extends StatelessWidget {
                     ],
                   ),
                 ),
+                if (premiumLocked)
+                  PremiumVeil(radius: BorderRadius.circular(22), lockSize: 48),
               ],
             ),
           ),
@@ -504,72 +477,67 @@ class _ListeningTile extends StatelessWidget {
               '${done ? ', fertig' : ''}'
               '${premiumLocked ? ', mit Premium freischalten' : ''}',
           excludeSemantics: true,
-          child: Container(
-            width: width,
-            constraints: const BoxConstraints(minHeight: 140),
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: colors.raisedInk,
-              borderRadius: BorderRadius.circular(18),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 36,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: colors.playback,
-                      ),
-                      child: Center(
-                        child: SpeakerIcon(size: 17, color: colors.textPrimary),
-                      ),
-                    ),
-                    const Spacer(),
-                    if (premiumLocked)
-                      const PremiumLockBadge()
-                    else if (done)
-                      Icon(
-                        CupertinoIcons.checkmark_alt_circle_fill,
-                        size: 22,
-                        color: colors.progressWords,
-                      ),
-                  ],
-                ),
-                const SizedBox(height: 14),
-                const Spacer(),
-                Text(
-                  exercise.title,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppType.chrome(
-                    color: colors.textPrimary,
-                    size: 17,
-                    weight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                DifficultyBolts(
-                  difficulty: _difficulty(exercise.level),
-                  size: 12,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  exercise.topic,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppType.meta(color: colors.textMuted),
-                ),
-              ],
-            ),
+          child: Stack(
+            children: [
+              _tile(colors),
+              if (premiumLocked) PremiumVeil(radius: BorderRadius.circular(18)),
+            ],
           ),
         ),
       ),
     );
   }
+
+  Widget _tile(AppPalette colors) => Container(
+    width: width,
+    constraints: const BoxConstraints(minHeight: 140),
+    padding: const EdgeInsets.all(14),
+    decoration: BoxDecoration(
+      color: colors.raisedInk,
+      borderRadius: BorderRadius.circular(18),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: colors.playback,
+              ),
+              child: Center(
+                child: SpeakerIcon(size: 17, color: colors.textPrimary),
+              ),
+            ),
+            const Spacer(),
+            if (!premiumLocked && done)
+              Icon(
+                CupertinoIcons.checkmark_alt_circle_fill,
+                size: 22,
+                color: colors.progressWords,
+              ),
+          ],
+        ),
+        const SizedBox(height: 14),
+        const Spacer(),
+        Text(
+          exercise.title,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+          style: AppType.chrome(
+            color: colors.textPrimary,
+            size: 17,
+            weight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 8),
+        DifficultyBolts(difficulty: _difficulty(exercise.level), size: 12),
+      ],
+    ),
+  );
 }
 
 /// Grammar exercises as horizontally scrolling columns of three rows, like
@@ -789,7 +757,7 @@ class _RuleCard extends StatelessWidget {
                   style: AppType.editorial(
                     color: colors.textPrimary,
                     size: 20,
-                    height: 1.15,
+                    height: 1.2,
                   ),
                 ),
                 const SizedBox(height: 4),

@@ -112,11 +112,11 @@ export class GeneratedVocabularyBackend {
   }
 
   async perform(token: string, request: GenerationRequest, signal: AbortSignal,
-    statusOnly = false): Promise<GenerationResponse> {
+    statusOnly = false): Promise<GenerationResponse & { free_sample?: true }> {
     const user = await new TranslationBackend(this.url, this.serviceKey, this.apiKey,
       this.fetcher).authenticate(token, signal);
     if (!statusOnly) requireVocabularyTopic(request.prompt);
-    // Validate deployment configuration before claiming a paid attempt.
+    // Validate deployment configuration before reserving a new attempt.
     check(statusOnly || this.apiKey, 'NOT_CONFIGURED');
     const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(
       JSON.stringify(['generated-vocabulary-v1', request.lang, request.prompt, request.count])));
@@ -124,7 +124,10 @@ export class GeneratedVocabularyBackend {
     const claim = await this.rpc('claim_generated_vocabulary', { p_user: user,
       p_request: request.request_id, p_lang: request.lang, p_hash: hash,
       p_count: request.count, p_status_only: statusOnly }, signal);
-    if (claim.status === 'hit') return generatedResponse(claim.response, request);
+    const provenance = claim.free_sample === true ? { free_sample: true as const } : {};
+    if (claim.status === 'hit') {
+      return { ...generatedResponse(claim.response, request), ...provenance };
+    }
     const errors: Record<string, [string, number]> = {
       account_unverified: ['ACCOUNT_UNVERIFIED', 403], premium_required: ['PREMIUM_REQUIRED', 403],
       limit: ['RATE_LIMIT', 429],
@@ -137,9 +140,13 @@ export class GeneratedVocabularyBackend {
     check(!statusOnly && claim.status === 'claimed' && typeof claim.ticket === 'string' &&
       /^[0-9a-f-]{36}$/i.test(claim.ticket), 'STORAGE_UNAVAILABLE');
     let storing = false;
+    let providerStarted = false;
     try {
       await admitVocabularyTopic(request.prompt, user, this.rpc.bind(this), this.fetcher, this.apiKey, signal);
-      const response = await budgetedAnthropicFetch(user, 'generated-vocabulary', this.rpc.bind(this), this.fetcher, {
+      const response = await budgetedAnthropicFetch(user, 'generated-vocabulary', this.rpc.bind(this), (...args) => {
+        providerStarted = true;
+        return this.fetcher(...args);
+      }, {
         method: 'POST', headers: { 'x-api-key': this.apiKey,
           'anthropic-version': '2023-06-01', 'Content-Type': 'application/json' },
         body: JSON.stringify({ model: MODEL, max_tokens: 16000, thinking: { type: 'disabled' },
@@ -177,12 +184,16 @@ export class GeneratedVocabularyBackend {
       const saved = await this.rpc('finish_generated_vocabulary', { p_user: user,
         p_request: request.request_id, p_ticket: claim.ticket, p_response: result }, signal);
       check(saved.status === 'saved', 'REQUEST_UNCERTAIN', 409);
-      return result;
+      return { ...result, ...provenance };
     } catch (error) {
       // If delivery of the finish RPC is uncertain it may already have committed.
       // Preserve it for status polling instead of overwriting a successful result.
       if (!storing) {
-        try { await this.rpc('fail_generated_vocabulary', { p_user: user,
+        // Attempts that never reached the generation call keep their tombstone
+        // but release the daily quota and any free sample.
+        const operation = !providerStarted
+          ? 'release_unstarted_generated_vocabulary' : 'fail_generated_vocabulary';
+        try { await this.rpc(operation, { p_user: user,
           p_request: request.request_id, p_ticket: claim.ticket }, AbortSignal.timeout(4000)); }
         catch { /* Preserve the no-replay pending tombstone on storage failure. */ }
       }

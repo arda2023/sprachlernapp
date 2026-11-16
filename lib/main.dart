@@ -197,6 +197,14 @@ class _Start extends ConsumerWidget {
       AsyncData(value: true) || AsyncError() => const AppShell(),
       AsyncData() => OnboardingScreen(
         onDone: (result) async {
+          try {
+            await ref
+                .read(notificationProvider.notifier)
+                .setLearningPurpose(result.interest);
+          } catch (_) {
+            // Reminders remain optional; onboarding can always finish.
+          }
+          if (!ref.context.mounted) return;
           ref
               .read(onboardingProvider.notifier)
               .complete(interest: result.interest);

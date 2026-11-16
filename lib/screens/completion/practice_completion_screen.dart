@@ -8,15 +8,20 @@ import 'package:flutter/material.dart' show Scaffold;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/learning_milestone.dart';
 import '../../domain/streak.dart';
 import '../../domain/review_request.dart';
 import '../../models/home_models.dart';
 import '../../presentation/celebration_sounds.dart';
+import '../../presentation/notifications/learning_reminder_invitation.dart';
 import '../../presentation/providers/streak_providers.dart';
 import '../../presentation/providers/auth_providers.dart';
 import '../../presentation/providers/review_request_provider.dart';
+import '../../presentation/providers/onboarding_provider.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/action_buttons.dart';
+import '../../widgets/learning_milestone_card.dart';
+import '../../widgets/success_premium_invitation.dart';
 import '../../widgets/svg_glyph.dart';
 import 'widgets/completion_panda.dart';
 import 'widgets/stacked_word_cards.dart';
@@ -34,6 +39,7 @@ class PracticeCompletionScreen extends ConsumerStatefulWidget {
     required this.goal,
     required this.words,
     this.offerReview = false,
+    this.achievement,
   });
 
   final StreakSummary streak;
@@ -41,11 +47,13 @@ class PracticeCompletionScreen extends ConsumerStatefulWidget {
   final List<CompletionWord> words;
   // Only the real practice route opts in; previews never request reviews.
   final bool offerReview;
+  final Future<PracticeMilestoneResult>? achievement;
 
   static Route<void> route({
     required StreakSummary streak,
     required DailyGoal goal,
     required List<CompletionWord> words,
+    Future<PracticeMilestoneResult>? achievement,
   }) => CupertinoPageRoute<void>(
     builder: (_) => WebReadingViewport(
       child: PracticeCompletionScreen(
@@ -53,6 +61,7 @@ class PracticeCompletionScreen extends ConsumerStatefulWidget {
         goal: goal,
         words: words,
         offerReview: true,
+        achievement: achievement,
       ),
     ),
   );
@@ -413,6 +422,14 @@ class _PracticeCompletionScreenState
                                           )
                                         : const NeverScrollableScrollPhysics(),
                                     slivers: [
+                                      if (_done && widget.achievement != null)
+                                        SliverToBoxAdapter(
+                                          child: _PracticeFollowUps(
+                                            achievement: widget.achievement!,
+                                            playSound: !widget.streak.starToday,
+                                            owner: _reviewOwner,
+                                          ),
+                                        ),
                                       SliverToBoxAdapter(
                                         child: Padding(
                                           padding: EdgeInsets.fromLTRB(
@@ -460,6 +477,63 @@ class _PracticeCompletionScreenState
           ],
         ),
       ),
+    );
+  }
+}
+
+class _PracticeFollowUps extends ConsumerWidget {
+  const _PracticeFollowUps({
+    required this.achievement,
+    required this.playSound,
+    required this.owner,
+  });
+
+  final Future<PracticeMilestoneResult> achievement;
+  final bool playSound;
+  final String? owner;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(accountSessionProvider);
+    if (ref.read(contentAuthProvider).localOwner != owner) {
+      return const SizedBox.shrink();
+    }
+    final onboarded = ref.watch(onboardingProvider).asData?.value == true;
+    return FutureBuilder<PracticeMilestoneResult>(
+      future: achievement,
+      builder: (context, snapshot) {
+        final result = snapshot.data;
+        if (result == null || !result.successful) {
+          return const SizedBox.shrink();
+        }
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              for (final (i, milestone) in result.milestones.indexed)
+                Padding(
+                  padding: EdgeInsets.only(top: i == 0 ? 16 : 8),
+                  child: LearningMilestoneCard(
+                    key: ValueKey(milestone),
+                    milestone: milestone,
+                    playSound: i == 0 && playSound,
+                  ),
+                ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: LearningReminderInvitation(
+                  fallback: onboarded
+                      ? const SuccessPremiumInvitation(
+                          opportunityId: 'first_session',
+                          interest: 'Stapel',
+                        )
+                      : null,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -620,8 +694,8 @@ class _CompletionMessage extends StatelessWidget {
                 style: AppType.chrome(
                   size: 17,
                   weight: FontWeight.w700,
-                  color: const Color(0xFFFFFFFF),
-                  height: 1.15,
+                  color: AppColors.onActive,
+                  height: 1.2,
                 ),
               ),
             ),

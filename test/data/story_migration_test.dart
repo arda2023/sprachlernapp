@@ -11,7 +11,7 @@ import '../fixtures/story_learning.dart';
 void main() {
   for (final version in [2, 3, 4]) {
     test(
-      'v$version to v8 preserves all prior column values and append-only triggers',
+      'v$version to v9 preserves all prior column values and append-only triggers',
       () async {
         final dir = Directory.systemTemp.createTempSync('story-migrate-');
         addTearDown(() => dir.deleteSync(recursive: true));
@@ -31,6 +31,9 @@ void main() {
         if (version == 4) await repo.addStoryWord(storyCandidate(), now: now);
         await repo.close();
         final raw = sqlite3.open(file.path);
+        raw.execute('DROP TABLE free_generated_vocabulary');
+        raw.execute('DROP TABLE pending_generated_vocabulary');
+        raw.execute('DROP TABLE generated_vocabulary_additions');
         raw.execute('DROP TABLE form_identity_bindings');
         raw.execute('ALTER TABLE user_cards DROP COLUMN form_function');
         raw.execute('ALTER TABLE user_cards DROP COLUMN lexical_target_id');
@@ -92,7 +95,14 @@ void main() {
         await repo.close();
         final migrated = sqlite3.open(file.path);
         addTearDown(migrated.close);
-        expect(migrated.select('PRAGMA user_version').single.values.first, 8);
+        expect(migrated.select('PRAGMA user_version').single.values.first, 9);
+        for (final table in [
+          'generated_vocabulary_additions',
+          'free_generated_vocabulary',
+          'pending_generated_vocabulary',
+        ]) {
+          expect(migrated.select('SELECT * FROM $table'), isEmpty);
+        }
         for (final table in columns.keys) {
           final where = table == 'user_cards' && version < 4
               ? " WHERE card_id='existing'"

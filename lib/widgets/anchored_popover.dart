@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../theme/app_theme.dart';
+
 /// A speech-bubble panel whose arrow points at the widget that opened it
 /// (progress tiles, flame, daily goal). Same colour as the highlighted
 /// anchor, no dimming, tap outside to close.
@@ -242,9 +244,9 @@ class _PopoverLayout extends StatelessWidget {
         child: SingleChildScrollView(
           padding: padding,
           child: DefaultTextStyle.merge(
-            style: const TextStyle(color: Colors.white),
+            style: const TextStyle(color: AppColors.onActive),
             child: IconTheme.merge(
-              data: const IconThemeData(color: Colors.white),
+              data: const IconThemeData(color: AppColors.onActive),
               child: Builder(builder: builder),
             ),
           ),

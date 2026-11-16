@@ -104,7 +104,7 @@ Referenzen (Mobbin; der gewünschte Refero-Zugang war in dieser Umgebung nicht v
 | Abschnitt | Überschrift (Figtree 14, gedämpft), eine abgerundete Gruppe (20 pt) auf `raisedInk`, Zeilen getrennt durch eingerückte schwache Linie, optionale Fußnote. Kein Rahmen. | `settings/settings_screen.dart` |
 | Darstellung | Drei Mini-Vorschauen (Automatisch diagonal geteilt, Hell, Dunkel), gewählte mit orangem Zustandsring. Schmal oder große Schrift: eine Zeile je Motiv. Das App-eigene Motiv ist eine bewusste Produktentscheidung (DESIGN.md) gegen HIG › Dark Mode; Standard bleibt „Automatisch“. | `settings_screen.dart` |
 | Üben | Tagesziel mit Wert-Pille → Tagesziel-Popover (Pfeil auf die Pille); orange Schalter für Akzente, automatisch weiter, Grammatiktabellen. Ganze Zeile schaltet. Keine Beschreibungszeilen unter den Einstellungen; „Grammatiktabellen anzeigen“ wird nicht mehr angezeigt (31.10.2026). | `settings_screen.dart` |
-| Noch nicht verfügbar | Benachrichtigungen und Ton aus gedämpft mit „Bald“-Chip; keine Fußnote mehr (01.11.2026), VoiceOver-Hinweis „Noch nicht verfügbar“ je Zeile. Audiogeschwindigkeit entfällt (31.10.2026); Spracheingabe entfällt hier, da sie direkt in der Übung startet (01.11.2026). Premium steht als eigene Karte ganz oben: Stern im orangen Kreis, „Linglossa Premium“, gedämpfte Statuszeile, rechts Pille „Upgrade“/„Verwalten“; „Käufe wiederherstellen“ leise darunter (31.10.2026, `widgets/subscription_tile.dart`). | `settings_screen.dart` |
+| Noch nicht verfügbar | Ton aus gedämpft mit „Bald“-Chip; Lern-Benachrichtigungen mit echtem Schalter und vorhandener Uhrzeit; keine Fußnote mehr (01.11.2026), VoiceOver-Hinweis „Noch nicht verfügbar“ je Zeile. Audiogeschwindigkeit entfällt (31.10.2026); Spracheingabe entfällt hier, da sie direkt in der Übung startet (01.11.2026). Premium steht als eigene Karte ganz oben: Stern im orangen Kreis, „Linglossa Premium“, gedämpfte Statuszeile, rechts Pille „Upgrade“/„Verwalten“; „Käufe wiederherstellen“ leise darunter (31.10.2026, `widgets/subscription_tile.dart`). | `settings_screen.dart` |
 | Inhalte und Hilfe | Inhaltsupdates, Lokale Berichte und Feedback, Wörterbuch · Quellen & Lizenz (Wiktionary, CC BY-SA 4.0), Bildschirm-Vorschauen (Entwicklerwerkzeug, daher zuletzt). | `settings_screen.dart`, `widgets/dictionary_sources_sheet.dart` |
 
 ## Inhalte (24.10.2026)
@@ -127,87 +127,25 @@ Mobbin-Referenzen: große „Als Nächstes“-Karte mit Kachel-Reihe darunter wi
 
 **Dynamic Type:** Kachel-Reihen und Spalten haben keine feste Höhe; sie wachsen mit der höchsten Karte (`IntrinsicHeight`), statt abzuschneiden.
 
-## Onboarding und Paywall (24.10.2026)
+## Onboarding und Paywall (15.11.2026)
 
-Herleitung: Recherche unter `aislop/onboarding` und der Freemium-Plan (Premium 9,99 €/Monat oder 49,99 €/Jahr, kein Trial, Paywall einmal nach der Wort-Demo, schließbar, kein zweites Angebot; kostenlos lernen ohne Konto, Konto erst vor einem Kauf). Refero-Referenzen:
-- Ablauf: [CapWords „Photo-to-Word Onboarding“](https://refero.design/flows/6104) – personalisieren → kurze Demo → Paywall direkt nach dem Erfolgsmoment.
-- Brücke vor der Paywall: [Clucky Plan-Checkliste](https://refero.design/screens/746df9c6-8e56-4b63-b4bc-791fec47a3a9).
-- Paywall-Aufbau:
-  - X links, „Wiederherstellen“ rechts, wenige Vorteile, Bedingungen unter dem Knopf: [Perplexity](https://refero.design/screens/4182e2ca-0000-4d6a-a477-cf89130425c3), [CapWords](https://refero.design/screens/b13c6d76-0182-4741-8226-48cfabeca7b2).
-  - Tarif und Knopf unten angeheftet: [IFTTT](https://refero.design/screens/3f7373f6-512d-4ce7-9412-1d56d5ac36a3); gestapelte Tarifzeilen: [Perplexity](https://refero.design/screens/4182e2ca-0000-4d6a-a477-cf89130425c3).
-  - Beruhigungszeile unter dem Knopf: [Revolut](https://refero.design/screens/f6875db2-4608-49b4-b803-9e390a1801b5).
-- Stil:
-  - Leitstil Chantlings: dunkle Fläche, Serif-Titel, Orange nur für gefüllte Hauptaktionen, Glut-Schein als einzige Tiefe.
-  - Von Cron Calendar der weiche Glow unter dem Hauptknopf, von Pipe die Tonflächen statt Rahmen.
+**Gestalterischer Rahmen:** Bestehende Source Serif 4/Figtree-Typografie, Light/Dark-Tokens, kurze Texte, Orange für Auswahl und Hauptaktion. Kein animierter Grußwort-Hintergrund auf der Paywall. Die Sprachwechselanimation bleibt eigenständig.
 
-**Reihenfolge (5 Seiten + Paywall):** Willkommen → Thema → Tagesziel → Wort antippen → „Dein Start steht“ → Paywall. Oben Zurück und orange Schritt-Segmente wie in der Übung; unten ein oranger Hauptknopf mit Glut-Schein, abgeblendet, bis die Seite hat, was sie braucht. Vorwärts-Wischen ist bis dahin gesperrt, Zurück-Wischen geht immer. Name „Linglossa“.
+**Referenzen:** Brilliant für schrittweise Mitmach-Erklärungen, [Clearful](https://refero.design/screens/5fa5947e-ffd9-4904-a1ed-6b8ba8f3fb74) für die lesbare Free/Premium-Gegenüberstellung; Duolingo nur für sparsame Erfolgsrückmeldung. Die vom Nutzer gezeigte Wort-Aufdeck-Interaktion wird als konkretes Textbeispiel umgesetzt, ohne allgemeine Prozentversprechen zum Wortschatz.
 
-| Seite | Regel | Datei |
-|---|---|---|
-| Willkommen | Logo + Wortmarke (Schriftskalierung bis 1,3 wie Chrome), animiertes Buch, Serif-Titel. „Los geht’s“; „Ich habe schon ein Konto“ öffnet das Konto-Sheet (Platzhalter, startet ohne Konto). | `onboarding/onboarding_screen.dart` |
-| Thema | Vier Kacheln (Reisen, Beruf, Alltag, Kultur) mit Beispielsatz. Gewählt = oranger Rand + Haken. Bestimmt Seite 4, die Plan-Zeile und den ersten Paywall-Vorteil; wird gespeichert. | `onboarding_screen.dart` |
-| Tagesziel | Locker 5 · Normal 10 (vorgewählt) · Ernsthaft 15 · Intensiv 20. Gewählt in Popover-Orange; bei großer Schrift bricht die Wortzahl unter den Namen um. Wird als echtes Tagesziel gespeichert. | `onboarding_screen.dart`, `main.dart` |
-| Wort antippen | Satz aus dem Thema; antippbare Wörter gepunktet, das erste pulsiert viermal. Antippen → orange Bedeutungs-Karte wie im Reader. Nur Demo, kein Lernstand. Darunter die einzige Abfrage der KI-Übersetzung: Karte „Fehlende Wörter mit KI übersetzen“ mit kurzer Offenlegung (Anthropic, keine reine EU-Verarbeitung, dauerhaft privat (bis zur Löschung), abschaltbar) und Schalter, standardmäßig aus (29.10.2026, PRODUCT.md › Runtime). | `onboarding_screen.dart` |
-| Dein Start steht | Karte mit Plan-Pille („Dein Plan · Thema · N Wörter / Tag“) und drei Zeilen, die nacheinander abgehakt werden (Thema, Tagesziel, erstes Wort). Erst nach dem letzten Haken wird „Weiter“ aktiv. | `onboarding_screen.dart` |
-| Paywall | Siehe unten. | `onboarding/paywall_screen.dart` |
+**Onboarding:** Willkommen → freiwilliger Lernzweck („Weiß ich noch nicht“) → Tagesziel → Wortbedeutung/KI-Einstellung und echte Ein-Wort-Übung → vorhandene Abschlusskarte → erste Paywall. „Später ausprobieren“ startet Free direkt. Zwischenstand mit Ziel, Lernzweck, KI-Einstellung und erfolgreich gespeicherter Übung bleibt lokal erhalten. Bestehende Rive-Willkommensgrafik und Seitenbewegung bleiben, bei reduzierter Bewegung statisch.
 
 **Paywall:**
-- **Kopf:**
-  - Oben links X („Schließen“, führt direkt in die App), rechts „Wiederherstellen“; die Leiste wird bis 1,3 skaliert.
-  - Darunter die Plan-Pille, dann „Linglossa Premium“ und der Serif-Titel „Mehr lesen. Deine eigenen Wörter lernen.“.
-- **Vorteile** in fester Reihenfolge, je eine Zeile Detail, darunter „Alle veröffentlichten Grammatik- und Textübungen inklusive.“:
-  1. „Lies, was dich interessiert“ – „Alle Storys ohne Tageslimit – auch zu {Thema}.“
-  2. „Lerne mit deinen eigenen Texten“.
-  3. „Verstehe fehlende Stellen direkt“ – „500 neue KI-Übersetzungen pro Monat.“
-- Kopf und Vorteile scrollen; wo sie unter den angehefteten Block laufen, blenden sie auf 20 pt weich aus statt hart abgeschnitten zu werden.
-- **Tarife** als gestapelte Zeilen, direkt über dem Knopf angeheftet, damit der Preis immer neben „Premium abonnieren“ steht (ab Schriftgröße 1,35 scrollen sie mit, damit der Block den Bildschirm nicht füllt):
-  - Links Auswahlkreis, Titel und Zusatz, rechts Preis und Zeitraum – so bricht kein deutscher Text um.
-  - Jährlich ist vorgewählt: 49,99 € / Jahr, „entspricht 4,17 € / Monat“, Plakette „58 % sparen“ neben dem Titel.
-  - Monatlich: 9,99 € / Monat, monatlich kündbar.
-  - Der gewählte Tarif bekommt einen orangen Rand, eine Orange-Tönung und einen gefüllten Kreis, dessen Haken mit leichtem Überschwinger einploppt; der andere zeigt nur einen leeren Ring.
-- **Fuß:**
-  - „Premium abonnieren“, direkt darunter die Bedingungen des gewählten Tarifs („… Automatische Verlängerung, im Store kündbar.“, wechseln weich mit).
-  - Dann „Kostenlos weiterlernen“ sowie „Nutzungsbedingungen“ und „Datenschutz“ (brechen bei großer Schrift um).
-- **Ehrliche Platzhalter:**
-  - „Premium abonnieren“ öffnet zuerst das Konto-Sheet („Konto für dein Abo“). Nach der Wahl sagt ein Hinweis, dass Käufe in dieser Version noch nicht freigeschaltet sind, und die App startet kostenlos.
-  - Wiederherstellen und Rechtslinks melden ebenfalls nur „kommt bald“.
-  - Ohne echte Store-Abrechnung darf die Paywall nicht veröffentlicht werden.
-- **Einmalig:** Schließen, „Kostenlos weiterlernen“ und ein Kaufversuch beenden das Onboarding. System-Zurück führt zu „Dein Start steht“ und speichert nichts.
+- X links, Wiederherstellen bzw. Kontozugang rechts. Kurze anlassbezogene Überschrift; keine fliegende Plan-Pille, keine Trial-Zeitleiste.
+- Monats-/Jahresangebote aus dem Store als auswählbare Karten, bei großer Schrift untereinander. Ersparnis nur aus tatsächlichen Storepreisen. Keine erfundenen Preise oder Probeabos.
+- „Premium abonnieren“, Preis/Abrechnung/Kündigung, „Kostenlos weiterlernen“ und Rechtslinks. Kauf und Restore behalten die echten Konto-/Server-/Storeprüfungen.
+- Kaufblock auf ausreichend hohen Screens bei normaler Schrift unten; auf kleinen Screens und bei großer Schrift im Scrollinhalt. Schließen bleibt oben erreichbar.
+- Darunter Free/Premium-Vergleich mit tatsächlichen Grenzen, insbesondere einer Gratisstory und einmalig bis zu 50 generierten Wörtern.
+- Drei kurze Erklärungen, jede interaktiv: Slider deckt Wörter im Beispieltext auf; Tippen zeigt das abgerufene Wort im Satz; Heute/Morgen/Später zeigen einen Beispielrhythmus. Demonstrationen schreiben keinen Lernstand und verwenden keine Runtime-KI.
+- Forschung über einen leisen Link erreichbar. Quellen untersuchen Methoden, keine bereits belegte Wirksamkeit von Linglossa. Keine unbelegte Überlegenheit gegenüber anderen Apps.
+- Interaktionen wechseln in 180–220 ms, der Screen in 300 ms. Reduzierte Bewegung schaltet die Animationen aus. Vorhandene lokale Sound-/Haptikbausteine, keine neue Audio-Abhängigkeit.
 
-**Bewegung:**
-- **Seiten:** Seitenwechsel per Knopf in 340 ms (easeOutCubic). Beim Wischen liegt der Inhalt jeder Seite leicht zurück (35 % Parallaxe) und blendet aus.
-- **Textblöcke:** Sie kommen beim ersten Besuch gestaffelt von unten (`Reveal`, 420 ms + 60 ms je Stufe).
-- **Tippen:** Antippbare Elemente geben auf 97 % nach (`Pressable`).
-- **Übergang Plan → Paywall:**
-  - Das Onboarding tritt zurück (Skalierung 0,94, Deckkraft 0,4).
-  - Die Paywall blendet ein und gleitet 6 % von unten (520 ms, zurück 360 ms).
-  - Die Plan-Pille fliegt als Hero an ihren Platz oben in der Paywall.
-- **Reduzierte Bewegung:** Alles steht sofort; Seiten springen.
-
-**Haptik** (`Haptic` in `widgets/onboarding_motion.dart`):
-- `selectionClick`: Auswahl, Tarif, Wischen auf eine neue Seite, jeder Plan-Haken.
-- `lightImpact`: Wörter, Zurück, X, Textlinks.
-- `mediumImpact`: Hauptknöpfe und Anmeldeknöpfe.
-
-Knöpfe geben ihre Haptik selbst; das programmatische Weiterblättern löst keine zweite aus.
-
-**Töne:**
-- Epidemic Sound, ambient, also stumm bei Lautlos-Schalter (`presentation/onboarding_sounds.dart`):
-  - Auswahl-Klick bei Thema, Ziel und Tarifwechsel (`onboarding_select.mp3`).
-  - Häkchen-Ton je Plan-Zeile (`streak_check.mp3`).
-  - Aufsteigendes „Hud“ beim Öffnen der Paywall (`onboarding_paywall.mp3`).
-- Wörter, Zurück und Schließen haben nur Haptik.
-- In Tests sind die Töne stumm.
-
-**Animationen:** Rive (`assets/rive/onboarding.riv`), drei Artboards Logo · Welcome · Goal, je „Intro“ (einmal) → „Idle“ (Schleife). Quelle ist der Generator `tool/rive/onboarding/build_scene.py`; neu bauen mit `python3 tool/rive/onboarding/build_scene.py` und `rive tool/rive/onboarding --once` (Rive CLI, ohne Login, keine Skripte). Bei reduzierter Bewegung, in Widget-Tests und ohne native Rive-Runtime zeigt `OnboardingArt` ein Standbild (Logo per `CustomPaint`).
-
-**Gespeichert:** `<support>/ui/onboarding.json` (`done`, `interest`), nur UI-Zustand; das Tagesziel in den Einstellungen. Tests und Vorschauen überspringen das Onboarding (`onboardingStoreProvider` ist dort `null`).
-
-**Paywall, Neufassung (31.10.2026, Nutzerwunsch; ersetzt Tarif-Zeilen und „kein Trial“ oben):** Mobbin/Refero: [Unwind](https://refero.design/screens/a81efcc2-4fc8-4867-962c-89a7b890d321), [Mimo](https://mobbin.com/screens/e257555e-bd98-4163-b095-198a8c58473b), [Vocabulary](https://mobbin.com/screens/32238af5-552f-4ac3-bede-16981f4c23d3), [Bevel](https://mobbin.com/screens/87ac5af9-7c7a-46b8-8a82-ad8c90bf574c), [Calm Sleep](https://mobbin.com/screens/07905baf-c7e7-48db-9b78-5866d040e1af).
-- Kopf: „Hello · Olá · Hei · Ciao · Hola“ riesig in Serif, glutfarben, rechts angeschnitten; jedes Wort gleitet abwechselnd von unten bzw. oben herein, ruht und blendet aus, während das nächste kommt (`widgets/word_rain.dart`, `WordCycle`).
-- Testphase angeboten: Titel „N Tage gratis lernen“, darunter eine Zeitleiste (orange auslaufende Spur): „Heute“ – alles frei; Datum – Abo startet mit Preis, bis dahin kündbar. Über dem Knopf „N Tage gratis, dann Preis Zeitraum“, Knopf „Kostenlos testen“, darunter „Alle Pläne“.
-- Kauf (keine Testphase oder „Alle Pläne“): Serif-Titel, drei Vorteile, Tarife **nebeneinander** als Karten (Titel + Auswahlkreis, Preis groß, darunter Monatsbetrag bzw. Zeitraum); Plakette „−58 %“ (aus Store-Preisen berechnet) bzw. „N Tage gratis“.
-- Nach dem Onboarding zusätzlich die Plan-Pille.
+**Ergänzungen in Home und Abschluss:** Eine kurze nächste Lernaufgabe auf Home. Echte Meilensteine erhalten eine kleine einmalige Animation. Nach Lernerfolg höchstens eine Einladung: Benachrichtigungen oder dezenter Premiumhinweis; die Ablehnung wird gespeichert. Ton respektiert die bestehende Ambient-Wiedergabe.
 
 **Sprachwechsel (01.11.2026, Nutzerwunsch):** Vier große, leichte Figtree-Wörter (400) der gewählten Sprache füllen den Bildschirm. Grußwort und dritte Zeile bleiben ganz sichtbar; zweite und vierte Zeile sind abwechselnd rechts und links um etwa 30 % angeschnitten. Die Wörter gleiten langsamer nacheinander von oben und unten zu ihren Zeilenmitten (650 ms je Wort, 140 ms gestaffelt; insgesamt 1070 ms). Das Grußwort ist orange, die anderen glutfarben. Schon beim Eintritt setzt eine deutlichere, stetige Drift ein (14-s-Zyklus, vertikal bis 36 pt, auf engen Höhen angepasst); kein abrupter Halt. Reduzierte Bewegung zeigt die fertigen Wörter ohne Drift. Der Vorhang bleibt zusätzlich an die Ladebereitschaft gebunden. `WordWall`, `LaunchCurtain`.
 

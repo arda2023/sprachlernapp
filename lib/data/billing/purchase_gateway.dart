@@ -138,28 +138,12 @@ class AdaptyPurchaseGateway implements PurchaseGateway {
         skipped(product, 'skipped (unknown ID or access level)');
         continue;
       }
-      // Only a plain free introductory trial is surfaced (user decision
-      // 31.10.2026); StoreKit attaches it only while the account is
-      // eligible. Any other offer keeps the product off this paywall.
+      // No trial or discounted offer: the permanent free sample is the
+      // trial experience (user decision 15.11.2026). Never hide an attached
+      // introductory offer while displaying plain paid terms.
       final offer = product.subscription?.offer;
-      final trialDays = offer == null
-          ? null
-          : freeTrialDays(
-              introductory:
-                  offer.identifier.type ==
-                  AdaptySubscriptionOfferType.introductory,
-              phases: [
-                for (final phase in offer.phases)
-                  (
-                    freeTrial: phase.paymentMode == AdaptyPaymentMode.freeTrial,
-                    unit: phase.subscriptionPeriod.unit.name,
-                    units: phase.subscriptionPeriod.numberOfUnits,
-                    periods: phase.numberOfPeriods,
-                  ),
-              ],
-            );
-      if (offer != null && offer.phases.isNotEmpty && trialDays == null) {
-        skipped(product, 'skipped (offer other than a free trial)');
+      if (offer != null) {
+        skipped(product, 'skipped (introductory or promotional offer)');
         continue;
       }
       final localizedPrice = product.price.localizedString;
@@ -177,7 +161,6 @@ class AdaptyPurchaseGateway implements PurchaseGateway {
           localizedPeriod: product.subscription?.localizedPeriod,
           isRecommended: plan == PurchasePlan.yearly,
           priceAmount: product.price.amount,
-          trialDays: trialDays,
         ),
       );
     }

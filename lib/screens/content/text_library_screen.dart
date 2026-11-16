@@ -8,6 +8,7 @@ import '../../models/reading_history.dart';
 import '../../theme/app_theme.dart';
 import '../../presentation/providers/premium_access_provider.dart';
 import '../../widgets/premium_content_gate.dart';
+import '../../widgets/premium_action.dart';
 import '../../widgets/back_bar.dart';
 import '../../widgets/section_heading.dart';
 import 'widgets/text_exercise_shelf.dart';
@@ -32,10 +33,15 @@ class TextLibraryScreen extends ConsumerWidget {
     required ReadingHistory history,
   }) async {
     final container = ProviderScope.containerOf(context, listen: false);
-    if (!container.read(premiumContentAccessProvider)) {
-      await showPremiumContentPaywall(context, interest: 'Texte');
+    if (!container.read(premiumContentAccessProvider) &&
+        !await unlockPremiumAction(
+          context,
+          interest: 'Textübungen',
+          allowGuestSignIn: true,
+        )) {
       return;
     }
+    if (!context.mounted) return;
     await Navigator.of(context).push(
       CupertinoPageRoute<void>(
         builder: (_) => TextLibraryScreen(texts: texts, history: history),
@@ -48,10 +54,15 @@ class TextLibraryScreen extends ConsumerWidget {
   /// points at it.
   static Future<void> start(BuildContext context, ExerciseText text) async {
     final container = ProviderScope.containerOf(context, listen: false);
-    if (!container.read(premiumContentAccessProvider)) {
-      await showPremiumContentPaywall(context, interest: 'Texte');
+    if (!container.read(premiumContentAccessProvider) &&
+        !await unlockPremiumAction(
+          context,
+          interest: 'Textübungen',
+          allowGuestSignIn: true,
+        )) {
       return;
     }
+    if (!context.mounted) return;
     final mode = await ExerciseChoiceSheet.show(context, text);
     if (mode != null &&
         context.mounted &&
@@ -168,11 +179,9 @@ class TextLibraryScreen extends ConsumerWidget {
                             TextExerciseShelf(
                               texts: group,
                               premiumLocked: premiumLocked,
-                              onUpgrade: () => showPremiumContentPaywall(
-                                context,
-                                interest: 'Texte',
-                              ),
                               onOpen: (text, anchor) =>
+                                  _choose(anchor, text.id),
+                              onUpgrade: (text, anchor) =>
                                   _choose(anchor, text.id),
                             ),
                           ],

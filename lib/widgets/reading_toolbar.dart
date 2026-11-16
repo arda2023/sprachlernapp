@@ -34,7 +34,7 @@ class ReadingToolbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = translating
-        ? const Color(0xFFFFFFFF)
+        ? AppColors.onActive
         : context.appColors.textMuted;
     return DecoratedBox(
       decoration: BoxDecoration(color: context.appColors.raisedInk),
@@ -161,7 +161,7 @@ class _ListenToggle extends StatelessWidget {
             child: SpeakerIcon(
               filled: on,
               size: 20,
-              color: on ? const Color(0xFFFFFFFF) : context.appColors.textMuted,
+              color: on ? AppColors.onActive : context.appColors.textMuted,
             ),
           ),
         ),

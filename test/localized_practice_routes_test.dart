@@ -64,7 +64,17 @@ void main() {
       expect(dashboard.grammar, isNot(same(sampleGrammarExercises)));
       expect(dashboard.rules, isNot(same(sampleGrammarRules)));
       final title = find.text(authored.texts.first.info.title);
-      await t.ensureVisible(title);
+      // Texte follow Hören and Grammatik, below the first screen.
+      await t.scrollUntilVisible(
+        title,
+        200,
+        scrollable: find
+            .descendant(
+              of: find.byType(ContentDashboardScreen),
+              matching: find.byType(Scrollable),
+            )
+            .first,
+      );
       await t.tap(title);
       await t.pumpAndSettle();
       await t.tap(find.text(ExerciseMode.verbs.title));

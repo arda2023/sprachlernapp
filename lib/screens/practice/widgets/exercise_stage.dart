@@ -217,6 +217,9 @@ class _StagePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    // The outer discs reach far past the screen. Without the clip they show
+    // over the previous screen while this one slides out on the way back.
+    canvas.clipRect(Offset.zero & size);
     canvas.drawRect(Offset.zero & size, Paint()..color = tone.ground);
     final focused = _focusCentre();
     final centre = focused ?? Offset(size.width / 2, -size.height * 0.06);

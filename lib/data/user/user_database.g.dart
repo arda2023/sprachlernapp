@@ -4949,6 +4949,602 @@ class GeneratedVocabularyAdditionsCompanion
   }
 }
 
+class $FreeGeneratedVocabularyTable extends FreeGeneratedVocabulary
+    with TableInfo<$FreeGeneratedVocabularyTable, FreeGeneratedVocabularyRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FreeGeneratedVocabularyTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _cardIdMeta = const VerificationMeta('cardId');
+  @override
+  late final GeneratedColumn<String> cardId = GeneratedColumn<String>(
+    'card_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES generated_vocabulary_additions (card_id)',
+    ),
+  );
+  static const VerificationMeta _langMeta = const VerificationMeta('lang');
+  @override
+  late final GeneratedColumn<String> lang = GeneratedColumn<String>(
+    'lang',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [cardId, lang];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'free_generated_vocabulary';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FreeGeneratedVocabularyRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('card_id')) {
+      context.handle(
+        _cardIdMeta,
+        cardId.isAcceptableOrUnknown(data['card_id']!, _cardIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_cardIdMeta);
+    }
+    if (data.containsKey('lang')) {
+      context.handle(
+        _langMeta,
+        lang.isAcceptableOrUnknown(data['lang']!, _langMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_langMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {cardId};
+  @override
+  FreeGeneratedVocabularyRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FreeGeneratedVocabularyRow(
+      cardId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}card_id'],
+      )!,
+      lang: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lang'],
+      )!,
+    );
+  }
+
+  @override
+  $FreeGeneratedVocabularyTable createAlias(String alias) {
+    return $FreeGeneratedVocabularyTable(attachedDatabase, alias);
+  }
+}
+
+class FreeGeneratedVocabularyRow extends DataClass
+    implements Insertable<FreeGeneratedVocabularyRow> {
+  final String cardId;
+  final String lang;
+  const FreeGeneratedVocabularyRow({required this.cardId, required this.lang});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['card_id'] = Variable<String>(cardId);
+    map['lang'] = Variable<String>(lang);
+    return map;
+  }
+
+  FreeGeneratedVocabularyCompanion toCompanion(bool nullToAbsent) {
+    return FreeGeneratedVocabularyCompanion(
+      cardId: Value(cardId),
+      lang: Value(lang),
+    );
+  }
+
+  factory FreeGeneratedVocabularyRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FreeGeneratedVocabularyRow(
+      cardId: serializer.fromJson<String>(json['cardId']),
+      lang: serializer.fromJson<String>(json['lang']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'cardId': serializer.toJson<String>(cardId),
+      'lang': serializer.toJson<String>(lang),
+    };
+  }
+
+  FreeGeneratedVocabularyRow copyWith({String? cardId, String? lang}) =>
+      FreeGeneratedVocabularyRow(
+        cardId: cardId ?? this.cardId,
+        lang: lang ?? this.lang,
+      );
+  FreeGeneratedVocabularyRow copyWithCompanion(
+    FreeGeneratedVocabularyCompanion data,
+  ) {
+    return FreeGeneratedVocabularyRow(
+      cardId: data.cardId.present ? data.cardId.value : this.cardId,
+      lang: data.lang.present ? data.lang.value : this.lang,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FreeGeneratedVocabularyRow(')
+          ..write('cardId: $cardId, ')
+          ..write('lang: $lang')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(cardId, lang);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FreeGeneratedVocabularyRow &&
+          other.cardId == this.cardId &&
+          other.lang == this.lang);
+}
+
+class FreeGeneratedVocabularyCompanion
+    extends UpdateCompanion<FreeGeneratedVocabularyRow> {
+  final Value<String> cardId;
+  final Value<String> lang;
+  final Value<int> rowid;
+  const FreeGeneratedVocabularyCompanion({
+    this.cardId = const Value.absent(),
+    this.lang = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FreeGeneratedVocabularyCompanion.insert({
+    required String cardId,
+    required String lang,
+    this.rowid = const Value.absent(),
+  }) : cardId = Value(cardId),
+       lang = Value(lang);
+  static Insertable<FreeGeneratedVocabularyRow> custom({
+    Expression<String>? cardId,
+    Expression<String>? lang,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (cardId != null) 'card_id': cardId,
+      if (lang != null) 'lang': lang,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FreeGeneratedVocabularyCompanion copyWith({
+    Value<String>? cardId,
+    Value<String>? lang,
+    Value<int>? rowid,
+  }) {
+    return FreeGeneratedVocabularyCompanion(
+      cardId: cardId ?? this.cardId,
+      lang: lang ?? this.lang,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (cardId.present) {
+      map['card_id'] = Variable<String>(cardId.value);
+    }
+    if (lang.present) {
+      map['lang'] = Variable<String>(lang.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FreeGeneratedVocabularyCompanion(')
+          ..write('cardId: $cardId, ')
+          ..write('lang: $lang, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PendingGeneratedVocabularyTable extends PendingGeneratedVocabulary
+    with
+        TableInfo<
+          $PendingGeneratedVocabularyTable,
+          PendingGeneratedVocabularyRow
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PendingGeneratedVocabularyTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _ownerMeta = const VerificationMeta('owner');
+  @override
+  late final GeneratedColumn<String> owner = GeneratedColumn<String>(
+    'owner',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _langMeta = const VerificationMeta('lang');
+  @override
+  late final GeneratedColumn<String> lang = GeneratedColumn<String>(
+    'lang',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _requestIdMeta = const VerificationMeta(
+    'requestId',
+  );
+  @override
+  late final GeneratedColumn<String> requestId = GeneratedColumn<String>(
+    'request_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _promptMeta = const VerificationMeta('prompt');
+  @override
+  late final GeneratedColumn<String> prompt = GeneratedColumn<String>(
+    'prompt',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _itemCountMeta = const VerificationMeta(
+    'itemCount',
+  );
+  @override
+  late final GeneratedColumn<int> itemCount = GeneratedColumn<int>(
+    'item_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    owner,
+    lang,
+    requestId,
+    prompt,
+    itemCount,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pending_generated_vocabulary';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PendingGeneratedVocabularyRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('owner')) {
+      context.handle(
+        _ownerMeta,
+        owner.isAcceptableOrUnknown(data['owner']!, _ownerMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_ownerMeta);
+    }
+    if (data.containsKey('lang')) {
+      context.handle(
+        _langMeta,
+        lang.isAcceptableOrUnknown(data['lang']!, _langMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_langMeta);
+    }
+    if (data.containsKey('request_id')) {
+      context.handle(
+        _requestIdMeta,
+        requestId.isAcceptableOrUnknown(data['request_id']!, _requestIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_requestIdMeta);
+    }
+    if (data.containsKey('prompt')) {
+      context.handle(
+        _promptMeta,
+        prompt.isAcceptableOrUnknown(data['prompt']!, _promptMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_promptMeta);
+    }
+    if (data.containsKey('item_count')) {
+      context.handle(
+        _itemCountMeta,
+        itemCount.isAcceptableOrUnknown(data['item_count']!, _itemCountMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_itemCountMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {owner, lang};
+  @override
+  PendingGeneratedVocabularyRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PendingGeneratedVocabularyRow(
+      owner: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}owner'],
+      )!,
+      lang: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lang'],
+      )!,
+      requestId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}request_id'],
+      )!,
+      prompt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}prompt'],
+      )!,
+      itemCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}item_count'],
+      )!,
+    );
+  }
+
+  @override
+  $PendingGeneratedVocabularyTable createAlias(String alias) {
+    return $PendingGeneratedVocabularyTable(attachedDatabase, alias);
+  }
+}
+
+class PendingGeneratedVocabularyRow extends DataClass
+    implements Insertable<PendingGeneratedVocabularyRow> {
+  final String owner;
+  final String lang;
+  final String requestId;
+  final String prompt;
+  final int itemCount;
+  const PendingGeneratedVocabularyRow({
+    required this.owner,
+    required this.lang,
+    required this.requestId,
+    required this.prompt,
+    required this.itemCount,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['owner'] = Variable<String>(owner);
+    map['lang'] = Variable<String>(lang);
+    map['request_id'] = Variable<String>(requestId);
+    map['prompt'] = Variable<String>(prompt);
+    map['item_count'] = Variable<int>(itemCount);
+    return map;
+  }
+
+  PendingGeneratedVocabularyCompanion toCompanion(bool nullToAbsent) {
+    return PendingGeneratedVocabularyCompanion(
+      owner: Value(owner),
+      lang: Value(lang),
+      requestId: Value(requestId),
+      prompt: Value(prompt),
+      itemCount: Value(itemCount),
+    );
+  }
+
+  factory PendingGeneratedVocabularyRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PendingGeneratedVocabularyRow(
+      owner: serializer.fromJson<String>(json['owner']),
+      lang: serializer.fromJson<String>(json['lang']),
+      requestId: serializer.fromJson<String>(json['requestId']),
+      prompt: serializer.fromJson<String>(json['prompt']),
+      itemCount: serializer.fromJson<int>(json['itemCount']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'owner': serializer.toJson<String>(owner),
+      'lang': serializer.toJson<String>(lang),
+      'requestId': serializer.toJson<String>(requestId),
+      'prompt': serializer.toJson<String>(prompt),
+      'itemCount': serializer.toJson<int>(itemCount),
+    };
+  }
+
+  PendingGeneratedVocabularyRow copyWith({
+    String? owner,
+    String? lang,
+    String? requestId,
+    String? prompt,
+    int? itemCount,
+  }) => PendingGeneratedVocabularyRow(
+    owner: owner ?? this.owner,
+    lang: lang ?? this.lang,
+    requestId: requestId ?? this.requestId,
+    prompt: prompt ?? this.prompt,
+    itemCount: itemCount ?? this.itemCount,
+  );
+  PendingGeneratedVocabularyRow copyWithCompanion(
+    PendingGeneratedVocabularyCompanion data,
+  ) {
+    return PendingGeneratedVocabularyRow(
+      owner: data.owner.present ? data.owner.value : this.owner,
+      lang: data.lang.present ? data.lang.value : this.lang,
+      requestId: data.requestId.present ? data.requestId.value : this.requestId,
+      prompt: data.prompt.present ? data.prompt.value : this.prompt,
+      itemCount: data.itemCount.present ? data.itemCount.value : this.itemCount,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PendingGeneratedVocabularyRow(')
+          ..write('owner: $owner, ')
+          ..write('lang: $lang, ')
+          ..write('requestId: $requestId, ')
+          ..write('prompt: $prompt, ')
+          ..write('itemCount: $itemCount')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(owner, lang, requestId, prompt, itemCount);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PendingGeneratedVocabularyRow &&
+          other.owner == this.owner &&
+          other.lang == this.lang &&
+          other.requestId == this.requestId &&
+          other.prompt == this.prompt &&
+          other.itemCount == this.itemCount);
+}
+
+class PendingGeneratedVocabularyCompanion
+    extends UpdateCompanion<PendingGeneratedVocabularyRow> {
+  final Value<String> owner;
+  final Value<String> lang;
+  final Value<String> requestId;
+  final Value<String> prompt;
+  final Value<int> itemCount;
+  final Value<int> rowid;
+  const PendingGeneratedVocabularyCompanion({
+    this.owner = const Value.absent(),
+    this.lang = const Value.absent(),
+    this.requestId = const Value.absent(),
+    this.prompt = const Value.absent(),
+    this.itemCount = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PendingGeneratedVocabularyCompanion.insert({
+    required String owner,
+    required String lang,
+    required String requestId,
+    required String prompt,
+    required int itemCount,
+    this.rowid = const Value.absent(),
+  }) : owner = Value(owner),
+       lang = Value(lang),
+       requestId = Value(requestId),
+       prompt = Value(prompt),
+       itemCount = Value(itemCount);
+  static Insertable<PendingGeneratedVocabularyRow> custom({
+    Expression<String>? owner,
+    Expression<String>? lang,
+    Expression<String>? requestId,
+    Expression<String>? prompt,
+    Expression<int>? itemCount,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (owner != null) 'owner': owner,
+      if (lang != null) 'lang': lang,
+      if (requestId != null) 'request_id': requestId,
+      if (prompt != null) 'prompt': prompt,
+      if (itemCount != null) 'item_count': itemCount,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PendingGeneratedVocabularyCompanion copyWith({
+    Value<String>? owner,
+    Value<String>? lang,
+    Value<String>? requestId,
+    Value<String>? prompt,
+    Value<int>? itemCount,
+    Value<int>? rowid,
+  }) {
+    return PendingGeneratedVocabularyCompanion(
+      owner: owner ?? this.owner,
+      lang: lang ?? this.lang,
+      requestId: requestId ?? this.requestId,
+      prompt: prompt ?? this.prompt,
+      itemCount: itemCount ?? this.itemCount,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (owner.present) {
+      map['owner'] = Variable<String>(owner.value);
+    }
+    if (lang.present) {
+      map['lang'] = Variable<String>(lang.value);
+    }
+    if (requestId.present) {
+      map['request_id'] = Variable<String>(requestId.value);
+    }
+    if (prompt.present) {
+      map['prompt'] = Variable<String>(prompt.value);
+    }
+    if (itemCount.present) {
+      map['item_count'] = Variable<int>(itemCount.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PendingGeneratedVocabularyCompanion(')
+          ..write('owner: $owner, ')
+          ..write('lang: $lang, ')
+          ..write('requestId: $requestId, ')
+          ..write('prompt: $prompt, ')
+          ..write('itemCount: $itemCount, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $StoryWordSourcesTable extends StoryWordSources
     with TableInfo<$StoryWordSourcesTable, StorySourceRow> {
   @override
@@ -6652,6 +7248,10 @@ abstract class _$UserDatabase extends GeneratedDatabase {
       $StoryLearningAdditionsTable(this);
   late final $GeneratedVocabularyAdditionsTable generatedVocabularyAdditions =
       $GeneratedVocabularyAdditionsTable(this);
+  late final $FreeGeneratedVocabularyTable freeGeneratedVocabulary =
+      $FreeGeneratedVocabularyTable(this);
+  late final $PendingGeneratedVocabularyTable pendingGeneratedVocabulary =
+      $PendingGeneratedVocabularyTable(this);
   late final $StoryWordSourcesTable storyWordSources = $StoryWordSourcesTable(
     this,
   );
@@ -6678,6 +7278,8 @@ abstract class _$UserDatabase extends GeneratedDatabase {
     cardContexts,
     storyLearningAdditions,
     generatedVocabularyAdditions,
+    freeGeneratedVocabulary,
+    pendingGeneratedVocabulary,
     storyWordSources,
     learningIdentityBindings,
     formIdentityBindings,

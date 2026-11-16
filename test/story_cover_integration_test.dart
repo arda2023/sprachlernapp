@@ -43,6 +43,7 @@ class _ShippingAssetBundle extends CachingAssetBundle {
 // Home progress is supplied locally; no Story, cover, bundle or image is mocked.
 ProviderContainer _container(String language, DriftContentRepository content) =>
     ProviderContainer(
+      retry: (_, _) => null,
       overrides: [
         premiumContentAccessProvider.overrideWithValue(true),
         selectedContentLanguageProvider.overrideWith((ref) async => language),
@@ -219,8 +220,9 @@ void main() {
         await container.read(storySummariesProvider.future);
       });
       final stories = container.read(libraryStoriesProvider).requireValue;
-      expect(stories.length, language == 'en' ? 58 : 57);
+      expect(stories.length, language == 'en' ? 62 : 61);
       for (final story in stories) {
+        if (story.topic == 'Sprachenlernen') continue;
         expect(
           storyCoverAssetKey(story.id, story.topic),
           isNotNull,
@@ -264,6 +266,7 @@ void main() {
         ),
       );
       await tester.pump();
+      expect(find.text('Kostenlos lesen'), findsOneWidget);
       final libraryCover = find.byWidgetPredicate(
         (widget) =>
             widget is StoryCover &&

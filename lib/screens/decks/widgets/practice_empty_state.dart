@@ -48,7 +48,7 @@ class PracticeEmptyState extends StatelessWidget {
             size: 15,
             weight: FontWeight.w400,
             color: colors.textMuted,
-            height: 1.4,
+            height: 1.35,
           ),
         ),
         if (actionLabel case final label?) ...[

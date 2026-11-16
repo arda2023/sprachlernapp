@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/home_models.dart';
 import '../../../presentation/providers/premium_access_provider.dart';
+import '../../../presentation/providers/deck_providers.dart';
 import '../../../widgets/deck_premium_badge.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/press_scale.dart';
@@ -33,7 +34,7 @@ class DeckGauge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.appColors;
-    const white = Color(0xFFFFFFFF);
+    const white = AppColors.onActive;
     return ExcludeSemantics(
       child: ProgressRing(
         fraction: fractionOf(deck),
@@ -71,9 +72,10 @@ class DeckTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = context.appColors;
-    const white = Color(0xFFFFFFFF);
-    final locked =
-        !isFreeDeckId(deck.id) && !ref.watch(premiumContentAccessProvider);
+    const white = AppColors.onActive;
+    final locked = !isFreeDeckId(deck.id) &&
+        !ref.watch(freeGeneratedDeckAccessProvider(deck.id)) &&
+        !ref.watch(premiumContentAccessProvider);
     final practised = (DeckGauge.fractionOf(deck) * 100).round();
     final active = deck.isActive;
     final accent = active && highlightActive && !locked;
@@ -118,7 +120,7 @@ class DeckTile extends ConsumerWidget {
                             color: accent ? white : colors.textPrimary,
                             size: 17,
                             weight: FontWeight.w700,
-                            height: 1.25,
+                            height: 1.2,
                           ),
                         ),
                         const SizedBox(height: 5),

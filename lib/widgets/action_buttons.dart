@@ -18,7 +18,7 @@ class PrimaryActionButton extends StatelessWidget {
     label: label,
     onPressed: onPressed,
     fill: context.appColors.popover,
-    foreground: const Color(0xFFFFFFFF),
+    foreground: AppColors.onActive,
   );
 }
 

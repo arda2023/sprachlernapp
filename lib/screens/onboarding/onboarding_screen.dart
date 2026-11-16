@@ -8,9 +8,13 @@ import 'package:flutter/material.dart'
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/story_category.dart';
+import '../../presentation/providers/onboarding_provider.dart';
+import '../../presentation/providers/deck_providers.dart';
+import '../../presentation/providers/database_providers.dart';
+import '../../presentation/providers/premium_access_provider.dart';
+import '../decks/deck_practice_screen.dart';
 import '../../presentation/onboarding_sounds.dart';
 import '../../theme/app_theme.dart';
-import '../decks/widgets/practice_chrome.dart' show SessionTrack;
 import 'paywall_screen.dart';
 import 'widgets/account_sheet.dart';
 import 'widgets/onboarding_art.dart';
@@ -72,20 +76,128 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
   // never asks again.
   bool _aiTranslations = true;
   bool _planReady = false;
+  bool _practiced = false;
+  bool _practiceBusy = false;
+  bool _interacted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future<void>(_restoreDraft);
+  }
+
+  Future<void> _restoreDraft() async {
+    try {
+      final draft = await ref.read(onboardingProvider.notifier).readDraft();
+      if (!mounted || _interacted || draft == null) return;
+      final name = draft['interest'];
+      final interest = _Interest.values
+          .where((i) => i.name == name)
+          .firstOrNull;
+      final goal = draft['dailyGoal'];
+      final practiced = draft['practiced'] == true;
+      final rawPage = draft['page'];
+      final page = rawPage is int ? rawPage.clamp(0, practiced ? 4 : 3) : 0;
+      setState(() {
+        _interest = interest;
+        _goal = const [5, 10, 15, 20].contains(goal) ? goal as int : 10;
+        _aiTranslations = draft['aiTranslations'] is bool
+            ? draft['aiTranslations'] as bool
+            : true;
+        _practiced = practiced;
+        _page = page;
+        _visited.addAll(List.generate(page + 1, (i) => i));
+      });
+      if (_pages.hasClients) _pages.jumpToPage(page);
+    } catch (_) {
+      /* An unreadable draft starts a fresh onboarding. */
+    }
+  }
+
+  void _saveDraft() {
+    _interacted = true;
+    unawaited(
+      ref.read(onboardingProvider.notifier).saveDraft({
+        'page': _page,
+        'interest': _interest?.name,
+        'dailyGoal': _goal,
+        'aiTranslations': _aiTranslations,
+        'practiced': _practiced,
+      }),
+    );
+  }
+
+  Future<void> _firstPractice() async {
+    if (_practiceBusy) return;
+    if (_practiced) {
+      await _go(4);
+      return;
+    }
+    _saveDraft();
+    setState(() => _practiceBusy = true);
+    try {
+      final decks = await ref.read(decksProvider.future);
+      if (!mounted) return;
+      final deck = decks.where((d) => isFreeDeckId(d.id)).firstOrNull;
+      if (deck == null) {
+        throw StateError('Der kostenlose Stapel ist noch nicht verfügbar.');
+      }
+      final language = ref.read(selectedContentLanguageProvider).asData?.value;
+      await Navigator.of(context).push<void>(
+        CupertinoPageRoute(
+          builder: (_) => DeckPracticeScreen(
+            deckId: deck.id,
+            sessionSize: 1,
+            onSessionCompleted: () {
+              if (!mounted ||
+                  ref.read(selectedContentLanguageProvider).asData?.value !=
+                      language) {
+                return;
+              }
+              setState(() => _practiced = true);
+              _saveDraft();
+            },
+          ),
+        ),
+      );
+      if (mounted && _practiced) await _go(4);
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Die Übung ist gerade nicht verfügbar. Du kannst kostenlos weiterlernen.',
+            ),
+          ),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _practiceBusy = false);
+    }
+  }
+
+  void _skipPractice() {
+    _saveDraft();
+    widget.onDone(_result);
+  }
 
   _Interest get _topic => _interest ?? _Interest.everyday;
 
   OnboardingSounds get _sounds => ref.read(onboardingSoundsProvider);
 
   OnboardingResult get _result => (
-    interest: _topic.category.name,
+    interest: _interest?.category.name ?? '',
     dailyGoal: _goal,
     aiTranslations: _aiTranslations,
   );
 
   /// The furthest page a swipe may reach right now.
-  int get _maxPage => _page == 1 && _interest == null
+  int get _maxPage => _programmatic
+      ? (_practiced ? OnboardingScreen.pageCount - 1 : 3)
+      : _page == 1 && _interest == null
       ? 1
+      : _page == 3 && !_practiced
+      ? 3
       : math.min(_page + 1, OnboardingScreen.pageCount - 1);
 
   @override
@@ -96,6 +208,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
   }
 
   Future<void> _go(int page) async {
+    _interacted = true;
     if (MediaQuery.disableAnimationsOf(context)) {
       _pages.jumpToPage(page);
       return;
@@ -116,6 +229,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
       _page = page;
       _visited.add(page);
     });
+    _saveDraft();
   }
 
   Future<void> _openPaywall() async {
@@ -157,7 +271,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
       0 => ('Los geht’s', () => _go(1)),
       1 => ('Weiter', _interest == null ? null : () => _go(2)),
       2 => ('Weiter', () => _go(3)),
-      3 => ('Weiter', () => _go(4)),
+      3 => (
+        _practiced
+            ? 'Weiter'
+            : _practiceBusy
+            ? 'Übung wird geladen …'
+            : 'Ein Wort üben',
+        _practiceBusy ? null : _firstPractice,
+      ),
       _ => ('Weiter', _planReady ? _openPaywall : null),
     };
     final pages = [
@@ -171,6 +292,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
             _interest = i;
             _tapped = null;
           });
+          _saveDraft();
         },
       ),
       _GoalPage(
@@ -179,6 +301,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
         onSelect: (g) {
           _sounds.select();
           setState(() => _goal = g);
+          _saveDraft();
         },
       ),
       _TryPage(
@@ -193,6 +316,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
         onAiTranslations: (value) {
           Haptic.select();
           setState(() => _aiTranslations = value);
+          _saveDraft();
         },
       ),
       _PlanPage(
@@ -242,6 +366,16 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       GlowButton(label: label, onPressed: onPressed),
+                      if (_page == 1)
+                        TextAction(
+                          label: 'Weiß ich noch nicht',
+                          onTap: () => _go(2),
+                        ),
+                      if (_page == 3 && !_practiceBusy)
+                        TextAction(
+                          label: 'Später ausprobieren',
+                          onTap: _skipPractice,
+                        ),
                       if (_page == 0)
                         TextAction(
                           label: 'Ich habe schon ein Konto',
@@ -412,7 +546,7 @@ class _Title extends StatelessWidget {
       style: AppType.editorial(
         color: context.appColors.textPrimary,
         size: 32,
-        height: 1.15,
+        height: 1.2,
       ),
     ),
   );
@@ -672,7 +806,7 @@ class _InterestTile extends StatelessWidget {
                   child: const Icon(
                     CupertinoIcons.checkmark_alt,
                     size: 16,
-                    color: white,
+                    color: AppColors.onActive,
                   ),
                 ),
               ),
@@ -769,7 +903,7 @@ class _GoalOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const white = Color(0xFFFFFFFF);
+    const white = AppColors.onActive;
     final colors = context.appColors;
     return Pressable(
       label: '$name, $words Wörter pro Tag',
@@ -984,7 +1118,7 @@ class _AiConsentCard extends StatelessWidget {
                   size: 13,
                   weight: FontWeight.w400,
                   color: colors.textMuted,
-                  height: 1.4,
+                  height: 1.35,
                 ),
               ),
             ],
@@ -1055,7 +1189,7 @@ class _WordState extends State<_Word> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     final colors = context.appColors;
     final style = AppType.editorial(
-      color: widget.selected ? const Color(0xFFFFFFFF) : colors.textPrimary,
+      color: widget.selected ? AppColors.onActive : colors.textPrimary,
       size: 24,
       weight: FontWeight.w500,
     );
@@ -1112,7 +1246,7 @@ class _MeaningBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const white = Color(0xFFFFFFFF);
+    const white = AppColors.onActive;
     return Semantics(
       liveRegion: true,
       label: '$word: $meaning',
@@ -1319,7 +1453,7 @@ class _PlanRow extends StatelessWidget {
                         CupertinoIcons.checkmark_alt,
                         key: ValueKey(true),
                         size: 18,
-                        color: Color(0xFFFFFFFF),
+                        color: AppColors.onActive,
                       )
                     : Icon(
                         icon,

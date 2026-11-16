@@ -23,7 +23,7 @@ class LanguagePanel extends ConsumerStatefulWidget {
 }
 
 class _LanguagePanelState extends ConsumerState<LanguagePanel> {
-  static const _white = Color(0xFFFFFFFF);
+  static const _white = AppColors.onActive;
   static const _itemExtent = 44.0;
 
   late int _index = LanguagePanel.languages
@@ -80,7 +80,7 @@ class _LanguagePanelState extends ConsumerState<LanguagePanel> {
             selectionOverlay: Container(
               margin: const EdgeInsets.symmetric(horizontal: 4),
               decoration: BoxDecoration(
-                color: const Color(0x33FFFFFF),
+                color: const Color(0x331A1D26),
                 borderRadius: BorderRadius.circular(12),
               ),
             ),

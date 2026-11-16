@@ -18,13 +18,15 @@ try {
       email_confirmed_at timestamptz,
       is_anonymous boolean default false
     );
-    create function auth.uid() returns uuid language sql as $$select null::uuid$$;
+    create function auth.uid() returns uuid language sql as
+      $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
   `);
   for (const file of [
     '20261003000001_schemas.sql',
     '20261031000001_adapty_entitlements.sql',
     '20261031000004_generated_vocabulary.sql',
     '20261101000003_generated_vocabulary_premium.sql',
+    '20261115000001_free_vocabulary_generation.sql',
   ]) {
     await db.exec(await readFile(new URL('../supabase/migrations/' + file, import.meta.url), 'utf8'));
   }
@@ -36,7 +38,7 @@ try {
     .replace(/^select pass\(.*$/gm, '')
     .replace(/^select \* from finish\(\);$/gm, '');
   await db.exec(sql);
-  console.log('PASS PostgreSQL/PGlite: generated_vocabulary_test.sql (10 assertion groups)');
+  console.log('PASS PostgreSQL/PGlite: generated_vocabulary_test.sql (11 assertion groups)');
 } finally {
   await db.close();
 }

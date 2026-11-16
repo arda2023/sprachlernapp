@@ -18,7 +18,8 @@ import '../../widgets/back_bar.dart';
 import '../../widgets/difficulty_bolts.dart';
 import '../../widgets/count_format.dart';
 import '../../widgets/deck_premium_badge.dart';
-import '../onboarding/paywall_screen.dart';
+import '../../domain/generated_vocabulary_repository.dart';
+import '../../widgets/premium_action.dart';
 import '../home/widgets/deck_tile.dart';
 import 'deck_practice_screen.dart';
 
@@ -86,6 +87,7 @@ class DeckDetailsScreen extends ConsumerWidget {
               }
               final locked =
                   !isFreeDeckId(deck.id) &&
+                  !ref.watch(freeGeneratedDeckAccessProvider(deck.id)) &&
                   !ref.watch(premiumContentAccessProvider);
               final activation = ref.watch(deckActiveControllerProvider);
               return Column(
@@ -103,7 +105,20 @@ class DeckDetailsScreen extends ConsumerWidget {
                         _ProgressLegend(deck: deck),
                         const SizedBox(height: 20),
                         if (locked)
-                          _PremiumDeckPanel(deck: deck)
+                          _PremiumDeckPanel(
+                            onUnlock: () async {
+                              final unlocked = await unlockPremiumAction(
+                                context,
+                                interest: deck.name,
+                                allowGuestSignIn: !isGeneratedVocabularyDeckId(
+                                  deck.id,
+                                ),
+                              );
+                              if (unlocked && context.mounted) {
+                                _practise(context, DeckPracticeMode.learn);
+                              }
+                            },
+                          )
                         else ...[
                           PrimaryActionButton(
                             label: 'Mit diesem Stapel üben',
@@ -170,9 +185,9 @@ class DeckDetailsScreen extends ConsumerWidget {
 
 /// A locked deck stays explorable, with a single route to unlock practice.
 class _PremiumDeckPanel extends StatelessWidget {
-  const _PremiumDeckPanel({required this.deck});
+  const _PremiumDeckPanel({required this.onUnlock});
 
-  final Deck deck;
+  final VoidCallback onUnlock;
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +215,7 @@ class _PremiumDeckPanel extends StatelessWidget {
                       color: colors.textPrimary,
                       size: 20,
                       weight: FontWeight.w700,
-                      height: 1.25,
+                      height: 1.2,
                     ),
                   ),
                 ),
@@ -208,15 +223,7 @@ class _PremiumDeckPanel extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          PrimaryActionButton(
-            label: 'Premium holen',
-            onPressed: () => Navigator.of(context).push(
-              PaywallScreen.route(
-                plan: (interest: deck.name, dailyGoal: 10),
-                onContinue: () {},
-              ),
-            ),
-          ),
+          PrimaryActionButton(label: 'Premium holen', onPressed: onUnlock),
         ],
       ),
     );
@@ -281,7 +288,7 @@ class _Masthead extends StatelessWidget {
             style: AppType.editorial(
               color: colors.textPrimary,
               size: 32,
-              height: 1.15,
+              height: 1.2,
             ),
           ),
         ),

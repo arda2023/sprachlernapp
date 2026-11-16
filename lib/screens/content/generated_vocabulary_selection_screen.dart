@@ -75,7 +75,7 @@ class _GeneratedVocabularySelectionScreenState
         );
       } else {
         Navigator.of(context).pop(
-          '${result.addedIds.length} Wörter im Stapel „Generierte Vokabeln“ gespeichert.'
+          '${result.savedCount} Wörter im Stapel „Generierte Vokabeln“ gespeichert.'
           '${result.blockedForms.isEmpty ? '' : ' ${result.blockedForms.length} deaktivierte oder zurückgestellte Wörter übersprungen.'}',
         );
       }
@@ -260,7 +260,7 @@ class GeneratedWordChip extends StatelessWidget {
                   duration: duration,
                   style: AppType.editorial(
                     size: 17,
-                    height: 1.25,
+                    height: 1.2,
                     color: selected ? colors.textPrimary : colors.iconOff,
                   ),
                   child: Text(word),

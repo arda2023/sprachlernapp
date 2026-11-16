@@ -157,6 +157,31 @@ class GeneratedVocabularyAdditions extends Table {
   Set<Column> get primaryKey => {cardId};
 }
 
+/// Locally selected cards from a server-confirmed free response. The existing
+/// generated vocabulary membership keeps its immutable sync row shape.
+@DataClassName('FreeGeneratedVocabularyRow')
+class FreeGeneratedVocabulary extends Table {
+  TextColumn get cardId =>
+      text().references(GeneratedVocabularyAdditions, #cardId)();
+  TextColumn get lang => text()();
+  @override
+  Set<Column> get primaryKey => {cardId};
+}
+
+/// A free attempt may outlive the app process. Kept with the account's local
+/// data and outside the learning sync protocol.
+@DataClassName('PendingGeneratedVocabularyRow')
+class PendingGeneratedVocabulary extends Table {
+  TextColumn get owner => text()();
+  TextColumn get lang => text()();
+  TextColumn get requestId => text()();
+  TextColumn get prompt => text()();
+  IntColumn get itemCount => integer()();
+
+  @override
+  Set<Column> get primaryKey => {owner, lang};
+}
+
 @DataClassName('StoryAdditionRow')
 class StoryLearningAdditions extends Table {
   TextColumn get cardId => text()();
@@ -224,7 +249,7 @@ class LanguageLearningPreferences extends Table {
   Set<Column> get primaryKey => {lang};
 }
 
-/// Learner database (schema v8). Content stays in read-only content.sqlite;
+/// Learner database. Content stays in read-only content.sqlite;
 /// both databases are joined only by stable ids.
 @DriftDatabase(
   tables: [
@@ -236,6 +261,8 @@ class LanguageLearningPreferences extends Table {
     CardContexts,
     StoryLearningAdditions,
     GeneratedVocabularyAdditions,
+    FreeGeneratedVocabulary,
+    PendingGeneratedVocabulary,
     StoryWordSources,
     LearningIdentityBindings,
     FormIdentityBindings,
@@ -287,7 +314,7 @@ class UserDatabase extends _$UserDatabase {
   }
 
   @override
-  int get schemaVersion => 8;
+  int get schemaVersion => 9;
 
   // Upgrade guards below introduce the following schema changes:
   // Version | Additions / transformations
@@ -301,6 +328,7 @@ class UserDatabase extends _$UserDatabase {
   //         | userCards/formIdentityBindings, then foreign_key_check.
   // v7      | languageLearningPreferences.newWordSource (from == 6).
   // v8      | generatedVocabularyAdditions.
+  // v9      | Local free sample markers and pending attempts.
   // Keep the nonchronological block order below; do not sort it by version.
   // Every guard sees the original from, not a version advanced per block.
   // The v6 copy needs earlier settings columns; its TableMigration calls copy
@@ -313,6 +341,10 @@ class UserDatabase extends _$UserDatabase {
       await transaction(() async {
         if (from < 8) {
           await m.createTable(generatedVocabularyAdditions);
+        }
+        if (from < 9) {
+          await m.createTable(freeGeneratedVocabulary);
+          await m.createTable(pendingGeneratedVocabulary);
         }
         if (from < 5) {
           await m.addColumn(userCards, userCards.formFunction);

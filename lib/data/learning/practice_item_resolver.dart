@@ -19,6 +19,7 @@ class PracticeItemResolver {
     this.contentError,
     this.catalog,
     this.generatedAdditions,
+    this.freeGeneratedIds,
   );
   final ContentRepository? content;
   final PracticeCatalog? catalog;
@@ -30,6 +31,7 @@ class PracticeItemResolver {
   final Map<String, UserCardState> states;
   final Object? contentError;
   final Map<String, DateTime> generatedAdditions;
+  final Set<String> freeGeneratedIds;
   late final _groups = LearningGroups(cards, states);
   // practiceResolverProvider calls load while constructing derived read views.
   // If both correction capabilities exist, this path also writes editorial
@@ -89,6 +91,13 @@ class PracticeItemResolver {
                 await content.selectionCards(await content.allCardIds()),
       locals.values.map((i) => i.card),
     );
+    final generated = user is GeneratedVocabularyRepository
+        ? user as GeneratedVocabularyRepository
+        : null;
+    final generatedAdditions =
+        await generated?.generatedVocabularyAdditions() ?? const {};
+    final freeGeneratedIds = await generated?.freeGeneratedVocabularyIds() ??
+        const <String>{};
     return PracticeItemResolver._(
       content,
       user,
@@ -102,10 +111,9 @@ class PracticeItemResolver {
       await user.allCardStates(),
       contentError,
       catalog,
-      user is GeneratedVocabularyRepository
-          ? await (user as GeneratedVocabularyRepository)
-                .generatedVocabularyAdditions()
-          : const {},
+      generatedAdditions,
+      freeGeneratedIds.where((id) =>
+          generatedAdditions.containsKey(id) && cards.containsKey(id)).toSet(),
     );
   }
 

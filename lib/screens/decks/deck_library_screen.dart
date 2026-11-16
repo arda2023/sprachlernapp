@@ -62,7 +62,10 @@ class DeckLibraryScreen extends ConsumerWidget {
         ),
         data: (decks) {
           bool activeDeck(Deck deck) =>
-              deck.isActive && (premium || isFreeDeckId(deck.id));
+              deck.isActive &&
+              (premium ||
+                  isFreeDeckId(deck.id) ||
+                  ref.watch(freeGeneratedDeckAccessProvider(deck.id)));
           final active = decks.where(activeDeck).toList();
           final others = decks.where((deck) => !activeDeck(deck)).toList();
           List<Widget> section(String title, List<Deck> group) => [

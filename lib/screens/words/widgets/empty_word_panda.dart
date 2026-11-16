@@ -23,21 +23,15 @@ class _EmptyWordPandaState extends State<EmptyWordPanda>
 
   // The Rive entrance settles at frame 104 (60 fps). Start this clock only
   // once the loaded Rive widget is painted, and pause alongside the panda.
+  // The bubble then unfolds for 1300 ms: tail, body, then the words.
+  static const _settleMs = 1733, _bubbleMs = 1300;
   late final _entrance = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 2113),
+    duration: const Duration(milliseconds: _settleMs + _bubbleMs),
   );
   late final _bubbleIn = CurvedAnimation(
     parent: _entrance,
-    curve: const Interval(
-      1733 / 2113,
-      2033 / 2113,
-      curve: Cubic(0.23, 1, 0.32, 1),
-    ),
-  );
-  late final _textIn = CurvedAnimation(
-    parent: _entrance,
-    curve: const Interval(1813 / 2113, 1, curve: Cubic(0.23, 1, 0.32, 1)),
+    curve: const Interval(_settleMs / (_settleMs + _bubbleMs), 1),
   );
   bool _painted = false;
   late final AppLifecycleListener _lifecycle;
@@ -150,7 +144,6 @@ class _EmptyWordPandaState extends State<EmptyWordPanda>
   void dispose() {
     _lifecycle.dispose();
     _bubbleIn.dispose();
-    _textIn.dispose();
     _entrance.dispose();
     _controller?.dispose();
     _settings?.dispose();
@@ -183,17 +176,7 @@ class _EmptyWordPandaState extends State<EmptyWordPanda>
                         28,
                         24,
                       ),
-                      child: FadeTransition(
-                        opacity: _bubbleIn,
-                        child: ScaleTransition(
-                          alignment: Alignment.bottomLeft,
-                          scale: Tween(
-                            begin: 0.94,
-                            end: 1.0,
-                          ).animate(_bubbleIn),
-                          child: _HintBubble(_hint, textIn: _textIn),
-                        ),
-                      ),
+                      child: PandaHintBubble(_hint, progress: _bubbleIn),
                     ),
 
                     SizedBox(
@@ -222,56 +205,155 @@ class _EmptyWordPandaState extends State<EmptyWordPanda>
   }
 }
 
-class _HintBubble extends StatelessWidget {
-  const _HintBubble(this.hint, {required this.textIn});
-
-  final Animation<double> textIn;
+/// Speech bubble that unfolds from its tail: the tail grows toward the panda,
+/// the body widens from the left while rising, then the words fade in one by
+/// one. Layout always uses the final size, so wrapping never jumps.
+class PandaHintBubble extends StatelessWidget {
+  const PandaHintBubble(this.hint, {super.key, required this.progress});
 
   final String hint;
+
+  /// 0 = hidden, 1 = fully shown.
+  final Animation<double> progress;
+
+  static const _ease = Cubic(0.23, 1, 0.32, 1);
+
+  /// Fraction of [progress] mapped onto [begin]..[end] with the app curve.
+  static double phase(double t, double begin, double end) =>
+      _ease.transform(((t - begin) / (end - begin)).clamp(0.0, 1.0));
 
   @override
   Widget build(BuildContext context) {
     final color = context.appColors.popover;
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Positioned(
-          left: 70,
-          bottom: -12,
-          child: Transform.rotate(
-            angle: math.pi / 4,
-            child: SizedBox.square(
-              dimension: 26,
-              child: ColoredBox(color: color),
-            ),
-          ),
-        ),
-        DecoratedBox(
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-            child: FadeTransition(
-              opacity: textIn,
-              child: SlideTransition(
-                position: Tween(
-                  begin: const Offset(0, 0.08),
-                  end: Offset.zero,
-                ).animate(textIn),
-                child: Text(
-                  hint,
+    final words = hint.split(' ');
+    return AnimatedBuilder(
+      animation: progress,
+      builder: (context, child) {
+        final t = progress.value;
+        final body = _BubbleShape.bodyRect;
+        return CustomPaint(
+          painter: _BubblePainter(color: color, t: t),
+          child: ClipPath(
+            clipper: _BodyClipper(t, body),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+              child: Transform.translate(
+                offset: Offset(0, 4 * (1 - phase(t, 0.4, 0.85))),
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      for (var i = 0; i < words.length; i++)
+                        TextSpan(
+                          text: i == words.length - 1
+                              ? words[i]
+                              : '${words[i]} ',
+                          style: TextStyle(
+                            color: AppColors.onActive.withValues(
+                              alpha: phase(
+                                t,
+                                0.4 + i * 0.035,
+                                0.64 + i * 0.035,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                  semanticsLabel: hint,
                   style: AppType.chrome(
-                    color: const Color(0xFFFFFFFF),
+                    color: AppColors.onActive,
                     size: 15,
+                    decoration: TextDecoration.none,
                   ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        );
+      },
     );
   }
+}
+
+/// Animated geometry shared by painter and clipper.
+abstract final class _BubbleShape {
+  static const radius = 20.0, tailBase = 40.0, tailWidth = 22.0;
+  static const tailDrop = 15.0, tailLean = 13.0;
+
+  /// Body rectangle anchored bottom-left: wider first, then taller.
+  static Rect bodyRect(Size size, double t) {
+    final minWidth = math.min(tailBase + tailWidth + radius, size.width);
+    final minHeight = math.min(radius * 1.6, size.height);
+    final w =
+        minWidth +
+        (size.width - minWidth) * PandaHintBubble.phase(t, 0.08, 0.62);
+    final h =
+        minHeight +
+        (size.height - minHeight) * PandaHintBubble.phase(t, 0.16, 0.66);
+    return Rect.fromLTWH(0, size.height - h, w, h);
+  }
+}
+
+class _BodyClipper extends CustomClipper<Path> {
+  _BodyClipper(this.t, this.rect);
+
+  final double t;
+  final Rect Function(Size, double) rect;
+
+  @override
+  Path getClip(Size size) {
+    final body = rect(size, t);
+    return Path()..addRRect(
+      RRect.fromRectAndRadius(
+        body,
+        Radius.circular(math.min(_BubbleShape.radius, body.height / 2)),
+      ),
+    );
+  }
+
+  @override
+  bool shouldReclip(_BodyClipper old) => old.t != t;
+}
+
+class _BubblePainter extends CustomPainter {
+  _BubblePainter({required this.color, required this.t});
+
+  final Color color;
+  final double t;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (t <= 0) return;
+    final paint = Paint()
+      ..color = color.withValues(
+        alpha: color.a * PandaHintBubble.phase(t, 0, 0.12),
+      );
+    final body = _BubbleShape.bodyRect(size, t);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        body,
+        Radius.circular(math.min(_BubbleShape.radius, body.height / 2)),
+      ),
+      paint,
+    );
+    // Tail leans left toward the panda and grows out of the body's lower edge.
+    final grow = PandaHintBubble.phase(t, 0, 0.3);
+    final left = _BubbleShape.tailBase, right = left + _BubbleShape.tailWidth;
+    final base = size.height - 1;
+    final tip = Offset(
+      left - _BubbleShape.tailLean * grow,
+      size.height + _BubbleShape.tailDrop * grow,
+    );
+    canvas.drawPath(
+      Path()
+        ..moveTo(left, base)
+        ..quadraticBezierTo(left - 1, base + 7 * grow, tip.dx, tip.dy)
+        ..quadraticBezierTo(left + 9, base + 9 * grow, right, base)
+        ..close(),
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_BubblePainter old) => old.t != t || old.color != color;
 }

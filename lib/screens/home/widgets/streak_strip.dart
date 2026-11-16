@@ -178,7 +178,7 @@ class _StreakStripState extends ConsumerState<StreakStrip>
       size: 15,
       weight: FontWeight.w600,
       color: colors.textMuted,
-      height: 1.3,
+      height: 1.35,
     );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -186,7 +186,7 @@ class _StreakStripState extends ConsumerState<StreakStrip>
         PopoverTrigger<void>(
           popover: widget.calendar,
           builder: (context, open, show) {
-            const white = Color(0xFFFFFFFF);
+            const white = AppColors.onActive;
             final text = base.copyWith(color: open ? white : null);
             return MergeSemantics(
               child: GestureDetector(
@@ -281,7 +281,8 @@ class _WeekBar extends StatelessWidget {
     final colors = context.appColors;
     const white = Color(0xFFFFFFFF);
     final pill = onAccent ? white : colors.active;
-    final mark = onAccent ? colors.popover : white;
+    // Checks on the orange pill use the dark ink, like all text on orange.
+    final mark = onAccent ? colors.popover : AppColors.onActive;
     final filled = summary.barFilled;
     final lit = summary.starToday;
     final missedSlot = summary.barMissed ? filled : null;

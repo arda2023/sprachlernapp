@@ -17,7 +17,7 @@ class GoalPanel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const white = Color(0xFFFFFFFF);
+    const white = AppColors.onActive;
     final goal = ref.watch(learningProgressProvider).value?.goal;
     if (goal == null) return const SizedBox(height: 120);
     final base = PopoverText.body();
@@ -59,7 +59,7 @@ class GoalPanel extends ConsumerWidget {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                const ColoredBox(color: Color(0x4DFFFFFF)),
+                const ColoredBox(color: Color(0x4D1A1D26)),
                 FractionallySizedBox(
                   alignment: Alignment.centerLeft,
                   widthFactor: fraction,
@@ -119,9 +119,7 @@ class _GoalChip extends StatelessWidget {
             constraints: const BoxConstraints(minWidth: 52),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
             decoration: BoxDecoration(
-              color: selected
-                  ? const Color(0xFFFFFFFF)
-                  : const Color(0x33FFFFFF),
+              color: selected ? AppColors.onActive : const Color(0x331A1D26),
               borderRadius: BorderRadius.circular(99),
             ),
             child: Text(
@@ -132,7 +130,7 @@ class _GoalChip extends StatelessWidget {
                 weight: FontWeight.w800,
                 color: selected
                     ? context.appColors.popover
-                    : const Color(0xFFFFFFFF),
+                    : AppColors.onActive,
                 tabular: true,
               ),
             ),

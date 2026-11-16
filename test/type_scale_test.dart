@@ -36,6 +36,31 @@ void main() {
     expect(offScale, isEmpty);
   });
 
+  test('literal line heights use the shared set', () {
+    final call = RegExp(r'AppType\.(chrome|editorial)\(');
+    final height = RegExp(r'(?<![\w.])height:\s*(\d+(?:\.\d+)?)\b');
+    final offScale = <String>[];
+    for (final file in Directory('lib').listSync(recursive: true)) {
+      if (file is! File || !file.path.endsWith('.dart')) continue;
+      final source = file.readAsStringSync();
+      for (final match in call.allMatches(source)) {
+        var depth = 0;
+        var end = match.end - 1;
+        for (; end < source.length; end++) {
+          if (source[end] == '(') depth++;
+          if (source[end] == ')' && --depth == 0) break;
+        }
+        final literal = height.firstMatch(source.substring(match.end, end));
+        if (literal == null) continue;
+        if (!AppType.lineHeights.contains(double.parse(literal.group(1)!))) {
+          final line = '\n'.allMatches(source.substring(0, match.start)).length;
+          offScale.add('${file.path}:${line + 1} ${literal.group(0)}');
+        }
+      }
+    }
+    expect(offScale, isEmpty);
+  });
+
   test('raw font sizes stay on the chrome scale', () {
     final raw = RegExp(r'fontSize:\s*(\d+(?:\.\d+)?)\b');
     final offScale = [

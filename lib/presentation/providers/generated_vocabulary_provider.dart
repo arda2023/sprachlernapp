@@ -3,9 +3,32 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/generated_vocabulary_client.dart';
 import '../../data/learning/generated_vocabulary_service.dart';
 import '../../data/user/generated_vocabulary_store.dart';
+import '../../domain/generated_vocabulary.dart';
+import 'auth_providers.dart';
 import 'database_providers.dart';
 import 'personal_learning_provider.dart';
 import 'premium_access_provider.dart';
+
+final freeVocabularyGenerationAvailableProvider = FutureProvider<bool?>((
+  ref,
+) async {
+  final session = ref.watch(accountSessionProvider).asData?.value;
+  final auth = ref.watch(contentAuthProvider);
+  if (session == null || !auth.configured) return null;
+  return auth.freeVocabularyGenerationAvailable();
+}, retry: (_, _) => null);
+
+final pendingGeneratedVocabularyRequestProvider = FutureProvider.autoDispose
+    .family<GeneratedVocabularyRequest?, String>((ref, lang) async {
+      if (ref.watch(accountSessionProvider).asData?.value == null ||
+          await ref.watch(selectedContentLanguageProvider.future) != lang) {
+        return null;
+      }
+      final service = await ref.watch(
+        generatedVocabularyServiceProvider.future,
+      );
+      return service.pendingFreeRequest();
+    }, retry: (_, _) => null);
 
 final generatedVocabularyServiceProvider =
     FutureProvider<GeneratedVocabularyService>((ref) async {
@@ -24,12 +47,13 @@ final generatedVocabularyServiceProvider =
               'Sprache oder Ansicht geändert. Bitte erneut öffnen.',
             );
           }
-          if (!ref.read(premiumContentAccessProvider)) {
-            throw const GeneratedVocabularyFailure(
-              'PREMIUM_REQUIRED',
-              'Vokabeln zu deinem Thema erstellst du mit Premium.',
-            );
-          }
+        },
+        verifyPaid: () {
+          if (current && ref.read(premiumContentAccessProvider)) return;
+          throw const GeneratedVocabularyFailure(
+            'PREMIUM_REQUIRED',
+            'Weitere Vokabelthemen benötigen Premium.',
+          );
         },
       );
     }, retry: (_, _) => null);

@@ -71,6 +71,11 @@ class StoryCategory {
     Color(0xFF256B5A),
     Icons.work_outline,
   );
+  static const languageLearning = StoryCategory(
+    'Sprachenlernen',
+    Color(0xFF385C65),
+    Icons.translate,
+  );
 
   /// Display order on the Stories tab.
   static const all = [
@@ -86,6 +91,7 @@ class StoryCategory {
     health,
     culture,
     crime,
+    languageLearning,
   ];
 
   static const _aliases = {'Küche': restaurant, 'Medizin': health};

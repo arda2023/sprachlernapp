@@ -2,11 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../domain/preferences.dart';
-import '../presentation/providers/preferences_provider.dart';
-import '../screens/onboarding/paywall_screen.dart';
 import '../theme/app_theme.dart';
 import 'light_sweep.dart';
 import 'popover_content.dart';
@@ -18,19 +14,20 @@ const translationPaywallPadding = EdgeInsets.fromLTRB(16, 14, 14, 16);
 /// used up (user request 01.11.2026, like Duolingo's streak widgets): "Ups!"
 /// top left, a worried speech bubble top right, the Premium button below
 /// with a glint every three seconds. No source text, no quota sentence.
-class TranslationPaywallCard extends ConsumerStatefulWidget {
-  const TranslationPaywallCard({super.key});
+class TranslationPaywallCard extends StatefulWidget {
+  const TranslationPaywallCard({super.key, required this.onUpgrade});
+
+  final VoidCallback onUpgrade;
 
   static const title = 'Ups!';
   static const detail = 'Deine Übersetzungen sind alle.';
   static const action = 'Premium holen';
 
   @override
-  ConsumerState<TranslationPaywallCard> createState() =>
-      _TranslationPaywallCardState();
+  State<TranslationPaywallCard> createState() => _TranslationPaywallCardState();
 }
 
-class _TranslationPaywallCardState extends ConsumerState<TranslationPaywallCard>
+class _TranslationPaywallCardState extends State<TranslationPaywallCard>
     with SingleTickerProviderStateMixin {
   late final _entrance = AnimationController(
     vsync: this,
@@ -55,18 +52,7 @@ class _TranslationPaywallCardState extends ConsumerState<TranslationPaywallCard>
 
   void _openPaywall() {
     HapticFeedback.selectionClick();
-    final navigator = Navigator.of(context);
-    final goal =
-        (ref.read(preferencesProvider).asData?.value ??
-                const PracticePreferences())
-            .dailyGoal;
-    navigator.pop();
-    navigator.push(
-      PaywallScreen.route(
-        plan: (interest: 'deinen Themen', dailyGoal: goal),
-        onContinue: () {},
-      ),
-    );
+    widget.onUpgrade();
   }
 
   /// Rises 8 pt and fades in between [start] and [end] of the entrance.

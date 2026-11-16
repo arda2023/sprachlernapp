@@ -96,7 +96,28 @@ Future<void> _checkScrolledContent(WidgetTester tester, _Screen screen) async {
       ),
     );
     await tester.pumpAndSettle();
+    final atEnd = position.pixels >= position.maxScrollExtent - 0.5;
+    // A short label sliced by the viewport edge is sampled mostly against the
+    // background, so contrast would depend on the scroll step. Reveal it
+    // fully; the bound keeps every step moving forward.
+    final top = tester.getRect(scrollable.first).top;
+    final sliced = find
+        .descendant(of: scrollable.first, matching: find.byType(RichText))
+        .evaluate()
+        .map((e) => tester.getRect(find.byWidget(e.widget)))
+        .where(
+          (r) =>
+              r.top < top &&
+              r.bottom > top &&
+              r.height < position.viewportDimension * 0.3,
+        );
+    if (sliced.isNotEmpty) {
+      final hidden = top - sliced.map((r) => r.top).reduce(math.min);
+      position.jumpTo(math.max(0, position.pixels - hidden));
+      await tester.pumpAndSettle();
+    }
     await expectAccessible(tester);
+    if (atEnd) return;
   }
   fail('Fixture content did not finish scrolling');
 }

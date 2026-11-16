@@ -82,7 +82,7 @@ void main() {
     }
   });
 
-  testWidgets('expanded word hit area works outside the glyphs', (
+  testWidgets('sentence words keep their natural width and stay tappable', (
     tester,
   ) async {
     usePhoneViewport(tester);
@@ -103,11 +103,11 @@ void main() {
         find.bySemanticsLabel('I, Übersetzung anzeigen'),
       );
       final glyph = tester.getRect(find.text('I'));
-      expect(target.width, greaterThanOrEqualTo(44));
-      expect(target.height, greaterThanOrEqualTo(44));
-      final point = target.bottomRight - const Offset(1, 1);
-      expect(glyph.contains(point), isFalse);
-      await tester.tapAt(point);
+      // Regression: a 44 pt minimum width spread "I" and "walk" apart.
+      expect(target.width, lessThan(glyph.width + 1));
+      final next = tester.getRect(find.byKey(const ValueKey('practice-input')));
+      expect(next.left - target.right, lessThan(12));
+      await tester.tapAt(target.center);
       await tester.pump();
       expect(anchors, hasLength(1));
       expect(anchors.single.start, 0);

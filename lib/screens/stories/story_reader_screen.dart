@@ -13,10 +13,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/learning_milestone.dart';
 import '../../domain/story_learning.dart';
+import '../../domain/editorial_stories.dart';
 import '../../domain/story_learning_diagnostics.dart';
+import '../../presentation/notifications/learning_reminder_invitation.dart';
 import '../../presentation/providers/story_learning_providers.dart';
 import '../../presentation/providers/bundled_stories_provider.dart';
+import '../../presentation/providers/premium_access_provider.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -34,6 +38,9 @@ import '../../presentation/audio/speech_narration.dart';
 import '../../presentation/audio/device_speech_playback.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/back_bar.dart';
+import '../../widgets/learning_milestone_card.dart';
+import '../../widgets/success_premium_invitation.dart';
+import '../../widgets/premium_content_gate.dart';
 import '../../widgets/reading_toolbar.dart';
 import '../../widgets/rounded_text_highlight.dart';
 import '../home/widgets/story_carousel.dart';
@@ -93,13 +100,17 @@ class StoryReaderScreen extends StatefulWidget {
     Story story, {
     double? initialProgress,
     ValueChanged<double>? onProgress,
+    Future<bool> Function()? onFinished,
   }) => Navigator.of(context).push(
     CupertinoPageRoute<void>(
       builder: (_) => WebReadingViewport(
-        child: _StoredStoryReader(
-          story: story,
-          initialProgress: initialProgress,
-          onProgress: onProgress,
+        child: _StoryFinishScope(
+          onFinished: onFinished,
+          child: _StoredStoryReader(
+            story: story,
+            initialProgress: initialProgress,
+            onProgress: onProgress,
+          ),
         ),
       ),
     ),
@@ -222,6 +233,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
   final _progress = ValueNotifier<double>(0);
   final _scrolled = ValueNotifier<bool>(false);
   bool _moved = false;
+  Future<bool>? _finishingStory;
+  bool _firstStory = false;
 
   /// Where the last tap landed, so popovers can point at the word.
   Offset? _tapAt;
@@ -488,14 +501,14 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
             recognizer: sentence.recognizer,
             style: _wordSpan(token).style?.copyWith(
               backgroundColor: background,
-              color: selected ? const Color(0xFFFFFFFF) : null,
+              color: selected ? AppColors.onActive : null,
             ),
           ),
     ];
     return TextSpan(
       style: TextStyle(
         backgroundColor: background,
-        color: selected ? const Color(0xFFFFFFFF) : null,
+        color: selected ? AppColors.onActive : null,
       ),
       children: children,
     );
@@ -693,7 +706,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
         decoration: ink == null ? null : TextDecoration.underline,
         decorationColor: ink,
         decorationThickness: 2,
-        color: index == _selected ? const Color(0xFFFFFFFF) : null,
+        color: index == _selected ? AppColors.onActive : null,
       ),
     );
   }
@@ -825,7 +838,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
         style: AppType.editorial(
           color: colors.textPrimary,
           size: 32,
-          height: 1.15,
+          height: 1.2,
         ),
       ),
     ),
@@ -883,7 +896,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
                 color: colors.textPrimary,
                 size: 20,
                 weight: FontWeight.w700,
-                height: 1.3,
+                height: 1.45,
               ),
             ),
           ),
@@ -910,6 +923,22 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
     ],
   ];
 
+  Future<bool> _finishStory() async {
+    final onFinished = _StoryFinishScope.maybeOf(context);
+    if (onFinished == null) return false;
+    final existing = _finishingStory;
+    if (existing != null) return _firstStory ? false : existing;
+    final pending = _finishingStory = onFinished();
+    if (!await pending || !mounted) return false;
+    setState(() => _firstStory = true);
+    return true;
+  }
+
+  Future<void> _closeAfterFinishing() async {
+    final celebrating = await _finishStory();
+    if (mounted && !celebrating) Navigator.of(context).maybePop();
+  }
+
   Widget _buildReaderContent(
     BuildContext context,
     Story story,
@@ -920,7 +949,10 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
   ) => NotificationListener<ScrollNotification>(
     onNotification: (n) {
       if (n is UserScrollNotification) _moved = true;
-      if (n is ScrollEndNotification) _report();
+      if (n is ScrollEndNotification) {
+        if (_moved && _progress.value >= 0.98) _finishStory();
+        _report();
+      }
       return false;
     },
     child: ListView(
@@ -949,10 +981,20 @@ class _StoryReaderScreenState extends State<StoryReaderScreen>
                   const SizedBox(height: 22),
                 ],
                 const SizedBox(height: 12),
-                _EndCard(
-                  title: story.title,
-                  onDone: () => Navigator.of(context).maybePop(),
-                ),
+                if (_firstStory) ...[
+                  const LearningMilestoneCard(
+                    milestone: LearningMilestone.firstStory,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8, bottom: 8),
+                    child: LearningReminderInvitation(
+                      fallback: SuccessPremiumInvitation(
+                        opportunityId: 'first_story:${story.id}',
+                      ),
+                    ),
+                  ),
+                ],
+                _EndCard(title: story.title, onDone: _closeAfterFinishing),
               ],
             ),
           ),
@@ -1244,7 +1286,7 @@ class _DockToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.appColors;
-    final ink = on ? const Color(0xFFFFFFFF) : colors.textPrimary;
+    final ink = on ? AppColors.onActive : colors.textPrimary;
     return MergeSemantics(
       child: CupertinoButton(
         onPressed: onPressed,
@@ -1286,6 +1328,19 @@ class _DockToggle extends StatelessWidget {
 }
 
 /// Bottom of the page: the story is done.
+class _StoryFinishScope extends InheritedWidget {
+  const _StoryFinishScope({required this.onFinished, required super.child});
+
+  final Future<bool> Function()? onFinished;
+
+  static Future<bool> Function()? maybeOf(BuildContext context) =>
+      context.getInheritedWidgetOfExactType<_StoryFinishScope>()?.onFinished;
+
+  @override
+  bool updateShouldNotify(_StoryFinishScope oldWidget) =>
+      onFinished != oldWidget.onFinished;
+}
+
 class _EndCard extends StatelessWidget {
   const _EndCard({required this.title, required this.onDone});
 
@@ -1356,6 +1411,26 @@ class _StoredStoryReader extends ConsumerWidget {
   final ValueChanged<double>? onProgress;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (!isFreeStoryId(story.id) && !ref.watch(premiumContentAccessProvider)) {
+      return Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              BackBar(onBack: () => Navigator.of(context).maybePop()),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: PremiumUnlockCard(
+                  title: story.title,
+                  detail: 'Diese Story kannst du mit Premium lesen.',
+                  onPressed: () =>
+                      showPremiumContentPaywall(context, interest: 'Stories'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     if (story.id.startsWith('library:')) {
       return ref
           .watch(bundledStoriesProvider)
@@ -1374,13 +1449,15 @@ class _StoredStoryReader extends ConsumerWidget {
                 text: item.text,
                 sourceLanguage: item.language,
                 lookup: (surface) => WordEntry(
-                  headword: surface,
+                  headword: surface.toLowerCase(),
                   partOfSpeech: '',
-                  translation: '',
+                  translation: item.glosses[surface.toLowerCase()] ?? '',
                   sourceLanguage: item.language,
                 ),
                 initialMarks: const {},
-                translate: (_) => '',
+                translate: (sentence) =>
+                    item.translations[sentence.trim()] ?? '',
+                sources: item.sources,
                 initialProgress: initialProgress,
                 onProgress: onProgress,
               );

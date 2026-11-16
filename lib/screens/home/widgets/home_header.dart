@@ -224,7 +224,7 @@ class _GoalBadgeState extends State<GoalBadge>
                       AppGlyphs.target,
                       size: 22,
                       color: widget.open
-                          ? const Color(0xFFFFFFFF)
+                          ? AppColors.onActive
                           : Color.lerp(
                               colors.iconOff,
                               colors.progressWords,
@@ -242,7 +242,7 @@ class _GoalBadgeState extends State<GoalBadge>
                     size: 17,
                     weight: FontWeight.w800,
                     color: widget.open
-                        ? const Color(0xFFFFFFFF)
+                        ? AppColors.onActive
                         : colors.textPrimary,
                     tabular: true,
                   ),
@@ -271,7 +271,7 @@ class _StreakButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.appColors;
     final lit = days > 0;
-    const white = Color(0xFFFFFFFF);
+    const white = AppColors.onActive;
     return MergeSemantics(
       child: CupertinoButton(
         onPressed: onTap,
@@ -353,7 +353,7 @@ class _LanguageChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.appColors;
-    const white = Color(0xFFFFFFFF);
+    const white = AppColors.onActive;
     return MergeSemantics(
       child: CupertinoButton(
         onPressed: onTap,

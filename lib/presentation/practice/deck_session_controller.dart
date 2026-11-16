@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/answer_check.dart';
 import '../../domain/content.dart';
+import '../../domain/generated_vocabulary_repository.dart';
 import '../../domain/repositories.dart';
 import '../../domain/review_pass.dart';
 import '../../domain/srs_state.dart';
@@ -101,10 +102,15 @@ class DeckSessionController extends Notifier<DeckSessionState> {
         await _resolver.content?.decks() ??
         <DeckSummary>[];
     return _freePracticeIds = {
+      ..._resolver.freeGeneratedIds,
       for (final deck in decks)
         if (isFreeDeckId(deck.id)) ...await _resolver.deckPracticeIds(deck.id),
     };
   }
+
+  bool _isFreeDeck(String id) =>
+      isFreeDeckId(id) ||
+      (id == _resolver.generatedDeckId && _resolver.freeGeneratedIds.isNotEmpty);
 
   @override
   DeckSessionState build() {
@@ -148,11 +154,17 @@ class DeckSessionController extends Notifier<DeckSessionState> {
       if (!_initialized) {
         if (args.deckId.isNotEmpty &&
             !isFreeDeckId(args.deckId) &&
+            !isGeneratedVocabularyDeckId(args.deckId) &&
             !ref.read(premiumContentAccessProvider)) {
           throw StateError('Für diesen Stapel brauchst du Premium.');
         }
         _resolver = await ref.read(practiceResolverProvider.future);
         if (!ref.mounted) return;
+        if (args.deckId.isNotEmpty &&
+            !_isFreeDeck(args.deckId) &&
+            !ref.read(premiumContentAccessProvider)) {
+          throw StateError('Für diesen Stapel brauchst du Premium.');
+        }
         _user = await ref.read(userRepositoryProvider.future);
         if (!ref.mounted) return;
         _version = await ref.read(appInfoProvider.future);
@@ -183,13 +195,16 @@ class DeckSessionController extends Notifier<DeckSessionState> {
             args.deckId.isNotEmpty) {
           throw _resolver.contentError ?? StateError('Inhaltspaket fehlt');
         }
-        final scope = args.deckId == storyCollectionId
+        final allScope = args.deckId == storyCollectionId
             ? _resolver.storyPracticeIds
             : args.deckId.isEmpty
             ? null
             : await _resolver.deckPracticeIds(args.deckId);
         final premium = ref.read(premiumContentAccessProvider);
         final freeIds = premium ? null : await _freeIds();
+        final scope = freeIds == null
+            ? allScope
+            : allScope?.where(freeIds.contains).toList();
         final allStates = await _user.allCardStates();
         final states = filterSessionCardStates(allStates, freeIds: freeIds);
         final cards = _resolver.cards;
@@ -201,7 +216,7 @@ class DeckSessionController extends Notifier<DeckSessionState> {
           final filteredSources = filterMixedSessionSources(
             premium: premium,
             freeIds: freeIds,
-            isFreeDeck: isFreeDeckId,
+            isFreeDeck: _isFreeDeck,
             activeSources: sources.active,
             sourceOrder: sources.order,
             storyAdditions: _resolver.additions,
@@ -261,7 +276,7 @@ class DeckSessionController extends Notifier<DeckSessionState> {
     if (!ref.read(premiumContentAccessProvider)) {
       final freeIds = await _freeIds();
       if (!ref.mounted) return;
-      final directLocked = args.deckId.isNotEmpty && !isFreeDeckId(args.deckId);
+      final directLocked = args.deckId.isNotEmpty && !_isFreeDeck(args.deckId);
       // Keep completed entries and their history. Entitlement changes only
       // remove future choices; the current answer is always allowed to commit.
       _queue = [

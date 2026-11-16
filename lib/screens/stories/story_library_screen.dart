@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/semantics.dart' show CustomSemanticsAction;
 
+import '../../domain/editorial_stories.dart';
 import '../../models/home_models.dart';
 import '../../models/news_models.dart';
 import '../../models/story_category.dart';
@@ -24,6 +25,7 @@ class StoryLibraryScreen extends ConsumerWidget {
     super.key,
     required this.stories,
     required this.onOpenStory,
+    this.onUpgradeStory,
     this.status,
     this.collection,
     this.news = const [],
@@ -31,6 +33,7 @@ class StoryLibraryScreen extends ConsumerWidget {
     this.progress = const {},
     this.imported = const [],
     this.onOpenImported,
+    this.onUpgradeImported,
     this.onDeleteImported,
     this.onImportText,
     this.onImported,
@@ -48,6 +51,7 @@ class StoryLibraryScreen extends ConsumerWidget {
   final Widget? status;
   final Widget? collection;
   final ValueChanged<Story> onOpenStory;
+  final ValueChanged<Story>? onUpgradeStory;
 
   /// One article per desk; the section is left out when empty.
   final List<NewsArticle> news;
@@ -58,6 +62,7 @@ class StoryLibraryScreen extends ConsumerWidget {
 
   final List<ImportedText> imported;
   final ValueChanged<ImportedText>? onOpenImported;
+  final ValueChanged<ImportedText>? onUpgradeImported;
   final ValueChanged<ImportedText>? onDeleteImported;
 
   /// Stores a pasted text; returns an error message or null.
@@ -113,6 +118,7 @@ class StoryLibraryScreen extends ConsumerWidget {
       finished: finished,
       premiumLocked: premiumLocked,
       onUpgrade: onUpgrade,
+      onUpgradeStory: onUpgradeStory,
     ),
     2 => StoryCarousel(
       stories: stories,
@@ -121,6 +127,7 @@ class StoryLibraryScreen extends ConsumerWidget {
       finished: finished,
       premiumLocked: premiumLocked,
       onUpgrade: onUpgrade,
+      onUpgradeStory: onUpgradeStory,
     ),
     3 => StoryCarousel(
       stories: stories,
@@ -129,6 +136,7 @@ class StoryLibraryScreen extends ConsumerWidget {
       finished: finished,
       premiumLocked: premiumLocked,
       onUpgrade: onUpgrade,
+      onUpgradeStory: onUpgradeStory,
       width: 232,
       height: 132,
     ),
@@ -139,6 +147,7 @@ class StoryLibraryScreen extends ConsumerWidget {
       finished: finished,
       premiumLocked: premiumLocked,
       onUpgrade: onUpgrade,
+      onUpgradeStory: onUpgradeStory,
     ),
   };
 
@@ -146,11 +155,13 @@ class StoryLibraryScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final premiumLocked = !ref.watch(premiumContentAccessProvider);
     void upgrade() => showPremiumContentPaywall(context, interest: 'Stories');
+    final freeStory = stories.where((story) => isFreeStoryId(story.id)).firstOrNull;
     final groups = <String, List<Story>>{};
     for (final category in StoryCategory.all) {
       groups[category.name] = [];
     }
     for (final story in stories) {
+      if (story.id == freeStory?.id) continue;
       (groups[StoryCategory.of(story.topic).name] ??= []).add(story);
     }
     groups.removeWhere((_, list) => list.isEmpty);
@@ -212,6 +223,20 @@ class StoryLibraryScreen extends ConsumerWidget {
               ],
             ),
           ),
+          if (freeStory != null) ...[
+            const SizedBox(height: 18),
+            const Padding(
+              padding: _gutter,
+              child: SectionHeading(title: 'Kostenlos lesen'),
+            ),
+            const SizedBox(height: 12),
+            StoryFeatureShelf(
+              stories: [freeStory],
+              onOpen: onOpenStory,
+              progress: started,
+              finished: finished,
+            ),
+          ],
           ?collection,
           if (status != null) Padding(padding: _gutter, child: status!),
           if (news.isNotEmpty) ...[
@@ -258,8 +283,10 @@ class StoryLibraryScreen extends ConsumerWidget {
                       category: StoryCategory.of(story.topic),
                       fraction: entry.fraction,
                       onTap: () => onOpenStory(story),
-                      premiumLocked: premiumLocked,
-                      onUpgrade: upgrade,
+                      premiumLocked: premiumLocked && !isFreeStoryId(story.id),
+                      onUpgrade: onUpgradeStory == null
+                          ? upgrade
+                          : () => onUpgradeStory!(story),
                     ),
                     ImportedText text => ContinueReadingTile(
                       title: text.title,
@@ -268,7 +295,9 @@ class StoryLibraryScreen extends ConsumerWidget {
                       fraction: entry.fraction,
                       onTap: () => onOpenImported?.call(text),
                       premiumLocked: premiumLocked,
-                      onUpgrade: upgrade,
+                      onUpgrade: onUpgradeImported == null
+                          ? upgrade
+                          : () => onUpgradeImported!(text),
                     ),
                     _ => const SizedBox.shrink(),
                   },
@@ -314,7 +343,9 @@ class StoryLibraryScreen extends ConsumerWidget {
                       progress: progress[text.id],
                       onTap: () => onOpenImported?.call(text),
                       premiumLocked: premiumLocked,
-                      onUpgrade: upgrade,
+                      onUpgrade: onUpgradeImported == null
+                          ? upgrade
+                          : () => onUpgradeImported!(text),
                       onDelete: onDeleteImported == null
                           ? null
                           : () => onDeleteImported!(text),
@@ -398,7 +429,7 @@ class _ImportPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.appColors;
-    final ink = open ? const Color(0xFFFFFFFF) : colors.active;
+    final ink = open ? AppColors.onActive : colors.active;
     return MergeSemantics(
       child: CupertinoButton(
         onPressed: onPressed,
@@ -515,13 +546,13 @@ class _AddTextCard extends StatelessWidget {
                 Icon(
                   CupertinoIcons.plus,
                   size: 28,
-                  color: open ? const Color(0xFFFFFFFF) : colors.active,
+                  color: open ? AppColors.onActive : colors.active,
                 ),
                 const SizedBox(height: 6),
                 Text(
                   'Import',
                   style: AppType.meta(
-                    color: open ? const Color(0xFFFFFFFF) : colors.textMuted,
+                    color: open ? AppColors.onActive : colors.textMuted,
                   ),
                 ),
               ],
@@ -605,51 +636,60 @@ class _ImportedCard extends StatelessWidget {
                   '${started ? ', ${(entry.fraction * 100).round()} Prozent gelesen' : ''}'
                   '${premiumLocked ? ', mit Premium freischalten' : ''}',
               excludeSemantics: true,
-              child: Container(
-                width: 150,
-                height: height,
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: _paper,
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+              child: Stack(
+                children: [
+                  Container(
+                    width: 150,
+                    height: height,
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: _paper,
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(icon, size: 22, color: const Color(0xFF8A6E4B)),
-                        const Spacer(),
-                        if (premiumLocked) const PremiumLockBadge(),
+                        Row(
+                          children: [
+                            Icon(
+                              icon,
+                              size: 22,
+                              color: const Color(0xFF8A6E4B),
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Expanded(
+                          child: Text(
+                            text.title,
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppType.editorial(
+                              color: _ink,
+                              size: 17,
+                              height: 1.2,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          started
+                              ? '${(entry.fraction * 100).round()} % gelesen'
+                              : '${text.wordCount} Wörter',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppType.meta(color: const Color(0xFF6E6457)),
+                        ),
+                        if (started) ...[
+                          const SizedBox(height: 6),
+                          ReadingBar(fraction: entry.fraction),
+                        ],
                       ],
                     ),
-                    const SizedBox(height: 10),
-                    Expanded(
-                      child: Text(
-                        text.title,
-                        maxLines: 4,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppType.editorial(
-                          color: _ink,
-                          size: 17,
-                          height: 1.25,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      started
-                          ? '${(entry.fraction * 100).round()} % gelesen'
-                          : '${text.wordCount} Wörter',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppType.meta(color: const Color(0xFF6E6457)),
-                    ),
-                    if (started) ...[
-                      const SizedBox(height: 6),
-                      ReadingBar(fraction: entry.fraction),
-                    ],
-                  ],
-                ),
+                  ),
+                  if (premiumLocked)
+                    PremiumVeil(radius: BorderRadius.circular(18)),
+                ],
               ),
             ),
           ),

@@ -1,0 +1,118 @@
+[
+  {
+    "id": "library:it:linglossa",
+    "title": "Come impari con Linglossa",
+    "topic": "Sprachenlernen",
+    "level": "A2",
+    "minutes": 1,
+    "body": "Cerchi la parola giusta mentre racconti a un amico com’è andata la tua giornata. Ieri l’hai riconosciuta in una storia, ma oggi non ti viene in mente.\n\nSu Linglossa vedi un suggerimento in tedesco e completi una frase nella lingua che stai imparando. Provi a ricordare la parola mancante prima di vedere la risposta.\n\nQuando leggi una storia, tocca una parola per controllarne il significato e rileggi la frase. Il resto della frase può aiutarti a capire come si usa la parola.\n\nDurante gli esercizi, le parole tornano dopo una pausa e puoi provare a ricordarle di nuovo. Ora prova con la parola «giornata» nella prima frase.",
+    "translations": {
+      "Cerchi la parola giusta mentre racconti a un amico com’è andata la tua giornata.": "Du suchst nach dem richtigen Wort, während du einem Freund von deinem Tag erzählst.",
+      "Ieri l’hai riconosciuta in una storia, ma oggi non ti viene in mente.": "Gestern hast du es in einer Geschichte wiedererkannt, aber heute fällt es dir nicht ein.",
+      "Su Linglossa vedi un suggerimento in tedesco e completi una frase nella lingua che stai imparando.": "In Linglossa siehst du einen deutschen Hinweis und ergänzt einen Satz in der Sprache, die du lernst.",
+      "Provi a ricordare la parola mancante prima di vedere la risposta.": "Du versuchst, dich an das fehlende Wort zu erinnern, bevor du die Lösung siehst.",
+      "Quando leggi una storia, tocca una parola per controllarne il significato e rileggi la frase.": "Wenn du eine Geschichte liest, tippe auf ein Wort, um seine Bedeutung nachzusehen, und lies den Satz noch einmal.",
+      "Il resto della frase può aiutarti a capire come si usa la parola.": "Der restliche Satz kann dir helfen zu verstehen, wie das Wort verwendet wird.",
+      "Durante gli esercizi, le parole tornano dopo una pausa e puoi provare a ricordarle di nuovo.": "Beim Üben kommen Wörter nach einer Pause wieder. So kannst du erneut versuchen, sie abzurufen.",
+      "Ora prova con la parola «giornata» nella prima frase.": "Probiere es jetzt mit dem Wort „giornata“ im ersten Satz."
+    },
+    "sources": [
+      {
+        "title": "Webb (2005)",
+        "url": "https://www.cambridge.org/core/journals/studies-in-second-language-acquisition/article/receptive-and-productive-vocabulary-learning-the-effects-of-reading-and-writing-on-word-knowledge/DDF362AE7B13D1949B1CD591DA2F3414"
+      },
+      {
+        "title": "Yanagisawa, Webb & Uchihara (2020)",
+        "url": "https://www.cambridge.org/core/journals/studies-in-second-language-acquisition/article/abs/how-do-different-forms-of-glossing-contribute-to-l2-vocabulary-learning-from-reading/38124150D59DF3039EE1FF5AE88FE922"
+      },
+      {
+        "title": "Cepeda et al. (2006)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/16719566/"
+      }
+    ],
+    "glosses": {
+      "giornata": "Tag",
+      "parola": "Wort",
+      "amico": "Freund",
+      "storia": "Geschichte",
+      "frase": "Satz",
+      "risposta": "Antwort",
+      "pausa": "Pause",
+      "lingua": "Sprache"
+    }
+  },
+  {
+    "id": "library:it:language_spacing",
+    "title": "Una parola che torna domani",
+    "topic": "Sprachenlernen",
+    "level": "B1",
+    "minutes": 1,
+    "body": "Lunedì Maya impara la parola «ombrello» perché piove mentre va al lavoro. La ricorda quella sera e ci riprova giovedì prima di controllare la risposta.\n\nIl secondo tentativo è più difficile perché ha avuto tempo di dimenticare. Alcuni esperimenti indicano che distribuire lo studio in più sessioni spesso aiuta a ricordare più a lungo.\n\nLa pausa più utile può cambiare a seconda di quanto a lungo vuoi ricordare una cosa. La settimana dopo, Maya prova a ricordare la parola mentre organizza una passeggiata sotto la pioggia.",
+    "translations": {
+      "Lunedì Maya impara la parola «ombrello» perché piove mentre va al lavoro.": "Am Montag lernt Maya das Wort „Regenschirm“, weil es auf ihrem Arbeitsweg regnet.",
+      "La ricorda quella sera e ci riprova giovedì prima di controllare la risposta.": "Am Abend erinnert sie sich daran, und am Donnerstag versucht sie es erneut, bevor sie die Lösung nachsieht.",
+      "Il secondo tentativo è più difficile perché ha avuto tempo di dimenticare.": "Der zweite Versuch fällt ihr schwerer, weil sie Zeit zum Vergessen hatte.",
+      "Alcuni esperimenti indicano che distribuire lo studio in più sessioni spesso aiuta a ricordare più a lungo.": "Mehrere Experimente deuten darauf hin, dass verteilte Lerneinheiten oft helfen, sich länger zu erinnern.",
+      "La pausa più utile può cambiare a seconda di quanto a lungo vuoi ricordare una cosa.": "Wie viel Abstand am meisten hilft, kann davon abhängen, wie lange du dir etwas merken möchtest.",
+      "La settimana dopo, Maya prova a ricordare la parola mentre organizza una passeggiata sotto la pioggia.": "In der nächsten Woche ruft Maya das Wort wieder ab, als sie einen Spaziergang im Regen plant."
+    },
+    "sources": [
+      {
+        "title": "Cepeda et al. (2006)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/16719566/"
+      },
+      {
+        "title": "Karpicke & Roediger (2008)",
+        "url": "https://learninglab.psych.purdue.edu/downloads/2008/2008_Karpicke_Roediger_Science.pdf"
+      }
+    ]
+  },
+  {
+    "id": "library:it:language_retrieval",
+    "title": "Quando distogli lo sguardo",
+    "topic": "Sprachenlernen",
+    "level": "B1",
+    "minutes": 1,
+    "body": "Noah legge una parola nuova sull’autobus e pensa che la ricorderà più tardi. A casa chiude il quaderno e prova a dire la parola a memoria.\n\nEsita, controlla la risposta e ci riprova poco dopo. In un esperimento con parole straniere, richiamarle più volte alla memoria ha aiutato a ricordarle una settimana dopo.\n\nLeggere una parola e ricordarne la forma richiedono esercizi diversi. Noah aggiunge una frase breve per provare a ricordare la forma in una situazione che capisce.",
+    "translations": {
+      "Noah legge una parola nuova sull’autobus e pensa che la ricorderà più tardi.": "Noah liest im Bus ein neues Wort und denkt, dass er sich später daran erinnern wird.",
+      "A casa chiude il quaderno e prova a dire la parola a memoria.": "Zu Hause klappt er sein Heft zu und versucht, das Wort aus dem Gedächtnis zu sagen.",
+      "Esita, controlla la risposta e ci riprova poco dopo.": "Er zögert, sieht die Lösung nach und versucht es etwas später noch einmal.",
+      "In un esperimento con parole straniere, richiamarle più volte alla memoria ha aiutato a ricordarle una settimana dopo.": "In einem Experiment mit fremdsprachigen Vokabeln half der wiederholte Abruf, sich eine Woche später an die Wörter zu erinnern.",
+      "Leggere una parola e ricordarne la forma richiedono esercizi diversi.": "Ein Wort zu lesen und seine Form abzurufen erfordern unterschiedliche Arten der Übung.",
+      "Noah aggiunge una frase breve per provare a ricordare la forma in una situazione che capisce.": "Noah ergänzt einen kurzen Satz, damit er die Form später in einer verständlichen Situation abrufen kann."
+    },
+    "sources": [
+      {
+        "title": "Karpicke & Roediger (2008)",
+        "url": "https://learninglab.psych.purdue.edu/downloads/2008/2008_Karpicke_Roediger_Science.pdf"
+      },
+      {
+        "title": "Webb (2005)",
+        "url": "https://www.cambridge.org/core/journals/studies-in-second-language-acquisition/article/receptive-and-productive-vocabulary-learning-the-effects-of-reading-and-writing-on-word-knowledge/DDF362AE7B13D1949B1CD591DA2F3414"
+      }
+    ]
+  },
+  {
+    "id": "library:it:language_context",
+    "title": "Un indizio nella frase dopo",
+    "topic": "Sprachenlernen",
+    "level": "B1",
+    "minutes": 1,
+    "body": "Lea legge di un fornaio che comincia a lavorare prima che sorga il sole. Si ferma davanti a una parola sconosciuta e cerca indizi nella frase successiva.\n\nIl fornaio mescola farina e acqua e presto metterà qualcosa nel forno. Lea consulta una breve spiegazione della parola e rilegge il passaggio.\n\nIn diversi studi, chi leggeva tendeva a imparare più parole se i testi offrivano brevi spiegazioni. La spiegazione dà a Lea un significato e la scena nel forno le mostra un uso concreto.",
+    "translations": {
+      "Lea legge di un fornaio che comincia a lavorare prima che sorga il sole.": "Lea liest über einen Bäcker, der vor Sonnenaufgang mit der Arbeit beginnt.",
+      "Si ferma davanti a una parola sconosciuta e cerca indizi nella frase successiva.": "Sie hält bei einem unbekannten Wort an und sucht im nächsten Satz nach Hinweisen.",
+      "Il fornaio mescola farina e acqua e presto metterà qualcosa nel forno.": "Der Bäcker mischt Mehl und Wasser und schiebt bald etwas in den Ofen.",
+      "Lea consulta una breve spiegazione della parola e rilegge il passaggio.": "Lea sieht eine kurze Erklärung zum Wort nach und liest die Stelle erneut.",
+      "In diversi studi, chi leggeva tendeva a imparare più parole se i testi offrivano brevi spiegazioni.": "Über mehrere Studien hinweg lernten Lesende tendenziell mehr Wörter, wenn Texte kurze Erklärungen boten.",
+      "La spiegazione dà a Lea un significato e la scena nel forno le mostra un uso concreto.": "Die Erklärung gibt Lea eine Bedeutung, und die Szene in der Bäckerei zeigt ihr eine konkrete Verwendung."
+    },
+    "sources": [
+      {
+        "title": "Yanagisawa, Webb & Uchihara (2020)",
+        "url": "https://www.cambridge.org/core/journals/studies-in-second-language-acquisition/article/abs/how-do-different-forms-of-glossing-contribute-to-l2-vocabulary-learning-from-reading/38124150D59DF3039EE1FF5AE88FE922"
+      }
+    ]
+  }
+]

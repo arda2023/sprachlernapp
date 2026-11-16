@@ -22,6 +22,7 @@ import 'package:sprachapp/screens/decks/deck_library_screen.dart';
 import 'package:sprachapp/screens/decks/deck_practice_screen.dart';
 import 'package:sprachapp/screens/decks/widgets/form_info_sheet.dart';
 import 'package:sprachapp/theme/app_theme.dart';
+import 'package:sprachapp/widgets/section_heading.dart';
 
 import 'fixtures/deck_repositories.dart';
 
@@ -86,12 +87,20 @@ void main() {
     (tester) async {
       await tester.pumpWidget(testScope(const SprachApp(), user: user));
       await tester.pumpAndSettle();
+      final browseDecks = find.descendant(
+        of: find.byWidgetPredicate(
+          (widget) =>
+              widget is SectionHeading && widget.title == 'Aktive Stapel',
+        ),
+        matching: find.text('Mehr ansehen'),
+      );
       await tester.scrollUntilVisible(
-        find.text('Mehr ansehen'),
+        browseDecks,
         200,
         scrollable: find.byType(Scrollable).first,
       );
-      await tester.tap(find.text('Mehr ansehen'));
+      await tester.pumpAndSettle();
+      await tester.tap(browseDecks.hitTestable());
       await tester.pumpAndSettle();
       expect(find.byType(DeckLibraryScreen), findsOneWidget);
       expect(find.text('1 aktiv · 1 Stapel'), findsNothing);

@@ -77,6 +77,10 @@ class DriftUserRepository
   Future<Map<String, DateTime>> generatedVocabularyAdditions() =>
       GeneratedVocabularyStore(_db, lang: lang).additions();
 
+  @override
+  Future<Set<String>> freeGeneratedVocabularyIds() =>
+      GeneratedVocabularyStore(_db, lang: lang).freeIds();
+
   Future<void> _guardDecks(Iterable<String> ids) async {
     final requested = ids.toSet();
     final generated = generatedVocabularyDeckId(lang);

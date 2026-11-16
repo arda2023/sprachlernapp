@@ -112,18 +112,9 @@ class PracticeSentenceState extends State<PracticeSentence> {
         final style = AppType.editorial(
           size: 24,
           weight: FontWeight.w400,
-          height: 1.5,
+          height: 1.45,
           letterSpacing: 0,
           color: colors.memoryLevel2,
-        );
-        // Preserve the visual line height at large text while giving normal
-        // text and its inline editor at least a 44 pt interaction height.
-        final verticalTapPadding = math.max(
-          0.0,
-          (44 -
-                  MediaQuery.textScalerOf(context).scale(style.fontSize!) *
-                      style.height!) /
-              2,
         );
         widget.input.blue = colors.memoryLevel2;
         widget.input.red = colors.error;
@@ -159,7 +150,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
             final word = text.substring(0, wordLength);
             final wordStyle = selected
                 // Like every popover trigger: popover orange, white ink.
-                ? style.copyWith(color: const Color(0xFFFFFFFF))
+                ? style.copyWith(color: AppColors.onActive)
                 : style.copyWith(
                     color: colors.memoryLevel2.withValues(
                       alpha: widget.selectedStart == null ? 1 : .8,
@@ -180,44 +171,38 @@ class PracticeSentenceState extends State<PracticeSentence> {
                     selected: selected,
                     label: '$text, Übersetzung anzeigen',
                     excludeSemantics: true,
+                    // Inline targets keep the word's own width and line
+                    // height (WCAG 2.5.8 inline exception): a 44 pt minimum
+                    // here spread short words like "a" or "to" apart.
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        minWidth: math.min(44.0, constraints.maxWidth),
-                        minHeight: 44,
                         maxWidth: constraints.maxWidth,
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: verticalTapPadding,
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
-                          children: [
-                            // The bubble stays anchored to the glyphs even
-                            // when their tappable area is larger.
-                            Flexible(
-                              child: _WordHighlight(
-                                key: item.key,
-                                on: selected,
-                                color: colors.popover,
-                                child: Text(word, style: wordStyle),
-                              ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          // The bubble's arrow points at the word itself, not
+                          // at its trailing punctuation.
+                          Flexible(
+                            child: _WordHighlight(
+                              key: item.key,
+                              on: selected,
+                              color: colors.popover,
+                              child: Text(word, style: wordStyle),
                             ),
-                            if (wordLength < text.length)
-                              Text(
-                                text.substring(wordLength),
-                                style: style.copyWith(
-                                  color: colors.memoryLevel2.withValues(
-                                    alpha: widget.selectedStart == null
-                                        ? 1
-                                        : .8,
-                                  ),
+                          ),
+                          if (wordLength < text.length)
+                            Text(
+                              text.substring(wordLength),
+                              style: style.copyWith(
+                                color: colors.memoryLevel2.withValues(
+                                  alpha: widget.selectedStart == null ? 1 : .8,
                                 ),
                               ),
-                          ],
-                        ),
+                            ),
+                        ],
                       ),
                     ),
                   ),
@@ -329,7 +314,7 @@ class PracticeSentenceState extends State<PracticeSentence> {
                                 isDense: true,
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: ghost.isEmpty ? 5 : ghostPadding,
-                                  vertical: verticalTapPadding,
+                                  vertical: 0,
                                 ),
                                 filled: true,
                                 fillColor: widget.solved
@@ -365,7 +350,6 @@ class PracticeSentenceState extends State<PracticeSentence> {
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal: ghostPadding,
-                                      vertical: verticalTapPadding,
                                     ),
                                     child: Text.rich(
                                       key: const ValueKey('practice-ghost'),

@@ -1,8 +1,10 @@
 import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
+
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:drift/native.dart';
 import 'package:sprachapp/data/user/drift_user_repository.dart';
 import 'package:sprachapp/data/user/generated_vocabulary_store.dart';
 import 'package:sprachapp/data/user/user_database.dart';
@@ -24,6 +26,75 @@ void main() {
   Future<void> settle() =>
       Future<void>.delayed(const Duration(milliseconds: 20));
 
+  test('only saved free-sample words reach direct and mixed queues without Premium', () async {
+    final db = UserDatabase(NativeDatabase.memory());
+    final store = GeneratedVocabularyStore(db, lang: 'en');
+    final now = DateTime(2026, 11, 15);
+    final user = DriftUserRepository(db, lang: 'en', ownsDatabase: false);
+    final container = ProviderContainer(
+      overrides: [
+        premiumContentAccessProvider.overrideWithValue(false),
+        contentRepositoryProvider.overrideWith(
+          (_) async => throw StateError('offline'),
+        ),
+        selectedContentLanguageProvider.overrideWith((_) async => 'en'),
+        userRepositoryProvider.overrideWith((_) async => user),
+        appInfoProvider.overrideWith((_) async => 'test'),
+        clockProvider.overrideWithValue(() => now),
+      ],
+    );
+    addTearDown(() async {
+      container.dispose();
+      await db.close();
+    });
+    final paid = await store.save(
+      response('en', twoItems: true),
+      selected: {0, 1},
+      now: now,
+      verify: () {},
+    );
+    expect(await store.freeIds(), isEmpty);
+    // A matching free response unlocks the original card and leaves its
+    // immutable context and learning history intact.
+    final sample = await store.save(
+      response(
+        'en',
+        requestId: '87654321-1234-4234-8234-123456789abc',
+        freeSample: true,
+      ),
+      selected: {0},
+      now: now,
+      verify: () {},
+    );
+    final cardId = paid.addedIds.first;
+    expect(sample.existingIds, [cardId]);
+    expect(await store.freeIds(), {cardId});
+    final deck = (await container.read(decksProvider.future)).single;
+    expect(deck.totalWords, 1);
+    expect(container.read(freeGeneratedDeckAccessProvider(deck.id)), isTrue);
+
+    for (final (deckId, kind) in [
+      (deck.id, DeckSessionKind.learn),
+      ('', DeckSessionKind.mixed),
+    ]) {
+      final provider = deckSessionControllerProvider((
+        deckId: deckId,
+        kind: kind,
+        size: 5,
+      ));
+      final sub = container.listen(provider, (_, _) {});
+      for (var i = 0; i < 50 && container.read(provider).loading; i++) {
+        await settle();
+      }
+      final session = container.read(provider);
+      expect(session.error, isNull);
+      expect(session.total, 1);
+      expect(session.pass?.item.card.id, cardId);
+      sub.close();
+      container.invalidate(provider);
+    }
+  });
+
   for (final lang in GeneratedVocabularyRequest.languages) {
     test(
       '$lang generated vocabulary learns offline through shared providers and survives restart',
@@ -41,7 +112,7 @@ void main() {
         );
         ProviderContainer scope() => ProviderContainer(
           overrides: [
-        premiumContentAccessProvider.overrideWithValue(true),
+            premiumContentAccessProvider.overrideWithValue(true),
             contentRepositoryProvider.overrideWith(
               (ref) async => throw const ContentUnavailable(
                 ContentUnavailableReason.missing,

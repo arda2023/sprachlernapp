@@ -224,7 +224,7 @@ class GlowButton extends StatelessWidget {
               style: AppType.chrome(
                 size: 17,
                 weight: FontWeight.w700,
-                color: const Color(0xFFFFFFFF),
+                color: AppColors.onActive,
               ),
             ),
           ),

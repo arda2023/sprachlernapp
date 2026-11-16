@@ -21,8 +21,12 @@ class AppPalette {
   Color get iconOff => light ? const Color(0xFF8992A1) : AppColors.iconOff;
   Color get active => AppColors.active;
 
-  /// Text on a neutral surface needs more contrast than a filled accent.
-  Color get accentText => light ? const Color(0xFFA94E00) : AppColors.active;
+  /// Orange text on a neutral surface (user decision 15.11.2026: one orange,
+  /// no darker variant).
+  Color get accentText => AppColors.active;
+
+  /// Text and icons on an orange fill: near-black, 6.4:1 on [active].
+  Color get onActive => AppColors.onActive;
   Color get mastered => AppColors.mastered;
   Color get activeTint =>
       light ? const Color(0xFFFFF0E2) : AppColors.activeTint;
@@ -53,8 +57,9 @@ class AppPalette {
   Color get progressWords =>
       light ? const Color(0xFF1FA463) : const Color(0xFF34C77B);
 
-  /// White text reaches 4.63:1, including small labels and captions.
-  Color get popover => const Color(0xFFBC5800);
+  /// Highlighted tiles, chips and popovers: the one app orange with
+  /// [onActive] ink (user decision 15.11.2026, replaces #BC5800 + white).
+  Color get popover => AppColors.active;
 }
 
 abstract final class AppColors {
@@ -64,6 +69,9 @@ abstract final class AppColors {
 
   static const mastered = Color(0xFF7B2CBF);
   static const active = Color(0xFFF77F00);
+
+  /// Ink on [active]: 6.4:1, also for small captions.
+  static const onActive = Color(0xFF1A1D26);
 
   /// Field Orange at 8% over Raised Ink: background of an active deck tile.
   static const activeTint = Color(0xFF2C2523);
@@ -119,6 +127,13 @@ abstract final class AppType {
 
   /// Source Serif 4: card titles, headings, section titles, screen titles.
   static const editorialScale = [17.0, 20.0, 24.0, 28.0, 32.0];
+
+  /// Line heights (user request 15.11.2026: consistent line spacing):
+  /// 1.1 dense numbers and calendar cells, 1.2 headings and titles, 1.35
+  /// multi-line interface text, 1.45 reading text (example sentences,
+  /// translations, legal pages). 1.0 and 1.05 only for decorative type
+  /// (word rain, cover texture). `test/type_scale_test.dart` guards this.
+  static const lineHeights = [1.0, 1.05, 1.1, 1.2, 1.35, 1.45];
 
   static TextStyle chrome({
     double size = 15,

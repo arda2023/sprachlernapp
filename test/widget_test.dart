@@ -870,11 +870,20 @@ void main() {
 
   /// Scrolls [finder] into view and clear of the notched bar.
   Future<void> reveal(WidgetTester tester, Finder finder) async {
-    await tester.scrollUntilVisible(
-      finder,
-      200,
-      scrollable: dashboardScrollable(),
-    );
+    // Scrolls the list itself: a drag from its centre can land on the
+    // topic field at the top, whose own text scrollable takes the gesture.
+    final position = tester
+        .state<ScrollableState>(dashboardScrollable())
+        .position;
+    // Sections above the current position: start again from the top.
+    if (finder.evaluate().isEmpty) position.jumpTo(0);
+    await tester.pump();
+    for (var i = 0; i < 60 && finder.evaluate().isEmpty; i++) {
+      position.jumpTo(
+        (position.pixels + 200).clamp(0.0, position.maxScrollExtent),
+      );
+      await tester.pump();
+    }
     await tester.ensureVisible(finder);
     await tester.pumpAndSettle();
   }
@@ -895,18 +904,14 @@ void main() {
     );
     expect(find.textContaining('Bald verfügbar'), findsNothing);
 
-    // Texte: compact numbered rows, without image backgrounds.
-    expect(find.text('Texte'), findsOneWidget);
-    expect(
-      find.descendant(of: dashboard, matching: find.byType(TextExerciseShelf)),
-      findsOneWidget,
-    );
-    expect(tester.getTopLeft(find.byType(TextExerciseShelf)).dy, lessThan(600));
+    // Order (user request 15.11.2026): generator, Hören, Grammatik, Texte,
+    // Grammatikregeln. Hören comes first, directly below the generator.
+    expect(find.text('Hören'), findsOneWidget);
+    expect(find.text('Als Nächstes'), findsNothing);
+    expect(find.text('Aussprache'), findsNothing);
 
     // Hören: the first open exercise as a wide card, the rest as tiles.
-    final feature = find.bySemanticsLabel(
-      RegExp('^Als Nächstes: Das th in „think“'),
-    );
+    final feature = find.bySemanticsLabel(RegExp('^Das th in „think“'));
     await reveal(tester, feature);
     expect(
       tester.getSemantics(feature),
@@ -926,6 +931,14 @@ void main() {
     );
     expect(find.text('Simple Present mit he, she und it'), findsOneWidget);
 
+    // Texte: compact numbered rows, without image backgrounds, below Grammatik.
+    await reveal(tester, find.text('Texte'));
+    expect(find.text('Texte'), findsOneWidget);
+    expect(
+      find.descendant(of: dashboard, matching: find.byType(TextExerciseShelf)),
+      findsOneWidget,
+    );
+
     // Grammatikregeln: rule cards in two columns.
     final artikel = find.bySemanticsLabel(RegExp('^Artikel, a, an und the'));
     await reveal(tester, artikel);
@@ -937,9 +950,9 @@ void main() {
     await tester.drag(dashboard, const Offset(0, 4000));
     await tester.pumpAndSettle();
     for (final label in [
-      'Alle Texte anzeigen',
       'Alle Hörübungen anzeigen',
       'Alle Grammatikübungen anzeigen',
+      'Alle Texte anzeigen',
       'Alle Grammatikregeln anzeigen',
     ]) {
       final more = find.bySemanticsLabel(label);
@@ -981,7 +994,7 @@ void main() {
     stillStage(tester);
     await openContentTab(tester);
     final slowMorning = find.bySemanticsLabel(RegExp(r'^A Slow Morning\.'));
-    await tester.ensureVisible(slowMorning);
+    await reveal(tester, slowMorning);
     await tester.pumpAndSettle();
     await tester.tap(slowMorning);
     await tester.pumpAndSettle();
@@ -989,9 +1002,7 @@ void main() {
     await tester.tapAt(const Offset(20, 40));
     await tester.pumpAndSettle();
 
-    final feature = find.bySemanticsLabel(
-      RegExp('^Als Nächstes: Das th in „think“'),
-    );
+    final feature = find.bySemanticsLabel(RegExp('^Das th in „think“'));
     expect(find.byType(ExerciseChoiceSheet), findsNothing);
     await reveal(tester, feature);
     await tester.tap(feature);
@@ -1056,6 +1067,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    await reveal(tester, find.bySemanticsLabel('Alle Texte anzeigen'));
     await tester.tap(find.bySemanticsLabel('Alle Texte anzeigen'));
     await tester.pumpAndSettle();
     final fromStories = find.ancestor(

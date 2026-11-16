@@ -39,16 +39,31 @@ class GeneratedVocabularyRequest {
 
 /// Validated suggestions, bound to the exact request that produced them.
 class GeneratedVocabularyResponse {
-  GeneratedVocabularyResponse._(this.requestId, this.lang, this.items);
+  GeneratedVocabularyResponse._(
+    this.requestId,
+    this.lang,
+    this.items,
+    this.freeSample,
+  );
 
   factory GeneratedVocabularyResponse.fromJson(
     Object? json, {
     required GeneratedVocabularyRequest request,
   }) {
-    final map = _object(json, {'contract', 'request_id', 'lang', 'items'});
+    final map = _object(json, {
+      'contract',
+      'request_id',
+      'lang',
+      'items',
+      if (json is Map && json.containsKey('free_sample')) 'free_sample',
+    });
     _require(map['contract'] is int && map['contract'] == 1, 'contract');
     _require(map['request_id'] == request.requestId, 'request_id');
     _require(map['lang'] == request.lang, 'lang');
+    _require(
+      !map.containsKey('free_sample') || map['free_sample'] == true,
+      'free_sample',
+    );
     final raw = map['items'];
     _require(
       raw is List && raw.isNotEmpty && raw.length <= request.count,
@@ -65,17 +80,20 @@ class GeneratedVocabularyResponse {
       request.requestId,
       request.lang,
       List.unmodifiable(items),
+      map['free_sample'] == true,
     );
   }
 
   final String requestId, lang;
   final List<GeneratedVocabularyItem> items;
+  final bool freeSample;
 
   Map<String, dynamic> toJson() => {
     'contract': 1,
     'request_id': requestId,
     'lang': lang,
     'items': items.map((item) => item.toJson()).toList(),
+    if (freeSample) 'free_sample': true,
   };
 }
 

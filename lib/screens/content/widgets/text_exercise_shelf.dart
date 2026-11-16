@@ -20,7 +20,7 @@ class TextExerciseShelf extends StatelessWidget {
   final List<ExerciseText> texts;
   final void Function(ExerciseText text, BuildContext anchor) onOpen;
   final bool premiumLocked;
-  final VoidCallback? onUpgrade;
+  final void Function(ExerciseText text, BuildContext anchor)? onUpgrade;
 
   @override
   Widget build(BuildContext context) {
@@ -76,16 +76,17 @@ class TextExerciseRow extends StatelessWidget {
   final int rank;
   final void Function(ExerciseText text, BuildContext anchor) onOpen;
   final bool premiumLocked;
-  final VoidCallback? onUpgrade;
+  final void Function(ExerciseText text, BuildContext anchor)? onUpgrade;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.appColors;
     final category = StoryCategory.of(text.info.topic);
+    final action = premiumLocked ? onUpgrade : onOpen;
     return MergeSemantics(
       child: PressScale(
         child: CupertinoButton(
-          onPressed: premiumLocked ? onUpgrade : () => onOpen(text, context),
+          onPressed: action == null ? null : () => action(text, context),
           padding: EdgeInsets.zero,
           minimumSize: const Size(44, 44),
           child: Semantics(
@@ -93,56 +94,61 @@ class TextExerciseRow extends StatelessWidget {
                 '${text.info.title}. ${text.info.topic}, Niveau ${text.info.level}'
                 '${premiumLocked ? ', mit Premium freischalten' : ', Text üben'}',
             excludeSemantics: true,
-            child: Container(
-              constraints: const BoxConstraints(minHeight: 84),
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: Color.lerp(category.color, colors.raisedInk, 0.85),
-                borderRadius: BorderRadius.circular(18),
-              ),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 26,
-                    child: Text(
-                      '$rank',
-                      style: AppType.editorial(
-                        size: 20,
-                        color: colors.textMuted,
-                      ),
-                    ),
+            child: Stack(
+              children: [
+                Container(
+                  constraints: const BoxConstraints(minHeight: 84),
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: Color.lerp(category.color, colors.raisedInk, 0.85),
+                    borderRadius: BorderRadius.circular(18),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          text.info.title,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 26,
+                        child: Text(
+                          '$rank',
                           style: AppType.editorial(
-                            size: 17,
-                            height: 1.2,
-                            color: colors.textPrimary,
+                            size: 20,
+                            color: colors.textMuted,
                           ),
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          text.info.topic,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppType.meta(color: colors.textMuted),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              text.info.title,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppType.editorial(
+                                size: 17,
+                                height: 1.2,
+                                color: colors.textPrimary,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              text.info.topic,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppType.meta(color: colors.textMuted),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  if (premiumLocked) ...[
-                    const SizedBox(width: 8),
-                    const PremiumLockBadge(),
-                  ],
-                ],
-              ),
+                ),
+                if (premiumLocked)
+                  PremiumVeil(
+                    radius: BorderRadius.circular(18),
+                    lock: Alignment.centerRight,
+                  ),
+              ],
             ),
           ),
         ),

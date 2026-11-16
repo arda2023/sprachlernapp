@@ -37,6 +37,72 @@ class GeneratedVocabularyStore {
       row.cardId: row.addedAt.toLocal(),
   };
 
+  Future<Set<String>> freeIds() async => {
+    for (final row in await (db.select(
+      db.freeGeneratedVocabulary,
+    )..where((t) => t.lang.equals(lang))).get())
+      row.cardId,
+  };
+
+  Future<void> _markFree(String cardId) async {
+    await db
+        .into(db.freeGeneratedVocabulary)
+        .insert(
+          FreeGeneratedVocabularyCompanion.insert(cardId: cardId, lang: lang),
+          mode: InsertMode.insertOrIgnore,
+        );
+  }
+
+  Future<GeneratedVocabularyRequest?> pendingRequest(String owner) async {
+    final row =
+        await (db.select(db.pendingGeneratedVocabulary)
+              ..where((t) => t.owner.equals(owner) & t.lang.equals(lang)))
+            .getSingleOrNull();
+    return row == null
+        ? null
+        : GeneratedVocabularyRequest(
+            requestId: row.requestId,
+            lang: row.lang,
+            prompt: row.prompt,
+            count: row.itemCount,
+          );
+  }
+
+  Future<GeneratedVocabularyRequest> stagePendingRequest(
+    String owner,
+    GeneratedVocabularyRequest request, {
+    required void Function() verify,
+  }) => db.transaction(() async {
+    verify();
+    if (request.lang != lang) throw StateError('Sprache geändert.');
+    final existing = await pendingRequest(owner);
+    verify();
+    if (existing != null) return existing;
+    await db
+        .into(db.pendingGeneratedVocabulary)
+        .insert(
+          PendingGeneratedVocabularyCompanion.insert(
+            owner: owner,
+            lang: lang,
+            requestId: request.requestId,
+            prompt: request.prompt,
+            itemCount: request.count,
+          ),
+        );
+    verify();
+    return request;
+  });
+
+  Future<void> clearPendingRequest(String owner, String requestId) async {
+    await (db.delete(db.pendingGeneratedVocabulary)..where(
+          (t) =>
+              t.owner.equals(owner) &
+              t.lang.equals(lang) &
+              t.requestId.equals(requestId),
+        ))
+        .go();
+  }
+
   Future<GeneratedVocabularySaveResult> save(
     GeneratedVocabularyResponse response, {
     required Set<int> selected,
@@ -83,6 +149,7 @@ class GeneratedVocabularyStore {
         if (context == null) {
           throw StateError('Gespeicherter Übungssatz fehlt.');
         }
+        if (response.freeSample) await _markFree(prior.cardId);
         existing.add(prior.cardId);
         continue;
       }
@@ -170,6 +237,7 @@ class GeneratedVocabularyStore {
               addedAt: now.toUtc(),
             ),
           );
+      if (response.freeSample) await _markFree(id);
       added.add(id);
     }
     if (added.isNotEmpty) {

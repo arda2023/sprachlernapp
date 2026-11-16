@@ -8,47 +8,46 @@ import '../../data/billing/purchase_gateway.dart'
     show PurchasePlan, PurchaseProduct;
 import '../../presentation/onboarding_sounds.dart';
 import '../../presentation/providers/purchase_provider.dart';
-import '../../presentation/providers/notification_provider.dart';
-import '../../data/notifications/notification_gateway.dart';
-import '../../domain/trial_reminder.dart';
+import '../../domain/premium_offer.dart';
+import '../../presentation/providers/database_providers.dart';
+import '../../presentation/providers/premium_offer_provider.dart';
+import 'widgets/learning_principles.dart';
 import '../legal/legal_document.dart';
 import '../legal/legal_document_screen.dart';
 import '../legal/legal_release_gate.dart' show legalStoreOperationsEnabled;
 
 import '../../theme/app_theme.dart';
 import '../../widgets/date_format.dart';
-import '../../widgets/word_rain.dart';
 import 'widgets/account_sheet.dart';
 import 'widgets/onboarding_motion.dart';
 import '../../presentation/providers/auth_providers.dart';
 
 bool get _purchasesEnabled => legalStoreOperationsEnabled;
 
-/// What the onboarding learned, shown at the top of the paywall (the plan
-/// pill flies here from the last onboarding step).
+/// Optional learning context used to tailor the offer.
 typedef PaywallContext = ({String interest, int dailyGoal});
 
 /// Shared with the plan card on the last onboarding step.
 const paywallHeroTag = 'onboarding-plan-card';
 
-/// Closable premium offer. Store products, prices and outcomes come from the
-/// billing provider. Two faces (user request 31.10.2026, Mobbin/Refero
-/// references Unwind, Mimo, Vocabulary, Bevel, Calm): while the store still
-/// offers this account a free trial, a timeline of how the trial runs;
-/// afterwards (trial used) the plans side by side. Both open with "Hello"
-/// in every learning language sliding in.
+/// A closable, paid offer with a permanent free tier. Interactive learning
+/// principles explain the approach; the store remains the price authority.
 class PaywallScreen extends ConsumerStatefulWidget {
   const PaywallScreen({
     super.key,
     required this.plan,
     required this.onContinue,
     this.onboarding = false,
+    this.reason,
+    this.onUnlocked,
   });
 
   final PaywallContext plan;
 
-  /// Right after the onboarding: shows the plan pill the onboarding built.
+  /// Uses the introductory headline after the first saved practice.
   final bool onboarding;
+  final PremiumOfferReason? reason;
+  final VoidCallback? onUnlocked;
 
   /// Finishes the onboarding; the paywall then pops itself so the app
   /// underneath is revealed.
@@ -60,13 +59,17 @@ class PaywallScreen extends ConsumerStatefulWidget {
     required PaywallContext plan,
     required VoidCallback onContinue,
     bool onboarding = false,
+    PremiumOfferReason? reason,
+    VoidCallback? onUnlocked,
   }) => PageRouteBuilder<void>(
-    transitionDuration: const Duration(milliseconds: 520),
-    reverseTransitionDuration: const Duration(milliseconds: 360),
+    transitionDuration: const Duration(milliseconds: 300),
+    reverseTransitionDuration: const Duration(milliseconds: 240),
     pageBuilder: (_, _, _) => PaywallScreen(
       plan: plan,
       onContinue: onContinue,
       onboarding: onboarding,
+      reason: reason,
+      onUnlocked: onUnlocked,
     ),
     transitionsBuilder: (context, animation, _, child) {
       if (MediaQuery.disableAnimationsOf(context)) return child;
@@ -100,8 +103,16 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   bool _actionLocked = false;
   String? _restoreFailureMessage;
 
-  /// "Alle Pläne" on the trial face: the plans side by side instead.
-  bool _showPlans = false;
+  bool _dismissalRecorded = false;
+
+  void _rememberDismissal() {
+    if (_dismissalRecorded || ref.read(purchaseProvider).hasPremiumUiAccess) {
+      return;
+    }
+    _dismissalRecorded = true;
+    final history = ref.read(premiumOfferHistoryProvider.future);
+    history.then((value) => value.dismiss()).catchError((Object _) {});
+  }
 
   @override
   void initState() {
@@ -109,9 +120,11 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     Future<void>(() => ref.read(purchaseProvider.notifier).load());
   }
 
-  void _finish({String? notice}) {
+  void _finish({String? notice, bool unlocked = false}) {
     if (_leaving) return;
     _leaving = true;
+    if (unlocked) widget.onUnlocked?.call();
+    _rememberDismissal();
     if (notice != null) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(notice)));
@@ -258,7 +271,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     final id = state.selectedProductId;
     if (id == null) return null;
     for (final product in state.products) {
-      if (product.productId == id) return product;
+      if (product.productId == id && product.trialDays == null) return product;
     }
     return null;
   }
@@ -270,10 +283,6 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     final period =
         product.localizedPeriod ??
         (product.plan == PurchasePlan.yearly ? 'jährlich' : 'monatlich');
-    if (product.trialDays case final days?) {
-      return '${_days(days)} gratis, dann ${product.localizedPrice} $period. '
-          'Vorher im Store kündbar.';
-    }
     return '${product.localizedPrice} $period. Automatische Verlängerung, im Store kündbar.';
   }
 
@@ -365,6 +374,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     ref.listen<PurchaseState>(purchaseProvider, (previous, next) {
       if (previous?.hasPremiumUiAccess != true && next.hasPremiumUiAccess) {
         _finish(
+          unlocked: true,
           notice: next.sandboxTestActive
               ? 'Premium-Testabo aktiv (Sandbox).'
               : 'Premium ist aktiv.',
@@ -372,7 +382,6 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       }
     });
     final purchase = ref.watch(purchaseProvider);
-    final notifications = ref.watch(notificationProvider);
     final selectedProduct = _productFor(purchase);
     final busy =
         _actionLocked ||
@@ -380,22 +389,19 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
         purchase.phase == PurchasePhase.restoring ||
         purchase.isSyncing;
     final colors = context.appColors;
-    // The page is on screen from the first frame of the route; its parts
-    // follow in a short cascade while it rises.
-    const active = true;
-    final products = [...purchase.products]
-      ..sort(
-        (a, b) => a.plan == b.plan
-            ? 0
-            : a.plan == PurchasePlan.yearly
-            ? -1
-            : 1,
-      );
-    // The trial face while the selected plan still carries a free trial.
-    final trialDays = purchase.hasPremiumUiAccess
-        ? null
-        : selectedProduct?.trialDays;
-    final trial = trialDays != null && !_showPlans;
+    final products =
+        purchase.products.where((p) => p.trialDays == null).toList()..sort(
+          (a, b) => a.plan == b.plan
+              ? 0
+              : a.plan == PurchasePlan.yearly
+              ? -1
+              : 1,
+        );
+    final reason =
+        widget.reason ??
+        (widget.onboarding
+            ? PremiumOfferReason.onboarding
+            : PremiumOfferReason.fromInterest(widget.plan.interest));
     final plans =
         purchase.phase == PurchasePhase.loading ||
             purchase.phase == PurchasePhase.idle
@@ -428,22 +434,14 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
         purchase.products.isEmpty &&
         !purchase.hasVerifiedAccount;
     final actions = _PaywallActions(
-      active: active,
-      plans: trial || needsAccount || purchase.hasPremiumUiAccess
-          ? null
-          : plans,
       purchase: purchase,
       selectedProduct: selectedProduct,
       busy: busy,
-      trial: trial,
       canStartPurchase: _canStartPurchase(purchase),
       onContinue: _finish,
       onSubscribe: _subscribe,
       onSignIn: _checkAccountAccess,
       onManage: _manageSubscriptions,
-      onAllPlans: trialDays != null && !_showPlans
-          ? () => setState(() => _showPlans = true)
-          : null,
       statusMessage: _statusMessage(purchase),
       terms: needsAccount
           ? 'Melde dich mit deinem Konto an, um eine vorhandene Premium-Freischaltung zu nutzen.'
@@ -453,197 +451,129 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       openPrivacy: () => _openLegal(LegalDocument.privacy),
       openImprint: () => _openLegal(LegalDocument.imprint),
     );
-    // Only at very large text sizes would the pinned block crowd out the
-    // page; there everything scrolls together.
-    final pinActions = MediaQuery.textScalerOf(context).scale(1) <= 1.35;
-    final content = Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // "Hello" in every learning language, sliding in.
-        Reveal(
-          active: active,
-          order: 2,
-          child: WordCycle(
-            words: greetings,
-            height: MediaQuery.sizeOf(context).height < 700 ? 96 : 132,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (widget.onboarding) ...[
-                const SizedBox(height: 6),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: _PlanPill(plan: widget.plan),
-                ),
-              ],
-              const SizedBox(height: 14),
-              Reveal(
-                active: active,
-                order: 3,
-                child: Semantics(
-                  header: true,
-                  child: Text(
-                    trial
-                        ? '${_days(trialDays)} gratis lernen'
-                        : 'Mehr lesen. Deine eigenen Wörter lernen.',
-                    style: AppType.editorial(
-                      color: colors.textPrimary,
-                      size: 28,
-                      height: 1.15,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 22),
-              if (trial)
-                Reveal(
-                  active: active,
-                  order: 4,
-                  child: _TrialTimeline(
-                    days: trialDays,
-                    price: selectedProduct!,
-                    reminder:
-                        notifications.permission ==
-                                NotificationPermission.allowed &&
-                            notifications.scheduledTrial?.productId ==
-                                selectedProduct.productId &&
-                            notifications.scheduledTrial!.remindAt.isAfter(
-                              DateTime.now(),
-                            )
-                        ? notifications.scheduledTrial
-                        : null,
-                  ),
-                )
-              else
-                for (final (i, benefit) in _benefits(
-                  widget.plan.interest,
-                ).indexed)
-                  Reveal(
-                    active: active,
-                    order: 4 + i,
-                    child: _BenefitRow(benefit: benefit),
-                  ),
-            ],
-          ),
-        ),
-      ],
-    );
-    return Scaffold(
-      backgroundColor: colors.nightPage,
-      body: Stack(
+    final pinActions =
+        MediaQuery.textScalerOf(context).scale(1) <= 1.35 &&
+        MediaQuery.sizeOf(context).height >= 740;
+    final language =
+        ref.watch(selectedContentLanguageProvider).asData?.value ?? 'en';
+    final content = Padding(
+      padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // A faint warm glow behind the header – the only light source.
-          Positioned(
-            top: -160,
-            left: 0,
-            right: 0,
-            child: IgnorePointer(
-              child: Container(
-                height: 380,
-                decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                    colors: [
-                      colors.popover.withValues(alpha: 0.18),
-                      colors.popover.withValues(alpha: 0),
-                    ],
-                  ),
-                ),
+          Text(
+            'LINGLOSSA PREMIUM',
+            style: AppType.meta(color: colors.textMuted),
+          ),
+          const SizedBox(height: 12),
+          Semantics(
+            header: true,
+            child: Text(
+              reason.title,
+              style: AppType.editorial(
+                size: 32,
+                height: 1.1,
+                color: colors.textPrimary,
               ),
             ),
           ),
-          SafeArea(
-            child: Column(
-              children: [
-                // Functional actions follow the user's preferred text size.
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(6, 2, 6, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Pressable(
-                        label: 'Schließen',
-                        haptic: Haptic.light,
-                        onTap: _finish,
-                        child: SizedBox(
-                          width: 44,
-                          height: 44,
-                          child: Icon(
-                            CupertinoIcons.xmark,
-                            size: 22,
-                            color: colors.textMuted,
+          const SizedBox(height: 14),
+          Text(
+            reason.detail,
+            style: AppType.chrome(color: colors.textMuted, height: 1.35),
+          ),
+          const SizedBox(height: 28),
+          if (!needsAccount && !purchase.hasPremiumUiAccess) plans,
+          if (!pinActions) ...[const SizedBox(height: 14), actions],
+          const SizedBox(height: 30),
+          const PremiumComparison(),
+          const SizedBox(height: 42),
+          LearningPrinciples(language: language),
+          const SizedBox(height: 20),
+        ],
+      ),
+    );
+    return PopScope(
+      onPopInvokedWithResult: (didPop, _) {
+        if (didPop) _rememberDismissal();
+      },
+      child: Scaffold(
+        backgroundColor: colors.nightPage,
+        body: SafeArea(
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 640),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(6, 2, 6, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Pressable(
+                          label: 'Schließen',
+                          haptic: Haptic.light,
+                          onTap: _finish,
+                          child: SizedBox(
+                            width: 44,
+                            height: 44,
+                            child: Icon(
+                              CupertinoIcons.xmark,
+                              size: 22,
+                              color: colors.textMuted,
+                            ),
                           ),
                         ),
-                      ),
-                      Flexible(
-                        child: TextAction(
-                          label: purchase.billingReady
-                              ? 'Wiederherstellen'
-                              : purchase.hasVerifiedAccount
-                              ? 'Zugang prüfen'
-                              : 'Anmelden',
-                          onTap: purchase.billingReady
-                              ? _restore
-                              : _checkAccountAccess,
-                          size: 14,
+                        Flexible(
+                          child: TextAction(
+                            label: purchase.billingReady
+                                ? 'Wiederherstellen'
+                                : purchase.hasVerifiedAccount
+                                ? 'Zugang prüfen'
+                                : 'Anmelden',
+                            onTap: purchase.billingReady
+                                ? _restore
+                                : _checkAccountAccess,
+                            size: 14,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  // Content that continues under the pinned block fades out
-                  // instead of being cut.
-                  child: ShaderMask(
-                    blendMode: BlendMode.dstIn,
-                    shaderCallback: (rect) => LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: const [
-                        Color(0xFFFFFFFF),
-                        Color(0xFFFFFFFF),
-                        Color(0x00FFFFFF),
                       ],
-                      stops: [0, (1 - 20 / rect.height).clamp(0.0, 1.0), 1],
-                    ).createShader(rect),
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: pinActions
-                          ? content
-                          : Column(children: [content, actions]),
                     ),
                   ),
-                ),
-                if (pinActions) actions,
-              ],
+                  Expanded(
+                    child: SingleChildScrollView(
+                      key: const Key('premium-details-scroll'),
+                      child: content,
+                    ),
+                  ),
+                  if (pinActions)
+                    Container(
+                      decoration: BoxDecoration(
+                        color: colors.nightPage,
+                        border: Border(top: BorderSide(color: colors.hairline)),
+                      ),
+                      child: actions,
+                    ),
+                ],
+              ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }
 }
 
-/// "1 Tag" / "3 Tage".
-String _days(int days) => days == 1 ? '1 Tag' : '$days Tage';
-
 class _PaywallActions extends StatelessWidget {
   const _PaywallActions({
-    required this.active,
-    required this.plans,
     required this.purchase,
     required this.selectedProduct,
     required this.busy,
-    required this.trial,
     required this.canStartPurchase,
     required this.onContinue,
     required this.onSubscribe,
     required this.onSignIn,
     required this.onManage,
-    required this.onAllPlans,
     required this.statusMessage,
     required this.terms,
     required this.gateMessage,
@@ -652,20 +582,14 @@ class _PaywallActions extends StatelessWidget {
     required this.openImprint,
   });
 
-  final bool active;
-
-  /// The plans side by side; null on the trial face.
-  final Widget? plans;
   final PurchaseState purchase;
   final PurchaseProduct? selectedProduct;
   final bool busy;
-  final bool trial;
   final bool canStartPurchase;
   final VoidCallback onContinue;
   final VoidCallback onSubscribe;
   final VoidCallback onSignIn;
   final VoidCallback onManage;
-  final VoidCallback? onAllPlans;
   final String? statusMessage;
   final String terms;
   final String? gateMessage;
@@ -684,332 +608,142 @@ class _PaywallActions extends StatelessWidget {
         purchase.hasPremiumUiAccess &&
         purchase.activeProductId ==
             ServerBillingSnapshot.complimentaryProductId;
-    return Reveal(
-      active: active,
-      order: 8,
-      offset: 10,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 4, 20, 4),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (plans case final plans?) ...[
-              const SizedBox(height: 12),
-              plans,
-              const SizedBox(height: 14),
-            ],
-            if (trial) ...[
-              Text(
-                terms,
-                textAlign: TextAlign.center,
-                style: AppType.chrome(
-                  size: 13,
-                  weight: FontWeight.w600,
-                  color: colors.textPrimary,
-                ),
-              ),
-              const SizedBox(height: 10),
-            ],
-            GlowButton(
-              label: complimentary
-                  ? 'Weiterlernen'
-                  : needsAccount
-                  ? 'Mit Konto freischalten'
-                  : purchase.hasPremiumUiAccess
-                  ? 'Abo verwalten'
-                  : purchase.phase == PurchasePhase.loading
-                  ? 'Preise werden geladen …'
-                  : purchase.phase == PurchasePhase.purchasing
-                  ? 'Kauf läuft …'
-                  : purchase.isSyncing
-                  ? 'Wird überprüft …'
-                  : purchase.phase == PurchasePhase.failed &&
-                        selectedProduct != null
-                  ? 'Erneut versuchen'
-                  : selectedProduct?.trialDays != null
-                  ? 'Kostenlos testen'
-                  : 'Premium abonnieren',
-              onPressed: busy
-                  ? null
-                  : complimentary
-                  ? onContinue
-                  : needsAccount
-                  ? onSignIn
-                  : purchase.hasPremiumUiAccess
-                  ? onManage
-                  : canStartPurchase &&
-                        selectedProduct != null &&
-                        (purchase.phase == PurchasePhase.ready ||
-                            purchase.phase == PurchasePhase.failed)
-                  ? onSubscribe
-                  : null,
-            ),
-            const SizedBox(height: 8),
-            if (purchase.hasPremiumUiAccess || !trial)
-              Text(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 4),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _SubscribeButton(
+            label: complimentary
+                ? 'Weiterlernen'
+                : needsAccount
+                ? 'Mit Konto freischalten'
+                : purchase.hasPremiumUiAccess
+                ? 'Abo verwalten'
+                : purchase.phase == PurchasePhase.loading
+                ? 'Preise werden geladen …'
+                : purchase.phase == PurchasePhase.purchasing
+                ? 'Kauf läuft …'
+                : purchase.isSyncing
+                ? 'Wird überprüft …'
+                : purchase.phase == PurchasePhase.failed &&
+                      selectedProduct != null
+                ? 'Erneut versuchen'
+                : 'Premium abonnieren',
+            onPressed: busy
+                ? null
+                : complimentary
+                ? onContinue
+                : needsAccount
+                ? onSignIn
+                : purchase.hasPremiumUiAccess
+                ? onManage
+                : canStartPurchase &&
+                      selectedProduct != null &&
+                      (purchase.phase == PurchasePhase.ready ||
+                          purchase.phase == PurchasePhase.failed)
+                ? onSubscribe
+                : null,
+          ),
+          ColoredBox(
+            color: colors.nightPage,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(
                 purchase.hasPremiumUiAccess
                     ? statusMessage ?? 'Premium ist aktiv.'
                     : terms,
                 textAlign: TextAlign.center,
                 style: AppType.meta(color: colors.textMuted),
               ),
-            if (!purchase.hasPremiumUiAccess && statusMessage != null)
-              Semantics(
-                liveRegion: true,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    statusMessage!,
-                    textAlign: TextAlign.center,
-                    style: AppType.meta(color: colors.textPrimary),
-                  ),
-                ),
-              )
-            else if (gateMessage != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Text(
-                  gateMessage!,
-                  textAlign: TextAlign.center,
-                  style: AppType.meta(color: colors.textMuted),
-                ),
-              ),
-            if (onAllPlans case final onAllPlans?)
-              TextAction(label: 'Alle Pläne', onTap: onAllPlans, strong: true),
-            TextAction(
-              label: 'Kostenlos weiterlernen',
-              onTap: onContinue,
-              strong: onAllPlans == null,
-            ),
-            Wrap(
-              alignment: WrapAlignment.center,
-              children: [
-                TextAction(
-                  label: 'Nutzungsbedingungen',
-                  onTap: openTerms,
-                  size: 12,
-                ),
-                TextAction(label: 'Datenschutz', onTap: openPrivacy, size: 12),
-                TextAction(label: 'Impressum', onTap: openImprint, size: 12),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// How the free trial runs, as a vertical track: today everything opens,
-/// on the shown date the plan starts (Refero: Unwind; Mobbin: Mimo,
-/// Vocabulary). The reminder stop requires an actual pending native schedule;
-/// a catalog offer or notification permission alone is not a promise.
-class _TrialTimeline extends StatelessWidget {
-  const _TrialTimeline({
-    required this.days,
-    required this.price,
-    this.reminder,
-  });
-
-  final int days;
-  final PurchaseProduct price;
-  final TrialReminderPlan? reminder;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.appColors;
-    final start =
-        reminder?.expiresAt.toLocal() ??
-        DateTime.now().add(Duration(days: days));
-    final period =
-        price.localizedPeriod ??
-        (price.plan == PurchasePlan.yearly ? 'pro Jahr' : 'pro Monat');
-    final stops = [
-      (
-        icon: CupertinoIcons.lock_open_fill,
-        title: 'Heute',
-        detail: 'Alle Stories, eigene Texte und KI-Übersetzungen.',
-      ),
-      if (reminder case final planned?)
-        (
-          icon: CupertinoIcons.bell_fill,
-          title: 'Erinnerung',
-          detail: planned.isSandbox
-              ? 'Kurz vor Ablauf.'
-              : 'Einen Tag vor Ablauf.',
-        ),
-      (
-        icon: CupertinoIcons.star_fill,
-        title: formatDateDe(start),
-        detail:
-            'Dein Abo startet: ${price.localizedPrice} $period. '
-            'Bis dahin jederzeit kündbar.',
-      ),
-    ];
-    return Stack(
-      children: [
-        // The track behind the icons: orange at today, fading out.
-        Positioned(
-          left: 0,
-          top: 0,
-          bottom: 0,
-          width: 40,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: const [0, 0.32, 0.7, 1],
-                colors: [
-                  colors.popover,
-                  colors.popover.withValues(alpha: 0.55),
-                  colors.raisedInk,
-                  colors.raisedInk.withValues(alpha: 0),
-                ],
-              ),
             ),
           ),
-        ),
-        Column(
-          children: [
-            for (final (i, stop) in stops.indexed)
-              Semantics(
-                container: true,
-                label: '${stop.title}. ${stop.detail}',
-                excludeSemantics: true,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    bottom: i == stops.length - 1 ? 28 : 22,
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: Icon(
-                          stop.icon,
-                          size: 18,
-                          color: const Color(0xFFFFFFFF),
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 9),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                stop.title,
-                                style: AppType.chrome(
-                                  size: 17,
-                                  weight: FontWeight.w700,
-                                  color: colors.textPrimary,
-                                ),
-                              ),
-                              const SizedBox(height: 3),
-                              Text(
-                                stop.detail,
-                                style: AppType.chrome(
-                                  size: 13,
-                                  weight: FontWeight.w500,
-                                  color: colors.textMuted,
-                                  height: 1.35,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+          if (!purchase.hasPremiumUiAccess && statusMessage != null)
+            Semantics(
+              liveRegion: true,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(
+                  statusMessage!,
+                  textAlign: TextAlign.center,
+                  style: AppType.meta(color: colors.textPrimary),
                 ),
               ),
-          ],
-        ),
-      ],
+            )
+          else if (gateMessage != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                gateMessage!,
+                textAlign: TextAlign.center,
+                style: AppType.meta(color: colors.textMuted),
+              ),
+            ),
+          TextAction(
+            label: 'Kostenlos weiterlernen',
+            onTap: onContinue,
+            strong: true,
+          ),
+          Wrap(
+            alignment: WrapAlignment.center,
+            children: [
+              TextAction(
+                label: 'Nutzungsbedingungen',
+                onTap: openTerms,
+                size: 12,
+              ),
+              TextAction(label: 'Datenschutz', onTap: openPrivacy, size: 12),
+              TextAction(label: 'Impressum', onTap: openImprint, size: 12),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
 
-typedef _Benefit = ({IconData icon, String title, String detail});
+/// Keep the purchase label in the same painted layer as its background. The
+/// pinned action must stay readable while the details scroll or prices reload.
+class _SubscribeButton extends StatelessWidget {
+  const _SubscribeButton({required this.label, required this.onPressed});
 
-/// The three arguments in the plan's fixed order; the first line picks up
-/// the topic chosen in the onboarding.
-List<_Benefit> _benefits(String interest) => [
-  (
-    icon: CupertinoIcons.book,
-    title: 'Lies, was dich interessiert',
-    detail: 'Alle Storys ohne Tageslimit – auch zu $interest.',
-  ),
-  (
-    icon: CupertinoIcons.doc_text,
-    title: 'Lerne mit deinen eigenen Texten',
-    detail: 'Texte importieren und Wörter darin üben.',
-  ),
-  (
-    icon: CupertinoIcons.sparkles,
-    title: 'Verstehe fehlende Stellen direkt',
-    detail: '500 neue KI-Übersetzungen pro Monat.',
-  ),
-];
-
-class _BenefitRow extends StatelessWidget {
-  const _BenefitRow({required this.benefit});
-
-  final _Benefit benefit;
+  final String label;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.appColors;
-    return Semantics(
-      container: true,
-      label: '${benefit.title}. ${benefit.detail}',
-      excludeSemantics: true,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 14),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                color: colors.activeTint,
-                shape: BoxShape.circle,
+    final enabled = onPressed != null;
+    return Pressable(
+      label: label,
+      onTap: onPressed,
+      haptic: Haptic.primary,
+      minSize: const Size(44, 56),
+      child: Container(
+        constraints: const BoxConstraints(minHeight: 56),
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        decoration: BoxDecoration(
+          color: colors.popover.withValues(alpha: enabled ? 1 : 0.4),
+          borderRadius: BorderRadius.circular(99),
+          boxShadow: [
+            if (enabled)
+              BoxShadow(
+                color: colors.popover.withValues(alpha: 0.35),
+                blurRadius: 24,
+                offset: const Offset(0, 8),
               ),
-              child: Icon(benefit.icon, size: 18, color: colors.active),
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    benefit.title,
-                    style: AppType.chrome(
-                      size: 17,
-                      weight: FontWeight.w700,
-                      color: colors.textPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    benefit.detail,
-                    style: AppType.chrome(
-                      size: 13,
-                      weight: FontWeight.w400,
-                      color: colors.textMuted,
-                      height: 1.35,
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
+        ),
+        child: Text(
+          label,
+          textAlign: TextAlign.center,
+          style: AppType.chrome(
+            size: 17,
+            weight: FontWeight.w700,
+            color: AppColors.onActive.withValues(alpha: enabled ? 1 : 0.4),
+          ),
         ),
       ),
     );
@@ -1018,7 +752,7 @@ class _BenefitRow extends StatelessWidget {
 
 /// The plans as cards side by side (Mobbin: Bevel, Calm, Fixtured); stacked
 /// at very large text sizes. The yearly card carries the saving against
-/// twelve months, or the trial length while one is offered.
+/// twelve months.
 class _PlanRow extends StatelessWidget {
   const _PlanRow({
     required this.products,
@@ -1052,9 +786,7 @@ class _PlanRow extends StatelessWidget {
       for (final product in products)
         _PlanCard(
           product: product,
-          badge: product.trialDays != null
-              ? '${_days(product.trialDays!)} gratis'
-              : _saving(product),
+          badge: _saving(product),
           selected: product.productId == selectedId,
           enabled: enabled,
           onTap: () => onSelect(product),
@@ -1189,7 +921,7 @@ class _PlanCard extends StatelessWidget {
                   style: AppType.chrome(
                     size: 13,
                     weight: FontWeight.w800,
-                    color: const Color(0xFFFFFFFF),
+                    color: AppColors.onActive,
                   ),
                 ),
               ),
@@ -1256,25 +988,11 @@ class _PlanCheck extends StatelessWidget {
         child: const Icon(
           CupertinoIcons.checkmark_alt,
           size: 14,
-          color: Color(0xFFFFFFFF),
+          color: AppColors.onActive,
         ),
       ),
     );
   }
-}
-
-/// The plan pill that heads the plan card on the last onboarding step.
-/// Same Hero tag and widget, so it flies here during the transition.
-class _PlanPill extends StatelessWidget {
-  const _PlanPill({required this.plan});
-
-  final PaywallContext plan;
-
-  @override
-  Widget build(BuildContext context) => Hero(
-    tag: paywallHeroTag,
-    child: PlanSummaryPill(plan: plan),
-  );
 }
 
 /// Compact plan summary: "Dein Plan · Reisen · 10 Wörter / Tag".

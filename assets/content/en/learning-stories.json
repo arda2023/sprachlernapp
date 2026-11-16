@@ -1,0 +1,118 @@
+[
+  {
+    "id": "library:en:linglossa",
+    "title": "How you learn with Linglossa",
+    "topic": "Sprachenlernen",
+    "level": "A2",
+    "minutes": 1,
+    "body": "You are looking for the right word while you tell a friend about your day. Yesterday you recognised it in a story, but today it will not come to mind.\n\nIn Linglossa, you see a German cue and complete a sentence in the language you are learning. You try to recall the missing word before you see the answer.\n\nWhen you read a story, tap a word to check what it means and read the sentence again. The rest of the sentence can help you understand how the word is used.\n\nIn practice, words come back after a break, giving you another chance to recall them. Try it now with the word “day” in the first sentence.",
+    "translations": {
+      "You are looking for the right word while you tell a friend about your day.": "Du suchst nach dem richtigen Wort, während du einem Freund von deinem Tag erzählst.",
+      "Yesterday you recognised it in a story, but today it will not come to mind.": "Gestern hast du es in einer Geschichte wiedererkannt, aber heute fällt es dir nicht ein.",
+      "In Linglossa, you see a German cue and complete a sentence in the language you are learning.": "In Linglossa siehst du einen deutschen Hinweis und ergänzt einen Satz in der Sprache, die du lernst.",
+      "You try to recall the missing word before you see the answer.": "Du versuchst, dich an das fehlende Wort zu erinnern, bevor du die Lösung siehst.",
+      "When you read a story, tap a word to check what it means and read the sentence again.": "Wenn du eine Geschichte liest, tippe auf ein Wort, um seine Bedeutung nachzusehen, und lies den Satz noch einmal.",
+      "The rest of the sentence can help you understand how the word is used.": "Der restliche Satz kann dir helfen zu verstehen, wie das Wort verwendet wird.",
+      "In practice, words come back after a break, giving you another chance to recall them.": "Beim Üben kommen Wörter nach einer Pause wieder. So hast du eine weitere Gelegenheit, sie abzurufen.",
+      "Try it now with the word “day” in the first sentence.": "Probiere es jetzt mit dem Wort „day“ im ersten Satz."
+    },
+    "sources": [
+      {
+        "title": "Webb (2005)",
+        "url": "https://www.cambridge.org/core/journals/studies-in-second-language-acquisition/article/receptive-and-productive-vocabulary-learning-the-effects-of-reading-and-writing-on-word-knowledge/DDF362AE7B13D1949B1CD591DA2F3414"
+      },
+      {
+        "title": "Yanagisawa, Webb & Uchihara (2020)",
+        "url": "https://www.cambridge.org/core/journals/studies-in-second-language-acquisition/article/abs/how-do-different-forms-of-glossing-contribute-to-l2-vocabulary-learning-from-reading/38124150D59DF3039EE1FF5AE88FE922"
+      },
+      {
+        "title": "Cepeda et al. (2006)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/16719566/"
+      }
+    ],
+    "glosses": {
+      "day": "Tag",
+      "word": "Wort",
+      "friend": "Freund",
+      "story": "Geschichte",
+      "sentence": "Satz",
+      "answer": "Antwort",
+      "pause": "Pause",
+      "language": "Sprache"
+    }
+  },
+  {
+    "id": "library:en:language_spacing",
+    "title": "A word that comes back tomorrow",
+    "topic": "Sprachenlernen",
+    "level": "B1",
+    "minutes": 1,
+    "body": "On Monday, Maya learns the word for umbrella because it rains on her way to work. She remembers it that evening, and on Thursday she tries again before checking the answer.\n\nThat second attempt feels harder because she has had time to forget. Experiments suggest that spreading study across sessions often helps people remember material for longer.\n\nThe most helpful gap can change depending on how long you need to remember something. Next week, Maya tries the word again as she plans a walk in the rain.",
+    "translations": {
+      "On Monday, Maya learns the word for umbrella because it rains on her way to work.": "Am Montag lernt Maya das Wort für Regenschirm, weil es auf ihrem Arbeitsweg regnet.",
+      "She remembers it that evening, and on Thursday she tries again before checking the answer.": "Am Abend erinnert sie sich daran, und am Donnerstag versucht sie es erneut, bevor sie die Lösung nachsieht.",
+      "That second attempt feels harder because she has had time to forget.": "Dieser zweite Versuch fällt ihr schwerer, weil sie Zeit zum Vergessen hatte.",
+      "Experiments suggest that spreading study across sessions often helps people remember material for longer.": "Experimente deuten darauf hin, dass verteilte Lerneinheiten oft helfen, sich länger an den Lernstoff zu erinnern.",
+      "The most helpful gap can change depending on how long you need to remember something.": "Wie viel Abstand am meisten hilft, kann davon abhängen, wie lange du dir etwas merken möchtest.",
+      "Next week, Maya tries the word again as she plans a walk in the rain.": "In der nächsten Woche ruft Maya das Wort wieder ab, als sie einen Spaziergang im Regen plant."
+    },
+    "sources": [
+      {
+        "title": "Cepeda et al. (2006)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/16719566/"
+      },
+      {
+        "title": "Karpicke & Roediger (2008)",
+        "url": "https://learninglab.psych.purdue.edu/downloads/2008/2008_Karpicke_Roediger_Science.pdf"
+      }
+    ]
+  },
+  {
+    "id": "library:en:language_retrieval",
+    "title": "What happens when you look away",
+    "topic": "Sprachenlernen",
+    "level": "B1",
+    "minutes": 1,
+    "body": "Noah reads a new word on the bus and thinks he will remember it later. At home he closes his notes and tries to say the word from memory.\n\nHe hesitates, checks the answer and tries once more a little later. In one experiment with foreign vocabulary, repeated recall helped learners remember words a week later.\n\nReading a word and recalling its form ask for different kinds of practice. Noah adds a short sentence so he can later try to recall the form in a situation he understands.",
+    "translations": {
+      "Noah reads a new word on the bus and thinks he will remember it later.": "Noah liest im Bus ein neues Wort und denkt, dass er sich später daran erinnern wird.",
+      "At home he closes his notes and tries to say the word from memory.": "Zu Hause klappt er seine Notizen zu und versucht, das Wort aus dem Gedächtnis zu sagen.",
+      "He hesitates, checks the answer and tries once more a little later.": "Er zögert, sieht die Lösung nach und versucht es etwas später noch einmal.",
+      "In one experiment with foreign vocabulary, repeated recall helped learners remember words a week later.": "In einem Experiment mit fremdsprachigen Vokabeln half der wiederholte Abruf den Lernenden, sich eine Woche später an die Wörter zu erinnern.",
+      "Reading a word and recalling its form ask for different kinds of practice.": "Ein Wort zu lesen und seine Form abzurufen erfordern unterschiedliche Arten der Übung.",
+      "Noah adds a short sentence so he can later try to recall the form in a situation he understands.": "Noah ergänzt einen kurzen Satz, damit er die Form später in einer verständlichen Situation abrufen kann."
+    },
+    "sources": [
+      {
+        "title": "Karpicke & Roediger (2008)",
+        "url": "https://learninglab.psych.purdue.edu/downloads/2008/2008_Karpicke_Roediger_Science.pdf"
+      },
+      {
+        "title": "Webb (2005)",
+        "url": "https://www.cambridge.org/core/journals/studies-in-second-language-acquisition/article/receptive-and-productive-vocabulary-learning-the-effects-of-reading-and-writing-on-word-knowledge/DDF362AE7B13D1949B1CD591DA2F3414"
+      }
+    ]
+  },
+  {
+    "id": "library:en:language_context",
+    "title": "The clue in the next sentence",
+    "topic": "Sprachenlernen",
+    "level": "B1",
+    "minutes": 1,
+    "body": "Lea is reading about a baker who starts work before the sun comes up. An unfamiliar word stops her, so she reads the next sentence and looks for clues.\n\nThe baker is mixing flour and water, and soon he will put something in the oven. Lea checks a short explanation of the word and reads the passage again.\n\nAcross a set of studies, readers tended to learn more vocabulary when texts offered short explanations of words. The explanation gives Lea a meaning, and the bakery scene gives her an example of how the word fits.",
+    "translations": {
+      "Lea is reading about a baker who starts work before the sun comes up.": "Lea liest über einen Bäcker, der vor Sonnenaufgang mit der Arbeit beginnt.",
+      "An unfamiliar word stops her, so she reads the next sentence and looks for clues.": "Ein unbekanntes Wort hält sie auf. Sie liest den nächsten Satz und sucht nach Hinweisen.",
+      "The baker is mixing flour and water, and soon he will put something in the oven.": "Der Bäcker mischt Mehl und Wasser, und bald schiebt er etwas in den Ofen.",
+      "Lea checks a short explanation of the word and reads the passage again.": "Lea sieht eine kurze Erklärung zum Wort nach und liest die Stelle erneut.",
+      "Across a set of studies, readers tended to learn more vocabulary when texts offered short explanations of words.": "Über mehrere Studien hinweg lernten Lesende tendenziell mehr Vokabeln, wenn Texte kurze Worterklärungen boten.",
+      "The explanation gives Lea a meaning, and the bakery scene gives her an example of how the word fits.": "Die Erklärung gibt Lea eine Bedeutung, und die Szene in der Bäckerei zeigt ihr, wie das Wort verwendet wird."
+    },
+    "sources": [
+      {
+        "title": "Yanagisawa, Webb & Uchihara (2020)",
+        "url": "https://www.cambridge.org/core/journals/studies-in-second-language-acquisition/article/abs/how-do-different-forms-of-glossing-contribute-to-l2-vocabulary-learning-from-reading/38124150D59DF3039EE1FF5AE88FE922"
+      }
+    ]
+  }
+]

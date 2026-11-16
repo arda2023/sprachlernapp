@@ -72,7 +72,7 @@ class _LegendRow extends StatelessWidget {
                 bottom: 0,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: const Color(0x29FFFFFF),
+                    color: const Color(0x291A1D26),
                     borderRadius: BorderRadius.circular(14),
                   ),
                 ),

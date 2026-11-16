@@ -13,9 +13,10 @@ const item = { form: 'brain', lemma: 'brain', pos: 'NOUN', gloss_de: 'Gehirn',
 const { start: _start, ...providerItem } = item;
 
 type Options = { claim?: string; auth?: number; provider?: unknown; providerStatus?: number;
-  budget?: string; admitted?: boolean; wait?: Promise<void>; finish?: 'lost' | 'stale'; hang?: boolean; apiKey?: string };
+  budget?: string; admitted?: boolean; freeSample?: boolean; wait?: Promise<void>;
+  finish?: 'lost' | 'stale'; hang?: boolean; apiKey?: string };
 function fixture(options: Options = {}) {
-  let models = 0, claims = 0, failures = 0, finishes = 0;
+  let models = 0, claims = 0, failures = 0, finishes = 0, releases = 0;
   let ready: unknown, pending = false, failed = false;
   let modelBody: Record<string, unknown> | undefined;
   const bodies: Record<string, unknown>[] = [];
@@ -29,12 +30,12 @@ function fixture(options: Options = {}) {
     if (path.endsWith('/claim_generated_vocabulary')) {
       claims++; bodies.push(body);
       if (options.claim) return Response.json({ status: options.claim });
-      if (ready) return Response.json({ status: 'hit', response: ready });
+      if (ready) return Response.json({ status: 'hit', response: ready, free_sample: options.freeSample });
       if (failed) return Response.json({ status: 'failed' });
       if (pending) return Response.json({ status: 'busy' });
       if (body.p_status_only) return Response.json({ status: 'missing' });
       pending = true;
-      return Response.json({ status: 'claimed', ticket: requestId });
+      return Response.json({ status: 'claimed', ticket: requestId, free_sample: options.freeSample });
     }
     if (path.endsWith('/finish_generated_vocabulary')) {
       finishes++;
@@ -45,6 +46,9 @@ function fixture(options: Options = {}) {
     }
     if (path.endsWith('/fail_generated_vocabulary')) {
       failures++; failed = true; return Response.json({ status: 'ok' });
+    }
+    if (path.endsWith('/release_unstarted_generated_vocabulary')) {
+      releases++; failed = true; return Response.json({ status: 'ok' });
     }
     assert.equal(path, 'https://api.anthropic.com/v1/messages');
     assert.equal(new Headers(init?.headers).get('x-api-key'), 'server-only');
@@ -68,8 +72,43 @@ function fixture(options: Options = {}) {
   return { handler, run: (value: unknown = input, status = false) => handler(new Request(
     'https://example.test/generate-vocabulary' + (status ? '?status=1' : ''), {
       method: 'POST', headers: { Authorization: 'Bearer synthetic' }, body: JSON.stringify(value) })),
-    stats: () => ({ models, claims, failures, finishes, bodies, modelBody }) };
+    stats: () => ({ models, claims, failures, finishes, releases, bodies, modelBody }) };
 }
+
+test('only server claim provenance can unlock saved sample practice', async () => {
+  const f = fixture({ freeSample: true });
+  assert.equal((await (await f.run()).json()).free_sample, true);
+  assert.equal((await (await f.run(input, true)).json()).free_sample, true);
+  assert.equal(f.stats().models, 1);
+});
+
+test('free allowance releases on rejection before generation and persists after model starts', async () => {
+  const rejected = fixture({ freeSample: true, admitted: false });
+  assert.equal((await rejected.run()).status, 422);
+  assert.equal(rejected.stats().releases, 1);
+  assert.equal(rejected.stats().models, 0);
+
+  const failed = fixture({ freeSample: true, providerStatus: 502 });
+  assert.equal((await failed.run()).status, 502);
+  assert.equal(failed.stats().releases, 0);
+  assert.equal(failed.stats().failures, 1);
+  assert.equal(failed.stats().models, 1);
+});
+
+test('paid attempts that never reach generation release their daily quota', async () => {
+  const rejected = fixture({ admitted: false });
+  assert.equal((await rejected.run()).status, 422);
+  assert.equal(rejected.stats().releases, 1);
+  assert.equal(rejected.stats().failures, 0);
+  const budget = fixture({ budget: 'limit' });
+  assert.equal((await budget.run()).status, 429);
+  assert.equal(budget.stats().releases, 1);
+  assert.equal(budget.stats().models, 0);
+  const started = fixture({ providerStatus: 502 });
+  assert.equal((await started.run()).status, 502);
+  assert.equal(started.stats().releases, 0);
+  assert.equal(started.stats().failures, 1);
+});
 
 test('one provider call produces validated suggestions and repeat/status reads reuse it', async () => {
   const f = fixture();
@@ -245,7 +284,8 @@ test('off-task classification blocks generation and consumes no retry automatica
   assert.equal(response.status, 422);
   assert.deepEqual(await response.json(), { error: 'TOPIC_NOT_ALLOWED' });
   assert.equal(f.stats().models, 0);
-  assert.equal(f.stats().failures, 1);
+  assert.equal(f.stats().failures, 0);
+  assert.equal(f.stats().releases, 1);
 });
 test('questions are refused before reservation or provider; monthly limit blocks both AI stages', async () => {
   const question = fixture();

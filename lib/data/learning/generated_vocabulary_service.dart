@@ -17,10 +17,56 @@ class GeneratedVocabularyService {
     required this.client,
     required this.store,
     required this.verify,
+    this.verifyPaid,
   });
   final GeneratedVocabularyClient client;
   final GeneratedVocabularyStore store;
   final void Function() verify;
+  final void Function()? verifyPaid;
+
+  Future<T?> _forPendingOwner<T>(
+    Future<T?> Function(String owner, void Function() verify) action,
+  ) async {
+    final access = client.access;
+    final revision = access.revision();
+    void current() {
+      verify();
+      if (revision != access.revision()) {
+        throw const GeneratedVocabularyFailure(
+          'ACCESS_CHANGED',
+          'Konto geändert. Bitte erneut öffnen.',
+        );
+      }
+    }
+
+    current();
+    final owner = await access.owner();
+    current();
+    if (owner == null) return null;
+    final result = await action(owner, current);
+    current();
+    return result;
+  }
+
+  Future<GeneratedVocabularyRequest?> pendingFreeRequest() =>
+      _forPendingOwner<GeneratedVocabularyRequest>(
+        (owner, _) => store.pendingRequest(owner),
+      );
+
+  Future<GeneratedVocabularyRequest> stageFreeRequest(
+    GeneratedVocabularyRequest request,
+  ) async =>
+      await _forPendingOwner(
+        (owner, current) =>
+            store.stagePendingRequest(owner, request, verify: current),
+      ) ??
+      request;
+
+  Future<void> clearFreeRequest(String requestId) async {
+    await _forPendingOwner(
+      (owner, _) => store.clearPendingRequest(owner, requestId),
+    );
+  }
 
   Future<GeneratedVocabularyDraft> generate(
     GeneratedVocabularyRequest request, {
@@ -43,16 +89,23 @@ class GeneratedVocabularyService {
 
     current();
     final response = await client.generate(request, statusOnly: statusOnly);
-    current();
-    final ids = (await store.additions()).keys.toSet();
+    void verifyDraft() {
+      current();
+      if (!response.freeSample) verifyPaid?.call();
+    }
+
+    verifyDraft();
+    final ids = response.freeSample
+        ? await store.freeIds()
+        : (await store.additions()).keys.toSet();
     final rows = await (store.db.select(
       store.db.userCards,
     )..where((t) => t.lang.equals(store.lang) & t.cardId.isIn(ids))).get();
-    current();
+    verifyDraft();
     return GeneratedVocabularyDraft(response, {
       for (final row in rows)
         if (row.formNorm != null) row.formNorm!,
-    }, current);
+    }, verifyDraft);
   }
 
   Future<bool> hasDeck() async {

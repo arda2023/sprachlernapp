@@ -85,7 +85,7 @@ TextStyle wordBubbleTranslation() => AppType.editorial(
   color: popoverInk,
   size: 17,
   weight: FontWeight.w400,
-  height: 1.3,
+  height: 1.35,
   letterSpacing: 0,
 );
 

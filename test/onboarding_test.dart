@@ -6,6 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sprachapp/main.dart';
+import 'package:sprachapp/domain/content.dart';
+import 'package:sprachapp/screens/decks/deck_practice_screen.dart';
+import 'package:sprachapp/screens/completion/practice_completion_screen.dart';
 import 'package:sprachapp/data/billing/purchase_gateway.dart';
 import 'package:sprachapp/presentation/providers/account_provider.dart';
 import 'package:sprachapp/presentation/providers/purchase_provider.dart';
@@ -20,6 +23,21 @@ import 'package:sprachapp/screens/onboarding/widgets/account_sheet.dart';
 import 'package:sprachapp/screens/onboarding/widgets/onboarding_art.dart';
 
 import 'fixtures/deck_repositories.dart';
+import 'fixtures/practice_session.dart';
+
+class _OnboardingContent extends TestContent {
+  _OnboardingContent() : super(library: true);
+  @override
+  Future<List<DeckSummary>> decks() async => [
+    const DeckSummary(
+      id: '4630a4856f603afdad2f24776298c19a',
+      slug: 'general',
+      titleDe: 'Allgemeine Sprache',
+      cardCount: 5,
+    ),
+    ...await super.decks(),
+  ];
+}
 
 class RecordingOnboardingSounds implements OnboardingSounds {
   final calls = <String>[];
@@ -104,6 +122,7 @@ void main() {
   }) => testScope(
     const SprachApp(),
     library: true,
+    content: _OnboardingContent(),
     overrides: [
       onboardingStoreProvider.overrideWithValue(store),
       accountActionsProvider.overrideWithValue(_AccountActions()),
@@ -147,6 +166,22 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  Future<void> firstPractice(WidgetTester tester) async {
+    await tapLabel(tester, 'Ein Wort üben');
+    expect(find.byType(DeckPracticeScreen), findsOneWidget);
+    await tester.enterText(
+      find.byType(EditableText).last,
+      shownPracticeItem(tester).card.form,
+    );
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Weiter'));
+    await tester.pumpAndSettle();
+    expect(find.byType(PracticeCompletionScreen), findsOneWidget);
+    await tester.tap(find.text('Weiter'));
+    await tester.pumpAndSettle();
+  }
+
   /// Welcome → Reisen → 15 words → tap "train" → plan page.
   Future<void> toPlanPage(WidgetTester tester) async {
     await tapLabel(tester, 'Los geht’s');
@@ -155,10 +190,51 @@ void main() {
     await tapLabel(tester, 'Ernsthaft, 15 Wörter pro Tag');
     await tapLabel(tester, 'Weiter');
     await tapLabel(tester, 'train, Übersetzung anzeigen');
-    await tapLabel(tester, 'Weiter');
+    await firstPractice(tester);
   }
 
-  testWidgets('Five steps, then the plan pill flies into the paywall; '
+  testWidgets('optional purpose and first practice can be skipped into Free', (
+    tester,
+  ) async {
+    final store = MemoryJsonStore();
+    await tester.pumpWidget(app(store));
+    await tester.pumpAndSettle();
+    await tapLabel(tester, 'Los geht’s');
+    await tapLabel(tester, 'Weiß ich noch nicht');
+    await tapLabel(tester, 'Weiter');
+    await tapLabel(tester, 'Später ausprobieren');
+    expect(find.byType(AppShell), findsOneWidget);
+    expect(find.byType(PaywallScreen), findsNothing);
+    expect((await store.read() as Map)['done'], isTrue);
+    expect((await store.read() as Map)['interest'], '');
+  });
+
+  testWidgets('restart restores the draft, consent and the actual page', (
+    tester,
+  ) async {
+    final store = MemoryJsonStore();
+    await store.write({
+      'done': false,
+      'draft': {
+        'page': 3,
+        'interest': 'travel',
+        'dailyGoal': 15,
+        'aiTranslations': false,
+        'practiced': false,
+      },
+    });
+    await tester.pumpWidget(app(store));
+    await tester.pumpAndSettle();
+    expect(find.bySemanticsLabel('Schritt 4 von 5'), findsOneWidget);
+    expect(find.bySemanticsLabel('Ein Wort üben'), findsOneWidget);
+    expect(
+      tester.widget<CupertinoSwitch>(find.byType(CupertinoSwitch)).value,
+      isFalse,
+    );
+    expect(find.byType(PaywallScreen), findsNothing);
+  });
+
+  testWidgets('A saved first practice precedes the scrollable paywall; '
       '"Kostenlos weiterlernen" opens the app', (tester) async {
     final store = MemoryJsonStore();
     final sounds = RecordingOnboardingSounds();
@@ -194,7 +270,7 @@ void main() {
       tester.widget<CupertinoSwitch>(find.byType(CupertinoSwitch)).value,
       isTrue,
     );
-    await tapLabel(tester, 'Weiter');
+    await firstPractice(tester);
 
     // "Dein Start steht" ticks the answers off, then "Weiter" lights up.
     expect(find.text('Dein Start steht'), findsOneWidget);
@@ -212,13 +288,10 @@ void main() {
     expect(sounds.calls.last, 'paywall');
     expect(
       find.bySemanticsLabel('Dein Plan: Reisen, 15 Wörter am Tag'),
-      findsOneWidget,
+      findsNothing,
     );
-    expect(find.text('Mehr lesen. Deine eigenen Wörter lernen.'), findsOne);
-    expect(
-      find.bySemanticsLabel(RegExp('^Lies, was dich interessiert.*Reisen')),
-      findsOneWidget,
-    );
+    expect(find.text('Mach mehr aus\ndeinen Wörtern.'), findsOne);
+    expect(find.byKey(const Key('premium-details-scroll')), findsOneWidget);
     // Yearly is preselected and uses the Store-localized price and period.
     expect(
       tester.getSemantics(
@@ -276,7 +349,7 @@ void main() {
     await tapLabel(tester, 'Mit Apple fortfahren');
     expect(find.byType(PaywallScreen), findsOneWidget);
     expect(find.byType(AppShell), findsNothing);
-    expect(await store.read(), isNull);
+    expect((await store.read() as Map)['done'], isFalse);
   });
 
   testWidgets(
@@ -606,7 +679,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(PaywallScreen), findsNothing);
     expect(find.text('Dein Start steht'), findsOneWidget);
-    expect(await store.read(), isNull);
+    expect((await store.read() as Map)['done'], isFalse);
     // The closing X also continues into the app.
     await tapLabel(tester, 'Weiter');
     await tapLabel(tester, 'Schließen');

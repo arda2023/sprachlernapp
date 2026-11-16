@@ -55,7 +55,7 @@ class LegalDocumentScreen extends StatelessWidget {
                           size: 28,
                           weight: FontWeight.w700,
                           color: colors.textPrimary,
-                          height: 1.18,
+                          height: 1.2,
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -79,7 +79,7 @@ class LegalDocumentScreen extends StatelessWidget {
                           style: AppType.chrome(
                             size: 15,
                             color: colors.textMuted,
-                            height: 1.55,
+                            height: 1.45,
                           ),
                         ),
                         const SizedBox(height: 22),
@@ -115,7 +115,7 @@ class _DraftBanner extends StatelessWidget {
         size: 15,
         weight: FontWeight.w600,
         color: colors.textPrimary,
-        height: 1.4,
+        height: 1.35,
       ),
     ),
   );

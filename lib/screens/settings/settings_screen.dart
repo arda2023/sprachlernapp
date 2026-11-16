@@ -517,7 +517,7 @@ class _Row extends StatelessWidget {
               style: AppType.chrome(
                 size: 15,
                 weight: FontWeight.w600,
-                color: open ? const Color(0xFFFFFFFF) : colors.textMuted,
+                color: open ? AppColors.onActive : colors.textMuted,
                 tabular: true,
               ),
             ),

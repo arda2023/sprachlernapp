@@ -16,6 +16,7 @@ import '../presentation/providers/runtime_translation_provider.dart';
 import '../theme/app_theme.dart';
 import 'anchored_popover.dart';
 import 'popover_content.dart';
+import 'premium_action.dart';
 import 'dictionary_sources_sheet.dart' show showDictionarySources;
 import 'translation_paywall_card.dart';
 import 'word_bubble.dart';
@@ -109,6 +110,8 @@ class _RuntimeTranslationSheetState
   StreamSubscription<void>? _changes;
   int _epoch = 0;
   bool checking = true, loading = false, started = false;
+  bool _upgradePending = false;
+  bool _requestIntended = false;
 
   /// Shows [TranslationPaywallCard] instead of the source text.
   bool usedUp = false;
@@ -130,6 +133,7 @@ class _RuntimeTranslationSheetState
     _changes = ref.read(runtimeTranslationProvider).changes.listen((_) {
       _epoch++;
       if (!mounted) return;
+      _requestIntended = false;
       setState(() {
         result = null;
         dictionaryText = null;
@@ -160,6 +164,7 @@ class _RuntimeTranslationSheetState
       return;
     }
     _epoch++;
+    _requestIntended = false;
     result = null;
     dictionaryText = null;
     candidates = [];
@@ -284,6 +289,7 @@ class _RuntimeTranslationSheetState
         (!widget.wordTap || consent != WordCloudConsent.enabled)) {
       return;
     }
+    _requestIntended = true;
     if (RuntimeTranslationSheet._freeUsedUp(
       ProviderScope.containerOf(context),
     )) {
@@ -312,6 +318,7 @@ class _RuntimeTranslationSheetState
         _grow();
       }
     } on TranslationFailure catch (e) {
+      if (!_current(epoch)) return;
       final premium =
           e.freeQuotaUsedUp && ref.read(purchaseProvider).hasPremiumUiAccess;
       if (e.freeQuotaUsedUp && !premium) {
@@ -340,6 +347,34 @@ class _RuntimeTranslationSheetState
     }
   }
 
+  Future<void> _upgradeAndRetry() async {
+    if (_upgradePending) return;
+    _upgradePending = true;
+    final epoch = _epoch;
+    try {
+      final paid = await unlockPremiumAction(
+        context,
+        interest: 'Übersetzungen',
+      );
+      if (!paid || !_current(epoch)) return;
+      final reloadWord = _requestIntended && widget.form != null;
+      setState(() {
+        usedUp = false;
+        started = false;
+        checking = reloadWord;
+      });
+      _grow();
+      if (reloadWord) {
+        // Reuse the dictionary, cache and consent checks before any word retry.
+        await _load();
+      } else if (_requestIntended) {
+        await request();
+      }
+    } finally {
+      _upgradePending = false;
+    }
+  }
+
   @override
   void dispose() {
     _epoch++;
@@ -351,7 +386,10 @@ class _RuntimeTranslationSheetState
   Widget build(BuildContext context) {
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
     final Widget content = usedUp
-        ? const TranslationPaywallCard(key: ValueKey('paywall'))
+        ? TranslationPaywallCard(
+            key: const ValueKey('paywall'),
+            onUpgrade: _upgradeAndRetry,
+          )
         : _compact
         ? const SizedBox(
             key: ValueKey('wait'),
@@ -453,7 +491,7 @@ class _RuntimeTranslationSheetState
       color: popoverInk,
       size: 20,
       weight: FontWeight.w400,
-      height: 1.4,
+      height: 1.35,
       letterSpacing: 0,
     );
     return Column(

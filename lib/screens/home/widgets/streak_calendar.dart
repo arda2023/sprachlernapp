@@ -23,12 +23,12 @@ const _months = [
   'August', 'September', 'Oktober', 'November', 'Dezember',
 ];
 const _weekdays = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-const _ink = Color(0xFFFFFFFF);
+const _ink = AppColors.onActive;
 // Text on the popover is bold or 18 pt+ and never translucent (white on
 // #E26C00 is 3.3:1, see PopoverText); quieter text is lighter in weight only.
 const _muted = _ink;
 // Practised days: one light band; each day in it carries a small flame.
-const _band = Color(0x33FFFFFF);
+const _band = Color(0x331A1D26);
 
 class _StreakCalendarState extends State<StreakCalendar> {
   late DateTime _month = DateTime(widget.today.year, widget.today.month);
@@ -65,7 +65,7 @@ class _StreakCalendarState extends State<StreakCalendar> {
                   label: 'Aktueller Streak',
                 ),
               ),
-              Container(width: 1, color: const Color(0x40FFFFFF)),
+              Container(width: 1, color: const Color(0x401A1D26)),
               Expanded(
                 child: _Stat(
                   icon: const GlyphIcon(
@@ -251,7 +251,7 @@ class _NavButton extends StatelessWidget {
         child: Icon(
           icon,
           size: 18,
-          color: onTap == null ? const Color(0x66FFFFFF) : _ink,
+          color: onTap == null ? const Color(0x661A1D26) : _ink,
         ),
       ),
     ),

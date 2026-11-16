@@ -125,22 +125,24 @@ declare
 begin
   insert into auth.users(id,email,email_confirmed_at)
     values(actor,'gift-vocabulary@example.test',clock_timestamp());
-  assert public.claim_generated_vocabulary(actor,request,'en',key,10,true)->>'status'='premium_required';
+  assert public.claim_generated_vocabulary(actor,request,'en',key,10,true)->>'status'='missing';
   assert app.bind_adapty_profile(actor,profile);
   perform app.sync_adapty_entitlement(actor,profile,'Production',
     'com.ardasayar.linglossa.premium.complimentary',true,
     now()-interval '1 minute',now()+interval '30 days',false,now());
   assert public.claim_generated_vocabulary(actor,request,'en',key,10,true)->>'status'='missing';
   r:=public.claim_generated_vocabulary(actor,request,'en',key,10);
-  assert r->>'status'='claimed';
+  assert r->>'status'='claimed' and r->>'free_sample'='false';
   perform public.fail_generated_vocabulary(actor,request,(r->>'ticket')::uuid);
   update app.verified_entitlements set expires_at=clock_timestamp()-interval '1 second'
     where user_id=actor;
   assert public.claim_generated_vocabulary(actor,request,'en',key,10,true)->>'status'='premium_required';
+  r:=public.claim_generated_vocabulary(actor,gen_random_uuid(),'en',key,10);
+  assert r->>'status'='claimed' and r->>'free_sample'='true';
   assert public.claim_generated_vocabulary(actor,gen_random_uuid(),'en',key,10)->>'status'='premium_required';
-  assert (select count(*)=1 from app.generated_vocabulary_requests where user_id=actor);
+  assert (select count(*)=2 from app.generated_vocabulary_requests where user_id=actor);
 end $$;
-select pass('topic vocabulary recognizes active gifts and refuses new attempts after expiry');
+select pass('topic vocabulary recognizes active gifts and applies the lifetime allowance after expiry');
 
 select * from finish();
 rollback;

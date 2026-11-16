@@ -6,8 +6,11 @@ import 'package:crypto/crypto.dart';
 import '../../data/notifications/notification_gateway.dart';
 import '../../data/platform/json_store_base.dart';
 import '../../domain/app_launch_intent.dart';
+import '../../domain/learning_reminder_copy.dart';
 import '../../domain/notification_schedule.dart';
 import '../../domain/trial_reminder.dart';
+
+typedef LearningReminderScope = ({String owner, String language});
 
 String notificationOwnerKey(String? accountId) => sha256
     .convert(utf8.encode(accountId == null ? 'guest' : 'account:$accountId'))
@@ -20,7 +23,8 @@ class NotificationContext {
     this.routingReady = false,
     this.canRequestPermission = true,
     this.goalReachedToday,
-    this.trial = const TrialReminderDecision(TrialReminderStatus.inactive),
+    this.latestReviewAt,
+    this.hasDueReviews = false,
   });
 
   /// Null while the account session is being restored or cannot be verified.
@@ -29,7 +33,16 @@ class NotificationContext {
   final bool routingReady;
   final bool canRequestPermission;
   final bool? goalReachedToday;
-  final TrialReminderDecision trial;
+  final DateTime? latestReviewAt;
+  final bool hasDueReviews;
+
+  LearningReminderScope? get scope {
+    final owner = ownerKey;
+    final lang = language;
+    return owner != null && lang != null
+        ? (owner: owner, language: lang)
+        : null;
+  }
 }
 
 class NotificationState {
@@ -40,6 +53,8 @@ class NotificationState {
     this.permission = NotificationPermission.unknown,
     this.trialStatus = TrialReminderStatus.inactive,
     this.scheduledTrial,
+    this.scope,
+    this.canInvite = false,
     this.error,
   });
 
@@ -49,6 +64,8 @@ class NotificationState {
   final NotificationPermission permission;
   final TrialReminderStatus trialStatus;
   final TrialReminderPlan? scheduledTrial;
+  final LearningReminderScope? scope;
+  final bool canInvite;
   final String? error;
 
   bool get learningEnabled =>
@@ -74,49 +91,33 @@ class NotificationService {
   final void Function(NotificationState) onChanged;
   final void Function(AppLaunchIntent) onLaunch;
   final Map<String, LearningReminderSettings> _settings = {};
+  final Map<LearningReminderScope, _ReminderCycle> _cycles = {};
+  final Map<LearningReminderScope, String> _purposes = {};
   late final StreamSubscription<String> _tapSubscription;
   Future<void> _operations = Future<void>.value();
   NotificationContext _context = const NotificationContext();
   NotificationPermission _permission = NotificationPermission.unknown;
-  TrialReminderPlan? _scheduledTrial;
-  TrialReminderStatus _trialStatus = TrialReminderStatus.inactive;
-  Timer? _trialTimer;
   bool _initialized = false;
   bool _loaded = false;
+  bool _cyclesDirty = false;
   bool _disposed = false;
   int _generation = 0;
   String? _lastSignature;
   String? _error;
   String? _pendingPayload;
   String? _lastHandledPayload;
-  String? _purchaseOwner;
-  DateTime? _purchaseAt;
 
   LearningReminderSettings get _currentSettings =>
       _settings[_context.ownerKey] ?? const LearningReminderSettings();
 
-  Future<void> update(
-    NotificationContext context, {
-    bool purchaseSucceeded = false,
-  }) {
+  Future<void> update(NotificationContext context) {
     if (_disposed) return Future.value();
     final ownerChanged = context.ownerKey != _context.ownerKey;
     _context = context;
     final generation = ++_generation;
     if (ownerChanged) {
-      _scheduledTrial = null;
-      _purchaseOwner = null;
-      _purchaseAt = null;
       _error = null;
     }
-    if (purchaseSucceeded && context.ownerKey != null) {
-      _purchaseOwner = context.ownerKey;
-      _purchaseAt = now();
-    }
-    if (_scheduledTrial?.identity != context.trial.plan?.identity) {
-      _scheduledTrial = null;
-    }
-    _trialStatus = context.trial.status;
     _emit();
     _dispatchTap();
     return _enqueue(() => _reconcile(generation));
@@ -124,23 +125,34 @@ class NotificationService {
 
   Future<void> refresh() => update(_context);
 
-  Future<void> setLearningEnabled(bool enabled) {
+  Future<void> setLearningEnabled(
+    bool enabled, {
+    LearningReminderScope? invitationScope,
+  }) {
     final owner = _context.ownerKey;
     if (owner == null || !gateway.supported || _disposed) return Future.value();
+    bool canApply() =>
+        _isOwner(owner) &&
+        (invitationScope == null || invitationScope == _context.scope);
     return _enqueue(() async {
       try {
         await _initialize();
-        if (!_isOwner(owner)) return;
+        if (!canApply()) return;
         _permission = await gateway.readPermission();
-        if (!_isOwner(owner)) return;
+        if (!canApply()) return;
         if (enabled && _permission != NotificationPermission.allowed) {
+          if (!_context.canRequestPermission) return;
           _permission = await gateway.requestPermission();
-          if (!_isOwner(owner)) return;
+          if (!canApply()) return;
         }
         final allowed =
             !enabled || _permission == NotificationPermission.allowed;
+        if (enabled && allowed && !_currentSettings.enabled) {
+          _cycles.removeWhere((scope, _) => scope.owner == owner);
+        }
         _settings[owner] = _currentSettings.copyWith(
           enabled: enabled && allowed,
+          invitationSeen: true,
         );
         await _save();
         if (!_isOwner(owner)) return;
@@ -148,6 +160,51 @@ class NotificationService {
         await _reconcile(_generation);
       } catch (_) {
         await _failed();
+      }
+    });
+  }
+
+  /// A real completion surface may claim the device-local invitation once.
+  /// Claiming the card never opens the OS dialog.
+  Future<bool> claimLearningInvitation(LearningReminderScope scope) async {
+    var claimed = false;
+    await _enqueue(() async {
+      if (!_canInvite || scope != _context.scope) return;
+      _settings[scope.owner] = _currentSettings.copyWith(invitationSeen: true);
+      try {
+        await _save();
+        claimed = !_disposed && scope == _context.scope;
+      } catch (_) {
+        _error = 'Die Einstellung konnte nicht gespeichert werden.';
+      }
+      _emit();
+    });
+    return claimed;
+  }
+
+  Future<void> setLearningPurpose(String? purpose, {String? language}) {
+    final owner = _context.ownerKey;
+    final lang = language ?? _context.language;
+    if (owner == null || lang == null || !gateway.supported) {
+      return Future.value();
+    }
+    final scope = (owner: owner, language: lang);
+    return _enqueue(() async {
+      try {
+        await _initialize();
+        if (!_isOwner(owner)) return;
+        if (learningReminderPurposeCode(purpose) case final code?) {
+          _purposes[scope] = code;
+        } else {
+          _purposes.remove(scope);
+        }
+        await _save();
+        if (_isOwner(owner)) await _reconcile(_generation);
+      } catch (_) {
+        if (_isOwner(owner)) {
+          _error = 'Die Einstellung konnte nicht gespeichert werden.';
+          _emit();
+        }
       }
     });
   }
@@ -201,10 +258,24 @@ class NotificationService {
       final saved = await store.read();
       if (saved is Map) {
         for (final entry in saved.entries) {
-          if (entry.key is String) {
-            _settings[entry.key as String] = LearningReminderSettings.fromJson(
-              entry.value,
-            );
+          final owner = entry.key;
+          final value = entry.value;
+          if (owner is! String || value is! Map) continue;
+          _settings[owner] = LearningReminderSettings.fromJson(value);
+          final languages = value['languages'];
+          if (languages is! Map) continue;
+          for (final entry in languages.entries) {
+            final language = entry.key;
+            final value = entry.value;
+            if (language is! String || value is! Map) continue;
+            final scope = (owner: owner, language: language);
+            if (_ReminderCycle.fromJson(value['cycle']) case final cycle?) {
+              _cycles[scope] = cycle;
+            }
+            if (learningReminderPurposeCode(value['purpose'])
+                case final code?) {
+              _purposes[scope] = code;
+            }
           }
         }
       }
@@ -212,9 +283,22 @@ class NotificationService {
     }
   }
 
-  Future<void> _save() => store.write({
-    for (final entry in _settings.entries) entry.key: entry.value.toJson(),
-  });
+  Future<void> _save() {
+    final languages = <String, Map<String, Object?>>{};
+    for (final scope in {..._cycles.keys, ..._purposes.keys}) {
+      (languages[scope.owner] ??= {})[scope.language] = {
+        'purpose': ?_purposes[scope],
+        'cycle': ?_cycles[scope]?.toJson(),
+      };
+    }
+    return store.write({
+      for (final owner in {..._settings.keys, ...languages.keys})
+        owner: {
+          ...(_settings[owner] ?? const LearningReminderSettings()).toJson(),
+          'languages': ?languages[owner],
+        },
+    });
+  }
 
   Future<void> _reconcile(int generation) async {
     if (!_current(generation)) return;
@@ -227,78 +311,17 @@ class NotificationService {
       if (!_current(generation)) return;
       _permission = await gateway.readPermission();
       if (!_current(generation)) return;
-      final context = _context;
-      final owner = context.ownerKey;
-      var plan = context.trial.plan;
-      _trialStatus = context.trial.status;
-      if (plan != null && !plan.remindAt.isAfter(now())) {
-        plan = null;
-        _trialStatus = TrialReminderStatus.tooLate;
-      }
-      final explicitRecentPurchase =
-          owner != null &&
-          _purchaseOwner == owner &&
-          _purchaseAt != null &&
-          now().difference(_purchaseAt!) < const Duration(minutes: 5);
-      if (plan != null &&
-          explicitRecentPurchase &&
-          context.canRequestPermission &&
-          _permission != NotificationPermission.allowed &&
-          _currentSettings.askedTrial != plan.identity) {
-        // Mark the attempt before calling the OS. This serial queue prevents
-        // resume/rebuild from asking again; persist the marker after the OS
-        // responds so a progress update during disk I/O cannot swallow a
-        // prompt that has not actually started. Startup never sets this marker.
-        _settings[owner] = _currentSettings.copyWith(askedTrial: plan.identity);
-        _permission = await gateway.requestPermission();
-        // The saved setting belongs to the captured owner even if the account
-        // changed while the native sheet was open. Never schedule for them now.
-        await _save();
-        if (!_current(generation)) return;
-      }
-      final scheduled = <ScheduledLocalNotification>[];
+      final owner = _context.ownerKey;
+      final scope = _context.scope;
       String? zone;
-      if (owner != null && _permission == NotificationPermission.allowed) {
+      var scheduled = <ScheduledLocalNotification>[];
+      if (_permission == NotificationPermission.allowed &&
+          _currentSettings.enabled &&
+          scope != null &&
+          _context.goalReachedToday != null) {
         zone = await gateway.localTimezone();
         if (!_current(generation)) return;
-        final settings = _currentSettings;
-        if (settings.enabled &&
-            context.language != null &&
-            context.goalReachedToday != null) {
-          final times = learningReminderTimes(
-            now: now(),
-            location: reminderLocation(zone),
-            hour: settings.hour,
-            minute: settings.minute,
-            goalReachedToday: context.goalReachedToday!,
-          );
-          for (final (index, at) in times.indexed) {
-            scheduled.add(
-              ScheduledLocalNotification(
-                id: learningNotificationFirstId + index,
-                at: at,
-                timezone: zone,
-                title: 'Zeit für ein paar Wörter',
-                body: 'Deine nächste Runde wartet.',
-                payload: _payload('practice', owner, context.language, at),
-              ),
-            );
-          }
-        }
-        if (plan != null && plan.remindAt.isAfter(now())) {
-          scheduled.add(
-            ScheduledLocalNotification(
-              id: trialNotificationId,
-              at: plan.remindAt,
-              timezone: zone,
-              title: 'Deine Testphase endet bald',
-              body: plan.isSandbox
-                  ? 'Dein Testabo verlängert sich in Kürze.'
-                  : 'Danach wird dein Abo kostenpflichtig.',
-              payload: _payload('home', owner, context.language, plan.remindAt),
-            ),
-          );
-        }
+        scheduled = _learningPlan(scope, zone);
       }
       final signature = jsonEncode([
         owner,
@@ -308,13 +331,24 @@ class NotificationService {
             notification.id,
             notification.at.toIso8601String(),
             notification.payload,
+            notification.title,
+            notification.body,
           ],
       ]);
-      if (_lastSignature != signature) {
-        _scheduledTrial = null;
+      final replace = _lastSignature != signature;
+      if (replace) {
         _lastSignature = null;
+        // The owned range also includes schedules from versions with trials
+        // and up to 30 daily learning reminders.
         await gateway.cancelOwned();
         if (!_current(generation)) return;
+      }
+      if (_cyclesDirty) {
+        await _save();
+        _cyclesDirty = false;
+        if (!_current(generation)) return;
+      }
+      if (replace) {
         for (final notification in scheduled) {
           // A native prompt or slow OS call may have consumed the lead time.
           if (!notification.at.isAfter(now())) continue;
@@ -323,30 +357,97 @@ class NotificationService {
             await gateway.cancelOwned();
             return;
           }
-          if (notification.id == trialNotificationId) _scheduledTrial = plan;
         }
         _lastSignature = signature;
       }
-      if (plan == null || _permission != NotificationPermission.allowed) {
-        _scheduledTrial = null;
-      }
       if (_permission == NotificationPermission.allowed) _error = null;
-      _trialTimer?.cancel();
-      if (_scheduledTrial case final trial?) {
-        final wait = trial.remindAt.difference(now());
-        if (wait > Duration.zero) {
-          _trialTimer = Timer(wait, () => unawaited(refresh()));
-        }
-      }
       _emit();
     } catch (_) {
       if (_current(generation)) await _failed();
     }
   }
 
+  List<ScheduledLocalNotification> _learningPlan(
+    LearningReminderScope scope,
+    String zone,
+  ) {
+    final currentTime = now();
+    final location = reminderLocation(zone);
+    final today = reminderCalendarDay(currentTime, location);
+    final latest = _context.latestReviewAt;
+    final skipToday =
+        _context.goalReachedToday == true ||
+        (latest != null && reminderCalendarDay(latest, location) == today);
+    final settings = _currentSettings;
+    var cycle = _cycles[scope];
+    final lastObserved = cycle?.latestReviewAt;
+    if (cycle == null ||
+        (latest != null &&
+            (lastObserved == null || latest.isAfter(lastObserved)))) {
+      final first = learningReminderTimes(
+        now: currentTime,
+        location: location,
+        hour: settings.hour,
+        minute: settings.minute,
+        goalReachedToday: skipToday,
+        days: 3,
+      ).firstOrNull;
+      if (first == null) return [];
+      cycle = _ReminderCycle(reminderCalendarDay(first, location), latest);
+      _cycles[scope] = cycle;
+      _cyclesDirty = true;
+    }
+    final reminders = <ScheduledLocalNotification>[];
+    for (final (attempt, at) in learningReminderAttempts(
+      firstDay: cycle.firstDay,
+      location: location,
+      hour: settings.hour,
+      minute: settings.minute,
+    )) {
+      final previous = cycle.attempts[attempt];
+      // The OS cannot confirm whether a notification was seen. Once its
+      // scheduled time passes, assume it may have been delivered.
+      if (previous != null && !previous.isAfter(currentTime)) continue;
+      final day = reminderCalendarDay(at, location);
+      if (day == today && skipToday) {
+        _cyclesDirty = cycle.attempts.remove(attempt) != null || _cyclesDirty;
+        continue;
+      }
+      if (previous != at) {
+        cycle.attempts[attempt] = at;
+        _cyclesDirty = true;
+      }
+      if (!at.isAfter(currentTime)) continue;
+      final copy = learningReminderCopy(
+        day: day,
+        attempt: attempt,
+        hasDueReviews: _context.hasDueReviews,
+        purpose: _purposes[scope],
+      );
+      reminders.add(
+        ScheduledLocalNotification(
+          id: learningNotificationFirstId + attempt,
+          at: at,
+          timezone: zone,
+          title: copy.title,
+          body: copy.body,
+          payload: _payload('practice', scope.owner, scope.language, at),
+        ),
+      );
+    }
+    return reminders;
+  }
+
+  bool get _canInvite =>
+      gateway.supported &&
+      _loaded &&
+      _context.scope != null &&
+      _context.canRequestPermission &&
+      !_currentSettings.enabled &&
+      !_currentSettings.invitationSeen;
+
   Future<void> _failed() async {
     _lastSignature = null;
-    _scheduledTrial = null;
     try {
       if (_initialized) await gateway.cancelOwned();
     } catch (_) {
@@ -358,17 +459,14 @@ class NotificationService {
 
   void _emit() {
     if (_disposed) return;
-    final plan = _scheduledTrial;
     onChanged(
       NotificationState(
         supported: gateway.supported,
         ready: _loaded && _context.ownerKey != null,
         settings: _currentSettings,
         permission: _permission,
-        trialStatus: _trialStatus,
-        scheduledTrial: plan != null && plan.remindAt.isAfter(now())
-            ? plan
-            : null,
+        scope: _context.scope,
+        canInvite: _canInvite,
         error: _error,
       ),
     );
@@ -420,7 +518,40 @@ class NotificationService {
   void dispose() {
     _disposed = true;
     _generation++;
-    _trialTimer?.cancel();
     unawaited(_tapSubscription.cancel());
   }
+}
+
+class _ReminderCycle {
+  _ReminderCycle(this.firstDay, this.latestReviewAt);
+
+  final DateTime firstDay;
+  final DateTime? latestReviewAt;
+  final attempts = <int, DateTime>{};
+
+  static _ReminderCycle? fromJson(Object? value) {
+    if (value is! Map) return null;
+    final day = _readDate(value['firstDay']);
+    if (day == null) return null;
+    final cycle = _ReminderCycle(day, _readDate(value['latestReviewAt']));
+    final attempts = value['attempts'];
+    if (attempts is Map) {
+      for (var i = 0; i < learningReminderDayOffsets.length; i++) {
+        if (_readDate(attempts['$i']) case final at?) cycle.attempts[i] = at;
+      }
+    }
+    return cycle;
+  }
+
+  Map<String, Object?> toJson() => {
+    'firstDay': firstDay.toIso8601String(),
+    'latestReviewAt': latestReviewAt?.toUtc().toIso8601String(),
+    'attempts': {
+      for (final entry in attempts.entries)
+        '${entry.key}': entry.value.toUtc().toIso8601String(),
+    },
+  };
+
+  static DateTime? _readDate(Object? value) =>
+      value is String ? DateTime.tryParse(value)?.toUtc() : null;
 }

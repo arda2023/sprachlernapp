@@ -119,7 +119,7 @@ class WordDetailsPage extends ConsumerWidget {
                 color: popoverInk,
                 size: 17,
                 weight: FontWeight.w400,
-                height: 1.3,
+                height: 1.45,
                 letterSpacing: 0,
               ),
             ),

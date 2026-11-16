@@ -1,13 +1,18 @@
 import 'dart:async';
 
+import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sprachapp/data/notifications/notification_gateway.dart';
 import 'package:sprachapp/data/platform/json_store_base.dart';
+import 'package:sprachapp/data/user/drift_user_repository.dart';
+import 'package:sprachapp/data/user/user_database.dart';
+import 'package:sprachapp/domain/srs_state.dart';
 import 'package:sprachapp/models/home_models.dart';
 import 'package:sprachapp/presentation/providers/auth_providers.dart';
 import 'package:sprachapp/presentation/providers/billing_provider.dart';
 import 'package:sprachapp/presentation/providers/database_providers.dart';
+import 'package:sprachapp/presentation/providers/deck_providers.dart';
 import 'package:sprachapp/presentation/providers/learning_providers.dart';
 import 'package:sprachapp/presentation/providers/notification_provider.dart';
 import 'package:sprachapp/presentation/providers/purchase_provider.dart';
@@ -50,6 +55,7 @@ class _Gateway implements NotificationGateway {
 }
 
 class _Billing extends BillingController {
+  int refreshes = 0;
   @override
   BillingState build() => BillingState(
     BillingPhase.ready,
@@ -69,7 +75,7 @@ class _Billing extends BillingController {
     ),
   );
   @override
-  Future<void> refresh() async {}
+  Future<void> refresh() async => refreshes++;
 }
 
 class _Purchases extends PurchaseController {
@@ -105,6 +111,14 @@ class _Harness {
     purchases = _Purchases(initiallyActive: initiallyActive);
     container = ProviderContainer(
       overrides: [
+        notificationLatestReviewProvider.overrideWith(
+          (ref) async => lastReview,
+        ),
+        vocabBreakdownProvider.overrideWith(
+          (ref) async =>
+              const VocabBreakdown(due: 1, building: 0, mastered: 0, unseen: 0),
+        ),
+
         notificationGatewayProvider.overrideWithValue(gateway),
         notificationSettingsStoreProvider.overrideWithValue(MemoryJsonStore()),
         accountSessionProvider.overrideWith((ref) => sessions.stream),
@@ -115,7 +129,7 @@ class _Harness {
             week: WeekProgress(const []),
           ),
         ),
-        billingProvider.overrideWith(_Billing.new),
+        billingProvider.overrideWith(() => billing),
         purchaseProvider.overrideWith(() => purchases),
         clockProvider.overrideWithValue(() => _now),
       ],
@@ -127,6 +141,8 @@ class _Harness {
     });
   }
   final gateway = _Gateway();
+  final billing = _Billing();
+  DateTime? lastReview;
   final sessions = StreamController<AccountSession?>.broadcast(sync: true);
   late final _Purchases purchases;
   late final ProviderContainer container;
@@ -147,53 +163,92 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(tz_data.initializeTimeZones);
 
+  test('purchase completion keeps entitlement refresh and never schedules trial reminders', () async {
+    final h = _Harness();
+    await h.signIn('account-a');
+    h.purchases.successWhileServerLoads();
+    await h.settle();
+    h.purchases.confirm();
+    h.gateway.permission = NotificationPermission.allowed;
+    final refreshes = h.billing.refreshes;
+    await h.settle();
+    expect(h.billing.refreshes, greaterThan(refreshes));
+    expect(h.gateway.prompts, 0);
+    expect(h.gateway.scheduled, isEmpty);
+    expect(h.container.read(notificationProvider).scheduledTrial, isNull);
+  });
+
+  test('startup and restore keep the old trial reminder disabled', () async {
+    final h = _Harness(initiallyActive: true);
+    await h.signIn('account-a');
+    h.purchases.confirm(outcome: PurchaseResult.restored);
+    await h.settle();
+    expect(h.gateway.prompts, 0);
+    expect(h.gateway.scheduled, isEmpty);
+  });
+
   test(
-    'purchase success outlives the paywall and waits for confirmed trial data',
+    'new learning from the repository replaces an already scheduled day',
     () async {
       final h = _Harness();
       await h.signIn('account-a');
-      expect(h.gateway.prompts, 0);
-      // No Paywall widget is attached. The native transaction succeeds before
-      // the server confirms its account, product, renewal and precise expiry.
-      h.purchases.successWhileServerLoads();
+      await h.container
+          .read(notificationProvider.notifier)
+          .setLearningEnabled(true);
+      expect(h.gateway.scheduled.first.at, DateTime.utc(2026, 11, 13, 18));
+      h.lastReview = _now;
+      h.container.invalidate(notificationLatestReviewProvider);
       await h.settle();
-      expect(h.gateway.prompts, 0);
-      expect(h.gateway.scheduled, isEmpty);
-      h.purchases.confirm();
-      await h.settle();
-      expect(h.gateway.prompts, 1);
-      expect(h.gateway.scheduled.single.id, trialNotificationId);
-      expect(h.container.read(notificationProvider).scheduledTrial, isNotNull);
-      await h.settle();
-      expect(h.gateway.prompts, 1);
+      expect(h.gateway.scheduled.first.at, DateTime.utc(2026, 11, 14, 18));
     },
   );
 
-  test(
-    'restoring an existing trial and startup never trigger a system prompt',
-    () async {
-      final h = _Harness(initiallyActive: true);
-      await h.signIn('account-a');
-      expect(h.gateway.prompts, 0);
-      h.purchases.confirm(outcome: PurchaseResult.restored);
-      await h.settle();
-      expect(h.gateway.prompts, 0);
-      expect(h.gateway.scheduled, isEmpty);
-    },
-  );
-
-  test(
-    'a previous account purchase marker never prompts for the next account',
-    () async {
-      final h = _Harness();
-      await h.signIn('account-a');
-      h.purchases.successWhileServerLoads();
-      await h.settle();
-      await h.signIn('account-b');
-      h.purchases.confirm();
-      await h.settle();
-      expect(h.gateway.prompts, 0);
-      expect(h.gateway.scheduled, isEmpty);
-    },
-  );
+  test('a newly saved review is observed in the same second', () async {
+    final db = UserDatabase(NativeDatabase.memory());
+    final user = DriftUserRepository(db, lang: 'en');
+    final container = ProviderContainer(
+      overrides: [
+        clockProvider.overrideWithValue(() => _now),
+        userRepositoryProvider.overrideWith((ref) async => user),
+      ],
+    );
+    addTearDown(() async {
+      container.dispose();
+      await user.close();
+    });
+    final detected = Completer<DateTime>();
+    container.listen(notificationLatestReviewProvider, (_, next) {
+      if (next.asData?.value case final at? when !detected.isCompleted) {
+        detected.complete(at);
+      }
+    });
+    expect(
+      await container.read(notificationLatestReviewProvider.future),
+      isNull,
+    );
+    await user.ensureCards(['card'], now: _now, origin: CardOrigin.deck);
+    expect(
+      await user.recordReview(
+        ReviewRecord(
+          id: 'review',
+          cardId: 'card',
+          createdAt: _now,
+          mode: ReviewMode.mixed,
+          sentenceId: 'sentence',
+          firstAttemptCorrect: true,
+          errorCount: 0,
+          revealed: false,
+          hintUsed: false,
+          boxBefore: 0,
+          boxAfter: 1,
+          dueAtAfter: _now.add(const Duration(days: 1)),
+          responseMs: null,
+          appVersion: 'test',
+          deviceId: 'test',
+        ),
+      ),
+      isTrue,
+    );
+    expect(await detected.future.timeout(const Duration(seconds: 2)), _now);
+  });
 }

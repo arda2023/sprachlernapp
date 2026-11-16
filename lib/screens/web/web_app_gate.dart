@@ -200,7 +200,7 @@ class _WebLoginScreenState extends ConsumerState<WebLoginScreen> {
                         onPressed: _busy ? null : _submit,
                         style: FilledButton.styleFrom(
                           backgroundColor: colors.popover,
-                          foregroundColor: Colors.white,
+                          foregroundColor: AppColors.onActive,
                           minimumSize: const Size(44, 52),
                         ),
                         child: _busy
@@ -208,7 +208,7 @@ class _WebLoginScreenState extends ConsumerState<WebLoginScreen> {
                                 dimension: 22,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
-                                  color: Colors.white,
+                                  color: AppColors.onActive,
                                 ),
                               )
                             : Text(

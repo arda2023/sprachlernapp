@@ -1,6 +1,6 @@
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(10);
+select plan(12);
 
 -- Explicit Premium fixtures keep replay, CAS and quota checks independent of
 -- entitlement setup. Real callers cannot write this service-only snapshot.
@@ -47,7 +47,7 @@ begin
   assert public.claim_generated_vocabulary('4a100000-0000-4000-8000-000000000099',req,'en',k,10)->>'status'='account_unverified';
   assert not exists(select 1 from app.generated_vocabulary_requests where user_id in(actor,anonymous_actor));
   update auth.users set email_confirmed_at=clock_timestamp() where id=actor;
-  assert public.claim_generated_vocabulary(actor,req,'en',k,10)->>'status'='premium_required';
+  assert public.claim_generated_vocabulary(actor,req,'en',k,10,true)->>'status'='missing';
   perform pg_temp.generation_premium(actor);
   assert public.claim_generated_vocabulary(actor,req,'en',k,10,true)->>'status'='missing';
   assert not exists(select 1 from app.generated_vocabulary_requests where user_id=actor);
@@ -158,6 +158,45 @@ select pass('five daily requests and 250 requested items include failures and re
 
 do $$
 declare
+  actor uuid:='4a400000-0000-4000-8000-000000000002';
+  k text:=repeat('f',64); req uuid; r jsonb;
+begin
+  assert not has_function_privilege('authenticated','public.release_unstarted_generated_vocabulary(uuid,uuid,uuid)','EXECUTE');
+  insert into auth.users(id,email,email_confirmed_at)
+    values(actor,'generation-unstarted@example.test',clock_timestamp());
+  perform pg_temp.generation_premium(actor);
+  -- Ten attempts rejected before generation leave tombstones but no quota use.
+  for i in 1..10 loop
+    req:=gen_random_uuid();
+    r:=public.claim_generated_vocabulary(actor,req,'en',k,50);
+    assert r->>'status'='claimed';
+    perform public.release_unstarted_generated_vocabulary(actor,req,gen_random_uuid());
+    assert (select state='pending' from app.generated_vocabulary_requests where request_id=req);
+    perform public.release_unstarted_generated_vocabulary(actor,req,(r->>'ticket')::uuid);
+    assert public.claim_generated_vocabulary(actor,req,'en',k,50)->>'status'='failed';
+  end loop;
+  for i in 1..5 loop
+    req:=gen_random_uuid();
+    r:=public.claim_generated_vocabulary(actor,req,'en',k,50);
+    assert r->>'status'='claimed';
+    perform public.fail_generated_vocabulary(actor,req,(r->>'ticket')::uuid);
+  end loop;
+  assert public.claim_generated_vocabulary(actor,gen_random_uuid(),'en',k,1)->>'status'='limit';
+  -- The total attempt cap still bounds released attempts.
+  update app.generated_vocabulary_requests set created_at=clock_timestamp()-interval '25 hours'
+    where user_id=actor and not quota_released;
+  for i in 1..20 loop
+    req:=gen_random_uuid();
+    r:=public.claim_generated_vocabulary(actor,req,'en',k,1);
+    assert r->>'status'='claimed';
+    perform public.release_unstarted_generated_vocabulary(actor,req,(r->>'ticket')::uuid);
+  end loop;
+  assert public.claim_generated_vocabulary(actor,gen_random_uuid(),'en',k,1)->>'status'='limit';
+end $$;
+select pass('attempts released before generation keep tombstones but not daily quota, within 30 attempts');
+
+do $$
+declare
   actor uuid:='4a500000-0000-4000-8000-000000000001';
   req uuid:='4a500000-0000-4000-8000-000000000002';
   k text:=repeat('f',64); r jsonb; ticket uuid; payload jsonb;
@@ -185,14 +224,16 @@ declare
   actor uuid:='4a700000-0000-4000-8000-000000000001';
   other_actor uuid:='4a700000-0000-4000-8000-000000000002';
   req uuid:='4a700000-0000-4000-8000-000000000003';
-  k text:=repeat('b',64);
+  k text:=repeat('b',64); free_attempt jsonb;
 begin
   insert into auth.users(id,email,email_confirmed_at) values
     (actor,'generation-free@example.test',clock_timestamp()),
     (other_actor,'generation-paid-other@example.test',clock_timestamp());
   perform pg_temp.generation_premium(other_actor);
+  free_attempt:=public.claim_generated_vocabulary(actor,gen_random_uuid(),'en',k,10);
+  assert free_attempt->>'status'='claimed' and free_attempt->>'free_sample'='true';
   assert public.claim_generated_vocabulary(actor,req,'en',k,10)->>'status'='premium_required';
-  assert public.claim_generated_vocabulary(actor,req,'en',k,10,true)->>'status'='premium_required';
+  assert public.claim_generated_vocabulary(actor,req,'en',k,10,true)->>'status'='missing';
   perform pg_temp.generation_premium(actor);
   update app.verified_entitlements set is_active=false where user_id=actor;
   assert public.claim_generated_vocabulary(actor,req,'en',k,10)->>'status'='premium_required';
@@ -202,9 +243,48 @@ begin
   update app.verified_entitlements set starts_at=clock_timestamp()+interval '1 day',
     expires_at=clock_timestamp()+interval '30 days' where user_id=actor;
   assert public.claim_generated_vocabulary(actor,req,'en',k,10)->>'status'='premium_required';
-  assert not exists(select 1 from app.generated_vocabulary_requests where user_id=actor);
+  assert (select count(*)=1 from app.generated_vocabulary_requests where user_id=actor);
 end $$;
-select pass('missing, foreign, inactive, expired and future Premium reserve no generation attempts');
+select pass('after the free slot, missing, foreign, inactive, expired and future Premium reserve nothing');
+
+do $$
+declare
+  actor uuid:='4a710000-0000-4000-8000-000000000001';
+  rejected uuid:='4a710000-0000-4000-8000-000000000002';
+  sample uuid:='4a710000-0000-4000-8000-000000000003';
+  claim jsonb; payload jsonb; k text:=repeat('b',64);
+begin
+  assert has_function_privilege('authenticated','public.free_vocabulary_generation_available()','EXECUTE');
+  assert not has_function_privilege('anon','public.free_vocabulary_generation_available()','EXECUTE');
+  assert not has_function_privilege('authenticated','public.release_unused_free_vocabulary_sample(uuid,uuid,uuid)','EXECUTE');
+  insert into auth.users(id,email,email_confirmed_at)
+    values(actor,'generation-sample@example.test',clock_timestamp());
+  perform set_config('request.jwt.claim.sub',actor::text,true);
+  assert public.free_vocabulary_generation_available();
+  claim:=public.claim_generated_vocabulary(actor,rejected,'en',k,50);
+  assert claim->>'free_sample'='true';
+  assert not public.free_vocabulary_generation_available();
+  assert public.claim_generated_vocabulary(actor,gen_random_uuid(),'es',k,1)->>'status'='premium_required';
+  perform public.release_unused_free_vocabulary_sample(actor,rejected,gen_random_uuid());
+  assert not public.free_vocabulary_generation_available();
+  perform public.release_unused_free_vocabulary_sample(actor,rejected,(claim->>'ticket')::uuid);
+  assert public.free_vocabulary_generation_available();
+  assert public.claim_generated_vocabulary(actor,rejected,'en',k,50)->>'status'='failed';
+  claim:=public.claim_generated_vocabulary(actor,sample,'pt-BR',k,50);
+  assert claim->>'status'='claimed' and claim->>'free_sample'='true';
+  payload:=jsonb_build_object('contract',1,'request_id',sample,'lang','pt-BR','items','[{}]'::jsonb);
+  assert public.finish_generated_vocabulary(actor,sample,(claim->>'ticket')::uuid,payload)->>'status'='saved';
+  claim:=public.claim_generated_vocabulary(actor,sample,'pt-BR',k,50,true);
+  assert claim->>'status'='hit' and claim->>'free_sample'='true' and claim->'response'=payload;
+  update app.generated_vocabulary_requests set created_at=clock_timestamp()-interval '40 days'
+    where user_id=actor;
+  assert public.claim_generated_vocabulary(actor,sample,'pt-BR',k,50,true)->>'status'='expired';
+  assert public.claim_generated_vocabulary(actor,gen_random_uuid(),'en',k,1)->>'status'='premium_required';
+  perform pg_temp.generation_premium(actor);
+  claim:=public.claim_generated_vocabulary(actor,gen_random_uuid(),'en',k,1);
+  assert claim->>'status'='claimed' and claim->>'free_sample'='false';
+end $$;
+select pass('lifetime sample survives retries and expiry and releases only unused claimed starts');
 
 do $$
 declare
@@ -257,7 +337,7 @@ begin
     (seed_actor,'generation-global-seed@example.test',clock_timestamp());
   perform pg_temp.generation_premium(actor);
   select 20000-coalesce(sum(item_count),0)::integer into remaining
-    from app.generated_vocabulary_requests where created_at>clock_timestamp()-interval '24 hours';
+    from app.generated_vocabulary_requests where created_at>clock_timestamp()-interval '24 hours' and not quota_released;
   assert remaining>0;
   -- Only service_role can seed the private ledger; failed attempts consume the
   -- same global budget as completed requests.
@@ -267,7 +347,7 @@ begin
     from generate_series(1,(remaining+49)/50) n;
   reset role;
   assert (select sum(item_count)=20000 from app.generated_vocabulary_requests
-    where created_at>clock_timestamp()-interval '24 hours');
+    where created_at>clock_timestamp()-interval '24 hours' and not quota_released);
   assert public.claim_generated_vocabulary(actor,gen_random_uuid(),'en',k,1)->>'status'='limit';
   assert not exists(select 1 from app.generated_vocabulary_requests where user_id=actor);
   -- Free exactly one unit to verify the inclusive boundary, without moving
@@ -278,7 +358,7 @@ begin
     where user_id=seed_actor and request_id=seed_request;
   assert public.claim_generated_vocabulary(actor,gen_random_uuid(),'en',k,1)->>'status'='claimed';
   assert (select sum(item_count)=20000 from app.generated_vocabulary_requests
-    where created_at>clock_timestamp()-interval '24 hours');
+    where created_at>clock_timestamp()-interval '24 hours' and not quota_released);
 end $$;
 select pass('global 20000-item rolling cap is inclusive and cannot reserve excess units');
 

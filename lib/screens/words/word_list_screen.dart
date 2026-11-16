@@ -240,15 +240,7 @@ class _WordListScreenState extends ConsumerState<WordListScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 4),
-              Padding(
-                padding: _gutter,
-                child: Text(
-                  _summary(all, playlistCount),
-                  style: AppType.meta(color: context.appColors.textMuted),
-                ),
-              ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
               Padding(
                 padding: _gutter,
                 child: Row(
@@ -447,7 +439,7 @@ class _FilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.appColors;
-    const white = Color(0xFFFFFFFF);
+    const white = AppColors.onActive;
     return MergeSemantics(
       child: CupertinoButton(
         onPressed: onTap,
@@ -490,13 +482,4 @@ class _FilterChip extends StatelessWidget {
       ),
     );
   }
-}
-
-/// "3 Wörter · 4 Übungen · 2 in der Playlist", singular where it is one.
-String _summary(List<VocabWord> all, int playlistCount) {
-  final words = all.map((w) => w.lexicalKey ?? w.id).toSet().length;
-  final forms = all.length;
-  return '$words ${words == 1 ? 'Wort' : 'Wörter'} · '
-      '$forms ${forms == 1 ? 'Übung' : 'Übungen'} · '
-      '$playlistCount in der Playlist';
 }

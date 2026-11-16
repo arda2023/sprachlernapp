@@ -138,7 +138,9 @@ class _WebLearningShellState extends ConsumerState<WebLearningShell> {
                   progress: ref.watch(readingProgressProvider),
                   imported: ref.watch(importedTextsProvider),
                   onOpenStory: _openStory,
+                  onUpgradeStory: _openStory,
                   onOpenImported: _openImported,
+                  onUpgradeImported: _openImported,
                   onImportText: _importText,
                   onDeleteImported: (text) =>
                       ref.read(importedTextsProvider.notifier).remove(text.id),
@@ -242,7 +244,7 @@ class WebWorkspaceFrame extends StatelessWidget {
                           style: FilledButton.styleFrom(
                             minimumSize: const Size(44, 52),
                             backgroundColor: colors.active,
-                            foregroundColor: Colors.white,
+                            foregroundColor: AppColors.onActive,
                           ),
                         ),
                         const Spacer(),
@@ -330,7 +332,7 @@ class WebWorkspaceFrame extends StatelessWidget {
                           style: IconButton.styleFrom(
                             minimumSize: const Size(52, 52),
                             backgroundColor: colors.active,
-                            foregroundColor: Colors.white,
+                            foregroundColor: AppColors.onActive,
                           ),
                         ),
                         Expanded(child: navigation[1]),
@@ -443,7 +445,7 @@ class WebLanguageSelector extends ConsumerWidget {
             backgroundColor: open
                 ? colors.popover
                 : colors.active.withValues(alpha: 0.12),
-            foregroundColor: open ? Colors.white : colors.textPrimary,
+            foregroundColor: open ? AppColors.onActive : colors.textPrimary,
           ),
           child: Row(
             children: [
@@ -455,7 +457,7 @@ class WebLanguageSelector extends ConsumerWidget {
                   style: AppType.chrome(
                     size: 15,
                     weight: FontWeight.w600,
-                    color: open ? Colors.white : colors.textPrimary,
+                    color: open ? AppColors.onActive : colors.textPrimary,
                   ),
                 ),
               ),

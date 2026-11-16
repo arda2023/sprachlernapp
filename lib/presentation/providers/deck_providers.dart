@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/content.dart';
+import '../../domain/generated_vocabulary_repository.dart';
 import '../../domain/srs_state.dart';
 import '../../domain/review_activity.dart';
 import '../../models/home_models.dart';
@@ -84,7 +85,11 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
   final lastReviews = await user.lastReviewTimes();
   final result = <Deck>[];
   for (final deck in summaries) {
-    final ids = await resolver.deckPracticeIds(deck.id);
+    final ids = deck.id == resolver.generatedDeckId &&
+            resolver.freeGeneratedIds.isNotEmpty &&
+            !ref.watch(premiumContentAccessProvider)
+        ? resolver.freeGeneratedIds
+        : await resolver.deckPracticeIds(deck.id);
     final states = {
       for (final id in ids)
         if (resolver.states.containsKey(id)) id: resolver.states[id]!,
@@ -133,6 +138,12 @@ final decksProvider = FutureProvider<List<Deck>>((ref) async {
   }
   return result;
 }, retry: (_, _) => null);
+
+final freeGeneratedDeckAccessProvider = Provider.family<bool, String>((ref, id) {
+  if (!isGeneratedVocabularyDeckId(id)) return false;
+  final resolver = ref.watch(practiceResolverProvider).asData?.value;
+  return resolver?.generatedDeckId == id && resolver!.freeGeneratedIds.isNotEmpty;
+});
 
 final vocabBreakdownProvider = FutureProvider<VocabBreakdown>((ref) async {
   ref.watch(userChangesProvider);
@@ -192,6 +203,7 @@ class DeckActiveController extends Notifier<DeckActivationState> {
   Future<void> setActive(String id, bool active) {
     if (active &&
         !isFreeDeckId(id) &&
+        !ref.read(freeGeneratedDeckAccessProvider(id)) &&
         !ref.read(premiumContentAccessProvider)) {
       state = DeckActivationState(
         values: state.values,
@@ -216,6 +228,7 @@ class DeckActiveController extends Notifier<DeckActivationState> {
         _persisted[id] ??= (await user.activeDeckIds([id])).contains(id);
         if (active &&
             !isFreeDeckId(id) &&
+            !ref.read(freeGeneratedDeckAccessProvider(id)) &&
             !ref.read(premiumContentAccessProvider)) {
           throw StateError('Dieser Stapel benötigt Premium.');
         }

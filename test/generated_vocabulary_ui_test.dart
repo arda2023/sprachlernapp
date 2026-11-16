@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sprachapp/data/content/content_auth_repository.dart';
 import 'package:sprachapp/data/generated_vocabulary_client.dart';
 import 'package:sprachapp/data/learning/generated_vocabulary_service.dart';
 import 'package:sprachapp/data/personal_learning_client.dart';
 import 'package:sprachapp/data/user/generated_vocabulary_store.dart';
 import 'package:sprachapp/domain/generated_vocabulary.dart';
+import 'package:sprachapp/presentation/providers/auth_providers.dart';
 import 'package:sprachapp/presentation/providers/generated_vocabulary_provider.dart';
 import 'package:sprachapp/presentation/providers/premium_access_provider.dart';
 import 'package:sprachapp/widgets/premium_content_gate.dart';
@@ -62,6 +64,18 @@ class _GeneratedUiService extends GeneratedVocabularyService {
   final statusChecks = <bool>[];
   final requests = <GeneratedVocabularyRequest>[];
   final saves = <Set<int>>[];
+  final staged = <GeneratedVocabularyRequest>[];
+
+  @override
+  Future<GeneratedVocabularyRequest> stageFreeRequest(
+    GeneratedVocabularyRequest request,
+  ) async {
+    staged.add(request);
+    return request;
+  }
+
+  @override
+  Future<void> clearFreeRequest(String requestId) async {}
 
   @override
   Future<GeneratedVocabularyDraft> generate(
@@ -125,7 +139,10 @@ class _PendingClient extends GeneratedVocabularyClient {
   }
 }
 
-GeneratedVocabularyDraft _draft({Set<String> existing = const {}}) {
+GeneratedVocabularyDraft _draft({
+  Set<String> existing = const {},
+  bool freeSample = false,
+}) {
   final request = GeneratedVocabularyRequest(
     requestId: '12345678-1234-4234-8234-123456789abc',
     lang: 'en',
@@ -137,6 +154,7 @@ GeneratedVocabularyDraft _draft({Set<String> existing = const {}}) {
       'contract': 1,
       'request_id': request.requestId,
       'lang': 'en',
+      if (freeSample) 'free_sample': true,
       'items': [
         {
           'form': 'ticket',
@@ -172,10 +190,24 @@ Widget _host(
   Widget? screen,
   double textScale = 1,
   bool premium = true,
+  bool Function()? freeAvailable,
+  GeneratedVocabularyRequest? restoredRequest,
 }) => ProviderScope(
   overrides: [
     premiumContentAccessProvider.overrideWithValue(premium),
     generatedVocabularyServiceProvider.overrideWith((ref) async => service),
+    if (freeAvailable != null) ...[
+      contentAuthProvider.overrideWithValue(
+        ContentAuthRepository('https://example.test', 'public'),
+      ),
+      accountSessionProvider.overrideWith((ref) => Stream.value(null)),
+      freeVocabularyGenerationAvailableProvider.overrideWith(
+        (ref) async => freeAvailable(),
+      ),
+    ],
+    if (restoredRequest != null)
+      pendingGeneratedVocabularyRequestProvider('en')
+          .overrideWith((ref) async => restoredRequest),
   ],
   child: MaterialApp(
     builder: (context, child) => MediaQuery(
@@ -221,16 +253,22 @@ void main() {
     final service = _GeneratedUiService();
     await tester.pumpWidget(_host(service, premium: false));
     final field = find.byKey(const ValueKey('generation-topic'));
-    expect(find.byType(PremiumLockBadge), findsOneWidget);
+    expect(find.byType(PremiumVeil), findsOneWidget);
     expect(find.text('Generieren'), findsNothing);
     expect(find.text('Mit Premium erstellen'), findsNothing);
-    final badge = tester.getRect(find.byType(PremiumLockBadge));
+    // The veil darkens the whole field; its lock sits in the middle.
+    final veil = tester.getRect(find.byType(PremiumVeil));
     final box = tester.getRect(
       find.ancestor(of: field, matching: find.byType(DecoratedBox)).first,
     );
-    expect(badge.right, lessThan(box.right));
-    expect(badge.left, greaterThan(box.center.dx));
-    expect(badge.top, greaterThan(box.top));
+    expect(veil, box);
+    final lock = tester.getCenter(
+      find.descendant(
+        of: find.byType(PremiumVeil),
+        matching: find.byIcon(CupertinoIcons.lock_fill),
+      ),
+    );
+    expect((lock - box.center).distance, lessThan(1));
     await tester.tap(field);
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
@@ -246,6 +284,76 @@ void main() {
   });
 
   setUpAll(() => GoogleFonts.config.allowRuntimeFetching = false);
+
+  testWidgets('restored draft checks the same UUID only on tap', (
+    tester,
+  ) async {
+    final service = _GeneratedUiService();
+    var available = false;
+    final pending = GeneratedVocabularyRequest(
+      requestId: '12345678-1234-4234-8234-123456789abc',
+      lang: 'en',
+      prompt: 'Reisen mit dem Zug',
+      count: 50,
+    );
+    await tester.pumpWidget(
+      _host(
+        service,
+        premium: false,
+        freeAvailable: () => available,
+        restoredRequest: pending,
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text(pending.prompt), findsOne);
+    expect(service.requests, isEmpty);
+    await tester.tap(find.text('Ergebnis prüfen'));
+    await tester.pump();
+    expect(service.requests.single.toJson(), pending.toJson());
+    expect(service.statusChecks, [true]);
+    expect(service.staged, isEmpty);
+
+    available = true;
+    service.pending.completeError(
+      const GeneratedVocabularyFailure('REQUEST_MISSING', 'Nicht gestartet'),
+    );
+    await tester.pumpAndSettle();
+    expect(service.requests, hasLength(1));
+    service.pending = Completer();
+    await tester.tap(find.text('Generieren'));
+    await tester.pump();
+    expect(service.requests.last.toJson(), pending.toJson());
+    expect(service.statusChecks, [true, false]);
+    expect(service.staged.single.toJson(), pending.toJson());
+  });
+
+  testWidgets('unused free allowance opens preview, then generation locks', (
+    tester,
+  ) async {
+    final service = _GeneratedUiService();
+    var available = true;
+    await tester.pumpWidget(
+      _host(service, premium: false, freeAvailable: () => available),
+    );
+    await tester.pump();
+    expect(
+      find.text('Ein Thema mit bis zu 50 Wörtern kostenlos pro Konto.'),
+      findsOne,
+    );
+    await _begin(tester);
+    expect(service.requests, hasLength(1));
+    available = false;
+    service.pending.complete(_draft(freeSample: true));
+    await tester.pump();
+    await tester.pumpAndSettle();
+    expect(find.byType(GeneratedVocabularySelectionScreen), findsOne);
+    expect(service.saves, isEmpty);
+    await tester.tap(find.byType(PrimaryActionButton).last);
+    await tester.pumpAndSettle();
+    expect(service.saves, hasLength(1));
+    expect(find.byType(PremiumVeil), findsOne);
+    expect(find.text('Generieren'), findsNothing);
+  });
 
   testWidgets(
     'composer reveals generation only after typing and offers counts',

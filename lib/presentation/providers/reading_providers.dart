@@ -90,6 +90,37 @@ class ReadingProgressNotifier extends Notifier<Map<String, ReadingEntry>> {
     });
   }
 
+  /// Persists completion after the end of a real library story was reached.
+  /// Returns whether this is the first story in the loaded reading history.
+  Future<bool> finishStory(String storyId) async {
+    final generation = _generation;
+    await _loaded;
+    if (!ref.mounted || generation != _generation) return false;
+    final before = state;
+    if (before[storyId]?.finished == true) return false;
+    final first = !before.entries.any(
+      (entry) => entry.value.finished && !entry.key.startsWith('import-'),
+    );
+    final after = {
+      ...before,
+      storyId: ReadingEntry(
+        fraction: 1,
+        updatedAt: DateTime.now(),
+        finished: true,
+      ),
+    };
+    state = after;
+    try {
+      await _save(generation);
+    } catch (_) {
+      if (ref.mounted && generation == _generation && identical(state, after)) {
+        state = before;
+      }
+      rethrow;
+    }
+    return ref.mounted && generation == _generation && first;
+  }
+
   /// Records the reading position of [storyId].
   void report(String storyId, double fraction) {
     final f = fraction.clamp(0.0, 1.0);

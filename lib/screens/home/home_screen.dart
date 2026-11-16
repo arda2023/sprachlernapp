@@ -15,6 +15,7 @@ import '../../presentation/providers/streak_providers.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/more_button.dart';
 import '../../widgets/section_heading.dart';
+import 'widgets/daily_suggestion.dart';
 import 'widgets/goal_panel.dart';
 import 'widgets/home_deck_row.dart';
 import 'widgets/home_header.dart';
@@ -36,6 +37,7 @@ class HomeScreen extends ConsumerWidget {
     required this.onSetGoal,
     required this.onSettings,
     this.scrollController,
+    this.onUpgradeStory,
   });
 
   /// Main vertical scroll view; the tab bar scrolls it to the top on re-tap.
@@ -44,6 +46,7 @@ class HomeScreen extends ConsumerWidget {
   static const _gutter = EdgeInsets.symmetric(horizontal: 20);
 
   final ValueChanged<Story> onOpenStory;
+  final ValueChanged<Story>? onUpgradeStory;
   final VoidCallback onBrowseStories;
   final ValueChanged<Deck> onOpenDeck;
   final VoidCallback onBrowseDecks;
@@ -130,6 +133,7 @@ class HomeScreen extends ConsumerWidget {
                   ContentUnavailableView(error: error, onRetry: retry),
             ),
           ),
+          DailySuggestionCard(onOpenStory: onOpenStory),
           const SizedBox(height: 28),
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 8),
@@ -182,6 +186,7 @@ class HomeScreen extends ConsumerWidget {
                     onUpgrade: () =>
                         showPremiumContentPaywall(context, interest: 'Stories'),
                     onOpen: onOpenStory,
+                    onUpgradeStory: onUpgradeStory,
                     progress: progress,
                     finished: finished,
                   );

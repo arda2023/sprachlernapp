@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 
 import '../theme/app_theme.dart';
 
-/// Building blocks for content on the orange popover (white ink), so every
+/// Building blocks for content on the orange popover (dark ink), so every
 /// bubble – language, goal, import, word menu, practice menu, form info –
 /// reads the same.
-const popoverInk = Color(0xFFFFFFFF);
+const popoverInk = AppColors.onActive;
 
 /// Text on the popover. Nothing is translucent; hierarchy comes from size
 /// and weight: headings and row titles bold, the line below them in medium
-/// weight (user decision 29.10.2026: no bold subtext under bold text). White
-/// on #BC5800 reaches 4.63:1, including small captions.
+/// weight (user decision 29.10.2026: no bold subtext under bold text). The
+/// dark ink on the app orange reaches 6.4:1, including small captions.
 abstract final class PopoverText {
   static TextStyle body({FontWeight weight = FontWeight.w500}) =>
       AppType.chrome(size: 17, weight: weight, color: popoverInk, height: 1.35);

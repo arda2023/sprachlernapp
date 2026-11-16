@@ -3,12 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 
 import '../../../domain/content_access_policy.dart';
-import '../../../domain/preferences.dart';
+import '../../../presentation/providers/auth_providers.dart';
 import '../../../presentation/providers/content_access_provider.dart';
-import '../../../presentation/providers/preferences_provider.dart';
-import '../../onboarding/paywall_screen.dart';
+import '../../../presentation/providers/database_providers.dart';
 import '../../../theme/app_theme.dart';
 import '../../../widgets/popover_content.dart';
+import '../../../widgets/premium_action.dart';
 import '../../../widgets/premium_content_gate.dart';
 
 /// Popover content behind "Importieren": where a text can come from. Pasting
@@ -28,16 +28,30 @@ class ImportPanel extends ConsumerStatefulWidget {
 
 class _ImportPanelState extends ConsumerState<ImportPanel> {
   String? _message;
+  bool _upgrading = false;
 
   Future<void> _paste() async {
+    final auth = ref.read(contentAuthProvider);
+    final owner = auth.localOwner;
+    final revision = auth.identityRevision;
+    final language = ref.read(selectedContentLanguageProvider).asData?.value;
     final data = await Clipboard.getData(Clipboard.kTextPlain);
     final text = data?.text?.trim() ?? '';
-    if (!mounted) return;
+    if (!mounted ||
+        !identical(auth, ref.read(contentAuthProvider)) ||
+        auth.localOwner != owner ||
+        auth.identityRevision != revision ||
+        ref.read(selectedContentLanguageProvider).asData?.value != language ||
+        ref.read(contentAccessProvider) != ContentAccessDecision.allowed) {
+      return;
+    }
+    final import = widget.onImportText;
+    if (import == null) return;
     if (text.isEmpty) {
       setState(() => _message = 'Die Zwischenablage ist leer.');
       return;
     }
-    final error = widget.onImportText!(text);
+    final error = import(text);
     if (error != null) {
       setState(() => _message = error);
       return;
@@ -46,16 +60,19 @@ class _ImportPanelState extends ConsumerState<ImportPanel> {
     Navigator.of(context).pop(true);
   }
 
-  Future<void> _viewPremium() async {
-    final preferences =
-        ref.read(preferencesProvider).asData?.value ??
-        const PracticePreferences();
-    await Navigator.of(context).push<void>(
-      PaywallScreen.route(
-        plan: (interest: 'Eigene Texte', dailyGoal: preferences.dailyGoal),
-        onContinue: () {},
-      ),
-    );
+  Future<void> _viewPremium([Future<void> Function()? onUnlocked]) async {
+    if (_upgrading) return;
+    _upgrading = true;
+    try {
+      final paid = await unlockPremiumAction(
+        context,
+        interest: 'Eigene Texte',
+        allowGuestSignIn: true,
+      );
+      if (paid && mounted) await onUnlocked?.call();
+    } finally {
+      _upgrading = false;
+    }
   }
 
   @override
@@ -64,8 +81,8 @@ class _ImportPanelState extends ConsumerState<ImportPanel> {
     // the paywall, so learners still see what is possible (31.10.2026).
     final locked =
         ref.watch(contentAccessProvider) != ContentAccessDecision.allowed;
-    VoidCallback? tap(VoidCallback? available) =>
-        locked ? _viewPremium : available;
+    VoidCallback? tap(Future<void> Function()? available) =>
+        locked ? () => _viewPremium(available) : available;
     final options = [
       _Option(
         icon: CupertinoIcons.doc_on_clipboard,
@@ -147,7 +164,7 @@ class _Option extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const white = Color(0xFFFFFFFF);
+    const white = AppColors.onActive;
     final available = onTap != null;
     return MergeSemantics(
       child: CupertinoButton(
@@ -166,7 +183,7 @@ class _Option extends StatelessWidget {
             constraints: const BoxConstraints(minHeight: 96),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: available ? white : const Color(0x26FFFFFF),
+              color: available ? white : const Color(0x261A1D26),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
@@ -189,7 +206,7 @@ class _Option extends StatelessWidget {
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0x33FFFFFF),
+                          color: const Color(0x331A1D26),
                           borderRadius: BorderRadius.circular(99),
                         ),
                         child: Text(

@@ -153,13 +153,13 @@ void main() {
     });
   }
 
-  for (final (permission, scheduled, visible) in [
-    (NotificationPermission.denied, true, false),
-    (NotificationPermission.allowed, false, false),
-    (NotificationPermission.allowed, true, true),
+  for (final (permission, scheduled) in [
+    (NotificationPermission.denied, true),
+    (NotificationPermission.allowed, false),
+    (NotificationPermission.allowed, true),
   ]) {
     testWidgets(
-      'timeline promise: permission $permission, scheduled $scheduled',
+      'no trial offer or reminder: permission $permission, legacy schedule $scheduled',
       (tester) async {
         final notifications = _Notifications(
           NotificationState(
@@ -186,10 +186,9 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
-        expect(
-          find.text('Erinnerung'),
-          visible ? findsOneWidget : findsNothing,
-        );
+        expect(find.text('Erinnerung'), findsNothing);
+        expect(find.text('49,99 €'), findsNothing);
+        expect(find.textContaining('kostenlos testen'), findsNothing);
         expect(tester.takeException(), isNull);
       },
     );

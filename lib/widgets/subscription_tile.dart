@@ -204,7 +204,7 @@ class _SubscriptionTileState extends ConsumerState<SubscriptionTile> {
                               size: 13,
                               weight: FontWeight.w500,
                               color: colors.textMuted,
-                              height: 1.3,
+                              height: 1.35,
                             ),
                           ),
                         ],
@@ -302,7 +302,7 @@ class _PillButton extends StatelessWidget {
               style: AppType.chrome(
                 size: 15,
                 weight: FontWeight.w700,
-                color: const Color(0xFFFFFFFF),
+                color: AppColors.onActive,
               ),
             ),
           ),

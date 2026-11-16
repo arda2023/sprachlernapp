@@ -105,4 +105,34 @@ void main() {
     expect(find.text('Inhalte nicht verfügbar'), findsOneWidget);
     expect(panda, findsNothing);
   });
+
+  testWidgets('Hint bubble unfolds without overflow at any width', (
+    tester,
+  ) async {
+    const hint = 'Übe einen Stapel oder füge ein Wort aus einer Story hinzu.';
+    final progress = AnimationController(vsync: const TestVSync());
+    addTearDown(progress.dispose);
+    for (final width in [180.0, 260.0, 420.0]) {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: buildAppTheme(),
+          home: Center(
+            child: SizedBox(
+              width: width,
+              child: PandaHintBubble(hint, progress: progress),
+            ),
+          ),
+        ),
+      );
+      final size = tester.getSize(find.byType(PandaHintBubble));
+      for (final t in [0.0, 0.1, 0.3, 0.5, 0.8, 1.0]) {
+        progress.value = t;
+        await tester.pump();
+        // Layout uses the final size, so text never re-wraps mid-animation.
+        expect(tester.getSize(find.byType(PandaHintBubble)), size);
+        expect(tester.takeException(), isNull);
+      }
+      expect(find.bySemanticsLabel(hint), findsOneWidget);
+    }
+  });
 }

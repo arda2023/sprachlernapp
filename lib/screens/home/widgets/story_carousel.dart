@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 
+import '../../../domain/editorial_stories.dart';
 import '../../../models/home_models.dart';
 import '../../../models/story_category.dart';
 import '../../../theme/app_theme.dart';
@@ -73,6 +74,7 @@ class StoryCarousel extends StatelessWidget {
     this.finished = const {},
     this.premiumLocked = false,
     this.onUpgrade,
+    this.onUpgradeStory,
     this.onOpenFrom,
     this.width = cardWidth,
     this.height = cardHeight,
@@ -91,6 +93,7 @@ class StoryCarousel extends StatelessWidget {
   final Set<String> finished;
   final bool premiumLocked;
   final VoidCallback? onUpgrade;
+  final ValueChanged<Story>? onUpgradeStory;
 
   /// Card size: tall covers by default, wide and short for a shelf row.
   final double width;
@@ -112,8 +115,10 @@ class StoryCarousel extends StatelessWidget {
               story: stories[i],
               progress: progress[stories[i].id],
               finished: finished.contains(stories[i].id),
-              premiumLocked: premiumLocked,
-              onUpgrade: onUpgrade,
+              premiumLocked: premiumLocked && !isFreeStoryId(stories[i].id),
+              onUpgrade: onUpgradeStory == null
+                  ? onUpgrade
+                  : () => onUpgradeStory!(stories[i]),
               width: width,
               height: height,
               onTap: () => onOpenFrom != null
@@ -138,6 +143,7 @@ class StoryFeatureShelf extends StatelessWidget {
     this.finished = const {},
     this.premiumLocked = false,
     this.onUpgrade,
+    this.onUpgradeStory,
   });
 
   final List<Story> stories;
@@ -146,6 +152,7 @@ class StoryFeatureShelf extends StatelessWidget {
   final Set<String> finished;
   final bool premiumLocked;
   final VoidCallback? onUpgrade;
+  final ValueChanged<Story>? onUpgradeStory;
 
   @override
   Widget build(BuildContext context) {
@@ -161,8 +168,10 @@ class StoryFeatureShelf extends StatelessWidget {
               story: lead,
               progress: progress[lead.id],
               finished: finished.contains(lead.id),
-              premiumLocked: premiumLocked,
-              onUpgrade: onUpgrade,
+              premiumLocked: premiumLocked && !isFreeStoryId(lead.id),
+              onUpgrade: onUpgradeStory == null
+                  ? onUpgrade
+                  : () => onUpgradeStory!(lead),
               width: constraints.maxWidth,
               height: 196,
               onTap: () => onOpen(lead),
@@ -178,6 +187,7 @@ class StoryFeatureShelf extends StatelessWidget {
             finished: finished,
             premiumLocked: premiumLocked,
             onUpgrade: onUpgrade,
+            onUpgradeStory: onUpgradeStory,
             width: 232,
             height: 124,
           ),
@@ -445,10 +455,8 @@ class StoryCard extends StatelessWidget {
                     finished: finished,
                   ),
                   if (premiumLocked)
-                    const Positioned(
-                      top: 10,
-                      right: 10,
-                      child: PremiumLockBadge(onDark: true),
+                    const PremiumVeil(
+                      radius: BorderRadius.all(Radius.circular(18)),
                     )
                   else if (finished)
                     const Positioned(

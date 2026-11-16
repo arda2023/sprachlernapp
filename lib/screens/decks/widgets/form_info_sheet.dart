@@ -51,7 +51,7 @@ class FormInfoSheet extends StatelessWidget {
     final serif = AppType.editorial(
       color: popoverInk,
       size: 20,
-      height: 1.3,
+      height: 1.35,
       letterSpacing: 0,
     );
     return Column(

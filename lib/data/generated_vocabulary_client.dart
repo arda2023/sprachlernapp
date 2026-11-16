@@ -235,7 +235,7 @@ GeneratedVocabularyFailure _serverFailure(int status, Object? json) {
     'AUTH_REQUIRED' => 'Bitte zuerst anmelden.',
     'AI_MONTHLY_LIMIT' => 'Dein monatliches KI-Limit ist erreicht. Neue Anfragen sind ab dem nächsten Monat wieder möglich.',
     'TOPIC_NOT_ALLOWED' => 'Bitte nenne nur ein Vokabelthema, zum Beispiel „Urlaub am Meer“. Fragen und andere Aufgaben sind hier nicht möglich.',
-    'PREMIUM_REQUIRED' => 'Eigene Vokabelthemen benötigen Premium.',
+    'PREMIUM_REQUIRED' => 'Weitere Vokabelthemen benötigen Premium.',
     'RATE_LIMIT' => 'Das Tageslimit ist erreicht. Bitte später versuchen.',
     'REQUEST_PENDING' => 'Diese Anfrage wird noch bearbeitet.',
     'REQUEST_UNCERTAIN' || 'TIMEOUT' =>
