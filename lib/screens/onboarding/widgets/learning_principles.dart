@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show ScaffoldMessenger, SnackBar;
 import 'package:url_launcher/url_launcher.dart';
@@ -5,56 +7,19 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../domain/learning_evidence.dart';
 import '../../../theme/app_theme.dart';
 import 'onboarding_motion.dart';
+import 'paywall_demos.dart';
 
-/// Small, interactive explanations. They never write learning progress.
-class LearningPrinciples extends StatefulWidget {
+/// The paywall benefits, each with a short animation of the real surface
+/// (user request 21.11.2026). Not interactive; they never write learning
+/// progress.
+class LearningPrinciples extends StatelessWidget {
   const LearningPrinciples({super.key, this.language = 'en'});
   final String language;
 
   @override
-  State<LearningPrinciples> createState() => _LearningPrinciplesState();
-}
-
-class _LearningPrinciplesState extends State<LearningPrinciples> {
-  double _visible = 0.55;
-  bool _revealed = false;
-  int _visit = 0;
-
-  ({String text, String sentence, String word}) get _example =>
-      switch (widget.language) {
-        'pt-BR' => (
-          text: 'Uma pequena história abre uma porta para novas palavras. Cada frase dá mais sentido ao que você aprende.',
-          sentence: 'Eu … a porta.',
-          word: 'abro',
-        ),
-        'es' => (
-          text: 'Una pequeña historia abre una puerta a nuevas palabras. Cada frase da más sentido a lo que aprendes.',
-          sentence: 'Yo … la puerta.',
-          word: 'abro',
-        ),
-        'it' => (
-          text: 'Una piccola storia apre una porta a nuove parole. Ogni frase dà più senso a quello che impari.',
-          sentence: 'Io … la porta.',
-          word: 'apro',
-        ),
-        'nb' => (
-          text: 'En liten historie åpner en dør til nye ord. Hver setning gir mer mening til det du lærer.',
-          sentence: 'Jeg … døren.',
-          word: 'åpner',
-        ),
-        _ => (
-          text: 'A small story opens a door to new words. Every sentence gives more meaning to what you learn.',
-          sentence: 'I … the door.',
-          word: 'open',
-        ),
-      };
-
-  @override
   Widget build(BuildContext context) {
     final colors = context.appColors;
-    final example = _example;
-    final words = example.text.split(' ');
-    final shown = (_visible * words.length).round();
+    final examples = PaywallExamples.of(language);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -64,222 +29,29 @@ class _LearningPrinciplesState extends State<LearningPrinciples> {
         ),
         const SizedBox(height: 22),
         _Principle(
-          number: '01',
-          title: 'Im Satz verstehen.',
-          detail: 'Zusammenhang macht Wörter greifbar.',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Semantics(
-                label:
-                    'Beispieltext: $shown von ${words.length} Wörtern sichtbar.',
-                value: [
-                  for (final (i, word) in words.indexed)
-                    (i.isEven ? i ~/ 2 : (words.length + 1) ~/ 2 + i ~/ 2) <
-                            shown
-                        ? word
-                        : '…',
-                ].join(' '),
-                child: ExcludeSemantics(
-                  child: Wrap(
-                    spacing: 5,
-                    runSpacing: 7,
-                    children: [
-                      for (final (i, word) in words.indexed)
-                        // A fixed permutation reveals scattered words rather
-                        // than a prefix. Counts refer only to this example.
-                        AnimatedContainer(
-                          duration: MediaQuery.disableAnimationsOf(context)
-                              ? Duration.zero
-                              : const Duration(milliseconds: 180),
-                          curve: Curves.easeOutCubic,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 3,
-                            vertical: 1,
-                          ),
-                          decoration: BoxDecoration(
-                            color:
-                                (i.isEven
-                                        ? i ~/ 2
-                                        : (words.length + 1) ~/ 2 + i ~/ 2) <
-                                    shown
-                                ? const Color(0x00000000)
-                                : colors.hairline,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Text(
-                            word,
-                            style: AppType.editorial(
-                              size: 20,
-                              height: 1.45,
-                              color:
-                                  (i.isEven
-                                          ? i ~/ 2
-                                          : (words.length + 1) ~/ 2 + i ~/ 2) <
-                                      shown
-                                  ? colors.textPrimary
-                                  : const Color(0x00000000),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Semantics(
-                label: 'Wörter im Beispiel aufdecken',
-                child: CupertinoSlider(
-                  key: const Key('context-words-slider'),
-                  value: _visible,
-                  min: 0.2,
-                  activeColor: colors.textPrimary,
-                  onChanged: (value) => setState(() => _visible = value),
-                ),
-              ),
-              ColoredBox(
-                color: colors.raisedInk,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: Text(
-                    '$shown von ${words.length} Wörtern sichtbar',
-                    textAlign: TextAlign.center,
-                    style: AppType.meta(color: colors.textMuted),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 28),
-        _Principle(
-          number: '02',
           title: 'Selbst abrufen.',
-          detail: 'Vom deutschen Gedanken zum Wort in der Lernsprache.',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Ich öffne die Tür.',
-                style: AppType.chrome(color: colors.textMuted),
-              ),
-              const SizedBox(height: 14),
-              AnimatedSwitcher(
-                duration: MediaQuery.disableAnimationsOf(context)
-                    ? Duration.zero
-                    : const Duration(milliseconds: 180),
-                child: Text(
-                  _revealed
-                      ? example.sentence.replaceFirst('…', example.word)
-                      : example.sentence,
-                  key: ValueKey((_revealed, widget.language)),
-                  style: AppType.editorial(size: 24, color: colors.textPrimary),
-                ),
-              ),
-              const SizedBox(height: 16),
-              CupertinoButton(
-                key: const Key('retrieval-reveal'),
-                color: colors.nightPage,
-                borderRadius: BorderRadius.circular(16),
-                onPressed: () {
-                  Haptic.select();
-                  setState(() => _revealed = !_revealed);
-                },
-                child: Text(
-                  _revealed ? 'Noch einmal abrufen' : 'Wort aufdecken',
-                  style: AppType.chrome(
-                    weight: FontWeight.w600,
-                    color: colors.textPrimary,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          detail: 'Wörter, die du selbst abrufst, bleiben besser hängen.',
+          child: RecallDemo(examples: examples),
         ),
-        const SizedBox(height: 28),
+        const SizedBox(height: 32),
         _Principle(
-          number: '03',
-          title: 'Mit Abstand festigen.',
-          detail: 'Wiedersehen. Erinnern. Weiterlernen.',
-          child: Column(
-            children: [
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                alignment: WrapAlignment.center,
-                children: [
-                  for (var i = 0; i < 3; i++) ...[
-                    Semantics(
-                      selected: _visit == i,
-                      child: CupertinoButton(
-                        key: Key('spaced-visit-$i'),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 10,
-                        ),
-                        color: _visit == i
-                            ? colors.textPrimary
-                            : colors.nightPage,
-                        borderRadius: BorderRadius.circular(14),
-                        onPressed: () {
-                          Haptic.select();
-                          setState(() => _visit = i);
-                        },
-                        child: Text(
-                          ['Heute', 'Morgen', 'Später'][i],
-                          style: AppType.chrome(
-                            size: 15,
-                            weight: FontWeight.w600,
-                            color: _visit == i
-                                ? colors.nightPage
-                                : colors.textPrimary,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-              const SizedBox(height: 22),
-              AnimatedSwitcher(
-                duration: MediaQuery.disableAnimationsOf(context)
-                    ? Duration.zero
-                    : const Duration(milliseconds: 220),
-                child: Column(
-                  key: ValueKey(_visit),
-                  children: [
-                    Icon(
-                      [
-                        CupertinoIcons.book,
-                        CupertinoIcons.arrow_clockwise,
-                        CupertinoIcons.checkmark_circle,
-                      ][_visit],
-                      size: 30,
-                      color: colors.textPrimary,
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      [
-                        'Entdecken',
-                        'Wieder abrufen',
-                        'Erneut festigen',
-                      ][_visit],
-                      style: AppType.chrome(
-                        weight: FontWeight.w600,
-                        color: colors.textPrimary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                'Beispielrhythmus. Deine Antworten bestimmen die Abstände.',
-                textAlign: TextAlign.center,
-                style: AppType.meta(color: colors.textMuted),
-              ),
-            ],
-          ),
+          title: 'Im Satz verstehen.',
+          detail:
+              'Ein Tipp aufs Wort zeigt die Bedeutung, ohne den Lesefluss zu stoppen.',
+          child: GlossDemo(examples: examples),
+        ),
+        const SizedBox(height: 32),
+        _Principle(
+          title: 'Frei schreiben.',
+          detail:
+              'Übersetze ganze Sätze. Der AI-Tutor zeigt dir, was sich verbessern lässt.',
+          child: TutorDemo(examples: examples),
+        ),
+        const SizedBox(height: 32),
+        _Principle(
+          title: 'Wörter zu deinem Thema.',
+          detail: 'Beschreibe ein Thema. Linglossa erstellt passende Vokabeln.',
+          child: TopicDemo(examples: examples),
         ),
         const SizedBox(height: 12),
         Align(
@@ -297,12 +69,11 @@ class _LearningPrinciplesState extends State<LearningPrinciples> {
 
 class _Principle extends StatelessWidget {
   const _Principle({
-    required this.number,
     required this.title,
     required this.detail,
     required this.child,
   });
-  final String number, title, detail;
+  final String title, detail;
   final Widget child;
 
   @override
@@ -311,8 +82,6 @@ class _Principle extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(number, style: AppType.meta(color: colors.textMuted)),
-        const SizedBox(height: 6),
         Semantics(
           header: true,
           child: Text(
@@ -321,16 +90,13 @@ class _Principle extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 6),
-        Text(detail, style: AppType.chrome(color: colors.textMuted)),
-        const SizedBox(height: 16),
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: colors.raisedInk,
-            borderRadius: BorderRadius.circular(24),
-          ),
-          child: child,
+        Text(
+          detail,
+          style: AppType.chrome(color: colors.textMuted, height: 1.35),
         ),
+        const SizedBox(height: 16),
+        // The demonstrations draw their own surfaces, like in the app.
+        child,
       ],
     );
   }
@@ -422,107 +188,223 @@ Future<void> showLearningEvidence(
   },
 );
 
+/// Free against Premium as one card (user reference 21.11.2026): feature
+/// names left, Free in ink, Premium in orange. Where three columns do not
+/// fit without breaking inside a word, first the type steps down to 13,
+/// then each feature's values stack below its name.
 class PremiumComparison extends StatelessWidget {
   const PremiumComparison({super.key});
+
+  /// Feature, Free, Premium. "✓" and "—" are drawn as icons. The line break
+  /// only applies in the table; a no-break space keeps "im Monat" together.
+  static const rows = [
+    ('Stapel', 'Basis', 'Alle'),
+    ('Stories', '1', 'Alle'),
+    ('AI-Tutor', '3 Sätze\npro Tag', 'Unlimited'),
+    ('Vokabelgenerierung', '1× im Monat', 'Unlimited'),
+    ('Eigene Texte', '—', '✓'),
+    ('Text-, Hör- & Grammatikübungen', '—', '✓'),
+  ];
+
+  /// Label column: right padding plus rounding slack.
+  static const _labelGap = 9.0;
+
+  /// Value columns: horizontal padding plus rounding slack.
+  static const _valueGap = 9.0;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.appColors;
-    const rows = [
-      ('Wortschatz-Stapel', 'Allgemeine Sprache', 'Alle'),
-      ('Stories', '1', 'Alle'),
-      ('Eigene Themen', '1× bis 50 Wörter', '5 Aufträge / 24 h¹'),
-      ('Eigene Texte', '—', '✓'),
-      ('Text-, Hör- & Grammatikübungen', '—', '✓'),
-      ('Neue KI-Übersetzungen', '5 gesamt', '500 / Monat'),
-    ];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Container(
+      padding: const EdgeInsets.fromLTRB(14, 14, 14, 12),
+      decoration: BoxDecoration(
+        color: colors.raisedInk,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final scaler = MediaQuery.textScalerOf(context);
+          // Text also inherits the theme's letter spacing.
+          final inherited = DefaultTextStyle.of(context).style;
+          // The widest unbreakable run (as the line breaker sees it) of
+          // each column decides whether three columns fit.
+          double widest(Iterable<String> texts, TextStyle style) {
+            var widest = 0.0;
+            for (final text in texts) {
+              final painter = TextPainter(
+                text: TextSpan(text: text, style: inherited.merge(style)),
+                textDirection: TextDirection.ltr,
+                textScaler: scaler,
+              )..layout();
+              widest = math.max(widest, painter.minIntrinsicWidth);
+              painter.dispose();
+            }
+            return widest;
+          }
+
+          for (final size in const [15.0, 13.0]) {
+            final label =
+                widest([for (final row in rows) row.$1], _label(colors, size)) +
+                _labelGap;
+            final value =
+                math.max(
+                  widest([
+                    'Free',
+                    'Premium',
+                    for (final row in rows) ...[row.$2, row.$3],
+                  ], _premium(colors, size)),
+                  24,
+                ) +
+                _valueGap;
+            if (label + 2 * value <= constraints.maxWidth) {
+              return _table(
+                context,
+                size,
+                math.min(96, (constraints.maxWidth - label) / 2),
+              );
+            }
+          }
+          return _stacked(context);
+        },
+      ),
+    );
+  }
+
+  TextStyle _label(AppPalette colors, [double size = 15]) =>
+      AppType.chrome(size: size, color: colors.textPrimary, height: 1.35);
+
+  TextStyle _free(AppPalette colors, [double size = 15]) => AppType.chrome(
+    size: size,
+    weight: FontWeight.w600,
+    color: colors.textPrimary,
+    height: 1.35,
+  );
+
+  TextStyle _premium(AppPalette colors, [double size = 15]) => AppType.chrome(
+    size: size,
+    weight: FontWeight.w700,
+    color: colors.accentText,
+    height: 1.35,
+  );
+
+  Widget _table(BuildContext context, double size, double valueWidth) {
+    final colors = context.appColors;
+    return Table(
+      columnWidths: {
+        0: const FlexColumnWidth(),
+        1: FixedColumnWidth(valueWidth),
+        2: FixedColumnWidth(valueWidth),
+      },
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: [
-        Semantics(
-          header: true,
-          child: Text(
-            'Dein Tempo.\nDein Umfang.',
-            style: AppType.editorial(size: 28, color: colors.textPrimary),
-          ),
-        ),
-        const SizedBox(height: 20),
-        Table(
-          columnWidths: const {
-            0: FlexColumnWidth(1.65),
-            1: FlexColumnWidth(),
-            2: FlexColumnWidth(),
-          },
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        TableRow(
           children: [
-            TableRow(
-              children: [
-                const SizedBox(),
-                _cell(context, 'Free', true),
-                _cell(context, 'Premium', true),
-              ],
-            ),
-            for (final row in rows)
-              TableRow(
-                decoration: BoxDecoration(
-                  border: Border(top: BorderSide(color: colors.hairline)),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Text(
+                'Funktionen',
+                style: AppType.chrome(
+                  size: size,
+                  color: colors.textMuted,
+                  height: 1.35,
                 ),
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 16, 10, 16),
-                    child: Text(
-                      row.$1,
-                      style: AppType.chrome(
-                        size: 15,
-                        color: colors.textPrimary,
-                      ),
-                    ),
-                  ),
-                  _cell(context, row.$2, false),
-                  _cell(context, row.$3, true),
-                ],
               ),
+            ),
+            _cell(
+              context,
+              'Free',
+              _free(colors, size).copyWith(fontWeight: FontWeight.w700),
+              header: true,
+            ),
+            _cell(context, 'Premium', _premium(colors, size), header: true),
           ],
         ),
-        const SizedBox(height: 10),
-        Text(
-          '¹ Bis zu 50 Wörter pro Auftrag, höchstens 250 in 24 Stunden. Gemeinsame Kostenlimits können die Nutzung zusätzlich begrenzen.',
-          style: AppType.meta(color: colors.textMuted),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          'Free bleibt kostenlos. Ohne Testabo.',
-          style: AppType.chrome(
-            size: 15,
-            weight: FontWeight.w600,
-            color: colors.textPrimary,
+        for (final row in rows)
+          TableRow(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 11, 8, 11),
+                child: Text(row.$1, style: _label(colors, size)),
+              ),
+              _cell(context, row.$2, _free(colors, size)),
+              _cell(context, row.$3, _premium(colors, size)),
+            ],
           ),
-        ),
       ],
     );
   }
 
-  Widget _cell(BuildContext context, String text, bool strong) => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 14),
-    child: text == '✓' || text == '—'
-        ? Semantics(
-            label: text == '✓' ? 'Enthalten' : 'Nicht enthalten',
-            child: ExcludeSemantics(
+  Widget _stacked(BuildContext context) {
+    final colors = context.appColors;
+    Widget line(String plan, String value, TextStyle style) => Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              plan,
+              style: AppType.chrome(color: colors.textMuted, height: 1.35),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Flexible(child: _value(context, value, style, TextAlign.end)),
+        ],
+      ),
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (final (i, row) in rows.indexed)
+          Padding(
+            padding: EdgeInsets.only(top: i == 0 ? 0 : 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  row.$1,
+                  style: _label(colors).copyWith(fontWeight: FontWeight.w700),
+                ),
+                line('Free', row.$2.replaceAll('\n', ' '), _free(colors)),
+                line('Premium', row.$3, _premium(colors)),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _cell(
+    BuildContext context,
+    String text,
+    TextStyle style, {
+    bool header = false,
+  }) => Padding(
+    padding: header
+        ? const EdgeInsets.fromLTRB(4, 0, 4, 4)
+        : const EdgeInsets.symmetric(horizontal: 4, vertical: 11),
+    child: _value(context, text, style, TextAlign.center),
+  );
+
+  Widget _value(
+    BuildContext context,
+    String text,
+    TextStyle style,
+    TextAlign align,
+  ) => text == '✓' || text == '—'
+      ? Semantics(
+          label: text == '✓' ? 'Enthalten' : 'Nicht enthalten',
+          child: ExcludeSemantics(
+            child: Align(
+              alignment: align == TextAlign.center
+                  ? Alignment.center
+                  : Alignment.centerRight,
               child: Icon(
                 text == '✓' ? CupertinoIcons.checkmark : CupertinoIcons.minus,
                 size: 20,
-                color: context.appColors.textPrimary,
+                color: text == '✓' ? style.color : context.appColors.textMuted,
               ),
             ),
-          )
-        : Text(
-            text,
-            textAlign: TextAlign.center,
-            style: AppType.chrome(
-              size: 15,
-              weight: strong ? FontWeight.w700 : FontWeight.w500,
-              color: context.appColors.textPrimary,
-            ),
           ),
-  );
+        )
+      : Text(text, textAlign: align, style: style);
 }

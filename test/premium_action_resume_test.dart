@@ -225,7 +225,7 @@ void main() {
       final open = find.text('Übung aufrufen');
       await tester.tap(open);
       await tester.pumpAndSettle();
-      await tester.tap(find.bySemanticsLabel('Schließen'));
+      await tester.tap(find.bySemanticsLabel('Später'));
       await tester.pumpAndSettle();
       expect(find.byType(GrammarExerciseScreen), findsNothing);
 

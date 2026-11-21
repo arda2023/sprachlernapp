@@ -235,7 +235,7 @@ void main() {
   });
 
   testWidgets('A saved first practice precedes the scrollable paywall; '
-      '"Kostenlos weiterlernen" opens the app', (tester) async {
+      '"Später" opens the app', (tester) async {
     final store = MemoryJsonStore();
     final sounds = RecordingOnboardingSounds();
     final haptics = recordHaptics(tester);
@@ -290,7 +290,7 @@ void main() {
       find.bySemanticsLabel('Dein Plan: Reisen, 15 Wörter am Tag'),
       findsNothing,
     );
-    expect(find.text('Mach mehr aus\ndeinen Wörtern.'), findsOne);
+    expect(find.text('Erreiche mehr\nmit Premium'), findsOne);
     expect(find.byKey(const Key('premium-details-scroll')), findsOneWidget);
     // Yearly is preselected and uses the Store-localized price and period.
     expect(
@@ -314,7 +314,7 @@ void main() {
     );
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
 
-    await tapLabel(tester, 'Kostenlos weiterlernen');
+    await tapLabel(tester, 'Später');
     expect(find.byType(PaywallScreen), findsNothing);
     expect(find.byType(AppShell), findsOneWidget);
     expect(await store.read(), {'done': true, 'interest': 'Reisen'});
@@ -680,9 +680,9 @@ void main() {
     expect(find.byType(PaywallScreen), findsNothing);
     expect(find.text('Dein Start steht'), findsOneWidget);
     expect((await store.read() as Map)['done'], isFalse);
-    // The closing X also continues into the app.
+    // "Später" also continues into the app.
     await tapLabel(tester, 'Weiter');
-    await tapLabel(tester, 'Schließen');
+    await tapLabel(tester, 'Später');
     expect(find.byType(AppShell), findsOneWidget);
   });
 

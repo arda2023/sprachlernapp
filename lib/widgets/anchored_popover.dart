@@ -280,6 +280,7 @@ class PopoverBubble extends StatelessWidget {
     required this.arrowUp,
     required this.child,
     this.radius = defaultRadius,
+    this.shadow = true,
   });
 
   static const arrowHeight = 10.0;
@@ -294,18 +295,23 @@ class PopoverBubble extends StatelessWidget {
   final double radius;
   final Widget child;
 
+  /// Off only where the bubble sits flat on a card (paywall demo).
+  final bool shadow;
+
   @override
   Widget build(BuildContext context) => DecoratedBox(
     decoration: ShapeDecoration(
       color: color,
       shape: _BubbleBorder(arrowX: arrowX, arrowUp: arrowUp, radius: radius),
-      shadows: const [
-        BoxShadow(
-          color: Color(0x33000000),
-          blurRadius: 24,
-          offset: Offset(0, 8),
-        ),
-      ],
+      shadows: shadow
+          ? const [
+              BoxShadow(
+                color: Color(0x33000000),
+                blurRadius: 24,
+                offset: Offset(0, 8),
+              ),
+            ]
+          : null,
     ),
     child: Padding(
       padding: EdgeInsets.only(

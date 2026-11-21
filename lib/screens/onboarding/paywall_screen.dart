@@ -30,8 +30,8 @@ typedef PaywallContext = ({String interest, int dailyGoal});
 /// Shared with the plan card on the last onboarding step.
 const paywallHeroTag = 'onboarding-plan-card';
 
-/// A closable, paid offer with a permanent free tier. Interactive learning
-/// principles explain the approach; the store remains the price authority.
+/// A closable, paid offer with a permanent free tier. Animated benefits
+/// explain the approach; the store remains the price authority.
 class PaywallScreen extends ConsumerStatefulWidget {
   const PaywallScreen({
     super.key,
@@ -456,20 +456,31 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
         MediaQuery.sizeOf(context).height >= 740;
     final language =
         ref.watch(selectedContentLanguageProvider).asData?.value ?? 'en';
+    final showPlans = !needsAccount && !purchase.hasPremiumUiAccess;
     final content = Padding(
       padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'LINGLOSSA PREMIUM',
-            style: AppType.meta(color: colors.textMuted),
-          ),
-          const SizedBox(height: 12),
           Semantics(
             header: true,
-            child: Text(
-              reason.title,
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  // "Premium" in the orange of the comparison's column.
+                  for (final (i, part) in reason.title
+                      .split('Premium')
+                      .indexed) ...[
+                    if (i > 0)
+                      TextSpan(
+                        text: 'Premium',
+                        style: TextStyle(color: colors.accentText),
+                      ),
+                    TextSpan(text: part),
+                  ],
+                ],
+              ),
+              textAlign: TextAlign.center,
               style: AppType.editorial(
                 size: 32,
                 height: 1.1,
@@ -477,17 +488,15 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 14),
-          Text(
-            reason.detail,
-            style: AppType.chrome(color: colors.textMuted, height: 1.35),
-          ),
-          const SizedBox(height: 28),
-          if (!needsAccount && !purchase.hasPremiumUiAccess) plans,
-          if (!pinActions) ...[const SizedBox(height: 14), actions],
-          const SizedBox(height: 30),
+          const SizedBox(height: 24),
+          // Plans sit right above the purchase button, here or pinned.
+          if (!pinActions) ...[
+            if (showPlans) ...[plans, const SizedBox(height: 14)],
+            actions,
+            const SizedBox(height: 28),
+          ],
           const PremiumComparison(),
-          const SizedBox(height: 42),
+          const SizedBox(height: 40),
           LearningPrinciples(language: language),
           const SizedBox(height: 20),
         ],
@@ -505,25 +514,14 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
               constraints: const BoxConstraints(maxWidth: 640),
               child: Column(
                 children: [
+                  // The way out sits where the eye looks for "Skip", not next
+                  // to the purchase button; restore across from it (Mobbin:
+                  // 5 Minute Journal, Grok, Tide Guide; 21.11.2026).
                   Padding(
                     padding: const EdgeInsets.fromLTRB(6, 2, 6, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Pressable(
-                          label: 'Schließen',
-                          haptic: Haptic.light,
-                          onTap: _finish,
-                          child: SizedBox(
-                            width: 44,
-                            height: 44,
-                            child: Icon(
-                              CupertinoIcons.xmark,
-                              size: 22,
-                              color: colors.textMuted,
-                            ),
-                          ),
-                        ),
                         Flexible(
                           child: TextAction(
                             label: purchase.billingReady
@@ -534,8 +532,13 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                             onTap: purchase.billingReady
                                 ? _restore
                                 : _checkAccountAccess,
-                            size: 14,
                           ),
+                        ),
+                        TextAction(
+                          label: purchase.hasPremiumUiAccess
+                              ? 'Schließen'
+                              : 'Später',
+                          onTap: _finish,
                         ),
                       ],
                     ),
@@ -552,7 +555,19 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                         color: colors.nightPage,
                         border: Border(top: BorderSide(color: colors.hairline)),
                       ),
-                      child: actions,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          // Room above for the saving badge on the cards.
+                          if (showPlans)
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 18, 20, 10),
+                              child: plans,
+                            ),
+                          actions,
+                        ],
+                      ),
                     ),
                 ],
               ),
@@ -680,11 +695,6 @@ class _PaywallActions extends StatelessWidget {
                 style: AppType.meta(color: colors.textMuted),
               ),
             ),
-          TextAction(
-            label: 'Kostenlos weiterlernen',
-            onTap: onContinue,
-            strong: true,
-          ),
           Wrap(
             alignment: WrapAlignment.center,
             children: [
@@ -817,10 +827,11 @@ class _PlanRow extends StatelessWidget {
   }
 }
 
-/// One StoreKit/Play product as a card: title and check on top, the
-/// localized price large, below it the period or the per-month equivalent.
-/// Selected: orange ring (the border carries the state), faint orange tint,
-/// filled check that pops in.
+/// One StoreKit/Play product as a card: the localized price large with its
+/// period right after it and the check beside it; a yearly card adds the
+/// per-month equivalent. No "Jährlich"/"Monatlich" title: the period already
+/// says it (user request 21.11.2026). Selected: orange ring (the border
+/// carries the state), faint orange tint, filled check that pops in.
 class _PlanCard extends StatelessWidget {
   const _PlanCard({
     required this.product,
@@ -846,7 +857,7 @@ class _PlanCard extends StatelessWidget {
         product.localizedPeriod ?? (yearly ? 'pro Jahr' : 'pro Monat');
     final perMonth = yearly && product.priceAmount != null
         ? '${product.formatLike(product.priceAmount! / 12)} / Monat'
-        : period;
+        : null;
     return Pressable(
       label:
           '$title, ${product.localizedPrice} $period, $detail'
@@ -878,31 +889,32 @@ class _PlanCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
+                    // Never split between amount and currency; on very
+                    // narrow cards the price shrinks instead.
                     Expanded(
-                      child: Text(
-                        title,
-                        style: AppType.chrome(
-                          size: 15,
-                          weight: FontWeight.w700,
-                          color: colors.textPrimary,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          product.localizedPrice.replaceAll(' ', ' '),
+                          maxLines: 1,
+                          style: AppType.chrome(
+                            size: 24,
+                            weight: FontWeight.w800,
+                            color: colors.textPrimary,
+                            tabular: true,
+                          ),
                         ),
                       ),
                     ),
+                    const SizedBox(width: 8),
                     _PlanCheck(selected: selected),
                   ],
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  product.localizedPrice,
-                  style: AppType.chrome(
-                    size: 24,
-                    weight: FontWeight.w800,
-                    color: colors.textPrimary,
-                    tabular: true,
-                  ),
-                ),
                 const SizedBox(height: 2),
-                Text(perMonth, style: AppType.meta(color: colors.textMuted)),
+                Text(period, style: AppType.meta(color: colors.textMuted)),
+                if (perMonth != null)
+                  Text(perMonth, style: AppType.meta(color: colors.textMuted)),
               ],
             ),
           ),
