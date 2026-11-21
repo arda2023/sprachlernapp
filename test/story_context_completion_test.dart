@@ -51,6 +51,7 @@ void main() {
         }
       }
       final out = File('build/story_single_sentence/add-s${sentenceIndex + 1}.json');
+      out.parent.createSync(recursive: true);
       out.writeAsStringSync(const JsonEncoder.withIndent('  ').convert(result));
     });
   }

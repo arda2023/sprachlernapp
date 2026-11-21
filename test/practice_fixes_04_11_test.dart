@@ -219,6 +219,7 @@ void main() {
             : null;
       },
     ).open();
+    addTearDown(repo.close);
     final decks = {for (final d in await repo.decks()) d.slug: d};
     expect(decks.containsKey('business-email'), isFalse);
     final work = decks['arbeit-bildung']!;

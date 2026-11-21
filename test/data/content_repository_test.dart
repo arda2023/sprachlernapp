@@ -4,6 +4,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:path/path.dart' as p;
 import 'package:sprachapp/data/content/content_database.dart';
 import 'package:sprachapp/data/content/drift_content_repository.dart';
 import 'package:sprachapp/domain/content.dart';
@@ -382,9 +383,16 @@ void main() {
         expect(second.file.lastModifiedSync(), stamp); // not rewritten
         expect(userDb.readAsStringSync(), 'learner state');
         expect(
-          first.file.path,
-          endsWith(
-            ['content', 'en', 'generations', 'bootstrap-${first.manifest.sha256}', 'content.sqlite'].join(Platform.pathSeparator),
+          p.normalize(first.file.path),
+          p.normalize(
+            p.join(
+              support.path,
+              'content',
+              'en',
+              'generations',
+              'bootstrap-${first.manifest.sha256}',
+              'content.sqlite',
+            ),
           ),
         );
       },

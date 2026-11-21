@@ -90,6 +90,12 @@ void main() {
         Directory.systemTemp.createTempSync('language-ui-'),
       );
       var c = h.scope();
+      addTearDown(
+        () => t.runAsync(() async {
+          c.dispose();
+          await h.close();
+        }),
+      );
       Future<Map<String, Object?>> englishSnapshot() async => {
         for (final table in h.db.allTables)
           table.actualTableName:
@@ -237,10 +243,10 @@ void main() {
       // Restart the isolated provider scope after the external synthetic install.
       // Service/provider activation itself is covered in language_update_lifecycle_test.
       await t.pumpWidget(const SizedBox());
-      c.dispose();
-      await t.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 50)),
-      );
+      await t.runAsync(() async {
+        c.dispose();
+        await h.closeContentReaders();
+      });
       c = h.scope();
       await t.runAsync(() async {
         // Only "Allgemeine Sprache" starts active; Home lists active decks,
@@ -357,8 +363,6 @@ void main() {
       await capture('returned-english');
       expect(t.takeException(), isNull);
       await t.pumpWidget(const SizedBox());
-      c.dispose();
-      await t.runAsync(h.close);
     },
   );
 }

@@ -55,8 +55,19 @@ class LanguageHarness {
       appInfoProvider.overrideWith((ref) async => 'synthetic'),
     ],
   );
+  Future<void> closeContentReaders() async {
+    for (final owner in owners.values) {
+      owner.pause();
+      try {
+        await owner.closed();
+      } finally {
+        owner.resume();
+      }
+    }
+  }
+
   Future<void> close() async {
-    await Future<void>.delayed(const Duration(milliseconds: 30));
+    await closeContentReaders();
     await db.close();
     root.deleteSync(recursive: true);
   }

@@ -144,6 +144,7 @@ void main() {
         'INSERT INTO $table (${value.keys.join(',')}) VALUES (${List.filled(value.length, '?').join(',')})',
         value.values.toList(),
       );
+      raw.execute('BEGIN TRANSACTION');
       for (var i = 0; i < 805; i++) {
         insert('cards', {...source, 'id': 'batch-$i', 'lang': lang});
         insert('form_targets', {
@@ -166,6 +167,7 @@ void main() {
           });
         }
       }
+      raw.execute('COMMIT');
       raw.close();
       final counter = QueryCounts();
       final repo = await measured(

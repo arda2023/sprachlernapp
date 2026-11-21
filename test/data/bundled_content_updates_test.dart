@@ -84,13 +84,18 @@ void main() {
     expect((await journal.read('install-journal'))!['state'], 'committed');
     expect(previous.readAsBytesSync(), previousBytes);
     expect(user.readAsStringSync(), 'opaque learner database is never opened');
+    final registry = await ProcessValidationRegistry.createProcess(
+      Directory('${root.path}/content-readers'),
+    );
+    addTearDown(registry.closeProcess);
     final installer = ContentPackInstaller(
       loadAsset: (key) async => assets[key],
       supportDirectory: root,
       lang: 'pt-BR',
-      validationRegistry: await ProcessValidationRegistry.forAppSupport(root),
+      validationRegistry: registry,
     );
     final repo = await installer.open();
+    addTearDown(repo.close);
     expect(repo.info.version, 'synthetic_ptbr_2');
     final old = sqlite3.open(previous.path, mode: OpenMode.readOnly);
     final now = sqlite3.open(
