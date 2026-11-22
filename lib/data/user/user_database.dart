@@ -251,6 +251,73 @@ class LanguageLearningPreferences extends Table {
 
 /// Learner database. Content stays in read-only content.sqlite;
 /// both databases are joined only by stable ids.
+@DataClassName('TutorSkillRow')
+class TutorSkillStates extends Table {
+  TextColumn get lang => text()();
+  TextColumn get skillId => text()();
+  BoolColumn get tested => boolean()();
+  IntColumn get box =>
+      integer().check(const CustomExpression('box BETWEEN 0 AND 5'))();
+  DateTimeColumn get dueAt => dateTime().nullable()();
+  IntColumn get freshStreak =>
+      integer().check(const CustomExpression('fresh_streak >= 0'))();
+  TextColumn get lastFreshTopic => text().nullable()();
+  DateTimeColumn get updatedAt => dateTime()();
+  @override
+  Set<Column> get primaryKey => {lang, skillId};
+}
+
+@DataClassName('TutorItemRow')
+class TutorItems extends Table {
+  TextColumn get id => text()();
+  TextColumn get lang => text()();
+  TextColumn get kind => text().check(
+    const CustomExpression("kind IN ('translate','situation')"),
+  )();
+  TextColumn get promptDe => text()();
+  TextColumn get referenceAnswer => text()();
+  TextColumn get skillsJson => text()();
+  TextColumn get topic => text()();
+  TextColumn get origin => text()();
+  TextColumn get parentItemId => text().nullable()();
+  IntColumn get failures =>
+      integer().check(const CustomExpression('failures BETWEEN 0 AND 3'))();
+  BoolColumn get answerShown => boolean()();
+  TextColumn get status => text().check(
+    const CustomExpression("status IN ('new','retry','retired')"),
+  )();
+  DateTimeColumn get lastShownAt => dateTime().nullable()();
+  TextColumn get lastRoundId => text().nullable()();
+  BoolColumn get regenerationNeeded =>
+      boolean().withDefault(const Constant(false))();
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// A null result is a durable, idempotent submission waiting for its response.
+@DataClassName('TutorAttemptRow')
+class TutorAttempts extends Table {
+  TextColumn get attemptId => text()();
+  TextColumn get lang => text()();
+  TextColumn get itemId => text().references(TutorItems, #id)();
+  TextColumn get answer => text()();
+  BoolColumn get fresh => boolean()();
+  DateTimeColumn get createdAt => dateTime()();
+  TextColumn get resultJson => text().nullable()();
+  @override
+  Set<Column> get primaryKey => {attemptId};
+}
+
+/// Durable generation request payloads; never synced or counted as practice.
+@DataClassName('TutorGenerationRow')
+class TutorGenerations extends Table {
+  TextColumn get requestId => text()();
+  TextColumn get lang => text()();
+  TextColumn get payloadJson => text()();
+  @override
+  Set<Column> get primaryKey => {requestId};
+}
+
 @DriftDatabase(
   tables: [
     UserCards,
@@ -267,6 +334,10 @@ class LanguageLearningPreferences extends Table {
     LearningIdentityBindings,
     FormIdentityBindings,
     LanguageLearningPreferences,
+    TutorSkillStates,
+    TutorItems,
+    TutorAttempts,
+    TutorGenerations,
   ],
 )
 class UserDatabase extends _$UserDatabase {
@@ -314,7 +385,7 @@ class UserDatabase extends _$UserDatabase {
   }
 
   @override
-  int get schemaVersion => 9;
+  int get schemaVersion => 10;
 
   // Upgrade guards below introduce the following schema changes:
   // Version | Additions / transformations
@@ -329,6 +400,7 @@ class UserDatabase extends _$UserDatabase {
   // v7      | languageLearningPreferences.newWordSource (from == 6).
   // v8      | generatedVocabularyAdditions.
   // v9      | Local free sample markers and pending attempts.
+  // v10     | Language-scoped tutor states, items, attempts, pending generation.
   // Keep the nonchronological block order below; do not sort it by version.
   // Every guard sees the original from, not a version advanced per block.
   // The v6 copy needs earlier settings columns; its TableMigration calls copy
@@ -339,6 +411,12 @@ class UserDatabase extends _$UserDatabase {
   MigrationStrategy get migration => MigrationStrategy(
     onUpgrade: (m, from, to) async {
       await transaction(() async {
+        if (from < 10) {
+          await m.createTable(tutorSkillStates);
+          await m.createTable(tutorItems);
+          await m.createTable(tutorAttempts);
+          await m.createTable(tutorGenerations);
+        }
         if (from < 8) {
           await m.createTable(generatedVocabularyAdditions);
         }

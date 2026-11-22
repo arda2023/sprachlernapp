@@ -9,6 +9,7 @@ Orientierung am vorhandenen Code. Produktregeln stehen in `PRODUCT.md`, Zielschi
 | `lib/domain/` | Reines Dart ohne Flutter-/`dart:ui`-Imports: Karten, Identitäten, Antwortprüfung, SRS-Queues, Zählerableitung und Repository-Verträge. |
 | `lib/data/content/` | Inhaltspack, read-only Drift-Repository, Installation, Validierung, Updatejournal und Inhaltsauthentifizierung. |
 | `lib/data/user/` | Drift-Nutzerschema, `DriftUserRepository`, Speicher für generierte Vokabeln. |
+| `lib/data/tutor/` | Authentifizierter Tutor-HTTP-Client, strikte Vertragsvalidierung und sprachgetrennter `TutorStore` in user.db v10. |
 | `lib/data/learning/` | `PracticeItemResolver`/`PracticeCatalog` verbinden Pack und Lernstand; Dienste für persönliche und generierte Karten. |
 | `lib/data/sync/` | Kontoabgleich, zusätzliche SQL-Tabellen, `SyncJsonStore` und Supabase-RPC-Gateway. |
 | `lib/data/auth/` | Native Kontoidentität und Gateway für Kontolöschung. Die gemeinsame Authentifizierung selbst liegt in `data/content/content_auth_repository.dart`. |
@@ -54,6 +55,8 @@ practiceResolverProvider + userRepositoryProvider → DeckSessionController
 | `recordReview` | Vertrag in `lib/domain/repositories.dart`, Implementierung in `lib/data/user/drift_user_repository.dart`; Review und Box/Fälligkeit in einer Transaktion. |
 
 ## Wichtige Datenflüsse
+
+- **AI-Tutor:** `P/tutor_providers.dart` → `TutorSessionController.startRound` → `composeTutorRound` (`domain/tutor.dart`) → lokale Aufgaben oder `TutorClient.generate` in Stapeln bis fünf → `submitAnswer` → `TutorClient.grade` → `TutorStore.completeAttempt`. Versuch, Aufgabenstatus und deterministische Fähigkeitsänderungen werden gemeinsam persistiert. Hintergrundgenerierung ergänzt nur bereits eingefrorene Rundenplätze. `domain/tutor_skills.dart` spiegelt den kanonischen Serverkatalog; Disk-Vertragstest verhindert Abweichungen. Kein Zugriff auf KI-Anbieter aus dem Client, keine UI im Lernmodul.
 
 - **Pack und Update:** `ContentPackInstaller` öffnet gebündelte/installierte Inhalte; `P/content_update_provider.dart` verbindet `ContentReleaseClient`, `ContentUpdateService` und `ContentInstallJournal` (`lib/data/content/`). Download und Validierung gehen der Aktivierung voraus. Leser werden geschlossen, die aktive Generation umgeschaltet und Leser wieder geöffnet; Fehler können das vorbereitete Journal zurücksetzen.
 - **Review:** Übungsscreen → `DeckSessionController.start` → `PracticeItemResolver` und Queue-Funktionen in `domain/srs_state.dart` → `ReviewPass` (`domain/review_pass.dart`) → `commit` → `recordReview`. Änderungsereignisse aktualisieren die Ansichten; die vier Vokabelzähler sind Ableitungen, keine gespeicherten Spalten.
@@ -106,10 +109,27 @@ Die Basisschnittstellen stehen in `lib/domain/repositories.dart`. Zusatzverträg
 
 ## Tests
 
+- `test/domain/tutor_test.dart`, `tutor_skills_contract_test.dart`: vollständige Ergebnismatrix, Lernregeln, Themenvielfalt, Einstufung, Rundenwahl, Sprachformulierungen und Katalogvertrag.
+- `test/data/tutor_store_test.dart`, `tutor_client_test.dart`, `test/tutor_providers_test.dart`: Schema 9→10 und Altwerte, atomare Wiederaufnahme, Kontingente über Sprach-/Berliner Tagesgrenzen, HTTP-Fakes, Auth-/Einwilligungswechsel und Sitzungslifecycle.
+
 - `test/shell_callbacks_characterization_test.dart`: beide Shells, Story-/Import-Callbacks und Sprachwechsel bei Fortschrittsmeldungen; verdeckte Premiumzweige direkt über Callbacks.
 - `test/session_rules_characterization_test.dart`: Sitzungsgrößen, Tagesrest, Premiumfilter und Quellenrotation.
 - `test/reader_lookup_characterization_test.dart`: Wort-Popover, Runtimeübersetzung, Markierungen, Fehler und Bedingungen für persönliches Lernen.
 - `test/goldens/core_screens_golden_test.dart`, Bilder in `test/goldens/images/`: Home, Übung, Story-Reader und Wortliste, jeweils hell/dunkel. **Nur macOS**; ohne gebündelte Google Fonts wird Typografie nicht abgesichert.
+
+
+## AI-Tutor: API für die Oberfläche
+
+`tutorSessionControllerProvider` liefert synchron `TutorSessionState`; Aktionen über `ref.read(tutorSessionControllerProvider.notifier)` (`TutorSessionController`). Vor `startRound()` auf die Bereitschaft von `tutorDependenciesProvider` warten; währenddessen ist der Sitzungsstatus `loading`. Der Provider bleibt über UI-Rebuilds bestehen. Konto-, Sprach- oder Einwilligungswechsel verwerfen die aktive Sicht und verhindern verspätete Schreibvorgänge. Premiumänderungen ändern die bereits eingefrorene Runde nicht.
+
+- Aktionen: `Future<void> startRound()`, `submitAnswer(String answer)`, `next()`, `retry()`; `void endRound()`. `retry()` ist eine ausdrückliche Aktion und verwendet offene Eingaben mit derselben UUID. `endRound()` beendet die Ansicht, bewahrt aber offene Anfragen zur späteren Wiederaufnahme.
+- Zustandsfelder: `status`, `lang`, `roundId`, unveränderliche `round`, `index`, `currentItem`, `lastAttempt`, unveränderliche `attempts`, `failure`, `prefetchFailure`, `summary`, `remainingFreeToday`, `pendingAnswer`. Getter: `total`, `completed`, `isLastItem`, `premiumRequired`.
+- `TutorSessionStatus`: `idle`, `loading`, `answering`, `grading`, `feedback`, `completed`, `offline`, `limitReached`, `unavailable`, `error`. Bei `feedback` enthält `lastAttempt` Scores, Outcome, Fehler, `feedbackDe`, `idealAnswer`. Bei `completed` liefert `TutorRoundSummary` die abgeleiteten `correct`, `acceptable`, `incorrect`, `total` und `skills` (`TutorCounts.weak/secure/untested`).
+- `pendingAnswer` kennzeichnet eine noch nicht sicher abgeschlossene Bewertung; Eingabe unverändert anzeigen und mit `retry()` fortsetzen. Bei `limitReached && premiumRequired` öffnet die UI die bestehende Paywall mit `PremiumOfferReason.tutor` (Titel „Mehr Sätze\nmit Premium“). Premium-Fair-Use-Limits lösen keine Kaufaufforderung aus.
+- `tutorAvailabilityProvider` (`AsyncValue<TutorAvailability>`): `available`, `accountRequired`, `consentRequired`, `unsupportedLanguage`. Konto und KI-Freigabe kommen aus den bestehenden Flüssen. Der Server prüft zusätzlich die Kontobestätigung verbindlich.
+- `tutorRemainingFreeTodayProvider` (`AsyncValue<int>`): beobachtet Versuche und aktualisiert den Berliner Tageswechsel für die Home-Karte. `tutorStoreProvider`, `tutorClientProvider`, `tutorClockProvider`, `tutorIdProvider` und `tutorDependenciesProvider` sind austauschbare Integrations-/Testgrenzen. `tutorIntoLanguage`, `tutorInLanguage` und `stripTutorInstruction` liefern reine Dart-Darstellungshelfer.
+
+Rundenwahl reserviert bis zu vier Einstufungsplätze vor Retry-/Schwach-Plätzen, damit die Mindestzahl trotz der unvereinbaren Maxima 3+4+4 innerhalb von zehn passt. Bei Free begrenzt der Tagesrest auch die Einstufung. Zwei fehlgeschlagene Fähigkeiten eines Levels überspringen nur die passenden höheren Einstufungsplätze dieser Runde; es werden keine neuen Plätze nachgeschoben. Die ausgelassenen generierten Aufgaben bleiben gespeichert.
 
 
 ## Lokale Erinnerungen und externe Einstiege

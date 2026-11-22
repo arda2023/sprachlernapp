@@ -7234,6 +7234,2156 @@ class LanguageLearningPreferencesCompanion
   }
 }
 
+class $TutorSkillStatesTable extends TutorSkillStates
+    with TableInfo<$TutorSkillStatesTable, TutorSkillRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TutorSkillStatesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _langMeta = const VerificationMeta('lang');
+  @override
+  late final GeneratedColumn<String> lang = GeneratedColumn<String>(
+    'lang',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _skillIdMeta = const VerificationMeta(
+    'skillId',
+  );
+  @override
+  late final GeneratedColumn<String> skillId = GeneratedColumn<String>(
+    'skill_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _testedMeta = const VerificationMeta('tested');
+  @override
+  late final GeneratedColumn<bool> tested = GeneratedColumn<bool>(
+    'tested',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("tested" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _boxMeta = const VerificationMeta('box');
+  @override
+  late final GeneratedColumn<int> box = GeneratedColumn<int>(
+    'box',
+    aliasedName,
+    false,
+    check: () => const CustomExpression('box BETWEEN 0 AND 5'),
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dueAtMeta = const VerificationMeta('dueAt');
+  @override
+  late final GeneratedColumn<DateTime> dueAt = GeneratedColumn<DateTime>(
+    'due_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _freshStreakMeta = const VerificationMeta(
+    'freshStreak',
+  );
+  @override
+  late final GeneratedColumn<int> freshStreak = GeneratedColumn<int>(
+    'fresh_streak',
+    aliasedName,
+    false,
+    check: () => const CustomExpression('fresh_streak >= 0'),
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lastFreshTopicMeta = const VerificationMeta(
+    'lastFreshTopic',
+  );
+  @override
+  late final GeneratedColumn<String> lastFreshTopic = GeneratedColumn<String>(
+    'last_fresh_topic',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    lang,
+    skillId,
+    tested,
+    box,
+    dueAt,
+    freshStreak,
+    lastFreshTopic,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'tutor_skill_states';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TutorSkillRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('lang')) {
+      context.handle(
+        _langMeta,
+        lang.isAcceptableOrUnknown(data['lang']!, _langMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_langMeta);
+    }
+    if (data.containsKey('skill_id')) {
+      context.handle(
+        _skillIdMeta,
+        skillId.isAcceptableOrUnknown(data['skill_id']!, _skillIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_skillIdMeta);
+    }
+    if (data.containsKey('tested')) {
+      context.handle(
+        _testedMeta,
+        tested.isAcceptableOrUnknown(data['tested']!, _testedMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_testedMeta);
+    }
+    if (data.containsKey('box')) {
+      context.handle(
+        _boxMeta,
+        box.isAcceptableOrUnknown(data['box']!, _boxMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_boxMeta);
+    }
+    if (data.containsKey('due_at')) {
+      context.handle(
+        _dueAtMeta,
+        dueAt.isAcceptableOrUnknown(data['due_at']!, _dueAtMeta),
+      );
+    }
+    if (data.containsKey('fresh_streak')) {
+      context.handle(
+        _freshStreakMeta,
+        freshStreak.isAcceptableOrUnknown(
+          data['fresh_streak']!,
+          _freshStreakMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_freshStreakMeta);
+    }
+    if (data.containsKey('last_fresh_topic')) {
+      context.handle(
+        _lastFreshTopicMeta,
+        lastFreshTopic.isAcceptableOrUnknown(
+          data['last_fresh_topic']!,
+          _lastFreshTopicMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {lang, skillId};
+  @override
+  TutorSkillRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TutorSkillRow(
+      lang: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lang'],
+      )!,
+      skillId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}skill_id'],
+      )!,
+      tested: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}tested'],
+      )!,
+      box: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}box'],
+      )!,
+      dueAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}due_at'],
+      ),
+      freshStreak: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}fresh_streak'],
+      )!,
+      lastFreshTopic: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}last_fresh_topic'],
+      ),
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $TutorSkillStatesTable createAlias(String alias) {
+    return $TutorSkillStatesTable(attachedDatabase, alias);
+  }
+}
+
+class TutorSkillRow extends DataClass implements Insertable<TutorSkillRow> {
+  final String lang;
+  final String skillId;
+  final bool tested;
+  final int box;
+  final DateTime? dueAt;
+  final int freshStreak;
+  final String? lastFreshTopic;
+  final DateTime updatedAt;
+  const TutorSkillRow({
+    required this.lang,
+    required this.skillId,
+    required this.tested,
+    required this.box,
+    this.dueAt,
+    required this.freshStreak,
+    this.lastFreshTopic,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['lang'] = Variable<String>(lang);
+    map['skill_id'] = Variable<String>(skillId);
+    map['tested'] = Variable<bool>(tested);
+    map['box'] = Variable<int>(box);
+    if (!nullToAbsent || dueAt != null) {
+      map['due_at'] = Variable<DateTime>(dueAt);
+    }
+    map['fresh_streak'] = Variable<int>(freshStreak);
+    if (!nullToAbsent || lastFreshTopic != null) {
+      map['last_fresh_topic'] = Variable<String>(lastFreshTopic);
+    }
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  TutorSkillStatesCompanion toCompanion(bool nullToAbsent) {
+    return TutorSkillStatesCompanion(
+      lang: Value(lang),
+      skillId: Value(skillId),
+      tested: Value(tested),
+      box: Value(box),
+      dueAt: dueAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dueAt),
+      freshStreak: Value(freshStreak),
+      lastFreshTopic: lastFreshTopic == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastFreshTopic),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory TutorSkillRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TutorSkillRow(
+      lang: serializer.fromJson<String>(json['lang']),
+      skillId: serializer.fromJson<String>(json['skillId']),
+      tested: serializer.fromJson<bool>(json['tested']),
+      box: serializer.fromJson<int>(json['box']),
+      dueAt: serializer.fromJson<DateTime?>(json['dueAt']),
+      freshStreak: serializer.fromJson<int>(json['freshStreak']),
+      lastFreshTopic: serializer.fromJson<String?>(json['lastFreshTopic']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'lang': serializer.toJson<String>(lang),
+      'skillId': serializer.toJson<String>(skillId),
+      'tested': serializer.toJson<bool>(tested),
+      'box': serializer.toJson<int>(box),
+      'dueAt': serializer.toJson<DateTime?>(dueAt),
+      'freshStreak': serializer.toJson<int>(freshStreak),
+      'lastFreshTopic': serializer.toJson<String?>(lastFreshTopic),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  TutorSkillRow copyWith({
+    String? lang,
+    String? skillId,
+    bool? tested,
+    int? box,
+    Value<DateTime?> dueAt = const Value.absent(),
+    int? freshStreak,
+    Value<String?> lastFreshTopic = const Value.absent(),
+    DateTime? updatedAt,
+  }) => TutorSkillRow(
+    lang: lang ?? this.lang,
+    skillId: skillId ?? this.skillId,
+    tested: tested ?? this.tested,
+    box: box ?? this.box,
+    dueAt: dueAt.present ? dueAt.value : this.dueAt,
+    freshStreak: freshStreak ?? this.freshStreak,
+    lastFreshTopic: lastFreshTopic.present
+        ? lastFreshTopic.value
+        : this.lastFreshTopic,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  TutorSkillRow copyWithCompanion(TutorSkillStatesCompanion data) {
+    return TutorSkillRow(
+      lang: data.lang.present ? data.lang.value : this.lang,
+      skillId: data.skillId.present ? data.skillId.value : this.skillId,
+      tested: data.tested.present ? data.tested.value : this.tested,
+      box: data.box.present ? data.box.value : this.box,
+      dueAt: data.dueAt.present ? data.dueAt.value : this.dueAt,
+      freshStreak: data.freshStreak.present
+          ? data.freshStreak.value
+          : this.freshStreak,
+      lastFreshTopic: data.lastFreshTopic.present
+          ? data.lastFreshTopic.value
+          : this.lastFreshTopic,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TutorSkillRow(')
+          ..write('lang: $lang, ')
+          ..write('skillId: $skillId, ')
+          ..write('tested: $tested, ')
+          ..write('box: $box, ')
+          ..write('dueAt: $dueAt, ')
+          ..write('freshStreak: $freshStreak, ')
+          ..write('lastFreshTopic: $lastFreshTopic, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    lang,
+    skillId,
+    tested,
+    box,
+    dueAt,
+    freshStreak,
+    lastFreshTopic,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TutorSkillRow &&
+          other.lang == this.lang &&
+          other.skillId == this.skillId &&
+          other.tested == this.tested &&
+          other.box == this.box &&
+          other.dueAt == this.dueAt &&
+          other.freshStreak == this.freshStreak &&
+          other.lastFreshTopic == this.lastFreshTopic &&
+          other.updatedAt == this.updatedAt);
+}
+
+class TutorSkillStatesCompanion extends UpdateCompanion<TutorSkillRow> {
+  final Value<String> lang;
+  final Value<String> skillId;
+  final Value<bool> tested;
+  final Value<int> box;
+  final Value<DateTime?> dueAt;
+  final Value<int> freshStreak;
+  final Value<String?> lastFreshTopic;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const TutorSkillStatesCompanion({
+    this.lang = const Value.absent(),
+    this.skillId = const Value.absent(),
+    this.tested = const Value.absent(),
+    this.box = const Value.absent(),
+    this.dueAt = const Value.absent(),
+    this.freshStreak = const Value.absent(),
+    this.lastFreshTopic = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TutorSkillStatesCompanion.insert({
+    required String lang,
+    required String skillId,
+    required bool tested,
+    required int box,
+    this.dueAt = const Value.absent(),
+    required int freshStreak,
+    this.lastFreshTopic = const Value.absent(),
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : lang = Value(lang),
+       skillId = Value(skillId),
+       tested = Value(tested),
+       box = Value(box),
+       freshStreak = Value(freshStreak),
+       updatedAt = Value(updatedAt);
+  static Insertable<TutorSkillRow> custom({
+    Expression<String>? lang,
+    Expression<String>? skillId,
+    Expression<bool>? tested,
+    Expression<int>? box,
+    Expression<DateTime>? dueAt,
+    Expression<int>? freshStreak,
+    Expression<String>? lastFreshTopic,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (lang != null) 'lang': lang,
+      if (skillId != null) 'skill_id': skillId,
+      if (tested != null) 'tested': tested,
+      if (box != null) 'box': box,
+      if (dueAt != null) 'due_at': dueAt,
+      if (freshStreak != null) 'fresh_streak': freshStreak,
+      if (lastFreshTopic != null) 'last_fresh_topic': lastFreshTopic,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TutorSkillStatesCompanion copyWith({
+    Value<String>? lang,
+    Value<String>? skillId,
+    Value<bool>? tested,
+    Value<int>? box,
+    Value<DateTime?>? dueAt,
+    Value<int>? freshStreak,
+    Value<String?>? lastFreshTopic,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return TutorSkillStatesCompanion(
+      lang: lang ?? this.lang,
+      skillId: skillId ?? this.skillId,
+      tested: tested ?? this.tested,
+      box: box ?? this.box,
+      dueAt: dueAt ?? this.dueAt,
+      freshStreak: freshStreak ?? this.freshStreak,
+      lastFreshTopic: lastFreshTopic ?? this.lastFreshTopic,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (lang.present) {
+      map['lang'] = Variable<String>(lang.value);
+    }
+    if (skillId.present) {
+      map['skill_id'] = Variable<String>(skillId.value);
+    }
+    if (tested.present) {
+      map['tested'] = Variable<bool>(tested.value);
+    }
+    if (box.present) {
+      map['box'] = Variable<int>(box.value);
+    }
+    if (dueAt.present) {
+      map['due_at'] = Variable<DateTime>(dueAt.value);
+    }
+    if (freshStreak.present) {
+      map['fresh_streak'] = Variable<int>(freshStreak.value);
+    }
+    if (lastFreshTopic.present) {
+      map['last_fresh_topic'] = Variable<String>(lastFreshTopic.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TutorSkillStatesCompanion(')
+          ..write('lang: $lang, ')
+          ..write('skillId: $skillId, ')
+          ..write('tested: $tested, ')
+          ..write('box: $box, ')
+          ..write('dueAt: $dueAt, ')
+          ..write('freshStreak: $freshStreak, ')
+          ..write('lastFreshTopic: $lastFreshTopic, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TutorItemsTable extends TutorItems
+    with TableInfo<$TutorItemsTable, TutorItemRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TutorItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _langMeta = const VerificationMeta('lang');
+  @override
+  late final GeneratedColumn<String> lang = GeneratedColumn<String>(
+    'lang',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    check: () => const CustomExpression("kind IN ('translate','situation')"),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _promptDeMeta = const VerificationMeta(
+    'promptDe',
+  );
+  @override
+  late final GeneratedColumn<String> promptDe = GeneratedColumn<String>(
+    'prompt_de',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _referenceAnswerMeta = const VerificationMeta(
+    'referenceAnswer',
+  );
+  @override
+  late final GeneratedColumn<String> referenceAnswer = GeneratedColumn<String>(
+    'reference_answer',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _skillsJsonMeta = const VerificationMeta(
+    'skillsJson',
+  );
+  @override
+  late final GeneratedColumn<String> skillsJson = GeneratedColumn<String>(
+    'skills_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _topicMeta = const VerificationMeta('topic');
+  @override
+  late final GeneratedColumn<String> topic = GeneratedColumn<String>(
+    'topic',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _originMeta = const VerificationMeta('origin');
+  @override
+  late final GeneratedColumn<String> origin = GeneratedColumn<String>(
+    'origin',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _parentItemIdMeta = const VerificationMeta(
+    'parentItemId',
+  );
+  @override
+  late final GeneratedColumn<String> parentItemId = GeneratedColumn<String>(
+    'parent_item_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _failuresMeta = const VerificationMeta(
+    'failures',
+  );
+  @override
+  late final GeneratedColumn<int> failures = GeneratedColumn<int>(
+    'failures',
+    aliasedName,
+    false,
+    check: () => const CustomExpression('failures BETWEEN 0 AND 3'),
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _answerShownMeta = const VerificationMeta(
+    'answerShown',
+  );
+  @override
+  late final GeneratedColumn<bool> answerShown = GeneratedColumn<bool>(
+    'answer_shown',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("answer_shown" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    check: () => const CustomExpression("status IN ('new','retry','retired')"),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lastShownAtMeta = const VerificationMeta(
+    'lastShownAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastShownAt = GeneratedColumn<DateTime>(
+    'last_shown_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _lastRoundIdMeta = const VerificationMeta(
+    'lastRoundId',
+  );
+  @override
+  late final GeneratedColumn<String> lastRoundId = GeneratedColumn<String>(
+    'last_round_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _regenerationNeededMeta =
+      const VerificationMeta('regenerationNeeded');
+  @override
+  late final GeneratedColumn<bool> regenerationNeeded = GeneratedColumn<bool>(
+    'regeneration_needed',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("regeneration_needed" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    lang,
+    kind,
+    promptDe,
+    referenceAnswer,
+    skillsJson,
+    topic,
+    origin,
+    parentItemId,
+    failures,
+    answerShown,
+    status,
+    lastShownAt,
+    lastRoundId,
+    regenerationNeeded,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'tutor_items';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TutorItemRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('lang')) {
+      context.handle(
+        _langMeta,
+        lang.isAcceptableOrUnknown(data['lang']!, _langMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_langMeta);
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kindMeta);
+    }
+    if (data.containsKey('prompt_de')) {
+      context.handle(
+        _promptDeMeta,
+        promptDe.isAcceptableOrUnknown(data['prompt_de']!, _promptDeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_promptDeMeta);
+    }
+    if (data.containsKey('reference_answer')) {
+      context.handle(
+        _referenceAnswerMeta,
+        referenceAnswer.isAcceptableOrUnknown(
+          data['reference_answer']!,
+          _referenceAnswerMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_referenceAnswerMeta);
+    }
+    if (data.containsKey('skills_json')) {
+      context.handle(
+        _skillsJsonMeta,
+        skillsJson.isAcceptableOrUnknown(data['skills_json']!, _skillsJsonMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_skillsJsonMeta);
+    }
+    if (data.containsKey('topic')) {
+      context.handle(
+        _topicMeta,
+        topic.isAcceptableOrUnknown(data['topic']!, _topicMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_topicMeta);
+    }
+    if (data.containsKey('origin')) {
+      context.handle(
+        _originMeta,
+        origin.isAcceptableOrUnknown(data['origin']!, _originMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_originMeta);
+    }
+    if (data.containsKey('parent_item_id')) {
+      context.handle(
+        _parentItemIdMeta,
+        parentItemId.isAcceptableOrUnknown(
+          data['parent_item_id']!,
+          _parentItemIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('failures')) {
+      context.handle(
+        _failuresMeta,
+        failures.isAcceptableOrUnknown(data['failures']!, _failuresMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_failuresMeta);
+    }
+    if (data.containsKey('answer_shown')) {
+      context.handle(
+        _answerShownMeta,
+        answerShown.isAcceptableOrUnknown(
+          data['answer_shown']!,
+          _answerShownMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_answerShownMeta);
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_statusMeta);
+    }
+    if (data.containsKey('last_shown_at')) {
+      context.handle(
+        _lastShownAtMeta,
+        lastShownAt.isAcceptableOrUnknown(
+          data['last_shown_at']!,
+          _lastShownAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_round_id')) {
+      context.handle(
+        _lastRoundIdMeta,
+        lastRoundId.isAcceptableOrUnknown(
+          data['last_round_id']!,
+          _lastRoundIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('regeneration_needed')) {
+      context.handle(
+        _regenerationNeededMeta,
+        regenerationNeeded.isAcceptableOrUnknown(
+          data['regeneration_needed']!,
+          _regenerationNeededMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TutorItemRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TutorItemRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      lang: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lang'],
+      )!,
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+      promptDe: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}prompt_de'],
+      )!,
+      referenceAnswer: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reference_answer'],
+      )!,
+      skillsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}skills_json'],
+      )!,
+      topic: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}topic'],
+      )!,
+      origin: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}origin'],
+      )!,
+      parentItemId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent_item_id'],
+      ),
+      failures: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}failures'],
+      )!,
+      answerShown: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}answer_shown'],
+      )!,
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
+      lastShownAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_shown_at'],
+      ),
+      lastRoundId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}last_round_id'],
+      ),
+      regenerationNeeded: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}regeneration_needed'],
+      )!,
+    );
+  }
+
+  @override
+  $TutorItemsTable createAlias(String alias) {
+    return $TutorItemsTable(attachedDatabase, alias);
+  }
+}
+
+class TutorItemRow extends DataClass implements Insertable<TutorItemRow> {
+  final String id;
+  final String lang;
+  final String kind;
+  final String promptDe;
+  final String referenceAnswer;
+  final String skillsJson;
+  final String topic;
+  final String origin;
+  final String? parentItemId;
+  final int failures;
+  final bool answerShown;
+  final String status;
+  final DateTime? lastShownAt;
+  final String? lastRoundId;
+  final bool regenerationNeeded;
+  const TutorItemRow({
+    required this.id,
+    required this.lang,
+    required this.kind,
+    required this.promptDe,
+    required this.referenceAnswer,
+    required this.skillsJson,
+    required this.topic,
+    required this.origin,
+    this.parentItemId,
+    required this.failures,
+    required this.answerShown,
+    required this.status,
+    this.lastShownAt,
+    this.lastRoundId,
+    required this.regenerationNeeded,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['lang'] = Variable<String>(lang);
+    map['kind'] = Variable<String>(kind);
+    map['prompt_de'] = Variable<String>(promptDe);
+    map['reference_answer'] = Variable<String>(referenceAnswer);
+    map['skills_json'] = Variable<String>(skillsJson);
+    map['topic'] = Variable<String>(topic);
+    map['origin'] = Variable<String>(origin);
+    if (!nullToAbsent || parentItemId != null) {
+      map['parent_item_id'] = Variable<String>(parentItemId);
+    }
+    map['failures'] = Variable<int>(failures);
+    map['answer_shown'] = Variable<bool>(answerShown);
+    map['status'] = Variable<String>(status);
+    if (!nullToAbsent || lastShownAt != null) {
+      map['last_shown_at'] = Variable<DateTime>(lastShownAt);
+    }
+    if (!nullToAbsent || lastRoundId != null) {
+      map['last_round_id'] = Variable<String>(lastRoundId);
+    }
+    map['regeneration_needed'] = Variable<bool>(regenerationNeeded);
+    return map;
+  }
+
+  TutorItemsCompanion toCompanion(bool nullToAbsent) {
+    return TutorItemsCompanion(
+      id: Value(id),
+      lang: Value(lang),
+      kind: Value(kind),
+      promptDe: Value(promptDe),
+      referenceAnswer: Value(referenceAnswer),
+      skillsJson: Value(skillsJson),
+      topic: Value(topic),
+      origin: Value(origin),
+      parentItemId: parentItemId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parentItemId),
+      failures: Value(failures),
+      answerShown: Value(answerShown),
+      status: Value(status),
+      lastShownAt: lastShownAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastShownAt),
+      lastRoundId: lastRoundId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastRoundId),
+      regenerationNeeded: Value(regenerationNeeded),
+    );
+  }
+
+  factory TutorItemRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TutorItemRow(
+      id: serializer.fromJson<String>(json['id']),
+      lang: serializer.fromJson<String>(json['lang']),
+      kind: serializer.fromJson<String>(json['kind']),
+      promptDe: serializer.fromJson<String>(json['promptDe']),
+      referenceAnswer: serializer.fromJson<String>(json['referenceAnswer']),
+      skillsJson: serializer.fromJson<String>(json['skillsJson']),
+      topic: serializer.fromJson<String>(json['topic']),
+      origin: serializer.fromJson<String>(json['origin']),
+      parentItemId: serializer.fromJson<String?>(json['parentItemId']),
+      failures: serializer.fromJson<int>(json['failures']),
+      answerShown: serializer.fromJson<bool>(json['answerShown']),
+      status: serializer.fromJson<String>(json['status']),
+      lastShownAt: serializer.fromJson<DateTime?>(json['lastShownAt']),
+      lastRoundId: serializer.fromJson<String?>(json['lastRoundId']),
+      regenerationNeeded: serializer.fromJson<bool>(json['regenerationNeeded']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'lang': serializer.toJson<String>(lang),
+      'kind': serializer.toJson<String>(kind),
+      'promptDe': serializer.toJson<String>(promptDe),
+      'referenceAnswer': serializer.toJson<String>(referenceAnswer),
+      'skillsJson': serializer.toJson<String>(skillsJson),
+      'topic': serializer.toJson<String>(topic),
+      'origin': serializer.toJson<String>(origin),
+      'parentItemId': serializer.toJson<String?>(parentItemId),
+      'failures': serializer.toJson<int>(failures),
+      'answerShown': serializer.toJson<bool>(answerShown),
+      'status': serializer.toJson<String>(status),
+      'lastShownAt': serializer.toJson<DateTime?>(lastShownAt),
+      'lastRoundId': serializer.toJson<String?>(lastRoundId),
+      'regenerationNeeded': serializer.toJson<bool>(regenerationNeeded),
+    };
+  }
+
+  TutorItemRow copyWith({
+    String? id,
+    String? lang,
+    String? kind,
+    String? promptDe,
+    String? referenceAnswer,
+    String? skillsJson,
+    String? topic,
+    String? origin,
+    Value<String?> parentItemId = const Value.absent(),
+    int? failures,
+    bool? answerShown,
+    String? status,
+    Value<DateTime?> lastShownAt = const Value.absent(),
+    Value<String?> lastRoundId = const Value.absent(),
+    bool? regenerationNeeded,
+  }) => TutorItemRow(
+    id: id ?? this.id,
+    lang: lang ?? this.lang,
+    kind: kind ?? this.kind,
+    promptDe: promptDe ?? this.promptDe,
+    referenceAnswer: referenceAnswer ?? this.referenceAnswer,
+    skillsJson: skillsJson ?? this.skillsJson,
+    topic: topic ?? this.topic,
+    origin: origin ?? this.origin,
+    parentItemId: parentItemId.present ? parentItemId.value : this.parentItemId,
+    failures: failures ?? this.failures,
+    answerShown: answerShown ?? this.answerShown,
+    status: status ?? this.status,
+    lastShownAt: lastShownAt.present ? lastShownAt.value : this.lastShownAt,
+    lastRoundId: lastRoundId.present ? lastRoundId.value : this.lastRoundId,
+    regenerationNeeded: regenerationNeeded ?? this.regenerationNeeded,
+  );
+  TutorItemRow copyWithCompanion(TutorItemsCompanion data) {
+    return TutorItemRow(
+      id: data.id.present ? data.id.value : this.id,
+      lang: data.lang.present ? data.lang.value : this.lang,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      promptDe: data.promptDe.present ? data.promptDe.value : this.promptDe,
+      referenceAnswer: data.referenceAnswer.present
+          ? data.referenceAnswer.value
+          : this.referenceAnswer,
+      skillsJson: data.skillsJson.present
+          ? data.skillsJson.value
+          : this.skillsJson,
+      topic: data.topic.present ? data.topic.value : this.topic,
+      origin: data.origin.present ? data.origin.value : this.origin,
+      parentItemId: data.parentItemId.present
+          ? data.parentItemId.value
+          : this.parentItemId,
+      failures: data.failures.present ? data.failures.value : this.failures,
+      answerShown: data.answerShown.present
+          ? data.answerShown.value
+          : this.answerShown,
+      status: data.status.present ? data.status.value : this.status,
+      lastShownAt: data.lastShownAt.present
+          ? data.lastShownAt.value
+          : this.lastShownAt,
+      lastRoundId: data.lastRoundId.present
+          ? data.lastRoundId.value
+          : this.lastRoundId,
+      regenerationNeeded: data.regenerationNeeded.present
+          ? data.regenerationNeeded.value
+          : this.regenerationNeeded,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TutorItemRow(')
+          ..write('id: $id, ')
+          ..write('lang: $lang, ')
+          ..write('kind: $kind, ')
+          ..write('promptDe: $promptDe, ')
+          ..write('referenceAnswer: $referenceAnswer, ')
+          ..write('skillsJson: $skillsJson, ')
+          ..write('topic: $topic, ')
+          ..write('origin: $origin, ')
+          ..write('parentItemId: $parentItemId, ')
+          ..write('failures: $failures, ')
+          ..write('answerShown: $answerShown, ')
+          ..write('status: $status, ')
+          ..write('lastShownAt: $lastShownAt, ')
+          ..write('lastRoundId: $lastRoundId, ')
+          ..write('regenerationNeeded: $regenerationNeeded')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    lang,
+    kind,
+    promptDe,
+    referenceAnswer,
+    skillsJson,
+    topic,
+    origin,
+    parentItemId,
+    failures,
+    answerShown,
+    status,
+    lastShownAt,
+    lastRoundId,
+    regenerationNeeded,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TutorItemRow &&
+          other.id == this.id &&
+          other.lang == this.lang &&
+          other.kind == this.kind &&
+          other.promptDe == this.promptDe &&
+          other.referenceAnswer == this.referenceAnswer &&
+          other.skillsJson == this.skillsJson &&
+          other.topic == this.topic &&
+          other.origin == this.origin &&
+          other.parentItemId == this.parentItemId &&
+          other.failures == this.failures &&
+          other.answerShown == this.answerShown &&
+          other.status == this.status &&
+          other.lastShownAt == this.lastShownAt &&
+          other.lastRoundId == this.lastRoundId &&
+          other.regenerationNeeded == this.regenerationNeeded);
+}
+
+class TutorItemsCompanion extends UpdateCompanion<TutorItemRow> {
+  final Value<String> id;
+  final Value<String> lang;
+  final Value<String> kind;
+  final Value<String> promptDe;
+  final Value<String> referenceAnswer;
+  final Value<String> skillsJson;
+  final Value<String> topic;
+  final Value<String> origin;
+  final Value<String?> parentItemId;
+  final Value<int> failures;
+  final Value<bool> answerShown;
+  final Value<String> status;
+  final Value<DateTime?> lastShownAt;
+  final Value<String?> lastRoundId;
+  final Value<bool> regenerationNeeded;
+  final Value<int> rowid;
+  const TutorItemsCompanion({
+    this.id = const Value.absent(),
+    this.lang = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.promptDe = const Value.absent(),
+    this.referenceAnswer = const Value.absent(),
+    this.skillsJson = const Value.absent(),
+    this.topic = const Value.absent(),
+    this.origin = const Value.absent(),
+    this.parentItemId = const Value.absent(),
+    this.failures = const Value.absent(),
+    this.answerShown = const Value.absent(),
+    this.status = const Value.absent(),
+    this.lastShownAt = const Value.absent(),
+    this.lastRoundId = const Value.absent(),
+    this.regenerationNeeded = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TutorItemsCompanion.insert({
+    required String id,
+    required String lang,
+    required String kind,
+    required String promptDe,
+    required String referenceAnswer,
+    required String skillsJson,
+    required String topic,
+    required String origin,
+    this.parentItemId = const Value.absent(),
+    required int failures,
+    required bool answerShown,
+    required String status,
+    this.lastShownAt = const Value.absent(),
+    this.lastRoundId = const Value.absent(),
+    this.regenerationNeeded = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       lang = Value(lang),
+       kind = Value(kind),
+       promptDe = Value(promptDe),
+       referenceAnswer = Value(referenceAnswer),
+       skillsJson = Value(skillsJson),
+       topic = Value(topic),
+       origin = Value(origin),
+       failures = Value(failures),
+       answerShown = Value(answerShown),
+       status = Value(status);
+  static Insertable<TutorItemRow> custom({
+    Expression<String>? id,
+    Expression<String>? lang,
+    Expression<String>? kind,
+    Expression<String>? promptDe,
+    Expression<String>? referenceAnswer,
+    Expression<String>? skillsJson,
+    Expression<String>? topic,
+    Expression<String>? origin,
+    Expression<String>? parentItemId,
+    Expression<int>? failures,
+    Expression<bool>? answerShown,
+    Expression<String>? status,
+    Expression<DateTime>? lastShownAt,
+    Expression<String>? lastRoundId,
+    Expression<bool>? regenerationNeeded,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (lang != null) 'lang': lang,
+      if (kind != null) 'kind': kind,
+      if (promptDe != null) 'prompt_de': promptDe,
+      if (referenceAnswer != null) 'reference_answer': referenceAnswer,
+      if (skillsJson != null) 'skills_json': skillsJson,
+      if (topic != null) 'topic': topic,
+      if (origin != null) 'origin': origin,
+      if (parentItemId != null) 'parent_item_id': parentItemId,
+      if (failures != null) 'failures': failures,
+      if (answerShown != null) 'answer_shown': answerShown,
+      if (status != null) 'status': status,
+      if (lastShownAt != null) 'last_shown_at': lastShownAt,
+      if (lastRoundId != null) 'last_round_id': lastRoundId,
+      if (regenerationNeeded != null) 'regeneration_needed': regenerationNeeded,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TutorItemsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? lang,
+    Value<String>? kind,
+    Value<String>? promptDe,
+    Value<String>? referenceAnswer,
+    Value<String>? skillsJson,
+    Value<String>? topic,
+    Value<String>? origin,
+    Value<String?>? parentItemId,
+    Value<int>? failures,
+    Value<bool>? answerShown,
+    Value<String>? status,
+    Value<DateTime?>? lastShownAt,
+    Value<String?>? lastRoundId,
+    Value<bool>? regenerationNeeded,
+    Value<int>? rowid,
+  }) {
+    return TutorItemsCompanion(
+      id: id ?? this.id,
+      lang: lang ?? this.lang,
+      kind: kind ?? this.kind,
+      promptDe: promptDe ?? this.promptDe,
+      referenceAnswer: referenceAnswer ?? this.referenceAnswer,
+      skillsJson: skillsJson ?? this.skillsJson,
+      topic: topic ?? this.topic,
+      origin: origin ?? this.origin,
+      parentItemId: parentItemId ?? this.parentItemId,
+      failures: failures ?? this.failures,
+      answerShown: answerShown ?? this.answerShown,
+      status: status ?? this.status,
+      lastShownAt: lastShownAt ?? this.lastShownAt,
+      lastRoundId: lastRoundId ?? this.lastRoundId,
+      regenerationNeeded: regenerationNeeded ?? this.regenerationNeeded,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (lang.present) {
+      map['lang'] = Variable<String>(lang.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (promptDe.present) {
+      map['prompt_de'] = Variable<String>(promptDe.value);
+    }
+    if (referenceAnswer.present) {
+      map['reference_answer'] = Variable<String>(referenceAnswer.value);
+    }
+    if (skillsJson.present) {
+      map['skills_json'] = Variable<String>(skillsJson.value);
+    }
+    if (topic.present) {
+      map['topic'] = Variable<String>(topic.value);
+    }
+    if (origin.present) {
+      map['origin'] = Variable<String>(origin.value);
+    }
+    if (parentItemId.present) {
+      map['parent_item_id'] = Variable<String>(parentItemId.value);
+    }
+    if (failures.present) {
+      map['failures'] = Variable<int>(failures.value);
+    }
+    if (answerShown.present) {
+      map['answer_shown'] = Variable<bool>(answerShown.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (lastShownAt.present) {
+      map['last_shown_at'] = Variable<DateTime>(lastShownAt.value);
+    }
+    if (lastRoundId.present) {
+      map['last_round_id'] = Variable<String>(lastRoundId.value);
+    }
+    if (regenerationNeeded.present) {
+      map['regeneration_needed'] = Variable<bool>(regenerationNeeded.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TutorItemsCompanion(')
+          ..write('id: $id, ')
+          ..write('lang: $lang, ')
+          ..write('kind: $kind, ')
+          ..write('promptDe: $promptDe, ')
+          ..write('referenceAnswer: $referenceAnswer, ')
+          ..write('skillsJson: $skillsJson, ')
+          ..write('topic: $topic, ')
+          ..write('origin: $origin, ')
+          ..write('parentItemId: $parentItemId, ')
+          ..write('failures: $failures, ')
+          ..write('answerShown: $answerShown, ')
+          ..write('status: $status, ')
+          ..write('lastShownAt: $lastShownAt, ')
+          ..write('lastRoundId: $lastRoundId, ')
+          ..write('regenerationNeeded: $regenerationNeeded, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TutorAttemptsTable extends TutorAttempts
+    with TableInfo<$TutorAttemptsTable, TutorAttemptRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TutorAttemptsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _attemptIdMeta = const VerificationMeta(
+    'attemptId',
+  );
+  @override
+  late final GeneratedColumn<String> attemptId = GeneratedColumn<String>(
+    'attempt_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _langMeta = const VerificationMeta('lang');
+  @override
+  late final GeneratedColumn<String> lang = GeneratedColumn<String>(
+    'lang',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
+  @override
+  late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
+    'item_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES tutor_items (id)',
+    ),
+  );
+  static const VerificationMeta _answerMeta = const VerificationMeta('answer');
+  @override
+  late final GeneratedColumn<String> answer = GeneratedColumn<String>(
+    'answer',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _freshMeta = const VerificationMeta('fresh');
+  @override
+  late final GeneratedColumn<bool> fresh = GeneratedColumn<bool>(
+    'fresh',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("fresh" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _resultJsonMeta = const VerificationMeta(
+    'resultJson',
+  );
+  @override
+  late final GeneratedColumn<String> resultJson = GeneratedColumn<String>(
+    'result_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    attemptId,
+    lang,
+    itemId,
+    answer,
+    fresh,
+    createdAt,
+    resultJson,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'tutor_attempts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TutorAttemptRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('attempt_id')) {
+      context.handle(
+        _attemptIdMeta,
+        attemptId.isAcceptableOrUnknown(data['attempt_id']!, _attemptIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_attemptIdMeta);
+    }
+    if (data.containsKey('lang')) {
+      context.handle(
+        _langMeta,
+        lang.isAcceptableOrUnknown(data['lang']!, _langMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_langMeta);
+    }
+    if (data.containsKey('item_id')) {
+      context.handle(
+        _itemIdMeta,
+        itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_itemIdMeta);
+    }
+    if (data.containsKey('answer')) {
+      context.handle(
+        _answerMeta,
+        answer.isAcceptableOrUnknown(data['answer']!, _answerMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_answerMeta);
+    }
+    if (data.containsKey('fresh')) {
+      context.handle(
+        _freshMeta,
+        fresh.isAcceptableOrUnknown(data['fresh']!, _freshMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_freshMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('result_json')) {
+      context.handle(
+        _resultJsonMeta,
+        resultJson.isAcceptableOrUnknown(data['result_json']!, _resultJsonMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {attemptId};
+  @override
+  TutorAttemptRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TutorAttemptRow(
+      attemptId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}attempt_id'],
+      )!,
+      lang: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lang'],
+      )!,
+      itemId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}item_id'],
+      )!,
+      answer: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}answer'],
+      )!,
+      fresh: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}fresh'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      resultJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}result_json'],
+      ),
+    );
+  }
+
+  @override
+  $TutorAttemptsTable createAlias(String alias) {
+    return $TutorAttemptsTable(attachedDatabase, alias);
+  }
+}
+
+class TutorAttemptRow extends DataClass implements Insertable<TutorAttemptRow> {
+  final String attemptId;
+  final String lang;
+  final String itemId;
+  final String answer;
+  final bool fresh;
+  final DateTime createdAt;
+  final String? resultJson;
+  const TutorAttemptRow({
+    required this.attemptId,
+    required this.lang,
+    required this.itemId,
+    required this.answer,
+    required this.fresh,
+    required this.createdAt,
+    this.resultJson,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['attempt_id'] = Variable<String>(attemptId);
+    map['lang'] = Variable<String>(lang);
+    map['item_id'] = Variable<String>(itemId);
+    map['answer'] = Variable<String>(answer);
+    map['fresh'] = Variable<bool>(fresh);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    if (!nullToAbsent || resultJson != null) {
+      map['result_json'] = Variable<String>(resultJson);
+    }
+    return map;
+  }
+
+  TutorAttemptsCompanion toCompanion(bool nullToAbsent) {
+    return TutorAttemptsCompanion(
+      attemptId: Value(attemptId),
+      lang: Value(lang),
+      itemId: Value(itemId),
+      answer: Value(answer),
+      fresh: Value(fresh),
+      createdAt: Value(createdAt),
+      resultJson: resultJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(resultJson),
+    );
+  }
+
+  factory TutorAttemptRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TutorAttemptRow(
+      attemptId: serializer.fromJson<String>(json['attemptId']),
+      lang: serializer.fromJson<String>(json['lang']),
+      itemId: serializer.fromJson<String>(json['itemId']),
+      answer: serializer.fromJson<String>(json['answer']),
+      fresh: serializer.fromJson<bool>(json['fresh']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      resultJson: serializer.fromJson<String?>(json['resultJson']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'attemptId': serializer.toJson<String>(attemptId),
+      'lang': serializer.toJson<String>(lang),
+      'itemId': serializer.toJson<String>(itemId),
+      'answer': serializer.toJson<String>(answer),
+      'fresh': serializer.toJson<bool>(fresh),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'resultJson': serializer.toJson<String?>(resultJson),
+    };
+  }
+
+  TutorAttemptRow copyWith({
+    String? attemptId,
+    String? lang,
+    String? itemId,
+    String? answer,
+    bool? fresh,
+    DateTime? createdAt,
+    Value<String?> resultJson = const Value.absent(),
+  }) => TutorAttemptRow(
+    attemptId: attemptId ?? this.attemptId,
+    lang: lang ?? this.lang,
+    itemId: itemId ?? this.itemId,
+    answer: answer ?? this.answer,
+    fresh: fresh ?? this.fresh,
+    createdAt: createdAt ?? this.createdAt,
+    resultJson: resultJson.present ? resultJson.value : this.resultJson,
+  );
+  TutorAttemptRow copyWithCompanion(TutorAttemptsCompanion data) {
+    return TutorAttemptRow(
+      attemptId: data.attemptId.present ? data.attemptId.value : this.attemptId,
+      lang: data.lang.present ? data.lang.value : this.lang,
+      itemId: data.itemId.present ? data.itemId.value : this.itemId,
+      answer: data.answer.present ? data.answer.value : this.answer,
+      fresh: data.fresh.present ? data.fresh.value : this.fresh,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      resultJson: data.resultJson.present
+          ? data.resultJson.value
+          : this.resultJson,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TutorAttemptRow(')
+          ..write('attemptId: $attemptId, ')
+          ..write('lang: $lang, ')
+          ..write('itemId: $itemId, ')
+          ..write('answer: $answer, ')
+          ..write('fresh: $fresh, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('resultJson: $resultJson')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    attemptId,
+    lang,
+    itemId,
+    answer,
+    fresh,
+    createdAt,
+    resultJson,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TutorAttemptRow &&
+          other.attemptId == this.attemptId &&
+          other.lang == this.lang &&
+          other.itemId == this.itemId &&
+          other.answer == this.answer &&
+          other.fresh == this.fresh &&
+          other.createdAt == this.createdAt &&
+          other.resultJson == this.resultJson);
+}
+
+class TutorAttemptsCompanion extends UpdateCompanion<TutorAttemptRow> {
+  final Value<String> attemptId;
+  final Value<String> lang;
+  final Value<String> itemId;
+  final Value<String> answer;
+  final Value<bool> fresh;
+  final Value<DateTime> createdAt;
+  final Value<String?> resultJson;
+  final Value<int> rowid;
+  const TutorAttemptsCompanion({
+    this.attemptId = const Value.absent(),
+    this.lang = const Value.absent(),
+    this.itemId = const Value.absent(),
+    this.answer = const Value.absent(),
+    this.fresh = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.resultJson = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TutorAttemptsCompanion.insert({
+    required String attemptId,
+    required String lang,
+    required String itemId,
+    required String answer,
+    required bool fresh,
+    required DateTime createdAt,
+    this.resultJson = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : attemptId = Value(attemptId),
+       lang = Value(lang),
+       itemId = Value(itemId),
+       answer = Value(answer),
+       fresh = Value(fresh),
+       createdAt = Value(createdAt);
+  static Insertable<TutorAttemptRow> custom({
+    Expression<String>? attemptId,
+    Expression<String>? lang,
+    Expression<String>? itemId,
+    Expression<String>? answer,
+    Expression<bool>? fresh,
+    Expression<DateTime>? createdAt,
+    Expression<String>? resultJson,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (attemptId != null) 'attempt_id': attemptId,
+      if (lang != null) 'lang': lang,
+      if (itemId != null) 'item_id': itemId,
+      if (answer != null) 'answer': answer,
+      if (fresh != null) 'fresh': fresh,
+      if (createdAt != null) 'created_at': createdAt,
+      if (resultJson != null) 'result_json': resultJson,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TutorAttemptsCompanion copyWith({
+    Value<String>? attemptId,
+    Value<String>? lang,
+    Value<String>? itemId,
+    Value<String>? answer,
+    Value<bool>? fresh,
+    Value<DateTime>? createdAt,
+    Value<String?>? resultJson,
+    Value<int>? rowid,
+  }) {
+    return TutorAttemptsCompanion(
+      attemptId: attemptId ?? this.attemptId,
+      lang: lang ?? this.lang,
+      itemId: itemId ?? this.itemId,
+      answer: answer ?? this.answer,
+      fresh: fresh ?? this.fresh,
+      createdAt: createdAt ?? this.createdAt,
+      resultJson: resultJson ?? this.resultJson,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (attemptId.present) {
+      map['attempt_id'] = Variable<String>(attemptId.value);
+    }
+    if (lang.present) {
+      map['lang'] = Variable<String>(lang.value);
+    }
+    if (itemId.present) {
+      map['item_id'] = Variable<String>(itemId.value);
+    }
+    if (answer.present) {
+      map['answer'] = Variable<String>(answer.value);
+    }
+    if (fresh.present) {
+      map['fresh'] = Variable<bool>(fresh.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (resultJson.present) {
+      map['result_json'] = Variable<String>(resultJson.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TutorAttemptsCompanion(')
+          ..write('attemptId: $attemptId, ')
+          ..write('lang: $lang, ')
+          ..write('itemId: $itemId, ')
+          ..write('answer: $answer, ')
+          ..write('fresh: $fresh, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('resultJson: $resultJson, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TutorGenerationsTable extends TutorGenerations
+    with TableInfo<$TutorGenerationsTable, TutorGenerationRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TutorGenerationsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _requestIdMeta = const VerificationMeta(
+    'requestId',
+  );
+  @override
+  late final GeneratedColumn<String> requestId = GeneratedColumn<String>(
+    'request_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _langMeta = const VerificationMeta('lang');
+  @override
+  late final GeneratedColumn<String> lang = GeneratedColumn<String>(
+    'lang',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _payloadJsonMeta = const VerificationMeta(
+    'payloadJson',
+  );
+  @override
+  late final GeneratedColumn<String> payloadJson = GeneratedColumn<String>(
+    'payload_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [requestId, lang, payloadJson];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'tutor_generations';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TutorGenerationRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('request_id')) {
+      context.handle(
+        _requestIdMeta,
+        requestId.isAcceptableOrUnknown(data['request_id']!, _requestIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_requestIdMeta);
+    }
+    if (data.containsKey('lang')) {
+      context.handle(
+        _langMeta,
+        lang.isAcceptableOrUnknown(data['lang']!, _langMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_langMeta);
+    }
+    if (data.containsKey('payload_json')) {
+      context.handle(
+        _payloadJsonMeta,
+        payloadJson.isAcceptableOrUnknown(
+          data['payload_json']!,
+          _payloadJsonMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_payloadJsonMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {requestId};
+  @override
+  TutorGenerationRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TutorGenerationRow(
+      requestId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}request_id'],
+      )!,
+      lang: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}lang'],
+      )!,
+      payloadJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}payload_json'],
+      )!,
+    );
+  }
+
+  @override
+  $TutorGenerationsTable createAlias(String alias) {
+    return $TutorGenerationsTable(attachedDatabase, alias);
+  }
+}
+
+class TutorGenerationRow extends DataClass
+    implements Insertable<TutorGenerationRow> {
+  final String requestId;
+  final String lang;
+  final String payloadJson;
+  const TutorGenerationRow({
+    required this.requestId,
+    required this.lang,
+    required this.payloadJson,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['request_id'] = Variable<String>(requestId);
+    map['lang'] = Variable<String>(lang);
+    map['payload_json'] = Variable<String>(payloadJson);
+    return map;
+  }
+
+  TutorGenerationsCompanion toCompanion(bool nullToAbsent) {
+    return TutorGenerationsCompanion(
+      requestId: Value(requestId),
+      lang: Value(lang),
+      payloadJson: Value(payloadJson),
+    );
+  }
+
+  factory TutorGenerationRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TutorGenerationRow(
+      requestId: serializer.fromJson<String>(json['requestId']),
+      lang: serializer.fromJson<String>(json['lang']),
+      payloadJson: serializer.fromJson<String>(json['payloadJson']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'requestId': serializer.toJson<String>(requestId),
+      'lang': serializer.toJson<String>(lang),
+      'payloadJson': serializer.toJson<String>(payloadJson),
+    };
+  }
+
+  TutorGenerationRow copyWith({
+    String? requestId,
+    String? lang,
+    String? payloadJson,
+  }) => TutorGenerationRow(
+    requestId: requestId ?? this.requestId,
+    lang: lang ?? this.lang,
+    payloadJson: payloadJson ?? this.payloadJson,
+  );
+  TutorGenerationRow copyWithCompanion(TutorGenerationsCompanion data) {
+    return TutorGenerationRow(
+      requestId: data.requestId.present ? data.requestId.value : this.requestId,
+      lang: data.lang.present ? data.lang.value : this.lang,
+      payloadJson: data.payloadJson.present
+          ? data.payloadJson.value
+          : this.payloadJson,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TutorGenerationRow(')
+          ..write('requestId: $requestId, ')
+          ..write('lang: $lang, ')
+          ..write('payloadJson: $payloadJson')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(requestId, lang, payloadJson);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TutorGenerationRow &&
+          other.requestId == this.requestId &&
+          other.lang == this.lang &&
+          other.payloadJson == this.payloadJson);
+}
+
+class TutorGenerationsCompanion extends UpdateCompanion<TutorGenerationRow> {
+  final Value<String> requestId;
+  final Value<String> lang;
+  final Value<String> payloadJson;
+  final Value<int> rowid;
+  const TutorGenerationsCompanion({
+    this.requestId = const Value.absent(),
+    this.lang = const Value.absent(),
+    this.payloadJson = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TutorGenerationsCompanion.insert({
+    required String requestId,
+    required String lang,
+    required String payloadJson,
+    this.rowid = const Value.absent(),
+  }) : requestId = Value(requestId),
+       lang = Value(lang),
+       payloadJson = Value(payloadJson);
+  static Insertable<TutorGenerationRow> custom({
+    Expression<String>? requestId,
+    Expression<String>? lang,
+    Expression<String>? payloadJson,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (requestId != null) 'request_id': requestId,
+      if (lang != null) 'lang': lang,
+      if (payloadJson != null) 'payload_json': payloadJson,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TutorGenerationsCompanion copyWith({
+    Value<String>? requestId,
+    Value<String>? lang,
+    Value<String>? payloadJson,
+    Value<int>? rowid,
+  }) {
+    return TutorGenerationsCompanion(
+      requestId: requestId ?? this.requestId,
+      lang: lang ?? this.lang,
+      payloadJson: payloadJson ?? this.payloadJson,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (requestId.present) {
+      map['request_id'] = Variable<String>(requestId.value);
+    }
+    if (lang.present) {
+      map['lang'] = Variable<String>(lang.value);
+    }
+    if (payloadJson.present) {
+      map['payload_json'] = Variable<String>(payloadJson.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TutorGenerationsCompanion(')
+          ..write('requestId: $requestId, ')
+          ..write('lang: $lang, ')
+          ..write('payloadJson: $payloadJson, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$UserDatabase extends GeneratedDatabase {
   _$UserDatabase(QueryExecutor e) : super(e);
   late final $UserCardsTable userCards = $UserCardsTable(this);
@@ -7261,6 +9411,14 @@ abstract class _$UserDatabase extends GeneratedDatabase {
       $FormIdentityBindingsTable(this);
   late final $LanguageLearningPreferencesTable languageLearningPreferences =
       $LanguageLearningPreferencesTable(this);
+  late final $TutorSkillStatesTable tutorSkillStates = $TutorSkillStatesTable(
+    this,
+  );
+  late final $TutorItemsTable tutorItems = $TutorItemsTable(this);
+  late final $TutorAttemptsTable tutorAttempts = $TutorAttemptsTable(this);
+  late final $TutorGenerationsTable tutorGenerations = $TutorGenerationsTable(
+    this,
+  );
   late final Index reviewLogCard = Index(
     'review_log_card',
     'CREATE INDEX review_log_card ON review_log (card_id)',
@@ -7284,6 +9442,10 @@ abstract class _$UserDatabase extends GeneratedDatabase {
     learningIdentityBindings,
     formIdentityBindings,
     languageLearningPreferences,
+    tutorSkillStates,
+    tutorItems,
+    tutorAttempts,
+    tutorGenerations,
     reviewLogCard,
   ];
   @override

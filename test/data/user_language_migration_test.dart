@@ -109,6 +109,9 @@ void main() {
       raw.execute('DROP TABLE $table');
       raw.execute('ALTER TABLE old_$table RENAME TO $table');
     }
+    for (final table in ['tutor_attempts', 'tutor_items', 'tutor_skill_states', 'tutor_generations']) {
+      raw.execute('DROP TABLE $table');
+    }
     raw.execute('PRAGMA user_version=5');
     final before = snapshot(raw);
     raw.close();
@@ -134,6 +137,10 @@ void main() {
     }
     expect(after.keys.toSet().difference(before.keys.toSet()), {
       'language_learning_preferences',
+      'tutor_skill_states',
+      'tutor_items',
+      'tutor_attempts',
+      'tutor_generations',
     });
     final backup = sqlite3.open(
       '${file.path}.pre-v6.sqlite',

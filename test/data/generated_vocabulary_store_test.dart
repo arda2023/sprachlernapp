@@ -137,6 +137,9 @@ void main() {
       final raw = sqlite.sqlite3.open(file.path);
       raw.execute('DROP TABLE pending_generated_vocabulary');
       raw.execute('DROP TABLE free_generated_vocabulary');
+      for (final table in ['tutor_attempts', 'tutor_items', 'tutor_skill_states', 'tutor_generations']) {
+        raw.execute('DROP TABLE $table');
+      }
       raw.execute('PRAGMA user_version=8');
       raw.close();
 
@@ -467,6 +470,9 @@ void main() {
       raw.execute('DROP TABLE pending_generated_vocabulary');
       raw.execute('DROP TABLE free_generated_vocabulary');
       raw.execute('DROP TABLE generated_vocabulary_additions');
+      for (final table in ['tutor_attempts', 'tutor_items', 'tutor_skill_states', 'tutor_generations']) {
+        raw.execute('DROP TABLE $table');
+      }
       raw.execute('PRAGMA user_version=7');
       final before = Map<String, Object?>.from(
         raw.select('SELECT * FROM user_cards').single,
@@ -481,7 +487,7 @@ void main() {
       expect(
         (await migrated.customSelect('PRAGMA user_version').getSingle())
             .read<int>('user_version'),
-        9,
+        10,
       );
       expect(
         (await migrated.customSelect('SELECT * FROM user_cards').getSingle())

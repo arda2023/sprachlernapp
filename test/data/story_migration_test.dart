@@ -68,6 +68,9 @@ void main() {
         raw.execute(
           "INSERT INTO review_log VALUES ('old-review','existing','2026-10-04T00:00:00.000Z','deck','old-sentence',1,0,0,0,0,3,'2026-10-05T00:00:00.000Z',500,'old','device')",
         );
+        for (final table in ['tutor_attempts', 'tutor_items', 'tutor_skill_states', 'tutor_generations']) {
+          raw.execute('DROP TABLE $table');
+        }
         raw.execute('PRAGMA user_version=$version');
         final columns = <String, List<String>>{};
         final before = <String, List<Map<String, Object?>>>{};
@@ -95,7 +98,7 @@ void main() {
         await repo.close();
         final migrated = sqlite3.open(file.path);
         addTearDown(migrated.close);
-        expect(migrated.select('PRAGMA user_version').single.values.first, 9);
+        expect(migrated.select('PRAGMA user_version').single.values.first, 10);
         for (final table in [
           'generated_vocabulary_additions',
           'free_generated_vocabulary',

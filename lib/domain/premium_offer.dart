@@ -6,6 +6,7 @@ enum PremiumOfferReason {
   ownTexts,
   vocabulary,
   translations,
+  tutor,
   exercises;
 
   static PremiumOfferReason fromInterest(String interest) {
@@ -33,6 +34,7 @@ enum PremiumOfferReason {
     ownTexts => 'Deine Texte.\nDeine Wörter.',
     vocabulary => 'Wörter für\ndeine Themen.',
     translations => 'Lies weiter.\nVerstehe mehr.',
+    tutor => 'Mehr Sätze\nmit Premium',
     exercises => 'Mehr Wege,\nWörter zu üben.',
   };
 }

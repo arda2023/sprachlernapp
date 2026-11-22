@@ -1,5 +1,7 @@
 # Nutzerschema (Entwurf v1)
 
+Aktueller lokaler Stand: **user.db Schema 10**. Die historischen Abschnitte unten beschreiben die einzelnen additiven Migrationen.
+
 Der gemeinsame Entwurf gilt für Drift `user.db` und Supabase-Schema `app`; die unten ausdrücklich beschriebenen lokalen Migrationen sind kein angewendeter Serververtrag. Im Schema `app` hat jede Tabelle zusätzlich `user_id uuid` und RLS "nur eigene Zeilen". Regeln zu Box, Fälligkeit und Zählern: `docs/srs.md`. Inhalte: `docs/content-schema.md`.
 
 ## Gemeinsame Tabellen (user.db und app)
@@ -102,3 +104,16 @@ Die ausdrückliche Auswahl aus einer validierten Generierungsantwort schreibt Ka
 Die lokale ID ist `u:` + SHA256 über JSON `["generated-vocabulary-v1",lang,form_norm,lemma,pos,definition_de]`; `form_norm` verwendet NFC, Kleinschreibung und die vorhandene Apostrophnormalisierung. Innerhalb dieses privaten Stapels wird vor jeder Anlage zusätzlich dieselbe normalisierte Wortform gesucht: Wiederholtes Speichern mit anderer UUID oder neuer Formulierung verwendet die vorhandene Karte und ihren festen Kontext, ohne Box, Fälligkeit, Flags, Notizen, Mitgliedschaftsdatum oder Reviewhistorie zu ersetzen. Bereits deaktivierte oder zurückgestellte gleichgeschriebene Karten derselben Sprache verhindern eine neue Anlage.
 
 Pro Sprache gibt es genau einen Stapel „Generierte Vokabeln“. Beim ersten Speichern wird sein `deck_settings`-Eintrag aktiviert, sofern noch keiner besteht; eine spätere gespeicherte Deaktivierung bleibt erhalten. Resolver, Stapelanzeige, Gemischt und Wortliste verwenden die vorhandenen Karten- und SRS-Daten, auch ohne Content-Pack. Keine gespeicherten Vokabelzähler. Kein Cloud-Sync dieser lokalen Karten; serverseitige Status-/Antwortzeilen der Generierungsanfrage sind ein getrenntes Schema, siehe [Backend](backend.md).
+
+## Lokale Migration v9 → v10 (AI-Tutor, 22.11.2026)
+
+Additiv, auch beim Upgrade älterer Datenbanken: vorhandene Tabellenwerte, Geräte-ID, Karten, Kontexte und append-only Review-Trigger bleiben erhalten. Der Tutor verwendet die bereits nach Konto getrennte `user.db` und innerhalb dieser Datenbank explizite Sprachfilter. Keine Aufnahme in den bestehenden Lernsync; keine Tutorversuche im Vokabel-`review_log` und kein Einfluss auf Vokabelboxen oder Tagesziel.
+
+- `tutor_skill_states`: zusammengesetzter PK `(lang, skill_id)`, `tested`, `box` (0–5), nullable `due_at`, `fresh_streak`, `updated_at`, nullable `last_fresh_topic`. Das letzte frische Thema belegt die Themenvielfalt für „sicher“; Anzahl schwacher/sicherer/ungetesteter Fähigkeiten wird ausschließlich abgeleitet.
+- `tutor_items`: `id` PK (Server-UUID), `lang`, `kind`, `prompt_de`, `reference_answer`, `skills_json`, `topic`, `origin`, nullable `parent_item_id`, `failures` (0–3), `answer_shown`, `status` (`new`, `retry`, `retired`), nullable `last_shown_at` und `last_round_id`, `regeneration_needed`. Die Rundenreferenz verhindert sofortige Satzwiederholung; das Regenerierungsmerkmal bleibt bis zum Speichern einer Kindaufgabe erhalten. Ungenutzte generierte Aufgaben bleiben lokal.
+- `tutor_attempts`: `attempt_id` PK, `lang`, `item_id` FK, getrimmte `answer`, `fresh`, `created_at`, nullable `result_json`. Das Ergebnis enthält Scores, deterministisches Outcome, Fehler, Feedback, Idealsatz und die beobachtete Serverquote. Vor dem HTTP-Aufruf wird die unveränderliche Eingabe mit UUID persistiert; NULL-Ergebnis bedeutet offenen Versuch. Wiederaufnahme verwendet dieselbe UUID und Antwort. Ergebnis, Aufgabenstatus und sämtliche Fähigkeitsänderungen werden in einer Transaktion gespeichert, bei Replay nur einmal.
+- `tutor_generations`: `request_id` PK, `lang`, `payload_json`. Dauerhafte offene Generierungsanfragen einschließlich Origins und vermiedener Themen ermöglichen idempotente Wiederaufnahme. Erfolgreiches Speichern der Aufgaben entfernt den offenen Eintrag atomar. Keine Antworten, Tokens oder API-Schlüssel in diesem Payload.
+
+Das freie Tagesrestkontingent wird sprachübergreifend aus erfolgreichen Versuchen und deren Serverquoten abgeleitet. Kalendertag ist `Europe/Berlin`, einschließlich Sommerzeit. Andere Geräte können das Kontingent zwischenzeitlich verbrauchen; `TUTOR_DAILY_LIMIT` bleibt die verbindliche Serverentscheidung. Es gibt keine lokal gespeicherten Tages- oder Fortschrittszähler. Vertrag und Intervalle: [AI-Tutor, Abschnitte 3–7](plans/2026-11-22-ai-tutor.md).
+
+Die Rundenreferenz markiert ausschließlich Aufgaben der zuletzt angezeigten Runde, unabhängig von Uhrzeitgleichständen. Bei bestätigtem `MODEL_INVALID`/`MODEL_FAILED` werden offene lokale Anfrageeinträge entfernt; die Oberfläche zeigt den Fehler und startet keine automatische Wiederholung. Erst die ausdrückliche Retry-Aktion erstellt eine neue UUID. Bei verlorener Antwort, Timeout oder Offline bleiben UUID und Eingabe erhalten.
