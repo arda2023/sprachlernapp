@@ -23,6 +23,7 @@ import 'widgets/progress_tiles.dart';
 import 'widgets/story_carousel.dart';
 import 'widgets/streak_calendar.dart';
 import 'widgets/streak_strip.dart';
+import 'widgets/tutor_entry_card.dart';
 
 /// Home (docs/redesign/home-01-recherche.html, DESIGN.md): daily goal and
 /// streak in the header, the week box, progress tiles, stories and at most
@@ -134,6 +135,7 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           DailySuggestionCard(onOpenStory: onOpenStory),
+          const TutorEntryCard(),
           const SizedBox(height: 28),
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 8),

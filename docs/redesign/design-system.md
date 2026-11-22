@@ -8,7 +8,7 @@ Dateiangaben in den Tabellen bezeichnen bestehende Komponenten unter `lib/screen
 
 Herleitung, Mobbin-Referenzen und verworfene Richtungen: [historische Home-Recherche](home-01-recherche.html) (Richtung A „Heute-Karte“).
 
-**Reihenfolge:** Kopfzeile → Streak-Box → Fortschritts-Kästchen → Stories → Aktive Stapel. Geübt wird über den Play-Knopf in der Leiste.
+**Reihenfolge:** Kopfzeile → Streak-Box → Fortschritts-Kästchen → nächste Lernaufgabe → AI-Tutor-Karte → Stories → Aktive Stapel. Die gemeinsame Vokabelübung startet über den Play-Knopf in der Leiste.
 
 | Baustein | Regel | Datei |
 |---|---|---|
@@ -34,6 +34,21 @@ Herleitung, Mobbin-Referenzen und verworfene Richtungen: [historische Home-Reche
 **Streak-Regeln** (abgeleitet aus dem Review-Log, nichts gespeichert, `lib/domain/streak.dart`): Ein Tag zählt ab der ersten Übung. Eine Lücke setzt den Streak auf 0; geholte Sterne bleiben. Jeder 7. Tag einer ununterbrochenen Serie ist ein Stern. Nach einer Lücke bleibt das × sichtbar, bis wieder geübt wird; dann beginnt die Leiste links. Am Tag nach einem Stern ist die Leiste leer.
 
 **Barrierefreiheit:** Jede Antippfläche ≥ 44 pt; eigene Beschriftungen nach dem Muster `MergeSemantics → Button → Semantics(label, excludeSemantics)`, damit VoiceOver Beschriftung und Aktion gemeinsam erhält.
+
+## AI-Tutor (22.11.2026)
+
+Verbindlicher Bauvertrag: [AI-Tutor, Abschnitt 8](../plans/2026-11-22-ai-tutor.md#8-oberfläche-designsystem-docsredesigndesign-systemmd). Gestaltungsreferenzen sind die bestehenden Home-Karten, die Stapelübung mit Grammatik-Infochip und die Tutor-Demo der Paywall.
+
+- **Home:** Genau eine kompakte Karte nach der nächsten Lernaufgabe: „AI-Tutor“-Chip mit Sparkles, „Sätze frei übersetzen“, „Bis zu 10 Sätze pro Runde.“; Free zusätzlich „Heute noch N Sätze frei“. Auf Home keine Aufgabe, Eingabe oder Ergebnisse. Konto über das bestehende Account-Sheet, KI-Freigabe über den vorhandenen widerrufbaren Schalter in den Einstellungen. Das freie Tageslimit öffnet die bestehende Paywall mit `PremiumOfferReason.tutor`.
+- **Übung:** Eigenständiger Bildschirm, links ×, durchgehender animierter 6-pt-Fortschrittsbalken, kein Menü. Eine Karte auf `raisedInk`, Radius 24, kompakte Innenabstände. Oben Infochip mit 44-pt-Tippziel und derselben Pillengeometrie wie der Grammatikchip: „Übersetzen“ in `active` auf `activeTint`, „Situation“ in `memoryLevel2` auf `playback`. Darunter ausschließlich der deutsche Satz/die Frage in Editorial 24; ein versehentliches „Übersetze:“-Präfix wird entfernt.
+- **Info:** Verankertes Popover ohne Abdunkeln, ohne wiederholte Überschrift. Übersetzen orange: „Übersetze den Satz unten ins Englische.“; Situation als ausdrückliche blaue Ausnahme: „Wie würdest du in dieser Situation auf Englisch antworten?“. Sprachphrasen kommen aus dem Tutor-Domainvertrag. Blaues Popover: `AppColors.memoryLevel2` mit `onActive`, in beiden Motiven kontrastgeprüft. Orange verwendet wie die aktuellen App-Bausteine `popover` mit `onActive`; die bestehende Ausnahme für orange Akzentschrift im hellen Motiv bleibt bestehen.
+- **Antwort:** Mehrzeilig, keine Autokorrektur, Vorschläge, Smart Quotes oder Smart Dashes. Tastatur-Fertig prüft. Genau eine Aktionspille über der Tastatur: „Prüfen“ (leer deaktiviert), Denk-Punkte im unverändert hohen Button, danach „Weiter“ bzw. beim letzten Satz „Fertig“. Kein eigenständiger Ladebutton.
+- **Ergebnis:** Tastatur schließt beim Prüfen; das Feld schrumpft zur unveränderlichen Antwort mit `successTint`, `activeTint` oder `errorTint` und entsprechendem Zustandsrahmen. Eine Zeile mit Bedeutung / Grammatik / Natürlichkeit: 2 = grüner Haken, 1 = oranges ≈, 0 = rotes Kreuz. Jedes Symbol hat ein mindestens 44-pt-Tippziel und ein oranges Popover mit genau einem Satz (Definition; Urteil). Danach unmittelbar Feedback (Figtree 15), kleines Label „Idealer Satz“ (13) und Idealsatz (Editorial 17), ohne zusätzliche Karten oder Aktionen.
+- **Platz:** 390 × 844 pt, Tastatur-Inset 336 pt: Chip, Aufgabe, Feld und Button ohne Scrollen. Nach dem Ergebnis bei Standardschrift alles ohne Scrollen. 320 pt darf nicht überlaufen. Bei 2× Schrift wächst der Inhalt und darf scrollen; Ergebnisse werden automatisch mit `easeOutCubic` sichtbar gemacht, die Aktion bleibt fest erreichbar.
+- **Bewegung:** `PressScale` für Karte, Chip, Symbole und Aktion; Popover aus dem Anker. Button mit `LightSweep` und den drei Denk-Punkten der Paywall-Demo. Ergebnisse kurz gestaffelt (Fade/kleiner Pop mit gezeichneten Icons), danach Feedback und Idealsatz; Feldwechsel 220 ms, Fortschritt 250 ms, Aufgabenwechsel 200 ms mit leichtem Versatz. Ergebnis-Haptik folgt Erfolg / Warnung / Fehler. Abschluss „Runde geschafft“, echte Anzahlen und „Fertig“ zurück zu Home, kleiner gezeichneter Haken mit Ring/Punkten im Stil der bestehenden Abschlussanimation. `disableAnimations` zeigt sofort den Endzustand und stoppt Ladeanimationen; semantische Haptik bleibt wie in der Stapelübung erhalten.
+- **Ausfälle:** Offline und Fehler zeigen einen kurzen Hinweis und „Erneut versuchen“ im selben Aktionsplatz. Netzwerkunsichere Antworten bleiben unverändert für den idempotenten Wiederholungsversuch. Fehlender Zugang und nicht unterstützte Sprachen erhalten einen knappen Zustand; kein stiller Modell-Fallback.
+
+Dateien: `home/widgets/tutor_entry_card.dart`, `tutor/tutor_screen.dart`, `tutor/widgets/`. Widget-/Layout-Tests: `test/tutor_screen_test.dart`; Kontrast, Semantik und Tippziele: `test/accessibility/tutor_accessibility_test.dart`.
 
 ## Stories & Reader (20.10.2026)
 

@@ -158,6 +158,7 @@ class _PopoverRoute<T> extends PopupRoute<T> {
     Widget child,
   ) {
     final reduced = MediaQuery.disableAnimationsOf(context);
+    if (reduced) return child;
     final curved = CurvedAnimation(
       parent: animation,
       curve: Curves.easeOutBack,
@@ -165,13 +166,11 @@ class _PopoverRoute<T> extends PopupRoute<T> {
     );
     return FadeTransition(
       opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
-      child: reduced
-          ? child
-          : ScaleTransition(
-              scale: Tween(begin: 0.92, end: 1.0).animate(curved),
-              alignment: _PopoverLayout.scaleOrigin(context, anchor),
-              child: child,
-            ),
+      child: ScaleTransition(
+        scale: Tween(begin: 0.92, end: 1.0).animate(curved),
+        alignment: _PopoverLayout.scaleOrigin(context, anchor),
+        child: child,
+      ),
     );
   }
 }

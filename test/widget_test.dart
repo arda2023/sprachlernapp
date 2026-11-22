@@ -653,6 +653,9 @@ void main() {
     await tester.pumpWidget(testScope(const SprachApp(), library: true));
     await tester.pumpAndSettle();
     await scrollHomeTo(tester, find.text('Mehr entdecken'));
+    // The tutor entry moves this row below the first viewport. Complete the
+    // scroll layout before tapping; its old coordinates sit under the tab bar.
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Mehr entdecken'));
     await tester.pumpAndSettle();
     expect(find.byType(StoryLibraryScreen), findsOneWidget);
