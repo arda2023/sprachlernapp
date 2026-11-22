@@ -79,3 +79,37 @@ node --experimental-transform-types --test supabase/functions/_shared/ai_budget_
 ```
 
 Die lokalen SQL-Tests simulieren Auth-Rollen und führen die tatsächlichen Migrationen/Funktionskörper aus. PGlite selbst bietet hier keinen Beweis für unabhängige parallele Datenbanksessions; dafür dient der separate Live-Test. Die Cron-Registrierung wurde auf Supabase geprüft. Einzelheiten und Restbefunde: [Sicherheitsnachprüfung](security-fixes-2026-11-01.md).
+
+## AI-Tutor
+
+Stand 22.11.2026: im Repository implementiert, noch nicht veröffentlicht.
+`tutor-generate` und `tutor-grade` teilen dieselbe atomare Grenze von 5.000.000
+Mikro-Euro je Konto und UTC-Monat mit allen bestehenden Features. Aufruf nur
+über `budgetedAnthropicFetch`, ausschließlich `claude-haiku-5-5`, ohne Thinking,
+Tools, Caching oder automatischen Retry, mit JSON-Schema-Ausgabe.
+
+| Budgetfeature | `max_tokens` | `output_config.effort` | Höchstreservierung |
+|---|---:|---|---:|
+| `tutor-generate` | 4096 | `medium` | 1.020.480 Mikro-Euro (1,020480 €) |
+| `tutor-grade` | 1536 | `low` | 1.007.680 Mikro-Euro (1,007680 €) |
+
+Die Migration übernimmt den bestehenden Tarif unverändert: bis 100.000
+Inputtokens 0,20 €/Million Input und 1,00 €/Million Output; darüber 1,00 und
+5,00 €. Das entspricht weiterhin den hinterlegten USD-Preisen 0,10/0,50 bzw.
+0,50/2,50 je Million mit Faktor 2 EUR/USD. Reservierung: 1.000.000 Mikro-Euro
+für das gesamte maximale Inputfenster plus `max_tokens × 5`. Abrechnung mit
+plausibler Anbieter-Usage erfolgt einmalig, auch wenn das Ergebnis anschließend
+die Tutorvalidierung nicht besteht. Die bestehende Policy-Ablauffrist wird
+durch die Tutor-Migration **nicht verlängert**.
+
+Zusätzlich reserviert SQL Tageskontingente nach Europe/Berlin: Free 3 bewertete
+Antworten / 6 generierte Aufgaben, Premium 150 / 60, gemeinsam über Sprachen.
+Idempotente Treffer starten keinen Provider- oder Budgetaufruf. Nachweislich
+vor dem Provider beendete Anfragen (z. B. Budget verweigert, Elternaufgabe
+ungültig) geben nur die Tutor-Tagesreservierung frei; ihre UUID bleibt gesperrt.
+Unklare Anbieter-/Speicherausgänge behalten ihre Reservierung. Die bestehende
+Geldledger-Regel für unbekannte Ausgänge bleibt unverändert. Nach 30 Tagen
+entfernt der private-AI-Cron die Tutor-Inhalte, ohne das laufende Monatsbudget
+zurückzusetzen. Kontolöschung entfernt auch Tutor- und Budgetzeilen.
+
+Vertrag, Fehlercodes und synthetische Tests: [Backend](backend.md#ai-tutor-22112026-implementiert-noch-nicht-veröffentlicht).

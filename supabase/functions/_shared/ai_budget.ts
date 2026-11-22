@@ -1,11 +1,12 @@
 import { TranslationError } from './runtime_errors.ts';
 
 export type AiFeature = 'lookup-word' | 'translate-sentence' | 'personal-learning' |
-  'topic-check' | 'generated-vocabulary';
+  'topic-check' | 'generated-vocabulary' | 'tutor-generate' | 'tutor-grade';
 type Rpc = (name: string, body: Record<string, any>, signal: AbortSignal) => Promise<Record<string, any>>;
 const limits: Record<AiFeature, number> = {
   'lookup-word': 384, 'translate-sentence': 384, 'personal-learning': 1500,
   'topic-check': 128, 'generated-vocabulary': 16000,
+  'tutor-generate': 4096, 'tutor-grade': 1536,
 };
 
 /** Reserve before dispatch, even across endpoints. Unknown outcomes retain the

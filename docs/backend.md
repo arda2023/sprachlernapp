@@ -113,3 +113,164 @@ Auf Nutzerwunsch vom 01.11.2026 vorerst ausgeblendet. Migrationen und Function l
 ## Weiterhin Entwurf: `sentence-check`
 
 Story-Satzprüfung/Umschreiben ist nicht implementiert und wird durch diesen Auftrag nicht aktiviert. SRS, Antwortbewertung, Produktionspacks, redaktionelle Übersetzungen und bestehende Lernstände bleiben unverändert.
+
+## AI-Tutor (22.11.2026, implementiert, noch nicht veröffentlicht)
+
+`POST /functions/v1/tutor-generate` und `POST /functions/v1/tutor-grade` benötigen
+`Authorization: Bearer <Supabase-Access-Token>`, ein bestätigtes, nicht-anonymes
+Konto und die widerrufbare KI-Einwilligung. **Beide Requests enthalten zusätzlich
+zum Planvertrag `consent: 1`** (bestätigte Vertragsergänzung vom 22.11.2026, wie
+bei den bestehenden KI-Functions). Fehlt der Wert oder wurde die Einwilligung
+widerrufen, darf der Client nicht senden; der Server verweigert Requests ohne
+`consent: 1` mit `CONSENT_REQUIRED` (403). Es gibt keine zentrale Consent-Tabelle;
+dies ist der ausdrückliche Nachweis pro Request, kein dauerhaft gespeicherter
+Server-Consent. Nutzer-ID, Premiumstatus, Prompt und Fehlerkontext zur Bewertung
+kommen ausschließlich aus Auth bzw. der Datenbank.
+
+Generierung, exakter Beispielrequest:
+
+```json
+{
+  "request_id": "12345678-1234-4234-8234-123456789abc",
+  "lang": "en",
+  "items": [{ "skills": ["past_simple"], "kind": "translate" }],
+  "avoid_topics": ["alltag"],
+  "consent": 1
+}
+```
+
+Antwort 200:
+
+```json
+{
+  "items": [{
+    "id": "22345678-1234-4234-8234-123456789abc",
+    "kind": "translate",
+    "prompt_de": "Ich ging gestern ins Kino.",
+    "reference_answer": "I went to the cinema yesterday.",
+    "skills": ["past_simple"],
+    "topic": "kultur"
+  }]
+}
+```
+
+`lang`: `en`, `pt-BR`, `es`, `it`, `nb`. `items`: 1–5, je 1–2 eindeutige IDs aus
+`supabase/functions/_shared/tutor_skills.json` für diese Sprache. `kind` ist
+optional (`translate` oder `situation`); `parent_item_id` ist eine optionale UUID
+für eine eigene noch gespeicherte Elternaufgabe. `avoid_topics` ist erforderlich,
+höchstens acht verschiedene Katalogthemen, leere Liste erlaubt. Jede Ausgabe
+entspricht der Position ihrer Anfrage. Die Hauptfähigkeit bleibt erhalten;
+bei einer Neugenerierung müssen beide Fähigkeiten samt Reihenfolge der
+Elternaufgabe entsprechen. Elternaufgabe und Fehler aus deren letzten acht
+gespeicherten Versuchen lädt der Server selbst. Die neue Aufgabe muss ein
+anderes Thema und einen anderen Prompt als die Elternaufgabe haben.
+
+`prompt_de` enthält ausschließlich den deutschen Satz oder die Situationsfrage,
+8–160 UTF-16-Einheiten, höchstens zwei Sätze, Schlusspunkt/Frage-/Ausrufezeichen;
+Situationen enden mit `?`. Instruktionspräfixe (`Übersetze`, `Übersetzen Sie`,
+`Translate`, `Bitte`), führende Labels mit Doppelpunkt, umschließende Anführungszeichen
+und Kontrollzeichen werden verworfen, nicht still entfernt. Referenz: 2–200
+Einheiten, ungleich dem Prompt. Katalog-IDs, Themenausschlüsse, Reihenfolge,
+Feldschema und Grenzen werden im Code geprüft. Sprache, Alltagstauglichkeit und
+inhaltliche Angemessenheit werden im Systemprompt vorgegeben; diese semantischen
+Eigenschaften sind durch die formale Validierung allein nicht bewiesen.
+
+Bewertung, exakter Beispielrequest:
+
+```json
+{
+  "attempt_id": "32345678-1234-4234-8234-123456789abc",
+  "item_id": "22345678-1234-4234-8234-123456789abc",
+  "answer": "I goed to the cinema yesterday.",
+  "consent": 1
+}
+```
+
+Antwort 200:
+
+```json
+{
+  "scores": { "meaning": 2, "grammar": 0, "naturalness": 1 },
+  "outcome": "incorrect",
+  "errors": [{ "skill": "past_simple", "severity": "major", "quote": "goed", "fix": "went" }],
+  "feedback_de": "Die Vergangenheitsform von go ist went.",
+  "ideal_answer": "I went to the cinema yesterday.",
+  "quota": { "used": 1, "limit": 3 }
+}
+```
+
+`answer`: nach Trimmen 1–300 UTF-16-Einheiten, keine Kontroll-/Formatzeichen.
+Weitere Requestfelder werden abgewiesen, insbesondere clientseitige Prompts,
+Zielfähigkeiten oder Scores. Die Antwort steht im Modellinput als untrusted
+JSON-Daten. Scores sind ganze Zahlen 0–2, höchstens vier Fehler mit Katalog-ID
+der Lernsprache oder `other`; `quote` ist ein echter Ausschnitt der Nutzerantwort,
+`quote`/`fix` je höchstens 60 Einheiten. Feedback: 1–2 deutsche Sätze, maximal 220;
+Idealsatz: maximal 200, gültige Nutzerentscheidungen mit minimalen Änderungen
+erhalten. Die gesamte Rubrik einschließlich der „Nie Fehler“-Liste steht im
+Systemprompt. `tutorOutcome(scores: TutorScores, errors: readonly TutorError[],
+targetSkills: readonly string[]): TutorOutcome` in `_shared/tutor_contract.ts`
+(auch aus `_shared/tutor.ts` exportiert) berechnet in dieser Reihenfolge:
+`correct` bei Bedeutung=2, Grammatik=2, Natürlichkeit≥1; sonst `acceptable` bei
+allen Scores≥1 und keinem major-Fehler in einer Zielfähigkeit; sonst `incorrect`.
+Ein tabellengetriebener Test prüft alle 27 Scorekombinationen und Fehlerpositionen.
+
+Free: 3 Bewertungen und 6 generierte Aufgaben pro **Europe/Berlin-Kalendertag**;
+Premium: 150 und 60. Grenzen gelten gemeinsam über alle Sprachen. Premium wird
+aus aktiven serververifizierten Production-/zulässigen Sandbox-/Complimentary-
+Entitlements mit gültigen Zeiträumen bestimmt. `claim_tutor` reserviert die ganze
+Anfrage atomar unter Kontosperre, bevor das Modell läuft. `quota` ist der bei
+Reservierung gespeicherte Stand (einschließlich dieser Anfrage); ein Replay
+liefert denselben Stand, keinen aktuellen Tageszähler. Bereits gestartete,
+fehlgeschlagene oder unklare Provideraufrufe zählen weiter. Nur nachweislich
+vor Providerdispatch beendete Versuche geben die Tagesreservierung frei.
+
+Dieselbe normalisierte UUID und derselbe Inhalt liefern das gespeicherte Ergebnis
+ohne erneute Kosten oder Zählung; geänderter Inhalt → `CONFLICT` 409. Laufende,
+fehlgeschlagene, unklare und abgelaufene IDs werden niemals erneut an das Modell
+gesendet. Für Ergebniswiederaufnahme denselben POST senden, kein separater
+Statusparameter. Neue Versuche brauchen eine neue UUID. Beide Functions haben
+55 Sekunden Deadline, Requests sind auf 8.192 Byte begrenzt. Kein automatischer
+Retry, kein Fallback, keine Logs mit Prompts, Antworten oder Zugangsdaten.
+
+Fehlerantwort: `{ "error": "CODE" }`, zusätzlich bei Tageslimit z. B.
+`{ "error": "TUTOR_DAILY_LIMIT", "premium_required": true, "quota": { "used": 3, "limit": 3 } }`.
+
+| HTTP | Codes |
+|---|---|
+| 401 | `AUTH_REQUIRED` |
+| 403 | `CONSENT_REQUIRED`, `ACCOUNT_UNVERIFIED` |
+| 404 / 410 | `ITEM_NOT_FOUND` / `ITEM_EXPIRED`, `REQUEST_EXPIRED` |
+| 405 / 413 / 422 | `METHOD_NOT_ALLOWED` / `BODY_LIMIT` / `INPUT_INVALID`, `JSON_INVALID` |
+| 409 | `CONFLICT`, `REQUEST_PENDING`, `REQUEST_UNCERTAIN`, `REQUEST_FAILED` |
+| 429 | `TUTOR_DAILY_LIMIT` (`premium_required: true` nur für Free), `AI_MONTHLY_LIMIT` |
+| 502 | `MODEL_INVALID`, `MODEL_UNAVAILABLE` |
+| 503 / 504 | `NOT_CONFIGURED`, `AI_BUDGET_UNAVAILABLE`, `STORAGE_UNAVAILABLE`, `SERVICE_UNAVAILABLE` / `TIMEOUT` |
+
+`app.tutor_items` und `app.tutor_attempts` sind RLS-geschützt, eigene noch nicht
+abgelaufene Zeilen lesbar, ausschließlich durch Service-Rolle schreibbar.
+`app.tutor_requests` hält die privaten Reservierungen und Replay-Ergebnisse und
+ist auch beim Lesen ausschließlich für die Service-Rolle zugänglich. Nach
+30 Tagen werden Prompts, Referenzen, Fähigkeiten/Themen, Antworten, Bewertungen
+und Ergebnis-JSONs durch den bestehenden stündlichen `purge-private-ai`-Job
+gelöscht; Hash-/ID-Tombstones verhindern Replay bis zur Kontolöschung. Abgelaufene
+Inhalte werden bereits vor dem nächsten Cronlauf nicht mehr ausgeliefert. Alle
+Tutorzeilen werden bei Kontolöschung kaskadierend entfernt. Lokale Lernstände
+und deterministisches Scheduling werden hier nicht gespeichert.
+
+Reproduktion ohne Anbieteraufruf, Windows PowerShell und macOS Terminal identisch:
+
+```text
+deno test --allow-all supabase/functions/_shared/tutor_contract_test.ts supabase/functions/_shared/tutor_test.ts
+deno check supabase/functions/tutor-generate/index.ts supabase/functions/tutor-grade/index.ts
+supabase test db supabase/tests/database/tutor_test.sql
+node supabase/tests/run_tutor_sql.mjs
+```
+
+Der letzte Befehl ist die Alternative bei belegten lokalen Supabase-Ports: Er
+verwendet einen temporären Docker-PostgreSQL-Container ohne Host-Port/Netzwerk,
+synthetische Auth-/Entitlement-Voraussetzungen und unveränderte Migration und
+pgTAP-Datei. Zusätzlich laufen parallele echte PostgreSQL-Sessions gegen die
+Quoten und dieselbe Anfrage-ID. Der Container wird anschließend entfernt.
+
+Noch kein Deployment, keine echten Anthropic-Aufrufe und keine sprachliche
+Live-Abnahme. Budgetdetails: [AI-Tutor-Kostengrenze](ai-cost-limit.md#ai-tutor).
