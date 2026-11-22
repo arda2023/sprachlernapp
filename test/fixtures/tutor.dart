@@ -15,6 +15,7 @@ TutorItem tutorTestItem({
   String? skill,
   TutorOrigin origin = TutorOrigin.diagnostic,
   String topic = 'alltag',
+  DateTime? expiresAt,
 }) => TutorItem(
   id: tutorTestId(id),
   lang: lang,
@@ -24,11 +25,13 @@ TutorItem tutorTestItem({
   skills: [skill ?? tutorSkills[lang]!.first.id],
   topic: topic,
   origin: origin,
+  expiresAt: expiresAt ?? tutorTestNow.add(const Duration(days: 30)),
 );
 TutorGrade tutorTestGrade({
   TutorOutcome outcome = TutorOutcome.correct,
   int used = 1,
   int limit = 3,
+  String quotaDay = '2026-11-22',
 }) => TutorGrade(
   scores: switch (outcome) {
     TutorOutcome.correct => const TutorScores(2, 2, 2),
@@ -41,6 +44,7 @@ TutorGrade tutorTestGrade({
   idealAnswer: 'I am going home today.',
   used: used,
   limit: limit,
+  quotaDay: quotaDay,
 );
 
 class TutorMemoryConsent extends PersonalConsentStore {
@@ -100,6 +104,7 @@ class FakeTutorClient extends TutorClient {
               (t) => !request.avoidTopics.contains(t),
             ),
             origin: spec.origin,
+            expiresAt: tutorTestNow.add(const Duration(days: 30)),
             parentItemId: spec.parentItemId,
           ),
       ],

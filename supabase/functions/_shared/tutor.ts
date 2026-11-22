@@ -1,4 +1,5 @@
 import { budgetedAnthropicFetch } from './ai_budget.ts';
+import tutorErrors from './tutor_errors.json' with { type: 'json' };
 import { MODEL, TranslationBackend, TranslationError } from './runtime_translation.ts';
 import { tutorCatalog, tutorGenerateRequest, tutorGradeRequest, tutorGeneratedItems, tutorGradedAnswer,
   type TutorGenerateRequest, type TutorGradeRequest, type TutorItem, type TutorLanguage } from './tutor_contract.ts';
@@ -117,7 +118,7 @@ export class TutorBackend {
     const failure = failures[String(claim.status)];
     if (failure) throw new TranslationError(...failure);
     check(claim.status === 'claimed' && typeof claim.ticket === 'string', 'STORAGE_UNAVAILABLE');
-    let dispatched = false, storing = false;
+    let dispatched = false, rejected = false, storing = false;
     try {
       check(this.apiKey, 'NOT_CONFIGURED');
       const parents: (Json | null)[] = [];
@@ -137,9 +138,11 @@ export class TutorBackend {
         : { lang, skills_catalog: tutorCatalog.languages[lang], task: {
           kind: item!.kind, prompt_de: item!.prompt_de, reference_answer: item!.reference_answer, skills: item!.skills,
         }, learner_answer_untrusted: grading.answer };
-      const response = await budgetedAnthropicFetch(user, operation, this.rpc.bind(this), (...args) => {
+      const response = await budgetedAnthropicFetch(user, operation, this.rpc.bind(this), async (...args) => {
         dispatched = true;
-        return this.fetcher(...args);
+        const response = await this.fetcher(...args);
+        rejected = !response.ok;
+        return response;
       }, {
         method: 'POST', headers: { 'x-api-key': this.apiKey, 'anthropic-version': '2023-06-01', 'Content-Type': 'application/json' },
         body: JSON.stringify({ model: MODEL, max_tokens: generate ? 4096 : 1536,
@@ -174,12 +177,13 @@ export class TutorBackend {
         p_ticket: claim.ticket, p_response: result, p_answer: generate ? null : grading.answer,
         p_parents: generate ? generation.items.map(s => s.parent_item_id ?? null) : null }, signal);
       check(saved.status === 'saved', 'REQUEST_UNCERTAIN', 409);
-      return result;
+      check(saved.response && typeof saved.response === 'object' && !Array.isArray(saved.response), 'STORAGE_UNAVAILABLE');
+      return saved.response as Json;
     } catch (error) {
       if (!storing) {
         try {
           await this.rpc('fail_tutor', { p_user: user, p_request: requestId, p_operation: operation,
-            p_ticket: claim.ticket, p_release: !dispatched }, AbortSignal.timeout(4000));
+            p_ticket: claim.ticket, p_release: !dispatched || rejected }, AbortSignal.timeout(4000));
         } catch { /* Preserve the reservation and tombstone on uncertain storage. */ }
       }
       throw error;
@@ -203,7 +207,8 @@ export function tutorHandler(backend: TutorBackend, operation: TutorOperation) {
     } catch (error) {
       const failure = controller.signal.aborted ? new TranslationError('TIMEOUT', 504)
         : error instanceof TranslationError ? error : new TranslationError('SERVICE_UNAVAILABLE', 503);
-      return Response.json({ error: failure.code, ...failure.details }, { status: failure.status, headers });
+      const terminalStatus = (tutorErrors.terminal as Record<string, number>)[failure.code];
+      return Response.json({ error: failure.code, ...failure.details }, { status: terminalStatus ?? failure.status, headers });
     } finally { clearTimeout(timer); }
   };
 }

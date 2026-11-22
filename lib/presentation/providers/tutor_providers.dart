@@ -311,10 +311,7 @@ class TutorSessionController extends Notifier<TutorSessionState> {
         try {
           items = await d.client.generate(request);
         } on TutorFailure catch (e) {
-          if (e.code == 'MODEL_INVALID' || e.code == 'MODEL_FAILED') {
-            _verify(epoch);
-            await d.store.discardFailedGeneration(request.requestId);
-          }
+          await _discardTerminalGeneration(d, request, e, epoch);
           rethrow;
         }
         await d.verify();
@@ -400,6 +397,24 @@ class TutorSessionController extends Notifier<TutorSessionState> {
     ].take(5).toList();
     if (missing.isEmpty) return;
     final snapshot = await d.store.snapshot();
+    final expiredIds = {
+      for (final item in snapshot.items)
+        if (item.expired(d.now())) item.id,
+    };
+    TutorItemRequest replacement(int index) {
+      final slot = state.round[index];
+      final spec = slot.request;
+      if (expiredIds.contains(spec.parentItemId) ||
+          expiredIds.contains(slot.item?.id)) {
+        return TutorItemRequest(
+          skills: slot.item?.skills ?? spec.skills,
+          kind: spec.kind,
+          origin: TutorOrigin.regenerated,
+        );
+      }
+      return spec;
+    }
+
     final recent = snapshot.items.where((i) => i.lastShownAt != null).toList()
       ..sort((a, b) => b.lastShownAt!.compareTo(a.lastShownAt!));
     final avoid = <String>{for (final i in recent) i.topic}.take(8).toList();
@@ -409,7 +424,7 @@ class TutorSessionController extends Notifier<TutorSessionState> {
         TutorGenerationRequest(
           requestId: d.newId(),
           lang: d.store.lang,
-          items: missing.map((i) => state.round[i].request).toList(),
+          items: missing.map(replacement).toList(),
           avoidTopics: avoid,
         );
     await d.verify();
@@ -419,10 +434,7 @@ class TutorSessionController extends Notifier<TutorSessionState> {
     try {
       items = await d.client.generate(request);
     } on TutorFailure catch (e) {
-      if (e.code == 'MODEL_INVALID' || e.code == 'MODEL_FAILED') {
-        _verify(epoch);
-        await d.store.discardFailedGeneration(request.requestId);
-      }
+      await _discardTerminalGeneration(d, request, e, epoch);
       rethrow;
     }
     await d.verify();
@@ -442,6 +454,25 @@ class TutorSessionController extends Notifier<TutorSessionState> {
           .firstOrNull;
       if (slot != null) _resolved[slot] = items[i];
     }
+  }
+
+  Future<void> _discardTerminalGeneration(
+    TutorDependencies d,
+    TutorGenerationRequest request,
+    TutorFailure failure,
+    int epoch,
+  ) async {
+    if (!failure.terminalForId) return;
+    _verify(epoch);
+    if (failure.code == 'ITEM_EXPIRED' || failure.code == 'ITEM_NOT_FOUND') {
+      for (final spec in request.items) {
+        if (spec.parentItemId != null) {
+          await d.store.retireExpiredItem(spec.parentItemId!, d.now());
+          _verify(epoch);
+        }
+      }
+    }
+    await d.store.discardFailedGeneration(request.requestId);
   }
 
   void _startPrefetch(TutorDependencies d, int epoch) {
@@ -485,6 +516,11 @@ class TutorSessionController extends Notifier<TutorSessionState> {
       );
       return;
     }
+    if (_resolved[index]?.expired(d.now()) == true) {
+      await d.store.retireExpiredItem(_resolved[index]!.id, d.now());
+      _verify(epoch);
+      _resolved.remove(index);
+    }
     if (!_resolved.containsKey(index)) {
       await _prefetch;
       _verify(epoch);
@@ -509,6 +545,7 @@ class TutorSessionController extends Notifier<TutorSessionState> {
   }
 
   Future<void> submitAnswer(String answer) async {
+    answer = normalizeTutorAnswer(answer);
     final d = _dependencies, item = state.currentItem;
     if (d == null ||
         item == null ||
@@ -552,10 +589,26 @@ class TutorSessionController extends Notifier<TutorSessionState> {
           answer: pending.answer,
         );
       } on TutorFailure catch (e) {
-        if (e.code == 'MODEL_INVALID' || e.code == 'MODEL_FAILED') {
+        if (e.terminalForId) {
           _verify(epoch);
           await d.store.discardFailedAttempt(pending.attemptId);
+          _verify(epoch);
           _attemptId = null;
+          if (e.code == 'ITEM_EXPIRED' || e.code == 'ITEM_NOT_FOUND') {
+            await d.store.retireExpiredItem(item.id, d.now());
+            _verify(epoch);
+            _resolved.remove(state.index);
+            state = state.copyWith(
+              status: TutorSessionStatus.error,
+              failure: e,
+            );
+          } else {
+            state = state.copyWith(
+              status: TutorSessionStatus.answering,
+              failure: e,
+            );
+          }
+          return;
         }
         rethrow;
       }

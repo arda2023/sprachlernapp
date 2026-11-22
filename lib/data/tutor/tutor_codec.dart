@@ -73,19 +73,21 @@ class TutorGrade {
     required this.idealAnswer,
     required this.used,
     required this.limit,
+    required this.quotaDay,
   }) : errors = List.unmodifiable(errors);
   final TutorScores scores;
   final TutorOutcome outcome;
   final List<TutorError> errors;
   final String feedbackDe, idealAnswer;
   final int used, limit;
+  final String quotaDay;
   Map<String, Object> toJson() => {
     'scores': scores.toJson(),
     'outcome': outcome.name,
     'errors': errors.map((e) => e.toJson()).toList(),
     'feedback_de': feedbackDe,
     'ideal_answer': idealAnswer,
-    'quota': {'used': used, 'limit': limit},
+    'quota': {'used': used, 'limit': limit, 'quota_day': quotaDay},
   };
 }
 
@@ -130,6 +132,10 @@ List<TutorItem> decodeTutorItems(
         final topic = _text(row['topic'], 1, 40);
         final prompt = stripTutorInstruction(_text(row['prompt_de'], 8, 240));
         final reference = _text(row['reference_answer'], 2, 200);
+        final expiresAt = DateTime.tryParse(_text(row['expires_at'], 20, 40));
+        if (expiresAt == null || !expiresAt.isUtc) {
+          throw const FormatException('Invalid item expiry');
+        }
         if (!tutorUuid.hasMatch(id) ||
             !ids.add(id) ||
             kind != spec.kind.name ||
@@ -159,6 +165,7 @@ List<TutorItem> decodeTutorItems(
           skills: List<String>.from(skills),
           topic: topic,
           origin: spec.origin,
+          expiresAt: expiresAt,
           parentItemId: spec.parentItemId,
         );
       })(),
@@ -197,6 +204,13 @@ TutorGrade decodeTutorGrade(Object? value, TutorItem item) {
   }
   final quota = _map(json['quota']);
   final limit = _integer(quota['limit'], 1, 150);
+  final quotaDay = _text(quota['quota_day'], 10, 10);
+  final parsedDay = DateTime.tryParse(quotaDay);
+  if (!RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(quotaDay) ||
+      parsedDay == null ||
+      parsedDay.toIso8601String().substring(0, 10) != quotaDay) {
+    throw const FormatException('Invalid quota day');
+  }
   return TutorGrade(
     scores: s,
     outcome: outcome,
@@ -205,5 +219,6 @@ TutorGrade decodeTutorGrade(Object? value, TutorItem item) {
     idealAnswer: _text(json['ideal_answer'], 1, 200),
     used: _integer(quota['used'], 0, limit),
     limit: limit,
+    quotaDay: quotaDay,
   );
 }

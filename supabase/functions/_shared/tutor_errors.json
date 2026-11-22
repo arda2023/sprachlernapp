@@ -1,0 +1,19 @@
+{
+  "terminal": {
+    "INPUT_INVALID": 422,
+    "MODEL_INVALID": 502,
+    "MODEL_UNAVAILABLE": 502,
+    "REQUEST_FAILED": 409,
+    "ITEM_EXPIRED": 410,
+    "CONFLICT": 409,
+    "ITEM_NOT_FOUND": 404,
+    "REQUEST_EXPIRED": 410
+  },
+  "uncertain": [
+    "TIMEOUT",
+    "SERVICE_UNAVAILABLE",
+    "STORAGE_UNAVAILABLE",
+    "REQUEST_PENDING",
+    "REQUEST_UNCERTAIN"
+  ]
+}

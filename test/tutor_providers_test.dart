@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sprachapp/data/tutor/tutor_client.dart';
 import 'package:sprachapp/data/tutor/tutor_store.dart';
 import 'package:sprachapp/data/user/user_database.dart';
+import 'package:sprachapp/domain/tutor.dart';
 import 'package:sprachapp/presentation/providers/tutor_providers.dart';
 import 'package:sprachapp/presentation/providers/auth_providers.dart';
 import 'package:sprachapp/presentation/providers/database_providers.dart';
@@ -55,6 +56,67 @@ void main() {
     await db.close();
   });
   TutorSessionState state() => container.read(tutorSessionControllerProvider);
+
+  for (final code in [
+    'INPUT_INVALID',
+    'MODEL_INVALID',
+    'MODEL_UNAVAILABLE',
+    'REQUEST_FAILED',
+    'CONFLICT',
+  ]) {
+    test('terminal $code discards pending grade and unlocks editing', () async {
+      await controller.startRound();
+      client.gradeFailure = TutorFailure(code, 'terminal');
+      await controller.submitAnswer('First answer.');
+      final failedId = client.gradeRequests.last.id;
+      expect(await store.pendingAttempts(), isEmpty);
+      expect(state().pendingAnswer, isNull);
+      expect(state().status, TutorSessionStatus.answering);
+      client.gradeFailure = null;
+      await controller.submitAnswer('Edited answer.');
+      expect(client.gradeRequests.last.id, isNot(failedId));
+      expect(client.gradeRequests.last.answer, 'Edited answer.');
+      expect(state().status, TutorSessionStatus.feedback);
+    });
+    test('terminal $code generation is discarded across restart', () async {
+      client.generateFailure = TutorFailure(code, 'terminal');
+      await controller.startRound();
+      final failedId = client.generationRequests.last.requestId;
+      expect(await store.pendingGenerations(), isEmpty);
+      controller.endRound();
+      client.generateFailure = null;
+      await controller.startRound();
+      expect(client.generationRequests.last.requestId, isNot(failedId));
+      expect(state().status, TutorSessionStatus.answering);
+    });
+  }
+  test(
+    'ITEM_EXPIRED retires item and explicit retry replaces without parent',
+    () async {
+      await controller.startRound();
+      final expired = state().currentItem!;
+      client.gradeFailure = const TutorFailure(
+        'ITEM_EXPIRED',
+        'expired',
+        status: 410,
+      );
+      await controller.submitAnswer('My answer.');
+      expect(await store.pendingAttempts(), isEmpty);
+      final saved = (await store.snapshot()).items.firstWhere(
+        (item) => item.id == expired.id,
+      );
+      expect(saved.status, TutorItemStatus.retired);
+      client.gradeFailure = null;
+      await controller.retry();
+      expect(state().status, TutorSessionStatus.answering);
+      expect(state().currentItem!.id, isNot(expired.id));
+      expect(client.generationRequests.last.items.single.parentItemId, isNull);
+      expect(
+        client.generationRequests.last.items.single.skills,
+        expired.skills,
+      );
+    },
+  );
 
   test('availability reuses account, consent and selected language', () async {
     final access = tutorTestAccess();
@@ -284,7 +346,7 @@ void main() {
     expect(state().premiumRequired, true);
     client.gradeFailure = const TutorFailure('MODEL_INVALID', 'Invalid');
     await controller.retry();
-    expect(state().status, TutorSessionStatus.error);
+    expect(state().status, TutorSessionStatus.answering);
     expect(client.gradeRequests, hasLength(2));
   });
 }

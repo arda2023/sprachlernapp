@@ -270,6 +270,7 @@ class TutorSkillStates extends Table {
 @DataClassName('TutorItemRow')
 class TutorItems extends Table {
   TextColumn get id => text()();
+  DateTimeColumn get expiresAt => dateTime()();
   TextColumn get lang => text()();
   TextColumn get kind => text().check(
     const CustomExpression("kind IN ('translate','situation')"),

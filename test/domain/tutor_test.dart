@@ -12,6 +12,7 @@ TutorItem item({
   int failures = 0,
   String? lastRoundId,
   TutorItemStatus? status,
+  DateTime? expiresAt,
 }) => TutorItem(
   id: id,
   lang: 'en',
@@ -21,6 +22,7 @@ TutorItem item({
   skills: skills,
   topic: topic,
   origin: origin,
+  expiresAt: expiresAt ?? now.add(const Duration(days: 30)),
   answerShown: shown,
   failures: failures,
   lastRoundId: lastRoundId,
@@ -65,6 +67,30 @@ TutorAttempt attempt(
 );
 
 void main() {
+  test(
+    'expired retries and regeneration parents keep skills without parent ID',
+    () {
+      final expired = item(
+        skills: ['present_simple', 'word_order'],
+        shown: true,
+        expiresAt: now,
+      ).copyWith(regenerationNeeded: true);
+      final round = composeTutorRound(
+        lang: 'en',
+        states: {'present_simple': skill('present_simple')},
+        items: [expired],
+        now: now,
+        premium: true,
+        remainingDailyQuota: 3,
+      );
+      expect(round.every((slot) => slot.item == null), true);
+      final replacement = round.firstWhere(
+        (slot) => slot.primarySkill == 'present_simple',
+      );
+      expect(replacement.request.skills, expired.skills);
+      expect(replacement.request.parentItemId, isNull);
+    },
+  );
   group('rubric: all 27 score triples and major/minor positions', () {
     for (var m = 0; m <= 2; m++) {
       for (var g = 0; g <= 2; g++) {

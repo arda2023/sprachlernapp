@@ -13,6 +13,128 @@ import '../fixtures/tutor.dart';
 void main() {
   late UserDatabase db;
   late TutorStore store;
+  test(
+    'quota observations are order independent and never double count',
+    () async {
+      for (final observed in [
+        [2, 1],
+        [1, 2],
+        [1, 1],
+        [2, 2],
+      ]) {
+        final local = UserDatabase(NativeDatabase.memory());
+        final repository = TutorStore(local, lang: 'en');
+        try {
+          for (var index = 0; index < observed.length; index++) {
+            final item = tutorTestItem(id: index + 10);
+            await repository.saveItems([item]);
+            final pending = await repository.prepareAttempt(
+              attemptId: tutorTestId(index + 20),
+              item: item,
+              answer: 'answer',
+              now: tutorTestNow.add(Duration(seconds: index)),
+            );
+            await repository.completeAttempt(
+              pending,
+              tutorTestGrade(used: observed[index]),
+              now: tutorTestNow,
+            );
+          }
+          expect(
+            await repository.remainingFreeToday(tutorTestNow),
+            1,
+            reason: '$observed',
+          );
+        } finally {
+          await local.close();
+        }
+      }
+    },
+  );
+  test(
+    'deferred submission across midnight uses reservation quota day',
+    () async {
+      final item = tutorTestItem();
+      await store.saveItems([item]);
+      final before = DateTime.utc(2026, 11, 22, 22, 59);
+      final after = DateTime.utc(2026, 11, 22, 23, 1);
+      final pending = await store.prepareAttempt(
+        attemptId: tutorTestId(20),
+        item: item,
+        answer: 'answer',
+        now: before,
+      );
+      final payload = tutorTestGrade(used: 2).toJson();
+      payload['quota'] = {'used': 2, 'limit': 3, 'quota_day': '2026-11-23'};
+      await store.completeAttempt(
+        pending,
+        decodeTutorGrade(payload, item),
+        now: after,
+      );
+      expect(await store.remainingFreeToday(before), 3);
+      expect(await store.remainingFreeToday(after), 1);
+      expect(await TutorStore(db, lang: 'en').remainingFreeToday(after), 1);
+    },
+  );
+  test(
+    'lost result recovered after midnight stays on original reservation day',
+    () async {
+      final item = tutorTestItem();
+      await store.saveItems([item]);
+      final before = DateTime.utc(2026, 11, 22, 22, 59);
+      final after = DateTime.utc(2026, 11, 22, 23, 1);
+      final pending = await store.prepareAttempt(
+        attemptId: tutorTestId(20),
+        item: item,
+        answer: 'answer',
+        now: before,
+      );
+      await store.completeAttempt(pending, tutorTestGrade(used: 2), now: after);
+      expect(await store.remainingFreeToday(before), 1);
+      expect(await store.remainingFreeToday(after), 3);
+    },
+  );
+  test(
+    'expiry is persisted and expired items are excluded after reload',
+    () async {
+      final item = tutorTestItem(expiresAt: tutorTestNow);
+      await store.saveItems([item]);
+      final snapshot = await TutorStore(db, lang: 'en').snapshot();
+      expect(snapshot.items.single.expiresAt, tutorTestNow);
+      expect(
+        composeTutorRound(
+          lang: 'en',
+          states: {},
+          items: snapshot.items,
+          now: tutorTestNow,
+          premium: false,
+          remainingDailyQuota: 3,
+        ).every((slot) => slot.item == null),
+        true,
+      );
+    },
+  );
+  test(
+    'pending answers normalize whitespace before persistence and replay',
+    () async {
+      final item = tutorTestItem();
+      await store.saveItems([item]);
+      final first = await store.prepareAttempt(
+        attemptId: tutorTestId(20),
+        item: item,
+        answer: '  I\n\t go   home.  ',
+        now: tutorTestNow,
+      );
+      expect(first.answer, 'I go home.');
+      final replay = await store.prepareAttempt(
+        attemptId: tutorTestId(21),
+        item: item,
+        answer: 'I go home.',
+        now: tutorTestNow,
+      );
+      expect(replay.attemptId, first.attemptId);
+    },
+  );
   setUp(() {
     db = UserDatabase(NativeDatabase.memory());
     store = TutorStore(db, lang: 'en');
@@ -135,7 +257,7 @@ void main() {
     await es.completeAttempt(pending, tutorTestGrade(used: 2), now: at);
     expect(await store.remainingFreeToday(at), 1);
     expect(await store.remainingFreeToday(DateTime.utc(2026, 11, 22, 23)), 3);
-    expect(tutorBerlinDay(DateTime.utc(2026, 7, 1, 22)), '2026-7-2');
+    expect(tutorBerlinDay(DateTime.utc(2026, 7, 1, 22)), '2026-07-02');
     expect(
       tutorBerlinDay(DateTime.utc(2026, 10, 25, 0, 30)),
       tutorBerlinDay(DateTime.utc(2026, 10, 25, 1, 30)),

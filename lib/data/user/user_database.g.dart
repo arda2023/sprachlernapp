@@ -7777,6 +7777,17 @@ class $TutorItemsTable extends TutorItems
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _expiresAtMeta = const VerificationMeta(
+    'expiresAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> expiresAt = GeneratedColumn<DateTime>(
+    'expires_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _langMeta = const VerificationMeta('lang');
   @override
   late final GeneratedColumn<String> lang = GeneratedColumn<String>(
@@ -7933,6 +7944,7 @@ class $TutorItemsTable extends TutorItems
   @override
   List<GeneratedColumn> get $columns => [
     id,
+    expiresAt,
     lang,
     kind,
     promptDe,
@@ -7964,6 +7976,14 @@ class $TutorItemsTable extends TutorItems
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     } else if (isInserting) {
       context.missing(_idMeta);
+    }
+    if (data.containsKey('expires_at')) {
+      context.handle(
+        _expiresAtMeta,
+        expiresAt.isAcceptableOrUnknown(data['expires_at']!, _expiresAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_expiresAtMeta);
     }
     if (data.containsKey('lang')) {
       context.handle(
@@ -8100,6 +8120,10 @@ class $TutorItemsTable extends TutorItems
         DriftSqlType.string,
         data['${effectivePrefix}id'],
       )!,
+      expiresAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}expires_at'],
+      )!,
       lang: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}lang'],
@@ -8167,6 +8191,7 @@ class $TutorItemsTable extends TutorItems
 
 class TutorItemRow extends DataClass implements Insertable<TutorItemRow> {
   final String id;
+  final DateTime expiresAt;
   final String lang;
   final String kind;
   final String promptDe;
@@ -8183,6 +8208,7 @@ class TutorItemRow extends DataClass implements Insertable<TutorItemRow> {
   final bool regenerationNeeded;
   const TutorItemRow({
     required this.id,
+    required this.expiresAt,
     required this.lang,
     required this.kind,
     required this.promptDe,
@@ -8202,6 +8228,7 @@ class TutorItemRow extends DataClass implements Insertable<TutorItemRow> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
+    map['expires_at'] = Variable<DateTime>(expiresAt);
     map['lang'] = Variable<String>(lang);
     map['kind'] = Variable<String>(kind);
     map['prompt_de'] = Variable<String>(promptDe);
@@ -8228,6 +8255,7 @@ class TutorItemRow extends DataClass implements Insertable<TutorItemRow> {
   TutorItemsCompanion toCompanion(bool nullToAbsent) {
     return TutorItemsCompanion(
       id: Value(id),
+      expiresAt: Value(expiresAt),
       lang: Value(lang),
       kind: Value(kind),
       promptDe: Value(promptDe),
@@ -8258,6 +8286,7 @@ class TutorItemRow extends DataClass implements Insertable<TutorItemRow> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return TutorItemRow(
       id: serializer.fromJson<String>(json['id']),
+      expiresAt: serializer.fromJson<DateTime>(json['expiresAt']),
       lang: serializer.fromJson<String>(json['lang']),
       kind: serializer.fromJson<String>(json['kind']),
       promptDe: serializer.fromJson<String>(json['promptDe']),
@@ -8279,6 +8308,7 @@ class TutorItemRow extends DataClass implements Insertable<TutorItemRow> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
+      'expiresAt': serializer.toJson<DateTime>(expiresAt),
       'lang': serializer.toJson<String>(lang),
       'kind': serializer.toJson<String>(kind),
       'promptDe': serializer.toJson<String>(promptDe),
@@ -8298,6 +8328,7 @@ class TutorItemRow extends DataClass implements Insertable<TutorItemRow> {
 
   TutorItemRow copyWith({
     String? id,
+    DateTime? expiresAt,
     String? lang,
     String? kind,
     String? promptDe,
@@ -8314,6 +8345,7 @@ class TutorItemRow extends DataClass implements Insertable<TutorItemRow> {
     bool? regenerationNeeded,
   }) => TutorItemRow(
     id: id ?? this.id,
+    expiresAt: expiresAt ?? this.expiresAt,
     lang: lang ?? this.lang,
     kind: kind ?? this.kind,
     promptDe: promptDe ?? this.promptDe,
@@ -8332,6 +8364,7 @@ class TutorItemRow extends DataClass implements Insertable<TutorItemRow> {
   TutorItemRow copyWithCompanion(TutorItemsCompanion data) {
     return TutorItemRow(
       id: data.id.present ? data.id.value : this.id,
+      expiresAt: data.expiresAt.present ? data.expiresAt.value : this.expiresAt,
       lang: data.lang.present ? data.lang.value : this.lang,
       kind: data.kind.present ? data.kind.value : this.kind,
       promptDe: data.promptDe.present ? data.promptDe.value : this.promptDe,
@@ -8367,6 +8400,7 @@ class TutorItemRow extends DataClass implements Insertable<TutorItemRow> {
   String toString() {
     return (StringBuffer('TutorItemRow(')
           ..write('id: $id, ')
+          ..write('expiresAt: $expiresAt, ')
           ..write('lang: $lang, ')
           ..write('kind: $kind, ')
           ..write('promptDe: $promptDe, ')
@@ -8388,6 +8422,7 @@ class TutorItemRow extends DataClass implements Insertable<TutorItemRow> {
   @override
   int get hashCode => Object.hash(
     id,
+    expiresAt,
     lang,
     kind,
     promptDe,
@@ -8408,6 +8443,7 @@ class TutorItemRow extends DataClass implements Insertable<TutorItemRow> {
       identical(this, other) ||
       (other is TutorItemRow &&
           other.id == this.id &&
+          other.expiresAt == this.expiresAt &&
           other.lang == this.lang &&
           other.kind == this.kind &&
           other.promptDe == this.promptDe &&
@@ -8426,6 +8462,7 @@ class TutorItemRow extends DataClass implements Insertable<TutorItemRow> {
 
 class TutorItemsCompanion extends UpdateCompanion<TutorItemRow> {
   final Value<String> id;
+  final Value<DateTime> expiresAt;
   final Value<String> lang;
   final Value<String> kind;
   final Value<String> promptDe;
@@ -8443,6 +8480,7 @@ class TutorItemsCompanion extends UpdateCompanion<TutorItemRow> {
   final Value<int> rowid;
   const TutorItemsCompanion({
     this.id = const Value.absent(),
+    this.expiresAt = const Value.absent(),
     this.lang = const Value.absent(),
     this.kind = const Value.absent(),
     this.promptDe = const Value.absent(),
@@ -8461,6 +8499,7 @@ class TutorItemsCompanion extends UpdateCompanion<TutorItemRow> {
   });
   TutorItemsCompanion.insert({
     required String id,
+    required DateTime expiresAt,
     required String lang,
     required String kind,
     required String promptDe,
@@ -8477,6 +8516,7 @@ class TutorItemsCompanion extends UpdateCompanion<TutorItemRow> {
     this.regenerationNeeded = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
+       expiresAt = Value(expiresAt),
        lang = Value(lang),
        kind = Value(kind),
        promptDe = Value(promptDe),
@@ -8489,6 +8529,7 @@ class TutorItemsCompanion extends UpdateCompanion<TutorItemRow> {
        status = Value(status);
   static Insertable<TutorItemRow> custom({
     Expression<String>? id,
+    Expression<DateTime>? expiresAt,
     Expression<String>? lang,
     Expression<String>? kind,
     Expression<String>? promptDe,
@@ -8507,6 +8548,7 @@ class TutorItemsCompanion extends UpdateCompanion<TutorItemRow> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (expiresAt != null) 'expires_at': expiresAt,
       if (lang != null) 'lang': lang,
       if (kind != null) 'kind': kind,
       if (promptDe != null) 'prompt_de': promptDe,
@@ -8527,6 +8569,7 @@ class TutorItemsCompanion extends UpdateCompanion<TutorItemRow> {
 
   TutorItemsCompanion copyWith({
     Value<String>? id,
+    Value<DateTime>? expiresAt,
     Value<String>? lang,
     Value<String>? kind,
     Value<String>? promptDe,
@@ -8545,6 +8588,7 @@ class TutorItemsCompanion extends UpdateCompanion<TutorItemRow> {
   }) {
     return TutorItemsCompanion(
       id: id ?? this.id,
+      expiresAt: expiresAt ?? this.expiresAt,
       lang: lang ?? this.lang,
       kind: kind ?? this.kind,
       promptDe: promptDe ?? this.promptDe,
@@ -8568,6 +8612,9 @@ class TutorItemsCompanion extends UpdateCompanion<TutorItemRow> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<String>(id.value);
+    }
+    if (expiresAt.present) {
+      map['expires_at'] = Variable<DateTime>(expiresAt.value);
     }
     if (lang.present) {
       map['lang'] = Variable<String>(lang.value);
@@ -8621,6 +8668,7 @@ class TutorItemsCompanion extends UpdateCompanion<TutorItemRow> {
   String toString() {
     return (StringBuffer('TutorItemsCompanion(')
           ..write('id: $id, ')
+          ..write('expiresAt: $expiresAt, ')
           ..write('lang: $lang, ')
           ..write('kind: $kind, ')
           ..write('promptDe: $promptDe, ')

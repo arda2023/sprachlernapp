@@ -27,6 +27,9 @@ Map<String, Object> generated() => {
       'reference_answer': 'I am going home today.',
       'skills': ['present_simple'],
       'topic': 'alltag',
+      'expires_at': tutorTestNow
+          .add(const Duration(days: 30))
+          .toIso8601String(),
     },
   ],
 };
@@ -58,6 +61,103 @@ void main() {
     client = TutorClient(access: access, createClient: () => http);
   });
   tearDown(() => access.close());
+  test(
+    'terminal body codes survive transport instead of becoming uncertain',
+    () async {
+      final contract = jsonDecode(
+        File('supabase/functions/_shared/tutor_errors.json').readAsStringSync(),
+      ) as Map;
+      for (final entry in (contract['terminal'] as Map).entries) {
+        final code = entry.key as String;
+        respond = () async => FakeResponse([
+          utf8.encode(jsonEncode({'error': code})),
+        ], statusCode: entry.value as int);
+        await expectLater(
+          client.grade(
+            attemptId: tutorTestId(2),
+            item: tutorTestItem(),
+            answer: 'answer',
+          ),
+          throwsA(
+            failure(code)
+                .having((error) => error.uncertain, 'uncertain', false)
+                .having(
+                  (error) => error.terminalForId,
+                  'terminal for ID',
+                  true,
+                ),
+          ),
+        );
+      }
+      for (final code in contract['uncertain'] as List) {
+        respond = () async => FakeResponse([
+          utf8.encode(jsonEncode({'error': code})),
+        ], statusCode: 503);
+        await expectLater(
+          client.generate(request()),
+          throwsA(
+            failure(code as String)
+                .having((error) => error.uncertain, 'uncertain', true)
+                .having(
+                  (error) => error.terminalForId,
+                  'terminal for ID',
+                  false,
+                ),
+          ),
+        );
+      }
+    },
+  );
+  test('unclassified or bodyless 5xx keeps same-ID recovery', () async {
+    for (final body in ['', 'Bad Gateway', '{}', '{"error":"FUTURE_ERROR"}']) {
+      respond = () async => FakeResponse([utf8.encode(body)], statusCode: 502);
+      await expectLater(
+        client.generate(request()),
+        throwsA(
+          failure('SERVICE_UNAVAILABLE')
+              .having((error) => error.uncertain, 'uncertain', true)
+              .having((error) => error.terminalForId, 'terminal for ID', false),
+        ),
+      );
+    }
+  });
+  test('multiline answer is normalized on the wire', () async {
+    respond = () async =>
+        FakeResponse([utf8.encode(jsonEncode(tutorTestGrade().toJson()))]);
+    await client.grade(
+      attemptId: tutorTestId(2),
+      item: tutorTestItem(),
+      answer: '  I\n\t go   home. ',
+    );
+    expect(
+      jsonDecode(http.requests.single.body.toString())['answer'],
+      'I go home.',
+    );
+  });
+  test('expired generated items never enter a round', () async {
+    final payload = generated();
+    final row = (payload['items'] as List).single as Map;
+    row['expires_at'] = tutorTestNow.toIso8601String();
+    final items = decodeTutorItems(payload, request());
+    final round = composeTutorRound(
+      lang: 'en',
+      states: {
+        'present_simple': TutorSkillState(
+          lang: 'en',
+          skillId: 'present_simple',
+          tested: true,
+          box: 1,
+          updatedAt: tutorTestNow,
+        ),
+      },
+      items: items,
+      now: tutorTestNow,
+      premium: true,
+      remainingDailyQuota: 3,
+    );
+    expect(round.where((slot) => slot.item?.id == items.single.id), isEmpty);
+    expect(round.every((slot) => slot.request.parentItemId == null), true);
+  });
   test(
     'generate contract, HTTPS auth, consent, no redirect, prefix stripped',
     () async {

@@ -114,6 +114,7 @@ class TutorStore {
     required DateTime now,
   }) => db.transaction(() async {
     if (item.lang != lang) throw StateError('Language mismatch');
+    answer = normalizeTutorAnswer(answer);
     final existing = await (db.select(
       db.tutorAttempts,
     )..where((t) => t.attemptId.equals(attemptId))).getSingleOrNull();
@@ -183,6 +184,26 @@ class TutorStore {
       db.tutorGenerations,
     )..where((t) => t.lang.equals(lang) & t.requestId.equals(requestId))).go();
   }
+
+  Future<void> retireExpiredItem(String itemId, DateTime now) =>
+      db.transaction(() async {
+        await (db.delete(db.tutorAttempts)..where(
+              (row) =>
+                  row.lang.equals(lang) &
+                  row.itemId.equals(itemId) &
+                  row.resultJson.isNull(),
+            ))
+            .go();
+        await (db.update(
+          db.tutorItems,
+        )..where((row) => row.lang.equals(lang) & row.id.equals(itemId))).write(
+          TutorItemsCompanion(
+            status: const Value('retired'),
+            regenerationNeeded: const Value(false),
+            expiresAt: Value(now),
+          ),
+        );
+      });
 
   /// Attempt result, item transition and all skill updates commit together.
   /// Replaying an attempt never applies its learning transition twice.
@@ -301,13 +322,15 @@ class TutorStore {
               ..where((t) => t.resultJson.isNotNull())
               ..orderBy([(t) => OrderingTerm.asc(t.createdAt)]))
             .get();
-    var used = 0;
-    for (final row in rows.where((r) => tutorBerlinDay(r.createdAt) == today)) {
-      used++;
-      final server =
-          (jsonDecode(row.resultJson!) as Map)['quota']['used'] as int;
-      if (server > used) used = server;
+    var successful = 0, observed = 0;
+    for (final row in rows) {
+      final quota = (jsonDecode(row.resultJson!) as Map)['quota'] as Map;
+      if (quota['quota_day'] != today) continue;
+      successful++;
+      final server = quota['used'] as int;
+      if (server > observed) observed = server;
     }
+    final used = successful > observed ? successful : observed;
     return (3 - used).clamp(0, 3);
   }
 }
@@ -319,7 +342,9 @@ String tutorBerlinDay(DateTime time) {
     _zonesReady = true;
   }
   final local = tz.TZDateTime.from(time, tz.getLocation('Europe/Berlin'));
-  return '${local.year}-${local.month}-${local.day}';
+  return '${local.year.toString().padLeft(4, '0')}-'
+      '${local.month.toString().padLeft(2, '0')}-'
+      '${local.day.toString().padLeft(2, '0')}';
 }
 
 TutorItem _item(TutorItemRow row) => TutorItem(
@@ -331,6 +356,7 @@ TutorItem _item(TutorItemRow row) => TutorItem(
   skills: List<String>.from(jsonDecode(row.skillsJson) as List),
   topic: row.topic,
   origin: TutorOrigin.values.byName(row.origin),
+  expiresAt: row.expiresAt.toUtc(),
   parentItemId: row.parentItemId,
   failures: row.failures,
   answerShown: row.answerShown,
@@ -350,6 +376,7 @@ TutorItemRow _itemRow(TutorItem i) => TutorItemRow(
   skillsJson: jsonEncode(i.skills),
   topic: i.topic,
   origin: i.origin.name,
+  expiresAt: i.expiresAt,
   parentItemId: i.parentItemId,
   failures: i.failures,
   answerShown: i.answerShown,

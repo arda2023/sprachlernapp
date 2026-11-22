@@ -149,7 +149,8 @@ Antwort 200:
     "prompt_de": "Ich ging gestern ins Kino.",
     "reference_answer": "I went to the cinema yesterday.",
     "skills": ["past_simple"],
-    "topic": "kultur"
+    "topic": "kultur",
+    "expires_at": "2026-12-22T12:00:00+00:00"
   }]
 }
 ```
@@ -164,6 +165,13 @@ bei einer Neugenerierung müssen beide Fähigkeiten samt Reihenfolge der
 Elternaufgabe entsprechen. Elternaufgabe und Fehler aus deren letzten acht
 gespeicherten Versuchen lädt der Server selbst. Die neue Aufgabe muss ein
 anderes Thema und einen anderen Prompt als die Elternaufgabe haben.
+
+`expires_at` wird von `finish_tutor` aus dem gespeicherten `created_at + 30 Tage`
+ermittelt, nicht vom Modell. Das vollständige Ergebnis wird atomar gespeichert und
+auch bei Replay unverändert zurückgegeben. Der Client persistiert den UTC-Zeitpunkt
+und schließt Aufgaben ab diesem Zeitpunkt aus neuen Runden aus. Bei `ITEM_EXPIRED`
+wird die Aufgabe lokal stillgelegt; die explizit angeforderte Ersatzaufgabe erhält
+nur die Fähigkeiten, niemals die abgelaufene `parent_item_id`.
 
 `prompt_de` enthält ausschließlich den deutschen Satz oder die Situationsfrage,
 8–160 UTF-16-Einheiten, höchstens zwei Sätze, Schlusspunkt/Frage-/Ausrufezeichen;
@@ -195,18 +203,26 @@ Antwort 200:
   "errors": [{ "skill": "past_simple", "severity": "major", "quote": "goed", "fix": "went" }],
   "feedback_de": "Die Vergangenheitsform von go ist went.",
   "ideal_answer": "I went to the cinema yesterday.",
-  "quota": { "used": 1, "limit": 3 }
+  "quota": { "used": 1, "limit": 3, "quota_day": "2026-11-22" }
 }
 ```
 
-`answer`: nach Trimmen 1–300 UTF-16-Einheiten, keine Kontroll-/Formatzeichen.
+`answer`: nach Whitespace-Normalisierung 1–300 UTF-16-Einheiten. Client und Server
+trimmen und ersetzen jede Whitespace-Folge (auch Zeilenumbrüche und Tabs) durch
+ein Leerzeichen; der Client vor Persistenz, der Server vor Validierung und Hashing.
+Andere Kontroll-/Formatzeichen bleiben ungültig.
 Weitere Requestfelder werden abgewiesen, insbesondere clientseitige Prompts,
 Zielfähigkeiten oder Scores. Die Antwort steht im Modellinput als untrusted
 JSON-Daten. Scores sind ganze Zahlen 0–2, höchstens vier Fehler mit Katalog-ID
 der Lernsprache oder `other`; `quote` ist ein echter Ausschnitt der Nutzerantwort,
 `quote`/`fix` je höchstens 60 Einheiten. Feedback: 1–2 deutsche Sätze, maximal 220;
 Idealsatz: maximal 200, gültige Nutzerentscheidungen mit minimalen Änderungen
-erhalten. Die gesamte Rubrik einschließlich der „Nie Fehler“-Liste steht im
+erhalten. Ordinalzahlen/Datumsangaben wie „2.“ und „1. Mai“ sowie übliche
+deutsche Abkürzungen zählen nicht als Satzende. Für Prompts bleibt die Grenze
+von zwei Sätzen verbindlich. Feedback mit mehr als zwei Sätzen wird auf die
+ersten zwei gekürzt, nicht wegen der Satzanzahl verworfen; die Grenze von
+220 UTF-16-Einheiten wird vor dem Kürzen geprüft. Die gesamte Rubrik einschließlich
+der „Nie Fehler“-Liste steht im
 Systemprompt. `tutorOutcome(scores: TutorScores, errors: readonly TutorError[],
 targetSkills: readonly string[]): TutorOutcome` in `_shared/tutor_contract.ts`
 (auch aus `_shared/tutor.ts` exportiert) berechnet in dieser Reihenfolge:
@@ -219,10 +235,15 @@ Premium: 150 und 60. Grenzen gelten gemeinsam über alle Sprachen. Premium wird
 aus aktiven serververifizierten Production-/zulässigen Sandbox-/Complimentary-
 Entitlements mit gültigen Zeiträumen bestimmt. `claim_tutor` reserviert die ganze
 Anfrage atomar unter Kontosperre, bevor das Modell läuft. `quota` ist der bei
-Reservierung gespeicherte Stand (einschließlich dieser Anfrage); ein Replay
-liefert denselben Stand, keinen aktuellen Tageszähler. Bereits gestartete,
-fehlgeschlagene oder unklare Provideraufrufe zählen weiter. Nur nachweislich
-vor Providerdispatch beendete Versuche geben die Tagesreservierung frei.
+Reservierung gespeicherte Stand (einschließlich dieser Anfrage) mit
+`quota_day` (YYYY-MM-DD, Europe/Berlin, Tag der Reservierung). Ein Replay
+liefert diesen unveränderten Stand samt Reservierungstag, auch nach Mitternacht.
+Der Client speichert ihn im Versuchsergebnis und berechnet pro Quotentag
+max(Anzahl erfolgreicher Versuche, höchstes beobachtetes used), unabhängig von
+Reihenfolge und lokalem created_at. Vor Dispatch nachweislich beendete Aufrufe
+und definitive Nicht-2xx-Providerantworten geben die Tages-Satz-/Aufgabenquote
+frei. Timeouts, Verbindungsabbrüche und unbekannte Ausgänge behalten sie; ungültige
+2xx-Modellantworten ebenfalls. Dies gibt niemals die Geldbudget-Reservierung frei.
 
 Dieselbe normalisierte UUID und derselbe Inhalt liefern das gespeicherte Ergebnis
 ohne erneute Kosten oder Zählung; geänderter Inhalt → `CONFLICT` 409. Laufende,
@@ -233,18 +254,31 @@ Statusparameter. Neue Versuche brauchen eine neue UUID. Beide Functions haben
 Retry, kein Fallback, keine Logs mit Prompts, Antworten oder Zugangsdaten.
 
 Fehlerantwort: `{ "error": "CODE" }`, zusätzlich bei Tageslimit z. B.
-`{ "error": "TUTOR_DAILY_LIMIT", "premium_required": true, "quota": { "used": 3, "limit": 3 } }`.
+`{ "error": "TUTOR_DAILY_LIMIT", "premium_required": true, "quota": { "used": 3, "limit": 3, "quota_day": "2026-11-22" } }`.
 
-| HTTP | Codes |
-|---|---|
-| 401 | `AUTH_REQUIRED` |
-| 403 | `CONSENT_REQUIRED`, `ACCOUNT_UNVERIFIED` |
-| 404 / 410 | `ITEM_NOT_FOUND` / `ITEM_EXPIRED`, `REQUEST_EXPIRED` |
-| 405 / 413 / 422 | `METHOD_NOT_ALLOWED` / `BODY_LIMIT` / `INPUT_INVALID`, `JSON_INVALID` |
-| 409 | `CONFLICT`, `REQUEST_PENDING`, `REQUEST_UNCERTAIN`, `REQUEST_FAILED` |
-| 429 | `TUTOR_DAILY_LIMIT` (`premium_required: true` nur für Free), `AI_MONTHLY_LIMIT` |
-| 502 | `MODEL_INVALID`, `MODEL_UNAVAILABLE` |
-| 503 / 504 | `NOT_CONFIGURED`, `AI_BUDGET_UNAVAILABLE`, `STORAGE_UNAVAILABLE`, `SERVICE_UNAVAILABLE` / `TIMEOUT` |
+Der gemeinsame Fehlervertrag steht in `_shared/tutor_errors.json`. Der Server
+verwendet dessen terminale HTTP-Statuscodes; der Flutter-Vertrag wird im Transporttest
+gegen dieselbe Datei geprüft. Ein bekannter Body-Code hat Vorrang vor der HTTP-Klasse:
+auch `MODEL_UNAVAILABLE` mit 502 ist terminal **für diese ID**, nicht unsicher.
+
+| HTTP | Codes | Behandlung im Client |
+|---|---|---|
+| 422 | `INPUT_INVALID` | Pending löschen, Antwort wieder editierbar; expliziter Versuch mit neuer ID |
+| 502 | `MODEL_INVALID`, `MODEL_UNAVAILABLE` | Pending löschen; kein automatischer Retry; neue ID beim nächsten Versuch |
+| 409 | `REQUEST_FAILED`, `CONFLICT` | Terminal für diese ID; Pending löschen, nächste explizite Anfrage mit neuer ID |
+| 404 / 410 | `ITEM_NOT_FOUND` / `ITEM_EXPIRED` | Pending löschen, Aufgabe stilllegen, Ersatz ohne abgelaufenen Elternverweis |
+| 410 | `REQUEST_EXPIRED` | Pending löschen; neue ID bei expliziter Anfrage |
+| 409 | `REQUEST_PENDING`, `REQUEST_UNCERTAIN` | Unveränderte ID und Eingabe für Wiederaufnahme behalten |
+| 503 / 504 | `STORAGE_UNAVAILABLE`, `SERVICE_UNAVAILABLE` / `TIMEOUT` | Ungewiss: ID und Eingabe behalten |
+| 5xx ohne bekannten Body-Code | einschließlich leerer/ungültiger Antwort | Ungewiss: ID und Eingabe behalten |
+| 401 / 403 | `AUTH_REQUIRED` / `CONSENT_REQUIRED`, `ACCOUNT_UNVERIFIED` | Zugang klären; keine automatische Neuanfrage |
+| 429 | `TUTOR_DAILY_LIMIT` (`premium_required: true` nur für Free), `AI_MONTHLY_LIMIT` | Limit anzeigen, Pending zur späteren expliziten Wiederaufnahme behalten |
+| 503 | `NOT_CONFIGURED`, `AI_BUDGET_UNAVAILABLE` | Verfügbarkeit klären; explizite Wiederaufnahme kann `REQUEST_FAILED` ergeben |
+| 405 / 413 / 422 | `METHOD_NOT_ALLOWED` / `BODY_LIMIT` / `JSON_INVALID` | Protokollfehler; keine automatische Wiederholung |
+
+Auch bei Timeout oder Netzwerkverlust ohne Antwort bleibt der persistierte Request
+unverändert erhalten. Terminale Bereinigung gilt für Bewertung, Generierung,
+Prefetch und Wiederaufnahme nach Neustart.
 
 `app.tutor_items` und `app.tutor_attempts` sind RLS-geschützt, eigene noch nicht
 abgelaufene Zeilen lesbar, ausschließlich durch Service-Rolle schreibbar.

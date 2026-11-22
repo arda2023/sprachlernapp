@@ -84,6 +84,9 @@ class TutorSkillState {
   bool due(DateTime now) => dueAt == null || !dueAt!.isAfter(now);
 }
 
+String normalizeTutorAnswer(String answer) =>
+    answer.replaceAll(RegExp(r'\s+', unicode: true), ' ').trim();
+
 class TutorItem {
   TutorItem({
     required this.id,
@@ -94,6 +97,7 @@ class TutorItem {
     required List<String> skills,
     required this.topic,
     required this.origin,
+    required this.expiresAt,
     this.parentItemId,
     this.failures = 0,
     this.answerShown = false,
@@ -112,6 +116,8 @@ class TutorItem {
   final bool answerShown, regenerationNeeded;
   final TutorItemStatus status;
   final DateTime? lastShownAt;
+  final DateTime expiresAt;
+  bool expired(DateTime now) => !expiresAt.isAfter(now);
   String get primarySkill => skills.first;
   TutorItem copyWith({
     int? failures,
@@ -129,6 +135,7 @@ class TutorItem {
     skills: skills,
     topic: topic,
     origin: origin,
+    expiresAt: expiresAt,
     parentItemId: parentItemId,
     failures: failures ?? this.failures,
     answerShown: answerShown ?? this.answerShown,
@@ -341,8 +348,9 @@ List<TutorRoundSlot> composeTutorRound({
   final capacity = (premium ? 10 : remainingDailyQuota).clamp(0, 10);
   final catalog = tutorSkills[lang] ?? const <TutorSkill>[];
   if (capacity == 0 || catalog.isEmpty) return const [];
-  final available = items.where((i) => i.lang == lang).toList()
-    ..sort((a, b) => a.id.compareTo(b.id));
+  final available =
+      items.where((i) => i.lang == lang && !i.expired(now)).toList()
+        ..sort((a, b) => a.id.compareTo(b.id));
   final untested = catalog.where((s) => states[s.id]?.tested != true).toList()
     ..sort((a, b) => a.levelIndex.compareTo(b.levelIndex));
   final selected = <TutorRoundSlot>[];
@@ -356,6 +364,12 @@ List<TutorRoundSlot> composeTutorRound({
       (i) => i.regenerationNeeded && i.primarySkill == id,
     );
     final parent = parents.firstOrNull;
+    final expiredParent = items
+        .where(
+          (item) =>
+              item.lang == lang && item.primarySkill == id && item.expired(now),
+        )
+        .firstOrNull;
     final cached = available
         .where(
           (i) =>
@@ -371,7 +385,7 @@ List<TutorRoundSlot> composeTutorRound({
         .firstOrNull;
     freshCount++;
     final request = TutorItemRequest(
-      skills: parent?.skills ?? [id],
+      skills: parent?.skills ?? expiredParent?.skills ?? [id],
       kind:
           cached?.kind ??
           (freshCount % 4 == 0 ? TutorKind.situation : TutorKind.translate),

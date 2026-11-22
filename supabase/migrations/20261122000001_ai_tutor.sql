@@ -113,10 +113,10 @@ begin
   select coalesce(sum(units),0)::integer into used from app.tutor_requests
     where user_id=p_user and operation=p_operation and quota_day=day_at and not released;
   if used+p_count>cap then return jsonb_build_object('status','limit','premium_required',not premium,
-    'quota',jsonb_build_object('used',used,'limit',cap)); end if;
+    'quota',jsonb_build_object('used',used,'limit',cap,'quota_day',day_at)); end if;
   insert into app.tutor_requests(user_id,request_id,operation,input_hash,units,lang,item_id,quota_day,quota_limit,quota_used)
     values(p_user,p_request,p_operation,p_hash,p_count,p_lang,p_item,day_at,cap,used+p_count) returning * into r;
-  return jsonb_build_object('status','claimed','ticket',r.ticket,'quota',jsonb_build_object('used',used+p_count,'limit',cap));
+  return jsonb_build_object('status','claimed','ticket',r.ticket,'quota',jsonb_build_object('used',used+p_count,'limit',cap,'quota_day',day_at));
 end $$;
 
 create function public.load_tutor_item(p_user uuid,p_item uuid)
@@ -142,7 +142,7 @@ end $$;
 create function public.finish_tutor(p_user uuid,p_request uuid,p_operation text,p_ticket uuid,
   p_response jsonb,p_answer text,p_parents jsonb)
 returns jsonb language plpgsql security definer set search_path='' set lock_timeout='2s' as $$
-declare r app.tutor_requests; entry jsonb; ordinal bigint; parent uuid;
+declare r app.tutor_requests; entry jsonb; ordinal bigint; parent uuid; expires_at timestamptz;
 begin
   perform pg_advisory_xact_lock(hashtextextended(p_user::text,741905509));
   select * into r from app.tutor_requests where user_id=p_user and request_id=p_request
@@ -165,21 +165,23 @@ begin
         or jsonb_typeof(entry->'skills') is distinct from 'array' then raise exception 'invalid tutor item'; end if;
       insert into app.tutor_items(user_id,id,request_id,lang,kind,prompt_de,reference_answer,skills,topic,parent_item_id)
         values(p_user,(entry->>'id')::uuid,p_request,r.lang,entry->>'kind',entry->>'prompt_de',
-          entry->>'reference_answer',array(select jsonb_array_elements_text(entry->'skills')),entry->>'topic',parent);
+          entry->>'reference_answer',array(select jsonb_array_elements_text(entry->'skills')),entry->>'topic',parent)
+        returning created_at + interval '30 days' into expires_at;
+      p_response:=jsonb_set(p_response,array['items',(ordinal-1)::text,'expires_at'],to_jsonb(expires_at));
     end loop;
   else
     if p_answer is null or char_length(btrim(p_answer)) not between 1 and 300
       or p_response->>'outcome' is null or p_response->>'outcome' not in ('correct','acceptable','incorrect')
       or jsonb_typeof(p_response->'scores') is distinct from 'object'
       or jsonb_typeof(p_response->'errors') is distinct from 'array'
-      or p_response->'quota' is distinct from jsonb_build_object('used',r.quota_used,'limit',r.quota_limit)
+      or p_response->'quota' is distinct from jsonb_build_object('used',r.quota_used,'limit',r.quota_limit,'quota_day',r.quota_day)
       then raise exception 'invalid tutor grade'; end if;
     insert into app.tutor_attempts(user_id,attempt_id,item_id,answer,result)
       values(p_user,p_request,r.item_id,p_answer,p_response);
   end if;
   update app.tutor_requests set state='ready',response=p_response
     where user_id=p_user and request_id=p_request and operation=p_operation;
-  return jsonb_build_object('status','saved');
+  return jsonb_build_object('status','saved','response',p_response);
 end $$;
 
 create function public.fail_tutor(p_user uuid,p_request uuid,p_operation text,p_ticket uuid,p_release boolean)

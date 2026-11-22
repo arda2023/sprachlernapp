@@ -37,6 +37,7 @@ TutorItem tutorUiItem({
   skills: ['present_simple'],
   topic: 'alltag',
   origin: TutorOrigin.practice,
+  expiresAt: tutorTestNow.add(const Duration(days: 30)),
 );
 
 TutorAttempt tutorUiAttempt(

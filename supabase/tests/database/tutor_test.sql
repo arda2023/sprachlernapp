@@ -56,6 +56,7 @@ select pass('confirmed non-anonymous account and valid inputs required before re
 
 do $$ declare actor uuid:=pg_temp.tutor_user(); req uuid:=gen_random_uuid(); r jsonb; t uuid; begin
   r:=pg_temp.tutor_claim(actor,req,5); t:=(r->>'ticket')::uuid;
+  assert r->'quota'->>'quota_day'=((clock_timestamp() at time zone 'Europe/Berlin')::date)::text;
   assert r->>'status'='claimed';
   assert pg_temp.tutor_claim(actor,req,5)->>'status'='busy';
   assert pg_temp.tutor_claim(actor,gen_random_uuid(),2)->>'status'='limit';
@@ -65,7 +66,7 @@ do $$ declare actor uuid:=pg_temp.tutor_user(); req uuid:=gen_random_uuid(); r j
   assert pg_temp.tutor_claim(actor,gen_random_uuid(),5)->>'status'='claimed';
   assert pg_temp.tutor_claim(actor)->>'status'='claimed';
   r:=pg_temp.tutor_claim(actor); assert r->>'status'='limit';
-  assert r->>'premium_required'='true'; assert r->'quota'='{"used":6,"limit":6}'::jsonb;
+  assert r->>'premium_required'='true'; assert (r->'quota')-'quota_day'='{"used":6,"limit":6}'::jsonb;
 end $$;
 select pass('Free generation cap 6, batch all-or-none, idempotency and pre-provider release');
 
@@ -76,7 +77,9 @@ do $$ declare actor uuid:=pg_temp.tutor_user(); req uuid:=gen_random_uuid(); ite
   assert public.finish_tutor(actor,req,'tutor-generate',gen_random_uuid(),payload,null,'[null]')->>'status'='stale';
   assert public.finish_tutor(pg_temp.tutor_user(),req,'tutor-generate',t,payload,null,'[null]')->>'status'='stale';
   assert public.finish_tutor(actor,req,'tutor-generate',t,payload,null,'[null]')->>'status'='saved';
-  assert pg_temp.tutor_claim(actor,req)->'response'=payload;
+  assert (pg_temp.tutor_claim(actor,req)->'response')#-'{items,0,expires_at}'=payload;
+  assert (pg_temp.tutor_claim(actor,req)->'response'->'items'->0->>'expires_at')::timestamptz =
+    (select created_at + interval '30 days' from app.tutor_items where user_id=actor and id=item);
   assert pg_temp.tutor_claim(actor,req)->>'status'='hit';
   assert public.claim_tutor(actor,req,'tutor-generate',repeat('b',64),1,'en',null)->>'status'='conflict';
   perform public.fail_tutor(actor,req,'tutor-generate',t,true);
@@ -96,7 +99,7 @@ do $$ declare actor uuid:=pg_temp.tutor_user(); item uuid:=pg_temp.tutor_item(ac
   assert pg_temp.tutor_claim(actor,gen_random_uuid(),1,item)->>'status'='claimed';
   assert pg_temp.tutor_claim(actor,gen_random_uuid(),1,item)->>'status'='claimed';
   r:=pg_temp.tutor_claim(actor,gen_random_uuid(),1,item);
-  assert r->>'status'='limit'; assert r->'quota'='{"used":3,"limit":3}'::jsonb;
+  assert r->>'status'='limit'; assert (r->'quota')-'quota_day'='{"used":3,"limit":3}'::jsonb;
   assert pg_temp.tutor_claim(pg_temp.tutor_user(),gen_random_uuid(),1,item)->>'status'='missing';
   assert pg_temp.tutor_claim(actor,gen_random_uuid(),1,gen_random_uuid())->>'status'='missing';
 end $$;
@@ -109,10 +112,10 @@ do $$ declare actor uuid; item uuid; env text; product text; r jsonb; begin
       values(actor,'premium',env,true,'com.ardasayar.linglossa.premium.'||product,now()-interval '1 day',now()+interval '1 day',now());
     for i in 1..12 loop assert pg_temp.tutor_claim(actor,gen_random_uuid(),5)->>'status'='claimed'; end loop;
     r:=pg_temp.tutor_claim(actor); assert r->>'status'='limit'; assert r->>'premium_required'='false';
-    assert r->'quota'='{"used":60,"limit":60}'::jsonb;
+    assert (r->'quota')-'quota_day'='{"used":60,"limit":60}'::jsonb;
     for i in 1..150 loop assert pg_temp.tutor_claim(actor,gen_random_uuid(),1,item)->>'status'='claimed'; end loop;
     r:=pg_temp.tutor_claim(actor,gen_random_uuid(),1,item);
-    assert r->>'status'='limit'; assert r->'quota'='{"used":150,"limit":150}'::jsonb;
+    assert r->>'status'='limit'; assert (r->'quota')-'quota_day'='{"used":150,"limit":150}'::jsonb;
   end loop;
 end $$;
 select pass('Premium 60/150 for Production, allowlisted Sandbox and Complimentary snapshots');
@@ -138,7 +141,20 @@ do $$ declare actor uuid:=pg_temp.tutor_user(); req uuid:=gen_random_uuid(); r j
   perform public.fail_tutor(actor,req,'tutor-generate',t,true);
   assert pg_temp.tutor_claim(actor,gen_random_uuid(),2)->>'status'='limit';
 end $$;
-select pass('Berlin calendar/DST, no expired-lease replay and late refunds stay on original day');
+do $$ declare actor uuid:=pg_temp.tutor_user(); item uuid:=pg_temp.tutor_item(actor);
+  req uuid:=gen_random_uuid(); reservation jsonb; payload jsonb; yesterday date;
+begin
+  reservation:=pg_temp.tutor_claim(actor,req,1,item);
+  yesterday:=(clock_timestamp() at time zone 'Europe/Berlin')::date-1;
+  update app.tutor_requests set quota_day=yesterday where user_id=actor and request_id=req;
+  payload:=jsonb_build_object('scores',jsonb_build_object('meaning',2,'grammar',2,'naturalness',2),
+    'outcome','correct','errors','[]'::jsonb,'feedback_de','Die Aussage stimmt.','ideal_answer','I went home.',
+    'quota',jsonb_build_object('used',1,'limit',3,'quota_day',yesterday));
+  assert public.finish_tutor(actor,req,'tutor-grade',(reservation->>'ticket')::uuid,payload,'I went home.',null)->>'status'='saved';
+  assert pg_temp.tutor_claim(actor,req,1,item)->'response'->'quota'->>'quota_day'=yesterday::text;
+  assert pg_temp.tutor_claim(actor,gen_random_uuid(),1,item)->'quota'->>'used'='1';
+end $$;
+select pass('Berlin calendar/DST, midnight completion/replay and late refunds keep reservation day');
 
 do $$ declare actor uuid:=pg_temp.tutor_user(); item uuid:=pg_temp.tutor_item(actor); req uuid:=gen_random_uuid(); begin
   perform pg_temp.tutor_claim(actor,req);

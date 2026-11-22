@@ -38,16 +38,21 @@ function fixture(operation: TutorOperation, options: Options = {}) {
         return Response.json({ status: existing.failed ? 'failed' : 'busy' });
       }
       rows.set(body.p_request, { hash: body.p_hash });
-      return Response.json({ status: 'claimed', ticket: id, quota: { used: 1, limit: 3 } });
+      return Response.json({ status: 'claimed', ticket: id, quota: { used: 1, limit: 3, quota_day: '2026-11-22' } });
     }
     if (name === 'load_tutor_item') return Response.json({ status: options.load ?? 'found', item: options.parent ?? item });
     if (name === 'reserve_ai_spend') return Response.json({ status: options.budget ?? 'reserved' });
     if (name === 'settle_ai_spend') return Response.json({ status: 'settled' });
     if (name === 'finish_tutor') {
       if (options.finish === 'stale') return Response.json({ status: 'stale' });
+      if (operation === 'tutor-generate') {
+        body.p_response.items = body.p_response.items.map((item: Json) => ({
+          ...item, expires_at: '2026-12-22T12:00:00.000Z',
+        }));
+      }
       rows.get(body.p_request)!.ready = body.p_response;
       if (options.finish === 'lost') throw Error('lost acknowledgement');
-      return Response.json({ status: 'saved' });
+      return Response.json({ status: 'saved', response: body.p_response });
     }
     if (name === 'fail_tutor') {
       rows.get(body.p_request)!.failed = true;
@@ -90,7 +95,12 @@ for (const operation of ['tutor-generate', 'tutor-grade'] as const) {
     assert.equal(body.output_config.format.type, 'json_schema');
     assert.equal(body.messages.length, 1); assert.equal(typeof body.messages[0].content, 'string');
     assert.equal(typeof body.system, 'string');
-    if (operation === 'tutor-grade') { assert.equal(result.outcome, 'incorrect'); assert.deepEqual(result.quota, { used: 1, limit: 3 }); }
+    if (operation === 'tutor-grade') {
+      assert.equal(result.outcome, 'incorrect');
+      assert.deepEqual(result.quota, { used: 1, limit: 3, quota_day: '2026-11-22' });
+    } else {
+      assert.equal(result.items[0].expires_at, '2026-12-22T12:00:00.000Z');
+    }
   });
   test(`${operation}: consent/auth/account rejection dispatches no model`, async () => {
     for (const options of [{ auth: 401 }, { anonymous: true }, { claim: 'account_unverified' }]) {
@@ -128,8 +138,18 @@ for (const operation of ['tutor-generate', 'tutor-grade'] as const) {
       assert.equal((await f.run()).status, 409);
     }
   });
-  test(`${operation}: provider errors, timeouts and invalid outputs retain quota and never retry`, async () => {
-    for (const options of [{ raw: {} }, { providerStatus: 503 }, { hang: true }, { fetchFail: true }]) {
+  test(`${operation}: definite provider rejection releases daily quota but not money`, async () => {
+    const f = fixture(operation, { providerStatus: 503 });
+    const response = await f.run();
+    assert.equal(response.status, 502);
+    assert.equal((await response.json()).error, 'MODEL_UNAVAILABLE');
+    assert.equal(f.calls.find(call => call.name === 'fail_tutor')!.body.p_release, true);
+    assert.equal((await (await f.run()).json()).error, 'REQUEST_FAILED');
+    assert.equal(f.stats().models, 1);
+    assert.ok(!f.calls.some(call => call.name === 'settle_ai_spend'));
+  });
+  test(`${operation}: timeouts and invalid outputs retain quota and never retry`, async () => {
+    for (const options of [{ raw: {} }, { hang: true }, { fetchFail: true }]) {
       const f = fixture(operation, options); const response = await f.run();
       assert.ok([502, 503, 504].includes(response.status)); assert.equal(f.stats().models, 1);
       assert.equal(f.calls.find(c => c.name === 'fail_tutor')!.body.p_release, false);

@@ -20,6 +20,16 @@ class TutorFailure implements Exception {
   final String code, message;
   final int? status;
   final bool uncertain, premiumRequired;
+  bool get terminalForId => const {
+    'INPUT_INVALID',
+    'MODEL_INVALID',
+    'MODEL_UNAVAILABLE',
+    'REQUEST_FAILED',
+    'ITEM_EXPIRED',
+    'CONFLICT',
+    'ITEM_NOT_FOUND',
+    'REQUEST_EXPIRED',
+  }.contains(code);
 }
 
 /// Transport only: a suggestion response never creates a learning card.
@@ -58,6 +68,7 @@ class TutorClient {
     required TutorItem item,
     required String answer,
   }) async {
+    answer = normalizeTutorAnswer(answer);
     if (!tutorUuid.hasMatch(attemptId) ||
         !tutorUuid.hasMatch(item.id) ||
         answer.trim().isEmpty ||
@@ -248,7 +259,11 @@ TutorFailure _serverFailure(int status, Object? json) {
     'AI_MONTHLY_LIMIT',
     'AI_BUDGET_UNAVAILABLE',
     'MODEL_INVALID',
-    'MODEL_FAILED',
+    'MODEL_UNAVAILABLE',
+    'REQUEST_FAILED',
+    'ITEM_EXPIRED',
+    'ITEM_NOT_FOUND',
+    'REQUEST_EXPIRED',
     'CONFLICT',
     'REQUEST_CONFLICT',
     'REQUEST_PENDING',
@@ -277,6 +292,9 @@ TutorFailure _serverFailure(int status, Object? json) {
       'CONFLICT' ||
       'REQUEST_CONFLICT' => 'Diese Anfrage gehört zu einer anderen Eingabe.',
       'MODEL_INVALID' => 'Die Antwort konnte nicht geprüft werden.',
+      'INPUT_INVALID' => 'Bitte die Antwort prüfen und erneut eingeben.',
+      'ITEM_EXPIRED' || 'ITEM_NOT_FOUND' =>
+        'Diese Aufgabe ist abgelaufen. Bitte eine neue Aufgabe laden.',
       _ => 'Der AI-Tutor ist derzeit nicht verfügbar.',
     },
     status: status,

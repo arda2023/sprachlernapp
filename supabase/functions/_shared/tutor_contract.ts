@@ -51,8 +51,14 @@ function id(raw: unknown): string {
 }
 /** Sentence ends, ignoring common German abbreviations such as "z. B." or "bzw.". */
 function sentenceEnds(value: string): number {
-  const plain = value.replace(/(?<!\p{L})(?:z\.\s?B|d\.\s?h|u\.\s?a|bzw|ca|usw|etc|vgl|evtl|ggf|inkl|Nr)\./giu, 'ABBR');
-  return plain.match(/[.!?]+(?:\s|$)/gu)?.length ?? 0;
+  return sentenceBoundaries(value).length;
+}
+function sentenceBoundaries(value: string): number[] {
+  const plain = value
+    .replace(/(?<!\p{L})(?:z\.\s?B|d\.\s?h|u\.\s?a|bzw|ca|usw|etc|vgl|evtl|ggf|inkl|Nr)\./giu,
+      match => match.replaceAll('.', ' '))
+    .replace(/(?<![\p{L}\p{N}])\d+\.(?=\s|$)/gu, match => match.replace('.', ' '));
+  return [...plain.matchAll(/[.!?]+(?=\s|$)/gu)].map(match => match.index! + match[0].length);
 }
 /** Loose comparison so typographic quotes, case or spacing never void a grade. */
 function looseText(value: string): string {
@@ -89,7 +95,8 @@ export function tutorGenerateRequest(raw: unknown): TutorGenerateRequest {
 export function tutorGradeRequest(raw: unknown): TutorGradeRequest {
   consent(raw);
   const v = object(raw, ['attempt_id', 'item_id', 'answer', 'consent']);
-  return { attempt_id: id(v.attempt_id), item_id: id(v.item_id), answer: text(v.answer, 1, 300), consent: 1 };
+  const answer = typeof v.answer === 'string' ? v.answer.replace(/\s+/gu, ' ').trim() : v.answer;
+  return { attempt_id: id(v.attempt_id), item_id: id(v.item_id), answer: text(answer, 1, 300), consent: 1 };
 }
 
 /** Reject bad provider prompts; never silently turn an instruction into an exercise. */
@@ -138,9 +145,10 @@ export function tutorGradedAnswer(raw: unknown, lang: TutorLanguage, targets: st
     const quote = looseText(answer).includes(looseText(quoted)) ? quoted : '';
     return { skill: e.skill as string, severity: e.severity as 'minor' | 'major', quote, fix: text(e.fix, 1, 60, true) };
   });
-  const feedback_de = text(v.feedback_de, 1, 220, true);
-  requireValid(!/^(?:[-*•]|\d+[.)])\s/u.test(feedback_de) && /[.!?]$/u.test(feedback_de) &&
-    sentenceEnds(feedback_de) <= 2, true);
+  let feedback_de = text(v.feedback_de, 1, 220, true);
+  requireValid(!/^(?:[-*•]|\d+[.)])\s/u.test(feedback_de) && /[.!?]$/u.test(feedback_de), true);
+  const boundaries = sentenceBoundaries(feedback_de);
+  if (boundaries.length > 2) feedback_de = feedback_de.slice(0, boundaries[1]);
   const scores = s as TutorScores;
   return { scores, outcome: tutorOutcome(scores, errors, targets), errors, feedback_de,
     ideal_answer: text(v.ideal_answer, 1, 200, true) };
