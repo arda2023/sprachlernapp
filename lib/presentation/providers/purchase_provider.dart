@@ -716,8 +716,7 @@ class PurchaseController extends Notifier<PurchaseState> {
         expiresAt == null) {
       return;
     }
-    final delay = expiresAt.difference(_clock.now());
-    if (delay <= Duration.zero) {
+    if (!expiresAt.isAfter(_clock.now())) {
       if (_isCurrentAccount(generation, accountId)) {
         state = state.copyWith(
           premiumActive: false,
@@ -729,21 +728,42 @@ class PurchaseController extends Notifier<PurchaseState> {
       }
       return;
     }
-    _expiryTimer = _clock.schedule(delay, () {
-      if (!_isCurrentAccount(generation, accountId) ||
-          state.expiresAt != expiresAt ||
-          !state.hasPremiumUiAccess) {
-        return;
-      }
-      // Fail closed at the verified expiry even if the app stays open and the
-      // next server check is temporarily unavailable.
-      state = state.copyWith(
-        premiumActive: false,
-        sandboxTestActive: false,
-        purchaseAllowed: false,
-      );
-      _requestServerReconciliation(accountId, generation);
-    });
+    _armExpiryTimer(accountId, generation, expiresAt);
+  }
+
+  /// Browser timers overflow above ~24.8 days and fire at once, which revoked
+  /// every yearly or gifted Premium on web and re-synced in a loop. Waiting in
+  /// bounded steps keeps the expiry exact on every platform.
+  static const _maxExpiryTimerStep = Duration(days: 1);
+
+  void _armExpiryTimer(String accountId, int generation, DateTime expiresAt) {
+    final delay = expiresAt.difference(_clock.now());
+    _expiryTimer = _clock.schedule(
+      delay > _maxExpiryTimerStep ? _maxExpiryTimerStep : delay,
+      () {
+        if (!_isCurrentAccount(generation, accountId) ||
+            state.expiresAt != expiresAt ||
+            !state.hasPremiumUiAccess) {
+          return;
+        }
+        if (expiresAt.isAfter(_clock.now())) {
+          _armExpiryTimer(accountId, generation, expiresAt);
+          return;
+        }
+        _expireAccess(accountId, generation);
+      },
+    );
+  }
+
+  void _expireAccess(String accountId, int generation) {
+    // Fail closed at the verified expiry even if the app stays open and the
+    // next server check is temporarily unavailable.
+    state = state.copyWith(
+      premiumActive: false,
+      sandboxTestActive: false,
+      purchaseAllowed: false,
+    );
+    _requestServerReconciliation(accountId, generation);
   }
 
   bool get _storeReadyForPurchase =>

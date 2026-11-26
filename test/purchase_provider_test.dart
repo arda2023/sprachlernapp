@@ -164,12 +164,14 @@ class _FakePurchaseClock implements PurchaseClock {
 
   DateTime value;
   final timers = <_FakeTimer>[];
+  final delays = <Duration>[];
 
   @override
   DateTime now() => value;
 
   @override
   Timer schedule(Duration delay, void Function() callback) {
+    delays.add(delay);
     final timer = _FakeTimer(value.add(delay), callback);
     timers.add(timer);
     return timer;
@@ -1066,6 +1068,56 @@ void main() {
       await _flush();
       expect(container.read(purchaseProvider).premiumActive, isFalse);
       expect(container.read(purchaseProvider).isSyncing, isFalse);
+    },
+  );
+
+  test(
+    'a yearly expiry stays active without timers beyond the browser limit',
+    () async {
+      final now = DateTime.utc(2026, 11, 26, 12);
+      final expiresAt = now.add(const Duration(days: 365));
+      final clock = _FakePurchaseClock(now);
+      final billing = _BillingGateway('account-a');
+      final purchases = _PurchaseGateway();
+      final sync = _BillingSync(
+        _server(
+          active: true,
+          environment: 'Production',
+          purchaseEnvironment: 'Sandbox',
+          expiresAt: expiresAt,
+        ),
+      );
+      final container = _container(
+        billing: billing,
+        purchases: purchases,
+        sync: sync,
+        sessions: Stream<AccountSession?>.value((id: 'account-a', email: null)),
+        clock: clock,
+      );
+      addTearDown(() async {
+        container.dispose();
+        await billing.updates.close();
+      });
+      await _flush();
+      await container.read(purchaseProvider.notifier).load();
+      final syncsBefore = sync.calls;
+
+      for (var day = 0; day < 364; day++) {
+        clock.advance(const Duration(days: 1));
+      }
+      await _flush();
+      expect(container.read(purchaseProvider).premiumActive, isTrue);
+      expect(sync.calls, syncsBefore);
+      // Browser setTimeout overflows above 2^31-1 ms and fires immediately.
+      expect(
+        clock.delays.every((delay) => delay.inMilliseconds < 0x7fffffff),
+        isTrue,
+      );
+
+      sync.nextReply = Completer<ServerBillingSnapshot>();
+      clock.advance(const Duration(days: 1));
+      await _flush();
+      expect(container.read(purchaseProvider).premiumActive, isFalse);
     },
   );
 
